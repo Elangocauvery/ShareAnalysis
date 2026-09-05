@@ -20,6 +20,7 @@
   --jupiter:#0e7490;--jupiter-soft:#ecfeff;
   --yatharth:#9d174d;--yatharth-soft:#fdf2f8;
   --krishna:#ea580c;--krishna-soft:#fff7ed;
+  --manipal:#475569;--manipal-soft:#f1f5f9;
   --pos:#166534;--neg:#dc2626;--warn:#ea580c;
   --gold:#b8911e;--gold-soft:#fdf5e0;
   --shadow:0 1px 8px rgba(24,21,17,.07);--shadow-md:0 4px 20px rgba(24,21,17,.10);
@@ -35,7 +36,7 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);font-
 .chip{padding:4px 11px;border-radius:20px;font-size:10px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;}
 .chip-apollo{background:var(--apollo);color:#fff;}.chip-nh{background:var(--nh);color:#fff;}.chip-max{background:var(--max);color:#fff;}
 .chip-rainbow{background:var(--rainbow);color:#fff;}.chip-medanta{background:var(--medanta);color:#fff;}.chip-fortis{background:var(--fortis);color:#fff;}
-.chip-jupiter{background:var(--jupiter);color:#fff;}.chip-yatharth{background:var(--yatharth);color:#fff;}.chip-kims{background:var(--krishna);color:#fff;}.chip-date{background:rgba(255,255,255,.08);color:rgba(255,255,255,.55);border:1px solid rgba(255,255,255,.12);}
+.chip-jupiter{background:var(--jupiter);color:#fff;}.chip-yatharth{background:var(--yatharth);color:#fff;}.chip-kims{background:var(--krishna);color:#fff;}.chip-manipal{background:var(--manipal);color:#fff;}.chip-date{background:rgba(255,255,255,.08);color:rgba(255,255,255,.55);border:1px solid rgba(255,255,255,.12);}
 .tab-nav{background:var(--surface);border-bottom:2px solid var(--border);display:flex;align-items:center;padding:0 40px;overflow-x:auto;position:sticky;top:0;z-index:100;box-shadow:0 2px 12px rgba(24,21,17,.06);}
 .tab-nav::-webkit-scrollbar{height:0;}
 .tab-btn{padding:14px 15px 12px;font-size:12px;font-weight:600;color:var(--muted);background:none;border:none;border-bottom:3px solid transparent;cursor:pointer;white-space:nowrap;letter-spacing:.02em;transition:color .18s,border-color .18s;margin-bottom:-2px;}
@@ -74,6 +75,18 @@ td.tpos{color:var(--pos);font-weight:700;font-family:'IBM Plex Mono',monospace;}
 td.tneg{color:var(--neg);font-weight:700;font-family:'IBM Plex Mono',monospace;}
 td.tb{font-weight:700;}
 .dot{width:10px;height:10px;border-radius:50%;display:inline-block;margin-right:7px;vertical-align:middle;}
+.op-tbl td{white-space:normal;vertical-align:top;line-height:1.45;}
+.op-tbl td.tb{white-space:nowrap;}
+.op-tbl small.chg{display:inline-block;margin-top:2px;font-size:10px;font-weight:700;color:var(--muted);font-family:'IBM Plex Mono',monospace;}
+.op-tbl small.chg.pos{color:var(--pos);}
+.op-tbl small.chg.warn{color:var(--warn);}
+.takeaway-list{list-style:none;font-size:12px;line-height:1.7;margin-bottom:14px;}
+.takeaway-list li{position:relative;padding-left:20px;margin-bottom:6px;}
+.takeaway-list li::before{content:"▸";position:absolute;left:0;color:var(--gold);font-weight:700;}
+.mgmt-box{background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:12px 15px;margin-bottom:16px;}
+.mgmt-box .ml{font-size:9.5px;font-weight:800;text-transform:uppercase;letter-spacing:.09em;color:var(--muted);margin-bottom:3px;}
+.mgmt-box p{font-size:12px;line-height:1.6;margin-bottom:6px;}
+.mgmt-box p:last-child{margin-bottom:0;}
 .val-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:18px;box-shadow:var(--shadow);}
 .val-co{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.08em;margin-bottom:12px;font-family:'IBM Plex Mono',monospace;}
 .val-row{display:flex;justify-content:space-between;align-items:center;padding:5px 0;border-bottom:1px solid var(--border);}
@@ -182,6 +195,7 @@ td.tb{font-weight:700;}
     <span class="chip chip-apollo">Apollo</span><span class="chip chip-max">Max</span><span class="chip chip-fortis">Fortis</span>
     <span class="chip chip-nh">NH</span><span class="chip chip-medanta">Medanta</span><span class="chip chip-kims">KIMS</span>
     <span class="chip chip-rainbow">Rainbow</span><span class="chip chip-jupiter">Jupiter</span><span class="chip chip-yatharth">Yatharth</span>
+    <span class="chip chip-manipal">Manipal</span>
     <span class="chip chip-date">Q1 FY27 Results</span>
   </div>
 </div>
@@ -287,6 +301,7 @@ td.tb{font-weight:700;}
     <button class="co-sel-btn" style="--cc:var(--rainbow);" onclick="switchCo('rainbow',this)">Rainbow</button>
     <button class="co-sel-btn" style="--cc:var(--jupiter);" onclick="switchCo('jupiter',this)">Jupiter</button>
     <button class="co-sel-btn" style="--cc:var(--yatharth);" onclick="switchCo('yatharth',this)">Yatharth</button>
+    <button class="co-sel-btn" style="--cc:var(--manipal);" onclick="switchCo('manipal',this)">Manipal</button>
   </div>
 
   <!-- APOLLO -->
@@ -318,6 +333,30 @@ td.tb{font-weight:700;}
         </tbody>
       </table>
       <p style="font-size:12px;line-height:1.75;"><strong>Key insight:</strong> EBITDA margin expanded 90bps to 15.5% (blended) as EBITDA grew faster (+28%) than revenue (+21%). Hospital occupancy rose to 70% from 65% YoY; Sarjapur, Bengaluru (180 beds) commissioned in the quarter. Company guides for 20% hospital revenue growth for FY27 and plans 5,800+ new beds over 5 years (Indore, Dwarka, Delhi Proton Centre, Ranchi, Gurugram). Apollo HealthCo's digital cash losses narrowed from ₹4.9 Cr to ₹1.0 Cr YoY, and the pharmacy/digital demerger-merger scheme remains on track, expected to unlock a separate listing by Q4 FY27. International Patient Services revenue grew 26% YoY.</p>
+      <div class="tbl-title">🛏️ Operating Parameters</div>
+      <div class="mgmt-box">
+        <div class="ml">Bed Capacity</div><p>8,352 operating beds, excl. AHLL/managed (+180 YoY — Sarjapur, Bengaluru commissioned)</p>
+        <div class="ml">Occupancy</div><p>70% (+500 bps YoY from 65%)</p>
+        <div class="ml">ARPOB</div><p>— not separately disclosed</p>
+        <div class="ml">ALOS</div><p>— not disclosed</p>
+        <div class="ml">Payor Mix</div><p>Insurance 46% · Self-pay 39% · Govt scheme + international ~15% (not broken out) — Q1 FY27</p>
+        <div class="ml">Key Specialities (% of Revenue)</div><p>Cardiology 19% · Oncology 17% · Orthopedics 11% · Neurosciences 10% · Others 43% (IPD revenue)</p>
+      </div>
+      <div class="tbl-title">📌 Key Takeaways</div>
+      <ul class="takeaway-list">
+        <li>Revenue +20.6% YoY to ₹7,043.5 Cr with margin expansion (EBITDA margin 15.5%, +90bps) — growth and profitability moving together.</li>
+        <li>PAT +34.2% YoY to ₹580.7 Cr — the best profit growth of any hospital major this quarter.</li>
+        <li>Occupancy up to 70% (from 65%) while Apollo HealthCo's digital cash loss narrows to just ₹1.0 Cr.</li>
+        <li>Pharmacy/digital demerger on track for a separate listing by Q4 FY27 — a potential re-rating catalyst for the pure-hospital business.</li>
+        <li>Largest scale in the sector (8,352 beds, 5,800+ bed pipeline) but also the richest multiple among peers (~70–72x trailing P/E).</li>
+      </ul>
+      <div class="tbl-title">Management &amp; Control</div>
+      <div class="mgmt-box">
+        <div class="ml">Promoter / Controlling Shareholder</div>
+        <p>Reddy family (~28% holding)</p>
+        <div class="ml">PE / Strategic Investor</div>
+        <p>None currently — Apax Partners, an early PE backer, fully exited in 2012–13</p>
+      </div>
     </div>
   </div>
 
@@ -350,6 +389,30 @@ td.tb{font-weight:700;}
         </tbody>
       </table>
       <p style="font-size:12px;line-height:1.75;"><strong>Key insight:</strong> EBITDA margin eased from 26.8% (Q4 FY26) to 24.8% on new capacity dilution and the Kalinga integration, but held roughly flat YoY. Free cash flow of ₹397 Cr funded the acquisitions of a controlling 58.28% stake in Kalinga Hospital, Bhubaneswar (completed 18 May 2026) and Yerawada Properties, Pune — land for a proposed 450-bed hospital — completed 30 June 2026. Board approved ₹425 Cr capex for a new Tower 3 at MSSH Vaishali (+202 beds). Net debt-to-EBITDA remains below 1x.</p>
+      <div class="tbl-title">🛏️ Operating Parameters</div>
+      <div class="mgmt-box">
+        <div class="ml">Bed Capacity</div><p>+13% YoY (absolute network count not disclosed)</p>
+        <div class="ml">Occupancy</div><p>&gt;75% average — held despite +13% bed capacity growth</p>
+        <div class="ml">ARPOB</div><p>₹81,900/day (+5.0% YoY from ₹78,000)</p>
+        <div class="ml">ALOS</div><p>— not disclosed</p>
+        <div class="ml">Payor Mix</div><p>TPA/Corporates 34.9% · Self-pay 34.2% · Institutional 21.9% · International 9.1% — FY26</p>
+        <div class="ml">Key Specialities (% of Revenue)</div><p>Oncology 24.1% · Orthopedics 10.9% · Cardiac 10.6% · Neuro 9.6% · Renal 5.0% · Others ~14.6% (gross IPD, FY26)</p>
+      </div>
+      <div class="tbl-title">📌 Key Takeaways</div>
+      <ul class="takeaway-list">
+        <li>Best-in-class ARPOB (₹81,900/day, +5% YoY) with occupancy consistently above 75%.</li>
+        <li>PAT growth muted at +3.0% YoY as EBITDA margin eased 200bps QoQ (26.8%→24.8%) on new-capacity dilution.</li>
+        <li>Free cash flow of ₹397 Cr self-funded two acquisitions this quarter — Kalinga Hospital (Bhubaneswar) and Yerawada land (Pune).</li>
+        <li>Digital revenue is now 32% of total network revenue — diversification well beyond core hospital beds.</li>
+        <li>Richest valuation in the sector (~90–97x trailing P/E) despite comfortably low leverage (ND/EBITDA &lt;1x).</li>
+      </ul>
+      <div class="tbl-title">Management &amp; Control</div>
+      <div class="mgmt-box">
+        <div class="ml">Promoter / Controlling Shareholder</div>
+        <p>Abhay Soi + Kayak Investments Holding Pte Ltd (~23.7% combined, promoter group)</p>
+        <div class="ml">PE / Strategic Investor</div>
+        <p><strong>KKR</strong> (via Kayak Investments, part of the promoter group); Government of Singapore/GIC ~5.8%</p>
+      </div>
     </div>
   </div>
 
@@ -380,6 +443,30 @@ td.tb{font-weight:700;}
         </tbody>
       </table>
       <p style="font-size:12px;line-height:1.75;"><strong>Key insight:</strong> A new ESOP scheme effective April 2026 added ~₹31 Cr in costs this quarter and is expected to run at ~₹40 Cr/quarter through FY27 before tapering. Recent hospital acquisitions in Punjab, Bengaluru and a leased Delhi-NCR facility diluted margin; on a like-for-like basis, hospital EBITDA margin was broadly flat at ~22%. Management reiterated a long-term consolidated EBITDA margin target of 25% by FY28, guided by ramp-up of FMRI and Manesar and a proton-therapy facility approved for Gurgaon (~₹252 Cr capex). ~1,800 beds of brownfield expansion planned over 4–5 years.</p>
+      <div class="tbl-title">🛏️ Operating Parameters</div>
+      <div class="mgmt-box">
+        <div class="ml">Bed Capacity</div><p>3,418 occupied beds, hospital segment (+17% YoY)</p>
+        <div class="ml">Occupancy</div><p>69%</p>
+        <div class="ml">ARPOB</div><p>— not disclosed</p>
+        <div class="ml">ALOS</div><p>— not disclosed</p>
+        <div class="ml">Payor Mix</div><p>TPA/Insurance 36.3% · Cash 35.0% · Govt (CGHS+ECHS) 11.8% · Govt/PSU 8.4% · International 8.1% · Corporate 1.1% — Q2 FY26</p>
+        <div class="ml">Key Specialities (% of Revenue)</div><p>Cardiac 16.9% · Oncology 15.0% · Orthopedics 8.6% · Neurosciences 8.5% · Renal 6.9% · Gastro 5.2% · Others ~45% — Q2 FY26</p>
+      </div>
+      <div class="tbl-title">📌 Key Takeaways</div>
+      <ul class="takeaway-list">
+        <li>Revenue +17.5% YoY to ₹2,545 Cr on 19% hospital-segment growth and 17% occupied-bed growth.</li>
+        <li>PAT grew just +2.3% YoY, dragged by a new ESOP scheme adding ~₹31 Cr this quarter (~₹40 Cr/quarter through FY27).</li>
+        <li>Comfortable leverage (ND/EBITDA 1.01x) with a ~₹252 Cr Gurgaon proton-therapy facility now approved.</li>
+        <li>Margin (22.3%) still trails management's 25% FY28 target as newer facilities dilute the blend.</li>
+        <li>No founder-promoter — controlled by strategic investor IHH Healthcare Berhad rather than a family group.</li>
+      </ul>
+      <div class="tbl-title">Management &amp; Control</div>
+      <div class="mgmt-box">
+        <div class="ml">Promoter / Controlling Shareholder</div>
+        <p>None — no promoter group</p>
+        <div class="ml">PE / Strategic Investor</div>
+        <p><strong>IHH Healthcare Berhad</strong> (Malaysia, Khazanah-linked strategic investor) — controlling ~31% stake, raised via open offer completed Nov 2025</p>
+      </div>
     </div>
   </div>
 
@@ -410,6 +497,30 @@ td.tb{font-weight:700;}
         </tbody>
       </table>
       <p style="font-size:12px;line-height:1.75;"><strong>Key insight:</strong> The headline 78% growth is mostly base-effect from the UK acquisition (Practice Plus Group, acquired Nov 2025) entering with a full quarter of ₹825.7 Cr revenue vs a partial quarter a year ago. EBITDA margin compressed ~510bps to 18.8% purely from the lower-margin UK NHS-outsourcing mix diluting the blend — India hospital EBITDA still grew ~40% YoY on high-end cardiac and robotic-surgery volumes. PAT growth of only 5.7% reflects higher finance costs (+92% YoY) and depreciation (+85% YoY) post-acquisition. ₹730 Cr FY27 capex earmarked for ~1,500 India beds; company is not adding major India beds for 2–3 years, instead sweating existing assets.</p>
+      <div class="tbl-title">🛏️ Operating Parameters</div>
+      <div class="mgmt-box">
+        <div class="ml">Bed Capacity</div><p>— not disclosed; ₹730 Cr FY27 capex earmarked for ~1,500 India beds, but not adding major beds for 2–3 years</p>
+        <div class="ml">Occupancy</div><p>— not disclosed</p>
+        <div class="ml">ARPOB</div><p>— not disclosed</p>
+        <div class="ml">ALOS</div><p>4.4 days (Q4 FY26); 4.3 days (FY26 full year)</p>
+        <div class="ml">Payor Mix</div><p>Domestic walk-in 44% · Insured 33% · Govt scheme (CGHS/ESIS/state) 18% · International 5% — Q4 FY26</p>
+        <div class="ml">Key Specialities (% of Revenue)</div><p>Cardiac Sciences 34% · Oncology 14% · Medicine &amp; GI 12% · Renal 9% · Neuro 8% · Others 18% (India ops, Q4 FY26)</p>
+      </div>
+      <div class="tbl-title">📌 Key Takeaways</div>
+      <ul class="takeaway-list">
+        <li>Headline 78% revenue growth is largely a UK (Practice Plus Group) base-effect — India organic growth was a steadier ~17%.</li>
+        <li>EBITDA margin compressed ~510bps to 18.8%, purely from the lower-margin UK NHS-outsourcing mix diluting the blend.</li>
+        <li>PAT grew only 5.7% as finance costs (+92%) and depreciation (+85%) rose sharply post-acquisition.</li>
+        <li>Not adding major India beds for 2–3 years — choosing to sweat existing assets rather than add new capex.</li>
+        <li>Cheapest large-cap multiple in the sector (~40–45x trailing P/E) despite now spanning three geographies (India, Cayman, UK).</li>
+      </ul>
+      <div class="tbl-title">Management &amp; Control</div>
+      <div class="mgmt-box">
+        <div class="ml">Promoter / Controlling Shareholder</div>
+        <p>Dr. Devi Prasad Shetty &amp; family</p>
+        <div class="ml">PE / Strategic Investor</div>
+        <p>None currently — broadly FII/DII-held (FII ~10.6%); no dominant PE shareholder</p>
+      </div>
     </div>
   </div>
 
@@ -441,6 +552,30 @@ td.tb{font-weight:700;}
         </tbody>
       </table>
       <p style="font-size:12px;line-height:1.75;"><strong>Key insight:</strong> Underlying momentum is strong — ex-Noida EBITDA margin of 25.8% shows the mature network (Gurugram, Indore, Ranchi, Lucknow, Patna) remains highly profitable. In-patient volumes +27.7% YoY and out-patient +34.5% YoY, driven mainly by volume rather than price hikes. PAT's marginal decline reflects a high base — Q1 FY26 included a ₹19.6 Cr exceptional gain. Announced expansion pipeline now totals ~3,350 beds (~₹4,850 Cr capex) including a scaled-up 650-bed Guwahati project (~₹970 Cr). Noida's EBITDA loss narrowing sharply suggests breakeven could arrive ahead of schedule.</p>
+      <div class="tbl-title">🛏️ Operating Parameters</div>
+      <div class="mgmt-box">
+        <div class="ml">Bed Capacity</div><p>Noida: 433 of 550 planned beds live (ramp-up); core network (Gurugram, Indore, Ranchi, Lucknow, Patna) count not separately disclosed here</p>
+        <div class="ml">Occupancy</div><p>62.6% (diluted by new-bed additions)</p>
+        <div class="ml">ARPOB</div><p>₹70,244/day (+5.5% YoY from ₹66,600)</p>
+        <div class="ml">ALOS</div><p>2.87 days (Q1 FY27), down from 3.03 days (−5.2% YoY)</p>
+        <div class="ml">Payor Mix</div><p>Cash 55–56% (IPD) · Govt scheme (CGHS/ECHS/Railways) 25–27% · Insurance/other ~18–20% · Domestic 94% / International 6% — Q1 FY27</p>
+        <div class="ml">Key Specialities (% of Revenue)</div><p>Cardiac 20.7% · Oncology 13.5% · Neurosciences 11.2% · Digestive 11.0% · Others ~43.6% (30+ specialities)</p>
+      </div>
+      <div class="tbl-title">📌 Key Takeaways</div>
+      <ul class="takeaway-list">
+        <li>Ex-Noida EBITDA margin of 25.8% shows the mature network remains highly profitable beneath the consolidated 23.8%.</li>
+        <li>Noida's EBITDA loss narrowed sharply from ₹23.6 Cr to ₹4.9 Cr quarter-on-quarter — breakeven may arrive ahead of schedule.</li>
+        <li>PAT was roughly flat (−1.1%) only because of a high prior-year base (a ₹19.6 Cr exceptional gain in Q1 FY26).</li>
+        <li>Growth is volume-led — inpatient +27.7% YoY, outpatient +34.5% YoY — with limited reliance on price hikes.</li>
+        <li>Net-cash balance sheet self-funds a ~3,350-bed, ~₹4,850 Cr pipeline including a 650-bed Guwahati project.</li>
+      </ul>
+      <div class="tbl-title">Management &amp; Control</div>
+      <div class="mgmt-box">
+        <div class="ml">Promoter / Controlling Shareholder</div>
+        <p>Dr. Naresh Trehan, Sunil Sachdeva &amp; co-founders (~33% promoter group)</p>
+        <div class="ml">PE / Strategic Investor</div>
+        <p><strong>Carlyle</strong> (via Anant Investments) and <strong>Temasek</strong> were early PE/sovereign backers (held ~45% combined pre-IPO) but sold down substantially in the 2022 IPO and subsequent block deals — no longer in the promoter group</p>
+      </div>
     </div>
   </div>
 
@@ -471,6 +606,30 @@ td.tb{font-weight:700;}
         </tbody>
       </table>
       <p style="font-size:12px;line-height:1.75;"><strong>Key insight:</strong> PAT nearly halved despite 35% revenue growth — a textbook J-curve pattern from simultaneous ramp-up of Bangalore (Electronic City), Kondapur (Telangana, newly launched), Kerala cluster and a new Palakkad hospital. Kerala units remain in single-digit EBITDA margins and may take 2–3 years to stabilise at 20–22%; Bangalore's Electronic City hospital is expected to reach break-even only towards year-end. Insurance empanelment delays (only ~50% empaneled for Latur, Thane, Nashik, Bangalore) are slowing ramp-up. Mature Telangana/AP clusters continue to deliver 28%+ margins.</p>
+      <div class="tbl-title">🛏️ Operating Parameters</div>
+      <div class="mgmt-box">
+        <div class="ml">Bed Capacity</div><p>7,459 (+1,960 YoY, +35.6% from 5,499)</p>
+        <div class="ml">Occupancy</div><p>— not disclosed</p>
+        <div class="ml">ARPOB</div><p>— not disclosed</p>
+        <div class="ml">ALOS</div><p>— not disclosed</p>
+        <div class="ml">Payor Mix</div><p>Cash/Self-pay 52% · Insurance/TPA 32% · Corporate 12% · Govt scheme (Aarogyasri) 4% — latest investor presentation</p>
+        <div class="ml">Key Specialities (% of Revenue)</div><p>Cardiac 15% · Orthopedics 15% · Neurosciences 11% · Renal 9% · Gastric 9% · Mother &amp; Child 9% · Others 32%</p>
+      </div>
+      <div class="tbl-title">📌 Key Takeaways</div>
+      <ul class="takeaway-list">
+        <li>PAT nearly halved (−47.2%) even as revenue grew 35.3% — a textbook J-curve from four simultaneous hospital ramp-ups.</li>
+        <li>Fastest bed growth in the sector: +1,960 beds YoY to 7,459, but only ~50% insurance empanelment complete at several new units.</li>
+        <li>Proactively deleveraged — ₹1,084 Cr of QIP proceeds cut debt from ₹3,250 Cr to ₹2,400 Cr in a single quarter.</li>
+        <li>Mature Telangana/Andhra Pradesh clusters still deliver 28%+ EBITDA margins, masked by the new-unit drag.</li>
+        <li>Bangalore (Electronic City) and Kerala clusters are the ones to watch for breakeven progress through FY27–28.</li>
+      </ul>
+      <div class="tbl-title">Management &amp; Control</div>
+      <div class="mgmt-box">
+        <div class="ml">Promoter / Controlling Shareholder</div>
+        <p>Dr. Bhaskara Rao Bollineni &amp; family</p>
+        <div class="ml">PE / Strategic Investor</div>
+        <p><strong>General Atlantic</strong> — acquired a significant minority stake (~30%, replacing ICICI Venture) for $130 Mn in 2018; Quadria Capital an earlier investor</p>
+      </div>
     </div>
   </div>
 
@@ -492,6 +651,30 @@ td.tb{font-weight:700;}
         </tbody>
       </table>
       <p style="font-size:12px;line-height:1.75;"><strong>Key insight:</strong> India's only listed pediatric/perinatal hospital chain delivered the best margin (28.7%) in the sector despite margin compressing ~70bps YoY on doctor professional-fee inflation and new-unit gestation. ARPOB at mature hospitals is ₹70,000 vs ₹59,000 at newer ones. Occupancy dipped on seasonality (Q1 is traditionally weak for pediatric volumes) and new-capacity dilution. Strategic expansion into Western India: a 100-bed greenfield hospital in Malad, Mumbai (₹90 Cr) targeted for Q1 FY28, plus a 64% stake acquisition in a 70-bed Nellore, Andhra Pradesh hospital (₹19.8 Cr). Five-year plan targets 2,500 additional beds (₹2,200 Cr capex).</p>
+      <div class="tbl-title">🛏️ Operating Parameters</div>
+      <div class="mgmt-box">
+        <div class="ml">Bed Capacity</div><p>2,565 (24 hospitals, 9 cities)</p>
+        <div class="ml">Occupancy</div><p>41.2% (down from 45.3% QoQ — seasonal)</p>
+        <div class="ml">ARPOB</div><p>₹67,256/day (+7.7% QoQ)</p>
+        <div class="ml">ALOS</div><p>— not disclosed; ~1/3 of beds allocated to critical care</p>
+        <div class="ml">Payor Mix</div><p>Cash 51.7% · Insurance 48.3% (inpatient income, ~flat YoY) — Q1 FY27</p>
+        <div class="ml">Key Specialities</div><p>100% pediatric/perinatal — secondary care (routine OPD, immunisation), tertiary (neonatal surgery, advanced ventilation), quaternary (pediatric transplant, cardiology/cardiac surgery, neuro/neurosurgery)</p>
+      </div>
+      <div class="tbl-title">📌 Key Takeaways</div>
+      <ul class="takeaway-list">
+        <li>Best EBITDA margin in the sector (28.7%) on an asset-light, hub-and-spoke pediatric model.</li>
+        <li>PAT grew a healthy +16.2% even as margin eased ~70bps YoY on doctor professional-fee inflation.</li>
+        <li>Occupancy dipped to 41.2% (from 45.3% QoQ) — largely a seasonal Q1 effect for pediatric volumes, not a demand problem.</li>
+        <li>First entry into Western India (Malad, Mumbai) plus a Nellore, AP acquisition extend the network beyond its South India base.</li>
+        <li>Net-cash balance sheet funds a five-year, 2,500-bed (~₹2,200 Cr) expansion plan without added leverage.</li>
+      </ul>
+      <div class="tbl-title">Management &amp; Control</div>
+      <div class="mgmt-box">
+        <div class="ml">Promoter / Controlling Shareholder</div>
+        <p>Dr. Ramesh Kancharla &amp; co-founders (~50%+ post-IPO)</p>
+        <div class="ml">PE / Strategic Investor</div>
+        <p><strong>British International Investment (BII)</strong> and <strong>CDC India</strong> (UK/Commonwealth development-finance investors) were pre-IPO backers — fully sold down via the 2022 IPO offer-for-sale</p>
+      </div>
     </div>
   </div>
 
@@ -513,6 +696,30 @@ td.tb{font-weight:700;}
         </tbody>
       </table>
       <p style="font-size:12px;line-height:1.75;"><strong>Key insight:</strong> The Dombivli hospital's first full quarter of operations produced a ₹9.5 Cr EBITDA drag (in line with management's own guidance), pulling margin down 290bps YoY to 19.3%. Excluding Dombivli, occupancy at established hospitals held stable at ~59.6% (vs 60.1% YoY). Finance costs jumped 55.5% YoY on expansion debt, and depreciation rose to ₹26.44 Cr from ₹21.22 Cr — together explaining most of the PAT decline despite resilient EBITDA. Jupiter also acquired IV-fluid maker Sulcus Pvt Ltd (₹3.78 Cr) for backward integration.</p>
+      <div class="tbl-title">🛏️ Operating Parameters</div>
+      <div class="mgmt-box">
+        <div class="ml">Bed Capacity</div><p>1,259 (+198 YoY, +18.7% from 1,061)</p>
+        <div class="ml">Occupancy</div><p>~59.6% ex-Dombivli (−50 bps YoY)</p>
+        <div class="ml">ARPOB</div><p>₹73,500/day (+10.0% YoY from ₹67,300)</p>
+        <div class="ml">ALOS</div><p>3.87 days</p>
+        <div class="ml">Payor Mix</div><p>Insurance/TPA 55.4% · Cash/self-pay ~44.6% (implied)</p>
+        <div class="ml">Key Specialities</div><p>Not separately disclosed in latest filings</p>
+      </div>
+      <div class="tbl-title">📌 Key Takeaways</div>
+      <ul class="takeaway-list">
+        <li>PAT fell 14.6% YoY as the Dombivli hospital's first full quarter added a ₹9.5 Cr EBITDA drag, exactly as management had guided.</li>
+        <li>ARPOB rose 10% YoY to ₹73,500/day — among the highest in the sector.</li>
+        <li>Finance costs jumped 55.5% YoY on expansion debt — a bigger swing factor for PAT than EBITDA itself.</li>
+        <li>Ex-Dombivli occupancy at established hospitals held broadly stable (~59.6% vs 60.1% YoY).</li>
+        <li>Backward-integrated into IV-fluid manufacturing via the Sulcus acquisition to help protect margins.</li>
+      </ul>
+      <div class="tbl-title">Management &amp; Control</div>
+      <div class="mgmt-box">
+        <div class="ml">Promoter / Controlling Shareholder</div>
+        <p>Thakker family / promoter group</p>
+        <div class="ml">PE / Strategic Investor</div>
+        <p>No major PE or strategic investor identified in current filings</p>
+      </div>
     </div>
   </div>
 
@@ -534,6 +741,80 @@ td.tb{font-weight:700;}
         </tbody>
       </table>
       <p style="font-size:12px;line-height:1.75;"><strong>Key insight:</strong> Highest reported revenue growth in the sector (+51%), driven by newly acquired/added hospitals now contributing 27% of revenue. Faridabad Sector-20 achieved EBITDA breakeven in a record nine months — a strong proof-point for Yatharth's acquisition-led, tier-2-focused playbook. Reported EBITDA margin of 23.3% understates underlying profitability given new-facility dilution; adjusted margin (ex-Faridabad Sec-20, New Delhi) is 28.1%. The Board declared the company's maiden interim dividend (5% of face value). A ₹100 Cr Gurugram hospital acquisition (plus ₹100 Cr equipment capex) is targeted to launch by Q1 FY28, part of a plan to scale toward ~5,000 beds over three years.</p>
+      <div class="tbl-title">🛏️ Operating Parameters</div>
+      <div class="mgmt-box">
+        <div class="ml">Bed Capacity</div><p>~3,255 announced capacity; targeting ~5,000 beds over 3 years</p>
+        <div class="ml">Occupancy</div><p>— not disclosed</p>
+        <div class="ml">ARPOB</div><p>₹34,758/day* (*blended tier-2/3 network mix — not directly comparable to metro-heavy peers)</p>
+        <div class="ml">ALOS</div><p>— not disclosed</p>
+        <div class="ml">Payor Mix</div><p>Govt scheme (CGHS/ECHS/linked) 37% · Insurance/TPA 32% · Cash/self-pay 31% — targeting &lt;30% govt mix — FY25</p>
+        <div class="ml">Key Specialities (% of Revenue)</div><p>Internal Medicine 19% (down from 56% in FY21) · Neuro 11% · Renal 11% · Oncology 10% · Cardiology 10% · Gen. Surgery 8% · Pulmonology 7% — FY25</p>
+      </div>
+      <div class="tbl-title">📌 Key Takeaways</div>
+      <ul class="takeaway-list">
+        <li>Highest revenue growth in the sector (+51% YoY), led by newly acquired hospitals now 27% of revenue.</li>
+        <li>Faridabad Sector-20 reached EBITDA breakeven in just nine months — a strong proof point for the acquisition-led playbook.</li>
+        <li>Reported EBITDA margin of 23.3% understates true profitability — adjusted (ex-new units) margin is 28.1%.</li>
+        <li>Declared its maiden interim dividend, signalling management's confidence in cash generation.</li>
+        <li>Geographic concentration in NCR/UP is a key differentiator — and risk — versus pan-India peers.</li>
+      </ul>
+      <div class="tbl-title">Management &amp; Control</div>
+      <div class="mgmt-box">
+        <div class="ml">Promoter / Controlling Shareholder</div>
+        <p>Tyagi family (promoter group)</p>
+        <div class="ml">PE / Strategic Investor</div>
+        <p>Carnelian Asset Management (India-focused alternative investment fund) holds a disclosed stake — no major global PE/DFI investor</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- MANIPAL -->
+  <div id="cop-manipal" class="cop">
+    <div class="cop-hdr" style="background:var(--manipal);"><div class="cop-name">⚪ Manipal Hospitals (Manipal Health Enterprises)</div><div class="cop-tag">BSE/NSE: MANIPALHOS · Listed 5 Aug 2026 · Q1 FY27 Not Yet Reported</div></div>
+    <div class="cop-body">
+      <div class="q4-highlight" style="margin-bottom:16px;">
+        <span class="q4-tag">Listing Status</span>
+        <div style="font-size:12px;line-height:1.7;">IPO'd ₹9,275 Cr (price band ₹560–₹590) and listed on BSE/NSE on 5 August 2026. The figures below are from the IPO prospectus (FY26, pre-listing) — Q1 FY27 actuals are not yet incorporated into this dashboard's sector-wide tables (Peer Comparison, Charts, Valuations). See the Overview and SWOT tabs for listing background.</div>
+      </div>
+      <div class="tbl-title">Snapshot — FY26 (IPO Prospectus, Pre-Listing)</div>
+      <table style="margin-bottom:18px;">
+        <thead><tr><th>Metric</th><th>FY26</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td class="tb">Revenue (₹ Cr)</td><td class="num">10,336</td><td>Second-largest private hospital chain by revenue, after Apollo</td></tr>
+          <tr><td class="tb">EBITDA (₹ Cr)</td><td class="num">2,721.87</td><td>~26–29% margin band (pre-Sahyadri consolidation)</td></tr>
+          <tr><td class="tb">PAT (₹ Cr)</td><td class="num">~917</td><td>—</td></tr>
+          <tr><td class="tb">Licensed Beds</td><td class="num">13,037</td><td>49 hospitals — largest pan-India network by bed count</td></tr>
+          <tr><td class="tb">Operational Beds</td><td class="num">~6,878</td><td>&lt;70% of licensed capacity in operation</td></tr>
+          <tr><td class="tb">Occupancy</td><td class="num">64%</td><td>Room to lift toward peer levels (67–76%)</td></tr>
+          <tr><td class="tb">Proforma EBITDA / PAT Margin</td><td class="num">~25% / ~6%</td><td>Post-Sahyadri consolidation (dilutive; Sahyadri margin ~18.6%)</td></tr>
+        </tbody>
+      </table>
+      <p style="font-size:12px;line-height:1.75;"><strong>Key insight:</strong> Manipal enters the listed hospital pack as the largest network by bed count and second-largest by revenue, but with a licensed-to-operational bed utilisation gap (only ~53% of licensed beds operational) that gives it a longer runway to lift occupancy than most peers. The Sahyadri Hospitals acquisition is margin-dilutive near-term (18.6% EBITDA margin vs Manipal's own ~26%), pulling proforma FY26 margins down to ~25% EBITDA / ~6% PAT. IPO proceeds (₹800 Cr fresh issue) are earmarked to prepay ₹552.76 Cr of subsidiary debt and buy out the Sahyadri minority stake. Its board meets to approve Q1 FY27 unaudited results shortly after this dashboard's original build — check back for updated actuals once published.</p>
+      <div class="tbl-title">🛏️ Operating Parameters</div>
+      <div class="mgmt-box">
+        <div class="ml">Bed Capacity</div><p>13,037 licensed beds (49 hospitals); ~6,878 operational (&lt;70% of licensed)</p>
+        <div class="ml">Occupancy</div><p>64.5% (FY26)</p>
+        <div class="ml">ARPOB</div><p>₹68,958/day (FY26)</p>
+        <div class="ml">ALOS</div><p>— not disclosed</p>
+        <div class="ml">Payor Mix</div><p>Insurance/TPA ~49–50% · Self-pay/Cash 30.33% · Govt scheme 13.80% (of gross IPD revenue) — FY26</p>
+        <div class="ml">Key Specialities (% of Revenue)</div><p>CONGO-R cluster = 64.3% of gross IPD revenue — Cardiac 16.61% · Ortho 12.08% · Oncology 9.96% · Neuro 9.21% · Renal 7.19% · Gastro 7.05% — FY26 (DRHP)</p>
+      </div>
+      <div class="tbl-title">📌 Key Takeaways</div>
+      <ul class="takeaway-list">
+        <li>India's largest hospital chain by bed count (13,037 licensed beds, 49 hospitals) and second-largest by revenue (₹10,336 Cr FY26) after Apollo.</li>
+        <li>Only ~6,878 of 13,037 licensed beds (under 70%) were operational in FY26, at 64% occupancy — meaningful room to scale utilisation.</li>
+        <li>The Sahyadri Hospitals acquisition is margin-dilutive (18.6% EBITDA margin vs Manipal's own ~26%), pulling proforma FY26 margins to ~25% EBITDA / ~6% PAT.</li>
+        <li>IPO proceeds (₹800 Cr fresh issue) are earmarked to prepay ₹552.76 Cr of subsidiary debt and buy out the Sahyadri minority stake.</li>
+        <li>Listed 5 August 2026 at ~25x EV/EBITDA and ~60x trailing P/E — priced for a turnaround not yet proven in a quarterly report.</li>
+      </ul>
+      <div class="tbl-title">Management &amp; Control</div>
+      <div class="mgmt-box">
+        <div class="ml">Promoter / Controlling Shareholder</div>
+        <p>Dr. Ranjan Pai / Manipal Group (~31%)</p>
+        <div class="ml">PE / Strategic Investor</div>
+        <p><strong>Temasek</strong> (~51%), <strong>TPG Asia</strong> (~10%), Mubadala, Novo Holdings, CalPERS (~8% combined) — heavily sovereign/PE-backed per IPO prospectus</p>
+      </div>
+      <p style="font-size:10.5px;color:var(--muted);margin-top:12px;">Figures sourced from the IPO prospectus and exchange filings through August 2026. Not included in this dashboard's Peer Comparison, Charts or Valuations tabs pending publication of actual Q1 FY27 results — see Overview tab for the latest listing status.</p>
     </div>
   </div>
 
@@ -568,6 +849,59 @@ td.tb{font-weight:700;}
       <p style="font-size:11.5px;line-height:1.7;">KIMS (−47.2%) and Jupiter (−14.6%) are absorbing the heaviest near-term cost of expansion — both are running multiple new hospitals through the loss-making early years simultaneously.</p>
     </div>
   </div>
+
+  <!-- ── OPERATING PERFORMANCE (all hospitals) ── -->
+  <div class="sec-hdr gap-top">🛏️ Operating Performance — All Hospitals Under Review <span class="sec-note">Bed capacity, occupancy &amp; ARPOB · Q1 FY27 vs Q1 FY26 unless noted</span></div>
+
+  <div class="kpi-row">
+    <div class="kpi sector-a"><div class="kl">Highest ARPOB</div><div class="kv">Max ₹81,900/day</div><div class="kc pos">+5.0% YoY</div></div>
+    <div class="kpi"><div class="kl">Highest Occupancy</div><div class="kv">Max &gt;75%</div><div class="kc pos">Despite +13% bed growth</div></div>
+    <div class="kpi"><div class="kl">Fastest Bed Expansion</div><div class="kv">KIMS +35.6%</div><div class="kc pos">5,499 → 7,459 beds YoY</div></div>
+    <div class="kpi"><div class="kl">Steepest Occupancy Fall</div><div class="kv">Rainbow 41.2%</div><div class="kc neg">−410 bps QoQ, seasonal</div></div>
+    <div class="kpi"><div class="kl">Best ARPOB Growth</div><div class="kv">Jupiter +10.0%</div><div class="kc pos">₹67,300 → ₹73,500</div></div>
+  </div>
+
+  <div style="overflow-x:auto;">
+  <table class="op-tbl" style="margin-bottom:10px;table-layout:fixed;min-width:860px;">
+    <colgroup><col style="width:13%"><col style="width:16%"><col style="width:13%"><col style="width:12%"><col style="width:9%"><col style="width:37%"></colgroup>
+    <thead><tr><th>Company</th><th>Bed Capacity</th><th>Occupancy</th><th>ARPOB (₹/day)</th><th>ALOS (days)</th><th>Operating Note</th></tr></thead>
+    <tbody>
+      <tr><td class="tb"><span class="dot" style="background:var(--apollo)"></span>Apollo</td><td class="num">8,352<br><small class="chg pos">+180 YoY</small></td><td class="num">70%<br><small class="chg pos">+500 bps YoY</small></td><td class="num">—</td><td class="num">—</td><td>Hospital-segment EBITDA margin 24.0%; volume + occupancy led; Sarjapur (Bengaluru) commissioned</td></tr>
+      <tr><td class="tb"><span class="dot" style="background:var(--max)"></span>Max</td><td class="num">—<br><small class="chg pos">+13% YoY</small></td><td class="num">&gt;75%<br><small class="chg pos">Held YoY</small></td><td class="num">81,900<br><small class="chg pos">+5.0% YoY</small></td><td class="num">—</td><td>Kalinga (Bhubaneswar) added at 50% occupancy, ₹35k ARPOB — dilutive to network average</td></tr>
+      <tr><td class="tb"><span class="dot" style="background:var(--fortis)"></span>Fortis</td><td class="num">3,418†<br><small class="chg pos">+17% YoY</small></td><td class="num">69%<br><small class="chg">—</small></td><td class="num">—</td><td class="num">—</td><td>†Occupied beds, hospital segment. Agilus Diagnostics volumes +3.3% to 10.46 Mn tests</td></tr>
+      <tr><td class="tb"><span class="dot" style="background:var(--nh)"></span>NH</td><td class="num">—<br><small class="chg">₹730 Cr FY27 capex</small></td><td class="num">—</td><td class="num">—</td><td class="num">4.4<br><small class="chg">Q4 FY26</small></td><td>Not adding major India beds for 2–3 years — sweating existing assets instead</td></tr>
+      <tr><td class="tb"><span class="dot" style="background:var(--medanta)"></span>Medanta</td><td class="num">433/550‡<br><small class="chg">Ramp-up</small></td><td class="num">62.6%<br><small class="chg warn">Diluted, new beds</small></td><td class="num">70,244<br><small class="chg pos">+5.5% YoY</small></td><td class="num">2.87<br><small class="chg pos">-5.2% YoY</small></td><td>‡Noida only. In-patient volumes +27.7% YoY, out-patient +34.5% YoY. Faster bed-turns support ARPOB</td></tr>
+      <tr><td class="tb"><span class="dot" style="background:var(--krishna)"></span>KIMS</td><td class="num">7,459<br><small class="chg pos">+35.6% YoY</small></td><td class="num">—</td><td class="num">—</td><td class="num">—</td><td>Only ~50% insurance empanelment complete at Latur, Thane, Nashik, Bangalore units</td></tr>
+      <tr><td class="tb"><span class="dot" style="background:var(--rainbow)"></span>Rainbow</td><td class="num">2,565<br><small class="chg">24 hosp., 9 cities</small></td><td class="num">41.2%<br><small class="chg warn">−410 bps QoQ</small></td><td class="num">67,256<br><small class="chg pos">+7.7% QoQ</small></td><td class="num">—</td><td>Mature-hospital ARPOB ~₹70,000 vs ~₹59,000 at newer units. ~1/3 of beds allocated to critical care</td></tr>
+      <tr><td class="tb"><span class="dot" style="background:var(--jupiter)"></span>Jupiter</td><td class="num">1,259<br><small class="chg pos">+18.7% YoY</small></td><td class="num">~59.6%*<br><small class="chg warn">−50 bps YoY</small></td><td class="num">73,500<br><small class="chg pos">+10.0% YoY</small></td><td class="num">3.87</td><td>*Ex-Dombivli. Its first full quarter added a ₹9.5 Cr EBITDA drag</td></tr>
+      <tr><td class="tb"><span class="dot" style="background:var(--yatharth)"></span>Yatharth</td><td class="num">~3,255<br><small class="chg">Announced capacity</small></td><td class="num">—</td><td class="num">34,758*<br><small class="chg">—</small></td><td class="num">—</td><td>*Blended tier-2/3 mix. New-hospital revenue mix rose to 27% (from 22% QoQ)</td></tr>
+      <tr><td class="tb"><span class="dot" style="background:var(--manipal)"></span>Manipal</td><td class="num">13,037 lic.<br><small class="chg">~6,878 operational</small></td><td class="num">64.5%<br><small class="chg">FY26</small></td><td class="num">68,958<br><small class="chg">FY26</small></td><td class="num">—</td><td>FY26 (IPO prospectus) — Q1 FY27 actuals not yet incorporated; &lt;70% of licensed beds are operational</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <p style="font-size:10.5px;color:var(--muted);margin-bottom:22px;">— denotes not disclosed in company filings/investor presentations for the period, or not directly comparable. ARPOB = Average Revenue Per Occupied Bed per day. ALOS = Average Length of Stay. Manipal figures are FY26 (pre-listing); all others are Q1 FY27 vs Q1 FY26 unless marked. Individual company panels under the Companies tab carry each hospital's own operating parameters in full.</p>
+
+  <!-- ── PAYOR MIX & SPECIALITIES ── -->
+  <div class="sec-hdr gap-top">💳 Payor Mix &amp; Key Specialities <span class="sec-note">As disclosed in each company's latest investor presentation / IPO prospectus — periods vary, see last column</span></div>
+  <div style="overflow-x:auto;">
+  <table class="op-tbl" style="margin-bottom:6px;table-layout:fixed;min-width:920px;">
+    <colgroup><col style="width:11%"><col style="width:28%"><col style="width:34%"><col style="width:12%"></colgroup>
+    <thead><tr><th>Company</th><th>Payor Mix (% of Revenue)</th><th>Key Specialities (% of Revenue)</th><th>Data Period</th></tr></thead>
+    <tbody>
+      <tr><td class="tb"><span class="dot" style="background:var(--apollo)"></span>Apollo</td><td>Insurance 46% · Self-pay 39% · Govt scheme + international ~15% (not broken out)</td><td>Cardiology 19% · Oncology 17% · Orthopedics 11% · Neurosciences 10% · Others 43% (IPD revenue)</td><td class="num">Q1 FY27</td></tr>
+      <tr><td class="tb"><span class="dot" style="background:var(--max)"></span>Max</td><td>TPA/Corporates 34.9% · Self-pay 34.2% · Institutional 21.9% · International 9.1%</td><td>Oncology 24.1% · Orthopedics 10.9% · Cardiac 10.6% · Neuro 9.6% · Renal 5.0% · Others ~14.6% (gross IPD)</td><td class="num">FY26</td></tr>
+      <tr><td class="tb"><span class="dot" style="background:var(--fortis)"></span>Fortis</td><td>TPA/Insurance 36.3% · Cash 35.0% · Govt (CGHS+ECHS) 11.8% · Govt/PSU 8.4% · International 8.1% · Corporate 1.1%</td><td>Cardiac 16.9% · Oncology 15.0% · Orthopedics 8.6% · Neurosciences 8.5% · Renal 6.9% · Gastro 5.2% · Others ~45%</td><td class="num">Q2 FY26</td></tr>
+      <tr><td class="tb"><span class="dot" style="background:var(--nh)"></span>NH</td><td>Domestic walk-in 44% · Insured 33% · Govt scheme (CGHS/ESIS/state) 18% · International 5%</td><td>Cardiac Sciences 34% · Oncology 14% · Medicine &amp; GI 12% · Renal 9% · Neuro 8% · Others 18% (India ops)</td><td class="num">Q4 FY26</td></tr>
+      <tr><td class="tb"><span class="dot" style="background:var(--medanta)"></span>Medanta</td><td>Cash 55–56% (IPD) · Govt scheme (CGHS/ECHS/Railways) 25–27% · Insurance/other ~18–20% · Domestic 94% / International 6%</td><td>Cardiac 20.7% · Oncology 13.5% · Neurosciences 11.2% · Digestive 11.0% · Others ~43.6% (30+ specialities)</td><td class="num">Q1 FY27</td></tr>
+      <tr><td class="tb"><span class="dot" style="background:var(--krishna)"></span>KIMS</td><td>Cash/Self-pay 52% · Insurance/TPA 32% · Corporate 12% · Govt scheme (Aarogyasri) 4%</td><td>Cardiac 15% · Orthopedics 15% · Neurosciences 11% · Renal 9% · Gastric 9% · Mother &amp; Child 9% · Others 32%</td><td class="num">Latest IP</td></tr>
+      <tr><td class="tb"><span class="dot" style="background:var(--rainbow)"></span>Rainbow</td><td>Cash 51.7% · Insurance 48.3% (inpatient income, ~flat YoY)</td><td>100% pediatric/perinatal — secondary (OPD/immunisation), tertiary (neonatal surgery, ventilation), quaternary (transplant, cardiac &amp; neuro surgery)</td><td class="num">Q1 FY27</td></tr>
+      <tr><td class="tb"><span class="dot" style="background:var(--jupiter)"></span>Jupiter</td><td>Insurance/TPA 55.4% · Cash/self-pay ~44.6% (implied)</td><td>Not separately disclosed in latest filings</td><td class="num">Latest results</td></tr>
+      <tr><td class="tb"><span class="dot" style="background:var(--yatharth)"></span>Yatharth</td><td>Govt scheme (CGHS/ECHS/linked) 37% · Insurance/TPA 32% · Cash/self-pay 31% — targeting &lt;30% govt mix</td><td>Internal Medicine 19% (down from 56% in FY21) · Neuro 11% · Renal 11% · Oncology 10% · Cardiology 10% · Gen. Surgery 8% · Pulmonology 7%</td><td class="num">FY25</td></tr>
+      <tr><td class="tb"><span class="dot" style="background:var(--manipal)"></span>Manipal</td><td>Insurance/TPA ~49–50% · Self-pay/Cash 30.33% · Govt scheme 13.80% (of gross IPD revenue)</td><td>CONGO-R cluster = 64.3% of gross IPD revenue — Cardiac 16.61% · Ortho 12.08% · Oncology 9.96% · Neuro 9.21% · Renal 7.19% · Gastro 7.05%</td><td class="num">FY26 (DRHP)</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <p style="font-size:10.5px;color:var(--muted);margin-bottom:6px;">Sourced from each company's own investor presentations, earnings-call slides or IPO prospectus/DRHP — reporting periods differ by company (see Data Period column) since payor mix and specialty splits are not disclosed on a uniform quarterly basis across the sector. Category labels (e.g. "Institutional", "Corporate") follow each company's own disclosure terminology and are not always directly comparable across peers. Verify against the latest investor presentation before relying on these figures.</p>
 </div>
 
 <!-- ══════════ CHARTS ══════════ -->
