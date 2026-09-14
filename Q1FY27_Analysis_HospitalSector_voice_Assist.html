@@ -1,0 +1,2388 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Hospital Sector Intelligence Dashboard Q1 FY27 — Cauvery Business Research. 9 companies: Apollo, Max, Fortis, NH, Medanta, KIMS, Rainbow, Jupiter, Yatharth.">
+<title>Hospital Sector Intelligence Dashboard · Q1 FY27 | Cauvery Business Research</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f7f6f2;--surface:#fff;--surface2:#f2f0eb;--border:#e2ddd5;
+  --text:#181511;--muted:#6e6860;
+  --apollo:#1d4ed8;--apollo-soft:#eff6ff;
+  --nh:#0f766e;--nh-soft:#f0fdfa;
+  --max:#7c3aed;--max-soft:#f5f3ff;
+  --rainbow:#dc2626;--rainbow-soft:#fef2f2;
+  --medanta:#b8911e;--medanta-soft:#fdf5e0;
+  --fortis:#166534;--fortis-soft:#f0fdf4;
+  --jupiter:#0e7490;--jupiter-soft:#ecfeff;
+  --yatharth:#9d174d;--yatharth-soft:#fdf2f8;
+  --krishna:#ea580c;--krishna-soft:#fff7ed;
+  --manipal:#475569;--manipal-soft:#f1f5f9;
+  --pos:#166534;--neg:#dc2626;--warn:#ea580c;
+  --gold:#b8911e;--gold-soft:#fdf5e0;
+  --shadow:0 1px 8px rgba(24,21,17,.07);--shadow-md:0 4px 20px rgba(24,21,17,.10);
+  --radius:10px;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);font-size:13.5px;line-height:1.55;}
+.hdr{background:#181511;color:#fff;padding:0 40px;display:flex;align-items:stretch;justify-content:space-between;min-height:72px;flex-wrap:wrap;}
+.hdr-left{display:flex;align-items:center;padding:16px 0;}
+.hdr-left h1{font-family:'Playfair Display',serif;font-size:1.6rem;letter-spacing:-.01em;color:#fff;line-height:1.15;}
+.hdr-left .sub{font-size:11px;font-weight:500;color:rgba(255,255,255,.45);letter-spacing:.12em;text-transform:uppercase;margin-top:4px;}
+.hdr-right{display:flex;align-items:center;gap:8px;flex-wrap:wrap;padding:16px 0;}
+.chip{padding:4px 11px;border-radius:20px;font-size:10px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;}
+.chip-apollo{background:var(--apollo);color:#fff;}.chip-nh{background:var(--nh);color:#fff;}.chip-max{background:var(--max);color:#fff;}
+.chip-rainbow{background:var(--rainbow);color:#fff;}.chip-medanta{background:var(--medanta);color:#fff;}.chip-fortis{background:var(--fortis);color:#fff;}
+.chip-jupiter{background:var(--jupiter);color:#fff;}.chip-yatharth{background:var(--yatharth);color:#fff;}.chip-kims{background:var(--krishna);color:#fff;}.chip-manipal{background:var(--manipal);color:#fff;}.chip-date{background:rgba(255,255,255,.08);color:rgba(255,255,255,.55);border:1px solid rgba(255,255,255,.12);}
+.tab-nav{background:var(--surface);border-bottom:2px solid var(--border);display:flex;align-items:center;padding:0 40px;overflow-x:auto;position:sticky;top:0;z-index:100;box-shadow:0 2px 12px rgba(24,21,17,.06);}
+.tab-nav::-webkit-scrollbar{height:0;}
+.tab-btn{padding:14px 15px 12px;font-size:12px;font-weight:600;color:var(--muted);background:none;border:none;border-bottom:3px solid transparent;cursor:pointer;white-space:nowrap;letter-spacing:.02em;transition:color .18s,border-color .18s;margin-bottom:-2px;}
+.tab-btn:hover{color:var(--text);}
+.tab-btn.active{color:var(--text);border-bottom-color:var(--apollo);font-weight:700;}
+.main{padding:26px 40px 60px;max-width:1460px;margin:0 auto;isolation:isolate;}
+.panel{display:none;animation:fadeIn .2s ease;position:relative;z-index:1;}
+.panel.active{display:block;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(5px);}to{opacity:1;transform:translateY(0);}}
+.sec-hdr{font-family:'Playfair Display',serif;font-size:1.3rem;font-weight:700;color:var(--text);letter-spacing:-.01em;margin-bottom:18px;padding-bottom:10px;border-bottom:2px solid var(--border);display:flex;align-items:center;gap:12px;flex-wrap:wrap;}
+.sec-note{font-size:11px;color:var(--muted);font-weight:400;margin-left:4px;}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:18px;}
+.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;}
+.g4{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;}
+.gap-top{margin-top:22px;}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:20px 22px;box-shadow:var(--shadow);}
+.card-lbl{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);margin-bottom:14px;}
+.badge-row{margin-top:12px;display:flex;gap:5px;flex-wrap:wrap;}
+.badge{font-size:10px;padding:2px 8px;border-radius:4px;font-weight:700;font-family:'IBM Plex Mono',monospace;}
+.b-buy{background:#dcfce7;color:#15803d;}.b-hold{background:#fef9c3;color:#a16207;}.b-sell{background:#fee2e2;color:#b91c1c;}
+.b-spec{background:#f3f4f6;color:#4b5563;}.b-pos{background:#dcfce7;color:#15803d;}.b-neg{background:#fee2e2;color:#b91c1c;}.b-warn{background:#fff7ed;color:#c2410c;}
+.kpi-row{display:grid;grid-template-columns:repeat(5,1fr);gap:11px;margin-bottom:22px;}
+.kpi{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:14px 16px;box-shadow:var(--shadow);}
+.kpi.sector-a{border-left:4px solid var(--gold);}
+.kpi .kl{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.09em;color:var(--muted);margin-bottom:5px;}
+.kpi .kv{font-size:1.05rem;font-weight:800;color:var(--text);font-family:'IBM Plex Mono',monospace;}
+.kpi .kc{font-size:10px;font-weight:700;margin-top:2px;}
+.pos{color:var(--pos);}.neg{color:var(--neg);}.warn{color:var(--warn);}
+table{width:100%;border-collapse:collapse;background:var(--surface);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);}
+th{background:#181511;color:#fff;font-family:'IBM Plex Mono',monospace;font-size:10.5px;font-weight:500;padding:11px 13px;text-align:left;letter-spacing:.05em;text-transform:uppercase;white-space:nowrap;}
+td{padding:10px 13px;border-bottom:1px solid var(--border);font-size:12.5px;white-space:nowrap;vertical-align:middle;}
+tr:last-child td{border-bottom:none;}
+tr:nth-child(even) td{background:#fafaf8;}
+td.num{font-family:'IBM Plex Mono',monospace;}
+td.tpos{color:var(--pos);font-weight:700;font-family:'IBM Plex Mono',monospace;}
+td.tneg{color:var(--neg);font-weight:700;font-family:'IBM Plex Mono',monospace;}
+td.tb{font-weight:700;}
+.dot{width:10px;height:10px;border-radius:50%;display:inline-block;margin-right:7px;vertical-align:middle;}
+.op-tbl td{white-space:normal;vertical-align:top;line-height:1.45;}
+.op-tbl td.tb{white-space:nowrap;}
+.op-tbl small.chg{display:inline-block;margin-top:2px;font-size:10px;font-weight:700;color:var(--muted);font-family:'IBM Plex Mono',monospace;}
+.op-tbl small.chg.pos{color:var(--pos);}
+.op-tbl small.chg.warn{color:var(--warn);}
+.takeaway-list{list-style:none;font-size:12px;line-height:1.7;margin-bottom:14px;}
+.takeaway-list li{position:relative;padding-left:20px;margin-bottom:6px;}
+.takeaway-list li::before{content:"▸";position:absolute;left:0;color:var(--gold);font-weight:700;}
+.mgmt-box{background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:12px 15px;margin-bottom:16px;}
+.mgmt-box .ml{font-size:9.5px;font-weight:800;text-transform:uppercase;letter-spacing:.09em;color:var(--muted);margin-bottom:3px;}
+.mgmt-box p{font-size:12px;line-height:1.6;margin-bottom:6px;}
+.mgmt-box p:last-child{margin-bottom:0;}
+.val-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:18px;box-shadow:var(--shadow);}
+.val-co{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.08em;margin-bottom:12px;font-family:'IBM Plex Mono',monospace;}
+.val-row{display:flex;justify-content:space-between;align-items:center;padding:5px 0;border-bottom:1px solid var(--border);}
+.val-row:last-child{border-bottom:none;}
+.val-lbl{font-size:11.5px;color:var(--muted);}
+.val-num{font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:600;}
+.seg-block{margin-bottom:16px;border:1px solid var(--border);border-radius:8px;overflow:hidden;}
+.seg-block-hdr{background:#181511;color:#fff;font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:600;padding:7px 13px;letter-spacing:.07em;text-transform:uppercase;}
+.seg-row{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:0;border-bottom:1px solid var(--border);}
+.seg-row:last-child{border-bottom:none;}
+.seg-row.hdr-row{background:var(--surface2);}
+.seg-cell{padding:8px 12px;font-size:11.5px;}
+.seg-cell.num{font-family:'IBM Plex Mono',monospace;}
+.seg-cell.pos{color:var(--pos);font-weight:700;font-family:'IBM Plex Mono',monospace;}
+.seg-cell.neg{color:var(--neg);font-weight:700;font-family:'IBM Plex Mono',monospace;}
+.seg-cell.lbl{font-weight:700;font-size:11px;}
+.swot-grid{display:grid;grid-template-columns:1fr 1fr;gap:0;border:1.5px solid var(--border);border-radius:var(--radius);overflow:hidden;margin-bottom:16px;}
+.swot-cell{padding:13px 15px;}
+.swot-s{background:#e8f5ee;border-right:1px solid var(--border);border-bottom:1px solid var(--border);}
+.swot-w{background:#fbeee8;border-bottom:1px solid var(--border);}
+.swot-o{background:#f0edf8;border-right:1px solid var(--border);}
+.swot-t{background:var(--gold-soft);}
+.swot-lbl{font-size:9px;font-weight:900;text-transform:uppercase;letter-spacing:.12em;margin-bottom:5px;}
+.sl{color:#166534;}.wl{color:#dc2626;}.ol{color:#7c3aed;}.tl{color:var(--gold);}
+.swot-ul{list-style:none;font-size:11px;line-height:1.65;}
+.swot-ul li::before{content:"• ";color:var(--muted);}
+.co-hdr-swot{font-family:'Playfair Display',serif;font-size:1rem;font-weight:700;margin-bottom:10px;padding-bottom:6px;border-bottom:1.5px solid var(--border);display:flex;align-items:center;gap:8px;}
+.chart-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:20px 22px;box-shadow:var(--shadow);}
+.chart-card h3{font-size:13px;font-weight:700;margin-bottom:3px;color:var(--text);}
+.chart-card p.sub{font-size:10.5px;color:var(--muted);margin-bottom:14px;}
+.cbassist-chat{background:var(--surface);border:1.5px solid var(--apollo);border-radius:var(--radius);padding:20px 22px;}
+.cbassist-title{font-weight:800;font-size:12.5px;color:var(--apollo);margin-bottom:6px;display:flex;align-items:center;gap:8px;flex-wrap:nowrap;overflow:hidden;}
+.cbassist-sub{font-size:10px;font-weight:400;color:var(--muted);margin-bottom:12px;padding-left:16px;}
+.cbassist-title span{width:8px;height:8px;background:var(--pos);border-radius:50%;display:inline-block;animation:pulse 1.5s infinite;}
+@keyframes pulse{0%,100%{opacity:1;}50%{opacity:.3;}}
+.chat-msgs{min-height:120px;max-height:360px;overflow-y:auto;margin-bottom:12px;display:flex;flex-direction:column;gap:10px;padding-right:4px;}
+.chat-msg{padding:10px 14px;border-radius:10px;font-size:12px;max-width:90%;line-height:1.55;}
+.chat-msg.user{background:#181511;color:#fff;align-self:flex-end;border-radius:10px 10px 2px 10px;}
+.chat-msg.bot{background:var(--surface2);border:1px solid var(--border);align-self:flex-start;border-radius:10px 10px 10px 2px;}
+.chat-msg.bot strong{color:var(--apollo);}
+.chat-input-row{display:flex;gap:8px;}
+.chat-input{flex:1;border:1.5px solid var(--border);border-radius:8px;padding:10px 12px;font-size:12px;font-family:'Inter',sans-serif;background:var(--surface);color:var(--text);outline:none;transition:border-color .2s;}
+.chat-input:focus{border-color:var(--apollo);}
+.chat-send{background:var(--apollo);color:#fff;border:none;border-radius:8px;padding:10px 18px;font-size:12px;font-weight:700;cursor:pointer;}
+.chat-send:disabled{opacity:.5;cursor:not-allowed;}
+.chat-mic-btn{background:#fff;color:var(--apollo);border:1.5px solid var(--apollo);border-radius:50%;width:38px;height:38px;flex:0 0 auto;font-size:15px;cursor:pointer;line-height:1;display:none;}
+.chat-mic-btn.listening{background:#dc2626;color:#fff;border-color:#dc2626;}
+.voice-toggle-btn{background:var(--surface2);color:var(--apollo);border:1px solid var(--border);border-radius:14px;width:30px;height:22px;font-size:12px;cursor:pointer;margin-left:auto;flex:0 0 auto;}
+.cb-lang-select{background:var(--surface2);color:var(--apollo);border:1px solid var(--border);border-radius:10px;font-size:9.5px;font-weight:700;padding:2px 4px;margin-left:6px;flex:0 0 auto;max-width:64px;}
+.cb-chip-row{display:flex;flex-wrap:wrap;gap:6px;margin:-4px 0 2px;}
+.cb-chip{background:var(--surface2);border:1px solid var(--border);color:var(--apollo);border-radius:14px;padding:6px 12px;font-size:10.5px;font-weight:700;cursor:pointer;}
+.cb-chip:hover{background:var(--apollo-soft);}
+.cb-clarify{font-style:italic;color:var(--muted);}
+.chat-msg.bot ul{margin:6px 0 0;padding-left:16px;}
+.chat-msg.bot li{margin-bottom:3px;}
+.chat-msg.bot table{border-collapse:collapse;margin-top:6px;width:100%;font-size:11px;}
+.chat-msg.bot table th,.chat-msg.bot table td{border:1px solid var(--border);padding:5px 8px;text-align:left;}
+.chat-msg.bot table th{background:var(--apollo-soft);color:var(--apollo);font-weight:700;}
+.preset-tab{padding:5px 13px;border-radius:20px;font-size:11px;font-weight:700;cursor:pointer;border:1.5px solid var(--border);background:var(--surface);color:var(--muted);transition:all .15s;margin:2px 2px 6px 0;}
+.preset-tab:hover{border-color:var(--text);color:var(--text);}
+.verdict-card{background:var(--surface);border:2px solid var(--gold);border-radius:var(--radius);padding:22px 26px;box-shadow:var(--shadow-md);margin-bottom:18px;}
+.verdict-title{font-family:'Playfair Display',serif;font-size:1.3rem;font-weight:900;color:var(--gold);margin-bottom:6px;display:flex;align-items:center;gap:10px;}
+.verdict-body{font-size:13px;line-height:1.7;color:var(--text);}
+.co-selector{display:flex;flex-wrap:wrap;gap:6px;padding:14px 16px;background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius);margin-bottom:18px;}
+.co-sel-btn{padding:6px 14px;border-radius:20px;font-size:11.5px;font-weight:700;cursor:pointer;border:2px solid var(--border);background:var(--surface);color:var(--muted);transition:all .18s;white-space:nowrap;}
+.co-sel-btn:hover{border-color:var(--cc,#181511);color:var(--cc,#181511);}
+.co-sel-btn.active{background:var(--cc,#181511);border-color:var(--cc,#181511);color:#fff;box-shadow:0 2px 8px rgba(0,0,0,.15);}
+.cop{display:none;animation:fadeIn .2s ease;}
+.cop.active{display:block;}
+.cop-hdr{padding:14px 22px;color:#fff;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:6px;border-radius:var(--radius) var(--radius) 0 0;}
+.cop-name{font-family:'Playfair Display',serif;font-size:1.15rem;font-weight:700;}
+.cop-tag{font-size:10px;opacity:.8;font-weight:500;}
+.cop-body{background:var(--surface);border:1px solid var(--border);border-top:none;border-radius:0 0 var(--radius) var(--radius);padding:20px 22px;box-shadow:var(--shadow);margin-bottom:24px;}
+.tbl-title{font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin-bottom:8px;padding-bottom:5px;border-bottom:1.5px solid var(--border);}
+.q4-highlight{background:#f0fdf4;border:1.5px solid #22c55e;border-radius:8px;padding:12px 15px;}
+.q4-highlight .q4-tag{display:inline-block;background:#22c55e;color:#fff;font-size:9px;font-weight:800;text-transform:uppercase;letter-spacing:.08em;padding:2px 8px;border-radius:10px;margin-bottom:8px;}
+.cb-wm{position:fixed;bottom:16px;right:16px;z-index:9999;display:flex;align-items:center;gap:9px;background:rgba(255,255,255,.94);border:1.5px solid var(--border);border-radius:30px;padding:7px 15px 7px 8px;box-shadow:0 4px 22px rgba(24,21,17,.13);backdrop-filter:blur(10px);pointer-events:none;}
+.cb-wm-logo{width:30px;height:30px;background:linear-gradient(135deg,#0f766e 0%,#1d4ed8 100%);border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-size:.9rem;font-weight:900;color:#fff;flex-shrink:0;}
+.cb-wm-name{font-size:11.5px;font-weight:800;color:var(--text);letter-spacing:-.01em;}
+.cb-wm-sub{font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:.07em;margin-top:1px;}
+.cb-bubble{position:fixed;bottom:70px;right:16px;z-index:10000;background:linear-gradient(135deg,#0f766e 0%,#1d4ed8 100%);color:#fff;height:42px;padding:0 16px;border-radius:22px;display:flex;align-items:center;gap:6px;font-size:12.5px;font-weight:800;font-family:'Inter',sans-serif;cursor:pointer;box-shadow:0 4px 16px rgba(29,78,216,.35);transition:transform .15s ease;white-space:nowrap;}
+.cb-bubble:hover{transform:scale(1.05);}
+.cb-panel{position:fixed;bottom:122px;right:16px;width:360px;max-width:92vw;height:520px;max-height:75vh;background:var(--surface);border-radius:14px;box-shadow:0 10px 40px rgba(24,21,17,.25);display:none;flex-direction:column;overflow:hidden;z-index:10000;font-family:'Inter',sans-serif;}
+.cb-panel-header{background:var(--apollo);color:#fff;padding:12px 14px;font-size:12.5px;font-weight:800;display:flex;justify-content:space-between;align-items:center;flex-shrink:0;}
+.cb-panel-close{cursor:pointer;font-size:18px;line-height:1;}
+@media (max-width: 768px) {
+  .hdr{padding:0 16px;flex-direction:column;align-items:flex-start;min-height:auto;padding-bottom:12px;}
+  .hdr-left h1{font-size:1.15rem;}
+  .hdr-right{padding:0 0 10px 0;gap:5px;}
+  .chip{font-size:9px;padding:3px 8px;}
+  .tab-nav{padding:0 8px;}
+  .tab-btn{padding:12px 10px 10px;font-size:11px;}
+  .main{padding:16px 12px 80px;}
+  .g2,.g3,.g4{grid-template-columns:1fr;}
+  .kpi-row{grid-template-columns:1fr 1fr;}
+  table{font-size:11px;}
+  th{font-size:9.5px;padding:8px 8px;}
+  td{padding:8px 8px;font-size:11px;}
+  .sec-hdr{font-size:1.05rem;}
+  .verdict-card{padding:16px 14px;}
+  .verdict-title{font-size:1rem;}
+  .cb-wm{bottom:12px;right:10px;padding:5px 10px 5px 6px;}
+  .cb-bubble{bottom:60px;right:10px;height:38px;padding:0 12px;font-size:11.5px;}
+  .cb-panel{left:3vw;right:3vw;width:auto;max-width:none;bottom:104px;height:70vh;max-height:70vh;border-radius:12px;}
+  .seg-row{grid-template-columns:1fr;}
+  .seg-row.hdr-row{display:none;}
+  .seg-cell{padding:6px 12px;display:flex;justify-content:space-between;align-items:flex-start;border-bottom:1px solid rgba(0,0,0,.05);font-size:11px;}
+  .seg-cell::before{content:attr(data-label);font-size:9.5px;font-weight:700;text-transform:uppercase;color:var(--muted);letter-spacing:.07em;margin-right:8px;flex-shrink:0;width:90px;}
+  .seg-cell.lbl{font-size:11.5px;font-weight:700;background:var(--surface2);padding:8px 12px;display:block;}
+  .swot-grid{grid-template-columns:1fr;}
+}
+@media (max-width: 480px) { .kpi-row{grid-template-columns:1fr;} .hdr-left h1{font-size:1rem;} .tab-btn{font-size:10px;padding:10px 8px 8px;} .main{padding:12px 10px 80px;} }
+</style>
+</head>
+<body>
+
+<div class="hdr">
+  <div class="hdr-left">
+    <div>
+      <h1>🏥 Hospital Sector Intelligence</h1>
+      <div class="sub">Cauvery Business Research · Data: Official Exchange Filings, Investor Presentations &amp; Earnings Calls Q1 FY27</div>
+      <div class="sub" style="margin-top:2px;">Q1 FY27 (Apr–Jun 2026) · 9 Companies · v1.0 | Build: 20260818-1120 IST</div>
+    </div>
+  </div>
+  <div class="hdr-right">
+    <span class="chip chip-apollo">Apollo</span><span class="chip chip-max">Max</span><span class="chip chip-fortis">Fortis</span>
+    <span class="chip chip-nh">NH</span><span class="chip chip-medanta">Medanta</span><span class="chip chip-kims">KIMS</span>
+    <span class="chip chip-rainbow">Rainbow</span><span class="chip chip-jupiter">Jupiter</span><span class="chip chip-yatharth">Yatharth</span>
+    <span class="chip chip-manipal">Manipal</span>
+    <span class="chip chip-date">Q1 FY27 Results</span>
+  </div>
+</div>
+
+<div class="tab-nav">
+  <button class="tab-btn active" onclick="switchTab('overview',this)">📊 Sector Overview</button>
+  <button class="tab-btn" onclick="switchTab('companies',this)">🏥 Companies</button>
+  <button class="tab-btn" onclick="switchTab('comparison',this)">⚖️ Peer Comparison</button>
+  <button class="tab-btn" onclick="switchTab('charts',this)">📈 Charts</button>
+  <button class="tab-btn" onclick="switchTab('valuation',this)">💰 Valuations</button>
+  <button class="tab-btn" onclick="switchTab('swot',this)">🔲 SWOT</button>
+  <button class="tab-btn" onclick="switchTab('analyst',this)">🎯 Analyst Ratings</button>
+  <button class="tab-btn" onclick="switchTab('verdict',this)">⚖️ Verdict</button>
+</div>
+
+<div class="main">
+
+<!-- ══════════ SECTOR OVERVIEW ══════════ -->
+<div id="tab-overview" class="panel active">
+  <div class="sec-hdr">📊 Sector Overview <span class="sec-note">Q1 FY27 (Apr–Jun 2026) — Company Filings &amp; Investor Presentations</span></div>
+
+  <div class="kpi-row">
+    <div class="kpi sector-a"><div class="kl">Sector Q1 Revenue (9 Cos.)</div><div class="kv">≈₹19,010 Cr</div><div class="kc pos">Broad-based 16–78% YoY</div></div>
+    <div class="kpi"><div class="kl">Fastest Revenue Growth</div><div class="kv">NH +78.0%</div><div class="kc pos">UK full-quarter add</div></div>
+    <div class="kpi"><div class="kl">Steepest PAT Decline</div><div class="kv">KIMS −47.2%</div><div class="kc neg">New-hospital J-curve</div></div>
+    <div class="kpi"><div class="kl">Best PAT Growth</div><div class="kv">Apollo +34.2%</div><div class="kc pos">Margin + volume led</div></div>
+    <div class="kpi"><div class="kl">Best EBITDA Margin</div><div class="kv">Rainbow 28.7%</div><div class="kc pos">Asset-light pediatric model</div></div>
+  </div>
+
+  <p style="font-size:12px;color:var(--muted);line-height:1.75;margin-bottom:20px;">
+  Q1 FY27 was a quarter of <strong>divergence between top-line and bottom-line</strong> across the listed hospital pack. Every one of the nine companies posted double-digit revenue growth — several well above 30% — but profit growth diverged sharply.
+  Mature, low-capex-intensity operators (Apollo, Rainbow, Yatharth) converted growth into PAT gains, while companies mid-way through aggressive bed expansion (KIMS, Jupiter, NH, Fortis) saw EBITDA margins compress and PAT growth lag or reverse, as new hospitals in their J-curve ramp-up phase, higher depreciation on expanded asset bases, and rising finance costs on expansion debt weighed on reported profit. This is a structural feature of the FY26–FY28 hospital capex supercycle, not a sign of a broken sector — new capacity built in FY25–FY26 is expected to swing from a drag to a tailwind through FY27–FY28 as occupancy ramps.
+  </p>
+
+  <div class="q4-highlight" style="margin-bottom:20px;">
+    <span class="q4-tag">New Entrant — Watch List</span>
+    <div style="font-size:12px;line-height:1.7;">
+      <strong>Manipal Hospitals (Manipal Health Enterprises, BSE/NSE: MANIPALHOS)</strong> — India's second-largest private hospital chain by revenue (₹10,336 Cr FY26) and largest by bed count (13,037 licensed beds) — listed on 5 August 2026 after a ₹9,275 Cr IPO. <strong>Its Q1 FY27 results have not yet been published</strong>: the board is scheduled to meet on <strong>20 August 2026</strong> to approve the unaudited Q1 FY27 results. It is not yet included in this dashboard's Q1 FY27 tables/charts for that reason, but a profile based on IPO-prospectus financials and a forward-looking SWOT are included on the SWOT tab — this dashboard will be updated with actual Q1 FY27 figures once reported.
+    </div>
+  </div>
+
+  <table style="margin-bottom:22px;">
+    <thead><tr><th>Company</th><th>Q1 FY27 Revenue (₹Cr)</th><th>Rev Growth YoY</th><th>EBITDA (₹Cr)</th><th>EBITDA%</th><th>PAT (₹Cr)</th><th>PAT Growth YoY</th><th>Key Driver</th></tr></thead>
+    <tbody>
+      <tr><td class="tb"><span class="dot" style="background:var(--apollo)"></span>Apollo Hospitals</td><td class="num">7,043.5</td><td class="num tpos">+20.6%</td><td class="num">1,092.0</td><td class="num">15.5%</td><td class="num">580.7</td><td class="num tpos">+34.2%</td><td>Volume + margin, HealthCo turnaround</td></tr>
+      <tr><td class="tb"><span class="dot" style="background:var(--max)"></span>Max Healthcare</td><td class="num">2,982.0</td><td class="num tpos">+16.0%</td><td class="num">704.0</td><td class="num">24.8%</td><td class="num">357.0</td><td class="num tpos">+3.0%</td><td>ARPOB +5%, Kalinga/YPPL M&amp;A</td></tr>
+      <tr><td class="tb"><span class="dot" style="background:var(--fortis)"></span>Fortis Healthcare</td><td class="num">2,545.0</td><td class="num tpos">+17.5%</td><td class="num">568.0</td><td class="num">22.3%</td><td class="num">273.0</td><td class="num tpos">+2.3%</td><td>Hospital +19%, ESOP cost drag</td></tr>
+      <tr><td class="tb"><span class="dot" style="background:var(--nh)"></span>Narayana Hrudayalaya</td><td class="num">2,683.6</td><td class="num tpos">+78.0%</td><td class="num">505.2</td><td class="num">18.8%</td><td class="num">207.3</td><td class="num tpos">+5.7%</td><td>UK (Practice Plus) full quarter</td></tr>
+      <tr><td class="tb"><span class="dot" style="background:var(--medanta)"></span>Medanta (Global Health)</td><td class="num">1,304.1</td><td class="num tpos">+26.5%</td><td class="num">315.3</td><td class="num">23.8%</td><td class="num">157.3</td><td class="num tneg">−1.1%</td><td>Noida loss narrows to ₹4.9 Cr</td></tr>
+      <tr><td class="tb"><span class="dot" style="background:var(--krishna)"></span>KIMS Hospitals</td><td class="num">1,179.5</td><td class="num tpos">+35.3%</td><td class="num">223.4</td><td class="num">18.9%</td><td class="num">41.5</td><td class="num tneg">−47.2%</td><td>4 new units in ramp-up, higher interest</td></tr>
+      <tr><td class="tb"><span class="dot" style="background:var(--rainbow)"></span>Rainbow Children's</td><td class="num">470.0</td><td class="num tpos">+33.2%</td><td class="num">134.65</td><td class="num">28.7%</td><td class="num">62.5</td><td class="num tpos">+16.2%</td><td>Mumbai entry, Nellore acquisition</td></tr>
+      <tr><td class="tb"><span class="dot" style="background:var(--jupiter)"></span>Jupiter Life Line</td><td class="num">411.0</td><td class="num tpos">+16.4%</td><td class="num">79.3</td><td class="num">19.3%</td><td class="num">37.5</td><td class="num tneg">−14.6%</td><td>Dombivli ramp-up drag ₹9.5 Cr</td></tr>
+      <tr><td class="tb"><span class="dot" style="background:var(--yatharth)"></span>Yatharth Hospitals</td><td class="num">392.7</td><td class="num tpos">+51.0%</td><td class="num">91.7</td><td class="num">23.3%</td><td class="num">45.4</td><td class="num tpos">+8.0%</td><td>New units 27% of revenue, maiden dividend</td></tr>
+    </tbody>
+  </table>
+
+  <div class="g3">
+    <div class="card">
+      <div class="card-lbl">🟢 J-curve Turning Positive</div>
+      <p style="font-size:11.5px;line-height:1.7;">Yatharth's Faridabad Sector-20 hit EBITDA breakeven in just 9 months; Medanta Noida's EBITDA loss narrowed from ₹23.6 Cr (Q4 FY26) to ₹4.9 Cr; Fortis's newer facilities are converging to like-for-like margins. Early evidence that FY25–26 capex is starting to pay back.</p>
+    </div>
+    <div class="card">
+      <div class="card-lbl">🟠 J-curve Still Biting</div>
+      <p style="font-size:11.5px;line-height:1.7;">KIMS (4 new units: Bangalore, Kondapur, Kerala, Maharashtra) and Jupiter (Dombivli) are still absorbing ramp-up losses and higher interest costs, dragging PAT even as revenue grows 16–35%. Expect FY27–28 as the inflection window.</p>
+    </div>
+    <div class="card">
+      <div class="card-lbl">🔵 One-Off / Structural Items</div>
+      <p style="font-size:11.5px;line-height:1.7;">NH's 78% revenue growth is largely UK (Practice Plus Group) entering the base for a full quarter versus 5 months in Q4 FY26 — India organic growth was a more modest ~17%. Medanta's flat PAT reflects a high base (₹19.6 Cr exceptional gain in Q1 FY26).</p>
+    </div>
+  </div>
+
+  <div class="sec-hdr gap-top">🏦 Private Equity / Strategic Ownership <span class="sec-note">Who backs each hospital chain — promoter and major PE/strategic shareholders</span></div>
+  <table style="margin-bottom:10px;">
+    <thead><tr><th>Company</th><th>Promoter / Controlling Shareholder</th><th>PE / Strategic / Sovereign Investors</th><th>Status</th></tr></thead>
+    <tbody>
+      <tr><td class="tb">Apollo Hospitals</td><td>Reddy family (~28%)</td><td>None currently — Apax Partners (early PE backer) fully exited in 2012–13</td><td><span class="badge b-spec">No active PE</span></td></tr>
+      <tr><td class="tb">Max Healthcare</td><td>Abhay Soi + Kayak Investments Holding Pte Ltd (~23.7% combined, promoter group)</td><td><strong>KKR</strong> (via Kayak Investments, part of promoter group); Government of Singapore/GIC ~5.8%</td><td><span class="badge b-pos">PE-backed (KKR)</span></td></tr>
+      <tr><td class="tb">Fortis Healthcare</td><td>—</td><td><strong>IHH Healthcare Berhad</strong> (Malaysia, Khazanah-linked strategic investor) — controlling ~31% stake, raised via open offer completed Nov 2025</td><td><span class="badge b-pos">Strategic-controlled (IHH)</span></td></tr>
+      <tr><td class="tb">Narayana Hrudayalaya</td><td>Dr. Devi Prasad Shetty &amp; family</td><td>None currently — broadly FII/DII-held (FII ~10.6%); no dominant PE shareholder</td><td><span class="badge b-spec">No active PE</span></td></tr>
+      <tr><td class="tb">Medanta (Global Health)</td><td>Dr. Naresh Trehan, Sunil Sachdeva &amp; co-founders (~33% promoter group)</td><td><strong>Carlyle</strong> (via Anant Investments) and <strong>Temasek</strong> were early PE/sovereign backers (held ~45% combined pre-IPO); both sold down substantially in the 2022 IPO and subsequent block deals — no longer in the promoter group</td><td><span class="badge b-warn">Legacy PE (reduced)</span></td></tr>
+      <tr><td class="tb">KIMS Hospitals</td><td>Dr. Bhaskara Rao Bollineni &amp; family</td><td><strong>General Atlantic</strong> — acquired a significant minority stake (~30%, replacing ICICI Venture) for $130 Mn in 2018; Quadria Capital an earlier investor</td><td><span class="badge b-pos">PE-backed (General Atlantic)</span></td></tr>
+      <tr><td class="tb">Rainbow Children's</td><td>Dr. Ramesh Kancharla &amp; co-founders (~50%+ post-IPO)</td><td><strong>British International Investment (BII)</strong> and <strong>CDC India</strong> (UK/Commonwealth development-finance investors) were pre-IPO backers — fully sold down via the 2022 IPO offer-for-sale</td><td><span class="badge b-warn">Legacy DFI (exited)</span></td></tr>
+      <tr><td class="tb">Jupiter Life Line</td><td>Thakker family / promoter group</td><td>No major PE/strategic investor identified in current filings</td><td><span class="badge b-spec">No active PE</span></td></tr>
+      <tr><td class="tb">Yatharth Hospitals</td><td>Tyagi family (promoter group)</td><td>Carnelian Asset Management (India-focused alternative investment fund) holds a disclosed stake</td><td><span class="badge b-spec">Domestic fund holding</span></td></tr>
+      <tr><td class="tb">Manipal Hospitals (new listing)</td><td>Dr. Ranjan Pai / Manipal Group (~31%)</td><td><strong>Temasek</strong> (~51%), <strong>TPG Asia</strong> (~10%), Mubadala, Novo Holdings, CalPERS (~8% combined) — heavily sovereign/PE-backed per IPO prospectus</td><td><span class="badge b-pos">Sovereign/PE-controlled</span></td></tr>
+    </tbody>
+  </table>
+  <p style="font-size:10.5px;color:var(--muted);">Ownership stakes are sourced from IPO prospectuses, exchange shareholding filings and deal reporting through August 2026, and can change with block deals, open offers or further stake sales — verify current shareholding pattern (NSE/BSE quarterly disclosures) before relying on these figures. "PE" here is used broadly to include private equity, sovereign wealth and development-finance investors.</p>
+</div>
+
+<!-- ══════════ COMPANIES ══════════ -->
+<div id="tab-companies" class="panel">
+  <div class="sec-hdr">🏥 Company Deep-Dive <span class="sec-note">Q1 FY27 vs Q1 FY26 · All figures consolidated unless stated</span></div>
+
+  <div class="co-selector" id="coSelector">
+    <button class="co-sel-btn active" style="--cc:var(--apollo);" onclick="switchCo('apollo',this)">Apollo</button>
+    <button class="co-sel-btn" style="--cc:var(--max);" onclick="switchCo('max',this)">Max</button>
+    <button class="co-sel-btn" style="--cc:var(--fortis);" onclick="switchCo('fortis',this)">Fortis</button>
+    <button class="co-sel-btn" style="--cc:var(--nh);" onclick="switchCo('nh',this)">NH</button>
+    <button class="co-sel-btn" style="--cc:var(--medanta);" onclick="switchCo('medanta',this)">Medanta</button>
+    <button class="co-sel-btn" style="--cc:var(--krishna);" onclick="switchCo('kims',this)">KIMS</button>
+    <button class="co-sel-btn" style="--cc:var(--rainbow);" onclick="switchCo('rainbow',this)">Rainbow</button>
+    <button class="co-sel-btn" style="--cc:var(--jupiter);" onclick="switchCo('jupiter',this)">Jupiter</button>
+    <button class="co-sel-btn" style="--cc:var(--yatharth);" onclick="switchCo('yatharth',this)">Yatharth</button>
+    <button class="co-sel-btn" style="--cc:var(--manipal);" onclick="switchCo('manipal',this)">Manipal</button>
+  </div>
+
+  <!-- APOLLO -->
+  <div id="cop-apollo" class="cop active">
+    <div class="cop-hdr" style="background:var(--apollo);"><div class="cop-name">🔵 Apollo Hospitals Enterprise</div><div class="cop-tag">BSE: 508869 · NSE: APOLLOHOSP · Q1 FY27 (Apr–Jun 2026)</div></div>
+    <div class="cop-body">
+      <div class="tbl-title">Snapshot — Q1 FY27 vs Q1 FY26 (Consolidated)</div>
+      <table style="margin-bottom:18px;">
+        <thead><tr><th>Metric</th><th>Q1 FY27</th><th>Q1 FY26</th><th>YoY Change</th></tr></thead>
+        <tbody>
+          <tr><td class="tb">Revenue (₹ Cr)</td><td class="num">7,043.5</td><td class="num">5,842.1</td><td class="num tpos">+20.6%</td></tr>
+          <tr><td class="tb">EBITDA (₹ Cr)</td><td class="num">1,092.0</td><td class="num">853.1</td><td class="num tpos">+28.0%</td></tr>
+          <tr><td class="tb">EBITDA Margin</td><td class="num">15.5%</td><td class="num">14.6%</td><td class="num tpos">+90 bps</td></tr>
+          <tr><td class="tb">PAT (₹ Cr)</td><td class="num">580.7</td><td class="num">432.8</td><td class="num tpos">+34.2%</td></tr>
+          <tr><td class="tb">Diluted EPS (₹)</td><td class="num">40.36</td><td class="num">—</td><td class="num">—</td></tr>
+          <tr><td class="tb">Hospital Occupancy</td><td class="num">70%</td><td class="num">65%</td><td class="num tpos">+500 bps</td></tr>
+          <tr><td class="tb">Operating Beds (excl. AHLL/managed)</td><td class="num">8,352</td><td class="num">—</td><td class="num">Sarjapur (180 beds) added Q1 FY27</td></tr>
+          <tr><td class="tb">Net Debt (₹ Cr)</td><td class="num">~748</td><td class="num">—</td><td class="num">—</td></tr>
+        </tbody>
+      </table>
+      <div class="tbl-title">Segment Performance — Q1 FY27</div>
+      <table style="margin-bottom:16px;">
+        <thead><tr><th>Segment</th><th>Revenue (₹ Cr)</th><th>Revenue YoY</th><th>EBITDA (₹ Cr)</th><th>EBITDA Margin</th><th>PAT (₹ Cr)</th><th>PAT YoY</th></tr></thead>
+        <tbody>
+          <tr><td class="tb">Healthcare Services (Hospitals)</td><td class="num">3,567</td><td class="num tpos">+22%</td><td class="num">862</td><td class="num">24.0%</td><td class="num">480</td><td class="num tpos">+25%</td></tr>
+          <tr><td class="tb">Apollo HealthCo (Pharmacy + Digital)</td><td class="num">2,977</td><td class="num tpos">+20%</td><td class="num">171</td><td class="num">5.8%</td><td class="num">101</td><td class="num tpos">+78%</td></tr>
+          <tr><td class="tb">AHLL (Clinics / Diagnostics)</td><td class="num">499</td><td class="num tpos">+15%</td><td class="num">59</td><td class="num">11.8%</td><td class="num tneg">−1</td><td class="num tpos">Loss narrowed from −8</td></tr>
+          <tr><td class="tb">Consolidated Total</td><td class="num tb">7,043.5</td><td class="num tpos tb">+20.6%</td><td class="num tb">1,092.0</td><td class="num tb">15.5%</td><td class="num tb">580.7</td><td class="num tpos tb">+34.2%</td></tr>
+        </tbody>
+      </table>
+      <p style="font-size:12px;line-height:1.75;"><strong>Key insight:</strong> EBITDA margin expanded 90bps to 15.5% (blended) as EBITDA grew faster (+28%) than revenue (+21%). Hospital occupancy rose to 70% from 65% YoY; Sarjapur, Bengaluru (180 beds) commissioned in the quarter. Company guides for 20% hospital revenue growth for FY27 and plans 5,800+ new beds over 5 years (Indore, Dwarka, Delhi Proton Centre, Ranchi, Gurugram). Apollo HealthCo's digital cash losses narrowed from ₹4.9 Cr to ₹1.0 Cr YoY, and the pharmacy/digital demerger-merger scheme remains on track, expected to unlock a separate listing by Q4 FY27. International Patient Services revenue grew 26% YoY.</p>
+      <div class="tbl-title">🛏️ Operating Parameters</div>
+      <div class="mgmt-box">
+        <div class="ml">Bed Capacity</div><p>8,352 operating beds, excl. AHLL/managed (+180 YoY — Sarjapur, Bengaluru commissioned)</p>
+        <div class="ml">Occupancy</div><p>70% (+500 bps YoY from 65%)</p>
+        <div class="ml">ARPOB</div><p>— not separately disclosed</p>
+        <div class="ml">ALOS</div><p>— not disclosed</p>
+        <div class="ml">Payor Mix</div><p>Insurance 46% · Self-pay 39% · Govt scheme + international ~15% (not broken out) — Q1 FY27</p>
+        <div class="ml">Key Specialities (% of Revenue)</div><p>Cardiology 19% · Oncology 17% · Orthopedics 11% · Neurosciences 10% · Others 43% (IPD revenue)</p>
+      </div>
+      <div class="tbl-title">📌 Key Takeaways</div>
+      <ul class="takeaway-list">
+        <li>Revenue +20.6% YoY to ₹7,043.5 Cr with margin expansion (EBITDA margin 15.5%, +90bps) — growth and profitability moving together.</li>
+        <li>PAT +34.2% YoY to ₹580.7 Cr — the best profit growth of any hospital major this quarter.</li>
+        <li>Occupancy up to 70% (from 65%) while Apollo HealthCo's digital cash loss narrows to just ₹1.0 Cr.</li>
+        <li>Pharmacy/digital demerger on track for a separate listing by Q4 FY27 — a potential re-rating catalyst for the pure-hospital business.</li>
+        <li>Largest scale in the sector (8,352 beds, 5,800+ bed pipeline) but also the richest multiple among peers (~70–72x trailing P/E).</li>
+      </ul>
+      <div class="tbl-title">Management &amp; Control</div>
+      <div class="mgmt-box">
+        <div class="ml">Promoter / Controlling Shareholder</div>
+        <p>Reddy family (~28% holding)</p>
+        <div class="ml">PE / Strategic Investor</div>
+        <p>None currently — Apax Partners, an early PE backer, fully exited in 2012–13</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- MAX -->
+  <div id="cop-max" class="cop">
+    <div class="cop-hdr" style="background:var(--max);"><div class="cop-name">🟣 Max Healthcare Institute</div><div class="cop-tag">BSE: 543220 · NSE: MAXHEALTH · Q1 FY27 (Apr–Jun 2026)</div></div>
+    <div class="cop-body">
+      <div class="tbl-title">Snapshot — Q1 FY27 vs Q4 FY26 vs Q1 FY26 (Network Basis)</div>
+      <table style="margin-bottom:18px;">
+        <thead><tr><th>Metric</th><th>Q1 FY27</th><th>Q4 FY26</th><th>Q1 FY26</th><th>YoY Change</th></tr></thead>
+        <tbody>
+          <tr><td class="tb">Network Gross Revenue (₹ Cr)</td><td class="num">2,982</td><td class="num">2,664</td><td class="num">2,574</td><td class="num tpos">+16.0%</td></tr>
+          <tr><td class="tb">Network Operating EBITDA (₹ Cr)</td><td class="num">704</td><td class="num">~714</td><td class="num">~612</td><td class="num tpos">+15.0%</td></tr>
+          <tr><td class="tb">EBITDA Margin</td><td class="num">24.8%</td><td class="num">26.8%</td><td class="num">24.9%</td><td class="num warn">−10 bps YoY</td></tr>
+          <tr><td class="tb">Network PAT (₹ Cr)</td><td class="num">357</td><td class="num">387</td><td class="num">345</td><td class="num tpos">+3.0%</td></tr>
+          <tr><td class="tb">ARPOB (₹/day)</td><td class="num">81,900</td><td class="num">77,900</td><td class="num">78,000</td><td class="num tpos">+5.0%</td></tr>
+          <tr><td class="tb">Average Occupancy</td><td class="num">&gt;75%</td><td class="num">—</td><td class="num">—</td><td class="num">Despite +13% bed capacity YoY</td></tr>
+          <tr><td class="tb">Free Cash Flow (₹ Cr)</td><td class="num">397</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+        </tbody>
+      </table>
+      <div class="tbl-title">Other Revenue Lines — Q1 FY27</div>
+      <table style="margin-bottom:16px;">
+        <thead><tr><th>Line Item</th><th>Q1 FY27 (₹ Cr)</th><th>YoY Growth</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td class="tb">International Patient Revenue</td><td class="num">247</td><td class="num tpos">+18%</td><td class="num">~9% of hospital revenue</td></tr>
+          <tr><td class="tb">Digital Revenue</td><td class="num">941</td><td class="num">—</td><td class="num">32% of total revenue</td></tr>
+          <tr><td class="tb">Max Lab</td><td class="num">58</td><td class="num tpos">+20%</td><td class="num">Non-captive pathology</td></tr>
+          <tr><td class="tb">Max@Home</td><td class="num">78</td><td class="num tpos">+32%</td><td class="num">Home healthcare</td></tr>
+          <tr><td class="tb">Kalinga Hospital (MSSH Bhubaneswar)</td><td class="num">19</td><td class="num">New</td><td class="num">~₹2 Cr EBITDA, 50% occupancy, ARPOB ₹35k — acquired 18 May 2026</td></tr>
+        </tbody>
+      </table>
+      <p style="font-size:12px;line-height:1.75;"><strong>Key insight:</strong> EBITDA margin eased from 26.8% (Q4 FY26) to 24.8% on new capacity dilution and the Kalinga integration, but held roughly flat YoY. Free cash flow of ₹397 Cr funded the acquisitions of a controlling 58.28% stake in Kalinga Hospital, Bhubaneswar (completed 18 May 2026) and Yerawada Properties, Pune — land for a proposed 450-bed hospital — completed 30 June 2026. Board approved ₹425 Cr capex for a new Tower 3 at MSSH Vaishali (+202 beds). Net debt-to-EBITDA remains below 1x.</p>
+      <div class="tbl-title">🛏️ Operating Parameters</div>
+      <div class="mgmt-box">
+        <div class="ml">Bed Capacity</div><p>+13% YoY (absolute network count not disclosed)</p>
+        <div class="ml">Occupancy</div><p>&gt;75% average — held despite +13% bed capacity growth</p>
+        <div class="ml">ARPOB</div><p>₹81,900/day (+5.0% YoY from ₹78,000)</p>
+        <div class="ml">ALOS</div><p>— not disclosed</p>
+        <div class="ml">Payor Mix</div><p>TPA/Corporates 34.9% · Self-pay 34.2% · Institutional 21.9% · International 9.1% — FY26</p>
+        <div class="ml">Key Specialities (% of Revenue)</div><p>Oncology 24.1% · Orthopedics 10.9% · Cardiac 10.6% · Neuro 9.6% · Renal 5.0% · Others ~14.6% (gross IPD, FY26)</p>
+      </div>
+      <div class="tbl-title">📌 Key Takeaways</div>
+      <ul class="takeaway-list">
+        <li>Best-in-class ARPOB (₹81,900/day, +5% YoY) with occupancy consistently above 75%.</li>
+        <li>PAT growth muted at +3.0% YoY as EBITDA margin eased 200bps QoQ (26.8%→24.8%) on new-capacity dilution.</li>
+        <li>Free cash flow of ₹397 Cr self-funded two acquisitions this quarter — Kalinga Hospital (Bhubaneswar) and Yerawada land (Pune).</li>
+        <li>Digital revenue is now 32% of total network revenue — diversification well beyond core hospital beds.</li>
+        <li>Richest valuation in the sector (~90–97x trailing P/E) despite comfortably low leverage (ND/EBITDA &lt;1x).</li>
+      </ul>
+      <div class="tbl-title">Management &amp; Control</div>
+      <div class="mgmt-box">
+        <div class="ml">Promoter / Controlling Shareholder</div>
+        <p>Abhay Soi + Kayak Investments Holding Pte Ltd (~23.7% combined, promoter group)</p>
+        <div class="ml">PE / Strategic Investor</div>
+        <p><strong>KKR</strong> (via Kayak Investments, part of the promoter group); Government of Singapore/GIC ~5.8%</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- FORTIS -->
+  <div id="cop-fortis" class="cop">
+    <div class="cop-hdr" style="background:var(--fortis);"><div class="cop-name">🟢 Fortis Healthcare</div><div class="cop-tag">BSE: 532843 · NSE: FORTIS · Q1 FY27 (Apr–Jun 2026)</div></div>
+    <div class="cop-body">
+      <div class="tbl-title">Snapshot — Q1 FY27 vs Q1 FY26 (Consolidated)</div>
+      <table style="margin-bottom:18px;">
+        <thead><tr><th>Metric</th><th>Q1 FY27</th><th>Q1 FY26</th><th>YoY Change</th></tr></thead>
+        <tbody>
+          <tr><td class="tb">Revenue (₹ Cr)</td><td class="num">2,545</td><td class="num">2,167</td><td class="num tpos">+17.5%</td></tr>
+          <tr><td class="tb">Operating EBITDA (₹ Cr, ex-ESOP)</td><td class="num">568</td><td class="num">491</td><td class="num tpos">+15.8%</td></tr>
+          <tr><td class="tb">EBITDA Margin (ex-ESOP)</td><td class="num">22.3%</td><td class="num">22.6%</td><td class="num warn">−30 bps</td></tr>
+          <tr><td class="tb">EBITDA Margin (incl. ESOP)</td><td class="num">21.1%</td><td class="num">—</td><td class="num">ESOP cost ~₹31 Cr this quarter</td></tr>
+          <tr><td class="tb">PAT (₹ Cr)</td><td class="num">273</td><td class="num">267</td><td class="num tpos">+2.3%</td></tr>
+          <tr><td class="tb">PAT Attributable to Owners (PATMI, ₹ Cr)</td><td class="num">266</td><td class="num">260</td><td class="num tpos">+2.35%</td></tr>
+          <tr><td class="tb">Net Debt (₹ Cr)</td><td class="num">2,233</td><td class="num">—</td><td class="num">ND/EBITDA 1.01x, ND/Equity 0.21x</td></tr>
+        </tbody>
+      </table>
+      <div class="tbl-title">Segment Performance — Q1 FY27</div>
+      <table style="margin-bottom:16px;">
+        <thead><tr><th>Segment</th><th>Revenue (₹ Cr)</th><th>Revenue YoY</th><th>EBITDA (₹ Cr)</th><th>EBITDA Margin</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td class="tb">Hospitals</td><td class="num">2,187</td><td class="num tpos">+19%</td><td class="num">471</td><td class="num">21.5%</td><td class="num">Occupancy 69%; occupied beds +17% to 3,418</td></tr>
+          <tr><td class="tb">Agilus Diagnostics</td><td class="num">407</td><td class="num tpos">+10.2%</td><td class="num">97</td><td class="num">23.9%</td><td class="num">10.46 Mn tests vs 10.13 Mn YoY</td></tr>
+          <tr><td class="tb">Consolidated Total</td><td class="num tb">2,545</td><td class="num tpos tb">+17.5%</td><td class="num tb">568</td><td class="num tb">22.3%</td><td class="num tb">Ex-ESOP basis</td></tr>
+        </tbody>
+      </table>
+      <p style="font-size:12px;line-height:1.75;"><strong>Key insight:</strong> A new ESOP scheme effective April 2026 added ~₹31 Cr in costs this quarter and is expected to run at ~₹40 Cr/quarter through FY27 before tapering. Recent hospital acquisitions in Punjab, Bengaluru and a leased Delhi-NCR facility diluted margin; on a like-for-like basis, hospital EBITDA margin was broadly flat at ~22%. Management reiterated a long-term consolidated EBITDA margin target of 25% by FY28, guided by ramp-up of FMRI and Manesar and a proton-therapy facility approved for Gurgaon (~₹252 Cr capex). ~1,800 beds of brownfield expansion planned over 4–5 years.</p>
+      <div class="tbl-title">🛏️ Operating Parameters</div>
+      <div class="mgmt-box">
+        <div class="ml">Bed Capacity</div><p>3,418 occupied beds, hospital segment (+17% YoY)</p>
+        <div class="ml">Occupancy</div><p>69%</p>
+        <div class="ml">ARPOB</div><p>— not disclosed</p>
+        <div class="ml">ALOS</div><p>— not disclosed</p>
+        <div class="ml">Payor Mix</div><p>TPA/Insurance 36.3% · Cash 35.0% · Govt (CGHS+ECHS) 11.8% · Govt/PSU 8.4% · International 8.1% · Corporate 1.1% — Q2 FY26</p>
+        <div class="ml">Key Specialities (% of Revenue)</div><p>Cardiac 16.9% · Oncology 15.0% · Orthopedics 8.6% · Neurosciences 8.5% · Renal 6.9% · Gastro 5.2% · Others ~45% — Q2 FY26</p>
+      </div>
+      <div class="tbl-title">📌 Key Takeaways</div>
+      <ul class="takeaway-list">
+        <li>Revenue +17.5% YoY to ₹2,545 Cr on 19% hospital-segment growth and 17% occupied-bed growth.</li>
+        <li>PAT grew just +2.3% YoY, dragged by a new ESOP scheme adding ~₹31 Cr this quarter (~₹40 Cr/quarter through FY27).</li>
+        <li>Comfortable leverage (ND/EBITDA 1.01x) with a ~₹252 Cr Gurgaon proton-therapy facility now approved.</li>
+        <li>Margin (22.3%) still trails management's 25% FY28 target as newer facilities dilute the blend.</li>
+        <li>No founder-promoter — controlled by strategic investor IHH Healthcare Berhad rather than a family group.</li>
+      </ul>
+      <div class="tbl-title">Management &amp; Control</div>
+      <div class="mgmt-box">
+        <div class="ml">Promoter / Controlling Shareholder</div>
+        <p>None — no promoter group</p>
+        <div class="ml">PE / Strategic Investor</div>
+        <p><strong>IHH Healthcare Berhad</strong> (Malaysia, Khazanah-linked strategic investor) — controlling ~31% stake, raised via open offer completed Nov 2025</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- NH -->
+  <div id="cop-nh" class="cop">
+    <div class="cop-hdr" style="background:var(--nh);"><div class="cop-name">🟦 Narayana Hrudayalaya</div><div class="cop-tag">NSE: NH · Q1 FY27 (Apr–Jun 2026)</div></div>
+    <div class="cop-body">
+      <div class="tbl-title">Snapshot — Q1 FY27 vs Q1 FY26 (Consolidated)</div>
+      <table style="margin-bottom:18px;">
+        <thead><tr><th>Metric</th><th>Q1 FY27</th><th>Q1 FY26</th><th>YoY Change</th></tr></thead>
+        <tbody>
+          <tr><td class="tb">Revenue (₹ Cr)</td><td class="num">2,683.6</td><td class="num">1,507.3</td><td class="num tpos">+78.0%</td></tr>
+          <tr><td class="tb">EBITDA (₹ Cr)</td><td class="num">505.2</td><td class="num">360.7</td><td class="num tpos">+40.0%</td></tr>
+          <tr><td class="tb">EBITDA Margin</td><td class="num">18.8%</td><td class="num">23.9%</td><td class="num warn">−510 bps</td></tr>
+          <tr><td class="tb">PAT (₹ Cr)</td><td class="num">207.3</td><td class="num">196.1</td><td class="num tpos">+5.7%</td></tr>
+          <tr><td class="tb">PAT Margin</td><td class="num">7.7%</td><td class="num">13.0%</td><td class="num warn">−530 bps</td></tr>
+          <tr><td class="tb">Net Debt (₹ Cr)</td><td class="num">1,967</td><td class="num">—</td><td class="num">ND/Equity 0.42x</td></tr>
+        </tbody>
+      </table>
+      <div class="tbl-title">Revenue by Geography — Q1 FY27</div>
+      <table style="margin-bottom:16px;">
+        <thead><tr><th>Geography</th><th>Revenue (₹ Cr)</th><th>YoY Growth</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td class="tb">India</td><td class="num">1,324.7</td><td class="num tpos">+17.0%</td><td class="num">Seasonally weak Q1; robust footfall</td></tr>
+          <tr><td class="tb">Cayman Islands</td><td class="num">551.4</td><td class="num tpos">+38.9%</td><td class="num">One Health insurance platform scaling</td></tr>
+          <tr><td class="tb">UK (Practice Plus Group)</td><td class="num">825.7</td><td class="num">New</td><td class="num">3rd quarter under NH; full-quarter base effect</td></tr>
+          <tr><td class="tb">Consolidated Total</td><td class="num tb">2,683.6</td><td class="num tpos tb">+78.0%</td><td class="num tb">—</td></tr>
+        </tbody>
+      </table>
+      <p style="font-size:12px;line-height:1.75;"><strong>Key insight:</strong> The headline 78% growth is mostly base-effect from the UK acquisition (Practice Plus Group, acquired Nov 2025) entering with a full quarter of ₹825.7 Cr revenue vs a partial quarter a year ago. EBITDA margin compressed ~510bps to 18.8% purely from the lower-margin UK NHS-outsourcing mix diluting the blend — India hospital EBITDA still grew ~40% YoY on high-end cardiac and robotic-surgery volumes. PAT growth of only 5.7% reflects higher finance costs (+92% YoY) and depreciation (+85% YoY) post-acquisition. ₹730 Cr FY27 capex earmarked for ~1,500 India beds; company is not adding major India beds for 2–3 years, instead sweating existing assets.</p>
+      <div class="tbl-title">🛏️ Operating Parameters</div>
+      <div class="mgmt-box">
+        <div class="ml">Bed Capacity</div><p>— not disclosed; ₹730 Cr FY27 capex earmarked for ~1,500 India beds, but not adding major beds for 2–3 years</p>
+        <div class="ml">Occupancy</div><p>— not disclosed</p>
+        <div class="ml">ARPOB</div><p>— not disclosed</p>
+        <div class="ml">ALOS</div><p>4.4 days (Q4 FY26); 4.3 days (FY26 full year)</p>
+        <div class="ml">Payor Mix</div><p>Domestic walk-in 44% · Insured 33% · Govt scheme (CGHS/ESIS/state) 18% · International 5% — Q4 FY26</p>
+        <div class="ml">Key Specialities (% of Revenue)</div><p>Cardiac Sciences 34% · Oncology 14% · Medicine &amp; GI 12% · Renal 9% · Neuro 8% · Others 18% (India ops, Q4 FY26)</p>
+      </div>
+      <div class="tbl-title">📌 Key Takeaways</div>
+      <ul class="takeaway-list">
+        <li>Headline 78% revenue growth is largely a UK (Practice Plus Group) base-effect — India organic growth was a steadier ~17%.</li>
+        <li>EBITDA margin compressed ~510bps to 18.8%, purely from the lower-margin UK NHS-outsourcing mix diluting the blend.</li>
+        <li>PAT grew only 5.7% as finance costs (+92%) and depreciation (+85%) rose sharply post-acquisition.</li>
+        <li>Not adding major India beds for 2–3 years — choosing to sweat existing assets rather than add new capex.</li>
+        <li>Cheapest large-cap multiple in the sector (~40–45x trailing P/E) despite now spanning three geographies (India, Cayman, UK).</li>
+      </ul>
+      <div class="tbl-title">Management &amp; Control</div>
+      <div class="mgmt-box">
+        <div class="ml">Promoter / Controlling Shareholder</div>
+        <p>Dr. Devi Prasad Shetty &amp; family</p>
+        <div class="ml">PE / Strategic Investor</div>
+        <p>None currently — broadly FII/DII-held (FII ~10.6%); no dominant PE shareholder</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- MEDANTA -->
+  <div id="cop-medanta" class="cop">
+    <div class="cop-hdr" style="background:var(--medanta);"><div class="cop-name">🟡 Medanta (Global Health)</div><div class="cop-tag">NSE: MEDANTA · Q1 FY27 (Apr–Jun 2026)</div></div>
+    <div class="cop-body">
+      <div class="tbl-title">Snapshot — Q1 FY27 vs Q1 FY26 (Consolidated)</div>
+      <table style="margin-bottom:18px;">
+        <thead><tr><th>Metric</th><th>Q1 FY27</th><th>Q1 FY26</th><th>YoY Change</th></tr></thead>
+        <tbody>
+          <tr><td class="tb">Revenue from Operations (₹ Cr)</td><td class="num">1,304.1</td><td class="num">1,030.8</td><td class="num tpos">+26.5%</td></tr>
+          <tr><td class="tb">Total Income (₹ Cr)</td><td class="num">1,326.2</td><td class="num">1,051.3</td><td class="num tpos">+26.15%</td></tr>
+          <tr><td class="tb">EBITDA (₹ Cr, reported incl. Noida)</td><td class="num">315.3</td><td class="num">255.3</td><td class="num tpos">+23.5%</td></tr>
+          <tr><td class="tb">EBITDA Margin</td><td class="num">23.8%</td><td class="num">24.3%</td><td class="num warn">−50 bps</td></tr>
+          <tr><td class="tb">EBITDA (₹ Cr, ex-Noida)</td><td class="num">320.1</td><td class="num">258.2</td><td class="num tpos">+24.0%</td></tr>
+          <tr><td class="tb">EBITDA Margin (ex-Noida)</td><td class="num">25.8%</td><td class="num">—</td><td class="num">Core network strength</td></tr>
+          <tr><td class="tb">PAT (₹ Cr)</td><td class="num">157.3</td><td class="num">159.0</td><td class="num tneg">−1.1%</td></tr>
+          <tr><td class="tb">ARPOB (₹/day)</td><td class="num">70,244</td><td class="num">66,600</td><td class="num tpos">+5.5%</td></tr>
+          <tr><td class="tb">Occupancy</td><td class="num">62.6%</td><td class="num">—</td><td class="num">Diluted by new-bed additions</td></tr>
+        </tbody>
+      </table>
+      <div class="tbl-title">Medanta Noida — Ramp-Up Tracker</div>
+      <table style="margin-bottom:16px;">
+        <thead><tr><th>Period</th><th>Revenue (₹ Cr)</th><th>EBITDA (₹ Cr)</th><th>Beds Live</th></tr></thead>
+        <tbody>
+          <tr><td class="tb">Q4 FY26</td><td class="num">52.5</td><td class="num tneg">−23.6</td><td class="num">—</td></tr>
+          <tr><td class="tb">Q1 FY27</td><td class="num">85.5</td><td class="num tneg">−4.9</td><td class="num">433 of 550 planned</td></tr>
+        </tbody>
+      </table>
+      <p style="font-size:12px;line-height:1.75;"><strong>Key insight:</strong> Underlying momentum is strong — ex-Noida EBITDA margin of 25.8% shows the mature network (Gurugram, Indore, Ranchi, Lucknow, Patna) remains highly profitable. In-patient volumes +27.7% YoY and out-patient +34.5% YoY, driven mainly by volume rather than price hikes. PAT's marginal decline reflects a high base — Q1 FY26 included a ₹19.6 Cr exceptional gain. Announced expansion pipeline now totals ~3,350 beds (~₹4,850 Cr capex) including a scaled-up 650-bed Guwahati project (~₹970 Cr). Noida's EBITDA loss narrowing sharply suggests breakeven could arrive ahead of schedule.</p>
+      <div class="tbl-title">🛏️ Operating Parameters</div>
+      <div class="mgmt-box">
+        <div class="ml">Bed Capacity</div><p>Noida: 433 of 550 planned beds live (ramp-up); core network (Gurugram, Indore, Ranchi, Lucknow, Patna) count not separately disclosed here</p>
+        <div class="ml">Occupancy</div><p>62.6% (diluted by new-bed additions)</p>
+        <div class="ml">ARPOB</div><p>₹70,244/day (+5.5% YoY from ₹66,600)</p>
+        <div class="ml">ALOS</div><p>2.87 days (Q1 FY27), down from 3.03 days (−5.2% YoY)</p>
+        <div class="ml">Payor Mix</div><p>Cash 55–56% (IPD) · Govt scheme (CGHS/ECHS/Railways) 25–27% · Insurance/other ~18–20% · Domestic 94% / International 6% — Q1 FY27</p>
+        <div class="ml">Key Specialities (% of Revenue)</div><p>Cardiac 20.7% · Oncology 13.5% · Neurosciences 11.2% · Digestive 11.0% · Others ~43.6% (30+ specialities)</p>
+      </div>
+      <div class="tbl-title">📌 Key Takeaways</div>
+      <ul class="takeaway-list">
+        <li>Ex-Noida EBITDA margin of 25.8% shows the mature network remains highly profitable beneath the consolidated 23.8%.</li>
+        <li>Noida's EBITDA loss narrowed sharply from ₹23.6 Cr to ₹4.9 Cr quarter-on-quarter — breakeven may arrive ahead of schedule.</li>
+        <li>PAT was roughly flat (−1.1%) only because of a high prior-year base (a ₹19.6 Cr exceptional gain in Q1 FY26).</li>
+        <li>Growth is volume-led — inpatient +27.7% YoY, outpatient +34.5% YoY — with limited reliance on price hikes.</li>
+        <li>Net-cash balance sheet self-funds a ~3,350-bed, ~₹4,850 Cr pipeline including a 650-bed Guwahati project.</li>
+      </ul>
+      <div class="tbl-title">Management &amp; Control</div>
+      <div class="mgmt-box">
+        <div class="ml">Promoter / Controlling Shareholder</div>
+        <p>Dr. Naresh Trehan, Sunil Sachdeva &amp; co-founders (~33% promoter group)</p>
+        <div class="ml">PE / Strategic Investor</div>
+        <p><strong>Carlyle</strong> (via Anant Investments) and <strong>Temasek</strong> were early PE/sovereign backers (held ~45% combined pre-IPO) but sold down substantially in the 2022 IPO and subsequent block deals — no longer in the promoter group</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- KIMS -->
+  <div id="cop-kims" class="cop">
+    <div class="cop-hdr" style="background:var(--krishna);"><div class="cop-name">🟠 KIMS Hospitals</div><div class="cop-tag">BSE: 543308 · NSE: KIMS · Q1 FY27 (Apr–Jun 2026)</div></div>
+    <div class="cop-body">
+      <div class="tbl-title">Snapshot — Q1 FY27 vs Q1 FY26 (Consolidated)</div>
+      <table style="margin-bottom:18px;">
+        <thead><tr><th>Metric</th><th>Q1 FY27</th><th>Q1 FY26</th><th>YoY Change</th></tr></thead>
+        <tbody>
+          <tr><td class="tb">Revenue from Operations (₹ Cr)</td><td class="num">1,179.5</td><td class="num">871.6</td><td class="num tpos">+35.3%</td></tr>
+          <tr><td class="tb">EBITDA (₹ Cr)</td><td class="num">223.4</td><td class="num">192.6</td><td class="num tpos">+16.0%</td></tr>
+          <tr><td class="tb">EBITDA Margin</td><td class="num">18.9%</td><td class="num">22.1%</td><td class="num warn">−320 bps</td></tr>
+          <tr><td class="tb">PAT (₹ Cr)</td><td class="num">41.5</td><td class="num">78.6</td><td class="num tneg">−47.2%</td></tr>
+          <tr><td class="tb">Total Bed Capacity</td><td class="num">7,459</td><td class="num">5,499</td><td class="num tpos">+1,960 beds</td></tr>
+          <tr><td class="tb">Total Debt (₹ Cr)</td><td class="num">2,400 (Jul 2026)</td><td class="num">3,250 (Mar 2026)</td><td class="num tpos">Cut ₹850 Cr via QIP</td></tr>
+        </tbody>
+      </table>
+      <div class="tbl-title">QIP Utilisation — Q1 FY27</div>
+      <table style="margin-bottom:16px;">
+        <thead><tr><th>Use of Proceeds</th><th>Amount (₹ Cr)</th></tr></thead>
+        <tbody>
+          <tr><td class="tb">Own-company debt repayment</td><td class="num">910</td></tr>
+          <tr><td class="tb">Subsidiary debt repayment (Chalasani ₹100 Cr + KIMS Bengaluru ₹30 Cr)</td><td class="num">130</td></tr>
+          <tr><td class="tb">Subsidiary investment</td><td class="num">44 (balance)</td></tr>
+          <tr><td class="tb">Total utilised of ₹1,500 Cr QIP</td><td class="num tb">1,084</td></tr>
+        </tbody>
+      </table>
+      <p style="font-size:12px;line-height:1.75;"><strong>Key insight:</strong> PAT nearly halved despite 35% revenue growth — a textbook J-curve pattern from simultaneous ramp-up of Bangalore (Electronic City), Kondapur (Telangana, newly launched), Kerala cluster and a new Palakkad hospital. Kerala units remain in single-digit EBITDA margins and may take 2–3 years to stabilise at 20–22%; Bangalore's Electronic City hospital is expected to reach break-even only towards year-end. Insurance empanelment delays (only ~50% empaneled for Latur, Thane, Nashik, Bangalore) are slowing ramp-up. Mature Telangana/AP clusters continue to deliver 28%+ margins.</p>
+      <div class="tbl-title">🛏️ Operating Parameters</div>
+      <div class="mgmt-box">
+        <div class="ml">Bed Capacity</div><p>7,459 (+1,960 YoY, +35.6% from 5,499)</p>
+        <div class="ml">Occupancy</div><p>— not disclosed</p>
+        <div class="ml">ARPOB</div><p>— not disclosed</p>
+        <div class="ml">ALOS</div><p>— not disclosed</p>
+        <div class="ml">Payor Mix</div><p>Cash/Self-pay 52% · Insurance/TPA 32% · Corporate 12% · Govt scheme (Aarogyasri) 4% — latest investor presentation</p>
+        <div class="ml">Key Specialities (% of Revenue)</div><p>Cardiac 15% · Orthopedics 15% · Neurosciences 11% · Renal 9% · Gastric 9% · Mother &amp; Child 9% · Others 32%</p>
+      </div>
+      <div class="tbl-title">📌 Key Takeaways</div>
+      <ul class="takeaway-list">
+        <li>PAT nearly halved (−47.2%) even as revenue grew 35.3% — a textbook J-curve from four simultaneous hospital ramp-ups.</li>
+        <li>Fastest bed growth in the sector: +1,960 beds YoY to 7,459, but only ~50% insurance empanelment complete at several new units.</li>
+        <li>Proactively deleveraged — ₹1,084 Cr of QIP proceeds cut debt from ₹3,250 Cr to ₹2,400 Cr in a single quarter.</li>
+        <li>Mature Telangana/Andhra Pradesh clusters still deliver 28%+ EBITDA margins, masked by the new-unit drag.</li>
+        <li>Bangalore (Electronic City) and Kerala clusters are the ones to watch for breakeven progress through FY27–28.</li>
+      </ul>
+      <div class="tbl-title">Management &amp; Control</div>
+      <div class="mgmt-box">
+        <div class="ml">Promoter / Controlling Shareholder</div>
+        <p>Dr. Bhaskara Rao Bollineni &amp; family</p>
+        <div class="ml">PE / Strategic Investor</div>
+        <p><strong>General Atlantic</strong> — acquired a significant minority stake (~30%, replacing ICICI Venture) for $130 Mn in 2018; Quadria Capital an earlier investor</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- RAINBOW -->
+  <div id="cop-rainbow" class="cop">
+    <div class="cop-hdr" style="background:var(--rainbow);"><div class="cop-name">🔴 Rainbow Children's Medicare</div><div class="cop-tag">BSE: 543524 · NSE: RAINBOW · Q1 FY27 (Apr–Jun 2026)</div></div>
+    <div class="cop-body">
+      <div class="tbl-title">Snapshot — Q1 FY27 vs Q1 FY26 (Consolidated)</div>
+      <table style="margin-bottom:18px;">
+        <thead><tr><th>Metric</th><th>Q1 FY27</th><th>Q1 FY26</th><th>YoY Change</th></tr></thead>
+        <tbody>
+          <tr><td class="tb">Revenue (₹ Cr)</td><td class="num">470.0</td><td class="num">352.9</td><td class="num tpos">+33.2%</td></tr>
+          <tr><td class="tb">EBITDA (₹ Cr)</td><td class="num">134.65</td><td class="num">103.6</td><td class="num tpos">+29.9%</td></tr>
+          <tr><td class="tb">EBITDA Margin</td><td class="num">28.7%</td><td class="num">29.4%</td><td class="num warn">−70 bps</td></tr>
+          <tr><td class="tb">PAT (₹ Cr)</td><td class="num">62.5</td><td class="num">53.8</td><td class="num tpos">+16.2%</td></tr>
+          <tr><td class="tb">Bed Capacity</td><td class="num">2,565</td><td class="num">—</td><td class="num">24 hospitals, 9 cities</td></tr>
+          <tr><td class="tb">Occupancy</td><td class="num">41.2%</td><td class="num">—</td><td class="num warn">Down from 45.3% (Q4 FY26)</td></tr>
+          <tr><td class="tb">ARPOB (₹/day)</td><td class="num">67,256</td><td class="num">—</td><td class="num tpos">+7.7% QoQ</td></tr>
+        </tbody>
+      </table>
+      <p style="font-size:12px;line-height:1.75;"><strong>Key insight:</strong> India's only listed pediatric/perinatal hospital chain delivered the best margin (28.7%) in the sector despite margin compressing ~70bps YoY on doctor professional-fee inflation and new-unit gestation. ARPOB at mature hospitals is ₹70,000 vs ₹59,000 at newer ones. Occupancy dipped on seasonality (Q1 is traditionally weak for pediatric volumes) and new-capacity dilution. Strategic expansion into Western India: a 100-bed greenfield hospital in Malad, Mumbai (₹90 Cr) targeted for Q1 FY28, plus a 64% stake acquisition in a 70-bed Nellore, Andhra Pradesh hospital (₹19.8 Cr). Five-year plan targets 2,500 additional beds (₹2,200 Cr capex).</p>
+      <div class="tbl-title">🛏️ Operating Parameters</div>
+      <div class="mgmt-box">
+        <div class="ml">Bed Capacity</div><p>2,565 (24 hospitals, 9 cities)</p>
+        <div class="ml">Occupancy</div><p>41.2% (down from 45.3% QoQ — seasonal)</p>
+        <div class="ml">ARPOB</div><p>₹67,256/day (+7.7% QoQ)</p>
+        <div class="ml">ALOS</div><p>— not disclosed; ~1/3 of beds allocated to critical care</p>
+        <div class="ml">Payor Mix</div><p>Cash 51.7% · Insurance 48.3% (inpatient income, ~flat YoY) — Q1 FY27</p>
+        <div class="ml">Key Specialities</div><p>100% pediatric/perinatal — secondary care (routine OPD, immunisation), tertiary (neonatal surgery, advanced ventilation), quaternary (pediatric transplant, cardiology/cardiac surgery, neuro/neurosurgery)</p>
+      </div>
+      <div class="tbl-title">📌 Key Takeaways</div>
+      <ul class="takeaway-list">
+        <li>Best EBITDA margin in the sector (28.7%) on an asset-light, hub-and-spoke pediatric model.</li>
+        <li>PAT grew a healthy +16.2% even as margin eased ~70bps YoY on doctor professional-fee inflation.</li>
+        <li>Occupancy dipped to 41.2% (from 45.3% QoQ) — largely a seasonal Q1 effect for pediatric volumes, not a demand problem.</li>
+        <li>First entry into Western India (Malad, Mumbai) plus a Nellore, AP acquisition extend the network beyond its South India base.</li>
+        <li>Net-cash balance sheet funds a five-year, 2,500-bed (~₹2,200 Cr) expansion plan without added leverage.</li>
+      </ul>
+      <div class="tbl-title">Management &amp; Control</div>
+      <div class="mgmt-box">
+        <div class="ml">Promoter / Controlling Shareholder</div>
+        <p>Dr. Ramesh Kancharla &amp; co-founders (~50%+ post-IPO)</p>
+        <div class="ml">PE / Strategic Investor</div>
+        <p><strong>British International Investment (BII)</strong> and <strong>CDC India</strong> (UK/Commonwealth development-finance investors) were pre-IPO backers — fully sold down via the 2022 IPO offer-for-sale</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- JUPITER -->
+  <div id="cop-jupiter" class="cop">
+    <div class="cop-hdr" style="background:var(--jupiter);"><div class="cop-name">🔷 Jupiter Life Line Hospitals</div><div class="cop-tag">NSE: JLHL · Q1 FY27 (Apr–Jun 2026)</div></div>
+    <div class="cop-body">
+      <div class="tbl-title">Snapshot — Q1 FY27 vs Q1 FY26 (Consolidated)</div>
+      <table style="margin-bottom:18px;">
+        <thead><tr><th>Metric</th><th>Q1 FY27</th><th>Q1 FY26</th><th>YoY Change</th></tr></thead>
+        <tbody>
+          <tr><td class="tb">Revenue (₹ Cr)</td><td class="num">410.98</td><td class="num">352.95</td><td class="num tpos">+16.44%</td></tr>
+          <tr><td class="tb">EBITDA (₹ Cr)</td><td class="num">79.3</td><td class="num">78.4</td><td class="num tpos">+1.15%</td></tr>
+          <tr><td class="tb">EBITDA Margin</td><td class="num">19.3%</td><td class="num">22.2%</td><td class="num warn">−290 bps</td></tr>
+          <tr><td class="tb">PAT (₹ Cr)</td><td class="num">37.48</td><td class="num">43.88</td><td class="num tneg">−14.59%</td></tr>
+          <tr><td class="tb">ARPOB (₹/day)</td><td class="num">73,500</td><td class="num">67,300</td><td class="num tpos">+10.0%</td></tr>
+          <tr><td class="tb">Bed Capacity</td><td class="num">1,259</td><td class="num">1,061</td><td class="num tpos">+198 beds</td></tr>
+          <tr><td class="tb">Finance Cost (₹ Cr)</td><td class="num">12.86</td><td class="num">8.27</td><td class="num warn">+55.5%</td></tr>
+        </tbody>
+      </table>
+      <p style="font-size:12px;line-height:1.75;"><strong>Key insight:</strong> The Dombivli hospital's first full quarter of operations produced a ₹9.5 Cr EBITDA drag (in line with management's own guidance), pulling margin down 290bps YoY to 19.3%. Excluding Dombivli, occupancy at established hospitals held stable at ~59.6% (vs 60.1% YoY). Finance costs jumped 55.5% YoY on expansion debt, and depreciation rose to ₹26.44 Cr from ₹21.22 Cr — together explaining most of the PAT decline despite resilient EBITDA. Jupiter also acquired IV-fluid maker Sulcus Pvt Ltd (₹3.78 Cr) for backward integration.</p>
+      <div class="tbl-title">🛏️ Operating Parameters</div>
+      <div class="mgmt-box">
+        <div class="ml">Bed Capacity</div><p>1,259 (+198 YoY, +18.7% from 1,061)</p>
+        <div class="ml">Occupancy</div><p>~59.6% ex-Dombivli (−50 bps YoY)</p>
+        <div class="ml">ARPOB</div><p>₹73,500/day (+10.0% YoY from ₹67,300)</p>
+        <div class="ml">ALOS</div><p>3.87 days</p>
+        <div class="ml">Payor Mix</div><p>Insurance/TPA 55.4% · Cash/self-pay ~44.6% (implied)</p>
+        <div class="ml">Key Specialities</div><p>Not separately disclosed in latest filings</p>
+      </div>
+      <div class="tbl-title">📌 Key Takeaways</div>
+      <ul class="takeaway-list">
+        <li>PAT fell 14.6% YoY as the Dombivli hospital's first full quarter added a ₹9.5 Cr EBITDA drag, exactly as management had guided.</li>
+        <li>ARPOB rose 10% YoY to ₹73,500/day — among the highest in the sector.</li>
+        <li>Finance costs jumped 55.5% YoY on expansion debt — a bigger swing factor for PAT than EBITDA itself.</li>
+        <li>Ex-Dombivli occupancy at established hospitals held broadly stable (~59.6% vs 60.1% YoY).</li>
+        <li>Backward-integrated into IV-fluid manufacturing via the Sulcus acquisition to help protect margins.</li>
+      </ul>
+      <div class="tbl-title">Management &amp; Control</div>
+      <div class="mgmt-box">
+        <div class="ml">Promoter / Controlling Shareholder</div>
+        <p>Thakker family / promoter group</p>
+        <div class="ml">PE / Strategic Investor</div>
+        <p>No major PE or strategic investor identified in current filings</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- YATHARTH -->
+  <div id="cop-yatharth" class="cop">
+    <div class="cop-hdr" style="background:var(--yatharth);"><div class="cop-name">🟪 Yatharth Hospital &amp; Trauma Care</div><div class="cop-tag">Q1 FY27 (Apr–Jun 2026)</div></div>
+    <div class="cop-body">
+      <div class="tbl-title">Snapshot — Q1 FY27 vs Q1 FY26 (Consolidated)</div>
+      <table style="margin-bottom:18px;">
+        <thead><tr><th>Metric</th><th>Q1 FY27</th><th>Q1 FY26</th><th>YoY Change</th></tr></thead>
+        <tbody>
+          <tr><td class="tb">Revenue (₹ Cr)</td><td class="num">392.7</td><td class="num">259.2</td><td class="num tpos">+51.0%</td></tr>
+          <tr><td class="tb">EBITDA (₹ Cr)</td><td class="num">91.7</td><td class="num">66.0</td><td class="num tpos">+39.0%</td></tr>
+          <tr><td class="tb">EBITDA Margin (reported)</td><td class="num">23.3%</td><td class="num">25.4%</td><td class="num warn">−210 bps</td></tr>
+          <tr><td class="tb">Adjusted EBITDA Margin*</td><td class="num">28.1%</td><td class="num">—</td><td class="num">*ex-Faridabad Sec-20 &amp; New Delhi</td></tr>
+          <tr><td class="tb">PAT (₹ Cr)</td><td class="num">45.4</td><td class="num">42.0</td><td class="num tpos">+8.0%</td></tr>
+          <tr><td class="tb">Revenue QoQ</td><td class="num">392.7</td><td class="num">341.6 (Q4 FY26)</td><td class="num tpos">+15.0%</td></tr>
+          <tr><td class="tb">New-Hospital Revenue Mix</td><td class="num">27%</td><td class="num">22% (Q4 FY26)</td><td class="num">Rising contribution</td></tr>
+        </tbody>
+      </table>
+      <p style="font-size:12px;line-height:1.75;"><strong>Key insight:</strong> Highest reported revenue growth in the sector (+51%), driven by newly acquired/added hospitals now contributing 27% of revenue. Faridabad Sector-20 achieved EBITDA breakeven in a record nine months — a strong proof-point for Yatharth's acquisition-led, tier-2-focused playbook. Reported EBITDA margin of 23.3% understates underlying profitability given new-facility dilution; adjusted margin (ex-Faridabad Sec-20, New Delhi) is 28.1%. The Board declared the company's maiden interim dividend (5% of face value). A ₹100 Cr Gurugram hospital acquisition (plus ₹100 Cr equipment capex) is targeted to launch by Q1 FY28, part of a plan to scale toward ~5,000 beds over three years.</p>
+      <div class="tbl-title">🛏️ Operating Parameters</div>
+      <div class="mgmt-box">
+        <div class="ml">Bed Capacity</div><p>~3,255 announced capacity; targeting ~5,000 beds over 3 years</p>
+        <div class="ml">Occupancy</div><p>— not disclosed</p>
+        <div class="ml">ARPOB</div><p>₹34,758/day* (*blended tier-2/3 network mix — not directly comparable to metro-heavy peers)</p>
+        <div class="ml">ALOS</div><p>— not disclosed</p>
+        <div class="ml">Payor Mix</div><p>Govt scheme (CGHS/ECHS/linked) 37% · Insurance/TPA 32% · Cash/self-pay 31% — targeting &lt;30% govt mix — FY25</p>
+        <div class="ml">Key Specialities (% of Revenue)</div><p>Internal Medicine 19% (down from 56% in FY21) · Neuro 11% · Renal 11% · Oncology 10% · Cardiology 10% · Gen. Surgery 8% · Pulmonology 7% — FY25</p>
+      </div>
+      <div class="tbl-title">📌 Key Takeaways</div>
+      <ul class="takeaway-list">
+        <li>Highest revenue growth in the sector (+51% YoY), led by newly acquired hospitals now 27% of revenue.</li>
+        <li>Faridabad Sector-20 reached EBITDA breakeven in just nine months — a strong proof point for the acquisition-led playbook.</li>
+        <li>Reported EBITDA margin of 23.3% understates true profitability — adjusted (ex-new units) margin is 28.1%.</li>
+        <li>Declared its maiden interim dividend, signalling management's confidence in cash generation.</li>
+        <li>Geographic concentration in NCR/UP is a key differentiator — and risk — versus pan-India peers.</li>
+      </ul>
+      <div class="tbl-title">Management &amp; Control</div>
+      <div class="mgmt-box">
+        <div class="ml">Promoter / Controlling Shareholder</div>
+        <p>Tyagi family (promoter group)</p>
+        <div class="ml">PE / Strategic Investor</div>
+        <p>Carnelian Asset Management (India-focused alternative investment fund) holds a disclosed stake — no major global PE/DFI investor</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- MANIPAL -->
+  <div id="cop-manipal" class="cop">
+    <div class="cop-hdr" style="background:var(--manipal);"><div class="cop-name">⚪ Manipal Hospitals (Manipal Health Enterprises)</div><div class="cop-tag">BSE/NSE: MANIPALHOS · Listed 5 Aug 2026 · Q1 FY27 Not Yet Reported</div></div>
+    <div class="cop-body">
+      <div class="q4-highlight" style="margin-bottom:16px;">
+        <span class="q4-tag">Listing Status</span>
+        <div style="font-size:12px;line-height:1.7;">IPO'd ₹9,275 Cr (price band ₹560–₹590) and listed on BSE/NSE on 5 August 2026. The figures below are from the IPO prospectus (FY26, pre-listing) — Q1 FY27 actuals are not yet incorporated into this dashboard's sector-wide tables (Peer Comparison, Charts, Valuations). See the Overview and SWOT tabs for listing background.</div>
+      </div>
+      <div class="tbl-title">Snapshot — FY26 (IPO Prospectus, Pre-Listing)</div>
+      <table style="margin-bottom:18px;">
+        <thead><tr><th>Metric</th><th>FY26</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td class="tb">Revenue (₹ Cr)</td><td class="num">10,336</td><td>Second-largest private hospital chain by revenue, after Apollo</td></tr>
+          <tr><td class="tb">EBITDA (₹ Cr)</td><td class="num">2,721.87</td><td>~26–29% margin band (pre-Sahyadri consolidation)</td></tr>
+          <tr><td class="tb">PAT (₹ Cr)</td><td class="num">~917</td><td>—</td></tr>
+          <tr><td class="tb">Licensed Beds</td><td class="num">13,037</td><td>49 hospitals — largest pan-India network by bed count</td></tr>
+          <tr><td class="tb">Operational Beds</td><td class="num">~6,878</td><td>&lt;70% of licensed capacity in operation</td></tr>
+          <tr><td class="tb">Occupancy</td><td class="num">64%</td><td>Room to lift toward peer levels (67–76%)</td></tr>
+          <tr><td class="tb">Proforma EBITDA / PAT Margin</td><td class="num">~25% / ~6%</td><td>Post-Sahyadri consolidation (dilutive; Sahyadri margin ~18.6%)</td></tr>
+        </tbody>
+      </table>
+      <p style="font-size:12px;line-height:1.75;"><strong>Key insight:</strong> Manipal enters the listed hospital pack as the largest network by bed count and second-largest by revenue, but with a licensed-to-operational bed utilisation gap (only ~53% of licensed beds operational) that gives it a longer runway to lift occupancy than most peers. The Sahyadri Hospitals acquisition is margin-dilutive near-term (18.6% EBITDA margin vs Manipal's own ~26%), pulling proforma FY26 margins down to ~25% EBITDA / ~6% PAT. IPO proceeds (₹800 Cr fresh issue) are earmarked to prepay ₹552.76 Cr of subsidiary debt and buy out the Sahyadri minority stake. Its board meets to approve Q1 FY27 unaudited results shortly after this dashboard's original build — check back for updated actuals once published.</p>
+      <div class="tbl-title">🛏️ Operating Parameters</div>
+      <div class="mgmt-box">
+        <div class="ml">Bed Capacity</div><p>13,037 licensed beds (49 hospitals); ~6,878 operational (&lt;70% of licensed)</p>
+        <div class="ml">Occupancy</div><p>64.5% (FY26)</p>
+        <div class="ml">ARPOB</div><p>₹68,958/day (FY26)</p>
+        <div class="ml">ALOS</div><p>— not disclosed</p>
+        <div class="ml">Payor Mix</div><p>Insurance/TPA ~49–50% · Self-pay/Cash 30.33% · Govt scheme 13.80% (of gross IPD revenue) — FY26</p>
+        <div class="ml">Key Specialities (% of Revenue)</div><p>CONGO-R cluster = 64.3% of gross IPD revenue — Cardiac 16.61% · Ortho 12.08% · Oncology 9.96% · Neuro 9.21% · Renal 7.19% · Gastro 7.05% — FY26 (DRHP)</p>
+      </div>
+      <div class="tbl-title">📌 Key Takeaways</div>
+      <ul class="takeaway-list">
+        <li>India's largest hospital chain by bed count (13,037 licensed beds, 49 hospitals) and second-largest by revenue (₹10,336 Cr FY26) after Apollo.</li>
+        <li>Only ~6,878 of 13,037 licensed beds (under 70%) were operational in FY26, at 64% occupancy — meaningful room to scale utilisation.</li>
+        <li>The Sahyadri Hospitals acquisition is margin-dilutive (18.6% EBITDA margin vs Manipal's own ~26%), pulling proforma FY26 margins to ~25% EBITDA / ~6% PAT.</li>
+        <li>IPO proceeds (₹800 Cr fresh issue) are earmarked to prepay ₹552.76 Cr of subsidiary debt and buy out the Sahyadri minority stake.</li>
+        <li>Listed 5 August 2026 at ~25x EV/EBITDA and ~60x trailing P/E — priced for a turnaround not yet proven in a quarterly report.</li>
+      </ul>
+      <div class="tbl-title">Management &amp; Control</div>
+      <div class="mgmt-box">
+        <div class="ml">Promoter / Controlling Shareholder</div>
+        <p>Dr. Ranjan Pai / Manipal Group (~31%)</p>
+        <div class="ml">PE / Strategic Investor</div>
+        <p><strong>Temasek</strong> (~51%), <strong>TPG Asia</strong> (~10%), Mubadala, Novo Holdings, CalPERS (~8% combined) — heavily sovereign/PE-backed per IPO prospectus</p>
+      </div>
+      <p style="font-size:10.5px;color:var(--muted);margin-top:12px;">Figures sourced from the IPO prospectus and exchange filings through August 2026. Not included in this dashboard's Peer Comparison, Charts or Valuations tabs pending publication of actual Q1 FY27 results — see Overview tab for the latest listing status.</p>
+    </div>
+  </div>
+
+</div>
+
+<!-- ══════════ PEER COMPARISON ══════════ -->
+<div id="tab-comparison" class="panel">
+  <div class="sec-hdr">⚖️ Peer Comparison <span class="sec-note">Q1 FY27 — All 9 Hospitals, Consolidated</span></div>
+  <table style="margin-bottom:22px;">
+    <thead><tr><th>Company</th><th>Revenue ₹Cr</th><th>Rev YoY</th><th>EBITDA Margin</th><th>PAT ₹Cr</th><th>PAT YoY</th><th>Occupancy</th><th>ARPOB ₹/day</th><th>Net Debt/ND-Equity</th></tr></thead>
+    <tbody>
+      <tr><td class="tb">Apollo Hospitals</td><td class="num">7,043.5</td><td class="num tpos">+20.6%</td><td class="num">15.5%</td><td class="num">580.7</td><td class="num tpos">+34.2%</td><td class="num">70%</td><td class="num">—</td><td class="num">₹748 Cr net debt</td></tr>
+      <tr><td class="tb">Max Healthcare</td><td class="num">2,982.0</td><td class="num tpos">+16.0%</td><td class="num">24.8%</td><td class="num">357.0</td><td class="num tpos">+3.0%</td><td class="num">75%+</td><td class="num">81,900</td><td class="num">ND/EBITDA &lt;1x</td></tr>
+      <tr><td class="tb">Fortis Healthcare</td><td class="num">2,545.0</td><td class="num tpos">+17.5%</td><td class="num">22.3%</td><td class="num">273.0</td><td class="num tpos">+2.3%</td><td class="num">69%</td><td class="num">—</td><td class="num">ND/EBITDA 1.01x</td></tr>
+      <tr><td class="tb">Narayana Hrudayalaya</td><td class="num">2,683.6</td><td class="num tpos">+78.0%</td><td class="num">18.8%</td><td class="num">207.3</td><td class="num tpos">+5.7%</td><td class="num">—</td><td class="num">—</td><td class="num">ND/Equity 0.42x</td></tr>
+      <tr><td class="tb">Medanta (Global Health)</td><td class="num">1,304.1</td><td class="num tpos">+26.5%</td><td class="num">23.8%</td><td class="num">157.3</td><td class="num tneg">−1.1%</td><td class="num">62.6%</td><td class="num">70,244</td><td class="num">Net cash positive</td></tr>
+      <tr><td class="tb">KIMS Hospitals</td><td class="num">1,179.5</td><td class="num tpos">+35.3%</td><td class="num">18.9%</td><td class="num">41.5</td><td class="num tneg">−47.2%</td><td class="num">—</td><td class="num">—</td><td class="num">₹2,400 Cr debt (post-QIP)</td></tr>
+      <tr><td class="tb">Rainbow Children's</td><td class="num">470.0</td><td class="num tpos">+33.2%</td><td class="num">28.7%</td><td class="num">62.5</td><td class="num tpos">+16.2%</td><td class="num">41.2%</td><td class="num">67,256</td><td class="num">Net cash</td></tr>
+      <tr><td class="tb">Jupiter Life Line</td><td class="num">411.0</td><td class="num tpos">+16.4%</td><td class="num">19.3%</td><td class="num">37.5</td><td class="num tneg">−14.6%</td><td class="num">59.6%</td><td class="num">73,500</td><td class="num">Rising (expansion debt)</td></tr>
+      <tr><td class="tb">Yatharth Hospitals</td><td class="num">392.7</td><td class="num tpos">+51.0%</td><td class="num">23.3%</td><td class="num">45.4</td><td class="num tpos">+8.0%</td><td class="num">—</td><td class="num">34,758*</td><td class="num">Maiden dividend declared</td></tr>
+    </tbody>
+  </table>
+  <p style="font-size:10.5px;color:var(--muted);margin-bottom:20px;">*Yatharth ARPOB reflects a blended tier-2/tier-3 network mix; not directly comparable to metro-heavy peers.</p>
+
+  <div class="g2">
+    <div class="card">
+      <div class="card-lbl">📈 Revenue Growth Leaders</div>
+      <p style="font-size:11.5px;line-height:1.7;">NH (+78%, largely UK base-effect) → Yatharth (+51%, M&amp;A-led) → KIMS (+35.3%, new beds) → Rainbow (+33.2%, Mumbai/AP expansion) → Medanta (+26.5%, Noida ramp-up + core growth).</p>
+    </div>
+    <div class="card">
+      <div class="card-lbl">📉 PAT Under Pressure</div>
+      <p style="font-size:11.5px;line-height:1.7;">KIMS (−47.2%) and Jupiter (−14.6%) are absorbing the heaviest near-term cost of expansion — both are running multiple new hospitals through the loss-making early years simultaneously.</p>
+    </div>
+  </div>
+
+  <!-- ── OPERATING PERFORMANCE (all hospitals) ── -->
+  <div class="sec-hdr gap-top">🛏️ Operating Performance — All Hospitals Under Review <span class="sec-note">Bed capacity, occupancy &amp; ARPOB · Q1 FY27 vs Q1 FY26 unless noted</span></div>
+
+  <div class="kpi-row">
+    <div class="kpi sector-a"><div class="kl">Highest ARPOB</div><div class="kv">Max ₹81,900/day</div><div class="kc pos">+5.0% YoY</div></div>
+    <div class="kpi"><div class="kl">Highest Occupancy</div><div class="kv">Max &gt;75%</div><div class="kc pos">Despite +13% bed growth</div></div>
+    <div class="kpi"><div class="kl">Fastest Bed Expansion</div><div class="kv">KIMS +35.6%</div><div class="kc pos">5,499 → 7,459 beds YoY</div></div>
+    <div class="kpi"><div class="kl">Steepest Occupancy Fall</div><div class="kv">Rainbow 41.2%</div><div class="kc neg">−410 bps QoQ, seasonal</div></div>
+    <div class="kpi"><div class="kl">Best ARPOB Growth</div><div class="kv">Jupiter +10.0%</div><div class="kc pos">₹67,300 → ₹73,500</div></div>
+  </div>
+
+  <div style="overflow-x:auto;">
+  <table class="op-tbl" style="margin-bottom:10px;table-layout:fixed;min-width:860px;">
+    <colgroup><col style="width:13%"><col style="width:16%"><col style="width:13%"><col style="width:12%"><col style="width:9%"><col style="width:37%"></colgroup>
+    <thead><tr><th>Company</th><th>Bed Capacity</th><th>Occupancy</th><th>ARPOB (₹/day)</th><th>ALOS (days)</th><th>Operating Note</th></tr></thead>
+    <tbody>
+      <tr><td class="tb"><span class="dot" style="background:var(--apollo)"></span>Apollo</td><td class="num">8,352<br><small class="chg pos">+180 YoY</small></td><td class="num">70%<br><small class="chg pos">+500 bps YoY</small></td><td class="num">—</td><td class="num">—</td><td>Hospital-segment EBITDA margin 24.0%; volume + occupancy led; Sarjapur (Bengaluru) commissioned</td></tr>
+      <tr><td class="tb"><span class="dot" style="background:var(--max)"></span>Max</td><td class="num">—<br><small class="chg pos">+13% YoY</small></td><td class="num">&gt;75%<br><small class="chg pos">Held YoY</small></td><td class="num">81,900<br><small class="chg pos">+5.0% YoY</small></td><td class="num">—</td><td>Kalinga (Bhubaneswar) added at 50% occupancy, ₹35k ARPOB — dilutive to network average</td></tr>
+      <tr><td class="tb"><span class="dot" style="background:var(--fortis)"></span>Fortis</td><td class="num">3,418†<br><small class="chg pos">+17% YoY</small></td><td class="num">69%<br><small class="chg">—</small></td><td class="num">—</td><td class="num">—</td><td>†Occupied beds, hospital segment. Agilus Diagnostics volumes +3.3% to 10.46 Mn tests</td></tr>
+      <tr><td class="tb"><span class="dot" style="background:var(--nh)"></span>NH</td><td class="num">—<br><small class="chg">₹730 Cr FY27 capex</small></td><td class="num">—</td><td class="num">—</td><td class="num">4.4<br><small class="chg">Q4 FY26</small></td><td>Not adding major India beds for 2–3 years — sweating existing assets instead</td></tr>
+      <tr><td class="tb"><span class="dot" style="background:var(--medanta)"></span>Medanta</td><td class="num">433/550‡<br><small class="chg">Ramp-up</small></td><td class="num">62.6%<br><small class="chg warn">Diluted, new beds</small></td><td class="num">70,244<br><small class="chg pos">+5.5% YoY</small></td><td class="num">2.87<br><small class="chg pos">-5.2% YoY</small></td><td>‡Noida only. In-patient volumes +27.7% YoY, out-patient +34.5% YoY. Faster bed-turns support ARPOB</td></tr>
+      <tr><td class="tb"><span class="dot" style="background:var(--krishna)"></span>KIMS</td><td class="num">7,459<br><small class="chg pos">+35.6% YoY</small></td><td class="num">—</td><td class="num">—</td><td class="num">—</td><td>Only ~50% insurance empanelment complete at Latur, Thane, Nashik, Bangalore units</td></tr>
+      <tr><td class="tb"><span class="dot" style="background:var(--rainbow)"></span>Rainbow</td><td class="num">2,565<br><small class="chg">24 hosp., 9 cities</small></td><td class="num">41.2%<br><small class="chg warn">−410 bps QoQ</small></td><td class="num">67,256<br><small class="chg pos">+7.7% QoQ</small></td><td class="num">—</td><td>Mature-hospital ARPOB ~₹70,000 vs ~₹59,000 at newer units. ~1/3 of beds allocated to critical care</td></tr>
+      <tr><td class="tb"><span class="dot" style="background:var(--jupiter)"></span>Jupiter</td><td class="num">1,259<br><small class="chg pos">+18.7% YoY</small></td><td class="num">~59.6%*<br><small class="chg warn">−50 bps YoY</small></td><td class="num">73,500<br><small class="chg pos">+10.0% YoY</small></td><td class="num">3.87</td><td>*Ex-Dombivli. Its first full quarter added a ₹9.5 Cr EBITDA drag</td></tr>
+      <tr><td class="tb"><span class="dot" style="background:var(--yatharth)"></span>Yatharth</td><td class="num">~3,255<br><small class="chg">Announced capacity</small></td><td class="num">—</td><td class="num">34,758*<br><small class="chg">—</small></td><td class="num">—</td><td>*Blended tier-2/3 mix. New-hospital revenue mix rose to 27% (from 22% QoQ)</td></tr>
+      <tr><td class="tb"><span class="dot" style="background:var(--manipal)"></span>Manipal</td><td class="num">13,037 lic.<br><small class="chg">~6,878 operational</small></td><td class="num">64.5%<br><small class="chg">FY26</small></td><td class="num">68,958<br><small class="chg">FY26</small></td><td class="num">—</td><td>FY26 (IPO prospectus) — Q1 FY27 actuals not yet incorporated; &lt;70% of licensed beds are operational</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <p style="font-size:10.5px;color:var(--muted);margin-bottom:22px;">— denotes not disclosed in company filings/investor presentations for the period, or not directly comparable. ARPOB = Average Revenue Per Occupied Bed per day. ALOS = Average Length of Stay. Manipal figures are FY26 (pre-listing); all others are Q1 FY27 vs Q1 FY26 unless marked. Individual company panels under the Companies tab carry each hospital's own operating parameters in full.</p>
+
+  <!-- ── PAYOR MIX & SPECIALITIES ── -->
+  <div class="sec-hdr gap-top">💳 Payor Mix &amp; Key Specialities <span class="sec-note">As disclosed in each company's latest investor presentation / IPO prospectus — periods vary, see last column</span></div>
+  <div style="overflow-x:auto;">
+  <table class="op-tbl" style="margin-bottom:6px;table-layout:fixed;min-width:920px;">
+    <colgroup><col style="width:11%"><col style="width:28%"><col style="width:34%"><col style="width:12%"></colgroup>
+    <thead><tr><th>Company</th><th>Payor Mix (% of Revenue)</th><th>Key Specialities (% of Revenue)</th><th>Data Period</th></tr></thead>
+    <tbody>
+      <tr><td class="tb"><span class="dot" style="background:var(--apollo)"></span>Apollo</td><td>Insurance 46% · Self-pay 39% · Govt scheme + international ~15% (not broken out)</td><td>Cardiology 19% · Oncology 17% · Orthopedics 11% · Neurosciences 10% · Others 43% (IPD revenue)</td><td class="num">Q1 FY27</td></tr>
+      <tr><td class="tb"><span class="dot" style="background:var(--max)"></span>Max</td><td>TPA/Corporates 34.9% · Self-pay 34.2% · Institutional 21.9% · International 9.1%</td><td>Oncology 24.1% · Orthopedics 10.9% · Cardiac 10.6% · Neuro 9.6% · Renal 5.0% · Others ~14.6% (gross IPD)</td><td class="num">FY26</td></tr>
+      <tr><td class="tb"><span class="dot" style="background:var(--fortis)"></span>Fortis</td><td>TPA/Insurance 36.3% · Cash 35.0% · Govt (CGHS+ECHS) 11.8% · Govt/PSU 8.4% · International 8.1% · Corporate 1.1%</td><td>Cardiac 16.9% · Oncology 15.0% · Orthopedics 8.6% · Neurosciences 8.5% · Renal 6.9% · Gastro 5.2% · Others ~45%</td><td class="num">Q2 FY26</td></tr>
+      <tr><td class="tb"><span class="dot" style="background:var(--nh)"></span>NH</td><td>Domestic walk-in 44% · Insured 33% · Govt scheme (CGHS/ESIS/state) 18% · International 5%</td><td>Cardiac Sciences 34% · Oncology 14% · Medicine &amp; GI 12% · Renal 9% · Neuro 8% · Others 18% (India ops)</td><td class="num">Q4 FY26</td></tr>
+      <tr><td class="tb"><span class="dot" style="background:var(--medanta)"></span>Medanta</td><td>Cash 55–56% (IPD) · Govt scheme (CGHS/ECHS/Railways) 25–27% · Insurance/other ~18–20% · Domestic 94% / International 6%</td><td>Cardiac 20.7% · Oncology 13.5% · Neurosciences 11.2% · Digestive 11.0% · Others ~43.6% (30+ specialities)</td><td class="num">Q1 FY27</td></tr>
+      <tr><td class="tb"><span class="dot" style="background:var(--krishna)"></span>KIMS</td><td>Cash/Self-pay 52% · Insurance/TPA 32% · Corporate 12% · Govt scheme (Aarogyasri) 4%</td><td>Cardiac 15% · Orthopedics 15% · Neurosciences 11% · Renal 9% · Gastric 9% · Mother &amp; Child 9% · Others 32%</td><td class="num">Latest IP</td></tr>
+      <tr><td class="tb"><span class="dot" style="background:var(--rainbow)"></span>Rainbow</td><td>Cash 51.7% · Insurance 48.3% (inpatient income, ~flat YoY)</td><td>100% pediatric/perinatal — secondary (OPD/immunisation), tertiary (neonatal surgery, ventilation), quaternary (transplant, cardiac &amp; neuro surgery)</td><td class="num">Q1 FY27</td></tr>
+      <tr><td class="tb"><span class="dot" style="background:var(--jupiter)"></span>Jupiter</td><td>Insurance/TPA 55.4% · Cash/self-pay ~44.6% (implied)</td><td>Not separately disclosed in latest filings</td><td class="num">Latest results</td></tr>
+      <tr><td class="tb"><span class="dot" style="background:var(--yatharth)"></span>Yatharth</td><td>Govt scheme (CGHS/ECHS/linked) 37% · Insurance/TPA 32% · Cash/self-pay 31% — targeting &lt;30% govt mix</td><td>Internal Medicine 19% (down from 56% in FY21) · Neuro 11% · Renal 11% · Oncology 10% · Cardiology 10% · Gen. Surgery 8% · Pulmonology 7%</td><td class="num">FY25</td></tr>
+      <tr><td class="tb"><span class="dot" style="background:var(--manipal)"></span>Manipal</td><td>Insurance/TPA ~49–50% · Self-pay/Cash 30.33% · Govt scheme 13.80% (of gross IPD revenue)</td><td>CONGO-R cluster = 64.3% of gross IPD revenue — Cardiac 16.61% · Ortho 12.08% · Oncology 9.96% · Neuro 9.21% · Renal 7.19% · Gastro 7.05%</td><td class="num">FY26 (DRHP)</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <p style="font-size:10.5px;color:var(--muted);margin-bottom:6px;">Sourced from each company's own investor presentations, earnings-call slides or IPO prospectus/DRHP — reporting periods differ by company (see Data Period column) since payor mix and specialty splits are not disclosed on a uniform quarterly basis across the sector. Category labels (e.g. "Institutional", "Corporate") follow each company's own disclosure terminology and are not always directly comparable across peers. Verify against the latest investor presentation before relying on these figures.</p>
+</div>
+
+<!-- ══════════ CHARTS ══════════ -->
+<div id="tab-charts" class="panel">
+  <div class="sec-hdr">📈 Visual Analytics <span class="sec-note">Q1 FY27 YoY · Chart.js</span></div>
+  <div class="g2">
+    <div class="chart-card">
+      <h3>Revenue Growth YoY (%)</h3>
+      <p class="sub">All 9 companies — Q1 FY27 vs Q1 FY26</p>
+      <canvas id="chartRev" height="220"></canvas>
+    </div>
+    <div class="chart-card">
+      <h3>PAT Growth YoY (%)</h3>
+      <p class="sub">Divergence between top-line and bottom-line</p>
+      <canvas id="chartPat" height="220"></canvas>
+    </div>
+  </div>
+  <div class="g2 gap-top">
+    <div class="chart-card">
+      <h3>EBITDA — Absolute (₹ Cr)</h3>
+      <p class="sub">Q1 FY27 reported EBITDA, full figures</p>
+      <canvas id="chartEbitdaAbs" height="220"></canvas>
+    </div>
+    <div class="chart-card">
+      <h3>EBITDA Growth YoY (%)</h3>
+      <p class="sub">Q1 FY27 vs Q1 FY26 EBITDA growth</p>
+      <canvas id="chartEbitdaGrowth" height="220"></canvas>
+    </div>
+  </div>
+  <div class="g2 gap-top">
+    <div class="chart-card">
+      <h3>EBITDA Margin (%)</h3>
+      <p class="sub">Q1 FY27 reported EBITDA margin</p>
+      <canvas id="chartMargin" height="220"></canvas>
+    </div>
+    <div class="chart-card">
+      <h3>Revenue Scale (₹ Cr)</h3>
+      <p class="sub">Apollo dominates by absolute scale</p>
+      <canvas id="chartRevScale" height="220"></canvas>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ VALUATIONS ══════════ -->
+<div id="tab-valuation" class="panel">
+  <div class="sec-hdr">💰 Valuations <span class="sec-note">CMP as of mid-Aug 2026 · Indicative — verify live prices before acting</span></div>
+  <div class="g3">
+    <div class="val-card"><div class="val-co" style="color:var(--apollo);">Apollo Hospitals</div>
+      <div class="val-row"><span class="val-lbl">CMP</span><span class="val-num">≈₹8,825</span></div>
+      <div class="val-row"><span class="val-lbl">Market Cap</span><span class="val-num">≈₹1,26,900 Cr</span></div>
+      <div class="val-row"><span class="val-lbl">Q1 FY27 Revenue (Consol.)</span><span class="val-num">₹7,043.5 Cr (+20.6%)</span></div>
+      <div class="val-row"><span class="val-lbl">Trailing P/E</span><span class="val-num">~70–72x</span></div>
+    </div>
+    <div class="val-card"><div class="val-co" style="color:var(--max);">Max Healthcare</div>
+      <div class="val-row"><span class="val-lbl">CMP</span><span class="val-num">≈₹1,150–1,200</span></div>
+      <div class="val-row"><span class="val-lbl">Market Cap</span><span class="val-num">&gt;₹1,00,000 Cr</span></div>
+      <div class="val-row"><span class="val-lbl">Q1 FY27 Network Revenue</span><span class="val-num">₹2,982 Cr (+16%)</span></div>
+      <div class="val-row"><span class="val-lbl">Trailing P/E</span><span class="val-num">~90–97x</span></div>
+    </div>
+    <div class="val-card"><div class="val-co" style="color:var(--fortis);">Fortis Healthcare</div>
+      <div class="val-row"><span class="val-lbl">CMP</span><span class="val-num">≈₹925</span></div>
+      <div class="val-row"><span class="val-lbl">Market Cap</span><span class="val-num">≈₹69,830 Cr</span></div>
+      <div class="val-row"><span class="val-lbl">Q1 FY27 Revenue</span><span class="val-num">₹2,545 Cr (+17.5%)</span></div>
+      <div class="val-row"><span class="val-lbl">Trailing P/E</span><span class="val-num">~85–94x</span></div>
+    </div>
+    <div class="val-card"><div class="val-co" style="color:var(--nh);">Narayana Hrudayalaya</div>
+      <div class="val-row"><span class="val-lbl">CMP</span><span class="val-num">≈₹1,828</span></div>
+      <div class="val-row"><span class="val-lbl">Market Cap</span><span class="val-num">≈₹37,140 Cr</span></div>
+      <div class="val-row"><span class="val-lbl">Q1 FY27 Revenue</span><span class="val-num">₹2,683.6 Cr (+78%)</span></div>
+      <div class="val-row"><span class="val-lbl">Trailing P/E</span><span class="val-num">~40–45x</span></div>
+    </div>
+    <div class="val-card"><div class="val-co" style="color:var(--medanta);">Medanta (Global Health)</div>
+      <div class="val-row"><span class="val-lbl">CMP</span><span class="val-num">≈₹1,415</span></div>
+      <div class="val-row"><span class="val-lbl">Market Cap</span><span class="val-num">≈₹38,030 Cr</span></div>
+      <div class="val-row"><span class="val-lbl">Q1 FY27 Revenue</span><span class="val-num">₹1,304.1 Cr (+26.5%)</span></div>
+      <div class="val-row"><span class="val-lbl">Trailing P/E</span><span class="val-num">~65–69x</span></div>
+    </div>
+    <div class="val-card"><div class="val-co" style="color:var(--krishna);">KIMS Hospitals</div>
+      <div class="val-row"><span class="val-lbl">CMP</span><span class="val-num">≈₹800–826</span></div>
+      <div class="val-row"><span class="val-lbl">Market Cap</span><span class="val-num">≈₹32,100 Cr</span></div>
+      <div class="val-row"><span class="val-lbl">Q1 FY27 Revenue</span><span class="val-num">₹1,179.5 Cr (+35.3%)</span></div>
+      <div class="val-row"><span class="val-lbl">Trailing P/E</span><span class="val-num">Elevated post PAT dip</span></div>
+    </div>
+    <div class="val-card"><div class="val-co" style="color:var(--rainbow);">Rainbow Children's</div>
+      <div class="val-row"><span class="val-lbl">CMP</span><span class="val-num">≈₹1,598</span></div>
+      <div class="val-row"><span class="val-lbl">Market Cap</span><span class="val-num">≈₹16,220 Cr</span></div>
+      <div class="val-row"><span class="val-lbl">Q1 FY27 Revenue</span><span class="val-num">₹470 Cr (+33.2%)</span></div>
+      <div class="val-row"><span class="val-lbl">EV/EBITDA</span><span class="val-num">~25x (broker est.)</span></div>
+    </div>
+    <div class="val-card"><div class="val-co" style="color:var(--jupiter);">Jupiter Life Line</div>
+      <div class="val-row"><span class="val-lbl">CMP</span><span class="val-num">≈₹316</span></div>
+      <div class="val-row"><span class="val-lbl">Q1 FY27 Revenue</span><span class="val-num">₹411 Cr (+16.4%)</span></div>
+      <div class="val-row"><span class="val-lbl">PAT</span><span class="val-num">₹37.5 Cr (−14.6%)</span></div>
+      <div class="val-row"><span class="val-lbl">Note</span><span class="val-num">Under pressure post-results</span></div>
+    </div>
+    <div class="val-card"><div class="val-co" style="color:var(--yatharth);">Yatharth Hospitals</div>
+      <div class="val-row"><span class="val-lbl">CMP</span><span class="val-num">≈₹843</span></div>
+      <div class="val-row"><span class="val-lbl">Market Cap</span><span class="val-num">≈₹8,120 Cr</span></div>
+      <div class="val-row"><span class="val-lbl">Q1 FY27 Revenue</span><span class="val-num">₹392.7 Cr (+51%)</span></div>
+      <div class="val-row"><span class="val-lbl">Note</span><span class="val-num">Maiden interim dividend declared</span></div>
+    </div>
+  </div>
+  <p style="font-size:10.5px;color:var(--muted);margin-top:16px;">Market caps and multiples are indicative, sourced from exchange/data-vendor snapshots taken between end-July and mid-August 2026, and move daily — verify live prices before any investment decision. CB Research does not issue its own Buy/Sell/Hold recommendations; see Analyst Ratings tab for third-party broker views.</p>
+</div>
+
+<!-- ══════════ SWOT ══════════ -->
+<div id="tab-swot" class="panel">
+  <div class="sec-hdr">🔲 SWOT — Company by Company <span class="sec-note">Q1 FY27</span></div>
+
+  <div class="co-hdr-swot" style="color:var(--apollo);">🔵 Apollo Hospitals</div>
+  <div class="swot-grid">
+    <div class="swot-cell swot-s"><div class="swot-lbl sl">Strengths</div><ul class="swot-ul">
+      <li>Diversified integrated model — hospitals (24.0% EBITDA margin) + pharmacy/digital + diagnostics</li>
+      <li>Largest scale in sector: 8,352 operating beds, occupancy up to 70%</li>
+      <li>Apollo HealthCo losses narrowing fast — digital cash loss down from ₹4.9 Cr to ₹1.0 Cr YoY</li>
+    </ul></div>
+    <div class="swot-cell swot-w"><div class="swot-lbl wl">Weaknesses</div><ul class="swot-ul">
+      <li>Blended EBITDA margin (15.5%) dragged down by low-margin HealthCo segment (5.8%)</li>
+      <li>Complex multi-vertical structure pending demerger simplification</li>
+    </ul></div>
+    <div class="swot-cell swot-o"><div class="swot-lbl ol">Opportunities</div><ul class="swot-ul">
+      <li>Pharmacy/digital demerger-merger on track — separate listing expected by Q4 FY27, could re-rate pure-hospital EV/EBITDA</li>
+      <li>5,800+ new-bed pipeline over 5 years (Indore, Dwarka, Delhi Proton Centre, Ranchi, Gurugram)</li>
+      <li>International Patient Services revenue +26% YoY — high-margin growth lever</li>
+    </ul></div>
+    <div class="swot-cell swot-t"><div class="swot-lbl tl">Threats</div><ul class="swot-ul">
+      <li>Execution/timeline risk on the HealthCo demerger scheme</li>
+      <li>Regulatory/pricing pressure on pharmacy distribution margins</li>
+      <li>Intensifying metro competition from Max and Fortis</li>
+    </ul></div>
+  </div>
+
+  <div class="co-hdr-swot" style="color:var(--max);">🟣 Max Healthcare</div>
+  <div class="swot-grid">
+    <div class="swot-cell swot-s"><div class="swot-lbl sl">Strengths</div><ul class="swot-ul">
+      <li>Highest ARPOB in the sector (₹81,900/day, +5% YoY) and occupancy consistently &gt;75%</li>
+      <li>Strong free cash flow (₹397 Cr in the quarter) and low leverage (ND/EBITDA &lt;1x)</li>
+      <li>Digital revenue at 32% of total — diversified beyond core hospital beds</li>
+    </ul></div>
+    <div class="swot-cell swot-w"><div class="swot-lbl wl">Weaknesses</div><ul class="swot-ul">
+      <li>Margin diluted 200bps QoQ (26.8% → 24.8%) by new-capacity ramp-up and Kalinga integration</li>
+      <li>Oncology OBDs pressured by CGHS-linked drug/discount changes</li>
+    </ul></div>
+    <div class="swot-cell swot-o"><div class="swot-lbl ol">Opportunities</div><ul class="swot-ul">
+      <li>Kalinga Hospital, Bhubaneswar turnaround (58.28% stake) opens Eastern India</li>
+      <li>YPPL land bank enables a new 450-bed Pune hospital</li>
+      <li>New foray into medical education (teaching college, Lucknow campus)</li>
+    </ul></div>
+    <div class="swot-cell swot-t"><div class="swot-lbl tl">Threats</div><ul class="swot-ul">
+      <li>Integration risk across multiple concurrent M&amp;A transactions</li>
+      <li>Regional competitive intensity in NCR and Mumbai</li>
+      <li>Policy-driven oncology pricing pressure a recurring theme</li>
+    </ul></div>
+  </div>
+
+  <div class="co-hdr-swot" style="color:var(--fortis);">🟢 Fortis Healthcare</div>
+  <div class="swot-grid">
+    <div class="swot-cell swot-s"><div class="swot-lbl sl">Strengths</div><ul class="swot-ul">
+      <li>Diversified hospital (86% of EBITDA) + Agilus Diagnostics model</li>
+      <li>Hospital revenue growth of 19% YoY on 17% occupied-bed growth</li>
+      <li>Comfortable leverage — ND/EBITDA 1.01x, ND/Equity 0.21x</li>
+    </ul></div>
+    <div class="swot-cell swot-w"><div class="swot-lbl wl">Weaknesses</div><ul class="swot-ul">
+      <li>New ESOP scheme adding ~₹31–40 Cr/quarter cost through FY27</li>
+      <li>Diagnostics growth (10.2%) trailing the hospital segment and some peers</li>
+      <li>Margin (22.3%) still below the FY28 target of 25%</li>
+    </ul></div>
+    <div class="swot-cell swot-o"><div class="swot-lbl ol">Opportunities</div><ul class="swot-ul">
+      <li>Proton-therapy facility approved for Gurgaon (~₹252 Cr capex)</li>
+      <li>~1,800-bed brownfield expansion pipeline over 4–5 years</li>
+      <li>FMRI and Manesar ramp-up expected to lift blended margin</li>
+    </ul></div>
+    <div class="swot-cell swot-t"><div class="swot-lbl tl">Threats</div><ul class="swot-ul">
+      <li>ESOP cost visibility remains a multi-quarter margin headwind</li>
+      <li>Competitive diagnostics pricing environment</li>
+      <li>Regulatory chemotherapy-discount mandates pressuring oncology economics sector-wide</li>
+    </ul></div>
+  </div>
+
+  <div class="co-hdr-swot" style="color:var(--nh);">🟦 Narayana Hrudayalaya</div>
+  <div class="swot-grid">
+    <div class="swot-cell swot-s"><div class="swot-lbl sl">Strengths</div><ul class="swot-ul">
+      <li>Three-geography diversification — India, Cayman Islands, UK (Practice Plus Group)</li>
+      <li>Cayman One Health insurance platform scaling fast (+38.9% YoY)</li>
+      <li>Comfortable balance sheet — ND/Equity 0.42x</li>
+    </ul></div>
+    <div class="swot-cell swot-w"><div class="swot-lbl wl">Weaknesses</div><ul class="swot-ul">
+      <li>EBITDA margin compressed ~510bps to 18.8% from lower-margin UK mix</li>
+      <li>PAT growth (+5.7%) far behind revenue growth (+78%) on higher finance/depreciation costs</li>
+    </ul></div>
+    <div class="swot-cell swot-o"><div class="swot-lbl ol">Opportunities</div><ul class="swot-ul">
+      <li>UK business to contribute a full 12 months in FY27 vs partial-year base in FY26</li>
+      <li>India hospital EBITDA still growing ~40% YoY on high-end cardiac/robotic volumes</li>
+      <li>Not adding major India beds for 2–3 years — capital-light margin expansion runway from existing assets</li>
+    </ul></div>
+    <div class="swot-cell swot-t"><div class="swot-lbl tl">Threats</div><ul class="swot-ul">
+      <li>GBP/USD currency translation risk on UK earnings</li>
+      <li>UK integration execution risk as separation from former parent completes</li>
+      <li>Competitive intensity in Bengaluru cardiac-care market</li>
+    </ul></div>
+  </div>
+
+  <div class="co-hdr-swot" style="color:var(--medanta);">🟡 Medanta (Global Health)</div>
+  <div class="swot-grid">
+    <div class="swot-cell swot-s"><div class="swot-lbl sl">Strengths</div><ul class="swot-ul">
+      <li>Best-in-class ex-Noida EBITDA margin of 25.8% across the mature network</li>
+      <li>Strong volume growth — inpatient +27.7%, outpatient +34.5% YoY</li>
+      <li>Net-cash balance sheet gives self-funding flexibility</li>
+    </ul></div>
+    <div class="swot-cell swot-w"><div class="swot-lbl wl">Weaknesses</div><ul class="swot-ul">
+      <li>Consolidated margin (23.8%) still diluted by Noida ramp-up</li>
+      <li>PAT essentially flat YoY against a high prior-year base (₹19.6 Cr exceptional gain in Q1 FY26)</li>
+    </ul></div>
+    <div class="swot-cell swot-o"><div class="swot-lbl ol">Opportunities</div><ul class="swot-ul">
+      <li>Medanta Noida EBITDA loss narrowing sharply (−₹23.6 Cr → −₹4.9 Cr QoQ) — breakeven may arrive early</li>
+      <li>~3,350-bed announced expansion pipeline (~₹4,850 Cr capex), including scaled-up 650-bed Guwahati project</li>
+    </ul></div>
+    <div class="swot-cell swot-t"><div class="swot-lbl tl">Threats</div><ul class="swot-ul">
+      <li>Execution risk across a large multi-city greenfield pipeline</li>
+      <li>Any delay to Noida breakeven would extend the current margin drag</li>
+      <li>Rising NCR hospital competitive intensity (Max, Fortis, Manipal all expanding in the region)</li>
+    </ul></div>
+  </div>
+
+  <div class="co-hdr-swot" style="color:var(--krishna);">🟠 KIMS Hospitals</div>
+  <div class="swot-grid">
+    <div class="swot-cell swot-s"><div class="swot-lbl sl">Strengths</div><ul class="swot-ul">
+      <li>Mature Telangana/AP clusters continue to deliver 28%+ EBITDA margins</li>
+      <li>Fastest bed-capacity growth in the sector — +1,960 beds YoY to 7,459</li>
+      <li>Proactive deleveraging — ₹1,084 Cr of QIP proceeds cut debt from ₹3,250 Cr to ₹2,400 Cr in one quarter</li>
+    </ul></div>
+    <div class="swot-cell swot-w"><div class="swot-lbl wl">Weaknesses</div><ul class="swot-ul">
+      <li>PAT nearly halved (−47.2%) — heaviest earnings impact in the sector from expansion</li>
+      <li>Kerala cluster still in single-digit EBITDA margins; may take 2–3 years to normalise</li>
+      <li>Only ~50% insurance empanelment complete for several new units</li>
+    </ul></div>
+    <div class="swot-cell swot-o"><div class="swot-lbl ol">Opportunities</div><ul class="swot-ul">
+      <li>Four simultaneous new-hospital ramp-ups (Bangalore, Kondapur, Kerala, Palakkad) set up a multi-year growth base</li>
+      <li>Bangalore/Kerala clusters targeted to approach breakeven through FY27–28</li>
+    </ul></div>
+    <div class="swot-cell swot-t"><div class="swot-lbl tl">Threats</div><ul class="swot-ul">
+      <li>Execution risk from running four ramp-ups concurrently</li>
+      <li>Insurance empanelment delays could push out occupancy gains further</li>
+      <li>Increasing competitive intensity in South Indian metros</li>
+    </ul></div>
+  </div>
+
+  <div class="co-hdr-swot" style="color:var(--rainbow);">🔴 Rainbow Children's Medicare</div>
+  <div class="swot-grid">
+    <div class="swot-cell swot-s"><div class="swot-lbl sl">Strengths</div><ul class="swot-ul">
+      <li>Best EBITDA margin in the sector (28.7%) on an asset-light hub-and-spoke pediatric model</li>
+      <li>Net-cash balance sheet despite active expansion</li>
+      <li>India's only listed dedicated pediatric/perinatal chain — differentiated positioning</li>
+    </ul></div>
+    <div class="swot-cell swot-w"><div class="swot-lbl wl">Weaknesses</div><ul class="swot-ul">
+      <li>Margin eased ~70bps YoY on doctor professional-fee inflation and new-unit gestation</li>
+      <li>Occupancy dipped to 41.2% (seasonally weak Q1 for pediatric volumes)</li>
+    </ul></div>
+    <div class="swot-cell swot-o"><div class="swot-lbl ol">Opportunities</div><ul class="swot-ul">
+      <li>First entry into Western India — Malad, Mumbai greenfield hospital targeted Q1 FY28</li>
+      <li>64% stake acquisition in Nellore, Andhra Pradesh strengthens the AP hub</li>
+      <li>Five-year plan to add 2,500 beds (₹2,200 Cr capex), doubling network capacity</li>
+    </ul></div>
+    <div class="swot-cell swot-t"><div class="swot-lbl tl">Threats</div><ul class="swot-ul">
+      <li>Execution risk entering a new, more competitive Mumbai market</li>
+      <li>Seasonality remains a structural feature of the pediatric-care model</li>
+      <li>Doctor-fee inflation across the specialty could persist</li>
+    </ul></div>
+  </div>
+
+  <div class="co-hdr-swot" style="color:var(--jupiter);">🔷 Jupiter Life Line Hospitals</div>
+  <div class="swot-grid">
+    <div class="swot-cell swot-s"><div class="swot-lbl sl">Strengths</div><ul class="swot-ul">
+      <li>High and rising ARPOB — ₹73,500/day, +10% YoY</li>
+      <li>Strong brand positioning in the Mumbai Metropolitan Region</li>
+      <li>Backward integration into IV-fluid manufacturing via the Sulcus acquisition</li>
+    </ul></div>
+    <div class="swot-cell swot-w"><div class="swot-lbl wl">Weaknesses</div><ul class="swot-ul">
+      <li>PAT down 14.6% YoY — Dombivli ramp-up drag (₹9.5 Cr EBITDA loss) plus higher finance costs (+55.5%)</li>
+      <li>EBITDA margin down 290bps YoY to 19.3%</li>
+    </ul></div>
+    <div class="swot-cell swot-o"><div class="swot-lbl ol">Opportunities</div><ul class="swot-ul">
+      <li>Dombivli insurance empanelment underway — should lift occupancy in coming quarters</li>
+      <li>In-house IV-fluid manufacturing (₹35–40 Cr capex) targets margin improvement</li>
+      <li>Three further Western India projects in the pipeline</li>
+    </ul></div>
+    <div class="swot-cell swot-t"><div class="swot-lbl tl">Threats</div><ul class="swot-ul">
+      <li>Execution risk on Dombivli's occupancy ramp timeline</li>
+      <li>Rising leverage as expansion continues</li>
+      <li>Competitive intensity from larger MMR players</li>
+    </ul></div>
+  </div>
+
+  <div class="co-hdr-swot" style="color:var(--yatharth);">🟪 Yatharth Hospitals</div>
+  <div class="swot-grid">
+    <div class="swot-cell swot-s"><div class="swot-lbl sl">Strengths</div><ul class="swot-ul">
+      <li>Highest revenue growth in the sector (+51% YoY)</li>
+      <li>Fast breakeven track record — Faridabad Sector-20 reached EBITDA breakeven in 9 months</li>
+      <li>Maiden interim dividend signals management confidence in cash generation</li>
+    </ul></div>
+    <div class="swot-cell swot-w"><div class="swot-lbl wl">Weaknesses</div><ul class="swot-ul">
+      <li>Reported EBITDA margin (23.3%) understates underlying profitability due to new-unit dilution (adjusted: 28.1%)</li>
+      <li>Geographic concentration in NCR/UP relative to pan-India peers</li>
+    </ul></div>
+    <div class="swot-cell swot-o"><div class="swot-lbl ol">Opportunities</div><ul class="swot-ul">
+      <li>Gurugram hospital acquisition (₹100 Cr + ₹100 Cr equipment) targeted for Q1 FY28 launch</li>
+      <li>Plan to scale toward ~5,000 beds over three years from current 3,255-bed announced capacity</li>
+      <li>New hospitals already contributing a rising 27% of revenue mix</li>
+    </ul></div>
+    <div class="swot-cell swot-t"><div class="swot-lbl tl">Threats</div><ul class="swot-ul">
+      <li>Execution risk on the new Gurugram facility and continued M&amp;A-led growth</li>
+      <li>Tier-2/3 competitive dynamics differ from metro-focused peers</li>
+      <li>Reliance on continued acquisition pipeline to sustain growth rate</li>
+    </ul></div>
+  </div>
+
+  <div class="co-hdr-swot" style="color:#555;">⚪ Manipal Hospitals (Manipal Health Enterprises) — Newly Listed, Q1 FY27 Not Yet Reported</div>
+  <div class="q4-highlight" style="margin-bottom:14px;">
+    <span class="q4-tag">Listing Status</span>
+    <div style="font-size:12px;line-height:1.7;">Manipal Health Enterprises IPO'd ₹9,275 Cr (price band ₹560–₹590) and listed on BSE/NSE on 5 August 2026. Its board is scheduled to meet on 20 August 2026 to approve Q1 FY27 unaudited results — not yet published as of this dashboard's date. FY26 (pre-IPO, prospectus) financials: revenue ₹10,336 Cr, EBITDA ₹2,721.87 Cr (~26–29% margin band), PAT ~₹917 Cr, 13,037 licensed beds across 49 hospitals (largest pan-India network by bed count). This SWOT is therefore based on IPO-prospectus positioning, not a quarterly result.</div>
+  </div>
+  <div class="swot-grid">
+    <div class="swot-cell swot-s"><div class="swot-lbl sl">Strengths</div><ul class="swot-ul">
+      <li>Largest pan-India hospital network by bed capacity (13,037 licensed beds, 49 hospitals)</li>
+      <li>"Triple-metro moat" — simultaneous market leadership in Bengaluru, Kolkata and Pune</li>
+      <li>Second-largest private hospital chain by revenue (₹10,336 Cr FY26) after Apollo</li>
+    </ul></div>
+    <div class="swot-cell swot-w"><div class="swot-lbl wl">Weaknesses</div><ul class="swot-ul">
+      <li>Licensed-to-operational bed utilisation gap — only ~6,878 of 13,037 beds (&lt;70%) operational in FY26, at 64% occupancy</li>
+      <li>Sahyadri Hospitals acquisition is margin-dilutive (18.6% EBITDA margin vs Manipal's ~26%)</li>
+      <li>Proforma FY26 EBITDA/PAT margins contracted to ~25%/~6% post-Sahyadri consolidation</li>
+    </ul></div>
+    <div class="swot-cell swot-o"><div class="swot-lbl ol">Opportunities</div><ul class="swot-ul">
+      <li>IPO proceeds (₹800 Cr fresh issue) earmarked to prepay ₹552.76 Cr subsidiary debt and buy out the Sahyadri minority stake — deleveraging tailwind</li>
+      <li>Scope to lift occupancy toward peer levels (67–76%) across under-utilised licensed capacity</li>
+    </ul></div>
+    <div class="swot-cell swot-t"><div class="swot-lbl tl">Threats</div><ul class="swot-ul">
+      <li>IPO-note commentary (SPTulsian) flagged the issue as expensive at ~25x EV/EBITDA and ~60x P/E against 25% margins, low occupancy and 12–13% RoE</li>
+      <li>Newly listed — no quarterly track record yet as a public company; first results (Q1 FY27) due 20 Aug 2026</li>
+      <li>Large promoter-group share pledging (36.9 Cr shares encumbered, incl. Deutsche Bank NCD-linked pledge over 21.5% of shares) disclosed in August 2026</li>
+    </ul></div>
+  </div>
+
+  <p style="font-size:11px;color:var(--muted);">Sector-level themes (structural demand, capex supercycle, valuation discipline) are summarised on the Verdict tab.</p>
+</div>
+
+<!-- ══════════ ANALYST RATINGS ══════════ -->
+<div id="tab-analyst" class="panel">
+  <div class="sec-hdr">🎯 Analyst Ratings <span class="sec-note">Third-party broker views post Q1 FY27 — not CB Research's own recommendation</span></div>
+  <table>
+    <thead><tr><th>Company</th><th>Broker</th><th>Rating</th><th>Target Price</th><th>Rationale (broker's stated view)</th></tr></thead>
+    <tbody>
+      <tr><td class="tb">Apollo Hospitals</td><td>JM Financial</td><td><span class="badge b-buy">BUY</span></td><td class="num">₹10,446</td><td>Hospital + pharmacy both sustaining 18–20% growth; pharmacy demerger to unlock value by Q4 FY27</td></tr>
+      <tr><td class="tb">Max Healthcare</td><td>Choice Institutional Equities</td><td><span class="badge b-hold">Constructive</span></td><td class="num">—</td><td>Rising occupancy/ARPOB at newer units to unlock operating leverage; Kalinga turnaround + medical-education optionality</td></tr>
+      <tr><td class="tb">Medanta (Global Health)</td><td>ICICI Securities</td><td><span class="badge b-buy">BUY</span></td><td class="num">₹1,650</td><td>26.5% revenue / 26.3% EBITDA growth; Noida loss narrowing faster than expected</td></tr>
+      <tr><td class="tb">Rainbow Children's</td><td>Systematix</td><td><span class="badge b-buy">BUY</span></td><td class="num">~27% upside (pre-Q1)</td><td>Pan-India expansion into Western India; asset-light hub-and-spoke model</td></tr>
+      <tr><td class="tb">Yatharth Hospitals</td><td>Nuvama</td><td><span class="badge b-buy">BUY</span></td><td class="num">—</td><td>ARPOB/occupancy below industry benchmark — sees meaningful re-rating headroom</td></tr>
+      <tr><td class="tb">Fortis Healthcare</td><td>General street commentary</td><td><span class="badge b-hold">Mixed</span></td><td class="num">—</td><td>Steady execution; ESOP cost drag near-term vs FY28 25% margin target reaffirmed</td></tr>
+      <tr><td class="tb">Narayana Hrudayalaya</td><td>General street commentary</td><td><span class="badge b-hold">Mixed / Sell (select)</span></td><td class="num">—</td><td>UK integration diluting margin; some brokers cautious on near-term profitability trajectory</td></tr>
+      <tr><td class="tb">KIMS Hospitals</td><td>General street commentary</td><td><span class="badge b-hold">Watch</span></td><td class="num">—</td><td>PAT decline flagged as transitional; watching Bangalore/Kerala breakeven timeline</td></tr>
+      <tr><td class="tb">Jupiter Life Line</td><td>General street commentary</td><td><span class="badge b-hold">Watch</span></td><td class="num">—</td><td>Dombivli ramp-up and rising finance costs flagged as near-term earnings drag</td></tr>
+    </tbody>
+  </table>
+  <p style="font-size:10.5px;color:var(--muted);margin-top:12px;">CB Research does not issue its own Buy/Sell/Hold calls. Ratings and targets above are attributed to named third-party brokerages or summarised general street commentary where a specific brokerage note was not identified, and may have moved since publication — verify with the broker's latest note before acting.</p>
+</div>
+
+<!-- ══════════ VERDICT ══════════ -->
+<div id="tab-verdict" class="panel">
+  <div class="sec-hdr">⚖️ Verdict <span class="sec-note">Q1 FY27 Wrap</span></div>
+  <div class="verdict-card">
+    <div class="verdict-title">🏥 The Sector: Growth Is Not the Question, Timing of Margin Payback Is</div>
+    <div class="verdict-body">Every listed Indian hospital major grew Q1 FY27 revenue by double digits, confirming that underlying demand for organised, tertiary-care healthcare remains structurally strong. The dispersion is in how each company converted that growth into profit. Apollo, Rainbow and Yatharth show that a business past its heavy capex phase — or expanding through fast-breakeven brownfield/M&amp;A — can grow revenue 20–51% and still grow PAT. KIMS, Jupiter and (to a lesser extent) Fortis and NH illustrate the other side: multiple simultaneous new-hospital ramp-ups compress EBITDA margin and inflate depreciation/finance costs faster than volumes can offset them. Neither pattern is a red flag on its own — it is where each company sits in its capex cycle. The sector's ~10,000-bed combined pipeline over the next 3–5 years means this divergence is likely to persist company-by-company through FY27–28, with early evidence (Yatharth Faridabad's 9-month breakeven, Medanta Noida's narrowing loss) that the earlier waves of expansion are beginning to convert into profit.</div>
+  </div>
+  <div class="g3">
+    <div class="card"><div class="card-lbl">Watch For Q2 FY27</div><p style="font-size:11.5px;line-height:1.7;">Whether KIMS's Kondapur and Bangalore units, Jupiter's Dombivli, and NH's UK margin trajectory show sequential improvement — that will be the tell on whether Q1's margin softness was transitory or a longer grind.</p></div>
+    <div class="card"><div class="card-lbl">Balance Sheet Discipline</div><p style="font-size:11.5px;line-height:1.7;">KIMS's rapid QIP-funded debt paydown (₹3,250 Cr → ₹2,400 Cr in one quarter) stands out as a proactive de-risking move worth tracking across the sector as capex intensifies.</p></div>
+    <div class="card"><div class="card-lbl">Valuation Discipline</div><p style="font-size:11.5px;line-height:1.7;">With several names trading at 45–95x trailing earnings, the sector is priced for continued execution. Investors should size positions with the awareness that a single soft quarter (as seen with Jupiter and NH post-results) can trigger sharp re-ratings.</p></div>
+  </div>
+</div>
+
+</div><!-- /main -->
+
+<!-- ══════════ VOICE ASSIST — floating widget, available on every tab ══════════ -->
+<div id="cbBubble" class="cb-bubble" title="Voice Assist">🎧 Voice Assist</div>
+<div id="cbPanel" class="cb-panel">
+  <div class="cb-panel-header">
+    <span>Voice Assist — Hospital Sector Q1 FY27</span>
+    <span id="cbPanelClose" class="cb-panel-close">&times;</span>
+  </div>
+  <div class="cbassist-chat" style="border:none;border-radius:0;flex:1;display:flex;flex-direction:column;overflow:hidden;">
+    <div class="cbassist-title">
+      <span></span>CB Assist
+      <select id="cbLangSelect" class="cb-lang-select" title="If voice input keeps mishearing you, try a different accent setting">
+        <option value="en-IN">IN 🇮🇳</option>
+        <option value="en-GB">UK 🇬🇧</option>
+        <option value="en-US">US 🇺🇸</option>
+      </select>
+      <button id="cbVoiceToggle" class="voice-toggle-btn" title="Turn spoken replies on/off">🔊</button>
+      <button id="cbClear" class="voice-toggle-btn" title="Clear conversation" style="margin-left:6px;">🗑</button>
+    </div>
+    <div class="cbassist-sub">Offline assistant · Ask about any of the 9 companies' Q1 FY27 numbers, or general terms like "what is EBITDA" · Can't give buy/sell advice</div>
+    <div class="chat-msgs" id="cbMsgs" style="flex:1;">
+      <div class="chat-msg bot">Hi! Ask me about Q1 FY27 revenue, PAT, EBITDA margin, or key events for Apollo, Max, Fortis, NH, Medanta, KIMS, Rainbow, Jupiter or Yatharth. Try a comparison ("compare Apollo and Max"), a ranking ("which company had the best revenue growth and why?"), or a term ("what does ARPOB mean?"). Tap the mic to ask out loud — if it mishears you, try switching the accent dropdown above.</div>
+    </div>
+    <div class="chat-input-row">
+      <input type="text" class="chat-input" id="cbInput" placeholder="e.g. How did KIMS perform in Q1 FY27?" onkeydown="if(event.key==='Enter')cbSend()">
+      <button class="chat-mic-btn" id="cbMic" title="Ask by voice">🎤</button>
+      <button class="chat-send" onclick="cbSend()">Ask</button>
+    </div>
+  </div>
+</div>
+
+<div class="cb-wm">
+  <div class="cb-wm-logo">CB</div>
+  <div>
+    <div class="cb-wm-name">Cauvery Business</div>
+    <div class="cb-wm-sub">Hospital Sector · Q1 FY27</div>
+  </div>
+</div>
+
+<script>
+function switchTab(id, btn){
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('tab-'+id).classList.add('active');
+  btn.classList.add('active');
+}
+
+// v2.2: pre-warm the Chrome mic permission the moment the panel opens — the
+// bubble click is itself a user gesture, so this can trigger the browser's
+// permission prompt right away instead of waiting for the first mic tap
+// (which used to eat the start of what the person said while the dialog
+// was still up, or force a second tap after granting). Only relevant if
+// this browser supports speech recognition at all; does nothing otherwise
+// — typing still works either way. Only ever asks once per page load, and
+// immediately releases the mic since actual capture is handled by the
+// Speech Recognition API in Part D, not by this stream.
+function cbPrimeMic(){
+  if(window.__cbMicPrimed) return;
+  const hasSpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+  if(!hasSpeechRecognition || !navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) return;
+  window.__cbMicPrimed = true;
+  navigator.mediaDevices.getUserMedia({ audio: true })
+    .then(stream => { stream.getTracks().forEach(t => t.stop()); })
+    .catch(() => { /* denied or unavailable — mic button still degrades to typing, same as before */ });
+}
+
+// ── VOICE ASSIST — floating bubble, works from any tab ──
+const cbBubble = document.getElementById('cbBubble');
+const cbPanel = document.getElementById('cbPanel');
+const cbPanelClose = document.getElementById('cbPanelClose');
+if(cbBubble && cbPanel){
+  cbBubble.addEventListener('click', () => {
+    const showing = cbPanel.style.display === 'flex';
+    cbPanel.style.display = showing ? 'none' : 'flex';
+    if(showing && typeof cbSynth !== 'undefined' && cbSynth) cbSynth.cancel();
+    if(!showing) cbPrimeMic();
+    if(!showing && !window.__cbGreeted){
+      window.__cbGreeted = true;
+      const greeting = document.querySelector('#cbMsgs .chat-msg.bot');
+      if(greeting) cbSpeak(greeting.textContent);
+    }
+  });
+}
+if(cbPanelClose && cbPanel){
+  cbPanelClose.addEventListener('click', () => {
+    cbPanel.style.display = 'none';
+    if(typeof cbSynth !== 'undefined' && cbSynth) cbSynth.cancel();
+  });
+}
+
+function switchCo(id, btn){
+  document.querySelectorAll('.cop').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('#coSelector .co-sel-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('cop-'+id).classList.add('active');
+  btn.classList.add('active');
+}
+
+const compData = {
+  labels: ['Apollo','Max','Fortis','NH','Medanta','KIMS','Rainbow','Jupiter','Yatharth'],
+  revGrowth: [20.6,16.0,17.5,78.0,26.5,35.3,33.2,16.4,51.0],
+  patGrowth: [34.2,3.0,2.3,5.7,-1.1,-47.2,16.2,-14.6,8.0],
+  margin: [15.5,24.8,22.3,18.8,23.8,18.9,28.7,19.3,23.3],
+  revenue: [7043.5,2982.0,2545.0,2683.6,1304.1,1179.5,470.0,411.0,392.7],
+  ebitdaAbs: [1092.0,704.0,568.0,505.2,315.3,223.4,134.65,79.3,91.7],
+  ebitdaGrowth: [28.0,15.0,15.8,40.0,23.5,16.0,29.9,1.15,39.0],
+  colors: ['#1d4ed8','#7c3aed','#166534','#0f766e','#b8911e','#ea580c','#dc2626','#0e7490','#9d174d']
+};
+
+// Standard: full real figures, no K/L/Cr-style abbreviation, en-IN locale formatting on axis & tooltip.
+function fmtINR(v){ return '₹' + Number(v).toLocaleString('en-IN', {maximumFractionDigits:1}) + ' Cr'; }
+
+// v2.4 fix: if the Chart.js CDN script is blocked, slow, or fails to load
+// for any reason (corporate firewall, ad-blocker, flaky connection), the
+// global `Chart` is undefined and `new Chart(...)` throws. Because these
+// calls used to run unguarded at the top level, that ONE uncaught error
+// stopped the entire inline <script> from executing any further — silently
+// killing everything declared below it, including the whole CB Assist
+// widget (cbSynth, cbFacts, cbSend, the mic engine, all of it), even though
+// none of that has anything to do with charts. A charting-library hiccup
+// should cost you a chart, never the assistant. Every call is now wrapped
+// so a failure here degrades gracefully (that one chart just doesn't
+// render) instead of cascading into "nothing on the page works."
+function bar(id, data, suffix){
+  try{
+    const ctx = document.getElementById(id);
+    if(!ctx) return;
+    new Chart(ctx, {
+      type:'bar',
+      data:{ labels: compData.labels, datasets:[{ data:data, backgroundColor: compData.colors }] },
+      options:{
+        plugins:{ legend:{display:false}, tooltip:{callbacks:{label:c=>c.parsed.y.toLocaleString('en-IN')+suffix}} },
+        scales:{ y:{ ticks:{ callback:v=>Number(v).toLocaleString('en-IN')+suffix } } }
+      }
+    });
+  }catch(e){ console.warn('Chart render skipped for', id, '—', e.message); }
+}
+
+function barINR(id, data){
+  try{
+    const ctx = document.getElementById(id);
+    if(!ctx) return;
+    new Chart(ctx, {
+      type:'bar',
+      data:{ labels: compData.labels, datasets:[{ data:data, backgroundColor: compData.colors }] },
+      options:{
+        plugins:{ legend:{display:false}, tooltip:{callbacks:{label:c=>fmtINR(c.parsed.y)}} },
+        scales:{ y:{ ticks:{ callback:v=>Number(v).toLocaleString('en-IN') } } }
+      }
+    });
+  }catch(e){ console.warn('Chart render skipped for', id, '—', e.message); }
+}
+bar('chartRev', compData.revGrowth, '%');
+bar('chartPat', compData.patGrowth, '%');
+bar('chartMargin', compData.margin, '%');
+barINR('chartRevScale', compData.revenue);
+barINR('chartEbitdaAbs', compData.ebitdaAbs);
+bar('chartEbitdaGrowth', compData.ebitdaGrowth, '%');
+
+// ── CB ASSIST VOICE (Web Speech API — no API key, mirrors the site-wide Voice Assist) ──
+const cbSynth = window.speechSynthesis;
+let cbVoiceEnabled = true;
+let cbPreferredVoice = null;
+
+function cbPickVoice(){
+  if(!cbSynth) return;
+  const voices = cbSynth.getVoices();
+  if(!voices || !voices.length) return;
+  const priority = ["Microsoft Neerja Online (Natural)","Microsoft Ravi Online (Natural)","Google UK English Female","Google US English","Samantha","Daniel"];
+  for(const name of priority){
+    const m = voices.find(v => v.name === name);
+    if(m){ cbPreferredVoice = m; return; }
+  }
+  cbPreferredVoice = voices.find(v => /^en/i.test(v.lang) && /(natural|online|premium)/i.test(v.name))
+    || voices.find(v => /^en/i.test(v.lang) && /google/i.test(v.name))
+    || voices.find(v => /en-IN/i.test(v.lang))
+    || voices.find(v => /^en/i.test(v.lang))
+    || null;
+}
+cbPickVoice();
+if(cbSynth) cbSynth.onvoiceschanged = cbPickVoice;
+
+function cbStripHtml(html){
+  const tmp = document.createElement('div');
+  tmp.innerHTML = html;
+  return tmp.textContent || tmp.innerText || '';
+}
+
+// v2: normalizes a reply before it's spoken, so currency/percent/acronyms
+// read naturally instead of literally ("₹81,900" → "rupees 81,900", "ARPOB"
+// → "A R P O B") — extend the acronym list if new jargon gets added to
+// cbAbbrevGlossary below.
+function cbSpeakableText(html){
+  let t = cbStripHtml(html);
+  t = t.replace(/₹\s*/g, ' rupees ')
+       .replace(/%/g, ' percent')
+       .replace(/\bCr\b/g, 'crore')
+       .replace(/\bYoY\b/gi, 'year on year')
+       .replace(/\bQoQ\b/gi, 'quarter on quarter')
+       .replace(/\bPAT\b/g, 'P A T')
+       .replace(/\bROCE\b/gi, 'R O C E')
+       .replace(/\bCAGR\b/gi, 'C A G R')
+       .replace(/\bARPOB\b/gi, 'A R P O B')
+       .replace(/\bARPIB\b/gi, 'A R P I B')
+       .replace(/\bALOS\b/gi, 'A L O S')
+       .replace(/\bQIP\b/gi, 'Q I P');
+  return t.replace(/\s+/g, ' ').trim();
+}
+
+function cbSpeakNow(text){
+  const u = new SpeechSynthesisUtterance(text);
+  if(cbPreferredVoice) u.voice = cbPreferredVoice;
+  u.lang = cbPreferredVoice ? cbPreferredVoice.lang : 'en-IN';
+  u.rate = 0.95;
+  u.pitch = 1;
+  cbSynth.speak(u);
+}
+
+function cbSpeak(text){
+  if(!cbSynth || !cbVoiceEnabled) return;
+  try{
+    const plain = cbSpeakableText(text);
+    if(cbSynth.speaking || cbSynth.pending){
+      // Chrome quirk: speak() right after cancel() can be silently dropped —
+      // give it a beat. Only happens if something's already talking.
+      cbSynth.cancel();
+      setTimeout(() => cbSpeakNow(plain), 120);
+    } else {
+      cbSpeakNow(plain); // synchronous — required for Safari/iOS to allow audio
+    }
+  }catch(e){ /* voice is an enhancement, never block the chat on it */ }
+}
+
+const cbVoiceToggle = document.getElementById('cbVoiceToggle');
+function cbRefreshVoiceToggle(){
+  if(!cbSynth){ if(cbVoiceToggle) cbVoiceToggle.style.display='none'; return; }
+  if(cbVoiceToggle){
+    cbVoiceToggle.textContent = cbVoiceEnabled ? '🔊' : '🔇';
+    cbVoiceToggle.title = cbVoiceEnabled ? 'Voice replies on — tap to mute' : 'Voice replies off — tap to unmute';
+  }
+}
+if(cbVoiceToggle){
+  cbVoiceToggle.addEventListener('click', () => {
+    cbVoiceEnabled = !cbVoiceEnabled;
+    if(!cbVoiceEnabled && cbSynth) cbSynth.cancel();
+    cbRefreshVoiceToggle();
+  });
+}
+cbRefreshVoiceToggle();
+
+// ── CB ASSIST MIC (speech-to-text) ──
+const CBSpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+const cbMicBtn = document.getElementById('cbMic');
+const cbLangSelect = document.getElementById('cbLangSelect');
+let cbRecognition = null, cbListening = false, cbFinalTranscript = '', cbUserWantsToListen = false, cbSafetyTimer = null;
+let cbFinalAlternatives = []; // v2: keeps runner-up transcripts for accent/mishearing recovery
+
+if(CBSpeechRecognition && cbMicBtn){
+  cbMicBtn.style.display = 'inline-block';
+  cbMicBtn.title = 'Tap to ask by voice, tap again when you\'re done speaking';
+
+  // NOTE: continuous:true (the browser's built-in "keep listening" mode) is
+  // well documented as unreliable across browsers — on some devices it can
+  // fail to stop cleanly, which is what caused the looping. Instead, we chain
+  // together short, reliable single-shot sessions ourselves: each one ends
+  // cleanly and predictably, and we immediately start the next one UNLESS
+  // the person has tapped the mic to say they're done. This gives the same
+  // "don't cut me off mid-sentence" behaviour without the instability, and a
+  // hard 20-second safety cap guarantees it can never run away regardless.
+  function cbNewRecognition(){
+    const r = new CBSpeechRecognition();
+    r.lang = (cbLangSelect && cbLangSelect.value) || 'en-IN';
+    r.continuous = false;
+    r.interimResults = true;
+    r.maxAlternatives = 3; // v2: keep runner-up transcripts — real fix for misheard company names/acronyms
+
+    r.addEventListener('result', (e) => {
+      let interim = '';
+      for(let i = e.resultIndex; i < e.results.length; i++){
+        const transcript = e.results[i][0].transcript;
+        if(e.results[i].isFinal){
+          cbFinalTranscript += transcript + ' ';
+          const alts = [];
+          for(let a = 1; a < e.results[i].length; a++) alts.push(e.results[i][a].transcript);
+          cbFinalAlternatives.push(alts);
+        } else {
+          interim += transcript;
+        }
+      }
+      document.getElementById('cbInput').value = (cbFinalTranscript + interim).trim();
+    });
+
+    r.addEventListener('error', (e) => {
+      if(e.error === 'not-allowed' || e.error === 'service-not-allowed'){
+        cbUserWantsToListen = false;
+        const msgs = document.getElementById('cbMsgs');
+        const b = document.createElement('div'); b.className='chat-msg bot';
+        b.textContent = "I couldn't access the microphone — please allow mic permission in your browser and try again, or just type your question.";
+        msgs.appendChild(b); msgs.scrollTop = msgs.scrollHeight;
+      }
+      // 'no-speech' / 'aborted' etc. are routine (e.g. a longer thinking
+      // pause) — the 'end' handler below decides whether to continue.
+    });
+
+    r.addEventListener('end', () => {
+      if(cbUserWantsToListen){
+        cbTryRestart();
+      } else {
+        cbStopListening(true);
+      }
+    });
+
+    return r;
+  }
+
+  // v2 fix: Chrome ends a non-continuous session after ANY short pause —
+  // completely normal, and the whole point of chaining fresh sessions in
+  // 'end' above is to make that invisible to the person still talking.
+  // BUT calling .start() again in the same tick a previous session just
+  // ended frequently throws InvalidStateError in real Chrome/Android
+  // builds. The old code treated that throw as "the user is done" and
+  // submitted whatever fragment was captured so far — which is why a
+  // natural mid-sentence pause (very commonly right after an emphasised
+  // word like "growth", just before the qualifying clause) was getting
+  // answered as if it were the whole question. A failed restart is a
+  // technical hiccup, not the user finishing their sentence, so it must
+  // never auto-submit: retry a few times with a short defer first, and if
+  // it truly can't restart, stop quietly and leave the partial transcript
+  // in the input box for the person to finish typing or resume the mic.
+  let cbRestartAttempts = 0;
+  const CB_MAX_RESTART_ATTEMPTS = 4;
+  function cbTryRestart(){
+    try{
+      cbRecognition = cbNewRecognition();
+      cbRecognition.start();
+      cbRestartAttempts = 0;
+    }catch(e){
+      cbRestartAttempts++;
+      if(cbRestartAttempts <= CB_MAX_RESTART_ATTEMPTS){
+        setTimeout(cbTryRestart, 150);
+      } else {
+        cbStopListening(false); // give up listening WITHOUT submitting
+        const msgs = document.getElementById('cbMsgs');
+        const b = document.createElement('div'); b.className='chat-msg bot';
+        b.textContent = "I lost the mic connection there — what I caught so far is still in the box, feel free to keep typing or tap the mic to continue.";
+        msgs.appendChild(b); msgs.scrollTop = msgs.scrollHeight;
+      }
+    }
+  }
+
+  function cbStopListening(submit){
+    cbUserWantsToListen = false;
+    cbListening = false;
+    cbMicBtn.textContent = '🎤';
+    cbMicBtn.classList.remove('listening');
+    if(cbSafetyTimer){ clearTimeout(cbSafetyTimer); cbSafetyTimer = null; }
+    if(cbRecognition){ try{ cbRecognition.stop(); }catch(e){} }
+    if(submit){
+      const finalQ = cbFinalTranscript.trim();
+      cbFinalTranscript = '';
+      if(finalQ){
+        document.getElementById('cbInput').value = finalQ;
+        // v2: flatten this turn's alternatives into a retry list, most-confident first.
+        window.__cbVoiceAlternates = [].concat(...cbFinalAlternatives);
+        cbFinalAlternatives = [];
+        cbSend();
+      } else {
+        cbFinalAlternatives = [];
+      }
+    }
+  }
+
+  cbMicBtn.addEventListener('click', () => {
+    if(cbUserWantsToListen){ cbStopListening(true); return; } // manual stop → submit whatever was captured
+    if(cbSynth) cbSynth.cancel();
+    cbFinalTranscript = '';
+    cbFinalAlternatives = [];
+    cbRestartAttempts = 0;
+    cbUserWantsToListen = true;
+    cbListening = true;
+    cbMicBtn.textContent = '⏺';
+    cbMicBtn.classList.add('listening');
+    cbRecognition = cbNewRecognition();
+    try{ cbRecognition.start(); }catch(e){ cbStopListening(false); }
+    cbSafetyTimer = setTimeout(() => { if(cbUserWantsToListen) cbStopListening(true); }, 20000); // hard cap — never listens forever
+  });
+
+  // v2: switching accent mid-panel just affects the next listening session.
+  if(cbLangSelect){
+    cbLangSelect.addEventListener('change', () => {
+      if(cbUserWantsToListen) cbStopListening(false);
+    });
+  }
+}
+
+// ── CB ASSIST CLEAR ──
+const cbClearBtn = document.getElementById('cbClear');
+if(cbClearBtn){
+  cbClearBtn.addEventListener('click', () => {
+    if(cbSynth) cbSynth.cancel();
+    if(cbUserWantsToListen){
+      cbUserWantsToListen = false;
+      cbListening = false;
+      if(cbSafetyTimer){ clearTimeout(cbSafetyTimer); cbSafetyTimer = null; }
+      if(cbRecognition){ try{ cbRecognition.stop(); }catch(e){} }
+      if(cbMicBtn){ cbMicBtn.textContent = '🎤'; cbMicBtn.classList.remove('listening'); }
+    }
+    if(typeof cbContext !== 'undefined'){ cbContext.lastCompany = null; cbContext.lastMetric = null; cbContext.awaitingConfirm = null; }
+    const msgs = document.getElementById('cbMsgs');
+    msgs.innerHTML = '<div class="chat-msg bot">Hi! Ask me about Q1 FY27 revenue, PAT, EBITDA margin, or key events for Apollo, Max, Fortis, NH, Medanta, KIMS, Rainbow, Jupiter or Yatharth. Try a comparison ("compare Apollo and Max"), a ranking ("which company had the best revenue growth and why?"), or a term ("what does ARPOB mean?"). Tap the mic to ask out loud — if it mishears you, try switching the accent dropdown above.</div>';
+    document.getElementById('cbInput').value = '';
+  });
+}
+
+// ── CB ASSIST FUZZY/PHONETIC MATCHING (v2) ──
+// Tackles accent/mishearing/typos: no hard-coded name dictionary, just
+// tolerance for closeness to whatever this dashboard already defines below
+// (cbFacts keys, compData.labels, cbAliasMap, glossary terms).
+function cbLevenshtein(a, b){
+  a = (a || '').toLowerCase(); b = (b || '').toLowerCase();
+  const m = a.length, n = b.length;
+  if(m === 0) return n;
+  if(n === 0) return m;
+  let prev = new Array(n + 1);
+  let curr = new Array(n + 1);
+  for(let j = 0; j <= n; j++) prev[j] = j;
+  for(let i = 1; i <= m; i++){
+    curr[0] = i;
+    for(let j = 1; j <= n; j++){
+      const cost = a[i - 1] === b[j - 1] ? 0 : 1;
+      curr[j] = Math.min(prev[j] + 1, curr[j - 1] + 1, prev[j - 1] + cost);
+    }
+    [prev, curr] = [curr, prev];
+  }
+  return prev[n];
+}
+
+function cbSimilarity(a, b){
+  if(!a || !b) return 0;
+  const dist = cbLevenshtein(a, b);
+  const maxLen = Math.max(a.length, b.length) || 1;
+  return 1 - dist / maxLen;
+}
+
+// Lightweight consonant-skeleton key (not a full Soundex/Metaphone) — good
+// enough to catch e.g. "Narayana" vs "Narayan", "Yatharth" vs "Yatharat".
+function cbPhoneticKey(s){
+  return (s || '').toLowerCase()
+    .replace(/[^a-z]/g, '')
+    .replace(/ph/g, 'f')
+    .replace(/wh/g, 'w')
+    .replace(/[cq]/g, 'k')
+    .replace(/z/g, 's')
+    .replace(/[aeiou]/g, '')
+    .replace(/(.)\1+/g, '$1');
+}
+
+const cbStopWords = new Set(['the','a','an','is','are','was','were','of','in','on','for','and','or','to','how','what','whats',
+  'which','who','did','do','does','has','have','had','with','about','company','companies','this','that','it','its','me',
+  'you','tell','please','can','could','would','i']);
+
+function cbTokenize(s){
+  return (s || '').toLowerCase().replace(/[^a-z0-9\s]/g, ' ').split(/\s+/).filter(Boolean);
+}
+
+function cbNgramCandidates(tokens, maxN){
+  const out = [];
+  for(let n = 1; n <= maxN; n++){
+    for(let i = 0; i + n <= tokens.length; i++) out.push(tokens.slice(i, i + n).join(' '));
+  }
+  return out;
+}
+
+// Best fuzzy match of any of `terms` inside free-text `ql`. Exact/substring
+// first (fast, no false-positive risk), then surface + phonetic similarity
+// on 1-2 word windows. Returns {term, score} or null.
+function cbFuzzyFind(ql, terms, threshold){
+  threshold = threshold == null ? 0.72 : threshold;
+  const cleanTerms = (terms || []).filter(Boolean);
+  if(!cleanTerms.length) return null;
+
+  const lowerQl = ql.toLowerCase();
+  for(const term of cleanTerms){
+    const t = term.toLowerCase();
+    if(t.length >= 3 && lowerQl.includes(t)) return { term, score: 1 };
+  }
+
+  const tokens = cbTokenize(ql).filter(t => !cbStopWords.has(t));
+  const candidates = cbNgramCandidates(tokens, 2);
+  let best = null;
+  candidates.forEach(cand => {
+    if(cand.length < 3) return;
+    cleanTerms.forEach(term => {
+      const t = term.toLowerCase();
+      const surface = cbSimilarity(cand, t);
+      const phon = cbSimilarity(cbPhoneticKey(cand), cbPhoneticKey(t));
+      const score = Math.max(surface, phon * 0.95);
+      if(score >= threshold && (!best || score > best.score)) best = { term, score };
+    });
+  });
+  return best;
+}
+
+// ── CB ASSIST CONVERSATION MEMORY & INTENT CLASSIFIER (v2) ──
+const cbContext = { lastCompany: null, lastMetric: null, awaitingConfirm: null };
+
+const cbGreetingRe = /^\s*(hi|hello|hey|vanakam|namaste|good\s?(morning|afternoon|evening))\b/i;
+const cbThanksRe = /\b(thanks|thank\s?you|thanku|thankyou|cheers|great|nice one|got it|ok(ay)?\s*(thanks)?)\s*[.!]*\s*$/i;
+const cbHelpRe = /\b(what can you (do|answer|tell me)|help me|how (do|can) (i|you) (use|ask)|what (questions|things) can i ask|what should i ask)\b/i;
+
+// Buy/sell/target-price/"good investment" style asks — checked BEFORE
+// company-name matching since these often name a company too ("should I buy
+// Apollo?") and must never be answered as a plain data lookup.
+const cbRecommendationRe = /\b(should i (buy|sell|invest|hold|avoid)|is (it|this|that|[a-z]+) (a )?good (buy|investment|time to (buy|sell|invest))|worth (buying|investing|holding)|buy or sell|target price|price target|will (the )?(stock|price|share) (go up|rise|fall|drop|crash)|which (stock|share|company) should i (buy|invest in)|best (stock|share|investment) to buy|recommend(ation)?s?\b.*\b(stock|share|buy|sell|invest)\b)\b/i;
+
+const cbDefinitionRe = /\b(what is|what'?s|whats|define|definition of|meaning of|explain)\b/i;
+
+// v2.5: a real visitor asked "which hospital received PE investments?" and
+// got an answer about something else entirely. Root cause: cbFacts only
+// ever carried the Q1 FY27 financial summary, so this question matched
+// none of it, fell through to cbAnalytical's compare-trigger path (which
+// treats "which hospital ..." as a ranking question), found no financial
+// metric to rank on, and defaulted to the generic blended-performance
+// "strongest overall" answer — confidently wrong, about a completely
+// different topic. The ownership data was sitting right there in the
+// dashboard's own "PE / Strategic Ownership" table the whole time; it was
+// just never wired into CB Assist. This regex must be checked BEFORE
+// cbAnalytical gets a turn, precisely so "which hospital" doesn't get
+// hijacked into a financial ranking again.
+const cbOwnershipIntentRe = /\b(private equity|\bpe\b[\s\S]{0,25}(invest\w*|back\w*|stake\w*|own\w*)|strategic investor|promoter(s|ship)?|major shareholder|who (owns|backs|controls)|backed by|stake ?(sale|holder)|ownership|sovereign (wealth|investor)|general atlantic|carlyle|temasek|\bkkr\b|\bihh\b|carnelian|quadria|apax)\b/i;
+
+function cbClassifyIntent(ql){
+  if(cbRecommendationRe.test(ql)) return 'recommendation';
+  if(cbHelpRe.test(ql)) return 'help';
+  if(cbGreetingRe.test(ql)) return 'greeting';
+  if(cbThanksRe.test(ql)) return 'thanks';
+  if(cbDefinitionRe.test(ql)) return 'definition';
+  return 'analytical';
+}
+
+function cbRecommendationResponse(){
+  return '<strong>Not investment advice</strong><ul>' +
+    '<li>CB Research is an independent research &amp; education platform — not SEBI-registered, so I can\'t give buy/sell/hold calls or price targets.</li>' +
+    '<li>I can share the disclosed Q1 FY27 numbers so you can form your own view — try a specific metric ("what\'s KIMS\'s PAT growth?") or a ranking ("which company had the best margin?").</li>' +
+    '</ul>';
+}
+
+function cbSmallTalkResponse(intent){
+  if(intent === 'greeting') return 'Hi! Ask me about Q1 FY27 numbers for any of the 9 companies, a comparison, a ranking, or a term like "what is EBITDA" — by typing or by voice.';
+  if(intent === 'thanks') return 'Happy to help — ask away if you\'ve got more questions.';
+  if(intent === 'help'){
+    return '<strong>Here\'s what I can answer</strong><ul>' +
+      '<li>Single-company numbers — "How did Apollo perform in Q1?"</li>' +
+      '<li>Comparisons — "Compare Max and Fortis"</li>' +
+      '<li>Rankings &amp; filters — "Which company had the best margin?", "Which companies grew revenue over 30%?"</li>' +
+      '<li>Term definitions — "What is ARPOB?", "What does YoY mean?"</li>' +
+      '<li>I can\'t give buy/sell recommendations or price targets — only disclosed facts &amp; figures.</li>' +
+      '</ul>';
+  }
+  return null;
+}
+
+// Sector-agnostic financial glossary — answers plain-English definition
+// questions even when the term never appears in any company's cbFacts text
+// (what casual, non-member visitors tend to ask). Sector-specific jargon
+// stays in cbAbbrevGlossary below since that also shows who disclosed it.
+const cbGenericDefinitions = {
+  'ebitda': 'Earnings Before Interest, Tax, Depreciation &amp; Amortisation — a measure of core operating profit before financing and accounting adjustments.',
+  'pat': 'Profit After Tax — the bottom-line net profit after all expenses, interest, depreciation and taxes.',
+  'net profit': 'Net Profit (PAT) — profit after tax, interest and depreciation: the true bottom line.',
+  'yoy': 'Year-on-Year — comparing a quarter or period to the same period one year earlier.',
+  'qoq': 'Quarter-on-Quarter — comparing a quarter to the immediately preceding one.',
+  'margin': 'Margin (unless stated otherwise) here means EBITDA margin — EBITDA as a percentage of revenue.',
+  'revenue': 'Revenue (or turnover / top line) — total income earned from operations before expenses are deducted.',
+  'net debt': 'Net Debt — total borrowings minus cash &amp; cash equivalents.',
+  'roe': 'Return on Equity — net profit as a percentage of shareholders\' equity.',
+  'eps': 'Earnings Per Share — net profit divided by the number of outstanding shares.',
+  'pe ratio': 'Price-to-Earnings Ratio — share price divided by earnings per share; a common (if rough) valuation yardstick.',
+  'market cap': 'Market Capitalisation — share price multiplied by the total number of outstanding shares.',
+  'occupancy': 'Bed occupancy — the percentage of a hospital\'s total beds that are occupied on average.',
+  'working capital': 'Working Capital — short-term assets minus short-term liabilities; capital tied up in day-to-day operations.'
+};
+
+function cbGenericDefinitionFallback(ql){
+  const terms = Object.keys(cbGenericDefinitions);
+  const found = cbFuzzyFind(ql, terms, 0.78);
+  if(!found) return null;
+  return '<strong>' + found.term.replace(/\b\w/g, c => c.toUpperCase()) + '</strong><ul><li>' + cbGenericDefinitions[found.term] + '</li></ul>';
+}
+
+// ── CB ASSIST (offline keyword bot) ──
+const cbFacts = {
+  apollo: "Apollo Hospitals Q1 FY27: Revenue ₹7,043.5 Cr (+20.6% YoY), EBITDA ₹1,092 Cr (+28%, margin 15.5%), PAT ₹580.7 Cr (+34.2%). Hospital occupancy 70% (up from 65%). Sarjapur, Bengaluru (180 beds) commissioned in the quarter.",
+  max: "Max Healthcare Q1 FY27: Network revenue ₹2,982 Cr (+16%), EBITDA ₹704 Cr (+15%, margin 24.8%), PAT ₹357 Cr (+3%). ARPOB ₹81,900 (+5%). Completed Kalinga Hospital (Bhubaneswar) and Yerawada Properties (Pune) acquisitions.",
+  fortis: "Fortis Healthcare Q1 FY27: Revenue ₹2,545 Cr (+17.5%), EBITDA ₹568 Cr (+15.8%, margin 22.3% ex-ESOP), PAT ₹273 Cr (+2.3%). Hospital occupancy 69%; net debt ₹2,233 Cr.",
+  nh: "Narayana Hrudayalaya Q1 FY27: Revenue ₹2,683.6 Cr (+78.0%, largely UK full-quarter base effect), EBITDA ₹505.2 Cr (+40%, margin 18.8%), PAT ₹207.3 Cr (+5.7%). India organic growth ~17%.",
+  medanta: "Medanta (Global Health) Q1 FY27: Revenue ₹1,304.1 Cr (+26.5%), EBITDA ₹315.3 Cr (+23.5%, margin 23.8%), PAT ₹157.3 Cr (-1.1% vs high base). Noida hospital EBITDA loss narrowed to ₹4.9 Cr from ₹23.6 Cr.",
+  kims: "KIMS Hospitals Q1 FY27: Revenue ₹1,179.5 Cr (+35.3%), EBITDA ₹223.4 Cr (+16%, margin 18.9%), PAT ₹41.5 Cr (-47.2%) due to 4 new hospitals in ramp-up. Debt cut from ₹3,250 Cr to ₹2,400 Cr using QIP proceeds.",
+  rainbow: "Rainbow Children's Medicare Q1 FY27: Revenue ₹470 Cr (+33.2%), EBITDA ₹134.65 Cr (+29.9%, margin 28.7% — best in sector), PAT ₹62.5 Cr (+16.2%). Expanding into Mumbai and Andhra Pradesh (Nellore).",
+  jupiter: "Jupiter Life Line Hospitals Q1 FY27: Revenue ₹411 Cr (+16.4%), EBITDA ₹79.3 Cr (+1.15%, margin 19.3%), PAT ₹37.5 Cr (-14.6%) due to Dombivli hospital ramp-up (₹9.5 Cr EBITDA drag) and higher finance costs.",
+  yatharth: "Yatharth Hospitals Q1 FY27: Revenue ₹392.7 Cr (+51% — highest in sector), EBITDA ₹91.7 Cr (+39%, margin 23.3%, adjusted 28.1%), PAT ₹45.4 Cr (+8%). Declared maiden interim dividend."
+};
+
+// Short one-line "why" driver per company, used for the terse bullet/table
+// views below — cbFacts above stays as the full-sentence source (also used
+// for the ARPOB/ROCE-style glossary search), this is just the compact form.
+const cbHighlights = {
+  apollo: "Occupancy up to 70%; Sarjapur (180 beds) commissioned",
+  max: "ARPOB ₹81,900 (+5%); Kalinga &amp; Yerawada acquisitions completed",
+  fortis: "Occupancy 69%; net debt ₹2,233 Cr",
+  nh: "UK full-quarter base effect; India organic growth ~17%",
+  medanta: "Noida hospital EBITDA loss narrowed to ₹4.9 Cr (from ₹23.6 Cr)",
+  kims: "4 new hospitals ramping up; debt cut ₹3,250 Cr → ₹2,400 Cr via QIP",
+  rainbow: "Best margin in sector; expanding into Mumbai &amp; Nellore (AP)",
+  jupiter: "Dombivli ramp-up drag (-₹9.5 Cr EBITDA); higher finance costs",
+  yatharth: "Highest revenue growth in sector; maiden interim dividend declared",
+};
+
+// v2.5: Private Equity / Strategic Ownership — pulled verbatim from the
+// dashboard's own "PE / Strategic Ownership" table and each company's
+// panel (same facts already published elsewhere on this page, just not
+// previously reachable through CB Assist). Update this alongside that
+// table/panels if ownership changes are added to the dashboard later —
+// it is NOT auto-synced from them.
+const cbOwnership = {
+  apollo:  { status: 'No active PE', detail: 'Apax Partners was an early PE backer but fully exited in 2012–13; promoter is the Reddy family (~28%).' },
+  max:     { status: 'PE-backed (KKR)', detail: 'KKR holds a stake via Kayak Investments, part of the promoter group; Government of Singapore/GIC holds ~5.8%.' },
+  fortis:  { status: 'Strategic-controlled (IHH)', detail: 'IHH Healthcare Berhad (Malaysia, Khazanah-linked) controls ~31%, raised via an open offer completed Nov 2025.' },
+  nh:      { status: 'No active PE', detail: 'Broadly FII/DII-held (FII ~10.6%); no dominant PE shareholder. Promoter: Dr. Devi Prasad Shetty &amp; family.' },
+  medanta: { status: 'Legacy PE (reduced)', detail: 'Carlyle and Temasek were early PE/sovereign backers (~45% combined pre-IPO) but sold down substantially in the 2022 IPO and after — no longer in the promoter group.' },
+  kims:    { status: 'PE-backed (General Atlantic)', detail: 'General Atlantic holds ~30% (bought from ICICI Venture) for $130 Mn in 2018; Quadria Capital was an earlier investor.' },
+  rainbow: { status: 'Legacy DFI (exited)', detail: 'British International Investment (BII) and CDC India were pre-IPO development-finance backers, fully sold down via the 2022 IPO offer-for-sale.' },
+  jupiter: { status: 'No active PE', detail: 'No major PE or strategic investor identified in current filings.' },
+  yatharth:{ status: 'Domestic fund holding', detail: 'Carnelian Asset Management (an India-focused alternative investment fund) holds a disclosed stake — no major global PE/DFI investor.' },
+};
+
+function cbOwnershipOne(key){
+  const o = cbOwnership[key];
+  const label = compData.labels[cbCompanyKeys.indexOf(key)];
+  cbContext.lastCompany = key;
+  return '<strong>' + label + ' — ownership</strong><ul><li><strong>' + o.status + '</strong></li><li>' + o.detail + '</li></ul>';
+}
+
+function cbOwnershipList(){
+  const withPE = cbCompanyKeys.filter(k => cbOwnership[k] && !/no active pe/i.test(cbOwnership[k].status));
+  const withoutPE = cbCompanyKeys.filter(k => cbOwnership[k] && /no active pe/i.test(cbOwnership[k].status));
+  const peLines = withPE.map(k => '<li>' + compData.labels[cbCompanyKeys.indexOf(k)] + ' — ' + cbOwnership[k].status + '</li>').join('');
+  const noneLine = withoutPE.length ? '<li>No active PE/strategic investor: ' + withoutPE.map(k => compData.labels[cbCompanyKeys.indexOf(k)]).join(', ') + '</li>' : '';
+  return '<strong>PE / Strategic Ownership — Hospital Sector</strong><ul>' + peLines + noneLine + '</ul>' +
+    '<p style="font-size:10.5px;color:var(--muted);margin-top:6px;">"PE" used broadly here (private equity, sovereign wealth, development-finance investors), per the dashboard\'s own Ownership table. Ask about one company (e.g. "who backs KIMS") for the fuller detail.</p>';
+}
+
+function cbPct(v){ return (v >= 0 ? '+' : '') + v.toFixed(1) + '%'; }
+
+// Short bulleted card for one company — the compact form used everywhere a
+// full answer is needed (single lookups, and the "Why" behind a ranking).
+function cbCompanyBullets(key){
+  const i = cbCompanyKeys.indexOf(key);
+  const pat = cbPatAbs[i];
+  cbContext.lastCompany = key; // v2: remember for pronoun follow-ups
+  return '<strong>' + compData.labels[i] + ' — Q1 FY27</strong><ul>' +
+    '<li>Revenue: ' + fmtINR(compData.revenue[i]) + ' (' + cbPct(compData.revGrowth[i]) + ' YoY)</li>' +
+    '<li>EBITDA: ' + fmtINR(compData.ebitdaAbs[i]) + ' (margin ' + compData.margin[i].toFixed(1) + '%)</li>' +
+    '<li>PAT: ' + (pat == null ? 'n/a' : fmtINR(pat)) + ' (' + cbPct(compData.patGrowth[i]) + ' YoY)</li>' +
+    (cbHighlights[key] ? '<li>' + cbHighlights[key] + '</li>' : '') +
+    '</ul>';
+}
+
+// v2.3: a real-visitor test surfaced this exact failure — "how come Narayana
+// is able to grow so well this quarter" got the same flat data-card as a
+// plain "how did NH perform" lookup, with the actual explanation (the
+// driver line) buried as the LAST bullet after three raw numbers, and no
+// flag that the headline +78% revenue growth is a UK base-effect artifact
+// (the same sentence already says real India organic growth is ~17%) or
+// that PAT only grew 5.7% despite that headline. A "why/how come" question
+// needs the explanation FIRST, with the misleading-headline caveat and the
+// profit/revenue disconnect made explicit — not just the same three bullets
+// re-ordered by luck.
+// NOTE: deliberately does NOT include a bare "how did/does X perform" —
+// that's the app's own example question ("e.g. How did KIMS perform in Q1
+// FY27?") and must stay a plain factual lookup, not an explanation. Only
+// phrasing that explicitly asks for a reason/cause counts as "why" intent.
+const cbWhyIntentRe = /\b(why|how come|how (is|did|does|has) .*(manage|able) to|what('?s| is)?\s*driving|what caused|reason (for|behind)|explain why)\b/i;
+
+// Pulls the human company name out of cbFacts's own lead sentence (e.g.
+// "Narayana Hrudayalaya Q1 FY27: ..." → "Narayana Hrudayalaya") so a
+// visitor who asked using the full name sees it echoed back, not just the
+// short chart label — falls back to the chart label if the pattern doesn't
+// match. Keeping the short label in parentheses preserves the follow-up
+// chip logic below, which scans replies for `compData.labels`.
+function cbFullName(key){
+  const text = cbFacts[key] || '';
+  const m = text.match(/^([^,]+?)\s+Q1\s*FY\d{2}/i);
+  return m ? m[1].trim() : compData.labels[cbCompanyKeys.indexOf(key)];
+}
+
+function cbCompanyWhy(key){
+  const i = cbCompanyKeys.indexOf(key);
+  cbContext.lastCompany = key;
+  const label = compData.labels[i];
+  const full = cbFullName(key);
+  const driver = cbHighlights[key] || 'No specific driver called out in the Q1 FY27 disclosure.';
+  const revGrowth = compData.revGrowth[i];
+  const patGrowth = compData.patGrowth[i];
+  const skewed = /base effect|one-?off|acquisition|m&amp;a|\bm&a\b|high base|low base|consolidat/i.test(driver);
+  const caveat = skewed
+    ? '<li><em>Heads up: the headline revenue growth below includes a one-off/base effect called out in the driver above — treat it as less comparable than a like-for-like number.</em></li>'
+    : '';
+  const patGap = (revGrowth - patGrowth >= 15)
+    ? '<li>Worth noting: PAT growth (' + cbPct(patGrowth) + ') lagged well behind revenue growth (' + cbPct(revGrowth) + ') — profit didn\'t scale at the same pace this quarter.</li>'
+    : '';
+  const labelAlreadyInFull = new RegExp('\\b' + label.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '\\b', 'i').test(full);
+  return '<strong>' + full + (labelAlreadyInFull ? '' : ' (' + label + ')') + ' — why Q1 FY27 looked this way</strong><ul>' +
+    '<li><strong>Main driver:</strong> ' + driver + '</li>' +
+    caveat + patGap +
+    '<li>For reference: revenue ' + fmtINR(compData.revenue[i]) + ' (' + cbPct(revGrowth) + ' YoY), EBITDA margin ' + compData.margin[i].toFixed(1) + '%, PAT ' + (cbPatAbs[i] == null ? 'n/a' : fmtINR(cbPatAbs[i])) + ' (' + cbPct(patGrowth) + ' YoY)</li>' +
+    '</ul>';
+}
+
+// Side-by-side table for a two-company compare — clearer than two separate
+// bullet lists when the point is to line the numbers up against each other.
+function cbCompareTable(k1, k2){
+  const i1 = cbCompanyKeys.indexOf(k1), i2 = cbCompanyKeys.indexOf(k2);
+  cbContext.lastCompany = k2; // v2: most-recently-named company, for a natural follow-up
+  const row = (label, v1, v2) => '<tr><td>' + label + '</td><td>' + v1 + '</td><td>' + v2 + '</td></tr>';
+  return '<strong>' + compData.labels[i1] + ' vs ' + compData.labels[i2] + ' — Q1 FY27</strong>' +
+    '<table><tr><th>Metric</th><th>' + compData.labels[i1] + '</th><th>' + compData.labels[i2] + '</th></tr>' +
+    row('Revenue', fmtINR(compData.revenue[i1]) + ' (' + cbPct(compData.revGrowth[i1]) + ')', fmtINR(compData.revenue[i2]) + ' (' + cbPct(compData.revGrowth[i2]) + ')') +
+    row('EBITDA margin', compData.margin[i1].toFixed(1) + '%', compData.margin[i2].toFixed(1) + '%') +
+    row('PAT', (cbPatAbs[i1] == null ? 'n/a' : fmtINR(cbPatAbs[i1])) + ' (' + cbPct(compData.patGrowth[i1]) + ')', (cbPatAbs[i2] == null ? 'n/a' : fmtINR(cbPatAbs[i2])) + ' (' + cbPct(compData.patGrowth[i2]) + ')') +
+    row('Highlight', cbHighlights[k1] || '—', cbHighlights[k2] || '—') +
+    '</table>';
+}
+
+
+// ── CB ASSIST ANALYTICAL LAYER ──
+// Extends the offline keyword bot to answer comparative/ranking questions
+// ("which company had the best revenue and why?") using the same Q1 FY27
+// numbers already charted in compData, plus the driver context already
+// written in cbFacts — no external API, still fully offline/static.
+const cbCompanyKeys = Object.keys(cbFacts);
+const cbAliasMap = { nh: ['nh', 'narayana'], medanta: ['medanta', 'global health'], kims: ['kims', 'krishna'] };
+
+function cbExtractNum(text, label){
+  const re = new RegExp(label + '\\s*₹\\s*([\\d,]+\\.?\\d*)', 'i');
+  const m = text.match(re);
+  return m ? parseFloat(m[1].replace(/,/g, '')) : null;
+}
+const cbPatAbs = cbCompanyKeys.map(k => cbExtractNum(cbFacts[k], 'PAT'));
+
+function cbIdxExtreme(arr, mode){
+  let idx = 0;
+  for(let i = 1; i < arr.length; i++){
+    if(mode === 'max' ? arr[i] > arr[idx] : arr[i] < arr[idx]) idx = i;
+  }
+  return idx;
+}
+
+const cbCompareTrigger = /\b(best|highest|top|leader|leading|largest|biggest|strongest|worst|lowest|weakest|smallest|which (compan(y|ies)|hospital(s)?|one)|who (is|has|leads)|compare|vs\.?|versus|rank|ranking|overall|average|sector average)\b/i;
+
+// Abbreviations/metrics the bot can EXPLAIN even when it doesn't have a
+// full 9-company numeric array to rank on — e.g. ARPOB is only mentioned in
+// Max's Q1 FY27 summary, not disclosed for the other 8 this quarter. Rather
+// than returning "I don't understand", it explains the term and surfaces
+// whichever companies' write-ups actually mention it, with an honest note
+// about what's missing — instead of silently failing OR making up numbers
+// for companies that didn't disclose it.
+const cbAbbrevGlossary = {
+  arpob: 'Average Revenue Per Occupied Bed',
+  arpib: 'Average Revenue Per Inpatient Bed',
+  alos: 'Average Length of Stay',
+  roce: 'Return on Capital Employed',
+  cagr: 'Compound Annual Growth Rate',
+  capex: 'Capital Expenditure',
+  qip: 'Qualified Institutional Placement',
+};
+
+function cbSearchMentions(term){
+  const re = new RegExp('\\b' + term + '\\b', 'i');
+  const hits = [];
+  cbCompanyKeys.forEach((key, i) => {
+    if(re.test(cbFacts[key])) hits.push({ label: compData.labels[i], text: cbFacts[key] });
+  });
+  return hits;
+}
+
+// Pulls just the one sentence mentioning the term, not the whole paragraph — keeps it short.
+function cbSnippetFor(text, term){
+  const sentences = text.split(/(?<=[.!?])\s+/);
+  return sentences.find(s => new RegExp('\\b' + term + '\\b', 'i').test(s)) || text;
+}
+
+// v2: fuzzy-matches the term itself too (e.g. "R O C E" or a mangled
+// acronym), falling through to the generic glossary above if this sector's
+// own glossary has no match.
+function cbAbbrevFallback(ql){
+  const terms = Object.keys(cbAbbrevGlossary);
+  const found = cbFuzzyFind(ql, terms, 0.78);
+  if(found){
+    const term = found.term;
+    const full = cbAbbrevGlossary[term];
+    const hits = cbSearchMentions(term);
+    if(hits.length === 0){
+      return '<strong>' + term.toUpperCase() + '</strong> (' + full + ')<ul><li>Not called out for any of the 9 companies this quarter — check individual filings</li></ul>';
+    }
+    const list = hits.map(h => '<li><strong>' + h.label + ':</strong> ' + cbSnippetFor(h.text, term) + '</li>').join('');
+    const missing = cbCompanyKeys.length - hits.length;
+    return '<strong>' + term.toUpperCase() + '</strong> (' + full + ')<ul>' + list +
+      (missing > 0 ? '<li><em>Not disclosed for the other ' + missing + ' companies this quarter</em></li>' : '') + '</ul>';
+  }
+  return null;
+}
+
+function cbMetricDefs(){
+  return [
+    { test: ql => /revenue.*(growth|grew|grow)|(growth|grew|grow).*revenue/.test(ql), data: compData.revGrowth, name: 'revenue growth', words: ['revenue growth'], fmt: v => v.toFixed(1) + '% YoY' },
+    { test: ql => /(\bpat\b|profit|net profit|earnings|bottom line).*(growth|grew|grow)|(growth|grew|grow).*(\bpat\b|profit|net profit|earnings|bottom line)/.test(ql), data: compData.patGrowth, name: 'PAT growth', words: ['pat growth', 'profit growth'], fmt: v => v.toFixed(1) + '% YoY' },
+    { test: ql => /ebitda.*(growth|grew|grow)|(growth|grew|grow).*ebitda/.test(ql), data: compData.ebitdaGrowth, name: 'EBITDA growth', words: ['ebitda growth'], fmt: v => v.toFixed(1) + '% YoY' },
+    { test: ql => /margin/.test(ql), data: compData.margin, name: 'EBITDA margin', words: ['margin', 'ebitda margin'], fmt: v => v.toFixed(1) + '%' },
+    { test: ql => /ebitda/.test(ql), data: compData.ebitdaAbs, name: 'EBITDA', words: ['ebitda'], fmt: v => fmtINR(v) },
+    { test: ql => /(\bpat\b|profit|net profit|earnings|bottom line)/.test(ql), data: cbPatAbs, name: 'PAT (net profit)', words: ['pat', 'net profit', 'profit'], fmt: v => v == null ? 'n/a' : fmtINR(v) },
+    { test: ql => /(revenue|turnover|sales|top line)/.test(ql), data: compData.revenue, name: 'revenue', words: ['revenue', 'turnover', 'sales'], fmt: v => fmtINR(v) },
+  ];
+}
+
+// v2: fuzzy metric lookup used when regex .test() misses due to a misheard word.
+function cbResolveMetric(ql){
+  const defs = cbMetricDefs();
+  const direct = defs.find(m => m.test(ql));
+  if(direct) return direct;
+  let best = null, bestScore = 0;
+  defs.forEach(m => {
+    const found = cbFuzzyFind(ql, m.words || [m.name], 0.75);
+    if(found && found.score > bestScore){ best = m; bestScore = found.score; }
+  });
+  return best;
+}
+
+// v2: replaces the old exact-substring alias filter with fuzzy matching +
+// pronoun/context fallback. Returns { keys, fuzzy, confidence, fromContext }.
+function cbResolveCompany(ql){
+  const exact = cbCompanyKeys.filter(key => (cbAliasMap[key] || [key]).some(a => ql.includes(a.toLowerCase())));
+  if(exact.length) return { keys: exact, fuzzy: false, confidence: 1 };
+
+  const scored = [];
+  cbCompanyKeys.forEach(key => {
+    const i = cbCompanyKeys.indexOf(key);
+    const names = (cbAliasMap[key] || [key]).concat([compData.labels[i]]);
+    const found = cbFuzzyFind(ql, names, 0.74);
+    if(found) scored.push({ key, score: found.score });
+  });
+  if(scored.length){
+    scored.sort((a, b) => b.score - a.score);
+    const top = scored.filter(s => s.score >= scored[0].score - 0.03);
+    return { keys: top.map(s => s.key), fuzzy: true, confidence: scored[0].score };
+  }
+
+  if(/\b(they|them|their|theirs|it'?s?|that company|the company|same company|him|her)\b/i.test(ql) && cbContext.lastCompany){
+    return { keys: [cbContext.lastCompany], fuzzy: false, confidence: 1, fromContext: true };
+  }
+  return { keys: [], fuzzy: false, confidence: 0 };
+}
+
+function cbAnalytical(ql){
+  const resolved = cbResolveCompany(ql);
+
+  // Two confidently-identified companies → side-by-side table, regardless of exact phrasing.
+  if(resolved.keys.length === 2 && (!resolved.fuzzy || resolved.confidence >= 0.85)){
+    return cbCompareTable(resolved.keys[0], resolved.keys[1]);
+  }
+
+  // v2: threshold-filtered questions — "companies that grew revenue over 30%"
+  const thresholdMatch = ql.match(/(over|above|more than|greater than|at least)\s*(\d+(\.\d+)?)\s*%/i)
+    || ql.match(/(under|below|less than)\s*(\d+(\.\d+)?)\s*%/i);
+  if(thresholdMatch && cbCompareTrigger.test(ql)){
+    const metric = cbResolveMetric(ql) || cbMetricDefs()[0];
+    const threshold = parseFloat(thresholdMatch[2]);
+    const isAbove = /over|above|more than|greater than|at least/i.test(thresholdMatch[1]);
+    const hits = compData.labels.map((label, i) => ({ label, v: metric.data[i] }))
+      .filter(r => r.v != null && (isAbove ? r.v >= threshold : r.v <= threshold));
+    if(!hits.length){
+      return '<strong>No matches</strong><ul><li>No company is ' + (isAbove ? 'above' : 'below') + ' ' + threshold + '% on ' + metric.name + ' this quarter</li></ul>';
+    }
+    return '<strong>' + metric.name.charAt(0).toUpperCase() + metric.name.slice(1) + ' ' + (isAbove ? '≥' : '≤') + ' ' + threshold + '%</strong><ul>' +
+      hits.map(r => '<li>' + r.label + ': ' + metric.fmt(r.v) + '</li>').join('') + '</ul>';
+  }
+
+  // v2: sector-average questions
+  if(/\b(average|sector average|typical|median)\b/i.test(ql)){
+    const metric = cbResolveMetric(ql);
+    if(metric){
+      const vals = metric.data.filter(v => v != null);
+      const avg = vals.reduce((a, b) => a + b, 0) / (vals.length || 1);
+      return '<strong>Sector average — ' + metric.name + '</strong><ul><li>' + metric.fmt(avg) + ' across ' + vals.length + ' of ' + cbCompanyKeys.length + ' companies (where disclosed)</li></ul>';
+    }
+  }
+
+  if(!cbCompareTrigger.test(ql)){
+    // Not a ranking/compare question. Exactly one confident company match → answer it directly.
+    if(resolved.keys.length === 1 && (!resolved.fuzzy || resolved.confidence >= 0.85)){
+      // v2.3: an explanatory "why/how come" question gets the driver-first
+      // answer (with the misleading-headline caveat), not the flat data card.
+      return cbWhyIntentRe.test(ql) ? cbCompanyWhy(resolved.keys[0]) : cbCompanyBullets(resolved.keys[0]);
+    }
+    // v2: low-confidence single match → clarify instead of guessing or failing silently.
+    if(resolved.keys.length >= 1 && resolved.fuzzy && resolved.confidence < 0.85){
+      const label = compData.labels[cbCompanyKeys.indexOf(resolved.keys[0])];
+      cbContext.awaitingConfirm = resolved.keys[0];
+      return '<span class="cb-clarify">I\'m not fully sure I caught that — did you mean <strong>' + label + '</strong>?</span>';
+    }
+    return null; // let the abbreviation/generic-glossary fallback in cbAnswer have a turn
+  }
+
+  const wantsWorst = /worst|lowest|weakest|smallest|declin|laggard|underperform/i.test(ql);
+  const dir = wantsWorst ? 'min' : 'max';
+  const metric = cbResolveMetric(ql);
+
+  if(!metric){
+    const abbrevResp = cbAbbrevFallback(ql);
+    if(abbrevResp) return abbrevResp;
+
+    // No specific metric named — blended Q1 FY27 performance across revenue
+    // growth, PAT growth and EBITDA margin (equally weighted, normalized).
+    // This is descriptive ranking of disclosed results, not a buy/sell call.
+    const norm = arr => { const lo = Math.min(...arr), hi = Math.max(...arr); return arr.map(v => hi === lo ? 0.5 : (v - lo) / (hi - lo)); };
+    const nRev = norm(compData.revGrowth), nPat = norm(compData.patGrowth), nMar = norm(compData.margin);
+    const score = compData.labels.map((_, i) => (nRev[i] + nPat[i] + nMar[i]) / 3);
+    const idx = cbIdxExtreme(score, dir);
+    const key = cbCompanyKeys[idx];
+    cbContext.lastCompany = key;
+    return '<strong>🏆 ' + compData.labels[idx] + ' — ' + (wantsWorst ? 'Weakest' : 'Strongest') + ' overall</strong><ul>' +
+      '<li>Blend of revenue growth, PAT growth &amp; EBITDA margin</li>' +
+      '<li>' + (cbHighlights[key] || '') + '</li>' +
+      '<li><em>Performance read of disclosed results — not a recommendation</em></li></ul>';
+  }
+
+  const idx = cbIdxExtreme(metric.data, dir);
+  const key = cbCompanyKeys[idx];
+  const label = compData.labels[idx];
+  const value = metric.fmt(metric.data[idx]);
+  const sortedIdx = compData.labels.map((_, i) => i).sort((a, b) => dir === 'max' ? metric.data[b] - metric.data[a] : metric.data[a] - metric.data[b]);
+  const runnerIdx = sortedIdx[1];
+  const runnerLabel = compData.labels[runnerIdx];
+  const runnerValue = metric.fmt(metric.data[runnerIdx]);
+  cbContext.lastCompany = key;
+  cbContext.lastMetric = metric.name;
+
+  return '<strong>🏆 ' + label + ' — ' + (dir === 'max' ? 'Highest' : 'Lowest') + ' ' + metric.name + '</strong><ul>' +
+    '<li>' + value + (dir === 'max' ? ' — ahead of ' : ' — next-lowest is ') + runnerLabel + ' (' + runnerValue + ')</li>' +
+    '<li>Why: ' + (cbHighlights[key] || '') + '</li></ul>';
+}
+
+// Turns each answer into a jumping-off point instead of a dead end — a
+// small set of tappable follow-up questions shown under the reply, chosen
+// based on what was just discussed (one company → suggest comparing it or
+// a different metric; a ranking answer → suggest another metric or the
+// opposite direction). Tapping a chip asks it immediately, voice included.
+function cbFollowUpSuggestions(resp){
+  const mentioned = cbCompanyKeys.filter((k, i) => new RegExp('\\b' + compData.labels[i] + '\\b', 'i').test(resp));
+  if(mentioned.length === 1){
+    const i = cbCompanyKeys.indexOf(mentioned[0]);
+    const other = compData.labels[(i + 1) % compData.labels.length];
+    return ['Compare ' + compData.labels[i] + ' and ' + other, 'Best EBITDA margin', 'Worst PAT growth'];
+  }
+  if(mentioned.length === 2){
+    return ['Best revenue growth', 'Best EBITDA margin', 'Overall which company is best'];
+  }
+  return ['Best revenue growth', 'Best EBITDA margin', 'Compare Apollo and Max'];
+}
+
+function cbShowFollowUps(resp){
+  const msgs = document.getElementById('cbMsgs');
+  const old = document.getElementById('cbChips');
+  if(old) old.remove();
+  const row = document.createElement('div');
+  row.id = 'cbChips';
+  row.className = 'cb-chip-row';
+  cbFollowUpSuggestions(resp).forEach(s => {
+    const chip = document.createElement('button');
+    chip.type = 'button';
+    chip.className = 'cb-chip';
+    chip.textContent = s;
+    chip.addEventListener('click', () => {
+      document.getElementById('cbInput').value = s;
+      cbSend();
+    });
+    row.appendChild(chip);
+  });
+  msgs.appendChild(row);
+  msgs.scrollTop = msgs.scrollHeight;
+}
+
+// v2: tries, in order — a pending "did you mean X?" confirm/deny, the
+// compliance guardrail, small talk, the analytical layer (which itself
+// tries the sector glossary + generic glossary internally), then the
+// definition glossaries again standalone (covers "what's ARPOB" phrased in
+// a way cbAnalytical's company/metric checks don't touch). Returns null on
+// a true miss so cbSend can retry with voice alternatives.
+function cbAnswer(ql){
+  if(cbContext.awaitingConfirm){
+    const pending = cbContext.awaitingConfirm;
+    cbContext.awaitingConfirm = null;
+    if(/^\s*(yes|yeah|yep|correct|right|that'?s? (right|it|him|her))\b/i.test(ql)){
+      return cbCompanyBullets(pending);
+    }
+    // any other reply falls through to normal handling below
+  }
+
+  // v2: recommendation guardrail and small talk are checked ahead of
+  // everything else — they don't depend on company/metric resolution.
+  // Definitions are NOT special-cased here on purpose: cbAnalytical already
+  // returns null for a query that names no company and isn't a
+  // ranking/compare/average question, and the abbreviation/generic-glossary
+  // fallback below then gets a turn. Special-casing "what is/what's" ahead
+  // of cbAnalytical was tried and reverted — it hijacked genuine analytical
+  // questions phrased that way ("what's the sector average margin?", "what
+  // is their PAT growth?" after a pronoun) into a bare term definition
+  // instead of answering them.
+  const intent = cbClassifyIntent(ql);
+  if(intent === 'recommendation') return cbRecommendationResponse();
+  const smallTalk = cbSmallTalkResponse(intent);
+  if(smallTalk) return smallTalk;
+
+  // v2.5: ownership questions are checked BEFORE cbAnalytical on purpose —
+  // "which hospital received PE investments" contains "which hospital",
+  // which cbCompareTrigger treats as a ranking question, and with no
+  // financial metric to rank on it would otherwise fall through to the
+  // generic "strongest overall performer" answer: confidently wrong, about
+  // an entirely different topic. See the cbOwnershipIntentRe comment above.
+  if(cbOwnershipIntentRe.test(ql)){
+    const resolved = cbResolveCompany(ql);
+    if(resolved.keys.length === 1 && (!resolved.fuzzy || resolved.confidence >= 0.85) && cbOwnership[resolved.keys[0]]){
+      return cbOwnershipOne(resolved.keys[0]);
+    }
+    return cbOwnershipList();
+  }
+
+  const analytical = cbAnalytical(ql);
+  if(analytical) return analytical;
+
+  const abbrev = cbAbbrevFallback(ql);
+  if(abbrev) return abbrev;
+  const generic = cbGenericDefinitionFallback(ql);
+  if(generic) return generic;
+
+  return null;
+}
+
+function cbSend(){
+  const input = document.getElementById('cbInput');
+  const q = input.value.trim();
+  if(!q) return;
+  const msgs = document.getElementById('cbMsgs');
+  const oldChips = document.getElementById('cbChips');
+  if(oldChips) oldChips.remove();
+  const u = document.createElement('div'); u.className='chat-msg user'; u.textContent=q; msgs.appendChild(u);
+
+  let ql = q.toLowerCase();
+  let resp = cbAnswer(ql);
+
+  // v2: if this query came from voice and produced no match, retry with the
+  // other recognition alternatives before giving up — the main
+  // accent/mishearing recovery path.
+  if(!resp && window.__cbVoiceAlternates && window.__cbVoiceAlternates.length){
+    for(const alt of window.__cbVoiceAlternates){
+      const altQl = alt.toLowerCase();
+      const altResp = cbAnswer(altQl);
+      if(altResp){ resp = altResp; ql = altQl; break; }
+    }
+  }
+  window.__cbVoiceAlternates = null;
+
+  if(!resp){
+    resp = "I can share Q1 FY27 figures for Apollo, Max, Fortis, NH, Medanta, KIMS, Rainbow, Jupiter or Yatharth — try mentioning a company name, ask something like \"which company had the best revenue growth and why?\", or ask what a term like \"ROCE\" means.";
+  }
+
+  const b = document.createElement('div'); b.className='chat-msg bot'; b.innerHTML=resp; msgs.appendChild(b);
+  input.value=''; msgs.scrollTop = msgs.scrollHeight;
+  cbSpeak(resp);
+  cbShowFollowUps(resp);
+}
+</script>
+
+</body>
+</html>
