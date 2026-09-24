@@ -1,0 +1,966 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Indian IT AI Scorecard</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800;900&family=Inter:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@500;600;700&family=Noto+Sans+Tamil:wght@400;600;700;800&display=swap">
+<style>
+:root{
+  color-scheme:light;
+  --bg:#FFFFFF; --ink:#101318; --ink2:#2E3440; --mute:#5B6472;
+  --line:#ECE4D8; --soft:#FFF6EC; --soft2:#FFFBF6;
+  --acc:#F28C28; --acc-ink:#A8520A; --acc-l:#FDD9B5;
+  --good:#127A3A; --good-bg:#E7F6EC; --warn:#9A5B00; --warn-bg:#FFF3D6; --bad:#B42318; --bad-bg:#FDECEA;
+  --tcs:#1D4ED8; --infy:#0284C7; --hcl:#7C3AED; --wipro:#0F766E; --techm:#BE123C;
+  --serif:"Playfair Display",Georgia,"Noto Sans Tamil",serif;
+  --sans:Inter,"Noto Sans Tamil",-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
+}
+*{box-sizing:border-box}
+html,body{background:var(--bg)}
+body{margin:0;font-family:var(--sans);color:var(--ink);font-size:15px;line-height:1.55;-webkit-font-smoothing:antialiased}
+body:not(.lang-ta) .ta{display:none!important}
+body.lang-ta .en{display:none!important}
+body.lang-ta{font-size:14.5px}
+.wrap{max-width:1120px;margin:0 auto;padding-inline:16px}
+button{font-family:inherit;cursor:pointer}
+button:focus-visible,input:focus-visible,select:focus-visible,[tabindex]:focus-visible{outline:3px solid var(--acc);outline-offset:2px}
+h1,h2,h3{text-wrap:balance;margin:0}
+.num{font-family:var(--mono);font-variant-numeric:tabular-nums}
+
+/* header */
+header.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:40;background:rgba(255,255,255,.96);backdrop-filter:blur(6px);border-bottom:1px solid var(--line)}
+.bar{display:flex;align-items:center;gap:12px;padding-block:10px;flex-wrap:wrap}
+.logo{width:38px;height:38px;border-radius:10px;background:var(--acc);color:#fff;font:800 15px var(--mono);display:grid;place-items:center;flex:none}
+.brand b{display:block;font-weight:800;font-size:14px;letter-spacing:.02em}
+.brand small{display:block;font:600 11px var(--mono);color:var(--acc-ink);letter-spacing:.08em;text-transform:uppercase}
+.bar .sp{flex:1}
+.pill-btn{border:1.5px solid var(--ink);background:#fff;color:var(--ink);font-weight:700;font-size:13px;padding:7px 12px;border-radius:999px;display:inline-flex;align-items:center;gap:6px}
+.pill-btn:hover{background:var(--soft)}
+.pill-btn.on{background:var(--ink);color:#fff}
+.lang{display:inline-flex;border:1.5px solid var(--ink);border-radius:999px;overflow:hidden}
+.lang button{border:0;background:#fff;color:var(--ink);font-weight:800;font-size:13px;padding:7px 12px}
+.lang button.on{background:var(--acc);color:#fff}
+nav.tabs{display:flex;gap:4px;overflow-x:auto;scrollbar-width:thin;padding-bottom:0}
+nav.tabs button{flex:none;border:0;background:none;color:var(--mute);font-weight:700;font-size:13.5px;padding:10px 12px;border-bottom:3px solid transparent;white-space:nowrap}
+nav.tabs button:hover{color:var(--ink)}
+nav.tabs button.on{color:var(--ink);border-bottom-color:var(--acc)}
+
+main{padding-block:22px 90px}
+section.tab{display:none}
+section.tab.on{display:block;animation:fi .25s ease}
+@keyframes fi{from{opacity:.4;transform:translateY(4px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+.eyebrow{font:700 11.5px var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--acc-ink)}
+.h1{font-family:var(--serif);font-weight:900;font-size:clamp(26px,4.4vw,42px);line-height:1.12;margin-top:6px}
+body.lang-ta .h1{font-family:"Noto Sans Tamil",var(--sans);font-weight:800;font-size:clamp(22px,3.6vw,34px);line-height:1.35}
+.h2{font-family:var(--serif);font-weight:800;font-size:clamp(20px,2.8vw,26px);margin-bottom:12px}
+body.lang-ta .h2{font-family:"Noto Sans Tamil",var(--sans);font-weight:800}
+.lede{font-size:16px;color:var(--ink2);max-width:68ch;margin:10px 0 0;font-weight:500}
+.asof{font:600 12px var(--mono);color:var(--mute);margin-top:8px}
+.stack{display:grid;gap:18px}
+.grid{display:grid;gap:14px}
+.g2{grid-template-columns:repeat(auto-fit,minmax(300px,1fr))}
+.g3{grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
+.g4{grid-template-columns:repeat(auto-fit,minmax(200px,1fr))}
+.card{border:1px solid var(--line);border-radius:14px;padding:16px;background:#fff}
+.card.soft{background:var(--soft2)}
+.card h3{font-size:16px;font-weight:800;margin-bottom:6px}
+ul.b{margin:6px 0 0;padding-left:18px;display:grid;gap:5px}
+ul.b li{font-weight:500}
+ul.b li::marker{color:var(--acc)}
+.muted{color:var(--mute)}
+.small{font-size:12.5px}
+
+/* KPI */
+.kpi{border:1px solid var(--line);border-radius:14px;padding:14px 16px;background:#fff}
+.kpi .v{font:700 26px var(--mono);font-variant-numeric:tabular-nums;letter-spacing:-.02em}
+.kpi .l{font-weight:700;font-size:13px;margin-top:2px}
+.kpi .s{font-size:12px;color:var(--mute);margin-top:2px}
+.kpi.neg .v{color:var(--bad)} .kpi.pos .v{color:var(--good)}
+
+/* chips */
+.chip{display:inline-flex;align-items:center;gap:5px;font-weight:800;font-size:12px;padding:3px 9px;border-radius:999px;white-space:nowrap}
+.chip.good{background:var(--good-bg);color:var(--good)}
+.chip.warn{background:var(--warn-bg);color:var(--warn)}
+.chip.bad{background:var(--bad-bg);color:var(--bad)}
+.chip.acc{background:var(--soft);color:var(--acc-ink);border:1px solid var(--acc-l)}
+.dot{width:10px;height:10px;border-radius:50%;display:inline-block;flex:none}
+
+/* Meter */
+.meter-wrap>*,.grid>*,.assist>*,.swot>*{min-width:0}
+.meter-wrap{display:grid;grid-template-columns:minmax(260px,360px) 1fr;gap:18px;align-items:start}
+@media (max-width:760px){.meter-wrap{grid-template-columns:1fr}}
+.gauge{width:100%;max-width:360px;display:block;margin:0 auto}
+.verdict{text-align:center;margin-top:-4px}
+.verdict .v{font:800 22px var(--sans)}
+.verdict .s{font:600 12px var(--mono);color:var(--mute)}
+.seg{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px}
+.seg button{border:1.5px solid var(--line);background:#fff;font-weight:800;font-size:12.5px;padding:6px 11px;border-radius:999px;color:var(--ink)}
+.seg button.on{border-color:var(--ink);background:var(--ink);color:#fff}
+.tscroll{overflow-x:auto;border:1px solid var(--line);border-radius:12px}
+table{border-collapse:collapse;width:100%;font-size:13.5px}
+th,td{padding:9px 10px;text-align:left;border-bottom:1px solid var(--line);vertical-align:middle}
+th{font-size:11.5px;font-family:var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--ink2);background:var(--soft2);white-space:nowrap}
+tr:last-child td{border-bottom:0}
+td.n{font-family:var(--mono);font-variant-numeric:tabular-nums;font-weight:600;white-space:nowrap}
+.cell{border:0;border-radius:8px;font-weight:900;font-size:13px;width:38px;height:30px}
+.cell[data-v="1"]{background:var(--good-bg);color:var(--good)}
+.cell[data-v="0"]{background:#F2F2F2;color:#555}
+.cell[data-v="-1"]{background:var(--bad-bg);color:var(--bad)}
+.cell:hover{outline:2px solid var(--acc)}
+.phase{font:700 10.5px var(--mono);padding:2px 6px;border-radius:5px;background:var(--soft);color:var(--acc-ink);text-transform:uppercase;letter-spacing:.05em}
+
+/* Company cards */
+.co{border:1px solid var(--line);border-radius:14px;padding:16px;background:#fff;display:flex;flex-direction:column;gap:8px}
+.co .hd{display:flex;align-items:center;gap:10px}
+.co .badge{width:40px;height:40px;border-radius:10px;color:#fff;font:800 12px var(--mono);display:grid;place-items:center;flex:none}
+.co .nm{font-weight:800;font-size:16px}
+.co .pl{font:700 12px var(--mono);color:var(--mute)}
+.kv{display:grid;grid-template-columns:auto 1fr;gap:4px 10px;font-size:13.5px}
+.kv dt{font-weight:800;color:var(--ink2)} .kv dd{margin:0;font-weight:500}
+.flag{border-left:4px solid var(--acc);background:var(--soft);padding:8px 10px;border-radius:0 8px 8px 0;font-size:13px;font-weight:600}
+
+/* bars */
+.bars{display:grid;gap:10px}
+.brow{display:grid;grid-template-columns:110px 1fr 90px;gap:10px;align-items:center}
+.brow .nm{font-weight:800;font-size:13.5px}
+.btrack{position:relative;height:22px;background:#F6F3EF;border-radius:6px;overflow:hidden}
+.bfill{position:absolute;top:0;bottom:0;border-radius:6px;transition:all .45s ease}
+.bzero{position:absolute;top:-3px;bottom:-3px;width:2px;background:var(--ink)}
+.brow .val{font:700 13.5px var(--mono);text-align:right}
+@media (max-width:480px){.brow{grid-template-columns:78px 1fr 72px}}
+
+/* signals */
+.sig{border:1px solid var(--line);border-radius:14px;padding:14px 16px;background:#fff;display:grid;gap:8px}
+.sig .top{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.sig h3{font-size:16px;font-weight:800;margin:0;flex:1;min-width:180px}
+.bb{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+@media (max-width:560px){.bb{grid-template-columns:1fr}}
+.bb div{border-radius:10px;padding:8px 10px;font-size:13px;font-weight:600}
+.bb .boon{background:var(--good-bg);color:#0B4F26}
+.bb .bane{background:var(--bad-bg);color:#7A1810}
+.bb b{display:block;font:800 11px var(--mono);letter-spacing:.08em;text-transform:uppercase;margin-bottom:2px}
+.now{font-size:13px;font-weight:600;color:var(--ink2)}
+
+/* timeline */
+.tl{position:relative;display:grid;gap:14px;padding-left:26px}
+.tl::before{content:"";position:absolute;left:8px;top:6px;bottom:6px;width:3px;background:var(--acc-l);border-radius:2px}
+.tl .it{position:relative}
+.tl .it::before{content:"";position:absolute;left:-24px;top:6px;width:14px;height:14px;border-radius:50%;background:#fff;border:3px solid var(--acc)}
+.tl .it.big::before{background:var(--acc)}
+.tl .when{font:700 12px var(--mono);color:var(--acc-ink);letter-spacing:.05em}
+.tl h3{font-size:16px;font-weight:800;margin:2px 0 4px}
+
+/* SWOT */
+.swot{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media (max-width:640px){.swot{grid-template-columns:1fr}}
+.swot .card h3{display:flex;align-items:center;gap:8px}
+.swot .S{border-top:4px solid var(--good)} .swot .W{border-top:4px solid var(--bad)}
+.swot .O{border-top:4px solid var(--acc)} .swot .T{border-top:4px solid #6B7280}
+
+/* takeaways */
+.tk{display:grid;gap:12px;counter-reset:tk}
+.tk .card{display:grid;grid-template-columns:44px 1fr;gap:12px;align-items:start}
+.tk .n{font:800 22px var(--mono);color:var(--acc)}
+
+/* Assist */
+.assist{display:grid;grid-template-columns:1fr 290px;gap:16px}
+@media (max-width:860px){.assist{grid-template-columns:1fr}}
+.chatbox{border:1px solid var(--line);border-radius:16px;display:flex;flex-direction:column;height:min(620px,74vh);min-height:420px;background:#fff}
+.chat-hd{display:flex;align-items:center;gap:8px;padding:10px 12px;border-bottom:1px solid var(--line);flex-wrap:wrap}
+.chat-hd .t{font-weight:800;flex:1;min-width:120px}
+.log{flex:1;overflow-y:auto;padding:14px;display:flex;flex-direction:column;gap:10px;background:var(--soft2)}
+.msg{max-width:88%;padding:10px 12px;border-radius:14px;font-size:14px;font-weight:500;line-height:1.5}
+.msg.u{align-self:flex-end;background:var(--ink);color:#fff;border-bottom-right-radius:4px}
+.msg.b{align-self:flex-start;background:#fff;border:1px solid var(--line);border-bottom-left-radius:4px}
+.msg.b ul{margin:6px 0 0;padding-left:18px}
+.msg.b table{font-size:12.5px;margin-top:6px}
+.msg.b th,.msg.b td{padding:5px 7px}
+.msg .acts{display:flex;gap:6px;margin-top:8px;flex-wrap:wrap}
+.mini{border:1px solid var(--line);background:#fff;border-radius:999px;font-size:11.5px;font-weight:700;padding:3px 9px;color:var(--ink2)}
+.mini:hover{border-color:var(--acc);color:var(--acc-ink)}
+.follow{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.follow button{border:1px dashed var(--acc);background:var(--soft);color:var(--acc-ink);font-size:12px;font-weight:700;border-radius:999px;padding:4px 10px}
+.inrow{display:flex;gap:8px;padding:10px;border-top:1px solid var(--line);align-items:center}
+.inrow input{flex:1;min-width:0;border:1.5px solid var(--line);border-radius:12px;padding:11px 12px;font:500 14.5px var(--sans);color:var(--ink);background:#fff}
+.inrow input:focus{border-color:var(--acc);outline:none}
+.mic{width:46px;height:46px;border-radius:50%;border:0;background:var(--acc);color:#fff;display:grid;place-items:center;flex:none;position:relative}
+.mic svg{width:22px;height:22px}
+.mic.live{background:var(--bad)}
+.mic.live::after{content:"";position:absolute;inset:-6px;border-radius:50%;border:3px solid var(--bad);animation:pulse 1.1s ease-out infinite}
+@keyframes pulse{from{transform:scale(.9);opacity:.9}to{transform:scale(1.25);opacity:0}}
+.send{height:46px;border:0;border-radius:12px;background:var(--ink);color:#fff;font-weight:800;padding:0 14px}
+.status{font:600 12px var(--mono);color:var(--mute);padding:0 12px 8px;min-height:18px}
+.side .card{margin-bottom:12px}
+.qs{display:flex;flex-direction:column;gap:6px}
+.qs button{text-align:left;border:1px solid var(--line);background:#fff;border-radius:10px;padding:8px 10px;font-size:13px;font-weight:600;color:var(--ink)}
+.qs button:hover{border-color:var(--acc);background:var(--soft)}
+.toggle{display:flex;align-items:center;gap:8px;font-size:13px;font-weight:700;margin:6px 0}
+.toggle input{width:18px;height:18px;accent-color:var(--acc)}
+select{font:600 13px var(--sans);border:1.5px solid var(--line);border-radius:8px;padding:6px;max-width:100%;color:var(--ink);background:#fff}
+
+/* quiz */
+.quiz .opt{display:block;width:100%;text-align:left;border:1.5px solid var(--line);background:#fff;border-radius:12px;padding:11px 13px;font-weight:600;font-size:14px;margin-top:8px;color:var(--ink)}
+.quiz .opt:hover:not([disabled]){border-color:var(--acc)}
+.quiz .opt.right{border-color:var(--good);background:var(--good-bg)}
+.quiz .opt.wrong{border-color:var(--bad);background:var(--bad-bg)}
+.quiz .exp{margin-top:10px;padding:10px 12px;border-radius:10px;background:var(--soft);font-size:13.5px;font-weight:600}
+.prog{height:6px;background:#F1ECE5;border-radius:3px;overflow:hidden;margin:8px 0 14px}
+.prog i{display:block;height:100%;background:var(--acc);transition:width .3s}
+
+/* CB badge */
+.cb{position:fixed;right:16px;bottom:calc(16px + env(safe-area-inset-bottom,0px));z-index:60}
+.cb .b{width:44px;height:44px;border-radius:50%;background:var(--acc);color:#fff;font:800 14px var(--mono);display:grid;place-items:center;border:0;box-shadow:0 4px 14px rgba(242,140,40,.45);animation:blink 1.8s ease-in-out infinite}
+@keyframes blink{50%{opacity:.45}}
+.cb .pop{display:none;position:absolute;right:0;bottom:54px;width:min(320px,calc(100vw - 32px));background:#fff;border:1.5px solid var(--ink);border-radius:12px;padding:12px;font-size:12.5px;font-weight:600;line-height:1.5;color:var(--ink)}
+.cb:hover .pop,.cb.open .pop{display:block}
+.src a{color:var(--acc-ink);font-weight:700;word-break:break-word}
+.src li{font-size:12.5px}
+.note{font-size:12px;color:var(--mute);font-weight:600;margin-top:6px}
+</style>
+
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <div class="bar">
+      <div class="logo">CB</div>
+      <div class="brand"><b>CB Research</b><small><span class="en">Sector Theme · IT Services</span><span class="ta">துறை ஆய்வு · ஐடி சேவைகள்</span></small></div>
+      <div class="sp"></div>
+      <button class="pill-btn" id="readTab" type="button" title="Read this tab aloud">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M11 5 6 9H2v6h4l5 4V5z"/><path d="M15.5 8.5a5 5 0 0 1 0 7M19 5a10 10 0 0 1 0 14"/></svg>
+        <span class="en">Listen</span><span class="ta">கேளுங்கள்</span>
+      </button>
+      <div class="lang" role="group" aria-label="Language">
+        <button type="button" id="lgEn" class="on">English</button>
+        <button type="button" id="lgTa">தமிழ்</button>
+      </div>
+    </div>
+    <nav class="tabs" id="tabs" aria-label="Sections"></nav>
+  </div>
+</header>
+
+<main class="wrap">
+
+<!-- ============ DASHBOARD ============ -->
+<section class="tab on" id="t-dash" data-read="dash">
+  <div class="eyebrow"><span class="en">Indian IT × Generative AI · Q1 FY27 read</span><span class="ta">இந்திய ஐடி × ஜெனரேட்டிவ் ஏஐ · Q1 FY27 நிலை</span></div>
+  <h1 class="h1"><span class="en">Boon or bane? Five IT majors bet on AI. Here is how we will know.</span><span class="ta">வரமா, சாபமா? ஐந்து ஐடி நிறுவனங்களின் ஏஐ பந்தயம் — எப்படி அறிவது?</span></h1>
+  <p class="lede"><span class="en">No single number will give the verdict. Watch eight signals together: deals and AI revenue arrive first, margins and revenue per employee next, and jobs and attrition last.</span><span class="ta">ஒரே எண்ணில் தீர்ப்பு கிடைக்காது. எட்டு சமிக்ஞைகளை ஒன்றாகப் பாருங்கள் — முதலில் ஒப்பந்தங்கள், ஏஐ வருவாய்; பின்னர் லாப வரம்பு, ஒரு ஊழியருக்கான வருவாய்; கடைசியில் வேலைவாய்ப்பு, விலகல் விகிதம்.</span></p>
+  <div class="asof">As of 24 Sep 2026 · Q1 FY27 (Apr–Jun 2026) results</div>
+
+  <div class="grid g4" style="margin-top:18px">
+    <div class="kpi neg"><div class="v">−25%</div><div class="l"><span class="en">Nifty IT, 2026 YTD</span><span class="ta">நிஃப்டி ஐடி, 2026 இதுவரை</span></div><div class="s"><span class="en">~40% below Dec-2024 peak</span><span class="ta">டிச-2024 உச்சத்திலிருந்து ~40% கீழ்</span></div></div>
+    <div class="kpi"><div class="v">$2.6B</div><div class="l"><span class="en">TCS AI run-rate</span><span class="ta">டிசிஎஸ் ஏஐ ஆண்டு வருவாய் விகிதம்</span></div><div class="s"><span class="en">~8.5% of revenue</span><span class="ta">வருவாயில் ~8.5%</span></div></div>
+    <div class="kpi pos"><div class="v">+62%</div><div class="l"><span class="en">HCLTech Advanced AI, YoY</span><span class="ta">HCLTech மேம்பட்ட ஏஐ, ஆண்டு வளர்ச்சி</span></div><div class="s"><span class="en">$171M in Q1</span><span class="ta">Q1-ல் $171M</span></div></div>
+    <div class="kpi"><div class="v">11.8–13.9%</div><div class="l"><span class="en">Attrition range</span><span class="ta">விலகல் விகித வரம்பு</span></div><div class="s"><span class="en">Calm. Neither a talent war nor a panic</span><span class="ta">அமைதி — போட்டியும் இல்லை, பதற்றமும் இல்லை</span></div></div>
+  </div>
+
+  <div class="card" style="margin-top:18px">
+    <div class="meter-wrap">
+      <div>
+        <div class="eyebrow" style="text-align:center"><span class="en">CB Boon Meter</span><span class="ta">CB வர-மானி</span></div>
+        <svg class="gauge" id="gauge" viewBox="0 0 320 190" role="img" aria-label="Boon meter"></svg>
+        <div class="verdict"><div class="v" id="vText">–</div><div class="s" id="vScore">–</div></div>
+        <p class="note" style="text-align:center"><span class="en">Tap any cell to change a reading. The meter recalculates as you go.</span><span class="ta">எந்தக் கட்டத்தையும் தட்டி மாற்றுங்கள் — மானி உடனே மாறும்.</span></p>
+      </div>
+      <div>
+        <div class="seg" id="coSeg"></div>
+        <div class="tscroll"><table id="sigTable"></table></div>
+        <p class="note"><span class="en">✓ boon signal · – neutral · ✗ bane signal. Readings are CB's educational view of Q1 FY27 data. Weights: lead ×1, coincident ×1.5, lagging ×1.</span><span class="ta">✓ வரம் · – நடுநிலை · ✗ சாபம். Q1 FY27 தரவின் CB கல்வி நோக்குப் பார்வை. எடை: முன்னோடி ×1, உடனிகழ் ×1.5, பின்தொடர் ×1.</span></p>
+      </div>
+    </div>
+  </div>
+
+  <h2 class="h2" style="margin-top:26px"><span class="en">Where each company stands today</span><span class="ta">இன்று ஒவ்வொரு நிறுவனத்தின் நிலை</span></h2>
+  <div class="grid g3" id="coQuick"></div>
+</section>
+
+<!-- ============ PLAYBOOKS (Business model) ============ -->
+<section class="tab" id="t-play" data-read="play">
+  <div class="eyebrow"><span class="en">Business Model</span><span class="ta">வணிக மாதிரி</span></div>
+  <h2 class="h2"><span class="en">Five AI playbooks, five different bets</span><span class="ta">ஐந்து ஏஐ உத்திகள் — ஐந்து வெவ்வேறு பந்தயங்கள்</span></h2>
+  <div class="grid g2" id="playGrid"></div>
+  <div class="card soft" style="margin-top:16px">
+    <h3><span class="en">How the business model changes</span><span class="ta">வணிக மாதிரி எப்படி மாறுகிறது</span></h3>
+    <ul class="b">
+      <li><span class="en">Old model: bill per person-hour. More people meant more revenue.</span><span class="ta">பழைய மாதிரி: ஒரு நபர்-மணிக்குக் கட்டணம் → அதிக ஆட்கள் = அதிக வருவாய்.</span></li>
+      <li><span class="en">AI cuts the hours needed for the same work, by an estimated 14–50% on legacy services.</span><span class="ta">அதே வேலைக்குத் தேவையான மணிநேரத்தை ஏஐ குறைக்கிறது (பழைய சேவைகளில் 14–50% என மதிப்பீடு).</span></li>
+      <li><span class="en">New model: platforms, agents, outcome-based pricing and infrastructure such as data centres and GPUs.</span><span class="ta">புதிய மாதிரி: தளங்கள், ஏஜென்ட்கள், விளைவு அடிப்படைக் கட்டணம், உள்கட்டமைப்பு (தரவு மையம், GPU).</span></li>
+      <li><span class="en">The test: new AI revenue must grow faster than old revenue shrinks.</span><span class="ta">சோதனை: பழைய வருவாய் குறைவதை விட புதிய ஏஐ வருவாய் வேகமாக வளர வேண்டும்.</span></li>
+    </ul>
+  </div>
+</section>
+
+<!-- ============ SCORECARD (Segments / Financials) ============ -->
+<section class="tab" id="t-score" data-read="score">
+  <div class="eyebrow"><span class="en">Segments & Financials · Q1 FY27</span><span class="ta">பிரிவுகள் & நிதி · Q1 FY27</span></div>
+  <h2 class="h2"><span class="en">The numbers behind the AI story</span><span class="ta">ஏஐ கதைக்குப் பின்னால் உள்ள எண்கள்</span></h2>
+  <div class="card">
+    <div class="seg" id="metSeg"></div>
+    <div class="bars" id="bars"></div>
+    <p class="note" id="barNote"></p>
+  </div>
+  <div class="tscroll" style="margin-top:16px"><table id="finTable"></table></div>
+  <p class="note"><span class="en">Deal metrics are not like-for-like. TCS reports total TCV, Infosys large-deal TCV, HCLTech net-new bookings, Wipro total bookings and TechM new deal wins. n/d = not disclosed in the sources used.</span><span class="ta">ஒப்பந்த அளவீடுகள் ஒரே வரையறையில் இல்லை — TCS மொத்த TCV, இன்ஃபோசிஸ் பெரிய ஒப்பந்த TCV, HCL புதிய முன்பதிவு, விப்ரோ மொத்த முன்பதிவு, TechM புதிய ஒப்பந்தங்கள். n/d = தரவு கிடைக்கவில்லை.</span></p>
+</section>
+
+<!-- ============ SIGNALS ============ -->
+<section class="tab" id="t-sig" data-read="sig">
+  <div class="eyebrow"><span class="en">How to spot it</span><span class="ta">எப்படிக் கண்டறிவது</span></div>
+  <h2 class="h2"><span class="en">Eight signals, in the order they show up</span><span class="ta">எட்டு சமிக்ஞைகள் — வெளிப்படும் வரிசையில்</span></h2>
+  <div class="seg" id="phSeg"></div>
+  <div class="stack" id="sigList"></div>
+</section>
+
+<!-- ============ TIMELINE ============ -->
+<section class="tab" id="t-when" data-read="when">
+  <div class="eyebrow"><span class="en">When will we know?</span><span class="ta">எப்போது தெரியும்?</span></div>
+  <h2 class="h2"><span class="en">The verdict builds over 4–8 quarters</span><span class="ta">தீர்ப்பு 4–8 காலாண்டுகளில் உருவாகும்</span></h2>
+  <div class="tl" id="tl"></div>
+</section>
+
+<!-- ============ MARKET / VALUATION ============ -->
+<section class="tab" id="t-mkt" data-read="mkt">
+  <div class="eyebrow"><span class="en">Valuations & share market activity</span><span class="ta">மதிப்பீடு & பங்குச்சந்தை நகர்வு</span></div>
+  <h2 class="h2"><span class="en">Why IT stocks fall on every AI launch</span><span class="ta">ஒவ்வொரு ஏஐ அறிமுகத்திலும் ஐடி பங்குகள் ஏன் விழுகின்றன</span></h2>
+  <div class="grid g4">
+    <div class="kpi neg"><div class="v">24–28%</div><div class="l"><span class="en">Nifty IT fall, 2026 YTD</span><span class="ta">நிஃப்டி ஐடி சரிவு 2026</span></div><div class="s"><span class="en">vs Nifty 500 ~−4.5%</span><span class="ta">நிஃப்டி 500 ~−4.5%</span></div></div>
+    <div class="kpi"><div class="v">14–16%</div><div class="l"><span class="en">AI deflation (HSBC)</span><span class="ta">ஏஐ விலைச் சுருக்கம் (HSBC)</span></div><div class="s"><span class="en">PL Capital: 20–50% on legacy work</span><span class="ta">PL: பழைய வேலையில் 20–50%</span></div></div>
+    <div class="kpi"><div class="v">$100M→$80M</div><div class="l"><span class="en">Typical HCL deal size</span><span class="ta">HCL சராசரி ஒப்பந்த அளவு</span></div><div class="s"><span class="en">2–3% yearly AI deflation</span><span class="ta">ஆண்டுக்கு 2–3% ஏஐ சுருக்கம்</span></div></div>
+    <div class="kpi"><div class="v">13–14×</div><div class="l"><span class="en">Possible sector P/E floor</span><span class="ta">சாத்தியமான P/E அடிமட்டம்</span></div><div class="s"><span class="en">HSBC view</span><span class="ta">HSBC கருத்து</span></div></div>
+  </div>
+  <div class="grid g2" style="margin-top:16px">
+    <div class="card"><h3><span class="en">What moves the stocks</span><span class="ta">பங்குகளை நகர்த்துவது எது</span></h3>
+      <ul class="b">
+        <li><span class="en">AI product launches from Anthropic, OpenAI and Google revive fears of cheaper software work.</span><span class="ta">Anthropic, OpenAI, Google ஏஐ அறிமுகங்கள் → மென்பொருள் வேலை மலிவாகும் அச்சம்.</span></li>
+        <li><span class="en">Accenture results and commentary set the global tone.</span><span class="ta">அக்சென்ச்சர் முடிவுகள் → உலகளாவிய மனநிலை.</span></li>
+        <li><span class="en">Weak client spending in the US and Europe.</span><span class="ta">அமெரிக்க, ஐரோப்பிய வாடிக்கையாளர் செலவுக் குறைவு.</span></li>
+        <li><span class="en">Guidance cuts. Infosys narrowed FY27 guidance to 1.5–3.0% CC.</span><span class="ta">வழிகாட்டல் குறைப்பு (இன்ஃபோசிஸ் FY27: 1.5–3.0% CC).</span></li>
+      </ul></div>
+    <div class="card"><h3><span class="en">What could re-rate them</span><span class="ta">மதிப்பை மீண்டும் உயர்த்தக்கூடியது</span></h3>
+      <ul class="b">
+        <li><span class="en">AI revenue crossing 15% of sales with rising margins.</span><span class="ta">ஏஐ வருவாய் 15%-ஐத் தாண்டி, லாப வரம்பும் உயர்தல்.</span></li>
+        <li><span class="en">Mega-deals such as TCS–SKF (>$800M) converting into reported revenue growth.</span><span class="ta">TCS–SKF (>$800M) போன்ற மெகா ஒப்பந்தங்கள் வருவாயாக மாறுதல்.</span></li>
+        <li><span class="en">Data centres signing anchor tenants at good returns.</span><span class="ta">தரவு மையங்களுக்கு நல்ல வருமானத்துடன் முதன்மை வாடிக்கையாளர்.</span></li>
+        <li><span class="en">FY28 guidance above FY27, due Apr 2027.</span><span class="ta">FY28 வழிகாட்டல் FY27-ஐ விட அதிகம் (ஏப் 2027).</span></li>
+      </ul></div>
+  </div>
+</section>
+
+<!-- ============ 5 TAKEAWAYS ============ -->
+<section class="tab" id="t-take" data-read="take">
+  <div class="eyebrow"><span class="en">5 Key Takeaways</span><span class="ta">5 முக்கியக் குறிப்புகள்</span></div>
+  <h2 class="h2"><span class="en">What Q1 FY27 already tells us</span><span class="ta">Q1 FY27 ஏற்கனவே சொல்வது</span></h2>
+  <div class="tk" id="tkList"></div>
+</section>
+
+<!-- ============ SWOT ============ -->
+<section class="tab" id="t-swot" data-read="swot">
+  <div class="eyebrow">SWOT</div>
+  <h2 class="h2"><span class="en">Indian IT in the AI era</span><span class="ta">ஏஐ யுகத்தில் இந்திய ஐடி</span></h2>
+  <div class="swot" id="swot"></div>
+</section>
+
+<!-- ============ CAUVERY ASSIST ============ -->
+<section class="tab" id="t-assist">
+  <div class="eyebrow">Cauvery Assist · <span class="en">voice + smart Q&A</span><span class="ta">குரல் + புத்திசாலி கேள்வி-பதில்</span></div>
+  <h2 class="h2"><span class="en">Ask by voice or text, in English or Tamil</span><span class="ta">பேசிக் கேளுங்கள் அல்லது தட்டச்சு செய்யுங்கள் — தமிழிலும் ஆங்கிலத்திலும்</span></h2>
+  <div class="assist">
+    <div class="chatbox">
+      <div class="chat-hd">
+        <div class="t">Cauvery Assist</div>
+        <span class="chip acc" id="engineChip">offline · 0 KB calls</span>
+        <button class="mini" id="stopTalk" type="button"><span class="en">Stop voice</span><span class="ta">குரலை நிறுத்து</span></button>
+        <button class="mini" id="clearChat" type="button"><span class="en">Clear</span><span class="ta">அழி</span></button>
+      </div>
+      <div class="log" id="log" aria-live="polite"></div>
+      <div class="status" id="status"></div>
+      <form class="inrow" id="askForm" autocomplete="off">
+        <button class="mic" id="mic" type="button" aria-label="Speak your question">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg>
+        </button>
+        <input id="q" type="text" placeholder="Ask: Which company has the best AI signal?">
+        <button class="send" type="submit"><span class="en">Ask</span><span class="ta">கேள்</span></button>
+      </form>
+    </div>
+    <div class="side">
+      <div class="card">
+        <h3><span class="en">Voice settings</span><span class="ta">குரல் அமைப்புகள்</span></h3>
+        <label class="toggle"><input type="checkbox" id="autoSpeak" checked> <span class="en">Read answers aloud</span><span class="ta">பதிலை வாசித்துக் காட்டு</span></label>
+        <label class="toggle"><input type="checkbox" id="convo"> <span class="en">Conversation mode (listen again after answering)</span><span class="ta">உரையாடல் முறை (பதிலுக்குப் பின் மீண்டும் கேட்கும்)</span></label>
+        <label class="small muted" for="voiceSel" style="font-weight:700"><span class="en">Voice</span><span class="ta">குரல்</span></label>
+        <select id="voiceSel"></select>
+        <label class="small muted" for="rate" style="font-weight:700;display:block;margin-top:8px"><span class="en">Speed</span><span class="ta">வேகம்</span> <span id="rateV" class="num">1.0×</span></label>
+        <input type="range" id="rate" min="0.6" max="1.4" step="0.1" value="1" style="width:100%;accent-color:var(--acc)">
+        <p class="note" id="voiceNote"></p>
+      </div>
+      <div class="card">
+        <h3><span class="en">Try asking</span><span class="ta">இப்படிக் கேளுங்கள்</span></h3>
+        <div class="qs" id="sugg"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SOCRATES QUIZ ============ -->
+<section class="tab" id="t-quiz">
+  <div class="eyebrow">Cauvery Socrates</div>
+  <h2 class="h2"><span class="en">Can you read the signals?</span><span class="ta">சமிக்ஞைகளைப் படிக்க முடியுமா?</span></h2>
+  <div class="card quiz" id="quiz" style="max-width:760px"></div>
+</section>
+
+<!-- ============ ANALYST VIEW ============ -->
+<section class="tab" id="t-view" data-read="view">
+  <div class="eyebrow"><span class="en">Analyst View</span><span class="ta">ஆய்வாளர் பார்வை</span></div>
+  <h2 class="h2"><span class="en">Our read: a boon for the adapters, a squeeze for the rest</span><span class="ta">எங்கள் பார்வை: மாறுபவர்களுக்கு வரம், மற்றவர்களுக்கு நெருக்கடி</span></h2>
+  <div class="grid g2">
+    <div class="card"><h3><span class="en">Near term (FY27)</span><span class="ta">குறுகிய காலம் (FY27)</span></h3>
+      <ul class="b">
+        <li><span class="en">Deflation shows up before new AI revenue does, so low-single-digit growth continues.</span><span class="ta">ஏஐ வருவாயை விட விலைச் சுருக்கம் முதலில் தெரியும் → குறைந்த ஒற்றை இலக்க வளர்ச்சி தொடரும்.</span></li>
+        <li><span class="en">Margins hold only where revenue per employee rises. HCLTech and TechM show this, Wipro does not yet.</span><span class="ta">ஊழியர் ஒருவருக்கான வருவாய் உயரும் இடத்தில் மட்டும் லாப வரம்பு நிற்கும் (HCL, TechM ஆம்; விப்ரோ இன்னும் இல்லை).</span></li>
+        <li><span class="en">Fresher hiring stays weak. Jobs lag the verdict.</span><span class="ta">புதியவர் பணியமர்த்தல் பலவீனமாக இருக்கும் — வேலைவாய்ப்பு தீர்ப்பைப் பின்தொடரும்.</span></li>
+      </ul></div>
+    <div class="card"><h3><span class="en">Medium term (FY28–FY29)</span><span class="ta">நடுத்தர காலம் (FY28–FY29)</span></h3>
+      <ul class="b">
+        <li><span class="en">AI becomes a boon if AI revenue reaches 15–20% of sales and total growth returns to 6% or more.</span><span class="ta">ஏஐ வருவாய் 15–20% ஆகி, மொத்த வளர்ச்சி 6%+ திரும்பினால் → வரம்.</span></li>
+        <li><span class="en">Data centres (TCS, HCLTech) are a long-gestation, capital-heavy bet. Returns take 2–4 years.</span><span class="ta">தரவு மையங்கள் (TCS, HCL) நீண்டகால, அதிக மூலதனப் பந்தயம் — வருமானம் 2–4 ஆண்டுகள்.</span></li>
+        <li><span class="en">It becomes a bane if TCV stays high but revenue stays flat. That would mean deals are being won at lower prices.</span><span class="ta">TCV அதிகமாக இருந்தும் வருவாய் தேங்கினால் → குறைந்த விலையில் ஒப்பந்தம் → சாபம்.</span></li>
+      </ul></div>
+  </div>
+  <div class="card soft" style="margin-top:14px">
+    <h3><span class="en">Your 3-line checklist every result season</span><span class="ta">ஒவ்வொரு முடிவுப் பருவத்திலும் 3 வரி சரிபார்ப்பு</span></h3>
+    <ul class="b">
+      <li><span class="en">Is AI revenue, or the AI share of revenue, rising quarter on quarter?</span><span class="ta">ஏஐ வருவாய் / பங்கு காலாண்டுக்குக் காலாண்டு உயர்கிறதா?</span></li>
+      <li><span class="en">Is revenue per employee rising while margins hold?</span><span class="ta">ஊழியர் ஒருவருக்கான வருவாய் உயர்ந்து, லாப வரம்பு நிற்கிறதா?</span></li>
+      <li><span class="en">Is last year's TCV now showing up as CC revenue growth?</span><span class="ta">கடந்த ஆண்டு TCV இப்போது CC வருவாய் வளர்ச்சியாகத் தெரிகிறதா?</span></li>
+    </ul>
+  </div>
+  <div class="card" style="margin-top:14px">
+    <h3><span class="en">Sources</span><span class="ta">ஆதாரங்கள்</span></h3>
+    <ul class="b src">
+      <li><a href="https://www.business-standard.com/companies/quarterly-results/tcs-q1fy27-result-net-profit-ebitda-attrition-foreign-orders-126070900797_1.html" target="_blank" rel="noopener">Business Standard: TCS Q1 FY27</a></li>
+      <li><a href="https://www.business-standard.com/companies/news/tcs-selects-hyderabad-for-hypervault-s-1-gw-ai-data-centre-campus-126090500615_1.html" target="_blank" rel="noopener">Business Standard: TCS HyperVault 1 GW, Hyderabad</a></li>
+      <li><a href="https://www.prnewswire.com/news-releases/infosys-ai-revenues-at-8-2-in-q1-resilient-operating-margin-of-21-1-302833353.html" target="_blank" rel="noopener">Infosys Q1 FY27 press release</a></li>
+      <li><a href="https://www.hcltech.com/press-releases/hcltech-delivers-robust-q1-led-record-deal-bookings-24-billion" target="_blank" rel="noopener">HCLTech Q1 FY27 press release</a></li>
+      <li><a href="https://www.business-standard.com/companies/quarterly-results/hcltech-q1-profit-up-over-20-retains-fy27-revenue-growth-guidance-126071301007_1.html" target="_blank" rel="noopener">Business Standard: HCLTech Q1, data centre, headcount</a></li>
+      <li><a href="https://www.indiainfoline.com/news/companies/wipro-q1-fy27-results-profit-rises-marginally-margins-fall-to-15-quarter-low-stock-gains-1-77" target="_blank" rel="noopener">IIFL: Wipro Q1 FY27</a></li>
+      <li><a href="https://www.techmahindra.com/insights/press-releases/techmahindra-q1-fy27-results/" target="_blank" rel="noopener">Tech Mahindra Q1 FY27 press release</a></li>
+      <li><a href="https://www.multibagg.ai/market-pulse/articles/nifty-it-2026-ai-selloff-cmu1keako000i2uqtrrapc8km" target="_blank" rel="noopener">Nifty IT 2026 AI sell-off (14 Sep 2026)</a></li>
+      <li><a href="https://analyticsindiamag.com/ai-news/tech-mahindra-launches-8-billion-parameter-hindi-first-education-llm" target="_blank" rel="noopener">AIM: TechM 8B Hindi-first education LLM</a></li>
+      <li><a href="https://www.constellationr.com/insights/news/wipro-launches-wipro-ai360-will-invest-1-billion-over-3-years-advance-ai" target="_blank" rel="noopener">Wipro ai360, $1B over 3 years (2023)</a></li>
+    </ul>
+  </div>
+</section>
+</main>
+
+<div class="cb" id="cb">
+  <button class="b" type="button" aria-label="Disclaimer">CB</button>
+  <div class="pop"><span class="en">CB Research is not SEBI-registered. This dashboard is for education only. It is not a buy, sell or hold recommendation. The data comes from company releases and news reports as of 24 Sep 2026. Signal readings are CB's interpretation. Please consult a registered advisor before investing.</span><span class="ta">CB Research SEBI-யில் பதிவு பெறவில்லை. இது கல்வி நோக்கத்திற்கு மட்டுமே; வாங்க/விற்க/வைத்திருக்கப் பரிந்துரை அல்ல. தரவு: நிறுவன அறிக்கைகள், செய்திகள் (24 செப் 2026). சமிக்ஞை மதிப்பீடுகள் CB-யின் விளக்கம். முதலீட்டுக்கு முன் பதிவுபெற்ற ஆலோசகரை அணுகவும்.</span></div>
+</div>
+
+<script>
+(function(){
+"use strict";
+var LANG="en";
+try{ if(localStorage.getItem("cbit_lang")==="ta") LANG="ta"; }catch(e){}
+function T(en,ta){ return '<span class="en">'+en+'</span><span class="ta">'+ta+'</span>'; }
+function $(id){ return document.getElementById(id); }
+
+/* ---------------- DATA ---------------- */
+var CO=[
+ {id:"tcs",nm:"TCS",full:"Tata Consultancy Services",col:"var(--tcs)",hex:"#1D4ED8",
+  plat:"WisdomNext 2.0 (agentic)",
+  alias:["tcs","tata","டிசிஎஸ்","டாடா"],
+  rev:"$7,624M · ₹72,275 cr",cc:3.2,ccq:0.4,mg:24.0,mgc:"−130 bps QoQ",deal:9.5,dealL:"$9.5B TCV",ai:"$2.6B run-rate (+13.6% QoQ)",hc:593798,hcc:9279,att:13.6,pat:"₹13,349 cr (+4.6%)",
+  guide:{en:"Target: exit FY27 margin at 25%+",ta:"இலக்கு: FY27 இறுதியில் 25%+ லாப வரம்பு"},
+  dc:{en:"HyperVault: up to ₹70,000 cr (~$7.4B), 1 GW campus in Hyderabad (announced 5 Sep 2026). TPG investing $1B.",ta:"ஹைப்பர்வால்ட்: ₹70,000 கோடி வரை (~$7.4B), ஹைதராபாத்தில் 1 GW வளாகம் (5 செப் 2026). TPG $1B முதலீடு."},
+  bet:{en:"Governance and orchestration layer, positioned as an AI-first transformation partner. Plus AI data-centre infrastructure.",ta:"ஆளுமை & ஒருங்கிணைப்பு அடுக்கு; 'ஏஐ-முதல்' மாற்றக் கூட்டாளி; கூடவே ஏஐ தரவு மைய உள்கட்டமைப்பு."},
+  proof:{en:"SKF mega-deal (>$800M), 6 AI-led mega deals in 5 quarters, +9,279 net hires.",ta:"SKF மெகா ஒப்பந்தம் (>$800M); 5 காலாண்டில் 6 ஏஐ மெகா ஒப்பந்தங்கள்; +9,279 நிகர பணியமர்த்தல்."},
+  risk:{en:"Margin fell 130 bps. Heavy data-centre capex could dilute return ratios.",ta:"லாப வரம்பு 130 bps சரிவு; அதிக தரவு மைய முதலீடு வருமான விகிதங்களைக் குறைக்கலாம்."},
+  fc:{en:"Your figure of $6–7B for 1 GW has been updated. The plan is now up to ₹70,000 cr (~$7.4B).",ta:"நீங்கள் குறிப்பிட்ட $6–7B இப்போது ₹70,000 கோடி (~$7.4B) வரை புதுப்பிக்கப்பட்டுள்ளது."}},
+ {id:"infy",nm:"Infosys",full:"Infosys",col:"var(--infy)",hex:"#0284C7",
+  plat:"Topaz + Topaz Fabric",
+  alias:["infosys","infy","இன்ஃபோசிஸ்","இன்போசிஸ்","இன்ஃபோ"],
+  rev:"$5,082M",cc:2.4,ccq:1.0,mg:21.1,mgc:"+20 bps QoQ",deal:3.6,dealL:"$3.6B large-deal TCV (61% net new)",ai:"8.2% of revenue",hc:null,hcc:null,att:null,pat:"$820M",
+  guide:{en:"FY27: 1.5–3.0% CC growth (trimmed), margin 20–22%",ta:"FY27: 1.5–3.0% CC வளர்ச்சி (குறைப்பு), லாப வரம்பு 20–22%"},
+  dc:{en:"No own data centre. An open, interoperable stack that works with any model provider.",ta:"சொந்த தரவு மையம் இல்லை; எந்த மாடல் நிறுவனத்துடனும் இணையும் திறந்த அடுக்கு."},
+  bet:{en:"A broad umbrella of composable agents, services and models. Clients keep critical technology in their own environment and are not tied to one LLM vendor.",ta:"பரந்த குடை: இணைக்கக்கூடிய ஏஜென்ட்கள், சேவைகள், மாடல்கள்; வாடிக்கையாளர் தம் சூழலில் தொழில்நுட்பத்தை வைத்துக்கொள்ளலாம்; ஒரு LLM நிறுவனத்தைச் சார்ந்திருக்கத் தேவையில்லை."},
+  proof:{en:"Margin held at 21.1%, 61% of TCV is net new, FCF is 116% of profit.",ta:"லாப வரம்பு 21.1% நிலை; TCV-யில் 61% புதியது; இலவச பணப்புழக்கம் லாபத்தின் 116%."},
+  risk:{en:"FY27 guidance trimmed. Growth is still low single digit.",ta:"FY27 வழிகாட்டல் குறைப்பு; வளர்ச்சி இன்னும் குறைந்த ஒற்றை இலக்கம்."},
+  fc:{en:"Matches your description. Topaz Fabric launched in 2025.",ta:"நீங்கள் கூறியது சரி; Topaz Fabric 2025-ல் அறிமுகம்."}},
+ {id:"hcl",nm:"HCLTech",full:"HCL Technologies",col:"var(--hcl)",hex:"#7C3AED",
+  plat:"AI Force 2.0 · AI Factory · AI Foundry",
+  alias:["hcl","hcltech","ஹெச்சிஎல்","எச்சிஎல்"],
+  rev:"$3,650M · ₹34,579 cr",cc:2.6,ccq:null,mg:17.5,mgc:"EBIT +18% YoY",deal:2.4,dealL:"$2.4B net-new bookings (record)",ai:"$171M Advanced AI (+62% YoY)",hc:223889,hcc:-3292,att:12.7,pat:"₹4,624 cr (+20.3%)",
+  guide:{en:"FY27: 1–4% CC, EBIT 17.5–18.5%",ta:"FY27: 1–4% CC, EBIT 17.5–18.5%"},
+  dc:{en:"Up to ₹3,500 cr (~$370M) for an AI data centre that can scale to 50 MW. The first client with committed capacity is close.",ta:"₹3,500 கோடி வரை (~$370M) — 50 MW வரை விரிவாக்கக்கூடிய ஏஐ தரவு மையம்; முதல் வாடிக்கையாளர் நெருங்குகிறது."},
+  bet:{en:"Full stack: industrialised data and AI, industry-specific small language models (a $150M Sarvam stake) and infrastructure.",ta:"முழு அடுக்கு: தரவு & ஏஐ தொழில்மயமாக்கல், துறை சார்ந்த சிறு மொழி மாடல்கள் (Sarvam-ல் $150M), உள்கட்டமைப்பு."},
+  proof:{en:"AI revenue +62%, record bookings, revenue per employee +3.3% with fewer staff.",ta:"ஏஐ வருவாய் +62%; சாதனை முன்பதிவு; குறைந்த ஊழியருடன் ஒருவருக்கான வருவாய் +3.3%."},
+  risk:{en:"Deal sizes are shrinking (~$100M to ~$80M). Fresher hiring halved (1,056 vs 1,984).",ta:"ஒப்பந்த அளவு சுருக்கம் (~$100M→~$80M); புதியவர் பணியமர்த்தல் பாதி (1,056 vs 1,984)."},
+  fc:{en:"Needs checking: your note says $1.48B in Bhubaneswar. Q1 FY27 disclosures say up to ₹3,500 cr (~$370M), 50 MW. We could not verify the location.",ta:"சரிபார்க்க வேண்டியது: நீங்கள் குறிப்பிட்ட $1.48B / புவனேஸ்வர் — Q1 FY27 தகவல்: ₹3,500 கோடி (~$370M), 50 MW; இடம் உறுதிசெய்யப்படவில்லை."}},
+ {id:"wipro",nm:"Wipro",full:"Wipro",col:"var(--wipro)",hex:"#0F766E",
+  plat:"Wipro ai360",
+  alias:["wipro","விப்ரோ"],
+  rev:"$2,610M IT services · ₹24,479 cr",cc:0.9,ccq:-1.2,mg:16.0,mgc:"−130 bps QoQ (15-qtr low)",deal:3.37,dealL:"$3.37B bookings ($1.63B large)",ai:"Not disclosed",hc:243000,hcc:null,att:13.9,pat:"₹3,352 cr (+0.6%)",
+  guide:{en:"Q2: −1.5% to +0.5% QoQ CC",ta:"Q2: −1.5% முதல் +0.5% QoQ CC"},
+  dc:{en:"No data-centre plan disclosed.",ta:"தரவு மையத் திட்டம் அறிவிக்கப்படவில்லை."},
+  bet:{en:"AI-first ecosystem: AI embedded in every internal platform and client offering.",ta:"ஏஐ-முதல் சூழல்: அனைத்து உள் தளங்களிலும் வாடிக்கையாளர் தீர்வுகளிலும் ஏஐ."},
+  proof:{en:"13 large deals, large-deal bookings +12.9% QoQ. Management says AI expands the addressable market.",ta:"13 பெரிய ஒப்பந்தங்கள்; பெரிய முன்பதிவு +12.9% QoQ; ஏஐ சந்தையை விரிவாக்குகிறது என நிர்வாகம்."},
+  risk:{en:"Margin at a 15-quarter low, negative Q2 guidance, recovery will take 'a few quarters'.",ta:"15 காலாண்டுக் குறைந்த லாப வரம்பு; Q2 எதிர்மறை வழிகாட்டல்; மீட்சிக்கு 'சில காலாண்டுகள்'."},
+  fc:{en:"The $1B was announced in July 2023 as a 3-year plan, so that window has ended. Watch for a fresh commitment.",ta:"$1B — ஜூலை 2023-ல் 3 ஆண்டுத் திட்டமாக அறிவிப்பு; அந்தக் காலம் முடிந்தது. புதிய அறிவிப்பைக் கவனியுங்கள்."}},
+ {id:"techm",nm:"Tech Mahindra",full:"Tech Mahindra",col:"var(--techm)",hex:"#BE123C",
+  plat:"TechM Orion Marketplace + own LLMs",
+  alias:["tech mahindra","techm","tech m","mahindra","டெக் மஹிந்திரா","டெக்மஹிந்திரா","மஹிந்திரா","டெக் எம்"],
+  rev:"$1,660M · ₹15,712 cr",cc:6.6,ccq:2.2,mg:14.4,mgc:"+60 bps QoQ, +330 bps YoY",deal:1.078,dealL:"$1,078M new deals (+33% YoY)",ai:"Not disclosed",hc:146760,hcc:-863,att:11.8,pat:"₹1,465 cr (+28.4%)",
+  guide:{en:"Turnaround plan: margin expansion",ta:"மீட்சித் திட்டம்: லாப வரம்பு விரிவாக்கம்"},
+  dc:{en:"No data centre. Builds sovereign/Indic LLMs instead: an 8B Hindi-first education LLM (Feb 2026, IndiaAI Mission).",ta:"தரவு மையம் இல்லை; இந்திய மொழி LLM-கள் — 8B இந்தி-முதல் கல்வி LLM (பிப் 2026, IndiaAI திட்டம்)."},
+  bet:{en:"A marketplace of enterprise-ready autonomous agents, plus its own Indic LLMs and agentic modernisation services.",ta:"நிறுவனங்களுக்குத் தயாரான தன்னியக்க ஏஜென்ட்களின் சந்தை; சொந்த இந்திய LLM; ஏஜென்டிக் நவீனமயமாக்கல் சேவைகள்."},
+  proof:{en:"Fastest growth (6.6% CC), EBIT +330 bps YoY, deal wins +33%, lowest attrition (11.8%).",ta:"அதிக வளர்ச்சி (6.6% CC); EBIT +330 bps; ஒப்பந்தங்கள் +33%; குறைந்த விலகல் (11.8%)."},
+  risk:{en:"Gains are mostly from the turnaround so far, with no AI revenue disclosed. Profit missed estimates.",ta:"இதுவரை பெரும்பாலும் மீட்சித் திட்ட பலன்; ஏஐ வருவாய் வெளியிடப்படவில்லை; லாபம் எதிர்பார்ப்பை விடக் குறைவு."},
+  fc:{en:"Confirmed: the 8B-parameter LLM is Hindi-first and education-focused.",ta:"உறுதி: 8B அளவுரு LLM — இந்தி-முதல், கல்வி நோக்கு."}}
+];
+
+var SIG=[
+ {id:"tcv",ph:"lead",w:1,en:"Deal wins / TCV",ta:"ஒப்பந்த வெற்றி / TCV",
+  boon:{en:"Rising TCV with a high net-new share",ta:"TCV உயர்வு + அதிக புதிய ஒப்பந்தப் பங்கு"},
+  bane:{en:"Renewals re-signed at lower value",ta:"புதுப்பிக்கப்பட்ட ஒப்பந்தங்கள் குறைந்த மதிப்பில்"},
+  now:{en:"Strong at TCS ($9.5B), Infosys (61% net new), HCLTech (record) and TechM (+33%)",ta:"TCS ($9.5B), இன்ஃபோசிஸ் (61% புதியது), HCL (சாதனை), TechM (+33%) வலுவானவை"},
+  r:{tcs:1,infy:1,hcl:1,wipro:0,techm:1}},
+ {id:"ai",ph:"lead",w:1,en:"AI revenue disclosed and growing",ta:"ஏஐ வருவாய் வெளிப்படுத்தல் & வளர்ச்சி",
+  boon:{en:"AI share of revenue rising every quarter",ta:"ஒவ்வொரு காலாண்டும் ஏஐ பங்கு உயர்வு"},
+  bane:{en:"No disclosure, or AI revenue only replacing old revenue",ta:"வெளிப்படுத்தல் இல்லை / பழைய வருவாயை மாற்றீடு மட்டும்"},
+  now:{en:"TCS $2.6B run-rate, Infosys 8.2%, HCLTech +62%. Wipro and TechM do not disclose",ta:"TCS $2.6B, இன்ஃபோசிஸ் 8.2%, HCL +62%; விப்ரோ, TechM வெளியிடவில்லை"},
+  r:{tcs:1,infy:1,hcl:1,wipro:0,techm:0}},
+ {id:"size",ph:"lead",w:1,en:"Deal size and pricing",ta:"ஒப்பந்த அளவு & விலை",
+  boon:{en:"Outcome-based or platform pricing holds value",ta:"விளைவு/தள அடிப்படைக் கட்டணம் மதிப்பைக் காக்கிறது"},
+  bane:{en:"Same scope, smaller deal: AI savings passed on to the client",ta:"அதே வேலை, சிறிய ஒப்பந்தம் — ஏஐ சேமிப்பு வாடிக்கையாளருக்கு"},
+  now:{en:"HCLTech: typical deal ~$100M to ~$80M. Sector deflation 2–3% a year",ta:"HCL: ~$100M→~$80M; துறை சுருக்கம் ஆண்டுக்கு 2–3%"},
+  r:{tcs:0,infy:0,hcl:-1,wipro:0,techm:0}},
+ {id:"cc",ph:"coin",w:1.5,en:"Constant-currency revenue growth",ta:"நிலையான நாணய வருவாய் வளர்ச்சி",
+  boon:{en:"Growth returns to 6%+ YoY",ta:"ஆண்டு வளர்ச்சி 6%+ திரும்புதல்"},
+  bane:{en:"Stuck at 0–3% despite big TCV",ta:"பெரிய TCV இருந்தும் 0–3%-ல் தேக்கம்"},
+  now:{en:"TechM 6.6%, TCS 3.2%, HCLTech 2.6%, Infosys 2.4%, Wipro 0.9%",ta:"TechM 6.6%, TCS 3.2%, HCL 2.6%, இன்ஃபோசிஸ் 2.4%, விப்ரோ 0.9%"},
+  r:{tcs:0,infy:0,hcl:0,wipro:-1,techm:1}},
+ {id:"mg",ph:"coin",w:1.5,en:"Operating margin trend",ta:"இயக்க லாப வரம்பு போக்கு",
+  boon:{en:"Margin expands as AI lifts productivity",ta:"ஏஐ உற்பத்தித்திறனால் லாப வரம்பு விரிவு"},
+  bane:{en:"Margin falls: price cuts plus AI investment cost",ta:"விலைக் குறைப்பு + ஏஐ முதலீட்டுச் செலவால் சரிவு"},
+  now:{en:"Up: TechM, HCLTech, Infosys. Down: TCS (wage hike), Wipro (15-qtr low)",ta:"உயர்வு: TechM, HCL, இன்ஃபோசிஸ்; சரிவு: TCS (சம்பள உயர்வு), விப்ரோ (15-காலாண்டுக் குறைவு)"},
+  r:{tcs:-1,infy:1,hcl:1,wipro:-1,techm:1}},
+ {id:"rpe",ph:"coin",w:1.5,en:"Revenue per employee (non-linearity)",ta:"ஊழியர் ஒருவருக்கான வருவாய் (நேர்கோடற்ற வளர்ச்சி)",
+  boon:{en:"Revenue grows while headcount stays flat",ta:"ஊழியர் எண்ணிக்கை நிலையாக, வருவாய் உயர்வு"},
+  bane:{en:"Both fall together",ta:"இரண்டும் சேர்ந்து சரிவு"},
+  now:{en:"HCLTech $65.5K (+3.3%). TechM: revenue up with fewer staff",ta:"HCL $65.5K (+3.3%); TechM: குறைந்த ஊழியருடன் அதிக வருவாய்"},
+  r:{tcs:0,infy:0,hcl:1,wipro:0,techm:1}},
+ {id:"hc",ph:"lag",w:1,en:"Headcount and fresher hiring",ta:"ஊழியர் எண்ணிக்கை & புதியவர் பணியமர்த்தல்",
+  boon:{en:"Hiring shifts to AI-skilled talent at higher value",ta:"அதிக மதிப்புள்ள ஏஐ திறனாளர்களுக்கு மாற்றம்"},
+  bane:{en:"Broad cuts and a freeze on freshers",ta:"பரவலான குறைப்பு, புதியவர் நிறுத்தம்"},
+  now:{en:"TCS +9,279 QoQ (but −19,271 YoY). HCLTech −3,292, TechM −863",ta:"TCS +9,279 QoQ (ஆனால் −19,271 YoY); HCL −3,292; TechM −863"},
+  r:{tcs:0,infy:0,hcl:-1,wipro:0,techm:0}},
+ {id:"att",ph:"lag",w:1,en:"Attrition",ta:"ஊழியர் விலகல் விகிதம்",
+  boon:{en:"Moderate attrition plus rising hiring: demand is healthy",ta:"மிதமான விலகல் + பணியமர்த்தல் உயர்வு = தேவை ஆரோக்கியம்"},
+  bane:{en:"Very low attrition while hiring falls: people fear job loss. A spike means a talent war over AI skills",ta:"பணியமர்த்தல் குறையும்போது மிகக் குறைந்த விலகல் = வேலை இழப்பு அச்சம்; திடீர் உயர்வு = ஏஐ திறனுக்குப் போட்டி"},
+  now:{en:"11.8–13.9%, a calm range. Watch the direction, not the level",ta:"11.8–13.9% — அமைதியான வரம்பு; அளவை விட திசையைக் கவனியுங்கள்"},
+  r:{tcs:0,infy:0,hcl:0,wipro:0,techm:0}}
+];
+var PH={lead:{en:"Lead · 0–2 qtrs",ta:"முன்னோடி · 0–2 காலாண்டு"},coin:{en:"Coincident · 2–4 qtrs",ta:"உடனிகழ் · 2–4 காலாண்டு"},lag:{en:"Lagging · 4–8 qtrs",ta:"பின்தொடர் · 4–8 காலாண்டு"}};
+var BASE=JSON.parse(JSON.stringify(SIG.map(function(s){return s.r;})));
+
+function coScore(cid){ var n=0,d=0; SIG.forEach(function(s){ n+=s.w*s.r[cid]; d+=s.w; }); return n/d; }
+function sectorScore(){ var t=0; CO.forEach(function(c){ t+=coScore(c.id); }); return t/CO.length; }
+function verdictOf(x){
+  if(x>=0.35) return {k:"good",en:"Leaning boon",ta:"வரம் நோக்கி"};
+  if(x>=0.1) return {k:"good",en:"Early boon signs",ta:"வரத்தின் ஆரம்ப அறிகுறிகள்"};
+  if(x>-0.1) return {k:"warn",en:"Too early / mixed",ta:"கலப்பு / இன்னும் முன்கூட்டியது"};
+  if(x>-0.35) return {k:"bad",en:"Early strain",ta:"ஆரம்ப அழுத்தம்"};
+  return {k:"bad",en:"Leaning bane",ta:"சாபம் நோக்கி"};
+}
+
+/* ---------------- TABS ---------------- */
+var TABS=[["dash","Dashboard","டாஷ்போர்டு"],["play","Business Model","வணிக மாதிரி"],["score","Segments & Financials","பிரிவுகள் & நிதி"],["sig","Signals","சமிக்ஞைகள்"],["when","When will we know","எப்போது தெரியும்"],["mkt","Valuations","மதிப்பீடுகள்"],["take","5 Key Takeaways","5 குறிப்புகள்"],["swot","SWOT","SWOT"],["assist","Cauvery Assist","காவேரி உதவி"],["quiz","Cauvery Socrates","காவேரி சாக்ரடீஸ்"],["view","Analyst View","ஆய்வாளர் பார்வை"]];
+var nav=$("tabs");
+nav.innerHTML=TABS.map(function(t,i){return '<button type="button" data-t="'+t[0]+'" class="'+(i?"":"on")+'">'+T(t[1],t[2])+'</button>';}).join("");
+function showTab(id){
+  document.querySelectorAll("section.tab").forEach(function(s){ s.classList.toggle("on", s.id==="t-"+id); });
+  nav.querySelectorAll("button").forEach(function(b){ b.classList.toggle("on", b.dataset.t===id); });
+  try{ localStorage.setItem("cbit_tab",id); }catch(e){}
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+nav.addEventListener("click",function(e){ var b=e.target.closest("button"); if(b) showTab(b.dataset.t); });
+
+/* ---------------- LANGUAGE ---------------- */
+function setLang(l){
+  LANG=l; document.body.classList.toggle("lang-ta", l==="ta");
+  $("lgEn").classList.toggle("on", l==="en"); $("lgTa").classList.toggle("on", l==="ta");
+  document.documentElement.lang = l==="ta"?"ta":"en";
+  $("q").placeholder = l==="ta" ? "கேளுங்கள்: எந்த நிறுவனத்துக்கு ஏஐ சமிக்ஞை சிறந்தது?" : "Ask: Which company has the best AI signal?";
+  try{ localStorage.setItem("cbit_lang",l); }catch(e){}
+  fillVoices(); renderSugg();
+}
+$("lgEn").onclick=function(){ setLang("en"); };
+$("lgTa").onclick=function(){ setLang("ta"); };
+
+/* ---------------- METER ---------------- */
+var sel="sector";
+function polar(cx,cy,r,deg){ var a=(180-deg)*Math.PI/180; return [cx+r*Math.cos(a), cy-r*Math.sin(a)]; }
+function arc(cx,cy,r,d1,d2){ var p1=polar(cx,cy,r,d1),p2=polar(cx,cy,r,d2); return "M"+p1[0].toFixed(1)+" "+p1[1].toFixed(1)+" A"+r+" "+r+" 0 0 1 "+p2[0].toFixed(1)+" "+p2[1].toFixed(1); }
+function drawGauge(x){
+  var cx=160,cy=160,r=120, deg=(x+1)/2*180;
+  var s='';
+  s+='<path d="'+arc(cx,cy,r,0,60)+'" stroke="#F4B4AC" stroke-width="26" fill="none"/>';
+  s+='<path d="'+arc(cx,cy,r,60,120)+'" stroke="#FBD89A" stroke-width="26" fill="none"/>';
+  s+='<path d="'+arc(cx,cy,r,120,180)+'" stroke="#A8DDB8" stroke-width="26" fill="none"/>';
+  for(var i=0;i<=10;i++){ var a=polar(cx,cy,r+16,i*18), b=polar(cx,cy,r+22,i*18); s+='<line x1="'+a[0]+'" y1="'+a[1]+'" x2="'+b[0]+'" y2="'+b[1]+'" stroke="#9AA3AF" stroke-width="1.5"/>'; }
+  s+='<text x="22" y="182" font-family="IBM Plex Mono,monospace" font-size="11" font-weight="700" fill="#B42318">'+(LANG==="ta"?"சாபம்":"BANE")+'</text>';
+  s+='<text x="298" y="182" text-anchor="end" font-family="IBM Plex Mono,monospace" font-size="11" font-weight="700" fill="#127A3A">'+(LANG==="ta"?"வரம்":"BOON")+'</text>';
+  s+='<text x="160" y="22" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="10.5" font-weight="700" fill="#5B6472">'+(LANG==="ta"?"கலப்பு":"MIXED")+'</text>';
+  var tip=polar(cx,cy,r-18,deg);
+  s+='<g id="needle"><line x1="'+cx+'" y1="'+cy+'" x2="'+tip[0].toFixed(1)+'" y2="'+tip[1].toFixed(1)+'" stroke="#101318" stroke-width="5" stroke-linecap="round"/></g>';
+  s+='<circle cx="'+cx+'" cy="'+cy+'" r="11" fill="#F28C28" stroke="#101318" stroke-width="3"/>';
+  $("gauge").innerHTML=s;
+}
+function renderMeter(){
+  var x= sel==="sector"? sectorScore() : coScore(sel);
+  drawGauge(x);
+  var v=verdictOf(x);
+  $("vText").innerHTML='<span class="chip '+v.k+'" style="font-size:15px;padding:5px 14px">'+T(v.en,v.ta)+'</span>';
+  var nm= sel==="sector"? T("Sector average","துறைச் சராசரி") : CO.filter(function(c){return c.id===sel;})[0].nm;
+  $("vScore").innerHTML=nm+' · score <span class="num">'+(x>=0?"+":"")+x.toFixed(2)+'</span> / ±1.00';
+  renderQuick();
+}
+function renderSeg(){
+  var opts=[["sector",T("Sector","துறை")]].concat(CO.map(function(c){return [c.id,c.nm];}));
+  $("coSeg").innerHTML=opts.map(function(o){return '<button type="button" data-c="'+o[0]+'" class="'+(o[0]===sel?"on":"")+'">'+o[1]+'</button>';}).join("")+
+    '<button type="button" data-c="reset" style="border-style:dashed">'+T("Reset","மீட்டமை")+'</button>';
+}
+$("coSeg").addEventListener("click",function(e){ var b=e.target.closest("button"); if(!b) return;
+  if(b.dataset.c==="reset"){ SIG.forEach(function(s,i){ s.r=JSON.parse(JSON.stringify(BASE[i])); }); renderTable(); renderMeter(); return; }
+  sel=b.dataset.c; renderSeg(); renderTable(); renderMeter(); });
+function sym(v){ return v>0?"✓":(v<0?"✗":"–"); }
+function renderTable(){
+  var h='<thead><tr><th>'+T("Signal","சமிக்ஞை")+'</th><th>'+T("Phase","கட்டம்")+'</th>'+CO.map(function(c){return '<th style="text-align:center;'+(sel===c.id?"background:var(--acc-l)":"")+'">'+c.nm.replace("Tech Mahindra","TechM")+'</th>';}).join("")+'</tr></thead><tbody>';
+  SIG.forEach(function(s,i){
+    h+='<tr><td style="font-weight:700;min-width:170px">'+T(s.en,s.ta)+'</td><td><span class="phase">'+s.ph+'</span></td>';
+    CO.forEach(function(c){ h+='<td style="text-align:center;'+(sel===c.id?"background:var(--soft)":"")+'"><button type="button" class="cell" data-i="'+i+'" data-c="'+c.id+'" data-v="'+s.r[c.id]+'" aria-label="'+s.en+' '+c.nm+'">'+sym(s.r[c.id])+'</button></td>'; });
+    h+='</tr>';
+  });
+  h+='<tr><td style="font-weight:800">'+T("Score","மதிப்பெண்")+'</td><td></td>'+CO.map(function(c){var x=coScore(c.id);return '<td class="n" style="text-align:center;color:'+(x>0.05?"var(--good)":x<-0.05?"var(--bad)":"var(--ink2)")+'">'+(x>=0?"+":"")+x.toFixed(2)+'</td>';}).join("")+'</tr>';
+  $("sigTable").innerHTML=h+'</tbody>';
+}
+$("sigTable").addEventListener("click",function(e){ var b=e.target.closest(".cell"); if(!b) return;
+  var s=SIG[+b.dataset.i], c=b.dataset.c, v=s.r[c]; s.r[c]= v===1?-1:(v+1);
+  renderTable(); renderMeter(); });
+
+function renderQuick(){
+  $("coQuick").innerHTML=CO.map(function(c){ var x=coScore(c.id), v=verdictOf(x);
+    return '<div class="co"><div class="hd"><div class="badge" style="background:'+c.hex+'">'+c.nm.slice(0,3).toUpperCase()+'</div><div style="flex:1"><div class="nm">'+c.nm+'</div><div class="pl">'+c.plat+'</div></div><span class="chip '+v.k+'">'+T(v.en,v.ta)+'</span></div>'+
+    '<ul class="b"><li>'+T(c.proof.en,c.proof.ta)+'</li><li>'+T(c.risk.en,c.risk.ta)+'</li></ul></div>'; }).join("");
+}
+
+/* ---------------- PLAYBOOKS ---------------- */
+$("playGrid").innerHTML=CO.map(function(c){
+  return '<div class="co"><div class="hd"><div class="badge" style="background:'+c.hex+'">'+c.nm.slice(0,3).toUpperCase()+'</div><div><div class="nm">'+c.full+'</div><div class="pl">'+c.plat+'</div></div></div>'+
+  '<dl class="kv"><dt>'+T("Bet","பந்தயம்")+'</dt><dd>'+T(c.bet.en,c.bet.ta)+'</dd><dt>'+T("Infra","உள்கட்டமைப்பு")+'</dt><dd>'+T(c.dc.en,c.dc.ta)+'</dd><dt>'+T("Proof","சான்று")+'</dt><dd>'+T(c.proof.en,c.proof.ta)+'</dd></dl>'+'</div>';
+}).join("");
+
+/* ---------------- SCORECARD ---------------- */
+var MET=[
+ {k:"mg",en:"Operating margin %",ta:"இயக்க லாப வரம்பு %",f:function(c){return c.mg;},fmt:function(v){return v.toFixed(1)+"%";},note:{en:"HCLTech is EBIT excluding restructuring. Wipro is IT services.",ta:"HCL — மறுசீரமைப்பு தவிர்த்த EBIT; விப்ரோ — ஐடி சேவைகள்."}},
+ {k:"cc",en:"CC growth YoY %",ta:"CC ஆண்டு வளர்ச்சி %",f:function(c){return c.cc;},fmt:function(v){return v.toFixed(1)+"%";},note:{en:"Constant currency, year on year. Wipro is IT services.",ta:"நிலையான நாணயம், ஆண்டுக்கு ஆண்டு."}},
+ {k:"deal",en:"Deal wins $B",ta:"ஒப்பந்தங்கள் $B",f:function(c){return c.deal;},fmt:function(v){return "$"+v.toFixed(2)+"B";},note:{en:"Definitions differ by company. See the table note.",ta:"நிறுவனத்துக்கு நிறுவனம் வரையறை மாறுபடும் — அட்டவணைக் குறிப்பைப் பார்க்கவும்."}},
+ {k:"att",en:"Attrition %",ta:"விலகல் %",f:function(c){return c.att;},fmt:function(v){return v.toFixed(1)+"%";},note:{en:"Last twelve months (LTM). Infosys: not disclosed in the sources used.",ta:"கடந்த 12 மாதம் (LTM). இன்ஃபோசிஸ்: தரவு இல்லை."}},
+ {k:"hcc",en:"Headcount change QoQ",ta:"ஊழியர் மாற்றம் QoQ",f:function(c){return c.hcc;},fmt:function(v){return (v>0?"+":"")+v.toLocaleString("en-IN");},note:{en:"The zero line is in the middle. Infosys and Wipro: not disclosed in the sources used.",ta:"நடுக்கோடு = பூஜ்யம். இன்ஃபோசிஸ், விப்ரோ: தரவு இல்லை."}}
+];
+var met="mg";
+function renderMetSeg(){ $("metSeg").innerHTML=MET.map(function(m){return '<button type="button" data-m="'+m.k+'" class="'+(m.k===met?"on":"")+'">'+T(m.en,m.ta)+'</button>';}).join(""); }
+$("metSeg").addEventListener("click",function(e){ var b=e.target.closest("button"); if(!b) return; met=b.dataset.m; renderMetSeg(); renderBars(); });
+function renderBars(){
+  var m=MET.filter(function(x){return x.k===met;})[0];
+  var vals=CO.map(function(c){return m.f(c);});
+  var nums=vals.filter(function(v){return v!==null&&v!==undefined;});
+  var hasNeg=nums.some(function(v){return v<0;});
+  var mx=Math.max.apply(null,nums.map(Math.abs));
+  $("bars").innerHTML=CO.map(function(c,i){ var v=vals[i];
+    if(v===null||v===undefined) return '<div class="brow"><div class="nm">'+c.nm.replace("Tech Mahindra","TechM")+'</div><div class="btrack"></div><div class="val muted">n/d</div></div>';
+    var st;
+    if(hasNeg){ var w=Math.abs(v)/mx*50; st= v>=0? "left:50%;width:"+w+"%" : "left:"+(50-w)+"%;width:"+w+"%"; }
+    else { st="left:0;width:"+(v/mx*100)+"%"; }
+    return '<div class="brow"><div class="nm">'+c.nm.replace("Tech Mahindra","TechM")+'</div><div class="btrack">'+(hasNeg?'<div class="bzero" style="left:50%"></div>':'')+'<div class="bfill" style="'+st+';background:'+c.hex+'"></div></div><div class="val">'+m.fmt(v)+'</div></div>';
+  }).join("");
+  $("barNote").innerHTML=T(m.note.en,m.note.ta);
+}
+(function finTable(){
+  var rows=[["Revenue","வருவாய்",function(c){return c.rev;}],["CC YoY","CC ஆண்டு",function(c){return c.cc.toFixed(1)+"%";}],["Margin","லாப வரம்பு",function(c){return c.mg.toFixed(1)+"% <span class='muted small'>("+c.mgc+")</span>";}],["PAT","நிகர லாபம்",function(c){return c.pat;}],["Deals","ஒப்பந்தங்கள்",function(c){return c.dealL;}],["AI revenue","ஏஐ வருவாய்",function(c){return c.ai;}],["Headcount","ஊழியர்",function(c){return c.hc?c.hc.toLocaleString("en-IN")+(c.hcc!==null?" ("+(c.hcc>0?"+":"")+c.hcc.toLocaleString("en-IN")+")":""):"n/d";}],["Attrition","விலகல்",function(c){return c.att?c.att+"%":"n/d";}],["Guidance","வழிகாட்டல்",function(c){return T(c.guide.en,c.guide.ta);}]];
+  var h='<thead><tr><th>'+T("Q1 FY27","Q1 FY27")+'</th>'+CO.map(function(c){return '<th>'+c.nm+'</th>';}).join("")+'</tr></thead><tbody>';
+  rows.forEach(function(r){ h+='<tr><td style="font-weight:800;white-space:nowrap">'+T(r[0],r[1])+'</td>'+CO.map(function(c){return '<td class="n" style="white-space:normal;min-width:130px">'+r[2](c)+'</td>';}).join("")+'</tr>'; });
+  $("finTable").innerHTML=h+'</tbody>';
+})();
+
+/* ---------------- SIGNALS ---------------- */
+var ph="all";
+function renderPh(){ var o=[["all",T("All","அனைத்தும்")],["lead",T(PH.lead.en,PH.lead.ta)],["coin",T(PH.coin.en,PH.coin.ta)],["lag",T(PH.lag.en,PH.lag.ta)]];
+  $("phSeg").innerHTML=o.map(function(x){return '<button type="button" data-p="'+x[0]+'" class="'+(x[0]===ph?"on":"")+'">'+x[1]+'</button>';}).join(""); }
+$("phSeg").addEventListener("click",function(e){ var b=e.target.closest("button"); if(!b) return; ph=b.dataset.p; renderPh(); renderSig(); });
+function renderSig(){
+  $("sigList").innerHTML=SIG.filter(function(s){return ph==="all"||s.ph===ph;}).map(function(s){
+    return '<div class="sig"><div class="top"><h3>'+T(s.en,s.ta)+'</h3><span class="phase">'+T(PH[s.ph].en,PH[s.ph].ta)+'</span></div>'+
+    '<div class="bb"><div class="boon"><b>'+T("Boon if","வரம் எனில்")+'</b>'+T(s.boon.en,s.boon.ta)+'</div><div class="bane"><b>'+T("Bane if","சாபம் எனில்")+'</b>'+T(s.bane.en,s.bane.ta)+'</div></div>'+
+    '<div class="now"><span class="chip acc">'+T("Q1 FY27 reading","Q1 FY27 நிலை")+'</span> '+T(s.now.en,s.now.ta)+'</div></div>';
+  }).join("");
+}
+
+/* ---------------- TIMELINE ---------------- */
+var TL=[
+ {w:"Jul 2026 · done",wt:"ஜூலை 2026 · முடிந்தது",en:"Q1 FY27: first AI revenue disclosures",ta:"Q1 FY27: முதல் ஏஐ வருவாய் வெளிப்படுத்தல்",b:{en:"TCS, Infosys and HCLTech now report AI revenue. TCV is strong but growth is only 1–3%.",ta:"TCS, இன்ஃபோசிஸ், HCL ஏஐ வருவாய் வெளியிடுகின்றன; TCV வலுவானது, ஆனால் வளர்ச்சி 1–3% மட்டுமே."}},
+ {w:"Late Sep 2026",wt:"செப் இறுதி 2026",en:"Accenture results: the global read",ta:"அக்சென்ச்சர் முடிவுகள் — உலகளாவிய அறிகுறி",b:{en:"Accenture's GenAI bookings and pricing commentary usually set the tone for Indian IT.",ta:"அதன் ஜென்ஏஐ முன்பதிவு, விலைக் கருத்துகள் இந்திய ஐடியின் மனநிலையை அமைக்கும்."}},
+ {w:"Oct 2026",wt:"அக் 2026",en:"Q2 FY27 results (TCS opens the season)",ta:"Q2 FY27 முடிவுகள் (TCS தொடக்கம்)",b:{en:"Check whether the SKF deal is ramping, whether margins recover after the wage hike, and whether Wipro meets its −1.5% to +0.5% guide.",ta:"SKF ஒப்பந்த வளர்ச்சி; சம்பள உயர்வுக்குப் பின் லாப வரம்பு மீட்சி; விப்ரோ −1.5%/+0.5% வழிகாட்டல்."}},
+ {w:"Jan 2027",wt:"ஜன 2027",en:"Q3 FY27: the furlough quarter",ta:"Q3 FY27: விடுமுறைக் காலாண்டு",b:{en:"A seasonally weak quarter. Look at revenue per employee and headcount direction.",ta:"பருவ ரீதியாகப் பலவீனம்; ஊழியர் ஒருவருக்கான வருவாய், எண்ணிக்கை திசையைக் கவனிக்கவும்."}},
+ {w:"Apr 2027",wt:"ஏப் 2027",en:"Q4 FY27 + FY28 guidance: the first real verdict",ta:"Q4 FY27 + FY28 வழிகாட்டல் — முதல் உண்மையான தீர்ப்பு",big:1,b:{en:"If FY28 guidance is above FY27 and the AI share of revenue exceeds 12%, that is an early boon.",ta:"FY28 வழிகாட்டல் FY27-ஐ விட அதிகம் + ஏஐ பங்கு 12%+ எனில் ஆரம்ப வரம்."}},
+ {w:"Jul–Oct 2027",wt:"ஜூலை–அக் 2027",en:"TCV-to-revenue test",ta:"TCV → வருவாய் சோதனை",big:1,b:{en:"Two years of AI mega-deals should be visible in revenue by now. If not, the deals were priced down, which is deflation.",ta:"2 ஆண்டு ஏஐ மெகா ஒப்பந்தங்கள் வருவாயில் தெரிய வேண்டும்; இல்லையெனில் விலைச் சுருக்கம்."}},
+ {w:"FY28–FY29",wt:"FY28–FY29",en:"Data centres go live in phases",ta:"தரவு மையங்கள் கட்டம் கட்டமாகச் செயல்பாடு",b:{en:"TCS HyperVault and HCLTech: anchor tenants, utilisation and return on capital decide whether the capex pays off.",ta:"TCS ஹைப்பர்வால்ட், HCL: முதன்மை வாடிக்கையாளர், பயன்பாடு, மூலதன வருமானம் — முதலீடு பலன் தருமா என்பதைத் தீர்மானிக்கும்."}}
+];
+$("tl").innerHTML=TL.map(function(t){return '<div class="it'+(t.big?" big":"")+'"><div class="when">'+T(t.w,t.wt)+'</div><h3>'+T(t.en,t.ta)+'</h3><div class="muted" style="font-weight:600;color:var(--ink2)">'+T(t.b.en,t.b.ta)+'</div></div>';}).join("")+
+ '<div class="card soft"><h3>'+T("Signals between result dates","முடிவுகளுக்கு இடையிலான சமிக்ஞைகள்")+'</h3><ul class="b"><li>'+T("Mega-deal announcements on stock exchanges","பங்குச்சந்தை மெகா ஒப்பந்த அறிவிப்புகள்")+'</li><li>'+T("Naukri JobSpeak IT hiring index, published monthly","நௌக்ரி JobSpeak ஐடி பணியமர்த்தல் குறியீடு (மாதாந்திரம்)")+'</li><li>'+T("Campus hiring season (Aug–Dec): offer counts and joining dates","வளாகப் பணியமர்த்தல் (ஆக–டிச): வேலை வாய்ப்பு எண்ணிக்கை, சேர்க்கை தேதிகள்")+'</li><li>'+T("US client tech budgets and big AI product launches","அமெரிக்க வாடிக்கையாளர் தொழில்நுட்ப பட்ஜெட், பெரிய ஏஐ அறிமுகங்கள்")+'</li></ul></div>';
+
+/* ---------------- TAKEAWAYS ---------------- */
+var TK=[
+ {en:"<b>It is too early for a verdict.</b> Deals and AI revenue are positive. Revenue growth (1–3% at most majors) is not yet.",ta:"<b>தீர்ப்புக்கு இன்னும் முன்கூட்டியது.</b> ஒப்பந்தங்கள், ஏஐ வருவாய் நேர்மறை; வருவாய் வளர்ச்சி (பெரும்பாலும் 1–3%) இன்னும் இல்லை."},
+ {en:"<b>Revenue per employee is the key tell.</b> HCLTech (+3.3%) and TechM grow with fewer people. That is AI-led non-linearity in action.",ta:"<b>ஊழியர் ஒருவருக்கான வருவாய் தான் முக்கிய அறிகுறி.</b> HCL (+3.3%), TechM குறைந்த ஆட்களுடன் வளர்கின்றன — ஏஐ நேர்கோடற்ற வளர்ச்சி."},
+ {en:"<b>Deflation comes before the dividend.</b> Deal sizes are shrinking and analysts see 14–50% price erosion on legacy work.",ta:"<b>பலனுக்கு முன் விலைச் சுருக்கம்.</b> ஒப்பந்த அளவு சுருங்குகிறது; பழைய வேலையில் 14–50% விலை அரிப்பு என ஆய்வாளர்கள்."},
+ {en:"<b>TCS and HCLTech are betting on infrastructure.</b> Data centres add a new revenue line but tie up capital for years.",ta:"<b>TCS, HCL உள்கட்டமைப்பில் பந்தயம்.</b> தரவு மையங்கள் புதிய வருவாய் தரும், ஆனால் ஆண்டுக்கணக்கில் மூலதனம் முடங்கும்."},
+ {en:"<b>Attrition is not the signal yet.</b> At 11.8–13.9% it is calm. The job signal to watch is fresher hiring, which HCLTech halved.",ta:"<b>விலகல் விகிதம் இன்னும் சமிக்ஞை அல்ல.</b> 11.8–13.9% அமைதி; கவனிக்க வேண்டியது புதியவர் பணியமர்த்தல் (HCL பாதியாகக் குறைத்தது)."}
+];
+$("tkList").innerHTML=TK.map(function(t,i){return '<div class="card"><div class="n">0'+(i+1)+'</div><div style="font-weight:500">'+T(t.en,t.ta)+'</div></div>';}).join("");
+
+/* ---------------- SWOT ---------------- */
+var SW=[
+ ["S","Strengths","பலங்கள்",[["Deep client relationships and domain knowledge","ஆழமான வாடிக்கையாளர் உறவு & துறை அறிவு"],["Strong balance sheets and high cash conversion","வலுவான இருப்புநிலை, அதிக பணமாற்றம்"],["Scale to retrain lakhs of engineers","லட்சக்கணக்கான பொறியாளர்களை மறுபயிற்சி அளிக்கும் திறன்"]]],
+ ["W","Weaknesses","பலவீனங்கள்",[["Revenue is still tied to headcount and billed hours","வருவாய் இன்னும் ஆட்கள்/மணிநேரத்துடன் பிணைப்பு"],["Low R&D spend and few owned models or IP","குறைந்த ஆய்வுச் செலவு, சொந்த மாடல்/அறிவுசார் சொத்து குறைவு"],["Over-dependence on US/EU clients","அமெரிக்க/ஐரோப்பிய வாடிக்கையாளர் சார்பு"]]],
+ ["O","Opportunities","வாய்ப்புகள்",[["Agentic AI and legacy modernisation work","ஏஜென்டிக் ஏஐ & பழைய அமைப்பு நவீனமயமாக்கல்"],["Sovereign AI and Indic LLMs under the IndiaAI Mission","இறையாண்மை ஏஐ, IndiaAI இந்திய மொழி LLM"],["AI data centres and GPU-as-a-service","ஏஐ தரவு மையங்கள், GPU சேவை"]]],
+ ["T","Threats","அச்சுறுத்தல்கள்",[["AI vendors selling direct to enterprises","ஏஐ நிறுவனங்கள் நேரடியாக நிறுவனங்களுக்கு விற்பனை"],["Price deflation of 14–50% on legacy work","பழைய வேலையில் 14–50% விலைச் சுருக்கம்"],["US visa and tariff policy, plus client budget cuts","அமெரிக்க விசா/வரிக் கொள்கை, வாடிக்கையாளர் பட்ஜெட் குறைப்பு"]]]
+];
+$("swot").innerHTML=SW.map(function(s){return '<div class="card '+s[0]+'"><h3>'+T(s[1],s[2])+'</h3><ul class="b">'+s[3].map(function(x){return '<li>'+T(x[0],x[1])+'</li>';}).join("")+'</ul></div>';}).join("");
+
+/* ---------------- QUIZ ---------------- */
+var QZ=[
+ {q:["TCV rises strongly, but revenue stays flat for 4 quarters. What does that suggest?","TCV வலுவாக உயர்கிறது, ஆனால் 4 காலாண்டுகள் வருவாய் தேக்கம். இது எதைக் குறிக்கிறது?"],o:[["AI is a clear boon","ஏஐ தெளிவான வரம்"],["Deals are being won at lower prices (deflation)","குறைந்த விலையில் ஒப்பந்தங்கள் (விலைச் சுருக்கம்)"],["Attrition is rising","விலகல் உயர்கிறது"]],a:1,e:["When bookings don't convert to revenue, the same work is being priced down. That is AI deflation.","முன்பதிவு வருவாயாக மாறவில்லை எனில், அதே வேலை குறைந்த விலையில் — இதுவே ஏஐ விலைச் சுருக்கம்."]},
+ {q:["Which single metric best shows AI-led non-linearity?","ஏஐ-ஆல் நேர்கோடற்ற வளர்ச்சியை சிறப்பாகக் காட்டும் அளவீடு எது?"],o:[["Revenue per employee","ஊழியர் ஒருவருக்கான வருவாய்"],["Dividend per share","பங்கு ஒன்றுக்கான ஈவுத்தொகை"],["Number of AI press releases","ஏஐ செய்திக்குறிப்புகளின் எண்ணிக்கை"]],a:0,e:["Revenue that grows while headcount stays flat means AI is doing the work. HCLTech is +3.3%.","ஊழியர் நிலையாக இருக்க வருவாய் உயர்ந்தால் ஏஐ வேலை செய்கிறது. HCL +3.3%."]},
+ {q:["Which is a LAGGING signal, the last to confirm the verdict?","கடைசியாகத் தீர்ப்பை உறுதிசெய்யும் பின்தொடர் சமிக்ஞை எது?"],o:[["Deal wins","ஒப்பந்த வெற்றி"],["AI revenue disclosure","ஏஐ வருவாய் வெளிப்படுத்தல்"],["Headcount and fresher hiring","ஊழியர் & புதியவர் பணியமர்த்தல்"]],a:2,e:["Companies adjust hiring only after demand and pricing settle, so jobs move last.","தேவையும் விலையும் நிலைத்த பின்தான் பணியமர்த்தல் மாறும் — வேலைவாய்ப்பு கடைசியில்."]},
+ {q:["Very low attrition while hiring is falling usually means…","பணியமர்த்தல் குறையும்போது மிகக் குறைந்த விலகல் பொதுவாகக் குறிப்பது…"],o:[["Employees fear job loss and stay put","வேலை இழப்பு அச்சத்தில் ஊழியர்கள் தங்குகிறார்கள்"],["A talent war","திறனாளர் போட்டி"],["Margins will surely rise","லாப வரம்பு நிச்சயம் உயரும்"]],a:0,e:["Low attrition is not always good news. Read it together with hiring.","குறைந்த விலகல் எப்போதும் நல்லதல்ல — பணியமர்த்தலுடன் சேர்த்துப் படியுங்கள்."]},
+ {q:["Which company reported Advanced AI revenue up 62% YoY in Q1 FY27?","Q1 FY27-ல் மேம்பட்ட ஏஐ வருவாய் 62% உயர்ந்ததாக அறிவித்த நிறுவனம்?"],o:[["Wipro","விப்ரோ"],["HCLTech","HCLTech"],["Infosys","இன்ஃபோசிஸ்"]],a:1,e:["HCLTech: $171M, +10.6% QoQ, +62.1% YoY in CC.","HCLTech: $171M, +10.6% QoQ, +62.1% YoY (CC)."]},
+ {q:["When do we get the first real verdict?","முதல் உண்மையான தீர்ப்பு எப்போது?"],o:[["Next week","அடுத்த வாரம்"],["Apr 2027, with FY28 guidance","ஏப் 2027 — FY28 வழிகாட்டல்"],["Only in 2030","2030-ல் மட்டும்"]],a:1,e:["Full-year FY27 numbers plus FY28 guidance show whether AI revenue is outrunning deflation.","FY27 முழு ஆண்டு + FY28 வழிகாட்டல் → ஏஐ வருவாய் விலைச் சுருக்கத்தை முந்துகிறதா என்பது தெரியும்."]},
+ {q:["TCS's HyperVault data centre campus is planned where?","TCS ஹைப்பர்வால்ட் தரவு மைய வளாகம் எங்கே?"],o:[["Chennai","சென்னை"],["Hyderabad, Telangana","ஹைதராபாத், தெலங்கானா"],["Pune","புனே"]],a:1,e:["A 1 GW campus on 264 acres, up to ₹70,000 cr, with TPG investing $1B.","1 GW, 264 ஏக்கர், ₹70,000 கோடி வரை; TPG $1B."]},
+ {q:["Why do IT stocks fall when a big AI model or tool launches?","பெரிய ஏஐ மாடல்/கருவி அறிமுகமானால் ஐடி பங்குகள் ஏன் விழுகின்றன?"],o:[["Fear that clients need fewer billable hours","வாடிக்கையாளருக்குக் குறைந்த கட்டண மணிநேரம் போதும் என்ற அச்சம்"],["Interest rates rise","வட்டி விகிதம் உயர்வு"],["The rupee strengthens","ரூபாய் வலுப்பெறுகிறது"]],a:0,e:["The market prices in deflation of legacy services before new AI revenue shows up.","புதிய ஏஐ வருவாய் வருவதற்கு முன்பே பழைய சேவை விலைச் சுருக்கத்தைச் சந்தை கணக்கிடுகிறது."]}
+];
+var qi=0,qs=0,qdone=false;
+function renderQuiz(){
+  var box=$("quiz");
+  if(qdone){ box.innerHTML='<div class="eyebrow">'+T("Result","முடிவு")+'</div><div class="h1 num" style="margin:6px 0">'+qs+' / '+QZ.length+'</div><p style="font-weight:600">'+(qs>=6?T("Excellent. You can read the signals like an analyst.","அருமை! ஆய்வாளர் போல சமிக்ஞைகளைப் படிக்கிறீர்கள்."):T("Good start. Review the Signals tab and try again.","நல்ல தொடக்கம் — சமிக்ஞைகள் பகுதியை மீண்டும் பார்த்து முயற்சிக்கவும்."))+'</p><button class="pill-btn on" type="button" id="qRe">'+T("Try again","மீண்டும்")+'</button>'; $("qRe").onclick=function(){qi=0;qs=0;qdone=false;renderQuiz();}; return; }
+  var q=QZ[qi];
+  box.innerHTML='<div class="small muted num" style="font-weight:700">'+(qi+1)+' / '+QZ.length+' · '+T("score","மதிப்பெண்")+' '+qs+'</div><div class="prog"><i style="width:'+(qi/QZ.length*100)+'%"></i></div><h3 style="font-size:18px;font-weight:800">'+T(q.q[0],q.q[1])+'</h3>'+
+    q.o.map(function(o,i){return '<button type="button" class="opt" data-i="'+i+'">'+T(o[0],o[1])+'</button>';}).join("")+'<div id="qExp"></div>';
+  box.querySelectorAll(".opt").forEach(function(b){ b.onclick=function(){
+    var i=+b.dataset.i; box.querySelectorAll(".opt").forEach(function(x){x.disabled=true;});
+    box.querySelectorAll(".opt")[q.a].classList.add("right"); if(i!==q.a) b.classList.add("wrong"); else qs++;
+    $("qExp").innerHTML='<div class="exp">'+(i===q.a?"✓ ":"✗ ")+T(q.e[0],q.e[1])+'</div><button type="button" class="pill-btn on" id="qNext" style="margin-top:10px">'+T(qi<QZ.length-1?"Next":"See result",qi<QZ.length-1?"அடுத்து":"முடிவு")+' →</button>';
+    speak(LANG==="ta"?q.e[1]:q.e[0]);
+    $("qNext").onclick=function(){ qi++; if(qi>=QZ.length) qdone=true; renderQuiz(); };
+  }; });
+}
+
+/* ================= VOICE ================= */
+var synth=window.speechSynthesis||null, voices=[];
+function loadVoices(){ if(!synth) return; voices=synth.getVoices()||[]; fillVoices(); }
+function langVoices(l){ return voices.filter(function(v){ return (v.lang||"").toLowerCase().indexOf(l)===0; }); }
+function fillVoices(){
+  var s=$("voiceSel"); if(!s) return;
+  if(!synth){ s.innerHTML='<option>—</option>'; $("voiceNote").innerHTML=T("This browser cannot speak. Answers will show as text.","இந்த உலாவி பேசாது; பதில்கள் எழுத்தாக மட்டும்."); return; }
+  var list=langVoices(LANG);
+  var pref=list.slice().sort(function(a,b){ return (/IN/i.test(b.lang)?1:0)-(/IN/i.test(a.lang)?1:0); });
+  s.innerHTML= pref.length? pref.map(function(v){return '<option value="'+v.name.replace(/"/g,"&quot;")+'">'+v.name+' ('+v.lang+')</option>';}).join("") : '<option value="">'+(LANG==="ta"?"தமிழ் குரல் இல்லை":"Default voice")+'</option>';
+  try{ var saved=localStorage.getItem("cbit_voice_"+LANG); if(saved && pref.some(function(v){return v.name===saved;})) s.value=saved; }catch(e){}
+  $("voiceNote").innerHTML = (LANG==="ta" && !list.length) ?
+    T("","இந்தச் சாதனத்தில் தமிழ் குரல் இல்லை. Android Chrome-ல் Google தமிழ் குரல் பொதுவாக உள்ளது; Windows-ல் Settings → Time & language → Speech → Tamil சேர்க்கவும். பதில்கள் எழுத்தாகக் காட்டப்படும்.") :
+    T("Voices come from your device. Indian-English voices are listed first.","குரல்கள் உங்கள் சாதனத்திலிருந்து; இந்தியக் குரல்கள் முதலில்.");
+}
+if(synth){ loadVoices(); if(typeof synth.onvoiceschanged!=="undefined") synth.onvoiceschanged=loadVoices; }
+$("voiceSel").onchange=function(){ try{ localStorage.setItem("cbit_voice_"+LANG,this.value); }catch(e){} };
+var RATE=1; $("rate").oninput=function(){ RATE=+this.value; $("rateV").textContent=RATE.toFixed(1)+"×"; };
+function plain(html){ var d=document.createElement("div"); d.innerHTML=html; d.querySelectorAll(LANG==="ta"?".en":".ta").forEach(function(n){n.remove();}); return (d.textContent||"").replace(/\s+/g," ").replace(/[✓✗→·]/g," ").trim(); }
+function chunks(t){ var parts=t.match(/[^.!?।]+[.!?।]?/g)||[t], out=[], cur=""; parts.forEach(function(p){ if((cur+p).length>180){ if(cur) out.push(cur); cur=p; } else cur+=p; }); if(cur.trim()) out.push(cur); return out; }
+var speaking=false;
+function speak(text,onEnd){
+  if(!synth||!text){ if(onEnd) onEnd(); return; }
+  var list=langVoices(LANG); if(LANG==="ta"&&!list.length){ if(onEnd) onEnd(); return; }
+  synth.cancel(); var name=$("voiceSel").value; var v=voices.filter(function(x){return x.name===name;})[0]||list[0]||null;
+  var cs=chunks(text); speaking=true;
+  cs.forEach(function(c,i){ var u=new SpeechSynthesisUtterance(c.trim()); if(v){u.voice=v;u.lang=v.lang;} else u.lang= LANG==="ta"?"ta-IN":"en-IN"; u.rate=RATE;
+    if(i===cs.length-1) u.onend=function(){ speaking=false; if(onEnd) onEnd(); };
+    synth.speak(u); });
+}
+function stopSpeak(){ if(synth) synth.cancel(); speaking=false; }
+$("stopTalk").onclick=function(){ stopSpeak(); convoOff(); };
+$("readTab").onclick=function(){
+  if(speaking){ stopSpeak(); return; }
+  var s=document.querySelector("section.tab.on"); if(!s) return;
+  var clone=s.cloneNode(true); clone.querySelectorAll(LANG==="ta"?".en":".ta").forEach(function(n){n.remove();}); clone.querySelectorAll("table,.src,select,svg,.seg").forEach(function(n){n.remove();});
+  var t=(clone.textContent||"").replace(/\s+/g," ").trim();
+  if(LANG==="ta" && !langVoices("ta").length){ setStatus(LANG, "இந்தச் சாதனத்தில் தமிழ் குரல் இல்லை — Cauvery Assist அமைப்புகளைப் பார்க்கவும்."); showTab("assist"); return; }
+  speak(t.slice(0,3500));
+};
+
+/* speech recognition */
+var SR=window.SpeechRecognition||window.webkitSpeechRecognition||null, rec=null, listening=false, micBlocked=false;
+function setStatus(l,msg){ $("status").textContent=msg||""; }
+function convoOff(){ $("convo").checked=false; }
+function startListen(){
+  if(!SR){ setStatus(LANG, LANG==="ta"?"இந்த உலாவியில் குரல் உள்ளீடு இல்லை — Chrome/Edge பயன்படுத்தவும். தட்டச்சு எங்கும் வேலை செய்யும்.":"Voice input is not available in this browser. Use Chrome or Edge. Typing works everywhere."); return; }
+  if(micBlocked){ setStatus(LANG, micMsg()); return; }
+  stopSpeak();
+  rec=new SR(); rec.lang= LANG==="ta"?"ta-IN":"en-IN"; rec.interimResults=true; rec.maxAlternatives=1; rec.continuous=false;
+  var finalT="";
+  rec.onstart=function(){ listening=true; $("mic").classList.add("live"); setStatus(LANG, LANG==="ta"?"கேட்கிறேன்… பேசுங்கள்":"Listening… speak now"); };
+  rec.onresult=function(e){ var t=""; for(var i=e.resultIndex;i<e.results.length;i++){ t+=e.results[i][0].transcript; if(e.results[i].isFinal) finalT=t; } $("q").value=t; };
+  rec.onerror=function(e){ if(e.error==="not-allowed"||e.error==="service-not-allowed"){ micBlocked=true; setStatus(LANG, micMsg()); convoOff(); } else if(e.error==="no-speech"){ setStatus(LANG, LANG==="ta"?"குரல் கேட்கவில்லை — மீண்டும் முயற்சிக்கவும்.":"No speech heard. Tap the mic and try again."); } else setStatus(LANG, "Voice error: "+e.error); };
+  rec.onend=function(){ listening=false; $("mic").classList.remove("live"); var v=(finalT||$("q").value).trim(); if(v){ setStatus(LANG,""); ask(v); } };
+  try{ rec.start(); }catch(err){ setStatus(LANG, micMsg()); }
+}
+function micMsg(){ return LANG==="ta" ? "இந்தப் பக்கத்தில் மைக்ரோஃபோன் தடுக்கப்பட்டுள்ளது. பதிவிறக்கிய கோப்பை உங்கள் போர்ட்டலில் (GitHub Pages) Chrome-ல் திறந்தால் குரல் வேலை செய்யும். இங்கே தட்டச்சு செய்யுங்கள் — பதில் வாசிக்கப்படும்." : "The microphone is blocked on this page. Voice input works when the downloaded file is opened from your portal (GitHub Pages) in Chrome. You can type here, and answers will still be read aloud."; }
+$("mic").onclick=function(){ if(listening&&rec){ rec.stop(); return; } startListen(); };
+
+/* ================= SMART Q&A ENGINE ================= */
+var METRICS=[
+ {k:"margin",kw:["margin","ebit","profitab","லாப வரம்பு","மார்ஜின்","வரம்பு"],en:"Operating margin",ta:"இயக்க லாப வரம்பு",v:function(c){return c.mg.toFixed(1)+"% ("+c.mgc+")";}},
+ {k:"att",kw:["attrition","quit","leaving","விலகல்","வெளியேற"],en:"Attrition (LTM)",ta:"விலகல் விகிதம்",v:function(c){return c.att?c.att+"%":"n/d";}},
+ {k:"hc",kw:["headcount","employee","staff","hiring","hire","job","fresher","layoff","ஊழியர்","வேலை","பணியமர்த்த","புதியவர்","ஆட்கள்"],en:"Headcount (QoQ change)",ta:"ஊழியர் எண்ணிக்கை (மாற்றம்)",v:function(c){return c.hc?c.hc.toLocaleString("en-IN")+(c.hcc!==null?" ("+(c.hcc>0?"+":"")+c.hcc.toLocaleString("en-IN")+")":""):"n/d";}},
+ {k:"deal",kw:["deal","tcv","booking","contract","order","ஒப்பந்த","ஆர்டர்","முன்பதிவு"],en:"Deal wins",ta:"ஒப்பந்த வெற்றிகள்",v:function(c){return c.dealL;}},
+ {k:"ai",kw:["ai revenue","ai rev","ai share","ஏஐ வருவாய்","ai வருவாய்"],en:"AI revenue",ta:"ஏஐ வருவாய்",v:function(c){return c.ai;}},
+ {k:"growth",kw:["growth","revenue","sales","cc ","constant","வளர்ச்சி","வருவாய்","விற்பனை"],en:"Revenue · CC YoY",ta:"வருவாய் · CC ஆண்டு வளர்ச்சி",v:function(c){return c.rev+" · "+c.cc.toFixed(1)+"%";}},
+ {k:"profit",kw:["profit","pat","net income","நிகர லாபம்","லாபம்"],en:"Net profit",ta:"நிகர லாபம்",v:function(c){return c.pat;}},
+ {k:"guide",kw:["guidance","outlook","guide","வழிகாட்ட"],en:"Guidance",ta:"வழிகாட்டல்",v:function(c){return LANG==="ta"?c.guide.ta:c.guide.en;},both:function(c){return T(c.guide.en,c.guide.ta);}},
+ {k:"dc",kw:["data cent","datacent","data center","gw","mw","hypervault","தரவு மைய","டேட்டா சென்டர்"],en:"Data centre / infra",ta:"தரவு மையம் / உள்கட்டமைப்பு",both:function(c){return T(c.dc.en,c.dc.ta);}},
+ {k:"plat",kw:["platform","strategy","approach","wisdomnext","topaz","ai force","ai360","orion","தளம்","உத்தி","அணுகுமுறை"],en:"AI platform & bet",ta:"ஏஐ தளம் & பந்தயம்",both:function(c){return "<b>"+c.plat+"</b>: "+T(c.bet.en,c.bet.ta);}},
+ {k:"score",kw:["signal","score","boon","bane","verdict","வரமா"," வரம் ","சாப","மதிப்பெண்","சமிக்ஞை"],en:"CB Boon Meter reading",ta:"CB வர-மானி நிலை",both:function(c){var x=coScore(c.id),v=verdictOf(x);return T(v.en,v.ta)+' <span class="num">('+(x>=0?"+":"")+x.toFixed(2)+')</span>';}}
+];
+var KB=[
+ {k:["boon or bane","boon","bane","good or bad","verdict","overall","will ai help","வரமா","சாபமா","வரம்","சாபம்","நல்லதா"],en:"<b>Verdict: too early, but the early signs are mixed-positive.</b><ul><li>Positive: strong TCV, AI revenue now disclosed (TCS $2.6B run-rate, Infosys 8.2%, HCLTech +62%).</li><li>Negative: revenue growth is only 1–3% at most majors and deal sizes are shrinking.</li><li>Sector score on the CB Boon Meter: "+"{{SEC}}.</li></ul>",ta:"<b>தீர்ப்பு: இன்னும் முன்கூட்டியது — ஆரம்ப அறிகுறிகள் கலப்பு-நேர்மறை.</b><ul><li>நேர்மறை: வலுவான TCV, ஏஐ வருவாய் வெளிப்படுத்தல் (TCS $2.6B, இன்ஃபோசிஸ் 8.2%, HCL +62%).</li><li>எதிர்மறை: பெரும்பாலானவற்றில் வளர்ச்சி 1–3% மட்டும்; ஒப்பந்த அளவு சுருக்கம்.</li><li>CB வர-மானி துறை மதிப்பெண்: {{SEC}}.</li></ul>",f:["When will we know?","Which company is best placed?"],ft:["எப்போது தெரியும்?","எந்த நிறுவனம் சிறந்த நிலையில்?"]},
+ {k:["when","how long","timeline","know","result date","q2","எப்போது","எவ்வளவு காலம்","தெரியும்"],en:"<b>We will know over the next 4–8 quarters.</b><ul><li>Oct 2026: Q2 FY27 results (TCS opens the season)</li><li>Apr 2027: FY28 guidance, the first real verdict</li><li>Jul–Oct 2027: the TCV-to-revenue test</li><li>FY28–29: data-centre returns</li></ul>",ta:"<b>அடுத்த 4–8 காலாண்டுகளில் தெரியும்.</b><ul><li>அக் 2026: Q2 FY27 (TCS தொடக்கம்)</li><li>ஏப் 2027: FY28 வழிகாட்டல் — முதல் உண்மையான தீர்ப்பு</li><li>ஜூலை–அக் 2027: TCV→வருவாய் சோதனை</li><li>FY28–29: தரவு மைய வருமானம்</li></ul>",tab:"when",f:["What should I watch in Q2 results?"],ft:["Q2 முடிவுகளில் எதைக் கவனிக்க வேண்டும்?"]},
+ {k:["spot","how to know","how can we","identify","which signal","indicator","watch","track","கண்டறி","எப்படி அறிவது","கவனிக்க","அறிகுறி"],en:"<b>Watch 8 signals in order:</b><ul><li><b>Lead:</b> deal TCV, AI revenue, deal size and pricing</li><li><b>Coincident:</b> CC growth, margin, revenue per employee</li><li><b>Lagging:</b> headcount and fresher hiring, attrition</li></ul>No single metric is enough. A boon shows as revenue rising faster than headcount while margins hold.",ta:"<b>வரிசையாக 8 சமிக்ஞைகள்:</b><ul><li><b>முன்னோடி:</b> TCV, ஏஐ வருவாய், ஒப்பந்த அளவு/விலை</li><li><b>உடனிகழ்:</b> CC வளர்ச்சி, லாப வரம்பு, ஊழியர் ஒருவருக்கான வருவாய்</li><li><b>பின்தொடர்:</b> ஊழியர்/புதியவர், விலகல்</li></ul>ஒரே அளவீடு போதாது. வரம் = ஊழியரை விட வருவாய் வேகமாக உயர்ந்து, லாப வரம்பு நிற்பது.",tab:"sig",f:["What does attrition tell us?","What is revenue per employee?"],ft:["விலகல் விகிதம் எதைச் சொல்கிறது?","ஊழியர் ஒருவருக்கான வருவாய் என்றால் என்ன?"]},
+ {k:["attrition","quit","விலகல்"],en:"<b>Attrition is a lagging, two-sided signal.</b><ul><li>Moderate attrition with rising hiring means healthy demand</li><li>A spike means a talent war for AI skills</li><li>Very low attrition while hiring falls means people fear job loss</li><li>Now: 11.8% (TechM) to 13.9% (Wipro), a calm range</li></ul>",ta:"<b>விலகல் — பின்தொடர், இருபக்க சமிக்ஞை.</b><ul><li>மிதமான விலகல் + பணியமர்த்தல் உயர்வு = ஆரோக்கியம்</li><li>திடீர் உயர்வு = ஏஐ திறனுக்குப் போட்டி</li><li>பணியமர்த்தல் குறைந்து, மிகக் குறைந்த விலகல் = வேலை இழப்பு அச்சம்</li><li>இப்போது: 11.8% (TechM) – 13.9% (விப்ரோ) — அமைதி</li></ul>"},
+ {k:["jobs","new jobs","fresher","layoff","employment","hiring","வேலை","புதியவர்","பணியமர்த்த","வேலைவாய்ப்பு"],en:"<b>Jobs are the last signal to move.</b><ul><li>TCS: +9,279 in Q1 but −19,271 YoY. Over 50% of lateral hires have AI skills</li><li>HCLTech: −3,292, freshers 1,056 vs 1,984 a year ago</li><li>TechM: −863</li></ul>A boon for companies can still mean fewer entry-level jobs per $1M of revenue.",ta:"<b>வேலைவாய்ப்பு கடைசியில் மாறும்.</b><ul><li>TCS: Q1-ல் +9,279, ஆனால் YoY −19,271; 50%+ அனுபவ ஊழியர்கள் ஏஐ திறனுடன்</li><li>HCL: −3,292; புதியவர் 1,056 (முன்பு 1,984)</li><li>TechM: −863</li></ul>நிறுவனங்களுக்கு வரம் என்றாலும், $1M வருவாய்க்கு ஆரம்ப நிலை வேலைகள் குறையலாம்."},
+ {k:["revenue per employee","non-linear","nonlinear","productivity","ஊழியர் ஒருவருக்கான","உற்பத்தித்திறன்","நேர்கோடற்ற"],en:"<b>Revenue per employee is the best single tell.</b><ul><li>It rises when AI does the work instead of more people</li><li>HCLTech: $65.5K (+3.3% YoY) with 3,292 fewer staff</li><li>TCS says AI brings 10–15% productivity gains from day one</li></ul>",ta:"<b>ஊழியர் ஒருவருக்கான வருவாய் — சிறந்த ஒற்றை அறிகுறி.</b><ul><li>கூடுதல் ஆட்களுக்குப் பதில் ஏஐ வேலை செய்தால் உயரும்</li><li>HCL: $65.5K (+3.3%), 3,292 குறைந்த ஊழியருடன்</li><li>TCS: ஏஐ முதல் நாளிலிருந்தே 10–15% உற்பத்தித்திறன் தருகிறது</li></ul>"},
+ {k:["deflation","price","cheaper","pricing","deal size","விலைச் சுருக்கம்","விலை","மலிவு"],en:"<b>AI deflation is the main risk.</b><ul><li>HSBC estimates 14–16% and PL Capital 20–50% on legacy services</li><li>HCLTech's typical deal shrank from ~$100M to ~$80M</li><li>Test: TCV stays high while revenue stays flat</li></ul>",ta:"<b>ஏஐ விலைச் சுருக்கம் — முக்கிய அபாயம்.</b><ul><li>HSBC 14–16%, PL 20–50% (பழைய சேவைகள்)</li><li>HCL சராசரி ஒப்பந்தம் ~$100M→~$80M</li><li>சோதனை: TCV அதிகம், வருவாய் தேக்கம்</li></ul>"},
+ {k:["tcv","what is tcv","deal win","contract signing","order book","ஒப்பந்த கையெழுத்து","tcv என்றால்"],en:"<b>TCV (total contract value) is the value of deals signed, spread over 3–7 years.</b><ul><li>It is a lead signal, but it is not revenue</li><li>Check whether TCV shows up as CC revenue growth 2–4 quarters later</li><li>Q1 FY27: TCS $9.5B, Infosys $3.6B large deals, HCLTech $2.4B record</li></ul>",ta:"<b>TCV = கையெழுத்தான ஒப்பந்த மொத்த மதிப்பு (3–7 ஆண்டுகளுக்கு).</b><ul><li>முன்னோடி சமிக்ஞை — ஆனால் வருவாய் அல்ல</li><li>2–4 காலாண்டில் CC வளர்ச்சியாக மாறுகிறதா பாருங்கள்</li><li>Q1 FY27: TCS $9.5B, இன்ஃபோசிஸ் $3.6B, HCL $2.4B (சாதனை)</li></ul>"},
+ {k:["best","leader","winner","which company","top","strongest","சிறந்த","முன்னணி","எந்த நிறுவனம்"],en:"<b>On the CB Boon Meter today:</b><ul>{{RANK}}</ul>HCLTech and TechM show the clearest non-linearity. TCS leads on deal scale. Wipro is weakest. This is an educational reading, not a recommendation.",ta:"<b>இன்றைய CB வர-மானி:</b><ul>{{RANK}}</ul>HCL, TechM தெளிவான நேர்கோடற்ற வளர்ச்சி; TCS ஒப்பந்த அளவில் முன்னணி; விப்ரோ பலவீனம். இது கல்வி நோக்கு — பரிந்துரை அல்ல.",tab:"dash"},
+ {k:["worst","weak","laggard","risk","பலவீன","அபாய"],en:"<b>Weakest signals: Wipro.</b><ul><li>Margin 16.0%, a 15-quarter low</li><li>Q2 guide −1.5% to +0.5% QoQ</li><li>No AI revenue disclosed</li></ul>Sector-wide risks: deflation, fewer fresher jobs and heavy data-centre capex.",ta:"<b>பலவீனமான சமிக்ஞைகள்: விப்ரோ.</b><ul><li>லாப வரம்பு 16.0% — 15 காலாண்டுக் குறைவு</li><li>Q2 வழிகாட்டல் −1.5%/+0.5%</li><li>ஏஐ வருவாய் வெளியிடவில்லை</li></ul>துறை அபாயங்கள்: விலைச் சுருக்கம், புதியவர் வேலைக் குறைவு, அதிக தரவு மைய முதலீடு."},
+ {k:["data centre","data center","datacentre","hypervault","gw","தரவு மைய","டேட்டா"],en:"<b>Two companies are betting on AI data centres.</b><ul><li>TCS HyperVault: up to ₹70,000 cr (~$7.4B), 1 GW, Hyderabad, with $1B from TPG</li><li>HCLTech: up to ₹3,500 cr (~$370M), scalable to 50 MW</li></ul>These are long-gestation assets. Watch for anchor tenants and return on capital over FY28–29.",ta:"<b>இரண்டு நிறுவனங்கள் ஏஐ தரவு மையங்களில் பந்தயம்.</b><ul><li>TCS ஹைப்பர்வால்ட்: ₹70,000 கோடி வரை (~$7.4B), 1 GW, ஹைதராபாத்; TPG $1B</li><li>HCL: ₹3,500 கோடி வரை (~$370M), 50 MW வரை</li></ul>நீண்டகாலச் சொத்துகள் — FY28–29-ல் வாடிக்கையாளர், மூலதன வருமானம் கவனிக்கவும்."},
+ {k:["nifty","stock","share price","fall","crash","why down","பங்கு","சரிவு","விழுந்த","நிஃப்டி"],en:"<b>Nifty IT is down ~24–28% in 2026, about 40% below its Dec-2024 peak.</b><ul><li>Big AI launches revive deflation fears</li><li>Weak client spending and guidance cuts</li><li>HSBC sees a possible P/E floor near 13–14×</li></ul>",ta:"<b>நிஃப்டி ஐடி 2026-ல் ~24–28% சரிவு; டிச-2024 உச்சத்திலிருந்து ~40% கீழ்.</b><ul><li>பெரிய ஏஐ அறிமுகங்கள் → விலைச் சுருக்க அச்சம்</li><li>வாடிக்கையாளர் செலவுக் குறைவு, வழிகாட்டல் குறைப்பு</li><li>HSBC: P/E அடிமட்டம் ~13–14×</li></ul>",tab:"mkt"},
+ {k:["buy","sell","invest","should i","target","recommend","வாங்க","விற்க","முதலீடு செய்ய"],en:"<b>CB Research is not SEBI-registered and does not give buy, sell or hold calls.</b> Use the Signals tab to form your own view, and consult a registered advisor before investing.",ta:"<b>CB Research SEBI பதிவு பெறவில்லை; வாங்க/விற்கப் பரிந்துரை தருவதில்லை.</b> சமிக்ஞைகள் பகுதியைக் கொண்டு உங்கள் பார்வையை உருவாக்குங்கள்; முதலீட்டுக்கு முன் பதிவுபெற்ற ஆலோசகரை அணுகவும்."},
+ {k:["agentic","agent","autonomous","ஏஜென்ட்","ஏஜென்டிக்"],en:"<b>Agentic AI means AI agents that complete multi-step tasks on their own</b>, such as raising a ticket, fixing code or reconciling invoices.<ul><li>TCS WisdomNext 2.0, HCLTech AI Force 2.0 and TechM Orion Marketplace all push agents</li><li>For IT firms it can replace billed hours, so pricing must shift to outcomes</li></ul>",ta:"<b>ஏஜென்டிக் ஏஐ = பல படி வேலைகளைத் தானாக முடிக்கும் ஏஐ ஏஜென்ட்கள்</b> (டிக்கெட், குறியீடு திருத்தம், பில் சரிபார்ப்பு).<ul><li>TCS WisdomNext 2.0, HCL AI Force 2.0, TechM Orion — அனைத்தும் ஏஜென்ட்கள்</li><li>கட்டண மணிநேரத்தை மாற்றும் → விளைவு அடிப்படைக் கட்டணம் தேவை</li></ul>"},
+ {k:["constant currency","cc growth","what is cc","நிலையான நாணய"],en:"<b>Constant currency (CC) growth</b> removes exchange-rate effects. It shows real business growth. INR growth (e.g. TCS +13.9%) looks bigger because the rupee weakened, while TCS's CC growth was 3.2%.",ta:"<b>நிலையான நாணய (CC) வளர்ச்சி</b> — மாற்று விகித விளைவை நீக்கிய உண்மையான வணிக வளர்ச்சி. ரூபாய் பலவீனத்தால் INR வளர்ச்சி (TCS +13.9%) பெரிதாகத் தெரியும்; CC வளர்ச்சி 3.2% மட்டுமே."},
+ {k:["q2","next result","october","what to watch","அக்டோபர்","அடுத்த முடிவு"],en:"<b>Q2 FY27 checklist (Oct 2026):</b><ul><li>TCS: SKF ramp, margin back toward 25%, AI run-rate above $2.6B</li><li>Infosys: does the 1.5–3.0% guide hold?</li><li>HCLTech: AI revenue growth and data-centre client</li><li>Wipro: within the −1.5% to +0.5% guide?</li><li>TechM: can the margin expansion continue?</li></ul>",ta:"<b>Q2 FY27 சரிபார்ப்பு (அக் 2026):</b><ul><li>TCS: SKF வளர்ச்சி, லாப வரம்பு 25% நோக்கி, ஏஐ $2.6B-க்கு மேல்</li><li>இன்ஃபோசிஸ்: 1.5–3.0% நிற்குமா?</li><li>HCL: ஏஐ வளர்ச்சி, தரவு மைய வாடிக்கையாளர்</li><li>விப்ரோ: −1.5%/+0.5%-க்குள்?</li><li>TechM: லாப வரம்பு விரிவு தொடருமா?</li></ul>"},
+ {k:["llm","sovereign","indic","own model","language model","indiaai","மொழி மாடல்","இந்திய மொழி"],en:"<b>Own models:</b><ul><li>TechM: 8B-parameter Hindi-first education LLM (Feb 2026, IndiaAI Mission)</li><li>HCLTech: industry small language models and a $150M stake in Sarvam</li><li>Infosys: model-agnostic, works with any provider</li></ul>",ta:"<b>சொந்த மாடல்கள்:</b><ul><li>TechM: 8B இந்தி-முதல் கல்வி LLM (பிப் 2026, IndiaAI)</li><li>HCL: துறை சிறு மொழி மாடல்கள்; Sarvam-ல் $150M</li><li>இன்ஃபோசிஸ்: எந்த மாடலுடனும் இணையும்</li></ul>"},
+ {k:["meter","how is score","how calculated","methodology","மானி","கணக்கீடு"],en:"<b>CB Boon Meter:</b> 8 signals, each scored ✓ +1, – 0 or ✗ −1. Coincident signals are weighted ×1.5. The weighted average runs from −1 (bane) to +1 (boon). Tap any cell on the Dashboard to test your own view.",ta:"<b>CB வர-மானி:</b> 8 சமிக்ஞைகள் — ✓ +1, – 0, ✗ −1; உடனிகழ் சமிக்ஞைகள் ×1.5. எடைச் சராசரி −1 (சாபம்) முதல் +1 (வரம்). டாஷ்போர்டில் கட்டத்தைத் தட்டி உங்கள் பார்வையைச் சோதியுங்கள்.",tab:"dash"},
+ {k:["hello","hi","vanakam","vanakkam","வணக்கம்","help","உதவி"],en:"Vanakam! Ask me about any company (TCS, Infosys, HCLTech, Wipro, TechM), any metric (margin, attrition, jobs, deals, AI revenue, data centres), or ask when we will know.",ta:"வணக்கம்! எந்த நிறுவனம் (TCS, இன்ஃபோசிஸ், HCL, விப்ரோ, TechM), எந்த அளவீடு (லாப வரம்பு, விலகல், வேலை, ஒப்பந்தம், ஏஐ வருவாய், தரவு மையம்) பற்றியும் கேளுங்கள். அல்லது எப்போது தெரியும் என்று கேளுங்கள்."}
+];
+function norm(s){ return (" "+s.toLowerCase().replace(/[?!.,;:()"'`]/g," ").replace(/\s+/g," ")+" "); }
+function findCos(q){ return CO.filter(function(c){ return c.alias.some(function(a){ return q.indexOf(a)>=0; }); }); }
+function findMets(q){ return METRICS.filter(function(m){ return m.kw.some(function(k){ return q.indexOf(k)>=0; }); }); }
+function rankList(){ return CO.map(function(c){return {c:c,x:coScore(c.id)};}).sort(function(a,b){return b.x-a.x;}).map(function(o){var v=verdictOf(o.x);return '<li><b>'+o.c.nm+'</b> <span class="num">'+(o.x>=0?"+":"")+o.x.toFixed(2)+'</span> · '+T(v.en,v.ta)+'</li>';}).join(""); }
+function fill(s){ var x=sectorScore(); return s.replace("{{SEC}}",'<span class="num">'+(x>=0?"+":"")+x.toFixed(2)+'</span>').replace("{{RANK}}",rankList()); }
+function metVal(m,c){ return m.both? m.both(c) : m.v(c); }
+var ctx={cos:[],mets:[]};
+function answer(raw){
+  var q=norm(raw);
+  var cos=findCos(q), mets=findMets(q);
+  var compare=/compare|vs|versus|against|ஒப்பிடு|ஒப்பீடு|எதிராக/.test(q);
+  var all=/all compan|every compan|sector|all five|அனைத்து நிறுவன|துறை/.test(q);
+  // follow-up context: "what about wipro?" or "and attrition?"
+  if(!cos.length && mets.length && ctx.cos.length && /^ (and|what about|how about|its|their|அதன்|அவற்றின்|மற்றும்)/.test(q)) cos=ctx.cos;
+  if(cos.length && !mets.length && ctx.mets.length && /^ (and|what about|how about|மற்றும்)/.test(q)) mets=ctx.mets;
+  // specific KB beats generic metric for concept questions
+  var conceptual=/what is|what does|meaning|explain|why|fact check|verify|என்றால் என்ன|விளக்க|ஏன்|சரிபார்/.test(q);
+  if((all||compare) && !cos.length && !mets.length){ if(ctx.mets.length){ mets=ctx.mets; cos=CO; } else { cos=CO; compare=true; } }
+  if((all||compare) && mets.length && !cos.length) cos=CO;
+  if(mets.length && cos.length && !(conceptual && cos.length===0)){
+    ctx={cos:cos,mets:mets};
+    if(mets.length>3) mets=mets.slice(0,3);
+    var h='<div class="tscroll"><table><thead><tr><th></th>'+mets.map(function(m){return '<th>'+T(m.en,m.ta)+'</th>';}).join("")+'</tr></thead><tbody>'+
+      cos.map(function(c){return '<tr><td style="font-weight:800">'+c.nm+'</td>'+mets.map(function(m){return '<td class="n" style="white-space:normal">'+metVal(m,c)+'</td>';}).join("")+'</tr>';}).join("")+'</tbody></table></div>';
+    var extra="";
+    if(mets[0].k==="margin"&&cos.length>1){ var best=cos.slice().sort(function(a,b){return b.mg-a.mg;})[0]; extra=T("Highest: <b>"+best.nm+"</b>. The direction of the margin matters more than its level.","அதிகம்: <b>"+best.nm+"</b>. அளவை விட திசை முக்கியம்."); }
+    if(mets[0].k==="att"&&cos.length>1) extra=T("All are in a calm 11.8–13.9% band.","அனைத்தும் 11.8–13.9% அமைதி வரம்பில்.");
+    return {html:T("Q1 FY27 data:","Q1 FY27 தரவு:")+h+(extra?'<div style="margin-top:6px">'+extra+'</div>':""),f:cos.length===1?[["Compare with all companies","அனைத்து நிறுவனங்களுடன் ஒப்பிடு"],["Is "+cos[0].nm+" a boon or bane?",cos[0].nm+" வரமா சாபமா?"]]:[["Which company is best placed?","எந்த நிறுவனம் சிறந்த நிலையில்?"]]};
+  }
+  if(cos.length && !conceptual){
+    ctx={cos:cos,mets:[]};
+    var c=cos[0], x=coScore(c.id), v=verdictOf(x);
+    if(cos.length>1||compare){
+      var t='<div class="tscroll"><table><thead><tr><th></th><th>CC YoY</th><th>'+T("Margin","வரம்பு")+'</th><th>'+T("AI","ஏஐ")+'</th><th>'+T("Meter","மானி")+'</th></tr></thead><tbody>'+cos.map(function(c){var x=coScore(c.id);return '<tr><td style="font-weight:800">'+c.nm+'</td><td class="n">'+c.cc.toFixed(1)+'%</td><td class="n">'+c.mg.toFixed(1)+'%</td><td class="n" style="white-space:normal">'+c.ai+'</td><td class="n">'+(x>=0?"+":"")+x.toFixed(2)+'</td></tr>';}).join("")+'</tbody></table></div>';
+      return {html:T("Side by side, Q1 FY27:","ஒப்பீடு, Q1 FY27:")+t,f:[["Compare attrition","விலகலை ஒப்பிடு"],["Compare deal wins","ஒப்பந்தங்களை ஒப்பிடு"]]};
+    }
+    return {html:'<b>'+c.full+'</b> · '+c.plat+'<br><span class="chip '+v.k+'" style="margin:6px 0">'+T(v.en,v.ta)+' ('+(x>=0?"+":"")+x.toFixed(2)+')</span><ul><li>'+T(c.bet.en,c.bet.ta)+'</li><li>'+T("Proof: ","சான்று: ")+T(c.proof.en,c.proof.ta)+'</li><li>'+T("Watch: ","கவனிக்க: ")+T(c.risk.en,c.risk.ta)+'</li><li>'+T("Infra: ","உள்கட்டமைப்பு: ")+T(c.dc.en,c.dc.ta)+'</li></ul>',
+      f:[["What about its margin and attrition?","அதன் லாப வரம்பு, விலகல்?"],["Is "+c.nm+" a boon or bane?",c.nm+" வரமா சாபமா?"]]};
+  }
+  var best=null,bs=0;
+  KB.forEach(function(e){ var s=0; e.k.forEach(function(k){ if(q.indexOf(k)>=0) s+= k.length>6?2:1; }); if(s>bs){bs=s;best=e;} });
+  if(best){ ctx={cos:[],mets:[]}; return {html:fill(T(best.en,best.ta)),tab:best.tab,f:(best.f||[]).map(function(x,i){return [x,(best.ft||[])[i]||x];})}; }
+  if(mets.length){ ctx={cos:CO,mets:mets}; return answer("compare "+mets[0].kw[0]); }
+  return {html:T("I didn't catch that. Try one of these, or name a company plus a metric (e.g. \"HCL margin\", \"Wipro attrition\").","புரியவில்லை. கீழே உள்ளவற்றில் ஒன்றைக் கேளுங்கள், அல்லது நிறுவனம் + அளவீடு சொல்லுங்கள் (எ.கா. \"HCL லாப வரம்பு\", \"விப்ரோ விலகல்\")."),f:[["Is AI a boon or bane?","ஏஐ வரமா சாபமா?"],["How can we spot it?","எப்படிக் கண்டறிவது?"],["When will we know?","எப்போது தெரியும்?"]]};
+}
+
+var log=$("log");
+function addMsg(who,html,opts){
+  var d=document.createElement("div"); d.className="msg "+who; d.innerHTML=html;
+  if(who==="b"){
+    var acts=document.createElement("div"); acts.className="acts";
+    acts.innerHTML='<button type="button" class="mini" data-a="say">🔊 '+T("Replay","மீண்டும் கேள்")+'</button>'+(opts&&opts.tab?'<button type="button" class="mini" data-a="tab" data-t="'+opts.tab+'">'+T("Open related tab","தொடர்புடைய பகுதி")+' →</button>':'');
+    d.appendChild(acts);
+    if(opts&&opts.f&&opts.f.length){ var fw=document.createElement("div"); fw.className="follow"; fw.innerHTML=opts.f.map(function(x){return '<button type="button" data-q-en="'+x[0].replace(/"/g,"&quot;")+'" data-q-ta="'+x[1].replace(/"/g,"&quot;")+'">'+T(x[0],x[1])+'</button>';}).join(""); d.appendChild(fw); }
+    d._html=html;
+  }
+  log.appendChild(d); log.scrollTop=log.scrollHeight; return d;
+}
+log.addEventListener("click",function(e){
+  var b=e.target.closest("button"); if(!b) return;
+  if(b.dataset.a==="say"){ var m=b.closest(".msg"); speak(plain(m._html)); }
+  else if(b.dataset.a==="tab"){ showTab(b.dataset.t); }
+  else if(b.dataset.qEn){ ask(LANG==="ta"?b.dataset.qTa:b.dataset.qEn); }
+});
+function ask(text){
+  text=(text||"").trim(); if(!text) return;
+  addMsg("u",text.replace(/</g,"&lt;")); $("q").value="";
+  var r=answer(text);
+  var m=addMsg("b",r.html,{tab:r.tab,f:r.f});
+  if($("autoSpeak").checked){ speak(plain(r.html), function(){ if($("convo").checked && !micBlocked) setTimeout(startListen,350); }); }
+  else if($("convo").checked && !micBlocked) setTimeout(startListen,350);
+}
+$("askForm").addEventListener("submit",function(e){ e.preventDefault(); ask($("q").value); });
+$("clearChat").onclick=function(){ log.innerHTML=""; ctx={cos:[],mets:[]}; greet(); };
+var SUG=[["Is AI a boon or bane for Indian IT?","இந்திய ஐடிக்கு ஏஐ வரமா சாபமா?"],["How can we spot it early?","ஆரம்பத்திலேயே எப்படிக் கண்டறிவது?"],["When will we know?","எப்போது தெரியும்?"],["Compare margin of all companies","அனைத்து நிறுவன லாப வரம்பை ஒப்பிடு"],["HCL attrition and headcount","HCL விலகல் மற்றும் ஊழியர்"],["TCS vs Infosys","TCS vs இன்ஃபோசிஸ்"],["What about new jobs for freshers?","புதியவர்களுக்கு வேலைவாய்ப்பு?"],["Tell me about data centres","தரவு மையங்கள் பற்றி சொல்"],["Why are IT stocks falling?","ஐடி பங்குகள் ஏன் விழுகின்றன?"],["What to watch in Q2 results?","Q2 முடிவுகளில் எதைக் கவனிக்க?"]];
+function renderSugg(){ $("sugg").innerHTML=SUG.map(function(s){return '<button type="button" data-en="'+s[0]+'" data-ta="'+s[1]+'">'+T(s[0],s[1])+'</button>';}).join(""); }
+$("sugg").addEventListener("click",function(e){ var b=e.target.closest("button"); if(b) ask(LANG==="ta"?b.dataset.ta:b.dataset.en); });
+function greet(){ addMsg("b",T("Vanakam! I'm Cauvery Assist. Tap the mic or type a question. I can compare companies, explain signals and read answers aloud in English or Tamil.","வணக்கம்! நான் காவேரி உதவி. மைக்கைத் தட்டுங்கள் அல்லது தட்டச்சு செய்யுங்கள் — நிறுவனங்களை ஒப்பிடுவேன், சமிக்ஞைகளை விளக்குவேன், தமிழிலும் ஆங்கிலத்திலும் வாசிப்பேன்."),{f:[["Is AI a boon or bane?","ஏஐ வரமா சாபமா?"],["How can we spot it?","எப்படிக் கண்டறிவது?"]]}); }
+$("engineChip").textContent="offline · "+(KB.length+METRICS.length*CO.length)+" answers";
+
+/* CB badge tap */
+$("cb").querySelector(".b").onclick=function(){ $("cb").classList.toggle("open"); };
+
+/* ---------------- INIT ---------------- */
+renderSeg(); renderTable(); renderMeter(); renderMetSeg(); renderBars(); renderPh(); renderSig(); renderQuiz(); greet();
+setLang(LANG);
+try{ var st=localStorage.getItem("cbit_tab"); if(st && document.getElementById("t-"+st)) showTab(st); }catch(e){}
+var h=(location.hash||"").slice(1); if(h && document.getElementById("t-"+h)) showTab(h);
+// re-draw gauge labels on language change
+$("lgEn").addEventListener("click",renderMeter); $("lgTa").addEventListener("click",renderMeter);
+})();
+</script>
+
+</body>
+</html>
