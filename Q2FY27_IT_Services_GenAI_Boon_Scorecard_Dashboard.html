@@ -195,6 +195,12 @@ td.n{font-family:var(--mono);font-variant-numeric:tabular-nums;font-weight:600;w
 .mic.live::after{content:"";position:absolute;inset:-6px;border-radius:50%;border:3px solid var(--bad);animation:pulse 1.1s ease-out infinite}
 @keyframes pulse{from{transform:scale(.9);opacity:.9}to{transform:scale(1.25);opacity:0}}
 .send{height:46px;border:0;border-radius:12px;background:var(--ink);color:#fff;font-weight:800;padding:0 14px}
+.spd{display:inline-flex;align-items:center;gap:4px;border:1px solid var(--line);border-radius:999px;padding:2px 4px;font-size:12px;font-weight:700}
+.spd .mini{width:26px;height:24px;padding:0;font-size:15px;line-height:1}
+.set-h{font-weight:800;font-size:13px;margin-top:8px}
+.listenbar{display:flex;align-items:center;gap:8px;padding:0 12px 8px;flex-wrap:wrap}
+.lb-track{flex:1;min-width:120px;height:8px;background:#F1ECE5;border-radius:4px;overflow:hidden}
+.lb-track i{display:block;height:100%;width:0;background:var(--acc);transition:width .1s linear}
 .status{font:600 12px var(--mono);color:var(--mute);padding:0 12px 8px;min-height:18px}
 .side .card{margin-bottom:12px}
 .qs{display:flex;flex-direction:column;gap:6px}
@@ -377,11 +383,22 @@ select{font:600 13px var(--sans);border:1.5px solid var(--line);border-radius:8p
       <div class="chat-hd">
         <div class="t">Cauvery Assist</div>
         <span class="chip acc" id="engineChip">offline · 0 KB calls</span>
+        <div class="spd" role="group" aria-label="Reading speed">
+          <button type="button" class="mini" id="spdDown" aria-label="Slower">−</button>
+          <span class="num" id="spdV">0.80×</span>
+          <button type="button" class="mini" id="spdUp" aria-label="Faster">+</button>
+        </div>
+        <button class="mini" id="pauseTalk" type="button"><span class="en">Pause</span><span class="ta">இடைநிறுத்து</span></button>
         <button class="mini" id="stopTalk" type="button"><span class="en">Stop voice</span><span class="ta">குரலை நிறுத்து</span></button>
         <button class="mini" id="clearChat" type="button"><span class="en">Clear</span><span class="ta">அழி</span></button>
       </div>
       <div class="log" id="log" aria-live="polite"></div>
       <div class="status" id="status"></div>
+      <div class="listenbar" id="listenBar" hidden>
+        <div class="lb-track"><i id="lbFill"></i></div>
+        <button type="button" class="mini" id="lbSend"><span class="en">Done, send now</span><span class="ta">முடிந்தது, அனுப்பு</span></button>
+        <button type="button" class="mini" id="lbCancel"><span class="en">Cancel</span><span class="ta">ரத்து</span></button>
+      </div>
       <form class="inrow" id="askForm" autocomplete="off">
         <button class="mic" id="mic" type="button" aria-label="Speak your question">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg>
@@ -397,8 +414,24 @@ select{font:600 13px var(--sans);border:1.5px solid var(--line);border-radius:8p
         <label class="toggle"><input type="checkbox" id="convo"> <span class="en">Conversation mode (listen again after answering)</span><span class="ta">உரையாடல் முறை (பதிலுக்குப் பின் மீண்டும் கேட்கும்)</span></label>
         <label class="small muted" for="voiceSel" style="font-weight:700"><span class="en">Voice</span><span class="ta">குரல்</span></label>
         <select id="voiceSel"></select>
-        <label class="small muted" for="rate" style="font-weight:700;display:block;margin-top:8px"><span class="en">Speed</span><span class="ta">வேகம்</span> <span id="rateV" class="num">1.0×</span></label>
-        <input type="range" id="rate" min="0.6" max="1.4" step="0.1" value="1" style="width:100%;accent-color:var(--acc)">
+        <div class="set-h"><span class="en">Reading speed</span><span class="ta">வாசிக்கும் வேகம்</span> <span id="rateV" class="num">0.80×</span></div>
+        <div class="seg" id="spdSeg" style="margin:6px 0">
+          <button type="button" data-r="0.65"><span class="en">Slow</span><span class="ta">மெதுவாக</span></button>
+          <button type="button" data-r="0.8"><span class="en">Relaxed</span><span class="ta">நிதானம்</span></button>
+          <button type="button" data-r="0.95"><span class="en">Normal</span><span class="ta">சாதாரணம்</span></button>
+          <button type="button" data-r="1.15"><span class="en">Fast</span><span class="ta">வேகமாக</span></button>
+        </div>
+        <input type="range" id="rate" min="0.5" max="1.5" step="0.05" value="0.8" style="width:100%;accent-color:var(--acc)" aria-label="Reading speed">
+        <label class="toggle"><input type="checkbox" id="gaps" checked> <span class="en">Short pause between points</span><span class="ta">குறிப்புகளுக்கு இடையே சிறு இடைவெளி</span></label>
+        <div class="set-h" style="margin-top:10px"><span class="en">Listening</span><span class="ta">கேட்கும் முறை</span></div>
+        <label class="small muted" for="waitSel" style="font-weight:700;display:block"><span class="en">Answer after I stop talking for</span><span class="ta">நான் பேசி நிறுத்திய பின் காத்திருக்க வேண்டியது</span></label>
+        <select id="waitSel" style="width:100%">
+          <option value="2000">2 sec</option>
+          <option value="3000" selected>3 sec</option>
+          <option value="5000">5 sec</option>
+          <option value="0">Only when I tap Done / மைக்கைத் தட்டும்போது மட்டும்</option>
+        </select>
+        <label class="toggle"><input type="checkbox" id="review"> <span class="en">Let me check the text before sending</span><span class="ta">அனுப்பும் முன் எழுத்தைச் சரிபார்க்கிறேன்</span></label>
         <p class="note" id="voiceNote"></p>
       </div>
       <div class="card">
@@ -791,48 +824,129 @@ function fillVoices(){
 }
 if(synth){ loadVoices(); if(typeof synth.onvoiceschanged!=="undefined") synth.onvoiceschanged=loadVoices; }
 $("voiceSel").onchange=function(){ try{ localStorage.setItem("cbit_voice_"+LANG,this.value); }catch(e){} };
-var RATE=1; $("rate").oninput=function(){ RATE=+this.value; $("rateV").textContent=RATE.toFixed(1)+"×"; };
-function plain(html){ var d=document.createElement("div"); d.innerHTML=html; d.querySelectorAll(LANG==="ta"?".en":".ta").forEach(function(n){n.remove();}); return (d.textContent||"").replace(/\s+/g," ").replace(/[✓✗→·]/g," ").trim(); }
-function chunks(t){ var parts=t.match(/[^.!?।]+[.!?।]?/g)||[t], out=[], cur=""; parts.forEach(function(p){ if((cur+p).length>180){ if(cur) out.push(cur); cur=p; } else cur+=p; }); if(cur.trim()) out.push(cur); return out; }
-var speaking=false;
+/* ---- reading speed ---- */
+var RATE=0.8;
+try{ var sr=parseFloat(localStorage.getItem("cbit_rate")); if(sr>=0.5&&sr<=1.5) RATE=sr; }catch(e){}
+function setRate(r){
+  RATE=Math.max(0.5,Math.min(1.5,Math.round(r*100)/100));
+  $("rate").value=RATE; $("rateV").textContent=RATE.toFixed(2)+"×"; $("spdV").textContent=RATE.toFixed(2)+"×";
+  $("spdSeg").querySelectorAll("button").forEach(function(b){ b.classList.toggle("on", Math.abs(+b.dataset.r-RATE)<0.01); });
+  try{ localStorage.setItem("cbit_rate",RATE); }catch(e){}
+}
+$("rate").oninput=function(){ setRate(+this.value); };
+$("spdSeg").addEventListener("click",function(e){ var b=e.target.closest("button"); if(b) setRate(+b.dataset.r); });
+$("spdDown").onclick=function(){ setRate(RATE-0.1); };
+$("spdUp").onclick=function(){ setRate(RATE+0.1); };
+setRate(RATE);
+
+/* ---- speaking: one sentence at a time, with pauses ---- */
+function plain(html){
+  var d=document.createElement("div"); d.innerHTML=html;
+  d.querySelectorAll(LANG==="ta"?".en":".ta").forEach(function(n){n.remove();});
+  d.querySelectorAll(".acts,.follow").forEach(function(n){n.remove();});
+  d.querySelectorAll("li,tr,br,h3,b").forEach(function(n){ if(n.tagName==="B") return; n.appendChild(document.createTextNode(". ")); });
+  d.querySelectorAll("td,th").forEach(function(n){ n.appendChild(document.createTextNode(", ")); });
+  return (d.textContent||"").replace(/[✓✗→·|]/g," ").replace(/\s*\.\s*\./g,".").replace(/:\s*\./g,":").replace(/\s+/g," ").trim();
+}
+function sentences(t){
+  var parts=t.match(/[^.!?।;:]+[.!?।;:]?/g)||[t], out=[];
+  parts.forEach(function(p){ p=p.trim(); if(!p||/^[.,;:]+$/.test(p)) return;
+    while(p.length>200){ var cut=p.lastIndexOf(",",200); if(cut<60) cut=p.lastIndexOf(" ",200); out.push(p.slice(0,cut+1)); p=p.slice(cut+1).trim(); }
+    out.push(p); });
+  return out;
+}
+var speaking=false, paused=false, sq=[], sqDone=null, sqTimer=null, sqVoice=null;
+function nextSentence(){
+  if(!sq.length){ speaking=false; updPause(); var f=sqDone; sqDone=null; if(f) f(); return; }
+  var c=sq.shift(), u=new SpeechSynthesisUtterance(c);
+  if(sqVoice){u.voice=sqVoice;u.lang=sqVoice.lang;} else u.lang= LANG==="ta"?"ta-IN":"en-IN";
+  u.rate=RATE; u.pitch=1;
+  u.onend=function(){ if(!speaking) return; var gap=$("gaps").checked? Math.round(450/RATE):60; sqTimer=setTimeout(nextSentence,gap); };
+  u.onerror=function(){ if(speaking) sqTimer=setTimeout(nextSentence,60); };
+  synth.speak(u);
+}
 function speak(text,onEnd){
+  stopSpeak();
   if(!synth||!text){ if(onEnd) onEnd(); return; }
   var list=langVoices(LANG); if(LANG==="ta"&&!list.length){ if(onEnd) onEnd(); return; }
-  synth.cancel(); var name=$("voiceSel").value; var v=voices.filter(function(x){return x.name===name;})[0]||list[0]||null;
-  var cs=chunks(text); speaking=true;
-  cs.forEach(function(c,i){ var u=new SpeechSynthesisUtterance(c.trim()); if(v){u.voice=v;u.lang=v.lang;} else u.lang= LANG==="ta"?"ta-IN":"en-IN"; u.rate=RATE;
-    if(i===cs.length-1) u.onend=function(){ speaking=false; if(onEnd) onEnd(); };
-    synth.speak(u); });
+  var name=$("voiceSel").value; sqVoice=voices.filter(function(x){return x.name===name;})[0]||list[0]||null;
+  sq=sentences(text); sqDone=onEnd||null; speaking=true; paused=false; updPause();
+  nextSentence();
 }
-function stopSpeak(){ if(synth) synth.cancel(); speaking=false; }
+function stopSpeak(){ clearTimeout(sqTimer); sq=[]; sqDone=null; speaking=false; paused=false; if(synth){ synth.cancel(); } updPause(); }
+function updPause(){ var b=$("pauseTalk"); if(!b) return; b.innerHTML= paused? T("Resume","தொடர்"):T("Pause","இடைநிறுத்து"); b.disabled=!speaking; }
+$("pauseTalk").onclick=function(){ if(!synth||!speaking) return; if(paused){ synth.resume(); paused=false; } else { synth.pause(); paused=true; } updPause(); };
 $("stopTalk").onclick=function(){ stopSpeak(); convoOff(); };
 $("readTab").onclick=function(){
   if(speaking){ stopSpeak(); return; }
   var s=document.querySelector("section.tab.on"); if(!s) return;
-  var clone=s.cloneNode(true); clone.querySelectorAll(LANG==="ta"?".en":".ta").forEach(function(n){n.remove();}); clone.querySelectorAll("table,.src,select,svg,.seg").forEach(function(n){n.remove();});
-  var t=(clone.textContent||"").replace(/\s+/g," ").trim();
+  var clone=s.cloneNode(true); clone.querySelectorAll(LANG==="ta"?".en":".ta").forEach(function(n){n.remove();}); clone.querySelectorAll("table,.src,select,svg,.seg,button").forEach(function(n){n.remove();});
   if(LANG==="ta" && !langVoices("ta").length){ setStatus(LANG, "இந்தச் சாதனத்தில் தமிழ் குரல் இல்லை — Cauvery Assist அமைப்புகளைப் பார்க்கவும்."); showTab("assist"); return; }
-  speak(t.slice(0,3500));
+  speak(plain(clone.innerHTML).slice(0,4000));
 };
 
-/* speech recognition */
+/* ---- listening: waits until you finish ---- */
 var SR=window.SpeechRecognition||window.webkitSpeechRecognition||null, rec=null, listening=false, micBlocked=false;
+var IS_ANDROID=/Android/i.test(navigator.userAgent);
+var L={want:false,committed:"",session:"",heard:false,silT:null,tick:null,deadline:0,waitMs:3000};
 function setStatus(l,msg){ $("status").textContent=msg||""; }
 function convoOff(){ $("convo").checked=false; }
+try{ var sw=localStorage.getItem("cbit_wait"); if(sw!==null) $("waitSel").value=sw; if(localStorage.getItem("cbit_review")==="1") $("review").checked=true; }catch(e){}
+$("waitSel").onchange=function(){ try{ localStorage.setItem("cbit_wait",this.value); }catch(e){} };
+$("review").onchange=function(){ try{ localStorage.setItem("cbit_review",this.checked?"1":"0"); }catch(e){} };
+function heardText(){ return (L.committed+" "+L.session).replace(/\s+/g," ").trim(); }
+function armSilence(ms){
+  clearTimeout(L.silT); clearInterval(L.tick);
+  if(!ms){ $("lbFill").style.width="0"; return; }
+  L.deadline=Date.now()+ms;
+  L.tick=setInterval(function(){ var left=Math.max(0,L.deadline-Date.now()); $("lbFill").style.width=(100-left/ms*100)+"%";
+    if(L.heard) setStatus(LANG,(LANG==="ta"?"முடித்தீர்களா? ":"Finished? Sending in ")+Math.ceil(left/1000)+(LANG==="ta"?" வினாடியில் அனுப்பப்படும் — தொடர்ந்து பேசினால் காத்திருக்கும்":"s. Keep talking to add more.")); },100);
+  L.silT=setTimeout(function(){ finishListen(true); },ms);
+}
+function newRec(){
+  var r=new SR(); r.lang= LANG==="ta"?"ta-IN":"en-IN"; r.interimResults=true; r.maxAlternatives=1; r.continuous=!IS_ANDROID;
+  r.onresult=function(e){
+    var t=""; for(var i=0;i<e.results.length;i++) t+=e.results[i][0].transcript+" ";
+    L.session=t.trim(); L.heard=true; $("q").value=heardText();
+    if(L.waitMs) armSilence(L.waitMs);
+    else setStatus(LANG, LANG==="ta"?"கேட்கிறேன்… முடிந்ததும் 'முடிந்தது' தட்டுங்கள்":"Listening… tap 'Done' when you finish");
+  };
+  r.onerror=function(e){
+    if(e.error==="not-allowed"||e.error==="service-not-allowed"){ micBlocked=true; L.want=false; endUI(); setStatus(LANG, micMsg()); convoOff(); }
+    else if(e.error==="audio-capture"){ L.want=false; endUI(); setStatus(LANG, LANG==="ta"?"மைக்ரோஃபோன் கிடைக்கவில்லை.":"No microphone found."); }
+    /* no-speech / aborted / network: onend decides */
+  };
+  r.onend=function(){
+    L.committed=heardText(); L.session="";
+    if(L.want){ setTimeout(function(){ if(!L.want) return; try{ rec=newRec(); rec.start(); }catch(err){} },120); }
+  };
+  return r;
+}
 function startListen(){
   if(!SR){ setStatus(LANG, LANG==="ta"?"இந்த உலாவியில் குரல் உள்ளீடு இல்லை — Chrome/Edge பயன்படுத்தவும். தட்டச்சு எங்கும் வேலை செய்யும்.":"Voice input is not available in this browser. Use Chrome or Edge. Typing works everywhere."); return; }
   if(micBlocked){ setStatus(LANG, micMsg()); return; }
   stopSpeak();
-  rec=new SR(); rec.lang= LANG==="ta"?"ta-IN":"en-IN"; rec.interimResults=true; rec.maxAlternatives=1; rec.continuous=false;
-  var finalT="";
-  rec.onstart=function(){ listening=true; $("mic").classList.add("live"); setStatus(LANG, LANG==="ta"?"கேட்கிறேன்… பேசுங்கள்":"Listening… speak now"); };
-  rec.onresult=function(e){ var t=""; for(var i=e.resultIndex;i<e.results.length;i++){ t+=e.results[i][0].transcript; if(e.results[i].isFinal) finalT=t; } $("q").value=t; };
-  rec.onerror=function(e){ if(e.error==="not-allowed"||e.error==="service-not-allowed"){ micBlocked=true; setStatus(LANG, micMsg()); convoOff(); } else if(e.error==="no-speech"){ setStatus(LANG, LANG==="ta"?"குரல் கேட்கவில்லை — மீண்டும் முயற்சிக்கவும்.":"No speech heard. Tap the mic and try again."); } else setStatus(LANG, "Voice error: "+e.error); };
-  rec.onend=function(){ listening=false; $("mic").classList.remove("live"); var v=(finalT||$("q").value).trim(); if(v){ setStatus(LANG,""); ask(v); } };
-  try{ rec.start(); }catch(err){ setStatus(LANG, micMsg()); }
+  L.want=true; L.committed=""; L.session=""; L.heard=false; L.waitMs=+$("waitSel").value;
+  $("q").value=""; listening=true; $("mic").classList.add("live"); $("listenBar").hidden=false;
+  setStatus(LANG, LANG==="ta"?"கேட்கிறேன்… நிதானமாகப் பேசுங்கள்":"Listening… take your time");
+  armSilence(0);
+  /* if nothing is said at all, give up after 12 s */
+  L.silT=setTimeout(function(){ if(!L.heard) finishListen(false); },12000);
+  try{ rec=newRec(); rec.start(); }catch(err){ setStatus(LANG, micMsg()); endUI(); }
+}
+function endUI(){ listening=false; clearTimeout(L.silT); clearInterval(L.tick); $("mic").classList.remove("live"); $("listenBar").hidden=true; $("lbFill").style.width="0"; }
+function finishListen(send){
+  L.want=false; try{ if(rec) rec.stop(); }catch(e){}
+  endUI();
+  var v=heardText();
+  if(!send||!v){ setStatus(LANG, v?"":(LANG==="ta"?"குரல் கேட்கவில்லை — மைக்கைத் தட்டி மீண்டும் முயற்சிக்கவும்.":"No speech heard. Tap the mic and try again.")); if(!v) convoOff(); return; }
+  if($("review").checked){ $("q").value=v; $("q").focus(); setStatus(LANG, LANG==="ta"?"சரிபார்த்து 'கேள்' தட்டுங்கள்":"Check the text, then tap Ask"); return; }
+  setStatus(LANG,""); ask(v);
 }
 function micMsg(){ return LANG==="ta" ? "இந்தப் பக்கத்தில் மைக்ரோஃபோன் தடுக்கப்பட்டுள்ளது. பதிவிறக்கிய கோப்பை உங்கள் போர்ட்டலில் (GitHub Pages) Chrome-ல் திறந்தால் குரல் வேலை செய்யும். இங்கே தட்டச்சு செய்யுங்கள் — பதில் வாசிக்கப்படும்." : "The microphone is blocked on this page. Voice input works when the downloaded file is opened from your portal (GitHub Pages) in Chrome. You can type here, and answers will still be read aloud."; }
-$("mic").onclick=function(){ if(listening&&rec){ rec.stop(); return; } startListen(); };
+$("mic").onclick=function(){ if(listening){ finishListen(true); return; } startListen(); };
+$("lbSend").onclick=function(){ finishListen(true); };
+$("lbCancel").onclick=function(){ finishListen(false); $("q").value=""; setStatus(LANG,""); convoOff(); };
 
 /* ================= SMART Q&A ENGINE ================= */
 var METRICS=[
@@ -938,8 +1052,8 @@ function ask(text){
   addMsg("u",text.replace(/</g,"&lt;")); $("q").value="";
   var r=answer(text);
   var m=addMsg("b",r.html,{tab:r.tab,f:r.f});
-  if($("autoSpeak").checked){ speak(plain(r.html), function(){ if($("convo").checked && !micBlocked) setTimeout(startListen,350); }); }
-  else if($("convo").checked && !micBlocked) setTimeout(startListen,350);
+  if($("autoSpeak").checked){ speak(plain(r.html), function(){ if($("convo").checked && !micBlocked) setTimeout(startListen,900); }); }
+  else if($("convo").checked && !micBlocked) setTimeout(startListen,900);
 }
 $("askForm").addEventListener("submit",function(e){ e.preventDefault(); ask($("q").value); });
 $("clearChat").onclick=function(){ log.innerHTML=""; ctx={cos:[],mets:[]}; greet(); };
