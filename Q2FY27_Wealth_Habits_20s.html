@@ -206,6 +206,8 @@ footer{padding-block:30px;font-size:.84rem;color:var(--muted);display:grid;gap:8
 .mottobar .slogan{font-family:"Noto Sans Tamil",sans-serif;font-weight:800;font-size:1.35rem;color:#c0392b}
 .mottobar .go{font-family:"Bangers",var(--display);font-size:1.3rem;letter-spacing:.05em;color:#18293a}
 .check input.note{margin:0;width:100%;height:auto;flex:1;border:1px solid var(--line);border-radius:8px;padding:5px 8px;font-size:.88rem;accent-color:auto}
+.sync{display:flex;gap:8px;align-items:flex-start;font-size:.84rem;color:var(--muted);margin:0}
+.sync i{width:10px;height:10px;border-radius:50%;flex:none;margin-top:6px}
 </style>
 </head>
 <body>
@@ -276,6 +278,7 @@ footer{padding-block:30px;font-size:.84rem;color:var(--muted);display:grid;gap:8
         <div class="stat"><span class="muted inl"><span lang="en">Current streak</span><span lang="ta">தொடர் நாட்கள்</span></span><span class="v" id="streak">0</span><span class="muted" id="jMsg"></span></div>
       </div>
       <div class="days" id="days"></div>
+      <p class="sync" id="jSync"></p>
       <div id="exBanner" class="row" hidden><span class="pill ex inl"><span lang="en">Sample entries</span><span lang="ta">மாதிரிப் பதிவுகள்</span></span><button class="btn small ghost" id="clearEx"><span class="keep inl"><span lang="en">Clear samples and start</span><span lang="ta">மாதிரிகளை நீக்கித் தொடங்கு</span></span></button></div>
     </div>
     <div class="panel">
@@ -293,6 +296,17 @@ footer{padding-block:30px;font-size:.84rem;color:var(--muted);display:grid;gap:8
       <h3><span lang="en">Moments so far</span><span lang="ta">இதுவரையிலான தருணங்கள்</span></h3>
       <div class="list" id="moments"></div>
     </div>
+  </div>
+  <div class="panel" id="archive">
+    <div class="row" style="justify-content:space-between"><h3><span lang="en">My past moments</span><span lang="ta">என் கடந்த தருணங்கள்</span></h3><span class="pill num" id="arCount">0</span></div>
+    <p class="muted inl"><span lang="en">Every moment ever saved, newest first, across all your 30-day journeys. Read them on a low day.</span><span lang="ta">எல்லா 30 நாள் பயணங்களிலும் சேமித்த ஒவ்வொரு தருணமும், புதியது முதலில். மனம் சோர்ந்த நாளில் படி.</span></p>
+    <div class="row" style="align-items:end">
+      <label class="f" for="arMonth" style="flex:1;min-width:150px"><span class="inl"><span lang="en">Month</span><span lang="ta">மாதம்</span></span><select id="arMonth"></select></label>
+      <label class="f" for="arSearch" style="flex:2;min-width:180px"><span class="inl"><span lang="en">Search</span><span lang="ta">தேடு</span></span><input id="arSearch"></label>
+      <button type="button" class="btn ghost" id="arRandom"><span class="keep inl"><span lang="en">Surprise me</span><span lang="ta">ஒரு தருணம் காட்டு</span></span></button>
+    </div>
+    <div id="arPick" class="fb good" hidden></div>
+    <div class="list" id="arList" style="max-height:420px"></div>
   </div>
 </section>
 
@@ -857,36 +871,100 @@ $("map").addEventListener("keydown",e=>{const g=e.target.closest(".stone");if(g&
 /* ================= S1 journal ================= */
 const CATS=[["Study","படிப்பு"],["Sport","விளையாட்டு"],["Kindness","கருணை"],["New skill","புதிய திறன்"],["Money","பணம்"],["Work win","வேலை வெற்றி"],["Courage","துணிவு"]];
 const catTa=k=>(CATS.find(c=>c[0]===k)||[k,k])[1];
-let J=store.get("journal",null);
-if(!J){J={start:iso(new Date()),entries:{
+const SAMPLES={
  1:{t:"Finished a certification module before the deadline.",ta:"கெடுவுக்கு முன்பே ஒரு சான்றிதழ் பாடத்தொகுதியை முடித்தேன்.",c:"Study",ex:true},
  2:{t:"Ran 5 km without stopping for the first time.",ta:"முதல் முறையாக நிற்காமல் 5 கி.மீ. ஓடினேன்.",c:"Sport",ex:true},
- 3:{t:"Skipped a ₹2,000 impulse buy and moved it to my SIP.",ta:"₹2,000 திடீர் வாங்குதலைத் தவிர்த்து SIP-க்கு மாற்றினேன்.",c:"Money",ex:true}}}}
-let sel=1,selCat="";
-$("jStart").value=J.start;
-$("jStart").addEventListener("change",e=>{J.start=e.target.value||iso(new Date());store.set("journal",J);renderJournal()});
+ 3:{t:"Skipped a ₹2,000 impulse buy and moved it to my SIP.",ta:"₹2,000 திடீர் வாங்குதலைத் தவிர்த்து SIP-க்கு மாற்றினேன்.",c:"Money",ex:true}};
+/* Moments are keyed by calendar date (YYYY-MM-DD) so nothing is overwritten when a new 30-day journey starts. */
+const OLDJ=store.get("journal",null);
+let JSTART=store.get("jstart",null)||(OLDJ&&OLDJ.start)||iso(new Date());
+let LOCAL=store.get("moments",null);
+if(!LOCAL){LOCAL={};if(OLDJ&&OLDJ.entries){for(const k in OLDJ.entries){const e=OLDJ.entries[k];if(e&&!e.ex&&e.t){const d=new Date(OLDJ.start+"T00:00:00");d.setDate(d.getDate()+(+k)-1);LOCAL[iso(d)]={t:e.t,c:e.c||"",u:Date.now()}}}}store.set("moments",LOCAL)}
+let CLOUDMAP=null,MOM=Object.assign({},LOCAL),CLOUD=null,JDOC=null,SYNC="local",uploaded=false;
+let hideEx=store.get("hideEx",false),sel=1,selCat="";
+function mergeMoments(){MOM=Object.assign({},LOCAL,CLOUDMAP||{})}
+function setSync(s){SYNC=s;const el=$("jSync");if(!el)return;
+  const M={local:["#a86b12",L("Saved in this browser only. Sign in to claude.ai and open the page link to save online.","இந்த உலாவியில் மட்டும் சேமிக்கப்படுகிறது. ஆன்லைனில் சேமிக்க claude.ai-ல் உள்நுழைந்து பக்க இணைப்பைத் திறக்கவும்.")],
+   connecting:["#5a6b78",L("Connecting to your online journal…","உன் ஆன்லைன் நாட்குறிப்புடன் இணைக்கிறது…")],
+   online:["#1f8a4c",L("Saved online to your claude.ai account. Open this page on any device to see every moment.","உன் claude.ai கணக்கில் ஆன்லைனில் சேமிக்கப்படுகிறது. எந்தச் சாதனத்திலும் இந்தப் பக்கத்தைத் திறந்து எல்லாத் தருணங்களையும் பார்க்கலாம்.")],
+   readonly:["#a86b12",L("Your access to this page does not allow online saving. Moments are kept in this browser; ask the owner for Contributor access.","இந்தப் பக்கத்தில் ஆன்லைனில் சேமிக்க உனக்கு அனுமதி இல்லை. தருணங்கள் இந்த உலாவியில் வைக்கப்படும்; உரிமையாளரிடம் Contributor அனுமதி கேள்.")],
+   error:["#c0392b",L("Could not reach online storage just now. Your moment is kept in this browser and will upload next time.","இப்போது ஆன்லைன் சேமிப்பை அணுக முடியவில்லை. தருணம் இந்த உலாவியில் உள்ளது; அடுத்த முறை பதிவேற்றப்படும்.")]}[s];
+  el.innerHTML=`<i style="background:${M[0]}"></i><span>${M[1]}</span>`;}
+async function cloudWrite(date,rec){
+  if(!CLOUD||SYNC==="readonly")return false;
+  try{if(rec)await CLOUD.doc(date).set({date,t:rec.t,c:rec.c||"",u:rec.u||Date.now()});else await CLOUD.doc(date).delete();if(SYNC!=="online")setSync("online");return true}
+  catch(e){setSync(e&&(e.code==="invalid_argument"||e.code==="not_granted")?"readonly":"error");return false}
+}
+async function uploadLocal(){
+  if(uploaded)return;uploaded=true;
+  for(const d of Object.keys(LOCAL)){if(CLOUDMAP&&!CLOUDMAP[d]){const ok=await cloudWrite(d,LOCAL[d]);if(!ok)break}}
+}
+async function initCloud(){
+  if(!(window.claude&&typeof window.claude.use==="function")){setSync("local");return}
+  setSync("connecting");
+  let db=null,u=null,uid=null;
+  try{db=await window.claude.use("db");u=await window.claude.use("user");uid=u?await u.id():null}catch(e){}
+  if(!db||!uid){setSync("local");return}
+  try{JDOC=db.doc("data/users/"+uid+"/journal");CLOUD=JDOC.collection("moments")}catch(e){setSync("local");return}
+  try{const js=await JDOC.get();const st=js.exists&&js.data()&&js.data().start;if(st&&st!==JSTART){JSTART=st;store.set("jstart",JSTART);$("jStart").value=JSTART}}catch(e){}
+  CLOUD.orderBy("date","desc").limit(1000).onSnapshot(snap=>{
+    const m={};snap.docs.forEach(d=>{const x=d.data();if(x&&x.date&&x.t)m[x.date]={t:String(x.t),c:String(x.c||""),u:x.u||0}});
+    CLOUDMAP=m;
+    for(const d in m){LOCAL[d]=m[d]} store.set("moments",LOCAL);
+    mergeMoments();if(SYNC==="connecting")setSync("online");renderJournal();uploadLocal();
+  },e=>{setSync(e&&e.code==="not_granted"?"local":"error")});
+}
+$("jStart").value=JSTART;
+$("jStart").addEventListener("change",async e=>{JSTART=e.target.value||iso(new Date());store.set("jstart",JSTART);renderJournal();if(JDOC&&SYNC==="online"){try{await JDOC.set({start:JSTART})}catch(err){}}});
 $("jCats").addEventListener("click",e=>{const b=e.target.closest(".cat");if(!b)return;selCat=selCat===b.dataset.c?"":b.dataset.c;paintCats()});
 function paintCats(){$("jCats").innerHTML=CATS.map(([k,t])=>`<button type="button" class="cat ${k===selCat?"on":""}" data-c="${k}">${L(k,t)}</button>`).join("")}
-function dayDate(n){const d=new Date(J.start+"T00:00:00");d.setDate(d.getDate()+n-1);return d}
+function dayDate(n){const d=new Date(JSTART+"T00:00:00");d.setDate(d.getDate()+n-1);return d}
+const dayKey=n=>iso(dayDate(n));
+const showEx=()=>!hideEx&&Object.keys(MOM).length===0;
+function entryFor(n){const m=MOM[dayKey(n)];if(m)return m;return showEx()&&SAMPLES[n]?SAMPLES[n]:null}
+function fmtD(ds,lang){return new Date(ds+"T00:00:00").toLocaleDateString(lang==="ta"?"ta-IN":"en-IN",{weekday:"short",day:"numeric",month:"short",year:"numeric"})}
+function momentItem(date,v,label){return `<div class="item ${v.ex?"ex":""}"><span class="num muted">${label}</span> ${v.c?`<span class="pill">${L(esc(v.c),esc(catTa(v.c)))}</span>`:""} ${v.ex?`<span class="pill ex">${L("Example","மாதிரி")}</span>`:""}<br>${v.ex?L(esc(v.t),esc(v.ta)):esc(v.t)}</div>`}
 function renderJournal(){
-  let h="";for(let i=1;i<=30;i++){const e=J.entries[i];h+=`<button type="button" class="day ${e?(e.ex?"ex":"done"):""} ${i===sel?"sel":""}" data-d="${i}" aria-label="Day ${i}">${i}</button>`}
+  let h="";for(let i=1;i<=30;i++){const e=entryFor(i);h+=`<button type="button" class="day ${e?(e.ex?"ex":"done"):""} ${i===sel?"sel":""}" data-d="${i}" aria-label="Day ${i}">${i}</button>`}
   $("days").innerHTML=h;
-  const real=Object.keys(J.entries).filter(k=>!J.entries[k].ex);const n=real.length;
+  let n=0,last=0;for(let i=1;i<=30;i++){if(MOM[dayKey(i)]){n++;last=i}}
   $("ring").setAttribute("stroke-dashoffset",(251.3*(1-n/30)).toFixed(1));$("ringTxt").textContent=n+"/30";
-  let last=0;for(let i=1;i<=30;i++)if(J.entries[i]&&!J.entries[i].ex)last=i;let s=0;for(let i=last;i>=1&&J.entries[i]&&!J.entries[i].ex;i--)s++;
+  let s=0;for(let i=last;i>=1&&MOM[dayKey(i)];i--)s++;
   $("streak").innerHTML=L(s+(s===1?" day":" days"),s+" நாள்");
-  $("jMsg").innerHTML=n>=30?L("30 days done. Keep the habit for life.","30 நாட்கள் நிறைவு. இந்தப் பழக்கத்தை வாழ்நாள் முழுதும் தொடருங்கள்."):n>=21?L("The habit is forming. Stay with it.","பழக்கம் உருவாகிறது. தொடருங்கள்."):n>=7?L("One week strong.","ஒரு வாரம் வெற்றிகரமாக."):L("Ask every evening, same time.","ஒவ்வொரு மாலையும் அதே நேரத்தில் கேளுங்கள்.");
-  $("exBanner").hidden=!Object.values(J.entries).some(v=>v.ex);
+  $("jMsg").innerHTML=n>=30?L("30 days done. Start a new journey: change the start date. Every moment stays saved.","30 நாட்கள் நிறைவு. புதிய பயணத்துக்கு தொடக்க நாளை மாற்று. எல்லாத் தருணங்களும் சேமிப்பில் இருக்கும்."):n>=21?L("The habit is forming. Stay with it.","பழக்கம் உருவாகிறது. தொடருங்கள்."):n>=7?L("One week strong.","ஒரு வாரம் வெற்றிகரமாக."):L("Ask every evening, same time.","ஒவ்வொரு மாலையும் அதே நேரத்தில் கேளுங்கள்.");
+  $("exBanner").hidden=!showEx();
   const d=dayDate(sel);$("jDayTitle").innerHTML=L(`Day ${sel} · ${d.toLocaleDateString("en-IN",{weekday:"short",day:"numeric",month:"short"})}`,`நாள் ${sel} · ${d.toLocaleDateString("ta-IN",{weekday:"short",day:"numeric",month:"short"})}`);
-  const cur=J.entries[sel];$("jText").value=cur?(cur.ex&&MODE==="ta"?cur.ta:cur.t):"";selCat=cur?cur.c:"";paintCats();
+  const cur=entryFor(sel);$("jText").value=cur?(cur.ex&&MODE==="ta"?cur.ta:cur.t):"";selCat=cur?cur.c:"";paintCats();
   const nm=kid();$("jText").placeholder=T(`What made you proud today${nm?", "+nm:""}? Write it honestly.`,`இன்று${nm?" "+nm:""} நீ எதற்காகப் பெருமைப்பட்டாய்? நேர்மையாக எழுது.`);
-  const list=Object.entries(J.entries).sort((a,b)=>b[0]-a[0]);
-  $("moments").innerHTML=list.length?list.map(([k,v])=>`<div class="item ${v.ex?"ex":""}"><span class="num muted">${k}</span> ${v.c?`<span class="pill">${L(esc(v.c),esc(catTa(v.c)))}</span>`:""} ${v.ex?`<span class="pill ex">${L("Example","மாதிரி")}</span>`:""}<br>${v.ex?L(esc(v.t),esc(v.ta)):esc(v.t)}</div>`).join(""):`<p class="muted">${L("No moments yet. Tap a day, ask the question, write the answer.","இன்னும் பதிவு இல்லை. ஒரு நாளைத் தொட்டு, கேள்வி கேட்டு, பதிலை எழுதுங்கள்.")}</p>`;
+  const list=[];for(let i=30;i>=1;i--){const e=entryFor(i);if(e)list.push([i,e])}
+  $("moments").innerHTML=list.length?list.map(([k,v])=>momentItem(dayKey(k),v,L("Day "+k,"நாள் "+k))).join(""):`<p class="muted">${L("No moments in this journey yet. Tap a day, ask the question, write the answer.","இந்தப் பயணத்தில் இன்னும் பதிவு இல்லை. ஒரு நாளைத் தொட்டு, கேள்வி கேட்டு, பதிலை எழுதுங்கள்.")}</p>`;
+  renderArchive();
 }
+function renderArchive(){
+  const keys=Object.keys(MOM).sort().reverse();
+  $("arCount").innerHTML=L(keys.length+" saved",keys.length+" சேமிப்பு");
+  const months=[...new Set(keys.map(k=>k.slice(0,7)))];const cur=$("arMonth").value;
+  $("arMonth").innerHTML=`<option value="">${esc(T("All months","எல்லா மாதங்களும்"))}</option>`+months.map(m=>`<option value="${m}" ${m===cur?"selected":""}>${esc(new Date(m+"-01T00:00:00").toLocaleDateString(MODE==="ta"?"ta-IN":"en-IN",{month:"long",year:"numeric"}))}</option>`).join("");
+  $("arSearch").placeholder=T("Search your moments","உன் தருணங்களில் தேடு");
+  const q=$("arSearch").value.trim().toLowerCase(),mo=$("arMonth").value;
+  const rows=keys.filter(k=>(!mo||k.startsWith(mo))&&(!q||MOM[k].t.toLowerCase().includes(q)||(MOM[k].c||"").toLowerCase().includes(q)));
+  $("arList").innerHTML=keys.length?(rows.length?rows.map(k=>momentItem(k,MOM[k],L(fmtD(k,"en"),fmtD(k,"ta")))).join(""):`<p class="muted">${L("No moments match.","பொருந்தும் தருணம் இல்லை.")}</p>`):`<p class="muted">${L("Your saved moments will collect here, day after day, month after month.","நீ சேமிக்கும் தருணங்கள் நாளுக்கு நாள், மாதத்துக்கு மாதம் இங்கே சேரும்.")}</p>`;
+}
+$("arMonth").addEventListener("change",renderArchive);
+$("arSearch").addEventListener("input",renderArchive);
+$("arRandom").addEventListener("click",()=>{const keys=Object.keys(MOM);const box=$("arPick");if(!keys.length){box.hidden=false;box.innerHTML=L("Save a few moments first.","முதலில் சில தருணங்களைச் சேமி.");return}
+  const k=keys[Math.floor(Math.random()*keys.length)];box.hidden=false;box.innerHTML=`<b>${L(fmtD(k,"en"),fmtD(k,"ta"))}</b><br>${esc(MOM[k].t)}`});
 $("days").addEventListener("click",e=>{const b=e.target.closest(".day");if(!b)return;sel=+b.dataset.d;renderJournal()});
-$("jSave").addEventListener("click",()=>{const t=$("jText").value.trim();if(!t)delete J.entries[sel];else J.entries[sel]={t,c:selCat};store.set("journal",J);
-  flash($("jToast"),t?L("Saved. Well done!","சேமிக்கப்பட்டது. அருமை!"):L("Cleared.","நீக்கப்பட்டது."));if(t&&sel<30&&!J.entries[sel+1])sel++;renderJournal()});
-$("clearEx").addEventListener("click",()=>{for(const k in J.entries)if(J.entries[k].ex)delete J.entries[k];store.set("journal",J);sel=1;renderJournal()});
+$("jSave").addEventListener("click",async()=>{
+  const t=$("jText").value.trim(),date=dayKey(sel);
+  if(!t){delete LOCAL[date];if(CLOUDMAP)delete CLOUDMAP[date]}else{LOCAL[date]={t,c:selCat,u:Date.now()};if(CLOUDMAP)CLOUDMAP[date]=LOCAL[date]}
+  store.set("moments",LOCAL);mergeMoments();
+  const wasSel=sel;if(t&&sel<30&&!MOM[dayKey(sel+1)])sel++;renderJournal();
+  flash($("jToast"),t?L("Saved. Well done!","சேமிக்கப்பட்டது. அருமை!"):L("Cleared.","நீக்கப்பட்டது."));
+  if(CLOUD){const ok=await cloudWrite(dayKey(wasSel),t?LOCAL[dayKey(wasSel)]:null);if(ok&&t)flash($("jToast"),L("Saved online. Well done!","ஆன்லைனில் சேமிக்கப்பட்டது. அருமை!"))}
+});
+$("clearEx").addEventListener("click",()=>{hideEx=true;store.set("hideEx",true);sel=1;renderJournal()});
+setSync("local");initCloud();
 
 /* ================= S2 jars ================= */
 const js=store.get("jars",null);
