@@ -208,6 +208,8 @@ footer{padding-block:30px;font-size:.84rem;color:var(--muted);display:grid;gap:8
 .check input.note{margin:0;width:100%;height:auto;flex:1;border:1px solid var(--line);border-radius:8px;padding:5px 8px;font-size:.88rem;accent-color:auto}
 .sync{display:flex;gap:8px;align-items:flex-start;font-size:.84rem;color:var(--muted);margin:0}
 .sync i{width:10px;height:10px;border-radius:50%;flex:none;margin-top:6px}
+.mact{gap:6px;margin-top:6px}
+.item.editing{outline:2px solid var(--gold);background:var(--gold-soft)}
 </style>
 </head>
 <body>
@@ -285,7 +287,7 @@ footer{padding-block:30px;font-size:.84rem;color:var(--muted);display:grid;gap:8
       <h3 id="jDayTitle">Day 1</h3>
       <label class="f" for="jText"><span class="inl"><span lang="en">Proudest moment today</span><span lang="ta">இன்றைய பெருமைமிகு தருணம்</span></span><textarea id="jText"></textarea></label>
       <div><span class="muted inl"><span lang="en">What kind of win was it?</span><span lang="ta">எந்த வகை வெற்றி?</span></span><div class="cats" id="jCats"></div></div>
-      <div class="row"><button class="btn" id="jSave"><span class="keep inl"><span lang="en">Save moment</span><span lang="ta">சேமி</span></span></button><span class="toast" id="jToast"></span></div>
+      <div class="row"><button class="btn" id="jSave"><span class="keep inl"><span lang="en">Save moment</span><span lang="ta">சேமி</span></span></button><button class="btn ghost" id="jDel" hidden><span class="keep inl"><span lang="en">Delete</span><span lang="ta">நீக்கு</span></span></button><button class="btn ghost" id="jCancel" hidden><span class="keep inl"><span lang="en">Cancel</span><span lang="ta">ரத்து</span></span></button><span class="toast" id="jToast"></span></div>
       <details><summary class="muted inl"><span lang="en">If the child says "nothing", try these</span><span lang="ta">"ஒன்றுமில்லை" என்றால், இவற்றைக் கேளுங்கள்</span></summary>
         <ul class="muted" style="padding-left:18px">
           <li><span lang="en">What did you do today that you could not do last month?</span><span lang="ta">கடந்த மாதம் முடியாத எதை இன்று செய்தாய்?</span></li>
@@ -895,7 +897,8 @@ let JSTART=store.get("jstart",null)||(OLDJ&&OLDJ.start)||iso(new Date());
 let LOCAL=store.get("moments",null);
 if(!LOCAL){LOCAL={};if(OLDJ&&OLDJ.entries){for(const k in OLDJ.entries){const e=OLDJ.entries[k];if(e&&!e.ex&&e.t){const d=new Date(OLDJ.start+"T00:00:00");d.setDate(d.getDate()+(+k)-1);LOCAL[iso(d)]={t:e.t,c:e.c||"",u:Date.now()}}}}store.set("moments",LOCAL)}
 let CLOUDMAP=null,MOM=Object.assign({},LOCAL),CLOUD=null,JDOC=null,SYNC="local",uploaded=false;
-let hideEx=store.get("hideEx",false),sel=1,selCat="";
+let hideEx=store.get("hideEx",false),sel=1,selCat="",EDITD=null,PENDDEL=null;
+const target=()=>EDITD||dayKey(sel);
 function mergeMoments(){MOM=Object.assign({},LOCAL,CLOUDMAP||{})}
 function setSync(s){SYNC=s;const el=$("jSync");if(!el)return;
   const M={local:["#a86b12",L("Saved in this browser only. Sign in to claude.ai and open the page link to save online.","இந்த உலாவியில் மட்டும் சேமிக்கப்படுகிறது. ஆன்லைனில் சேமிக்க claude.ai-ல் உள்நுழைந்து பக்க இணைப்பைத் திறக்கவும்.")],
@@ -937,7 +940,11 @@ const dayKey=n=>iso(dayDate(n));
 const showEx=()=>!hideEx&&Object.keys(MOM).length===0;
 function entryFor(n){const m=MOM[dayKey(n)];if(m)return m;return showEx()&&SAMPLES[n]?SAMPLES[n]:null}
 function fmtD(ds,lang){return new Date(ds+"T00:00:00").toLocaleDateString(lang==="ta"?"ta-IN":"en-IN",{weekday:"short",day:"numeric",month:"short",year:"numeric"})}
-function momentItem(date,v,label){return `<div class="item ${v.ex?"ex":""}"><span class="num muted">${label}</span> ${v.c?`<span class="pill">${L(esc(v.c),esc(catTa(v.c)))}</span>`:""} ${v.ex?`<span class="pill ex">${L("Example","மாதிரி")}</span>`:""}<br>${v.ex?L(esc(v.t),esc(v.ta)):esc(v.t)}</div>`}
+function momentItem(date,v,label){
+  const act=v.ex?"":(PENDDEL===date
+    ?`<div class="row mact"><span class="muted">${L("Delete this moment?","இந்தத் தருணத்தை நீக்கவா?")}</span><button type="button" class="btn small" style="background:var(--bad)" data-delyes="${date}">${L("Yes, delete","ஆம், நீக்கு")}</button><button type="button" class="btn small ghost" data-delno="1">${L("Keep it","வேண்டாம்")}</button></div>`
+    :`<div class="row mact"><button type="button" class="btn small ghost" data-edit="${date}">${L("Edit","திருத்து")}</button><button type="button" class="btn small ghost" data-del="${date}">${L("Delete","நீக்கு")}</button></div>`);
+  return `<div class="item ${v.ex?"ex":""} ${target()===date&&!v.ex?"editing":""}"><span class="num muted">${label}</span> ${v.c?`<span class="pill">${L(esc(v.c),esc(catTa(v.c)))}</span>`:""} ${v.ex?`<span class="pill ex">${L("Example","மாதிரி")}</span>`:""}<br>${v.ex?L(esc(v.t),esc(v.ta)):esc(v.t)}${act}</div>`}
 function renderJournal(){
   let h="";for(let i=1;i<=30;i++){const e=entryFor(i);h+=`<button type="button" class="day ${e?(e.ex?"ex":"done"):""} ${i===sel?"sel":""}" data-d="${i}" aria-label="Day ${i}">${i}</button>`}
   $("days").innerHTML=h;
@@ -948,7 +955,11 @@ function renderJournal(){
   $("jMsg").innerHTML=n>=30?L("30 days done. Start a new journey: change the start date. Every moment stays saved.","30 நாட்கள் நிறைவு. புதிய பயணத்துக்கு தொடக்க நாளை மாற்று. எல்லாத் தருணங்களும் சேமிப்பில் இருக்கும்."):n>=21?L("The habit is forming. Stay with it.","பழக்கம் உருவாகிறது. தொடருங்கள்."):n>=7?L("One week strong.","ஒரு வாரம் வெற்றிகரமாக."):L("Ask every evening, same time.","ஒவ்வொரு மாலையும் அதே நேரத்தில் கேளுங்கள்.");
   $("exBanner").hidden=!showEx();
   const d=dayDate(sel);$("jDayTitle").innerHTML=L(`Day ${sel} · ${d.toLocaleDateString("en-IN",{weekday:"short",day:"numeric",month:"short"})}`,`நாள் ${sel} · ${d.toLocaleDateString("ta-IN",{weekday:"short",day:"numeric",month:"short"})}`);
-  const cur=entryFor(sel);$("jText").value=cur?(cur.ex&&MODE==="ta"?cur.ta:cur.t):"";selCat=cur?cur.c:"";paintCats();
+  if(EDITD){$("jDayTitle").innerHTML=L("Editing · "+fmtD(EDITD,"en"),"திருத்தம் · "+fmtD(EDITD,"ta"))}
+  const cur=EDITD?MOM[EDITD]:entryFor(sel);$("jText").value=cur?(cur.ex&&MODE==="ta"?cur.ta:cur.t):"";selCat=cur?cur.c:"";paintCats();
+  const has=!!(cur&&!cur.ex);
+  $("jSave").innerHTML=`<span class="keep inl">${has?L("Update moment","திருத்தி சேமி"):L("Save moment","சேமி")}</span>`;
+  $("jDel").hidden=!has;$("jCancel").hidden=!EDITD;
   const nm=kid();$("jText").placeholder=T(`What made ${nm||"your child"} proud today? Write it in their own words.`,`இன்று ${nm||"குழந்தை"} எதற்காகப் பெருமைப்பட்டது? அவர்கள் வார்த்தைகளிலேயே எழுதுங்கள்.`);
   const list=[];for(let i=30;i>=1;i--){const e=entryFor(i);if(e)list.push([i,e])}
   $("moments").innerHTML=list.length?list.map(([k,v])=>momentItem(dayKey(k),v,L("Day "+k,"நாள் "+k))).join(""):`<p class="muted">${L("No moments in this journey yet. Tap a day, ask the question, write the answer.","இந்தப் பயணத்தில் இன்னும் பதிவு இல்லை. ஒரு நாளைத் தொட்டு, கேள்வி கேட்டு, பதிலை எழுதுங்கள்.")}</p>`;
@@ -968,14 +979,25 @@ $("arMonth").addEventListener("change",renderArchive);
 $("arSearch").addEventListener("input",renderArchive);
 $("arRandom").addEventListener("click",()=>{const keys=Object.keys(MOM);const box=$("arPick");if(!keys.length){box.hidden=false;box.innerHTML=L("Save a few moments first.","முதலில் சில தருணங்களைச் சேமி.");return}
   const k=keys[Math.floor(Math.random()*keys.length)];box.hidden=false;box.innerHTML=`<b>${L(fmtD(k,"en"),fmtD(k,"ta"))}</b><br>${esc(MOM[k].t)}`});
-$("days").addEventListener("click",e=>{const b=e.target.closest(".day");if(!b)return;sel=+b.dataset.d;renderJournal()});
+$("days").addEventListener("click",e=>{const b=e.target.closest(".day");if(!b)return;sel=+b.dataset.d;EDITD=null;PENDDEL=null;renderJournal()});
+function startEdit(date){PENDDEL=null;let n=0;for(let i=1;i<=30;i++)if(dayKey(i)===date)n=i;
+  if(n){sel=n;EDITD=null}else EDITD=date;renderJournal();$("jText").scrollIntoView({block:"center"});$("jText").focus()}
+async function removeMoment(date){delete LOCAL[date];if(CLOUDMAP)delete CLOUDMAP[date];store.set("moments",LOCAL);mergeMoments();
+  if(EDITD===date)EDITD=null;PENDDEL=null;renderJournal();flash($("jToast"),L("Moment deleted.","தருணம் நீக்கப்பட்டது."));if(CLOUD)await cloudWrite(date,null)}
+function listClick(e){const b=e.target.closest("button");if(!b)return;
+  if(b.dataset.edit){startEdit(b.dataset.edit)}else if(b.dataset.del){PENDDEL=b.dataset.del;renderJournal()}
+  else if(b.dataset.delyes){removeMoment(b.dataset.delyes)}else if(b.dataset.delno){PENDDEL=null;renderJournal()}}
+$("moments").addEventListener("click",listClick);$("arList").addEventListener("click",listClick);
+$("jCancel").addEventListener("click",()=>{EDITD=null;renderJournal()});
+$("jDel").addEventListener("click",()=>{const d=target();if(MOM[d]){PENDDEL=d;renderJournal();const el=document.querySelector(`[data-delyes="${d}"]`);if(el)el.scrollIntoView({block:"center"})}});
 $("jSave").addEventListener("click",async()=>{
-  const t=$("jText").value.trim(),date=dayKey(sel);
-  if(!t){delete LOCAL[date];if(CLOUDMAP)delete CLOUDMAP[date]}else{LOCAL[date]={t,c:selCat,u:Date.now()};if(CLOUDMAP)CLOUDMAP[date]=LOCAL[date]}
+  const t=$("jText").value.trim(),date=target(),wasNew=!MOM[date];
+  if(!t){if(!wasNew){PENDDEL=date;renderJournal()}return}
+  LOCAL[date]={t,c:selCat,u:Date.now()};if(CLOUDMAP)CLOUDMAP[date]=LOCAL[date];
   store.set("moments",LOCAL);mergeMoments();
-  const wasSel=sel;if(t&&sel<30&&!MOM[dayKey(sel+1)])sel++;renderJournal();
-  flash($("jToast"),t?L("Saved. Well done!","சேமிக்கப்பட்டது. அருமை!"):L("Cleared.","நீக்கப்பட்டது."));
-  if(CLOUD){const ok=await cloudWrite(dayKey(wasSel),t?LOCAL[dayKey(wasSel)]:null);if(ok&&t)flash($("jToast"),L("Saved online. Well done!","ஆன்லைனில் சேமிக்கப்பட்டது. அருமை!"))}
+  const wasEdit=!!EDITD;EDITD=null;if(wasNew&&!wasEdit&&sel<30&&!MOM[dayKey(sel+1)])sel++;renderJournal();
+  flash($("jToast"),wasNew?L("Saved. Well done!","சேமிக்கப்பட்டது. அருமை!"):L("Correction saved.","திருத்தம் சேமிக்கப்பட்டது."));
+  if(CLOUD){const ok=await cloudWrite(date,LOCAL[date]);if(ok)flash($("jToast"),wasNew?L("Saved online. Well done!","ஆன்லைனில் சேமிக்கப்பட்டது. அருமை!"):L("Correction saved online.","திருத்தம் ஆன்லைனில் சேமிக்கப்பட்டது."))}
 });
 $("clearEx").addEventListener("click",()=>{hideEx=true;store.set("hideEx",true);sel=1;renderJournal()});
 setSync("local");initCloud();
