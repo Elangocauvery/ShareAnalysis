@@ -1,0 +1,541 @@
+<title>Pipes &amp; Tubes Q1 FY27</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Source+Sans+3:wght@400;600;700;800&family=IBM+Plex+Mono:wght@500;600&family=Noto+Sans+Tamil:wght@500;700;800&display=swap">
+<style>
+/* Layout: pipe "print-line" masthead, sticky scrolling tab rail, one tab visible at a time, white cards on white with hairline borders. Single light look by design (CB house style). */
+:root{
+  --bg:#FFFFFF; --panel:#FFFFFF; --soft:#FFF6EC; --line:#E8DCCD; --ink:#141414; --ink2:#3A3A3A; --mute:#5E5A55;
+  --acc:#F28C28; --accD:#B85E0A; --good:#127A3E; --bad:#B42318; --warn:#9A6A00;
+  --apl:#2E5E8C; --ast:#C2410C; --sup:#127A57; --pri:#6D3FA0;
+  --fd:"Barlow Condensed","Arial Narrow",Arial,sans-serif;
+  --fb:"Source Sans 3","Noto Sans Tamil","Segoe UI",Arial,sans-serif;
+  --fm:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--fb);font-size:16px;line-height:1.5;font-weight:600;margin:0}
+.wrap{max-width:1180px;margin:0 auto;padding-inline:16px;padding-block:0 120px}
+body:not(.ta-mode) .ta{display:none!important}
+body.ta-mode .en{display:none!important}
+body.ta-mode{font-family:"Noto Sans Tamil","Source Sans 3",Arial,sans-serif}
+h1,h2,h3{font-family:var(--fd);letter-spacing:.01em;text-wrap:balance;margin:0;color:var(--ink)}
+h1{font-size:clamp(30px,5vw,46px);font-weight:800;line-height:1}
+h2{font-size:26px;font-weight:800;margin-bottom:12px}
+h3{font-size:20px;font-weight:700;margin-bottom:6px}
+.ta-mode h1,.ta-mode h2,.ta-mode h3{font-family:"Noto Sans Tamil",var(--fd)}
+.printline{font-family:var(--fm);font-size:12px;letter-spacing:.06em;color:var(--accD);background:var(--soft);border-block:2px solid var(--acc);padding:6px 16px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+header.mast{padding-block:18px 10px;display:flex;flex-wrap:wrap;gap:12px 20px;align-items:flex-end;justify-content:space-between}
+.mast .sub{font-weight:700;color:var(--ink2);margin-top:6px}
+.slogan{display:inline-block;margin-top:8px;font-weight:800;color:var(--accD);border:2px solid var(--acc);border-radius:999px;padding:2px 12px;font-size:14px}
+.ctrls{display:flex;gap:8px;flex-wrap:wrap}
+button{font:inherit;cursor:pointer}
+.btn{background:#fff;border:2px solid var(--ink);color:var(--ink);border-radius:8px;padding:6px 12px;font-weight:800;font-size:14px}
+.btn.on,.btn:hover{background:var(--acc);border-color:var(--acc);color:#111}
+.btn:focus-visible,.tab:focus-visible{outline:3px solid var(--accD);outline-offset:2px}
+nav.tabs{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:var(--bg);border-bottom:2px solid var(--line);display:flex;gap:4px;overflow-x:auto;padding-block:8px;scrollbar-width:thin}
+.tab{flex:0 0 auto;border:2px solid var(--line);background:#fff;border-radius:8px;padding:6px 12px;font-weight:800;font-size:14px;color:var(--ink2)}
+.tab[aria-selected="true"]{background:var(--acc);border-color:var(--acc);color:#111}
+section.pane{padding-block:18px}
+.grid{display:grid;gap:14px}
+.g2{grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr))}
+.g4{grid-template-columns:repeat(auto-fit,minmax(min(100%,250px),1fr))}
+.card{background:var(--panel);border:2px solid var(--line);border-radius:10px;padding:14px;min-width:0}
+.card.co{border-top-width:6px}
+.tag{display:inline-block;font-family:var(--fm);font-size:12px;font-weight:600;padding:1px 8px;border-radius:999px;background:var(--soft);color:var(--accD);border:1px solid var(--acc)}
+ul.b{margin:6px 0 0;padding-left:20px}
+ul.b li{margin:3px 0}
+.kv{display:grid;grid-template-columns:1fr auto;gap:2px 10px;font-size:15px}
+.kv span:nth-child(even){font-family:var(--fm);font-weight:600;text-align:right;font-variant-numeric:tabular-nums}
+.up{color:var(--good)} .dn{color:var(--bad)}
+.tw{overflow-x:auto;border:2px solid var(--line);border-radius:10px}
+table{border-collapse:collapse;width:100%;min-width:640px;font-size:15px}
+th,td{padding:8px 10px;border-bottom:1px solid var(--line);text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+th{background:var(--soft);font-weight:800;color:var(--ink)}
+th:first-child,td:first-child{text-align:left;position:sticky;left:0;background:#fff}
+th:first-child{background:var(--soft)}
+td.n{font-family:var(--fm);font-weight:600}
+.note{font-size:13px;color:var(--mute);font-weight:600;margin-top:8px}
+.dot{display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:6px;vertical-align:-1px}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.chip{font-family:var(--fm);font-size:12px;font-weight:600;padding:2px 8px;border-radius:6px;border:2px solid var(--ink);background:#fff}
+.chip.g{border-color:var(--good);color:var(--good)} .chip.r{border-color:var(--bad);color:var(--bad)} .chip.o{border-color:var(--acc);color:var(--accD)}
+svg text{font-family:var(--fb);font-weight:700;fill:var(--ink)}
+.chart{width:100%;height:auto;display:block}
+.tk{counter-reset:k;display:grid;gap:10px}
+.tk .card{display:grid;grid-template-columns:44px 1fr;gap:10px;align-items:start}
+.tk .num{font-family:var(--fd);font-size:34px;font-weight:800;color:var(--acc);line-height:1}
+.sw{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr));gap:10px}
+.sw .card h3{font-size:17px}
+.sw .S{border-left:6px solid var(--good)} .sw .W{border-left:6px solid var(--bad)} .sw .O{border-left:6px solid var(--apl)} .sw .T{border-left:6px solid var(--warn)}
+.seg{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px}
+/* Assist */
+.as-box{border:2px solid var(--acc);border-radius:12px;overflow:hidden}
+.as-head{background:var(--soft);padding:10px 12px;display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:space-between}
+.as-log{padding:12px;display:flex;flex-direction:column;gap:10px;max-height:460px;overflow-y:auto;background:#fff}
+.msg{max-width:88%;padding:8px 12px;border-radius:10px;font-size:16px}
+.msg.u{align-self:flex-end;background:var(--acc);color:#111;font-weight:800}
+.msg.b{align-self:flex-start;background:#fff;border:2px solid var(--line)}
+.msg details{margin-top:4px;font-size:14px}
+.as-in{display:flex;gap:8px;padding:10px;border-top:2px solid var(--line);flex-wrap:wrap}
+.as-in input{flex:1 1 220px;min-width:0;font:inherit;font-weight:700;padding:8px 10px;border:2px solid var(--ink);border-radius:8px}
+.sugg{display:flex;gap:6px;flex-wrap:wrap;padding:0 10px 10px}
+.sugg button{border:2px solid var(--line);background:#fff;border-radius:999px;padding:3px 10px;font-weight:700;font-size:13px}
+.bar{height:4px;background:var(--acc);width:0;transition:width .1s linear}
+.speed{display:flex;align-items:center;gap:6px;flex-wrap:wrap;font-size:13px}
+.speed input[type=range]{width:110px}
+select{font:inherit;font-weight:700;border:2px solid var(--ink);border-radius:6px;padding:2px 4px;background:#fff}
+/* Quiz */
+.q{margin-bottom:12px}
+.opt{display:block;width:100%;text-align:left;margin:6px 0;padding:8px 12px;border:2px solid var(--line);border-radius:8px;background:#fff;font-weight:700}
+.opt.ok{border-color:var(--good);background:#EAF7EF} .opt.no{border-color:var(--bad);background:#FDECEA}
+/* floating */
+#cb{position:fixed;right:14px;bottom:calc(14px + env(safe-area-inset-bottom,0px));z-index:50}
+#cb .logo{width:48px;height:48px;border-radius:50%;background:var(--acc);color:#111;font-family:var(--fd);font-weight:800;font-size:22px;display:grid;place-items:center;border:3px solid #111;animation:blink 1.6s ease-in-out infinite;cursor:pointer}
+#cb .disc{position:absolute;right:0;bottom:58px;width:min(320px,80vw);background:#fff;border:2px solid #111;border-radius:10px;padding:10px;font-size:13px;display:none}
+#cb:hover .disc,#cb.open .disc{display:block}
+#va{position:fixed;right:14px;bottom:calc(72px + env(safe-area-inset-bottom,0px));z-index:50;background:#111;color:#fff;border:0;border-radius:999px;padding:8px 14px;font-weight:800;display:flex;gap:6px;align-items:center}
+@keyframes blink{50%{opacity:.45}}
+@media (prefers-reduced-motion:reduce){#cb .logo{animation:none}.bar{transition:none}}
+.cycle-legend{display:flex;flex-wrap:wrap;gap:10px;font-size:14px}
+</style>
+
+<div class="printline">CB RESEARCH ▸ Q1 FY27 (APR–JUN 2026) ▸ uPVC · CPVC · HDPE · PPR · MS/GI STRUCTURAL TUBE ▸ IS 4985 · IS 15778 · IS 4923 ▸ BATCH Q1FY27-PIPES</div>
+<div class="wrap">
+<header class="mast">
+  <div>
+    <h1><span class="en">Pipes &amp; Tubes · Q1 FY27</span><span class="ta">Pipes &amp; Tubes · Q1 FY27</span></h1>
+    <div class="sub"><span class="en">APL Apollo · Astral · Supreme Industries · Prince Pipes — business &amp; investment study</span><span class="ta">APL Apollo · Astral · Supreme · Prince Pipes — business &amp; investment பார்வை</span></div>
+    <div class="slogan"><span class="en">Learn before you Buy</span><span class="ta">வாங்கறதுக்கு முன்னாடி கத்துக்குங்க!</span></div>
+  </div>
+  <div class="ctrls">
+    <button class="btn on" id="bEN" type="button">English</button>
+    <button class="btn" id="bTA" type="button">தமிழ்</button>
+    <button class="btn" id="bRead" type="button"><span class="en">Read this tab</span><span class="ta">இந்த tab-ஐ படிங்க</span></button>
+  </div>
+</header>
+<nav class="tabs" id="tabs" role="tablist"></nav>
+<main id="panes"></main>
+</div>
+
+<button id="va" type="button" aria-label="Voice Assist"><svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="3" width="6" height="11" rx="3" fill="#fff"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3" stroke="#fff" stroke-width="2" fill="none"/></svg><span class="en">Voice Assist</span><span class="ta">Voice Assist</span></button>
+<div id="cb"><div class="logo" tabindex="0" role="button" aria-label="Disclaimer">CB</div>
+<div class="disc"><span class="en"><b>CB Research (Cauvery Business Research)</b> is an education platform, not SEBI-registered. Nothing here is a buy, sell or hold recommendation. Figures are from company filings, press releases and broker notes (Jul–Sep 2026); share prices are the latest seen in Sep 2026 and will have moved. Do your own research or consult a registered adviser.</span><span class="ta"><b>CB Research</b> ஒரு education platform — SEBI-registered இல்லைங்க. இங்க எதுவும் buy/sell/hold recommendation இல்ல. Numbers எல்லாம் company filings, press release, broker notes (Jul–Sep 2026)-ல இருந்து. Share price Sep 2026 நிலவரம் — இப்போ மாறியிருக்கும். நீங்களே research பண்ணுங்க, இல்லனா registered adviser-கிட்ட கேளுங்க.</span></div></div>
+
+<script>
+const L=(e,t)=>`<span class="en">${e}</span><span class="ta">${t===undefined?e:t}</span>`;
+const UL=a=>`<ul class="b">${a.map(x=>`<li>${L(x[0],x[1])}</li>`).join('')}</ul>`;
+const fmt=(v,d=1)=>v==null?'–':Number(v).toLocaleString('en-IN',{maximumFractionDigits:d,minimumFractionDigits:d});
+const sg=v=>v==null?'–':`<span class="${v>=0?'up':'dn'}">${v>=0?'+':''}${fmt(v)}%</span>`;
+
+/* ===== DATA (₹ crore unless noted). Q1 FY27 = Apr–Jun 2026 ===== */
+const C=[
+ {id:'apl',name:'APL Apollo Tubes',short:'APL Apollo',col:'var(--apl)',hex:'#2E5E8C',al:['apl','apollo','apl apollo','tubes','steel','ஏபிஎல்','அப்போலோ','அப்பல்லோ'],
+  kind:['Branded structural steel tubes','Branded structural steel tubes'],
+  rev:5606.7,revP:5169.8,eb:411.3,ebP:372.0,pat:263.1,patP:237.2,vol:744823,volP:794350,volU:'t',em:7.3,emP:7.2,
+  price:2185,pdate:'24 Sep 2026',mcap:60660,pe:49,pb:10.9,wc:0,cash:1406,roe:25.3,roce:37.3,
+  ocf26:2103,capex26:696,fcf26:1407,ocfQ:-30,fcfQ:-290,capexQ:216,
+  ebkg:5.5,realkg:75.3,cap:'5.0 MTPA → 8 MTPA by FY28',guid:['Volume +15–20%, EBITDA +20%+, ₹5,000–5,500/t','Volume +15–20%, EBITDA +20%+, ₹5,000–5,500/t'],
+  cyS:70,cyStk:61,cy:66,tg:65,stage:['Stage 1 late / Stage 2 early','Stage 1 late / Stage 2 early'],sector:['Steel tubes — P3 Expansion','Steel tubes — P3 Expansion']},
+ {id:'ast',name:'Astral',short:'Astral',col:'var(--ast)',hex:'#C2410C',al:['astral','ஆஸ்ட்ரல்','அஸ்ட்ரல்','ஆஸ்ட்ரால்'],
+  kind:['Premium plumbing + adhesives & paints','Premium plumbing + adhesives & paints'],
+  rev:1578.0,revP:1361.2,eb:231.0,ebP:184.8,pat:120.2,patP:81.1,vol:56146,volP:56146,volU:'t',em:14.7,emP:13.6,
+  price:1392,pdate:'22 Sep 2026',mcap:37400,pe:65,pb:9.4,wc:25,cash:470,roe:15.5,roce:20,
+  ocf26:1117,capex26:459,fcf26:658,ocfQ:null,fcfQ:null,capexQ:137,
+  ebkg:35.3,realkg:187.1,cap:'4.21 lakh t pipes; 40,000 t CPVC resin plant by Dec 2026',guid:['Plumbing volume double-digit; EBITDA margin 16–18%','Plumbing volume double-digit; EBITDA margin 16–18%'],
+  cyS:60,cyStk:68,cy:64,tg:76,stage:['Stage 1 late (base)','Stage 1 late (base)'],sector:['Plastic pipes — P1 Trough → P2','Plastic pipes — P1 Trough → P2']},
+ {id:'sup',name:'Supreme Industries',short:'Supreme',col:'var(--sup)',hex:'#127A57',al:['supreme','suprem','சுப்ரீம்','சுப்ரிம்'],
+  kind:['Largest plastics processor; pipes + packaging, industrial, consumer','பெரிய plastics processor; pipes + packaging, industrial, consumer'],
+  rev:2717.7,revP:2609.1,eb:398.1,ebP:319.1,pat:207.8,patP:177.4,vol:157536,volP:183825,volU:'t',em:14.65,emP:12.23,
+  price:3460,pdate:'22 Sep 2026',mcap:43950,pe:43,pb:7.1,wc:65,cash:558,roe:21,roce:20,
+  ocf26:null,capex26:null,fcf26:null,ocfQ:null,fcfQ:null,capexQ:500,
+  ebkg:25.3,realkg:172.5,cap:'Wavin 70,000 t at 50–60% use; greenfield Bihar, Jammu, Maharashtra',guid:['Volume +12–13% (pipes +15–17%); EBITDA 14–14.5%','Volume +12–13% (pipes +15–17%); EBITDA 14–14.5%'],
+  cyS:60,cyStk:49,cy:55,tg:68,stage:['Stage 4 → Stage 1 (price below falling 200-DMA)','Stage 4 → Stage 1 (falling 200-DMA-க்கு கீழ)'],sector:['Plastic pipes — P1 Trough → P2','Plastic pipes — P1 Trough → P2']},
+ {id:'pri',name:'Prince Pipes & Fittings',short:'Prince',col:'var(--pri)',hex:'#6D3FA0',al:['prince','பிரின்ஸ்','ப்ரின்ஸ்'],
+  kind:['Mid-size plastic pipes; CPVC, SWR, bathware (Aquel)','Mid-size plastic pipes; CPVC, SWR, bathware (Aquel)'],
+  rev:609.4,revP:580.4,eb:77.0,ebP:39.9,pat:33.7,patP:4.8,vol:40729,volP:43795,volU:'t',em:12.6,emP:6.9,
+  price:267,pdate:'11 Sep 2026',mcap:2950,pe:28,pb:1.8,wc:71,cash:null,roe:6.5,roce:null,
+  ocf26:null,capex26:null,fcf26:null,ocfQ:null,fcfQ:null,capexQ:41,
+  ebkg:18.9,realkg:149.6,cap:'~4.35 lakh t, 9 plants (+ Bhuj takeover)',guid:['Volume +12–15%; EBITDA margin 11–13%','Volume +12–15%; EBITDA margin 11–13%'],
+  cyS:60,cyStk:74,cy:67,tg:76,stage:['Stage 1 late (base)','Stage 1 late (base)'],sector:['Plastic pipes — P1 Trough → P2','Plastic pipes — P1 Trough → P2']}
+];
+C.forEach(c=>{c.revG=(c.rev/c.revP-1)*100;c.ebG=(c.eb/c.ebP-1)*100;c.patG=(c.pat/c.patP-1)*100;c.volG=(c.vol/c.volP-1)*100});
+C[1].volG=0.1; C[3].patG=600; C[2].volG=-14.3; C[3].volG=-7.0;
+
+/* ===== SVG helpers ===== */
+function hbars(items,{fmtv=v=>fmt(v)+'%',w=560,title=''}={}){
+  const rowH=34,lab=150,pad=70,h=items.length*rowH+30;
+  const max=Math.max(...items.map(i=>Math.abs(i.v)),1),hasNeg=items.some(i=>i.v<0);
+  const inner=w-lab-pad*(hasNeg?2:1);const zero=lab+(hasNeg?pad+inner*(Math.max(...items.map(i=>-Math.min(i.v,0)))/max)/(1+0):0);
+  const negMax=Math.max(0,...items.map(i=>-i.v)),posMax=Math.max(0,...items.map(i=>i.v)),tot=negMax+posMax||1;
+  const span=w-lab-pad*2, z=lab+pad*0.5+span*(negMax/tot);
+  let s=`<svg class="chart" viewBox="0 0 ${w} ${h}" role="img" aria-label="${title}">`;
+  s+=`<line x1="${z}" y1="6" x2="${z}" y2="${h-18}" stroke="#141414" stroke-width="1.5"/>`;
+  items.forEach((it,k)=>{const y=10+k*rowH,len=span*(Math.abs(it.v)/tot),x=it.v>=0?z:z-len;
+    s+=`<text x="0" y="${y+18}" font-size="14">${it.l}</text><rect x="${x}" y="${y+4}" width="${Math.max(len,1.5)}" height="20" rx="3" fill="${it.c}"/>`;
+    s+=`<text x="${it.v>=0?z+len+6:z-len-6}" y="${y+19}" font-size="14" text-anchor="${it.v>=0?'start':'end'}">${fmtv(it.v)}</text>`});
+  return s+`</svg>`;
+}
+const series=(key,f)=>C.map(c=>({l:c.short,v:c[key],c:c.hex}));
+
+/* ===== TABS ===== */
+const T=[];
+const add=(id,en,ta,html)=>T.push({id,en,ta,html});
+
+/* Dashboard */
+add('dash','Dashboard','Dashboard',()=>`
+<h2>${L('Q1 FY27 at a glance','Q1 FY27 — ஒரே பார்வையில')}</h2>
+${UL([['Plastic-pipe industry volume fell ~10% YoY: PVC prices swung sharply in April and dealers cut stock while the PVC import-duty waiver ran till June.','Plastic pipe industry volume ~10% YoY குறைஞ்சது — April-ல PVC விலை ஏறி இறங்குச்சு, June வரை import duty waiver இருந்ததால dealers stock குறைச்சாங்க.'],
+['Margins rose at all four despite weak tonnage: better product mix and higher realisations.','Tonnage weak-ஆ இருந்தாலும் நாலு company-க்கும் margin ஏறிச்சு — product mix, realisation நல்லா இருந்தது.'],
+['Govt put a Minimum Import Price of US$0.766/kg on S-PVC resin from 24 Jul 2026 for 6 months — a floor under PVC prices that should help restocking.','24 Jul 2026 முதல் 6 மாசத்துக்கு S-PVC resin-க்கு US$0.766/kg Minimum Import Price (MIP) — PVC விலைக்கு ஒரு floor; restocking-க்கு உதவும்.'],
+['Steel side: HRC hit a 4-year high (~₹62,000/t, Sep 2026) — supportive for APL Apollo realisations and inventory gains.','Steel side: HRC 4-வருஷ high (~₹62,000/t, Sep 2026) — APL Apollo realisation-க்கு support.']])}
+<div class="grid g4" style="margin-top:14px">${C.map(c=>`
+<div class="card co" style="border-top-color:${c.hex}">
+<h3>${c.name}</h3><div class="note" style="margin:0 0 6px">${L(c.kind[0],c.kind[1])}</div>
+<div class="kv"><span>${L('Revenue','Revenue')}</span><span>₹${fmt(c.rev)} cr</span>
+<span>${L('Revenue YoY','Revenue YoY')}</span><span>${sg(c.revG)}</span>
+<span>${L('Volume YoY','Volume YoY')}</span><span>${sg(c.volG)}</span>
+<span>${L('EBITDA margin','EBITDA margin')}</span><span>${fmt(c.em)}%</span>
+<span>${L('PAT YoY','PAT YoY')}</span><span>${c.id==='pri'?'<span class="up">~7x</span>':sg(c.patG)}</span>
+<span>P/E (TTM)</span><span>${c.pe}x</span></div>
+<div class="chips"><span class="chip o">CY ${c.cy}</span><span class="chip o">TG ${c.tg}</span></div></div>`).join('')}</div>
+<div class="grid g2" style="margin-top:14px">
+<div class="card"><h3>${L('Volume YoY — every one below last year except Astral','Volume YoY — Astral தவிர எல்லாருக்கும் குறைவு')}</h3>${hbars(series('volG'),{title:'Volume YoY'})}<div class="note">${L('Industry plastic-pipe volume: ~−10% YoY (broker estimate)','Industry plastic-pipe volume: ~−10% YoY (broker estimate)')}</div></div>
+<div class="card"><h3>${L('EBITDA growth YoY — margin did the work','EBITDA growth YoY — margin தான் காப்பாத்துச்சு')}</h3>${hbars(series('ebG'),{title:'EBITDA YoY'})}</div>
+</div>
+<p class="note">${L('CY = Cycle lens, TG = Trigger lens (0–100, CB Trigger &amp; Cycle method). Prices: latest seen Sep 2026.','CY = Cycle lens, TG = Trigger lens (0–100). Price: Sep 2026 நிலவரம்.')}</p>`);
+
+/* Business model */
+add('bm','Business Model','Business Model',()=>`
+<h2>${L('How each company makes money','ஒவ்வொரு company-யும் எப்படி சம்பாதிக்குது')}</h2>
+<div class="card" style="margin-bottom:14px"><h3>${L('Picture it: the value chain','Picture it: value chain')}</h3>
+<div class="tw" style="border:0"><svg class="chart" viewBox="0 0 900 230" style="min-width:640px" role="img" aria-label="Value chain">
+<defs><marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0L10,5L0,10z" fill="#141414"/></marker></defs>
+${[['Crude / ethylene + chlorine',20],['VCM → PVC resin (64% imported)',200],['Pipe extrusion + fittings moulding',400],['Distributors → dealers → plumbers',600],['Homes · farms · water schemes',780]].map((b,i)=>`<rect x="${b[1]}" y="20" width="${i==4?110:160}" height="62" rx="8" fill="${i==2?'#FFF6EC':'#fff'}" stroke="${i==2?'#F28C28':'#141414'}" stroke-width="2"/><foreignObject x="${b[1]+4}" y="24" width="${i==4?102:152}" height="56"><div xmlns="http://www.w3.org/1999/xhtml" style="font:700 13px/1.2 'Source Sans 3',Arial;color:#141414;text-align:center">${b[0]}</div></foreignObject>${i<4?`<line x1="${b[1]+(i==4?110:160)}" y1="51" x2="${[200,400,600,780][i]-4}" y2="51" stroke="#141414" stroke-width="2" marker-end="url(#ar)"/>`:''}`).join('')}
+${[['Iron ore + coking coal',20],['HR coil (HRC) from mills',200],['Tube mill: ERW, GI, pre-galv, colour-coated',400],['3-tier dealers / projects',600],['Buildings · sheds · infra',780]].map((b,i)=>`<rect x="${b[1]}" y="140" width="${i==4?110:160}" height="62" rx="8" fill="${i==2?'#EAF1F8':'#fff'}" stroke="${i==2?'#2E5E8C':'#141414'}" stroke-width="2"/><foreignObject x="${b[1]+4}" y="144" width="${i==4?102:152}" height="56"><div xmlns="http://www.w3.org/1999/xhtml" style="font:700 13px/1.2 'Source Sans 3',Arial;color:#141414;text-align:center">${b[0]}</div></foreignObject>${i<4?`<line x1="${b[1]+160}" y1="171" x2="${[200,400,600,780][i]-4}" y2="171" stroke="#141414" stroke-width="2" marker-end="url(#ar)"/>`:''}`).join('')}
+<text x="400" y="14" font-size="13" fill="#B85E0A">PLASTIC: Astral · Supreme · Prince</text><text x="400" y="134" font-size="13" fill="#2E5E8C">STEEL: APL Apollo</text>
+</svg></div>
+<ul class="b"><li>${L('All four are converters: they buy a commodity (PVC resin or HRC) and earn a spread for brand, reach and product range.','நாலும் converters தான் — commodity (PVC resin / HRC) வாங்கி, brand, reach, product range-க்கு ஒரு spread சம்பாதிக்கறாங்க.')}</li>
+<li>${L('When raw-material prices fall fast, dealers wait and sell old stock at a loss; when prices rise, dealers restock and companies gain on inventory.','Raw material விலை வேகமா இறங்கினா dealers வாங்க மாட்டாங்க, inventory loss; விலை ஏறினா restock பண்ணுவாங்க, inventory gain.')}</li></ul></div>
+<div class="grid g2">
+<div class="card co" style="border-top-color:var(--apl)"><h3>APL Apollo</h3>${UL([['India\'s largest structural steel tube maker; buys HRC, sells branded tubes (APL Apollo, SG Premium).','India-வோட பெரிய structural steel tube maker; HRC வாங்கி branded tubes விக்குது (APL Apollo, SG Premium).'],['Earns per tonne: ₹5,522 EBITDA/t in Q1 — thin per-kg margin, very high asset turns.','ஒரு tonne-க்கு earn பண்ணுது: Q1-ல ₹5,522 EBITDA/t — per kg margin கம்மி, ஆனா asset turn ரொம்ப அதிகம்.'],['Near-zero working capital: dealers pay fast, steel mills give credit.','Working capital கிட்டத்தட்ட zero — dealers சீக்கிரம் pay பண்றாங்க, mills credit தராங்க.'],['Replaces wood, cement and fabricated steel in buildings — a substitution story.','Buildings-ல wood, cement, fabricated steel-க்கு பதிலா — substitution story.']])}</div>
+<div class="card co" style="border-top-color:var(--ast)"><h3>Astral</h3>${UL([['Premium CPVC/PVC plumbing brand (67% of revenue) sold through plumbers and dealers.','Premium CPVC/PVC plumbing brand (revenue-ல 67%) — plumbers, dealers வழியா.'],['Second engine: adhesives (Resinova, UK Bond It), paints, bathware.','இரண்டாவது engine: adhesives (Resinova, UK), paints, bathware.'],['Building its own 40,000 t CPVC resin plant — backward integration to cut import dependence.','சொந்த 40,000 t CPVC resin plant கட்டுது — import dependence குறைக்க backward integration.'],['Highest plumbing EBITDA/kg in the group (~₹35/kg).','Group-லயே plumbing EBITDA/kg அதிகம் (~₹35/kg).']])}</div>
+<div class="card co" style="border-top-color:var(--sup)"><h3>Supreme Industries</h3>${UL([['India\'s largest plastics processor; pipes are ~2/3 of revenue.','India-வோட பெரிய plastics processor; revenue-ல ~2/3 pipes.'],['Also packaging films, industrial moulded parts (auto, appliances), consumer furniture.','Packaging films, industrial moulded parts (auto, appliances), consumer furniture-உம் இருக்கு.'],['Bought Wavin India pipes (70,000 t) — adds gas and agri piping know-how.','Wavin India pipes (70,000 t) வாங்கிச்சு — gas, agri piping know-how.'],['Holds a stake in Supreme Petrochem (associate income lifts consolidated PAT).','Supreme Petrochem-ல stake — associate income consolidated PAT-ஐ ஏத்துது.']])}</div>
+<div class="card co" style="border-top-color:var(--pri)"><h3>Prince Pipes</h3>${UL([['Mid-size player (~5% share), 9 plants, 1,500+ distributors.','Mid-size player (~5% share), 9 plants, 1,500+ distributors.'],['Was heavy in agri pipes; now pushing plumbing, CPVC (Smartfit Plus), low-noise SWR (DECILO).','முன்னாடி agri pipes அதிகம்; இப்போ plumbing, CPVC (Smartfit Plus), low-noise SWR (DECILO) push பண்றாங்க.'],['Aquel bathware brand for faucets and sanitaryware.','Faucets, sanitaryware-க்கு Aquel bathware brand.'],['Working capital is the heaviest in the group: 71 days.','Group-லயே working capital அதிகம்: 71 days.']])}</div>
+</div>`);
+
+/* Segments */
+add('seg','Segments','Segments',()=>`
+<h2>${L('Segment performance — Q1 FY27','Segment performance — Q1 FY27')}</h2>
+<div class="grid g2">
+<div class="card"><h3>Astral</h3><div class="tw"><table><tr><th>${L('Segment','Segment')}</th><th>Revenue ₹cr</th><th>YoY</th><th>EBITDA ₹cr</th><th>Margin</th></tr>
+<tr><td>Plumbing</td><td class="n">1,050.5</td><td>${sg(10.1)}</td><td class="n">198.3</td><td class="n">18.9% <span class="up">(16.4%)</span></td></tr>
+<tr><td>Paints &amp; Adhesives</td><td class="n">527.5</td><td>${sg(29.5)}</td><td class="n">45.7</td><td class="n">8.7% <span class="dn">(9.2%)</span></td></tr>
+<tr><td>• India adhesives</td><td class="n">326</td><td>${sg(25)}</td><td class="n">–</td><td class="n">12.2%</td></tr>
+<tr><td>• UK adhesives</td><td class="n">121</td><td>${sg(26)}</td><td class="n">–</td><td class="n">4.9%</td></tr>
+<tr><td>• Paints</td><td class="n">75</td><td>${sg(49)}</td><td class="n">–</td><td class="n">low single digit</td></tr></table></div>
+${UL([['Pipe volume flat at 56,146 t vs industry −10% — share gain.','Pipe volume flat — 56,146 t; industry −10% — share gain.'],['Adhesive raw materials up 15–16%; only 7–8% price hike so far, so margin dipped.','Adhesive raw material 15–16% ஏறிச்சு; price hike 7–8% தான் — அதனால margin இறங்குச்சு.']])}</div>
+<div class="card"><h3>Supreme Industries</h3><div class="tw"><table><tr><th>${L('Segment','Segment')}</th><th>Revenue ₹cr</th><th>Value YoY</th><th>Volume YoY</th></tr>
+<tr><td>Plastic piping</td><td class="n">~1,820*</td><td>${sg(0)}</td><td>${sg(-15.4)}</td></tr>
+<tr><td>Packaging</td><td class="n">438</td><td>${sg(9)}</td><td>${sg(-10)}</td></tr>
+<tr><td>Industrial</td><td class="n">373</td><td>${sg(23.8)}</td><td>${sg(-5.8)}</td></tr>
+<tr><td>Consumer</td><td class="n">87</td><td>${sg(-11)}</td><td>${sg(-22)}</td></tr></table></div>
+${UL([['Piping EBIT margin up 265 bps to 11.4%; non-pipe EBIT ~9.7%.','Piping EBIT margin 265 bps ஏறி 11.4%; non-pipe EBIT ~9.7%.'],['Pipe volume 125.8 kt — the weakest of the plastic peers this quarter.','Pipe volume 125.8 kt — இந்த quarter plastic peers-லயே weak.']])}<div class="note">*${L('Derived: total revenue less other segments.','Derived: total revenue − மற்ற segments.')}</div></div>
+<div class="card"><h3>APL Apollo</h3><div class="tw"><table><tr><th>${L('Brand / category','Brand / category')}</th><th>Q1 FY27 tonnes</th><th>Share</th></tr>
+<tr><td>APL Apollo brand</td><td class="n">5,68,691</td><td class="n">76%</td></tr>
+<tr><td>SG Premium brand</td><td class="n">58,686</td><td class="n">8%</td></tr>
+<tr><td>${L('Other categories (derived)','மற்றவை (derived)')}</td><td class="n">1,17,446</td><td class="n">16%</td></tr>
+<tr><td><b>${L('Total','மொத்தம்')}</b></td><td class="n"><b>7,44,823</b></td><td class="n">−6.2% YoY</td></tr></table></div>
+${UL([['Realisation per tonne up 15.6% YoY — price and mix offset the volume drop.','Per tonne realisation 15.6% ஏறிச்சு — volume drop-ஐ price, mix ஈடு கட்டுச்சு.'],['Dubai plant under 50% utilisation due to West Asia supply disruption.','West Asia supply பிரச்சனையால Dubai plant 50%-க்கு கீழ ஓடுது.']])}</div>
+<div class="card"><h3>Prince Pipes</h3><div class="kv"><span>Revenue</span><span>₹609.4 cr (+5%)</span><span>Volume</span><span>40,729 t (−7%)</span><span>Gross margin</span><span>34% (26%)</span><span>EBITDA</span><span>₹77 cr (+93%)</span><span>EBITDA/kg</span><span>₹18.9</span></div>
+${UL([['Single segment (pipes &amp; fittings); agri volumes fell most.','ஒரே segment (pipes &amp; fittings); agri volume தான் அதிகம் குறைஞ்சது.'],['Plumbing and value-added products (CPVC, DECILO) lifted mix.','Plumbing, value-added products (CPVC, DECILO) mix-ஐ ஏத்துச்சு.']])}</div>
+</div>`);
+
+/* Products & Raw materials */
+add('rm','Products & Raw Materials','Products & Raw Materials',()=>`
+<h2>${L('Products and raw-material prices','Products &amp; raw material விலை')}</h2>
+<div class="tw"><table><tr><th>${L('Product','Product')}</th><th>APL Apollo</th><th>Astral</th><th>Supreme</th><th>Prince</th><th style="text-align:left">${L('Main use','பயன்')}</th></tr>
+${[['uPVC pipes &amp; fittings','–','✓','✓','✓','Plumbing, borewell, agri'],['CPVC hot/cold water','–','✓ (own resin plant coming)','✓','✓ Smartfit Plus','Hot water lines'],['SWR / low-noise drainage','–','✓','✓','✓ DECILO','Building drainage'],['HDPE / gas piping','–','✓','✓ (Wavin, ~₹600 cr FY27)','✓','Gas, sewer, agri'],['PPR','–','✓','✓','✓ Greenfit','Industrial, plumbing'],['Water tanks','–','✓','✓','✓','Storage'],['Structural steel tubes (MS/GI/pre-galv)','✓ 5,000+ SKUs','–','–','–','Buildings, sheds, infra'],['Adhesives / paints','–','✓ Resinova, Gem, paints','–','–','Construction chemicals'],['Bathware','–','✓','–','✓ Aquel','Faucets, sanitaryware'],['Packaging / industrial / furniture','–','–','✓','–','FMCG, auto, homes']].map(r=>`<tr>${r.map((x,i)=>`<td${i==5?' style="text-align:left"':''}>${x}</td>`).join('')}</tr>`).join('')}</table></div>
+<div class="grid g2" style="margin-top:14px">
+<div class="card"><h3>${L('PVC resin price ladder (US$/kg)','PVC resin price ladder (US$/kg)')}</h3>
+${hbars([{l:'China import',v:0.65,c:'#9AA3AD'},{l:'Taiwan import',v:0.72,c:'#9AA3AD'},{l:'MIP floor (CIF)',v:0.766,c:'#F28C28'},{l:'Domestic K-67',v:0.865,c:'#2E5E8C'},{l:'Min landed (MIP+duty)',v:0.87,c:'#B85E0A'}],{fmtv:v=>'$'+v.toFixed(3).replace(/0$/,'')})}
+${UL([['DGFT notification (24 Jul 2026): S-PVC imports at or below US$0.766/kg CIF need a licence, for 6 months.','DGFT notification (24 Jul 2026): US$0.766/kg CIF-க்கு கீழ S-PVC import-க்கு licence வேணும் — 6 மாசம்.'],['Every major supplier was shipping below the floor; India imports ~64% of its S-PVC.','முக்கிய supplier எல்லாரும் floor-க்கு கீழ தான் அனுப்பிட்டு இருந்தாங்க; India S-PVC-ல ~64% import.'],['Customs-duty exemption on PVC withdrawn from 16 Jul — the April–June waiver had triggered destocking.','PVC customs duty exemption 16 Jul-ல withdraw ஆச்சு — April–June waiver தான் destocking-க்கு காரணம்.'],['Read-through: firmer PVC = inventory gains + restocking for Astral, Supreme, Prince.','அர்த்தம்: PVC விலை firm-ஆனா inventory gain + restocking — Astral, Supreme, Prince-க்கு நல்லது.']])}</div>
+<div class="card"><h3>${L('HRC steel (APL Apollo\'s raw material)','HRC steel (APL Apollo raw material)')}</h3>
+${hbars([{l:'Aug 2026 (mid)',v:57800,c:'#9AA3AD'},{l:'Sep 2026',v:62000,c:'#2E5E8C'}],{fmtv:v=>'₹'+v.toLocaleString('en-IN')+'/t'})}
+${UL([['June 2026: ~US$601/t ex-Mumbai, weak monsoon demand, high stocks.','June 2026: ~US$601/t ex-Mumbai — monsoon demand weak, stock அதிகம்.'],['Sep 2026: BigMint benchmark ₹62,000/t — highest since Jun 2022; mills hiked again in September.','Sep 2026: BigMint benchmark ₹62,000/t — Jun 2022-க்கு அப்புறம் highest; September-லயும் mills விலை ஏத்துனாங்க.'],['Rising HRC lifts tube realisations and gives inventory gains; falling HRC in Q1 had caused dealer destocking.','HRC ஏறினா tube realisation ஏறும், inventory gain; Q1-ல HRC இறங்கினதால dealer destocking.']])}</div>
+<div class="card"><h3>${L('Other inputs','மற்ற inputs')}</h3>${UL([['Adhesive chemicals (VAM, resins): up 15–16% — Astral passed on 7–8%.','Adhesive chemicals (VAM, resins): 15–16% ஏறிச்சு — Astral 7–8% தான் pass பண்ணுச்சு.'],['CPVC resin: imported (mainly Lubrizol, Kaneka, Sekisui); Astral\'s own plant trials in Q4 FY27.','CPVC resin: import தான் (Lubrizol, Kaneka, Sekisui); Astral சொந்த plant trial Q4 FY27-ல.'],['Zinc for galvanising (APL Apollo GI tubes).','Galvanising-க்கு zinc (APL Apollo GI tubes).']])}</div>
+<div class="card"><h3>${L('Picture it: why destocking hits volume','Picture it: destocking ஏன் volume-ஐ அடிக்குது')}</h3>
+<svg class="chart" viewBox="0 0 460 170" role="img" aria-label="Destocking loop"><defs><marker id="a2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0L10,5L0,10z" fill="#141414"/></marker></defs>
+${[['PVC price falls',20,20],['Dealer waits to buy',250,20],['Company volume drops',250,110],['Price floor (MIP) → restock',20,110]].map(b=>`<rect x="${b[1]}" y="${b[2]}" width="190" height="44" rx="8" fill="#fff" stroke="#141414" stroke-width="2"/><text x="${b[1]+95}" y="${b[2]+27}" text-anchor="middle" font-size="14">${b[0]}</text>`).join('')}
+<line x1="212" y1="42" x2="246" y2="42" stroke="#141414" stroke-width="2" marker-end="url(#a2)"/><line x1="345" y1="66" x2="345" y2="106" stroke="#141414" stroke-width="2" marker-end="url(#a2)"/><line x1="248" y1="132" x2="214" y2="132" stroke="#F28C28" stroke-width="3" marker-end="url(#a2)"/><line x1="115" y1="108" x2="115" y2="68" stroke="#F28C28" stroke-width="3" marker-end="url(#a2)"/></svg>
+<div class="note">${L('Orange arrows = what changed after 24 Jul. Astral saw ~40% volume growth in July.','Orange arrows = 24 Jul-க்கு அப்புறம் மாறினது. July-ல Astral volume ~40% வளர்ந்தது.')}</div></div>
+</div>`);
+
+/* Financials */
+add('fin','Financials','Financials',()=>`
+<h2>${L('Q1 FY27 vs Q1 FY26 (₹ crore)','Q1 FY27 vs Q1 FY26 (₹ crore)')}</h2>
+<div class="tw"><table><tr><th>${L('Metric','Metric')}</th>${C.map(c=>`<th><span class="dot" style="background:${c.hex}"></span>${c.short}</th>`).join('')}</tr>
+<tr><td>Revenue</td>${C.map(c=>`<td class="n">${fmt(c.rev)}</td>`).join('')}</tr>
+<tr><td>Revenue YoY</td>${C.map(c=>`<td>${sg(c.revG)}</td>`).join('')}</tr>
+<tr><td>EBITDA</td>${C.map(c=>`<td class="n">${fmt(c.eb)}</td>`).join('')}</tr>
+<tr><td>EBITDA YoY</td>${C.map(c=>`<td>${sg(c.ebG)}</td>`).join('')}</tr>
+<tr><td>EBITDA margin</td>${C.map(c=>`<td class="n">${fmt(c.em)}% <span class="up">(${fmt(c.emP)}%)</span></td>`).join('')}</tr>
+<tr><td>PAT</td>${C.map(c=>`<td class="n">${fmt(c.pat)}</td>`).join('')}</tr>
+<tr><td>PAT YoY</td>${C.map(c=>`<td>${c.id==='pri'?'<span class="up">~7x</span>':sg(c.patG)}</td>`).join('')}</tr>
+<tr><td>Volume (t)</td>${C.map(c=>`<td class="n">${c.vol.toLocaleString('en-IN')}</td>`).join('')}</tr>
+<tr><td>Volume YoY</td>${C.map(c=>`<td>${sg(c.volG)}</td>`).join('')}</tr>
+<tr><td>Realisation ₹/kg</td>${C.map(c=>`<td class="n">${fmt(c.realkg)}</td>`).join('')}</tr>
+<tr><td>EBITDA ₹/kg</td>${C.map(c=>`<td class="n">${fmt(c.ebkg)}</td>`).join('')}</tr></table></div>
+<p class="note">${L('Supreme PAT is standalone; consolidated PAT ₹280.7 cr (+38.8%) includes Supreme Petrochem share. Astral plumbing EBITDA/kg shown (₹35.3); per-kg figures are CB calculations from reported revenue/EBITDA and tonnes. Prince Q1 FY26 PAT was only ₹4.8 cr, so the % jump is large.','Supreme PAT standalone; consolidated ₹280.7 cr (+38.8%). Astral-க்கு plumbing EBITDA/kg (₹35.3). Per-kg numbers CB கணக்கு. Prince Q1 FY26 PAT ₹4.8 cr தான் — அதனால % jump பெருசு.')}</p>
+<div class="grid g2" style="margin-top:12px">
+<div class="card"><h3>${L('EBITDA per kg (₹) — what each kilo earns','EBITDA per kg (₹) — ஒரு kilo-க்கு எவ்வளவு')}</h3>${hbars(series('ebkg'),{fmtv:v=>'₹'+fmt(v)})}</div>
+<div class="card"><h3>${L('Revenue growth YoY','Revenue growth YoY')}</h3>${hbars(series('revG'))}</div>
+</div>
+<div class="card" style="margin-top:14px"><h3>${L('FY27 guidance (kept unchanged by all four)','FY27 guidance (நாலு பேரும் மாத்தல)')}</h3><div class="tw"><table><tr><th>Company</th><th style="text-align:left">Guidance</th><th style="text-align:left">${L('Capacity','Capacity')}</th></tr>${C.map(c=>`<tr><td>${c.short}</td><td style="text-align:left">${L(c.guid[0],c.guid[1])}</td><td style="text-align:left">${c.cap}</td></tr>`).join('')}</table></div>
+<div class="note">${L('Hitting guidance after a weak Q1 needs a 17–28% run-rate for the remaining nine months (broker estimates).','Weak Q1-க்கு அப்புறம் guidance அடிக்க மீதி 9 மாசத்துல 17–28% run-rate வேணும் (broker estimate).')}</div></div>`);
+
+/* Cash flow & ratios */
+add('cf','Cash Flow & Ratios','Cash Flow & Ratios',()=>`
+<h2>${L('Cash flow, ratios and working capital','Cash flow, ratios, working capital')}</h2>
+<div class="tw"><table><tr><th>${L('Metric','Metric')}</th>${C.map(c=>`<th>${c.short}</th>`).join('')}</tr>
+<tr><td>FY26 operating cash flow ₹cr</td>${C.map(c=>`<td class="n">${c.ocf26==null?'n.d.':fmt(c.ocf26,0)}</td>`).join('')}</tr>
+<tr><td>FY26 capex ₹cr</td>${C.map(c=>`<td class="n">${c.capex26==null?'n.d.':fmt(c.capex26,0)}</td>`).join('')}</tr>
+<tr><td>FY26 free cash flow ₹cr</td>${C.map(c=>`<td class="n">${c.fcf26==null?'n.d.':fmt(c.fcf26,0)}</td>`).join('')}</tr>
+<tr><td>Q1 FY27 capex ₹cr</td>${C.map(c=>`<td class="n">${fmt(c.capexQ,0)}${c.id==='sup'?' (committed)':''}</td>`).join('')}</tr>
+<tr><td>Net cash ₹cr (latest)</td>${C.map(c=>`<td class="n">${c.cash==null?'n.d.':fmt(c.cash,0)}</td>`).join('')}</tr>
+<tr><td>Working capital days</td>${C.map(c=>`<td class="n">${c.wc===0?'~0':'~'+c.wc}</td>`).join('')}</tr>
+<tr><td>ROE %</td>${C.map(c=>`<td class="n">${c.roe==null?'n.d.':'~'+fmt(c.roe)}</td>`).join('')}</tr>
+<tr><td>ROCE %</td>${C.map(c=>`<td class="n">${c.roce==null?'n.d.':'~'+fmt(c.roce,0)}</td>`).join('')}</tr></table></div>
+<p class="note">${L('APL Apollo: FY26 ROE/ROCE from company deck; Q1 OCF −₹30 cr and FCF −₹290 cr (seasonal working-capital build). Astral cash = ₹470 cr at Jun-26 (net cash ₹693 cr at Mar-26). Supreme net cash at Mar-26; WC days ~65 is a FY26 broker estimate. Prince WC days from Q1 concall. n.d. = not disclosed in sources reviewed.','APL Apollo: FY26 ROE/ROCE company deck-ல இருந்து; Q1 OCF −₹30 cr, FCF −₹290 cr. Astral cash ₹470 cr (Jun-26). Supreme net cash Mar-26; WC ~65 days broker estimate. Prince WC Q1 concall. n.d. = sources-ல இல்ல.')}</p>
+<div class="grid g2" style="margin-top:12px">
+<div class="card"><h3>${L('Working capital days — lower is better','Working capital days — குறைவா இருந்தா நல்லது')}</h3>${hbars(C.map(c=>({l:c.short,v:c.wc,c:c.hex})),{fmtv:v=>v+' days'})}</div>
+<div class="card"><h3>${L('Astral working-capital build-up (FY26)','Astral working capital (FY26)')}</h3><div class="kv"><span>Debtor days</span><span>22</span><span>Inventory days</span><span>105</span><span>Payable days</span><span>94</span><span>Net WC days</span><span>~25</span></div>
+${UL([['APL Apollo runs on dealer advances and mill credit — the reason it can fund capex from cash flow.','APL Apollo dealer advance, mill credit-ல ஓடுது — அதனால capex-ஐ cash flow-லயே fund பண்ண முடியுது.'],['Prince ties up ~71 days of sales in working capital — a drag on ROE.','Prince ~71 days sales-ஐ working capital-ல வச்சிருக்கு — ROE-க்கு drag.'],['All four are net cash or near debt-free; no balance-sheet stress.','நாலும் net cash / almost debt-free — balance sheet stress இல்ல.']])}</div>
+</div>`);
+
+/* Valuations */
+add('val','Valuations','Valuations',()=>`
+<h2>${L('Valuations (latest price seen, Sep 2026)','Valuations (Sep 2026 price)')}</h2>
+<div class="tw"><table><tr><th>${L('Metric','Metric')}</th>${C.map(c=>`<th>${c.short}</th>`).join('')}</tr>
+<tr><td>Share price ₹</td>${C.map(c=>`<td class="n">${c.price.toLocaleString('en-IN')}</td>`).join('')}</tr>
+<tr><td>Price date</td>${C.map(c=>`<td>${c.pdate}</td>`).join('')}</tr>
+<tr><td>Market cap ₹cr</td>${C.map(c=>`<td class="n">${c.mcap.toLocaleString('en-IN')}</td>`).join('')}</tr>
+<tr><td>P/E (TTM, approx.)</td>${C.map(c=>`<td class="n">${c.pe}x</td>`).join('')}</tr>
+<tr><td>P/B</td>${C.map(c=>`<td class="n">${fmt(c.pb)}x</td>`).join('')}</tr>
+<tr><td>ROE %</td>${C.map(c=>`<td class="n">~${fmt(c.roe)}</td>`).join('')}</tr></table></div>
+<div class="grid g2" style="margin-top:12px">
+<div class="card"><h3>P/E (TTM)</h3>${hbars(series('pe'),{fmtv:v=>v+'x'})}</div>
+<div class="card"><h3>${L('Reading the multiples','Multiples-ஐ எப்படி பார்க்கலாம்')}</h3>${UL([['Astral carries the richest P/E (~65x) for its brand, plumbing margin and adjacencies.','Astral P/E அதிகம் (~65x) — brand, plumbing margin, adjacencies-க்கு premium.'],['APL Apollo ~49x with 25%+ ROE; market pays for its capacity path to 8 MTPA.','APL Apollo ~49x, ROE 25%+; 8 MTPA capacity path-க்கு market pay பண்ணுது.'],['Supreme ~43x — below its own recent band after a 20% one-year fall.','Supreme ~43x — 1 வருஷத்துல 20% இறங்கினதால தன் recent band-க்கு கீழ.'],['Prince ~28x P/E but 1.8x book — cheap on assets, still low ROE (~6.5%).','Prince ~28x P/E, ஆனா 1.8x book — assets-ல cheap, ROE இன்னும் கம்மி (~6.5%).'],['P/E is computed on trailing profit; it will move with the price and with Q2 results.','P/E trailing profit-ல கணக்கு — price, Q2 results-ஓட மாறும்.']])}</div>
+</div>`);
+
+/* 5 Key takeaways */
+add('kt','5 Key Takeaways','5 முக்கிய விஷயங்கள்',()=>`
+<h2>${L('5 key takeaways','5 முக்கிய விஷயங்கள்')}</h2><div class="tk">${[
+['Margin over volume.','Volume-ஐ விட margin.','All four grew EBITDA faster than revenue while tonnage fell or stayed flat.','நாலு பேருக்கும் tonnage குறைஞ்சாலும் EBITDA, revenue-ஐ விட வேகமா வளர்ந்தது.'],
+['Q1 was a stocking problem, not a demand collapse.','Q1 stocking பிரச்சனை தான், demand collapse இல்ல.','PVC price swings and the duty waiver made dealers wait; July volumes bounced (Astral ~+40%).','PVC விலை swing, duty waiver-னால dealers காத்திருந்தாங்க; July-ல volume bounce (Astral ~+40%).'],
+['Policy is now on the producers\' side.','Policy இப்போ producers பக்கம்.','The PVC MIP and duty withdrawal put a floor under resin — supportive for inventory and restocking. It lapses in ~6 months unless extended.','PVC MIP, duty withdrawal resin-க்கு floor — inventory, restocking-க்கு support. 6 மாசத்துல extend பண்ணலனா முடியும்.'],
+['Astral gained share; Supreme lost some.','Astral share பிடிச்சது; Supreme கொஞ்சம் இழந்தது.','Astral pipes flat vs industry −10%; Supreme pipes −15%. Prince −7%.','Astral pipes flat vs industry −10%; Supreme pipes −15%; Prince −7%.'],
+['APL Apollo shows steel-side pricing power.','APL Apollo-க்கு steel-side pricing power.','EBITDA/t +18% to ₹5,522 despite −6% volume; HRC at a 4-year high helps Q2.','Volume −6% ஆனாலும் EBITDA/t +18% → ₹5,522; HRC 4-வருஷ high Q2-க்கு உதவும்.']
+].map((k,i)=>`<div class="card"><div class="num">${i+1}</div><div><h3>${L(k[0],k[1])}</h3><div>${L(k[2],k[3])}</div></div></div>`).join('')}</div>`);
+
+/* Reasons for share market activity */
+add('mkt','Reasons for share market activity','Share market நகர்வுக்கு காரணம்',()=>`
+<h2>${L('Why the shares moved','Shares ஏன் நகர்ந்தது')}</h2>
+<div class="grid g2">${[
+['apl',[['~₹1,796 (2 Jul) after a weak Q1 volume update — volumes missed the 875 kt guidance by ~15%.','~₹1,796 (2 Jul) — Q1 volume update weak; 875 kt guidance-ஐ ~15% miss.'],['Rose to ~₹2,185 (24 Sep), ~+20% from July lows: margin beat, guidance kept, HRC at a 4-year high.','~₹2,185 (24 Sep) வரை ஏறிச்சு, July low-ல இருந்து ~+20%: margin beat, guidance மாறல, HRC 4-வருஷ high.'],['₹8.50 final dividend (record date 8 Sep).','₹8.50 final dividend (record date 8 Sep).']]],
+['ast',[['Jumped 7.3% to ₹1,565 on 13 Aug: PAT +48%, share gain, July volume ~+40%.','13 Aug-ல 7.3% ஏறி ₹1,565: PAT +48%, share gain, July volume ~+40%.'],['Drifted to ~₹1,392 by 22 Sep as sector sentiment cooled; demerger of plumbing and chemicals was dropped in July.','22 Sep-க்குள் ~₹1,392-க்கு இறங்குச்சு; plumbing–chemicals demerger July-ல drop ஆச்சு.']]],
+['sup',[['Flat near ₹3,460 from July to September; down ~20% over one year.','July–September ₹3,460 பக்கம் flat; 1 வருஷத்துல ~20% down.'],['Market weighed the 15% pipe-volume fall against margin beat and kept guidance; one broker cut to Hold, others kept Buy.','15% pipe volume fall vs margin beat, guidance — market balance பண்ணுச்சு; ஒரு broker Hold-க்கு cut, மற்றவங்க Buy.']]],
+['pri',[['+4.8% to ~₹276 on results day (4–6 Aug): EBITDA +93%, margin 13%.','Results day (4–6 Aug) +4.8% → ~₹276: EBITDA +93%, margin 13%.'],['Touched ~₹295 (28 Aug), back to ~₹267 (11 Sep); 52-week range ₹205–353.','~₹295 (28 Aug) தொட்டு ~₹267 (11 Sep)-க்கு வந்தது; 52-week range ₹205–353.']]]
+].map(([id,pts])=>{const c=C.find(x=>x.id===id);return `<div class="card co" style="border-top-color:${c.hex}"><h3>${c.name}</h3>${UL(pts)}</div>`}).join('')}</div>
+<div class="card" style="margin-top:14px"><h3>${L('Sector-wide drivers','Sector-wide காரணங்கள்')}</h3>${UL([['24 Jul: PVC Minimum Import Price notified — positive for plastic-pipe sentiment.','24 Jul: PVC MIP notify ஆச்சு — plastic pipe sentiment-க்கு positive.'],['Slow government capex and an early monsoon hurt Q1 construction activity.','Govt capex மெதுவா, monsoon சீக்கிரம் — Q1 construction activity பாதிச்சது.'],['Broader market soft in Sep 2026 (Sensex ~77,000).','Sep 2026-ல market soft (Sensex ~77,000).']])}</div>`);
+
+/* Triggers & cycle */
+const TRG=[
+ ['apl','+','Capacity 5 → 8 MTPA, phases from H2 FY27',4,.7,.7,.7,'Commissioning filings','Q1 deck, 1 Aug 2026'],
+ ['apl','+','HRC at 4-year high → realisation & inventory gains',2,1,1,.7,'Monthly HRC price','BigMint, Sep 2026'],
+ ['apl','+','Q2 volume rebound (management guided Q2 > Q1)',2,.4,1,.7,'Q2 volume print','Concall, 3 Aug 2026'],
+ ['apl','−','Volume-guidance cut risk; Dubai plant <50% used',2,.7,1,1,'Q2 dispatches','Nuvama via BT, 2 Jul 2026'],
+ ['ast','+','PVC MIP → restocking, inventory gains',2,1,1,.7,'Monthly volume','DGFT, 24 Jul 2026'],
+ ['ast','+','40,000 t CPVC resin plant (ready Dec-26, trials Q4 FY27)',3,.7,.7,1,'Commissioning','Q1 release, 12 Aug 2026'],
+ ['ast','+','July volume ~+40% YoY (restock)',2,1,1,.7,'Q2 volume','Concall, Aug 2026'],
+ ['ast','−','Adhesive raw-material inflation (15–16%)',1,1,1,1,'Adhesive margin','ICICI Sec, 13 Aug 2026'],
+ ['sup','+','PVC MIP + duty withdrawal → pipe restocking',2,1,1,1,'Pipe volume','PL Capital, 29 Jul 2026'],
+ ['sup','+','Wavin utilisation 50–60% → 70%',1,.7,1,1,'Utilisation','Concall, Jul 2026'],
+ ['sup','+','Gas piping ~₹600 cr in FY27',2,.7,.7,1,'Order flow','Concall, Jul 2026'],
+ ['sup','−','Pipe market-share loss (−15% vs industry −10%)',2,.7,1,1,'Q2 pipe volume','ICICI Direct, Jul 2026'],
+ ['pri','+','PVC MIP → channel restocking',2,1,1,1,'Volume','DGFT, 24 Jul 2026'],
+ ['pri','+','Mix shift: CPVC, DECILO → margin 11–13%',2,.7,1,1,'Gross margin','Concall, 4 Aug 2026'],
+ ['pri','+','Bhuj plant takeover completed',1,.7,1,1,'Utilisation','Q1 release, 4 Aug 2026'],
+ ['pri','−','Needs 17–21% growth in 9M to meet guidance',2,.4,1,1,'Q2 volume','IDBI Capital, 5 Aug 2026']];
+add('tc','Triggers & Cycle','Triggers & Cycle',()=>{
+ const ph=[['P1 Trough',60],['P2 Early recovery',85],['P3 Expansion',70],['P4 Late cycle',35],['P5 Downturn',20]];
+ const cx=170,cy=150,r=110;let s=`<svg class="chart" viewBox="0 0 340 300" role="img" aria-label="Cycle clock" style="max-width:420px">`;
+ const cols=['#FFE2C2','#FFD0A0','#F5F0E8','#F3D9D6','#E9E2EE'];
+ ph.forEach((p,i)=>{const a0=(i*72-90)*Math.PI/180,a1=((i+1)*72-90)*Math.PI/180;
+  s+=`<path d="M${cx},${cy} L${cx+r*Math.cos(a0)},${cy+r*Math.sin(a0)} A${r},${r} 0 0,1 ${cx+r*Math.cos(a1)},${cy+r*Math.sin(a1)} Z" fill="${cols[i]}" stroke="#141414" stroke-width="1.5"/>`;
+  const am=((i+.5)*72-90)*Math.PI/180;s+=`<text x="${cx+(r+18)*Math.cos(am)}" y="${cy+(r+18)*Math.sin(am)}" font-size="12" text-anchor="middle">${p[0]}</text>`});
+ const ptr=(deg,col,len)=>{const a=(deg-90)*Math.PI/180;return `<line x1="${cx}" y1="${cy}" x2="${cx+len*Math.cos(a)}" y2="${cy+len*Math.sin(a)}" stroke="${col}" stroke-width="5" stroke-linecap="round"/>`};
+ s+=ptr(68,'#F28C28',96)+ptr(180,'#2E5E8C',80)+`<circle cx="${cx}" cy="${cy}" r="7" fill="#141414"/></svg>`;
+ const rows=TRG.map(t=>{const p=t[3]*t[4]*t[5]*t[6];const c=C.find(x=>x.id===t[0]);return `<tr><td>${c.short}</td><td style="text-align:left">${t[2]}</td><td class="${t[1]=='+'?'up':'dn'}" style="font-weight:800">${t[1]}</td><td class="n">${t[3]}</td><td class="n">${t[4]}</td><td class="n">${t[5]}</td><td class="n">${t[6]}</td><td class="n"><b>${p.toFixed(2)}</b></td><td style="text-align:left">${t[7]}</td><td style="text-align:left">${t[8]}</td></tr>`}).join('');
+ const tl=[['24 Jul 26','PVC MIP notified',0],['Late Oct–Nov 26','Q2 FY27 results',1],['Dec 26','Astral CPVC resin plant ready',1],['~Jan 27','PVC MIP 6-month window ends',1],['Q4 FY27','CPVC resin trials; APL capacity phases',1],['FY28','APL Apollo 8 MTPA',1]];
+ let tls=`<svg class="chart" viewBox="0 0 900 120" style="min-width:640px" role="img" aria-label="Trigger timeline"><line x1="30" y1="50" x2="870" y2="50" stroke="#141414" stroke-width="3"/>`;
+ tl.forEach((e,i)=>{const x=40+i*162;tls+=`<circle cx="${x}" cy="50" r="9" fill="${e[2]?'#F28C28':'#127A3E'}" stroke="#141414" stroke-width="2"/><text x="${x}" y="30" font-size="13" text-anchor="middle">${e[0]}</text><foreignObject x="${x-75}" y="64" width="150" height="50"><div xmlns="http://www.w3.org/1999/xhtml" style="font:700 12px/1.2 'Source Sans 3',Arial;color:#141414;text-align:center">${e[1]}</div></foreignObject>`});tls+=`</svg>`;
+ return `<h2>${L('Triggers &amp; cycle','Triggers &amp; cycle')}</h2>
+<div class="grid g2"><div class="card"><h3>${L('Cycle clock','Cycle clock')}</h3>${s}
+<div class="cycle-legend"><span><span class="dot" style="background:#F28C28"></span>${L('Plastic pipes: P1 Trough, turning to P2','Plastic pipes: P1 Trough → P2 பக்கம்')}</span><span><span class="dot" style="background:#2E5E8C"></span>${L('Steel tubes: P3 Expansion','Steel tubes: P3 Expansion')}</span></div></div>
+<div class="card"><h3>${L('Evidence for the phase','Phase-க்கு ஆதாரம்')}</h3>${UL([['Plastic: industry volume −10% YoY in Q1; PVC near multi-year lows; MIP floor from 24 Jul; July volumes bounced. Indicators split between P1 and P2, so scored as P1 (60).','Plastic: Q1 industry volume −10%; PVC multi-year low பக்கம்; 24 Jul முதல் MIP floor; July volume bounce. P1–P2 split — அதனால P1 (60).'],['Steel tubes: FY26 volume +11%, EBITDA/t at record, HRC at 4-year high, capacity 5 → 8 MTPA. P3 (70); watch for P4 signs (record margins + capacity everywhere).','Steel tubes: FY26 volume +11%, EBITDA/t record, HRC 4-வருஷ high, capacity 5 → 8 MTPA. P3 (70); P4 signs-ஐ கவனிங்க.']])}
+<div class="tw" style="margin-top:8px"><table style="min-width:420px"><tr><th>Stock</th><th>Sector</th><th>Stock cycle</th><th>CY</th><th>TG</th></tr>${C.map(c=>`<tr><td>${c.short}</td><td class="n">${c.cyS}</td><td class="n">${c.cyStk}</td><td class="n"><b>${c.cy}</b></td><td class="n"><b>${c.tg}</b></td></tr>`).join('')}</table></div>
+<div class="note">${C.map(c=>`${c.short}: ${L(c.stage[0],c.stage[1])}`).join(' · ')}</div></div></div>
+<div class="card" style="margin-top:14px"><h3>${L('Trigger table (points = Impact × Certainty × Timing × Priced-in)','Trigger table (points = I × C × W × P)')}</h3>
+<div class="tw"><table style="min-width:900px"><tr><th>Stock</th><th style="text-align:left">Trigger</th><th>+/−</th><th>I</th><th>C</th><th>W</th><th>P</th><th>Pts</th><th style="text-align:left">${L('What to watch','கவனிக்க')}</th><th style="text-align:left">Source &amp; date</th></tr>${rows}</table></div>
+<div class="note">TG = 50 + 8 × (top-3 positive points) − 8 × (negative points). ${L('Supreme carries a Stage 4 → 1 price flag: under the CB rules its Conviction is capped at 55 until the price base confirms.','Supreme-க்கு Stage 4 → 1 flag: CB rules படி price base confirm ஆகும் வரை Conviction 55-ல cap.')}</div></div>
+<div class="card" style="margin-top:14px"><h3>${L('Trigger timeline','Trigger timeline')}</h3><div class="tw" style="border:0">${tls}</div></div>
+<div class="card" style="margin-top:14px"><h3>${L('What would change this view','இந்த view எது மாத்தும்')}</h3>${UL([['MIP not extended in Jan 2027 and Chinese PVC floods back → plastic cycle slips back to P1.','Jan 2027-ல MIP extend ஆகலனா, Chinese PVC திரும்ப வந்தா → plastic cycle P1-க்கு திரும்பும்.'],['Q2 pipe volumes below +10% YoY → guidance cuts across the sector.','Q2 pipe volume +10%-க்கு கீழ → sector முழுக்க guidance cut.'],['HRC turns down sharply → APL Apollo inventory losses and a dealer destock like Q1.','HRC வேகமா இறங்கினா → APL Apollo inventory loss, Q1 மாதிரி destock.']])}</div>`});
+
+/* SWOT */
+const SW={apl:[['Scale, brand, ~0 WC days, 25%+ ROE','Scale, brand, ~0 WC days, 25%+ ROE'],['Thin per-kg margin; volume sensitive to steel swings','Per-kg margin கம்மி; steel swing-க்கு volume sensitive'],['8 MTPA, steel replacing wood/RCC, exports','8 MTPA, wood/RCC-க்கு பதில் steel, exports'],['Capacity glut, HRC crash, West Asia disruption','Capacity glut, HRC crash, West Asia பிரச்சனை']],
+ast:[['Top plumbing margin (18.9%), share gains, strong brand','Top plumbing margin (18.9%), share gain, brand'],['Paints still sub-scale; adhesive margins squeezed','Paints இன்னும் சின்னது; adhesive margin squeeze'],['Own CPVC resin from FY28; adhesives 15–20% growth','FY28 முதல் சொந்த CPVC resin; adhesives 15–20%'],['High P/E leaves little room for misses','P/E அதிகம் — miss-க்கு இடம் கம்மி']],
+sup:[['Largest processor, diversified, net cash','பெரிய processor, diversified, net cash'],['Pipe volume −15%, lost share this quarter','Pipe volume −15%, இந்த quarter share இழந்தது'],['Wavin gas piping, exports US$26m → US$150m target','Wavin gas piping, exports US$26m → 150m target'],['Aggressive pricing by peers; consumer segment weak','Peers aggressive pricing; consumer segment weak']],
+pri:[['Margin recovery (13%), cheap on book (1.8x)','Margin recovery (13%), book-ல cheap (1.8x)'],['Low ROE, 71 WC days, small share (~5%)','ROE கம்மி, 71 WC days, share ~5%'],['CPVC/DECILO mix, Bhuj plant, network growth','CPVC/DECILO mix, Bhuj plant, network'],['Steep 9M run-rate needed; agri weakness','9M-ல அதிக run-rate வேணும்; agri weak']]};
+add('swot','SWOT','SWOT',()=>`<h2>SWOT</h2>${C.map(c=>`<h3 style="margin-top:14px"><span class="dot" style="background:${c.hex}"></span>${c.name}</h3><div class="sw">${['S','W','O','T'].map((k,i)=>`<div class="card ${k}"><h3>${L(['Strengths','Weaknesses','Opportunities','Threats'][i],['பலம்','பலவீனம்','வாய்ப்புகள்','அபாயங்கள்'][i])}</h3><div>${L(SW[c.id][i][0],SW[c.id][i][1])}</div></div>`).join('')}</div>`).join('')}`);
+
+/* Assist */
+add('assist','Cauvery Assist','Cauvery Assist',()=>`<h2>Cauvery Assist</h2>
+<div class="as-box"><div class="as-head"><b>${L('Ask about Q1 FY27 pipes — short, direct answers','Q1 FY27 pipes பத்தி கேளுங்க — சுருக்கமா பதில்')}</b>
+<div class="speed"><span>${L('Speed','வேகம்')}</span><button class="btn" type="button" data-sp="0.6">${L('Slow','மெதுவா')}</button><button class="btn" type="button" data-sp="0.8">${L('Relaxed','Relaxed')}</button><button class="btn" type="button" data-sp="1">${L('Normal','Normal')}</button><button class="btn" type="button" data-sp="1.25">${L('Fast','வேகமா')}</button><input id="spd" type="range" min="0.5" max="1.5" step="0.05" value="0.8" aria-label="Speech speed"><span id="spdv">0.80×</span>
+<button class="btn" type="button" id="aPause">${L('Pause','Pause')}</button><button class="btn" type="button" id="aStop">${L('Stop','Stop')}</button>
+<label>${L('Wait','Wait')} <select id="aWait"><option value="2000">2s</option><option value="3000" selected>3s</option><option value="5000">5s</option><option value="0">Done</option></select></label></div></div>
+<div class="bar" id="aBar"></div><div class="as-log" id="aLog" aria-live="polite"></div>
+<div class="sugg" id="aSug"></div>
+<form class="as-in" id="aForm"><input id="aQ" autocomplete="off" placeholder="Ask: Which company has the highest margin?"><button class="btn" type="button" id="aMic">${L('Mic','Mic')}</button><button class="btn" type="button" id="aDone" hidden>${L('Done','முடிஞ்சது')}</button><button class="btn on" type="submit">${L('Ask','கேளுங்க')}</button></form></div>
+<p class="note">${L('Read-aloud works everywhere. Microphone input is blocked inside claude.ai previews; it works when this file is opened in Chrome/Edge or hosted on GitHub Pages.','Read-aloud எங்கயும் வேலை செய்யும். claude.ai-ல mic block ஆகும்; Chrome/Edge-ல file-ஐ open பண்ணினா அல்லது GitHub Pages-ல mic வேலை செய்யும்.')}</p>`);
+
+/* Socrates quiz */
+const QZ=[
+['What caused the Q1 FY27 volume drop in plastic pipes?','Q1 FY27 plastic pipe volume ஏன் குறைஞ்சது?',[['Dealer destocking on PVC price swings and the duty waiver','PVC விலை swing, duty waiver-னால dealer destocking'],['A factory strike','Factory strike'],['GST hike on pipes','Pipes மேல GST ஏற்றம்']],0,'Dealers waited while PVC fell; MIP and duty withdrawal ended that.','PVC இறங்கும் போது dealers காத்திருந்தாங்க; MIP, duty withdrawal அதை நிறுத்துச்சு.'],
+['What is the PVC Minimum Import Price set on 24 Jul 2026?','24 Jul 2026 PVC MIP எவ்வளவு?',[['US$0.766/kg CIF','US$0.766/kg CIF'],['US$0.65/kg','US$0.65/kg'],['US$1.10/kg','US$1.10/kg']],0,'Imports at or below US$0.766/kg need a licence for 6 months.','US$0.766/kg-க்கு கீழ import-க்கு 6 மாசம் licence வேணும்.'],
+['Whose pipe volume held flat while the industry fell ~10%?','Industry ~10% குறைஞ்சப்போ யாரோட pipe volume flat?',[['Astral','Astral'],['Supreme','Supreme'],['Prince','Prince']],0,'Astral: 56,146 t, flat YoY — a share gain.','Astral: 56,146 t flat — share gain.'],
+['APL Apollo\'s EBITDA per tonne in Q1 FY27?','Q1 FY27 APL Apollo EBITDA per tonne?',[['₹5,522','₹5,522'],['₹4,683','₹4,683'],['₹6,000','₹6,000']],0,'+18% YoY; ₹4,683 was Q1 FY26; ₹6,000 is the long-term goal.','+18% YoY; ₹4,683 Q1 FY26; ₹6,000 long-term goal.'],
+['Which company has the highest working-capital days?','எந்த company-க்கு working capital days அதிகம்?',[['Prince Pipes (~71)','Prince Pipes (~71)'],['APL Apollo','APL Apollo'],['Astral','Astral']],0,'APL Apollo is near zero; Prince is ~71 days.','APL Apollo ~0; Prince ~71 days.'],
+['In CB\'s cycle lens, plastic pipes sit at…','CB cycle lens-ல plastic pipes எந்த phase?',[['P1 Trough, turning to P2','P1 Trough → P2'],['P4 Late cycle','P4 Late cycle'],['P5 Downturn','P5 Downturn']],0,'Volumes weak but PVC floor in place and July bounced.','Volume weak, ஆனா PVC floor வந்தாச்சு, July bounce.'],
+['Astral\'s big backward-integration trigger is…','Astral-ஓட பெரிய backward-integration trigger?',[['40,000 t CPVC resin plant','40,000 t CPVC resin plant'],['A steel mill','Steel mill'],['A paint acquisition','Paint acquisition']],0,'Ready Dec 2026, trials Q4 FY27, benefits from FY28.','Dec 2026 ready, Q4 FY27 trials, FY28 முதல் பலன்.'],
+['Why did Supreme\'s consolidated PAT grow faster than standalone?','Supreme consolidated PAT standalone-ஐ விட ஏன் அதிகம் வளர்ந்தது?',[['Share of profit from Supreme Petrochem','Supreme Petrochem profit share'],['Tax refund','Tax refund'],['Asset sale','Asset sale']],0,'Consolidated ₹280.7 cr (+38.8%) vs standalone ₹207.8 cr (+17.1%).','Consolidated ₹280.7 cr (+38.8%) vs standalone ₹207.8 cr (+17.1%).']];
+add('quiz','Cauvery Socrates','Cauvery Socrates',()=>`<h2>Cauvery Socrates</h2><p>${L('Tap an answer. Score shows at the end.','பதிலை tap பண்ணுங்க. கடைசில score.')}</p>
+${QZ.map((q,i)=>`<div class="card q" data-q="${i}"><h3>${i+1}. ${L(q[0],q[1])}</h3>${q[2].map((o,j)=>`<button class="opt" type="button" data-j="${j}">${L(o[0],o[1])}</button>`).join('')}<div class="note ex" hidden>${L(q[4],q[5])}</div></div>`).join('')}
+<div class="card"><h3 id="qs">${L('Score: 0 / 8','Score: 0 / 8')}</h3></div>`);
+
+/* Analyst view */
+add('av','Analyst View','Analyst View',()=>`<h2>${L('Analyst view (education only)','Analyst view (education மட்டும்)')}</h2>
+<div class="grid g2">${C.map(c=>`<div class="card co" style="border-top-color:${c.hex}"><h3>${c.name}</h3>${UL({
+apl:[['Business: best-quality earnings engine here — cash-rich, high ROE, pricing power shown in a weak quarter.','Business: இங்க best-quality earnings engine — cash அதிகம், ROE high, weak quarter-லயும் pricing power.'],['Cycle: steel tubes P3; margins near record — watch for late-cycle signs.','Cycle: steel tubes P3; margin record பக்கம் — late-cycle signs கவனிங்க.'],['Top triggers: 8 MTPA ramp, HRC upswing. Risk: volume-guidance cut.','Top triggers: 8 MTPA ramp, HRC upswing. Risk: volume guidance cut.']],
+ast:[['Business: cleanest Q1 in plastics — share gain plus margin; adjacencies growing 30%.','Business: plastics-ல cleanest Q1 — share gain + margin; adjacencies 30% வளர்ச்சி.'],['Cycle: P1 → P2 sector; stock basing.','Cycle: sector P1 → P2; stock base போடுது.'],['Top triggers: PVC MIP restock, CPVC resin plant. Risk: rich valuation, adhesive RM.','Top triggers: PVC MIP restock, CPVC resin plant. Risk: valuation, adhesive RM.']],
+sup:[['Business: strong margin, but the weakest pipe volume; non-pipe mix helped.','Business: margin strong, ஆனா pipe volume weakest; non-pipe mix உதவுச்சு.'],['Cycle: P1 → P2 sector; price still under a falling 200-DMA.','Cycle: sector P1 → P2; price இன்னும் falling 200-DMA-க்கு கீழ.'],['Top triggers: restocking, Wavin and gas piping. Risk: further share loss.','Top triggers: restocking, Wavin, gas piping. Risk: share loss.']],
+pri:[['Business: sharpest margin turnaround; still the lowest ROE and heaviest WC.','Business: margin turnaround அதிகம்; ROE இன்னும் lowest, WC heavy.'],['Cycle: P1 → P2 sector; stock near the low end of its 52-week range, cheap on book.','Cycle: sector P1 → P2; stock 52-week range கீழ் பக்கம், book-ல cheap.'],['Top triggers: restocking, mix shift. Risk: tall 9-month run-rate.','Top triggers: restocking, mix shift. Risk: 9 மாச run-rate.']]}[c.id])}</div>`).join('')}</div>
+<div class="card" style="margin-top:14px"><h3>${L('Sector read','Sector read')}</h3>${UL([['Q2 FY27 results (late Oct–Nov) are the test: did restocking turn into double-digit volume?','Q2 FY27 results (late Oct–Nov) தான் test: restocking double-digit volume-ஆ மாறிச்சா?'],['Policy floor (MIP) is temporary; its renewal in Jan 2027 matters for plastic margins.','MIP temporary; Jan 2027 renewal plastic margin-க்கு முக்கியம்.'],['This page is for learning. It is not a recommendation to buy, sell or hold.','இது கத்துக்கறதுக்கு மட்டும். Buy/sell/hold recommendation இல்ல.']])}</div>
+<p class="note">${L('Sources: company press releases and decks (APL Apollo 1 Aug, Supreme 28 Jul, Prince 4 Aug, Astral 12 Aug 2026); broker notes from Sharekhan, ICICI Securities, ICICI Direct, IDBI Capital, PL Capital, Motilal Oswal (via DSIJ), Nuvama (via Business Today); DGFT notification and GTRI analysis on PVC MIP; BigMint and SMM on HRC; price data from Anand Rathi, IIFL, Blinkx (Sep 2026).','Sources: company press release, decks; broker notes (Sharekhan, ICICI Sec, ICICI Direct, IDBI, PL, MOSL, Nuvama); DGFT, GTRI (PVC MIP); BigMint, SMM (HRC); price: Anand Rathi, IIFL, Blinkx (Sep 2026).')}</p>`);
+
+/* ===== RENDER ===== */
+const tabsEl=document.getElementById('tabs'),panes=document.getElementById('panes');
+T.forEach((t,i)=>{const b=document.createElement('button');b.className='tab';b.type='button';b.role='tab';b.id='t-'+t.id;b.innerHTML=L(t.en,t.ta);b.setAttribute('aria-selected',i==0);b.onclick=()=>show(t.id);tabsEl.appendChild(b);
+ const s=document.createElement('section');s.className='pane';s.id='p-'+t.id;s.innerHTML=t.html();s.hidden=i!=0;panes.appendChild(s)});
+let cur='dash';
+function show(id){cur=id;T.forEach(t=>{document.getElementById('p-'+t.id).hidden=t.id!==id;document.getElementById('t-'+t.id).setAttribute('aria-selected',t.id===id)});document.getElementById('t-'+id).scrollIntoView({block:'nearest',inline:'nearest'});try{localStorage.setItem('cb_pipes_tab',id)}catch(e){}}
+try{const h=location.hash.slice(1);const s=h&&T.some(t=>t.id===h)?h:localStorage.getItem('cb_pipes_tab');if(s&&T.some(t=>t.id===s))show(s)}catch(e){}
+
+let lang='en';
+function setLang(l){lang=l;document.body.classList.toggle('ta-mode',l==='ta');document.getElementById('bEN').classList.toggle('on',l==='en');document.getElementById('bTA').classList.toggle('on',l==='ta');document.documentElement.lang=l;
+ const q=document.getElementById('aQ');if(q)q.placeholder=l==='ta'?'கேளுங்க: எந்த company-க்கு margin அதிகம்?':'Ask: Which company has the highest margin?';renderSug();try{localStorage.setItem('cb_pipes_lang',l)}catch(e){}}
+document.getElementById('bEN').onclick=()=>setLang('en');document.getElementById('bTA').onclick=()=>setLang('ta');
+
+/* ===== SPEECH ===== */
+let rate=0.8;try{rate=parseFloat(localStorage.getItem('cb_pipes_rate'))||0.8}catch(e){}
+const synth=window.speechSynthesis;
+function voiceFor(l){if(!synth)return null;const v=synth.getVoices();return l==='ta'?(v.find(x=>/ta[-_]IN/i.test(x.lang))||null):(v.find(x=>/en[-_]IN/i.test(x.lang))||v.find(x=>/^en/i.test(x.lang))||null)}
+function speak(text){if(!synth)return;synth.cancel();const parts=String(text).replace(/\s+/g,' ').split(/(?<=[.!?।])\s+/).filter(Boolean);
+ parts.forEach(p=>{const u=new SpeechSynthesisUtterance(p);u.rate=rate;u.lang=lang==='ta'?'ta-IN':'en-IN';const v=voiceFor(lang);if(v)u.voice=v;synth.speak(u)});
+ if(lang==='ta'&&!voiceFor('ta')&&!speak.warned){speak.warned=1;addMsg('b',{en:'',ta:'இந்த device-ல Tamil voice இல்ல — English voice-ல படிக்கும்.'})}}
+const plain=el=>{const c=el.cloneNode(true);c.querySelectorAll(lang==='ta'?'.en':'.ta').forEach(n=>n.remove());c.querySelectorAll('svg,table,script').forEach(n=>n.remove());return c.textContent.replace(/\s+/g,' ').trim()};
+document.getElementById('bRead').onclick=()=>speak(plain(document.getElementById('p-'+cur)));
+
+/* ===== ASSIST ===== */
+const M=[
+ {k:'revG',kw:['revenue growth','sales growth','revenue','sales','top line','ரெவின்யூ','வருமானம்','விற்பனை'],en:'revenue growth',ta:'revenue growth',f:v=>(v>=0?'+':'')+fmt(v)+'%'},
+ {k:'em',kw:['margin','ebitda margin','மார்ஜின்','லாப வரம்பு'],en:'EBITDA margin',ta:'EBITDA margin',f:v=>fmt(v)+'%'},
+ {k:'patG',kw:['profit growth','pat','profit','net profit','லாபம்','ப்ராபிட்'],en:'PAT growth',ta:'PAT growth',f:v=>v>=500?'~7x':(v>=0?'+':'')+fmt(v)+'%'},
+ {k:'volG',kw:['volume','tonnage','tonnes','வால்யூம்','டன்'],en:'volume growth',ta:'volume growth',f:v=>(v>=0?'+':'')+fmt(v)+'%'},
+ {k:'ebkg',kw:['per kg','per kilo','ebitda per','கிலோ'],en:'EBITDA per kg',ta:'EBITDA per kg',f:v=>'₹'+fmt(v)},
+ {k:'pe',kw:['p/e','pe ratio',' pe','valuation','expensive','costly','cheap','பிஇ','விலை அதிகம்'],en:'P/E',ta:'P/E',f:v=>v+'x'},
+ {k:'pb',kw:['p/b','book','pb'],en:'P/B',ta:'P/B',f:v=>fmt(v)+'x'},
+ {k:'wc',kw:['working capital','wc days','ஒர்கிங் கேபிடல்','working'],en:'working-capital days',ta:'working capital days',f:v=>v===0?'~0 days':'~'+v+' days',low:1},
+ {k:'roe',kw:['roe','return on equity'],en:'ROE',ta:'ROE',f:v=>'~'+fmt(v)+'%'},
+ {k:'mcap',kw:['market cap','biggest','size','largest','மார்க்கெட் கேப்'],en:'market cap',ta:'market cap',f:v=>'₹'+v.toLocaleString('en-IN')+' cr'},
+ {k:'tg',kw:['trigger','catalyst','ட்ரிகர்'],en:'Trigger score',ta:'Trigger score',f:v=>String(v)},
+ {k:'cy',kw:['cycle score','cy score','சைக்கிள் ஸ்கோர்'],en:'Cycle score',ta:'Cycle score',f:v=>String(v)}];
+const KB=[
+ {k:['mip','minimum import','import price','எம்ஐபி'],a:['The PVC Minimum Import Price is US$0.766/kg CIF, set on 24 Jul 2026 for six months.','PVC Minimum Import Price US$0.766/kg CIF — 24 Jul 2026 முதல் 6 மாசம்.'],d:['Imports at or below it need a DGFT licence; minimum landed cost ~US$0.87/kg.','அதுக்கு கீழ import-க்கு DGFT licence வேணும்; landed cost ~US$0.87/kg.'],tab:'rm'},
+ {k:['pvc price','pvc','resin','பிவிசி','ரெசின்'],a:['Domestic PVC (K-67) trades around US$0.85–0.88/kg; the MIP puts a floor under it.','Domestic PVC (K-67) ~US$0.85–0.88/kg; MIP ஒரு floor போடுது.'],tab:'rm'},
+ {k:['hrc','steel price','ஸ்டீல்','எச்ஆர்சி'],a:['HRC hit ₹62,000/t in September 2026, a four-year high — supportive for APL Apollo.','September 2026-ல HRC ₹62,000/t — 4-வருஷ high; APL Apollo-க்கு support.'],tab:'rm'},
+ {k:['cpvc','resin plant','சிபிவிசி'],a:['Astral\'s 40,000 t CPVC resin plant should be ready by Dec 2026, with trials in Q4 FY27.','Astral-ஓட 40,000 t CPVC resin plant Dec 2026-க்கு ready, Q4 FY27-ல trial.'],tab:'tc'},
+ {k:['why volume','volume fall','volume drop','destock','ஏன் குறைஞ்சது','டிஸ்டாக்'],pre:1,a:['Volumes fell because dealers destocked during April–June PVC price swings and the duty waiver.','April–June PVC விலை swing, duty waiver-னால dealers destock பண்ணாங்க — அதான் volume குறைஞ்சது.'],tab:'dash'},
+ {k:['cycle','phase','சைக்கிள்'],a:['Plastic pipes are in P1 Trough turning to P2; steel tubes are in P3 Expansion.','Plastic pipes P1 Trough → P2; steel tubes P3 Expansion.'],tab:'tc'},
+ {k:['ebitda per tonne','per tonne','டன்னுக்கு'],pre:1,a:['APL Apollo earned ₹5,522 EBITDA per tonne in Q1 FY27, up 18% YoY.','APL Apollo Q1 FY27-ல டன்னுக்கு ₹5,522 EBITDA — 18% ஏற்றம்.'],tab:'fin'},
+ {k:['guidance','outlook','கைடன்ஸ்'],a:['All four kept FY27 guidance: double-digit volume growth with stable or better margins.','நாலு பேரும் FY27 guidance மாத்தல: double-digit volume growth, margin stable/better.'],tab:'fin'},
+ {k:['demerger','டீமெர்ஜர்'],a:['Astral dropped its plan to demerge plumbing and chemicals in late July 2026.','July 2026 கடைசில Astral plumbing–chemicals demerger plan-ஐ drop பண்ணுச்சு.'],tab:'mkt'}];
+const NOADV=['CB Research is not SEBI-registered, so I can\'t say buy, sell or hold. I can show the numbers, triggers and risks to help you study it.','CB Research SEBI-registered இல்லைங்க — buy/sell/hold சொல்ல முடியாது. Numbers, triggers, risks காட்டறேன், நீங்க study பண்ணுங்க.'];
+let ctx={e:null,m:null};
+function findE(q){return C.filter(c=>c.al.some(a=>q.includes(a)))}
+function findM(q){return M.find(m=>m.kw.some(k=>q.includes(k)))}
+function answer(raw){const q=' '+raw.toLowerCase()+' ';
+ if(/\b(buy|sell|hold|invest|target price|accumulate|should i)\b|வாங்கலாமா|விக்கலாமா|வாங்கலாம்|முதலீடு பண்ணலாமா/.test(q))return{a:NOADV};
+ const kb=KB.find(x=>x.pre&&x.k.some(k=>q.includes(k)));if(kb)return{a:kb.a,d:kb.d,tab:kb.tab};
+ let es=findE(q);let m=findM(q);
+ if(!es.length&&/\b(its|it|their|them)\b|அதோட|அதுக்கு/.test(q)&&ctx.e)es=ctx.e;
+ if(!m&&/\bcompare|vs|versus|ஒப்பிடு/.test(q)&&ctx.m)m=ctx.m;
+ const hi=/highest|most|best|top|largest|biggest|greatest|max|அதிகம்|அதிகமா|பெரிய/.test(q),lo=/lowest|least|worst|min|smallest|cheapest|குறைவு|கம்மி/.test(q);
+ if(m&&!es.length&&(hi||lo)){let s=[...C].sort((a,b)=>b[m.k]-a[m.k]);if(lo)s.reverse();if(m.k==='pe'&&/cheap/.test(q))s=[...C].sort((a,b)=>a.pe-b.pe);const t=s[0],n=s[1];ctx={e:[t],m};
+  return{a:[`${t.short} has the ${lo?'lowest':'highest'} ${m.en}: ${m.f(t[m.k])}. Next is ${n.short} (${m.f(n[m.k])}).`,`${t.short}-க்கு தான் ${m.ta} ${lo?'கம்மி':'அதிகம்'} — ${m.f(t[m.k])}. அடுத்து ${n.short} (${m.f(n[m.k])}).`],d:tbl(m)}}
+ if(m&&es.length>=2){const [a,b]=es;ctx={e:es,m};const w=(m.low?a[m.k]<b[m.k]:a[m.k]>b[m.k])?a:b;
+  return{a:[`${a.short} ${m.en} is ${m.f(a[m.k])} vs ${b.short} ${m.f(b[m.k])}; ${w.short} is ${m.low?'better (lower)':'higher'}.`,`${a.short} ${m.ta} ${m.f(a[m.k])}, ${b.short} ${m.f(b[m.k])} — ${w.short} ${m.low?'better (கம்மி)':'அதிகம்'}.`]}}
+ if(m&&es.length===1){const e=es[0];ctx={e:[e],m};return{a:[`${e.short}'s ${m.en} is ${m.f(e[m.k])} in Q1 FY27.`,`Q1 FY27-ல ${e.short} ${m.ta} ${m.f(e[m.k])}.`]}}
+ if(m&&!es.length){ctx={e:null,m};return{a:[`${m.en[0].toUpperCase()+m.en.slice(1)}: ${C.map(c=>c.short+' '+m.f(c[m.k])).join(', ')}.`,`${m.ta}: ${C.map(c=>c.short+' '+m.f(c[m.k])).join(', ')}.`],d:tbl(m)}}
+ const kb2=KB.find(x=>x.k.some(k=>q.includes(k)));if(kb2)return{a:kb2.a,d:kb2.d,tab:kb2.tab};
+ if(es.length===2){const [a,b]=es;ctx={e:es,m:M[1]};return{a:[`${a.short}: revenue ${M[0].f(a.revG)}, margin ${fmt(a.em)}%. ${b.short}: revenue ${M[0].f(b.revG)}, margin ${fmt(b.em)}%.`,`${a.short}: revenue ${M[0].f(a.revG)}, margin ${fmt(a.em)}%. ${b.short}: revenue ${M[0].f(b.revG)}, margin ${fmt(b.em)}%.`]}}
+ if(es.length===1){const e=es[0];ctx={e:[e],m:null};const S={apl:['APL Apollo: volume fell 6% but EBITDA per tonne rose 18% to ₹5,522, lifting profit 11%.','APL Apollo: volume 6% குறைஞ்சது, ஆனா EBITDA per tonne 18% ஏறி ₹5,522 — profit 11% ஏற்றம்.'],ast:['Astral: pipe volume held flat while the industry fell 10%; PAT rose 48%.','Astral: industry 10% குறைஞ்சப்போ pipe volume flat; PAT 48% ஏற்றம்.'],sup:['Supreme: volume fell 14% but margin rose to 14.65%, lifting PAT 17%.','Supreme: volume 14% குறைஞ்சது, ஆனா margin 14.65%-க்கு ஏறி PAT 17% ஏற்றம்.'],pri:['Prince: volume fell 7% but EBITDA nearly doubled to ₹77 crore with a 13% margin.','Prince: volume 7% குறைஞ்சது, ஆனா EBITDA கிட்டத்தட்ட double — ₹77 கோடி, margin 13%.']};
+  if(/risk|ரிஸ்க்|அபாயம்/.test(q))return{a:[SW[e.id][3][0]+'.',SW[e.id][3][1]+'.']};return{a:S[e.id]}}
+ return{a:['I can answer on revenue, margin, profit, volume, P/E, working capital, PVC MIP, HRC, triggers and cycle. Try: "Which company has the highest margin?"','Revenue, margin, profit, volume, P/E, working capital, PVC MIP, HRC, triggers, cycle பத்தி கேளுங்க. உதாரணம்: "எந்த company-க்கு margin அதிகம்?"']}}
+function tbl(m){const r=C.map(c=>`<li>${c.short}: ${m.f(c[m.k])}</li>`).join('');return[`<ul class="b">${r}</ul>`,`<ul class="b">${r}</ul>`]}
+const log=()=>document.getElementById('aLog');
+function addMsg(who,o,more,tab){const d=document.createElement('div');d.className='msg '+who;
+ d.innerHTML=typeof o==='string'?o:(L(o.en,o.ta)+(more?`<details><summary>${L('More details','மேலும்')}</summary>${L(more[0],more[1])}</details>`:'')+(tab?` <button class="btn" type="button" style="margin-top:6px;font-size:12px;padding:2px 8px">${L('Open related tab','Related tab-ஐ திறங்க')}</button>`:''));
+ if(tab)d.querySelector('button').onclick=()=>show(tab);log().appendChild(d);log().scrollTop=1e6}
+function ask(q){if(!q.trim())return;addMsg('u',q.replace(/</g,'&lt;'));const r=answer(q);addMsg('b',{en:r.a[0],ta:r.a[1]},r.d,r.tab);speak(lang==='ta'?r.a[1]:r.a[0])}
+const SUG=[['Which company has the highest margin?','எந்த company-க்கு margin அதிகம்?'],['Astral vs Supreme volume','Astral vs Supreme volume'],['What is the PVC MIP?','PVC MIP என்ன?'],['Lowest working capital days?','Working capital days கம்மி யாருக்கு?'],['Should I buy APL Apollo?','APL Apollo வாங்கலாமா?'],['Why did volume fall?','Volume ஏன் குறைஞ்சது?']];
+function renderSug(){const s=document.getElementById('aSug');if(!s)return;s.innerHTML='';SUG.forEach(x=>{const b=document.createElement('button');b.type='button';b.textContent=lang==='ta'?x[1]:x[0];b.onclick=()=>ask(b.textContent);s.appendChild(b)})}
+addMsg('b',{en:'Vanakam! Ask me about the Q1 FY27 results of APL Apollo, Astral, Supreme and Prince. Answers are short and read aloud.',ta:'வணக்கம்! APL Apollo, Astral, Supreme, Prince — Q1 FY27 results பத்தி கேளுங்க. சுருக்கமா பதில், சத்தமா படிக்கும்.'});
+document.getElementById('aForm').onsubmit=e=>{e.preventDefault();const i=document.getElementById('aQ');ask(i.value);i.value=''};
+const spd=document.getElementById('spd'),spdv=document.getElementById('spdv');
+function setRate(v){rate=v;spd.value=v;spdv.textContent=(+v).toFixed(2)+'×';try{localStorage.setItem('cb_pipes_rate',v)}catch(e){}}
+setRate(rate);spd.oninput=()=>setRate(+spd.value);
+document.querySelectorAll('[data-sp]').forEach(b=>b.onclick=()=>setRate(+b.dataset.sp));
+document.getElementById('aPause').onclick=()=>{if(!synth)return;synth.paused?synth.resume():synth.pause()};
+document.getElementById('aStop').onclick=()=>synth&&synth.cancel();
+/* Mic: waits for silence before sending */
+const SR=window.SpeechRecognition||window.webkitSpeechRecognition;let rec=null,listening=false,heard='',silT=null,barT=null;
+function stopListen(send){listening=false;clearTimeout(silT);clearInterval(barT);document.getElementById('aBar').style.width='0';document.getElementById('aDone').hidden=true;try{rec&&rec.stop()}catch(e){}if(send&&heard.trim())ask(heard.trim());heard='';document.getElementById('aQ').value=''}
+function armSilence(){clearTimeout(silT);clearInterval(barT);const w=+document.getElementById('aWait').value;if(!w)return;const t0=Date.now(),bar=document.getElementById('aBar');barT=setInterval(()=>{bar.style.width=Math.min(100,(Date.now()-t0)/w*100)+'%'},100);silT=setTimeout(()=>stopListen(true),w)}
+document.getElementById('aMic').onclick=()=>{if(!SR){addMsg('b',{en:'Voice input is not available here. Open this file in Chrome or Edge, or type your question.',ta:'இங்க voice input இல்ல. Chrome/Edge-ல file-ஐ open பண்ணுங்க, இல்லனா type பண்ணுங்க.'});return}
+ if(listening){stopListen(true);return}
+ synth&&synth.cancel();rec=new SR();rec.lang=lang==='ta'?'ta-IN':'en-IN';rec.continuous=true;rec.interimResults=true;heard='';listening=true;document.getElementById('aDone').hidden=false;
+ rec.onresult=e=>{let t='';for(let i=0;i<e.results.length;i++)t+=e.results[i][0].transcript;heard=t;document.getElementById('aQ').value=t;armSilence()};
+ rec.onerror=e=>{if(e.error==='not-allowed'||e.error==='service-not-allowed'){stopListen(false);addMsg('b',{en:'The microphone is blocked in this view. Open the downloaded file in Chrome or Edge to speak.',ta:'இந்த view-ல mic block ஆகியிருக்கு. Download பண்ண file-ஐ Chrome/Edge-ல open பண்ணி பேசுங்க.'})}};
+ rec.onend=()=>{if(listening){try{rec.start()}catch(e){}}};
+ try{rec.start()}catch(e){stopListen(false)}};
+document.getElementById('aDone').onclick=()=>stopListen(true);
+
+/* Quiz */
+let score=0;document.querySelectorAll('.q').forEach(qd=>{const q=QZ[+qd.dataset.q];qd.querySelectorAll('.opt').forEach(b=>b.onclick=()=>{if(qd.dataset.done)return;qd.dataset.done=1;const j=+b.dataset.j;b.classList.add(j===q[3]?'ok':'no');qd.querySelector(`[data-j="${q[3]}"]`).classList.add('ok');qd.querySelector('.ex').hidden=false;if(j===q[3])score++;document.getElementById('qs').innerHTML=L(`Score: ${score} / ${QZ.length}`,`Score: ${score} / ${QZ.length}`)})});
+
+/* floating */
+document.getElementById('va').onclick=()=>{show('assist');document.getElementById('aQ').focus()};
+const cb=document.getElementById('cb');cb.querySelector('.logo').onclick=()=>cb.classList.toggle('open');
+let L0='en';try{L0=localStorage.getItem('cb_pipes_lang')||'en'}catch(e){}setLang(L0);
+</script>
