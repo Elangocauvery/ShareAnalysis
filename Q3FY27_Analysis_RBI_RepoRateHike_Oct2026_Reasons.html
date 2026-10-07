@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>RBI Rate Hike Decoded</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=Noto+Sans+Tamil:wght@400;600;700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<style>
+:root{--bg:#ffffff;--soft:#f6f8fb;--ink:#1b2333;--mute:#5d6878;--line:#e3e8ef;--navy:#0f3a68;--orange:#f07c1b;--green:#1f9d55;--amber:#d69e2e;--red:#d64545;--blue:#2b6cb0}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,"Noto Sans Tamil",system-ui,sans-serif;font-size:15px;line-height:1.55}
+body.ta{font-family:"Noto Sans Tamil",Inter,sans-serif}
+header{background:linear-gradient(135deg,#fff 0%,#fff4ea 100%);border-bottom:3px solid var(--orange);padding:18px 16px 12px}
+.hwrap{max-width:1100px;margin:auto;display:flex;gap:12px;align-items:center;justify-content:space-between;flex-wrap:wrap}
+h1{margin:0;font-size:22px;color:var(--navy)}
+.sub{color:var(--mute);font-size:13px;margin-top:2px}
+.lang{display:flex;gap:6px}
+.lang button{border:1px solid var(--navy);background:#fff;color:var(--navy);padding:6px 12px;border-radius:20px;font-weight:600;cursor:pointer}
+.lang button.on{background:var(--navy);color:#fff}
+nav{position:sticky;top:0;z-index:20;background:#fff;border-bottom:1px solid var(--line);overflow-x:auto;white-space:nowrap}
+nav .nw{max-width:1100px;margin:auto;padding:0 8px}
+nav button{border:0;background:none;padding:12px 12px;font-weight:600;color:var(--mute);cursor:pointer;border-bottom:3px solid transparent;font-family:inherit;font-size:14px}
+nav button.on{color:var(--orange);border-bottom-color:var(--orange)}
+main{max-width:1100px;margin:auto;padding:16px 16px 120px}
+.tab{display:none}.tab.on{display:block}
+h2{color:var(--navy);font-size:19px;margin:6px 0 12px}
+h3{font-size:16px;margin:4px 0 8px;color:var(--navy)}
+.grid{display:grid;gap:12px}
+.g4{grid-template-columns:repeat(auto-fit,minmax(150px,1fr))}
+.g2{grid-template-columns:repeat(auto-fit,minmax(300px,1fr))}
+.card{background:#fff;border:1px solid var(--line);border-radius:12px;padding:14px;box-shadow:0 1px 3px rgba(15,58,104,.05)}
+.kpi .v{font-size:24px;font-weight:800;color:var(--navy)}
+.kpi .l{font-size:12px;color:var(--mute);text-transform:uppercase;letter-spacing:.4px}
+.kpi .d{font-size:12px;margin-top:2px}
+.up{color:var(--red)}.dn{color:var(--green)}
+.banner{background:var(--soft);border-left:4px solid var(--orange);padding:12px 14px;border-radius:8px;margin:12px 0}
+.pill{display:inline-block;padding:2px 10px;border-radius:12px;font-size:12px;font-weight:700;color:#fff}
+.p-ok{background:var(--green)}.p-part{background:var(--amber)}.p-fix{background:var(--red)}
+.reason{margin-bottom:12px}
+.reason .top{display:flex;justify-content:space-between;align-items:center;gap:8px;cursor:pointer}
+.reason .num{width:30px;height:30px;border-radius:50%;background:var(--navy);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;flex:none}
+.reason .body{display:none;margin-top:10px}
+.reason.open .body{display:block}
+.cols{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+@media(max-width:640px){.cols{grid-template-columns:1fr}}
+.view{background:#f1f5fb;border-radius:8px;padding:10px}
+.fix{background:#fff6ee;border-radius:8px;padding:10px}
+.view b,.fix b{display:block;font-size:12px;text-transform:uppercase;letter-spacing:.4px;margin-bottom:4px}
+.view b{color:var(--blue)}.fix b{color:var(--orange)}
+table{width:100%;border-collapse:collapse;font-size:14px}
+th,td{border-bottom:1px solid var(--line);padding:8px;text-align:left;vertical-align:top}
+th{background:var(--soft);color:var(--navy)}
+td.n,th.n{text-align:right;font-variant-numeric:tabular-nums}
+.tw{overflow-x:auto}
+.chartbox{position:relative;height:280px}
+svg text{font-family:Inter,"Noto Sans Tamil",sans-serif}
+.node{cursor:pointer}
+.node rect{transition:all .2s}
+.node:hover rect,.node.sel rect{stroke:var(--orange);stroke-width:3}
+#mapInfo{min-height:70px}
+input[type=range]{width:100%}
+.calc label{font-size:13px;color:var(--mute);display:block;margin-top:8px}
+.calc input[type=number]{width:100%;padding:8px;border:1px solid var(--line);border-radius:8px;font-size:15px}
+.big{font-size:26px;font-weight:800;color:var(--red)}
+.quiz .opt{display:block;width:100%;text-align:left;margin:6px 0;padding:10px;border:1px solid var(--line);border-radius:8px;background:#fff;cursor:pointer;font-family:inherit;font-size:14px}
+.quiz .opt.r{background:#e8f7ee;border-color:var(--green)}
+.quiz .opt.w{background:#fdecec;border-color:var(--red)}
+.fb{margin-top:8px;font-size:14px}
+.btn{background:var(--navy);color:#fff;border:0;padding:9px 16px;border-radius:8px;font-weight:600;cursor:pointer;font-family:inherit}
+.btn.o{background:var(--orange)}
+.wm{position:fixed;inset:0;pointer-events:none;display:flex;align-items:center;justify-content:center;font-size:70px;font-weight:800;color:rgba(15,58,104,.035);transform:rotate(-24deg);z-index:0}
+/* CB badge */
+#cbBadge{position:fixed;right:16px;bottom:16px;width:58px;height:58px;border-radius:50%;background:var(--orange);color:#fff;font-weight:800;font-size:20px;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 14px rgba(240,124,27,.45);cursor:pointer;z-index:50;animation:blink 2s infinite;border:3px solid #fff}
+@keyframes blink{0%,100%{box-shadow:0 0 0 0 rgba(240,124,27,.6)}50%{box-shadow:0 0 0 12px rgba(240,124,27,0)}}
+#disc{display:none;position:fixed;right:16px;bottom:84px;max-width:320px;background:#fff;border:1px solid var(--line);border-top:4px solid var(--orange);border-radius:10px;padding:12px 14px;font-size:12.5px;color:var(--mute);box-shadow:0 8px 24px rgba(0,0,0,.12);z-index:51}
+#disc.on{display:block}
+/* CB Assist */
+#asBtn{position:fixed;right:84px;bottom:20px;height:50px;padding:0 16px;border-radius:25px;background:var(--navy);color:#fff;font-weight:700;display:flex;align-items:center;gap:6px;cursor:pointer;z-index:50;border:0;font-family:inherit;box-shadow:0 4px 12px rgba(15,58,104,.3)}
+#asPanel{display:none;position:fixed;right:16px;bottom:84px;width:min(360px,calc(100vw - 32px));height:440px;background:#fff;border:1px solid var(--line);border-radius:14px;box-shadow:0 10px 30px rgba(0,0,0,.15);z-index:52;flex-direction:column;overflow:hidden}
+#asPanel.on{display:flex}
+#asHead{background:var(--navy);color:#fff;padding:10px 12px;font-weight:700;display:flex;justify-content:space-between;align-items:center}
+#asLog{flex:1;overflow-y:auto;padding:10px;background:var(--soft)}
+.msg{margin:6px 0;padding:8px 10px;border-radius:10px;max-width:88%;font-size:14px}
+.msg.u{background:var(--navy);color:#fff;margin-left:auto}
+.msg.b{background:#fff;border:1px solid var(--line)}
+#asIn{display:flex;gap:6px;padding:8px;border-top:1px solid var(--line)}
+#asIn input{flex:1;padding:9px;border:1px solid var(--line);border-radius:8px;font-family:inherit}
+#mic{width:42px;border-radius:8px;border:0;background:var(--orange);color:#fff;font-size:18px;cursor:pointer}
+#mic.rec{background:var(--red);animation:blink 1s infinite}
+.chips{display:flex;flex-wrap:wrap;gap:6px;padding:0 8px 8px}
+.chips span{font-size:12px;background:#fff;border:1px solid var(--line);border-radius:14px;padding:4px 10px;cursor:pointer}
+.small{font-size:12.5px;color:var(--mute)}
+.src a{color:var(--blue);word-break:break-all}
+.hti{position:relative;cursor:help}
+.hti .tip{visibility:hidden;opacity:0;position:absolute;top:calc(100% + 6px);left:50%;transform:translateX(-50%);background:#1b2333;color:#fff;font-size:12px;font-weight:600;line-height:1.35;padding:7px 9px;border-radius:7px;width:150px;text-align:left;z-index:30;transition:opacity .15s;box-shadow:0 4px 12px rgba(0,0,0,.2)}
+.hti .tip b{display:block;font-size:13px;margin-bottom:2px}
+.hti .tip:before{content:"";position:absolute;bottom:100%;left:50%;margin-left:-6px;border:6px solid transparent;border-bottom-color:#1b2333}
+.hti:hover .tip,.hti.on .tip{visibility:visible;opacity:1}
+.hti:last-child .tip,.hti:nth-last-child(2) .tip{left:auto;right:0;transform:none}
+.hti:last-child .tip:before,.hti:nth-last-child(2) .tip:before{left:auto;right:12px}
+</style>
+</head>
+<body>
+<div class="wm">CB RESEARCH</div>
+
+<header><div class="hwrap">
+  <div>
+    <h1 data-en="Why did RBI hike the repo rate? — Reasons Decoded" data-ta="RBI ஏன் ரெப்போ ரேட்டை ஏத்துச்சு? — காரணங்கள் அலசல்"></h1>
+    <div class="sub" data-en="MPC decision: 7 Oct 2026 · Q3 FY27 · Repo 5.25% → 5.50% · Stance: Calibrated Tightening" data-ta="MPC முடிவு: 7 அக் 2026 · Q3 FY27 · ரெப்போ 5.25% → 5.50% · நிலைப்பாடு: படிப்படியான இறுக்கம்"></div>
+  </div>
+  <div class="lang"><button id="bEn" class="on" onclick="setLang('en')">English</button><button id="bTa" onclick="setLang('ta')">தமிழ்</button></div>
+</div></header>
+
+<nav><div class="nw">
+  <button class="on" data-t="t1" data-en="Snapshot" data-ta="சுருக்கம்"></button>
+  <button data-t="t2" data-en="6 Reasons: Checked" data-ta="6 காரணங்கள்: சரிபார்ப்பு"></button>
+  <button data-t="t3" data-en="Cause–Effect Map" data-ta="காரணம்–விளைவு வரைபடம்"></button>
+  <button data-t="t4" data-en="Charts" data-ta="வரைபடங்கள்"></button>
+  <button data-t="t5" data-en="Who Gets Hit" data-ta="யாருக்கு பாதிப்பு"></button>
+  <button data-t="t6" data-en="Reasons RBI Considered" data-ta="RBI கருதிய காரணங்கள்"></button>
+  <button data-t="t7" data-en="Economists' View" data-ta="பொருளாதார நிபுணர் பார்வை"></button>
+  <button data-t="t10" data-en="Investor Lens" data-ta="முதலீட்டாளர் பார்வை"></button>
+  <button data-t="t11" data-en="Sector Weights" data-ta="துறை எடைகள்"></button>
+  <button data-t="t8" data-en="Cauvery Socrates" data-ta="காவேரி சாக்ரடீஸ்"></button>
+</div></nav>
+
+<main>
+<!-- TAB 1 SNAPSHOT -->
+<section class="tab on" id="t1">
+  <h2 data-en="Decision at a glance" data-ta="முடிவு ஒரே பார்வையில்"></h2>
+  <div class="grid g4">
+    <div class="card kpi"><div class="l" data-en="Repo rate" data-ta="ரெப்போ ரேட்"></div><div class="v">5.50%</div><div class="d up">▲ 25 bps</div></div>
+    <div class="card kpi"><div class="l" data-en="MPC vote" data-ta="MPC வாக்கு"></div><div class="v">6–0</div><div class="d" data-en="Unanimous" data-ta="ஒருமனதாக"></div></div>
+    <div class="card kpi"><div class="l" data-en="CPI Aug 2026" data-ta="CPI ஆக 2026"></div><div class="v">4.82%</div><div class="d up" data-en="▲ from 4.45% (Jul)" data-ta="▲ ஜூலை 4.45% இலிருந்து"></div></div>
+    <div class="card kpi"><div class="l" data-en="FY27 CPI forecast" data-ta="FY27 CPI கணிப்பு"></div><div class="v">5.1%</div><div class="d up" data-en="▲ from 5.0%" data-ta="▲ 5.0% இலிருந்து"></div></div>
+    <div class="card kpi"><div class="l" data-en="FY27 GDP forecast" data-ta="FY27 GDP கணிப்பு"></div><div class="v">7.1%</div><div class="d dn" data-en="▲ 40 bps upgrade" data-ta="▲ 40 bps உயர்வு"></div></div>
+    <div class="card kpi"><div class="l" data-en="US Fed (upper)" data-ta="US Fed (மேல் வரம்பு)"></div><div class="v">4.00%</div><div class="d up" data-en="Hiked 16 Sep 2026" data-ta="16 செப் 2026 ஏற்றம்"></div></div>
+    <div class="card kpi"><div class="l" data-en="Repo – Fed gap" data-ta="ரெப்போ – Fed இடைவெளி"></div><div class="v">150 bps</div><div class="d" data-en="Restored from 125" data-ta="125-லிருந்து மீட்பு"></div></div>
+    <div class="card kpi"><div class="l" data-en="Crude / Rupee" data-ta="கச்சா / ரூபாய்"></div><div class="v" style="font-size:19px">$100+ / ₹95</div><div class="d up" data-en="Imported-inflation risk" data-ta="இறக்குமதி பணவீக்க அபாயம்"></div></div>
+  </div>
+
+  <div class="banner" data-en="<b>First hike since February 2023.</b> Stance shifted from <i>neutral</i> to <i>calibrated tightening</i> — the Governor said the next move can only be a hike or a pause. Rate cuts are off the table." data-ta="<b>பிப்ரவரி 2023-க்கு அப்புறம் முதல் ஏற்றம்.</b> நிலைப்பாடு <i>நடுநிலை</i>யிலிருந்து <i>படிப்படியான இறுக்கம்</i>-க்கு மாறிடுச்சு — அடுத்த முடிவு ஏற்றமோ இடைநிறுத்தமோ தான்னு கவர்னர் சொல்லிட்டார். ரேட் குறைப்பு இப்போதைக்கு இல்ல."></div>
+
+  <h3 data-en="Your 6 reasons at a glance" data-ta="உங்க 6 காரணங்கள் ஒரே பார்வையில்"></h3>
+  <div class="card tw"><table id="scoreTbl"></table></div>
+
+  <div class="banner" data-en="<b>The one-line truth:</b> RBI hiked mainly because inflation is rising and its <i>outlook</i> is worse (crude above $100, rupee near 95/$, weak monsoon, WPI 9.92%) while growth is strong enough (Q1 GDP 7.8%) to absorb a hike. The Fed gap and liquidity are supporting reasons. Bank NIMs and RBI's own dividend are <u>consequences</u>, not reasons." data-ta="<b>ஒரே வரியில் உண்மை:</b> பணவீக்கம் ஏறுது, அதோட <i>எதிர்கால நிலை</i> இன்னும் மோசம் (கச்சா $100-க்கு மேல, ரூபாய் 95/$ பக்கம், பலவீனமான மழை, WPI 9.92%). அதே நேரம் வளர்ச்சி வலுவா இருக்கு (Q1 GDP 7.8%) — அதனால ஏற்றத்தைத் தாங்க முடியும். Fed இடைவெளி, லிக்விடிட்டி இவை துணைக் காரணங்கள். வங்கி NIM, RBI டிவிடெண்ட் இவை <u>விளைவுகள்</u> தான், காரணங்கள் இல்ல."></div>
+</section>
+
+<!-- TAB 2 REASONS -->
+<section class="tab" id="t2">
+  <h2 data-en="Your six reasons — what's right, what needs correcting" data-ta="உங்க ஆறு காரணங்கள் — எது சரி, எது திருத்தணும்"></h2>
+  <p class="small" data-en="Tap each reason to open. Left = your view; right = CB Research correction with data." data-ta="ஒவ்வொரு காரணத்தையும் தட்டித் திறங்க. இடது = உங்க பார்வை; வலது = தரவுடன் CB Research திருத்தம்."></p>
+  <div id="reasons"></div>
+</section>
+
+<!-- TAB 3 MAP -->
+<section class="tab" id="t3">
+  <h2 data-en="Cause → Effect map: how the pressure reached RBI" data-ta="காரணம் → விளைவு: அழுத்தம் RBI-ஐ எப்படி அடைஞ்சது"></h2>
+  <p class="small" data-en="Tap any box to see the explanation." data-ta="விளக்கம் பார்க்க எந்தப் பெட்டியையும் தட்டுங்க."></p>
+  <div class="card" style="overflow-x:auto"><svg id="map" viewBox="0 0 900 470" style="min-width:680px;width:100%"></svg></div>
+  <div class="card" id="mapInfo" style="margin-top:10px"></div>
+</section>
+
+<!-- TAB 4 CHARTS -->
+<section class="tab" id="t4">
+  <h2 data-en="The data behind the decision" data-ta="முடிவுக்குப் பின்னால் உள்ள தரவு"></h2>
+  <div class="grid g2">
+    <div class="card"><h3 data-en="CPI inflation vs RBI target band" data-ta="CPI பணவீக்கம் vs RBI இலக்கு வரம்பு"></h3><div class="chartbox"><canvas id="cCpi"></canvas></div><div class="small" data-en="Target 4%; tolerance band 2%–6%. September CPI releases 12 Oct 2026." data-ta="இலக்கு 4%; சகிப்பு வரம்பு 2%–6%. செப்டம்பர் CPI 12 அக் 2026 அன்று வரும்."></div></div>
+    <div class="card"><h3 data-en="RBI repo vs US Fed upper bound" data-ta="RBI ரெப்போ vs US Fed மேல் வரம்பு"></h3><div class="chartbox"><canvas id="cRates"></canvas></div></div>
+    <div class="card"><h3 data-en="Policy-rate gap (repo minus Fed), bps" data-ta="கொள்கை வட்டி இடைவெளி (ரெப்போ − Fed), bps"></h3><div class="chartbox"><canvas id="cGap"></canvas></div></div>
+    <div class="card"><h3 data-en="August 2026 CPI — rural vs urban vs food" data-ta="ஆகஸ்ட் 2026 CPI — கிராமம் vs நகரம் vs உணவு"></h3><div class="chartbox"><canvas id="cSplit"></canvas></div><div class="small" data-en="Rural inflation is higher — this supports your 'fragile majority' point." data-ta="கிராமப் பணவீக்கம் அதிகம் — உங்க 'பலவீனமான பெரும்பான்மை' கருத்துக்கு இது ஆதாரம்."></div></div>
+  </div>
+</section>
+
+<!-- TAB 5 IMPACT -->
+<section class="tab" id="t5">
+  <h2 data-en="Who gets hit, who gains" data-ta="யாருக்கு பாதிப்பு, யாருக்கு லாபம்"></h2>
+  <div class="tw card"><table>
+    <thead><tr><th data-en="Group" data-ta="பிரிவு"></th><th data-en="Effect" data-ta="விளைவு"></th><th data-en="Why" data-ta="ஏன்"></th></tr></thead>
+    <tbody id="impactTbl"></tbody>
+  </table></div>
+
+  <h3 style="margin-top:18px" data-en="EMI calculator — what 25 bps does to your loan" data-ta="EMI கணக்கி — 25 bps உங்க கடனுக்கு என்ன செய்யும்"></h3>
+  <div class="grid g2">
+    <div class="card calc">
+      <label data-en="Loan amount (₹)" data-ta="கடன் தொகை (₹)"></label><input type="number" id="la" value="5000000">
+      <label data-en="Tenure (years)" data-ta="காலம் (ஆண்டுகள்)"></label><input type="number" id="lt" value="20">
+      <label data-en="Current rate (%)" data-ta="தற்போதைய வட்டி (%)"></label><input type="number" id="lr" value="7.50" step="0.05">
+      <label><span data-en="Rate increase (bps): " data-ta="வட்டி உயர்வு (bps): "></span><b id="lbv">25</b></label><input type="range" id="lb" min="0" max="100" step="25" value="25">
+    </div>
+    <div class="card">
+      <div class="small" data-en="Old EMI" data-ta="பழைய EMI"></div><div id="e1" style="font-size:20px;font-weight:700"></div>
+      <div class="small" style="margin-top:8px" data-en="New EMI" data-ta="புதிய EMI"></div><div id="e2" style="font-size:20px;font-weight:700"></div>
+      <div class="small" style="margin-top:8px" data-en="Extra per month" data-ta="மாதம் கூடுதல்"></div><div id="e3" class="big"></div>
+      <div class="small" style="margin-top:8px" data-en="Extra over full tenure" data-ta="முழுக் காலத்திலும் கூடுதல்"></div><div id="e4" style="font-size:18px;font-weight:700;color:var(--red)"></div>
+      <p class="small" data-en="Applies to repo-linked (EBLR) floating loans, usually at the next reset. Many banks extend tenure instead of raising EMI." data-ta="ரெப்போ-இணைப்பு (EBLR) மிதக்கும் கடன்களுக்கு, பொதுவா அடுத்த ரீசெட்டில். பல வங்கிகள் EMI-ஐ ஏத்தாம காலத்தை நீட்டுவாங்க."></p>
+    </div>
+  </div>
+</section>
+
+<!-- TAB 6 MISSED -->
+<section class="tab" id="t6">
+  <h2 data-en="Reasons RBI considered" data-ta="RBI கருதிய காரணங்கள்"></h2>
+  <div class="grid g2" id="missed"></div>
+</section>
+
+<!-- TAB 7 ECONOMISTS -->
+<section class="tab" id="t7">
+  <h2 data-en="What economists expected before the meeting" data-ta="கூட்டத்துக்கு முன் நிபுணர்கள் எதிர்பார்த்தது"></h2>
+  <div class="tw card"><table>
+    <thead><tr><th data-en="Institution" data-ta="நிறுவனம்"></th><th data-en="Call" data-ta="கணிப்பு"></th><th data-en="Reasoning" data-ta="காரணம்"></th></tr></thead>
+    <tbody id="econTbl"></tbody>
+  </table></div>
+  <p class="small" data-en="Third-party views only, attributed to the named institutions. CB Research does not make rate or investment calls." data-ta="மூன்றாம் தரப்பு பார்வைகள் மட்டுமே. CB Research வட்டி அல்லது முதலீட்டுக் கணிப்பு செய்வதில்லை."></p>
+</section>
+
+<!-- TAB 10 INVESTOR LENS -->
+<section class="tab" id="t10">
+  <h2 data-en="What moves a stock price? Six influencers" data-ta="பங்கு விலையை நகர்த்துவது எது? ஆறு காரணிகள்"></h2>
+  <div class="banner" data-en="Every share price is pulled by six forces: <b>Earnings, Fundamentals, Macros, Cycle, Sentiment and Triggers</b>. Each carries a <b>different weight depending on the stock</b>. A bank or a realty stock leans heavily on macros; an FMCG stock leans on fundamentals; a small-cap turnaround leans on triggers. So investors need to understand macros — and know how much they matter for the stock in hand." data-ta="ஒவ்வொரு பங்கு விலையையும் ஆறு சக்திகள் இழுக்குது: <b>லாபம், அடிப்படை, மேக்ரோ, சுழற்சி, உணர்வு, தூண்டுதல்</b>. ஒவ்வொன்றுக்கும் <b>பங்கைப் பொறுத்து வேற வேற எடை</b>. வங்கி, ரியல்டி பங்குகள் மேக்ரோவை அதிகம் நம்பும்; FMCG அடிப்படையை; சிறிய திருப்புமுனைப் பங்குகள் தூண்டுதலை. அதனால முதலீட்டாளர் மேக்ரோவைப் புரிஞ்சுக்கணும் — கையில் உள்ள பங்குக்கு அது எவ்வளவு முக்கியம்னும் தெரிஞ்சுக்கணும்."></div>
+  <div class="card">
+    <h3 data-en="The six forces pulling on a share price — tap any one" data-ta="பங்கு விலையை இழுக்கும் ஆறு சக்திகள் — எதையாவது தட்டுங்க"></h3>
+    <svg id="hub" viewBox="0 0 400 400" style="width:100%;max-width:460px;display:block;margin:auto"></svg>
+    <div id="hubInfo" class="banner" style="margin-top:6px"></div>
+  </div>
+  <div class="card" style="margin-top:12px">
+    <h3 data-en="How long does each force take to show up in the price?" data-ta="ஒவ்வொரு சக்தியும் விலையில் தெரிய எவ்வளவு காலம் ஆகும்?"></h3>
+    <svg id="horizon" viewBox="0 0 400 250" style="width:100%;max-width:560px;display:block;margin:auto"></svg>
+    <p class="small" data-en="Sentiment and triggers move prices in days; macros and cycles over months; earnings and fundamentals decide where the price ends up over years." data-ta="உணர்வும் தூண்டுதலும் சில நாட்களில் விலையை நகர்த்தும்; மேக்ரோ, சுழற்சி மாதக்கணக்கில்; லாபமும் அடிப்படையும் ஆண்டுக்கணக்கில் விலை எங்கே நிற்கும்னு முடிவு செய்யும்."></p>
+  </div>
+
+  <h2 style="margin-top:22px" data-en="Why should a share investor watch macro factors?" data-ta="பங்கு முதலீட்டாளர் ஏன் மேக்ரோ காரணிகளைக் கவனிக்கணும்?"></h2>
+  <div class="banner" data-en="A well-run company's <b>share price</b> can fall even when its business is fine, because rates, inflation, the rupee and foreign flows change <b>how much the market is willing to pay</b> for every rupee of profit. Today's repo hike is exactly such a macro event." data-ta="நல்லா நடக்கும் நிறுவனத்தோட <b>பங்கு விலை</b> கூட விழலாம் — வட்டி, பணவீக்கம், ரூபாய், வெளிநாட்டுப் பணம் இவை <b>ஒவ்வொரு ரூபாய் லாபத்துக்கும் சந்தை கொடுக்கும் விலையை</b> மாற்றுது. இன்னைக்கு ரெப்போ ஏற்றம் அப்படிப்பட்ட ஒரு மேக்ரோ நிகழ்வு."></div>
+  <div class="grid g2" id="whyGrid"></div>
+
+  <h3 style="margin-top:16px" data-en="Macro factor → who usually feels it first" data-ta="மேக்ரோ காரணி → முதலில் யாருக்கு பாதிப்பு"></h3>
+  <div class="card tw"><table>
+    <thead><tr><th data-en="Macro move" data-ta="மேக்ரோ மாற்றம்"></th><th data-en="Tends to help" data-ta="பொதுவா உதவும்"></th><th data-en="Tends to hurt" data-ta="பொதுவா பாதிக்கும்"></th></tr></thead>
+    <tbody id="sectTbl"></tbody>
+  </table></div>
+  <p class="small" data-en="General tendencies for learning, not stock recommendations. Company-specific factors can override them." data-ta="கற்றலுக்கான பொதுப் போக்குகள் மட்டுமே, பங்குப் பரிந்துரை அல்ல. நிறுவனத் தனிக் காரணிகள் இவற்றை மாற்றலாம்."></p>
+</section>
+
+<!-- TAB 11 SECTOR WEIGHTS -->
+<section class="tab" id="t11">
+  <h2 data-en="Sector-wise weight of the six influencers" data-ta="துறை வாரியாக ஆறு காரணிகளின் எடை"></h2>
+  <div class="card">
+    <h3 data-en="Pick a sector — see how the weights shift" data-ta="துறையைத் தேர்ந்தெடுங்க — எடை எப்படி மாறுதுன்னு பாருங்க"></h3>
+    <select id="typeSel" onchange="curT=+this.value;renderInvestor()" style="width:100%;padding:10px;border:1px solid var(--navy);border-radius:8px;font-size:15px;font-family:inherit;margin:8px 0;color:var(--navy);font-weight:600;background:#fff"></select>
+    <div id="wBars"></div>
+    <div id="wNote" class="banner" style="margin-top:8px"></div>
+    <p class="small" data-en="Weights are illustrative CB Research estimates for learning — not a model output or a recommendation; individual companies within a sector can differ." data-ta="எடைகள் கற்றலுக்கான CB Research மதிப்பீடு மட்டுமே — மாதிரிக் கணிப்போ பரிந்துரையோ அல்ல; ஒரே துறைக்குள் நிறுவனத்துக்கு நிறுவனம் மாறலாம்."></p>
+  </div>
+
+  <div class="card" style="margin-top:12px">
+    <h3 data-en="Sector heatmap — weight of each influencer (%)" data-ta="துறை வெப்ப வரைபடம் — ஒவ்வொரு காரணியின் எடை (%)"></h3>
+    <p class="small" data-en="Darker = bigger influence. Sorted by Macro weight (highest first). Tap a row to load it above." data-ta="அடர் நிறம் = அதிக தாக்கம். மேக்ரோ எடைப்படி வரிசை (அதிகம் முதலில்). மேலே பார்க்க வரிசையைத் தட்டுங்க."></p>
+    <div id="heatLeg" class="small" style="margin-bottom:6px;line-height:1.9"></div><table id="heat" style="font-size:13px;table-layout:fixed;width:100%"><colgroup><col style="width:34%"><col><col><col><col><col><col></colgroup></table>
+  </div>
+
+</section>
+
+<!-- TAB 8 SOCRATES -->
+<section class="tab" id="t8">
+  <h2 data-en="Cauvery Socrates — test your understanding" data-ta="காவேரி சாக்ரடீஸ் — உங்க புரிதலைச் சோதிங்க"></h2>
+  <div class="card quiz" id="quiz"></div>
+</section>
+
+</main>
+
+<!-- CB badge + disclaimer -->
+<div id="cbBadge" onclick="document.getElementById('disc').classList.toggle('on')" title="Disclaimer">CB</div>
+<div id="disc"><b style="color:var(--orange)">Cauvery Business · CB Research</b><br><span data-en="Prepared by CB Research for educational purposes only. Not investment advice. CB Research is not a SEBI-registered research analyst. Figures are from public information; please verify before acting." data-ta="CB Research கல்வி நோக்கத்துக்காக மட்டும் தயாரித்தது. இது முதலீட்டு ஆலோசனை அல்ல. CB Research SEBI-பதிவு பெற்ற ஆய்வாளர் அல்ல. தரவுகள் பொதுத் தகவல்களிலிருந்து; செயல்படும் முன் சரிபாருங்கள்."></span></div>
+
+<!-- CB Assist voice -->
+<button id="asBtn" onclick="togAs()">🎙️ <span data-en="CB Assist" data-ta="CB உதவி"></span></button>
+<div id="asPanel">
+  <div id="asHead"><span data-en="CB Assist — ask by voice" data-ta="CB உதவி — குரலில் கேளுங்க"></span><span style="cursor:pointer" onclick="togAs()">✕</span></div>
+  <div id="asLog"></div>
+  <div class="chips" id="chips"></div>
+  <div id="asIn"><input id="q" placeholder="Ask: why did RBI hike?" onkeydown="if(event.key==='Enter')ask()"><button id="mic" onclick="listen()">🎤</button></div>
+</div>
+
+<script>
+var LANG='en';
+var CO={event:"RBI MPC Oct 2026",repoOld:5.25,repoNew:5.50,vote:"6-0",stance:"Calibrated tightening",cpiAug:4.82,cpiJul:4.45,cpiFY27:5.1,gdpFY27:7.1,fedUpper:4.00,gapBps:150,fcnrBn:132.98,swapTotalBn:143.6,wpiAug:9.92};
+
+var R=[
+{n:1,v:'ok',
+ en:{t:"Inflation rising above 4%; oil & costly imports; protect the fragile majority",you:"Inflation is above RBI's 4% limit; September may cross 5%. High oil prices (only partly passed on) and costly imports in an import-led economy push prices up. RBI must choose inflation control over growth because the poor are hit hardest.",fix:"<b>Mostly correct — two refinements.</b><br>① <u>4% is RBI's target, not its limit.</u> The legal tolerance band is 2%–6%. August CPI at 4.82% is above target but inside the band — so this was a <i>pre-emptive</i> hike based on the outlook, not a breach.<br>② <u>August inflation was led by food, not fuel.</u> Food inflation was 5.95% (onion +48%, garlic +44%, ginger +74%) and gold/silver jewellery also jumped. Oil works through the pipeline: WPI is already 9.92%, crude is above $100 and the rupee is near 95/$ — that is the imported inflation still to come.<br>③ The trade-off was easier than you framed it: growth is strong (Q1 GDP 7.8%; FY27 forecast raised to 7.1%), so RBI did not have to sacrifice much growth. Your 'fragile majority' point is backed by data — rural CPI 5.23% vs urban 4.31%."},
+ ta:{t:"பணவீக்கம் 4%-ஐத் தாண்டுது; எண்ணெய், விலையுயர்ந்த இறக்குமதி; பலவீனமான பெரும்பான்மையைக் காக்கணும்",you:"பணவீக்கம் RBI-யோட 4% வரம்பைத் தாண்டிடுச்சு; செப்டம்பர்ல 5%-ஐத் தாண்டலாம். எண்ணெய் விலை அதிகம், இறக்குமதி செலவு அதிகம். ஏழைகள் தான் அதிகம் பாதிக்கப்படுவாங்க, அதனால வளர்ச்சியை விட பணவீக்கக் கட்டுப்பாடு முக்கியம்.",fix:"<b>பெரும்பாலும் சரி — இரண்டு திருத்தங்கள்.</b><br>① <u>4% என்பது இலக்கு, வரம்பு இல்ல.</u> சட்டப்படி சகிப்பு வரம்பு 2%–6%. ஆகஸ்ட் CPI 4.82% — இலக்குக்கு மேல, ஆனா வரம்புக்குள்ள. அதனால இது எதிர்காலத்தைப் பார்த்து <i>முன்கூட்டியே</i> எடுத்த ஏற்றம்.<br>② <u>ஆகஸ்ட் பணவீக்கத்துக்கு முக்கியக் காரணம் உணவு, எரிபொருள் இல்ல.</u> உணவுப் பணவீக்கம் 5.95% (வெங்காயம் +48%, பூண்டு +44%, இஞ்சி +74%). எண்ணெய் பாதிப்பு இனிமே தான் வரும்: WPI ஏற்கனவே 9.92%, கச்சா $100-க்கு மேல, ரூபாய் 95/$ பக்கம்.<br>③ வளர்ச்சி வலுவா இருக்கு (Q1 GDP 7.8%; FY27 கணிப்பு 7.1%) — அதனால RBI பெருசா வளர்ச்சியை இழக்கல. கிராம CPI 5.23% vs நகரம் 4.31% — உங்க கருத்துக்கு தரவு ஆதாரம் இருக்கு."}},
+{n:2,v:'part',
+ en:{t:"Fed–repo gap narrowed; capital flight must be stopped",you:"The gap between the Fed rate and the repo rate narrowed, yields converged, and capital flight from India accelerated. It had to be corrected.",fix:"<b>Direction right, but it's a supporting reason, not the driver.</b><br>① The facts: the Fed hiked to 3.75%–4.00% on 16 Sep 2026, cutting the repo–Fed gap from 150 to 125 bps. Today's hike restores it to 150 bps.<br>② But RBI's legal mandate is inflation (with growth). It does not target a fixed Fed spread — SBI Research even said its hike call was independent of the Fed.<br>③ Investors look at the <i>bond-yield</i> gap and the expected rupee move, not just policy rates. With the rupee near 95/$, even a wider spread doesn't help if currency losses wipe it out. So the hike helps the rupee indirectly, alongside FCNR inflows and forex intervention."},
+ ta:{t:"Fed–ரெப்போ இடைவெளி குறைஞ்சது; மூலதன வெளியேற்றத்தைத் தடுக்கணும்",you:"Fed ரேட்டுக்கும் ரெப்போவுக்கும் உள்ள இடைவெளி குறைஞ்சிடுச்சு, மூலதனம் இந்தியாவிலிருந்து வேகமா வெளியேறுது. அதைச் சரி செய்யணும்.",fix:"<b>திசை சரி, ஆனா இது துணைக் காரணம் தான்.</b><br>① Fed 16 செப் 2026 அன்று 3.75%–4.00%-க்கு ஏத்துச்சு; இடைவெளி 150-லிருந்து 125 bps ஆச்சு. இன்னைக்கு ஏற்றத்தால மறுபடி 150 bps.<br>② RBI-யோட சட்டக் கடமை பணவீக்கம் தான்; Fed இடைவெளியை இலக்கா வெச்சுக்கல. SBI Research-ம் தங்கள் கணிப்பு Fed-ஐச் சாராதது-ன்னு சொன்னாங்க.<br>③ முதலீட்டாளர்கள் பாண்ட் ஈல்ட் இடைவெளியையும் ரூபாய் சரிவு எதிர்பார்ப்பையும் பார்ப்பாங்க. ரூபாய் 95/$ பக்கம் இருக்கும்போது, நாணய இழப்பு லாபத்தைச் சாப்பிட்டுடும்."}},
+{n:3,v:'part',
+ en:{t:"Almost all central banks hiked; China doesn't need to bother",you:"Almost all central banks have raised rates, so India as a large EM must follow. China exports more than it imports and doesn't need capital inflows, so it ignores US rates.",fix:"<b>Partly right — 'almost all' is overstated, and the China logic needs fixing.</b><br>① Several major central banks, led by the Fed, have turned hawkish — but it's not universal. RBI moves on India's own inflation, not to copy others.<br>② China's independence from US rates comes from three things: <u>capital controls</u>, a <u>managed currency</u>, and <u>low domestic inflation</u>. Its trade surplus helps, but the bigger reason is that money can't freely leave China the way FPI money leaves India.<br>③ India's real vulnerability is its <u>current-account deficit</u>: we need foreign capital to fund it, so rupee stability matters — that's the correct version of your point."},
+ ta:{t:"கிட்டத்தட்ட எல்லா மத்திய வங்கிகளும் ஏத்திச்சு; சீனா கவலைப்படாது",you:"கிட்டத்தட்ட எல்லா மத்திய வங்கிகளும் ரேட்டை ஏத்திச்சு. சீனா இறக்குமதியை விட ஏற்றுமதி அதிகம், மூலதனம் தேவையில்ல, அதனால US ரேட்டைப் பத்திக் கவலைப்படாது.",fix:"<b>பாதி சரி — 'எல்லாம்' என்பது மிகைப்படுத்தல்; சீனா விளக்கம் திருத்தணும்.</b><br>① Fed உட்பட சில பெரிய மத்திய வங்கிகள் கடுமையாகியிருக்கு, ஆனா எல்லாமே இல்ல. RBI இந்தியப் பணவீக்கத்தைப் பார்த்து தான் முடிவு எடுக்குது.<br>② சீனாவுக்கு சுதந்திரம் வர்றது <u>மூலதனக் கட்டுப்பாடு</u>, <u>கட்டுப்படுத்தப்பட்ட நாணயம்</u>, <u>குறைந்த உள்நாட்டுப் பணவீக்கம்</u> இவற்றால. வர்த்தக உபரி உதவுது, ஆனா முக்கியக் காரணம் பணம் சுதந்திரமா வெளியேற முடியாது.<br>③ இந்தியாவோட உண்மையான பலவீனம் <u>நடப்புக் கணக்குப் பற்றாக்குறை</u> — அதை நிரப்ப வெளிநாட்டு மூலதனம் வேணும்."}},
+{n:4,v:'part',
+ en:{t:"VRRR to absorb FCNR-driven surplus; hike offsets VRRR cost",you:"RBI is using VRRR to suck out surplus money from FCNR inflows. Too much money fuels inflation. VRRR has a cost to RBI, which the hike partly addresses.",fix:"<b>Liquidity point correct; the cost-recovery angle needs correcting.</b><br>① Correct: surplus liquidity peaked around ₹10–11 lakh crore, and RBI has used VRRRs, ₹1 lakh crore of OMO bond sales and FX swaps to bring it below ₹5 lakh crore. FCNR dollars swapped with RBI add rupee liquidity, and excess money left idle can fuel inflation and weaken transmission — call rates drift below repo.<br>② <u>Correction:</u> RBI does not need to raise rates to protect its own expenses. Liquidity operations are a tool of monetary policy, and their cost is a balance-sheet matter. The hike was about making tighter money bite on inflation, not about recovering what VRRR costs RBI."},
+ ta:{t:"FCNR உபரியை உறிஞ்ச VRRR; ஏற்றம் VRRR செலவை ஈடுகட்டும்",you:"FCNR வரவால வந்த உபரிப் பணத்தை RBI VRRR மூலம் உறிஞ்சுது. அதிகப் பணம் பணவீக்கத்தைத் தூண்டும். VRRR-க்கு RBI-க்கு செலவு இருக்கு, ஏற்றம் அதை ஓரளவு சரிகட்டும்.",fix:"<b>லிக்விடிட்டி கருத்து சரி; செலவை ஈடுகட்டும் கோணம் திருத்தணும்.</b><br>① சரி: உபரி லிக்விடிட்டி ₹10–11 லட்சம் கோடி வரை போச்சு; VRRR, ₹1 லட்சம் கோடி OMO பாண்ட் விற்பனை, FX ஸ்வாப் மூலம் ₹5 லட்சம் கோடிக்குக் கீழ கொண்டு வந்தாங்க. FCNR டாலர்களை RBI ஸ்வாப் செய்யும்போது ரூபாய் லிக்விடிட்டி கூடுது; சும்மா கிடக்கும் அதிகப் பணம் பணவீக்கத்தைத் தூண்டும்.<br>② <u>திருத்தம்:</u> RBI தன் சொந்தச் செலவைக் காக்க வட்டியை ஏத்த வேண்டியதில்ல. லிக்விடிட்டி நடவடிக்கைகள் பணக்கொள்கைக் கருவி; அதன் செலவு RBI இருப்புநிலைக் கணக்கு விஷயம். பணவீக்கத்தைக் கட்டுப்படுத்த தான் ஏற்றம், VRRR செலவை மீட்க இல்ல."}},
+{n:5,v:'fix',
+ en:{t:"Banks paid high FCNR rates; need higher lending rates to protect NII/NIM",you:"Banks offered high FCNR deposit rates and must raise lending rates (linked to repo), otherwise NII and NIM will shrink.",fix:"<b>The effect is real, but it is not why RBI hiked.</b><br>① FCNR(B) deposits are <u>dollar</u> deposits (rates ~6%–7.5% in USD). Under the 2026 scheme RBI swaps them at par — <u>RBI, not the bank, bears the hedging cost</u>. So the bank's rupee funding cost from FCNR is far lower than the headline rate suggests.<br>② Scale: FCNR(B) mobilisation reached $132.98 bn (≈ ₹12.6 lakh crore at ~₹95/$) by the 31 Aug close, within a total swap-facility inflow of $143.6 bn. That is large, but because RBI carries the hedge, it does not raise banks' cost the way a rupee deposit at 6–7% would.<br>③ <u>Correction:</u> RBI does not set the repo rate to protect bank margins — its mandate is price stability with growth. As a <i>consequence</i>, though, a hike usually lifts NIMs short-term: repo-linked (EBLR) loans reprice within a quarter while term deposits reprice only on renewal."},
+ ta:{t:"வங்கிகள் அதிக FCNR வட்டி கொடுத்தாங்க; NII/NIM-ஐக் காக்க கடன் வட்டி ஏறணும்",you:"வங்கிகள் FCNR-க்கு அதிக வட்டி கொடுத்ததால கடன் வட்டியை ஏத்தணும், இல்லாட்டி NII, NIM குறையும்.",fix:"<b>விளைவு உண்மை தான், ஆனா RBI ஏத்தினதுக்கு இது காரணம் இல்ல.</b><br>① FCNR(B) <u>டாலர்</u> டெபாசிட் (USD-ல ~6%–7.5%). 2026 திட்டத்துல RBI சம மதிப்புல ஸ்வாப் செய்யுது — <u>ஹெட்ஜிங் செலவை வங்கி இல்ல, RBI தாங்குது</u>.<br>② அளவு: ஆகஸ்ட் 31 முடிவுக்குள் FCNR(B) மூலம் $132.98 bn (≈ ₹12.6 லட்சம் கோடி); மொத்த ஸ்வாப் வரவு $143.6 bn. பெரிய தொகை தான், ஆனா ஹெட்ஜிங்கை RBI தாங்குறதால வங்கிகளுக்குச் செலவு அந்த அளவுக்குக் கூடாது.<br>③ <u>திருத்தம்:</u> வங்கி லாபத்தைக் காக்க RBI ரெப்போவை மாற்றாது — அதன் கடமை விலை நிலைத்தன்மை. ஆனா <i>விளைவாக</i>, EBLR கடன்கள் உடனே மாறும், டெபாசிட் புதுப்பிக்கும்போது தான் மாறும் — அதனால குறுகிய காலத்துல NIM கூடும்."}},
+{n:6,v:'fix',
+ en:{t:"FCNR costs hit RBI's dividend; higher repo helps RBI raise money",you:"FCNR-related costs (absorbing surplus, forex cover for depositors) will reduce RBI's dividend to government. A higher repo helps RBI raise money for these.",fix:"<b>First half correct; second half needs correcting.</b><br>① Correct: under the zero-cost swap RBI carries the currency risk on 3–5-year deposits, plus the cost of absorbing the surplus liquidity. If the rupee falls further, RBI's payout rises and its surplus transfer (dividend) to the government could shrink.<br>② <u>Correction:</u> RBI does not need to raise rates to meet its own expenses. Its mandate is price stability with growth, not its own income — setting policy rates to fund itself would conflict with that mandate. FCNR and liquidity costs are absorbed on RBI's balance sheet and show up, if at all, as a smaller dividend.<br>③ Where you're right in spirit: a firmer rupee from tighter policy lowers the eventual cost of the FCNR swap — an indirect benefit, not a motive."},
+ ta:{t:"FCNR செலவு RBI டிவிடெண்டைக் குறைக்கும்; அதிக ரெப்போ RBI-க்கு பணம் திரட்ட உதவும்",you:"FCNR செலவுகளால அரசுக்கு RBI கொடுக்கும் டிவிடெண்ட் குறையும். அதிக ரெப்போ RBI பணம் திரட்ட உதவும்.",fix:"<b>முதல் பாதி சரி; இரண்டாம் பாதி திருத்தணும்.</b><br>① சரி: பூஜ்ஜியச் செலவு ஸ்வாப்பில் 3–5 ஆண்டு நாணய அபாயத்தையும், உபரி லிக்விடிட்டியை உறிஞ்சும் செலவையும் RBI தாங்குது. ரூபாய் இன்னும் சரிஞ்சா, அரசுக்குக் கொடுக்கும் டிவிடெண்ட் குறையலாம்.<br>② <u>திருத்தம்:</u> RBI தன் சொந்தச் செலவைச் சமாளிக்க வட்டியை ஏத்த வேண்டியதில்ல. அதன் கடமை விலை நிலைத்தன்மை, சொந்த வருமானம் இல்ல. FCNR, லிக்விடிட்டி செலவுகள் RBI இருப்புநிலைக் கணக்கில் தாங்கப்படும் — விளைவு அதிகபட்சம் குறைந்த டிவிடெண்ட்.<br>③ மறைமுகமா நீங்க சொன்னது சரி: ரூபாய் வலுப்பட்டா FCNR ஸ்வாப் செலவு குறையும் — இது பலன், நோக்கம் இல்ல."}}
+];
+
+var MISSED=[
+ {en:["Rupee near ₹95/$","A weaker rupee raises the rupee cost of every imported item — crude, edible oil, electronics, gold. This exchange-rate pass-through feeds directly into inflation."],ta:["ரூபாய் ₹95/$ பக்கம்","ரூபாய் பலவீனமானா கச்சா, சமையல் எண்ணெய், மின்னணு, தங்கம் — எல்லா இறக்குமதியும் விலை ஏறும். இது நேரடியா பணவீக்கத்தைக் கூட்டும்."]},
+ {en:["Weak monsoon + El Niño","The Governor flagged risk to the coming rabi crop. Food is the biggest CPI driver right now, so a bad harvest would push inflation further."],ta:["பலவீனமான மழை + எல் நினோ","வரவிருக்கும் ரபி பயிருக்கு அபாயம்-னு கவர்னர் சொன்னார். இப்போ CPI-ஐ ஓட்டுறது உணவு தான்."]},
+ {en:["WPI at 9.92%","Wholesale inflation runs far ahead of retail. Producers eventually pass input costs to consumers — CPI tends to follow WPI with a lag."],ta:["WPI 9.92%","மொத்த விலைப் பணவீக்கம் சில்லறையை விட ரொம்ப முன்னால. உற்பத்தியாளர்கள் கடைசில அந்தச் செலவை நுகர்வோர் மேல போடுவாங்க."]},
+ {en:["Inflation expected to peak Oct–Dec","RBI expected headline inflation to peak this quarter. Hiking early anchors expectations before wage and price-setting adjusts upward."],ta:["அக்–டிச பணவீக்க உச்சம்","இந்தக் காலாண்டில் பணவீக்கம் உச்சம் தொடும்-னு RBI எதிர்பார்க்குது. முன்கூட்டியே ஏத்தினா எதிர்பார்ப்புகள் கட்டுக்குள்ள இருக்கும்."]},
+ {en:["Strong growth gives room","Q1 FY27 GDP grew 7.8% and FY27 growth was revised up to 7.1%. When growth is this strong, the cost of tightening is low — the classic window to act."],ta:["வலுவான வளர்ச்சி இடம் தருது","Q1 FY27 GDP 7.8%; FY27 கணிப்பு 7.1%. வளர்ச்சி வலுவா இருக்கும்போது இறுக்கத்தோட விலை குறைவு — நடவடிக்கை எடுக்க சரியான நேரம்."]},
+ {en:["Policy transmission","With liquidity drained, the overnight call rate is moving back toward repo. A hike now actually transmits to lending and deposit rates."],ta:["கொள்கை பரிமாற்றம்","லிக்விடிட்டி குறைஞ்சதால கால் ரேட் ரெப்போ பக்கம் வருது. இப்போ ஏத்தினா அது கடன், டெபாசிட் வட்டியில உண்மையா பிரதிபலிக்கும்."]}
+];
+
+var IMPACT=[
+ {en:["Home/auto borrowers (EBLR)","EMI ↑ or tenure ↑","Repo-linked loans reset within a quarter"],ta:["வீடு/வாகனக் கடன் (EBLR)","EMI ↑ அல்லது காலம் ↑","ரெப்போ-இணைப்புக் கடன்கள் ஒரு காலாண்டுக்குள் மாறும்"]},
+ {en:["Fixed-deposit savers","Gain","Deposit rates follow repo up, with a lag"],ta:["FD சேமிப்பாளர்கள்","லாபம்","டெபாசிட் வட்டி தாமதமா ஏறும்"]},
+ {en:["Banks (NIM)","Short-term ↑","Loans reprice faster than term deposits"],ta:["வங்கிகள் (NIM)","குறுகிய காலம் ↑","கடன்கள் டெபாசிட்டை விட வேகமா மாறும்"]},
+ {en:["Bond holders","Mark-to-market loss","Yields rise when rates rise"],ta:["பாண்ட் வைத்திருப்பவர்கள்","சந்தை மதிப்பு இழப்பு","வட்டி ஏறினா ஈல்ட் ஏறும்"]},
+ {en:["Rate-sensitive stocks (realty, auto, NBFC)","Pressure","Higher funding cost, slower demand"],ta:["வட்டி சார்ந்த பங்குகள் (ரியல்டி, ஆட்டோ, NBFC)","அழுத்தம்","நிதிச் செலவு ↑, தேவை மெதுவாகும்"]},
+ {en:["Rupee","Supportive","Wider rate gap, stronger inflation credibility"],ta:["ரூபாய்","ஆதரவு","அதிக வட்டி இடைவெளி, நம்பகத்தன்மை"]},
+ {en:["Low-income households","Protected over time","Lower inflation protects real income"],ta:["குறைந்த வருமானக் குடும்பங்கள்","காலப்போக்கில் பாதுகாப்பு","பணவீக்கம் குறைஞ்சா உண்மை வருமானம் காக்கப்படும்"]}
+];
+
+var ECON=[
+ {en:["SBI Research","+25 bps Oct, +25 bps Dec","Crude above $100, external shocks, broadening price pressure; inflation may approach 6.5% in Oct–Nov","Daily Pioneer, Sep 2026"],ta:["SBI Research","அக் +25, டிச +25 bps","கச்சா $100+, வெளி அதிர்ச்சிகள்; அக்–நவ பணவீக்கம் 6.5% பக்கம்","Daily Pioneer, செப் 2026"]},
+ {en:["HSBC (Pranjul Bhandari)","+25 bps Oct, +25 bps Dec → 5.75%","Inflation mandate; more liquidity removal expected","Telangana Today, 27 Sep 2026"],ta:["HSBC (பிரஞ்சுல் பண்டாரி)","அக் +25, டிச +25 → 5.75%","பணவீக்கக் கடமை; லிக்விடிட்டி மேலும் குறைப்பு","Telangana Today, 27 செப் 2026"]},
+ {en:["Market consensus (late Aug)","Hold at 5.25%","Inflation was still within band then — view shifted sharply in September","Octagon / Tempora, Aug 2026"],ta:["சந்தை ஒருமித்த கருத்து (ஆக இறுதி)","5.25%-ல் நிறுத்தம்","அப்போ பணவீக்கம் வரம்புக்குள்ள — செப்டம்பர்ல பார்வை மாறிடுச்சு","Octagon / Tempora, ஆக 2026"]}
+];
+
+var QZ=[
+ {en:["What is RBI's CPI inflation target?","4% exactly, as a hard ceiling","4% with a 2%–6% tolerance band","6%","5%"],ta:["RBI-யோட CPI பணவீக்க இலக்கு என்ன?","4% — கடுமையான உச்சவரம்பு","4%, 2%–6% சகிப்பு வரம்புடன்","6%","5%"],a:1,
+  why:{en:"4% is the target; RBI is only legally in breach if CPI stays outside 2%–6% for three straight quarters.",ta:"4% இலக்கு; தொடர்ந்து மூன்று காலாண்டு 2%–6%-க்கு வெளியே இருந்தா தான் சட்ட மீறல்."}},
+ {en:["What drove August 2026 CPI the most?","Fuel prices","Food (onion, garlic, ginger)","Healthcare","Telecom"],ta:["ஆகஸ்ட் 2026 CPI-ஐ அதிகம் ஓட்டியது எது?","எரிபொருள்","உணவு (வெங்காயம், பூண்டு, இஞ்சி)","சுகாதாரம்","தொலைத்தொடர்பு"],a:1,
+  why:{en:"Food inflation hit 5.95%; health was the lowest at 1.34%.",ta:"உணவுப் பணவீக்கம் 5.95%; சுகாதாரம் 1.34% — மிகக் குறைவு."}},
+ {en:["Does RBI raise the repo rate to cover its own expenses (FCNR swap, liquidity operations)?","Yes, that is a key reason","No — its mandate is price stability with growth","Only when the dividend is due","Only in an election year"],ta:["தன் சொந்தச் செலவை (FCNR ஸ்வாப், லிக்விடிட்டி) சமாளிக்க RBI ரெப்போவை ஏத்துமா?","ஆமாம், அது முக்கியக் காரணம்","இல்ல — அதன் கடமை விலை நிலைத்தன்மை + வளர்ச்சி","டிவிடெண்ட் கொடுக்கும் நேரத்தில் மட்டும்","தேர்தல் ஆண்டில் மட்டும்"],a:1,
+  why:{en:"RBI need not raise rates to protect its expenses. Those costs sit on its balance sheet and at most reduce its dividend to the government.",ta:"RBI தன் செலவைக் காக்க வட்டியை ஏத்த வேண்டியதில்ல. அந்தச் செலவுகள் இருப்புநிலைக் கணக்கில்; அதிகபட்சம் அரசுக்கு டிவிடெண்ட் குறையும்."}},
+ {en:["Under the 2026 FCNR(B) scheme, who bears the hedging cost?","The NRI depositor","The bank","RBI","SEBI"],ta:["2026 FCNR(B) திட்டத்துல ஹெட்ஜிங் செலவை யார் தாங்குறாங்க?","NRI டெபாசிட்டர்","வங்கி","RBI","SEBI"],a:2,
+  why:{en:"RBI swaps the dollars at par at zero cost — that's why RBI's balance sheet carries the currency risk.",ta:"RBI பூஜ்ஜியச் செலவில் ஸ்வாப் செய்யுது — அதனால நாணய அபாயம் RBI மேல."}},
+ {en:["Free text: In one line, why could RBI hike without much growth sacrifice?"],ta:["சொந்த வார்த்தையில்: வளர்ச்சியை அதிகம் இழக்காம RBI ஏன் ஏத்த முடிஞ்சது?"],free:true,
+  why:{en:"Model answer: growth was strong (Q1 GDP 7.8%, FY27 forecast raised to 7.1%), so the economy could absorb a 25 bps hike.",ta:"மாதிரி பதில்: வளர்ச்சி வலுவா இருந்தது (Q1 GDP 7.8%, FY27 7.1%), அதனால 25 bps ஏற்றத்தைத் தாங்க முடியும்."}}
+];
+
+var MAP=[
+ {id:'crude',x:20,y:20,w:170,h:56,c:'#d64545',en:["Crude > $100","Geopolitical risk pushed oil above $100/bbl. OMCs absorb part, but WPI is already 9.92%."],ta:["கச்சா > $100","புவிசார் அபாயத்தால எண்ணெய் $100-க்கு மேல. OMC-கள் ஓரளவு தாங்குது, ஆனா WPI ஏற்கனவே 9.92%."]},
+ {id:'rupee',x:20,y:110,w:170,h:56,c:'#d64545',en:["Rupee ~95/$","Oil import bill + capital outflows weakened the rupee — every import costs more in rupees."],ta:["ரூபாய் ~95/$","எண்ணெய் இறக்குமதி + மூலதன வெளியேற்றம் ரூபாயை பலவீனமாக்குச்சு."]},
+ {id:'food',x:20,y:200,w:170,h:56,c:'#d69e2e',en:["Food prices + weak monsoon","Food inflation 5.95%; El Niño threatens the rabi crop."],ta:["உணவு விலை + பலவீன மழை","உணவுப் பணவீக்கம் 5.95%; எல் நினோ ரபி பயிருக்கு அபாயம்."]},
+ {id:'fed',x:20,y:290,w:170,h:56,c:'#2b6cb0',en:["Fed hike to 4.00%","16 Sep 2026: repo–Fed gap squeezed to 125 bps, pressuring capital flows."],ta:["Fed 4.00%-க்கு ஏற்றம்","16 செப் 2026: இடைவெளி 125 bps ஆச்சு; மூலதன ஓட்டத்துக்கு அழுத்தம்."]},
+ {id:'fcnr',x:20,y:380,w:170,h:56,c:'#2b6cb0',en:["Swap inflows $143.6 bn","FCNR(B) alone brought $132.98 bn by 31 Aug, when RBI closed the window early. The zero-cost swap added rupee liquidity and put currency risk on RBI."],ta:["ஸ்வாப் வரவு $143.6 bn","FCNR(B) மட்டும் ஆக 31 வரை $132.98 bn; RBI சாளரத்தை முன்கூட்டியே மூடிச்சு. ரூபாய் லிக்விடிட்டி கூடியது, நாணய அபாயம் RBI மேல."]},
+ {id:'cpi',x:290,y:110,w:180,h:60,c:'#f07c1b',en:["CPI 4.82% & rising","Up every month since May (3.93%). Outlook: peak in Oct–Dec; FY27 forecast 5.1%."],ta:["CPI 4.82% & ஏறுமுகம்","மே (3.93%) முதல் ஒவ்வொரு மாதமும் ஏற்றம். FY27 கணிப்பு 5.1%."]},
+ {id:'liq',x:290,y:320,w:180,h:60,c:'#f07c1b',en:["Surplus liquidity","Peaked ~₹10–11 lakh crore; drained below ₹5 lakh crore via VRRR, OMO sales, FX swaps."],ta:["உபரி லிக்விடிட்டி","₹10–11 லட்சம் கோடி உச்சம்; VRRR, OMO, FX ஸ்வாப் மூலம் ₹5 லட்சம் கோடிக்குக் கீழ."]},
+ {id:'gdp',x:290,y:215,w:180,h:60,c:'#1f9d55',en:["Growth strong: 7.8%","Q1 FY27 GDP 7.8% — room to tighten without hurting growth much."],ta:["வளர்ச்சி வலுவு: 7.8%","Q1 FY27 GDP 7.8% — வளர்ச்சியைப் பெருசா பாதிக்காம இறுக்க இடம் இருக்கு."]},
+ {id:'rbi',x:540,y:200,w:150,h:80,c:'#0f3a68',en:["RBI MPC: +25 bps → 5.50%","Unanimous. Stance: calibrated tightening. Next move: hike or pause only."],ta:["RBI MPC: +25 bps → 5.50%","ஒருமனதாக. நிலைப்பாடு: படிப்படியான இறுக்கம்."]},
+ {id:'o1',x:740,y:40,w:150,h:50,c:'#5d6878',en:["Loan EMIs ↑","EBLR loans reprice within a quarter."],ta:["கடன் EMI ↑","EBLR கடன்கள் ஒரு காலாண்டுக்குள் மாறும்."]},
+ {id:'o2',x:740,y:130,w:150,h:50,c:'#5d6878',en:["FD rates ↑","Savers gain, with a lag."],ta:["FD வட்டி ↑","சேமிப்பாளர்களுக்கு லாபம், தாமதமாக."]},
+ {id:'o3',x:740,y:220,w:150,h:50,c:'#5d6878',en:["Bank NIM ↑ (short-term)","Consequence, not cause."],ta:["வங்கி NIM ↑ (குறுகிய காலம்)","விளைவு, காரணம் அல்ல."]},
+ {id:'o4',x:740,y:310,w:150,h:50,c:'#5d6878',en:["Rupee support","Wider gap + credibility."],ta:["ரூபாய்க்கு ஆதரவு","அதிக இடைவெளி + நம்பகத்தன்மை."]},
+ {id:'o5',x:740,y:400,w:150,h:50,c:'#5d6878',en:["Inflation expectations anchored","Protects real incomes of the poor."],ta:["பணவீக்க எதிர்பார்ப்பு கட்டுப்பாடு","ஏழைகளின் உண்மை வருமானம் காக்கப்படும்."]}
+];
+var LINKS=[['crude','cpi'],['rupee','cpi'],['food','cpi'],['crude','rupee'],['fed','rupee'],['fcnr','liq'],['fed','rbi'],['cpi','rbi'],['liq','rbi'],['gdp','rbi'],['rbi','o1'],['rbi','o2'],['rbi','o3'],['rbi','o4'],['rbi','o5']];
+
+function L(o){return o[LANG]||o.en}
+function setLang(l){LANG=l;document.body.classList.toggle('ta',l==='ta');
+ document.getElementById('bEn').classList.toggle('on',l==='en');document.getElementById('bTa').classList.toggle('on',l==='ta');
+ document.querySelectorAll('[data-en]').forEach(function(e){e.innerHTML=e.getAttribute('data-'+l)||e.getAttribute('data-en')});
+ document.getElementById('q').placeholder=l==='ta'?'கேளுங்க: RBI ஏன் ஏத்துச்சு?':'Ask: why did RBI hike?';
+ renderAll();}
+
+document.querySelectorAll('nav button').forEach(function(b){b.onclick=function(){
+ document.querySelectorAll('nav button').forEach(function(x){x.classList.remove('on')});b.classList.add('on');
+ document.querySelectorAll('.tab').forEach(function(t){t.classList.remove('on')});document.getElementById(b.dataset.t).classList.add('on');window.scrollTo(0,0);}});
+
+var VLAB={ok:{en:'Mostly correct',ta:'பெரும்பாலும் சரி'},part:{en:'Partly correct',ta:'பாதி சரி'},fix:{en:'Needs correction',ta:'திருத்தம் தேவை'}};
+var VCLS={ok:'p-ok',part:'p-part',fix:'p-fix'};
+
+function renderReasons(){var h='';R.forEach(function(r){var d=L(r);
+ h+='<div class="card reason" id="r'+r.n+'"><div class="top" onclick="this.parentNode.classList.toggle(\'open\')"><div style="display:flex;gap:10px;align-items:center"><div class="num">'+r.n+'</div><b>'+d.t+'</b></div><span style="color:var(--mute)">▾</span></div>'+
+ '<div class="body"><div class="cols"><div class="view"><b>'+(LANG==='ta'?'உங்க பார்வை':'Your view')+'</b>'+d.you+'</div><div class="fix"><b>'+(LANG==='ta'?'CB Research திருத்தம்':'CB Research correction')+'</b>'+d.fix+'</div></div></div></div>';});
+ document.getElementById('reasons').innerHTML=h;document.getElementById('r1').classList.add('open');
+ var t='<thead><tr><th>#</th><th>'+(LANG==='ta'?'காரணம்':'Reason')+'</th></tr></thead><tbody>';
+ R.forEach(function(r){t+='<tr><td>'+r.n+'</td><td>'+L(r).t+'</td></tr>'});
+ document.getElementById('scoreTbl').innerHTML=t+'</tbody>';}
+
+function renderLists(){
+ document.getElementById('missed').innerHTML=MISSED.map(function(m,i){var d=L(m);return '<div class="card"><h3>'+(i+1)+'. '+d[0]+'</h3><div>'+d[1]+'</div></div>'}).join('');
+ document.getElementById('impactTbl').innerHTML=IMPACT.map(function(m){var d=L(m);return '<tr><td><b>'+d[0]+'</b></td><td>'+d[1]+'</td><td>'+d[2]+'</td></tr>'}).join('');
+ document.getElementById('econTbl').innerHTML=ECON.map(function(m){var d=L(m);return '<tr><td><b>'+d[0]+'</b></td><td>'+d[1]+'</td><td>'+d[2]+'</td></tr>'}).join('');}
+
+var qi=0,qs=0;
+function renderQuiz(){var el=document.getElementById('quiz');
+ if(qi>=QZ.length){el.innerHTML='<h3>'+(LANG==='ta'?'முடிஞ்சது! மதிப்பெண்: ':'Done! Score: ')+qs+' / 4</h3><button class="btn o" onclick="qi=0;qs=0;renderQuiz()">'+(LANG==='ta'?'மீண்டும்':'Restart')+'</button>';return;}
+ var q=QZ[qi],d=L(q),h='<div class="small">'+(qi+1)+' / '+QZ.length+'</div><h3>'+d[0]+'</h3>';
+ if(q.free){h+='<textarea id="ft" rows="3" style="width:100%;padding:8px;border:1px solid var(--line);border-radius:8px;font-family:inherit"></textarea><br><button class="btn" style="margin-top:6px" onclick="freeAns()">'+(LANG==='ta'?'சமர்ப்பி':'Submit')+'</button><div class="fb" id="fb"></div>';}
+ else{for(var i=1;i<d.length;i++)h+='<button class="opt" onclick="pick(this,'+(i-1)+')">'+d[i]+'</button>';h+='<div class="fb" id="fb"></div>';}
+ el.innerHTML=h;}
+function pick(b,i){var q=QZ[qi];document.querySelectorAll('.opt').forEach(function(o,j){o.disabled=true;if(j===q.a)o.classList.add('r')});
+ if(i===q.a)qs++;else b.classList.add('w');
+ document.getElementById('fb').innerHTML=(i===q.a?'✅ ':'❌ ')+L(q.why)+'<br><button class="btn" style="margin-top:8px" onclick="qi++;renderQuiz()">'+(LANG==='ta'?'அடுத்து →':'Next →')+'</button>';}
+function freeAns(){var v=(document.getElementById('ft').value||'').toLowerCase();var hit=/growth|gdp|7\.8|7\.1|strong|வளர்ச்சி|வலு/.test(v);
+ document.getElementById('fb').innerHTML=(hit?'✅ ':'🤔 ')+L(QZ[qi].why)+'<br><button class="btn" style="margin-top:8px" onclick="qi++;renderQuiz()">'+(LANG==='ta'?'முடி →':'Finish →')+'</button>';}
+
+function renderMap(){var s=document.getElementById('map'),h='<defs><marker id="ar" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#9aa5b4"/></marker></defs>';
+ var by={};MAP.forEach(function(n){by[n.id]=n});
+ LINKS.forEach(function(l){var a=by[l[0]],b=by[l[1]];var x1=a.x+a.w,y1=a.y+a.h/2,x2=b.x,y2=b.y+b.h/2;
+  if(l[0]==='crude'&&l[1]==='rupee'){x1=a.x+a.w/2;y1=a.y+a.h;x2=b.x+b.w/2;y2=b.y;}
+  h+='<path d="M'+x1+','+y1+' C'+((x1+x2)/2)+','+y1+' '+((x1+x2)/2)+','+y2+' '+x2+','+y2+'" fill="none" stroke="#9aa5b4" stroke-width="1.6" marker-end="url(#ar)"/>';});
+ MAP.forEach(function(n){var d=L(n);var words=d[0];
+  h+='<g class="node" data-id="'+n.id+'" onclick="mapSel(\''+n.id+'\')"><rect x="'+n.x+'" y="'+n.y+'" width="'+n.w+'" height="'+n.h+'" rx="10" fill="'+n.c+'" opacity="'+(n.id==='rbi'?1:0.92)+'" stroke="#fff" stroke-width="2"/>'+
+  '<foreignObject x="'+(n.x+4)+'" y="'+(n.y+2)+'" width="'+(n.w-8)+'" height="'+(n.h-4)+'"><div xmlns="http://www.w3.org/1999/xhtml" style="height:100%;display:flex;align-items:center;justify-content:center;text-align:center;color:#fff;font-weight:700;font-size:'+(n.id==='rbi'?14:12.5)+'px;line-height:1.2">'+words+'</div></foreignObject></g>';});
+ h+='<text x="105" y="465" text-anchor="middle" font-size="12" fill="#5d6878">'+(LANG==='ta'?'அழுத்தங்கள்':'Pressures')+'</text><text x="380" y="465" text-anchor="middle" font-size="12" fill="#5d6878">'+(LANG==='ta'?'நிலைமை':'Conditions')+'</text><text x="615" y="465" text-anchor="middle" font-size="12" fill="#5d6878">'+(LANG==='ta'?'முடிவு':'Decision')+'</text><text x="815" y="465" text-anchor="middle" font-size="12" fill="#5d6878">'+(LANG==='ta'?'விளைவுகள்':'Effects')+'</text>';
+ s.innerHTML=h;mapSel('rbi');}
+function mapSel(id){var n=MAP.filter(function(x){return x.id===id})[0],d=L(n);
+ document.querySelectorAll('.node').forEach(function(g){g.classList.toggle('sel',g.dataset.id===id)});
+ document.getElementById('mapInfo').innerHTML='<h3 style="color:'+n.c+'">'+d[0]+'</h3><div>'+d[1]+'</div>';}
+
+var charts={};
+function mk(id,cfg){if(charts[id])charts[id].destroy();charts[id]=new Chart(document.getElementById(id),cfg);}
+function renderCharts(){Chart.defaults.font.family=LANG==='ta'?'Noto Sans Tamil':'Inter';
+ var ta=LANG==='ta';
+ mk('cCpi',{type:'line',data:{labels:['May 26','Jun 26','Jul 26','Aug 26','Sep 26*'],datasets:[
+  {label:'CPI %',data:[3.93,4.38,4.45,4.82,null],borderColor:'#f07c1b',backgroundColor:'#f07c1b',borderWidth:3,tension:.2},
+  {label:ta?'இலக்கு 4%':'Target 4%',data:[4,4,4,4,4],borderColor:'#1f9d55',borderDash:[5,5],pointRadius:0},
+  {label:ta?'மேல் வரம்பு 6%':'Upper band 6%',data:[6,6,6,6,6],borderColor:'#d64545',borderDash:[5,5],pointRadius:0}]},
+  options:{maintainAspectRatio:false,scales:{y:{min:2,max:7}},plugins:{tooltip:{callbacks:{label:function(c){return c.dataset.label+': '+(c.raw==null?'—':c.raw.toFixed(2)+'%')}}}}}});
+ var lab=['Feb 25','Apr 25','Jun 25','Aug 25','Oct 25','Dec 25','Feb 26','Apr 26','Jun 26','Aug 26','Sep 26','Oct 26'];
+ var repo=[6.25,6.00,5.50,5.50,5.50,5.25,5.25,5.25,5.25,5.25,5.25,5.50];
+ var fed=[4.50,4.50,4.50,4.50,4.25,3.75,3.75,3.75,3.75,3.75,4.00,4.00];
+ mk('cRates',{type:'line',data:{labels:lab,datasets:[{label:'RBI repo %',data:repo,borderColor:'#0f3a68',stepped:true,borderWidth:3},{label:'US Fed upper %',data:fed,borderColor:'#d64545',stepped:true,borderWidth:3}]},options:{maintainAspectRatio:false,scales:{y:{min:3,max:6.5}}}});
+ var gap=repo.map(function(v,i){return Math.round((v-fed[i])*100)});
+ mk('cGap',{type:'bar',data:{labels:lab,datasets:[{label:'bps',data:gap,backgroundColor:gap.map(function(g,i){return i===lab.length-1?'#f07c1b':'#2b6cb0'})}]},options:{maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{y:{beginAtZero:true}}},plugins:[topLabels]});
+ mk('cSplit',{type:'bar',data:{labels:ta?['கிராமம்','நகரம்','மொத்தம்','உணவு']:['Rural','Urban','Combined','Food'],datasets:[{data:[5.23,4.31,4.82,5.95],backgroundColor:['#d69e2e','#2b6cb0','#f07c1b','#d64545']}]},options:{maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{y:{beginAtZero:true,max:7}}},plugins:[topLabels]});}
+var topLabels={id:'tl',afterDatasetsDraw:function(c){var x=c.ctx;c.data.datasets.forEach(function(ds,i){c.getDatasetMeta(i).data.forEach(function(b,j){var v=ds.data[j];if(v==null)return;x.save();x.fillStyle='#1b2333';x.font='600 11px Inter';x.textAlign='center';x.fillText(String(v),b.x,b.y-4);x.restore();})})}};
+
+function emi(p,r,n){var m=r/1200;return p*m*Math.pow(1+m,n)/(Math.pow(1+m,n)-1)}
+function inr(v){return '₹'+Math.round(v).toLocaleString('en-IN')}
+function calc(){var p=+document.getElementById('la').value||0,y=+document.getElementById('lt').value||1,r=+document.getElementById('lr').value||0,b=+document.getElementById('lb').value;
+ document.getElementById('lbv').textContent=b;var n=y*12,e1=emi(p,r,n),e2=emi(p,r+b/100,n);
+ document.getElementById('e1').textContent=inr(e1);document.getElementById('e2').textContent=inr(e2);
+ document.getElementById('e3').textContent='+ '+inr(e2-e1);document.getElementById('e4').textContent='+ '+inr((e2-e1)*n);}
+['la','lt','lr','lb'].forEach(function(id){document.getElementById(id).addEventListener('input',calc)});
+
+/* CB Assist knowledge base */
+var KB=[
+ {k:['investor','invest','share','stock','macro','why should','influenc','முதலீ','பங்கு','மேக்ரோ'],en:"Six things move a stock price: earnings, fundamentals, macros, cycle, sentiment and triggers. Each carries a different weight depending on the stock. For banks and rate-sensitive stocks, macros like today's repo hike carry heavy weight; for FMCG, fundamentals dominate. That is why investors need to understand macros.",ta:"பங்கு விலையை ஆறு விஷயங்கள் நகர்த்தும்: லாபம், அடிப்படை, மேக்ரோ, சுழற்சி, உணர்வு, தூண்டுதல். பங்கைப் பொறுத்து ஒவ்வொன்றுக்கும் எடை வேறுபடும். வங்கி, வட்டி சார்ந்த பங்குகளுக்கு இன்னைக்கு ரெப்போ ஏற்றம் போன்ற மேக்ரோவுக்கு அதிக எடை; FMCG-க்கு அடிப்படை ஆதிக்கம். அதனால தான் முதலீட்டாளர் மேக்ரோவைப் புரிஞ்சுக்கணும்."},
+ {k:['why','reason','hike','raise','ஏன்','காரணம்','ஏத்த'],en:"RBI hiked by 25 basis points to 5.50% mainly because inflation is rising — 4.82% in August, up every month since May — and the outlook is worse, with crude above 100 dollars, the rupee near 95 and a weak monsoon. Growth is strong at 7.8 percent, so RBI could afford it.",ta:"RBI 25 பேசிஸ் பாயிண்ட் ஏத்தி 5.50% ஆக்குச்சு. முக்கியக் காரணம் பணவீக்கம் ஏறுது — ஆகஸ்ட்ல 4.82%. கச்சா 100 டாலருக்கு மேல, ரூபாய் 95 பக்கம், மழையும் பலவீனம். வளர்ச்சி 7.8% வலுவா இருக்கு, அதனால RBI தாங்க முடியும்."},
+ {k:['target','4%','four','limit','band','இலக்கு','வரம்பு'],en:"Four percent is RBI's target, not its limit. The tolerance band is two to six percent. August CPI of 4.82 percent is above target but inside the band, so this was a pre-emptive hike.",ta:"நாலு சதவீதம் இலக்கு தான், வரம்பு இல்ல. சகிப்பு வரம்பு ரெண்டிலிருந்து ஆறு சதவீதம். ஆகஸ்ட் 4.82% வரம்புக்குள்ள தான் — இது முன்கூட்டிய ஏற்றம்."},
+ {k:['fed','america','us ','gap','spread','அமெரிக்கா','இடைவெளி'],en:"The US Fed hiked to 4 percent on 16 September, cutting the repo-Fed gap to 125 basis points. Today's hike restores it to 150. It's a supporting reason; RBI's mandate is inflation, not a fixed Fed spread.",ta:"அமெரிக்க Fed செப்டம்பர் 16 அன்று 4%-க்கு ஏத்துச்சு. இடைவெளி 125 ஆச்சு, இன்னைக்கு 150 ஆச்சு. இது துணைக் காரணம் தான்."},
+ {k:['fcnr','nri','deposit','swap','டெபாசிட்'],en:"RBI's swap facility drew 143.6 billion dollars, of which 132.98 billion came through FCNR deposits before the window closed on 31 August. RBI swaps those dollars at zero cost, so RBI, not banks, bears the currency risk. That's why it can reduce RBI's surplus transfer to government if the rupee weakens further.",ta:"RBI ஸ்வாப் வசதி மூலம் 143.6 பில்லியன் டாலர் வந்துச்சு; அதில FCNR மூலம் 132.98 பில்லியன், ஆகஸ்ட் 31 அன்று சாளரம் மூடும் முன். RBI பூஜ்ஜியச் செலவில் ஸ்வாப் செய்யுது, அதனால நாணய அபாயம் RBI மேல."},
+ {k:['vrrr','liquidity','surplus','லிக்விடிட்டி','உபரி'],en:"Surplus liquidity peaked around 10 to 11 lakh crore rupees and RBI drained it below 5 lakh crore using VRRR, bond sales and FX swaps. That curbs inflation risk from idle money. RBI does not need to raise rates to cover what these operations cost it.",ta:"உபரி லிக்விடிட்டி 10-11 லட்சம் கோடி வரை போச்சு; VRRR, பாண்ட் விற்பனை மூலம் 5 லட்சம் கோடிக்குக் கீழ வந்துச்சு. அந்தச் செலவைச் சமாளிக்க RBI வட்டியை ஏத்த வேண்டியதில்ல."},
+ {k:['nim','nii','bank','margin','வங்கி'],en:"Bank margins usually improve briefly after a hike because repo-linked loans reprice within a quarter while term deposits reprice only on renewal. But protecting bank margins is a consequence, not a reason RBI hikes.",ta:"ஏற்றத்துக்கு அப்புறம் வங்கி NIM சிறிது காலம் கூடும் — கடன்கள் வேகமா மாறும், டெபாசிட் தாமதமா மாறும். ஆனா இது விளைவு, காரணம் இல்ல."},
+ {k:['dividend','surplus transfer','government','டிவிடெண்ட்','அரசு'],en:"RBI does not need to raise rates to meet its own expenses; its mandate is price stability. The FCNR swap risk could reduce its dividend, but a firmer rupee from tighter policy lowers that cost indirectly.",ta:"RBI தன் சொந்தச் செலவுக்காக வட்டியை ஏத்த வேண்டியதில்ல. FCNR ஸ்வாப் அபாயம் டிவிடெண்டைக் குறைக்கலாம், ஆனா ரூபாய் வலுப்பட்டா அந்தச் செலவு குறையும்."},
+ {k:['emi','loan','home','கடன்','இஎம்ஐ'],en:"For a 50 lakh, 20-year loan at 7.5 percent, a 25 basis point rise adds roughly 770 rupees a month. Use the EMI calculator in the Who Gets Hit tab for your own numbers.",ta:"50 லட்சம், 20 ஆண்டு, 7.5% கடனுக்கு 25 பேசிஸ் பாயிண்ட் ஏற்றம் மாதம் சுமார் 770 ரூபாய் கூடும். 'யாருக்கு பாதிப்பு' பகுதியில் கணக்கி இருக்கு."},
+ {k:['china','சீனா'],en:"China can ignore US rates mainly because of capital controls, a managed currency and low inflation. Its trade surplus helps, but money can't freely leave China the way foreign portfolio money leaves India.",ta:"சீனா மூலதனக் கட்டுப்பாடு, கட்டுப்படுத்தப்பட்ட நாணயம், குறைந்த பணவீக்கம் இவற்றால US ரேட்டைப் புறக்கணிக்க முடியுது."},
+ {k:['next','december','future','அடுத்து','டிசம்பர்'],en:"The stance is now calibrated tightening, so the next move is a hike or a pause — no cuts. SBI Research and HSBC both expected another 25 basis points in December. The September CPI comes out on 12 October.",ta:"நிலைப்பாடு இப்போ படிப்படியான இறுக்கம் — அடுத்து ஏற்றமோ இடைநிறுத்தமோ தான். SBI, HSBC டிசம்பர்ல இன்னொரு 25 எதிர்பார்க்கிறாங்க. செப்டம்பர் CPI அக்டோபர் 12."},
+ {k:['oil','crude','petrol','எண்ணெய்','கச்சா'],en:"Crude crossed 100 dollars a barrel. Oil companies are absorbing part of it, but wholesale inflation is already 9.92 percent, so the pass-through to retail prices is still coming.",ta:"கச்சா 100 டாலரைத் தாண்டிடுச்சு. மொத்தப் பணவீக்கம் ஏற்கனவே 9.92%; சில்லறை விலைக்கு இனிமே தான் வரும்."}
+];
+function answer(q){q=q.toLowerCase();var best=null,bs=0;KB.forEach(function(e){var s=0;e.k.forEach(function(k){if(q.indexOf(k)>-1)s++});if(s>bs){bs=s;best=e}});
+ if(!best)return LANG==='ta'?'மன்னிக்கணும், இதைப் பத்திக் கேளுங்க: காரணம், Fed, FCNR, லிக்விடிட்டி, வங்கி NIM, EMI, சீனா, அடுத்த நடவடிக்கை.':'Try asking about: the reason, the 4% target, the Fed gap, FCNR, liquidity, bank NIMs, EMIs, China or the next move.';
+ return best[LANG];}
+function say(t){try{speechSynthesis.cancel();var u=new SpeechSynthesisUtterance(t.replace(/<[^>]+>/g,''));u.lang=LANG==='ta'?'ta-IN':'en-IN';u.rate=1;speechSynthesis.speak(u);}catch(e){}}
+function addMsg(t,c){var d=document.createElement('div');d.className='msg '+c;d.textContent=t;var lg=document.getElementById('asLog');lg.appendChild(d);lg.scrollTop=lg.scrollHeight;}
+function ask(txt){var q=txt||document.getElementById('q').value.trim();if(!q)return;addMsg(q,'u');document.getElementById('q').value='';var a=answer(q);setTimeout(function(){addMsg(a,'b');say(a)},200);}
+function togAs(){var p=document.getElementById('asPanel');p.classList.toggle('on');document.getElementById('disc').classList.remove('on');
+ if(p.classList.contains('on')&&!document.getElementById('asLog').children.length)addMsg(LANG==='ta'?'வணக்கம்! மைக்கைத் தட்டி குரலில் கேளுங்க.':'Hello! Tap the mic and ask by voice, or type.','b');}
+function listen(){var SR=window.SpeechRecognition||window.webkitSpeechRecognition;if(!SR){addMsg(LANG==='ta'?'இந்த உலாவியில் குரல் உள்ளீடு இல்லை — தட்டச்சு செய்யுங்க.':'Voice input is not supported in this browser — please type.','b');return;}
+ var r=new SR();r.lang=LANG==='ta'?'ta-IN':'en-IN';r.interimResults=false;var m=document.getElementById('mic');m.classList.add('rec');
+ r.onresult=function(e){ask(e.results[0][0].transcript)};r.onend=function(){m.classList.remove('rec')};r.onerror=function(){m.classList.remove('rec')};r.start();}
+function renderChips(){var c=LANG==='ta'?['RBI ஏன் ஏத்துச்சு?','பங்கு விலையை நகர்த்துவது எது?','முதலீட்டாளர் ஏன் கவனிக்கணும்?','அடுத்து என்ன?']:['Why did RBI hike?','What moves a stock price?','Why should investors care?','What next?'];
+ document.getElementById('chips').innerHTML=c.map(function(x){return '<span onclick="ask(\''+x+'\')">'+x+'</span>'}).join('');}
+
+
+var INF=[
+ {k:'E',ic:'₹',h:[62,100],today:{en:'Higher rates raise interest cost for borrowers, so analysts may trim earnings estimates for leveraged firms.',ta:'வட்டி ஏறினா கடன் வாங்கிய நிறுவனங்களுக்கு வட்டிச் செலவு கூடும்; லாப மதிப்பீடுகள் குறையலாம்.'},c:'#0f3a68',en:["Earnings","Quarterly profit growth — the engine of long-term price."],ta:["லாபம் (Earnings)","காலாண்டு லாப வளர்ச்சி — நீண்டகால விலையின் இயந்திரம்."]},
+ {k:'F',ic:'⚖',h:[70,100],today:{en:'Strong balance sheets with low debt ride out a rate hike far better.',ta:'குறைந்த கடன், வலுவான இருப்புநிலை உள்ள நிறுவனங்கள் வட்டி ஏற்றத்தை நல்லா தாங்கும்.'},c:'#1f9d55',en:["Fundamentals","Balance sheet, ROE, debt, cash flow, moat, management quality."],ta:["அடிப்படை (Fundamentals)","இருப்புநிலை, ROE, கடன், பணப்புழக்கம், போட்டி அரண், நிர்வாகத் தரம்."]},
+ {k:'M',ic:'🌐',h:[30,75],today:{en:"Today's 25 bps repo hike, crude above $100 and the rupee near 95/$ are all macro forces.",ta:'இன்னைக்கு 25 bps ரெப்போ ஏற்றம், $100+ கச்சா, 95/$ ரூபாய் — எல்லாமே மேக்ரோ சக்திகள்.'},c:'#f07c1b',en:["Macros","Interest rates, inflation, rupee, crude, Fed, FPI flows — like today's repo hike."],ta:["மேக்ரோ (Macros)","வட்டி, பணவீக்கம், ரூபாய், கச்சா, Fed, FPI ஓட்டம் — இன்னைக்கு ரெப்போ ஏற்றம் மாதிரி."]},
+ {k:'C',ic:'🔄',h:[40,85],today:{en:'The hike marks a turn in the rate cycle — from cuts and pauses to calibrated tightening.',ta:'இந்த ஏற்றம் வட்டிச் சுழற்சியில் திருப்பம் — குறைப்பு, இடைநிறுத்தத்திலிருந்து படிப்படியான இறுக்கத்துக்கு.'},c:'#2b6cb0',en:["Cycle","Where the sector sits in its up- or down-cycle — capex, commodity, credit or demand cycle."],ta:["சுழற்சி (Cycle)","துறை தன் ஏற்ற/இறக்கச் சுழற்சியில் எங்கே — மூலதனம், பொருள், கடன், தேவைச் சுழற்சி."]},
+ {k:'S',ic:'😊',h:[0,35],today:{en:'Markets often react on the day — rate-sensitive stocks may dip on the headline alone.',ta:'அன்னைக்கே சந்தை எதிர்வினை காட்டும் — தலைப்புச் செய்திக்கே வட்டி சார்ந்த பங்குகள் சரியலாம்.'},c:'#d69e2e',en:["Sentiment","Market mood, FII/DII flows, news, fear and greed."],ta:["உணர்வு (Sentiment)","சந்தை மனநிலை, FII/DII ஓட்டம், செய்தி, பயம், பேராசை."]},
+ {k:'T',ic:'⚡',h:[0,25],today:{en:'The policy announcement itself is a trigger; the next one is the September CPI on 12 Oct.',ta:'கொள்கை அறிவிப்பே ஒரு தூண்டுதல்; அடுத்தது அக் 12 அன்று வரும் செப்டம்பர் CPI.'},c:'#d64545',en:["Triggers","Specific events: order wins, results surprise, policy change, M&A, rating upgrade."],ta:["தூண்டுதல் (Triggers)","குறிப்பிட்ட நிகழ்வுகள்: ஆர்டர், எதிர்பாராத முடிவு, கொள்கை மாற்றம், இணைப்பு, ரேட்டிங் உயர்வு."]}
+];
+var TYPES=[{w:[20, 20, 30, 15, 10, 5],en:["Banks", "Repo, liquidity and credit cost move margins directly — today's hike matters most here."],ta:["வங்கிகள்", "ரெப்போ, லிக்விடிட்டி, கடன் செலவு லாப விகிதத்தை நேரடியா நகர்த்தும் — இன்னைக்கு ஏற்றம் இங்கே தான் அதிகம் முக்கியம்."]},
+{w:[20, 15, 30, 15, 10, 10],en:["NBFCs", "Borrowing cost rises with rates; funding access and asset quality track the macro."],ta:["NBFC", "வட்டியோட கடன் வாங்கும் செலவு ஏறும்; நிதி அணுகலும் சொத்துத் தரமும் மேக்ரோவைப் பின்தொடரும்."]},
+{w:[25, 20, 25, 10, 10, 10],en:["IT services", "Rupee and US tech spending are the key macros; deal wins act as triggers."],ta:["IT சேவை", "ரூபாய், அமெரிக்க டெக் செலவு முக்கிய மேக்ரோ; ஒப்பந்த வெற்றிகள் தூண்டுதல்."]},
+{w:[15, 15, 5, 15, 25, 25],en:["Defence", "Order wins and government policy drive prices; domestic rates matter little."],ta:["பாதுகாப்பு", "ஆர்டர்களும் அரசுக் கொள்கையும் விலையை ஓட்டும்; உள்நாட்டு வட்டி அதிகம் முக்கியமில்ல."]},
+{w:[15, 20, 20, 15, 10, 20],en:["Power", "Regulation, tariffs and capex funding cost; policy announcements are big triggers."],ta:["மின்சாரம்", "ஒழுங்குமுறை, கட்டணம், மூலதனச் செலவு; கொள்கை அறிவிப்புகள் பெரிய தூண்டுதல்."]},
+{w:[15, 10, 25, 25, 10, 15],en:["Textiles", "Cotton cycle, rupee and export tariffs dominate; margins are thin."],ta:["ஜவுளி", "பருத்திச் சுழற்சி, ரூபாய், ஏற்றுமதி வரி ஆதிக்கம்; லாப விகிதம் குறைவு."]},
+{w:[20, 15, 25, 25, 10, 5],en:["Automobiles", "Loan EMIs and the demand cycle drive volumes — rate-sensitive."],ta:["வாகனங்கள்", "கடன் EMI, தேவைச் சுழற்சி விற்பனையை ஓட்டும் — வட்டி சார்ந்தது."]},
+{w:[25, 15, 15, 25, 10, 10],en:["Auto ancillaries", "Follows the vehicle cycle and exports; client wins are triggers."],ta:["வாகன உதிரிபாகங்கள்", "வாகனச் சுழற்சி, ஏற்றுமதியைப் பின்தொடரும்; புது வாடிக்கையாளர் தூண்டுதல்."]},
+{w:[15, 10, 15, 20, 35, 5],en:["Capital markets", "Volumes rise and fall with market mood — sentiment is the main driver."],ta:["மூலதனச் சந்தை", "சந்தை மனநிலையோட வர்த்தக அளவு ஏறி இறங்கும் — உணர்வு தான் முக்கியம்."]},
+{w:[20, 15, 10, 5, 35, 15],en:["Platform companies", "Growth narrative and user metrics; valuations swing with sentiment."],ta:["தளம் சார்ந்த நிறுவனங்கள்", "வளர்ச்சிக் கதை, பயனர் எண்ணிக்கை; மதிப்பீடு உணர்வோட ஆடும்."]},
+{w:[20, 15, 35, 10, 10, 10],en:["Exporters", "A weaker rupee lifts realisations; global demand and tariffs matter."],ta:["ஏற்றுமதியாளர்கள்", "பலவீன ரூபாய் வருவாயைக் கூட்டும்; உலகத் தேவை, வரி முக்கியம்."]},
+{w:[15, 15, 40, 10, 10, 10],en:["Importers", "Rupee and crude/commodity prices hit costs directly — most macro-exposed."],ta:["இறக்குமதியாளர்கள்", "ரூபாய், கச்சா/பொருள் விலை நேரடியா செலவைத் தாக்கும் — மிக அதிக மேக்ரோ பாதிப்பு."]},
+{w:[20, 15, 10, 10, 25, 20],en:["Electronics (EMS)", "PLI incentives and new client orders are triggers; sentiment-driven valuations."],ta:["மின்னணு (EMS)", "PLI ஊக்கமும் புது ஆர்டர்களும் தூண்டுதல்; மதிப்பீடு உணர்வு சார்ந்தது."]},
+{w:[10, 15, 25, 15, 5, 30],en:["Fertilizers", "Subsidy policy is the big trigger; gas prices and rupee are the macros."],ta:["உரங்கள்", "மானியக் கொள்கை பெரிய தூண்டுதல்; எரிவாயு விலை, ரூபாய் மேக்ரோ."]},
+{w:[20, 15, 15, 30, 10, 10],en:["Chemicals", "Global pricing cycle and China supply dominate."],ta:["ரசாயனங்கள்", "உலக விலைச் சுழற்சி, சீன விநியோகம் ஆதிக்கம்."]},
+{w:[30, 35, 10, 5, 10, 10],en:["FMCG", "Steady earnings and brand strength; macros matter via input inflation."],ta:["FMCG", "நிலையான லாபம், பிராண்ட் பலம்; மேக்ரோ உள்ளீட்டுப் பணவீக்கம் வழியா."]},
+{w:[25, 25, 15, 15, 10, 10],en:["Consumer durables", "Discretionary demand and EMI financing; season and input costs matter."],ta:["நுகர்வோர் நீடித்த பொருட்கள்", "விருப்பச் செலவு, EMI நிதி; பருவமும் உள்ளீட்டுச் செலவும் முக்கியம்."]},
+{w:[15, 15, 20, 20, 10, 20],en:["Infrastructure", "Government capex cycle, order inflow and interest cost on working capital."],ta:["உள்கட்டமைப்பு", "அரசு மூலதனச் சுழற்சி, ஆர்டர் வரவு, நடைமுறை மூலதன வட்டிச் செலவு."]},
+{w:[10, 10, 10, 15, 30, 25],en:["Railways", "Budget allocations and orders are triggers; heavy retail sentiment."],ta:["ரயில்வே", "பட்ஜெட் ஒதுக்கீடு, ஆர்டர்கள் தூண்டுதல்; சில்லறை உணர்வு அதிகம்."]},
+{w:[15, 15, 30, 25, 10, 5],en:["Realty", "Home-loan rates and the property cycle — highly rate-sensitive."],ta:["ரியல்டி", "வீட்டுக்கடன் வட்டி, சொத்துச் சுழற்சி — மிக வட்டி சார்ந்தது."]},
+{w:[15, 10, 25, 35, 10, 5],en:["Metals", "Cycle is king: global prices and China demand decide earnings."],ta:["உலோகங்கள்", "சுழற்சி தான் ராஜா: உலக விலை, சீனா தேவை லாபத்தை முடிவு செய்யும்."]},
+{w:[25, 20, 15, 10, 10, 20],en:["Pharma", "US pricing and rupee are macros; USFDA outcomes are triggers."],ta:["மருந்து", "அமெரிக்க விலை, ரூபாய் மேக்ரோ; USFDA முடிவுகள் தூண்டுதல்."]},
+{w:[10, 15, 20, 5, 35, 15],en:["Loss-making new-age", "No profits yet, so value rests on distant cash flows — higher rates and mood swings hit hardest."],ta:["நஷ்டத்தில் இயங்கும் புதுயுக நிறுவனங்கள்", "இன்னும் லாபம் இல்ல; மதிப்பு தூரத்துப் பணப்புழக்கத்தில் — வட்டி ஏற்றமும் மனநிலை மாற்றமும் அதிகம் அடிக்கும்."]},
+{w:[20, 15, 5, 10, 20, 30],en:["Small-cap turnaround", "Company-specific triggers and sentiment lead; macros are background."],ta:["சிறிய திருப்புமுனைப் பங்கு", "நிறுவனத் தனித் தூண்டுதலும் உணர்வும் முன்னிலை; மேக்ரோ பின்னணி."]}];
+var curT=0;
+var WHY=[
+ {en:["1. Valuation: the price you pay","Share prices are future profits discounted back to today. When rates rise, the discount rate rises and P/E multiples tend to shrink — especially for high-growth stocks whose profits lie far in the future."],ta:["1. மதிப்பீடு: நீங்க கொடுக்கும் விலை","பங்கு விலை = எதிர்கால லாபத்தை இன்றைய மதிப்புக்குக் கொண்டு வருவது. வட்டி ஏறினா P/E சுருங்கும் — குறிப்பா லாபம் ரொம்ப தூரத்துல இருக்கும் வளர்ச்சிப் பங்குகளுக்கு."]},
+ {en:["2. Earnings: what the company makes","Higher rates raise interest cost for borrowers and cool demand for loan-financed purchases like cars and homes. Inflation squeezes margins when input costs rise faster than prices."],ta:["2. லாபம்: நிறுவனம் சம்பாதிப்பது","வட்டி ஏறினா கடன் வாங்கிய நிறுவனங்களுக்குச் செலவு கூடும்; கார், வீடு போன்ற கடன் வாங்கும் தேவை குறையும். உள்ளீட்டுச் செலவு விலையை விட வேகமா ஏறினா லாப விகிதம் குறையும்."]},
+ {en:["3. Sector rotation","The same macro event helps some sectors and hurts others. A weak rupee helps exporters but hurts importers; high crude hurts paints and airlines."],ta:["3. துறை சுழற்சி","ஒரே மேக்ரோ நிகழ்வு சில துறைக்கு உதவும், சிலதுக்கு பாதிக்கும். பலவீன ரூபாய் ஏற்றுமதியாளருக்கு உதவும்; அதிக கச்சா பெயிண்ட், விமானத் துறையை பாதிக்கும்."]},
+ {en:["4. Money flows","Foreign investors compare India's returns with US rates and the rupee outlook. When the gap narrows, FPI selling can drag even good stocks down."],ta:["4. பண ஓட்டம்","வெளிநாட்டு முதலீட்டாளர்கள் இந்திய வருமானத்தை US வட்டி, ரூபாய் போக்கோட ஒப்பிடுவாங்க. இடைவெளி குறைஞ்சா FPI விற்பனை நல்ல பங்குகளையும் இழுக்கும்."]},
+ {en:["5. Timing and patience","Macro tells you the environment, not the company. It helps you avoid overpaying at the peak of a cycle and stay calm when good businesses fall for macro reasons."],ta:["5. நேரம், பொறுமை","மேக்ரோ சூழலைச் சொல்லும், நிறுவனத்தை இல்ல. சுழற்சி உச்சத்துல அதிக விலை கொடுக்காம இருக்கவும், மேக்ரோ காரணத்தால நல்ல பங்கு விழும்போது பதறாம இருக்கவும் உதவும்."]},
+ {en:["6. Risk control","Knowing which holdings depend on cheap money, low crude or a strong rupee shows where your portfolio is exposed before the next policy move."],ta:["6. அபாயக் கட்டுப்பாடு","எந்தப் பங்குகள் மலிவு கடன், குறைந்த கச்சா, வலுவான ரூபாயை நம்பியிருக்குன்னு தெரிஞ்சா, அடுத்த கொள்கை மாற்றத்துக்கு முன்னே உங்க போர்ட்ஃபோலியோ அபாயம் தெரியும்."]}
+];
+var SECT=[
+ {en:["Repo rate ↑","Banks (short-term NIM), cash-rich companies","Realty, auto, NBFCs, highly leveraged firms"],ta:["ரெப்போ ↑","வங்கிகள் (குறுகிய கால NIM), பணம் நிறைந்த நிறுவனங்கள்","ரியல்டி, ஆட்டோ, NBFC, அதிகக் கடன் நிறுவனங்கள்"]},
+ {en:["Crude ↑","Upstream oil producers","Paints, airlines, tyres, OMCs (if prices are held)"],ta:["கச்சா ↑","எண்ணெய் உற்பத்தியாளர்கள்","பெயிண்ட், விமானம், டயர், OMC (விலை கட்டுப்பாட்டில் இருந்தா)"]},
+ {en:["Rupee ↓","IT services, pharma exporters","Importers, companies with foreign-currency debt"],ta:["ரூபாய் ↓","IT சேவை, பார்மா ஏற்றுமதியாளர்","இறக்குமதியாளர், வெளிநாட்டுக் கடன் உள்ள நிறுவனங்கள்"]},
+ {en:["Inflation ↑","Firms with pricing power","FMCG and others when input costs outrun prices"],ta:["பணவீக்கம் ↑","விலை நிர்ணய சக்தி உள்ள நிறுவனங்கள்","உள்ளீட்டுச் செலவு விலையை முந்தும்போது FMCG போன்றவை"]},
+ {en:["US Fed ↑ / gap narrows","Domestic-demand stocks less dependent on FPI","Large caps with heavy FPI ownership"],ta:["US Fed ↑ / இடைவெளி குறையுது","FPI-ஐ அதிகம் நம்பாத உள்நாட்டுத் தேவைப் பங்குகள்","அதிக FPI உரிமை உள்ள பெரிய பங்குகள்"]}
+];
+
+var hubSel=2;
+function drawHub(){var cx=200,cy=200,R=140,h='';var ta=LANG==='ta';
+ h+='<circle cx="200" cy="200" r="168" fill="none" stroke="#e3e8ef" stroke-dasharray="4 5"/>';
+ INF.forEach(function(m,i){var a=-Math.PI/2+i*Math.PI/3,x=cx+R*Math.cos(a),y=cy+R*Math.sin(a),sel=i===hubSel;var w=TYPES[curT].w[i];
+  h+='<line x1="'+cx+'" y1="'+cy+'" x2="'+x+'" y2="'+y+'" stroke="'+m.c+'" stroke-width="'+(2+w/3)+'" opacity="'+(sel?0.95:0.45)+'" stroke-linecap="round"/>';});
+ h+='<circle cx="200" cy="200" r="58" fill="#0f3a68"/><text x="200" y="194" text-anchor="middle" fill="#fff" font-size="15" font-weight="800">'+(ta?'பங்கு':'SHARE')+'</text><text x="200" y="214" text-anchor="middle" fill="#fff" font-size="15" font-weight="800">'+(ta?'விலை':'PRICE')+'</text>';
+ INF.forEach(function(m,i){var a=-Math.PI/2+i*Math.PI/3,x=cx+R*Math.cos(a),y=cy+R*Math.sin(a),sel=i===hubSel;var nm=L(m)[0].split(' (')[0];
+  h+='<g style="cursor:pointer" onclick="hubSel='+i+';drawHub()"><circle cx="'+x+'" cy="'+y+'" r="'+(sel?44:38)+'" fill="'+m.c+'" stroke="#fff" stroke-width="'+(sel?5:3)+'"/>'+
+  '<text x="'+x+'" y="'+(y-6)+'" text-anchor="middle" font-size="20">'+m.ic+'</text>'+
+  '<text x="'+x+'" y="'+(y+15)+'" text-anchor="middle" fill="#fff" font-size="'+(ta?9.5:(nm.length>10?9.5:11))+'" font-weight="700">'+nm+'</text></g>';});
+ h+='<text x="200" y="396" text-anchor="middle" font-size="10.5" fill="#5d6878">'+(ta?'கோட்டின் தடிமன் = எடை (துறை எடைகள் தாவலில் மாற்றலாம்): ':'Line thickness = weight for (change in Sector Weights tab): ')+L(TYPES[curT])[0]+'</text>';
+ document.getElementById('hub').innerHTML=h;
+ var m=INF[hubSel],d=L(m);
+ document.getElementById('hubInfo').innerHTML='<b style="color:'+m.c+'">'+m.ic+' '+d[0]+'</b> — '+d[1]+'<br><b>'+(ta?'இன்றைய ரெப்போ ஏற்றத்தோட தொடர்பு: ':'Link to today\'s repo hike: ')+'</b>'+L(m.today)+'<br><span class="small">'+(ta?'இந்தத் துறைக்கு எடை: ':'Weight for this sector: ')+'<b>'+TYPES[curT].w[hubSel]+'%</b></span>';
+ drawHorizon();}
+function drawHorizon(){var ta=LANG==='ta',x0=110,W=280,h='';
+ var ticks=ta?['நாட்கள்','வாரங்கள்','மாதங்கள்','காலாண்டுகள்','ஆண்டுகள்']:['Days','Weeks','Months','Quarters','Years'];
+ ticks.forEach(function(t,i){var x=x0+i*W/4;h+='<line x1="'+x+'" y1="18" x2="'+x+'" y2="222" stroke="#e3e8ef"/><text x="'+x+'" y="240" text-anchor="middle" font-size="10" fill="#5d6878">'+t+'</text>';});
+ var order=[4,5,2,3,0,1];
+ order.forEach(function(idx,r){var m=INF[idx],y=24+r*33,a=x0+m.h[0]/100*W,b=x0+m.h[1]/100*W,sel=idx===hubSel;
+  h+='<text x="'+(x0-8)+'" y="'+(y+15)+'" text-anchor="end" font-size="'+(ta?10:11.5)+'" font-weight="600" fill="#1b2333">'+m.ic+' '+L(m)[0].split(' (')[0]+'</text>'+
+  '<rect x="'+a+'" y="'+y+'" width="'+(b-a)+'" height="22" rx="11" fill="'+m.c+'" opacity="'+(sel?1:0.75)+'" stroke="'+(sel?'#1b2333':'none')+'" stroke-width="1.5" style="cursor:pointer" onclick="hubSel='+idx+';drawHub()"/>';});
+ h+='<text x="'+(x0)+'" y="12" font-size="10" fill="#d64545" font-weight="700">'+(ta?'← குறுகிய கால சத்தம்':'← short-term noise')+'</text><text x="'+(x0+W)+'" y="12" text-anchor="end" font-size="10" fill="#1f9d55" font-weight="700">'+(ta?'நீண்டகால மதிப்பு →':'long-term value →')+'</text>';
+ document.getElementById('horizon').innerHTML=h;}
+function tipTog(el,e){e.stopPropagation();var on=el.classList.contains('on');document.querySelectorAll('.hti.on').forEach(function(x){x.classList.remove('on')});if(!on)el.classList.add('on');}
+document.addEventListener('click',function(){document.querySelectorAll('.hti.on').forEach(function(x){x.classList.remove('on')})});
+function renderInvestor(){
+ document.getElementById('whyGrid').innerHTML=WHY.map(function(m){var d=L(m);return '<div class="card"><h3>'+d[0]+'</h3><div>'+d[1]+'</div></div>'}).join('');
+ document.getElementById('sectTbl').innerHTML=SECT.map(function(m){var d=L(m);return '<tr><td><b>'+d[0]+'</b></td><td style="color:var(--green)">'+d[1]+'</td><td style="color:var(--red)">'+d[2]+'</td></tr>'}).join('');
+ var sel=document.getElementById('typeSel');sel.innerHTML=TYPES.map(function(t,i){return '<option value="'+i+'"'+(i===curT?' selected':'')+'>'+L(t)[0]+'</option>'}).join('');
+ var ord=TYPES.map(function(t,i){return i}).sort(function(a,b){return TYPES[b].w[2]-TYPES[a].w[2]||TYPES[b].w[0]-TYPES[a].w[0]});
+ var hx='<colgroup><col style="width:34%"><col><col><col><col><col><col></colgroup><thead><tr><th style="padding:6px 4px">'+(LANG==='ta'?'துறை':'Sector')+'</th>'+INF.map(function(m){return '<th class="hti" tabindex="0" onclick="tipTog(this,event)" style="text-align:center;padding:6px 2px;font-size:17px">'+m.ic+'<span class="tip" style="border-top:4px solid '+m.c+'"><b>'+m.ic+' '+L(m)[0]+'</b>'+L(m)[1]+'</span></th>'}).join('')+'</tr></thead><tbody>';
+ function hexA(c,a){var r=parseInt(c.substr(1,2),16),g=parseInt(c.substr(3,2),16),b=parseInt(c.substr(5,2),16);return 'rgba('+r+','+g+','+b+','+a+')'}
+ ord.forEach(function(i){var t=TYPES[i];hx+='<tr style="cursor:pointer;'+(i===curT?'outline:2px solid var(--orange);':'')+'" onclick="curT='+i+';renderInvestor();document.getElementById(\'typeSel\').scrollIntoView({behavior:\'smooth\',block:\'center\'})"><td><b>'+L(t)[0]+'</b></td>'+t.w.map(function(w,j){var a=Math.min(1,w/38);return '<td style="text-align:center;padding:7px 2px;background:'+hexA(INF[j].c,a*0.85)+';color:'+(a>0.55?'#fff':'#1b2333')+';font-weight:'+(j===2?800:600)+'">'+w+'</td>'}).join('')+'</tr>'});
+ document.getElementById('heat').innerHTML=hx+'</tbody>';
+ var lg=INF.map(function(m){return '<span style="white-space:nowrap;margin-right:8px">'+m.ic+' '+L(m)[0].split(' (')[0]+'</span>'}).join(' ');
+ document.getElementById('heatLeg').innerHTML=lg;
+ var t=TYPES[curT];
+ document.getElementById('wBars').innerHTML=INF.map(function(m,i){var w=t.w[i];return '<div style="display:flex;align-items:center;gap:8px;margin:6px 0"><div style="width:120px;font-size:13px;font-weight:600">'+L(m)[0].split(' (')[0]+'</div><div style="flex:1;background:var(--soft);border-radius:6px;height:22px"><div style="width:'+(w*2.5)+'%;max-width:100%;background:'+m.c+';height:22px;border-radius:6px"></div></div><div style="width:38px;text-align:right;font-weight:700">'+w+'%</div></div>'}).join('');
+ document.getElementById('wNote').innerHTML='<b>'+L(t)[0]+':</b> '+L(t)[1];drawHub();}
+
+
+function renderAll(){renderInvestor();renderReasons();renderLists();renderQuiz();renderMap();renderChips();calc();if(window.Chart){try{renderCharts()}catch(e){}}}
+setLang('en');
+</script>
+</body>
+</html>
