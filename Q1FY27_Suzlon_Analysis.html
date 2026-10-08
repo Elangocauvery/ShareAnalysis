@@ -1,0 +1,855 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+</head>
+<body>
+<title>Suzlon Q1 FY27</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Inter:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@500;600&family=Noto+Sans+Tamil:wght@400;600;700&display=swap">
+<style>
+/* Layout: CB house style — white sheet, sticky orange-ruled tab rail, one panel per section, wind-teal for Suzlon data */
+:root{
+  --bg:#FFFFFF; --ink:#16181D; --muted:#4A4F59; --line:#E6E1DA;
+  --accent:#F28C28; --accent-soft:#FFF3E6; --accent-deep:#B85F0A;
+  --wind:#0B7A86; --wind-soft:#E6F4F5;
+  --good:#1E7B3C; --good-soft:#E7F5EC; --warn:#A86200; --warn-soft:#FFF5E0; --bad:#B42318; --bad-soft:#FDECEA;
+  --f-display:"Playfair Display", Georgia, "Times New Roman", serif;
+  --f-body:"Inter", "Noto Sans Tamil", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --f-mono:"IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace;
+  color-scheme: light;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:15px;line-height:1.55;margin:0}
+.lang-en .ta,.lang-ta .en{display:none!important}
+.lang-ta{font-family:"Noto Sans Tamil","Inter",system-ui,sans-serif}
+.wrap{max-width:1180px;margin:0 auto;padding-inline:16px;padding-block:0 96px}
+h1,h2,h3{font-family:var(--f-display);text-wrap:balance;margin:0;color:var(--ink)}
+.lang-ta h1,.lang-ta h2,.lang-ta h3{font-family:"Noto Sans Tamil",var(--f-display);font-weight:700}
+h2{font-size:1.55rem;margin-bottom:6px}
+h3{font-size:1.12rem;margin-bottom:8px}
+p{margin:0}
+b,strong{font-weight:700}
+.mono,.num{font-family:var(--f-mono);font-variant-numeric:tabular-nums}
+
+/* header */
+header.top{padding-block:22px 14px;border-bottom:3px solid var(--accent);display:grid;gap:12px}
+.toprow{display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between}
+.brand{display:flex;gap:10px;align-items:center}
+.cbmark{width:40px;height:40px;border-radius:50%;background:var(--accent);color:#fff;display:grid;place-items:center;font-family:var(--f-display);font-weight:800;font-size:1rem;flex:none}
+.brand small{display:block;color:var(--muted);font-weight:600;font-size:.78rem;letter-spacing:.06em;text-transform:uppercase}
+.brand strong{font-size:.95rem}
+.slogan{font-weight:800;color:var(--accent-deep);font-size:.95rem}
+.ctl{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.btn{font:inherit;font-weight:700;font-size:.85rem;border:2px solid var(--ink);background:#fff;color:var(--ink);padding:6px 12px;border-radius:999px;cursor:pointer}
+.btn:hover{background:var(--accent-soft)}
+.btn.on{background:var(--ink);color:#fff}
+.btn.acc{border-color:var(--accent);background:var(--accent);color:#fff}
+.btn:focus-visible,.tab:focus-visible,.opt:focus-visible{outline:3px solid var(--wind);outline-offset:2px}
+.title h1{font-size:clamp(1.7rem,4.2vw,2.6rem);line-height:1.1}
+.title .sub{color:var(--muted);font-weight:600;margin-top:6px;font-size:.92rem}
+.greet{font-weight:700;color:var(--wind)}
+
+/* tabs */
+nav.tabs{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:#fff;border-bottom:1px solid var(--line);display:flex;gap:4px;overflow-x:auto;padding-block:8px;scrollbar-width:thin}
+.tab{font:inherit;font-weight:700;font-size:.86rem;white-space:nowrap;padding:8px 12px;border:none;border-bottom:3px solid transparent;background:none;color:var(--muted);cursor:pointer}
+.tab.active{color:var(--ink);border-bottom-color:var(--accent)}
+.tab:hover{color:var(--ink)}
+.readbar{display:flex;justify-content:flex-end;gap:8px;padding-block:10px 0;flex-wrap:wrap}
+
+section.panel{padding-block:18px 8px;display:grid;gap:18px}
+.lead{color:var(--muted);font-weight:600;max-width:72ch}
+
+/* tiles */
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px}
+.kpi{border:1.5px solid var(--line);border-radius:10px;padding:12px 14px;display:grid;gap:2px;background:#fff}
+.kpi .l{font-size:.74rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.kpi .v{font-family:var(--f-mono);font-size:1.45rem;font-weight:600;color:var(--ink)}
+.kpi .d{font-size:.82rem;font-weight:700}
+.up{color:var(--good)}.dn{color:var(--bad)}.fl{color:var(--warn)}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{font-weight:800;font-size:.8rem;padding:5px 10px;border-radius:999px;border:1.5px solid var(--line);background:#fff}
+.chip.wind{border-color:var(--wind);color:var(--wind);background:var(--wind-soft)}
+.chip.warn{border-color:var(--warn);color:var(--warn);background:var(--warn-soft)}
+.chip.bad{border-color:var(--bad);color:var(--bad);background:var(--bad-soft)}
+.chip.good{border-color:var(--good);color:var(--good);background:var(--good-soft)}
+.chip.acc{border-color:var(--accent);color:var(--accent-deep);background:var(--accent-soft)}
+
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px}
+.grid3{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px}
+.grid2>*,.grid3>*{min-width:0}
+.box{border:1.5px solid var(--line);border-radius:10px;padding:14px 16px;background:#fff;display:grid;gap:8px;align-content:start}
+.box.hl{border-color:var(--accent);background:var(--accent-soft)}
+.box.w{border-color:var(--wind);background:var(--wind-soft)}
+.eyebrow{font-size:.74rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--accent-deep)}
+ul.b{margin:0;padding-left:1.1em;display:grid;gap:5px}
+ul.b li{font-weight:500}
+ul.b li::marker{color:var(--accent)}
+
+/* tables */
+.tw{overflow-x:auto;border:1.5px solid var(--line);border-radius:10px}
+table{border-collapse:collapse;width:100%;font-size:.88rem}
+th,td{padding:8px 10px;text-align:right;border-bottom:1px solid var(--line);white-space:nowrap}
+th:first-child,td:first-child{text-align:left;white-space:normal;min-width:150px}
+thead th{background:#FAF7F3;font-weight:800;font-size:.78rem;text-transform:uppercase;letter-spacing:.04em;color:var(--muted)}
+td{font-family:var(--f-mono);font-variant-numeric:tabular-nums;font-weight:500}
+td:first-child{font-family:var(--f-body);font-weight:700}
+tr:last-child td{border-bottom:none}
+.note{font-size:.8rem;color:var(--muted);font-weight:500}
+.chart{position:relative;height:280px}
+.chart.tall{height:320px}
+
+/* graphics */
+.chain{display:flex;flex-wrap:wrap;gap:8px;align-items:stretch}
+.step{flex:1 1 130px;min-width:0;border:2px solid var(--wind);border-radius:10px;padding:10px;background:var(--wind-soft);display:grid;gap:4px;position:relative}
+.step .n{font-family:var(--f-mono);font-size:.75rem;font-weight:600;color:var(--wind)}
+.step b{font-size:.92rem}
+.step span.s{font-size:.8rem;color:var(--muted);font-weight:500}
+.bar{height:22px;border-radius:6px;background:#F1EEEA;position:relative;overflow:hidden}
+.bar>i{position:absolute;inset:0 auto 0 0;background:var(--wind);border-radius:6px}
+.bar>em{position:absolute;right:8px;top:2px;font-style:normal;font-size:.78rem;font-weight:800}
+.slices{display:grid;grid-template-columns:repeat(20,1fr);gap:3px;max-width:420px}
+.slices i{aspect-ratio:1;border-radius:2px;background:#E9E4DD}
+.slices i.p{background:var(--accent)}
+.tl{display:grid;gap:0;border-left:3px solid var(--accent);margin-left:6px}
+.tl>div{padding:0 0 14px 16px;position:relative}
+.tl>div::before{content:"";position:absolute;left:-9px;top:4px;width:15px;height:15px;border-radius:50%;background:#fff;border:3px solid var(--accent)}
+.tl .when{font-family:var(--f-mono);font-size:.8rem;font-weight:600;color:var(--accent-deep)}
+.tl b{display:block}
+.swot{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px}
+.swot .box h3{font-family:var(--f-body);font-size:1rem;font-weight:800}
+.s1{border-color:var(--good)!important}.s2{border-color:var(--bad)!important}.s3{border-color:var(--wind)!important}.s4{border-color:var(--warn)!important}
+.take{display:grid;gap:12px}
+.take .box{grid-template-columns:44px 1fr;align-items:start}
+.take .k{font-family:var(--f-display);font-size:1.9rem;font-weight:800;color:var(--accent);line-height:1}
+
+/* assist */
+.assist{border:2px solid var(--accent);border-radius:12px;display:grid;gap:0;overflow:hidden}
+.ahead{background:var(--accent-soft);padding:10px 14px;display:flex;gap:8px;flex-wrap:wrap;align-items:center;justify-content:space-between}
+.ahead b{font-family:var(--f-display);font-size:1.1rem}
+.alog{padding:14px;display:grid;gap:10px;max-height:420px;overflow-y:auto;background:#fff}
+.msg{max-width:88%;padding:9px 12px;border-radius:12px;font-weight:500}
+.msg.u{justify-self:end;background:var(--ink);color:#fff}
+.msg.a{justify-self:start;background:#F6F3EF;border:1px solid var(--line)}
+.msg.a .direct{font-weight:700}
+.msg details{margin-top:6px;font-size:.88rem}
+.msg summary{cursor:pointer;color:var(--accent-deep);font-weight:700}
+.msg .acts{display:flex;gap:6px;margin-top:6px;flex-wrap:wrap}
+.mini{font:inherit;font-size:.76rem;font-weight:700;border:1.5px solid var(--line);background:#fff;border-radius:999px;padding:3px 9px;cursor:pointer;color:var(--ink)}
+.ain{display:flex;gap:8px;padding:10px 14px;border-top:1px solid var(--line);flex-wrap:wrap}
+.ain input{flex:1 1 220px;min-width:0;font:inherit;font-weight:600;padding:9px 12px;border:2px solid var(--line);border-radius:999px}
+.ain input:focus{outline:none;border-color:var(--accent)}
+.sugs{display:flex;gap:6px;flex-wrap:wrap;padding:0 14px 12px}
+.sets{display:flex;gap:10px;flex-wrap:wrap;align-items:center;padding:10px 14px;border-top:1px solid var(--line);font-size:.82rem;font-weight:700;color:var(--muted)}
+.sets select,.sets input{font:inherit;font-weight:600}
+.cd{height:4px;background:#F1EEEA;margin:0 14px;border-radius:3px;overflow:hidden}
+.cd>i{display:block;height:100%;width:0;background:var(--accent)}
+.status{padding:4px 14px 0;font-size:.8rem;font-weight:700;color:var(--wind);min-height:1.2em}
+
+/* quiz */
+.quiz{border:2px solid var(--wind);border-radius:12px;padding:16px;display:grid;gap:12px;max-width:760px}
+.opt{font:inherit;text-align:left;font-weight:600;padding:10px 12px;border:2px solid var(--line);border-radius:10px;background:#fff;cursor:pointer;color:var(--ink)}
+.opt.right{border-color:var(--good);background:var(--good-soft)}
+.opt.wrong{border-color:var(--bad);background:var(--bad-soft)}
+.qmeta{display:flex;justify-content:space-between;font-weight:800;font-size:.82rem;color:var(--muted)}
+
+/* floating */
+.cb-badge{position:fixed;right:16px;bottom:calc(16px + env(safe-area-inset-bottom,0px));z-index:50}
+.cb-badge button{width:48px;height:48px;border-radius:50%;border:none;background:var(--accent);color:#fff;font-family:var(--f-display);font-weight:800;font-size:1.05rem;cursor:pointer;animation:blink 1.6s ease-in-out infinite;box-shadow:0 2px 8px rgba(0,0,0,.18)}
+@keyframes blink{50%{opacity:.45}}
+.cb-pop{position:absolute;right:0;bottom:58px;width:min(320px,calc(100vw - 32px));background:#fff;border:2px solid var(--accent);border-radius:10px;padding:12px;font-size:.8rem;font-weight:600;color:var(--ink);box-shadow:0 6px 18px rgba(0,0,0,.12)}
+.cb-badge:hover .cb-pop{display:block!important}
+.va-bubble{position:fixed;right:16px;bottom:calc(76px + env(safe-area-inset-bottom,0px));z-index:50;font:inherit;font-weight:800;font-size:.82rem;background:var(--ink);color:#fff;border:none;border-radius:999px;padding:9px 14px;cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,.18)}
+@media (prefers-reduced-motion:reduce){.cb-badge button{animation:none}}
+.cycle svg{max-width:100%;height:auto}
+.foot{margin-top:28px;padding-top:14px;border-top:1px solid var(--line);font-size:.8rem;color:var(--muted);font-weight:600}
+@media (max-width:560px){h2{font-size:1.3rem}.kpi .v{font-size:1.25rem}}
+</style>
+
+<div class="wrap lang-en" id="app">
+<header class="top">
+  <div class="toprow">
+    <div class="brand"><div class="cbmark">CB</div><div><small>CB Research · Cauvery Business Research</small><strong class="slogan"><span class="en">Learn before you Buy</span><span class="ta">வாங்கறதுக்கு முன்னாடி கத்துக்குங்க!</span></strong></div></div>
+    <div class="ctl">
+      <button class="btn on" id="bEN" onclick="setLang('en')">English</button>
+      <button class="btn" id="bTA" onclick="setLang('ta')">தமிழ்</button>
+    </div>
+  </div>
+  <div class="title">
+    <p class="greet"><span class="en">Vanakam, Cauvery-ans!</span><span class="ta">வணக்கம் காவேரியன்ஸ்!</span></p>
+    <h1><span class="en">Suzlon Energy — Q1 FY27 Business &amp; Investment Analysis</span><span class="ta">Suzlon Energy — Q1 FY27 Business &amp; Investment அலசல்</span></h1>
+    <p class="sub"><span class="en">NSE: SUZLON · BSE: 532667 · Quarter Apr–Jun 2026 · Results 28 Jul 2026 · Price data as of 5 Oct 2026 · Focus: the 2-year and 5-year road ahead</span><span class="ta">NSE: SUZLON · BSE: 532667 · Apr–Jun 2026 quarter · Results 28 Jul 2026 · Price 5 Oct 2026 நிலவரம் · இந்த முறை focus: அடுத்த 2 வருஷம், 5 வருஷம்</span></p>
+  </div>
+</header>
+
+<nav class="tabs" id="tabs" aria-label="Sections"></nav>
+<div class="readbar"><button class="btn" onclick="readTab()">🔊 <span class="en">Read this tab</span><span class="ta">இந்த tab-ஐ படிச்சு காட்டு</span></button><button class="btn" onclick="stopSpeak()"><span class="en">Stop</span><span class="ta">நிறுத்து</span></button></div>
+
+<!-- 1 DASHBOARD -->
+<section class="panel" id="p-dash">
+  <div><h2><span class="en">At a glance</span><span class="ta">ஒரே பார்வையில்</span></h2>
+  <p class="lead"><span class="en">Record first-quarter deliveries, but margins slipped. The stock is near its 52-week low.</span><span class="ta">First quarter-ல record deliveries, ஆனா margin இறங்கியிருக்கு. Share price 52-week low பக்கத்துல இருக்கு.</span></p></div>
+  <div class="kpis">
+    <div class="kpi"><span class="l">Revenue</span><span class="v">₹3,819 cr</span><span class="d up">▲ 23% YoY</span></div>
+    <div class="kpi"><span class="l">EBITDA</span><span class="v">₹595 cr</span><span class="d fl">▼ 1% YoY</span></div>
+    <div class="kpi"><span class="l">EBITDA margin</span><span class="v">15.6%</span><span class="d dn">▼ 360 bps (19.2%)</span></div>
+    <div class="kpi"><span class="l">PAT</span><span class="v">₹305 cr</span><span class="d dn">▼ 6% YoY</span></div>
+    <div class="kpi"><span class="l"><span class="en">Deliveries</span><span class="ta">Deliveries</span></span><span class="v">506 MW</span><span class="d up">▲ 14% · Q1 record</span></div>
+    <div class="kpi"><span class="l"><span class="en">Order book</span><span class="ta">Order book</span></span><span class="v">~6.1 GW</span><span class="d up">84% PSU + C&amp;I</span></div>
+    <div class="kpi"><span class="l"><span class="en">Net cash</span><span class="ta">Net cash</span></span><span class="v">₹2,322 cr</span><span class="d up">Debt ₹277 cr</span></div>
+    <div class="kpi"><span class="l"><span class="en">Share price</span><span class="ta">Share price</span></span><span class="v">₹38.81</span><span class="d dn">−37% from ₹61.5 high</span></div>
+  </div>
+  <div class="chips">
+    <span class="chip wind">CY (Cycle) 52 / 100</span>
+    <span class="chip wind">TG (Triggers) 54 / 100</span>
+    <span class="chip bad"><span class="en">Price stage: Weinstein Stage 4 (falling)</span><span class="ta">Price stage: Weinstein Stage 4 (இறங்கு முகம்)</span></span>
+    <span class="chip acc">P/E 16.9x · ex-DTA 22.2x</span>
+    <span class="chip acc">EV/EBITDA 16.9x</span>
+  </div>
+  <div class="grid2">
+    <div class="box"><h3><span class="en">Revenue up, margin down</span><span class="ta">Revenue ஏறுது, margin இறங்குது</span></h3><div class="chart"><canvas id="cQtr"></canvas></div><p class="note">₹ crore; line = EBITDA margin %. Q1 FY26 → Q1 FY27.</p></div>
+    <div class="box"><h3><span class="en">Deliveries per quarter (MW)</span><span class="ta">ஒவ்வொரு quarter deliveries (MW)</span></h3><div class="chart"><canvas id="cMW"></canvas></div><p class="note"><span class="en">Q1 is seasonally the weakest quarter; Q4 FY26 was an all-time record.</span><span class="ta">Q1 பொதுவா weak quarter; Q4 FY26 தான் all-time record.</span></p></div>
+  </div>
+  <div class="box hl"><h3><span class="en">The story in five lines</span><span class="ta">ஐந்து வரியில கதை</span></h3>
+    <ul class="b en">
+      <li>Volume is strong: 506 MW delivered, 269 MW commissioned (more than double last year).</li>
+      <li>Profit fell 6% because EBITDA margin dropped to 15.6% (logistics hit from the Middle East, upfront Suzlon 2.0 costs, more EPC work).</li>
+      <li>Management still guides 17–18% EBITDA margin for FY27, with a heavy second half.</li>
+      <li>Order book ~6.1 GW, about 2.4 years of FY26 deliveries.</li>
+      <li>Big question: can Suzlon turn orders into cash as it takes on land, grid and EPC work?</li>
+    </ul>
+    <ul class="b ta">
+      <li>Volume நல்லா இருக்கு: 506 MW deliver பண்ணியிருக்காங்க, 269 MW commission (போன வருஷத்தை விட இரண்டு மடங்குக்கு மேல).</li>
+      <li>Profit 6% குறைஞ்சது — EBITDA margin 15.6%-க்கு இறங்கினதால (Middle East logistics பிரச்சனை, Suzlon 2.0 செலவு, EPC வேலை அதிகம்).</li>
+      <li>FY27-க்கு 17–18% EBITDA margin தான் guidance, second half-ல தான் அதிக வேலை.</li>
+      <li>Order book ~6.1 GW — FY26 deliveries-க்கு சுமார் 2.4 வருஷ வேலை.</li>
+      <li>முக்கிய கேள்வி: land, grid, EPC எல்லாம் எடுத்துக்கும்போது orders-ஐ cash-ஆ மாத்த முடியுமா?</li>
+    </ul>
+  </div>
+</section>
+
+<!-- 2 BUSINESS MODEL -->
+<section class="panel" id="p-model" hidden>
+  <div><h2><span class="en">Business Model</span><span class="ta">Business Model</span></h2>
+  <p class="lead"><span class="en">Suzlon makes wind turbines and, through its development arm, can take a project from empty land to a running wind farm — then maintain it for 20+ years.</span><span class="ta">Suzlon wind turbine தயாரிக்குது; அதோட development arm மூலமா காலி நிலத்துல இருந்து ஓடுற wind farm வரைக்கும் பண்ணி, 20+ வருஷம் maintain-உம் பண்ணுது.</span></p></div>
+
+  <div class="box w"><span class="eyebrow"><span class="en">Picture it — the A-to-Z chain Suzlon offers</span><span class="ta">Picture it — Suzlon பண்ற A-to-Z chain</span></span>
+    <div class="chain">
+      <div class="step"><span class="n">1</span><b><span class="en">Find wind</span><span class="ta">காத்து எங்கே?</span></b><span class="s"><span class="en">Wind-mast data, site study</span><span class="ta">Wind data, site study</span></span></div>
+      <div class="step"><span class="n">2</span><b><span class="en">Secure land</span><span class="ta">நிலம்</span></b><span class="s"><span class="en">Land bank via DevCo</span><span class="ta">DevCo land bank</span></span></div>
+      <div class="step"><span class="n">3</span><b><span class="en">Grid &amp; evacuation</span><span class="ta">Grid connectivity</span></b><span class="s"><span class="en">Substation, line to grid</span><span class="ta">Substation, line</span></span></div>
+      <div class="step"><span class="n">4</span><b><span class="en">PPA support</span><span class="ta">PPA உதவி</span></b><span class="s"><span class="en">Helps buyer sell power</span><span class="ta">Power விற்க உதவி</span></span></div>
+      <div class="step"><span class="n">5</span><b><span class="en">Make turbine</span><span class="ta">Turbine தயாரிப்பு</span></b><span class="s">Blades, nacelle, tower</span></div>
+      <div class="step"><span class="n">6</span><b><span class="en">Erect &amp; commission</span><span class="ta">Erect &amp; commission</span></b><span class="s">EPC</span></div>
+      <div class="step"><span class="n">7</span><b><span class="en">Run for 25 years</span><span class="ta">25 வருஷம் O&amp;M</span></b><span class="s"><span class="en">AMS — annuity income</span><span class="ta">AMS — தொடர் வருமானம்</span></span></div>
+    </div>
+    <p class="note"><span class="en">Steps 1–4 = RE DevCo · 5 = RE Tech · 6 = RE Projects · 7 = RE AMS (the four Suzlon 2.0 verticals).</span><span class="ta">1–4 = RE DevCo · 5 = RE Tech · 6 = RE Projects · 7 = RE AMS (Suzlon 2.0-ன் நாலு verticals).</span></p>
+  </div>
+
+  <div class="grid2">
+    <div class="box"><h3><span class="en">How the money comes in (FY26)</span><span class="ta">பணம் எப்படி வருது (FY26)</span></h3>
+      <ul class="b en"><li><b>Turbine sales (WTG): ₹14,040 cr</b> — one-time, lumpy, ~14.5% segment EBITDA margin.</li><li><b>O&amp;M / AMS: ₹2,073 cr</b> — recurring, ~40% margin on a ~22 GW fleet.</li><li><b>Forging &amp; foundry: ₹597 cr</b> — castings for wind and other industries.</li><li>Products: S144 (3.x MW) workhorse; new S175 (5 MW) launched 2026; S163 (6.3 MW) planned.</li></ul>
+      <ul class="b ta"><li><b>Turbine விற்பனை (WTG): ₹14,040 கோடி</b> — ஒரு தடவை வருமானம், ~14.5% segment margin.</li><li><b>O&amp;M / AMS: ₹2,073 கோடி</b> — தொடர்ந்து வர்ற வருமானம், ~40% margin, ~22 GW fleet.</li><li><b>Forging &amp; foundry: ₹597 கோடி</b> — wind-க்கும் மத்த industry-க்கும் castings.</li><li>Products: S144 (3.x MW) main model; புது S175 (5 MW) 2026-ல launch; S163 (6.3 MW) plan-ல.</li></ul>
+    </div>
+    <div class="box"><h3><span class="en">Why ALMM-Wind matters</span><span class="ta">ALMM-Wind ஏன் முக்கியம்?</span></h3>
+      <ul class="b en"><li>From the 31 Jul 2025 MNRE order, blades, towers, gearboxes, generators and special bearings must come from ALMM-WTC listed plants.</li><li>Turbine data must stay in India; SOPs issued Oct 2025 and amended Sept 2026.</li><li>Suzlon already makes its key parts in India — an edge over import-heavy rivals, mainly Chinese OEMs.</li></ul>
+      <ul class="b ta"><li>MNRE 31 Jul 2025 order படி blades, tower, gearbox, generator, bearings எல்லாம் ALMM-WTC list-ல இருக்கற plant-ல இருந்து தான் வரணும்.</li><li>Turbine data India-லயே இருக்கணும்; SOP Oct 2025-ல வந்தது, Sept 2026-ல amend ஆனது.</li><li>Suzlon முக்கிய parts-ஐ India-லயே பண்ணுது — import நம்பியிருக்கற Chinese OEMs-ஐ விட இது பெரிய plus.</li></ul>
+    </div>
+  </div>
+
+  <div class="grid2">
+    <div class="box"><h3><span class="en">Where the equity came from</span><span class="ta">Equity எங்கிருந்து வந்தது?</span></h3>
+      <div class="tl">
+        <div><span class="when">2015</span><b><span class="en">Dilip Shanghvi family invests ₹1,800 cr</span><span class="ta">Dilip Shanghvi family ₹1,800 கோடி முதலீடு</span></b></div>
+        <div><span class="when">2020</span><b><span class="en">Debt restructuring — part of loans turned into shares</span><span class="ta">Debt restructuring — கடனில் ஒரு பகுதி shares-ஆ மாறிச்சு</span></b></div>
+        <div><span class="when">Oct 2022</span><b><span class="en">Rights issue ₹1,200 cr at ₹5</span><span class="ta">Rights issue ₹1,200 கோடி, ₹5 விலையில</span></b></div>
+        <div><span class="when">Aug 2023</span><b><span class="en">QIP ₹2,000 cr at ₹18.60</span><span class="ta">QIP ₹2,000 கோடி, ₹18.60 விலையில</span></b></div>
+        <div><span class="when">2026</span><b><span class="en">~1,371 cr shares; promoters hold 11.7%</span><span class="ta">~1,371 கோடி shares; promoter-கிட்ட 11.7% தான்</span></b></div>
+      </div>
+      <p class="note"><span class="en">The fresh money came via a rights issue and a QIP (not an FPO). It wiped out debt but multiplied the share count.</span><span class="ta">புது பணம் rights issue, QIP மூலமா வந்தது (FPO இல்ல). கடன் போச்சு, ஆனா share எண்ணிக்கை பல மடங்கு ஆச்சு.</span></p>
+    </div>
+    <div class="box"><h3><span class="en">Wind only works where wind blows</span><span class="ta">காத்து அடிக்கற இடத்துல தான் windmill</span></h3>
+      <ul class="b en"><li>Main wind states: Gujarat, Tamil Nadu, Karnataka, Maharashtra, Rajasthan, Madhya Pradesh, Andhra Pradesh.</li><li>FY26 additions led by Gujarat, Karnataka and Maharashtra.</li><li>India's potential at 150 m hub height: ~1,164 GW. Installed: 57.4 GW (Jun 2026).</li></ul>
+      <ul class="b ta"><li>முக்கிய wind மாநிலங்கள்: Gujarat, தமிழ்நாடு, Karnataka, Maharashtra, Rajasthan, MP, Andhra.</li><li>FY26-ல Gujarat, Karnataka, Maharashtra தான் அதிகம் சேர்த்தது.</li><li>150 m hub height-ல India potential ~1,164 GW. இப்போ installed 57.4 GW (Jun 2026).</li></ul>
+      <div><div class="bar"><i style="width:4.9%"></i><em>4.9% <span class="en">used</span><span class="ta">பயன்பாட்டில்</span></em></div><p class="note"><span class="en">Plenty of windy land exists. The real shortage is ready sites near the grid.</span><span class="ta">காத்து அடிக்கற நிலம் நிறைய இருக்கு. Grid பக்கத்துல ready-ஆ இருக்கற site தான் குறைவு.</span></p></div>
+    </div>
+  </div>
+</section>
+
+<!-- 3 SEGMENTS -->
+<section class="panel" id="p-seg" hidden>
+  <div><h2><span class="en">Segment performance</span><span class="ta">Segment performance</span></h2>
+  <p class="lead"><span class="en">Segments were renamed in Q1: Wind Turbine Generator → Renewable Energy Solutions; O&amp;M → RE Asset Management Services. Past numbers unchanged.</span><span class="ta">Q1-ல segment பேர் மாறிச்சு: WTG → Renewable Energy Solutions; O&amp;M → RE Asset Management Services. பழைய numbers மாறல.</span></p></div>
+  <div class="grid2">
+    <div class="tw"><table>
+      <thead><tr><th>Segment (₹ cr)</th><th>Q1 FY27</th><th>Q1 FY26</th><th>YoY</th></tr></thead>
+      <tbody>
+        <tr><td><span class="en">RE Solutions (turbines + EPC)</span><span class="ta">RE Solutions (turbine + EPC)</span></td><td>3,174</td><td>2,495</td><td class="up">+27%</td></tr>
+        <tr><td>RE AMS (O&amp;M)</td><td>632</td><td>585</td><td class="up">+8%</td></tr>
+        <tr><td>India AMS EBITDA</td><td>228</td><td>188</td><td class="up">+21%</td></tr>
+        <tr><td>India AMS EBITDA margin</td><td>43.3%</td><td>39.2%</td><td class="up">+410 bps</td></tr>
+        <tr><td>Foundry &amp; Forging revenue</td><td>126</td><td>147</td><td class="dn">−14%</td></tr>
+        <tr><td>Foundry &amp; Forging EBITDA</td><td>22</td><td>—</td><td>—</td></tr>
+      </tbody></table></div>
+    <div class="box"><h3><span class="en">Q1 FY27 revenue mix</span><span class="ta">Q1 FY27 revenue mix</span></h3><div class="chart"><canvas id="cSeg"></canvas></div><p class="note">Segment revenue before inter-segment eliminations.</p></div>
+  </div>
+  <div class="grid3">
+    <div class="box"><span class="eyebrow">RE Solutions</span><ul class="b en"><li>Record Q1 deliveries 506 MW (+14%).</li><li>EPC share of order book up to 32% from 22%.</li><li>Lower margin: Middle East logistics, scope and mix shifts.</li></ul><ul class="b ta"><li>Q1 record deliveries 506 MW (+14%).</li><li>Order book-ல EPC பங்கு 22%-ல இருந்து 32%.</li><li>Margin குறைவு: Middle East logistics, scope மாற்றம்.</li></ul></div>
+    <div class="box"><span class="eyebrow">RE AMS</span><ul class="b en"><li>The steady cash engine: 43% margin in India.</li><li>Target: grow fleet under management 4x to 70 GW by FY31, incl. solar and other brands.</li></ul><ul class="b ta"><li>நிலையான cash engine: India-ல 43% margin.</li><li>Target: FY31-க்குள்ள 70 GW fleet (4 மடங்கு), solar &amp; மத்த brands-உம் சேர்த்து.</li></ul></div>
+    <div class="box"><span class="eyebrow">Foundry &amp; Forging</span><ul class="b en"><li>Small and seasonal; EBITDA fell from ₹88 cr in Q3 FY26 to ₹22 cr.</li><li>Moving into aerospace and auto castings and exports.</li></ul><ul class="b ta"><li>சின்ன business, seasonal; EBITDA Q3 FY26-ல ₹88 கோடி → இப்போ ₹22 கோடி.</li><li>Aerospace, auto castings, exports பக்கம் போறாங்க.</li></ul></div>
+  </div>
+  <div class="box w"><h3><span class="en">Order book quality</span><span class="ta">Order book quality</span></h3>
+    <ul class="b en"><li>~6.1 GW (5,933 MW at June end; 6,135 MW by July after the Waaree order).</li><li>~84% from PSUs and commercial &amp; industrial buyers, split about half-half.</li><li>FY27 order intake crossed 1.1 GW by 25 Aug (Tata Power 400 MW EPC, Waaree 201.6 MW, Torrent 250 MW); Ayana 200 MW added in Sept.</li><li>About 60% of new FY27 orders came through the DevCo (land + connectivity) model.</li></ul>
+    <ul class="b ta"><li>~6.1 GW (June முடிவுல 5,933 MW; Waaree order-க்கு அப்புறம் July-ல 6,135 MW).</li><li>~84% PSU, C&amp;I customers கிட்ட இருந்து — பாதி பாதி.</li><li>FY27-ல 25 Aug-க்குள்ள 1.1 GW orders (Tata Power 400 MW EPC, Waaree 201.6 MW, Torrent 250 MW); Sept-ல Ayana 200 MW.</li><li>புது orders-ல சுமார் 60% DevCo (land + connectivity) model மூலமா வந்தது.</li></ul>
+  </div>
+</section>
+
+<!-- 4 FINANCIALS -->
+<section class="panel" id="p-fin" hidden>
+  <div><h2><span class="en">Financials</span><span class="ta">Financials</span></h2><p class="lead"><span class="en">Consolidated, ₹ crore.</span><span class="ta">Consolidated, ₹ கோடி.</span></p></div>
+  <div class="tw"><table>
+    <thead><tr><th>Quarter</th><th>Q1 FY26</th><th>Q2 FY26</th><th>Q3 FY26</th><th>Q4 FY26</th><th>Q1 FY27</th></tr></thead>
+    <tbody>
+      <tr><td>Revenue</td><td>3,117</td><td>3,866</td><td>4,228</td><td>5,468</td><td>3,819</td></tr>
+      <tr><td>EBITDA</td><td>599</td><td>721</td><td>739</td><td>964</td><td>595</td></tr>
+      <tr><td>EBITDA margin</td><td>19.2%</td><td>18.6%</td><td>17.5%</td><td>17.6%</td><td>15.6%</td></tr>
+      <tr><td>PAT</td><td>324</td><td>1,279*</td><td>445</td><td>1,114</td><td>305</td></tr>
+      <tr><td>Deliveries (MW)</td><td>444</td><td>565</td><td>617</td><td>830</td><td>506</td></tr>
+    </tbody></table></div>
+  <p class="note">* <span class="en">Q2 FY26 PAT includes one-time non-cash deferred tax asset (DTA) recognition. Q2 revenue derived as FY26 total minus other quarters.</span><span class="ta">Q2 FY26 PAT-ல ஒரு தடவை வந்த non-cash deferred tax asset (DTA) சேர்ந்திருக்கு.</span></p>
+  <div class="grid2">
+    <div class="tw"><table>
+      <thead><tr><th>Year</th><th>FY25</th><th>FY26</th><th>Change</th></tr></thead>
+      <tbody>
+        <tr><td>Revenue</td><td>10,851</td><td>16,679</td><td class="up">+54%</td></tr>
+        <tr><td>EBITDA</td><td>1,857</td><td>3,022</td><td class="up">+63%</td></tr>
+        <tr><td>EBITDA margin</td><td>17.1%</td><td>18.1%</td><td class="up">+100 bps</td></tr>
+        <tr><td>PBT</td><td>1,447</td><td>2,422</td><td class="up">+67%</td></tr>
+        <tr><td>PAT (reported)</td><td>2,072</td><td>3,163</td><td class="up">+53%</td></tr>
+        <tr><td>PAT ex-DTA (₹742 cr)</td><td>—</td><td>2,421</td><td>—</td></tr>
+        <tr><td>Deliveries (MW)</td><td>1,550</td><td>2,456</td><td class="up">+58%</td></tr>
+        <tr><td>EPS (₹)</td><td>1.52</td><td>2.31</td><td class="up">+52%</td></tr>
+        <tr><td>Net worth</td><td>—</td><td>9,464</td><td>Q1: 9,869</td></tr>
+      </tbody></table></div>
+    <div class="box hl"><span class="eyebrow"><span class="en">Picture it — why EPS looks tiny</span><span class="ta">Picture it — EPS ஏன் இவ்வளவு சின்னதா?</span></span>
+      <ul class="b en"><li>FY26 profit ₹3,163 cr is shared by ~1,371 crore shares.</li><li>Each share gets ₹2.31 (₹1.77 without the one-time tax credit).</li><li>Low EPS is a share-count effect, not a small-profit effect. Judge it against the ₹38.81 price (P/E), not in isolation.</li></ul>
+      <ul class="b ta"><li>FY26 profit ₹3,163 கோடி-ஐ ~1,371 கோடி shares பங்கு போடுது.</li><li>ஒரு share-க்கு ₹2.31 தான் (ஒரு தடவை tax credit இல்லாம ₹1.77).</li><li>EPS சின்னதா இருக்கறது share எண்ணிக்கை அதிகம்-ங்கறதால; profit சின்னது இல்ல. ₹38.81 விலையோட (P/E) சேர்த்து தான் பாக்கணும்.</li></ul>
+      <div class="slices" id="slices" aria-label="Share count picture"></div>
+      <p class="note"><span class="en">Each square ≈ 6.9 crore shares. Orange = ~348 cr shares added by the 2022 rights issue (240 cr at ₹5) and 2023 QIP (107.5 cr at ₹18.60).</span><span class="ta">ஒவ்வொரு கட்டமும் ≈ 6.9 கோடி shares. Orange = 2022 rights (240 கோடி) + 2023 QIP (107.5 கோடி) சேர்த்த ~348 கோடி shares.</span></p>
+    </div>
+  </div>
+  <div class="box"><h3><span class="en">Q1 FY27 profit walk</span><span class="ta">Q1 FY27 profit எப்படி வந்தது</span></h3>
+    <ul class="b en"><li>PBT ₹390 cr (−15% YoY from ₹459 cr).</li><li>Interest cost up ~30% YoY from higher working-capital use, though borrowing rates fell.</li><li>Tax ~22% is mostly non-cash (using up past deferred tax assets); little cash tax in the near term.</li><li>No exceptional item this quarter; Q4 FY26 had a ₹70 cr gain.</li></ul>
+    <ul class="b ta"><li>PBT ₹390 கோடி (போன வருஷம் ₹459 கோடி, −15%).</li><li>Working capital அதிகம் பயன்படுத்தினதால interest ~30% ஏறிச்சு; ஆனா borrowing rate குறைஞ்சிருக்கு.</li><li>Tax ~22% பெரும்பாலும் non-cash (பழைய deferred tax asset பயன்பாடு); இப்போதைக்கு cash tax கம்மி.</li><li>இந்த quarter-ல exceptional item இல்ல; Q4 FY26-ல ₹70 கோடி gain இருந்தது.</li></ul>
+  </div>
+</section>
+
+<!-- 5 CASH FLOW & RATIOS -->
+<section class="panel" id="p-cash" hidden>
+  <div><h2><span class="en">Cash Flow &amp; Ratios</span><span class="ta">Cash Flow &amp; Ratios</span></h2><p class="lead"><span class="en">Profits are strong on paper. Cash lags because customers, especially PSUs, pay slower.</span><span class="ta">Paper-ல profit நல்லா இருக்கு. Customers (முக்கியமா PSU) லேட்டா pay பண்றதால cash பின்னாடி வருது.</span></p></div>
+  <div class="grid2">
+    <div class="tw"><table>
+      <thead><tr><th>₹ cr</th><th>FY24</th><th>FY25</th><th>FY26</th></tr></thead>
+      <tbody>
+        <tr><td>Cash from operations</td><td>80</td><td>1,092</td><td>1,202</td></tr>
+        <tr><td>Working capital change</td><td class="dn">−1,061</td><td class="dn">−890</td><td class="dn">−2,054</td></tr>
+        <tr><td>Capex</td><td>−227</td><td>−371</td><td>−577</td></tr>
+        <tr><td>Acquisitions</td><td>—</td><td>−441</td><td>−269</td></tr>
+        <tr><td>Free cash flow</td><td class="dn">−148</td><td>721</td><td>625</td></tr>
+        <tr><td>Trade receivables</td><td>—</td><td>3,866</td><td>6,269</td></tr>
+        <tr><td>CFO ÷ PAT</td><td>—</td><td>53%</td><td>38%</td></tr>
+      </tbody></table></div>
+    <div class="box"><h3><span class="en">Profit vs cash</span><span class="ta">Profit vs cash</span></h3><div class="chart"><canvas id="cCash"></canvas></div></div>
+  </div>
+  <div class="grid2">
+    <div class="tw"><table>
+      <thead><tr><th>Working capital days</th><th>FY24</th><th>FY25</th><th>FY26</th></tr></thead>
+      <tbody>
+        <tr><td>Debtor days</td><td>72</td><td>102</td><td class="dn">130</td></tr>
+        <tr><td>Inventory days</td><td>176</td><td>210</td><td class="up">171</td></tr>
+        <tr><td>Payable days</td><td>86</td><td>165</td><td>156</td></tr>
+        <tr><td>Cash conversion cycle</td><td>162</td><td>148</td><td>145</td></tr>
+        <tr><td>Working capital days</td><td>66</td><td>103</td><td>73</td></tr>
+      </tbody></table></div>
+    <div class="tw"><table>
+      <thead><tr><th>Key ratios</th><th>Value</th></tr></thead>
+      <tbody>
+        <tr><td>ROE (FY26, incl. DTA)</td><td>~41%</td></tr>
+        <tr><td>ROCE</td><td>~32.5%</td></tr>
+        <tr><td>Debt / Equity</td><td>0.05</td></tr>
+        <tr><td>Net cash (Jun 2026)</td><td>₹2,322 cr</td></tr>
+        <tr><td>Borrowings (Jun 2026)</td><td>₹277 cr</td></tr>
+        <tr><td>Net worth (Jun 2026)</td><td>₹9,869 cr</td></tr>
+        <tr><td>Q1 FY27 PAT margin</td><td>8.0%</td></tr>
+      </tbody></table></div>
+  </div>
+  <div class="box hl"><span class="eyebrow"><span class="en">Picture it — ₹100 of profit</span><span class="ta">Picture it — ₹100 profit</span></span>
+    <ul class="b en"><li>In FY26, every ₹100 of reported profit brought in about ₹38 of operating cash (₹50 if we remove the one-time tax credit).</li><li>The rest is stuck mostly in receivables — money customers still owe.</li><li>Management says PSU payment delays were priced into bids. Watch debtor days falling below 120.</li></ul>
+    <ul class="b ta"><li>FY26-ல ₹100 profit-க்கு சுமார் ₹38 தான் operating cash வந்தது (ஒரு தடவை tax credit தள்ளினா ₹50).</li><li>மீதி பெரும்பாலும் receivables-ல மாட்டியிருக்கு — customers இன்னும் தர வேண்டிய பணம்.</li><li>PSU payment delay-ஐ bid price-லயே சேர்த்திருக்கோம்னு management சொல்றாங்க. Debtor days 120-க்கு கீழ வருதான்னு பாருங்க.</li></ul>
+    <div style="display:grid;gap:6px;max-width:520px">
+      <div class="bar"><i style="width:100%;background:var(--accent)"></i><em style="color:#fff">PAT ₹100</em></div>
+      <div class="bar"><i style="width:38%"></i><em>CFO ₹38</em></div>
+    </div>
+  </div>
+</section>
+
+<!-- 6 FUTURE -->
+<section class="panel" id="p-future" hidden>
+  <div><h2><span class="en">The next 2 and 5 years</span><span class="ta">அடுத்த 2 வருஷம், 5 வருஷம்</span></h2>
+  <p class="lead"><span class="en">Three things decide Suzlon's future: how much wind India installs, how much of it Suzlon wins, and whether profits turn into cash.</span><span class="ta">Suzlon-ன் எதிர்காலத்தை மூணு விஷயம் தீர்மானிக்கும்: India எவ்வளவு wind install பண்ணுது, அதுல Suzlon எவ்வளவு பிடிக்குது, profit cash-ஆ மாறுதா.</span></p></div>
+
+  <div class="grid3">
+    <div class="box w"><span class="eyebrow">1 · <span class="en">Demand</span><span class="ta">Demand</span></span><ul class="b en"><li>India added a record 6.05 GW in FY26 (+46%).</li><li>Target: 100 GW by 2030, 156 GW by 2036 — needs ~9–11 GW a year.</li><li>~17 GW auctioned and ~28 GW under implementation.</li></ul><ul class="b ta"><li>FY26-ல record 6.05 GW (+46%).</li><li>Target: 2030-க்குள்ள 100 GW, 2036-க்குள்ள 156 GW — வருஷத்துக்கு ~9–11 GW வேணும்.</li><li>~17 GW auction முடிஞ்சிருக்கு, ~28 GW implementation-ல.</li></ul></div>
+    <div class="box w"><span class="eyebrow">2 · <span class="en">Share</span><span class="ta">Market share</span></span><ul class="b en"><li>~28% cumulative India share; FY26 deliveries equal ~41% of national additions.</li><li>Chinese OEMs (Envision, Sany) had ~33% of FY26 installs; Inox and Adani Wind are growing.</li><li>Suzlon targets ~40% share by FY31.</li></ul><ul class="b ta"><li>மொத்த India share ~28%; FY26 deliveries national additions-ல ~41%-க்கு சமம்.</li><li>Chinese OEMs (Envision, Sany) FY26-ல ~33%; Inox, Adani Wind வளர்றாங்க.</li><li>FY31-க்குள்ள ~40% share-தான் Suzlon target.</li></ul></div>
+    <div class="box w"><span class="eyebrow">3 · <span class="en">Cash</span><span class="ta">Cash</span></span><ul class="b en"><li>More EPC and DevCo work means bigger contracts but more money tied up.</li><li>FY27 margin guide: 17–18% (±50–100 bps).</li><li>DevCo capital: ~₹500 cr, to be recycled.</li></ul><ul class="b ta"><li>EPC, DevCo அதிகமானா contract பெருசு, ஆனா பணம் அதிகம் மாட்டும்.</li><li>FY27 margin guidance: 17–18% (±50–100 bps).</li><li>DevCo-க்கு ~₹500 கோடி, திரும்ப recycle பண்ணுவாங்க.</li></ul></div>
+  </div>
+
+  <div class="box hl"><h3><span class="en">The site question: can buyers find windy land?</span><span class="ta">Site கேள்வி: காத்து அடிக்கற நிலம் கிடைக்குமா?</span></h3>
+    <ul class="b en">
+      <li><b>Wind is location-bound.</b> A turbine earns only where the wind is steady, so buyers cannot put it anywhere like a solar panel.</li>
+      <li><b>Land is not the limit; ready sites are.</b> Only ~5% of the 1,164 GW potential is used. The bottleneck is land near a grid substation with evacuation capacity.</li>
+      <li><b>Grid is the biggest risk.</b> Industry estimates up to 40 GW of wind could be delayed by 2030 because of transmission and substation delays.</li>
+      <li><b>Suzlon's answer is DevCo.</b> It holds land and connectivity (~25 GW development pipeline, 602 MW DevCo projects secured) and offers buyers execution-ready sites. ~60% of FY27 orders came this way.</li>
+      <li><b>Taller, bigger turbines open new sites.</b> S175's 175 m rotor makes lower-wind sites viable.</li>
+      <li><b>Repowering</b> old small turbines (many in Tamil Nadu and Gujarat) frees the best sites again.</li>
+    </ul>
+    <ul class="b ta">
+      <li><b>Wind இடத்தை சார்ந்தது.</b> காத்து நிலையா அடிக்கற இடத்துல தான் turbine சம்பாதிக்கும்; solar panel மாதிரி எங்க வேணும்னாலும் போட முடியாது.</li>
+      <li><b>நிலம் பிரச்சனை இல்ல; ready site தான் பிரச்சனை.</b> 1,164 GW potential-ல ~5% தான் பயன்பாட்டுல. Grid substation பக்கத்துல evacuation capacity-யோட இருக்கற நிலம் தான் குறைவு.</li>
+      <li><b>Grid தான் பெரிய risk.</b> Transmission, substation delay-ஆல 2030-க்குள்ள 40 GW வரை wind தள்ளிப்போகலாம்னு industry சொல்லுது.</li>
+      <li><b>Suzlon-ன் பதில் DevCo.</b> நிலமும் connectivity-யும் கையில வெச்சிருக்காங்க (~25 GW pipeline, 602 MW DevCo projects); buyers-க்கு ready site தர்றாங்க. FY27 orders-ல ~60% இப்படி தான் வந்தது.</li>
+      <li><b>உயரமான, பெரிய turbines புது site-ஐ திறக்கும்.</b> S175-ன் 175 m rotor-ஆல குறைஞ்ச காத்து இடமும் லாபமா மாறும்.</li>
+      <li><b>Repowering</b> — பழைய சின்ன turbines-ஐ (தமிழ்நாடு, Gujarat-ல நிறைய) மாத்தினா best sites திரும்ப கிடைக்கும்.</li>
+    </ul>
+  </div>
+
+  <div class="grid2">
+    <div class="box"><h3><span class="en">2-year view (FY27–FY29)</span><span class="ta">2 வருஷ பார்வை (FY27–FY29)</span></h3>
+      <ul class="b en"><li>Order book covers ~2.4 years of FY26 deliveries — revenue visibility is good.</li><li>H2 FY27 must deliver the margin recovery to 17–18%.</li><li>First domestic S175 delivery expected in FY27; blade capacity doubled to 1,260 MW at Jaisalmer.</li><li>Key test: debtor days and cash conversion as EPC share rises.</li></ul>
+      <ul class="b ta"><li>Order book FY26 deliveries-க்கு ~2.4 வருஷம் — revenue visibility நல்லா இருக்கு.</li><li>H2 FY27-ல margin 17–18%-க்கு திரும்பணும்.</li><li>முதல் S175 India delivery FY27-ல; Jaisalmer blade capacity 1,260 MW-ஆ இரட்டிப்பு.</li><li>முக்கிய test: EPC அதிகமாகும்போது debtor days, cash conversion.</li></ul></div>
+    <div class="box"><h3><span class="en">5-year view (to FY31) — Suzlon 2.0 targets</span><span class="ta">5 வருஷ பார்வை (FY31) — Suzlon 2.0 targets</span></h3>
+      <ul class="b en"><li>10 GW annual RE sales (wind + solar + storage).</li><li>70 GW fleet under management (4x).</li><li>15 GW RE order book; 3 GW export order intake.</li><li>~40% India wind share; ~60% of volume via DevCo.</li><li>BESS manufacturing facility planned by 2027.</li></ul>
+      <ul class="b ta"><li>வருஷத்துக்கு 10 GW RE sales (wind + solar + storage).</li><li>70 GW fleet management (4 மடங்கு).</li><li>15 GW order book; 3 GW export orders.</li><li>India wind-ல ~40% share; volume-ல ~60% DevCo மூலமா.</li><li>2027-க்குள்ள BESS factory plan.</li></ul></div>
+  </div>
+
+  <div><h3><span class="en">CB scenarios (illustrative, not forecasts)</span><span class="ta">CB scenarios (கல்விக்காக மட்டும், forecast இல்ல)</span></h3>
+  <div class="tw"><table>
+    <thead><tr><th>Scenario</th><th>Bear FY29</th><th>Base FY29</th><th>Bull FY29</th><th>Bear FY31</th><th>Base FY31</th><th>Bull FY31</th></tr></thead>
+    <tbody>
+      <tr><td>India wind added (GW/yr)</td><td>6.5</td><td>9</td><td>11</td><td>7</td><td>11</td><td>14</td></tr>
+      <tr><td>Suzlon deliveries (GW)</td><td>2.6</td><td>3.4</td><td>4.9</td><td>2.8</td><td>4.2</td><td>6.6</td></tr>
+      <tr><td>Revenue (₹ cr)</td><td>18,200</td><td>24,300</td><td>33,900</td><td>19,800</td><td>33,300</td><td>52,100</td></tr>
+      <tr><td>EBITDA margin</td><td>14%</td><td>17.5%</td><td>18.5%</td><td>14%</td><td>17.5%</td><td>18.5%</td></tr>
+      <tr><td>PAT (₹ cr, 25% tax)</td><td>1,310</td><td>2,590</td><td>4,030</td><td>1,400</td><td>3,620</td><td>6,330</td></tr>
+      <tr><td>EPS (₹)</td><td>0.96</td><td>1.89</td><td>2.94</td><td>1.02</td><td>2.64</td><td>4.62</td></tr>
+      <tr><td>P/E at today's ₹38.81</td><td>40x</td><td>21x</td><td>13x</td><td>38x</td><td>15x</td><td>8x</td></tr>
+    </tbody></table></div>
+  <p class="note"><span class="en">Assumes ~1,371 cr shares (no dilution), full 25% tax from FY29, ₹6–6.8 cr revenue per MW incl. EPC, plus AMS. Bull adds exports and solar/BESS. Change any input and the answer changes a lot.</span><span class="ta">~1,371 கோடி shares, FY29 முதல் 25% tax, MW-க்கு ₹6–6.8 கோடி revenue (EPC சேர்த்து) + AMS. Bull-ல exports, solar/BESS சேர்த்திருக்கோம்.</span></p></div>
+  <div class="box"><h3><span class="en">Scenario EPS path</span><span class="ta">Scenario EPS பாதை</span></h3><div class="chart"><canvas id="cScen"></canvas></div></div>
+
+  <div class="box"><h3><span class="en">Milestones to watch</span><span class="ta">கவனிக்க வேண்டிய milestones</span></h3>
+    <div class="tl">
+      <div><span class="when">Oct–Nov 2026</span><b><span class="en">Q2 FY27 results — is margin back above 17%?</span><span class="ta">Q2 FY27 results — margin 17%-க்கு மேல வந்ததா?</span></b></div>
+      <div><span class="when">H2 FY27</span><b><span class="en">Delivery ramp; first India S175 delivery</span><span class="ta">Delivery ramp; முதல் S175 delivery</span></b></div>
+      <div><span class="when">2027</span><b><span class="en">BESS factory; ALMM-WTC enforcement on rivals</span><span class="ta">BESS factory; போட்டியாளர்கள் மேல ALMM-WTC</span></b></div>
+      <div><span class="when">FY28–FY29</span><b><span class="en">DevCo sites convert to orders; export intake</span><span class="ta">DevCo sites orders-ஆ மாறுது; exports</span></b></div>
+      <div><span class="when">2030</span><b><span class="en">India 100 GW wind target checkpoint</span><span class="ta">India 100 GW wind target</span></b></div>
+      <div><span class="when">FY31</span><b><span class="en">Suzlon 2.0: 10 GW sales, 70 GW fleet, 40% share</span><span class="ta">Suzlon 2.0: 10 GW sales, 70 GW fleet, 40% share</span></b></div>
+    </div>
+  </div>
+</section>
+
+<!-- 6b WIND VS SOLAR -->
+<section class="panel" id="p-ws" hidden>
+  <div><h2><span class="en">Wind vs Solar — which runs longer?</span><span class="ta">Wind vs Solar — யார் நீண்ட தூரம் ஓடுவாங்க?</span></h2>
+  <p class="lead"><span class="en">Solar is winning the race on volume. The real question for Suzlon is whether wind keeps a secure, growing seat beside it.</span><span class="ta">Volume-ல solar தான் ஜெயிக்குது. Suzlon-க்கு முக்கிய கேள்வி: solar பக்கத்துல wind-க்கு நிலையான, வளர்ற இடம் இருக்குமா?</span></p></div>
+
+  <div class="kpis">
+    <div class="kpi"><span class="l"><span class="en">FY26 added — solar</span><span class="ta">FY26 solar சேர்ப்பு</span></span><span class="v">44.6 GW</span><span class="d up">+87% YoY</span></div>
+    <div class="kpi"><span class="l"><span class="en">FY26 added — wind</span><span class="ta">FY26 wind சேர்ப்பு</span></span><span class="v">6.05 GW</span><span class="d up">+46% YoY</span></div>
+    <div class="kpi"><span class="l"><span class="en">Ratio</span><span class="ta">விகிதம்</span></span><span class="v">7 : 1</span><span class="d fl"><span class="en">solar : wind</span><span class="ta">solar : wind</span></span></div>
+    <div class="kpi"><span class="l"><span class="en">Module capacity (Jun 26)</span><span class="ta">Module capacity (Jun 26)</span></span><span class="v">261.7 GW</span><span class="d fl">Cells 36.6 GW</span></div>
+    <div class="kpi"><span class="l"><span class="en">Wind turbine capacity</span><span class="ta">Turbine capacity</span></span><span class="v">~24 GW/yr</span><span class="d fl"><span class="en">vs ~6 GW installs</span><span class="ta">installs ~6 GW தான்</span></span></div>
+    <div class="kpi"><span class="l"><span class="en">Offshore wind installed</span><span class="ta">Offshore installed</span></span><span class="v">0 MW</span><span class="d dn"><span class="en">4.5 GW tenders got no bids</span><span class="ta">4.5 GW tender-க்கு bid இல்ல</span></span></div>
+  </div>
+
+  <div class="grid2">
+    <div class="box"><h3><span class="en">Picture it — when each one produces</span><span class="ta">Picture it — எப்போ எது current தருது</span></h3><div class="chart"><canvas id="cProfile"></canvas></div><p class="note"><span class="en">Illustrative typical day. Solar peaks at noon; wind often picks up in the evening and night, when India's demand peaks. About 45% of wind generation falls in peak-demand hours (MNRE).</span><span class="ta">உதாரணத்துக்கான ஒரு நாள். Solar மதியம் உச்சம்; wind சாயங்காலம், ராத்திரி அதிகம் — அப்போ தான் India demand உச்சம். Wind generation-ல ~45% peak hours-ல (MNRE).</span></p></div>
+    <div class="box"><h3><span class="en">Picture it — months from order to power</span><span class="ta">Picture it — order-ல இருந்து current வர எத்தனை மாசம்</span></h3>
+      <div style="display:grid;gap:10px">
+        <div><b class="en">Solar (ground or rooftop)</b><b class="ta">Solar (தரை / மாடி)</b><div class="bar"><i style="width:30%;background:var(--accent)"></i><em>~9–18</em></div></div>
+        <div><b class="en">Onshore wind</b><b class="ta">Onshore wind</b><div class="bar"><i style="width:60%"></i><em>~18–30 + 12 wind-data</em></div></div>
+        <div><b class="en">Offshore wind</b><b class="ta">Offshore wind</b><div class="bar"><i style="width:100%;background:#9AA0A8"></i><em>5–7 years</em></div></div>
+      </div>
+      <p class="note"><span class="en">Typical ranges. Wind needs at least a year of mast data, larger land parcels, heavy-lift roads and its own evacuation line.</span><span class="ta">பொதுவான range. Wind-க்கு குறைஞ்சது 1 வருஷ wind data, பெரிய நிலம், கனமான crane பாதை, தனி evacuation line வேணும்.</span></p></div>
+  </div>
+
+  <div><h3><span class="en">Head-to-head</span><span class="ta">நேருக்கு நேர்</span></h3>
+  <div class="tw"><table>
+    <thead><tr><th>Factor</th><th>Solar</th><th>Onshore wind</th><th>Edge</th></tr></thead>
+    <tbody>
+      <tr><td>Capex per MW, all-in (2026)</td><td>₹4.5–5.5 cr (DCR modules)</td><td>₹8–9 cr (turbine + land + evacuation)</td><td class="up">Solar</td></tr>
+      <tr><td>CUF — India fleet average</td><td>~19–20%</td><td>~23%</td><td class="up">Wind</td></tr>
+      <tr><td>CUF — new projects, good sites</td><td>24–28% (AC, bifacial, DC overloading)</td><td>30–35% (S144-class, 140 m+ hub)</td><td class="up">Wind</td></tr>
+      <tr><td>Recent auction tariff</td><td>₹2.5–3.1 /unit</td><td>₹3.43–3.69 /unit</td><td class="up">Solar</td></tr>
+      <tr><td>Siting</td><td>Almost anywhere; rooftop too</td><td>Only proven wind sites</td><td class="up">Solar</td></tr>
+      <tr><td>Build time</td><td>9–18 months</td><td>18–30 months + data</td><td class="up">Solar</td></tr>
+      <tr><td>Evening / night power</td><td>Needs battery</td><td>Natural</td><td class="up">Wind</td></tr>
+      <tr><td>Grid line use in hybrid</td><td>Midday only</td><td>Fills evening, night, monsoon</td><td class="up">Wind</td></tr>
+      <tr><td>Technology runway</td><td>Perovskite-tandem &gt;28% (from ~2028), bifacial, trackers</td><td>Bigger rotors (175 m), taller towers, repowering</td><td class="up">Solar</td></tr>
+      <tr><td>Domestic manufacturing</td><td>Modules 262 GW; cells 37 GW catching up</td><td>~24 GW, almost fully local</td><td class="fl">Both</td></tr>
+      <tr><td>Government support</td><td>PLI, ALMM-I &amp; II, PM Surya Ghar, PM-KUSUM</td><td>ALMM-Wind/WTC, wind RCO, offshore VGF, repowering</td><td class="up">Solar</td></tr>
+      <tr><td>Overcapacity risk for makers</td><td>High (modules ~6x installs)</td><td>High (turbines ~4x installs)</td><td class="fl">Both</td></tr>
+    </tbody></table></div>
+  <p class="note"><span class="en">Capex: CTUIL's Sep 2026 benchmarks (₹3.5 cr solar, ₹6 cr wind) are minimums for financial closure; actual projects run higher — e.g. SJVN 1 GW Bikaner solar ≈ ₹5.5 cr/MW, and DCR modules add ≈ ₹1.1 cr/MW. Wind all-in is a CB estimate. Fleet CUF from FY26 generation (106 BU on ~53 GW average). Tariffs from 2025–26 auctions.</span><span class="ta">Capex: CTUIL Sep 2026 benchmark (solar ₹3.5, wind ₹6 கோடி) குறைந்தபட்ச அளவு; உண்மை projects அதிகம் — SJVN 1 GW solar ≈ ₹5.5 கோடி/MW, DCR modules ≈ ₹1.1 கோடி கூடுதல். Fleet CUF FY26 generation-ல இருந்து (106 BU, ~53 GW).</span></p></div>
+
+  <div class="grid2">
+    <div class="box"><h3><span class="en">Offshore wind: the long shoreline is a 2030s story</span><span class="ta">Offshore wind: நீண்ட கடற்கரை — 2030-களின் கதை</span></h3>
+      <ul class="b en"><li>VGF scheme approved June 2024: ₹7,453 cr for 1 GW (500 MW Gujarat, 500 MW Tamil Nadu) plus ₹600 cr for ports.</li><li>First tenders (500 MW Gujarat VGF, 4 GW Tamil Nadu seabed lease) got zero bids and were cancelled in Aug 2025.</li><li>Ceiling tariffs were ₹4–4.5; GWEC estimates viable tariffs near ₹9.6–10.5 per unit.</li><li>Fresh Tamil Nadu tender planned for 2026-27. Even if awarded, power comes only around 2031–32.</li><li>For Suzlon: no meaningful offshore revenue inside the 5-year window.</li></ul>
+      <ul class="b ta"><li>VGF scheme June 2024: 1 GW-க்கு ₹7,453 கோடி (Gujarat 500 MW, தமிழ்நாடு 500 MW) + ports-க்கு ₹600 கோடி.</li><li>முதல் tenders (Gujarat 500 MW, தமிழ்நாடு 4 GW seabed) — ஒரு bid கூட வரல, Aug 2025-ல cancel.</li><li>Ceiling tariff ₹4–4.5; ஆனா லாபமா இருக்க ₹9.6–10.5 வேணும்னு GWEC சொல்லுது.</li><li>புது தமிழ்நாடு tender 2026-27-ல. Award ஆனாலும் current 2031–32-ல தான்.</li><li>Suzlon-க்கு: அடுத்த 5 வருஷத்துல offshore-ல பெரிய revenue இல்ல.</li></ul></div>
+    <div class="box"><h3><span class="en">Technology cuts both ways</span><span class="ta">Technology இரண்டு பக்கமும் வெட்டும்</span></h3>
+      <ul class="b en"><li><b>Perovskite-tandem:</b> Navitas–Caelux 5 GW partnership targets &gt;28% modules from 2028 (vs ~25% today). Higher output per acre widens solar's cost lead.</li><li><b>Batteries:</b> solar + storage now bids near ₹3.13 per unit. Cheaper storage lets solar serve evenings — the biggest long-term threat to wind's niche.</li><li><b>But</b> batteries also help wind: storage smooths wind's ups and downs, making hybrid and round-the-clock supply easier.</li><li><b>Wind tech:</b> larger rotors make low-wind sites viable; repowering (NIWE: 25 GW+ potential) reuses India's best old sites.</li></ul>
+      <ul class="b ta"><li><b>Perovskite-tandem:</b> Navitas–Caelux 5 GW partnership, 2028 முதல் &gt;28% modules (இப்போ ~25%). ஒரு ஏக்கருக்கு அதிக current — solar cost lead இன்னும் பெருசாகும்.</li><li><b>Battery:</b> Solar + storage ₹3.13 பக்கத்துல bid ஆகுது. Storage மலிவானா solar சாயங்காலமும் current தரும் — wind-க்கு இது தான் பெரிய நீண்டகால threat.</li><li><b>ஆனா</b> battery wind-க்கும் உதவும்: wind ஏற்ற இறக்கத்தை சமன் பண்ணும், hybrid, RTC supply சுலபமாகும்.</li><li><b>Wind tech:</b> பெரிய rotors-ஆல குறைஞ்ச காத்து site-உம் லாபம்; repowering (NIWE: 25 GW+) பழைய best sites-ஐ திரும்ப பயன்படுத்தும்.</li></ul></div>
+  </div>
+
+  <div class="box w"><h3><span class="en">Hybrid: the decision sits with power producers</span><span class="ta">Hybrid: முடிவு power producers கையில</span></h3>
+    <ul class="b en"><li>Suzlon makes wind turbines, not solar panels. In solar it works asset-light (EPC and partners), and plans a BESS factory by 2027.</li><li>Whether wind grows depends on power producers (NTPC, Tata Power, Adani, JSW, Torrent and C&amp;I buyers) choosing wind-solar hybrids, FDRE and round-the-clock contracts.</li><li>Why they would: one grid connection carries solar by day and wind by evening/night, so the costly transmission line earns more hours. Over 45 GW of awarded RE is still waiting for PPAs, and curtailment from transmission limits is rising — both favour better use of each line.</li><li>Suzlon's lever: DevCo offers hybrid-ready land with connectivity, so the producer's choice of wind gets easier.</li></ul>
+    <ul class="b ta"><li>Suzlon wind turbine தயாரிக்குது, solar panel இல்ல. Solar-ல asset-light (EPC, partners); 2027-க்குள்ள BESS factory plan.</li><li>Wind வளருமா என்பது power producers (NTPC, Tata Power, Adani, JSW, Torrent, C&amp;I) hybrid, FDRE, RTC contracts-ஐ தேர்ந்தெடுக்கறதுல தான் இருக்கு.</li><li>ஏன் தேர்ந்தெடுப்பாங்க: ஒரே grid connection-ல பகல்ல solar, சாயங்காலம்/ராத்திரி wind — விலையுயர்ந்த transmission line அதிக நேரம் சம்பாதிக்கும். 45 GW-க்கு மேல RE இன்னும் PPA-க்கு காத்திருக்கு, transmission-ஆல curtailment ஏறுது — இரண்டும் line-ஐ நல்லா பயன்படுத்த சாதகம்.</li><li>Suzlon-ன் lever: DevCo hybrid-ready land + connectivity தருது — producer wind-ஐ தேர்ந்தெடுக்கறது சுலபமாகும்.</li></ul>
+  </div>
+
+  <div class="grid2">
+    <div class="box"><h3><span class="en">CB survival scorecard (out of 5)</span><span class="ta">CB survival scorecard (5-க்கு)</span></h3><div class="chart tall"><canvas id="cScore"></canvas></div><p class="note"><span class="en">CB Research judgement on each factor; education only.</span><span class="ta">ஒவ்வொரு factor-க்கும் CB Research மதிப்பீடு; கல்விக்காக மட்டும்.</span></p></div>
+    <div class="tw"><table>
+      <thead><tr><th>Factor</th><th>Solar</th><th>Wind</th></tr></thead>
+      <tbody>
+        <tr><td>Capex per MW</td><td>5</td><td>3</td></tr>
+        <tr><td>Speed to build</td><td>5</td><td>2</td></tr>
+        <tr><td>Siting flexibility</td><td>5</td><td>2</td></tr>
+        <tr><td>Energy per MW (CUF)</td><td>3</td><td>4</td></tr>
+        <tr><td>Evening / night value</td><td>2</td><td>5</td></tr>
+        <tr><td>Technology upgrade path</td><td>5</td><td>3</td></tr>
+        <tr><td>Domestic supply chain</td><td>4</td><td>4</td></tr>
+        <tr><td>Government support</td><td>5</td><td>3</td></tr>
+        <tr><td>Tariff competitiveness</td><td>5</td><td>3</td></tr>
+        <tr><td>Grid use in hybrid</td><td>3</td><td>4</td></tr>
+        <tr><td><b>Total (out of 50)</b></td><td><b>42</b></td><td><b>33</b></td></tr>
+      </tbody></table></div>
+  </div>
+
+  <div class="box hl"><span class="eyebrow"><span class="en">CB Verdict</span><span class="ta">CB தீர்ப்பு</span></span>
+    <h3><span class="en">Solar wins the race. Wind survives as solar's essential partner, not its rival.</span><span class="ta">Race-ல solar ஜெயிக்குது. Wind அழியாது — solar-ன் போட்டியாளரா இல்ல, அவசியமான partner-ஆ நிலைக்கும்.</span></h3>
+    <ul class="b en">
+      <li><b>Capex, speed, siting, policy:</b> solar leads clearly (42 vs 33). It will keep taking roughly 80–85% of new RE capacity.</li>
+      <li><b>Why wind still survives:</b> India's demand peaks in the evening; wind delivers then without a battery, and gives more energy per MW of scarce grid capacity. Hybrid, FDRE and round-the-clock contracts need it.</li>
+      <li><b>Realistic wind path:</b> 8–11 GW a year onshore is achievable if grid lines keep pace; offshore is a 2030s option and adds little before FY31.</li>
+      <li><b>Biggest long-term threat to wind:</b> cheap solar + battery replacing wind's evening role. Watch storage tariffs falling below ~₹3 per unit.</li>
+      <li><b>For Suzlon:</b> survival is not the risk — it has net cash, local ALMM-ready supply and ~28% of a market that is still growing. The risk is a growth ceiling. Its hedges are DevCo hybrid sites, solar EPC (asset-light), BESS and AMS on other brands' fleets.</li>
+    </ul>
+    <ul class="b ta">
+      <li><b>Capex, வேகம், site, policy:</b> solar தெளிவா முன்னாடி (42 vs 33). புது RE capacity-ல ~80–85% solar தான் எடுக்கும்.</li>
+      <li><b>Wind ஏன் நிலைக்கும்:</b> India demand சாயங்காலம் உச்சம்; அப்போ battery இல்லாமலே wind current தருது, குறைவான grid capacity-க்கு MW-க்கு அதிக energy தருது. Hybrid, FDRE, RTC contracts-க்கு wind அவசியம்.</li>
+      <li><b>Wind-க்கு நடைமுறை பாதை:</b> grid line கூட வந்தா வருஷத்துக்கு 8–11 GW onshore சாத்தியம்; offshore 2030-களின் option, FY31-க்கு முன்னாடி பெருசா சேர்க்காது.</li>
+      <li><b>Wind-க்கு பெரிய நீண்டகால threat:</b> மலிவான solar + battery சாயங்கால வேலையை எடுத்துக்கறது. Storage tariff ~₹3-க்கு கீழ போகுதான்னு பாருங்க.</li>
+      <li><b>Suzlon-க்கு:</b> அழிவு risk இல்ல — net cash, ALMM-ready local supply, இன்னும் வளர்ற market-ல ~28% share. Risk என்னன்னா growth-க்கு ஒரு உச்சவரம்பு. அதுக்கு hedge: DevCo hybrid sites, solar EPC (asset-light), BESS, மத்த brands fleet-க்கு AMS.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- 7 VALUATIONS -->
+<section class="panel" id="p-val" hidden>
+  <div><h2><span class="en">Valuations</span><span class="ta">Valuations</span></h2><p class="lead"><span class="en">At ₹38.81 (5 Oct 2026). TTM = Jul 2025–Jun 2026.</span><span class="ta">₹38.81 விலையில (5 Oct 2026). TTM = Jul 2025–Jun 2026.</span></p></div>
+  <div class="grid2">
+    <div class="tw"><table>
+      <thead><tr><th>Metric</th><th>Value</th></tr></thead>
+      <tbody>
+        <tr><td>Shares outstanding</td><td>~1,371 cr</td></tr>
+        <tr><td>Market cap</td><td>₹53,210 cr</td></tr>
+        <tr><td>Enterprise value (less net cash)</td><td>₹50,890 cr</td></tr>
+        <tr><td>TTM revenue</td><td>₹17,381 cr</td></tr>
+        <tr><td>TTM EBITDA</td><td>₹3,018 cr</td></tr>
+        <tr><td>TTM PAT (reported / ex-DTA)</td><td>₹3,144 / ₹2,402 cr</td></tr>
+        <tr><td>P/E (reported)</td><td>16.9x</td></tr>
+        <tr><td>P/E (ex one-time tax credit)</td><td>22.2x</td></tr>
+        <tr><td>EV / EBITDA (TTM)</td><td>16.9x</td></tr>
+        <tr><td>EV / EBITDA FY27E · FY28E*</td><td>12.5x · 11.6x</td></tr>
+        <tr><td>P / B (book ₹7.20/share)</td><td>5.4x</td></tr>
+        <tr><td>EV / Sales</td><td>2.9x</td></tr>
+        <tr><td>52-week high / low</td><td>₹61.5 / ₹38.2</td></tr>
+      </tbody></table></div>
+    <div class="box"><h3><span class="en">How to read it</span><span class="ta">இதை எப்படி படிக்கணும்</span></h3>
+      <ul class="b en"><li>For a capital-goods maker, EV/EBITDA is cleaner than P/E because the tax credit inflates PAT.</li><li>At ~17x TTM EBITDA, the price assumes growth continues but no longer assumes perfection (it was far higher in 2025).</li><li>P/B 5.4x reflects high ROE, which needs margins to hold.</li><li>What brokers published: UBS target ₹72 (May 2026), ICICI Securities ₹65 (Feb 2026); Anand Rathi and Prabhudas Lilladher stayed positive after Q1. CB Research does not set targets.</li></ul>
+      <ul class="b ta"><li>Capital goods company-க்கு P/E-ஐ விட EV/EBITDA தெளிவு, ஏன்னா tax credit PAT-ஐ பெருசா காட்டுது.</li><li>~17x TTM EBITDA-ல, growth தொடரும்னு price நம்புது, ஆனா perfect-ஆ இருக்கணும்னு இல்ல (2025-ல இதைவிட ரொம்ப அதிகம்).</li><li>P/B 5.4x high ROE-ஐ காட்டுது; அதுக்கு margin நிலைக்கணும்.</li><li>Brokers சொன்னது: UBS ₹72 (May 2026), ICICI Securities ₹65 (Feb 2026); Q1-க்கு அப்புறமும் Anand Rathi, Prabhudas Lilladher positive. CB Research target கொடுக்காது.</li></ul>
+      <p class="note">* <span class="en">Forward EBITDA from one brokerage's May 2026 estimates (₹4,071 cr / ₹4,399 cr).</span><span class="ta">Forward EBITDA ஒரு brokerage-ன் May 2026 estimate (₹4,071 / ₹4,399 கோடி).</span></p>
+    </div>
+  </div>
+</section>
+
+<!-- 8 TAKEAWAYS -->
+<section class="panel" id="p-take" hidden>
+  <div><h2><span class="en">5 Key Takeaways</span><span class="ta">5 முக்கிய பாடங்கள்</span></h2></div>
+  <div class="take">
+    <div class="box"><span class="k">1</span><div><b class="en">Record volume, weaker margin.</b><b class="ta">Record volume, margin weak.</b><p class="en">506 MW delivered (+14%), but EBITDA margin fell to 15.6% from 19.2%.</p><p class="ta">506 MW deliver (+14%), ஆனா EBITDA margin 19.2%-ல இருந்து 15.6%.</p></div></div>
+    <div class="box"><span class="k">2</span><div><b class="en">Order book gives 2+ years of visibility.</b><b class="ta">Order book 2+ வருஷ visibility தருது.</b><p class="en">~6.1 GW, 84% PSU and C&amp;I; EPC share up to 32%, which brings bigger tickets and more working capital.</p><p class="ta">~6.1 GW, 84% PSU, C&amp;I; EPC 32% — பெரிய orders, ஆனா working capital அதிகம்.</p></div></div>
+    <div class="box"><span class="k">3</span><div><b class="en">Cash conversion is the weak link.</b><b class="ta">Cash conversion தான் weak point.</b><p class="en">FY26 operating cash ₹1,202 cr vs PAT ₹3,163 cr; debtor days rose to 130.</p><p class="ta">FY26 operating cash ₹1,202 கோடி vs PAT ₹3,163 கோடி; debtor days 130-க்கு ஏறிச்சு.</p></div></div>
+    <div class="box"><span class="k">4</span><div><b class="en">Low EPS is a share-count story.</b><b class="ta">EPS குறைவு = share எண்ணிக்கை அதிகம்.</b><p class="en">~1,371 cr shares after restructuring, rights and QIP. FY26 EPS ₹2.31 includes a ₹742 cr non-cash tax credit.</p><p class="ta">Restructuring, rights, QIP-க்கு அப்புறம் ~1,371 கோடி shares. FY26 EPS ₹2.31-ல ₹742 கோடி non-cash tax credit இருக்கு.</p></div></div>
+    <div class="box"><span class="k">5</span><div><b class="en">The future runs on sites and grid.</b><b class="ta">எதிர்காலம் site, grid-ல தான் இருக்கு.</b><p class="en">India needs ~9–11 GW a year for 100 GW by 2030. DevCo land plus connectivity and ALMM-Wind localisation are Suzlon's moat; grid delays are the main threat.</p><p class="ta">2030-க்குள்ள 100 GW-க்கு வருஷத்துக்கு ~9–11 GW வேணும். DevCo land + connectivity, ALMM-Wind தான் Suzlon-ன் moat; grid delay தான் பெரிய threat.</p></div></div>
+  </div>
+</section>
+
+<!-- 9 REASONS -->
+<section class="panel" id="p-reasons" hidden>
+  <div><h2><span class="en">Reasons for share market activity</span><span class="ta">Share price ஏன் இப்படி நகருது?</span></h2>
+  <p class="lead"><span class="en">Down ~26% in 2026 and ~28% over one year, while the business kept growing.</span><span class="ta">Business வளர்ந்தாலும் 2026-ல ~26%, ஒரு வருஷத்துல ~28% இறங்கியிருக்கு.</span></p></div>
+  <div class="box"><h3><span class="en">Selected closing prices (₹)</span><span class="ta">சில closing prices (₹)</span></h3><div class="chart"><canvas id="cPx"></canvas></div><p class="note"><span class="en">Dated closes from news reports; not a full daily series.</span><span class="ta">News reports-ல இருந்து எடுத்த தேதி வாரியான prices.</span></p></div>
+  <div class="grid2">
+    <div class="box"><h3 class="dn"><span class="en">What pushed it down</span><span class="ta">இறக்கியது எது?</span></h3>
+      <ul class="b en"><li><b>28 Jul results:</b> fell 6–10% intraday; PAT ₹305 cr missed street estimates near ₹400 cr.</li><li><b>Margin squeeze:</b> 15.6% vs 18–19% expected.</li><li><b>September:</b> −15% (₹46.5 → ₹39.7) with broad market weakness and selling below key moving averages.</li><li><b>Profit booking</b> after a multi-year multibagger run.</li><li><b>Worries:</b> higher interest cost (+30%), rising receivables, competition from Chinese OEMs and Inox.</li></ul>
+      <ul class="b ta"><li><b>28 Jul results:</b> 6–10% விழுந்தது; PAT ₹305 கோடி, street ~₹400 கோடி எதிர்பார்த்தது.</li><li><b>Margin squeeze:</b> 18–19% எதிர்பார்த்தாங்க, வந்தது 15.6%.</li><li><b>September:</b> −15% (₹46.5 → ₹39.7), market weakness, moving average-க்கு கீழ selling.</li><li><b>Profit booking</b> — பல வருஷ multibagger ஓட்டத்துக்கு அப்புறம்.</li><li><b>கவலைகள்:</b> interest cost +30%, receivables ஏற்றம், Chinese OEMs, Inox போட்டி.</li></ul></div>
+    <div class="box"><h3 class="up"><span class="en">What did not lift it</span><span class="ta">Price-ஐ ஏத்தாதது எது?</span></h3>
+      <ul class="b en"><li>Steady order wins (Torrent 250 MW, Ayana 200 MW) drew little reaction.</li><li>Suzlon 2.0 targets (10 GW, 70 GW) were announced in June, before the slide.</li><li>The market now wants proof on margins and cash, not more orders.</li></ul>
+      <ul class="b ta"><li>Torrent 250 MW, Ayana 200 MW orders வந்தும் price பெருசா நகரல.</li><li>Suzlon 2.0 targets June-லயே announce ஆச்சு, slide-க்கு முன்னாடி.</li><li>Market இப்போ orders இல்ல, margin, cash-ல proof கேக்குது.</li></ul></div>
+  </div>
+</section>
+
+<!-- 10 TRIGGERS & CYCLE -->
+<section class="panel" id="p-trig" hidden>
+  <div><h2><span class="en">Triggers &amp; Cycle</span><span class="ta">Triggers &amp; Cycle</span></h2>
+  <p class="lead"><span class="en">CY 52 · TG 54 — a supportive long-term sector, but the stock is in a falling price stage and margins are under pressure.</span><span class="ta">CY 52 · TG 54 — sector நீண்ட காலத்துக்கு சாதகம், ஆனா stock இறங்கு stage-ல, margin அழுத்தத்துல.</span></p></div>
+  <div class="grid2">
+    <div class="box cycle"><h3><span class="en">Cycle clock</span><span class="ta">Cycle clock</span></h3>
+      <svg viewBox="0 0 340 260" role="img" aria-label="Cycle clock">
+        <circle cx="170" cy="130" r="95" fill="#FFFFFF" stroke="#E6E1DA" stroke-width="18"/>
+        <path d="M170 35 A95 95 0 0 1 260 100" fill="none" stroke="#1E7B3C" stroke-width="18"/>
+        <path d="M260 100 A95 95 0 0 1 226 207" fill="none" stroke="#0B7A86" stroke-width="18"/>
+        <path d="M226 207 A95 95 0 0 1 114 207" fill="none" stroke="#A86200" stroke-width="18"/>
+        <path d="M114 207 A95 95 0 0 1 80 100" fill="none" stroke="#B42318" stroke-width="18"/>
+        <path d="M80 100 A95 95 0 0 1 170 35" fill="none" stroke="#6B7280" stroke-width="18"/>
+        <text x="236" y="40" font-size="12" font-weight="700" fill="#1E7B3C">Early recovery</text>
+        <text x="280" y="160" font-size="12" font-weight="700" fill="#0B7A86" text-anchor="middle">Expansion</text>
+        <text x="170" y="252" font-size="12" font-weight="700" fill="#A86200" text-anchor="middle">Late cycle</text>
+        <text x="40" y="170" font-size="12" font-weight="700" fill="#B42318" text-anchor="middle">Downturn</text>
+        <text x="62" y="44" font-size="12" font-weight="700" fill="#6B7280" text-anchor="middle">Trough</text>
+        <line x1="170" y1="130" x2="252" y2="170" stroke="#16181D" stroke-width="4" stroke-linecap="round"/>
+        <circle cx="170" cy="130" r="7" fill="#16181D"/>
+        <circle cx="96" cy="185" r="9" fill="#F28C28" stroke="#FFFFFF" stroke-width="2"/>
+        <text x="170" y="122" font-size="11" font-weight="700" fill="#16181D" text-anchor="middle">Sector</text>
+        <text x="112" y="210" font-size="11" font-weight="700" fill="#B85F0A">Stock</text>
+      </svg>
+      <ul class="b en"><li><b>Sector 61:</b> wind is an S-curve in rapid adoption (+46% installs) but domestic turbine capacity (~24 GW) far exceeds installs (~6 GW) — scored as Maturing (55) blended with capex/order-book Expansion (70).</li><li><b>Stock 43:</b> re-inventing via Suzlon 2.0 (75), margin falling (25), valuation in band (55), Weinstein Stage 4 (15).</li></ul>
+      <ul class="b ta"><li><b>Sector 61:</b> wind வேகமா வளர்ற S-curve (+46%), ஆனா turbine capacity (~24 GW) installs-ஐ (~6 GW) விட ரொம்ப அதிகம் — Maturing (55) + order-book Expansion (70).</li><li><b>Stock 43:</b> Suzlon 2.0 re-invention (75), margin இறங்குது (25), valuation band-க்குள்ள (55), Weinstein Stage 4 (15).</li></ul>
+    </div>
+    <div class="box"><h3><span class="en">Scores</span><span class="ta">Scores</span></h3>
+      <div class="chips"><span class="chip wind">CY 52</span><span class="chip wind">TG 54</span><span class="chip bad">Stage 4 gate: conviction capped at 55</span></div>
+      <ul class="b en"><li><b>TG = 50 + 8×5.12 − 8×4.66 ≈ 54.</b> Positives are real but mostly at guidance or approved stage; negatives are already visible in numbers.</li><li><b>What would change this view:</b> Q2/Q3 margin back to 17%+; debtor days below 120; price reclaiming its 30-week average.</li><li>Downside view changes if: margin stays below 16% in H2, or a large PSU payment delay surfaces.</li></ul>
+      <ul class="b ta"><li><b>TG = 50 + 8×5.12 − 8×4.66 ≈ 54.</b> Positives உண்மை, ஆனா பெரும்பாலும் guidance/approved stage-ல; negatives ஏற்கனவே numbers-ல தெரியுது.</li><li><b>View மாறணும்னா:</b> Q2/Q3-ல margin 17%+; debtor days 120-க்கு கீழ; price 30-week average-க்கு மேல.</li><li>மோசமாகும் signal: H2-லயும் margin 16%-க்கு கீழ, அல்லது பெரிய PSU payment delay.</li></ul>
+    </div>
+  </div>
+  <div class="tw"><table>
+    <thead><tr><th>Trigger</th><th>+/−</th><th>I</th><th>C</th><th>W</th><th>P</th><th>Points</th><th>What to watch · source</th></tr></thead>
+    <tbody>
+      <tr><td>ALMM-Wind / WTC localisation squeezes import-heavy rivals</td><td class="up">+</td><td>4</td><td>0.7</td><td>0.7</td><td>1.0</td><td>1.96</td><td style="text-align:left;white-space:normal">Enforcement on Chinese OEMs · MNRE OM 31 Jul 2025, SOP amend Sep 2026</td></tr>
+      <tr><td>RE DevCo scales (site + connectivity moat)</td><td class="up">+</td><td>4</td><td>0.7</td><td>0.7</td><td>1.0</td><td>1.96</td><td style="text-align:left;white-space:normal">DevCo share of orders (~60%) · Q1 FY27 call, 28 Jul 2026</td></tr>
+      <tr><td>H2 FY27 margin recovery to 17–18%</td><td class="up">+</td><td>3</td><td>0.4</td><td>1.0</td><td>1.0</td><td>1.20</td><td style="text-align:left;white-space:normal">Q2, Q3 EBITDA margin · guidance 28 Jul 2026</td></tr>
+      <tr><td>S175 5 MW ramp (first India delivery FY27)</td><td class="up">+</td><td>3</td><td>0.7</td><td>0.4</td><td>1.0</td><td>0.84</td><td style="text-align:left;white-space:normal">S175 orders · launch Q1 FY27</td></tr>
+      <tr><td>Repowering policy for old turbines</td><td class="up">+</td><td>3</td><td>0.4</td><td>0.4</td><td>1.0</td><td>0.48</td><td style="text-align:left;white-space:normal">MNRE repowering rules · Minister, Jun 2026</td></tr>
+      <tr><td>Receivables / working capital build-up</td><td class="dn">−</td><td>2</td><td>1.0</td><td>1.0</td><td>0.7</td><td>1.40</td><td style="text-align:left;white-space:normal">Debtor days 130 · FY26 accounts</td></tr>
+      <tr><td>Margin pressure from EPC mix &amp; costs</td><td class="dn">−</td><td>3</td><td>1.0</td><td>1.0</td><td>0.4</td><td>1.20</td><td style="text-align:left;white-space:normal">Already in price (−37% from high) · Q1 FY27</td></tr>
+      <tr><td>Grid / transmission delays</td><td class="dn">−</td><td>3</td><td>0.7</td><td>0.7</td><td>0.7</td><td>1.03</td><td style="text-align:left;white-space:normal">Up to 40 GW at risk by 2030 · industry, Apr 2026</td></tr>
+      <tr><td>Competition (Envision, Sany, Inox, Adani)</td><td class="dn">−</td><td>3</td><td>0.7</td><td>0.7</td><td>0.7</td><td>1.03</td><td style="text-align:left;white-space:normal">Order pricing · FY26 OEM share data</td></tr>
+    </tbody></table></div>
+  <p class="note">I = impact 1–5 · C = certainty · W = timing weight · P = priced-in · Points = I×C×W×P. TG uses top-3 positives and all negatives. Education only.</p>
+</section>
+
+<!-- 11 SWOT -->
+<section class="panel" id="p-swot" hidden>
+  <div><h2>SWOT</h2></div>
+  <div class="swot">
+    <div class="box s1"><h3><span class="en">Strengths</span><span class="ta">பலம்</span></h3><ul class="b en"><li>Fully integrated, made-in-India turbines.</li><li>~28% cumulative India share; ~22 GW installed globally.</li><li>Annuity AMS business at ~43% margin.</li><li>Net cash ₹2,322 cr; nearly debt-free.</li><li>DevCo land and grid pipeline.</li></ul><ul class="b ta"><li>முழுசா India-லயே தயாரிப்பு.</li><li>India-ல ~28% share; உலகளவுல ~22 GW.</li><li>~43% margin AMS தொடர் வருமானம்.</li><li>Net cash ₹2,322 கோடி; கடன் கிட்டத்தட்ட இல்ல.</li><li>DevCo land, grid pipeline.</li></ul></div>
+    <div class="box s2"><h3><span class="en">Weaknesses</span><span class="ta">பலவீனம்</span></h3><ul class="b en"><li>Margin slipped to 15.6%.</li><li>Weak cash conversion; debtor days 130.</li><li>Low promoter stake (11.7%).</li><li>Governance flags: director resignation (2024), CFO exit (2025).</li><li>Huge share count keeps EPS small.</li></ul><ul class="b ta"><li>Margin 15.6%-க்கு இறங்கிச்சு.</li><li>Cash conversion weak; debtor days 130.</li><li>Promoter பங்கு குறைவு (11.7%).</li><li>Governance கேள்விகள்: director ராஜினாமா (2024), CFO விலகல் (2025).</li><li>Share எண்ணிக்கை அதிகம், EPS சின்னது.</li></ul></div>
+    <div class="box s3"><h3><span class="en">Opportunities</span><span class="ta">வாய்ப்புகள்</span></h3><ul class="b en"><li>100 GW by 2030, 156 GW by 2036.</li><li>Repowering old wind sites.</li><li>Hybrid, FDRE and round-the-clock tenders need wind.</li><li>Exports (3 GW intake target), solar and BESS.</li></ul><ul class="b ta"><li>2030-க்குள்ள 100 GW, 2036-க்குள்ள 156 GW.</li><li>பழைய wind sites repowering.</li><li>Hybrid, FDRE, RTC tenders-க்கு wind அவசியம்.</li><li>Exports (3 GW target), solar, BESS.</li></ul></div>
+    <div class="box s4"><h3><span class="en">Threats</span><span class="ta">அச்சுறுத்தல்கள்</span></h3><ul class="b en"><li>Grid and substation delays.</li><li>Chinese OEMs (Envision led FY26 commissioning), Inox, Adani.</li><li>PSU payment delays.</li><li>Wind is site-bound; good sites near grid are scarce.</li><li>Policy shifts, e.g. reverse auctions.</li></ul><ul class="b ta"><li>Grid, substation தாமதம்.</li><li>Chinese OEMs (FY26 commissioning-ல Envision முதலிடம்), Inox, Adani.</li><li>PSU payment தாமதம்.</li><li>Wind site சார்ந்தது; grid பக்கத்துல நல்ல site குறைவு.</li><li>Policy மாற்றம் (reverse auction மாதிரி).</li></ul></div>
+  </div>
+</section>
+
+<!-- 12 ASSIST -->
+<section class="panel" id="p-assist" hidden>
+  <div><h2>Cauvery Assist</h2><p class="lead"><span class="en">Ask by typing or by voice. Answers come first, in one or two lines, read aloud slowly.</span><span class="ta">Type பண்ணியோ பேசியோ கேளுங்க. பதில் முதல்ல, ஒன்னு ரெண்டு வரியில, மெதுவா படிச்சு காட்டும்.</span></p></div>
+  <div class="assist">
+    <div class="ahead"><b>Cauvery Assist</b>
+      <div class="ctl"><button class="mini" onclick="setRate(rate-0.1)">−</button><span class="mono" id="rateLbl">0.8×</span><button class="mini" onclick="setRate(rate+0.1)">+</button><button class="mini" id="pauseBtn" onclick="togglePause()"><span class="en">Pause</span><span class="ta">Pause</span></button><button class="mini" onclick="stopSpeak()"><span class="en">Stop</span><span class="ta">நிறுத்து</span></button></div></div>
+    <div class="alog" id="alog" aria-live="polite"></div>
+    <div class="status" id="astatus"></div>
+    <div class="cd"><i id="cdbar"></i></div>
+    <div class="ain">
+      <input id="aq" type="text" autocomplete="off" placeholder="Ask: What is the order book?">
+      <button class="btn acc" onclick="askFromInput()"><span class="en">Ask</span><span class="ta">கேளு</span></button>
+      <button class="btn" id="micBtn" onclick="toggleMic()">🎤 <span class="en">Speak</span><span class="ta">பேசுங்க</span></button>
+      <button class="btn" id="doneBtn" onclick="micDone()" hidden><span class="en">Done</span><span class="ta">முடிஞ்சது</span></button>
+    </div>
+    <div class="sugs" id="sugs"></div>
+    <div class="sets">
+      <label for="speedSel"><span class="en">Speed</span><span class="ta">வேகம்</span></label>
+      <select id="speedSel" onchange="setRate(parseFloat(this.value))"><option value="0.6">Slow</option><option value="0.8" selected>Relaxed</option><option value="1">Normal</option><option value="1.2">Fast</option></select>
+      <input id="speedRange" type="range" min="0.5" max="1.5" step="0.05" value="0.8" oninput="setRate(parseFloat(this.value))" aria-label="Speed">
+      <label for="waitSel"><span class="en">Wait after I stop</span><span class="ta">நான் நிறுத்தின பிறகு காத்திரு</span></label>
+      <select id="waitSel" onchange="setWait(this.value)"><option value="2">2 s</option><option value="3" selected>3 s</option><option value="5">5 s</option><option value="manual">Tap Done</option></select>
+      <label><input type="checkbox" id="reviewChk"> <span class="en">Check text before sending</span><span class="ta">அனுப்பும் முன் text பாரு</span></label>
+      <label><input type="checkbox" id="convChk"> <span class="en">Conversation mode</span><span class="ta">Conversation mode</span></label>
+    </div>
+  </div>
+  <p class="note"><span class="en">Voice input needs Chrome or Edge on a normal web page (e.g. GitHub Pages); claude.ai previews block the microphone. Read-aloud works everywhere.</span><span class="ta">Voice input-க்கு Chrome/Edge-ல சாதாரண web page (GitHub Pages) வேணும்; claude.ai preview mic-ஐ block பண்ணும். Read-aloud எங்கயும் வேலை செய்யும்.</span></p>
+</section>
+
+<!-- 13 QUIZ -->
+<section class="panel" id="p-quiz" hidden>
+  <div><h2>Cauvery Socrates</h2><p class="lead"><span class="en">Test what you learned. One question at a time.</span><span class="ta">கத்துக்கிட்டதை test பண்ணுங்க. ஒரு கேள்வி ஒரு தடவை.</span></p></div>
+  <div class="quiz" id="quiz"></div>
+</section>
+
+<!-- 14 ANALYST VIEW -->
+<section class="panel" id="p-view" hidden>
+  <div><h2><span class="en">Analyst View</span><span class="ta">Analyst View</span></h2><p class="lead"><span class="en">Education only. Not a buy, sell or hold recommendation.</span><span class="ta">கல்விக்காக மட்டும். Buy, sell, hold பரிந்துரை இல்ல.</span></p></div>
+  <div class="grid2">
+    <div class="box hl"><h3><span class="en">CB reading</span><span class="ta">CB பார்வை</span></h3>
+      <ul class="b en"><li><b>Business:</b> the strongest it has been in 15 years — net cash, record volumes, integrated local supply chain.</li><li><b>Cycle:</b> sector long-term supportive (100 GW goal) but turbine overcapacity and price competition are real; stock in Weinstein Stage 4.</li><li><b>Top positive triggers:</b> ALMM-Wind localisation and DevCo site control.</li><li><b>Top risk:</b> working capital and grid delays turning orders into slow cash.</li><li><b>2-year:</b> revenue visibility is high; margin and cash are the swing factors.</li><li><b>Wind vs solar:</b> solar leads on capex, speed and siting (42 vs 33); wind stays essential for evening power and hybrids, so the risk for Suzlon is a growth ceiling, not survival.</li><li><b>5-year:</b> Suzlon 2.0 targets are ambitious; our base case gets roughly halfway (≈4.2 GW deliveries, EPS ≈ ₹2.6 in FY31).</li></ul>
+      <ul class="b ta"><li><b>Business:</b> 15 வருஷத்துல இதுதான் best நிலை — net cash, record volumes, local supply chain.</li><li><b>Cycle:</b> sector நீண்ட காலத்துக்கு சாதகம் (100 GW), ஆனா turbine overcapacity, விலை போட்டி உண்டு; stock Weinstein Stage 4-ல.</li><li><b>முக்கிய positive triggers:</b> ALMM-Wind, DevCo site control.</li><li><b>முக்கிய risk:</b> working capital, grid delay — orders மெதுவா cash ஆகும்.</li><li><b>2 வருஷம்:</b> revenue visibility அதிகம்; margin, cash தான் swing factors.</li><li><b>Wind vs solar:</b> capex, வேகம், site-ல solar முன்னாடி (42 vs 33); சாயங்கால current, hybrid-க்கு wind அவசியம் — Suzlon-க்கு risk growth உச்சவரம்பு, அழிவு இல்ல.</li><li><b>5 வருஷம்:</b> Suzlon 2.0 target பெருசு; எங்க base case பாதி தூரம் போகுது (FY31-ல ≈4.2 GW, EPS ≈ ₹2.6).</li></ul>
+    </div>
+    <div class="box"><h3><span class="en">Learner's checklist for next quarter</span><span class="ta">அடுத்த quarter-க்கு checklist</span></h3>
+      <ul class="b en"><li>EBITDA margin ≥ 17%?</li><li>Deliveries ≥ 600 MW in Q2?</li><li>Debtor days and net cash direction?</li><li>New DevCo and S175 orders?</li><li>Any ALMM-WTC enforcement news?</li><li>Grid: new ISTS substations in Gujarat, Karnataka, Tamil Nadu?</li></ul>
+      <ul class="b ta"><li>EBITDA margin 17%-க்கு மேலயா?</li><li>Q2-ல deliveries 600 MW-க்கு மேலயா?</li><li>Debtor days, net cash எந்த பக்கம்?</li><li>புது DevCo, S175 orders?</li><li>ALMM-WTC enforcement செய்தி?</li><li>Grid: Gujarat, Karnataka, தமிழ்நாடு-ல புது ISTS substations?</li></ul>
+    </div>
+  </div>
+  <div class="foot"><span class="en">Sources: company Q1 FY27 &amp; FY26 releases and call summaries; MNRE and PIB releases; JMK Research; GWEC; brokerage notes as reported in Business Standard, DSIJ, Upstox, Kotak Neo, Angel One (Jul–Oct 2026). Figures rounded.</span><span class="ta">Sources: company Q1 FY27, FY26 results, call summaries; MNRE, PIB; JMK Research; GWEC; brokerage notes (Jul–Oct 2026). Numbers rounded.</span></div>
+</section>
+</div>
+
+<button class="va-bubble" onclick="showTab('assist')">🎙 <span class="en vl">Voice Assist</span><span class="ta vl">Voice Assist</span></button>
+<div class="cb-badge"><button id="cbBtn" aria-label="Disclaimer" onclick="var p=document.getElementById('cbPop');p.hidden=!p.hidden;">CB</button>
+  <div class="cb-pop" id="cbPop" hidden><b>CB Research — Learn before you Buy</b><br><span class="en">For education only. CB Research (Cauvery Business Research) is not SEBI-registered and does not give buy, sell or hold recommendations. Scenarios are illustrative. Do your own research or consult a SEBI-registered adviser.</span><span class="ta">கல்விக்காக மட்டும். CB Research SEBI-registered இல்ல; buy, sell, hold சொல்ல மாட்டோம். Scenarios உதாரணத்துக்கு மட்டும். நீங்களே ஆராய்ந்து, தேவைன்னா SEBI-registered adviser-ஐ கேளுங்க.</span></div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<script>
+var LANG="en";
+function A(en,ta){return {en:en,ta:ta};}
+function L(o){return o?(o[LANG]||o.en):"";}
+var TABS=[["dash",A("Dashboard","Dashboard")],["model",A("Business Model","Business Model")],["seg",A("Segments","Segments")],["fin",A("Financials","Financials")],["cash",A("Cash Flow & Ratios","Cash Flow & Ratios")],["future",A("Future 2Y / 5Y","எதிர்காலம் 2Y / 5Y")],["ws",A("Wind vs Solar","Wind vs Solar")],["val",A("Valuations","Valuations")],["take",A("5 Key Takeaways","5 Takeaways")],["reasons",A("Reasons for share market activity","Price நகர்வு காரணங்கள்")],["trig",A("Triggers & Cycle","Triggers & Cycle")],["swot",A("SWOT","SWOT")],["assist",A("Cauvery Assist","Cauvery Assist")],["quiz",A("Cauvery Socrates","Cauvery Socrates")],["view",A("Analyst View","Analyst View")]];
+var current="dash";
+function store(k,v){try{localStorage.setItem("cba_suzlon_q1fy27_"+k,v);}catch(e){}}
+function load(k){try{return localStorage.getItem("cba_suzlon_q1fy27_"+k);}catch(e){return null;}}
+function buildTabs(){var n=document.getElementById("tabs");n.innerHTML="";TABS.forEach(function(t){var b=document.createElement("button");b.className="tab"+(t[0]===current?" active":"");b.textContent=L(t[1]);b.onclick=function(){showTab(t[0]);};b.id="t-"+t[0];n.appendChild(b);});}
+function showTab(id){current=id;TABS.forEach(function(t){document.getElementById("p-"+t[0]).hidden=(t[0]!==id);var b=document.getElementById("t-"+t[0]);if(b)b.classList.toggle("active",t[0]===id);});store("tab",id);initCharts(id);var b=document.getElementById("t-"+id);if(b&&b.scrollIntoView)b.scrollIntoView({block:"nearest",inline:"center"});if(id==="assist")setTimeout(function(){document.getElementById("aq").focus();},50);}
+function setLang(l){LANG=l;var app=document.getElementById("app");app.classList.toggle("lang-ta",l==="ta");app.classList.toggle("lang-en",l!=="ta");document.body.classList.toggle("lang-ta",l==="ta");document.body.classList.toggle("lang-en",l!=="ta");document.getElementById("bEN").classList.toggle("on",l!=="ta");document.getElementById("bTA").classList.toggle("on",l==="ta");buildTabs();document.getElementById("aq").placeholder=L(CONFIG.placeholder);renderSugs();renderQuiz();store("lang",l);}
+
+/* charts */
+var made={};var INK="#16181D",MUT="#4A4F59",GRID="#EEE9E2",ACC="#F28C28",WIND="#0B7A86";
+function base(){return {responsive:true,maintainAspectRatio:false,plugins:{legend:{labels:{color:INK,font:{weight:"700",family:"Inter"}}}},scales:{x:{ticks:{color:MUT,font:{weight:"600"}},grid:{color:GRID}},y:{ticks:{color:MUT,font:{weight:"600"}},grid:{color:GRID}}}};}
+function initCharts(id){if(typeof Chart==="undefined")return;Chart.defaults.font.family="Inter, system-ui, sans-serif";
+ if(id==="dash"&&!made.dash){made.dash=1;var q=["Q1 FY26","Q2 FY26","Q3 FY26","Q4 FY26","Q1 FY27"];var o=base();o.scales.y1={position:"right",min:10,max:22,ticks:{color:WIND,callback:function(v){return v+"%";}},grid:{display:false}};
+  new Chart(document.getElementById("cQtr"),{data:{labels:q,datasets:[{type:"bar",label:"Revenue ₹ cr",data:[3117,3866,4228,5468,3819],backgroundColor:ACC,borderRadius:4},{type:"line",label:"EBITDA margin %",data:[19.2,18.6,17.5,17.6,15.6],borderColor:WIND,backgroundColor:WIND,yAxisID:"y1",tension:.25,pointRadius:4}]},options:o});
+  var o2=base();o2.plugins.legend.display=false;new Chart(document.getElementById("cMW"),{type:"bar",data:{labels:q,datasets:[{label:"MW",data:[444,565,617,830,506],backgroundColor:[WIND,WIND,WIND,WIND,ACC],borderRadius:4}]},options:o2});}
+ if(id==="seg"&&!made.seg){made.seg=1;new Chart(document.getElementById("cSeg"),{type:"doughnut",data:{labels:["RE Solutions 3,174","RE AMS 632","Forging 126"],datasets:[{data:[3174,632,126],backgroundColor:[WIND,ACC,"#9AA0A8"],borderColor:"#FFFFFF",borderWidth:2}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:"bottom",labels:{color:INK,font:{weight:"700"}}}}}});}
+ if(id==="cash"&&!made.cash){made.cash=1;new Chart(document.getElementById("cCash"),{type:"bar",data:{labels:["FY24","FY25","FY26"],datasets:[{label:"PAT",data:[660,2072,3163],backgroundColor:ACC,borderRadius:4},{label:"Cash from operations",data:[80,1092,1202],backgroundColor:WIND,borderRadius:4}]},options:base()});}
+ if(id==="future"&&!made.future){made.future=1;var o3=base();new Chart(document.getElementById("cScen"),{type:"line",data:{labels:["FY26 (ex-DTA)","FY29","FY31"],datasets:[{label:"Bull",data:[1.77,2.94,4.62],borderColor:"#1E7B3C",backgroundColor:"#1E7B3C",tension:.2},{label:"Base",data:[1.77,1.89,2.64],borderColor:WIND,backgroundColor:WIND,tension:.2},{label:"Bear",data:[1.77,0.96,1.02],borderColor:"#B42318",backgroundColor:"#B42318",tension:.2}]},options:o3});}
+ if(id==="ws"&&!made.ws){made.ws=1;var h=[];for(var i=0;i<24;i++)h.push(i+":00");var sol=h.map(function(_,i){return (i<6||i>18)?0:Math.round(100*Math.sin(Math.PI*(i-6)/12));});var wnd=[62,64,63,60,55,48,40,34,30,28,28,30,34,40,48,56,64,72,78,80,78,74,70,66];var o5=base();o5.scales.y.title={display:true,text:"% of peak output",color:MUT};new Chart(document.getElementById("cProfile"),{type:"line",data:{labels:h,datasets:[{label:"Solar",data:sol,borderColor:ACC,backgroundColor:"rgba(242,140,40,.15)",fill:true,tension:.35,pointRadius:0},{label:"Wind",data:wnd,borderColor:WIND,backgroundColor:"rgba(11,122,134,.10)",fill:true,tension:.35,pointRadius:0}]},options:o5});
+  var o6=base();o6.indexAxis="y";o6.scales.x.min=0;o6.scales.x.max=5;new Chart(document.getElementById("cScore"),{type:"bar",data:{labels:["Capex","Speed","Siting","CUF","Evening value","Tech path","Supply chain","Govt support","Tariff","Hybrid grid use"],datasets:[{label:"Solar",data:[5,5,5,3,2,5,4,5,5,3],backgroundColor:ACC,borderRadius:3},{label:"Wind",data:[3,2,2,4,5,3,4,3,3,4],backgroundColor:WIND,borderRadius:3}]},options:o6});}
+ if(id==="reasons"&&!made.reasons){made.reasons=1;var o4=base();o4.plugins.legend.display=false;new Chart(document.getElementById("cPx"),{type:"line",data:{labels:["1 Jan","30 Mar","26 May","31 Jul","28 Aug","17 Sep","28 Sep","5 Oct"],datasets:[{label:"₹",data:[52.71,39.56,53.50,48.00,46.77,42.13,39.66,38.81],borderColor:ACC,backgroundColor:"rgba(242,140,40,.12)",fill:true,tension:.2,pointRadius:4,pointBackgroundColor:ACC}]},options:o4});}
+}
+function slices(){var s=document.getElementById("slices");var h="";for(var i=0;i<200;i++){h+='<i class="'+(i>=150?"p":"")+'"></i>';}s.innerHTML=h;}
+
+/* speech */
+var rate=0.8,paused=false,synth=window.speechSynthesis;
+function setRate(r){rate=Math.max(0.5,Math.min(1.5,Math.round(r*100)/100));document.getElementById("rateLbl").textContent=rate.toFixed(2).replace(/0$/,"")+"×";document.getElementById("speedRange").value=rate;store("rate",rate);}
+function pickVoice(){if(!synth)return null;var vs=synth.getVoices();var want=LANG==="ta"?"ta":"en";var v=vs.filter(function(x){return x.lang&&x.lang.toLowerCase().indexOf(want+"-in")===0;})[0]||vs.filter(function(x){return x.lang&&x.lang.toLowerCase().indexOf(want)===0;})[0];return v||null;}
+function speak(text){if(!synth){status(L(A("Read-aloud is not supported in this browser.","இந்த browser-ல read-aloud இல்ல.")));return;}synth.cancel();paused=false;var parts=String(text).replace(/\s+/g," ").match(/[^.!?।]+[.!?।]?/g)||[];var v=pickVoice();if(LANG==="ta"&&!v)status("Tamil voice இந்த device-ல இல்ல; default voice பயன்படுத்துறோம்.");parts.forEach(function(p){p=p.trim();if(!p)return;var u=new SpeechSynthesisUtterance(p);u.rate=rate;u.lang=LANG==="ta"?"ta-IN":"en-IN";if(v)u.voice=v;synth.speak(u);});}
+function stopSpeak(){if(synth)synth.cancel();paused=false;}
+function togglePause(){if(!synth)return;if(paused){synth.resume();paused=false;}else{synth.pause();paused=true;}}
+function plain(el){var c=el.cloneNode(true);c.querySelectorAll(LANG==="ta"?".en":".ta").forEach(function(x){x.remove();});c.querySelectorAll("canvas,svg,script").forEach(function(x){x.remove();});return c.textContent.replace(/\s+/g," ").trim();}
+function readTab(){speak(plain(document.getElementById("p-"+current)));}
+if(synth&&synth.onvoiceschanged!==undefined)synth.onvoiceschanged=function(){};
+
+/* Cauvery Assist CONFIG (same shape as cauvery-assist.js) */
+var CONFIG={title:"Cauvery Assist",storageKey:"cba_suzlon_q1fy27",
+ placeholder:A("Ask: What is the order book?","கேளுங்க: Order book எவ்வளவு?"),
+ greeting:A("Vanakam! Ask me about Suzlon's Q1 FY27 results, its future, or ALMM-Wind.","வணக்கம்! Suzlon Q1 FY27 results, எதிர்காலம், ALMM-Wind பத்தி கேளுங்க."),
+ noAdvice:A("I can't say whether to buy or sell. CB Research is not SEBI-registered; we only explain the numbers.","Buy பண்ணலாமா sell பண்ணலாமான்னு சொல்ல முடியாது. CB Research SEBI-registered இல்ல; numbers-ஐ மட்டும் விளக்குவோம்."),
+ fallback:A("I don't have that in this dashboard. Try: revenue, margin, order book, EPS, future, ALMM, DevCo or valuation.","அது இந்த dashboard-ல இல்ல. Revenue, margin, order book, EPS, future, ALMM, DevCo, valuation பத்தி கேளுங்க."),
+ kb:[
+ {k:["revenue","sales","topline","ரெவின்யூ","வருமானம்","விற்பனை"],a:A("Q1 FY27 revenue was ₹3,819 crore, up 23% year on year.","Q1 FY27 revenue ₹3,819 கோடி, போன வருஷத்தை விட 23% அதிகம்."),d:A("FY26 revenue was ₹16,679 crore (+54%).","FY26 revenue ₹16,679 கோடி (+54%)."),tab:"fin"},
+ {k:["profit","pat","net profit","லாபம்","ப்ராஃபிட்","பேட்"],a:A("Q1 FY27 profit was ₹305 crore, down 6% from ₹324 crore.","Q1 FY27 profit ₹305 கோடி, ₹324 கோடியில இருந்து 6% குறைவு."),d:A("Street expected about ₹400 crore. Lower margin and 30% higher interest cost hurt.","Street ~₹400 கோடி எதிர்பார்த்தது. Margin குறைவு, interest 30% ஏற்றம் காரணம்."),tab:"fin"},
+ {k:["margin","ebitda","மார்ஜின்","இபிட்டா"],a:A("EBITDA margin fell to 15.6% from 19.2%; management guides 17–18% for FY27.","EBITDA margin 19.2%-ல இருந்து 15.6%-க்கு இறங்கிச்சு; FY27-க்கு 17–18% guidance."),d:A("Reasons: Middle East logistics disruption, upfront Suzlon 2.0 investments, more EPC work.","காரணங்கள்: Middle East logistics, Suzlon 2.0 செலவு, EPC வேலை அதிகம்."),tab:"fin"},
+ {k:["delivery","deliveries","mw","megawatt","டெலிவரி"],a:A("Suzlon delivered 506 MW in Q1, its best first quarter, up 14%.","Q1-ல 506 MW deliver பண்ணாங்க — best first quarter, 14% அதிகம்."),d:A("FY26 deliveries were a record 2,456 MW; Q4 FY26 alone was 830 MW.","FY26-ல record 2,456 MW; Q4 FY26-ல மட்டும் 830 MW."),tab:"dash"},
+ {k:["order book","orders","order","ஆர்டர்","ஆர்டர் புக்"],a:A("The order book is about 6.1 GW, roughly 2.4 years of FY26 deliveries.","Order book சுமார் 6.1 GW — FY26 deliveries-க்கு ~2.4 வருஷ வேலை."),d:A("84% is from PSU and C&I buyers; EPC share rose to 32%. FY27 intake crossed 1.1 GW by August.","84% PSU, C&I; EPC 32%. FY27-ல August-க்குள்ள 1.1 GW orders."),tab:"seg"},
+ {k:["eps","earning per share","per share","இபிஎஸ்"],a:A("EPS is low because profit is spread over about 1,371 crore shares: ₹2.31 in FY26.","Profit ~1,371 கோடி shares-க்கு பங்கு போறதால EPS குறைவு: FY26-ல ₹2.31."),d:A("Without the one-time ₹742 crore tax credit, FY26 EPS is about ₹1.77. Q1 FY27 EPS is about ₹0.22.","₹742 கோடி tax credit இல்லாம FY26 EPS ~₹1.77. Q1 FY27 EPS ~₹0.22."),tab:"fin"},
+ {k:["share count","shares","equity","rights","qip","fpo","private equity","shanghvi","ஷேர்","ஈக்விட்டி"],a:A("The share count grew through debt conversion, a ₹1,200 crore rights issue and a ₹2,000 crore QIP.","Debt conversion, ₹1,200 கோடி rights issue, ₹2,000 கோடி QIP மூலமா shares அதிகமாச்சு."),d:A("Dilip Shanghvi's family invested ₹1,800 crore in 2015. Promoters now hold 11.7%.","2015-ல Dilip Shanghvi family ₹1,800 கோடி போட்டாங்க. இப்போ promoter பங்கு 11.7%."),tab:"model"},
+ {k:["future","5 year","five year","2 year","two year","next","outlook","fy31","எதிர்காலம்","அடுத்த"],a:A("In our base case Suzlon reaches about 4.2 GW deliveries and EPS near ₹2.6 by FY31; the range is wide.","எங்க base case-ல FY31-க்குள்ள ~4.2 GW deliveries, EPS ~₹2.6; range ரொம்ப பெருசு."),d:A("Bear: EPS about ₹1.0. Bull: about ₹4.6. Drivers: India installs, Suzlon share, margins and cash.","Bear: EPS ~₹1.0. Bull: ~₹4.6. Drivers: India installs, share, margin, cash."),tab:"future"},
+ {k:["site","location","land","wind blow","where","windy","காத்து","நிலம்","இடம்"],a:A("Windy land is not scarce; ready sites near the grid are, and Suzlon's DevCo controls such sites.","காத்து நிலம் பிரச்சனை இல்ல; grid பக்கத்துல ready site தான் குறைவு — அதை Suzlon DevCo கையில வெச்சிருக்கு."),d:A("Only ~5% of India's 1,164 GW wind potential is used. Up to 40 GW could be delayed by grid issues by 2030.","India-ன் 1,164 GW potential-ல ~5% தான் பயன்பாட்டுல. Grid பிரச்சனையால 2030-க்குள்ள 40 GW வரை தள்ளிப்போகலாம்."),tab:"future"},
+ {k:["devco","development","a to z","evacuation","ppa","டெவ்கோ"],a:A("RE DevCo gives buyers ready sites with land and grid connectivity; about 60% of FY27 orders came this way.","RE DevCo buyers-க்கு land, grid connectivity-யோட ready site தருது; FY27 orders-ல ~60% இப்படி தான்."),d:A("602 MW DevCo projects secured; about ₹500 crore to be invested and recycled.","602 MW DevCo projects; ~₹500 கோடி முதலீடு, recycle பண்ணுவாங்க."),tab:"model"},
+ {k:["almm","make in india","local","import","chinese","china","ஏஎல்எம்எம்"],a:A("ALMM-Wind requires key turbine parts from approved Indian plants, which favours locally integrated makers like Suzlon.","ALMM-Wind படி முக்கிய parts approved India plants-ல இருந்து தான் வரணும் — Suzlon மாதிரி local makers-க்கு சாதகம்."),d:A("Covers blades, towers, gearboxes, generators, special bearings; data must stay in India.","Blades, tower, gearbox, generator, bearings; data India-லயே இருக்கணும்."),tab:"model"},
+ {k:["market share","share of market","competition","inox","envision","adani","competitor","போட்டி","மார்க்கெட் ஷேர்"],a:A("Suzlon has about 28% cumulative India share and targets about 40% by FY31.","Suzlon-க்கு மொத்த India share ~28%; FY31-க்குள்ள ~40% target."),d:A("Chinese OEMs took ~33% of FY26 installs; Inox and Adani Wind are the main domestic rivals.","FY26 installs-ல Chinese OEMs ~33%; Inox, Adani Wind முக்கிய போட்டி."),tab:"future"},
+ {k:["cash","cash flow","free cash","receivable","working capital","debtor","கேஷ்","பணம்"],a:A("Cash lags profit: FY26 operating cash was ₹1,202 crore against ₹3,163 crore profit.","Cash profit-க்கு பின்னாடி: FY26 operating cash ₹1,202 கோடி, profit ₹3,163 கோடி."),d:A("Debtor days rose to 130; receivables rose to ₹6,269 crore.","Debtor days 130; receivables ₹6,269 கோடி."),tab:"cash"},
+ {k:["debt","net cash","borrowing","கடன்"],a:A("Suzlon is net cash: ₹2,322 crore at June 2026, with borrowings of only ₹277 crore.","Suzlon net cash-ல இருக்கு: June 2026-ல ₹2,322 கோடி, கடன் ₹277 கோடி தான்."),tab:"cash"},
+ {k:["valuation","pe","p/e","ev","expensive","cheap","pb","வேல்யுவேஷன்"],a:A("At ₹38.81, P/E is about 17x reported and 22x without the tax credit; EV/EBITDA is about 17x.","₹38.81-ல P/E ~17x (reported), tax credit இல்லாம 22x; EV/EBITDA ~17x."),tab:"val"},
+ {k:["price","fall","falling","down","why","stock","விலை","இறங்","விழு"],a:A("The stock fell on the Q1 margin miss, then 15% more in September with weak markets and profit booking.","Q1 margin miss-ல விழுந்தது, அப்புறம் September-ல market weakness, profit booking-ஆல இன்னும் 15%."),d:A("₹38.81 on 5 Oct, near the 52-week low of ₹38.2; high was ₹61.5.","5 Oct-ல ₹38.81, 52-week low ₹38.2 பக்கத்துல; high ₹61.5."),tab:"reasons"},
+ {k:["ams","service","o&m","maintenance","annuity","சர்வீஸ்"],a:A("The service business (RE AMS) earned ₹632 crore in Q1 with a 43% margin in India.","Service business (RE AMS) Q1-ல ₹632 கோடி, India-ல 43% margin."),tab:"seg"},
+ {k:["s175","5 mw","turbine model","s144","product","டர்பைன்"],a:A("The new S175 is a 5 MW turbine with a 175 m rotor; its first India order is in and first delivery is expected in FY27.","புது S175 — 5 MW, 175 m rotor; முதல் India order வந்தாச்சு, FY27-ல delivery."),tab:"model"},
+ {k:["cycle","trigger","catalyst","weinstein","stage","சைக்கிள்","ட்ரிக்கர்"],a:A("Cycle score is 52 and trigger score 54; the stock is in a falling price stage (Stage 4).","Cycle score 52, trigger score 54; stock இறங்கு stage-ல (Stage 4)."),d:A("Top positives: ALMM-Wind and DevCo. Top risks: working capital and grid delays.","முக்கிய positives: ALMM-Wind, DevCo. Risks: working capital, grid delay."),tab:"trig"},
+ {k:["target","100 gw","india wind","install","government","2030","டார்கெட்"],a:A("India targets 100 GW of wind by 2030, up from 57.4 GW in June 2026.","India 2030-க்குள்ள 100 GW wind target; June 2026-ல 57.4 GW."),d:A("That needs about 9–11 GW a year versus a record 6.05 GW in FY26.","வருஷத்துக்கு ~9–11 GW வேணும்; FY26-ல record 6.05 GW."),tab:"future"},
+ {k:["solar","wind vs solar","solar vs wind","which is better","survive","survival","சோலார்","சூரிய"],a:A("Solar wins on cost, speed and siting, but wind survives as its partner because it supplies evening and night power.","Cost, வேகம், site-ல solar ஜெயிக்குது; ஆனா சாயங்காலம், ராத்திரி current தர்றதால wind partner-ஆ நிலைக்கும்."),d:A("CB scorecard: solar 42, wind 33 out of 50. FY26 additions: solar 44.6 GW vs wind 6.05 GW.","CB scorecard: solar 42, wind 33 (50-க்கு). FY26: solar 44.6 GW, wind 6.05 GW."),tab:"ws"},
+ {k:["offshore","sea","shore","vgf","viability gap","கடல்","ஆஃப்ஷோர்"],a:A("Offshore wind is a 2030s story: the first 4.5 GW of tenders got no bids, and a fresh Tamil Nadu tender is planned for 2026-27.","Offshore wind 2030-களின் கதை: முதல் 4.5 GW tender-க்கு bid இல்ல; புது தமிழ்நாடு tender 2026-27-ல."),d:A("VGF of ₹7,453 crore covers 1 GW. Viable tariffs are near ₹9.6–10.5 per unit versus ceilings of ₹4–4.5.","₹7,453 கோடி VGF 1 GW-க்கு. லாபமா இருக்க ₹9.6–10.5 வேணும், ceiling ₹4–4.5 தான்."),tab:"ws"},
+ {k:["hybrid","fdre","round the clock","rtc","ஹைப்ரிட்"],a:A("Hybrids let one grid line carry solar by day and wind by evening, so producers choosing hybrid is wind's main growth path.","Hybrid-ல ஒரே grid line-ல பகல் solar, சாயங்காலம் wind — producers hybrid தேர்ந்தெடுக்கறது தான் wind-க்கு முக்கிய வளர்ச்சி பாதை."),tab:"ws"},
+ {k:["perovskite","battery","bess","storage","technology","பேட்டரி","பெரோவ்ஸ்கைட்"],a:A("Perovskite-tandem modules above 28% are targeted from 2028, and cheaper batteries let solar serve evenings, the biggest long-term threat to wind.","2028 முதல் 28%-க்கு மேல perovskite-tandem modules; மலிவான battery solar-ஐ சாயங்காலமும் ஓட வைக்கும் — wind-க்கு பெரிய நீண்டகால threat."),tab:"ws"},
+ {k:["governance","director","cfo","promoter","risk","ரிஸ்க்"],a:A("Main risks are working capital, grid delays, competition and past governance flags.","முக்கிய risks: working capital, grid delay, போட்டி, பழைய governance கேள்விகள்."),tab:"swot"}
+ ],
+ suggestions:[["What is the order book?","Order book எவ்வளவு?"],["Why is EPS so low?","EPS ஏன் குறைவா இருக்கு?"],["What is Suzlon's future in 5 years?","5 வருஷத்துல Suzlon எதிர்காலம் என்ன?"],["Can buyers find windy sites?","காத்து அடிக்கற site கிடைக்குமா?"],["What is ALMM-Wind?","ALMM-Wind என்ன?"],["Why did the stock fall?","Share price ஏன் இறங்கிச்சு?"],["Wind vs solar: which survives?","Wind vs solar: எது நிலைக்கும்?"],["What about offshore wind?","Offshore wind நிலவரம் என்ன?"]]
+};
+var adviceRe=/\b(buy|sell|hold|invest|should i|target price|accumulate|exit)\b|வாங்கலாமா|வாங்கணுமா|விக்கலாமா|விற்கலாமா|முதலீடு பண்ணலாமா/i;
+function answer(q){var s=q.toLowerCase();if(adviceRe.test(s)&&!/learn before/i.test(s))return {a:CONFIG.noAdvice};var best=null,bs=0;CONFIG.kb.forEach(function(e){var sc=0;e.k.forEach(function(k){if(s.indexOf(k.toLowerCase())>=0)sc+=k.length>3?2+k.length/10:1;});if(sc>bs){bs=sc;best=e;}});return best&&bs>=1?best:{a:CONFIG.fallback};}
+function esc(t){return String(t).replace(/[&<>]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;"}[c];});}
+function addMsg(who,html){var d=document.createElement("div");d.className="msg "+who;d.innerHTML=html;var log=document.getElementById("alog");log.appendChild(d);log.scrollTop=log.scrollHeight;return d;}
+function ask(q){q=(q||"").trim();if(!q)return;addMsg("u",esc(q));var r=answer(q);var direct=L(r.a);var h='<div class="direct">'+esc(direct)+'</div>';if(r.d)h+='<details><summary>'+L(A("More details","மேலும் விவரம்"))+'</summary><div>'+esc(L(r.d))+'</div></details>';h+='<div class="acts"><button class="mini" data-say="1">🔊 '+L(A("Read again","மறுபடி படி"))+'</button>'+(r.tab?'<button class="mini" data-tab="'+r.tab+'">'+L(A("Open related tab","Related tab திற"))+'</button>':'')+'</div>';var m=addMsg("a",h);m.querySelector("[data-say]").onclick=function(){speak(direct);};var tb=m.querySelector("[data-tab]");if(tb)tb.onclick=function(){showTab(r.tab);};speak(direct);if(document.getElementById("convChk").checked&&SR){var w=function(){if(synth&&synth.speaking){setTimeout(w,400);}else{startMic();}};setTimeout(w,800);}}
+function askFromInput(){var i=document.getElementById("aq");var v=i.value;i.value="";ask(v);}
+document.getElementById("aq").addEventListener("keydown",function(e){if(e.key==="Enter")askFromInput();});
+function renderSugs(){var s=document.getElementById("sugs");s.innerHTML="";CONFIG.suggestions.forEach(function(p){var b=document.createElement("button");b.className="mini";b.textContent=LANG==="ta"?p[1]:p[0];b.onclick=function(){ask(b.textContent);};s.appendChild(b);});}
+function status(t){document.getElementById("astatus").textContent=t||"";}
+
+/* mic: waits for the speaker to finish */
+var SR=window.SpeechRecognition||window.webkitSpeechRecognition;var rec=null,listening=false,heard="",silTimer=null,waitSec="3",cdTimer=null;
+function setWait(v){waitSec=v;store("wait",v);document.getElementById("doneBtn").hidden=!(listening&&v==="manual");}
+function resetSilence(){clearTimeout(silTimer);clearInterval(cdTimer);var bar=document.getElementById("cdbar");bar.style.width="0";if(waitSec==="manual")return;var ms=parseFloat(waitSec)*1000,t0=Date.now();cdTimer=setInterval(function(){var p=Math.min(1,(Date.now()-t0)/ms);bar.style.width=(p*100)+"%";},100);silTimer=setTimeout(function(){if(heard.trim())micDone();},ms);}
+function startMic(){if(!SR){status(L(A("Voice input needs Chrome or Edge on a normal web page.","Voice input-க்கு Chrome/Edge வேணும்.")));return;}stopSpeak();heard="";rec=new SR();rec.lang=LANG==="ta"?"ta-IN":"en-IN";rec.continuous=true;rec.interimResults=true;
+ rec.onresult=function(e){var fin="",intr="";for(var i=0;i<e.results.length;i++){if(e.results[i].isFinal)fin+=e.results[i][0].transcript+" ";else intr+=e.results[i][0].transcript;}heard=(fin+intr).trim();document.getElementById("aq").value=heard;status(L(A("Listening…","கேட்டுக்கிட்டிருக்கேன்…")));resetSilence();};
+ rec.onerror=function(e){if(e.error==="not-allowed"||e.error==="service-not-allowed"){listening=false;micUI();status(L(A("Microphone is blocked here. Open this file on GitHub Pages in Chrome or Edge.","இங்க mic block ஆகியிருக்கு. GitHub Pages-ல Chrome/Edge-ல திறங்க.")));}};
+ rec.onend=function(){if(listening){try{rec.start();}catch(x){}}};
+ try{rec.start();listening=true;micUI();status(L(A("Listening… speak now.","பேசுங்க, கேட்டுக்கிட்டிருக்கேன்…")));}catch(x){status(String(x));}}
+function stopMic(){listening=false;clearTimeout(silTimer);clearInterval(cdTimer);document.getElementById("cdbar").style.width="0";if(rec){try{rec.stop();}catch(x){}}micUI();}
+function micDone(){var t=heard;stopMic();status("");if(!t.trim())return;if(document.getElementById("reviewChk").checked){document.getElementById("aq").value=t;document.getElementById("aq").focus();status(L(A("Check the text, then press Ask.","Text-ஐ பாத்துட்டு Ask அழுத்துங்க.")));}else{document.getElementById("aq").value="";ask(t);}}
+function toggleMic(){if(listening)micDone();else startMic();}
+function micUI(){document.getElementById("micBtn").classList.toggle("on",listening);document.getElementById("doneBtn").hidden=!(listening&&waitSec==="manual");}
+
+/* Socrates quiz */
+var QUIZ=[
+ {q:A("How many MW did Suzlon deliver in Q1 FY27?","Q1 FY27-ல Suzlon எத்தனை MW deliver பண்ணுச்சு?"),o:[A("444 MW","444 MW"),A("506 MW","506 MW"),A("830 MW","830 MW"),A("2,456 MW","2,456 MW")],c:1,e:A("506 MW, its best first quarter (+14%).","506 MW — best first quarter (+14%).")},
+ {q:A("Why did profit fall even though revenue rose 23%?","Revenue 23% ஏறியும் profit ஏன் குறைஞ்சது?"),o:[A("Lower EBITDA margin and higher interest","EBITDA margin குறைவு, interest அதிகம்"),A("Fewer deliveries","Deliveries குறைஞ்சது"),A("Big debt repayment","பெரிய கடன் திருப்பல்"),A("A loss in exports","Exports-ல நஷ்டம்")],c:0,e:A("Margin fell to 15.6% and interest rose about 30%.","Margin 15.6%-க்கு இறங்கிச்சு, interest ~30% ஏறிச்சு.")},
+ {q:A("Why is Suzlon's EPS so small?","Suzlon EPS ஏன் இவ்வளவு சின்னது?"),o:[A("It makes losses","நஷ்டம்"),A("Profit is shared by ~1,371 crore shares","~1,371 கோடி shares profit-ஐ பங்கு போடுது"),A("It pays big dividends","பெரிய dividend"),A("Tax is very high","Tax ரொம்ப அதிகம்")],c:1,e:A("Debt conversion, rights and QIP raised the share count.","Debt conversion, rights, QIP-ஆல shares அதிகம்.")},
+ {q:A("What is the real bottleneck for new wind farms in India?","India-ல புது wind farm-க்கு உண்மையான தடை என்ன?"),o:[A("No windy land left","காத்து நிலமே இல்ல"),A("Ready sites with grid connectivity","Grid connectivity-யோட ready site"),A("No turbine makers","Turbine makers இல்ல"),A("No buyers for power","Power வாங்க ஆள் இல்ல")],c:1,e:A("Only ~5% of the 1,164 GW potential is used; grid-ready land is scarce.","1,164 GW-ல ~5% தான் பயன்பாட்டுல; grid-ready நிலம் தான் குறைவு.")},
+ {q:A("What does ALMM-Wind require?","ALMM-Wind என்ன சொல்லுது?"),o:[A("Key turbine parts from approved Indian plants","முக்கிய parts approved India plants-ல இருந்து"),A("Only solar projects","Solar மட்டும்"),A("A ban on exports","Export தடை"),A("Lower turbine prices","Turbine விலை குறைப்பு")],c:0,e:A("Blades, towers, gearboxes, generators and bearings must come from ALMM-WTC plants.","Blades, tower, gearbox, generator, bearings ALMM-WTC plants-ல இருந்து வரணும்.")},
+ {q:A("In FY26, every ₹100 of reported profit brought roughly how much operating cash?","FY26-ல ₹100 profit-க்கு எவ்வளவு operating cash வந்தது?"),o:[A("₹38","₹38"),A("₹100","₹100"),A("₹150","₹150"),A("₹5","₹5")],c:0,e:A("CFO ₹1,202 cr ÷ PAT ₹3,163 cr ≈ 38%.","CFO ₹1,202 ÷ PAT ₹3,163 ≈ 38%.")},
+ {q:A("Which Weinstein stage is the stock in now?","Stock இப்போ எந்த Weinstein stage-ல?"),o:[A("Stage 1 base","Stage 1"),A("Stage 2 advance","Stage 2"),A("Stage 3 top","Stage 3"),A("Stage 4 decline","Stage 4")],c:3,e:A("Price is below a falling 30-week average, near its 52-week low.","Price இறங்குற 30-week average-க்கு கீழ, 52-week low பக்கத்துல.")},
+ {q:A("Why can wind survive even though solar is cheaper?","Solar மலிவா இருந்தும் wind ஏன் நிலைக்கும்?"),o:[A("Wind is cheaper to build","Wind கட்ட மலிவு"),A("Wind supplies evening and night power when demand peaks","Demand உச்சமான சாயங்காலம், ராத்திரி wind current தருது"),A("Wind can be put anywhere","Wind எங்க வேணும்னாலும் போடலாம்"),A("Wind has no competition","Wind-க்கு போட்டி இல்ல")],c:1,e:A("About 45% of wind generation falls in peak-demand hours; solar needs batteries for that.","Wind generation-ல ~45% peak hours-ல; solar-க்கு அதுக்கு battery வேணும்.")},
+ {q:A("What happened to India's first offshore wind tenders?","India-ன் முதல் offshore wind tenders என்ன ஆச்சு?"),o:[A("Awarded at ₹4 per unit","₹4-க்கு award ஆச்சு"),A("Commissioned in 2025","2025-ல commission ஆச்சு"),A("No bids; cancelled in Aug 2025","Bid இல்ல; Aug 2025-ல cancel"),A("Won by Suzlon","Suzlon ஜெயிச்சது")],c:2,e:A("Tariff ceilings of ₹4–4.5 were far below viable levels near ₹10.","₹4–4.5 ceiling, லாப அளவு ~₹10-ஐ விட ரொம்ப குறைவு.")},
+ {q:A("What is Suzlon's FY31 market-share ambition in Indian wind?","FY31-க்குள்ள India wind-ல Suzlon share target என்ன?"),o:[A("~15%","~15%"),A("~28%","~28%"),A("~40%","~40%"),A("~70%","~70%")],c:2,e:A("About 40%, with ~60% of volume through DevCo.","~40%, volume-ல ~60% DevCo மூலமா.")}
+];
+var qi=0,qs=0,qa=false;
+function renderQuiz(){var z=document.getElementById("quiz");if(qi>=QUIZ.length){z.innerHTML='<h3>'+L(A("Done!","முடிஞ்சது!"))+'</h3><p><b>'+qs+' / '+QUIZ.length+'</b> — '+L(qs>=6?A("Well learned.","நல்லா கத்துக்கிட்டீங்க."):A("Revisit the Future and Financials tabs.","Future, Financials tabs-ஐ மறுபடி பாருங்க."))+'</p><button class="btn acc" onclick="qi=0;qs=0;qa=false;renderQuiz()">'+L(A("Try again","மறுபடி முயற்சி"))+'</button>';return;}
+ var Q=QUIZ[qi];var h='<div class="qmeta"><span>'+L(A("Question","கேள்வி"))+' '+(qi+1)+'/'+QUIZ.length+'</span><span>'+L(A("Score","Score"))+' '+qs+'</span></div><h3>'+esc(L(Q.q))+'</h3><div style="display:grid;gap:8px">';Q.o.forEach(function(o,i){h+='<button class="opt" data-i="'+i+'">'+esc(L(o))+'</button>';});h+='</div><div id="qfb"></div>';z.innerHTML=h;qa=false;
+ z.querySelectorAll(".opt").forEach(function(b){b.onclick=function(){if(qa)return;qa=true;var i=+b.getAttribute("data-i");var ok=i===Q.c;if(ok)qs++;z.querySelectorAll(".opt")[Q.c].classList.add("right");if(!ok)b.classList.add("wrong");document.getElementById("qfb").innerHTML='<p><b>'+L(ok?A("Correct!","சரி!"):A("Not quite.","கொஞ்சம் தவறு."))+'</b> '+esc(L(Q.e))+'</p><p style="margin-top:8px"><button class="btn acc" onclick="qi++;renderQuiz()">'+L(A("Next","அடுத்தது"))+'</button></p>';};});}
+
+/* boot */
+(function(){document.body.classList.add("lang-en");var r=parseFloat(load("rate"));setRate(isNaN(r)?0.8:r);var w=load("wait");if(w){waitSec=w;document.getElementById("waitSel").value=w;}slices();var l=load("lang");buildTabs();renderSugs();renderQuiz();addMsg("a",'<div class="direct">'+esc(L(CONFIG.greeting))+'</div>');if(l==="ta")setLang("ta");var h=(location.hash||"").replace("#","");var t=TABS.some(function(x){return x[0]===h;})?h:(load("tab")||"dash");if(!TABS.some(function(x){return x[0]===t;}))t="dash";if(window.Chart)showTab(t);else window.addEventListener("load",function(){showTab(t);});showTab(t);})();
+</script>
+
+</body>
+</html>
