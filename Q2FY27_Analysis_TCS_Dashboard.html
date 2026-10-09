@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TCS Q2 FY27 Analysis</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<style>
+:root{--bg:#ffffff;--soft:#f6f8fb;--ink:#1b2430;--mut:#5d6b7c;--line:#e3e8ef;--blue:#1d4ed8;--teal:#0f766e;--orange:#ea580c;--red:#dc2626;--green:#16a34a;--amber:#d97706}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Segoe UI",Roboto,"Noto Sans Tamil","Latha",Arial,sans-serif;font-size:15px;line-height:1.6}
+body.L-en .t{display:none!important}
+body.L-ta .e{display:none!important}
+header{background:linear-gradient(90deg,#eef4ff,#fff7ef);border-bottom:1px solid var(--line);padding:16px 18px}
+header h1{margin:0;font-size:22px}
+header .sub{color:var(--mut);font-size:13px}
+.toolbar{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+.btn{border:1px solid var(--line);background:#fff;border-radius:18px;padding:5px 12px;cursor:pointer;font-size:13px}
+.btn.on{background:var(--blue);color:#fff;border-color:var(--blue)}
+nav{position:sticky;top:0;z-index:20;background:#fff;border-bottom:1px solid var(--line);overflow-x:auto;white-space:nowrap;padding:6px 10px}
+nav button{border:none;background:none;padding:8px 11px;margin-right:2px;border-radius:8px;cursor:pointer;font-size:13.5px;color:var(--mut)}
+nav button.on{background:#e8efff;color:var(--blue);font-weight:600}
+main{max-width:1180px;margin:0 auto;padding:16px;position:relative;z-index:1}
+.tab{display:none}.tab.on{display:block}
+h2{font-size:19px;margin:6px 0 10px}
+h3{font-size:16px;margin:16px 0 8px}
+.grid{display:grid;gap:12px}
+.g4{grid-template-columns:repeat(auto-fit,minmax(190px,1fr))}
+.g2{grid-template-columns:repeat(auto-fit,minmax(340px,1fr))}
+.card{background:#fff;border:1px solid var(--line);border-radius:12px;padding:14px}
+.kpi .l{font-size:12px;color:var(--mut);letter-spacing:.3px}
+.kpi .v{font-size:22px;font-weight:700;margin:2px 0}
+.kpi .d{font-size:12.5px}
+.up{color:var(--green)}.dn{color:var(--red)}.fl{color:var(--amber)}
+table{border-collapse:collapse;width:100%;font-size:13.5px;background:#fff}
+th,td{border-bottom:1px solid var(--line);padding:7px 8px;text-align:right;white-space:nowrap}
+th:first-child,td:first-child{text-align:left}
+th{background:var(--soft);font-weight:600}
+td.l,th.l{text-align:left;white-space:normal}
+.tw{overflow-x:auto;border:1px solid var(--line);border-radius:10px}
+.cw{overflow-x:auto}
+.ci{min-width:900px;height:340px;position:relative}
+.ci.s{height:280px}
+.note{font-size:12.5px;color:var(--mut)}
+.pill{display:inline-block;padding:2px 9px;border-radius:12px;font-size:12px;font-weight:600}
+.pb{background:#dcfce7;color:#166534}.ph{background:#fef3c7;color:#92400e}.ps{background:#fee2e2;color:#991b1b}.pn{background:#e5e7eb;color:#374151}
+.bm-node{cursor:pointer}.bm-node:hover rect{stroke-width:3}
+#bmInfo{min-height:70px}
+.flow{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin:10px 0}
+.flow .st{padding:10px 12px;border-radius:10px;border:2px solid var(--line);background:#fff;font-size:13px;text-align:center;min-width:120px}
+.flow .ar{font-size:20px;color:var(--mut)}
+.flow .x{border-color:var(--red);background:#fff1f1}
+.swot{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.swot>div{border-radius:10px;padding:12px}
+.s1{background:#ecfdf5}.s2{background:#fef2f2}.s3{background:#eff6ff}.s4{background:#fffbeb}
+ul{margin:6px 0;padding-left:20px}
+.mcq{border:1px solid var(--line);border-radius:10px;padding:12px;margin-bottom:10px}
+.mcq button{display:block;width:100%;text-align:left;margin:5px 0;padding:8px 10px;border:1px solid var(--line);border-radius:8px;background:#fff;cursor:pointer;font-size:14px}
+.mcq button.ok{background:#dcfce7;border-color:var(--green)}
+.mcq button.no{background:#fee2e2;border-color:var(--red)}
+#cbBadge{position:fixed;right:16px;bottom:16px;width:58px;height:58px;border-radius:50%;background:radial-gradient(circle at 30% 30%,#ffb067,#ea580c);color:#fff;font-weight:800;font-size:20px;display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:60;animation:blink 2.4s infinite;border:3px solid #fff}
+@keyframes blink{0%,100%{box-shadow:0 0 0 0 rgba(234,88,12,.55)}50%{box-shadow:0 0 0 12px rgba(234,88,12,0)}}
+#disc{display:none;position:fixed;right:16px;bottom:84px;max-width:360px;background:#fff;border:1px solid var(--line);border-radius:12px;padding:14px;box-shadow:0 10px 30px rgba(0,0,0,.15);z-index:61;font-size:13px}
+#asBtn{position:fixed;right:84px;bottom:22px;background:var(--blue);color:#fff;border:none;border-radius:24px;padding:10px 14px;font-size:14px;cursor:pointer;z-index:59;box-shadow:0 4px 12px rgba(29,78,216,.35)}
+#asBox{display:none;position:fixed;right:16px;bottom:84px;width:min(380px,calc(100vw - 32px));height:470px;background:#fff;border:1px solid var(--line);border-radius:14px;box-shadow:0 10px 30px rgba(0,0,0,.18);z-index:62;flex-direction:column}
+#asBox .hd{padding:10px 12px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;font-weight:600}
+#asLog{flex:1;overflow-y:auto;padding:10px;font-size:13.5px}
+#asLog .q{background:#e8efff;padding:7px 10px;border-radius:10px;margin:6px 0 6px 30px}
+#asLog .a{background:var(--soft);padding:7px 10px;border-radius:10px;margin:6px 30px 6px 0}
+#asBox .ft{display:flex;gap:6px;padding:8px;border-top:1px solid var(--line)}
+#asIn{flex:1;border:1px solid var(--line);border-radius:18px;padding:7px 12px;font-size:14px}
+#micBtn{border:none;border-radius:50%;width:38px;height:38px;background:var(--orange);color:#fff;font-size:17px;cursor:pointer}
+#micBtn.rec{background:var(--red)}
+.wm{position:fixed;left:50%;top:55%;transform:translate(-50%,-50%) rotate(-28deg);font-size:80px;color:rgba(234,88,12,.035);font-weight:800;pointer-events:none;z-index:0;white-space:nowrap}
+.score{display:flex;align-items:center;gap:10px;margin:6px 0}
+.score .bar{flex:1;height:10px;background:#eef1f5;border-radius:6px;overflow:hidden}
+.score .bar span{display:block;height:100%;background:linear-gradient(90deg,#3b82f6,#0f766e)}
+.score .lb{width:200px;font-size:13px}
+.score .n{width:36px;text-align:right;font-weight:700}
+@media(max-width:600px){header h1{font-size:18px}.swot{grid-template-columns:1fr}.score .lb{width:130px}}
+</style>
+</head>
+<body class="L-en">
+<div class="wm" aria-hidden="true">CB RESEARCH</div>
+<header>
+  <h1><span class="e">TCS — Q2 FY27 Results: Business &amp; Investment Analysis</span><span class="t">டிசிஎஸ் — செப்டம்பர் 2026 காலாண்டு முடிவுகள்: வணிகம் &amp; முதலீட்டு ஆய்வு</span></h1>
+  <div class="sub"><span class="e">Quarter ended 30 Sep 2026 · Results declared 08 Oct 2026 · Dashboard built <span class="istv"></span> IST · CB Research (Cauvery Business)</span><span class="t">காலாண்டு முடிவு: 30-09-2026 · முடிவுகள் அறிவிப்பு: 08-10-2026 · தயாரிப்பு: <span class="istv"></span> (இந்திய நேரம்) · சிபி ரிசர்ச் (காவேரி பிசினஸ்)</span></div>
+  <div class="toolbar">
+    <button class="btn on" data-lang="en">English</button>
+    <button class="btn" data-lang="ta">தமிழ்</button>
+  </div>
+</header>
+<nav id="nav"></nav>
+<main>
+
+<!-- OVERVIEW -->
+<section class="tab on" id="t-ov" data-en="Overview" data-ta="சுருக்கம்">
+<h2><span class="e">Quarter at a glance</span><span class="t">இந்த காலாண்டு ஒரே பார்வையில்</span></h2>
+<div class="grid g4">
+ <div class="card kpi"><div class="l"><span class="e">Revenue (₹)</span><span class="t">வருவாய் (₹)</span></div><div class="v"><span class="e">₹73,188 Cr</span><span class="t">₹73,188 கோடி</span></div><div class="d"><span class="e"><span class="up">+1.3% QoQ</span> · <span class="up">+11.2% YoY</span></span><span class="t"><span class="up">காலாண்டுக்கு +1.3%</span> · <span class="up">ஆண்டுக்கு +11.2%</span></span></div></div>
+ <div class="card kpi"><div class="l"><span class="e">Revenue (US$)</span><span class="t">வருவாய் (டாலர்)</span></div><div class="v"><span class="e">$7,642 Mn</span><span class="t">$7,642 மில்லியன்</span></div><div class="d"><span class="e"><span class="fl">+0.2% QoQ</span> · <span class="up">+2.4% YoY</span></span><span class="t"><span class="fl">காலாண்டுக்கு +0.2%</span> · <span class="up">ஆண்டுக்கு +2.4%</span></span></div></div>
+ <div class="card kpi"><div class="l"><span class="e">Constant currency growth</span><span class="t">நிலையான நாணய வளர்ச்சி</span></div><div class="v"><span class="e">+0.5% QoQ</span><span class="t">+0.5%</span></div><div class="d"><span class="e"><span class="up">+2.8% YoY</span> · International +1.2% QoQ</span><span class="t">காலாண்டுக்கு +0.5% · <span class="up">ஆண்டுக்கு +2.8%</span></span></div></div>
+ <div class="card kpi"><div class="l"><span class="e">Operating (EBIT) margin</span><span class="t">செயல்பாட்டு லாப விகிதம்</span></div><div class="v">24.0%</div><div class="d"><span class="e"><span class="fl">Flat QoQ</span> · <span class="dn">−120 bps YoY</span></span><span class="t"><span class="fl">மாற்றமில்லை</span> · <span class="dn">ஆண்டுக்கு −1.2 புள்ளி</span></span></div></div>
+ <div class="card kpi"><div class="l"><span class="e">Net profit</span><span class="t">நிகர லாபம்</span></div><div class="v"><span class="e">₹13,884 Cr</span><span class="t">₹13,884 கோடி</span></div><div class="d"><span class="e">$1,450 Mn · Net margin 19.0%</span><span class="t">$1,450 மில்லியன் · நிகர லாப விகிதம் 19.0%</span></div></div>
+ <div class="card kpi"><div class="l"><span class="e">Order book (TCV)</span><span class="t">ஆர்டர் புக் (மொத்த ஒப்பந்த மதிப்பு)</span></div><div class="v"><span class="e">$9.6 Bn</span><span class="t">$9.6 பில்லியன்</span></div><div class="d"><span class="e"><span class="fl">vs $9.5 Bn in Q1</span> · <span class="dn">−4% YoY</span></span><span class="t"><span class="fl">முந்தைய காலாண்டு $9.5 பில்லியன்</span> · <span class="dn">ஆண்டுக்கு −4%</span></span></div></div>
+ <div class="card kpi"><div class="l"><span class="e">Annualised AI revenue</span><span class="t">ஆண்டு அடிப்படை ஏஐ வருவாய்</span></div><div class="v"><span class="e">$3.1 Bn</span><span class="t">$3.1 பில்லியன்</span></div><div class="d"><span class="e"><span class="up">Above 10% of revenue</span> · up from $2.6 Bn</span><span class="t"><span class="up">மொத்த வருவாயில் 10%-க்கு மேல்</span> · முன்பு $2.6 பில்லியன்</span></div></div>
+ <div class="card kpi"><div class="l"><span class="e">Attrition (last 12 months)</span><span class="t">ஊழியர் விலகல் (12 மாதம்)</span></div><div class="v">13.3%</div><div class="d"><span class="e">Headcount 5,98,056 · Stable</span><span class="t">ஊழியர்கள் 5,98,056 · நிலையானது</span></div></div>
+</div>
+<div class="card" style="margin-top:12px">
+<h3><span class="e">CB Research read-out</span><span class="t">சிபி ரிசர்ச் பார்வை</span></h3>
+<div class="e">
+<p>TCS delivered a <b>steady but slow</b> quarter. Rupee revenue looks strong (+11.2% YoY) mainly because the rupee weakened to about ₹95.8 per US dollar (implied), against about ₹88.1 a year ago. In constant currency the business grew only 2.8% YoY. Margins held at 24.0% despite investments, cash conversion was healthy at 102.2% of net profit, and AI revenue crossed 10% of the top line. The weak spot was India (−10.3% QoQ in constant currency) because of a large project deferral, and the order book stayed soft at $9.6 Bn.</p>
+<p>On the same evening (08 Oct 2026) the US Labor Department suspended TCS and seven other firms from the <b>PERM</b> green-card labour certification programme. TCS says its PERM filings were in single digits over the last two years, so the direct impact is small. The bigger story is what it signals for the Indian IT model as a whole (see the <i>PERM &amp; IT Future</i> tab).</p>
+</div>
+<div class="t">
+<p>டிசிஎஸ் இந்த காலாண்டுல <b>நிதானமா, ஆனா மெதுவா</b> வளர்ந்திருக்கு. ரூபாய் வருவாய் ஆண்டுக்கு 11.2% கூடின மாதிரி தெரியுது — காரணம் ரூபாய் மதிப்பு குறைஞ்சது. இப்போ ஒரு டாலருக்கு சுமார் ₹95.8 கிடைக்குது, போன வருஷம் ₹88.1. நாணய மாற்றத்த நீக்கிட்டு பார்த்தா உண்மையான வளர்ச்சி ஆண்டுக்கு 2.8% தான். முதலீடுகள் இருந்தும் லாப விகிதம் 24% நிலையா இருக்கு. லாபத்துல 102.2% பணமா வந்திருக்கு. ஏஐ வருவாய் மொத்தத்துல 10%-ஐ தாண்டிருச்சு. பலவீனம்: ஒரு பெரிய ப்ராஜெக்ட் தள்ளிப்போனதால இந்தியா வியாபாரம் 10.3% குறைஞ்சிருக்கு. ஆர்டர் புக் $9.6 பில்லியன் — பெரிசா கூடல.</p>
+<p>அதே நாள் சாயங்காலம் (08-10-2026) அமெரிக்க தொழிலாளர் துறை டிசிஎஸ் உட்பட 8 கம்பெனிகள <b>பெர்ம்</b> கிரீன் கார்டு திட்டத்துல இருந்து நிறுத்தி வச்சிருக்கு. டிசிஎஸ் சொல்றது — கடந்த 2 வருஷத்துல எங்க பெர்ம் விண்ணப்பங்கள் ஒத்தை இலக்கம்தான், அதனால நேரடி பாதிப்பு குறைவு. ஆனா இந்திய ஐடி துறை முழுக்க இது என்ன சொல்லுதுங்கறதுதான் பெரிய விஷயம் (<i>பெர்ம் &amp; ஐடி எதிர்காலம்</i> பகுதிய பாருங்க).</p>
+</div>
+<div class="grid g4" style="margin-top:10px">
+ <div class="card kpi"><div class="l"><span class="e">CB Cycle score</span><span class="t">சிபி சுழற்சி மதிப்பெண்</span></div><div class="v">58</div><div class="d"><span class="e">Sector phase: P1 Trough / bottoming</span><span class="t">துறை நிலை: அடிமட்டம் (நிலை-1)</span></div></div>
+ <div class="card kpi"><div class="l"><span class="e">CB Trigger score</span><span class="t">சிபி தூண்டுதல் மதிப்பெண்</span></div><div class="v">57</div><div class="d"><span class="e">AI and deals vs visa and AI-deflation risk</span><span class="t">ஏஐ, டீல்கள் ப்ளஸ் · விசா, ஏஐ விலைக்குறைப்பு மைனஸ்</span></div></div>
+ <div class="card kpi"><div class="l"><span class="e">CB Conviction</span><span class="t">சிபி நம்பிக்கை மதிப்பெண்</span></div><div class="v">55</div><div class="d"><span class="e">Capped: price trend in Stage 4</span><span class="t">வரம்பு: விலைப் போக்கு நிலை-4ல்</span></div></div>
+ <div class="card kpi"><div class="l"><span class="e">Dividend</span><span class="t">ஈவுத்தொகை</span></div><div class="v"><span class="e">₹12 / share</span><span class="t">ஒரு பங்குக்கு ₹12</span></div><div class="d"><span class="e">Record 14 Oct · Payment 30 Oct 2026</span><span class="t">பதிவு தேதி 14-10 · வழங்கும் தேதி 30-10-2026</span></div></div>
+</div>
+</div>
+</section>
+
+<!-- BUSINESS MODEL -->
+<section class="tab" id="t-bm" data-en="Business Model" data-ta="வணிக மாதிரி">
+<h2><span class="e">How TCS makes money — interactive map</span><span class="t">டிசிஎஸ் எப்படி சம்பாதிக்குது — தொட்டுப் பார்க்கும் வரைபடம்</span></h2>
+<p class="note"><span class="e">Tap any box to see what it means and how it shows up in this quarter's numbers.</span><span class="t">எந்த பெட்டியையாவது தொடுங்க — அது என்ன, இந்த காலாண்டு எண்ணிக்கையில எப்படி தெரியுதுன்னு காட்டும்.</span></p>
+<div class="card cw"><div style="min-width:900px"><svg id="bmSvg" viewBox="0 0 1000 470" width="100%"></svg></div></div>
+<div class="card" id="bmInfo"></div>
+</section>
+
+<!-- FINANCIALS -->
+<section class="tab" id="t-fin" data-en="Financials (₹ and $)" data-ta="நிதி நிலை (₹ &amp; $)">
+<h2><span class="e">Financials in Rupees and Dollars</span><span class="t">ரூபாய் மற்றும் டாலரில் நிதி நிலை</span></h2>
+<div class="toolbar"><button class="btn on" data-cur="inr"><span class="e">₹ Crore</span><span class="t">₹ கோடி</span></button><button class="btn" data-cur="usd"><span class="e">US$ Million</span><span class="t">டாலர் மில்லியன்</span></button></div>
+<div class="tw" style="margin-top:10px"><table id="finTbl"></table></div>
+<p class="note"><span class="e">† March 2026 quarter revenue derived from the reported +2.2% QoQ growth in the June 2026 quarter; Q2 FY27 EBITDA = reported EBIT + depreciation at the Q1 FY27 run-rate (₹1,206 Cr), because Q2 depreciation was not in the press release. "Adjusted" profit excludes exceptional items (₹1,135 Cr restructuring in Q2 FY26; legal-claim settlement in Q1 FY27). Dollar figures are IFRS, excluding exceptional items.</span><span class="t">† மார்ச் 2026 காலாண்டு வருவாய் — ஜூன் 2026 காலாண்டின் +2.2% வளர்ச்சியிலிருந்து கணக்கிடப்பட்டது. செப் 2026 இபிஐடிடிஏ = செயல்பாட்டு லாபம் + ஜூன் காலாண்டு தேய்மானம் (₹1,206 கோடி), ஏனெனில் இந்த காலாண்டு தேய்மானம் செய்திக்குறிப்பில் இல்லை. "சரிசெய்த" லாபம் — ஒருமுறை செலவுகள் நீக்கப்பட்டது (செப் 2025-ல் ₹1,135 கோடி மறுசீரமைப்பு; ஜூன் 2026-ல் சட்ட தீர்வு). டாலர் எண்கள் சர்வதேச கணக்கியல் தரப்படி, ஒருமுறை செலவுகள் இல்லாமல்.</span></p>
+<h3><span class="e">Revenue, EBITDA, EBIT and Net profit</span><span class="t">வருவாய், இபிஐடிடிஏ, செயல்பாட்டு லாபம், நிகர லாபம்</span></h3>
+<div class="card cw"><div class="ci"><canvas id="cFin"></canvas></div></div>
+<div class="grid g2" style="margin-top:12px">
+ <div class="card cw"><h3><span class="e">Margins (%)</span><span class="t">லாப விகிதங்கள் (%)</span></h3><div class="ci s" style="min-width:420px"><canvas id="cMar"></canvas></div></div>
+ <div class="card cw"><h3><span class="e">Rupee effect: implied ₹ per US$</span><span class="t">ரூபாய் தாக்கம்: ஒரு டாலருக்கு ₹</span></h3><div class="ci s" style="min-width:420px"><canvas id="cFx"></canvas></div></div>
+</div>
+<div class="card" style="margin-top:12px">
+<h3><span class="e">Why ₹ growth (11.2%) differs from $ growth (2.4%) and constant-currency growth (2.8%)</span><span class="t">ரூபாய் வளர்ச்சி (11.2%), டாலர் வளர்ச்சி (2.4%), நிலையான நாணய வளர்ச்சி (2.8%) — ஏன் வித்தியாசம்?</span></h3>
+<ul class="e">
+<li><b>Rupee growth</b> includes the rupee's fall: each dollar earned now converts into more rupees (about ₹95.8 against ₹88.1 a year ago).</li>
+<li><b>Dollar growth</b> is what clients actually paid, but it still mixes in pound and euro moves.</li>
+<li><b>Constant currency</b> strips out all currency moves — this is the true business growth: <b>+0.5% QoQ, +2.8% YoY</b>.</li>
+<li>Operating income in dollars was $1,833 Mn against $1,879 Mn a year ago, so in dollar terms profitability slipped slightly; the rupee made it look better.</li>
+</ul>
+<ul class="t">
+<li><b>ரூபாய் வளர்ச்சி</b>யில ரூபாய் மதிப்பு சரிவும் சேர்ந்திருக்கு — ஒவ்வொரு டாலரும் இப்போ அதிக ரூபாயா மாறுது (சுமார் ₹95.8; போன வருஷம் ₹88.1).</li>
+<li><b>டாலர் வளர்ச்சி</b> — வாடிக்கையாளர்கள் உண்மையா குடுத்த தொகை, ஆனா பவுண்டு, யூரோ மாற்றங்களும் கலந்திருக்கு.</li>
+<li><b>நிலையான நாணய வளர்ச்சி</b> — எல்லா நாணய மாற்றத்தையும் நீக்கின உண்மையான வியாபார வளர்ச்சி: <b>காலாண்டுக்கு +0.5%, ஆண்டுக்கு +2.8%</b>.</li>
+<li>டாலர்ல செயல்பாட்டு லாபம் $1,833 மில்லியன் — போன வருஷம் $1,879 மில்லியன். அதாவது டாலர் கணக்குல லாபம் கொஞ்சம் குறைஞ்சிருக்கு; ரூபாய் சரிவுதான் நல்லா காட்டுது.</li>
+</ul>
+</div>
+</section>
+
+<!-- GEO & SEGMENTS -->
+<section class="tab" id="t-seg" data-en="Geography &amp; Segments" data-ta="நாடுகள் &amp; துறைகள்">
+<h2><span class="e">Geography and Business Segments</span><span class="t">நாடுவாரி மற்றும் துறைவாரி வருவாய்</span></h2>
+<div class="grid g2">
+ <div class="card cw"><h3><span class="e">Revenue mix by geography (%)</span><span class="t">நாடுவாரி வருவாய் பங்கு (%)</span></h3><div class="ci s" style="min-width:420px"><canvas id="cGeo"></canvas></div></div>
+ <div class="card cw"><h3><span class="e">Geography constant-currency growth (%)</span><span class="t">நாடுவாரி நிலையான நாணய வளர்ச்சி (%)</span></h3><div class="ci s" style="min-width:420px"><canvas id="cGeoG"></canvas></div></div>
+</div>
+<div class="tw" style="margin-top:12px"><table id="geoTbl"></table></div>
+<div class="grid g2" style="margin-top:12px">
+ <div class="card cw"><h3><span class="e">Revenue mix by industry (%)</span><span class="t">துறைவாரி வருவாய் பங்கு (%)</span></h3><div class="ci s" style="min-width:420px"><canvas id="cVer"></canvas></div></div>
+ <div class="card cw"><h3><span class="e">Industry constant-currency growth (%)</span><span class="t">துறைவாரி நிலையான நாணய வளர்ச்சி (%)</span></h3><div class="ci s" style="min-width:420px"><canvas id="cVerG"></canvas></div></div>
+</div>
+<div class="tw" style="margin-top:12px"><table id="verTbl"></table></div>
+<p class="note"><span class="e">Rupee and dollar amounts per segment = share × total revenue, rounded. Indicative only, not reported segment figures.</span><span class="t">ஒவ்வொரு பிரிவின் ரூபாய், டாலர் தொகை = பங்கு சதவீதம் × மொத்த வருவாய். தோராயமானது, நிறுவனம் வெளியிட்ட எண் அல்ல.</span></p>
+<div class="card" style="margin-top:12px">
+<ul class="e">
+<li><b>Winners:</b> Banking, financial services and insurance (+2.5% QoQ), Manufacturing and Technology &amp; Services (+3.1% each); UK (+3.5%), Latin America (+4.3%), Asia Pacific (+2.0%).</li>
+<li><b>Laggards:</b> India (−10.3% QoQ, project deferral), Regional Markets (−5.8%), Consumer Business (−0.7%), Energy, Resources &amp; Utilities (−0.5%).</li>
+<li><b>North America</b>, the biggest market at 48.3%, grew only 0.4% QoQ and 1.5% YoY. This is exactly the market where the US visa debate matters.</li>
+</ul>
+<ul class="t">
+<li><b>நல்லா வளர்ந்தவை:</b> வங்கி-நிதி-காப்பீடு (+2.5%), உற்பத்தி, தொழில்நுட்ப சேவைகள் (தலா +3.1%); பிரிட்டன் (+3.5%), லத்தீன் அமெரிக்கா (+4.3%), ஆசிய-பசிபிக் (+2.0%).</li>
+<li><b>பின்தங்கியவை:</b> இந்தியா (−10.3%, ப்ராஜெக்ட் தள்ளிப்போனது), பிராந்திய சந்தைகள் (−5.8%), நுகர்வோர் வணிகம் (−0.7%), எரிசக்தி-வளங்கள் (−0.5%).</li>
+<li>மிகப்பெரிய சந்தையான <b>வட அமெரிக்கா</b> (48.3%) காலாண்டுக்கு 0.4%, ஆண்டுக்கு 1.5% தான் வளர்ந்திருக்கு. அமெரிக்க விசா விவாதம் முக்கியமா பாதிக்கற சந்தை இதுதான்.</li>
+</ul>
+</div>
+</section>
+
+<!-- ORDER BOOK -->
+<section class="tab" id="t-ob" data-en="Order Book &amp; AI" data-ta="ஆர்டர் புக் &amp; ஏஐ">
+<h2><span class="e">Order Book (TCV), Deals and AI</span><span class="t">ஆர்டர் புக், டீல்கள் மற்றும் ஏஐ</span></h2>
+<div class="grid g2">
+ <div class="card cw"><h3><span class="e">Total Contract Value (US$ Bn)</span><span class="t">மொத்த ஒப்பந்த மதிப்பு ($ பில்லியன்)</span></h3><div class="ci s" style="min-width:420px"><canvas id="cTcv"></canvas></div><p class="note"><span class="e">December 2025 quarter value not captured in our sources.</span><span class="t">டிசம்பர் 2025 காலாண்டு எண் எங்கள் தரவில் இல்லை.</span></p></div>
+ <div class="card cw"><h3><span class="e">Annualised AI revenue (US$ Bn)</span><span class="t">ஆண்டு அடிப்படை ஏஐ வருவாய் ($ பில்லியன்)</span></h3><div class="ci s" style="min-width:420px"><canvas id="cAi"></canvas></div><p class="note"><span class="e">† March 2026 quarter back-calculated from the reported +13.6% QoQ rise to $2.6 Bn.</span><span class="t">† மார்ச் 2026 எண் — ஜூன் காலாண்டின் +13.6% வளர்ச்சியிலிருந்து பின்கணக்கு.</span></p></div>
+</div>
+<div class="tw" style="margin-top:12px"><table id="dealTbl"></table></div>
+<div class="grid g4" style="margin-top:12px">
+ <div class="card kpi"><div class="l"><span class="e">Clients above $1 Mn</span><span class="t">$1 மில்லியனுக்கு மேல் வாடிக்கையாளர்கள்</span></div><div class="v">1,412</div><div class="d"><span class="e">vs 1,360 a year ago (+52)</span><span class="t">போன வருஷம் 1,360 (+52)</span></div></div>
+ <div class="card kpi"><div class="l"><span class="e">Patents applied (cumulative)</span><span class="t">காப்புரிமை விண்ணப்பம் (மொத்தம்)</span></div><div class="v">10,044</div><div class="d"><span class="e">241 this quarter</span><span class="t">இந்த காலாண்டு 241</span></div></div>
+ <div class="card kpi"><div class="l"><span class="e">Patents granted (cumulative)</span><span class="t">வழங்கப்பட்ட காப்புரிமை (மொத்தம்)</span></div><div class="v">5,885</div><div class="d"><span class="e">215 this quarter</span><span class="t">இந்த காலாண்டு 215</span></div></div>
+ <div class="card kpi"><div class="l"><span class="e">AI-led patents filed</span><span class="t">ஏஐ காப்புரிமை விண்ணப்பம்</span></div><div class="v">2,176</div><div class="d"><span class="e">180 this quarter</span><span class="t">இந்த காலாண்டு 180</span></div></div>
+</div>
+</section>
+
+<!-- PEOPLE -->
+<section class="tab" id="t-ppl" data-en="People &amp; Attrition" data-ta="ஊழியர்கள்">
+<h2><span class="e">People, Attrition and Hiring</span><span class="t">ஊழியர்கள், விலகல், பணியமர்த்தல்</span></h2>
+<div class="grid g4">
+ <div class="card kpi"><div class="l"><span class="e">Headcount</span><span class="t">ஊழியர் எண்ணிக்கை</span></div><div class="v">5,98,056</div><div class="d"><span class="e">30 Sep 2026</span><span class="t">30-09-2026 நிலவரம்</span></div></div>
+ <div class="card kpi"><div class="l"><span class="e">Attrition, IT services (12 months)</span><span class="t">ஊழியர் விலகல் (12 மாதம்)</span></div><div class="v">13.3%</div><div class="d"><span class="e">Stable sequentially</span><span class="t">முந்தைய காலாண்டு அளவே</span></div></div>
+ <div class="card kpi"><div class="l"><span class="e">Learning hours (quarter)</span><span class="t">பயிற்சி நேரம் (காலாண்டு)</span></div><div class="v"><span class="e">17.1 Mn</span><span class="t">1.71 கோடி மணி</span></div><div class="d"><span class="e"><span class="up">+17% QoQ</span></span><span class="t"><span class="up">காலாண்டுக்கு +17%</span></span></div></div>
+ <div class="card kpi"><div class="l"><span class="e">Revenue per employee (annualised)</span><span class="t">ஒரு ஊழியருக்கு வருவாய் (ஆண்டு)</span></div><div class="v"><span class="e">≈ $51,100</span><span class="t">≈ $51,100</span></div><div class="d"><span class="e">$7,642 Mn × 4 ÷ 5,98,056</span><span class="t">$7,642 மில்லியன் × 4 ÷ 5,98,056</span></div></div>
+</div>
+<div class="card" style="margin-top:12px">
+<ul class="e">
+<li>Attrition at 13.3% is calm — far below the 20%-plus peaks of FY23 — which keeps hiring and training costs predictable.</li>
+<li>Learning hours rose 17% QoQ as the workforce is re-skilled for AI.</li>
+<li>Analysts flagged a <b>higher bench</b> and <b>higher subcontracting costs</b> this quarter: capacity is being held for large deals ramping in the second half.</li>
+<li><b>US workforce:</b> TCS says it has a large local workforce across 31 US offices and delivery centres, and plans to hire 15,000 more people in the US over five years — its answer to the visa squeeze.</li>
+</ul>
+<ul class="t">
+<li>ஊழியர் விலகல் 13.3% — அமைதியான நிலை. 2022-23-ல 20%-க்கு மேல இருந்தது. அதனால ஆள் எடுக்கற, பயிற்சி செலவு கணிக்கக்கூடியதா இருக்கு.</li>
+<li>ஏஐ-க்காக ஊழியர்கள மறுபயிற்சி குடுக்கறதால பயிற்சி நேரம் காலாண்டுக்கு 17% கூடியிருக்கு.</li>
+<li>இந்த காலாண்டு <b>வேலையில்லாம காத்திருக்கற ஊழியர்கள்</b> அதிகம், <b>வெளி ஒப்பந்த செலவும்</b> அதிகம்னு ஆய்வாளர்கள் சொல்றாங்க — அடுத்த அரையாண்டுல வரப்போற பெரிய டீல்களுக்காக ஆட்கள தயாரா வச்சிருக்காங்க.</li>
+<li><b>அமெரிக்க ஊழியர்கள்:</b> அமெரிக்காவுல 31 அலுவலகங்கள்ல பெரிய அளவு உள்ளூர் ஊழியர்கள் இருக்காங்க, அடுத்த 5 வருஷத்துல இன்னும் 15,000 உள்ளூர் ஆட்கள எடுக்கப்போறதா டிசிஎஸ் சொல்லுது — விசா நெருக்கடிக்கு இதுதான் அவங்க பதில்.</li>
+</ul>
+</div>
+</section>
+
+<!-- CASH FLOW & WC -->
+<section class="tab" id="t-cf" data-en="Cash Flow &amp; Working Capital" data-ta="பணப்புழக்கம்">
+<h2><span class="e">Cash Flow, Working Capital and Cash Conversion</span><span class="t">பணப்புழக்கம், நடைமுறை மூலதனம், பணமாக்கல்</span></h2>
+<div class="grid g2">
+ <div class="card cw"><h3><span class="e">Operating cash flow (₹ Cr) and as % of net profit</span><span class="t">செயல்பாட்டு பணப்புழக்கம் (₹ கோடி) &amp; நிகர லாபத்தில் சதவீதம்</span></h3><div class="ci s" style="min-width:420px"><canvas id="cCf"></canvas></div></div>
+ <div class="card"><h3><span class="e">Working capital items (US$ Mn)</span><span class="t">நடைமுறை மூலதன உருப்படிகள் ($ மில்லியன்)</span></h3><div class="tw"><table id="bsTbl"></table></div></div>
+</div>
+<div class="tw" style="margin-top:12px"><table id="wcTbl"></table></div>
+<div class="card" style="margin-top:12px">
+<h3><span class="e">How working capital links to operating cash flow</span><span class="t">நடைமுறை மூலதனமும் பணப்புழக்கமும் — தொடர்பு</span></h3>
+<ul class="e">
+<li><b>Unbilled revenue rose 6.8% in six months</b> while billed receivables were flat — work done but not yet invoiced. This is the item to watch: if it keeps rising faster than revenue, cash conversion will dip.</li>
+<li>Even so, operating cash flow was 102.2% of profit in Q2 (after 93% in Q1), so the company converts nearly every rupee of profit into cash. A services firm with no inventory and receivable days in the 70s generates cash naturally.</li>
+<li>Invested funds grew $693 Mn in six months after paying dividends, confirming strong free cash generation (Q1 free cash flow was ₹11,662 Cr).</li>
+</ul>
+<ul class="t">
+<li>வேலை செஞ்சு இன்னும் பில் போடாத தொகை <b>ஆறு மாசத்துல 6.8% கூடியிருக்கு</b>, பில் போட்ட தொகை மாறல. இத கவனிக்கணும் — வருவாய விட வேகமா இது கூடிட்டே போனா பணமாக்கல் குறையும்.</li>
+<li>இருந்தாலும் இந்த காலாண்டு லாபத்துல 102.2% பணமா வந்திருக்கு (முந்தைய காலாண்டு 93%). சரக்கு இல்லாத, 70-சொச்சம் நாள்ல பணம் வசூலாகற சேவை வியாபாரத்துல பணம் இயல்பா வரும்.</li>
+<li>ஈவுத்தொகை குடுத்த பிறகும் முதலீட்டு நிதி ஆறு மாசத்துல $693 மில்லியன் கூடியிருக்கு — வலுவான உபரி பணப்புழக்கம் (ஜூன் காலாண்டு ₹11,662 கோடி).</li>
+</ul>
+</div>
+</section>
+
+<!-- VALUATION -->
+<section class="tab" id="t-val" data-en="Valuation &amp; Market" data-ta="மதிப்பீடு &amp; சந்தை">
+<h2><span class="e">Valuation and Market Activity</span><span class="t">மதிப்பீடு மற்றும் பங்குச் சந்தை நகர்வு</span></h2>
+<div class="grid g4">
+ <div class="card kpi"><div class="l"><span class="e">Share price (09 Oct, intraday)</span><span class="t">பங்கு விலை (09-10, நாளின் நடுவில்)</span></div><div class="v">≈ ₹2,175</div><div class="d"><span class="e"><span class="up">About +5% on the day</span></span><span class="t"><span class="up">அன்று சுமார் +5%</span></span></div></div>
+ <div class="card kpi"><div class="l"><span class="e">2026 so far (before results)</span><span class="t">2026-ல் இதுவரை (முடிவுக்கு முன்)</span></div><div class="v dn">≈ −35%</div><div class="d"><span class="e">September alone −14.5%</span><span class="t">செப்டம்பரில் மட்டும் −14.5%</span></div></div>
+ <div class="card kpi"><div class="l"><span class="e">P/E (Q2 EPS annualised)</span><span class="t">விலை/வருவாய் விகிதம்</span></div><div class="v"><span class="e">≈ 14.2x</span><span class="t">≈ 14.2 மடங்கு</span></div><div class="d"><span class="e">EPS ≈ ₹38.4 × 4</span><span class="t">பங்கு வருவாய் ≈ ₹38.4 × 4</span></div></div>
+ <div class="card kpi"><div class="l"><span class="e">1-year forward P/E (JM Financial)</span><span class="t">ஓராண்டு முன்னோக்கு விகிதம்</span></div><div class="v"><span class="e">13.4x</span><span class="t">13.4 மடங்கு</span></div><div class="d"><span class="e">Consensus EPS basis</span><span class="t">ஜேஎம் ஃபைனான்சியல் கணிப்பு</span></div></div>
+</div>
+<div class="card" style="margin-top:12px">
+<h3><span class="e">Why the share price moved</span><span class="t">பங்கு விலை ஏன் நகர்ந்தது</span></h3>
+<div class="tw"><table id="mvTbl"></table></div>
+<ul class="e">
+<li>Market value at about ₹2,175 is roughly ₹7.9 lakh crore (about 361.8 crore shares†).</li>
+<li>At 13–14 times earnings, TCS trades far below its own historical band (roughly 25–30 times in FY22–FY25). The market is pricing low growth, not a collapse — profit, cash and dividends are intact.</li>
+</ul>
+<ul class="t">
+<li>₹2,175 விலையில சந்தை மதிப்பு சுமார் ₹7.9 லட்சம் கோடி (சுமார் 361.8 கோடி பங்குகள்†).</li>
+<li>லாபத்தோட 13-14 மடங்குல வர்த்தகமாகுது — டிசிஎஸ்-ஓட பழைய அளவு (2021-25-ல சுமார் 25-30 மடங்கு) விட ரொம்ப குறைவு. சந்தை "குறைஞ்ச வளர்ச்சி"யத்தான் கணக்குல வச்சிருக்கு, சரிவை இல்ல — லாபம், பணம், ஈவுத்தொகை எல்லாம் பத்திரமா இருக்கு.</li>
+</ul>
+</div>
+</section>
+
+<!-- PERM & IT FUTURE -->
+<section class="tab" id="t-perm" data-en="PERM &amp; IT Future" data-ta="பெர்ம் &amp; ஐடி எதிர்காலம்">
+<h2><span class="e">US PERM Suspension — and what it means for Indian IT's future</span><span class="t">அமெரிக்க பெர்ம் நிறுத்தம் — இந்திய ஐடி துறையின் எதிர்காலத்துக்கு என்ன அர்த்தம்</span></h2>
+<div class="card">
+<h3><span class="e">What happened on 08 Oct 2026</span><span class="t">08-10-2026 அன்று என்ன நடந்தது</span></h3>
+<div class="e">
+<p>At a White House fraud task-force press conference, the US Labor Secretary (with Vice President JD Vance) announced that the Department of Labor will <b>not accept new or process pending PERM labour-certification applications</b> involving eight employers: <b>Microsoft, Adobe, Cognizant, Infosys, Tata (TCS), Wipro, HCL and Capgemini</b>. Cognizant had already been suspended in September. The action is tied to Inspector General investigations into alleged visa misuse.</p>
+<p><b>A common misreading, corrected:</b> the H-1B visa itself was <b>not</b> suspended. What has been stopped, for these companies only, is the <b>first step of the H-1B to green card pathway</b>.</p>
+</div>
+<div class="t">
+<p>வெள்ளை மாளிகை மோசடி தடுப்புக் குழுவோட செய்தியாளர் சந்திப்புல, அமெரிக்க தொழிலாளர் துறை செயலாளர் (துணை அதிபர் ஜே.டி. வான்ஸ் உடன்) அறிவிச்சது: <b>மைக்ரோசாஃப்ட், அடோபி, காக்னிசன்ட், இன்ஃபோசிஸ், டாடா (டிசிஎஸ்), விப்ரோ, எச்சிஎல், கேப்ஜெமினி</b> — இந்த 8 கம்பெனிகளோட <b>புது பெர்ம் விண்ணப்பங்கள ஏத்துக்க மாட்டோம், நிலுவையில இருக்கறதையும் பரிசீலிக்க மாட்டோம்</b>. காக்னிசன்ட் ஏற்கனவே செப்டம்பர்ல நிறுத்தப்பட்டிருந்துச்சு. விசா தவறா பயன்படுத்தப்பட்டதா சொல்லப்படற விசாரணையோட தொடர்புடைய நடவடிக்கை இது.</p>
+<p><b>பலர் தப்பா புரிஞ்சுக்கறது:</b> எச்-1பி விசாவே நிறுத்தப்படல. இந்த கம்பெனிகளுக்கு மட்டும், <b>எச்-1பி-ல இருந்து கிரீன் கார்டுக்கு போற முதல் படி</b>தான் நிறுத்தப்பட்டிருக்கு.</p>
+</div>
+<div class="flow e">
+ <div class="st">Student / new hire<br><small>student visa</small></div><div class="ar">➜</div>
+ <div class="st">H-1B visa<br><small>✔ still allowed</small></div><div class="ar">➜</div>
+ <div class="st x">PERM labour certification<br><small>✖ suspended for 8 firms</small></div><div class="ar">➜</div>
+ <div class="st">I-140 petition<br><small>blocked downstream</small></div><div class="ar">➜</div>
+ <div class="st">Green card<br><small>delayed</small></div>
+</div>
+<div class="flow t">
+ <div class="st">மாணவர் / புது ஊழியர்<br><small>மாணவர் விசா</small></div><div class="ar">➜</div>
+ <div class="st">எச்-1பி விசா<br><small>✔ தொடர்ந்து அனுமதி</small></div><div class="ar">➜</div>
+ <div class="st x">பெர்ம் தொழிலாளர் சான்றிதழ்<br><small>✖ 8 கம்பெனிகளுக்கு நிறுத்தம்</small></div><div class="ar">➜</div>
+ <div class="st">ஐ-140 மனு<br><small>அடுத்த படியும் தடை</small></div><div class="ar">➜</div>
+ <div class="st">கிரீன் கார்டு<br><small>தாமதம்</small></div>
+</div>
+</div>
+<div class="grid g2" style="margin-top:12px">
+<div class="card">
+<h3><span class="e">Direct impact on TCS</span><span class="t">டிசிஎஸ்-க்கு நேரடி பாதிப்பு</span></h3>
+<ul class="e">
+<li>TCS says its PERM applications were in <b>single digits over the last two years</b>, so it expects no impact on workforce strategy or client work (company statement, 09 Oct).</li>
+<li>Nasscom says the number of employees moving from H-1B to green cards via PERM at Indian IT firms is relatively limited; it called the step a temporary suspension of new filings.</li>
+<li>Second-order risk: some long-tenure H-1B employees need PERM approval to extend beyond the six-year limit. Those few cases may need to change roles, relocate or return to India.</li>
+<li>Reputation overhang: "under investigation" status can invite compliance questions from US public-sector and regulated banking clients.</li>
+</ul>
+<ul class="t">
+<li>கடந்த 2 வருஷத்துல எங்க பெர்ம் விண்ணப்பங்கள் <b>ஒத்தை இலக்கம்தான்</b>, அதனால ஊழியர் திட்டத்துக்கோ வாடிக்கையாளர் வேலைக்கோ பாதிப்பு இல்லன்னு டிசிஎஸ் சொல்லியிருக்கு (09-10 அறிக்கை).</li>
+<li>இந்திய ஐடி கம்பெனிகள்ல பெர்ம் வழியா கிரீன் கார்டுக்கு போறவங்க எண்ணிக்கை குறைவுதான்னு நாஸ்காம் சொல்லுது; இது புது விண்ணப்பங்களுக்கான தற்காலிக நிறுத்தம்னும் சொல்லியிருக்கு.</li>
+<li>இரண்டாம் நிலை ஆபத்து: 6 வருஷத்துக்கு மேல எச்-1பி நீட்டிக்க சிலருக்கு பெர்ம் ஒப்புதல் தேவை. அந்த சில பேர் வேற பொறுப்புக்கு மாறணும், வேற இடத்துக்கு போகணும், இல்லன்னா இந்தியா திரும்பணும்.</li>
+<li>நற்பெயர் சுமை: "விசாரணையில உள்ள கம்பெனி"ங்கற நிலை, அமெரிக்க அரசு, வங்கி வாடிக்கையாளர்கள்கிட்ட இருந்து விதிமுறை கேள்விகள கொண்டு வரலாம்.</li>
+</ul>
+</div>
+<div class="card">
+<h3><span class="e">The wider US policy picture</span><span class="t">அமெரிக்காவின் பரந்த கொள்கை நிலவரம்</span></h3>
+<div class="tw"><table id="polTbl"></table></div>
+</div>
+</div>
+<div class="card" style="margin-top:12px">
+<h3><span class="e">How the IT industry's future may look</span><span class="t">ஐடி துறையின் எதிர்காலம் எப்படி இருக்கலாம்</span></h3>
+<div class="tw"><table id="futTbl"></table></div>
+<h3><span class="e">Three scenarios for the sector</span><span class="t">துறைக்கு மூன்று சாத்தியங்கள்</span></h3>
+<div class="grid g4">
+<div class="card" style="background:#ecfdf5"><span class="e"><b>Bull (25%)</b><br>Suspension lifted after investigations; US rate cuts revive discretionary spending; AI services become net additive. Sector growth recovers to mid-to-high single digits by FY28.</span><span class="t"><b>நல்ல சூழல் (25%)</b><br>விசாரணைக்கு பிறகு நிறுத்தம் நீக்கப்படும்; அமெரிக்க வட்டி குறைப்பால செலவு திரும்பும்; ஏஐ சேவைகள் கூடுதல் வருவாய் தரும். 2027-28-க்குள் வளர்ச்சி 5-8% வரை திரும்பும்.</span></div>
+<div class="card" style="background:#eff6ff"><span class="e"><b>Base (50%)</b><br>Suspension lingers but stays narrow; firms localise and offshore further. Growth stays in low single digits; margins steady around 23–25%; valuations stay subdued until growth turns.</span><span class="t"><b>சாதாரண சூழல் (50%)</b><br>நிறுத்தம் நீடிக்கும் ஆனா குறுகியதா இருக்கும்; கம்பெனிகள் உள்ளூர் ஆட்களையும் இந்திய மையங்களையும் அதிகம் பயன்படுத்தும். வளர்ச்சி 1-3%; லாப விகிதம் 23-25%; வளர்ச்சி திரும்பும் வரை மதிப்பீடு குறைவாவே இருக்கும்.</span></div>
+<div class="card" style="background:#fef2f2"><span class="e"><b>Bear (25%)</b><br>Restrictions widen (H-1B cap cuts, L-1 curbs, outsourcing taxes) and AI deflation speeds up. Revenue flat to down in constant currency; margins compress 100–200 bps on onsite cost.</span><span class="t"><b>மோசமான சூழல் (25%)</b><br>கட்டுப்பாடுகள் விரியும் (எச்-1பி எண்ணிக்கை குறைப்பு, எல்-1 கட்டுப்பாடு, வெளி ஒப்பந்த வரி), ஏஐ விலைக்குறைப்பு வேகமாகும். வருவாய் தேங்கும் அல்லது குறையும்; அமெரிக்க செலவால லாப விகிதம் 1-2 புள்ளி குறையும்.</span></div>
+</div>
+<p class="note"><span class="e">Scenario probabilities are CB Research educational judgement, not forecasts or advice.</span><span class="t">இந்த சாத்திய சதவீதங்கள் சிபி ரிசர்ச்-ன் கல்வி நோக்கக் கணிப்பு மட்டுமே; முன்னறிவிப்போ ஆலோசனையோ அல்ல.</span></p>
+</div>
+</section>
+
+<!-- TRIGGERS & CYCLE -->
+<section class="tab" id="t-tc" data-en="Triggers &amp; Cycle" data-ta="தூண்டுதல் &amp; சுழற்சி">
+<h2><span class="e">Triggers and Cycle</span><span class="t">தூண்டுதல்கள் மற்றும் சுழற்சி</span></h2>
+<div class="grid g2">
+<div class="card">
+<h3><span class="e">Cycle clock — IT services (global-linked cycle)</span><span class="t">சுழற்சி கடிகாரம் — ஐடி சேவைகள் (உலக சந்தை சார்ந்த சுழற்சி)</span></h3>
+<svg viewBox="0 0 320 300" width="100%" style="max-width:360px;display:block;margin:auto" id="clock"></svg>
+<p class="note"><span class="e">Pointer = sector phase (P1 Trough / bottoming). Red dot = the stock's Weinstein price stage (Stage 4 decline, inferred from the −35% fall this year; 30-week average not computed).</span><span class="t">முள் = துறை நிலை (அடிமட்டம், நிலை-1). சிவப்பு புள்ளி = பங்கு விலை நிலை (வைன்ஸ்டீன் நிலை-4 சரிவு — இந்த வருஷ −35% சரிவிலிருந்து ஊகிக்கப்பட்டது; 30 வார சராசரி கணக்கிடப்படவில்லை).</span></p>
+</div>
+<div class="card">
+<h3><span class="e">Scores</span><span class="t">மதிப்பெண்கள்</span></h3>
+<div id="scoreBox"></div>
+<ul class="e">
+<li><b>Sector P1 (60):</b> constant-currency growth around 0–3% for several quarters; stock −35% this year; P/E around 13–14 times against a historic 25–30; margins stable, not collapsing.</li>
+<li><b>Stock (56):</b> re-inventing via AI (75) · EBIT flat near five-year low (50) · valuation below band with earnings rising (85) · Stage 4 price (15).</li>
+<li><b>Cycle 58 · Trigger 57 · Conviction 55</b> (the Stage 4 rule caps it at 55).</li>
+</ul>
+<ul class="t">
+<li><b>துறை நிலை-1 (60):</b> பல காலாண்டா வளர்ச்சி 0-3%; பங்கு இந்த வருஷம் −35%; விலை/வருவாய் 13-14 மடங்கு (பழைய அளவு 25-30); லாப விகிதம் நிலையா இருக்கு, சரியல.</li>
+<li><b>பங்கு (56):</b> ஏஐ மூலம் புதுப்பித்தல் (75) · லாப விகிதம் 5 வருஷ குறைந்த அளவுக்கு அருகில் (50) · மதிப்பீடு குறைவு, லாபம் கூடுது (85) · விலை நிலை-4 (15).</li>
+<li><b>சுழற்சி 58 · தூண்டுதல் 57 · நம்பிக்கை 55</b> (நிலை-4 விதிப்படி 55-க்கு மேல் போகாது).</li>
+</ul>
+</div>
+</div>
+<div class="tw" style="margin-top:12px"><table id="trgTbl"></table></div>
+<h3><span class="e">Trigger timeline</span><span class="t">தூண்டுதல் காலவரிசை</span></h3>
+<div class="tw"><table id="tlTbl"></table></div>
+<div class="card" style="margin-top:12px"><h3><span class="e">What would change this view</span><span class="t">இந்த பார்வையை எது மாற்றும்</span></h3>
+<ul class="e"><li>Two straight quarters of constant-currency growth above 1.5% QoQ with order book back above $11 Bn → cycle moves to P2 (early recovery).</li>
+<li>The PERM action widening into H-1B or L-1 restrictions on named firms → a negative trigger with impact 4 or more.</li>
+<li>Evidence of AI price deflation in application-maintenance renewals (lower contract values for the same scope).</li></ul>
+<ul class="t"><li>தொடர்ந்து 2 காலாண்டு 1.5%-க்கு மேல வளர்ச்சி, ஆர்டர் புக் $11 பில்லியனுக்கு மேல → சுழற்சி நிலை-2 (ஆரம்ப மீட்சி)க்கு நகரும்.</li>
+<li>பெர்ம் நடவடிக்கை எச்-1பி அல்லது எல்-1 கட்டுப்பாடா விரிஞ்சா → பெரிய எதிர்மறை தூண்டுதல்.</li>
+<li>பராமரிப்பு ஒப்பந்த புதுப்பிப்புல ஏஐ-னால விலை குறையறதுக்கான ஆதாரம் (அதே வேலைக்கு குறைஞ்ச ஒப்பந்த மதிப்பு).</li></ul>
+</div>
+</section>
+
+<!-- FORWARD -->
+<section class="tab" id="t-fw" data-en="Forward Outlook" data-ta="எதிர்கால பார்வை">
+<h2><span class="e">Forward-looking statements and outlook</span><span class="t">முன்னோக்கு அறிக்கைகள் மற்றும் எதிர்கால பார்வை</span></h2>
+<div class="tw"><table id="fwTbl"></table></div>
+<p class="note"><span class="e">TCS does not give numerical revenue guidance. Its releases carry the standard caution that forward-looking statements involve risks and uncertainties.</span><span class="t">டிசிஎஸ் எண் அளவிலான வருவாய் வழிகாட்டல் தருவதில்லை. எதிர்கால அறிக்கைகளில் ஆபத்துகளும் நிச்சயமின்மையும் உண்டு என்று அதன் அறிக்கைகள் எச்சரிக்கின்றன.</span></p>
+</section>
+
+<!-- SWOT -->
+<section class="tab" id="t-swot" data-en="SWOT" data-ta="பலம்-பலவீனம்">
+<h2><span class="e">SWOT</span><span class="t">பலம் · பலவீனம் · வாய்ப்பு · அச்சுறுத்தல்</span></h2>
+<div class="swot">
+<div class="s1"><span class="e"><b>Strengths</b><ul><li>Industry-leading 24% EBIT margin, about 48% return on equity</li><li>Debt-free; operating cash flow above 100% of profit</li><li>$3.1 Bn AI run-rate; 1,412 clients above $1 Mn</li><li>Low PERM and H-1B dependence versus peers</li></ul></span><span class="t"><b>பலம்</b><ul><li>துறையிலேயே அதிக 24% லாப விகிதம்; சுமார் 48% பங்கு மூலதன வருமானம்</li><li>கடன் இல்லை; லாபத்துக்கு மேல் பணப்புழக்கம்</li><li>$3.1 பில்லியன் ஏஐ வருவாய்; $1 மில்லியனுக்கு மேல் 1,412 வாடிக்கையாளர்கள்</li><li>போட்டியாளர்களை விட பெர்ம், எச்-1பி சார்பு குறைவு</li></ul></span></div>
+<div class="s2"><span class="e"><b>Weaknesses</b><ul><li>Constant-currency growth only 2.8% YoY</li><li>North America (48%) nearly flat</li><li>Order book down 4% YoY; India deferral</li><li>Unbilled revenue rising</li></ul></span><span class="t"><b>பலவீனம்</b><ul><li>உண்மையான வளர்ச்சி ஆண்டுக்கு 2.8% மட்டும்</li><li>வட அமெரிக்கா (48%) கிட்டத்தட்ட தேக்கம்</li><li>ஆர்டர் புக் ஆண்டுக்கு 4% குறைவு; இந்தியா ப்ராஜெக்ட் தாமதம்</li><li>பில் போடாத வருவாய் கூடுது</li></ul></span></div>
+<div class="s3"><span class="e"><b>Opportunities</b><ul><li>Taking over client captive centres and turning them into AI centres</li><li>Buying local consultancies (MHP)</li><li>Physical AI, chip design, lights-out factories</li><li>Offshoring push from visa curbs</li></ul></span><span class="t"><b>வாய்ப்புகள்</b><ul><li>வாடிக்கையாளர்களின் சொந்த மையங்களை எடுத்து ஏஐ மையமாக்குவது</li><li>உள்ளூர் ஆலோசனை நிறுவனங்களை வாங்குவது (எம்எச்பி)</li><li>இயந்திர ஏஐ, சிப் வடிவமைப்பு, தானியங்கி தொழிற்சாலை</li><li>விசா கட்டுப்பாட்டால் இந்தியாவுக்கு அதிக வேலை</li></ul></span></div>
+<div class="s4"><span class="e"><b>Threats</b><ul><li>AI-led revenue deflation in legacy work</li><li>Widening US immigration restrictions</li><li>Client spending caution; seasonal furloughs</li><li>A rupee rebound would cut rupee growth</li></ul></span><span class="t"><b>அச்சுறுத்தல்கள்</b><ul><li>ஏஐ-னால பழைய வேலை வருவாய் குறையலாம்</li><li>அமெரிக்க குடியேற்ற கட்டுப்பாடு விரியலாம்</li><li>வாடிக்கையாளர் செலவு எச்சரிக்கை; பருவகால விடுப்பு</li><li>ரூபாய் மதிப்பு உயர்ந்தா ரூபாய் வளர்ச்சி குறையும்</li></ul></span></div>
+</div>
+<h3><span class="e">CBF26 six-factor score</span><span class="t">சிபிஎஃப்26 ஆறு அம்ச மதிப்பெண்</span></h3>
+<div id="cbfBox" class="card"></div>
+</section>
+
+<!-- ANALYSTS -->
+<section class="tab" id="t-an" data-en="Analysts' Rating" data-ta="ஆய்வாளர் மதிப்பீடு">
+<h2><span class="e">Analysts' Rating (after Q2, 08–09 Oct 2026)</span><span class="t">ஆய்வாளர் மதிப்பீடுகள் (முடிவுக்குப் பின், 08-09 அக்டோபர் 2026)</span></h2>
+<p class="note"><span class="e">Third-party broker views only. CB Research does not issue buy, sell or hold recommendations. Current price about ₹2,175.</span><span class="t">இவை வெளி தரகு நிறுவனங்களின் கருத்துகள் மட்டுமே. சிபி ரிசர்ச் வாங்கு/விற்கு பரிந்துரை தருவதில்லை. தற்போதைய விலை சுமார் ₹2,175.</span></p>
+<div class="grid g4" id="anKpi"></div>
+<div class="card cw" style="margin-top:12px"><div class="ci" style="height:560px"><canvas id="cAn"></canvas></div></div>
+<div class="tw" style="margin-top:12px"><table id="anTbl"></table></div>
+</section>
+
+<!-- MANAGEMENT -->
+<section class="tab" id="t-mg" data-en="Management &amp; Board" data-ta="நிர்வாகம் &amp; இயக்குநர்கள்">
+<h2><span class="e">Management and Board</span><span class="t">நிர்வாகம் மற்றும் இயக்குநர் குழு</span></h2>
+<div class="tw"><table id="mgTbl"></table></div>
+<div class="card" style="margin-top:12px">
+<ul class="e">
+<li><b>Promoter:</b> Tata Sons holds about 71.8% (latest shareholding pattern before this quarter†). No pledge.</li>
+<li><b>Board:</b> majority independent directors as per the FY26 Annual Report†. The board approved the ₹12 second interim dividend on 08 Oct 2026.</li>
+<li><b>Governance read:</b> clean audits, conservative balance sheet, steady payouts. The new governance question is US regulatory scrutiny (the PERM investigation) — watch disclosures.</li>
+</ul>
+<ul class="t">
+<li><b>விளம்பரதாரர்:</b> டாடா சன்ஸ் சுமார் 71.8% பங்கு வச்சிருக்கு (இந்த காலாண்டுக்கு முந்தைய பங்குதாரர் விவரம்†). அடமானம் இல்லை.</li>
+<li><b>இயக்குநர் குழு:</b> 2025-26 ஆண்டறிக்கைப்படி பெரும்பான்மை சுயாதீன இயக்குநர்கள்†. 08-10-2026 அன்று ₹12 இரண்டாம் இடைக்கால ஈவுத்தொகைக்கு ஒப்புதல்.</li>
+<li><b>நிர்வாக நேர்மை:</b> சுத்தமான தணிக்கை, பழமைவாத இருப்புநிலை, சீரான ஈவுத்தொகை. புதுசா எழுந்த கேள்வி — அமெரிக்க விசாரணை (பெர்ம்). அறிவிப்புகள கவனிக்கணும்.</li>
+</ul>
+<p class="note"><span class="e">† Please verify the latest board list and shareholding on BSE/NSE; not re-checked for this quarter.</span><span class="t">† சமீபத்திய இயக்குநர் பட்டியல், பங்குதாரர் விவரத்தை மும்பை/தேசிய பங்குச் சந்தை தளத்தில் சரிபார்க்கவும்.</span></p>
+</div>
+</section>
+
+<!-- SOCRATES -->
+<section class="tab" id="t-soc" data-en="Cauvery Socrates" data-ta="காவேரி சாக்ரடீஸ்">
+<h2><span class="e">Cauvery Socrates — test your understanding</span><span class="t">காவேரி சாக்ரடீஸ் — உங்கள் புரிதலை சோதியுங்கள்</span></h2>
+<div id="socBox"></div>
+<div class="card"><b><span class="e">Think deeper (free text):</span><span class="t">ஆழமா யோசிங்க (உங்கள் பதில்):</span></b> <span class="e">If TCS hires 15,000 people locally in the US instead of using H-1B staff, what happens to its margin, and how could AI agents offset that cost? Write your answer, then compare with the PERM tab.</span><span class="t">எச்-1பி ஊழியர்களுக்கு பதிலா டிசிஎஸ் அமெரிக்காவுல 15,000 உள்ளூர் ஆட்கள எடுத்தா லாப விகிதம் என்ன ஆகும்? ஏஐ முகவர்கள் அந்த செலவ எப்படி ஈடுகட்டலாம்? எழுதிட்டு பெர்ம் பகுதியோட ஒப்பிடுங்க.</span>
+<textarea style="width:100%;height:80px;margin-top:8px;border:1px solid var(--line);border-radius:8px;padding:8px"></textarea></div>
+</section>
+
+</main>
+
+<div id="cbBadge" title="CB Research">CB</div>
+<div id="disc"><span class="e"><b>Prepared by CB Research (Cauvery Business)</b><br>For education only. Not investment advice. CB Research is not a SEBI-registered research analyst and gives no buy, sell or hold recommendation. Broker views are third-party and attributed. Figures are from company filings and reputed media as on 09 Oct 2026; derived or unverified cells are marked †. Please consult a SEBI-registered adviser before investing.</span><span class="t"><b>தயாரிப்பு: சிபி ரிசர்ச் (காவேரி பிசினஸ்)</b><br>கல்வி நோக்கத்துக்கு மட்டும். இது முதலீட்டு ஆலோசனை அல்ல. சிபி ரிசர்ச் செபியில் பதிவு பெற்ற ஆய்வாளர் அல்ல; வாங்கு/விற்கு/வைத்திரு பரிந்துரை தருவதில்லை. தரகு நிறுவனக் கருத்துகள் அவர்களுடையவை. எண்கள் 09-10-2026 வரையிலான நிறுவன அறிக்கைகள், நம்பகமான ஊடகங்களிலிருந்து; கணக்கிடப்பட்ட அல்லது சரிபார்க்காத எண்கள் † குறியிடப்பட்டுள்ளன. முதலீட்டுக்கு முன் செபி பதிவு பெற்ற ஆலோசகரை அணுகவும்.</span></div>
+<button id="asBtn"><span class="e">🎙️ CB Assist</span><span class="t">🎙️ சிபி உதவி</span></button>
+<div id="asBox">
+ <div class="hd"><span><span class="e">CB Assist — ask by voice</span><span class="t">சிபி உதவி — குரலில் கேளுங்க</span></span><button class="btn" id="asClose">✕</button></div>
+ <div id="asLog"></div>
+ <div class="ft"><input id="asIn"><button id="micBtn">🎤</button></div>
+</div>
+
+<script>
+var L="en";
+function T(en,ta){return L==="ta"?ta:en;}
+function NA(){return T("n/a","இல்லை");}
+var f=function(n,d){if(n===null||n===undefined)return NA();return Number(n).toLocaleString("en-IN",{minimumFractionDigits:d||0,maximumFractionDigits:d||0});};
+var pct=function(a,b){return((a/b-1)*100).toFixed(1)+"%";};
+var CO={
+ name:"Tata Consultancy Services",bse:"532540",nse:"TCS",quarter:"Q2 FY27",
+ periods:[["Q2 FY26","செப் 2025"],["Q4 FY26†","மார் 2026†"],["Q1 FY27","ஜூன் 2026"],["Q2 FY27","செப் 2026"]],
+ inr:{rev:[65799,70719,72275,73188],ebit:[16565,17870,17317,17553],da:[1206,1219,1206,1206],patAdj:[12904,13718,13849,13884],patRep:[12075,13718,13349,13884],ocf:[13293,null,12412,14190]},
+ usd:{periods:[["Q2 FY26","செப் 2025"],["Q1 FY27","ஜூன் 2026"],["Q2 FY27","செப் 2026"]],rev:[7466,7624,7642],cor:[4512,4605,4643],gm:[2954,3019,2999],sga:[1075,1193,1166],ebit:[1879,1826,1833],oi:[73,137,112],pbt:[1952,1963,1945],tax:[482,495,490],ni:[1464,1460,1450]},
+ geo:[[["North America","வட அமெரிக்கா"],48.8,48.3,48.3,0.4,1.5],[["Latin America","லத்தீன் அமெரிக்கா"],1.9,2.0,2.1,4.3,1.7],[["UK","பிரிட்டன்"],17.5,17.2,17.8,3.5,4.5],[["Continental Europe","ஐரோப்பா (கண்டம்)"],15.3,15.4,15.2,0.4,3.3],[["Asia Pacific","ஆசிய-பசிபிக்"],8.3,8.4,8.6,2.0,4.1],[["India","இந்தியா"],5.8,6.2,5.5,-10.3,6.0],[["Middle East & Africa","மத்திய கிழக்கு-ஆப்பிரிக்கா"],2.4,2.5,2.5,0.4,2.0]],
+ ver:[[["Banking, Fin. Services & Insurance","வங்கி-நிதி-காப்பீடு"],32.2,32.1,32.8,2.5,3.9],[["Consumer Business","நுகர்வோர் வணிகம்"],15.3,15.0,14.9,-0.7,-1.0],[["Life Sciences & Healthcare","மருந்து-சுகாதாரம்"],10.5,10.3,10.3,0.3,0.5],[["Manufacturing","உற்பத்தி"],8.8,8.7,9.0,3.1,4.2],[["Technology & Services","தொழில்நுட்ப சேவைகள்"],8.5,8.5,8.6,3.1,4.8],[["Communication & Media","தொலைத்தொடர்பு-ஊடகம்"],5.9,5.8,5.8,0.1,0.5],[["Energy, Resources & Utilities","எரிசக்தி-வளங்கள்"],5.9,6.3,6.2,-0.5,5.7],[["Regional Markets & Others","பிராந்திய சந்தைகள்"],12.9,13.3,12.4,-5.8,3.6]],
+ tcv:{p:[["Q2 FY26","செப் 2025"],["Q3 FY26","டிச 2025"],["Q4 FY26","மார் 2026"],["Q1 FY27","ஜூன் 2026"],["Q2 FY27","செப் 2026"]],v:[10.0,null,12.0,9.5,9.6]},
+ ai:{p:[["Q4 FY26†","மார் 2026†"],["Q1 FY27","ஜூன் 2026"],["Q2 FY27","செப் 2026"]],v:[2.29,2.6,3.1]},
+ cmp:2175,
+ analysts:[[["Centrum Broking","சென்ட்ரம்"],"na",3266],[["Nuvama","நுவாமா"],"buy",2750],[["Nomura","நோமுரா"],"buy",2630],[["Haitong International","ஹைடாங்"],"na",2621],[["UBS","யுபிஎஸ்"],"neutral",2565],[["Axis Capital","ஆக்சிஸ் கேப்பிட்டல்"],"na",2550],[["IIFL","ஐஐஎஃப்எல்"],"na",2500],[["Anand Rathi","ஆனந்த் ரதி"],"na",2430],[["Avendus Spark","அவெண்டஸ் ஸ்பார்க்"],"na",2430],[["Motilal Oswal","மோதிலால் ஓஸ்வால்"],"buy",2400],[["BNP Paribas","பிஎன்பி பரிபா"],"na",2400],[["Dolat Capital","டோலட் கேப்பிட்டல்"],"na",2400],[["JM Financial","ஜேஎம் ஃபைனான்சியல்"],"add",2375],[["HSBC","எச்எஸ்பிசி"],"na",2350],[["Systematix","சிஸ்டமேட்டிக்ஸ்"],"na",2350],[["Antique","ஆன்டிக்"],"hold",2325],[["JPMorgan","ஜேபி மார்கன்"],"ow",2300],[["Goldman Sachs","கோல்ட்மேன் சாக்ஸ்"],"buy",2210],[["Morgan Stanley","மார்கன் ஸ்டான்லி"],"ew",2160],[["DAM Capital","டேம் கேப்பிட்டல்"],"na",2120],[["CLSA","சிஎல்எஸ்ஏ"],"hold",2038],[["Ambit","ஆம்பிட்"],"na",1990],[["ICICI Securities","ஐசிஐசிஐ செக்யூரிட்டீஸ்"],"na",1920],[["Citi","சிட்டி"],"sell",1840],[["Jefferies","ஜெஃப்ரீஸ்"],"up",1800],[["Nirmal Bang","நிர்மல் பங்"],"sell",1578]],
+ rating:{buy:["Buy","வாங்கலாம்","pb"],add:["Add","சேர்க்கலாம்","pb"],ow:["Overweight","கூடுதல் எடை","pb"],hold:["Hold","வைத்திருக்கலாம்","ph"],neutral:["Neutral","நடுநிலை","ph"],ew:["Equal-weight","சம எடை","ph"],sell:["Sell","விற்கலாம்","ps"],up:["Underperform","பின்தங்கும்","ps"],na:["Not stated","குறிப்பிடவில்லை","pn"]},
+ cycle:{sectorPhase:"P1 Trough",sector:60,stockStage:"Stage 4",stock:56,cy:58},
+ triggers:[
+  {n:["AI revenue scaling ($3.1 Bn run-rate, above 10% of revenue)","ஏஐ வருவாய் வளர்ச்சி ($3.1 பில்லியன், 10%-க்கு மேல்)"],s:"+",I:2,C:1.0,W:1.0,P:1.0,w:["Quarterly AI run-rate","ஒவ்வொரு காலாண்டு ஏஐ வருவாய்"],st:["Executing","நடைமுறையில்"]},
+  {n:["Best Buy centre transition and BSNL ramp-up (mid-Q3)","பெஸ்ட் பை மையம் மாற்றம், பிஎஸ்என்எல் வேலை அதிகரிப்பு"],s:"+",I:2,C:0.7,W:1.0,P:1.0,w:["Q3 revenue lift; order-book inclusion","டிசம்பர் காலாண்டு வருவாய் உயர்வு"],st:["Approved","ஒப்புதல்"]},
+  {n:["Porsche partnership and MHP acquisition","போர்ஷே கூட்டு, எம்எச்பி கையகப்படுத்தல்"],s:"+",I:2,C:0.7,W:0.7,P:1.0,w:["Regulatory approval, deal closing","அரசு ஒப்புதல், ஒப்பந்த நிறைவு"],st:["Announced","அறிவிப்பு"]},
+  {n:["Deferred India project restart","இந்தியா ப்ராஜெக்ட் மீண்டும் தொடக்கம்"],s:"+",I:2,C:0.4,W:0.7,P:1.0,w:["India growth in early 2027","2027 தொடக்கத்தில் இந்தியா வளர்ச்சி"],st:["Watch","கவனிப்பு"]},
+  {n:["US PERM suspension (TCS filings in single digits)","அமெரிக்க பெர்ம் நிறுத்தம் (விண்ணப்பங்கள் ஒத்தை இலக்கம்)"],s:"−",I:1,C:1.0,W:1.0,P:1.0,w:["Investigation outcome; any spread to H-1B","விசாரணை முடிவு; எச்-1பி-க்கு விரிவு"],st:["Executing","நடைமுறையில்"]},
+  {n:["Wider US visa tightening ($100,000 H-1B fee, wage rule)","அமெரிக்க விசா கட்டுப்பாடு ($1 லட்சம் கட்டணம், ஊதிய விதி)"],s:"−",I:2,C:0.7,W:0.7,P:1.0,w:["Final wage rule; onsite cost","இறுதி ஊதிய விதி; அமெரிக்க செலவு"],st:["Approved","ஒப்புதல்"]},
+  {n:["AI-led deflation of legacy services revenue","ஏஐ-னால் பழைய சேவை வருவாய் குறைவு"],s:"−",I:3,C:0.4,W:0.7,P:1.0,w:["Maintenance renewal pricing","பராமரிப்பு ஒப்பந்த விலை"],st:["Watch","கவனிப்பு"]},
+  {n:["Seasonal furloughs in Q3","டிசம்பர் காலாண்டு பருவகால விடுப்பு"],s:"−",I:1,C:0.7,W:1.0,P:1.0,w:["Q3 growth","டிசம்பர் காலாண்டு வளர்ச்சி"],st:["Watch","கவனிப்பு"]}],
+ cbf:{g:45,m:80,d:95,v:72,t:30,r:55}
+};
+// static bilingual tables
+var TB={
+ deal:{h:[["Deal / partnership","டீல் / கூட்டு"],["What it is","என்ன"],["Why it matters","ஏன் முக்கியம்"]],r:[
+  [["Porsche AG and MHP acquisition","போர்ஷே, எம்எச்பி கையகப்படுத்தல்"],["Five-year partnership; TCS to buy 100% of MHP, Porsche's German consulting arm; AI mobility centre","5 வருஷ கூட்டு; போர்ஷே-ஓட ஜெர்மன் ஆலோசனை நிறுவனம் எம்எச்பி-ஐ முழுசா வாங்குது; ஏஐ வாகன மையம்"],["Adds onsite European consulting talent — growth without visas. Subject to approval; excluded from the $9.6 Bn order book.","விசா இல்லாமலே ஐரோப்பாவுல உள்ளூர் ஆலோசகர்கள் கிடைப்பாங்க. ஒப்புதலுக்கு உட்பட்டது; $9.6 பில்லியன் கணக்குல சேர்க்கல."]],
+  [["Best Buy captive centre → AI centre","பெஸ்ட் பை இந்திய மையம் → ஏஐ மையம்"],["Best Buy's India centre moves to TCS","பெஸ்ட் பை-ஓட இந்திய மையம் டிசிஎஸ்-க்கு மாறுது"],["New deal type; also excluded from the order book — upside later.","புது வகை டீல்; இதுவும் ஆர்டர் புக்ல சேர்க்கல — பின்னாடி கூடுதல்."]],
+  [["Honeywell Technologies","ஹனிவெல் டெக்னாலஜிஸ்"],["Global SAP S/4HANA transformation partner","உலகளாவிய எஸ்ஏபி மாற்ற கூட்டாளி"],["Large multi-year enterprise programme in Manufacturing.","உற்பத்தி துறையில பல வருஷ பெரிய திட்டம்."]],
+  [["Aareal Bank (Germany)","ஏரியல் வங்கி (ஜெர்மனி)"],["Infrastructure, cloud and cyber security","உள்கட்டமைப்பு, கிளவுட், இணைய பாதுகாப்பு"],["Supports banking and Continental Europe.","வங்கி துறை, ஐரோப்பா வளர்ச்சிக்கு உதவும்."]],
+  [["Vodafone Business (UK)","வோடஃபோன் பிசினஸ் (பிரிட்டன்)"],["Strategic partnership","முக்கிய கூட்டு"],["Supports UK growth (+3.5% QoQ).","பிரிட்டன் வளர்ச்சிக்கு உதவும் (+3.5%)."]],
+  [["DGCX (Dubai)","டிஜிசிஎக்ஸ் (துபாய்)"],["Trading, clearing and surveillance platform","வர்த்தகம், தீர்வு, கண்காணிப்பு தளம்"],["Platform-led banking win in the Middle East.","மத்திய கிழக்கில் சொந்த தளம் மூலம் வெற்றி."]]]},
+ mv:{h:[["Date","தேதி"],["Move","நகர்வு"],["Reason","காரணம்"]],r:[
+  [["Jan–Sep 2026","ஜனவரி-செப்டம்பர் 2026"],["≈ −35%","≈ −35%"],["Sector de-rating: fear that AI tools shrink traditional IT work, slow US spending, visa and fee tightening","துறை மதிப்பு சரிவு: ஏஐ பாரம்பரிய ஐடி வேலைய குறைக்கும்ங்கற பயம், அமெரிக்க செலவு மந்தம், விசா கட்டுப்பாடு"]],
+  [["September 2026","செப்டம்பர் 2026"],["−14.5%","−14.5%"],["Broad IT sell-off; Cognizant suspended from PERM","ஐடி பங்குகள் விற்பனை; காக்னிசன்ட் பெர்ம் நிறுத்தம்"]],
+  [["08 Oct 2026 (evening)","08-10-2026 (மாலை)"],["—","—"],["Results (profit ahead of most polls) plus US PERM suspension of 8 firms","முடிவுகள் (பெரும்பாலான கணிப்பை விட லாபம் அதிகம்) + 8 கம்பெனிகளுக்கு பெர்ம் நிறுத்தம்"]],
+  [["09 Oct 2026","09-10-2026"],["≈ +4% to +5.6%","≈ +4% முதல் +5.6%"],["Results better than feared; TCS clarified PERM filings were single-digit; Nifty IT rose about 3%","பயந்த அளவு மோசமில்லை; பெர்ம் விண்ணப்பம் ஒத்தை இலக்கம்னு விளக்கம்; நிஃப்டி ஐடி சுமார் 3% உயர்வு"]]]},
+ pol:{h:[["Measure","நடவடிக்கை"],["Status","நிலை"]],r:[
+  [["$100,000 fee on new H-1B petitions from abroad","வெளிநாட்டிலிருந்து புது எச்-1பி-க்கு $1 லட்சம் கட்டணம்"],["In force since 2025","2025 முதல் அமலில்"]],
+  [["Higher wage levels for H-1B and PERM","எச்-1பி, பெர்ம்-க்கு அதிக ஊதிய விதி"],["Proposed 27 Mar 2026; comments closed 26 May; at final-rule stage","27-03-2026 முன்மொழிவு; 26-05 கருத்துக் காலம் முடிவு; இறுதி விதி நிலை"]],
+  [["PERM labour-market test modernisation","பெர்ம் தொழிலாளர் சந்தை சோதனை சீரமைப்பு"],["On the 2026 regulatory agenda; not yet proposed","2026 திட்டப் பட்டியலில்; இன்னும் முன்மொழியவில்லை"]],
+  [["PERM suspension of 8 named employers","8 கம்பெனிகளுக்கு பெர்ம் நிறுத்தம்"],["Effective 08 Oct 2026; investigations ongoing","08-10-2026 முதல்; விசாரணை தொடர்கிறது"]],
+  [["Congressional pressure on PERM and H-1B misuse","பெர்ம், எச்-1பி தவறுக்கு எதிரான நாடாளுமன்ற அழுத்தம்"],["Senator Schmitt letter to Labor Department, Aug 2026","செனட்டர் ஷ்மிட் கடிதம், ஆகஸ்ட் 2026"]]]},
+ fut:{h:[["Horizon","காலம்"],["Likely effect on Indian IT","இந்திய ஐடி-க்கு வாய்ப்புள்ள தாக்கம்"],["Who gains / who loses","யாருக்கு லாபம் / நஷ்டம்"]],r:[
+  [["0–6 months","0-6 மாதம்"],["Headline noise, little revenue impact. Firms pause green-card promises and reassure staff and clients. Market reaction already muted (Nifty IT rose about 3% on 09 Oct).","செய்தி பரபரப்பு மட்டும், வருவாய்க்கு சிறிய பாதிப்பு. கம்பெனிகள் கிரீன் கார்டு உறுதிமொழிய நிறுத்தி, ஊழியர்களையும் வாடிக்கையாளர்களையும் சமாதானப்படுத்தும். சந்தை ஏற்கனவே அமைதியா எடுத்துக்கிச்சு (09-10 அன்று நிஃப்டி ஐடி சுமார் 3% உயர்வு)."],["Heavy users of H-1B and PERM (Cognizant, then Infosys and HCL) are more exposed than TCS","எச்-1பி, பெர்ம் அதிகம் பயன்படுத்தற காக்னிசன்ட், இன்ஃபோசிஸ், எச்சிஎல் — டிசிஎஸ்-ஐ விட அதிக பாதிப்பு"]],
+  [["6–24 months","6-24 மாதம்"],["Faster shift of work offshore to India and nearshore (Canada, Mexico, Latin America — TCS Latin America +4.3% QoQ). More local US hiring at higher cost, a margin drag of a few tenths of a point. Buying local consultancies (like MHP in Germany) becomes a template.","வேலைகள் வேகமா இந்தியாவுக்கும் பக்கத்து நாடுகளுக்கும் (கனடா, மெக்சிகோ, லத்தீன் அமெரிக்கா — டிசிஎஸ் லத்தீன் அமெரிக்கா +4.3%) நகரும். அமெரிக்காவுல அதிக செலவுல உள்ளூர் ஆட்கள் — லாப விகிதத்துல சில பத்தில் ஒரு புள்ளி குறைவு. ஜெர்மனி எம்எச்பி மாதிரி உள்ளூர் ஆலோசனை நிறுவனங்கள வாங்கறது வழக்கமாகும்."],["Indian delivery centres, captive-centre transfer deals, nearshore hubs gain; onsite-heavy contracts lose margin","இந்திய மையங்கள், மைய மாற்ற டீல்கள், பக்கத்து நாட்டு மையங்களுக்கு லாபம்; அமெரிக்க ஆட்கள் அதிகம் தேவைப்படற ஒப்பந்தங்களுக்கு நஷ்டம்"]],
+  [["2–5 years","2-5 வருஷம்"],["The H-1B-to-green-card path that drew Indian engineers into IT services weakens. More senior talent stays in India, feeding captive centres, AI product start-ups and Indian IT's own innovation hubs. AI agents reduce the need for people on client sites at all.","இந்திய பொறியாளர்கள ஐடி துறைக்கு இழுத்த 'எச்-1பி → கிரீன் கார்டு' கனவு பலவீனமாகும். அனுபவமுள்ள திறமையாளர்கள் இந்தியாவுலேயே தங்கி, உலக நிறுவனங்களின் இந்திய மையங்கள், ஏஐ ஸ்டார்ட்அப்கள், ஐடி கம்பெனிகளோட புதுமை மையங்களுக்கு பலம் சேர்ப்பாங்க. ஏஐ முகவர்களால வாடிக்கையாளர் இடத்துல ஆட்கள் தேவையே குறையும்."],["India's tech ecosystem gains talent; US client costs rise; pure labour-arbitrage models lose relevance","இந்திய தொழில்நுட்ப சூழலுக்கு திறமை கிடைக்கும்; அமெரிக்க வாடிக்கையாளர் செலவு கூடும்; வெறும் 'குறைஞ்ச கூலி' மாதிரி பொருத்தமில்லாம போகும்"]]]},
+ tl:{h:[["When","எப்போது"],["Event","நிகழ்வு"]],r:[
+  [["14 Oct 2026","14-10-2026"],["Record date for ₹12 interim dividend (paid 30 Oct)","₹12 ஈவுத்தொகை பதிவு தேதி (30-10 அன்று வழங்கல்)"]],
+  [["November 2026","நவம்பர் 2026"],["BSNL ramp-up expected (JM Financial)","பிஎஸ்என்எல் வேலை அதிகரிப்பு எதிர்பார்ப்பு (ஜேஎம் ஃபைனான்சியல்)"]],
+  [["Oct–Dec 2026","அக்டோபர்-டிசம்பர் 2026"],["Seasonal furloughs (headwind similar to last year)","பருவகால விடுப்பு (போன வருஷம் போலவே பாதிப்பு)"]],
+  [["January 2027","ஜனவரி 2027"],["December quarter results: check growth, order book, AI revenue, PERM status","டிசம்பர் காலாண்டு முடிவு: வளர்ச்சி, ஆர்டர் புக், ஏஐ வருவாய், பெர்ம் நிலை"]],
+  [["Pending","நிலுவையில்"],["Porsche–MHP regulatory approvals; Best Buy centre transition","போர்ஷே-எம்எச்பி ஒப்புதல்; பெஸ்ட் பை மையம் மாற்றம்"]],
+  [["Apr–Jun 2027","ஏப்ரல்-ஜூன் 2027"],["Deferred India project expected to restart (JM Financial)","இந்தியா ப்ராஜெக்ட் மீண்டும் தொடங்க வாய்ப்பு (ஜேஎம் ஃபைனான்சியல்)"]],
+  [["Open","தேதியில்லை"],["US investigation outcome; PERM modernisation proposal; final wage rule","அமெரிக்க விசாரணை முடிவு; பெர்ம் சீரமைப்பு முன்மொழிவு; இறுதி ஊதிய விதி"]]]},
+ fw:{h:[["Topic","தலைப்பு"],["What management and analysts said","நிர்வாகம் / ஆய்வாளர்கள் சொன்னது"],["CB Research interpretation","சிபி ரிசர்ச் விளக்கம்"]],r:[
+  [["Demand","தேவை"],["Environment unchanged and selective; discretionary programmes without near-term value still scrutinised","சூழல் மாறல, தேர்ந்தெடுத்துதான் செலவு; உடனடி பலன் இல்லாத திட்டங்கள கவனமா பார்க்கறாங்க"],["No inflection yet — growth will come from large deals and AI, not broad spending","இன்னும் திருப்பம் இல்ல — வளர்ச்சி பெரிய டீல்கள், ஏஐ-ல இருந்துதான் வரும்"]],
+  [["International","சர்வதேசம்"],["Expects current momentum to continue, based on pipeline and client demand","வரவிருக்கும் டீல்கள், வாடிக்கையாளர் தேவை அடிப்படையில இப்போதைய வேகம் தொடரும்"],["International +1.2% QoQ is the bar for Q3","சர்வதேச +1.2% தான் அடுத்த காலாண்டுக்கு அளவுகோல்"]],
+  [["India","இந்தியா"],["Deferred project expected back in the medium term; JM expects restart from Q1 FY28","தள்ளிப்போன ப்ராஜெக்ட் நடுத்தர காலத்துல திரும்பும்; ஏப்ரல்-ஜூன் 2027-ல தொடங்கும்னு ஜேஎம் கணிப்பு"],["India drag likely persists through the next two quarters","அடுத்த 2 காலாண்டு இந்தியா இழுபறி தொடரலாம்"]],
+  [["Margins","லாப விகிதம்"],["FY27 exit EBIT margin target above 25% (CFO, Q1 call); Q2 at 24.0% with M&A, partnership and talent investments, higher subcontracting and bench","வருட இறுதியில 25%-க்கு மேல இலக்கு (நிதி அதிகாரி); இப்போ 24% — கையகப்படுத்தல், கூட்டு, திறமை முதலீடு, வெளி ஒப்பந்த செலவு காரணம்"],["Needs about one point of improvement in the second half — possible only if utilisation rises as deals ramp","அடுத்த அரையாண்டுல சுமார் 1 புள்ளி கூடணும் — டீல்கள் வேகமெடுத்து ஊழியர் பயன்பாடு கூடினாதான் முடியும்"]],
+  [["AI","ஏஐ"],["Momentum strong; $3.1 Bn annualised, above 10% of revenue; demand for AI-native solutions accelerating (COO)","வேகம் வலுவா இருக்கு; $3.1 பில்லியன், 10%-க்கு மேல்; ஏஐ தீர்வுகளுக்கு தேவை கூடுது (செயல்பாட்டு தலைவர்)"],["Positive, but some AI work is short-duration; deflation of legacy work 'yet to fully play out' (JM)","நல்லது, ஆனா சில ஏஐ வேலைகள் குறுகிய காலம்; பழைய வேலை குறையறது இன்னும் முழுசா தெரியல (ஜேஎம்)"]],
+  [["Deals","டீல்கள்"],["Porsche and Best Buy are a 'new category of transformation partnerships' (CEO); both outside reported order book","போர்ஷே, பெஸ்ட் பை — 'புது வகை மாற்றக் கூட்டு' (தலைமை செயல் அதிகாரி); இரண்டும் ஆர்டர் புக் கணக்குல இல்ல"],["Upside to the second-half order book once closed","முடிஞ்சதும் ஆர்டர் புக்குக்கு கூடுதல்"]],
+  [["US workforce","அமெரிக்க ஊழியர்கள்"],["Will comply with the US directive; PERM impact minimal; plan to hire 15,000 in the US over five years","அமெரிக்க உத்தரவுக்கு கட்டுப்படுவோம்; பெர்ம் பாதிப்பு குறைவு; 5 வருஷத்துல 15,000 உள்ளூர் ஆட்கள்"],["Localisation raises onsite cost but lowers visa risk","உள்ளூர் ஆட்கள் செலவ கூட்டும், ஆனா விசா ஆபத்த குறைக்கும்"]]]},
+ mg:{h:[["Name","பெயர்"],["Role","பொறுப்பு"],["Message this quarter","இந்த காலாண்டு செய்தி"]],r:[
+  [["N Chandrasekaran","என். சந்திரசேகரன்"],["Chairman (also Chairman, Tata Sons)","தலைவர் (டாடா சன்ஸ் தலைவரும்)"],["—","—"]],
+  [["K Krithivasan","கே. கிருத்திவாசன்"],["Chief Executive Officer and Managing Director","தலைமை செயல் அதிகாரி &amp; நிர்வாக இயக்குநர்"],["Broad-based growth in all international markets; Porsche and Best Buy are a new category of partnership; industrialising AI at scale","எல்லா சர்வதேச சந்தைகளிலும் பரவலான வளர்ச்சி; போர்ஷே, பெஸ்ட் பை புது வகை கூட்டு; ஏஐ-ஐ பெரிய அளவில் செயல்படுத்துவது"]],
+  [["Aarthi Subramanian","ஆர்த்தி சுப்பிரமணியன்"],["Executive Director, President and Chief Operating Officer","செயல் இயக்குநர், தலைவர் &amp; தலைமை செயல்பாட்டு அதிகாரி"],["AI revenue above $3 Bn annualised; demand for AI-native solutions accelerating; cyber security a top client priority","ஏஐ வருவாய் $3 பில்லியனுக்கு மேல்; ஏஐ தீர்வுகளுக்கு தேவை கூடுது; இணைய பாதுகாப்பு முன்னுரிமை"]],
+  [["Samir Seksaria","சமீர் சேக்சரியா"],["Chief Financial Officer","தலைமை நிதி அதிகாரி"],["Capability building via acquisitions, partnerships and niche talent; strong cash conversion and industry-leading profitability","கையகப்படுத்தல், கூட்டு, சிறப்பு திறமை மூலம் பலம்; வலுவான பணமாக்கல், துறையில் முன்னணி லாபம்"]],
+  [["Sudeep Kunnumal","சுதீப் குன்னுமல்"],["Chief Human Resources Officer","தலைமை மனிதவள அதிகாரி"],["Learning hours +17% to 17.1 Mn; attrition stable at 13.3%","பயிற்சி நேரம் +17% (1.71 கோடி மணி); விலகல் 13.3%-ல் நிலையானது"]]]}
+};
+function rT(id,o){var h="<tr>"+o.h.map(function(c){return"<th class='l'>"+T(c[0],c[1])+"</th>"}).join("")+"</tr>";o.r.forEach(function(r){h+="<tr>"+r.map(function(c){return"<td class='l'>"+T(c[0],c[1])+"</td>"}).join("")+"</tr>"});document.getElementById(id).innerHTML=h;}
+// IST
+(function(){var d=new Date(),i=new Date(d.getTime()+(d.getTimezoneOffset()+330)*60000),p=function(n){return(n<10?"0":"")+n};var s=p(i.getDate())+"-"+p(i.getMonth()+1)+"-"+i.getFullYear()+", "+p(i.getHours())+":"+p(i.getMinutes());[].forEach.call(document.querySelectorAll(".istv"),function(e){e.textContent=s});})();
+// chart setup
+var valLab={id:"valLab",afterDatasetsDraw:function(ch,a,o){if(!o||!o.on)return;var c=ch.ctx;c.save();c.font="11px Segoe UI";c.fillStyle="#1b2430";c.textAlign="center";ch.data.datasets.forEach(function(ds,i){var m=ch.getDatasetMeta(i);if(m.hidden||m.type!=="bar")return;m.data.forEach(function(el,j){var v=ds.data[j];if(v===null||v===undefined)return;var t=(o.dec!==undefined?Number(v).toLocaleString("en-IN",{maximumFractionDigits:o.dec}):Number(v).toLocaleString("en-IN"))+(o.suf||"");if(ch.options.indexAxis==="y"){c.textAlign="left";c.fillText(t,el.x+4,el.y+4);}else{c.fillText(t,el.x,v<0?el.y+13:el.y-4);}});});c.restore();}};
+if(window.Chart){Chart.register(valLab);Chart.defaults.font.family="Segoe UI,Roboto,Noto Sans Tamil,Arial";Chart.defaults.color="#334155";}
+var charts={};
+function mk(id,cfg){if(!window.Chart){var el=document.getElementById(id);if(el&&el.parentNode&&!el.parentNode.dataset.w){el.parentNode.dataset.w=1;el.parentNode.insertAdjacentHTML("beforeend","<p class='note'><span class='e'>Chart library could not load (check internet connection). Tables remain available.</span><span class='t'>வரைபட நூலகம் ஏற்றப்படவில்லை (இணைய இணைப்பை சரிபார்க்கவும்). அட்டவணைகள் உள்ளன.</span></p>");}return;}if(charts[id])charts[id].destroy();cfg.options=cfg.options||{};cfg.options.responsive=true;cfg.options.maintainAspectRatio=false;charts[id]=new Chart(document.getElementById(id),cfg);}
+var P=function(a){return a.map(function(x){return T(x[0],x[1])})};
+// tabs
+var tabs=[].slice.call(document.querySelectorAll(".tab")),nav=document.getElementById("nav"),cur="inr",drawn={},active="t-ov";
+function buildNav(){nav.innerHTML="";tabs.forEach(function(t){var b=document.createElement("button");b.innerHTML=L==="ta"?t.dataset.ta:t.dataset.en;if(t.id===active)b.className="on";b.onclick=function(){active=t.id;tabs.forEach(function(x){x.classList.toggle("on",x.id===t.id)});[].forEach.call(nav.children,function(x){x.classList.remove("on")});b.classList.add("on");window.scrollTo({top:0});draw(t.id);};nav.appendChild(b);});}
+function setLang(l){L=l;document.body.className="L-"+l;document.documentElement.lang=l;[].forEach.call(document.querySelectorAll("[data-lang]"),function(x){x.classList.toggle("on",x.dataset.lang===l)});buildNav();for(var k in charts){charts[k].destroy();delete charts[k];}drawn={};renderStatic();draw(active);asReset();}
+[].forEach.call(document.querySelectorAll("[data-lang]"),function(b){b.onclick=function(){setLang(b.dataset.lang)};});
+// business model
+var BM=[{x:10,c:"#1d4ed8",h:["CLIENTS","வாடிக்கையாளர்கள்"],it:[
+ [["Banking & Insurance 32.8%","வங்கி-காப்பீடு 32.8%"],["Banks, insurers and capital markets — TCS's biggest industry, grew 2.5% QoQ. Products like TCS BaNCS run core banking for many banks.","வங்கிகள், காப்பீடு, மூலதன சந்தை — டிசிஎஸ்-ஓட மிகப்பெரிய துறை, 2.5% வளர்ச்சி. டிசிஎஸ் பேங்க்ஸ் மென்பொருள் பல வங்கிகளோட முக்கிய அமைப்பா இயங்குது."]],
+ [["Consumer 14.9%","நுகர்வோர் 14.9%"],["Retail, consumer goods, travel — fell 0.7% QoQ on cautious spending. The Best Buy deal sits here.","சில்லறை வணிகம், நுகர்பொருள், பயணம் — செலவு எச்சரிக்கையால 0.7% குறைவு. பெஸ்ட் பை டீல் இதுல வரும்."]],
+ [["Life Sciences 10.3%","மருந்து-சுகாதாரம் 10.3%"],["Pharma and healthcare — +0.3% QoQ. A new agent platform uses AI for clinical trials.","மருந்து, சுகாதாரம் — +0.3%. மருத்துவ ஆய்வுகளுக்கு ஏஐ முகவர் தளம் அறிமுகம்."]],
+ [["Manufacturing 9.0%","உற்பத்தி 9.0%"],["+3.1% QoQ — Honeywell and Porsche deals.","+3.1% — ஹனிவெல், போர்ஷே டீல்கள்."]],
+ [["Tech & Services 8.6%","தொழில்நுட்பம் 8.6%"],["Hi-tech and professional services — +3.1% QoQ.","உயர் தொழில்நுட்பம், தொழில்முறை சேவைகள் — +3.1%."]],
+ [["Telecom, Energy, Regional 24.4%","தொலைத்தொடர்பு, எரிசக்தி, பிராந்தியம் 24.4%"],["Telecom and media 5.8%, energy 6.2%, regional markets including India 12.4%.","தொலைத்தொடர்பு-ஊடகம் 5.8%, எரிசக்தி 6.2%, இந்தியா உட்பட பிராந்திய சந்தைகள் 12.4%."]]]},
+{x:280,c:"#0f766e",h:["WHAT TCS SELLS","டிசிஎஸ் விற்பது"],it:[
+ [["Consulting & AI","ஆலோசனை &amp; ஏஐ"],["AI, data and analytics, consulting — AI revenue $3.1 Bn annualised, above 10%.","ஏஐ, தரவு பகுப்பாய்வு, ஆலோசனை — ஏஐ வருவாய் $3.1 பில்லியன், 10%-க்கு மேல்."]],
+ [["Cloud & Infrastructure","கிளவுட் &amp; உள்கட்டமைப்பு"],["Cloud migration, data centres, infrastructure management (for example Aareal Bank).","கிளவுட் மாற்றம், தரவு மையங்கள், உள்கட்டமைப்பு மேலாண்மை (உதாரணம் ஏரியல் வங்கி)."]],
+ [["Enterprise software","நிறுவன மென்பொருள்"],["Implementing and running SAP, Oracle, Salesforce (Honeywell programme).","எஸ்ஏபி, ஆரக்கிள், சேல்ஸ்ஃபோர்ஸ் நிறுவுதல், இயக்குதல் (ஹனிவெல் திட்டம்)."]],
+ [["Business operations","வணிக செயல்பாடுகள்"],["Runs finance, HR and customer processes for clients; moving to autonomous operations.","வாடிக்கையாளர்களோட நிதி, மனிதவள, சேவை பணிகள நடத்துது; தானியங்கி செயல்பாட்டுக்கு மாறுது."]],
+ [["Engineering & IoT","பொறியியல் &amp; இணைய சாதனம்"],["Industrial autonomy lab, NVIDIA physical-AI lab, custom chip design.","தொழில்துறை தானியங்கி ஆய்வகம், என்விடியா ஏஐ ஆய்வகம், சிப் வடிவமைப்பு."]],
+ [["Own products","சொந்த தயாரிப்புகள்"],["TCS BaNCS, ignio, iON, Quartz — platform revenue with higher margins.","பேங்க்ஸ், இக்னியோ, ஐஆன், குவார்ட்ஸ் — அதிக லாபம் தரும் தள வருவாய்."]]]},
+{x:550,c:"#7c3aed",h:["HOW IT DELIVERS","எப்படி செய்கிறது"],it:[
+ [["Offshore India","இந்திய மையங்கள்"],["Most of the 5.98 lakh staff work from Indian delivery centres — the cost advantage behind a 24% margin.","5.98 லட்சம் ஊழியர்கள்ல பெரும்பாலோர் இந்திய மையங்கள்ல வேலை — 24% லாப விகிதத்துக்கு இதுதான் காரணம்."]],
+ [["Onsite (US, UK, Europe)","வாடிக்கையாளர் நாட்டில்"],["Client-site staff; the US uses local hires plus H-1B. Visa curbs raise cost here.","வாடிக்கையாளர் இடத்துல ஊழியர்கள்; அமெரிக்காவுல உள்ளூர் ஆட்கள் + எச்-1பி. விசா கட்டுப்பாடு இங்க செலவ கூட்டும்."]],
+ [["Nearshore","பக்கத்து நாட்டு மையங்கள்"],["Latin America, Canada, Eastern Europe hubs — Latin America +4.3% QoQ; a hedge against US visa rules.","லத்தீன் அமெரிக்கா, கனடா, கிழக்கு ஐரோப்பா — லத்தீன் அமெரிக்கா +4.3%; அமெரிக்க விசா விதிக்கு மாற்று வழி."]],
+ [["Captive-centre model","வாடிக்கையாளர் மைய மாதிரி"],["Taking over clients' own India centres (Best Buy) and turning them into AI centres.","வாடிக்கையாளர்களோட சொந்த இந்திய மையங்கள எடுத்து (பெஸ்ட் பை) ஏஐ மையமா மாத்துவது."]],
+ [["Partners","கூட்டாளிகள்"],["Google Cloud, NVIDIA, Microsoft, SAP, AWS — joint selling.","கூகுள் கிளவுட், என்விடியா, மைக்ரோசாஃப்ட், எஸ்ஏபி, அமேசான் — சேர்ந்து விற்பனை."]],
+ [["Human + AI model","மனிதர் + ஏஐ மாதிரி"],["AI agents do routine work, humans supervise — protects margin as prices fall.","ஏஐ முகவர்கள் வழக்கமான வேலை, மனிதர்கள் மேற்பார்வை — விலை குறைஞ்சாலும் லாபம் காக்கும்."]]]},
+{x:820,c:"#ea580c",h:["HOW IT EARNS","எப்படி சம்பாதிக்கிறது"],it:[
+ [["Multi-year contracts","பல வருஷ ஒப்பந்தங்கள்"],["$9.6 Bn of contracts signed this quarter — revenue visibility over 3–7 years.","இந்த காலாண்டு $9.6 பில்லியன் ஒப்பந்தம் — 3-7 வருஷ வருவாய் தெளிவு."]],
+ [["Effort or fixed price","நேர அடிப்படை / நிலை விலை"],["Billing by effort or by milestone; pricing pressure as AI raises productivity.","உழைப்பு நேரம் அல்லது கட்ட அடிப்படையில் பில்; ஏஐ உற்பத்தித்திறன் கூட்டுவதால விலை அழுத்தம்."]],
+ [["Managed services","நிர்வகிக்கப்பட்ட சேவைகள்"],["Recurring run-the-business revenue — sticky, the majority of revenue.","தொடர் வருவாய் — நிலையானது, பெரும்பகுதி வருவாய்."]],
+ [["Outcome-based AI","பலன் அடிப்படை ஏஐ"],["Paid on business outcomes; new transformation-partnership model (Porsche, Best Buy).","வணிக பலனுக்கு ஏற்ப கட்டணம்; புது கூட்டு மாதிரி (போர்ஷே, பெஸ்ட் பை)."]],
+ [["24% operating → 19% net","24% செயல்பாடு → 19% நிகரம்"],["₹17,553 Cr operating profit and ₹13,884 Cr net profit this quarter.","இந்த காலாண்டு செயல்பாட்டு லாபம் ₹17,553 கோடி, நிகர லாபம் ₹13,884 கோடி."]],
+ [["Cash → dividends","பணம் → ஈவுத்தொகை"],["Operating cash flow 102% of profit; ₹12 interim dividend; debt-free.","லாபத்துல 102% பணம்; ₹12 ஈவுத்தொகை; கடன் இல்லை."]]]}];
+function bm(){var s='<defs><marker id="ah" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto"><path d="M0,0 L9,3 L0,6 z" fill="#94a3b8"/></marker></defs>';BM.forEach(function(col,ci){s+='<text x="'+(col.x+85)+'" y="24" text-anchor="middle" font-size="14" font-weight="700" fill="'+col.c+'">'+T(col.h[0],col.h[1])+'</text>';col.it.forEach(function(it,ri){var y=40+ri*70;s+='<g class="bm-node" data-c="'+ci+'" data-r="'+ri+'"><rect x="'+col.x+'" y="'+y+'" width="170" height="54" rx="10" fill="'+col.c+'15" stroke="'+col.c+'" stroke-width="1.6"/><text x="'+(col.x+85)+'" y="'+(y+32)+'" text-anchor="middle" font-size="'+(L==="ta"?11.5:13)+'" fill="#1b2430">'+T(it[0][0].replace("&","&amp;"),it[0][1])+'</text></g>';if(ci<3)s+='<line x1="'+(col.x+170)+'" y1="'+(y+27)+'" x2="'+(BM[ci+1].x-2)+'" y2="'+(y+27)+'" stroke="#cbd5e1" stroke-width="1.4" marker-end="url(#ah)"/>';});});var sv=document.getElementById("bmSvg");sv.innerHTML=s;[].forEach.call(sv.querySelectorAll(".bm-node"),function(n){n.onclick=function(){var it=BM[n.dataset.c].it[n.dataset.r];document.getElementById("bmInfo").innerHTML="<b>"+T(it[0][0],it[0][1])+"</b><br>"+T(it[1][0],it[1][1]);};});document.getElementById("bmInfo").innerHTML=T("<b>Tap a box above.</b> TCS takes long-term technology work from large global companies, does most of it from India at lower cost, and earns a steady services margin of about 24% with almost no debt.","<b>மேலே உள்ள பெட்டியைத் தொடுங்க.</b> உலகின் பெரிய கம்பெனிகளோட நீண்டகால தொழில்நுட்ப வேலைய டிசிஎஸ் எடுத்து, பெரும்பகுதிய இந்தியாவுல குறைஞ்ச செலவுல செஞ்சு, சுமார் 24% லாப விகிதம் சம்பாதிக்குது. கடன் கிட்டத்தட்ட இல்ல.");}
+// financial
+function finTable(){var t=document.getElementById("finTbl"),h="";if(cur==="inr"){var I=CO.inr;h="<tr><th class='l'>"+T("₹ Crore","₹ கோடி")+"</th>"+P(CO.periods).map(function(p){return"<th>"+p+"</th>"}).join("")+"<th>"+T("QoQ","காலாண்டு மாற்றம்")+"</th><th>"+T("YoY","ஆண்டு மாற்றம்")+"</th></tr>";[[["Revenue","வருவாய்"],I.rev],[["EBITDA (latest†)","இபிஐடிடிஏ (சமீபம்†)"],I.ebit.map(function(v,i){return v+I.da[i]})],[["EBIT (operating profit)","செயல்பாட்டு லாபம்"],I.ebit],[["Net profit (adjusted)","நிகர லாபம் (சரிசெய்தது)"],I.patAdj],[["Net profit (reported)","நிகர லாபம் (அறிவித்தது)"],I.patRep],[["Operating cash flow","செயல்பாட்டு பணப்புழக்கம்"],I.ocf]].forEach(function(r){var v=r[1];h+="<tr><td class='l'>"+T(r[0][0],r[0][1])+"</td>"+v.map(function(x){return"<td>"+f(x)+"</td>"}).join("")+"<td>"+(v[2]&&v[3]?pct(v[3],v[2]):NA())+"</td><td>"+(v[0]&&v[3]?pct(v[3],v[0]):NA())+"</td></tr>";});var m=function(a,b){return a.map(function(v,i){return(v/b[i]*100).toFixed(1)+"%"})};h+="<tr><td class='l'>"+T("EBIT margin","செயல்பாட்டு லாப விகிதம்")+"</td>"+m(I.ebit,I.rev).map(function(v){return"<td>"+v+"</td>"}).join("")+"<td></td><td></td></tr><tr><td class='l'>"+T("Net margin (adjusted)","நிகர லாப விகிதம்")+"</td>"+m(I.patAdj,I.rev).map(function(v){return"<td>"+v+"</td>"}).join("")+"<td></td><td></td></tr>";}else{var U=CO.usd;h="<tr><th class='l'>"+T("US$ Million","டாலர் மில்லியன்")+"</th>"+P(U.periods).map(function(p){return"<th>"+p+"</th>"}).join("")+"<th>"+T("QoQ","காலாண்டு மாற்றம்")+"</th><th>"+T("YoY","ஆண்டு மாற்றம்")+"</th></tr>";[[["Revenue","வருவாய்"],U.rev],[["Cost of revenue","வருவாய் செலவு"],U.cor],[["Gross margin","மொத்த லாபம்"],U.gm],[["Selling, general & admin","விற்பனை-நிர்வாக செலவு"],U.sga],[["Operating income","செயல்பாட்டு லாபம்"],U.ebit],[["Other income","பிற வருமானம்"],U.oi],[["Profit before tax","வரிக்கு முந்தைய லாபம்"],U.pbt],[["Income tax","வருமான வரி"],U.tax],[["Net income","நிகர லாபம்"],U.ni]].forEach(function(r){h+="<tr><td class='l'>"+T(r[0][0],r[0][1])+"</td>"+r[1].map(function(v){return"<td>"+f(v)+"</td>"}).join("")+"<td>"+pct(r[1][2],r[1][1])+"</td><td>"+pct(r[1][2],r[1][0])+"</td></tr>";});h+="<tr><td class='l'>"+T("Gross margin %","மொத்த லாப விகிதம்")+"</td>"+U.gm.map(function(v,i){return"<td>"+(v/U.rev[i]*100).toFixed(1)+"%</td>"}).join("")+"<td></td><td></td></tr><tr><td class='l'>"+T("Operating margin %","செயல்பாட்டு லாப விகிதம்")+"</td>"+U.ebit.map(function(v,i){return"<td>"+(v/U.rev[i]*100).toFixed(1)+"%</td>"}).join("")+"<td></td><td></td></tr><tr><td class='l'>"+T("Earnings per share (US$)","பங்கு வருவாய் (டாலர்)")+"</td><td>0.40</td><td>0.40</td><td>0.40</td><td></td><td></td></tr>";}t.innerHTML=h;}
+[].forEach.call(document.querySelectorAll("[data-cur]"),function(b){b.onclick=function(){[].forEach.call(document.querySelectorAll("[data-cur]"),function(x){x.classList.remove("on")});b.classList.add("on");cur=b.dataset.cur;finTable();drawFin();};});
+function drawFin(){var tk={ticks:{callback:function(v){return v.toLocaleString("en-IN")}}};if(cur==="inr"){var I=CO.inr;mk("cFin",{type:"bar",data:{labels:P(CO.periods),datasets:[{label:T("Revenue ₹ Cr","வருவாய் ₹ கோடி"),data:I.rev,backgroundColor:"#93c5fd"},{label:T("EBITDA ₹ Cr","இபிஐடிடிஏ ₹ கோடி"),data:I.ebit.map(function(v,i){return v+I.da[i]}),backgroundColor:"#5eead4"},{label:T("EBIT ₹ Cr","செயல்பாட்டு லாபம் ₹ கோடி"),data:I.ebit,backgroundColor:"#0f766e"},{label:T("Net profit (adj.) ₹ Cr","நிகர லாபம் ₹ கோடி"),data:I.patAdj,backgroundColor:"#fdba74"}]},options:{plugins:{valLab:{on:true}},scales:{y:tk}}});}else{var U=CO.usd;mk("cFin",{type:"bar",data:{labels:P(U.periods),datasets:[{label:T("Revenue $ Mn","வருவாய் $ மில்லியன்"),data:U.rev,backgroundColor:"#93c5fd"},{label:T("Gross margin $ Mn","மொத்த லாபம் $ மில்லியன்"),data:U.gm,backgroundColor:"#c4b5fd"},{label:T("Operating income $ Mn","செயல்பாட்டு லாபம் $ மில்லியன்"),data:U.ebit,backgroundColor:"#0f766e"},{label:T("Net income $ Mn","நிகர லாபம் $ மில்லியன்"),data:U.ni,backgroundColor:"#fdba74"}]},options:{plugins:{valLab:{on:true}},scales:{y:tk}}});}}
+function sbar(l,n){return'<div class="score"><div class="lb">'+l+'</div><div class="bar"><span style="width:'+n+'%"></span></div><div class="n">'+n+'</div></div>';}
+function renderStatic(){["deal","mv","pol","fut","tl","fw","mg"].forEach(function(k){rT(k+"Tbl",TB[k])});bm();
+ // balance sheet & WC
+ var b=[[["Accounts receivable","வரவேண்டிய தொகை"],6102,6124,"+0.4%",""],[["Unbilled revenue","பில் போடாத வருவாய்"],1918,2048,"+6.8%","dn"],[["Invested funds","முதலீட்டு நிதி"],5287,5980,"+13.1%","up"],[["Current liabilities","நடப்பு கடப்பாடுகள்"],6439,6036,"−6.3%",""],[["Shareholders' funds","பங்குதாரர் நிதி"],11559,12628,"+9.2%",""]];
+ document.getElementById("bsTbl").innerHTML="<tr><th class='l'>"+T("Item","உருப்படி")+"</th><th>"+T("31 Mar 2026","31-03-2026")+"</th><th>"+T("30 Sep 2026","30-09-2026")+"</th><th>"+T("Change","மாற்றம்")+"</th></tr>"+b.map(function(r){return"<tr><td class='l'>"+T(r[0][0],r[0][1])+"</td><td>"+f(r[1])+"</td><td>"+f(r[2])+"</td><td class='"+r[4]+"'>"+r[3]+"</td></tr>"}).join("");
+ var w=[[["Inventory days","சரக்கு நாட்கள்"],"0",["Services business — no inventory","சேவை வணிகம் — சரக்கு இல்லை"]],[["Receivable days (billed)","வசூல் நாட்கள் (பில் போட்டது)"],"≈ 73",["Receivables $6,124 Mn ÷ (quarter revenue $7,642 Mn × 4) × 365","வரவேண்டியது $6,124 மில்லியன் ÷ (காலாண்டு வருவாய் × 4) × 365"]],[["Receivable days incl. unbilled","வசூல் நாட்கள் (பில் போடாததும் சேர்த்து)"],"≈ 98",["Receivables plus unbilled ($8,172 Mn) on the same basis","வரவேண்டியது + பில் போடாதது ($8,172 மில்லியன்)"]],[["Payable days","செலுத்த வேண்டிய நாட்கள்"],NA(),["Trade payables not disclosed in the press release","செய்திக்குறிப்பில் வெளியிடப்படவில்லை"]],[["Cash conversion cycle","பணச் சுழற்சி நாட்கள்"],"≈ 73–98",["Inventory 0 + receivable days − payable days (not available); essentially equals receivable days","சரக்கு 0 + வசூல் நாட்கள் − செலுத்த நாட்கள் (இல்லை); கிட்டத்தட்ட வசூல் நாட்களுக்கு சமம்"]],[["Operating cash flow ÷ net profit","பணப்புழக்கம் ÷ நிகர லாபம்"],"102.2%",["₹14,190 Cr ($1.48 Bn) against ₹13,884 Cr profit","₹14,190 கோடி ($1.48 பில்லியன்) — லாபம் ₹13,884 கோடி"]],[["Return on equity (annualised)","பங்கு மூலதன வருமானம் (ஆண்டு)"],"≈ 48%",["$1,450 Mn × 4 ÷ average equity $12,094 Mn","$1,450 மில்லியன் × 4 ÷ சராசரி பங்கு மூலதனம் $12,094 மில்லியன்"]]];
+ document.getElementById("wcTbl").innerHTML="<tr><th class='l'>"+T("Working-capital measure (Sep 2026 quarter)","நடைமுறை மூலதன அளவீடு (செப் 2026)")+"</th><th>"+T("Value","மதிப்பு")+"</th><th class='l'>"+T("How computed / comment","கணக்கீடு / குறிப்பு")+"</th></tr>"+w.map(function(r){return"<tr><td class='l'>"+T(r[0][0],r[0][1])+"</td><td>"+r[1]+"</td><td class='l'>"+T(r[2][0],r[2][1])+"</td></tr>"}).join("");
+}
+function draw(id){if(drawn[id])return;drawn[id]=1;
+if(id==="t-fin"){finTable();drawFin();var I=CO.inr;mk("cMar",{type:"line",data:{labels:P(CO.periods),datasets:[{label:T("EBITDA %","இபிஐடிடிஏ %"),data:I.ebit.map(function(v,i){return+((v+I.da[i])/I.rev[i]*100).toFixed(1)}),borderColor:"#14b8a6"},{label:T("EBIT %","செயல்பாட்டு லாபம் %"),data:I.ebit.map(function(v,i){return+(v/I.rev[i]*100).toFixed(1)}),borderColor:"#0f766e"},{label:T("Net % (adj.)","நிகர லாபம் %"),data:I.patAdj.map(function(v,i){return+(v/I.rev[i]*100).toFixed(1)}),borderColor:"#ea580c"}]},options:{scales:{y:{min:15,max:30}}}});var fx=[65799/7466,72275/7624,73188/7642].map(function(v){return+(v*10).toFixed(2)});mk("cFx",{type:"bar",data:{labels:P(CO.usd.periods),datasets:[{label:T("₹ per US$","ஒரு டாலருக்கு ₹"),data:fx,backgroundColor:["#cbd5e1","#94a3b8","#475569"]}]},options:{plugins:{valLab:{on:true,dec:2}},scales:{y:{min:80}}}});}
+if(id==="t-seg"){var G=CO.geo,V=CO.ver,pal=["#1d4ed8","#60a5fa","#0f766e","#14b8a6","#7c3aed","#ea580c","#f59e0b","#94a3b8"],nm=function(r){return T(r[0][0],r[0][1])};
+mk("cGeo",{type:"doughnut",data:{labels:G.map(nm),datasets:[{data:G.map(function(g){return g[3]}),backgroundColor:pal}]},options:{plugins:{legend:{position:"right"},tooltip:{callbacks:{label:function(c){return c.label+": "+c.raw+"%"}}}}}});
+mk("cGeoG",{type:"bar",data:{labels:G.map(nm),datasets:[{label:T("QoQ %","காலாண்டு %"),data:G.map(function(g){return g[4]}),backgroundColor:"#3b82f6"},{label:T("YoY %","ஆண்டு %"),data:G.map(function(g){return g[5]}),backgroundColor:"#fb923c"}]},options:{plugins:{valLab:{on:true,dec:1}}}});
+mk("cVer",{type:"bar",data:{labels:V.map(nm),datasets:[{label:T("Share %","பங்கு %"),data:V.map(function(v){return v[3]}),backgroundColor:pal}]},options:{indexAxis:"y",plugins:{legend:{display:false},valLab:{on:true,dec:1,suf:"%"}}}});
+mk("cVerG",{type:"bar",data:{labels:V.map(nm),datasets:[{label:T("QoQ %","காலாண்டு %"),data:V.map(function(v){return v[4]}),backgroundColor:"#0f766e"},{label:T("YoY %","ஆண்டு %"),data:V.map(function(v){return v[5]}),backgroundColor:"#fdba74"}]},options:{plugins:{valLab:{on:true,dec:1}}}});
+var tb=function(arr,lab){var h="<tr><th class='l'>"+lab+"</th>"+P(CO.usd.periods).map(function(p){return"<th>"+p+" %</th>"}).join("")+"<th>"+T("QoQ %","காலாண்டு %")+"</th><th>"+T("YoY %","ஆண்டு %")+"</th><th>"+T("≈ ₹ Cr","≈ ₹ கோடி")+"</th><th>"+T("≈ $ Mn","≈ $ மில்லியன்")+"</th></tr>";arr.forEach(function(r){h+="<tr><td class='l'>"+nm(r)+"</td><td>"+r[1]+"</td><td>"+r[2]+"</td><td>"+r[3]+"</td><td class='"+(r[4]<0?"dn":"up")+"'>"+r[4]+"</td><td class='"+(r[5]<0?"dn":"up")+"'>"+r[5]+"</td><td>"+f(73188*r[3]/100)+"</td><td>"+f(7642*r[3]/100)+"</td></tr>"});return h+"<tr><th class='l'>"+T("Total","மொத்தம்")+"</th><th>100</th><th>100</th><th>100</th><th>0.5</th><th>2.8</th><th>73,188</th><th>7,642</th></tr>";};
+document.getElementById("geoTbl").innerHTML=tb(G,T("Geography","நாடு"));document.getElementById("verTbl").innerHTML=tb(V,T("Industry","துறை"));}
+if(id==="t-ob"){mk("cTcv",{type:"bar",data:{labels:P(CO.tcv.p),datasets:[{label:T("Order book $ Bn","ஆர்டர் புக் $ பில்லியன்"),data:CO.tcv.v,backgroundColor:["#cbd5e1","#cbd5e1","#94a3b8","#3b82f6","#1d4ed8"]}]},options:{plugins:{legend:{display:false},valLab:{on:true,dec:1}},scales:{y:{beginAtZero:true}}}});mk("cAi",{type:"bar",data:{labels:P(CO.ai.p),datasets:[{label:T("AI revenue $ Bn","ஏஐ வருவாய் $ பில்லியன்"),data:CO.ai.v,backgroundColor:["#ddd6fe","#a78bfa","#7c3aed"]}]},options:{plugins:{legend:{display:false},valLab:{on:true,dec:2}},scales:{y:{beginAtZero:true}}}});}
+if(id==="t-cf"){mk("cCf",{type:"bar",data:{labels:P(CO.usd.periods),datasets:[{label:T("Operating cash flow ₹ Cr","பணப்புழக்கம் ₹ கோடி"),data:[13293,12412,14190],backgroundColor:"#0f766e",yAxisID:"y"},{type:"line",label:T("As % of net profit","லாபத்தில் %"),data:[110.1,93.0,102.2],borderColor:"#ea580c",yAxisID:"y1"}]},options:{plugins:{valLab:{on:true}},scales:{y:{beginAtZero:true},y1:{position:"right",min:80,max:120,grid:{display:false}}}}});}
+if(id==="t-tc"){trig();clock();document.getElementById("scoreBox").innerHTML=sbar(T("Sector cycle","துறை சுழற்சி"),60)+sbar(T("Stock cycle","பங்கு சுழற்சி"),56)+sbar(T("Cycle score","சுழற்சி மதிப்பெண்"),58)+sbar(T("Trigger score","தூண்டுதல் மதிப்பெண்"),57)+sbar(T("Conviction (capped)","நம்பிக்கை (வரம்பு)"),55);}
+if(id==="t-an")analysts();
+if(id==="t-swot")cbf();
+if(id==="t-soc")soc();
+}
+function trig(){var h="<tr><th class='l'>"+T("Trigger","தூண்டுதல்")+"</th><th>+/−</th><th>"+T("Impact","தாக்கம்")+"</th><th>"+T("Certainty","உறுதி")+"</th><th>"+T("Timing","காலம்")+"</th><th>"+T("Priced in","விலையில்")+"</th><th>"+T("Points","புள்ளி")+"</th><th class='l'>"+T("What to watch","கவனிக்க வேண்டியது")+"</th><th class='l'>"+T("Status","நிலை")+"</th></tr>",pos=[],neg=0;CO.triggers.forEach(function(t){var p=t.I*t.C*t.W*t.P;if(t.s==="+")pos.push(p);else neg+=p;h+="<tr><td class='l'>"+T(t.n[0],t.n[1])+"</td><td class='"+(t.s==="+"?"up":"dn")+"'>"+t.s+"</td><td>"+t.I+"</td><td>"+t.C+"</td><td>"+t.W+"</td><td>"+t.P+"</td><td><b>"+p.toFixed(2)+"</b></td><td class='l'>"+T(t.w[0],t.w[1])+"</td><td class='l'>"+T(t.st[0],t.st[1])+"</td></tr>"});pos.sort(function(a,b){return b-a});var sp=pos.slice(0,3).reduce(function(a,b){return a+b},0),tg=Math.max(0,Math.min(100,50+8*sp-8*neg));h+="<tr><th class='l' colspan='6'>"+T("Trigger score = 50 + 8 × "+sp.toFixed(2)+" (top 3 positive) − 8 × "+neg.toFixed(2)+" (negatives)","தூண்டுதல் மதிப்பெண் = 50 + 8 × "+sp.toFixed(2)+" (முதல் 3 நேர்மறை) − 8 × "+neg.toFixed(2)+" (எதிர்மறை)")+"</th><th>"+tg.toFixed(0)+"</th><th colspan='2'></th></tr>";document.getElementById("trgTbl").innerHTML=h;}
+function clock(){var s="",cx=160,cy=150,r=110,ph=[["P1 Trough","அடிமட்டம்"],["P2 Early recovery","ஆரம்ப மீட்சி"],["P3 Expansion","விரிவாக்கம்"],["P4 Peak","உச்சம்"],["P5 Downturn","சரிவு"]],cols=["#fde68a","#86efac","#93c5fd","#fdba74","#fca5a5"];for(var i=0;i<5;i++){var a0=(i*72-90)*Math.PI/180,a1=((i+1)*72-90)*Math.PI/180;s+='<path d="M'+cx+','+cy+' L'+(cx+r*Math.cos(a0))+','+(cy+r*Math.sin(a0))+' A'+r+','+r+' 0 0,1 '+(cx+r*Math.cos(a1))+','+(cy+r*Math.sin(a1))+' z" fill="'+cols[i]+'" stroke="#fff" stroke-width="2"/>';var am=((i+.5)*72-90)*Math.PI/180;s+='<text x="'+(cx+r*.62*Math.cos(am))+'" y="'+(cy+r*.62*Math.sin(am))+'" text-anchor="middle" font-size="11" fill="#1b2430">'+T(ph[i][0],ph[i][1])+'</text>';}var ap=(18-90)*Math.PI/180;s+='<line x1="'+cx+'" y1="'+cy+'" x2="'+(cx+(r-12)*Math.cos(ap))+'" y2="'+(cy+(r-12)*Math.sin(ap))+'" stroke="#1b2430" stroke-width="4" stroke-linecap="round"/><circle cx="'+cx+'" cy="'+cy+'" r="7" fill="#1b2430"/>';var sa=(330-90)*Math.PI/180,sx=cx+(r+10)*Math.cos(sa),sy=cy+(r+10)*Math.sin(sa);s+='<circle cx="'+sx+'" cy="'+sy+'" r="8" fill="#dc2626"/><text x="'+sx+'" y="'+(sy-12)+'" text-anchor="middle" font-size="11" fill="#dc2626">'+T("Stock: Stage 4","பங்கு: நிலை-4")+'</text><text x="160" y="292" text-anchor="middle" font-size="12" fill="#5d6b7c">'+T("IT services — sector phase P1 (score 60)","ஐடி சேவைகள் — துறை நிலை-1 (மதிப்பெண் 60)")+'</text>';document.getElementById("clock").innerHTML=s;}
+function cbf(){var c=CO.cbf;document.getElementById("cbfBox").innerHTML=sbar(T("Growth","வளர்ச்சி"),c.g)+sbar(T("Margin quality","லாப தரம்"),c.m)+sbar(T("Debt / balance sheet","கடன் / இருப்புநிலை"),c.d)+sbar(T("Valuation comfort","மதிப்பீட்டு வசதி"),c.v)+sbar(T("Technical trend","விலைப் போக்கு"),c.t)+sbar(T("Risk (higher = safer)","ஆபத்து (அதிகம் = பாதுகாப்பு)"),c.r)+'<p class="note">'+T("Composite about "+Math.round((c.g+c.m+c.d+c.v+c.t+c.r)/6)+" out of 100. Educational scoring, not a recommendation.","மொத்த மதிப்பெண் சுமார் "+Math.round((c.g+c.m+c.d+c.v+c.t+c.r)/6)+" / 100. கல்வி நோக்க மதிப்பெண், பரிந்துரை அல்ல.")+'</p>';}
+function analysts(){var A=CO.analysts.slice().sort(function(a,b){return b[2]-a[2]}),t=A.map(function(a){return a[2]}),s=t.slice().sort(function(a,b){return a-b}),med=(s[12]+s[13])/2,avg=t.reduce(function(a,b){return a+b},0)/t.length,R=CO.rating;var cnt=function(c){return A.filter(function(a){return R[a[1]][2]===c}).length};
+document.getElementById("anKpi").innerHTML='<div class="card kpi"><div class="l">'+T("Highest target","அதிக இலக்கு")+'</div><div class="v">₹'+f(s[s.length-1])+'</div><div class="d">'+T("Centrum","சென்ட்ரம்")+'</div></div><div class="card kpi"><div class="l">'+T("Lowest target","குறைந்த இலக்கு")+'</div><div class="v">₹'+f(s[0])+'</div><div class="d">'+T("Nirmal Bang","நிர்மல் பங்")+'</div></div><div class="card kpi"><div class="l">'+T("Median / average","நடு / சராசரி")+'</div><div class="v">₹'+f(med)+'</div><div class="d">'+T("Average","சராசரி")+' ₹'+f(avg)+' · '+((med/CO.cmp-1)*100).toFixed(1)+'%</div></div><div class="card kpi"><div class="l">'+T("Stated ratings","அறிவித்த மதிப்பீடுகள்")+'</div><div class="v">'+cnt("pb")+' / '+cnt("ph")+' / '+cnt("ps")+'</div><div class="d">'+T("Positive / Neutral / Negative","நேர்மறை / நடுநிலை / எதிர்மறை")+'</div></div>';
+mk("cAn",{type:"bar",data:{labels:A.map(function(a){return T(a[0][0],a[0][1])}),datasets:[{label:T("Target price ₹","இலக்கு விலை ₹"),data:t,backgroundColor:A.map(function(a){var c=R[a[1]][2];return c==="pb"?"#22c55e":c==="ps"?"#ef4444":c==="ph"?"#f59e0b":"#94a3b8"})},{type:"line",label:T("Current price ₹2,175","தற்போதைய விலை ₹2,175"),data:A.map(function(){return CO.cmp}),borderColor:"#1d4ed8",borderDash:[6,4],pointRadius:0}]},options:{indexAxis:"y",plugins:{valLab:{on:true}},scales:{x:{min:1400}}}});
+var h="<tr><th class='l'>"+T("Brokerage","தரகு நிறுவனம்")+"</th><th class='l'>"+T("Rating","மதிப்பீடு")+"</th><th>"+T("Target ₹","இலக்கு ₹")+"</th><th>"+T("vs ₹2,175","₹2,175-உடன் ஒப்பிட")+"</th></tr>";A.forEach(function(a){var u=(a[2]/CO.cmp-1)*100,r=R[a[1]];h+="<tr><td class='l'>"+T(a[0][0],a[0][1])+"</td><td class='l'><span class='pill "+r[2]+"'>"+T(r[0],r[1])+"</span></td><td>"+f(a[2])+"</td><td class='"+(u<0?"dn":"up")+"'>"+u.toFixed(1)+"%</td></tr>"});document.getElementById("anTbl").innerHTML=h;}
+var Q=[[["TCS's rupee revenue grew 11.2% YoY but constant-currency growth was only 2.8%. What explains the gap?","டிசிஎஸ் ரூபாய் வருவாய் 11.2% கூடியது, ஆனா நிலையான நாணய வளர்ச்சி 2.8% தான். ஏன் இந்த வித்தியாசம்?"],[["Price hikes to clients","வாடிக்கையாளர் விலை உயர்வு"],["The rupee weakened against the dollar","டாலருக்கு எதிரா ரூபாய் மதிப்பு குறைஞ்சது"],["More employees","அதிக ஊழியர்கள்"],["Acquisitions","கையகப்படுத்தல்"]],1,["Each dollar now converts into more rupees (about ₹95.8 against ₹88.1).","ஒவ்வொரு டாலரும் இப்போ அதிக ரூபாயா மாறுது (₹95.8; முன்பு ₹88.1)."]],
+[["What exactly did the US suspend on 08 Oct 2026 for TCS?","08-10-2026 அன்று டிசிஎஸ்-க்கு அமெரிக்கா எதை நிறுத்தியது?"],[["All H-1B visas","எல்லா எச்-1பி விசாக்களும்"],["L-1 transfers","எல்-1 இடமாற்றங்கள்"],["New and pending PERM certifications (green-card step)","புது, நிலுவை பெர்ம் சான்றிதழ்கள் (கிரீன் கார்டு படி)"],["Business visitor visas","வணிக பயண விசா"]],2,["H-1B was not suspended — PERM, the first step to a green card, was.","எச்-1பி நிறுத்தப்படல — கிரீன் கார்டு முதல் படியான பெர்ம் தான் நிறுத்தப்பட்டது."]],
+[["Which geography fell 10.3% QoQ in constant currency?","எந்த நாடு காலாண்டுக்கு 10.3% குறைஞ்சது?"],[["UK","பிரிட்டன்"],["North America","வட அமெரிக்கா"],["India","இந்தியா"],["Latin America","லத்தீன் அமெரிக்கா"]],2,["A large project deferral in India.","இந்தியாவுல ஒரு பெரிய ப்ராஜெக்ட் தள்ளிப்போனது."]],
+[["Operating cash flow was 102.2% of net profit. What does that tell you?","பணப்புழக்கம் நிகர லாபத்துல 102.2%. இது என்ன சொல்லுது?"],[["Profit is mostly on paper, not cash","லாபம் காகிதத்துல மட்டும்"],["Almost every rupee of profit came in as cash","கிட்டத்தட்ட எல்லா லாபமும் பணமா வந்திருக்கு"],["The company borrowed money","கம்பெனி கடன் வாங்கியது"],["Inventory fell","சரக்கு குறைஞ்சது"]],1,["High cash conversion — typical of an asset-light services firm.","அதிக பணமாக்கல் — சொத்து குறைவான சேவை நிறுவனத்துக்கு இயல்பானது."]],
+[["In the CB cycle lens, which phase is IT services in?","சிபி சுழற்சி பார்வையில ஐடி சேவைகள் எந்த நிலையில?"],[["Early recovery","ஆரம்ப மீட்சி"],["Expansion","விரிவாக்கம்"],["Trough / bottoming","அடிமட்டம்"],["Peak","உச்சம்"]],2,["Low growth, low valuation, stable margins — bottoming, not yet recovering.","குறைஞ்ச வளர்ச்சி, குறைஞ்ச மதிப்பீடு, நிலையான லாபம் — அடிமட்டம், இன்னும் மீட்சி இல்ல."]]];
+function soc(){var b=document.getElementById("socBox");b.innerHTML="";Q.forEach(function(q,qi){var d=document.createElement("div");d.className="mcq";d.innerHTML="<b>"+(qi+1)+". "+T(q[0][0],q[0][1])+"</b>";q[1].forEach(function(o,oi){var x=document.createElement("button");x.textContent=T(o[0],o[1]);x.onclick=function(){[].forEach.call(d.querySelectorAll("button"),function(y){y.disabled=true});x.className=oi===q[2]?"ok":"no";if(oi!==q[2])d.querySelectorAll("button")[q[2]].className="ok";var e=document.createElement("div");e.className="note";e.textContent="💡 "+T(q[3][0],q[3][1]);d.appendChild(e);};d.appendChild(x);});b.appendChild(d);});}
+// badge
+var disc=document.getElementById("disc");document.getElementById("cbBadge").onclick=function(){disc.style.display=disc.style.display==="block"?"none":"block";document.getElementById("asBox").style.display="none";};
+// voice assistant
+var KB=[
+{k:["constant currency","real growth","நிலையான நாணய","உண்மையான வளர்ச்சி"],en:"Constant currency revenue grew 0.5% quarter on quarter and 2.8% year on year. International markets grew 1.2% quarter on quarter.",ta:"நிலையான நாணய அடிப்படையில வருவாய் காலாண்டுக்கு 0.5%, ஆண்டுக்கு 2.8% வளர்ந்திருக்கு. சர்வதேச சந்தைகள் 1.2% வளர்ச்சி."},
+{k:["revenue","sales","top line","வருவாய்","வருமானம்","விற்பனை"],en:"Revenue was 73,188 crore rupees, up 1.3% quarter on quarter and 11.2% year on year. In dollars it was 7,642 million, up 2.4% year on year.",ta:"வருவாய் 73,188 கோடி ரூபாய் — ஆண்டுக்கு 11.2% அதிகம். டாலர்ல 7,642 மில்லியன், ஆண்டுக்கு 2.4% அதிகம்."},
+{k:["profit","net income","லாபம்"],en:"Net profit was 13,884 crore rupees, about 4% higher than last quarter and about 15% higher than the reported figure a year ago. Net margin was 19%.",ta:"நிகர லாபம் 13,884 கோடி ரூபாய். போன காலாண்டை விட சுமார் 4%, போன வருஷத்த விட சுமார் 15% அதிகம். நிகர லாப விகிதம் 19%."},
+{k:["margin","ebit","operating","ebitda","லாப விகிதம்","செயல்பாட்டு"],en:"Operating margin was 24.0%, flat versus last quarter. Operating profit was 17,553 crore rupees. Management targets an exit margin above 25% for the year.",ta:"செயல்பாட்டு லாப விகிதம் 24%, மாற்றமில்லை. செயல்பாட்டு லாபம் 17,553 கோடி ரூபாய். வருட இறுதியில 25%-க்கு மேல கொண்டு வர இலக்கு."},
+{k:["perm","green card","h1b","h-1b","h 1b","visa","vance","பெர்ம்","கிரீன்","விசா","எச்1பி","எச்-1பி"],en:"On 8 October the US Labor Department suspended new and pending PERM green card applications for eight firms including TCS. The H-1B visa itself was not suspended. TCS says its PERM filings were in single digits over two years, so it expects no impact on its workforce or clients, and it plans to hire 15,000 people in the US over five years.",ta:"அக்டோபர் 8 அன்று அமெரிக்க தொழிலாளர் துறை டிசிஎஸ் உட்பட 8 கம்பெனிகளோட பெர்ம் கிரீன் கார்டு விண்ணப்பங்கள நிறுத்தி வச்சிருக்கு. எச்-1பி விசா நிறுத்தப்படல. டிசிஎஸ் விண்ணப்பங்கள் 2 வருஷத்துல ஒத்தை இலக்கம்தான், அதனால பாதிப்பு இல்லன்னு சொல்றாங்க. அமெரிக்காவுல 5 வருஷத்துல 15,000 உள்ளூர் ஆட்கள எடுக்கப் போறாங்க."},
+{k:["future","industry","it sector","எதிர்காலம்","துறை எதிர்"],en:"For the IT industry, expect more work to move offshore to India and nearshore to places like Mexico and Canada, more local US hiring at higher cost, and more acquisitions of local consultancies. Long term, more top talent may stay in India and power global capability centres and AI start-ups.",ta:"ஐடி துறைக்கு: வேலைகள் இன்னும் அதிகமா இந்தியாவுக்கும் மெக்சிகோ, கனடா மாதிரி பக்கத்து நாடுகளுக்கும் நகரும். அமெரிக்காவுல உள்ளூர் ஆட்கள எடுக்கறதால செலவு கூடும். நீண்ட காலத்துல திறமையானவங்க இந்தியாவுலேயே தங்கி உலக நிறுவனங்களோட இந்திய மையங்களுக்கும் ஏஐ ஸ்டார்ட்அப்களுக்கும் பலம் சேர்ப்பாங்க."},
+{k:["attrition","employee","headcount","staff","ஊழியர்","விலகல்"],en:"Headcount was 5 lakh 98 thousand 56. Last twelve month attrition was stable at 13.3%.",ta:"ஊழியர் எண்ணிக்கை 5 லட்சத்து 98 ஆயிரத்து 56. கடந்த 12 மாத விலகல் 13.3%, நிலையானது."},
+{k:["order","tcv","deal","book","ஆர்டர்","டீல்","ஒப்பந்த"],en:"Total contract value was 9.6 billion dollars, slightly above 9.5 billion last quarter but about 4% lower than a year ago. The Porsche and Best Buy deals are not included.",ta:"மொத்த ஒப்பந்த மதிப்பு 9.6 பில்லியன் டாலர் — போன காலாண்டை விட கொஞ்சம் அதிகம், போன வருஷத்த விட 4% குறைவு. போர்ஷே, பெஸ்ட் பை டீல்கள் இதுல சேர்க்கப்படல."},
+{k:[" ai","artificial","ஏஐ","செயற்கை நுண்ணறிவு"],en:"Annualised AI revenue reached 3.1 billion dollars, crossing 10% of total revenue, up from 2.6 billion last quarter.",ta:"ஏஐ வருவாய் ஆண்டு அடிப்படையில 3.1 பில்லியன் டாலர் — மொத்தத்துல 10%-க்கு மேல. போன காலாண்டு 2.6 பில்லியன்."},
+{k:["geography","region","america","europe","india","country","நாடு","அமெரிக்கா","இந்தியா","பிரிட்டன்"],en:"North America is 48.3% of revenue and grew 0.4% quarter on quarter. The UK grew 3.5%, Latin America 4.3%, Asia Pacific 2%, Continental Europe 0.4%. India fell 10.3% due to a project deferral.",ta:"வட அமெரிக்கா 48.3% — 0.4% வளர்ச்சி. பிரிட்டன் 3.5%, லத்தீன் அமெரிக்கா 4.3%, ஆசிய-பசிபிக் 2%, ஐரோப்பா 0.4%. ப்ராஜெக்ட் தள்ளிப்போனதால இந்தியா 10.3% குறைவு."},
+{k:["segment","vertical","banking","sector mix","பிரிவு","வங்கி"],en:"Banking, financial services and insurance is the largest segment at 32.8% and grew 2.5%. Manufacturing and Technology and Services grew 3.1% each. Consumer business fell 0.7%.",ta:"வங்கி-நிதி-காப்பீடு 32.8%, 2.5% வளர்ச்சி. உற்பத்தி, தொழில்நுட்ப சேவைகள் தலா 3.1%. நுகர்வோர் வணிகம் 0.7% குறைவு."},
+{k:["analyst","target","broker","buy","sell","ஆய்வாளர்","இலக்கு","தரகு"],en:"Brokers are split. Targets range from 1,578 rupees at Nirmal Bang to 3,266 at Centrum. Nuvama, Nomura and Motilal Oswal are positive, while Jefferies, Citi and Nirmal Bang are negative. CB Research does not give recommendations.",ta:"தரகு நிறுவனங்கள் கருத்து பிரிஞ்சிருக்கு. இலக்கு விலை நிர்மல் பங்-ல 1,578 முதல் சென்ட்ரம்-ல 3,266 வரை. நுவாமா, நோமுரா, மோதிலால் ஓஸ்வால் நேர்மறை; ஜெஃப்ரீஸ், சிட்டி, நிர்மல் பங் எதிர்மறை. சிபி ரிசர்ச் பரிந்துரை தராது."},
+{k:["cash","working capital","receivable","பணப்புழக்கம்","நடைமுறை மூலதனம்","வசூல்"],en:"Operating cash flow was 14,190 crore rupees, 102.2% of net profit. Billed receivable days are about 73, or about 98 including unbilled revenue. Unbilled revenue rose 6.8% in six months, which is worth watching.",ta:"செயல்பாட்டு பணப்புழக்கம் 14,190 கோடி — லாபத்துல 102.2%. வசூல் நாட்கள் சுமார் 73, பில் போடாததையும் சேர்த்தா 98. பில் போடாத தொகை ஆறு மாசத்துல 6.8% கூடியிருக்கு, கவனிக்கணும்."},
+{k:["valuation","price","share","பங்கு விலை","மதிப்பீடு"],en:"The share traded near 2,175 rupees on 9 October, up about 5%. It is down roughly 35% in 2026 and trades around 13 to 14 times earnings, well below its history.",ta:"அக்டோபர் 9 அன்று பங்கு விலை சுமார் 2,175 ரூபாய், சுமார் 5% உயர்வு. 2026-ல சுமார் 35% சரிவு. லாபத்தோட 13-14 மடங்குல வர்த்தகம் — பழைய அளவை விட ரொம்ப குறைவு."},
+{k:["dividend","ஈவுத்தொகை"],en:"The board declared a second interim dividend of 12 rupees per share. Record date is 14 October and payment date is 30 October 2026.",ta:"ஒரு பங்குக்கு 12 ரூபாய் இரண்டாம் இடைக்கால ஈவுத்தொகை. பதிவு தேதி அக்டோபர் 14, வழங்கும் தேதி அக்டோபர் 30."},
+{k:["cycle","trigger","conviction","சுழற்சி","தூண்டுதல்"],en:"In the CB cycle lens, IT services is in phase one, trough or bottoming, scoring 60. The stock's price trend is in stage four. Cycle score is 58, trigger score 57, and conviction is capped at 55.",ta:"சிபி சுழற்சி பார்வையில ஐடி சேவைகள் அடிமட்ட நிலையில (நிலை-1, மதிப்பெண் 60). பங்கு விலைப் போக்கு நிலை-4. சுழற்சி 58, தூண்டுதல் 57, நம்பிக்கை 55."},
+{k:["management","ceo","cfo","board","chairman","நிர்வாகம்","தலைவர்"],en:"The Chief Executive is K Krithivasan, the Chief Operating Officer is Aarthi Subramanian, the Chief Financial Officer is Samir Seksaria, and the Chairman is N Chandrasekaran. Tata Sons holds about 72%.",ta:"தலைமை செயல் அதிகாரி கே. கிருத்திவாசன், தலைமை செயல்பாட்டு அதிகாரி ஆர்த்தி சுப்பிரமணியன், நிதி அதிகாரி சமீர் சேக்சரியா, தலைவர் என். சந்திரசேகரன். டாடா சன்ஸ் சுமார் 72% பங்கு."},
+{k:["porsche","mhp","best buy","acquisition","போர்ஷே","பெஸ்ட் பை","கையகப்"],en:"TCS signed a five year partnership with Porsche and will acquire MHP, Porsche's German consulting arm, subject to approvals. It will also take over Best Buy's India centre and turn it into an AI centre.",ta:"போர்ஷே-உடன் 5 வருஷ கூட்டு; அதோட ஜெர்மன் ஆலோசனை நிறுவனம் எம்எச்பி-ஐ ஒப்புதலுக்கு பிறகு டிசிஎஸ் வாங்குது. பெஸ்ட் பை-ஓட இந்திய மையத்தையும் எடுத்து ஏஐ மையமா மாத்துது."},
+{k:["rupee","dollar","currency","exchange","ரூபாய்","டாலர்","நாணய"],en:"The implied exchange rate was about 95.8 rupees per dollar this quarter, against about 88.1 a year ago. That is why rupee growth looks much higher than dollar growth.",ta:"இந்த காலாண்டு ஒரு டாலருக்கு சுமார் 95.8 ரூபாய்; போன வருஷம் 88.1. அதனாலதான் ரூபாய் வளர்ச்சி டாலர் வளர்ச்சிய விட அதிகமா தெரியுது."},
+{k:["risk","weakness","concern","ஆபத்து","பலவீனம்"],en:"Key risks are slow North America growth, a soft order book, AI-driven price deflation in legacy work, wider US visa restrictions, and rising unbilled revenue.",ta:"முக்கிய ஆபத்துகள்: அமெரிக்க வளர்ச்சி மெதுவு, ஆர்டர் புக் பலவீனம், ஏஐ-னால பழைய வேலை விலை குறைவு, அமெரிக்க விசா கட்டுப்பாடு, பில் போடாத தொகை அதிகரிப்பு."}];
+var asBox=document.getElementById("asBox"),asLog=document.getElementById("asLog"),asIn=document.getElementById("asIn");
+function asReset(){asLog.innerHTML='<div class="a">'+T('Ask me anything about TCS Q2 FY27 — tap 🎤 and speak, or type. Try: "What was constant currency growth?", "Impact of PERM?", "What do analysts say?"','டிசிஎஸ் இந்த காலாண்டு முடிவு பத்தி எதுவும் கேளுங்க — 🎤 தொட்டு பேசுங்க, இல்லன்னா தட்டச்சு செய்யுங்க. உதாரணம்: "உண்மையான வளர்ச்சி எவ்வளவு?", "பெர்ம் பாதிப்பு என்ன?", "ஆய்வாளர்கள் என்ன சொல்றாங்க?"')+'</div>';asIn.placeholder=T("Type or tap the mic…","தட்டச்சு செய்யுங்க அல்லது மைக்கை தொடுங்க…");document.getElementById("micBtn").title=T("Speak","பேசுங்க");}
+document.getElementById("asBtn").onclick=function(){asBox.style.display=asBox.style.display==="flex"?"none":"flex";disc.style.display="none";};
+document.getElementById("asClose").onclick=function(){asBox.style.display="none";};
+function answer(q){var ql=" "+q.toLowerCase()+" ",best=null,bs=0;KB.forEach(function(e){var s=0;e.k.forEach(function(k){if(ql.indexOf(k)>-1)s+=k.length;});if(s>bs){bs=s;best=e;}});var a=best?best[L]:T("Sorry, I don't have that. Try asking about revenue, profit, margin, PERM, order book, AI, attrition, cash flow or analysts.","மன்னிக்கவும், அதுக்கு பதில் இல்ல. வருவாய், லாபம், லாப விகிதம், பெர்ம், ஆர்டர் புக், ஏஐ, ஊழியர் விலகல், பணப்புழக்கம், ஆய்வாளர்கள் பத்தி கேளுங்க.");var qd=document.createElement("div");qd.className="q";qd.textContent=q;var ad=document.createElement("div");ad.className="a";ad.textContent=a;asLog.appendChild(qd);asLog.appendChild(ad);asLog.scrollTop=asLog.scrollHeight;speak(a);}
+function speak(t){try{if(!window.speechSynthesis)return;speechSynthesis.cancel();var u=new SpeechSynthesisUtterance(t);u.lang=L==="ta"?"ta-IN":"en-IN";var vs=speechSynthesis.getVoices().filter(function(v){return v.lang.indexOf(L==="ta"?"ta":"en")===0});if(vs.length)u.voice=vs[0];speechSynthesis.speak(u);}catch(e){}}
+asIn.addEventListener("keydown",function(e){if(e.key==="Enter"&&asIn.value.trim()){answer(asIn.value.trim());asIn.value="";}});
+var SR=window.SpeechRecognition||window.webkitSpeechRecognition,rec=null,mic=document.getElementById("micBtn");
+mic.onclick=function(){if(!SR){var d=document.createElement("div");d.className="a";d.textContent=T("Voice input is not supported in this browser — please type. Chrome and Edge support the microphone.","இந்த உலாவியில குரல் உள்ளீடு இல்ல — தட்டச்சு செய்யுங்க. குரோம், எட்ஜ் உலாவிகள்ல மைக் வேலை செய்யும்.");asLog.appendChild(d);return;}if(rec){rec.stop();return;}rec=new SR();rec.lang=L==="ta"?"ta-IN":"en-IN";rec.interimResults=false;rec.onresult=function(e){answer(e.results[0][0].transcript);};rec.onend=function(){mic.classList.remove("rec");rec=null;};rec.onerror=function(){mic.classList.remove("rec");rec=null;};mic.classList.add("rec");rec.start();};
+setLang("en");
+</script>
+</body>
+</html>
