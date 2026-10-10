@@ -1,0 +1,1009 @@
+<title>NTPC & Power Grid Q1 FY27</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&family=Inter:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@500;600&family=Noto+Sans+Tamil:wght@400;600;700&display=swap">
+<style>
+/* Layout: sticky masthead + scrollable tab rail; one tab panel at a time; white ground, light-orange UI accent, entity colours for NTPC / Power Grid / NTPC Green */
+:root{
+  --bg:#ffffff; --ink:#121417; --ink2:#3a3f47; --mute:#5d6470; --line:#e6e1da; --soft:#fff6ee;
+  --acc:#F28C28; --acc2:#fde6cf; --accd:#b85f0b;
+  --ntpc:#1d5fa6; --pg:#7a3a96; --ngel:#1f8a4c;
+  --good:#1f7a3f; --warn:#b26a00; --bad:#b3261e;
+  --fd:"Playfair Display",Georgia,serif; --fb:"Inter","Noto Sans Tamil",system-ui,sans-serif; --fm:"IBM Plex Mono",ui-monospace,monospace;
+  color-scheme:light;
+}
+html,body{background:var(--bg);color:var(--ink)}
+body{font-family:var(--fb);font-size:15px;line-height:1.55;font-weight:500}
+html[data-lang=ta] body{font-family:"Noto Sans Tamil","Inter",system-ui,sans-serif}
+html[data-lang=en] .ta, html[data-lang=ta] .en{display:none!important}
+.wrap{max-width:1180px;margin:0 auto;padding-inline:16px;padding-block:0 120px}
+header.mast{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:var(--bg);border-bottom:2px solid var(--acc)}
+.mrow{max-width:1180px;margin:0 auto;padding:10px 16px 6px;display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+.brand{font-family:var(--fd);font-weight:800;font-size:22px;letter-spacing:.2px;flex:1 1 280px;min-width:0}
+.brand small{display:block;font-family:var(--fb);font-size:12px;color:var(--mute);font-weight:600;letter-spacing:.4px}
+.slogan{font-size:12.5px;font-weight:700;color:var(--accd);background:var(--soft);border:1px solid var(--acc2);padding:4px 10px;border-radius:999px}
+.ctrl{display:flex;gap:8px;align-items:center}
+button{font:inherit;cursor:pointer}
+.lang{display:flex;border:2px solid var(--acc);border-radius:999px;overflow:hidden}
+.lang button{border:0;background:var(--bg);padding:5px 12px;font-weight:800;color:var(--ink)}
+.lang button[aria-pressed=true]{background:var(--acc);color:#fff}
+.readbtn{border:2px solid var(--ink);background:var(--bg);border-radius:999px;padding:5px 12px;font-weight:700}
+.tabs{max-width:1180px;margin:0 auto;display:flex;gap:4px;overflow-x:auto;padding:4px 16px 8px;scrollbar-width:thin}
+.tabs button{flex:0 0 auto;border:1.5px solid var(--line);background:var(--bg);border-radius:8px;padding:6px 11px;font-weight:700;font-size:13px;color:var(--ink2);white-space:nowrap}
+.tabs button[aria-selected=true]{background:var(--acc);border-color:var(--acc);color:#fff}
+.tabs button:focus-visible,button:focus-visible,input:focus-visible{outline:3px solid var(--accd);outline-offset:2px}
+section.panel{padding-top:22px}
+h1,h2,h3{text-wrap:balance;margin:0}
+h2{font-family:var(--fd);font-size:28px;font-weight:800;margin-bottom:6px}
+h3{font-size:16.5px;font-weight:800;margin:18px 0 8px}
+.lede{color:var(--ink2);font-weight:600;margin:0 0 14px;max-width:75ch}
+.grid{display:grid;gap:14px}
+.g2{grid-template-columns:repeat(auto-fit,minmax(300px,1fr))}
+.g3{grid-template-columns:repeat(auto-fit,minmax(250px,1fr))}
+.g4{grid-template-columns:repeat(auto-fit,minmax(200px,1fr))}
+.grid>*{min-width:0}
+.card{border:1.5px solid var(--line);border-radius:12px;padding:14px 16px;background:var(--bg)}
+.card.ntpc{border-top:5px solid var(--ntpc)} .card.pg{border-top:5px solid var(--pg)} .card.ngel{border-top:5px solid var(--ngel)} .card.acc{border-top:5px solid var(--acc)}
+.tag{display:inline-block;font-size:11.5px;font-weight:800;letter-spacing:.6px;text-transform:uppercase;padding:2px 8px;border-radius:5px;color:#fff}
+.t-ntpc{background:var(--ntpc)} .t-pg{background:var(--pg)} .t-ngel{background:var(--ngel)} .t-acc{background:var(--acc)}
+ul.b{margin:6px 0 0;padding-left:20px} ul.b li{margin:4px 0}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-top:10px}
+.kpi{border-left:4px solid var(--line);padding:4px 10px}
+.kpi .l{font-size:12px;color:var(--mute);font-weight:700;text-transform:uppercase;letter-spacing:.5px}
+.kpi .v{font-family:var(--fm);font-size:21px;font-weight:600;font-variant-numeric:tabular-nums}
+.kpi .d{font-size:12.5px;font-weight:700}
+.up{color:var(--good)} .dn{color:var(--bad)} .fl{color:var(--warn)}
+.tbl{overflow-x:auto;border:1.5px solid var(--line);border-radius:10px}
+table{border-collapse:collapse;width:100%;font-variant-numeric:tabular-nums;font-size:14px}
+th,td{padding:8px 10px;border-bottom:1px solid var(--line);text-align:right;white-space:nowrap}
+th:first-child,td:first-child{text-align:left;white-space:normal;min-width:150px}
+thead th{background:var(--soft);font-weight:800;font-size:12.5px;text-transform:uppercase;letter-spacing:.4px}
+tbody tr:last-child td{border-bottom:0}
+.note{font-size:12.5px;color:var(--mute);font-weight:600;margin-top:6px}
+.chip{display:inline-flex;align-items:center;gap:6px;font-weight:800;font-size:13px;padding:4px 10px;border-radius:999px;border:1.5px solid var(--line);background:var(--bg)}
+.chip b{font-family:var(--fm)}
+.pill-g{color:var(--good);border-color:#bfe2cb}.pill-w{color:var(--warn);border-color:#f2d6a6}.pill-r{color:var(--bad);border-color:#f0c2be}
+.picture{border:2px dashed var(--acc);border-radius:12px;padding:12px;background:var(--bg)}
+.picture .ph{font-weight:800;color:var(--accd);font-size:13px;text-transform:uppercase;letter-spacing:.6px;margin-bottom:6px}
+.svgbox{overflow-x:auto}
+svg text{font-family:var(--fb);font-weight:600}
+.legend{display:flex;gap:12px;flex-wrap:wrap;font-size:12.5px;font-weight:700;margin-top:4px}
+.legend i{display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:5px;vertical-align:-1px}
+.take{display:grid;grid-template-columns:44px 1fr;gap:12px;align-items:start;border-bottom:1px solid var(--line);padding:12px 0}
+.take .n{font-family:var(--fd);font-size:30px;font-weight:800;color:var(--acc);line-height:1}
+.swot{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px}
+.swot .card h3{margin-top:0}
+.s-s{border-left:6px solid var(--good)}.s-w{border-left:6px solid var(--bad)}.s-o{border-left:6px solid var(--ntpc)}.s-t{border-left:6px solid var(--warn)}
+/* assist */
+.as{border:2px solid var(--acc);border-radius:14px;overflow:hidden}
+.as-h{display:flex;flex-wrap:wrap;gap:8px;align-items:center;padding:10px 12px;background:var(--soft);border-bottom:1.5px solid var(--acc2)}
+.as-h strong{flex:1 1 160px}
+.as-h select,.as-h input[type=range]{font:inherit}
+.as-log{height:360px;overflow-y:auto;padding:12px;display:flex;flex-direction:column;gap:10px;background:var(--bg)}
+.msg{max-width:88%;padding:9px 12px;border-radius:12px;font-weight:600}
+.msg.u{align-self:flex-end;background:var(--ink);color:#fff}
+.msg.a{align-self:flex-start;background:var(--soft);border:1.5px solid var(--acc2)}
+.msg details{margin-top:6px;font-size:13.5px} .msg summary{cursor:pointer;color:var(--accd);font-weight:800}
+.msg .acts{display:flex;gap:6px;margin-top:6px;flex-wrap:wrap}
+.msg .acts button{border:1.5px solid var(--acc);background:var(--bg);border-radius:999px;padding:2px 9px;font-size:12px;font-weight:800;color:var(--accd)}
+.as-in{display:flex;gap:8px;padding:10px;border-top:1.5px solid var(--line);flex-wrap:wrap}
+.as-in input[type=text]{flex:1 1 220px;min-width:0;border:2px solid var(--line);border-radius:10px;padding:9px 12px;font:inherit;font-weight:600}
+.btn{border:2px solid var(--acc);background:var(--acc);color:#fff;border-radius:10px;padding:8px 14px;font-weight:800}
+.btn.o{background:var(--bg);color:var(--accd)}
+.sugg{display:flex;gap:6px;flex-wrap:wrap;padding:0 10px 10px}
+.sugg button{border:1.5px solid var(--line);background:var(--bg);border-radius:999px;padding:4px 10px;font-size:12.5px;font-weight:700}
+.listen{height:4px;background:var(--acc);width:0;transition:width .1s linear}
+/* quiz */
+.q{border:1.5px solid var(--line);border-radius:12px;padding:14px;margin-bottom:12px}
+.q .opts{display:grid;gap:6px;margin-top:8px}
+.q .opts button{text-align:left;border:1.5px solid var(--line);background:var(--bg);border-radius:9px;padding:8px 12px;font-weight:700}
+.q .opts button.ok{border-color:var(--good);background:#eaf6ee}
+.q .opts button.no{border-color:var(--bad);background:#fbecea}
+.q .ex{margin-top:8px;font-weight:600;color:var(--ink2)}
+/* CB badge + voice bubble */
+.cb{position:fixed;right:calc(14px + env(safe-area-inset-right,0px));bottom:calc(14px + env(safe-area-inset-bottom,0px));z-index:40}
+.cb .logo{width:46px;height:46px;border-radius:50%;background:var(--acc);color:#fff;font-family:var(--fd);font-weight:800;font-size:18px;display:grid;place-items:center;border:3px solid #fff;box-shadow:0 2px 8px rgba(0,0,0,.18);animation:blink 1.8s ease-in-out infinite;cursor:pointer}
+@keyframes blink{50%{opacity:.45}}
+@media (prefers-reduced-motion:reduce){.cb .logo{animation:none}}
+.cb .disc{position:absolute;right:0;bottom:56px;width:min(330px,82vw);background:var(--bg);border:2px solid var(--acc);border-radius:12px;padding:12px;font-size:12.5px;font-weight:600;color:var(--ink2);display:none;box-shadow:0 4px 18px rgba(0,0,0,.12)}
+.cb:hover .disc,.cb.open .disc,.cb:focus-within .disc{display:block}
+.vbub{position:fixed;right:calc(14px + env(safe-area-inset-right,0px));bottom:calc(72px + env(safe-area-inset-bottom,0px));z-index:39;border:2px solid var(--acc);background:var(--bg);color:var(--accd);border-radius:999px;padding:7px 12px;font-weight:800;font-size:13px;box-shadow:0 2px 8px rgba(0,0,0,.12)}
+.flow-step{font-size:12px}
+.mono{font-family:var(--fm)}
+.callout{border-left:5px solid var(--acc);background:var(--soft);padding:10px 14px;border-radius:0 10px 10px 0;font-weight:600}
+@media (max-width:560px){h2{font-size:23px}.brand{font-size:19px}.kpi .v{font-size:18px}}
+</style>
+
+<header class="mast">
+  <div class="mrow">
+    <div class="brand">NTPC · Power Grid · NTPC Green
+      <small><span class="en">Q1 FY27 (Apr–Jun 2026) business &amp; investment analysis · CB Research · data as of 10 Oct 2026</span><span class="ta">Q1 FY27 (Apr–Jun 2026) business &amp; investment analysis · CB Research · 10 Oct 2026 data</span></small>
+    </div>
+    <span class="slogan"><span class="en">Learn before you Buy</span><span class="ta">வாங்கறதுக்கு முன்னாடி கத்துக்குங்க!</span></span>
+    <div class="ctrl">
+      <div class="lang" role="group" aria-label="Language">
+        <button id="bEN" aria-pressed="true" onclick="setLang('en')">EN</button>
+        <button id="bTA" aria-pressed="false" onclick="setLang('ta')">தமிழ்</button>
+      </div>
+      <button class="readbtn" id="readTab" onclick="readTab()"><span class="en">🔊 Read this tab</span><span class="ta">🔊 இந்த tab-ஐ படிங்க</span></button>
+    </div>
+  </div>
+  <nav class="tabs" id="tabs" role="tablist"></nav>
+</header>
+
+<main class="wrap" id="main">
+
+<!-- ============ DASHBOARD ============ -->
+<section class="panel" id="dash" data-en="Dashboard" data-ta="டாஷ்போர்டு">
+  <h2><span class="en">Two monopolies, one quarter</span><span class="ta">ரெண்டு monopoly, ஒரு quarter</span></h2>
+  <p class="lede"><span class="en">India's biggest power producer and its biggest power carrier. Both earn a fixed, regulated return. Profits grow slowly, debt grows fast, and the share prices have been sliding.</span><span class="ta">இந்தியாவோட பெரிய power producer-உம், பெரிய power carrier-உம். ரெண்டுக்கும் fixed, regulated return தான். Profit மெதுவா வளருது, debt வேகமா வளருது, share price இறங்கிட்டு இருக்கு.</span></p>
+  <div class="grid g3">
+    <div class="card ntpc"><span class="tag t-ntpc">NTPC</span>
+      <div class="kpis">
+        <div class="kpi" style="border-color:var(--ntpc)"><div class="l">Revenue</div><div class="v">₹50,741 cr</div><div class="d up">+7.8% YoY</div></div>
+        <div class="kpi" style="border-color:var(--ntpc)"><div class="l">PAT (consol)</div><div class="v">₹6,896 cr</div><div class="d up">+12.9% YoY</div></div>
+        <div class="kpi" style="border-color:var(--ntpc)"><div class="l">EBITDA margin</div><div class="v">32.0%</div><div class="d up">+526 bps</div></div>
+        <div class="kpi" style="border-color:var(--ntpc)"><div class="l">Coal PLF</div><div class="v">76.7%</div><div class="d up"><span class="en">India 70.3%</span><span class="ta">India 70.3%</span></div></div>
+      </div>
+    </div>
+    <div class="card pg"><span class="tag t-pg">Power Grid</span>
+      <div class="kpis">
+        <div class="kpi" style="border-color:var(--pg)"><div class="l">Revenue</div><div class="v">₹11,497 cr</div><div class="d up">+2.7% YoY</div></div>
+        <div class="kpi" style="border-color:var(--pg)"><div class="l">PAT (consol)</div><div class="v">₹3,598 cr</div><div class="d dn">−0.9% YoY</div></div>
+        <div class="kpi" style="border-color:var(--pg)"><div class="l">EBITDA margin</div><div class="v">82.9%</div><div class="d up">+120 bps</div></div>
+        <div class="kpi" style="border-color:var(--pg)"><div class="l">Availability</div><div class="v">99.80%</div><div class="d fl"><span class="en">grid uptime</span><span class="ta">grid uptime</span></div></div>
+      </div>
+    </div>
+    <div class="card ngel"><span class="tag t-ngel">NTPC Green</span>
+      <div class="kpis">
+        <div class="kpi" style="border-color:var(--ngel)"><div class="l">Revenue</div><div class="v">₹1,107 cr</div><div class="d up">+62.7% YoY</div></div>
+        <div class="kpi" style="border-color:var(--ngel)"><div class="l">PAT</div><div class="v">₹305 cr</div><div class="d up">+38.3% YoY</div></div>
+        <div class="kpi" style="border-color:var(--ngel)"><div class="l">Operational</div><div class="v">10.7 GW</div><div class="d up">+57% YoY</div></div>
+        <div class="kpi" style="border-color:var(--ngel)"><div class="l">Share vs IPO</div><div class="v">₹88</div><div class="d dn"><span class="en">IPO ₹108</span><span class="ta">IPO ₹108</span></div></div>
+      </div>
+    </div>
+  </div>
+
+  <h3><span class="en">Market snapshot</span><span class="ta">Market snapshot</span></h3>
+  <div class="tbl"><table>
+    <thead><tr><th><span class="en">Metric</span><span class="ta">Metric</span></th><th>NTPC</th><th>Power Grid</th><th>NTPC Green</th></tr></thead>
+    <tbody>
+      <tr><td><span class="en">Last price (date)</span><span class="ta">Last price (தேதி)</span></td><td>₹318.6 (7 Oct)</td><td>₹263.5 (16 Sep)</td><td>₹88.5 (21 Sep)</td></tr>
+      <tr><td><span class="en">52-week range</span><span class="ta">52-week range</span></td><td>₹316 – ₹414</td><td>₹250 – ₹325</td><td>₹84 – ₹120</td></tr>
+      <tr><td><span class="en">Market cap</span><span class="ta">Market cap</span></td><td>~₹3.09 lakh cr</td><td>~₹2.45 lakh cr</td><td>~₹0.75 lakh cr</td></tr>
+      <tr><td>P/E (TTM, CB calc)</td><td>~10.9x</td><td>~15.4x</td><td>~130x</td></tr>
+      <tr><td>P/B</td><td>1.47x</td><td>~2.4x</td><td>~3.9x</td></tr>
+      <tr><td><span class="en">Dividend yield</span><span class="ta">Dividend yield</span></td><td>~2.8%</td><td>~3.4%</td><td>—</td></tr>
+      <tr><td><span class="en">Debt / Equity</span><span class="ta">Debt / Equity</span></td><td>1.30x</td><td>1.40x</td><td>—</td></tr>
+    </tbody></table></div>
+  <p class="note"><span class="en">Prices are the latest found in public sources; check live quotes. P/E and yield are CB calculations on trailing figures.</span><span class="ta">Prices public sources-ல கிடைச்ச latest. Live quote-ஐ check பண்ணுங்க. P/E, yield CB கணக்கு.</span></p>
+
+  <h3><span class="en">CB lenses</span><span class="ta">CB lenses</span></h3>
+  <div style="display:flex;gap:8px;flex-wrap:wrap">
+    <span class="chip pill-w">NTPC · CY <b>62</b></span><span class="chip pill-w">NTPC · TG <b>49</b></span>
+    <span class="chip pill-w">Power Grid · CY <b>56</b></span><span class="chip pill-g">Power Grid · TG <b>58</b></span>
+    <span class="chip pill-r"><span class="en">Both in Weinstein Stage 4 → Conviction capped at 55</span><span class="ta">ரெண்டும் Weinstein Stage 4 → Conviction 55-க்கு மேல போகாது</span></span>
+  </div>
+
+  <h3><span class="en">The quarter in five lines</span><span class="ta">இந்த quarter அஞ்சு வரியில</span></h3>
+  <ul class="b">
+    <li><span class="en">NTPC beat estimates: new units, higher coal PLF and a 62% jump in group-company profit.</span><span class="ta">NTPC estimate-ஐ தாண்டிச்சு: புது units, coal PLF ஏற்றம், group company profit 62% ஜம்ப்.</span></li>
+    <li><span class="en">Power Grid was flat; adjusted for a ₹230 cr one-off last year, PAT grew ~6%.</span><span class="ta">Power Grid flat தான்; போன வருஷ ₹230 cr one-off-ஐ நீக்கினா PAT ~6% வளர்ச்சி.</span></li>
+    <li><span class="en">Weak monsoon (−12%) means hydro is down and coal carries the grid. Peak shortage hit 7.7 GW in September.</span><span class="ta">Monsoon weak (−12%) → hydro கம்மி, coal தான் grid-ஐ தாங்குது. September-ல peak shortage 7.7 GW.</span></li>
+    <li><span class="en">NTPC group debt is ₹2.72 lakh cr; Power Grid's is ₹1.46 lakh cr. Both pay dividends larger than their free cash flow.</span><span class="ta">NTPC group debt ₹2.72 லட்சம் கோடி; Power Grid ₹1.46 லட்சம் கோடி. ரெண்டுமே free cash flow-ஐ விட அதிகமா dividend கொடுக்குது.</span></li>
+    <li><span class="en">Growth bets: NTPC nuclear (30 GW by 2047) and Power Grid's share of a ₹7.9 lakh cr national transmission plan.</span><span class="ta">Growth bets: NTPC nuclear (2047-க்குள் 30 GW), Power Grid-க்கு ₹7.9 லட்சம் கோடி national transmission plan-ல பங்கு.</span></li>
+  </ul>
+</section>
+
+<!-- ============ BUSINESS MODEL ============ -->
+<section class="panel" id="model" data-en="Business Model" data-ta="Business Model" hidden>
+  <h2><span class="en">How the money is made</span><span class="ta">பணம் எப்படி வருது</span></h2>
+  <div class="picture">
+    <div class="ph"><span class="en">Picture it · one unit of power, mine to fan</span><span class="ta">கற்பனை பண்ணுங்க · ஒரு unit current, mine-ல இருந்து fan வரை</span></div>
+    <div class="svgbox"><svg viewBox="0 0 900 190" width="100%" style="min-width:640px" role="img" aria-label="Power chain">
+      <defs><marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0L10,5L0,10z" fill="#5d6470"/></marker></defs>
+      <g font-size="13">
+        <rect x="10" y="40" width="140" height="70" rx="10" fill="#fff" stroke="#5d6470" stroke-width="2"/><text x="80" y="70" text-anchor="middle" fill="#121417" font-weight="800">Coal India /</text><text x="80" y="88" text-anchor="middle" fill="#121417" font-weight="800">captive mines</text>
+        <rect x="200" y="40" width="160" height="70" rx="10" fill="#fff" stroke="#1d5fa6" stroke-width="3"/><text x="280" y="68" text-anchor="middle" fill="#1d5fa6" font-weight="800">NTPC plant</text><text x="280" y="88" text-anchor="middle" fill="#121417">~₹4.94 / unit</text>
+        <rect x="410" y="40" width="160" height="70" rx="10" fill="#fff" stroke="#7a3a96" stroke-width="3"/><text x="490" y="68" text-anchor="middle" fill="#7a3a96" font-weight="800">Power Grid lines</text><text x="490" y="88" text-anchor="middle" fill="#121417">~₹0.24 / unit*</text>
+        <rect x="620" y="40" width="130" height="70" rx="10" fill="#fff" stroke="#5d6470" stroke-width="2"/><text x="685" y="68" text-anchor="middle" fill="#121417" font-weight="800">State discom</text><text x="685" y="88" text-anchor="middle" fill="#121417">buys &amp; bills</text>
+        <rect x="790" y="40" width="100" height="70" rx="10" fill="#fff4e8" stroke="#F28C28" stroke-width="2"/><text x="840" y="80" text-anchor="middle" fill="#121417" font-weight="800">Your home</text>
+        <line x1="150" y1="75" x2="196" y2="75" stroke="#5d6470" stroke-width="2" marker-end="url(#ar)"/>
+        <line x1="360" y1="75" x2="406" y2="75" stroke="#5d6470" stroke-width="2" marker-end="url(#ar)"/>
+        <line x1="570" y1="75" x2="616" y2="75" stroke="#5d6470" stroke-width="2" marker-end="url(#ar)"/>
+        <line x1="750" y1="75" x2="786" y2="75" stroke="#5d6470" stroke-width="2" marker-end="url(#ar)"/>
+        <text x="280" y="138" text-anchor="middle" fill="#3a3f47">Fixed ₹1.78 + fuel ₹2.68<tspan x="280" dy="17">+ other ~₹0.48</tspan></text>
+        <text x="490" y="138" text-anchor="middle" fill="#3a3f47">Annual fee for<tspan x="490" dy="17">lines kept available</tspan></text>
+        <text x="685" y="138" text-anchor="middle" fill="#3a3f47">pays both,<tspan x="685" dy="17">monthly</tspan></text>
+        <text x="80" y="138" text-anchor="middle" fill="#3a3f47">fuel cost<tspan x="80" dy="17">passed through</tspan></text>
+      </g>
+    </svg></div>
+    <p class="note"><span class="en">* CB illustration: Power Grid's ~₹44,000 cr yearly transmission income spread over ~1,850 billion units of national generation. Power Grid is not paid per unit; it earns a fixed annual charge.</span><span class="ta">* CB illustration: Power Grid-ஓட வருஷ ~₹44,000 cr transmission income-ஐ ~1,850 BU national generation-ல பிரிச்சா. Power Grid-க்கு unit-க்கு காசு இல்ல; fixed annual charge தான்.</span></p>
+  </div>
+  <div class="card ntpc" style="margin-top:14px">
+    <h3 style="margin-top:0"><span class="en">How we worked out NTPC's ~₹4.94 per unit</span><span class="ta">NTPC-ஓட ~₹4.94 per unit எப்படி கணக்கு போட்டோம்</span></h3>
+    <div class="tbl"><table><thead><tr><th><span class="en">Check (Q1 FY27, standalone)</span><span class="ta">Check (Q1 FY27, standalone)</span></th><th><span class="en">Calculation</span><span class="ta">கணக்கு</span></th><th>₹ / unit</th></tr></thead><tbody>
+      <tr><td><span class="en">Fixed + fuel charge (NTPC presentation)</span><span class="ta">Fixed + fuel charge (NTPC presentation)</span></td><td>1.78 + 2.68</td><td>4.46</td></tr>
+      <tr><td><b><span class="en">Generation revenue ÷ units sold</span><span class="ta">Generation revenue ÷ விற்ற units</span></b></td><td>₹42,912 cr ÷ 86.945 BU</td><td><b>~4.94</b></td></tr>
+      <tr><td><span class="en">All operating revenue ÷ units sold</span><span class="ta">மொத்த operating revenue ÷ விற்ற units</span></td><td>₹43,832 cr ÷ 86.945 BU</td><td>~5.04</td></tr>
+      <tr><td><span class="en">Fuel cross-check: energy charges ÷ units sold</span><span class="ta">Fuel cross-check: energy charges ÷ விற்ற units</span></td><td>₹23,676 cr ÷ 86.945 BU</td><td>2.72</td></tr>
+    </tbody></table></div>
+    <ul class="b">
+      <li><span class="en">Fixed + fuel alone gives ₹4.46; the presentation's "Others" component is missing from it.</span><span class="ta">Fixed + fuel மட்டும் ₹4.46; presentation-ல உள்ள "Others" இதுல இல்ல.</span></li>
+      <li><span class="en">The fuel cross-check (₹2.72 vs ₹2.68) confirms the 86.945 BU units figure.</span><span class="ta">Fuel cross-check (₹2.72 vs ₹2.68) 86.945 BU units சரின்னு காட்டுது.</span></li>
+      <li><span class="en">The ~₹0.48 gap is other tariff items: incentives, taxes and true-ups.</span><span class="ta">~₹0.48 வித்தியாசம் மற்ற tariff items: incentive, tax, true-up.</span></li>
+      <li><span class="en">Safe range: NTPC realised <b>₹4.9–5.0 per unit</b> at the plant gate. Homes pay more after discom costs and line losses.</span><span class="ta">பாதுகாப்பான range: plant gate-ல NTPC-க்கு <b>unit-க்கு ₹4.9–5.0</b>. Discom செலவு, line loss சேர்ந்து வீட்டுக்கு அதிகம்.</span></li>
+    </ul>
+    <p class="note"><span class="en">Units sold = energy sent out (NTPC OFS Q1 FY27). The ₹42,912 cr figure is from a news report and read as generation segment revenue; confirm against NTPC's segment table.</span><span class="ta">விற்ற units = energy sent out (NTPC OFS Q1 FY27). ₹42,912 cr news report-ல இருந்து, generation segment revenue-ஆ எடுத்திருக்கோம்; NTPC segment table-ல சரிபாருங்க.</span></p>
+  </div>
+  <div class="grid g3" style="margin-top:14px">
+    <div class="card ntpc"><span class="tag t-ntpc">NTPC</span>
+      <ul class="b">
+        <li><span class="en">Builds and runs plants; sells to state discoms under 25-year PPAs.</span><span class="ta">Plant கட்டி ஓட்டுது; state discom-க்கு 25 வருஷ PPA-ல விக்குது.</span></li>
+        <li><span class="en">Cost-plus: CERC allows 15.5% return on regulated equity (₹92,797 cr standalone; ₹1.22 lakh cr group).</span><span class="ta">Cost-plus: regulated equity-க்கு CERC 15.5% return அனுமதிக்குது (standalone ₹92,797 cr; group ₹1.22 லட்சம் cr).</span></li>
+        <li><span class="en">Fuel cost is passed through; profit comes from equity, efficiency and incentives.</span><span class="ta">Fuel cost அப்படியே pass-through; profit equity, efficiency, incentive-ல இருந்து.</span></li>
+        <li><span class="en">Extra legs: coal mining, NTPC Green, hydro (THDC, NEEPCO), trading, nuclear JV.</span><span class="ta">மற்ற கால்கள்: coal mining, NTPC Green, hydro (THDC, NEEPCO), trading, nuclear JV.</span></li>
+      </ul></div>
+    <div class="card pg"><span class="tag t-pg">Power Grid</span>
+      <ul class="b">
+        <li><span class="en">Carries ~45% of India's power over 1,86,595 ckm of lines and 291 substations.</span><span class="ta">இந்தியா power-ல ~45% இதோட 1,86,595 ckm line, 291 substation வழியா போகுது.</span></li>
+        <li><span class="en">Paid for keeping lines available, not for units carried. Availability 99.80%.</span><span class="ta">Line-ஐ available-ஆ வைக்கறதுக்கு தான் காசு, எத்தனை unit போச்சுன்னு இல்ல. Availability 99.80%.</span></li>
+        <li><span class="en">Two routes: RTM (CERC cost-plus) and TBCB (bid tariff for 35 years).</span><span class="ta">ரெண்டு வழி: RTM (CERC cost-plus), TBCB (35 வருஷ bid tariff).</span></li>
+        <li><span class="en">Side income: consultancy (₹519 cr, +28%) and telecom (₹252 cr, −13%).</span><span class="ta">Side income: consultancy (₹519 cr, +28%), telecom (₹252 cr, −13%).</span></li>
+      </ul></div>
+    <div class="card ngel"><span class="tag t-ngel">NTPC Green</span>
+      <ul class="b">
+        <li><span class="en">~89% owned by NTPC; listed Nov 2024 at ₹108.</span><span class="ta">NTPC-க்கு ~89% பங்கு; Nov 2024-ல ₹108-க்கு listing.</span></li>
+        <li><span class="en">Solar and wind under 25-year fixed tariffs won in bids. No fuel cost; EBITDA margin ~89%.</span><span class="ta">Bid-ல ஜெயிச்ச 25 வருஷ fixed tariff-ல solar, wind. Fuel cost இல்ல; EBITDA margin ~89%.</span></li>
+        <li><span class="en">Earnings = MW running × sunlight/wind × tariff, minus curtailment.</span><span class="ta">Earnings = ஓடுற MW × வெயில்/காத்து × tariff, minus curtailment.</span></li>
+      </ul></div>
+  </div>
+</section>
+
+<!-- ============ SEGMENTS ============ -->
+<section class="panel" id="seg" data-en="Segments" data-ta="Segments" hidden>
+  <h2><span class="en">Segment performance</span><span class="ta">Segment performance</span></h2>
+  <div class="grid g2">
+    <div class="card ntpc"><h3 style="margin-top:0"><span class="en">NTPC standalone PLF by fuel (%)</span><span class="ta">NTPC standalone PLF, fuel வாரியா (%)</span></h3>
+      <div id="chPLF"></div>
+      <ul class="b">
+        <li><span class="en">Coal and solar up; hydro halved on the weak monsoon.</span><span class="ta">Coal, solar ஏற்றம்; monsoon weak-ஆல hydro பாதியா குறைஞ்சது.</span></li>
+        <li><span class="en">Generation segment revenue ₹49,143 cr (+7.1%).</span><span class="ta">Generation segment revenue ₹49,143 cr (+7.1%).</span></li>
+      </ul></div>
+    <div class="card pg"><h3 style="margin-top:0"><span class="en">Power Grid revenue by segment (₹ cr)</span><span class="ta">Power Grid segment revenue (₹ cr)</span></h3>
+      <div class="tbl"><table><thead><tr><th>Segment</th><th>Q1 FY27</th><th>YoY</th></tr></thead><tbody>
+        <tr><td>Transmission</td><td>10,929</td><td class="up">+2.2%</td></tr>
+        <tr><td>Consultancy</td><td>519</td><td class="up">+27.8%</td></tr>
+        <tr><td>Telecom</td><td>252</td><td class="dn">−13.0%</td></tr>
+      </tbody></table></div>
+      <ul class="b"><li><span class="en">Transmission is 95% of revenue; growth depends on new lines being commissioned.</span><span class="ta">Revenue-ல 95% transmission; புது line commission ஆனா தான் growth.</span></li></ul></div>
+  </div>
+  <h3><span class="en">NTPC: where group profit came from (₹ cr)</span><span class="ta">NTPC: group profit எங்கிருந்து வந்தது (₹ cr)</span></h3>
+  <div class="tbl"><table><thead><tr><th><span class="en">Block</span><span class="ta">Block</span></th><th>Q1 FY27</th><th>Q1 FY26</th></tr></thead><tbody>
+    <tr><td><span class="en">Standalone PAT</span><span class="ta">Standalone PAT</span></td><td>5,342</td><td>4,775</td></tr>
+    <tr><td><span class="en">Subsidiaries (THDC 294, NGEL 276, BRBCL 153, NEEPCO 146, Mining 146…)</span><span class="ta">Subsidiaries (THDC 294, NGEL 276, BRBCL 153, NEEPCO 146, Mining 146…)</span></td><td>1,204</td><td>655</td></tr>
+    <tr><td><span class="en">JV share (HURL 238, Aravali 106, Meja 99…)</span><span class="ta">JV share (HURL 238, Aravali 106, Meja 99…)</span></td><td>628</td><td>476</td></tr>
+    <tr><td><span class="en">Dividend eliminations &amp; other</span><span class="ta">Dividend elimination, மற்றவை</span></td><td>−278</td><td>202</td></tr>
+    <tr><td><strong><span class="en">Consolidated PAT</span><span class="ta">Consolidated PAT</span></strong></td><td><strong>6,896</strong></td><td><strong>6,108</strong></td></tr>
+  </tbody></table></div>
+  <p class="note">Source: NTPC Q1 FY27 operational &amp; financial snapshot.</p>
+</section>
+
+<!-- ============ CAPACITY ============ -->
+<section class="panel" id="cap" data-en="Capacity" data-ta="Capacity" hidden>
+  <h2><span class="en">Capacity today and tomorrow</span><span class="ta">இன்னிக்கு capacity, நாளைக்கு capacity</span></h2>
+  <div class="grid g2">
+    <div class="card ntpc"><h3 style="margin-top:0"><span class="en">NTPC group installed (MW)</span><span class="ta">NTPC group installed (MW)</span></h3>
+      <div id="chCap"></div>
+      <ul class="b">
+        <li><span class="en">Standalone 60,992 MW; group 90,904 MW (+10% YoY).</span><span class="ta">Standalone 60,992 MW; group 90,904 MW (+10% YoY).</span></li>
+        <li><span class="en">Q1 added 1,796 MW: 820 thermal, 726 renewable, 250 pumped storage.</span><span class="ta">Q1-ல 1,796 MW சேர்ந்தது: 820 thermal, 726 renewable, 250 pumped storage.</span></li>
+        <li><span class="en">FY27 guidance: ~9.5 GW total, ~8 GW renewable.</span><span class="ta">FY27 guidance: மொத்தம் ~9.5 GW, renewable ~8 GW.</span></li>
+      </ul></div>
+    <div class="card ntpc"><h3 style="margin-top:0"><span class="en">Under construction, 30 Jun 2026 (MW)</span><span class="ta">கட்டுமானத்துல இருக்கு, 30 Jun 2026 (MW)</span></h3>
+      <div id="chUC"></div>
+      <ul class="b">
+        <li><span class="en">35,702 MW being built: 15,720 coal, 3,581 hydro, 16,401 renewable.</span><span class="ta">35,702 MW கட்டிட்டு இருக்காங்க: coal 15,720, hydro 3,581, renewable 16,401.</span></li>
+        <li><span class="en">Coal is still 44% of the build pipeline, the grid needs night-time power.</span><span class="ta">Build pipeline-ல இன்னும் 44% coal தான்; ராத்திரி power-க்கு grid-க்கு அது தேவை.</span></li>
+      </ul></div>
+  </div>
+  <div class="grid g3" style="margin-top:14px">
+    <div class="card pg"><span class="tag t-pg">Power Grid</span>
+      <ul class="b">
+        <li>1,86,595 ckm · 291 substations · 6,34,516 MVA</li>
+        <li><span class="en">Q1 commissioned 1,635 ckm and 10,500 MVA (35% of all of FY26's line additions).</span><span class="ta">Q1-ல 1,635 ckm, 10,500 MVA commission (FY26 முழு line addition-ல 35%).</span></li>
+        <li><span class="en">Gross fixed assets ₹3.26 lakh cr.</span><span class="ta">Gross fixed assets ₹3.26 லட்சம் cr.</span></li>
+      </ul></div>
+    <div class="card ngel"><span class="tag t-ngel">NTPC Green</span>
+      <ul class="b">
+        <li><span class="en">Operational 10,671 MW (solar 9,891, wind 780).</span><span class="ta">Operational 10,671 MW (solar 9,891, wind 780).</span></li>
+        <li><span class="en">Contracted/awarded 16,318 MW; pipeline 3,424 MW.</span><span class="ta">Contracted/awarded 16,318 MW; pipeline 3,424 MW.</span></li>
+      </ul></div>
+    <div class="card acc"><span class="tag t-acc"><span class="en">Storage</span><span class="ta">Storage</span></span>
+      <ul class="b">
+        <li><span class="en">18 GW pumped-storage portfolio; Tehri 1,000 MW running.</span><span class="ta">18 GW pumped-storage portfolio; Tehri 1,000 MW ஓடுது.</span></li>
+        <li><span class="en">5 GWh battery storage awarded at 15 thermal stations.</span><span class="ta">15 thermal station-ல 5 GWh battery storage award ஆகியிருக்கு.</span></li>
+      </ul></div>
+  </div>
+</section>
+
+<!-- ============ TARIFFS & REGULATION ============ -->
+<section class="panel" id="tariff" data-en="Tariffs & Rules" data-ta="Tariff & விதிகள்" hidden>
+  <h2><span class="en">Who sets the price, and how</span><span class="ta">விலையை யார் fix பண்றாங்க, எப்படி</span></h2>
+  <div class="grid g2">
+    <div class="card ntpc"><h3 style="margin-top:0"><span class="en">NTPC average tariff (₹ per unit)</span><span class="ta">NTPC சராசரி tariff (₹ per unit)</span></h3>
+      <div id="chTariff"></div>
+      <ul class="b">
+        <li><span class="en">Fixed charge rose to ₹1.78 (new units add to the equity base).</span><span class="ta">Fixed charge ₹1.78-க்கு ஏறிச்சு (புது units equity base-ஐ கூட்டுது).</span></li>
+        <li><span class="en">Fuel charge fell to ₹2.68 from ₹2.88; customers get the saving.</span><span class="ta">Fuel charge ₹2.88-ல இருந்து ₹2.68; அந்த லாபம் customer-க்கு போகுது.</span></li>
+        <li><span class="en">All-in realisation ~₹4.94 per unit: generation revenue ₹42,912 cr over 86.9 BU sold.</span><span class="ta">மொத்த realisation unit-க்கு ~₹4.94: generation revenue ₹42,912 cr ÷ 86.9 BU.</span></li>
+        <li><span class="en">Energy charges billed: ₹23,676 cr in Q1 (≈ ₹2.72 per unit).</span><span class="ta">Q1-ல energy charge billed: ₹23,676 cr (unit-க்கு ≈ ₹2.72).</span></li>
+        <li><span class="en">Homes pay much more: the discom adds transmission charges, line losses of roughly 15% and its own costs.</span><span class="ta">வீட்டுக்கு இதைவிட நிறைய அதிகம்: discom transmission charge, சுமார் 15% line loss, அவங்க செலவு எல்லாம் சேர்க்குது.</span></li>
+      </ul></div>
+    <div class="card acc"><h3 style="margin-top:0"><span class="en">The rulebook: CERC Tariff Regulations 2024 (FY25–29)</span><span class="ta">Rulebook: CERC Tariff Regulations 2024 (FY25–29)</span></h3>
+      <ul class="b">
+        <li><span class="en"><b>Two-part tariff.</b> Fixed (capacity) charge covers interest, depreciation, O&amp;M and a 15.5% return on equity. Energy charge covers fuel.</span><span class="ta"><b>Two-part tariff.</b> Fixed charge-ல interest, depreciation, O&amp;M, equity-க்கு 15.5% return. Energy charge-ல fuel.</span></li>
+        <li><span class="en"><b>Availability, not sales.</b> Full fixed charge only if the plant is available at the normative level (85% for coal).</span><span class="ta"><b>Availability தான் முக்கியம்.</b> Plant normative level-ல (coal-க்கு 85%) available-ஆ இருந்தா தான் full fixed charge.</span></li>
+        <li><span class="en"><b>Incentive</b> for generation above the normative level; small upside only.</span><span class="ta"><b>Incentive</b> normative level-க்கு மேல generate பண்ணா; சின்ன upside தான்.</span></li>
+        <li><span class="en"><b>Transmission:</b> RTM projects get the same cost-plus 15.5%; TBCB projects earn the bid tariff for 35 years, usually a lower return.</span><span class="ta"><b>Transmission:</b> RTM project-க்கு அதே cost-plus 15.5%; TBCB project-க்கு 35 வருஷ bid tariff, பொதுவா return குறைவு.</span></li>
+        <li><span class="en"><b>Collections:</b> Late Payment Surcharge Rules 2022 forced discoms to pay on time. Power Grid collected 104% of billing in Q1.</span><span class="ta"><b>Collections:</b> LPS Rules 2022-னால discom-கள் நேரத்துக்கு கட்டுறாங்க. Q1-ல Power Grid billing-ல 104% வசூல்.</span></li>
+        <li><span class="en"><b>Renewables:</b> fixed tariff discovered in auction (roughly ₹2.5–3.5/unit), no fuel pass-through.</span><span class="ta"><b>Renewables:</b> auction-ல fix ஆன tariff (சுமார் ₹2.5–3.5/unit), fuel pass-through இல்ல.</span></li>
+      </ul></div>
+  </div>
+  <div class="callout" style="margin-top:14px"><span class="en">The key point: a power shortage does not let NTPC or Power Grid raise prices. Their return is capped by the regulator. That is why scarcity helps less than people expect.</span><span class="ta">முக்கியமான விஷயம்: power shortage வந்தாலும் NTPC-யோ Power Grid-ஓ விலையை ஏத்த முடியாது. Return-க்கு regulator cap போட்டிருக்கு. அதனால தான் shortage நினைக்கிற அளவுக்கு உதவாது.</span></div>
+  <p class="note"><span class="en">Q1 FY27 capacity and energy charges are provisionally billed under the 2024 regulations, pending final CERC tariff orders. Renewable tariff range is indicative.</span><span class="ta">Q1 FY27 charges 2024 regulations-படி provisional billing; final CERC order இன்னும் வரணும். Renewable tariff range indicative.</span></p>
+</section>
+
+<!-- ============ POWER CRUNCH ============ -->
+<section class="panel" id="crunch" data-en="Power Crunch 2026" data-ta="Power Crunch 2026" hidden>
+  <h2><span class="en">The 2026 power crunch</span><span class="ta">2026 power crunch</span></h2>
+  <p class="lede"><span class="en">A weak El Niño monsoon cut hydro and kept AC demand high. Coal now carries the grid, and coal stocks are running out.</span><span class="ta">El Niño-னால monsoon weak; hydro குறைஞ்சது, AC demand ஏறியே இருக்கு. இப்போ coal தான் grid-ஐ தாங்குது, coal stock காலியாகிட்டு இருக்கு.</span></p>
+  <div class="kpis">
+    <div class="kpi" style="border-color:var(--bad)"><div class="l"><span class="en">Monsoon rain</span><span class="ta">Monsoon மழை</span></div><div class="v">−12%</div><div class="d dn"><span class="en">weakest since 2009</span><span class="ta">2009-க்கு அப்புறம் மோசம்</span></div></div>
+    <div class="kpi" style="border-color:var(--bad)"><div class="l"><span class="en">Peak shortage (Sep)</span><span class="ta">Peak shortage (Sep)</span></div><div class="v">7.7 GW</div><div class="d dn"><span class="en">above summer</span><span class="ta">summer-ஐ விட அதிகம்</span></div></div>
+    <div class="kpi" style="border-color:var(--warn)"><div class="l"><span class="en">Demand Apr–Aug</span><span class="ta">Demand Apr–Aug</span></div><div class="v">+9.5%</div><div class="d fl"><span class="en">fastest in a decade</span><span class="ta">10 வருஷத்துல வேகம்</span></div></div>
+    <div class="kpi" style="border-color:var(--bad)"><div class="l"><span class="en">Hydro output</span><span class="ta">Hydro output</span></div><div class="v">−14%</div><div class="d dn"><span class="en">dry reservoirs</span><span class="ta">reservoir வறட்சி</span></div></div>
+    <div class="kpi" style="border-color:var(--bad)"><div class="l"><span class="en">Plants &lt;4 days coal</span><span class="ta">&lt;4 நாள் coal plants</span></div><div class="v">~47%</div><div class="d dn">early Oct</div></div>
+  </div>
+  <div class="grid g2" style="margin-top:14px">
+    <div class="card acc"><h3 style="margin-top:0"><span class="en">Coal stock at power plants (million tonnes, approx.)</span><span class="ta">Power plant coal stock (million tonnes, சுமார்)</span></h3>
+      <div id="chCoal"></div>
+      <p class="note"><span class="en">From news reports citing CEA / National Coal Portal; points are approximate dates.</span><span class="ta">CEA / National Coal Portal-ஐ quote பண்ண news reports; தேதிகள் சுமார்.</span></p></div>
+    <div class="card ntpc"><h3 style="margin-top:0"><span class="en">What it means for NTPC</span><span class="ta">NTPC-க்கு இதன் அர்த்தம்</span></h3>
+      <ul class="b">
+        <li><span class="en"><b>Good:</b> plants run harder (coal PLF 76.7%); incentives and higher PLF help a little.</span><span class="ta"><b>நல்லது:</b> plants அதிகமா ஓடுது (coal PLF 76.7%); incentive கொஞ்சம் உதவும்.</span></li>
+        <li><span class="en"><b>Risk:</b> if coal runs out, availability drops below 85% and fixed charges are lost.</span><span class="ta"><b>Risk:</b> coal தீர்ந்தா availability 85%-க்கு கீழ போகும், fixed charge இழப்பு.</span></li>
+        <li><span class="en">NTPC plans to buy ~10 MT of commercial-mine coal in H2; captive mines met 19% of need in Q1.</span><span class="ta">H2-ல ~10 MT commercial-mine coal வாங்க NTPC plan; Q1-ல captive mines 19% தேவையை கொடுத்தது.</span></li>
+        <li><span class="en">Reuters sources say NTPC fears a severe shortage early 2027 if supply doesn't improve.</span><span class="ta">Supply சரியாகலைன்னா 2027 ஆரம்பத்துல பெரிய shortage வரும்னு NTPC பயப்படுதுன்னு Reuters sources சொல்றாங்க.</span></li>
+        <li><span class="en">Govt steps: 100+ captive plants told to run flat-out till year-end; imported-coal blending under review.</span><span class="ta">அரசு நடவடிக்கை: 100+ captive plants-ஐ year-end வரை full-ஆ ஓட்ட சொல்லியிருக்காங்க; imported coal blending பரிசீலனையில.</span></li>
+      </ul></div>
+  </div>
+  <div class="callout" style="margin-top:14px"><span class="en">Power Grid is largely insulated: it is paid for availability. The crunch strengthens the case for more lines, storage and HVDC links.</span><span class="ta">Power Grid-க்கு பெரிய பாதிப்பு இல்ல: availability-க்கு தான் காசு. இந்த crunch இன்னும் அதிக lines, storage, HVDC தேவைன்னு காட்டுது.</span></div>
+</section>
+
+<!-- ============ NTPC GREEN ============ -->
+<section class="panel" id="green" data-en="NTPC Green" data-ta="NTPC Green" hidden>
+  <h2><span class="en">NTPC Green: fast growth, slow share</span><span class="ta">NTPC Green: வேகமான growth, மெதுவான share</span></h2>
+  <div class="grid g2">
+    <div class="card ngel"><h3 style="margin-top:0"><span class="en">Q1 FY27 numbers</span><span class="ta">Q1 FY27 numbers</span></h3>
+      <div class="tbl"><table><thead><tr><th>₹ cr</th><th>Q1 FY27</th><th>Q1 FY26</th><th>YoY</th></tr></thead><tbody>
+        <tr><td>Revenue</td><td>1,107</td><td>680</td><td class="up">+62.7%</td></tr>
+        <tr><td>EBITDA</td><td>989</td><td>—</td><td>89% margin</td></tr>
+        <tr><td>PAT</td><td>305</td><td>220</td><td class="up">+38.3%</td></tr>
+        <tr><td><span class="en">Generation (MU)</span><span class="ta">Generation (MU)</span></td><td>5,753</td><td>~3,487</td><td class="up">+65%</td></tr>
+      </tbody></table></div></div>
+    <div class="card ngel"><h3 style="margin-top:0"><span class="en">Portfolio, 30 Jun 2026 (MW)</span><span class="ta">Portfolio, 30 Jun 2026 (MW)</span></h3>
+      <div id="chNG"></div></div>
+  </div>
+  <div class="grid g2" style="margin-top:14px">
+    <div class="card"><h3 style="margin-top:0"><span class="en">What's working</span><span class="ta">எது நல்லா போகுது</span></h3>
+      <ul class="b">
+        <li><span class="en">Operational capacity up 57% to 10.7 GW.</span><span class="ta">Operational capacity 57% ஏறி 10.7 GW.</span></li>
+        <li><span class="en">Target 60 GW by 2032; JVs with Rajasthan (25 GW) and Maharashtra (10 GW).</span><span class="ta">2032-க்குள் 60 GW target; Rajasthan (25 GW), Maharashtra (10 GW) JVs.</span></li>
+        <li><span class="en">New C&amp;I subsidiary to sell power directly to industry.</span><span class="ta">Industry-க்கு நேரடியா விக்க புது C&amp;I subsidiary.</span></li>
+      </ul></div>
+    <div class="card"><h3 style="margin-top:0"><span class="en">What's not</span><span class="ta">எது சரியா இல்ல</span></h3>
+      <ul class="b">
+        <li><span class="en">Only 595 MW added in Q1 against ~8 GW FY27 target.</span><span class="ta">FY27 target ~8 GW, Q1-ல 595 MW தான் சேர்ந்தது.</span></li>
+        <li><span class="en">Curtailment: 314 MU lost plus 135 MU TRAS loss in FY26, as lines lag solar parks.</span><span class="ta">Curtailment: FY26-ல 314 MU + 135 MU TRAS loss; solar park-க்கு line வேகமா வரல.</span></li>
+        <li><span class="en">At ~130x P/E the stock still prices in a lot; it trades ~18% below its ₹108 IPO price.</span><span class="ta">~130x P/E-ல இன்னும் நிறைய எதிர்பார்ப்பு price-ல இருக்கு; ₹108 IPO price-ஐ விட ~18% கீழ.</span></li>
+      </ul></div>
+  </div>
+  <div class="callout" style="margin-top:14px"><span class="en">NTPC's ~89% stake in NTPC Green is worth about ₹66,000–70,000 cr at market price, roughly ₹70 of each NTPC share.</span><span class="ta">NTPC Green-ல NTPC-ஓட ~89% பங்கு market price-ல சுமார் ₹66,000–70,000 cr; ஒவ்வொரு NTPC share-லயும் சுமார் ₹70.</span></div>
+</section>
+
+<!-- ============ NUCLEAR & GRID PUSH ============ -->
+<section class="panel" id="future" data-en="Nuclear & Grid Push" data-ta="Nuclear & Grid Push" hidden>
+  <h2><span class="en">Two long bets: NTPC nuclear, the transmission build-out</span><span class="ta">ரெண்டு நீண்ட கால bets: NTPC nuclear, transmission build-out</span></h2>
+  <div class="grid g2">
+    <div class="card ntpc"><h3 style="margin-top:0"><span class="en">NTPC goes nuclear</span><span class="ta">NTPC nuclear-க்கு போகுது</span></h3>
+      <ul class="b">
+        <li><span class="en">Target: 30 GW of India's 100 GW nuclear goal by 2047.</span><span class="ta">Target: 2047-க்குள் இந்தியாவோட 100 GW nuclear goal-ல 30 GW.</span></li>
+        <li><span class="en">Mahi Banswara (Rajasthan), 4×700 MW, via ASHVINI (JV with NPCIL). PM laid the foundation stone Sep 2025.</span><span class="ta">Mahi Banswara (Rajasthan), 4×700 MW, ASHVINI (NPCIL JV) மூலம். Sep 2025-ல PM அடிக்கல்.</span></li>
+        <li><span class="en">AERB excavation consent for Units 1–2 in Mar 2026; first unit testing expected FY2032–33.</span><span class="ta">Units 1–2-க்கு Mar 2026-ல AERB excavation consent; first unit testing FY2032–33.</span></li>
+        <li><span class="en">NTPC Parmanu Urja Nigam: 30 sites identified, studies at 10. SHANTI Act opens the sector to partners.</span><span class="ta">NTPC Parmanu Urja Nigam: 30 sites, 10-ல study. SHANTI Act partners-க்கு வழி திறக்குது.</span></li>
+      </ul></div>
+    <div class="card pg"><h3 style="margin-top:0"><span class="en">Government's transmission thrust</span><span class="ta">அரசோட transmission thrust</span></h3>
+      <ul class="b">
+        <li><span class="en">₹7.9 lakh cr of transmission capex planned to 2035–36; most to be bid in 3–4 years.</span><span class="ta">2035–36 வரை ₹7.9 லட்சம் cr transmission capex; பெரும்பாலும் 3–4 வருஷத்துல bid.</span></li>
+        <li><span class="en">Power Grid's work-in-hand ₹1.75 lakh cr (83% TBCB). Bidding pipeline ₹1.19 lakh cr.</span><span class="ta">Power Grid work-in-hand ₹1.75 லட்சம் cr (83% TBCB). Bidding pipeline ₹1.19 லட்சம் cr.</span></li>
+        <li><span class="en">Won 6 of 19 TBCB bids this year; ~47% share of ISTS TBCB since inception.</span><span class="ta">இந்த வருஷம் 19 TBCB bid-ல 6 ஜெயிச்சது; ISTS TBCB-ல ~47% share.</span></li>
+        <li><span class="en">New asset types: India's first synchronous condenser, HVDC (Khavda–Nagpur, JBIC ¥80 bn loan), offshore-wind evacuation in TN and Gujarat.</span><span class="ta">புது asset வகை: இந்தியாவோட first synchronous condenser, HVDC (Khavda–Nagpur, JBIC ¥80 bn loan), TN, Gujarat offshore wind evacuation.</span></li>
+        <li><span class="en">Tamil Nadu: ₹857 cr HTLS reconductoring of Tirunelveli–Udumalpet and Pugalur–Madurai 400 kV lines.</span><span class="ta">Tamil Nadu: Tirunelveli–Udumalpet, Pugalur–Madurai 400 kV line-களுக்கு ₹857 cr HTLS reconductoring.</span></li>
+      </ul></div>
+  </div>
+  <h3><span class="en">Timeline to watch</span><span class="ta">கவனிக்க வேண்டிய timeline</span></h3>
+  <div class="svgbox"><svg viewBox="0 0 900 120" width="100%" style="min-width:640px" role="img" aria-label="Timeline">
+    <line x1="30" y1="60" x2="870" y2="60" stroke="#121417" stroke-width="2"/>
+    <g font-size="12.5">
+      <circle cx="60" cy="60" r="7" fill="#F28C28"/><text x="60" y="38" text-anchor="middle" fill="#121417" font-weight="800">Q2 FY27</text><text x="60" y="88" text-anchor="middle" fill="#3a3f47">Results, Oct–Nov</text>
+      <circle cx="230" cy="60" r="7" fill="#7a3a96"/><text x="230" y="38" text-anchor="middle" fill="#121417" font-weight="800">FY27</text><text x="230" y="88" text-anchor="middle" fill="#3a3f47">₹30,000 cr capitalisation</text>
+      <circle cx="400" cy="60" r="7" fill="#1d5fa6"/><text x="400" y="38" text-anchor="middle" fill="#121417" font-weight="800">FY27–29</text><text x="400" y="88" text-anchor="middle" fill="#3a3f47">~10 GW/yr NTPC adds</text>
+      <circle cx="570" cy="60" r="7" fill="#1f8a4c"/><text x="570" y="38" text-anchor="middle" fill="#121417" font-weight="800">2032</text><text x="570" y="88" text-anchor="middle" fill="#3a3f47">60 GW RE goal</text>
+      <circle cx="700" cy="60" r="7" fill="#1d5fa6"/><text x="700" y="38" text-anchor="middle" fill="#121417" font-weight="800">FY33</text><text x="700" y="88" text-anchor="middle" fill="#3a3f47">1st nuclear unit tests</text>
+      <circle cx="840" cy="60" r="7" fill="#1d5fa6"/><text x="840" y="38" text-anchor="middle" fill="#121417" font-weight="800">2047</text><text x="840" y="88" text-anchor="middle" fill="#3a3f47">30 GW nuclear</text>
+    </g></svg></div>
+  <div class="callout"><span class="en">Nuclear gives NTPC a story, but no earnings for at least six years. Long-gestation projects tie up capital and debt in the meantime.</span><span class="ta">Nuclear NTPC-க்கு ஒரு கதை கொடுக்குது, ஆனா குறைஞ்சது ஆறு வருஷத்துக்கு earnings இல்ல. அதுவரை capital, debt கட்டிக் கிடக்கும்.</span></div>
+</section>
+
+<!-- ============ FINANCIALS ============ -->
+<section class="panel" id="fin" data-en="Financials" data-ta="Financials" hidden>
+  <h2><span class="en">Financials</span><span class="ta">Financials</span></h2>
+  <div class="grid g2">
+    <div class="card ntpc"><h3 style="margin-top:0">NTPC (₹ cr, consolidated)</h3>
+      <div class="tbl"><table><thead><tr><th></th><th>Q1 FY27</th><th>Q4 FY26</th><th>Q1 FY26</th><th>YoY</th></tr></thead><tbody>
+        <tr><td>Revenue</td><td>50,741</td><td>49,686</td><td>47,064</td><td class="up">+7.8%</td></tr>
+        <tr><td>EBITDA</td><td>16,231</td><td>—</td><td>12,579</td><td class="up">+29.0%</td></tr>
+        <tr><td>EBITDA margin</td><td>32.0%</td><td>—</td><td>26.7%</td><td class="up">+526 bps</td></tr>
+        <tr><td>PBT</td><td>8,596</td><td>—</td><td>7,578</td><td class="up">+13.4%</td></tr>
+        <tr><td>PAT</td><td>6,896</td><td>10,615</td><td>6,108</td><td class="up">+12.9%</td></tr>
+        <tr><td><span class="en">PAT to owners</span><span class="ta">Owners PAT</span></td><td>6,721</td><td>—</td><td>6,011</td><td class="up">+11.8%</td></tr>
+        <tr><td>EPS (₹)</td><td>6.93</td><td>—</td><td>6.20</td><td class="up">+11.8%</td></tr>
+      </tbody></table></div>
+      <p class="note"><span class="en">Standalone: revenue ₹43,832 cr (+3%), PAT ₹5,342 cr (+11.9%), adjusted PAT ₹5,128 cr (+16%).</span><span class="ta">Standalone: revenue ₹43,832 cr (+3%), PAT ₹5,342 cr (+11.9%), adjusted PAT ₹5,128 cr (+16%).</span></p></div>
+    <div class="card pg"><h3 style="margin-top:0">Power Grid (₹ cr, consolidated)</h3>
+      <div class="tbl"><table><thead><tr><th></th><th>Q1 FY27</th><th>Q4 FY26</th><th>Q1 FY26</th><th>YoY</th></tr></thead><tbody>
+        <tr><td>Revenue</td><td>11,497</td><td>11,665</td><td>11,197</td><td class="up">+2.7%</td></tr>
+        <tr><td>Total income</td><td>11,697</td><td>—</td><td>11,444</td><td class="up">+2.2%</td></tr>
+        <tr><td>EBITDA</td><td>9,536</td><td>—</td><td>9,147</td><td class="up">+4.2%</td></tr>
+        <tr><td>EBITDA margin</td><td>82.9%</td><td>—</td><td>81.7%</td><td class="up">+120 bps</td></tr>
+        <tr><td>PBT (incl. reg. deferral)</td><td>4,587</td><td>3,918</td><td>4,286</td><td class="up">+7.0%</td></tr>
+        <tr><td>PAT</td><td>3,598</td><td>4,546</td><td>3,631</td><td class="dn">−0.9%</td></tr>
+        <tr><td>EPS (₹, standalone)</td><td>3.67</td><td>—</td><td>—</td><td></td></tr>
+      </tbody></table></div>
+      <p class="note"><span class="en">Q1 FY26 had a ₹230 cr one-off gain; adjusted PAT growth ~6%. Q4/Q1 FY26 revenue and PBT derived from reported % changes.</span><span class="ta">Q1 FY26-ல ₹230 cr one-off gain; அதை நீக்கினா PAT ~6% வளர்ச்சி. Q4/Q1 FY26 revenue, PBT reported % change-ல இருந்து கணக்கு.</span></p></div>
+  </div>
+  <div class="grid g2" style="margin-top:14px">
+    <div class="card"><h3 style="margin-top:0"><span class="en">Quarterly PAT (₹ cr)</span><span class="ta">Quarterly PAT (₹ cr)</span></h3><div id="chPAT"></div></div>
+    <div class="card"><h3 style="margin-top:0"><span class="en">Why NTPC's margin jumped</span><span class="ta">NTPC margin ஏன் ஏறிச்சு</span></h3>
+      <ul class="b">
+        <li><span class="en">New units (Patratu 800 MW ×2, Khurja, Tehri PSP) earn fixed charges from day one.</span><span class="ta">புது units (Patratu 800 MW ×2, Khurja, Tehri PSP) முதல் நாளிலிருந்தே fixed charge சம்பாதிக்குது.</span></li>
+        <li><span class="en">Fuel cost per unit fell 7%, so revenue grew slower than profit.</span><span class="ta">Unit-க்கு fuel cost 7% குறைஞ்சது; அதனால revenue-ஐ விட profit வேகமா வளர்ந்தது.</span></li>
+        <li><span class="en">Coal PAF 93.98%: availability above the 85% norm earns full fixed charges plus incentive.</span><span class="ta">Coal PAF 93.98%: 85% norm-க்கு மேல availability → full fixed charge + incentive.</span></li>
+      </ul></div>
+  </div>
+</section>
+
+<!-- ============ CASH FLOW & RATIOS ============ -->
+<section class="panel" id="cash" data-en="Cash Flow & Ratios" data-ta="Cash Flow & Ratios" hidden>
+  <h2><span class="en">Cash flow, ratios and working capital</span><span class="ta">Cash flow, ratios, working capital</span></h2>
+  <div class="grid g2">
+    <div class="card"><h3 style="margin-top:0"><span class="en">Free cash flow vs dividends paid (₹ cr)</span><span class="ta">Free cash flow vs dividend (₹ cr)</span></h3><div id="chFCF"></div>
+      <p class="note"><span class="en">In FY26 both paid out more in dividends than they generated in free cash flow. The gap was borrowed.</span><span class="ta">FY26-ல ரெண்டும் free cash flow-ஐ விட அதிகமா dividend கொடுத்தது. அந்த gap கடன் வாங்கி தான்.</span></p></div>
+    <div class="card"><h3 style="margin-top:0"><span class="en">Cash flow table (₹ cr)</span><span class="ta">Cash flow table (₹ cr)</span></h3>
+      <div class="tbl"><table><thead><tr><th></th><th>FY24</th><th>FY25</th><th>FY26</th></tr></thead><tbody>
+        <tr><td><b>NTPC</b> CFO</td><td>40,099</td><td>50,488</td><td>50,902</td></tr>
+        <tr><td>NTPC capex</td><td>30,816</td><td>41,335</td><td>44,050</td></tr>
+        <tr><td>NTPC FCF</td><td>9,283</td><td>9,153</td><td>6,852</td></tr>
+        <tr><td>NTPC dividends</td><td>7,419</td><td>8,207</td><td>8,759</td></tr>
+        <tr><td>NTPC net new debt</td><td>15,006</td><td>12,980</td><td>14,958</td></tr>
+        <tr><td><b>Power Grid</b> CFO</td><td>37,290</td><td>36,222</td><td>40,935</td></tr>
+        <tr><td>PG capex</td><td>11,410</td><td>24,134</td><td>37,279</td></tr>
+        <tr><td>PG FCF</td><td>25,880</td><td>12,088</td><td>3,656</td></tr>
+        <tr><td>PG dividends</td><td>11,219</td><td>9,766</td><td>8,371</td></tr>
+        <tr><td>PG net new debt</td><td>−5,326</td><td>6,630</td><td>13,900</td></tr>
+      </tbody></table></div>
+      <p class="note">Source: stockanalysis.com / Screener consolidated data; PG FY26 dividend per company.</p></div>
+  </div>
+  <h3><span class="en">Working capital days (CB calc on revenue)</span><span class="ta">Working capital days (revenue-ல CB கணக்கு)</span></h3>
+  <div class="tbl"><table><thead><tr><th></th><th>FY24</th><th>FY25</th><th>FY26</th><th><span class="en">Read</span><span class="ta">அர்த்தம்</span></th></tr></thead><tbody>
+    <tr><td>NTPC receivable days</td><td>91</td><td>99</td><td>105</td><td class="dn"><span class="en">rising, incl. unbilled</span><span class="ta">ஏறுது, unbilled உட்பட</span></td></tr>
+    <tr><td>NTPC inventory days (coal)</td><td>37</td><td>36</td><td>36</td><td class="fl"><span class="en">stable</span><span class="ta">stable</span></td></tr>
+    <tr><td>NTPC payable days</td><td>23</td><td>22</td><td>23</td><td class="fl"><span class="en">stable</span><span class="ta">stable</span></td></tr>
+    <tr><td><b>NTPC net WC days</b></td><td>105</td><td>114</td><td>118</td><td class="dn"><span class="en">more cash tied up</span><span class="ta">அதிக cash கட்டிக் கிடக்கு</span></td></tr>
+    <tr><td>Power Grid debtor days</td><td>92</td><td>63</td><td>91</td><td class="fl"><span class="en">lumpy; Q1 collection 104%</span><span class="ta">ஏறி இறங்குது; Q1 collection 104%</span></td></tr>
+    <tr><td>Power Grid WC days (Screener)</td><td>−134</td><td>−166</td><td>−229</td><td class="up"><span class="en">negative: customer &amp; vendor money funds ops</span><span class="ta">negative: customer, vendor பணம் ops-ஐ fund பண்ணுது</span></td></tr>
+  </tbody></table></div>
+  <h3><span class="en">Key ratios</span><span class="ta">Key ratios</span></h3>
+  <div class="tbl"><table><thead><tr><th>Ratio</th><th>NTPC</th><th>Power Grid</th></tr></thead><tbody>
+    <tr><td>ROE (FY26)</td><td>~12.8%</td><td>~15.8%</td></tr>
+    <tr><td><span class="en">Core ROE Q1 (ex other income, PL Capital)</span><span class="ta">Core ROE Q1 (PL Capital)</span></td><td>19.7%</td><td>—</td></tr>
+    <tr><td>Debt / Equity (Q1)</td><td>1.30x</td><td>1.40x</td></tr>
+    <tr><td>Debt / annualised EBITDA</td><td>~4.2x</td><td>~3.8x</td></tr>
+    <tr><td>Interest cover (FY26)</td><td>—</td><td>~3.0x</td></tr>
+    <tr><td>EBITDA margin (Q1)</td><td>32.0%</td><td>82.9%</td></tr>
+    <tr><td><span class="en">Book value / share</span><span class="ta">Book value / share</span></td><td>₹216 (consol)</td><td>~₹108</td></tr>
+  </tbody></table></div>
+</section>
+
+<!-- ============ DEBT ============ -->
+<section class="panel" id="debt" data-en="Debt" data-ta="கடன்" hidden>
+  <h2><span class="en">The debt question</span><span class="ta">கடன் பிரச்சனை</span></h2>
+  <div class="grid g2">
+    <div class="card"><h3 style="margin-top:0"><span class="en">Total debt (₹ lakh cr)</span><span class="ta">மொத்த கடன் (₹ லட்சம் cr)</span></h3><div id="chDebt"></div></div>
+    <div class="card"><h3 style="margin-top:0"><span class="en">Debt facts</span><span class="ta">கடன் விவரம்</span></h3>
+      <ul class="b">
+        <li><span class="en">NTPC group: ₹2.34 lakh cr long-term + ₹38,398 cr short-term = ₹2.72 lakh cr. Short-term debt more than doubled YoY.</span><span class="ta">NTPC group: long-term ₹2.34 லட்சம் cr + short-term ₹38,398 cr = ₹2.72 லட்சம் cr. Short-term debt ஒரு வருஷத்துல இரட்டிப்புக்கு மேல.</span></li>
+        <li><span class="en">NTPC board cleared another ₹12,000 cr of bonds; capex plan to FY37 is ₹16.86 lakh cr.</span><span class="ta">NTPC board இன்னொரு ₹12,000 cr bonds-க்கு ஓகே; FY37 வரை capex plan ₹16.86 லட்சம் cr.</span></li>
+        <li><span class="en">Power Grid: ₹1.46 lakh cr, up from ₹1.31 lakh cr a year ago. Plans ~₹35,000 cr new debt a year at 80:20 debt-equity on new projects.</span><span class="ta">Power Grid: ₹1.46 லட்சம் cr; ஒரு வருஷம் முன்னாடி ₹1.31 லட்சம் cr. புது project-க்கு 80:20 debt-equity-ல வருஷம் ~₹35,000 cr கடன்.</span></li>
+        <li><span class="en">Power Grid took a ¥80 bn JBIC loan for Khavda–Nagpur HVDC.</span><span class="ta">Khavda–Nagpur HVDC-க்கு Power Grid ¥80 bn JBIC loan.</span></li>
+      </ul></div>
+  </div>
+  <div class="grid g2" style="margin-top:14px">
+    <div class="card acc"><h3 style="margin-top:0"><span class="en">Why it's less scary than it looks</span><span class="ta">பார்க்கிற அளவுக்கு பயப்பட வேண்டாம், ஏன்</span></h3>
+      <ul class="b">
+        <li><span class="en">Regulated tariffs build interest cost in; the regulator assumes 70:30 debt-equity.</span><span class="ta">Regulated tariff-லயே interest cost சேர்ந்திருக்கு; regulator 70:30 debt-equity-ஐ assume பண்ணுது.</span></li>
+        <li><span class="en">AAA-rated, government-owned, so they borrow cheaply (domestic bonds, JBIC).</span><span class="ta">AAA rating, அரசு நிறுவனம்; அதனால குறைஞ்ச வட்டியில கடன் (domestic bonds, JBIC).</span></li>
+        <li><span class="en">D/E is actually stable: NTPC 1.31 → 1.30; Power Grid ~1.4.</span><span class="ta">D/E stable தான்: NTPC 1.31 → 1.30; Power Grid ~1.4.</span></li>
+      </ul></div>
+    <div class="card"><h3 style="margin-top:0"><span class="en">Why it still matters</span><span class="ta">இருந்தாலும் ஏன் முக்கியம்</span></h3>
+      <ul class="b">
+        <li><span class="en">Dividends exceed free cash flow; the gap is funded with debt.</span><span class="ta">Dividend free cash flow-ஐ தாண்டுது; gap கடன்ல.</span></li>
+        <li><span class="en">Projects earn nothing until commissioned; NTPC's CWIP is ₹85,527 cr, nuclear adds years more.</span><span class="ta">Commission ஆகுற வரை project-க்கு earning இல்ல; NTPC CWIP ₹85,527 cr, nuclear இன்னும் வருஷங்கள் சேர்க்கும்.</span></li>
+        <li><span class="en">TBCB and renewable tariffs are fixed, so higher rates hit those returns directly.</span><span class="ta">TBCB, renewable tariff fixed; வட்டி ஏறினா அந்த return நேரடியா அடிபடும்.</span></li>
+        <li><span class="en">Debt growth means EPS grows slower than assets.</span><span class="ta">கடன் வளர்ச்சியால assets வளர்ற அளவுக்கு EPS வளராது.</span></li>
+      </ul></div>
+  </div>
+</section>
+
+<!-- ============ VALUATIONS ============ -->
+<section class="panel" id="val" data-en="Valuations" data-ta="Valuations" hidden>
+  <h2><span class="en">Valuations</span><span class="ta">Valuations</span></h2>
+  <div class="tbl"><table><thead><tr><th></th><th>NTPC</th><th>Power Grid</th><th>NTPC Green</th><th>Adani Power*</th><th>Adani Energy Sol.*</th></tr></thead><tbody>
+    <tr><td>P/E (TTM)</td><td>~10.9x</td><td>~15.4x</td><td>~130x</td><td>28.1x</td><td>68.2x</td></tr>
+    <tr><td>P/B</td><td>1.47x</td><td>~2.4x</td><td>~3.9x</td><td>6.2x</td><td>7.8x</td></tr>
+    <tr><td>ROE</td><td>~12.8%</td><td>~15.8%</td><td>~3%</td><td>19.8%</td><td>9.0%</td></tr>
+    <tr><td><span class="en">Dividend yield</span><span class="ta">Dividend yield</span></td><td>~2.8%</td><td>~3.4%</td><td>0%</td><td>0%</td><td>0%</td></tr>
+    <tr><td><span class="en">Price vs 52-wk high</span><span class="ta">52-wk high-ல இருந்து</span></td><td class="dn">−23%</td><td class="dn">−19%</td><td class="dn">−26%</td><td>—</td><td>—</td></tr>
+  </tbody></table></div>
+  <p class="note"><span class="en">*Peers as of 6 Aug 2026 (Motilal Oswal peer table). For utilities, P/B is the cleaner yardstick because profit tracks regulated equity.</span><span class="ta">*Peers 6 Aug 2026 data (Motilal Oswal). Utility-க்கு P/B தான் சரியான அளவுகோல்; profit regulated equity-யை follow பண்ணுது.</span></p>
+  <div class="grid g2" style="margin-top:14px">
+    <div class="card ntpc"><h3 style="margin-top:0"><span class="en">NTPC: sum of parts, rough</span><span class="ta">NTPC: sum of parts, சுமார்</span></h3>
+      <ul class="b">
+        <li><span class="en">NTPC Green stake ≈ ₹70 per NTPC share at market price.</span><span class="ta">NTPC Green பங்கு ≈ ஒரு NTPC share-க்கு ₹70.</span></li>
+        <li><span class="en">So the core business (thermal, hydro, mining, JVs) trades near ₹249 vs consolidated book ₹216.</span><span class="ta">அப்போ core business (thermal, hydro, mining, JVs) ~₹249; consolidated book ₹216.</span></li>
+        <li><span class="en">Brokers' range: Motilal Oswal ₹381 (Neutral), PL Capital ₹450 (Buy). Not CB views.</span><span class="ta">Brokers range: Motilal Oswal ₹381 (Neutral), PL Capital ₹450 (Buy). இவை CB views இல்ல.</span></li>
+      </ul></div>
+    <div class="card pg"><h3 style="margin-top:0"><span class="en">Power Grid: paying for growth that isn't showing</span><span class="ta">Power Grid: தெரியாத growth-க்கு premium</span></h3>
+      <ul class="b">
+        <li><span class="en">~15x P/E for ~3–6% PAT growth; the premium rests on the capex pipeline converting.</span><span class="ta">~3–6% PAT growth-க்கு ~15x P/E; pipeline convert ஆகும்னு நம்பிக்கை தான் premium.</span></li>
+        <li><span class="en">Its range over three years: ₹172–366; now near the lower third.</span><span class="ta">மூணு வருஷ range: ₹172–366; இப்போ கீழ் மூணுல ஒரு பங்குல.</span></li>
+        <li><span class="en">Brokers: ₹325 (Buy, 17x FY28E) to Neutral at Motilal Oswal. Not CB views.</span><span class="ta">Brokers: ₹325 (Buy, 17x FY28E) முதல் Motilal Oswal Neutral வரை. இவை CB views இல்ல.</span></li>
+      </ul></div>
+  </div>
+</section>
+
+<!-- ============ 5 KEY TAKEAWAYS ============ -->
+<section class="panel" id="take5" data-en="5 Key Takeaways" data-ta="5 முக்கிய பாடங்கள்" hidden>
+  <h2><span class="en">5 key takeaways</span><span class="ta">5 முக்கிய பாடங்கள்</span></h2>
+  <div class="take"><div class="n">1</div><div><b><span class="en">NTPC's quarter was genuinely good.</span><span class="ta">NTPC quarter உண்மையிலேயே நல்லது.</span></b> <span class="en">PAT +13%, margin +526 bps, coal PLF 6 points above India's average.</span><span class="ta">PAT +13%, margin +526 bps, coal PLF India average-ஐ விட 6 points அதிகம்.</span></div></div>
+  <div class="take"><div class="n">2</div><div><b><span class="en">Power Grid is in a build phase.</span><span class="ta">Power Grid build phase-ல இருக்கு.</span></b> <span class="en">Flat profit today; ₹1.75 lakh cr of work in hand to show up from FY28.</span><span class="ta">இன்னிக்கு profit flat; ₹1.75 லட்சம் cr work-in-hand FY28-ல இருந்து தெரியும்.</span></div></div>
+  <div class="take"><div class="n">3</div><div><b><span class="en">The power crunch is a test, not a windfall.</span><span class="ta">Power crunch ஒரு test, லாட்டரி இல்ல.</span></b> <span class="en">Regulated prices cap the upside; coal shortages threaten availability.</span><span class="ta">Regulated price upside-ஐ cap பண்ணுது; coal shortage availability-க்கு ஆபத்து.</span></div></div>
+  <div class="take"><div class="n">4</div><div><b><span class="en">Debt is the fuel of growth.</span><span class="ta">Growth-க்கு எரிபொருள் கடன் தான்.</span></b> <span class="en">₹4.2 lakh cr between the two; dividends now exceed free cash flow.</span><span class="ta">ரெண்டுக்கும் சேர்த்து ₹4.2 லட்சம் cr; dividend இப்போ free cash flow-ஐ தாண்டுது.</span></div></div>
+  <div class="take"><div class="n">5</div><div><b><span class="en">Monopoly ≠ multibagger.</span><span class="ta">Monopoly ≠ multibagger.</span></b> <span class="en">A capped 15.5% return makes these bond-like stocks that move with rates, policy and execution.</span><span class="ta">15.5% cap return இவங்களை bond மாதிரி stock ஆக்குது; rates, policy, execution-ஓட தான் நகரும்.</span></div></div>
+</section>
+
+<!-- ============ WHY SHARES STALL ============ -->
+<section class="panel" id="why" data-en="Why Shares Stall" data-ta="Share ஏன் நகரல" hidden>
+  <h2><span class="en">Reasons for share market activity: what ails these shares?</span><span class="ta">Share market activity-க்கு காரணம்: இந்த shares-க்கு என்ன பிரச்சனை?</span></h2>
+  <p class="lede"><span class="en">NTPC is down ~23% from its high and Power Grid ~19%, despite steady results. Seven reasons:</span><span class="ta">Results நல்லா இருந்தும் NTPC high-ல இருந்து ~23%, Power Grid ~19% இறங்கியிருக்கு. ஏழு காரணங்கள்:</span></p>
+  <div class="grid g2">
+    <div class="card"><h3 style="margin-top:0">1 · <span class="en">Return is capped</span><span class="ta">Return-க்கு cap</span></h3><p><span class="en">CERC fixes 15.5% on equity. A monopoly that can't set its price grows only as fast as its asset base, ~7–10% a year.</span><span class="ta">CERC equity-க்கு 15.5% fix பண்ணுது. விலையை fix பண்ண முடியாத monopoly, asset base வளர்ற வேகத்துல தான் வளரும், வருஷம் ~7–10%.</span></p></div>
+    <div class="card"><h3 style="margin-top:0">2 · <span class="en">Bond in disguise</span><span class="ta">மாறுவேஷத்துல bond</span></h3><ul class="b">
+      <li><span class="en"><b>Bond-like income:</b> regulated profit and a steady dividend, like coupons on a bond.</span><span class="ta"><b>Bond மாதிரி வருமானம்:</b> regulated profit, நிலையான dividend; bond coupon மாதிரி.</span></li>
+      <li><span class="en"><b>So funds compare them with the 10-year G-sec</b>, the risk-free government bond.</span><span class="ta"><b>அதனால funds இவங்களை 10-year G-sec-ஓட ஒப்பிடுவாங்க</b>; அது risk-free அரசு bond.</span></li>
+      <li><span class="en"><b>Expected return ≈ dividend yield + profit growth.</b> Power Grid: ~3.4% + ~6% ≈ 9–10% a year.</span><span class="ta"><b>எதிர்பார்க்கிற return ≈ dividend yield + profit growth.</b> Power Grid: ~3.4% + ~6% ≈ வருஷம் 9–10%.</span></li>
+      <li><span class="en"><b>Bond yields fall</b> → the bond pays less → investors accept a lower dividend yield → share price rises.</span><span class="ta"><b>Bond yield குறைஞ்சா</b> → bond-ல வருமானம் கம்மி → குறைஞ்ச dividend yield-ஐ ஏத்துக்குவாங்க → share price ஏறும்.</span></li>
+      <li><span class="en"><b>Bond yields stay flat or rise</b> → no reason to pay more → the price stalls even if profit grows.</span><span class="ta"><b>Bond yield அப்படியே இருந்தாலோ ஏறினாலோ</b> → அதிக விலை கொடுக்க காரணம் இல்ல → profit வளர்ந்தாலும் price நகராது.</span></li>
+    </ul>
+    <div class="callout" style="margin-top:8px"><span class="en"><b>Worked example (illustrative):</b> Power Grid pays ~₹9 a share. At a 3.4% yield the price is ~₹265. If falling bond yields make investors happy with 2.9%, the same ₹9 supports ~₹310, about 17% higher, with no change in profit.</span><span class="ta"><b>உதாரணம் (illustrative):</b> Power Grid share-க்கு ~₹9 dividend. 3.4% yield-ல price ~₹265. Bond yield குறைஞ்சு investors 2.9%-க்கு சம்மதிச்சா, அதே ₹9-க்கு price ~₹310; profit மாறாமலே சுமார் 17% ஏற்றம்.</span></div></div>
+    <div class="card"><h3 style="margin-top:0">3 · <span class="en">Capex eats the cash</span><span class="ta">Capex cash-ஐ சாப்பிடுது</span></h3><p><span class="en">Power Grid's FCF fell from ₹25,880 cr to ₹3,656 cr in two years. Returns arrive only after commissioning.</span><span class="ta">Power Grid FCF ரெண்டு வருஷத்துல ₹25,880 cr-ல இருந்து ₹3,656 cr. Commission ஆன பிறகு தான் return.</span></p></div>
+    <div class="card"><h3 style="margin-top:0">4 · <span class="en">Government as owner</span><span class="ta">அரசு தான் owner</span></h3><p><span class="en">51% government stake brings OFS supply, policy duties (run plants flat-out, buy costlier coal, absorb stressed assets) and high dividend demands.</span><span class="ta">51% அரசு பங்கு → OFS supply, policy கடமைகள் (plants full-ஆ ஓட்டணும், விலை அதிக coal வாங்கணும், stressed assets எடுக்கணும்), அதிக dividend கேட்பு.</span></p></div>
+    <div class="card"><h3 style="margin-top:0">5 · <span class="en">The 2023–24 PSU rally already priced it</span><span class="ta">2023–24 PSU rally-லயே price ஆச்சு</span></h3><p><span class="en">Both roughly doubled then. Now earnings are catching up while the price cools.</span><span class="ta">அப்போ ரெண்டும் சுமார் இரட்டிப்பு. இப்போ price ஆறும்போது earnings பிடிக்குது.</span></p></div>
+    <div class="card"><h3 style="margin-top:0">6 · <span class="en">Competition in new work</span><span class="ta">புது work-ல போட்டி</span></h3><p><span class="en">83% of Power Grid's new work is TBCB, where Adani, Sterlite and others bid down returns below the 15.5% RTM level.</span><span class="ta">Power Grid புது work-ல 83% TBCB; Adani, Sterlite போன்றவங்க bid பண்ணி return-ஐ 15.5% RTM level-க்கு கீழ இறக்குறாங்க.</span></p></div>
+    <div class="card"><h3 style="margin-top:0">7 · <span class="en">Coal tag and NGEL drag</span><span class="ta">Coal tag, NGEL drag</span></h3><p><span class="en">NTPC is >80% coal and gas, which keeps ESG funds away. Its green arm trades below IPO price and lags its 8 GW target.</span><span class="ta">NTPC >80% coal, gas; ESG funds விலகி இருக்காங்க. Green arm IPO price-க்கு கீழ, 8 GW target-ல பின்னால.</span></p></div>
+    <div class="card acc"><h3 style="margin-top:0"><span class="en">Recent price triggers</span><span class="ta">சமீபத்திய price triggers</span></h3>
+      <ul class="b">
+        <li><span class="en">NTPC +1.6% on results (27 Jul), then slid to ~₹319 as coal stocks fell.</span><span class="ta">Results-க்கு NTPC +1.6% (27 Jul), coal stock குறைய ~₹319-க்கு இறங்கிச்சு.</span></li>
+        <li><span class="en">Power Grid −3.7% to ₹271 on results day (6 Aug), drifting to ~₹264.</span><span class="ta">Results நாள் Power Grid −3.7%, ₹271 (6 Aug); அப்புறம் ~₹264.</span></li>
+        <li><span class="en">NTPC Green +5.8% on results, then back to ~₹88–90.</span><span class="ta">Results-க்கு NTPC Green +5.8%, அப்புறம் மறுபடி ~₹88–90.</span></li>
+      </ul></div>
+  </div>
+</section>
+
+<!-- ============ TRIGGERS & CYCLE ============ -->
+<section class="panel" id="trig" data-en="Triggers & Cycle" data-ta="Triggers & Cycle" hidden>
+  <h2><span class="en">Triggers &amp; cycle</span><span class="ta">Triggers &amp; cycle</span></h2>
+  <div class="grid g2">
+    <div class="card"><h3 style="margin-top:0"><span class="en">Cycle clock</span><span class="ta">Cycle clock</span></h3>
+      <div class="svgbox" id="clock"></div>
+      <ul class="b">
+        <li><span class="en">NTPC sector (policy/regulated): P3 Expansion; demand +9.5%, PLF up. Stock: Weinstein Stage 4.</span><span class="ta">NTPC sector (policy/regulated): P3 Expansion; demand +9.5%, PLF ஏற்றம். Stock: Weinstein Stage 4.</span></li>
+        <li><span class="en">Power T&amp;D (capex/order-book): P3 Expansion; ₹7.9 lakh cr plan, inflows resuming. Stock: Stage 4.</span><span class="ta">Power T&amp;D (capex/order-book): P3 Expansion; ₹7.9 லட்சம் cr plan, order inflow மறுபடி. Stock: Stage 4.</span></li>
+      </ul></div>
+    <div class="card"><h3 style="margin-top:0"><span class="en">Cycle scores</span><span class="ta">Cycle scores</span></h3>
+      <div class="tbl"><table><thead><tr><th></th><th>NTPC</th><th>Power Grid</th></tr></thead><tbody>
+        <tr><td>Sector phase</td><td>P3 · 70</td><td>P3 · 70</td></tr>
+        <tr><td>a. Lifecycle</td><td>Re-inventing · 75</td><td>Mature · 55</td></tr>
+        <tr><td>b. Earnings cycle</td><td>Rising mid · 70</td><td>Flat, near high · 40</td></tr>
+        <tr><td>c. Valuation band</td><td>In band · 55</td><td>In band · 55</td></tr>
+        <tr><td>d. Price stage</td><td>Stage 4 · 15</td><td>Stage 4 · 15</td></tr>
+        <tr><td><b>CY</b></td><td><b>62</b></td><td><b>56</b></td></tr>
+        <tr><td><b>TG</b></td><td><b>49</b></td><td><b>58</b></td></tr>
+      </tbody></table></div>
+      <p class="note"><span class="en">Stage 4 gate: Conviction capped at 55 for both until price trend turns.</span><span class="ta">Stage 4 gate: price trend மாறுற வரை ரெண்டுக்கும் Conviction 55 cap.</span></p></div>
+  </div>
+  <h3><span class="en">Trigger table</span><span class="ta">Trigger table</span></h3>
+  <div class="tbl"><table><thead><tr><th>Trigger</th><th>±</th><th>I</th><th>C</th><th>W</th><th>P</th><th>Pts</th><th><span class="en">Watch</span><span class="ta">கவனிங்க</span></th><th><span class="en">Source</span><span class="ta">Source</span></th></tr></thead><tbody>
+    <tr><td><b>NTPC</b> 9.5 GW FY27 additions</td><td class="up">+</td><td>3</td><td>0.7</td><td>1.0</td><td>1.0</td><td>2.10</td><td>Q2 commissioning</td><td>Concall, Jul 2026</td></tr>
+    <tr><td>NTPC · shortage lifts PLF, incentives, BESS</td><td class="up">+</td><td>2</td><td>0.7</td><td>1.0</td><td>1.0</td><td>1.40</td><td>PAF, incentive line</td><td>Grid-India, Sep 2026</td></tr>
+    <tr><td>NTPC · NGEL scale-up / value unlock</td><td class="up">+</td><td>3</td><td>0.4</td><td>0.7</td><td>1.0</td><td>0.84</td><td>Quarterly MW adds</td><td>NGEL Q1, Jul 2026</td></tr>
+    <tr><td>NTPC · nuclear 30 GW</td><td class="up">+</td><td>5</td><td>0.4</td><td>0.2</td><td>1.0</td><td>0.40</td><td>Mega EPC award</td><td>Lok Sabha, Feb 2026</td></tr>
+    <tr><td>NTPC · coal shortage hits availability</td><td class="dn">−</td><td>3</td><td>0.7</td><td>1.0</td><td>1.0</td><td>2.10</td><td>Coal days, PAF</td><td>CEA, Oct 2026</td></tr>
+    <tr><td>NTPC · NGEL curtailment / RE delays</td><td class="dn">−</td><td>2</td><td>0.7</td><td>1.0</td><td>1.0</td><td>1.40</td><td>RE adds vs 8 GW</td><td>Concall, Jul 2026</td></tr>
+    <tr><td>NTPC · debt-funded ₹16.9 lakh cr capex</td><td class="dn">−</td><td>2</td><td>0.7</td><td>0.7</td><td>1.0</td><td>0.98</td><td>Bond issues</td><td>Board, Jul 2026</td></tr>
+    <tr><td><b>Power Grid</b> ₹30,000 cr capitalisation</td><td class="up">+</td><td>3</td><td>1.0</td><td>1.0</td><td>1.0</td><td>3.00</td><td>Q2/Q3 capitalisation</td><td>Concall, Aug 2026</td></tr>
+    <tr><td>PG · ₹7.9 lakh cr national plan</td><td class="up">+</td><td>3</td><td>0.7</td><td>0.7</td><td>1.0</td><td>1.47</td><td>TBCB win rate</td><td>Webinar, Aug 2026</td></tr>
+    <tr><td>PG · new asset classes (SynCon, HVDC, BESS)</td><td class="up">+</td><td>2</td><td>0.7</td><td>0.7</td><td>1.0</td><td>0.98</td><td>Order wins</td><td>Q1 FY27 release</td></tr>
+    <tr><td>PG · TBCB competition lowers ROE</td><td class="dn">−</td><td>3</td><td>1.0</td><td>0.7</td><td>1.0</td><td>2.10</td><td>Bid tariffs</td><td>PL Capital, Aug 2026</td></tr>
+    <tr><td>PG · thin RTM pipeline (14% of WIH)</td><td class="dn">−</td><td>2</td><td>0.7</td><td>1.0</td><td>1.0</td><td>1.40</td><td>New RTM approvals</td><td>MOFSL, Aug 2026</td></tr>
+    <tr><td>PG · rising borrowings</td><td class="dn">−</td><td>2</td><td>0.7</td><td>0.7</td><td>1.0</td><td>0.98</td><td>D/E, interest cost</td><td>FY26 results</td></tr>
+  </tbody></table></div>
+  <h3><span class="en">What would change this view</span><span class="ta">இந்த view எது மாத்தும்</span></h3>
+  <ul class="b">
+    <li><span class="en">Price reclaiming a rising 30-week average (exits Stage 4).</span><span class="ta">Price மறுபடி ஏறுற 30-week average-க்கு மேல (Stage 4 முடிவு).</span></li>
+    <li><span class="en">NGEL delivering 2+ GW in a quarter; Power Grid raising capitalisation guidance.</span><span class="ta">NGEL ஒரு quarter-ல 2+ GW; Power Grid capitalisation guidance-ஐ ஏத்தறது.</span></li>
+    <li><span class="en">A sharp fall in bond yields, or coal stocks collapsing into a winter shortage.</span><span class="ta">Bond yield கணிசமா குறைவது, அல்லது coal stock சரிஞ்சு winter shortage.</span></li>
+  </ul>
+</section>
+
+<!-- ============ SWOT ============ -->
+<section class="panel" id="swot" data-en="SWOT" data-ta="SWOT" hidden>
+  <h2>SWOT</h2>
+  <div class="swot">
+    <div class="card s-s"><h3><span class="en">Strengths</span><span class="ta">பலம்</span></h3><ul class="b">
+      <li><span class="en">Assured 15.5% regulated return; AAA balance sheets</span><span class="ta">உறுதியான 15.5% return; AAA balance sheet</span></li>
+      <li><span class="en">NTPC coal PLF 76.7% vs India 70.3%</span><span class="ta">NTPC coal PLF 76.7% vs India 70.3%</span></li>
+      <li><span class="en">Power Grid: 99.8% availability, 104% collections</span><span class="ta">Power Grid: 99.8% availability, 104% collection</span></li></ul></div>
+    <div class="card s-w"><h3><span class="en">Weaknesses</span><span class="ta">பலவீனம்</span></h3><ul class="b">
+      <li><span class="en">Debt ₹2.72 + ₹1.46 lakh cr; dividends &gt; FCF</span><span class="ta">கடன் ₹2.72 + ₹1.46 லட்சம் cr; dividend &gt; FCF</span></li>
+      <li><span class="en">Capped pricing; slow EPS growth</span><span class="ta">விலைக்கு cap; மெதுவான EPS growth</span></li>
+      <li><span class="en">NTPC >80% fossil; NGEL execution behind</span><span class="ta">NTPC >80% fossil; NGEL execution பின்னால</span></li></ul></div>
+    <div class="card s-o"><h3><span class="en">Opportunities</span><span class="ta">வாய்ப்பு</span></h3><ul class="b">
+      <li><span class="en">₹7.9 lakh cr transmission plan; HVDC, SynCon, offshore wind</span><span class="ta">₹7.9 லட்சம் cr transmission plan; HVDC, SynCon, offshore wind</span></li>
+      <li><span class="en">Nuclear 30 GW, 18 GW pumped storage, BESS</span><span class="ta">Nuclear 30 GW, 18 GW pumped storage, BESS</span></li>
+      <li><span class="en">Demand growing ~9–10% a year</span><span class="ta">Demand வருஷம் ~9–10% வளர்ச்சி</span></li></ul></div>
+    <div class="card s-t"><h3><span class="en">Threats</span><span class="ta">அச்சுறுத்தல்</span></h3><ul class="b">
+      <li><span class="en">Coal shortage into early 2027</span><span class="ta">2027 ஆரம்பம் வரை coal shortage</span></li>
+      <li><span class="en">TBCB bid competition; RE curtailment</span><span class="ta">TBCB போட்டி; RE curtailment</span></li>
+      <li><span class="en">Policy burdens, OFS supply, rate cycle</span><span class="ta">Policy சுமை, OFS supply, rate cycle</span></li></ul></div>
+  </div>
+</section>
+
+<!-- ============ CAUVERY ASSIST ============ -->
+<section class="panel" id="assistTab" data-en="Cauvery Assist" data-ta="Cauvery Assist" hidden>
+  <h2>Cauvery Assist</h2>
+  <p class="lede"><span class="en">Ask about NTPC, Power Grid or NTPC Green. Direct one-line answers, read aloud. Education only.</span><span class="ta">NTPC, Power Grid, NTPC Green பத்தி கேளுங்க. நேரடி ஒரு வரி பதில், சத்தமா படிக்கும். கல்விக்கு மட்டும்.</span></p>
+  <div id="assist"></div>
+  <p class="note"><span class="en">Voice input needs Chrome or Edge on the GitHub Pages copy; the artifact view blocks the microphone. Read-aloud works everywhere.</span><span class="ta">Voice input GitHub Pages copy-ல Chrome/Edge-ல தான்; artifact view-ல mic block. Read-aloud எல்லா இடத்திலும் வேலை செய்யும்.</span></p>
+</section>
+
+<!-- ============ SOCRATES ============ -->
+<section class="panel" id="quiz" data-en="Cauvery Socrates" data-ta="Cauvery Socrates" hidden>
+  <h2>Cauvery Socrates</h2>
+  <p class="lede"><span class="en">Eight questions. Think first, then tap.</span><span class="ta">எட்டு கேள்விகள். முதல்ல யோசிங்க, அப்புறம் tap பண்ணுங்க.</span></p>
+  <div id="score" class="chip pill-g" style="margin-bottom:12px"></div>
+  <div id="quizBox"></div>
+</section>
+
+<!-- ============ ANALYST VIEW ============ -->
+<section class="panel" id="view" data-en="Analyst View" data-ta="Analyst View" hidden>
+  <h2><span class="en">Analyst view</span><span class="ta">Analyst view</span></h2>
+  <div class="grid g3">
+    <div class="card ntpc"><span class="tag t-ntpc">NTPC</span><ul class="b">
+      <li><span class="en">Best quarter in a while; margins and group companies firing.</span><span class="ta">சமீபத்துல best quarter; margin, group companies நல்லா ஓடுது.</span></li>
+      <li><span class="en">Cycle: sector P3, stock Stage 4 near its 52-week low.</span><span class="ta">Cycle: sector P3, stock Stage 4, 52-week low பக்கத்துல.</span></li>
+      <li><span class="en">Top positives: 9.5 GW additions, shortage-driven PLF. Top risk: coal availability.</span><span class="ta">முக்கிய positives: 9.5 GW additions, shortage-ஆல PLF. முக்கிய risk: coal availability.</span></li></ul></div>
+    <div class="card pg"><span class="tag t-pg">Power Grid</span><ul class="b">
+      <li><span class="en">A pipeline story: profits flat until capitalisation picks up.</span><span class="ta">Pipeline கதை: capitalisation ஏறும் வரை profit flat.</span></li>
+      <li><span class="en">Cycle: sector P3, stock Stage 4.</span><span class="ta">Cycle: sector P3, stock Stage 4.</span></li>
+      <li><span class="en">Top positives: ₹30,000 cr capitalisation, ₹7.9 lakh cr plan. Top risk: TBCB returns.</span><span class="ta">முக்கிய positives: ₹30,000 cr capitalisation, ₹7.9 லட்சம் cr plan. முக்கிய risk: TBCB return.</span></li></ul></div>
+    <div class="card ngel"><span class="tag t-ngel">NTPC Green</span><ul class="b">
+      <li><span class="en">Numbers growing fast from a small base.</span><span class="ta">சின்ன base-ல இருந்து வேகமான growth.</span></li>
+      <li><span class="en">Execution and curtailment decide whether ~130x P/E holds.</span><span class="ta">~130x P/E நிக்குமான்னு execution, curtailment தான் முடிவு பண்ணும்.</span></li>
+      <li><span class="en">Watch quarterly MW additions against the 8 GW goal.</span><span class="ta">8 GW goal-க்கு எதிரா quarterly MW addition-ஐ கவனிங்க.</span></li></ul></div>
+  </div>
+  <div class="callout" style="margin-top:14px"><span class="en">Bottom line for learners: these are steady, regulated compounders with heavy debt. Expect returns close to dividend plus regulated-equity growth, and re-rating only when rates fall or execution surprises.</span><span class="ta">கத்துக்கறவங்களுக்கு: இவை கடன் அதிகமான, steady regulated compounders. Dividend + regulated equity growth அளவுக்கு return எதிர்பாருங்க; rate குறைஞ்சாலோ execution ஆச்சரியப்படுத்தினாலோ தான் re-rating.</span></div>
+  <h3><span class="en">Sources</span><span class="ta">Sources</span></h3>
+  <ul class="b note">
+    <li>NTPC Q1 FY27 Operational &amp; Financial Snapshot (ntpc.co.in); PL Capital, Motilal Oswal (via DSIJ) result updates</li>
+    <li>Power Grid Q1 FY27 release (Daily Pioneer, JM Financial, Angel One); ICICI Direct, PL Capital result notes; T&amp;D India</li>
+    <li>NTPC Green Q1 FY27 (Energetica India, Arihant Capital)</li>
+    <li>Power crunch: Reuters via Engineering News / Mining Weekly; Business Today; Outlook Business; Free Press Journal</li>
+    <li>Nuclear: Lok Sabha reply (Energetica India); Business Today interview, Jun 2026</li>
+    <li>Cash flow and balance sheet: stockanalysis.com, Screener.in</li>
+  </ul>
+</section>
+
+</main>
+
+<button class="vbub" id="vbub" onclick="openAssist()"><span class="en">🎙 Voice Assist</span><span class="ta">🎙 Voice Assist</span></button>
+<div class="cb" id="cb" tabindex="0" aria-label="Disclaimer">
+  <div class="disc"><b>CB Research</b> · <span class="en">Education only. Not SEBI-registered. No buy, sell or hold recommendation. Data from company filings and public reports; verify before acting. Learn before you Buy.</span><span class="ta">கல்விக்கு மட்டும். SEBI-registered இல்ல. Buy, sell, hold recommendation இல்ல. Company filings, public reports data; முடிவெடுக்கும் முன் சரிபாருங்க. வாங்கறதுக்கு முன்னாடி கத்துக்குங்க!</span></div>
+  <div class="logo" onclick="document.getElementById('cb').classList.toggle('open')">CB</div>
+</div>
+
+<script>
+/* ---------- language + tabs ---------- */
+var LANG='en';
+var RATE=0.8; try{var rr=parseFloat(localStorage.getItem('cba_ntpcpg_rate')); if(rr) RATE=rr;}catch(e){}
+try{var s=localStorage.getItem('cb_ntpcpg_lang'); if(s) LANG=s;}catch(e){}
+document.documentElement.setAttribute('data-lang',LANG);
+var panels=[].slice.call(document.querySelectorAll('section.panel'));
+var tabsEl=document.getElementById('tabs');
+panels.forEach(function(p,i){
+  var b=document.createElement('button'); b.setAttribute('role','tab'); b.id='tb_'+p.id;
+  b.innerHTML='<span class="en">'+p.dataset.en+'</span><span class="ta">'+p.dataset.ta+'</span>';
+  b.onclick=function(){showTab(p.id)}; tabsEl.appendChild(b);
+});
+function showTab(id){
+  panels.forEach(function(p){p.hidden=(p.id!==id)});
+  [].forEach.call(tabsEl.children,function(b){b.setAttribute('aria-selected',b.id==='tb_'+id)});
+  var b=document.getElementById('tb_'+id); if(b) b.scrollIntoView({block:'nearest',inline:'nearest'});
+  window.scrollTo({top:0});
+  try{localStorage.setItem('cb_ntpcpg_tab',id)}catch(e){}
+}
+function setLang(l){
+  LANG=l; document.documentElement.setAttribute('data-lang',l);
+  document.getElementById('bEN').setAttribute('aria-pressed',l==='en');
+  document.getElementById('bTA').setAttribute('aria-pressed',l==='ta');
+  try{localStorage.setItem('cb_ntpcpg_lang',l)}catch(e){}
+  if(window.cbAssist&&cbAssist.setLang) cbAssist.setLang(l);
+  if(window.renderQuiz) renderQuiz();
+}
+setLang(LANG);
+var start='dash'; try{var h=(location.hash||'').slice(1); var t=localStorage.getItem('cb_ntpcpg_tab'); if(h&&document.getElementById(h)) start=h; else if(t&&document.getElementById(t)) start=t;}catch(e){}
+showTab(start);
+function openAssist(){showTab('assistTab'); var i=document.getElementById('asq'); if(i) i.focus();}
+
+/* ---------- charts ---------- */
+var C={ntpc:'#1d5fa6',pg:'#7a3a96',ngel:'#1f8a4c',acc:'#F28C28',grey:'#9aa3ad',ink:'#121417',mute:'#5d6470',line:'#e6e1da'};
+function fmt(v){return v>=1000?v.toLocaleString('en-IN'):(Math.round(v*100)/100).toString()}
+function bars(id,o){
+  var W=520,H=240,pl=46,pr=10,pt=18,pb=44,n=o.labels.length,sN=o.series.length;
+  var max=o.max||Math.max.apply(null,o.series.map(function(s){return Math.max.apply(null,s.values.map(Math.abs))}))*1.15;
+  var min=o.min||0; if(o.series.some(function(s){return s.values.some(function(v){return v<0})})) min=-max*0.3;
+  var y=function(v){return pt+(H-pt-pb)*(1-(v-min)/(max-min))};
+  var gw=(W-pl-pr)/n, bw=Math.min(38,(gw-14)/sN);
+  var s='<svg viewBox="0 0 '+W+' '+H+'" width="100%" role="img">';
+  for(var k=0;k<=4;k++){var v=min+(max-min)*k/4; s+='<line x1="'+pl+'" x2="'+(W-pr)+'" y1="'+y(v)+'" y2="'+y(v)+'" stroke="'+C.line+'"/><text x="'+(pl-6)+'" y="'+(y(v)+4)+'" text-anchor="end" font-size="10.5" fill="'+C.mute+'">'+fmt(Math.round(v*10)/10)+'</text>';}
+  o.labels.forEach(function(l,i){
+    var gx=pl+gw*i+(gw-bw*sN)/2;
+    o.series.forEach(function(se,j){var v=se.values[i]; if(v==null) return; var x=gx+bw*j, y0=y(Math.max(0,v)), h=Math.abs(y(v)-y(0));
+      s+='<rect x="'+x+'" y="'+y0+'" width="'+(bw-3)+'" height="'+Math.max(1,h)+'" rx="3" fill="'+se.color+'"/>';
+      s+='<text x="'+(x+(bw-3)/2)+'" y="'+(v>=0?y0-4:y0+h+12)+'" text-anchor="middle" font-size="10.5" fill="'+C.ink+'" font-weight="700">'+fmt(v)+'</text>';});
+    s+='<text x="'+(pl+gw*i+gw/2)+'" y="'+(H-pb+16)+'" text-anchor="middle" font-size="11.5" fill="'+C.ink+'" font-weight="700">'+l+'</text>';
+  });
+  s+='<line x1="'+pl+'" x2="'+(W-pr)+'" y1="'+y(0)+'" y2="'+y(0)+'" stroke="'+C.ink+'"/></svg>';
+  if(sN>1) s+='<div class="legend">'+o.series.map(function(se){return '<span><i style="background:'+se.color+'"></i>'+se.name+'</span>'}).join('')+'</div>';
+  document.getElementById(id).innerHTML=s;
+}
+bars('chPLF',{labels:['Coal','Gas','Solar','Hydro'],series:[{name:'Q1 FY27',color:C.ntpc,values:[76.71,5.29,31.06,30.92]},{name:'Q1 FY26',color:C.grey,values:[75.16,11.08,26.81,59.50]}],max:90});
+bars('chCap',{labels:['30 Jun 25','31 Mar 26','30 Jun 26'],series:[{name:'MW',color:C.ntpc,values:[82646,89108,90904]}],max:100000});
+bars('chUC',{labels:['Coal','Hydro','Renewable'],series:[{name:'MW',color:C.ntpc,values:[15720,3581,16401]}],max:19000});
+bars('chTariff',{labels:['Fixed','Fuel','Fixed+Fuel','Realised*'],series:[{name:'Q1 FY27',color:C.ntpc,values:[1.78,2.68,4.46,4.94]},{name:'Q1 FY26',color:C.grey,values:[1.75,2.88,4.63,null]}],max:5.8});
+document.getElementById('chTariff').insertAdjacentHTML('beforeend','<p class="note">*Realised = generation revenue ₹42,912 cr ÷ 86.945 BU sold (CB calc). Fixed and fuel charges from NTPC OFS Q1 FY27; the ~₹0.48 gap is other tariff items (incentives, taxes, adjustments).</p>');
+bars('chNG',{labels:['Operational','Contracted','Pipeline'],series:[{name:'MW',color:C.ngel,values:[10671,16318,3424]}],max:19000});
+bars('chPAT',{labels:['Q1 FY26','Q4 FY26','Q1 FY27'],series:[{name:'NTPC',color:C.ntpc,values:[6108,10615,6896]},{name:'Power Grid',color:C.pg,values:[3631,4546,3598]}],max:12000});
+bars('chFCF',{labels:['NTPC FY24','NTPC FY26','PG FY24','PG FY26'],series:[{name:'Free cash flow',color:C.acc,values:[9283,6852,25880,3656]},{name:'Dividends paid',color:C.ink,values:[7419,8759,11219,8371]}],max:30000});
+bars('chDebt',{labels:['NTPC Q1 FY26','NTPC Q1 FY27','PG Q1 FY26','PG Q1 FY27'],series:[{name:'₹ lakh cr',color:C.acc,values:[2.48,2.72,1.31,1.46]}],max:3.2});
+/* coal line */
+(function(){var pts=[['Apr',55],['Jul',44],['late Aug',31],['early Oct',20.6]],W=520,H=230,pl=40,pr=20,pt=20,pb=36,mx=60;
+ var x=function(i){return pl+(W-pl-pr)*i/(pts.length-1)}, y=function(v){return pt+(H-pt-pb)*(1-v/mx)};
+ var s='<svg viewBox="0 0 '+W+' '+H+'" width="100%" role="img">';
+ [0,20,40,60].forEach(function(v){s+='<line x1="'+pl+'" x2="'+(W-pr)+'" y1="'+y(v)+'" y2="'+y(v)+'" stroke="'+C.line+'"/><text x="'+(pl-6)+'" y="'+(y(v)+4)+'" text-anchor="end" font-size="10.5" fill="'+C.mute+'">'+v+'</text>'});
+ var d=pts.map(function(p,i){return (i?'L':'M')+x(i)+','+y(p[1])}).join('');
+ s+='<path d="'+d+'L'+x(pts.length-1)+','+y(0)+'L'+x(0)+','+y(0)+'Z" fill="#F28C28" fill-opacity=".15"/><path d="'+d+'" fill="none" stroke="#F28C28" stroke-width="3"/>';
+ pts.forEach(function(p,i){s+='<circle cx="'+x(i)+'" cy="'+y(p[1])+'" r="'+(i==pts.length-1?6:4)+'" fill="'+(i==pts.length-1?'#b3261e':'#F28C28')+'"/><text x="'+x(i)+'" y="'+(y(p[1])-10)+'" text-anchor="middle" font-size="12" font-weight="800" fill="'+C.ink+'">'+p[1]+'</text><text x="'+x(i)+'" y="'+(H-12)+'" text-anchor="middle" font-size="11.5" fill="'+C.ink+'" font-weight="700">'+p[0]+'</text>'});
+ document.getElementById('chCoal').innerHTML=s+'</svg>';})();
+/* cycle clock */
+(function(){var cx=170,cy=150,r=110,ph=['P1 Trough','P2 Early recovery','P3 Expansion','P4 Late cycle','P5 Downturn'],col=['#9aa3ad','#1f7a3f','#4f9d69','#b26a00','#b3261e'];
+ var s='<svg viewBox="0 0 360 300" width="100%" style="max-width:420px" role="img" aria-label="Cycle clock">';
+ for(var i=0;i<5;i++){var a0=(-90+i*72)*Math.PI/180,a1=(-90+(i+1)*72)*Math.PI/180;
+  s+='<path d="M'+cx+','+cy+'L'+(cx+r*Math.cos(a0))+','+(cy+r*Math.sin(a0))+'A'+r+','+r+' 0 0 1 '+(cx+r*Math.cos(a1))+','+(cy+r*Math.sin(a1))+'Z" fill="'+col[i]+'" fill-opacity=".22" stroke="#fff" stroke-width="2"/>';
+  var am=(-90+i*72+36)*Math.PI/180; s+='<text x="'+(cx+(r+26)*Math.cos(am))+'" y="'+(cy+(r+26)*Math.sin(am)+4)+'" text-anchor="middle" font-size="11" font-weight="800" fill="#121417">'+ph[i]+'</text>';}
+ var ap=(-90+2*72+30)*Math.PI/180; s+='<line x1="'+cx+'" y1="'+cy+'" x2="'+(cx+(r-14)*Math.cos(ap))+'" y2="'+(cy+(r-14)*Math.sin(ap))+'" stroke="#121417" stroke-width="4" stroke-linecap="round"/><circle cx="'+cx+'" cy="'+cy+'" r="7" fill="#121417"/>';
+ var as=(-90+4*72+40)*Math.PI/180; s+='<circle cx="'+(cx+(r-30)*Math.cos(as))+'" cy="'+(cy+(r-30)*Math.sin(as))+'" r="9" fill="#F28C28" stroke="#121417" stroke-width="2"/>';
+ s+='<text x="10" y="290" font-size="11" fill="#3a3f47" font-weight="700">Needle = both sectors (P3) · orange dot = both stocks (Stage 4 price trend)</text></svg>';
+ document.getElementById('clock').innerHTML=s;})();
+
+/* ---------- read tab aloud ---------- */
+function pickVoice(l){var vs=(window.speechSynthesis&&speechSynthesis.getVoices())||[];var code=l==='ta'?'ta':'en-IN';
+  return vs.find(function(v){return v.lang&&v.lang.replace('_','-').indexOf(code)===0})||vs.find(function(v){return l==='en'&&v.lang&&v.lang.indexOf('en')===0})||null;}
+function speak(text,l){ if(!window.speechSynthesis) return; speechSynthesis.cancel(); l=l||LANG;
+  var parts=String(text).replace(/\s+/g,' ').split(/(?<=[.!?।])\s+/).filter(Boolean); var v=pickVoice(l);
+  parts.forEach(function(p){var u=new SpeechSynthesisUtterance(p);u.lang=l==='ta'?'ta-IN':'en-IN';if(v)u.voice=v;u.rate=RATE;speechSynthesis.speak(u)});}
+function plain(el){var c=el.cloneNode(true);[].forEach.call(c.querySelectorAll(LANG==='en'?'.ta':'.en'),function(n){n.remove()});[].forEach.call(c.querySelectorAll('svg,script,table,#assist,#quizBox'),function(n){n.remove()});return c.textContent.replace(/\s+/g,' ').trim();}
+function readTab(){var p=panels.find(function(p){return !p.hidden}); if(p) speak(plain(p));}
+if(window.speechSynthesis) speechSynthesis.onvoiceschanged=function(){};
+</script>
+
+<script>
+/* ---------- Cauvery Assist (lite, CONFIG-compatible) ----------
+   Stand-in built to the cauvery-assist.js CONFIG schema. To use the master component,
+   paste cauvery-assist.js above this block and replace CauveryAssistLite with CauveryAssist. */
+var CauveryAssistLite=(function(){
+  function A(en,ta){return {en:en,ta:ta}}
+  function mount(root,CFG){
+    var lang=CFG.lang||'en', last=[], rec=null, listening=false, silT=null, waitMs=3000;
+    root.innerHTML='<div class="as"><div class="as-h"><strong>'+CFG.title+'</strong>'+
+      '<label><span class="en">Speed</span><span class="ta">வேகம்</span> <input id="asRate" type="range" min="0.5" max="1.5" step="0.05" value="'+RATE+'" aria-label="Speech speed"></label> <span class="mono" id="asRateV">'+RATE.toFixed(2)+'×</span>'+
+      '<button class="btn o" id="asPause" type="button">⏯</button><button class="btn o" id="asStop" type="button">⏹</button>'+
+      '<label><span class="en">Wait</span><span class="ta">காத்திரு</span> <select id="asWait"><option value="2000">2s</option><option value="3000" selected>3s</option><option value="5000">5s</option><option value="0">Done</option></select></label></div>'+
+      '<div class="listen" id="asBar"></div><div class="as-log" id="asLog" aria-live="polite"></div>'+
+      '<div class="sugg" id="asSugg"></div>'+
+      '<form class="as-in" id="asForm"><input type="text" id="asq" autocomplete="off"><button class="btn" type="submit"><span class="en">Ask</span><span class="ta">கேளுங்க</span></button><button class="btn o" type="button" id="asMic">🎙</button></form></div>';
+    var log=root.querySelector('#asLog'), q=root.querySelector('#asq');
+    function t(x){return typeof x==='string'?x:(x[lang]||x.en)}
+    function add(role,html,say,more,tab){var d=document.createElement('div');d.className='msg '+role;d.innerHTML=html;
+      if(role==='a'){ if(more) d.innerHTML+='<details><summary>'+(lang==='ta'?'மேலும் விவரம்':'More details')+'</summary>'+more+'</details>';
+        var acts=document.createElement('div');acts.className='acts';var b=document.createElement('button');b.type='button';b.textContent='🔊';b.onclick=function(){speak(say,lang)};acts.appendChild(b);
+        if(tab&&CFG.onOpenTab){var o=document.createElement('button');o.type='button';o.textContent=lang==='ta'?'Tab திறங்க':'Open related tab';o.onclick=function(){CFG.onOpenTab(tab)};acts.appendChild(o);}
+        d.appendChild(acts); speak(say,lang);}
+      log.appendChild(d); log.scrollTop=log.scrollHeight;}
+    function norm(s){return ' '+s.toLowerCase().replace(/[?.,!]/g,' ')+' '}
+    function has(s,arr){return arr.some(function(k){return s.indexOf(k.toLowerCase())>-1})}
+    function answer(raw){
+      var s=norm(raw);
+      if(has(s,[' buy',' sell',' hold','invest now','should i','வாங்கலாமா','வாங்க','விக்க','விற்க','முதலீடு பண்ண'])) return {a:t(CFG.noAdvice)};
+      var ents=CFG.entities.filter(function(e){return has(s,[e.name].concat(e.aliases))});
+      if(ents.some(function(e){return e.id==='ngel'})&&ents.some(function(e){return e.id==='ntpc'})&&(s.match(/ntpc|என்டிபிசி/g)||[]).length<2) ents=ents.filter(function(e){return e.id!=='ntpc'});
+      var follow=has(s,[' its ',' it ',' their ','அதோட','அது','இவங்க']);
+      if(!ents.length&&follow) ents=last;
+      var met=CFG.metrics.find(function(m){return has(s,m.kw)});
+      var kbHit=null,best=0; CFG.kb.forEach(function(k){var sc=k.k.filter(function(w){return s.indexOf(w.toLowerCase())>-1}).length; if(sc>best){best=sc;kbHit=k}});
+      if(kbHit&&(kbHit.preferOverMetric||!met)&&!(ents.length&&met)) {last=ents.length?ents:last; return {a:t(kbHit.a),d:kbHit.d&&t(kbHit.d),tab:kbHit.tab};}
+      if(met){
+        var lab=t(met.label), f=function(v){return met.fmt?met.fmt(v):(v+(met.unit||''))};
+        if(met.numeric===false){ if(!ents.length) ents=CFG.entities; last=ents;
+          return {a:ents.map(function(e){return e.text&&e.text[met.key]?t(e.text[met.key]):''}).join(' ')};}
+        var pool=(ents.length?ents:CFG.entities).filter(function(e){return e.values[met.key]!=null});
+        if(ents.length===1&&pool.length){var e=pool[0]; last=[e]; return {a:(lang==='ta'?e.name+' '+lab+': '+f(e.values[met.key])+'.':e.name+"'s "+lab+' is '+f(e.values[met.key])+'.')+(e.why?' '+t(e.why):'')};}
+        if(pool.length>=2){ var low=has(s,['lowest','least','cheapest','குறைவு','கம்மி']); var lb=low?!met.lowerIsBetter:met.lowerIsBetter;
+          pool.sort(function(a,b){return (b.values[met.key]-a.values[met.key])*(low?-1:1)}); last=pool;
+          var top=pool[0], rest=pool.slice(1).map(function(e){return e.name+' ('+f(e.values[met.key])+')'}).join(', ');
+          return {a: lang==='ta'? (low?lab+' கம்மி: ':lab+' அதிகம்: ')+top.name+' — '+f(top.values[met.key])+'. அடுத்து '+rest+'.' : top.name+' has the '+(low?'lowest ':'highest ')+lab+' at '+f(top.values[met.key])+'. Next: '+rest+'.'};}
+      }
+      if(ents.length===1){last=ents; return {a:t(ents[0].summary), d:ents[0].risk?('<b>'+(lang==='ta'?'Risk':'Risk')+':</b> '+t(ents[0].risk)):null};}
+      if(kbHit) return {a:t(kbHit.a),d:kbHit.d&&t(kbHit.d),tab:kbHit.tab};
+      return {a:t(CFG.fallback)};
+    }
+    function ask(text){ if(!text.trim()) return; add('u',text.replace(/</g,'&lt;')); var r=answer(text); add('a',r.a,r.a,r.d,r.tab); }
+    root.querySelector('#asForm').onsubmit=function(e){e.preventDefault(); ask(q.value); q.value='';};
+    root.querySelector('#asStop').onclick=function(){window.speechSynthesis&&speechSynthesis.cancel()};
+    root.querySelector('#asPause').onclick=function(){if(!window.speechSynthesis)return; speechSynthesis.paused?speechSynthesis.resume():speechSynthesis.pause()};
+    root.querySelector('#asRate').oninput=function(){RATE=parseFloat(this.value);root.querySelector('#asRateV').textContent=RATE.toFixed(2)+'×';try{localStorage.setItem(CFG.storageKey+'_rate',RATE)}catch(e){}};
+    root.querySelector('#asWait').onchange=function(){waitMs=parseInt(this.value,10)};
+    var bar=root.querySelector('#asBar');
+    root.querySelector('#asMic').onclick=function(){
+      var SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+      if(!SR){add('a',lang==='ta'?'இந்த browser-ல voice input இல்ல. Type பண்ணுங்க.':'Voice input is not available here. Please type your question.','');return;}
+      if(listening){finish();return;}
+      var buf=''; rec=new SR(); rec.lang=lang==='ta'?'ta-IN':'en-IN'; rec.continuous=true; rec.interimResults=true; listening=true; this.textContent='✅';
+      rec.onresult=function(ev){var txt='';for(var i=0;i<ev.results.length;i++){txt+=ev.results[i][0].transcript}buf=txt;q.value=txt;arm();};
+      rec.onend=function(){if(listening){try{rec.start()}catch(e){}}};
+      rec.onerror=function(ev){if(ev.error==='not-allowed'){listening=false;add('a',lang==='ta'?'Mic block ஆகியிருக்கு. Type பண்ணுங்க.':'The microphone is blocked here. Please type your question.','');}};
+      try{rec.start()}catch(e){}
+      function arm(){clearTimeout(silT); if(!waitMs) return; var t0=Date.now(); bar.style.width='100%';
+        silT=setTimeout(finish,waitMs); (function tick(){var p=1-(Date.now()-t0)/waitMs; if(p>0&&listening){bar.style.width=(p*100)+'%';requestAnimationFrame(tick)}})();}
+      function finish(){listening=false;clearTimeout(silT);bar.style.width='0';try{rec.stop()}catch(e){} root.querySelector('#asMic').textContent='🎙'; if(q.value.trim()){ask(q.value);q.value='';}}
+      window._asFinish=finish;
+    };
+    function finish(){ if(window._asFinish) window._asFinish(); }
+    function renderSugg(){root.querySelector('#asSugg').innerHTML=CFG.suggestions.map(function(p){return '<button type="button">'+(lang==='ta'?p[1]:p[0])+'</button>'}).join('');
+      [].forEach.call(root.querySelectorAll('#asSugg button'),function(b){b.onclick=function(){ask(b.textContent)}});
+      q.placeholder=t(CFG.placeholder);}
+    renderSugg(); var g=document.createElement('div');g.className='msg a';g.textContent=t(CFG.greeting);log.appendChild(g);
+    return {setLang:function(l){lang=l;renderSugg();}, speak:speak, plain:plain};
+  }
+  return {A:A,mount:mount};
+})();
+var A=CauveryAssistLite.A;
+var CONFIG={
+  title:'Cauvery Assist', storageKey:'cba_ntpcpg', lang:LANG,
+  placeholder:A('Ask: Which has more debt, NTPC or Power Grid?','கேளுங்க: NTPC-க்கா Power Grid-க்கா debt அதிகம்?'),
+  greeting:A('Ask me about NTPC, Power Grid or NTPC Green.','NTPC, Power Grid, NTPC Green பத்தி கேளுங்க.'),
+  noAdvice:A('I can’t say buy, sell or hold. CB Research is not SEBI-registered; this dashboard is for learning only.','Buy, sell, hold சொல்ல முடியாது. CB Research SEBI-registered இல்ல; இந்த dashboard கத்துக்கறதுக்கு மட்டும்.'),
+  fallback:A('I don’t have that here. Try profit, debt, P/E, tariff, coal shortage, nuclear or why shares don’t move.','அது இங்க இல்ல. Profit, debt, P/E, tariff, coal shortage, nuclear, share ஏன் நகரல — இதெல்லாம் கேளுங்க.'),
+  onOpenTab:function(id){showTab(id)},
+  metrics:[
+    {key:'patg',kw:['profit growth','growth','grew','fastest','வளர்ச்சி','க்ரோத்'],label:A('PAT growth (YoY)','PAT growth (YoY)'),unit:'%'},
+    {key:'pat',kw:['profit','pat','net profit','லாபம்','ப்ராஃபிட்','பிராபிட்'],label:A('Q1 FY27 PAT','Q1 FY27 PAT'),fmt:function(v){return '₹'+v.toLocaleString('en-IN')+' cr'}},
+    {key:'rev',kw:['revenue','sales','income','ரெவின்யூ','வருமானம்'],label:A('Q1 FY27 revenue','Q1 FY27 revenue'),fmt:function(v){return '₹'+v.toLocaleString('en-IN')+' cr'}},
+    {key:'margin',kw:['margin','ebitda','மார்ஜின்'],label:A('EBITDA margin','EBITDA margin'),unit:'%'},
+    {key:'debt',kw:['debt','borrow','loan','கடன்','டெட்'],label:A('total debt','total debt'),fmt:function(v){return '₹'+v+' lakh cr'},lowerIsBetter:true},
+    {key:'de',kw:['debt equity','d/e','leverage'],label:A('debt-to-equity','debt-to-equity'),unit:'x',lowerIsBetter:true},
+    {key:'pe',kw:['p/e',' pe ','pe ratio','valuation','cheap','expensive','மலிவு'],label:A('P/E','P/E'),unit:'x',lowerIsBetter:true},
+    {key:'pb',kw:['p/b',' pb ','book'],label:A('P/B','P/B'),unit:'x',lowerIsBetter:true},
+    {key:'yield',kw:['dividend','yield','டிவிடெண்ட்'],label:A('dividend yield','dividend yield'),unit:'%'},
+    {key:'cap',kw:['capacity','gw','mw','கெபாசிட்டி','கொள்ளளவு'],label:A('capacity','capacity'),numeric:false},
+    {key:'price',kw:['tariff','per unit','selling price','charge','டாரிஃப்','யூனிட்'],label:A('tariff','tariff'),numeric:false}
+  ],
+  entities:[
+    {id:'ntpc',name:'NTPC',aliases:['என்டிபிசி','ntpc ltd','thermal'],values:{pat:6896,patg:12.9,rev:50741,margin:32.0,debt:2.72,de:1.30,pe:10.9,pb:1.47,yield:2.8},
+      text:{cap:A('NTPC group has 90,904 MW installed and 35,702 MW under construction.','NTPC group-க்கு 90,904 MW installed, 35,702 MW கட்டுமானத்துல.'),
+            price:A('NTPC realised about ₹4.94 per unit in Q1: ₹1.78 fixed, ₹2.68 fuel and ~₹0.48 other items.','NTPC Q1-ல unit-க்கு சுமார் ₹4.94: fixed ₹1.78 + fuel ₹2.68 + மற்றவை ~₹0.48.')},
+      why:A('Margin rose on new units and lower fuel cost.','புது units, குறைஞ்ச fuel cost-ஆல margin ஏறிச்சு.'),
+      summary:A('NTPC had a strong Q1: PAT up 12.9% to ₹6,896 cr on new units and higher coal PLF.','NTPC-க்கு Q1 strong: புது units, coal PLF ஏற்றத்துல PAT 12.9% ஏறி ₹6,896 cr.'),
+      risk:A('Coal shortage could cut availability and fixed-charge recovery.','Coal shortage availability-ஐயும் fixed charge-ஐயும் குறைக்கலாம்.')},
+    {id:'pg',name:'Power Grid',aliases:['powergrid','pgcil','power grid','பவர் கிரிட்','பவர்கிரிட்','transmission'],values:{pat:3598,patg:-0.9,rev:11497,margin:82.9,debt:1.46,de:1.40,pe:15.4,pb:2.4,yield:3.4},
+      text:{cap:A('Power Grid runs 1,86,595 ckm of lines, 291 substations and 6,34,516 MVA.','Power Grid-க்கு 1,86,595 ckm line, 291 substation, 6,34,516 MVA.'),
+            price:A('Power Grid earns a fixed annual charge for availability, roughly 24 paise per unit of national generation by CB’s estimate.','Power Grid-க்கு availability-க்கு fixed annual charge; CB கணக்குப்படி national generation-ல unit-க்கு சுமார் 24 பைசா.')},
+      why:A('Profit was flat; adjusted for a one-off last year, it grew ~6%.','Profit flat; போன வருஷ one-off-ஐ நீக்கினா ~6% வளர்ச்சி.'),
+      summary:A('Power Grid was flat in Q1: PAT ₹3,598 cr, but capex rose 11% and work-in-hand is ₹1.75 lakh cr.','Power Grid Q1-ல flat: PAT ₹3,598 cr; ஆனா capex 11% ஏறிச்சு, work-in-hand ₹1.75 லட்சம் cr.'),
+      risk:A('TBCB competition is lowering returns on new projects.','TBCB போட்டி புது project return-ஐ குறைக்குது.')},
+    {id:'ngel',name:'NTPC Green',aliases:['ngel','green','என்டிபிசி கிரீன்','கிரீன்','solar'],values:{pat:305,patg:38.3,rev:1107,margin:89,pe:130,pb:3.9,yield:0},
+      text:{cap:A('NTPC Green runs 10,671 MW, with 16,318 MW contracted or awarded.','NTPC Green-க்கு 10,671 MW ஓடுது; 16,318 MW contracted/awarded.'),
+            price:A('NTPC Green sells at fixed auction tariffs under 25-year PPAs, with no fuel pass-through.','NTPC Green 25 வருஷ PPA-ல fixed auction tariff-ல விக்குது; fuel pass-through இல்ல.')},
+      why:A('Capacity is up 57%, but Q1 additions were only 595 MW.','Capacity 57% ஏறிச்சு; ஆனா Q1-ல 595 MW தான் சேர்ந்தது.'),
+      summary:A('NTPC Green grew PAT 38% to ₹305 cr, but the share trades ~18% below its ₹108 IPO price.','NTPC Green PAT 38% ஏறி ₹305 cr; ஆனா share ₹108 IPO price-ஐ விட ~18% கீழ.'),
+      risk:A('Curtailment and slow commissioning against an 8 GW target.','Curtailment, 8 GW target-க்கு மெதுவான commissioning.')}
+  ],
+  kb:[
+    {k:['why','not move','stall','fall','ails','down','ஏன்','நகரல','இறங்','விழுது'],preferOverMetric:true,tab:'why',
+      a:A('Because their return is capped at 15.5% by CERC, so profits grow only ~7–10% a year while debt and capex rise.','CERC 15.5%-ல return-க்கு cap போட்டிருக்கு; அதனால profit வருஷம் ~7–10% தான் வளருது, debt, capex ஏறுது.'),
+      d:A('<ul><li>Bond-like: valued against G-sec yields</li><li>Dividends exceed free cash flow</li><li>Govt ownership, OFS supply</li><li>Already re-rated in 2023–24</li><li>TBCB competition, coal ESG tag</li></ul>','<ul><li>Bond மாதிரி: G-sec yield-ஓட ஒப்பீடு</li><li>Dividend FCF-ஐ தாண்டுது</li><li>அரசு owner, OFS supply</li><li>2023–24-லயே re-rating</li><li>TBCB போட்டி, coal ESG tag</li></ul>')},
+    {k:['power cut','shortage','monsoon','coal','crunch','கரண்ட் கட்','பவர் கட்','மழை','நிலக்கரி','கோல்'],preferOverMetric:true,tab:'crunch',
+      a:A('Yes, the risk is real: September’s peak shortage hit 7.7 GW and nearly half of plants had under four days of coal.','ஆமா, risk உண்மை: September peak shortage 7.7 GW; பாதி plants-க்கு 4 நாளுக்கும் குறைவான coal.'),
+      d:A('<ul><li>Monsoon −12%, hydro −14%</li><li>Demand +9.5% Apr–Aug</li><li>NTPC buying ~10 MT commercial coal</li></ul>','<ul><li>Monsoon −12%, hydro −14%</li><li>Demand +9.5% Apr–Aug</li><li>NTPC ~10 MT commercial coal வாங்குது</li></ul>')},
+    {k:['nuclear','atomic','banswara','ashvini','அணு','நியூக்ளியர்'],preferOverMetric:true,tab:'future',
+      a:A('NTPC targets 30 GW of nuclear by 2047; its first unit at Mahi Banswara should start testing in FY2032–33.','NTPC 2047-க்குள் 30 GW nuclear target; Mahi Banswara first unit FY2032–33-ல testing.')},
+    {k:['regulat','cerc','rule','roe','15.5','விதி','ரெகுலேஷன்'],preferOverMetric:true,tab:'tariff',
+      a:A('CERC sets a two-part tariff that allows 15.5% return on equity, with fuel passed through.','CERC two-part tariff fix பண்ணுது: equity-க்கு 15.5% return, fuel pass-through.')},
+    {k:['tbcb','rtm','bid','competition','போட்டி'],preferOverMetric:true,tab:'tariff',
+      a:A('RTM projects get CERC’s cost-plus 15.5%; TBCB projects earn a 35-year bid tariff, usually a lower return.','RTM project-க்கு CERC cost-plus 15.5%; TBCB-க்கு 35 வருஷ bid tariff, பொதுவா return குறைவு.')},
+    {k:['transmission plan','government thrust','7.9','pipeline','order','work in hand','ஆர்டர்'],preferOverMetric:true,tab:'future',
+      a:A('The government plans ₹7.9 lakh cr of transmission to 2035–36; Power Grid already has ₹1.75 lakh cr of work in hand.','அரசு 2035–36 வரை ₹7.9 லட்சம் cr transmission plan; Power Grid கிட்ட ஏற்கனவே ₹1.75 லட்சம் cr work-in-hand.')},
+    {k:['free cash','fcf','cash flow','கேஷ்'],preferOverMetric:true,tab:'cash',
+      a:A('In FY26 both paid more dividends than their free cash flow: NTPC ₹8,759 vs ₹6,852 cr, Power Grid ₹8,371 vs ₹3,656 cr.','FY26-ல ரெண்டும் FCF-ஐ விட அதிகமா dividend: NTPC ₹8,759 vs ₹6,852 cr, Power Grid ₹8,371 vs ₹3,656 cr.')},
+    {k:['working capital','receivable','debtor','wc'],preferOverMetric:true,tab:'cash',
+      a:A('NTPC’s net working capital rose to ~118 days in FY26; Power Grid runs negative working capital.','NTPC net working capital FY26-ல ~118 நாள்; Power Grid negative working capital-ல ஓடுது.')},
+    {k:['cycle','trigger','stage','சைக்கிள்','ட்ரிகர்'],preferOverMetric:true,tab:'trig',
+      a:A('Both sectors are in P3 Expansion, but both stocks are in Weinstein Stage 4; CY 62/56, TG 49/58.','ரெண்டு sector-உம் P3 Expansion; ஆனா ரெண்டு stock-உம் Weinstein Stage 4; CY 62/56, TG 49/58.')},
+    {k:['ngel stake','sum of parts','sotp','hidden'],preferOverMetric:true,tab:'val',
+      a:A('NTPC’s ~89% NTPC Green stake is worth roughly ₹70 per NTPC share at market price.','NTPC Green-ல NTPC-ஓட ~89% பங்கு market price-ல ஒரு NTPC share-க்கு சுமார் ₹70.')}
+  ],
+  suggestions:[['Why don’t these shares move?','இந்த shares ஏன் நகரல?'],['Which has more debt?','யாருக்கு debt அதிகம்?'],['NTPC tariff per unit','NTPC unit-க்கு tariff'],['Is a power cut coming?','Power cut வருமா?'],['Which has the lowest P/E?','யாருக்கு P/E கம்மி?'],['Should I buy NTPC?','NTPC வாங்கலாமா?']]
+};
+var cbAssist=CauveryAssistLite.mount(document.getElementById('assist'),CONFIG);
+cbAssist.setLang(LANG);
+
+/* ---------- Socrates ---------- */
+var QZ=[
+ {q:A('NTPC’s fixed charge is fully recovered when…','NTPC-க்கு full fixed charge எப்போ கிடைக்கும்?'),o:[A('Plant availability is at or above 85%','Plant availability 85% அல்லது அதுக்கு மேல'),A('It sells more units','அதிக units விக்கும்போது'),A('Coal prices fall','Coal விலை குறையும்போது')],c:0,e:A('The two-part tariff pays fixed costs on availability, not on units sold.','Two-part tariff fixed cost-ஐ availability-க்கு தான் கொடுக்குது, units-க்கு இல்ல.')},
+ {q:A('CERC’s allowed return on equity for thermal and RTM transmission is…','Thermal, RTM transmission-க்கு CERC அனுமதிக்கிற ROE?'),o:[A('12%','12%'),A('15.5%','15.5%'),A('20%','20%')],c:1,e:A('15.5% under the 2024 Tariff Regulations.','2024 Tariff Regulations-படி 15.5%.')},
+ {q:A('Why did NTPC’s fuel charge fall to ₹2.68 per unit?','NTPC fuel charge ஏன் ₹2.68-க்கு குறைஞ்சது?'),o:[A('Lower fuel cost, passed to buyers','Fuel cost குறைஞ்சது, buyers-க்கு pass ஆச்சு'),A('NTPC cut its profit','NTPC profit-ஐ குறைச்சுது'),A('Government subsidy','அரசு subsidy')],c:0,e:A('Fuel is a pass-through: savings go to discoms, not NTPC.','Fuel pass-through: savings discom-க்கு, NTPC-க்கு இல்ல.')},
+ {q:A('Power Grid’s PAT fell 0.9% YoY. Adjusted for last year’s one-off, growth was about…','Power Grid PAT −0.9%. போன வருஷ one-off-ஐ நீக்கினா growth சுமார்?'),o:[A('−5%','−5%'),A('+6%','+6%'),A('+20%','+20%')],c:1,e:A('Q1 FY26 had a ₹230 cr one-off gain.','Q1 FY26-ல ₹230 cr one-off gain இருந்தது.')},
+ {q:A('In FY26, both companies paid dividends that were…','FY26-ல ரெண்டு company dividend…'),o:[A('Less than free cash flow','Free cash flow-ஐ விட குறைவு'),A('More than free cash flow','Free cash flow-ஐ விட அதிகம்'),A('Zero','பூஜ்யம்')],c:1,e:A('The gap was funded with debt.','அந்த gap கடன்ல fund ஆச்சு.')},
+ {q:A('Which phase is the power sector in, per the CB cycle lens?','CB cycle lens-படி power sector எந்த phase?'),o:[A('P1 Trough','P1 Trough'),A('P3 Expansion','P3 Expansion'),A('P5 Downturn','P5 Downturn')],c:1,e:A('Demand +9.5% and higher PLF point to expansion, though both stocks are in Stage 4.','Demand +9.5%, PLF ஏற்றம் → expansion; ஆனா ரெண்டு stock-உம் Stage 4.')},
+ {q:A('A power shortage mainly helps NTPC by…','Power shortage NTPC-க்கு முக்கியமா எப்படி உதவும்?'),o:[A('Letting it raise prices','விலை ஏத்த அனுமதிக்கும்'),A('Higher PLF and small incentives','அதிக PLF, சின்ன incentives'),A('Removing debt','கடனை நீக்கும்')],c:1,e:A('Prices are regulated, so upside is limited to incentives.','விலை regulated; upside incentive அளவுக்கு தான்.')},
+ {q:A('NTPC’s first nuclear unit at Mahi Banswara is expected to begin testing in…','Mahi Banswara first nuclear unit testing எப்போ?'),o:[A('FY2027–28','FY2027–28'),A('FY2032–33','FY2032–33'),A('2047','2047')],c:1,e:A('Per the government’s reply in Parliament.','Parliament-ல அரசு பதில்படி.')}
+];
+var ANS={};
+function renderQuiz(){var box=document.getElementById('quizBox'); if(!box) return; var L=LANG, sc=0, done=0;
+  box.innerHTML=QZ.map(function(z,i){var a=ANS[i];
+    if(a!=null){done++; if(a===z.c) sc++;}
+    return '<div class="q"><b>'+(i+1)+'. '+z.q[L]+'</b><div class="opts">'+z.o.map(function(o,j){var cl=a==null?'':(j===z.c?'ok':(j===a?'no':''));return '<button type="button" class="'+cl+'" data-i="'+i+'" data-j="'+j+'"'+(a!=null?' disabled':'')+'>'+o[L]+'</button>'}).join('')+'</div>'+(a!=null?'<div class="ex">'+(a===z.c?(L==='ta'?'சரி! ':'Right. '):(L==='ta'?'இல்ல. ':'Not quite. '))+z.e[L]+'</div>':'')+'</div>'}).join('');
+  document.getElementById('score').innerHTML=(L==='ta'?'மதிப்பெண்: ':'Score: ')+'<b>'+sc+' / '+QZ.length+'</b>';
+  [].forEach.call(box.querySelectorAll('button[data-i]'),function(b){b.onclick=function(){ANS[+b.dataset.i]=+b.dataset.j;renderQuiz()}});
+}
+renderQuiz();
+</script>
