@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Business Model Transformers</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<style>
+:root{--bg:#ffffff;--card:#f8fafc;--ink:#1e293b;--mute:#64748b;--line:#e2e8f0;--acc:#ea580c;--acc2:#0f766e;--blue:#1d4ed8;--red:#b91c1c;--green:#15803d;--before:#94a3b8;--after:#ea580c}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Segoe UI",system-ui,-apple-system,"Noto Sans Tamil",sans-serif;font-size:15px;line-height:1.5}
+body::before{content:"CB Research";position:fixed;top:45%;left:50%;transform:translate(-50%,-50%) rotate(-25deg);font-size:110px;font-weight:800;color:rgba(234,88,12,.035);pointer-events:none;z-index:0;white-space:nowrap}
+header{background:linear-gradient(90deg,#fff7ed,#ffffff);border-bottom:3px solid var(--acc);padding:16px 20px;position:relative;z-index:1}
+header h1{margin:0;font-size:22px}
+header p{margin:4px 0 0;color:var(--mute);font-size:13px}
+.lang{position:absolute;right:16px;top:16px;display:flex;gap:6px}
+.lang button{border:1px solid var(--acc);background:#fff;color:var(--acc);border-radius:16px;padding:4px 12px;cursor:pointer;font-weight:600}
+.lang button.on{background:var(--acc);color:#fff}
+nav{display:flex;flex-wrap:wrap;gap:4px;padding:10px 16px;background:#fff;border-bottom:1px solid var(--line);position:sticky;top:0;z-index:5}
+nav button{border:1px solid var(--line);background:var(--card);border-radius:8px;padding:7px 12px;cursor:pointer;font-size:13px;color:var(--ink)}
+nav button.on{background:var(--acc);color:#fff;border-color:var(--acc)}
+main{padding:16px 20px 120px;max-width:1300px;margin:auto;position:relative;z-index:1}
+section{display:none}section.on{display:block}
+h2{font-size:19px;border-left:4px solid var(--acc);padding-left:10px;margin:18px 0 10px}
+h3{font-size:16px;margin:14px 0 8px;color:var(--acc2)}
+.grid{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px}
+.kpi{font-size:24px;font-weight:700;color:var(--acc)}
+.small{font-size:12px;color:var(--mute)}
+.tag{display:inline-block;font-size:11px;padding:2px 8px;border-radius:10px;background:#ffedd5;color:#9a3412;margin:2px 4px 2px 0}
+.tag.g{background:#dcfce7;color:#166534}.tag.r{background:#fee2e2;color:#991b1b}.tag.b{background:#dbeafe;color:#1e40af}
+.tw{overflow-x:auto;border:1px solid var(--line);border-radius:10px;margin:8px 0}
+table{border-collapse:collapse;width:100%;font-size:13px;background:#fff}
+th,td{padding:7px 9px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+th{background:#fff7ed;position:sticky;top:0;white-space:nowrap}
+td.n,th.n{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+.pos{color:var(--green);font-weight:600}.neg{color:var(--red);font-weight:600}
+.sel{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0 12px}
+.sel button{border:1px solid var(--line);background:#fff;border-radius:18px;padding:5px 12px;cursor:pointer;font-size:13px}
+.sel button.on{background:var(--acc2);color:#fff;border-color:var(--acc2)}
+.ba{display:grid;grid-template-columns:1fr 70px 1fr;gap:10px;align-items:stretch}
+.ba .col{border-radius:12px;padding:14px;border:2px solid}
+.ba .b{border-color:var(--before);background:#f8fafc}
+.ba .a{border-color:var(--after);background:#fff7ed}
+.ba .arrow{display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:34px;color:var(--acc)}
+.ba .arrow span{font-size:11px;color:var(--mute);text-align:center}
+.canvas-row{display:grid;grid-template-columns:150px 1fr 1fr;border-bottom:1px solid var(--line)}
+.canvas-row div{padding:8px 10px;font-size:13px}
+.canvas-row div:first-child{font-weight:700;background:#f1f5f9}
+.canvas-row div:nth-child(3){background:#fff7ed}
+.chartbox{position:relative;height:340px;min-width:900px}
+.scroll{overflow-x:auto}
+.note{background:#fefce8;border:1px solid #fde68a;border-radius:10px;padding:10px 12px;font-size:13px;margin:10px 0}
+.pill{display:inline-block;min-width:44px;text-align:center;border-radius:8px;padding:2px 6px;font-weight:700;color:#fff}
+#cbBadge{position:fixed;right:18px;bottom:18px;width:56px;height:56px;border-radius:50%;background:var(--acc);color:#fff;font-weight:800;font-size:20px;display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 4px 14px rgba(234,88,12,.45);z-index:20;animation:blink 2.2s infinite;border:3px solid #fff}
+@keyframes blink{0%,100%{box-shadow:0 0 0 0 rgba(234,88,12,.6)}50%{box-shadow:0 0 0 12px rgba(234,88,12,0)}}
+#disc{display:none;position:fixed;right:18px;bottom:84px;max-width:360px;background:#fff;border:2px solid var(--acc);border-radius:12px;padding:14px;font-size:12.5px;z-index:21;box-shadow:0 8px 30px rgba(0,0,0,.15)}
+#asstBtn{position:fixed;right:86px;bottom:22px;height:48px;border-radius:24px;background:var(--acc2);color:#fff;border:none;padding:0 16px;font-weight:700;cursor:pointer;z-index:20;box-shadow:0 4px 14px rgba(15,118,110,.4)}
+#asst{display:none;position:fixed;right:18px;bottom:84px;width:380px;max-width:94vw;height:470px;background:#fff;border:2px solid var(--acc2);border-radius:14px;z-index:22;flex-direction:column;box-shadow:0 8px 30px rgba(0,0,0,.18)}
+#asst .hd{background:var(--acc2);color:#fff;padding:10px 12px;border-radius:11px 11px 0 0;display:flex;justify-content:space-between;align-items:center}
+#asst .log{flex:1;overflow-y:auto;padding:10px;font-size:13px}
+#asst .msg{margin:6px 0;padding:8px 10px;border-radius:10px;max-width:92%}
+#asst .u{background:#e0f2fe;margin-left:auto}
+#asst .b{background:#f1f5f9}
+#asst .ft{display:flex;gap:6px;padding:8px;border-top:1px solid var(--line)}
+#asst input{flex:1;border:1px solid var(--line);border-radius:8px;padding:8px}
+#asst button{border:none;border-radius:8px;padding:8px 10px;cursor:pointer;background:var(--acc2);color:#fff;font-weight:700}
+#asst .mic.rec{background:var(--red);animation:blink 1s infinite}
+.q{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:12px;margin:10px 0}
+.q label{display:block;padding:5px 8px;border-radius:6px;cursor:pointer}
+.q label:hover{background:#fff7ed}
+.fb{font-size:13px;margin-top:6px;font-weight:600}
+.ta{display:none}
+body.tamil .en{display:none}body.tamil .ta{display:inline}
+body.tamil div.ta,body.tamil p.ta{display:block}
+@media(max-width:760px){.ba{grid-template-columns:1fr}.ba .arrow{transform:rotate(90deg);height:60px}.canvas-row{grid-template-columns:100px 1fr 1fr}main{padding:12px 16px 120px}}
+</style>
+</head>
+<body>
+<header>
+  <h1><span class="en">Business Model Transformers — Before vs After</span><span class="ta">வணிக மாடல் மாற்றம் — முன்பு vs இப்போது</span></h1>
+  <p><span class="en">CDMO · Aerospace &amp; Defence · Custom Synthesis pivots in Indian mid-caps | Latest reported: Q1 FY27 (quarter ended 30 Jun 2026) | Prepared 12 Oct 2026</span><span class="ta">CDMO · விமான &amp; பாதுகாப்பு · Custom Synthesis-க்கு மாறிய இந்திய நிறுவனங்கள் | சமீபத்திய முடிவு: Q1 FY27 | 12 அக் 2026</span></p>
+  <div class="lang"><button id="bEN" class="on" onclick="setLang('en')">EN</button><button id="bTA" onclick="setLang('ta')">தமிழ்</button></div>
+</header>
+<nav id="nav"></nav>
+<main>
+
+<!-- OVERVIEW -->
+<section id="overview">
+  <h2><span class="en">Why a business-model change re-rates a company</span><span class="ta">வணிக மாடல் மாறும்போது பங்கு மதிப்பு ஏன் உயருது?</span></h2>
+  <div class="grid">
+    <div class="card"><b class="en">1. Price-taker → Partner</b><b class="ta">1. விலை ஏற்பவர் → கூட்டாளி</b><p class="en small">Generic APIs, auto parts and commodity chemicals sell on price. CDMO, aerospace and custom synthesis sell on qualification, trust and IP protection — customers rarely switch once a supplier is approved.</p><p class="ta small">Generic API, ஆட்டோ பார்ட்ஸ் எல்லாம் விலையை வச்சுத்தான் விக்கும். CDMO, விமான உதிரிகள் — ஒருமுறை approval வாங்கிட்டா customer சீக்கிரம் மாற மாட்டாங்க.</p></div>
+    <div class="card"><b class="en">2. Higher margin per kilo / per part</b><b class="ta">2. ஒவ்வொரு கிலோ / பார்ட்டுக்கும் அதிக லாபம்</b><p class="en small">Patented-molecule chemistry and flight-critical parts carry 30–45% EBITDA margins versus 12–20% for the old line. Mix shift alone lifts blended margins.</p><p class="ta small">Patent மருந்து மூலக்கூறு, விமான பார்ட்ஸ் — 30–45% EBITDA. பழைய வியாபாரத்துல 12–20% தான். கலவை மாறினாலே லாபம் ஏறும்.</p></div>
+    <div class="card"><b class="en">3. Long contracts = earnings visibility</b><b class="ta">3. நீண்ட ஒப்பந்தம் = வருமானம் தெளிவு</b><p class="en small">Multi-year order books (Azad ₹6,500 Cr, Sansera ADS ₹4,437 Cr, Motherson aerospace USD 1.6 bn) let the market pay a higher P/E for predictable growth.</p><p class="ta small">பல வருட order book இருந்தா, வருமானம் கணிக்க முடியும் — அதனால market அதிக P/E கொடுக்குது.</p></div>
+    <div class="card"><b class="en">4. The cost: capex, working capital, concentration</b><b class="ta">4. விலை: முதலீடு, Working Capital, சில customer சார்பு</b><p class="en small">Transformers spend heavily before revenue arrives, carry 130–180 working-capital days in ramp-up, and often depend on a handful of molecules or programmes. Watch CFO, not just PAT.</p><p class="ta small">வருமானம் வரும் முன்னாடியே பெரிய முதலீடு. Working capital 130–180 நாள் வரை போகும். PAT மட்டும் இல்ல, CFO-வையும் பாருங்க.</p></div>
+  </div>
+
+  <h2><span class="en">Transformation scorecard (baseline year → FY26)</span><span class="ta">மாற்ற மதிப்பெண் அட்டவணை (அடிப்படை ஆண்டு → FY26)</span></h2>
+  <div class="tw"><table id="scoreTbl"></table></div>
+  <div class="note"><span class="en">† Baseline-year figures (FY20–FY22) are rounded from annual reports and should be re-verified against audited BSE/NSE filings before publishing. FY26 and Q1 FY27 figures are from company results releases and investor presentations. Revenue = revenue from operations (Neuland: total income).</span><span class="ta">† அடிப்படை ஆண்டு (FY20–FY22) எண்கள் ஆண்டறிக்கையிலிருந்து தோராயமாக எடுக்கப்பட்டவை — publish செய்யும் முன் BSE/NSE filing-ல சரிபாருங்க. FY26, Q1 FY27 எண்கள் நிறுவன முடிவு அறிக்கையிலிருந்து.</span></div>
+
+  <h2><span class="en">The transformation map</span><span class="ta">மாற்ற வரைபடம்</span></h2>
+  <div class="scroll"><div id="mapSvg"></div></div>
+</section>
+
+<!-- BEFORE AFTER -->
+<section id="beforeafter">
+  <h2><span class="en">Business model — before and after</span><span class="ta">வணிக மாடல் — முன்பு &amp; இப்போது</span></h2>
+  <div class="sel" id="selBA"></div>
+  <div id="baBox"></div>
+</section>
+
+<!-- FINANCIALS -->
+<section id="financials">
+  <h2><span class="en">Financials — baseline vs FY26 vs Q1 FY27 (₹ Cr)</span><span class="ta">நிதி நிலை — அடிப்படை vs FY26 vs Q1 FY27 (₹ கோடி)</span></h2>
+  <div class="tw"><table id="finTbl"></table></div>
+  <h3><span class="en">Revenue: before vs after (₹ Cr, log scale)</span><span class="ta">வருவாய்: முன்பு vs இப்போது (₹ கோடி)</span></h3>
+  <div class="scroll"><div class="chartbox"><canvas id="chRev"></canvas></div></div>
+  <h3><span class="en">EBITDA absolute: before vs after (₹ Cr, log scale)</span><span class="ta">EBITDA தொகை: முன்பு vs இப்போது</span></h3>
+  <div class="scroll"><div class="chartbox"><canvas id="chEbitda"></canvas></div></div>
+  <h3><span class="en">EBITDA margin: before → FY26 → Q1 FY27 (%)</span><span class="ta">EBITDA மார்ஜின் (%)</span></h3>
+  <div class="scroll"><div class="chartbox"><canvas id="chMargin"></canvas></div></div>
+  <h3><span class="en">New-business share of revenue (%)</span><span class="ta">புதிய வியாபாரத்தின் பங்கு (%)</span></h3>
+  <div class="scroll"><div class="chartbox"><canvas id="chShare"></canvas></div></div>
+  <div class="note small" id="finSrc"></div>
+</section>
+
+<!-- CASH FLOW / WC -->
+<section id="cashwc">
+  <h2><span class="en">Cash flow &amp; working capital — the price of transformation</span><span class="ta">பணப்புழக்கம் &amp; Working Capital — மாற்றத்துக்கான விலை</span></h2>
+  <div class="grid">
+    <div class="card"><b class="en">Working capital cycle</b><b class="ta">Working capital சுழற்சி</b><p class="small en">Cash conversion cycle = Inventory days + Receivable days − Payable days. CDMO customers place large campaign orders (inventory spikes) and aerospace OEMs pay on 90–120 day terms, so the cycle lengthens during ramp-up.</p><p class="small ta">CCC = இருப்பு நாள் + வரவு நாள் − செலுத்த வேண்டிய நாள். CDMO campaign order, விமான OEM-களின் நீண்ட கடன் காலம் — அதனால ramp-up நேரத்துல சுழற்சி நீளும்.</p></div>
+    <div class="card"><b class="en">Link to CFO</b><b class="ta">CFO-வுடன் தொடர்பு</b><p class="small en">Every extra 10 days of working capital on ₹1,000 Cr revenue locks about ₹27 Cr of cash. That is why EBITDA can double while CFO and free cash flow stay flat or turn negative (Neuland FY26 FCF −₹49 Cr).</p><p class="small ta">₹1,000 கோடி வருவாய்க்கு 10 நாள் கூடுதல் WC = சுமார் ₹27 கோடி பணம் முடங்கும். அதனால EBITDA இரட்டிப்பானாலும் FCF குறையலாம்.</p></div>
+    <div class="card"><b class="en">Cash conversion test</b><b class="ta">பண மாற்ற சோதனை</b><p class="small en">CFO ÷ EBITDA above 70% = healthy conversion (Navin FY26 ~83%). Below 50% for two years = growth is being funded by the balance sheet, not by customers.</p><p class="small ta">CFO ÷ EBITDA 70%-க்கு மேல் = நல்லது (Navin FY26 ~83%). இரண்டு வருடம் 50%-க்கு கீழ் = வளர்ச்சிக்கு கடன் / பங்கு பணம் தேவை.</p></div>
+  </div>
+  <div class="tw"><table id="wcTbl"></table></div>
+  <div class="note small"><span class="en">n/a = not disclosed. Fill from the FY26 annual report (cash flow statement and notes on inventories, trade receivables and trade payables) before publishing.</span><span class="ta">n/a = இந்த dashboard-க்கு பார்த்த ஆதாரங்களில் இல்லை. FY26 ஆண்டறிக்கையிலிருந்து நிரப்பவும்.</span></div>
+</section>
+
+<!-- TRIGGERS & CYCLE -->
+<section id="triggers">
+  <h2><span class="en">Triggers &amp; Cycle</span><span class="ta">தூண்டிகள் &amp; சுழற்சி</span></h2>
+  <div class="sel" id="selTG"></div>
+  <div class="grid" style="grid-template-columns:minmax(280px,360px) 1fr">
+    <div class="card"><div id="clock"></div><div id="cyBox" class="small"></div></div>
+    <div><div class="tw"><table id="tgTbl"></table></div><div id="tgScore" class="card"></div></div>
+  </div>
+  <h3><span class="en">CY and TG across the group</span><span class="ta">எல்லா நிறுவனங்களின் CY &amp; TG</span></h3>
+  <div class="tw"><table id="cytgAll"></table></div>
+  <div class="note small"><span class="en">Method: CB Trigger &amp; Cycle framework. Trigger points = Impact × Certainty × Timing × Priced-in; TG = 50 + 8 × (top-3 positive) − 8 × (negatives). CY = 50% sector cycle + 50% stock cycle. Weinstein price stages are estimates from recent price behaviour and should be checked on the 30-week moving average. Educational lens only — catalysts to watch, not trading calls.</span><span class="ta">முறை: CB Trigger &amp; Cycle. இது கல்விக்கான பார்வை மட்டும் — வாங்க/விற்க பரிந்துரை அல்ல.</span></div>
+</section>
+
+<!-- ANALYSTS -->
+<section id="analysts">
+  <h2><span class="en">Analysts' Rating (third-party brokers)</span><span class="ta">ஆய்வாளர் மதிப்பீடு (வெளி நிறுவனங்கள்)</span></h2>
+  <div class="note small"><span class="en">These are views of the named brokerages, reproduced for education. CB Research does not issue buy, sell or hold recommendations.</span><span class="ta">இவை குறிப்பிட்ட brokerage-களின் கருத்து மட்டுமே. CB Research வாங்க/விற்க பரிந்துரை தருவதில்லை.</span></div>
+  <div class="tw"><table id="anTbl"></table></div>
+</section>
+
+<!-- MANAGEMENT -->
+<section id="mgmt">
+  <h2><span class="en">Management &amp; Board — who drove the pivot</span><span class="ta">நிர்வாகம் &amp; இயக்குநர் குழு — மாற்றத்தை நடத்தியவர்கள்</span></h2>
+  <div class="grid" id="mgGrid"></div>
+</section>
+
+<!-- PLAYBOOK -->
+<section id="playbook">
+  <h2><span class="en">The transformation playbook — common pattern</span><span class="ta">மாற்றத்தின் வழிமுறை — பொது அமைப்பு</span></h2>
+  <div id="playSvg" class="scroll"></div>
+  <h2><span class="en">Risks that break a transformation story</span><span class="ta">மாற்றக் கதையை உடைக்கும் அபாயங்கள்</span></h2>
+  <div class="tw"><table>
+    <tr><th>Risk</th><th>What it looks like</th><th>Most exposed here</th></tr>
+    <tr><td>Molecule / programme concentration</td><td>One or two commercial molecules drive most profit; a customer inventory cut halves a quarter</td><td>Neuland (Q1 FY26 dip), Laurus (3 commercial CDMO APIs)</td></tr>
+    <tr><td>End-market downcycle</td><td>Customer destocking hits even high-quality CSM franchises</td><td>PI Industries (FY26 revenue −16%)</td></tr>
+    <tr><td>Qualification delays</td><td>Aerospace part approvals take 18–36 months; revenue slips right</td><td>PTC, Azad, Sansera semicon</td></tr>
+    <tr><td>Working capital and leverage</td><td>Receivables and inventory build faster than profit; finance cost rises</td><td>Azad (170–180 days), Neuland FY26 (137 days)</td></tr>
+    <tr><td>Valuation already pricing perfection</td><td>Stocks at 50–75x trailing earnings fall hard on a single miss</td><td>Sansera (~75x), Laurus (65x forward by MOFSL)</td></tr>
+    <tr><td>Commodity price in the new line</td><td>New line turns commodity as capacity is added globally</td><td>Navin (R32 pricing risk flagged by Citi)</td></tr>
+  </table></div>
+  <h2><span class="en">Other Indian companies with a similar pivot (for future study)</span><span class="ta">இதே மாதிரி மாறிய மற்ற நிறுவனங்கள் (அடுத்த ஆய்வுக்கு)</span></h2>
+  <div class="grid" id="watchGrid"></div>
+  <div class="note small"><span class="en">Watchlist entries are qualitative and not yet analysed numerically in this dashboard.</span><span class="ta">இவை இந்த dashboard-ல் எண்களுடன் ஆய்வு செய்யப்படவில்லை.</span></div>
+</section>
+
+<!-- SOCRATES -->
+<section id="socrates">
+  <h2>Cauvery Socrates</h2>
+  <p class="small"><span class="en">Think before you click. Each answer explains the reasoning.</span><span class="ta">யோசிச்சு பதில் சொல்லுங்க. ஒவ்வொரு பதிலுக்கும் விளக்கம் வரும்.</span></p>
+  <div id="quiz"></div>
+</section>
+
+</main>
+
+<div id="cbBadge" onclick="toggleDisc()" onmouseenter="showDisc(true)" onmouseleave="showDisc(false)">CB</div>
+<div id="disc"><b>Prepared by CB Research (Cauvery Business Research), Chennai.</b><br>For educational purposes only. CB Research is not a SEBI-registered research analyst and does not give buy, sell or hold recommendations. Broker views shown are attributed to the named third parties. Figures marked † are approximate baseline values to be re-verified against audited filings. Investing in equities involves risk; consult a SEBI-registered adviser before acting.<br><span style="color:#ea580c">தமிழ்: இது கல்விக்காக மட்டும். முதலீடு செய்யும் முன் SEBI பதிவு பெற்ற ஆலோசகரை அணுகவும்.</span></div>
+<button id="asstBtn" onclick="toggleAsst()">🎙 CB Assist</button>
+<div id="asst">
+  <div class="hd"><b>CB Assist — voice Q&amp;A</b><span style="cursor:pointer" onclick="toggleAsst()">✕</span></div>
+  <div class="log" id="log"></div>
+  <div class="ft"><button class="mic" id="micBtn" onclick="listen()" title="Ask by voice">🎤</button><input id="qIn" placeholder="Ask: Laurus margin before and after?" onkeydown="if(event.key==='Enter')ask()"><button onclick="ask()">Ask</button></div>
+</div>
+
+<script>
+var CO = {
+ neuland:{name:"Neuland Laboratories",short:"Neuland",tk:"NSE: NEULANDLAB",grp:"CDMO",color:"#ea580c",
+  theme:"Generic API maker → API-focused CDMO (Custom Manufacturing Solutions)",
+  ta:"Generic API தயாரிப்பாளரிலிருந்து, புதிய மருந்துகளுக்கான CDMO கூட்டாளியாக மாறியது.",
+  before:{yr:"FY22",rev:951,ebitda:140,pat:null,dag:false,share:25,shareDag:true,
+   model:"Prime &amp; Specialty generic APIs sold to formulators; DMF-led, price-competitive",
+   canvas:{Customer:"Generic formulators",Product:"Off-patent APIs (e.g. levetiracetam, mirtazapine)",Revenue:"Volume × price per kg, annual tenders",Moat:"DMF filings, cost"},
+   mix:{"Generic APIs (Prime+Specialty)":75,"CMS (custom)":25}},
+  after:{yr:"FY26",rev:2053.1,ebitda:603.4,pat:363,patDag:true,share:60,shareDag:true,
+   model:"CDMO partner for innovators' new chemical entities from pre-clinical to commercial; peptide plant being commissioned",
+   canvas:{Customer:"Innovator pharma &amp; biotech (North America led)",Product:"Exclusive APIs/intermediates for NCEs, peptides next",Revenue:"Development fees + commercial supply contracts",Moat:"Process chemistry, regulatory track record, customer stickiness"},
+   mix:{"CMS (custom)":60,"Generic APIs":40}},
+  q1:{rev:650.1,ebitda:231.1,margin:35.5,pat:147.4},
+  lever:"Process R&amp;D depth + three USFDA/EU-GMP plants → innovator trust → molecules move from clinic to commercial",
+  newName:"CMS share",
+  wc:{days:"137 (FY26) → 84 (Q1 FY27)",cfo:null,capex:397.1,fcf:-49.4,netdebt:"Net cash ₹308.5 Cr (Q1 FY27)",note:"FY26 FCF negative on working capital build and ₹397 Cr capex; Q1 FY27 receivables released cash."},
+  an:[["Goldman Sachs","Buy","₹19,550","May 2026"]],price:"₹19,068 (31 Jul 2026)",
+  mg:[["Saharsh Davuluri","CEO &amp; Managing Director"],["Sucheth Davuluri","Vice Chairman"],["Abhijit Majumdar","Chief Financial Officer"]],
+  mgNote:"Second-generation promoters steered the shift from generic APIs to CMS; guiding 18–20% long-term CAGR.",
+  cyc:{type:"Structural growth (CDMO)",phase:"Rapid adoption",sector:80,sub:[80,40,30,50],stage:"Stage 2 extended (est.)"},
+  tg:[["Peptide commercial plant commissioning (Sep 2026)","+",3,0.7,1,0.7,"Qualification batches, first peptide orders","Q1 FY27 concall, 5 Aug 2026"],
+      ["Pipeline molecules moving to commercial","+",4,0.4,0.7,0.7,"Count of P3 / pre-reg CMS projects","Q1 FY27 presentation"],
+      ["Concentration in a few commercial molecules","−",3,0.7,0.7,1,"Quarterly lumpiness (Q1 FY26 EBITDA fell 67%)","Q1 FY27 concall"]]},
+ laurus:{name:"Laurus Labs",short:"Laurus",tk:"NSE: LAURUSLABS",grp:"CDMO",color:"#c2410c",
+  theme:"ARV generics (HIV APIs &amp; formulations) → CDMO-led pharma &amp; biotech",
+  ta:"HIV generic மருந்துகளைச் சார்ந்திருந்த நிறுவனம், இப்போ CDMO வழியா புதிய மருந்து நிறுவனங்களுக்கு உற்பத்தி செய்யுது.",
+  before:{yr:"FY20",rev:2832,ebitda:584,pat:255,dag:true,share:8,shareDag:true,
+   model:"Anti-retroviral APIs and formulations for global health tenders; Laurus Synthesis a small custom unit",
+   canvas:{Customer:"Generic majors, global-health procurement (PEPFAR/Global Fund)",Product:"ARV APIs + FDFs, oncology APIs",Revenue:"Tender volumes; price erosion each cycle",Moat:"Scale, backward integration"},
+   mix:{"ARV APIs &amp; FDFs":65,"Other generics":27,"Synthesis (CDMO)":8}},
+  after:{yr:"FY26",rev:6813,ebitda:1826,pat:889,share:31,
+   model:"CDMO (small molecules, fermentation biologics) for innovator human-health &amp; animal-health; generics kept as cash engine",
+   canvas:{Customer:"Innovator pharma, animal-health majors",Product:"Commercial CDMO APIs, intermediates, biocatalysis, CGT via ImmunoACT",Revenue:"Multi-year supply agreements, 125+ active projects",Moat:"8,300 kL reactors, 15 sites, quality record"},
+   mix:{"Affordable medicines (generics)":69,"CDMO small molecules":28,"Bio":3}},
+  q1:{rev:2026,ebitda:644,margin:31.8,pat:367.6,share:43},
+  lever:"Reinvest ARV cash flows into large-scale CDMO capacity; target CDMO ≥50% of revenue by FY30",
+  newName:"CDMO share",
+  wc:{days:"n/a",cfo:null,capex:null,fcf:null,netdebt:"Net debt/EBITDA 1.3x (FY26); net debt ₹2,656 Cr (Q1 FY27)",note:"FY27 capex guidance raised to ~₹2,000 Cr; ₹141 Cr inventory build in Q4 FY26."},
+  an:[["Motilal Oswal","Buy","₹1,980","24 Jul 2026"],["InCred","Add","₹1,990","Jul 2026"],["ICICI Direct","Buy","₹1,890","26 Jul 2026"],["DAM Capital","Buy","₹1,820","Jul 2026"],["Street (19 analysts)","11 Buy / 4 Hold / 4 Sell","avg ₹1,630","Jul 2026"]],price:"₹1,969 (15 Sep 2026)",
+  mg:[["Dr Satyanarayana Chava","Founder &amp; CEO"],["V. V. Ravi Kumar","Executive Director &amp; CFO"]],
+  mgNote:"Founder-led; used the ARV leadership years to fund CDMO and biotech platforms.",
+  cyc:{type:"Structural growth (CDMO) + global generics",phase:"Rapid adoption",sector:80,sub:[75,40,30,50],stage:"Stage 2 extended (est.)"},
+  tg:[["CDMO capex ~₹2,000 Cr FY27; 50% CDMO by FY30","+",4,0.7,0.7,0.4,"Commissioning dates, new commercial APIs","Q1 FY27 results, 24 Jul 2026"],
+      ["Bio / CGT platforms scaling","+",2,0.4,0.4,0.7,"Laurus Bio and ImmunoACT revenue","Q4 FY26 release"],
+      ["ARV API price erosion","−",2,1,1,1,"ARV share of revenue","Q1 FY27 preview notes"]]},
+ navin:{name:"Navin Fluorine International",short:"Navin",tk:"NSE: NAVINFLUOR",grp:"CDMO",color:"#0f766e",
+  theme:"Refrigerant gases &amp; inorganic fluorides → specialty fluorochemicals, CDMO and high-performance products",
+  ta:"Refrigerant gas விற்பனையிலிருந்து, specialty fluoro ரசாயனம், CDMO, உயர் தர பொருட்களுக்கு மாறியது.",
+  before:{yr:"FY21",rev:1179,ebitda:331,pat:261,dag:true,share:20,shareDag:true,
+   model:"R22 refrigerant gas and inorganic fluorides plus a growing specialty and CRAMS book",
+   canvas:{Customer:"AC/refrigeration makers, steel/glass, agro innovators",Product:"Refrigerant gases, inorganic fluorides",Revenue:"Commodity spreads",Moat:"Fluorine handling know-how"},
+   mix:{"Refrigerants &amp; inorganics":50,"Specialty chemicals":30,"CRAMS / CDMO":20}},
+  after:{yr:"FY26",rev:3313.9,ebitda:1081.7,pat:663.6,share:14,
+   model:"Three engines: HPP (R32, AHF, advanced materials with Chemours), specialty agro/pharma intermediates, cGMP CDMO",
+   canvas:{Customer:"Global innovators (agro, pharma), Chemours, HVAC",Product:"R32 HFC, fluoro-intermediates, cGMP APIs, advanced materials",Revenue:"Long-term supply + campaign orders; CDMO target ~USD 100 mn FY27",Moat:"Integrated fluorine chain at Surat/Dahej, sole Chemours site"},
+   mix:{"HPP":47,"Specialty chemicals":39,"CDMO":14}},
+  q1:{rev:1045.1,ebitda:357.1,margin:34.2,pat:243.3,share:17},
+  lever:"Use fluorination capability to move from commodity gas to patented-molecule intermediates and cGMP CDMO",
+  newName:"CDMO share",
+  wc:{days:"n/a",cfo:893.6,capex:null,fcf:null,netdebt:"Net debt/equity 0.9x (Sep 2025)",note:"CFO ₹893.6 Cr vs EBITDA ₹1,081.7 Cr = ~83% cash conversion in FY26 (up from ₹570.8 Cr CFO in FY25)."},
+  an:[["ICICI Securities","Buy","₹9,635","7 Aug 2026"],["Nuvama","Buy","₹9,071","Aug 2026"],["Jefferies","Buy","₹9,045","Aug 2026"],["UBS","Buy","₹9,000","Aug 2026"],["Motilal Oswal","Neutral","₹8,300","5 Aug 2026"],["Citi","Sell","₹7,200","Aug 2026"],["Morgan Stanley","Underweight","₹5,720","Aug 2026"],["Street (29)","23 Buy / 2 Hold / 4 Sell","—","Aug 2026"]],price:"₹8,676 (7 Aug 2026)",
+  mg:[["Vishad Mafatlal","Chairman (Mafatlal group)"]],
+  mgNote:"Promoter group backed a professional team; full CXO list to be added from the FY26 annual report.",
+  cyc:{type:"Global-linked specialty chemicals + structural CDMO",phase:"P3 Expansion",sector:70,sub:[75,40,30,50],stage:"Stage 2 extended (est.)"},
+  tg:[["R32 capex + Dahej MPP debottleneck (Q3 FY27)","+",3,0.7,1,0.4,"Commissioning; ₹600–825 Cr peak revenue potential","Q2 FY26 release"],
+      ["Advanced materials with Chemours","+",3,0.7,0.7,0.4,"First commercial supplies","Q1 FY27 broker notes"],
+      ["R32 price weakness as global capacity rises","−",3,0.4,0.7,1,"HFC realisations","Citi view, Aug 2026"]]},
+ acutaas:{name:"Acutaas Chemicals (formerly Ami Organics)",short:"Acutaas",tk:"NSE: ACUTAAS",grp:"CDMO",color:"#b45309",
+  theme:"Pharma intermediates for generics → CDMO + battery &amp; semiconductor chemicals",
+  ta:"Generic மருந்து intermediate-லிருந்து CDMO, பேட்டரி ரசாயனம், semiconductor ரசாயனம் நோக்கி.",
+  before:{yr:"FY21",rev:340,ebitda:77,pat:54,dag:true,share:5,shareDag:true,
+   model:"Advanced pharma intermediates for generic API makers; small specialty chemicals (preservatives)",
+   canvas:{Customer:"Generic API manufacturers",Product:"Intermediates for generic APIs",Revenue:"Product sales, price competition",Moat:"Process chemistry, cost"},
+   mix:{"Pharma intermediates (generic)":85,"Specialty chemicals":10,"CDMO":5}},
+  after:{yr:"FY26",rev:1339.4,ebitda:480.4,pat:356.4,share:30,shareDag:true,
+   model:"CDMO for innovators (incl. Fermion contract) + electrolyte additives for batteries + semicon chemicals via Korean JV Indichem",
+   canvas:{Customer:"Innovator pharma, cell makers, semicon fabs",Product:"CDMO intermediates, electrolyte additives, high-purity chemicals",Revenue:"Contracts + new-vertical product sales",Moat:"Backward integration, first-mover in Indian electrolyte additives"},
+   mix:{"Advanced intermediates (generic)":58,"CDMO":30,"Specialty, battery &amp; semicon":12}},
+  q1:{rev:329.7,ebitda:113.1,margin:34.3,pat:75.0},
+  lever:"Process chemistry reused for innovator CDMO and for battery/semicon chemistries; target ₹1,000 Cr CDMO revenue",
+  newName:"CDMO + new verticals",
+  wc:{days:"87 (Q2 FY26, from 100 in Q1 FY26)",cfo:null,capex:250,capexNote:"FY26 guided",fcf:null,netdebt:"n/a",note:"H1 FY26 CFO ₹136.5 Cr; Q1 FY27 revenue down 24% QoQ shows campaign lumpiness."},
+  an:[["Prabhudas Lilladher","Buy (upgraded)","₹3,790","24 Jul 2026"],["Investing.com consensus","—","avg ₹2,973 (range ₹1,423–4,001)","28 Aug 2026"]],price:"₹3,282 (28 Aug 2026)",
+  mg:[["Naresh Patel","Executive Chairman &amp; Managing Director"]],
+  mgNote:"Founder-promoter led the rename to Acutaas to signal the move beyond 'organics' into advanced materials.",
+  cyc:{type:"Structural growth (CDMO, battery chemicals)",phase:"Rapid adoption / emerging",sector:75,sub:[80,40,55,35],stage:"Stage 3 (est., off highs)"},
+  tg:[["Battery electrolyte additives — commercial supply from Q2 FY27","+",3,1,1,0.7,"Volumes, customer validations","Q1 FY27 PL report"],
+      ["Semicon chemicals via Indichem JV from H2 FY27","+",3,0.7,0.7,0.7,"JV revenue","Q2 FY26 filing"],
+      ["Commodity specialty chemicals declining","−",1,1,1,1,"Specialty segment −11% YoY","Q1 FY27 results"]]},
+ pi:{name:"PI Industries",short:"PI Ind",tk:"NSE: PIIND",grp:"Custom Synthesis",color:"#15803d",
+  theme:"Agrochem custom synthesis (CSM) &amp; domestic brands → adding pharma CRDMO, biologicals, electronic chemicals",
+  ta:"விவசாய ரசாயன custom synthesis நிறுவனம் — இப்போ மருந்து CRDMO-வுக்கும் விரிவு படுத்துது.",
+  before:{yr:"FY20",rev:3367,ebitda:742,pat:458,dag:true,share:0,
+   model:"Custom synthesis of patented agrochemicals for global innovators (~70%) + domestic crop-protection brands",
+   canvas:{Customer:"Global agrochem innovators, Indian farmers",Product:"Patented agro molecules (CSM), branded insecticides",Revenue:"Long-term CSM contracts + domestic sales",Moat:"IP-safe chemistry, innovator relationships"},
+   mix:{"Agchem CSM exports":70,"Domestic agri brands":30,"Pharma":0}},
+  after:{yr:"FY26",rev:6713.7,ebitda:1705.3,pat:1320.8,share:4.5,
+   model:"Agchem CSM still core; PI Health Sciences (Archimica, Therachem acquisitions) building pharma CRDMO for biotech and mid-pharma",
+   canvas:{Customer:"Agro innovators + biotech/mid-pharma",Product:"CSM molecules, own discovered insecticide (Pioxaniliprole), pharma APIs",Revenue:"CSM order book ~USD 1.2 bn + pharma projects",Moat:"Innovator trust, ~60 active projects"},
+   mix:{"Agchem exports":70,"Domestic":25.5,"Pharma":4.5}},
+  q1:{rev:1702.3,ebitda:369.3,margin:22.0,pat:244.2},
+  lever:"Apply CSM chemistry and IP discipline to pharma; acquisitions bought regulated sites and talent",
+  newName:"Pharma share",
+  wc:{days:"139 (Q3 FY26, from 115 in Q2 FY26)",cfo:null,capex:722.5,capexNote:"9M FY26",fcf:null,netdebt:"Net cash (large treasury)",note:"Agchem destocking stretched working capital in FY26; FY27 capex guided ₹700–800 Cr."},
+  an:[["Motilal Oswal","Buy","₹3,000","12 Aug 2026"],["Prabhudas Lilladher","Hold","₹2,569","12 Aug 2026"]],price:"₹2,398 (12 Aug 2026)",
+  mg:[["Mayank Singhal","Vice Chairman &amp; Managing Director"],["Narayan K. Seshadri","Chairman (Independent)"]],
+  mgNote:"Promoter family moved PI from distribution to CSM in the 2000s and now into pharma.",
+  cyc:{type:"Global-linked agrochem + emerging pharma CRDMO",phase:"P1 Trough / bottoming",sector:60,sub:[75,25,55,15],stage:"Stage 4 (est., falling)"},
+  tg:[["4–5 new CSM molecules + Pioxaniliprole launch FY27","+",3,0.7,1,1,"H2 FY27 export recovery","MOFSL / PL notes, 12 Aug 2026"],
+      ["Pharma CRDMO scale-up","+",3,0.7,0.4,1,"Pharma share above 10% of revenue","Q4 FY26 presentation"],
+      ["Agchem export downcycle + pyroxasulfone patent expiry","−",4,1,1,1,"FY27 guided only low-single-digit growth","Q1 FY27 results, 12 Aug 2026"]]},
+ samil:{name:"Samvardhana Motherson International",short:"Motherson",tk:"NSE: MOTHERSON",grp:"Aerospace",color:"#1d4ed8",
+  theme:"Auto wiring harness &amp; polymer modules → diversified global supplier incl. aerospace, consumer electronics, health",
+  ta:"கார் wiring harness நிறுவனம் — இப்போ விமானம், consumer electronics, மருத்துவத் துறைக்கும் விரிவாக்கம்.",
+  before:{yr:"FY20",rev:63537,ebitda:5640,pat:1170,dag:true,share:0.5,shareDag:true,
+   model:"Wiring harnesses, rear-view mirrors and bumper/polymer modules for global passenger-car OEMs",
+   canvas:{Customer:"Global car OEMs",Product:"Harness, mirrors, polymer modules",Revenue:"Content per vehicle × volumes",Moat:"Follow-the-customer global plants, M&amp;A integration"},
+   mix:{"Automotive":99.5,"Non-auto":0.5}},
+  after:{yr:"FY26",rev:126104,ebitda:12033,pat:4258,share:3,shareDag:true,
+   model:"Auto still dominant, but emerging businesses (consumer electronics +7.5x, aerospace +40%) growing 50%; booked business USD 96 bn",
+   canvas:{Customer:"Car OEMs + aerospace primes, electronics brands",Product:"Aero wiring &amp; structures (CIM Tools), device enclosures",Revenue:"Booked business, local-for-local",Moat:"Scale, 3CX10 diversification rule"},
+   mix:{"Automotive":97,"Emerging (CE, aero, health)":3}},
+  q1:null,
+  lever:"Acquisitions (CIM Tools aerospace) + greenfield India plants; 3CX10 rule (no customer, country or component above 10%)",
+  newName:"Non-auto share",
+  wc:{days:"n/a",cfo:null,capex:5911,fcf:null,netdebt:"Leverage 0.8x (lowest ever, FY26)",note:"FY26 capex ~49% of EBITDA, much of it for consumer electronics and aerospace."},
+  an:[["ICICI Securities","Buy","₹170","21 May 2026"]],price:"₹132 (21 May 2026)",
+  mg:[["Vivek Chaand Sehgal","Chairman"],["Laksh Vaaman Sehgal","Director"],["Pankaj Mital","Whole Time Director &amp; President"],["Kunal Malani","Chief Financial Officer"]],
+  mgNote:"Founder-chairman's acquisition-led playbook; next generation leading new verticals.",
+  cyc:{type:"Auto-ancillary consumption + structural aerospace/electronics",phase:"P3 Expansion",sector:70,sub:[75,70,55,70],stage:"Stage 1 late (est.)"},
+  tg:[["Consumer electronics GF3 plant ramp from Q3 FY27","+",3,0.7,1,0.7,"CE revenue run-rate","Arihant Q4 FY26 note"],
+      ["Aerospace order book USD 1.6 bn; 2 India plants FY27","+",2,0.7,0.7,1,"Aero revenue disclosure","Q4 FY26 update"],
+      ["European auto weakness / tariffs","−",3,0.4,1,1,"EU volumes","ICICI Sec note, May 2026"]]},
+ sansera:{name:"Sansera Engineering",short:"Sansera",tk:"NSE: SANSERA",grp:"Aerospace",color:"#7c3aed",
+  theme:"2W/PV auto forgings &amp; machined parts → Aerospace, Defence &amp; Semiconductor (ADS)",
+  ta:"டூவீலர் / கார் பார்ட்ஸ் நிறுவனம் — இப்போ விமானம், பாதுகாப்பு, semiconductor பாகங்கள் (ADS).",
+  before:{yr:"FY21",rev:1572,ebitda:268,pat:105,dag:true,share:3,shareDag:true,
+   model:"Connecting rods, crankshafts, rocker arms for 2W/PV/CV OEMs in India and abroad",
+   canvas:{Customer:"Auto OEMs (2W heavy)",Product:"Precision forged &amp; machined engine parts",Revenue:"Per-part pricing tied to vehicle volumes",Moat:"Precision machining at scale"},
+   mix:{"Automotive":90,"ADS":3,"Other non-auto":7}},
+  after:{yr:"FY26",rev:3497.9,ebitda:632.1,pat:326.9,share:9,
+   model:"Same machining DNA applied to aero-structures, defence and semicon-equipment parts; ADS revenue ₹315.5 Cr (+155%)",
+   canvas:{Customer:"Aero primes, defence, semicon-equipment OEMs",Product:"Flight-critical machined parts, semicon chamber parts",Revenue:"Long-term programmes; ADS backlog ₹4,437 Cr",Moat:"AS9100 approvals, qualified parts"},
+   mix:{"Automotive":85,"ADS":9,"Other non-auto":6}},
+  q1:{rev:1021.3,ebitda:196.1,margin:19.2,pat:87.4,share:14.2},
+  lever:"Engineering-led machining skills + dedicated ADS plants; non-auto at 20.8% of Q1 FY27 revenue",
+  newName:"ADS share",
+  wc:{days:"n/a (rising with ADS)",cfo:null,capex:null,fcf:null,netdebt:"Cash ₹397 Cr (FY26)",note:"Management flagged higher working capital needs from ADS growth."},
+  an:[["Street consensus","7–8 Buy / 1–2 Hold / 1 Sell","₹3,836 (range ₹2,500–4,500)","Aug 2026"]],price:"~₹3,900 (22 Aug 2026)",
+  mg:[["S. Sekhar Vasan","Chairman &amp; Managing Director"],["B. R. Preetham","Executive Director &amp; CEO"]],
+  mgNote:"Engineer-founders; CEO calls FY26 the inflection year for ADS. FY27 ADS guidance ₹550–600 Cr.",
+  cyc:{type:"Auto-ancillary + structural aerospace",phase:"P3 Expansion",sector:70,sub:[75,70,30,50],stage:"Stage 2 extended (est.)"},
+  tg:[["ADS FY27 guidance ₹550–600 Cr; backlog ₹4,437 Cr","+",4,0.7,1,0.4,"Quarterly ADS run-rate","Q1 FY27 results, 13 Aug 2026"],
+      ["Semicon-equipment parts revenue from CY2027","+",3,0.7,0.4,0.4,"First semicon shipments","Q1 FY27 concall"],
+      ["Working capital rise from ADS","−",2,1,1,1,"Receivable and inventory days","Q4 FY26 call"]]},
+ azad:{name:"Azad Engineering",short:"Azad",tk:"NSE: AZAD",grp:"Aerospace",color:"#0369a1",
+  theme:"Turbine-blade components for energy OEMs → aerospace &amp; defence parts → integrated propulsion systems",
+  ta:"மின் உற்பத்தி turbine blade-லிருந்து, விமான பாகங்கள், இப்போ முழு jet engine வரை.",
+  before:{yr:"FY22",rev:194,ebitda:60,pat:29,dag:true,share:12,shareDag:true,
+   model:"Precision-machined turbine blades and airfoils for global energy (gas/steam turbine) OEMs",
+   canvas:{Customer:"Energy OEMs (GE, Siemens, MHI)",Product:"Turbine blades, airfoils",Revenue:"Per-part long-term agreements",Moat:"Qualified complex geometries"},
+   mix:{"Energy &amp; oil-gas":88,"Aerospace &amp; defence":12}},
+  after:{yr:"FY26",rev:590,ebitda:220.7,pat:134,share:17.2,
+   model:"Customer-dedicated plants for GE, Siemens, Baker Hughes, MHI; A&amp;D crossed ₹100 Cr; first indigenous turbojet engine delivered to DRDO (Jul 2026)",
+   canvas:{Customer:"Energy + aero engine OEMs (Rolls-Royce, Safran, P&amp;W), DRDO",Product:"Rotating parts, airfoils, complete small turbojet engines",Revenue:"8-year single-source contracts; order book ₹6,500 Cr",Moat:"Single-source status, 93% exports"},
+   mix:{"Energy &amp; oil-gas":81.5,"Aerospace &amp; defence":17.2,"Other":1.3}},
+  q1:{rev:172.6,ebitda:64.4,margin:37.3,pat:35.2},
+  lever:"Customer-dedicated plants + QIP capital; moving from components to systems",
+  newName:"A&amp;D share",
+  wc:{days:"170–180",cfo:null,capex:450,capexNote:"FY26 planned",fcf:null,netdebt:"Raised ₹700 Cr QIP; finance cost high till H2 FY27",note:"Stretched cycle while four new plants ramp; the key watch item."},
+  an:[["ICICI Direct","Buy (upgraded)","₹2,960","Aug 2026"]],price:"₹2,450 (Aug 2026)",
+  mg:[["Rakesh Chopdar","Chairman &amp; CEO"],["Vishnu Malpani","Whole Time Director"]],
+  mgNote:"Founder-led; guiding 25%+ annual revenue growth for several years.",
+  cyc:{type:"Structural growth (aero engines, energy turbines)",phase:"Rapid adoption",sector:80,sub:[80,50,30,70],stage:"Stage 1 late (est.)"},
+  tg:[["Four new plants ramp from H2 FY27; order book ₹6,500 Cr","+",4,0.7,1,0.7,"Quarterly revenue acceleration","Q1 FY27 concall, 8 Aug 2026"],
+      ["Turbojet engine delivered → propulsion systems player","+",4,0.4,0.4,0.7,"Follow-on engine orders","Q1 FY27 release"],
+      ["Working capital 170–180 days, high finance cost","−",3,1,1,1,"WC days trend","Q1 FY27 concall"]]},
+ ptc:{name:"PTC Industries",short:"PTC",tk:"NSE: PTCIL",grp:"Aerospace",color:"#be123c",
+  theme:"Industrial steel castings → aerospace-grade titanium &amp; superalloy materials and castings (Aerolloy)",
+  ta:"சாதாரண steel casting நிறுவனம் — இப்போ விமானத் தர titanium, superalloy உற்பத்தி.",
+  before:{yr:"FY21",rev:213,ebitda:48,pat:7,dag:true,share:5,shareDag:true,
+   model:"Precision steel castings for oil &amp; gas, power and industrial customers",
+   canvas:{Customer:"Industrial / oil-gas OEMs",Product:"Steel investment &amp; sand castings",Revenue:"Job orders",Moat:"Metallurgy know-how"},
+   mix:{"Industrial castings":95,"Aerospace / defence":5}},
+  after:{yr:"FY26",rev:602.8,ebitda:172.3,pat:101.6,share:45,shareDag:true,
+   model:"Integrated titanium &amp; superalloy chain in the UP defence corridor: melting, ingots, castings, machining; UK precision arm",
+   canvas:{Customer:"Airbus, Honeywell, Safran, BrahMos, DRDO, ISRO",Product:"Ti/superalloy ingots, large aero castings, missile sub-systems",Revenue:"Long-term agreements + defence orders",Moat:"Only Indian end-to-end Ti &amp; superalloy aerospace chain"},
+   mix:{"Aerospace &amp; defence (Aerolloy + materials)":45,"Industrial castings &amp; UK":55}},
+  q1:{rev:190,ebitda:54.2,margin:28.5,pat:29.2},
+  lever:"Backward-integrated materials plant (VAR, VIM furnaces) + Make-in-India defence demand",
+  newName:"A&amp;D share",
+  wc:{days:"n/a",cfo:null,capex:null,fcf:null,netdebt:"Credit rating upgraded (2025)",note:"Large equity-funded capex; rolling mill and Ti sponge MoU next."},
+  an:[["ICICI Securities","Buy","₹21,500","2 Jun 2026"]],price:"₹18,489 (2 Jun 2026)",
+  mg:[["Sachin Agarwal","Chairman &amp; Managing Director"]],
+  mgNote:"Promoter-led re-invention of a 60-year-old foundry into a strategic materials company.",
+  cyc:{type:"Structural growth (aerospace materials)",phase:"Emerging → rapid adoption",sector:70,sub:[80,85,30,70],stage:"Stage 1 late (est.)"},
+  tg:[["Airbus titanium castings agreement (A320neo/A330neo/A350)","+",4,0.7,0.4,0.7,"Qualification milestones","Q1 FY27 release, 17 Aug 2026"],
+      ["Ti rolling mill (H1 FY27) + BrahMos / DRDO orders","+",3,0.7,1,0.7,"Aerolloy revenue run-rate","ICICI Sec, 2 Jun 2026"],
+      ["Slower aerospace qualification","−",3,0.4,0.7,1,"Programme delays","Q1 FY27 commentary"]]}
+};
+var IDS=Object.keys(CO);
+var WATCH=[["Bharat Forge","Auto forgings → defence &amp; aerospace (artillery, aero-engine parts)"],["Kaynes Technology","EMS assembly → semiconductor OSAT &amp; substrates"],["Dixon Technologies","Consumer-electronics assembly → mobile/IT EMS and display/component JVs"],["Gujarat Fluorochemicals","Refrigerants &amp; PTFE → EV battery chemicals and fluoropolymers"],["Divi's Laboratories","Generic APIs → custom synthesis, peptides and GLP-1 building blocks"],["Cohance Lifesciences","Generic intermediates (Suven) → integrated CDMO incl. ADC payloads"],["Data Patterns","Defence electronics sub-systems → complete radar &amp; EW systems"]];
+
+var LANG='en';
+function setLang(l){LANG=l;document.body.classList.toggle('tamil',l==='ta');document.getElementById('bEN').classList.toggle('on',l==='en');document.getElementById('bTA').classList.toggle('on',l==='ta');buildNav();}
+var TABS=[["overview","Overview","கண்ணோட்டம்"],["beforeafter","Before → After","முன்பு → இப்போது"],["financials","Financials","நிதி"],["cashwc","Cash Flow &amp; WC","பணப்புழக்கம் &amp; WC"],["triggers","Triggers &amp; Cycle","தூண்டிகள் &amp; சுழற்சி"],["analysts","Analysts' Rating","ஆய்வாளர் மதிப்பீடு"],["mgmt","Management &amp; Board","நிர்வாகம்"],["playbook","Playbook &amp; Watchlist","வழிமுறை"],["socrates","Cauvery Socrates","சாக்ரடீஸ்"]];
+var CUR='overview';
+function buildNav(){var n=document.getElementById('nav');n.innerHTML='';TABS.forEach(function(t){var b=document.createElement('button');b.innerHTML=LANG==='ta'?t[2]:t[1];if(t[0]===CUR)b.className='on';b.onclick=function(){show(t[0])};n.appendChild(b)});}
+function show(id){CUR=id;document.querySelectorAll('main section').forEach(function(s){s.classList.toggle('on',s.id===id)});buildNav();window.scrollTo(0,0);if(id==='financials')drawCharts();}
+function f(x,d){if(x===null||x===undefined)return 'n/a';return Number(x).toLocaleString('en-IN',{minimumFractionDigits:d||0,maximumFractionDigits:d===undefined?1:d});}
+function mg(o){return o.ebitda&&o.rev?o.ebitda/o.rev*100:null;}
+function pts(t){return t[2]*t[3]*t[4]*t[5];}
+function tgScore(c){var p=c.tg.filter(function(t){return t[1]==='+'}).map(pts).sort(function(a,b){return b-a}).slice(0,3).reduce(function(a,b){return a+b},0);var n=c.tg.filter(function(t){return t[1]!=='+'}).map(pts).reduce(function(a,b){return a+b},0);return Math.max(0,Math.min(100,Math.round(50+8*p-8*n)));}
+function cyScore(c){var s=c.cyc.sub.reduce(function(a,b){return a+b},0)/4;return Math.round(0.5*c.cyc.sector+0.5*s);}
+function gate(c){var g=[];if(/Stage 4/.test(c.cyc.stage))g.push('Stage 4 → cap 55');c.tg.forEach(function(t){if(t[1]!=='+'&&t[2]>=4&&t[3]>=0.7)g.push('Negative trigger I≥4, C≥0.7 → cap 50')});return g.join('; ')||'—';}
+function col(v){return v>=65?'#15803d':v>=50?'#ca8a04':'#b91c1c';}
+
+function buildScore(){var h='<tr><th>Company</th><th>Pivot</th><th>Base yr</th><th class="n">Revenue ×</th><th class="n">EBITDA ×</th><th class="n">Margin change (bps)</th><th class="n">PAT ×</th><th class="n">New-biz share</th></tr>';
+ IDS.forEach(function(k){var c=CO[k],b=c.before,a=c.after;var mb=mg(b),ma=mg(a);var d=b.dag?'†':'';
+  h+='<tr><td><b>'+c.name+'</b><br><span class="small">'+c.tk+'</span></td><td class="small">'+c.theme+'</td><td>'+b.yr+d+'</td><td class="n">'+f(a.rev/b.rev,1)+'x</td><td class="n">'+f(a.ebitda/b.ebitda,1)+'x</td><td class="n '+(ma>mb?'pos':'neg')+'">'+(ma>mb?'+':'')+f((ma-mb)*100,0)+'</td><td class="n">'+(b.pat&&a.pat?f(a.pat/b.pat,1)+'x':'n/a')+'</td><td class="n">'+f(b.share,1)+'%'+(b.shareDag?'†':'')+' → '+f(a.share,1)+'%'+(a.shareDag?'†':'')+'</td></tr>';});
+ document.getElementById('scoreTbl').innerHTML=h;}
+
+function buildMap(){var groups=[["CDMO","Pharma &amp; chemistry → CDMO"],["Custom Synthesis","Agro CSM → Pharma"],["Aerospace","Auto / industrial → Aerospace &amp; Defence"]];var W=1100,rowH=64,y=40,out='';var ids=IDS.slice();
+ var H=40+ids.length*rowH+groups.length*30;out+='<svg viewBox="0 0 '+W+' '+H+'" width="'+W+'" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI,sans-serif">';
+ out+='<text x="170" y="22" font-size="14" font-weight="700" fill="#64748b">BEFORE (old model)</text><text x="800" y="22" font-size="14" font-weight="700" fill="#ea580c">AFTER (new model)</text>';
+ groups.forEach(function(g){out+='<text x="10" y="'+(y+14)+'" font-size="13" font-weight="700" fill="#0f766e">'+g[1]+'</text>';y+=24;
+  ids.filter(function(k){return CO[k].grp===g[0]}).forEach(function(k){var c=CO[k];var mb=mg(c.before),ma=mg(c.after);
+   out+='<g style="cursor:pointer" onclick="openBA(\''+k+'\')"><rect x="10" y="'+y+'" width="420" height="50" rx="8" fill="#f1f5f9" stroke="#94a3b8"/><text x="20" y="'+(y+20)+'" font-size="13" font-weight="700" fill="#1e293b">'+c.short+' · '+c.before.yr+'</text><text x="20" y="'+(y+38)+'" font-size="11.5" fill="#475569">'+trunc(c.before.model,62)+'</text>';
+   out+='<line x1="432" y1="'+(y+25)+'" x2="630" y2="'+(y+25)+'" stroke="'+c.color+'" stroke-width="'+(2+Math.min(10,c.after.rev/c.before.rev))+'" marker-end="url(#ar)" opacity=".8"/><text x="531" y="'+(y+18)+'" text-anchor="middle" font-size="11" fill="#1e293b">Rev '+f(c.after.rev/c.before.rev,1)+'x · margin '+f(mb,0)+'%→'+f(ma,0)+'%</text>';
+   out+='<rect x="650" y="'+y+'" width="440" height="50" rx="8" fill="#fff7ed" stroke="'+c.color+'" stroke-width="2"/><text x="660" y="'+(y+20)+'" font-size="13" font-weight="700" fill="'+c.color+'">'+c.short+' · '+c.after.yr+'</text><text x="660" y="'+(y+38)+'" font-size="11.5" fill="#475569">'+trunc(c.after.model,64)+'</text></g>';y+=rowH;});});
+ out+='<defs><marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto" markerUnits="strokeWidth"><path d="M0,0 L6,3 L0,6 z" fill="#ea580c"/></marker></defs></svg><p class="small">Arrow thickness ∝ revenue multiple. Click any row to open its before/after page.</p>';
+ document.getElementById('mapSvg').innerHTML=out;}
+function trunc(s,n){s=s.replace(/&amp;/g,'&');s=s.length>n?s.slice(0,n-1)+'…':s;return s.replace(/&/g,'&amp;');}
+function openBA(k){show('beforeafter');renderBA(k);}
+
+var BAK='neuland',charts={};
+function selButtons(el,fn,cur){var s=document.getElementById(el);s.innerHTML='';IDS.forEach(function(k){var b=document.createElement('button');b.textContent=CO[k].short;if(k===cur)b.className='on';b.onclick=function(){fn(k)};s.appendChild(b)});}
+function renderBA(k){BAK=k;selButtons('selBA',renderBA,k);var c=CO[k],b=c.before,a=c.after;var mb=mg(b),ma=mg(a);
+ var h='<div class="card" style="margin-bottom:12px"><b style="font-size:17px">'+c.name+'</b> <span class="tag">'+c.tk+'</span><span class="tag b">'+c.grp+'</span><br><span class="en">'+c.theme+'</span><span class="ta">'+c.ta+'</span></div>';
+ h+='<div class="ba"><div class="col b"><b>BEFORE · '+b.yr+(b.dag?'†':'')+'</b><p class="small">'+b.model+'</p><div class="grid" style="grid-template-columns:1fr 1fr"><div><div class="small">Revenue</div><div class="kpi" style="color:#475569">₹'+f(b.rev,0)+' Cr</div></div><div><div class="small">EBITDA</div><div class="kpi" style="color:#475569">₹'+f(b.ebitda,0)+' Cr</div><div class="small">'+f(mb,1)+'% margin</div></div></div></div>';
+ h+='<div class="arrow">➜<span>'+c.lever+'</span></div>';
+ h+='<div class="col a"><b>AFTER · '+a.yr+'</b><p class="small">'+a.model+'</p><div class="grid" style="grid-template-columns:1fr 1fr"><div><div class="small">Revenue</div><div class="kpi">₹'+f(a.rev,0)+' Cr</div></div><div><div class="small">EBITDA</div><div class="kpi">₹'+f(a.ebitda,0)+' Cr</div><div class="small">'+f(ma,1)+'% margin</div></div></div>'+(c.q1?'<div class="small" style="margin-top:6px"><b>Q1 FY27:</b> revenue ₹'+f(c.q1.rev)+' Cr · EBITDA ₹'+f(c.q1.ebitda)+' Cr ('+f(c.q1.margin)+'%) · PAT ₹'+f(c.q1.pat)+' Cr</div>':'<div class="small" style="margin-top:6px">Q1 FY27 figures not included in this pass.</div>')+'</div></div>';
+ h+='<h3>Business-model canvas</h3><div class="card" style="padding:0"><div class="canvas-row"><div></div><div><b>Before</b></div><div><b>After</b></div></div>';
+ Object.keys(b.canvas).forEach(function(r){h+='<div class="canvas-row"><div>'+r+'</div><div>'+b.canvas[r]+'</div><div>'+a.canvas[r]+'</div></div>'});h+='</div>';
+ h+='<h3>Revenue mix shift'+(b.shareDag||a.shareDag?' (indicative †)':'')+'</h3><div class="grid"><div class="card"><canvas id="mixB" height="220"></canvas></div><div class="card"><canvas id="mixA" height="220"></canvas></div></div>';
+ document.getElementById('baBox').innerHTML=h;
+ ['mixB','mixA'].forEach(function(id,i){var m=i?a.mix:b.mix;if(charts[id])charts[id].destroy();if(!window.Chart)return;var pal=['#ea580c','#0f766e','#1d4ed8','#94a3b8','#ca8a04'];
+  charts[id]=new Chart(document.getElementById(id),{type:'doughnut',data:{labels:Object.keys(m).map(function(s){return s.replace(/&amp;/g,'&')}),datasets:[{data:Object.values(m),backgroundColor:i?pal:['#94a3b8','#cbd5e1','#64748b','#e2e8f0']}]},options:{plugins:{title:{display:true,text:(i?'After · ':'Before · ')+(i?a.yr:b.yr)+' (%)'},legend:{position:'bottom'}}}});});}
+
+function buildFin(){var h='<tr><th>Company</th><th>Base yr</th><th class="n">Revenue</th><th class="n">EBITDA</th><th class="n">EBITDA %</th><th class="n">PAT</th><th class="n">FY26 revenue</th><th class="n">FY26 EBITDA</th><th class="n">FY26 EBITDA %</th><th class="n">FY26 PAT</th><th class="n">Q1 FY27 revenue</th><th class="n">Q1 FY27 EBITDA</th><th class="n">Q1 FY27 EBITDA %</th><th class="n">Q1 FY27 PAT</th></tr>';
+ IDS.forEach(function(k){var c=CO[k],b=c.before,a=c.after,q=c.q1||{};var d=b.dag?'†':'';h+='<tr><td><b>'+c.short+'</b></td><td>'+b.yr+d+'</td><td class="n">'+f(b.rev,0)+'</td><td class="n">'+f(b.ebitda,0)+'</td><td class="n">'+f(mg(b),1)+'</td><td class="n">'+f(b.pat,0)+'</td><td class="n">'+f(a.rev,1)+'</td><td class="n">'+f(a.ebitda,1)+'</td><td class="n">'+f(mg(a),1)+'</td><td class="n">'+f(a.pat,1)+(a.patDag?'†':'')+'</td><td class="n">'+f(q.rev)+'</td><td class="n">'+f(q.ebitda)+'</td><td class="n">'+f(q.margin)+'</td><td class="n">'+f(q.pat)+'</td></tr>'});
+ document.getElementById('finTbl').innerHTML=h;
+ document.getElementById('finSrc').innerHTML='All figures ₹ Cr, consolidated. Neuland FY26 PAT† derived from reported EPS ₹283.01. Motherson FY26 PAT is normalised. PI FY26 PAT includes exceptional items. Azad Q1 FY27 is consolidated. PTC Q1 FY27 revenue is consolidated revenue (total income ₹197.1 Cr).';}
+function drawCharts(){if(!window.Chart)return;var L=IDS.map(function(k){return CO[k].short});
+ function bar(id,ds,log,pct){if(charts[id])charts[id].destroy();charts[id]=new Chart(document.getElementById(id),{type:'bar',data:{labels:L,datasets:ds},options:{maintainAspectRatio:false,scales:{y:{type:log?'logarithmic':'linear',ticks:{callback:function(v){return pct?v+'%':Number(v).toLocaleString('en-IN')}}}},plugins:{tooltip:{callbacks:{label:function(x){return x.dataset.label+': '+(pct?f(x.raw,1)+'%':'₹'+Number(x.raw).toLocaleString('en-IN')+' Cr')}}}}},plugins:[{id:'lbl',afterDatasetsDraw:function(ch){var cx=ch.ctx;cx.save();cx.font='10px Segoe UI';cx.fillStyle='#1e293b';cx.textAlign='center';ch.data.datasets.forEach(function(d,i){ch.getDatasetMeta(i).data.forEach(function(el,j){var v=d.data[j];if(v===null||v===undefined)return;cx.fillText(pct?f(v,1)+'%':Number(v).toLocaleString('en-IN',{maximumFractionDigits:0}),el.x,el.y-4)})});cx.restore();}}]});}
+ bar('chRev',[{label:'Before',data:IDS.map(function(k){return CO[k].before.rev}),backgroundColor:'#94a3b8'},{label:'FY26',data:IDS.map(function(k){return CO[k].after.rev}),backgroundColor:'#ea580c'}],true);
+ bar('chEbitda',[{label:'Before',data:IDS.map(function(k){return CO[k].before.ebitda}),backgroundColor:'#94a3b8'},{label:'FY26',data:IDS.map(function(k){return CO[k].after.ebitda}),backgroundColor:'#0f766e'}],true);
+ bar('chMargin',[{label:'Before',data:IDS.map(function(k){return mg(CO[k].before)}),backgroundColor:'#94a3b8'},{label:'FY26',data:IDS.map(function(k){return mg(CO[k].after)}),backgroundColor:'#ea580c'},{label:'Q1 FY27',data:IDS.map(function(k){return CO[k].q1?CO[k].q1.margin:null}),backgroundColor:'#1d4ed8'}],false,true);
+ bar('chShare',[{label:'Before',data:IDS.map(function(k){return CO[k].before.share}),backgroundColor:'#94a3b8'},{label:'FY26',data:IDS.map(function(k){return CO[k].after.share}),backgroundColor:'#7c3aed'},{label:'Q1 FY27',data:IDS.map(function(k){return CO[k].q1&&CO[k].q1.share!==undefined?CO[k].q1.share:null}),backgroundColor:'#1d4ed8'}],false,true);}
+
+function buildWC(){var h='<tr><th>Company</th><th>Working capital / CCC days</th><th class="n">CFO (₹ Cr)</th><th class="n">CFO ÷ EBITDA</th><th class="n">Capex (₹ Cr)</th><th class="n">FCF (₹ Cr)</th><th>Balance sheet</th><th>Read-across</th></tr>';
+ IDS.forEach(function(k){var c=CO[k],w=c.wc;var conv=w.cfo?f(w.cfo/c.after.ebitda*100,0)+'%':'n/a';h+='<tr><td><b>'+c.short+'</b></td><td>'+w.days+'</td><td class="n">'+f(w.cfo)+'</td><td class="n">'+conv+'</td><td class="n">'+f(w.capex)+(w.capexNote?'<br><span class="small">'+w.capexNote+'</span>':'')+'</td><td class="n '+(w.fcf<0?'neg':'')+'">'+f(w.fcf)+'</td><td class="small">'+w.netdebt+'</td><td class="small">'+w.note+'</td></tr>'});
+ document.getElementById('wcTbl').innerHTML=h;}
+
+var TGK='neuland';
+function renderTG(k){TGK=k;selButtons('selTG',renderTG,k);var c=CO[k];var cy=cyScore(c),tg=tgScore(c);
+ var h='<tr><th>Trigger</th><th>+/−</th><th class="n">I</th><th class="n">C</th><th class="n">W</th><th class="n">P</th><th class="n">Points</th><th>What to watch</th></tr>';
+ c.tg.forEach(function(t){h+='<tr><td>'+t[0]+'</td><td class="'+(t[1]==='+'?'pos':'neg')+'">'+t[1]+'</td><td class="n">'+t[2]+'</td><td class="n">'+t[3]+'</td><td class="n">'+t[4]+'</td><td class="n">'+t[5]+'</td><td class="n"><b>'+f(pts(t),2)+'</b></td><td class="small">'+t[6]+'</td></tr>'});
+ document.getElementById('tgTbl').innerHTML=h;
+ document.getElementById('tgScore').innerHTML='<b>'+c.short+'</b>: CY <span class="pill" style="background:'+col(cy)+'">'+cy+'</span> TG <span class="pill" style="background:'+col(tg)+'">'+tg+'</span><br><span class="small">Gates: '+gate(c)+'</span>';
+ document.getElementById('cyBox').innerHTML='<b>'+c.cyc.type+'</b><br>Sector phase: '+c.cyc.phase+' ('+c.cyc.sector+')<br>Stock sub-scores (lifecycle / earnings / valuation / price): '+c.cyc.sub.join(' / ')+'<br>Price stage: '+c.cyc.stage;
+ drawClock(c);}
+function drawClock(c){var ph=["P1 Trough","P2 Early recovery","P3 Expansion","P4 Late cycle","P5 Downturn"];var idx=/P1|Trough|Emerging/.test(c.cyc.phase)?0:/P2/.test(c.cyc.phase)?1:/P3|Rapid/.test(c.cyc.phase)?2:/P4/.test(c.cyc.phase)?3:4;
+ var s='<svg viewBox="-40 0 380 300" width="100%" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI,sans-serif"><circle cx="150" cy="150" r="110" fill="#fff7ed" stroke="#ea580c" stroke-width="2"/>';
+ ph.forEach(function(p,i){var ang=(-90+i*72)*Math.PI/180;var x=150+128*Math.cos(ang),y=150+128*Math.sin(ang);s+='<circle cx="'+(150+110*Math.cos(ang))+'" cy="'+(150+110*Math.sin(ang))+'" r="7" fill="'+(i===idx?'#ea580c':'#cbd5e1')+'"/><text x="'+x+'" y="'+(y+4)+'" font-size="10" text-anchor="middle" fill="'+(i===idx?'#ea580c':'#64748b')+'" font-weight="'+(i===idx?700:400)+'">'+p+'</text>'});
+ var a=(-90+idx*72)*Math.PI/180;s+='<line x1="150" y1="150" x2="'+(150+90*Math.cos(a))+'" y2="'+(150+90*Math.sin(a))+'" stroke="#0f766e" stroke-width="4" stroke-linecap="round"/><circle cx="150" cy="150" r="8" fill="#0f766e"/><text x="150" y="190" text-anchor="middle" font-size="11" fill="#0f766e">'+c.cyc.stage+'</text><text x="150" y="132" text-anchor="middle" font-size="12" font-weight="700">'+c.short+'</text></svg><p class="small">Structural S-curve sectors are mapped onto the clock: Emerging ≈ P1, Rapid adoption ≈ P3.</p>';
+ document.getElementById('clock').innerHTML=s;}
+function buildCYAll(){var h='<tr><th>Company</th><th>Cycle type</th><th>Phase</th><th class="n">CY</th><th class="n">TG</th><th>Top positive trigger</th><th>Top risk</th><th>Gates</th></tr>';
+ IDS.map(function(k){return [k,tgScore(CO[k])]}).sort(function(a,b){return b[1]-a[1]}).forEach(function(r){var c=CO[r[0]];var pos=c.tg.filter(function(t){return t[1]==='+'}).sort(function(a,b){return pts(b)-pts(a)})[0];var neg=c.tg.filter(function(t){return t[1]!=='+'})[0];
+  h+='<tr><td><b>'+c.short+'</b></td><td class="small">'+c.cyc.type+'</td><td>'+c.cyc.phase+'</td><td class="n"><span class="pill" style="background:'+col(cyScore(c))+'">'+cyScore(c)+'</span></td><td class="n"><span class="pill" style="background:'+col(r[1])+'">'+r[1]+'</span></td><td class="small">'+pos[0]+'</td><td class="small">'+(neg?neg[0]:'—')+'</td><td class="small">'+gate(c)+'</td></tr>'});
+ document.getElementById('cytgAll').innerHTML=h;}
+
+function buildAn(){var h='<tr><th>Company</th><th>Reference price</th><th>Broker</th><th>Rating</th><th>Target</th><th>Date</th></tr>';
+ IDS.forEach(function(k){var c=CO[k];c.an.forEach(function(a,i){var r=a[1].toLowerCase();var cl=/buy|add/.test(r)?'tag g':/sell|under/.test(r)?'tag r':'tag';h+='<tr>'+(i===0?'<td rowspan="'+c.an.length+'"><b>'+c.short+'</b></td><td rowspan="'+c.an.length+'" class="small">'+c.price+'</td>':'')+'<td>'+a[0]+'</td><td><span class="'+cl+'">'+a[1]+'</span></td><td>'+a[2]+'</td><td class="small">'+a[3]+'</td></tr>'})});
+ document.getElementById('anTbl').innerHTML=h;}
+function buildMg(){var h='';IDS.forEach(function(k){var c=CO[k];h+='<div class="card"><b>'+c.name+'</b><ul style="margin:6px 0;padding-left:18px">'+c.mg.map(function(m){return '<li><b>'+m[0]+'</b> — '+m[1]+'</li>'}).join('')+'</ul><p class="small">'+c.mgNote+'</p></div>'});document.getElementById('mgGrid').innerHTML=h;
+ document.getElementById('watchGrid').innerHTML=WATCH.map(function(w){return '<div class="card"><b>'+w[0]+'</b><p class="small">'+w[1]+'</p></div>'}).join('');}
+function buildPlay(){var st=[["1. Core skill","Chemistry / machining / metallurgy already proven in the old line"],["2. Adjacent bet","Same skill pointed at a higher-value customer (innovator, aero prime)"],["3. Qualify","18–36 months of audits, validation batches, AS9100 / USFDA"],["4. Capex ahead","Dedicated plants before revenue; FCF dips"],["5. Ramp","Commercial molecules / programmes; margins jump"],["6. Re-rate","Market pays for visibility; P/E expands"]];
+ var s='<svg viewBox="0 0 1100 190" width="1100" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI,sans-serif">';st.forEach(function(x,i){var X=10+i*182;s+='<rect x="'+X+'" y="30" width="165" height="120" rx="12" fill="'+(i<2?'#f1f5f9':i<4?'#fef3c7':'#fff7ed')+'" stroke="'+(i<2?'#94a3b8':i<4?'#ca8a04':'#ea580c')+'" stroke-width="2"/><text x="'+(X+82)+'" y="58" text-anchor="middle" font-size="13" font-weight="700">'+x[0]+'</text>';wrap(x[1],24).forEach(function(l,j){s+='<text x="'+(X+82)+'" y="'+(82+j*16)+'" text-anchor="middle" font-size="11" fill="#475569">'+l+'</text>'});if(i<5)s+='<text x="'+(X+172)+'" y="95" font-size="18" fill="#ea580c">›</text>'});
+ s+='<text x="10" y="178" font-size="11" fill="#64748b">Cash-flow dip happens in stages 3–4 (watch working capital and FCF); earnings and valuation jump in stages 5–6.</text></svg>';document.getElementById('playSvg').innerHTML=s;}
+function wrap(t,n){var w=t.split(' '),l=[],c='';w.forEach(function(x){if((c+' '+x).trim().length>n){l.push(c.trim());c=x}else c+=' '+x});l.push(c.trim());return l;}
+
+var QZ=[
+["Neuland's EBITDA margin went from about 15% (FY22) to 29.4% (FY26). What mainly explains the jump?",["Lower raw-material prices","Higher share of commercial CMS molecules for innovators","A cut in employee costs","Rupee appreciation"],1,"Commercial CMS molecules carry far higher margins than generic APIs; mix shift, plus operating leverage, drove the expansion."],
+["Neuland's EBITDA rose sharply in FY26 but free cash flow was negative. Why?",["Profit was fake","Working capital rose to 137 days and capex was ₹397 Cr","Dividends were too high","Tax refunds were delayed"],1,"Growth consumed cash: receivables/inventory built up and capex ran ahead. Q1 FY27 working capital fell to 84 days, releasing cash."],
+["Which company in this set carries a negative trigger strong enough to cap its conviction at 50?",["Navin Fluorine","PI Industries","PTC Industries","Laurus Labs"],1,"PI's agchem export downcycle plus patent expiry is an executing (C=1) high-impact (I=4) negative trigger."],
+["Sansera trades near 75x trailing earnings while auto peers trade at 30–38x. What is the market paying for?",["Two-wheeler volume growth","ADS (aerospace, defence, semicon) backlog and its margin uplift","Dividend yield","Debt reduction"],1,"The ₹4,437 Cr ADS backlog and the FY27 ADS guidance of ₹550–600 Cr are the re-rating drivers."],
+["Azad's working capital is 170–180 days. Which statement is most accurate?",["It does not matter for a high-margin company","It locks cash during ramp-up and raises finance cost, so CFO lags EBITDA","It means customers pay in advance","It will always stay this high"],1,"Long aerospace/energy cycles plus four new plants stretch working capital; management expects finance cost to stay high till H2 FY27."]];
+function buildQuiz(){var h='';QZ.forEach(function(q,i){h+='<div class="q"><b>Q'+(i+1)+'. '+q[0]+'</b>'+q[1].map(function(o,j){return '<label><input type="radio" name="q'+i+'" onchange="chk('+i+','+j+')"> '+o+'</label>'}).join('')+'<div class="fb" id="fb'+i+'"></div></div>'});
+ h+='<div class="q"><b>Think deeper:</b> If you had to pick one metric to tell whether a transformation is real or just a good quarter, what would it be and why? <textarea id="ft" style="width:100%;margin-top:6px" rows="3"></textarea><button onclick="ftR()" style="margin-top:6px;border:none;background:#0f766e;color:#fff;border-radius:8px;padding:6px 12px">Reflect</button><div class="fb" id="ftfb"></div></div>';document.getElementById('quiz').innerHTML=h;}
+function chk(i,j){var q=QZ[i],e=document.getElementById('fb'+i);e.innerHTML=(j===q[2]?'<span class="pos">Correct. </span>':'<span class="neg">Not quite. </span>')+q[3];}
+function ftR(){var t=document.getElementById('ftfb');t.innerHTML='Good candidates: the new line\'s share of revenue rising for 4+ quarters, number of commercial (not clinical) molecules or qualified parts, and CFO ÷ EBITDA staying above 60–70% once ramp-up ends. A single strong quarter can be a campaign order; a rising share with healthy cash conversion is structural.';}
+
+
+/* CB Assist */
+function toggleAsst(){var a=document.getElementById('asst');a.style.display=a.style.display==='flex'?'none':'flex';document.getElementById('disc').style.display='none';if(!document.getElementById('log').innerHTML)addMsg('b','Ask me by voice or text — e.g. "Neuland before and after", "who has the highest margin", "Azad working capital", "PI analyst target", "Laurus triggers". தமிழிலும் கேட்கலாம்.');}
+function toggleDisc(){var d=document.getElementById('disc');d.style.display=d.style.display==='block'?'none':'block';}
+function showDisc(v){if(window.matchMedia('(hover:hover)').matches)document.getElementById('disc').style.display=v?'block':'none';}
+function addMsg(w,t){var l=document.getElementById('log');var d=document.createElement('div');d.className='msg '+w;d.innerHTML=t;l.appendChild(d);l.scrollTop=l.scrollHeight;}
+var ALIAS={neuland:['neuland','நியூலேண்ட்'],laurus:['laurus','லாரஸ்'],navin:['navin','நவீன்','fluorine'],acutaas:['acutaas','ami organic','அக்யூட்டாஸ்'],pi:['pi industries','pi ind',' pi ','பிஐ'],samil:['motherson','samvardhana','samil','மதர்சன்'],sansera:['sansera','சான்செரா'],azad:['azad','ஆசாத்'],ptc:['ptc','aerolloy','பிடிசி']};
+function findCo(q){q=' '+q.toLowerCase()+' ';for(var k in ALIAS){if(ALIAS[k].some(function(a){return q.indexOf(a)>=0}))return k}return null;}
+function plain(s){return String(s).replace(/<[^>]+>/g,'').replace(/&amp;/g,'and');}
+function answer(q){var ql=q.toLowerCase();var k=findCo(ql);var ta=/[\u0B80-\u0BFF]/.test(q);
+ var rank=/highest|best|top|rank|which company|அதிக|சிறந்த/.test(ql);
+ if(rank&&!k){var m=IDS.slice();if(/growth|revenue|வளர்ச்சி/.test(ql)){m.sort(function(a,b){return CO[b].after.rev/CO[b].before.rev-CO[a].after.rev/CO[a].before.rev});return 'By revenue multiple since the baseline year: '+m.slice(0,3).map(function(x){return CO[x].short+' '+f(CO[x].after.rev/CO[x].before.rev,1)+'x'}).join(', ')+'.'}
+  if(/trigger|tg/.test(ql)){m.sort(function(a,b){return tgScore(CO[b])-tgScore(CO[a])});return 'Highest trigger (TG) scores: '+m.slice(0,3).map(function(x){return CO[x].short+' '+tgScore(CO[x])}).join(', ')+'.'}
+  m.sort(function(a,b){return mg(CO[b].after)-mg(CO[a].after)});return 'Highest FY26 EBITDA margins: '+m.slice(0,3).map(function(x){return CO[x].short+' '+f(mg(CO[x].after),1)+'%'}).join(', ')+'. Biggest margin gain: '+CO[IDS.slice().sort(function(a,b){return (mg(CO[b].after)-mg(CO[b].before))-(mg(CO[a].after)-mg(CO[a].before))})[0]].short+'.';}
+ if(!k)return ta?'எந்த நிறுவனம் என்று சொல்லுங்கள் — Neuland, Laurus, Navin, Acutaas, PI, Motherson, Sansera, Azad, PTC.':'Name a company (Neuland, Laurus, Navin, Acutaas, PI, Motherson, Sansera, Azad, PTC) or ask "which has the highest margin".';
+ var c=CO[k],b=c.before,a=c.after;
+ if(/analyst|target|broker|rating|ஆய்வாளர்|இலக்கு/.test(ql))return c.short+' broker views: '+c.an.map(function(x){return x[0]+' '+x[1]+' '+x[2]}).join('; ')+'. These are third-party views, not CB Research recommendations.';
+ if(/manage|ceo|board|promoter|நிர்வாக/.test(ql))return c.short+' leadership: '+c.mg.map(function(m){return m[0]+' ('+plain(m[1])+')'}).join(', ')+'. '+plain(c.mgNote);
+ if(/working|cash|cfo|wc|fcf|பணம்/.test(ql))return c.short+' working capital: '+c.wc.days+' days. CFO: '+(c.wc.cfo?'₹'+f(c.wc.cfo)+' Cr':'not disclosed')+'. '+plain(c.wc.note);
+ if(/trigger|catalyst|cycle|risk|தூண்டி|அபாய/.test(ql)){var p=c.tg.filter(function(t){return t[1]==='+'}),n=c.tg.filter(function(t){return t[1]!=='+'});return c.short+': CY '+cyScore(c)+', TG '+tgScore(c)+'. Main catalyst: '+plain(p[0][0])+'. Main risk: '+(n[0]?plain(n[0][0]):'none listed')+'.'}
+ if(/q1|quarter|latest|காலாண்டு/.test(ql))return c.q1?c.short+' Q1 FY27: revenue ₹'+f(c.q1.rev)+' Cr, EBITDA ₹'+f(c.q1.ebitda)+' Cr ('+f(c.q1.margin)+'%), PAT ₹'+f(c.q1.pat)+' Cr.':'Q1 FY27 figures for '+c.short+' are not loaded in this file.';
+ if(ta)return c.short+': '+c.ta+' வருவாய் ₹'+f(b.rev,0)+' கோடியிலிருந்து ₹'+f(a.rev,0)+' கோடி; EBITDA மார்ஜின் '+f(mg(b),1)+'% இலிருந்து '+f(mg(a),1)+'%.';
+ return c.short+': '+plain(c.theme)+'. Revenue ₹'+f(b.rev,0)+' Cr ('+b.yr+') to ₹'+f(a.rev,0)+' Cr ('+a.yr+'), EBITDA ₹'+f(b.ebitda,0)+' Cr to ₹'+f(a.ebitda,0)+' Cr, margin '+f(mg(b),1)+'% to '+f(mg(a),1)+'%. Lever: '+plain(c.lever)+'.';}
+function ask(t){var i=document.getElementById('qIn');var q=t||i.value.trim();if(!q)return;i.value='';addMsg('u',q);var a=answer(q);addMsg('b',a);speak(a,/[\u0B80-\u0BFF]/.test(a)?'ta-IN':'en-IN');}
+function speak(t,l){if(!window.speechSynthesis)return;speechSynthesis.cancel();var u=new SpeechSynthesisUtterance(t.replace(/₹/g,'rupees ').replace(/ Cr/g,' crore'));u.lang=l;u.rate=1;speechSynthesis.speak(u);}
+function listen(){var R=window.SpeechRecognition||window.webkitSpeechRecognition;if(!R){addMsg('b','Voice input is not supported in this browser — please type your question (Chrome or Edge support voice).');return}var r=new R();r.lang=LANG==='ta'?'ta-IN':'en-IN';var m=document.getElementById('micBtn');m.classList.add('rec');r.onresult=function(e){ask(e.results[0][0].transcript)};r.onend=function(){m.classList.remove('rec')};r.onerror=function(){m.classList.remove('rec');addMsg('b','Could not hear that — please try again or type.')};r.start();}
+
+buildNav();buildScore();buildMap();renderBA('neuland');buildFin();buildWC();renderTG('neuland');buildCYAll();buildAn();buildMg();buildPlay();buildQuiz();show('overview');
+</script>
+</body>
+</html>
