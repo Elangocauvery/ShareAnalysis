@@ -1,0 +1,642 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Shilchar 6-Pillar</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&family=IBM+Plex+Mono:wght@500;700&family=Inter:wght@500;600;700;800&family=Noto+Sans+Tamil:wght@500;700&display=swap" rel="stylesheet">
+<style>
+:root{--or:#F28C28;--or-d:#C9661A;--or-l:#FFF4E8;--ink:#111111;--mut:#3A3A3A;--line:#E3E3E3;--grn:#16803A;--red:#C62828;--blu:#1F5FAD;--bg:#FFFFFF;--soft:#FAFAFA}
+*{box-sizing:border-box}
+html,body{background:var(--bg);color:var(--ink)}
+body{margin:0;font-family:Inter,'Noto Sans Tamil',system-ui,sans-serif;font-weight:500;font-size:15.5px;line-height:1.55;overflow-x:hidden}
+body.lang-en .ta{display:none!important} body.lang-ta .en{display:none!important}
+body.lang-ta{font-family:'Noto Sans Tamil',Inter,system-ui,sans-serif}
+.wrap{max-width:1180px;margin:0 auto;padding:0 16px}
+header{border-bottom:3px solid var(--or);background:#fff}
+.top{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;padding:14px 0 6px}
+.brand{font-family:'IBM Plex Mono',monospace;font-weight:700;font-size:13px;letter-spacing:.06em;color:var(--or-d);text-transform:uppercase}
+.slogan{display:inline-block;margin-top:4px;background:var(--or-l);border:1px solid #F6C89A;color:#7A3A00;font-weight:800;font-size:13px;padding:3px 10px;border-radius:20px}
+h1{font-family:'Playfair Display',serif;font-weight:800;font-size:clamp(24px,4vw,36px);margin:6px 0 2px;line-height:1.15}
+.sub{color:var(--mut);font-weight:600;font-size:14px;padding-bottom:12px}
+.ctrl{display:flex;gap:8px;flex-wrap:wrap}
+.btn{border:2px solid var(--or);background:#fff;color:#7A3A00;font-weight:800;border-radius:10px;padding:7px 12px;cursor:pointer;font-size:14px;font-family:inherit}
+.btn.on,.btn:hover{background:var(--or);color:#fff}
+nav{position:sticky;top:0;z-index:20;background:#fff;border-bottom:1px solid var(--line)}
+nav .wrap{display:flex;gap:4px;overflow-x:auto;scrollbar-width:thin;padding-top:6px;padding-bottom:6px}
+nav button{flex:0 0 auto;border:0;background:#fff;font-family:inherit;font-weight:800;font-size:14px;color:#222;padding:8px 12px;border-radius:9px;cursor:pointer;border:1.5px solid transparent}
+nav button.act{background:var(--or-l);border-color:var(--or);color:#7A3A00}
+main{padding:18px 0 120px}
+.panel{display:none}.panel.act{display:block}
+h2{font-family:'Playfair Display',serif;font-size:26px;margin:4px 0 12px}
+h3{font-size:17px;font-weight:800;margin:0 0 8px}
+.card{background:#fff;border:1.5px solid var(--line);border-radius:14px;padding:16px;margin-bottom:14px}
+.card.hl{border-color:var(--or);background:var(--or-l)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin-bottom:14px}
+.g2{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:14px}
+.kpi{background:#fff;border:1.5px solid var(--line);border-left:5px solid var(--or);border-radius:12px;padding:12px 14px}
+.kpi .l{font-size:13px;font-weight:700;color:var(--mut)}
+.kpi .v{font-family:'IBM Plex Mono',monospace;font-size:25px;font-weight:700;line-height:1.2}
+.kpi .c{font-size:13px;font-weight:800}
+.up{color:var(--grn)}.dn{color:var(--red)}.neu{color:#7A3A00}
+ul.b{margin:0;padding-left:20px} ul.b li{margin:4px 0;font-weight:600}
+.tw{overflow-x:auto;-webkit-overflow-scrolling:touch}
+table{width:100%;border-collapse:collapse;font-size:14px;min-width:520px}
+th{background:var(--or-l);color:#5A2A00;font-weight:800;text-align:right;padding:8px;border-bottom:2px solid var(--or);white-space:nowrap}
+td{padding:8px;border-bottom:1px solid var(--line);text-align:right;font-family:'IBM Plex Mono',monospace;font-weight:600;white-space:nowrap}
+th:first-child,td:first-child{text-align:left;font-family:inherit;white-space:normal}
+td.t{font-family:inherit;text-align:left;white-space:normal;font-weight:600}
+.note{font-size:13px;color:var(--mut);font-weight:600;margin-top:6px}
+.chip{display:inline-flex;align-items:center;gap:6px;border:2px solid var(--or);border-radius:20px;padding:3px 12px;font-weight:800;font-size:14px;margin:3px 6px 3px 0;background:#fff}
+.chip b{font-family:'IBM Plex Mono',monospace}
+.flow{display:flex;flex-wrap:wrap;align-items:stretch;gap:6px}
+.fbox{flex:1 1 170px;border:2px solid var(--or);border-radius:12px;padding:10px 12px;background:#fff}
+.fbox .h{font-weight:800;color:#7A3A00;margin-bottom:4px}
+.fbox ul{margin:0;padding-left:18px;font-size:14px;font-weight:600}
+.arr{align-self:center;font-size:26px;font-weight:800;color:var(--or)}
+.pic{border:2px dashed var(--or);background:var(--or-l);border-radius:12px;padding:12px 14px;font-weight:700}
+.pic .h{font-family:'Playfair Display',serif;font-size:18px;color:#7A3A00}
+.sw{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px}
+.sw .card h3{font-size:18px}
+.sw .S{border-top:5px solid var(--grn)}.sw .W{border-top:5px solid var(--red)}.sw .O{border-top:5px solid var(--blu)}.sw .T{border-top:5px solid #8A5A00}
+.take{display:flex;gap:12px;align-items:flex-start}
+.take .n{flex:0 0 38px;height:38px;border-radius:50%;background:var(--or);color:#fff;font-weight:800;display:flex;align-items:center;justify-content:center;font-family:'IBM Plex Mono',monospace;font-size:18px}
+svg text{font-family:Inter,'Noto Sans Tamil',sans-serif}
+.bar{height:14px;border-radius:7px;background:#EEE;overflow:hidden}.bar i{display:block;height:100%;background:var(--or)}
+.pos{color:var(--grn);font-weight:800}.neg{color:var(--red);font-weight:800}
+/* CB badge */
+#cb{position:fixed;right:16px;bottom:16px;z-index:60;width:48px;height:48px;border-radius:50%;background:var(--or);color:#fff;font-family:'IBM Plex Mono',monospace;font-weight:700;font-size:17px;display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 2px 10px rgba(0,0,0,.18);animation:blink 1.6s ease-in-out infinite;border:0}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.45}}
+#disc{position:fixed;right:16px;bottom:72px;z-index:61;max-width:340px;background:#fff;border:2px solid var(--or);border-radius:12px;padding:12px;font-size:13px;font-weight:600;color:#222;display:none;box-shadow:0 4px 18px rgba(0,0,0,.15)}
+#cb:hover+#disc,#disc.open,#disc:hover{display:block}
+#vbub{position:fixed;right:16px;bottom:74px;z-index:59;background:#fff;color:#7A3A00;border:2px solid var(--or);border-radius:24px;padding:8px 14px;font-weight:800;font-size:14px;cursor:pointer;box-shadow:0 2px 10px rgba(0,0,0,.12);font-family:inherit}
+body.discopen #vbub{display:none}
+/* Assist */
+.as{border:2px solid var(--or);border-radius:14px;overflow:hidden}
+.as-h{background:var(--or-l);padding:10px 12px;display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:space-between;border-bottom:1.5px solid #F6C89A}
+.as-h .t{font-weight:800;color:#7A3A00;font-size:16px}
+.as-c{display:flex;flex-wrap:wrap;gap:6px;align-items:center;font-size:13px;font-weight:700}
+.as-c button,.as-c select{font-family:inherit;font-weight:800;font-size:13px;border:1.5px solid var(--or);background:#fff;border-radius:8px;padding:4px 8px;cursor:pointer;color:#5A2A00}
+.as-c button.on{background:var(--or);color:#fff}
+.as-log{height:380px;overflow-y:auto;padding:12px;background:#fff}
+.msg{margin:8px 0;max-width:92%}
+.msg.u{margin-left:auto;background:#F3F3F3;border-radius:12px 12px 2px 12px;padding:8px 12px;font-weight:700}
+.msg.a{background:#fff;border:1.5px solid var(--line);border-left:4px solid var(--or);border-radius:12px;padding:10px 12px}
+.msg.a .d1{font-weight:800;font-size:15.5px}
+.msg.a details{margin-top:6px;font-size:14px}.msg.a summary{cursor:pointer;color:var(--or-d);font-weight:800}
+.msg.a .ac{margin-top:6px;display:flex;gap:6px;flex-wrap:wrap}
+.msg.a .ac button{font-family:inherit;font-size:12.5px;font-weight:800;border:1.5px solid var(--or);background:#fff;border-radius:8px;padding:3px 8px;cursor:pointer;color:#5A2A00}
+.as-in{display:flex;gap:6px;padding:10px;border-top:1.5px solid var(--line);background:#fff}
+.as-in input{flex:1;min-width:0;border:2px solid #CCC;border-radius:10px;padding:9px 10px;font-size:15px;font-family:inherit;font-weight:600}
+.as-in input:focus{outline:none;border-color:var(--or)}
+.as-in button{font-family:inherit;font-weight:800;border:0;background:var(--or);color:#fff;border-radius:10px;padding:0 14px;cursor:pointer;font-size:15px}
+.as-in button.mic.rec{background:var(--red)}
+.cd{height:4px;background:#EEE}.cd i{display:block;height:100%;width:0;background:var(--red)}
+.sug{display:flex;flex-wrap:wrap;gap:6px;padding:8px 10px;border-top:1px solid var(--line)}
+.sug button{font-family:inherit;font-size:13px;font-weight:700;border:1.5px solid var(--line);background:var(--soft);border-radius:16px;padding:4px 10px;cursor:pointer}
+.sug button:hover{border-color:var(--or)}
+.as-note{font-size:12.5px;font-weight:700;color:#7A3A00;padding:6px 12px;background:#FFFBF6}
+/* Quiz */
+.qz .opt{display:block;width:100%;text-align:left;border:2px solid var(--line);background:#fff;border-radius:10px;padding:10px 12px;margin:6px 0;font-family:inherit;font-weight:700;font-size:15px;cursor:pointer}
+.qz .opt:hover{border-color:var(--or)}
+.qz .opt.ok{border-color:var(--grn);background:#EAF6EE}.qz .opt.no{border-color:var(--red);background:#FDECEC}
+.qz .ex{margin-top:8px;padding:10px;border-radius:10px;background:var(--or-l);font-weight:600}
+.prog{font-family:'IBM Plex Mono',monospace;font-weight:700;color:#7A3A00}
+@media (max-width:600px){.grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.kpi{padding:10px}.kpi .c{font-size:12px}h2{font-size:22px}.kpi .v{font-size:21px}#vbub{bottom:72px}.as-log{height:330px}}
+</style>
+</head>
+<body class="lang-en">
+<header><div class="wrap">
+  <div class="top">
+    <div>
+      <div class="brand">CB Research · Cauvery Business Research</div>
+      <span class="slogan"><span class="en">Learn before you Buy</span><span class="ta">வாங்கறதுக்கு முன்னாடி கத்துக்குங்க!</span></span>
+    </div>
+    <div class="ctrl">
+      <button class="btn on" id="bEN" onclick="setLang('en')">English</button>
+      <button class="btn" id="bTA" onclick="setLang('ta')">தமிழ்</button>
+      <button class="btn" onclick="readTab()">🔊 <span class="en">Read this tab</span><span class="ta">இந்த tab-ஐ படிங்க</span></button>
+    </div>
+  </div>
+  <h1 id="ttl"></h1>
+  <div class="sub" id="subt"></div>
+</div></header>
+<nav><div class="wrap" id="tabs"></div></nav>
+<main><div class="wrap" id="main"></div></main>
+<button id="vbub" onclick="showTab('assist')">🎙️ <span class="en">Voice Assist</span><span class="ta">Voice Assist</span></button>
+<button id="cb" aria-label="Disclaimer" onclick="document.getElementById('disc').classList.toggle('open');document.body.classList.toggle('discopen')">CB</button>
+<div id="disc"><span class="en"><b>Disclaimer:</b> CB Research (Cauvery Business Research) is an education platform and is <b>not SEBI-registered</b>. Nothing here is a buy, sell or hold recommendation. Figures come from company filings, concall summaries and market data pages as cited; verify with BSE/NSE filings before acting. Scenarios are illustrative, not forecasts.</span><span class="ta"><b>Disclaimer:</b> CB Research ஒரு education platform மட்டும் தாங்க — <b>SEBI-registered இல்லை</b>. இங்க buy, sell, hold-னு எந்த recommendation-உம் இல்லை. Numbers எல்லாம் company filings, concall summary, market data-ல இருந்து எடுத்தது; BSE/NSE filing-ல ஒரு தடவை check பண்ணிக்குங்க. Scenarios எல்லாம் உதாரணத்துக்கு தான், forecast இல்லை.</span></div>
+<script>
+function L(en,ta){return '<span class="en">'+en+'</span><span class="ta">'+ta+'</span>'}
+function A(en,ta){return {en:en,ta:ta}}
+function ul(arr){return '<ul class="b">'+arr.map(function(x){return '<li>'+L(x[0],x[1])+'</li>'}).join('')+'</ul>'}
+function card(title,body,cls){return '<div class="card '+(cls||'')+'">'+(title?'<h3>'+title+'</h3>':'')+body+'</div>'}
+function kpi(l,v,c,cls){return '<div class="kpi"><div class="l">'+l+'</div><div class="v">'+v+'</div><div class="c '+(cls||'')+'">'+(c||'')+'</div></div>'}
+function table(head,rows,note){var h='<div class="tw"><table><thead><tr>'+head.map(function(x){return '<th>'+x+'</th>'}).join('')+'</tr></thead><tbody>';rows.forEach(function(r){h+='<tr>'+r.map(function(c,i){return '<td'+(i>0&&typeof c==='string'&&c.indexOf('class="en"')>-1?' class="t"':'')+'>'+(c==null?'—':c)+'</td>'}).join('')+'</tr>'});return h+'</tbody></table></div>'+(note?'<div class="note">'+note+'</div>':'')}
+function fmt(v,d){return v==null?'—':(+v).toFixed(d==null?0:d)}
+/* SVG bar + optional line chart */
+function chart(o){
+  var W=660,H=o.h||270,pl=44,pr=o.line?48:12,pt=34,pb=46,n=o.labels.length;
+  var all=[];o.series.forEach(function(s){s.vals.forEach(function(v){if(v!=null)all.push(v)})});
+  var mx=Math.max.apply(null,all.concat([0]))*1.18,mn=Math.min.apply(null,all.concat([0]));if(mn<0)mn*=1.18;
+  var ih=H-pt-pb,iw=W-pl-pr,gw=iw/n,y=function(v){return pt+(mx-v)/(mx-mn)*ih};
+  var s='<svg viewBox="0 0 '+W+' '+H+'" width="100%" role="img" style="max-width:100%;height:auto">';
+  for(var g=0;g<=4;g++){var gv=mn+(mx-mn)*g/4,gy=y(gv);s+='<line x1="'+pl+'" x2="'+(W-pr)+'" y1="'+gy+'" y2="'+gy+'" stroke="#EEE"/><text x="'+(pl-6)+'" y="'+(gy+4)+'" font-size="11" text-anchor="end" fill="#555" font-weight="600">'+Math.round(gv)+'</text>'}
+  s+='<line x1="'+pl+'" x2="'+(W-pr)+'" y1="'+y(0)+'" y2="'+y(0)+'" stroke="#999"/>';
+  var ns=o.series.length,bw=Math.min(46,gw*0.72/ns);
+  o.labels.forEach(function(lb,i){var cx=pl+gw*i+gw/2;
+    o.series.forEach(function(se,j){var v=se.vals[i];if(v==null)return;var x=cx-bw*ns/2+bw*j,y0=y(Math.max(v,0)),hh=Math.abs(y(v)-y(0));
+      s+='<rect x="'+x+'" y="'+y0+'" width="'+(bw-3)+'" height="'+Math.max(hh,1)+'" rx="3" fill="'+se.color+'"/>';
+      s+='<text x="'+(x+(bw-3)/2)+'" y="'+(v>=0?y0-5:y0+hh+13)+'" font-size="11.5" font-weight="800" text-anchor="middle" fill="#111">'+(se.fmt?se.fmt(v):v)+'</text>'});
+    s+='<text x="'+cx+'" y="'+(H-pb+17)+'" font-size="12" font-weight="700" text-anchor="middle" fill="#222">'+lb+'</text>'});
+  if(o.line){var lv=o.line.vals.filter(function(v){return v!=null}),lmx=Math.max.apply(null,lv)*2.1,lmn=0,ly=function(v){return pt+(lmx-v)/(lmx-lmn)*ih},pts=[];
+    o.line.vals.forEach(function(v,i){if(v!=null)pts.push([pl+gw*i+gw/2,ly(v),v])});
+    s+='<polyline fill="none" stroke="'+o.line.color+'" stroke-width="3" points="'+pts.map(function(p){return p[0]+','+p[1]}).join(' ')+'"/>';
+    pts.forEach(function(p){s+='<circle cx="'+p[0]+'" cy="'+p[1]+'" r="5" fill="#fff" stroke="'+o.line.color+'" stroke-width="3"/><text x="'+p[0]+'" y="'+(p[1]-10)+'" font-size="12" font-weight="800" text-anchor="middle" fill="'+o.line.color+'">'+p[2]+(o.line.unit||'')+'</text>'});}
+  var lx=pl;o.series.concat(o.line?[o.line]:[]).forEach(function(se){s+='<rect x="'+lx+'" y="8" width="12" height="12" rx="2" fill="'+se.color+'"/><text x="'+(lx+17)+'" y="18" font-size="12" font-weight="800" fill="#222" class="en">'+se.name.en+'</text><text x="'+(lx+17)+'" y="18" font-size="12" font-weight="800" fill="#222" class="ta">'+se.name.ta+'</text>';lx+=Math.max(se.name.en.length,se.name.ta.length*0.9)*7+36});
+  return s+'</svg>';
+}
+/* Cycle clock */
+function cycleClock(active,stageTxt){
+  var ph=[A('P1 Trough','P1 அடிமட்டம்'),A('P2 Early recovery','P2 ஆரம்ப recovery'),A('P3 Expansion','P3 Expansion'),A('P4 Late / peak','P4 Peak'),A('P5 Downturn','P5 இறக்கம்')];
+  var cx=170,cy=150,r=110,s='<svg viewBox="0 0 340 300" width="100%" style="max-width:380px;height:auto">';
+  for(var i=0;i<5;i++){var a0=(-90+i*72)*Math.PI/180,a1=(-90+(i+1)*72)*Math.PI/180;
+    var x0=cx+r*Math.cos(a0),y0=cy+r*Math.sin(a0),x1=cx+r*Math.cos(a1),y1=cy+r*Math.sin(a1);
+    s+='<path d="M'+cx+','+cy+' L'+x0+','+y0+' A'+r+','+r+' 0 0,1 '+x1+','+y1+' Z" fill="'+(i===active?'#F28C28':'#FFF4E8')+'" stroke="#fff" stroke-width="3"/>';
+    var am=(-90+i*72+36)*Math.PI/180,tx=cx+(r*0.66)*Math.cos(am),ty=cy+(r*0.66)*Math.sin(am);
+    var w=ph[i];s+='<text x="'+tx+'" y="'+ty+'" font-size="11" font-weight="800" text-anchor="middle" fill="'+(i===active?'#fff':'#7A3A00')+'" class="en">'+w.en.split(' ')[0]+'</text><text x="'+tx+'" y="'+(ty+13)+'" font-size="9.5" font-weight="700" text-anchor="middle" fill="'+(i===active?'#fff':'#7A3A00')+'" class="en">'+w.en.split(' ').slice(1).join(' ')+'</text>';
+    s+='<text x="'+tx+'" y="'+ty+'" font-size="11" font-weight="800" text-anchor="middle" fill="'+(i===active?'#fff':'#7A3A00')+'" class="ta">'+w.ta.split(' ')[0]+'</text><text x="'+tx+'" y="'+(ty+13)+'" font-size="9.5" font-weight="700" text-anchor="middle" fill="'+(i===active?'#fff':'#7A3A00')+'" class="ta">'+w.ta.split(' ').slice(1).join(' ')+'</text>';}
+  var am2=(-90+active*72+36)*Math.PI/180;s+='<line x1="'+cx+'" y1="'+cy+'" x2="'+(cx+(r*0.42)*Math.cos(am2))+'" y2="'+(cy+(r*0.42)*Math.sin(am2))+'" stroke="#111" stroke-width="3"/><circle cx="'+cx+'" cy="'+cy+'" r="7" fill="#111"/>';
+  s+='<text x="'+cx+'" y="292" font-size="13" font-weight="800" text-anchor="middle" fill="#C62828" class="en">Stock: '+stageTxt.en+'</text><text x="'+cx+'" y="292" font-size="13" font-weight="800" text-anchor="middle" fill="#C62828" class="ta">Stock: '+stageTxt.ta+'</text>';
+  return s+'</svg>';
+}
+/* Timeline */
+function timeline(ev){
+  var W=660,H=180,pl=44,pr=44,s='<svg viewBox="0 0 '+W+' '+H+'" width="100%" style="height:auto">';
+  s+='<line x1="'+pl+'" x2="'+(W-pr)+'" y1="76" y2="76" stroke="#F28C28" stroke-width="4"/>';
+  ev.forEach(function(e,i){var x=pl+(W-pl-pr)*i/(ev.length-1),up=i%2===0;
+    s+='<circle cx="'+x+'" cy="76" r="9" fill="'+(e.neg?'#C62828':e.done?'#16803A':'#fff')+'" stroke="#F28C28" stroke-width="3"/>';
+    s+='<text x="'+x+'" y="'+(up?40:112)+'" font-size="15" font-weight="800" text-anchor="middle" fill="#111">'+e.d+'</text>';
+    s+='<text x="'+x+'" y="'+(up?20:134)+'" font-size="14" font-weight="700" text-anchor="middle" fill="#444" class="en">'+e.t.en+'</text><text x="'+x+'" y="'+(up?20:134)+'" font-size="14" font-weight="700" text-anchor="middle" fill="#444" class="ta">'+e.t.ta+'</text>';});
+  return s+'</svg>';
+}
+function flow(steps){return '<div class="flow">'+steps.map(function(s,i){return (i?'<div class="arr">➜</div>':'')+'<div class="fbox"><div class="h">'+L(s.h[0],s.h[1])+'</div>'+ul(s.p)+'</div>'}).join('')+'</div>'}
+function pic(en,ta){return '<div class="pic"><div class="h">🖼️ '+L('Picture it','இப்படி யோசிங்க')+'</div>'+L(en,ta)+'</div>'}
+function trigTable(tr){var rows=tr.map(function(t){var p=(t.I*t.C*t.W*t.P);return [L(t.n[0],t.n[1]),'<span class="'+(t.s>0?'pos':'neg')+'">'+(t.s>0?'+':'−')+'</span>',t.I,t.C,t.W,t.P,'<b>'+(t.s>0?'+':'−')+p.toFixed(2)+'</b>',L(t.w[0],t.w[1]),t.src]});
+  return table([L('Trigger','Trigger'),'+/−','I','C','W','P',L('Points','Points'),L('What to watch','என்ன பாக்கணும்'),L('Source & date','Source')],rows.map(function(r){return r.map(function(c,i){return (i===0||i===7||i===8)?'<span style="font-family:Inter;white-space:normal;display:block;text-align:left;min-width:'+(i===7?'180px':'120px')+'">'+c+'</span>':c})}),L('I = impact (1–5) · C = certainty · W = timing · P = priced-in. Points = I×C×W×P.','I = impact (1–5) · C = certainty · W = timing · P = priced-in. Points = I×C×W×P.'))}
+
+var OR='#F28C28',BL='#1F5FAD',RD='#C62828',GR='#16803A',DK='#5A2A00';
+var D={key:'cb_q1fy27_shilchar',
+title:L('Shilchar Technologies — Q1 FY27 Business &amp; Investment Analysis','Shilchar Technologies — Q1 FY27 Business &amp; Investment அலசல்'),
+sub:L('NSE: SHILCTECH · BSE: 531201 · Transformers (Power T&amp;D / renewables) · Quarter ended 30 Jun 2026 · Results 11 Aug 2026 · Price data as of 9 Oct 2026','NSE: SHILCTECH · BSE: 531201 · Transformers (Power T&amp;D / renewables) · June 30, 2026 quarter · Results 11 Aug 2026 · Price 9 Oct 2026 நிலவரம்'),
+tabs:[
+/* ---------------- DASHBOARD ---------------- */
+{id:'dash',l:['Dashboard','Dashboard'],html:function(){return ''+
+'<div class="grid">'+
+kpi(L('Revenue','Revenue'),'₹134.6 cr','<span class="dn">▼ 15.2% YoY</span> · <span class="dn">▼ 11.2% QoQ</span>')+
+kpi(L('Operating margin (ex other income)','Operating margin (other income இல்லாம)'),'~16%','<span class="dn">vs 33% Q1 FY26 · 21% Q4 FY26</span>')+
+kpi(L('EBITDA incl. other income','EBITDA (other income சேர்த்து)'),'₹29.2 cr','<span class="neu">'+L('~₹7 cr is other income','இதுல ~₹7 cr other income')+'</span>')+
+kpi(L('Net profit (PAT)','Net profit (PAT)'),'₹20.9 cr','<span class="dn">▼ 49.7% YoY</span> · <span class="dn">▼ 26.6% QoQ</span>')+
+kpi(L('EPS (quarter)','EPS (quarter)'),'₹18.23','<span class="dn">vs ₹36.27 Q1 FY26</span>')+
+kpi(L('Order book','Order book'),'~₹500 cr','<span class="neu">70% domestic · 30% export</span>')+
+kpi(L('Capacity utilisation','Capacity utilisation'),'60–65%','<span class="dn">'+L('vs ~79% in FY26','FY26-ல ~79%')+'</span>')+
+kpi(L('Share price · Mcap','Share price · Mcap'),'₹3,925','<span class="neu">₹4,491 cr · P/E 32.6×</span>')+
+'</div>'+
+card(L('CB lenses','CB lenses'),'<span class="chip">CY <b>57</b></span><span class="chip">TG <b>53</b></span><span class="chip" style="border-color:'+RD+';color:'+RD+'">'+L('Weinstein Stage 4 gate → Conviction capped at 55','Weinstein Stage 4 gate → Conviction max 55')+'</span>'+
+'<div class="note">'+L('CY = cycle score, TG = trigger score (see Triggers &amp; Cycle tab).','CY = cycle score, TG = trigger score (Triggers &amp; Cycle tab-ல பாருங்க).')+'</div>')+
+'<div class="g2">'+card(L('5-quarter trend (₹ cr)','5 quarter trend (₹ cr)'),chart({labels:["Q1 FY26","Q2 FY26","Q3 FY26","Q4 FY26","Q1 FY27"],series:[{name:A('Revenue','Revenue'),color:OR,vals:[159,171,170,152,135]},{name:A('PAT','PAT'),color:BL,vals:[41,46,42,28,21]}],line:{name:A('OPM %','OPM %'),color:RD,unit:'%',vals:[33,31,31,21,16]}}))+
+card(L('In one look','ஒரே பார்வையில'),ul([
+['Second weak quarter in a row: revenue −15%, profit halved.','தொடர்ந்து 2-வது weak quarter: revenue −15%, profit பாதியா குறைஞ்சிருக்கு.'],
+['Cause: export dispatches slowed (West Asia crisis, costly shipping, US tariff doubt).','காரணம்: export dispatch slow ஆயிடுச்சு (West Asia crisis, shipping cost, US tariff குழப்பம்).'],
+['Margin fell to ~16% as fixed costs met lower volumes and costlier inputs.','Volume குறைஞ்சு input cost ஏறினதால margin ~16%-க்கு இறங்கிடுச்சு.'],
+['Management keeps ₹800 cr FY27 guidance; says Q2 is fully booked.','Management FY27-க்கு ₹800 cr guidance-ஐ மாத்தலை; Q2 full-ஆ book ஆயிருக்குனு சொல்றாங்க.'],
+['Big swing factor: 6,500 MVA Gavasad plant due April 2027 (capacity nearly doubles).','பெரிய factor: April 2027-ல 6,500 MVA Gavasad plant வருது (capacity கிட்டத்தட்ட double).'],
+['Balance sheet: zero debt, ~₹202 cr investments, ROCE ~51%.','Balance sheet: debt zero, ~₹202 cr investments, ROCE ~51%.']]))+'</div>'}},
+/* ---------------- BUSINESS MODEL ---------------- */
+{id:'biz',l:['Business Model','Business Model'],html:function(){return ''+
+card(L('How Shilchar makes money','Shilchar எப்படி சம்பாதிக்குது'),flow([
+{h:['Inputs','Inputs'],p:[['CRGO steel (core)','CRGO steel (core)'],['Copper / aluminium windings','Copper / aluminium winding'],['Transformer oil, bushings','Transformer oil, bushings']]},
+{h:['Factory','Factory'],p:[['Gavasad, Vadodara (Gujarat), 17 acres','Gavasad, Vadodara (Gujarat), 17 acres'],['7,500 MVA capacity today','இப்போ 7,500 MVA capacity'],['Up to 50 MVA, 132 kV units','50 MVA, 132 kV வரை']]},
+{h:['Products','Products'],p:[['Power &amp; distribution transformers','Power &amp; distribution transformers'],['Inverter-duty (solar/wind)','Inverter-duty (solar/wind)'],['Electronics &amp; telecom transformers (small)','Electronics &amp; telecom transformers (சின்ன பங்கு)']]},
+{h:['Customers','Customers'],p:[['Solar/wind developers &amp; EPCs','Solar/wind developers &amp; EPC'],['Utilities, industry (steel, cement, oil &amp; gas)','Utilities, industry (steel, cement, oil &amp; gas)'],['Exports: 25+ countries','Exports: 25+ நாடுகள்']]},
+{h:['Money','பணம்'],p:[['Custom orders, made-to-spec','Custom order — spec படி செய்யறது'],['Export ~₹10–11 lakh/MVA','Export ~₹10–11 lakh/MVA'],['Capex from own cash, no debt','Capex சொந்த பணத்துல, கடன் இல்லை']]}]))+
+pic('A solar park makes power at low voltage. Shilchar\'s inverter-duty transformer is the "lift" that raises it to grid voltage. More solar parks → more lifts needed.','Solar park low voltage-ல power தயாரிக்குது. அதை grid voltage-க்கு தூக்கி விடற "lift" தான் Shilchar-ஓட inverter-duty transformer. Solar park அதிகமானா, lift-உம் அதிகம் வேணும்.')+
+'<div class="g2" style="margin-top:14px">'+card(L('Edge (moat)','பலம் (moat)'),ul([
+['40+ years in manufacturing; 17 years in renewable transformers.','40+ வருஷ manufacturing அனுபவம்; renewable transformer-ல 17 வருஷம்.'],
+['Strong export franchise — Middle East ~30% and US ~18–19% of revenue (FY25–26).','Export பலம் — Middle East ~30%, US ~18–19% revenue (FY25–26).'],
+['Debt-free; expansions funded from internal cash.','கடன் இல்லை; expansion எல்லாம் சொந்த cash-ல.'],
+['ROCE ~51% — very high for a manufacturer.','ROCE ~51% — ஒரு manufacturer-க்கு ரொம்ப அதிகம்.']]))+
+card(L('What it depends on','எதை நம்பி இருக்கு'),ul([
+['Grid &amp; renewable capex in India (FY26 saw ~55 GW renewables commissioned).','இந்தியாவோட grid &amp; renewable capex (FY26-ல ~55 GW renewables commission ஆச்சு).'],
+['Smooth export shipping — the Q4 &amp; Q1 dip came from here.','Export shipping சீரா இருக்கணும் — Q4 &amp; Q1 dip இங்க இருந்து தான்.'],
+['Raw material spread — oil price roughly doubled Feb–May 2026.','Raw material spread — transformer oil விலை Feb–May 2026-ல கிட்டத்தட்ட double.'],
+['Capacity — near full until the new plant arrives.','Capacity — புது plant வர்ற வரைக்கும் கிட்டத்தட்ட full.']]))+'</div>'}},
+/* ---------------- PRODUCTS ---------------- */
+{id:'prod',l:['Products','Products'],html:function(){return ''+
+card(L('Where each Shilchar product sits on the power chain','Power chain-ல Shilchar products எங்க வருது'),flow([
+{h:['1 · Generation','1 · Generation'],p:[['Solar parks → <b>inverter-duty</b>','Solar parks → <b>inverter-duty</b>'],['Wind / hydro → <b>generator step-up</b>','Wind / hydro → <b>generator step-up</b>']]},
+{h:['2 · Grid substation','2 · Grid substation'],p:[['<b>Power transformers</b> step voltage up/down','<b>Power transformers</b> voltage-ஐ ஏத்துது/இறக்குது'],['Today up to 50 MVA, 132 kV','இப்போ 50 MVA, 132 kV வரை']]},
+{h:['3 · Local network','3 · Local network'],p:[['<b>Distribution transformers</b> bring it down for use','<b>Distribution transformers</b> பயன்பாட்டுக்கு இறக்குது'],['The "pole-side" box near users','பயன்படுத்தறவங்க பக்கத்துல இருக்கற box']]},
+{h:['4 · Users','4 · Users'],p:[['Factories, buildings, utilities','Factories, buildings, utilities'],['Steel plants → <b>furnace transformers</b>','Steel plants → <b>furnace transformers</b>'],['Electronics → <b>R-core / ferrite</b>','Electronics → <b>R-core / ferrite</b>']]}]))+
+pic('A transformer works like a pump for electricity\'s "pressure" (voltage). Step it up so power travels far with less loss; step it down so it is safe to use. Shilchar makes the pumps at both ends — at the solar park and near the user.','Transformer-ஐ கரண்ட்டோட "pressure" (voltage)-க்கு ஒரு pump மாதிரி நினைங்க. Voltage ஏத்தினா power தூரம் போகும், loss கம்மி; இறக்கினா பயன்படுத்த safe. Shilchar ரெண்டு பக்கமும் pump செய்யுது — solar park-லயும், user பக்கத்துலயும்.')+
+card(L('Product range','Product range'),table([L('Product','Product'),L('What it does','என்ன செய்யுது'),L('Who buys','யார் வாங்கறாங்க'),L('Why it matters for Shilchar','Shilchar-க்கு ஏன் முக்கியம்')],[
+[L('<b>Inverter-duty (solar) transformers</b>','<b>Inverter-duty (solar) transformers</b>'),L('Take power from solar inverters and raise it to the solar park\'s grid-connection voltage; built to handle inverter harmonics.','Solar inverter power-ஐ வாங்கி solar park grid voltage-க்கு ஏத்துது; inverter harmonics-ஐ தாங்கற மாதிரி design.'),L('Solar developers, EPCs — India &amp; US','Solar developers, EPC — India &amp; US'),L('Core growth engine; 17 years in renewables.','முக்கிய growth engine; renewables-ல 17 வருஷம்.')],
+[L('<b>Wind / hydro generator step-up</b>','<b>Wind / hydro generator step-up</b>'),L('Raise low turbine voltage to grid voltage.','Turbine low voltage-ஐ grid voltage-க்கு ஏத்துது.'),L('Wind &amp; hydro project developers','Wind &amp; hydro project developers'),L('Second renewable leg; hybrid parks need both.','இரண்டாவது renewable leg; hybrid parks-க்கு ரெண்டும் வேணும்.')],
+[L('<b>Power transformers</b>','<b>Power transformers</b>'),L('Step voltage up or down at substations; up to 50 MVA / 132 kV today.','Substation-ல voltage ஏத்த/இறக்க; இப்போ 50 MVA / 132 kV வரை.'),L('Utilities, renewable pooling stations, large industry, exports','Utilities, renewable pooling stations, பெரிய industry, exports'),L('Range rises to 160 MVA / 220 kV from FY28 (needs approvals).','FY28-ல இருந்து 160 MVA / 220 kV வரை (approval வேணும்).')],
+[L('<b>Distribution transformers</b>','<b>Distribution transformers</b>'),L('Last-mile step-down to usable voltage (e.g., 11 kV → 440 V).','கடைசி படி — பயன்படுத்தற voltage-க்கு இறக்குது (உதா: 11 kV → 440 V).'),L('Utilities, industries, buildings, EPCs','Utilities, industries, buildings, EPC'),L('Steady volume; more price competition.','நிலையான volume; விலை போட்டி அதிகம்.')],
+[L('<b>Furnace &amp; converter-duty</b>','<b>Furnace &amp; converter-duty</b>'),L('Special units that feed high current to smelting furnaces and rectifiers.','Smelting furnace, rectifier-க்கு அதிக current கொடுக்கற special units.'),L('Steel, ferro-alloy, process industry','Steel, ferro-alloy, process industry'),L('Niche, engineering-heavy; diversifies away from renewables.','Niche, engineering அதிகம்; renewables-ஐ மட்டும் நம்பாம இருக்க.')],
+[L('<b>Electronics &amp; telecom (R-core, ferrite, toroidal)</b>','<b>Electronics &amp; telecom (R-core, ferrite, toroidal)</b>'),L('Small, high-frequency transformers inside equipment and power supplies.','Equipment, power supply உள்ள இருக்கற சின்ன high-frequency transformers.'),L('Telecom, medical devices, industrial electronics, EV chargers','Telecom, medical devices, industrial electronics, EV chargers'),L('Legacy business (since the 1990s); small share today.','பழைய business (1990s-ல இருந்து); இப்போ சின்ன பங்கு.')]],
+L('Shilchar reports one segment, so revenue by product is not disclosed; power &amp; distribution (incl. renewables) is the largest part.','Shilchar ஒரே segment report பண்றதால product-wise revenue தெரியாது; power &amp; distribution (renewables சேர்த்து) தான் பெரிய பங்கு.')))+
+'<div class="g2">'+card(L('Moving up the size ladder','Size ladder-ல மேல ஏறுது'),chart({h:240,labels:['Today','From FY28'],series:[{name:A('Max rating (MVA)','Max rating (MVA)'),color:OR,vals:[50,160]},{name:A('Max voltage (kV)','Max voltage (kV)'),color:BL,vals:[132,220]}]})+'<div class="note">'+L('Gavasad Expansion #3 (April 2027); larger-unit prototypes 3–4 months after start.','Gavasad Expansion #3 (April 2027); பெரிய unit prototype ஆரம்பிச்சு 3–4 மாசத்துல.')+'</div>')+
+card(L('Product read','Product அலசல்'),ul([
+['Renewable-linked products (solar inverter-duty, wind/hydro step-up) tie Shilchar to India\'s ~55 GW/year renewable build-out and US solar.','Renewable products (solar inverter-duty, wind/hydro step-up) — இந்தியாவோட ~55 GW/வருஷம் renewables, US solar-ஓட Shilchar-ஐ இணைக்குது.'],
+['Everything is custom-built to the customer\'s spec — orders get delayed, rarely cancelled.','எல்லாமே customer spec-க்கு ஏத்த custom build — order தள்ளிப்போகும், cancel ஆகறது அரிது.'],
+['220 kV / 160 MVA units mean bigger tickets and utility-grade work, but start at lower margins to win share.','220 kV / 160 MVA — பெரிய order, utility-grade வேலை; ஆனா share பிடிக்க ஆரம்பத்துல margin கம்மி.'],
+['Furnace and electronics transformers are small but spread the risk beyond solar.','Furnace, electronics transformers சின்னது தான், ஆனா solar-ஐ மட்டும் நம்பாம risk-ஐ பரப்புது.'],
+['All products share the same inputs (CRGO, copper, oil, bushings), so a cost spike hits the whole range.','எல்லா product-க்கும் ஒரே inputs (CRGO, copper, oil, bushings) — cost ஏறினா முழு range-உம் அடிபடும்.']]))+'</div>'}},
+/* ---------------- SEGMENTS ---------------- */
+{id:'seg',l:['Segments','Segments'],html:function(){return ''+
+card('',ul([['Reports one segment: Transformers &amp; Parts. So we track mix by geography and capacity.','ஒரே segment தான் report பண்றாங்க: Transformers &amp; Parts. அதனால geography, capacity வச்சு பாக்கறோம்.']]),'hl')+
+'<div class="g2">'+card(L('Order book mix (~₹500 cr, Q1 FY27)','Order book mix (~₹500 cr, Q1 FY27)'),chart({h:230,labels:['Domestic','Export'],series:[{name:A('₹ cr (approx.)','₹ cr (தோராயமா)'),color:OR,vals:[350,150]}]})+'<div class="note">'+L('70/30 split from concall; ₹ values derived.','70/30 split concall-ல சொன்னது; ₹ values நாங்க கணக்கு போட்டது.')+'</div>')+
+card(L('Q4 FY26 revenue split (₹ cr)','Q4 FY26 revenue split (₹ cr)'),chart({h:230,labels:['Domestic','Export'],series:[{name:A('₹ cr','₹ cr'),color:BL,vals:[100,52]}]})+'<div class="note">'+L('Exports ~34% in Q4 FY26, down from a much higher share in FY25.','Q4 FY26-ல exports ~34%, FY25-ஐ விட குறைவு.')+'</div>')+'</div>'+
+'<div class="g2">'+card(L('Capacity path (MVA)','Capacity path (MVA)'),chart({h:230,labels:['FY26','FY27','FY28E'],series:[{name:A('Capacity MVA','Capacity MVA'),color:OR,vals:[7500,7500,14000]},{name:A('Dispatch / target MVA','Dispatch / target MVA'),color:GR,vals:[6000,7000,null]}]})+'<div class="note">'+L('FY27 target 7,000 MVA is management\'s; FY28 capacity after Gavasad Expansion #3.','FY27 7,000 MVA target management-ஓடது; FY28 capacity Gavasad Expansion #3-க்கு அப்புறம்.')+'</div>')+
+card(L('Segment read','Segment அலசல்'),ul([
+['Exports carry better margins; their slowdown hurt both revenue and margin.','Exports-ல margin அதிகம்; அது slow ஆனதால revenue, margin ரெண்டும் அடிபட்டுச்சு.'],
+['Domestic orders rose to fill the gap — but at slightly lower margins.','அந்த gap-ஐ fill பண்ண domestic order அதிகமாச்சு — ஆனா margin கொஞ்சம் கம்மி.'],
+['Middle East orders were "deferred, not cancelled"; dispatches restarted from April.','Middle East order "cancel இல்லை, தள்ளி போச்சு"; April-ல இருந்து dispatch திரும்ப ஆரம்பம்.'],
+['Utilisation 60–65% in Q1 vs ~79% in FY26 → operating leverage worked in reverse.','Q1-ல utilisation 60–65%, FY26-ல ~79% → operating leverage தலைகீழா வேலை செஞ்சுது.'],
+['New 160 MVA / 220 kV range from FY28 needs utility approvals (e.g., PGCIL).','FY28-ல இருந்து 160 MVA / 220 kV range — utility approvals (PGCIL மாதிரி) வேணும்.']]))+'</div>'}},
+/* ---------------- FINANCIALS ---------------- */
+{id:'fin',l:['Financials','Financials'],html:function(){return ''+
+card(L('Quarterly P&amp;L (₹ cr, standalone)','Quarterly P&amp;L (₹ cr, standalone)'),table(['','Q1 FY26','Q2 FY26','Q3 FY26','Q4 FY26','Q1 FY27','YoY'],[
+[L('Revenue','Revenue'),159,171,170,152,'<b>134.6</b>','<span class="neg">−15.2%</span>'],
+[L('Expenses','Expenses'),106,118,118,120,113,'<span class="neg">+6.6%</span>'],
+[L('Operating profit','Operating profit'),52,54,52,32,'<b>22</b>','<span class="neg">−58%</span>'],
+[L('OPM %','OPM %'),'33%','31%','31%','21%','<b>16%</b>','<span class="neg">−17 pp</span>'],
+[L('Other income','Other income'),4,9,6,7,7,'<span class="pos">+75%</span>'],
+[L('Depreciation','Depreciation'),1,1,1,1,1,''],
+[L('PBT','PBT'),56,62,57,37,28,'<span class="neg">−50%</span>'],
+[L('Net profit','Net profit'),41,46,42,28,'<b>20.9</b>','<span class="neg">−49.7%</span>'],
+[L('EPS (₹)','EPS (₹)'),'36.27','40.16','37.01','24.82','<b>18.23</b>','<span class="neg">−49.7%</span>']],
+L('Source: company results via Screener; Q1 FY27 revenue ₹134.60 cr, PAT ₹20.86 cr, EBITDA incl. other income ₹29.23 cr per concall summary.','Source: company results (Screener); Q1 FY27 revenue ₹134.60 cr, PAT ₹20.86 cr, EBITDA (other income சேர்த்து) ₹29.23 cr — concall summary.')))+
+'<div class="g2">'+card(L('Annual trend (₹ cr)','வருஷ trend (₹ cr)'),chart({labels:['FY22','FY23','FY24','FY25','FY26','TTM'],series:[{name:A('Revenue','Revenue'),color:OR,vals:[180,280,397,623,652,628]},{name:A('PAT','PAT'),color:BL,vals:[14,43,92,147,158,138]}],line:{name:A('OPM %','OPM %'),color:RD,unit:'%',vals:[11,19,29,30,29,25]}}))+
+card(L('Reading the numbers','Numbers சொல்றது என்ன'),ul([
+['FY22→FY25: revenue 3.5×, profit 10× — the transformer super-cycle.','FY22→FY25: revenue 3.5×, profit 10× — transformer super-cycle.'],
+['FY26 growth slowed to +5% as exports wobbled in H2.','FY26-ல H2 exports தடுமாறினதால growth +5%-க்கு குறைஞ்சுது.'],
+['Q1 FY27 expenses rose 6.6% while revenue fell 15% → margin squeeze.','Q1 FY27-ல revenue 15% குறைஞ்சும் expenses 6.6% ஏறிடுச்சு → margin நசுங்கிடுச்சு.'],
+['Other income (₹7 cr) was ~25% of PBT — treasury income cushions profit.','Other income (₹7 cr) PBT-ல ~25% — treasury income profit-ஐ கொஞ்சம் காப்பாத்துது.'],
+['To hit ₹800 cr FY27, Q2–Q4 must average ~₹222 cr/quarter — above any quarter so far (best: ₹232 cr, Q4 FY25).','FY27-ல ₹800 cr வரணும்னா Q2–Q4 சராசரி ~₹222 cr/quarter வேணும் — இதுவரை best ₹232 cr (Q4 FY25).']]))+'</div>'}},
+/* ---------------- CASH FLOW & RATIOS ---------------- */
+{id:'cash',l:['Cash Flow &amp; Ratios','Cash Flow &amp; Ratios'],html:function(){return ''+
+'<div class="g2">'+card(L('Cash from operations vs profit (₹ cr)','Operations cash vs profit (₹ cr)'),chart({labels:['FY22','FY23','FY24','FY25','FY26'],series:[{name:A('CFO','CFO'),color:GR,vals:[-6,39,76,40,192]},{name:A('PAT','PAT'),color:BL,vals:[14,43,92,147,158]}]}))+
+card(L('Cash flow table (₹ cr)','Cash flow table (₹ cr)'),table(['','FY22','FY23','FY24','FY25','FY26'],[
+[L('Operating (CFO)','Operating (CFO)'),-6,39,76,40,'<b>192</b>'],[L('Investing','Investing'),-1,-12,-23,-48,-169],[L('Financing','Financing'),6,-19,-29,5,-31],[L('CFO / PAT','CFO / PAT'),'n.m.','91%','83%','27%','<b>122%</b>']]))+'</div>'+
+card(L('Working capital days','Working capital days'),table(['','FY22','FY23','FY24','FY25','FY26'],[
+[L('Debtor days','Debtor days'),140,120,86,134,'<b>86</b>'],[L('Inventory days','Inventory days'),82,42,87,88,'<b>83</b>'],[L('Payable days','Payable days'),93,67,80,102,'<b>64</b>'],[L('Cash conversion cycle','Cash conversion cycle'),129,96,93,120,'<b>105</b>'],[L('Working capital days','Working capital days'),91,86,77,112,'<b>91</b>']],
+L('Source: Screener ratios (annual).','Source: Screener ratios (annual).')))+
+'<div class="grid">'+kpi('ROCE','~51%',L('FY26 (75% in FY24)','FY26 (FY24-ல 75%)'),'neu')+kpi('ROE','~38%',L('TTM','TTM'),'neu')+kpi(L('Debt','கடன்'),'₹0',L('Debt-free since FY23','FY23-ல இருந்து கடன் இல்லை'),'up')+kpi(L('Investments','Investments'),'₹202 cr',L('Mar 2026 (₹54 cr Mar 2025)','Mar 2026 (Mar 2025-ல ₹54 cr)'),'up')+kpi(L('Dividend','Dividend'),'₹12.50/sh',L('FY26 final (125%)','FY26 final (125%)'),'neu')+'</div>'+
+card(L('What it means','இதுக்கு அர்த்தம்'),ul([
+['FY26 cash conversion was excellent (CFO 122% of PAT) as FY25\'s stuck receivables came back.','FY26-ல cash conversion சூப்பர் (CFO = PAT-ஓட 122%) — FY25-ல மாட்டிக்கிட்ட receivables திரும்ப வந்துச்சு.'],
+['Surplus cash went into investments (₹54 → ₹202 cr) — that\'s the "investing" outflow.','மிச்ச cash investments-ல போட்டாங்க (₹54 → ₹202 cr) — அது தான் "investing" outflow.'],
+['Payable days fell 102 → 64: suppliers are paid faster, which uses cash.','Payable days 102 → 64: suppliers-க்கு சீக்கிரம் பணம் கொடுக்கறாங்க, cash கொஞ்சம் போகுது.'],
+['₹120 cr Gavasad capex is funded from internal accruals — no dilution or debt needed.','₹120 cr Gavasad capex சொந்த பணத்துல — dilution, கடன் தேவையில்லை.'],
+['Watch: debtor days if export dispatches bunch up in Q2–Q3.','கவனிங்க: Q2–Q3-ல export dispatch ஒண்ணா வந்தா debtor days ஏறலாம்.']]))}},
+/* ---------------- VALUATIONS ---------------- */
+{id:'val',l:['Valuations','Valuations'],html:function(){return ''+
+'<div class="grid">'+kpi(L('Price (9 Oct 2026)','Price (9 Oct 2026)'),'₹3,925','52W ₹2,853–5,399','neu')+kpi('Market cap','₹4,491 cr','','neu')+kpi('P/E (TTM)','32.6×',L('TTM EPS ₹120','TTM EPS ₹120'),'neu')+kpi('P/B','~9×',L('Book ₹429/sh','Book ₹429/sh'),'neu')+kpi('EV / EBITDA','~27×',L('EV ≈ Mcap − ₹202 cr investments','EV ≈ Mcap − ₹202 cr investments'),'neu')+kpi(L('Dividend yield','Dividend yield'),'0.32%','','neu')+'</div>'+
+card(L('Illustrative FY27 scenarios (CB, not forecasts)','FY27 scenarios — உதாரணத்துக்கு (forecast இல்லை)'),table([L('Scenario','Scenario'),L('Revenue','Revenue'),'OPM',L('PAT','PAT'),'EPS',L('P/E at ₹3,925','₹3,925-ல P/E')],[
+[L('A · Guidance met','A · Guidance வந்தா'),'₹800 cr','30%','~₹197 cr','~₹172','<b>~23×</b>'],
+[L('B · FY26-like revenue, weaker margin','B · FY26 மாதிரி revenue, margin கம்மி'),'₹650 cr','22%','~₹125 cr','~₹109','<b>~36×</b>'],
+[L('C · Exports stay stuck','C · Exports மாட்டிக்கிட்டே இருந்தா'),'₹560 cr','18%','~₹93 cr','~₹81','<b>~48×</b>']],
+L('Assumes other income ~₹28 cr, depreciation ~₹5 cr, tax 25%, 1.144 cr shares. Shows how much the stock depends on the H2 recovery.','Other income ~₹28 cr, depreciation ~₹5 cr, tax 25%, 1.144 cr shares-னு வச்சு கணக்கு. H2 recovery-ஐ stock எவ்வளவு நம்பி இருக்குனு காட்டுது.')))+
+card(L('Valuation read','Valuation அலசல்'),ul([
+['At ~33× trailing and ~9× book, the price assumes the dip is temporary.','~33× trailing, ~9× book — dip தற்காலிகம்னு price நம்புது.'],
+['If guidance is met, the multiple falls to ~23× — that is the bull case already in many minds.','Guidance வந்தா multiple ~23×-க்கு வரும் — பலர் மனசுல இருக்கற bull case இது தான்.'],
+['If exports stay stuck, earnings fall further and the stock looks expensive (~48×).','Exports மாட்டிக்கிட்டா earnings இன்னும் குறையும், stock costly-ஆ தெரியும் (~48×).'],
+['High ROCE and zero debt justify a premium to plain-vanilla engineering firms — but not unlimited.','அதிக ROCE, கடன் இல்லாதது — premium-க்கு காரணம் இருக்கு; ஆனா அளவுக்கு மேல இல்லை.']]))}},
+/* ---------------- 5 KEY TAKEAWAYS ---------------- */
+{id:'take',l:['5 Key Takeaways','5 முக்கிய பாடங்கள்'],html:function(){var t=[
+['Exports, not demand, broke the quarter.','Demand இல்லை, exports தான் quarter-ஐ கெடுத்துச்சு.','Domestic demand is firm; West Asia shipping and US tariff doubt delayed export dispatches.','Domestic demand நல்லா இருக்கு; West Asia shipping, US tariff குழப்பம் export dispatch-ஐ தள்ளிப்போட்டுச்சு.'],
+['Margins halved — operating leverage cuts both ways.','Margin பாதி — operating leverage ரெண்டு பக்கமும் வெட்டும்.','OPM fell from 33% to ~16% as utilisation dropped to 60–65% and inputs got costlier.','Utilisation 60–65%-க்கு இறங்கி, input cost ஏறினதால OPM 33%-ல இருந்து ~16%.'],
+['Guidance is intact but now back-loaded.','Guidance இருக்கு, ஆனா கடைசி quarters மேல பாரம்.','₹800 cr needs ~₹222 cr per quarter for Q2–Q4 — a record run-rate.','₹800 cr-க்கு Q2–Q4 ஒவ்வொரு quarter-உம் ~₹222 cr — record run-rate வேணும்.'],
+['The balance sheet is a cushion.','Balance sheet ஒரு cushion.','Zero debt, ₹202 cr investments and internal funding of the ₹120 cr plant.','கடன் இல்லை, ₹202 cr investments, ₹120 cr plant சொந்த பணத்துல.'],
+['April 2027 is the next big date.','April 2027 அடுத்த பெரிய தேதி.','Gavasad #3 (+6,500 MVA) nearly doubles capacity; growth impact is from FY28.','Gavasad #3 (+6,500 MVA) capacity-ஐ கிட்டத்தட்ட double ஆக்குது; growth FY28-ல இருந்து.']];
+return t.map(function(x,i){return card('','<div class="take"><div class="n">'+(i+1)+'</div><div><h3>'+L(x[0],x[1])+'</h3>'+ul([[x[2],x[3]]])+'</div></div>')}).join('')}},
+/* ---------------- SHARE MARKET ACTIVITY ---------------- */
+{id:'mkt',l:['Reasons for share market activity','Share market நகர்வுக்கு காரணம்'],html:function(){return ''+
+card(L('Price points (₹)','Price points (₹)'),chart({h:250,labels:['52W high','5 May 26','6 May low','11 Aug 26','9 Oct 26','52W low'],series:[{name:A('Share price ₹','Share price ₹'),color:OR,vals:[5399,4820,4076,4576,3925,2853]}]})+'<div class="note">'+L('Returns: 1M −5.6% · 3M −12.5% · 6M −14.2% · 1Y −7.4% (to 9 Oct 2026).','Returns: 1M −5.6% · 3M −12.5% · 6M −14.2% · 1Y −7.4% (9 Oct 2026 வரை).')+'</div>')+
+'<div class="g2">'+card(L('Why it fell','ஏன் இறங்குச்சு'),ul([
+['6 May 2026: −15% intraday after Q4 FY26 (revenue −34% YoY, profit −49%).','6 May 2026: Q4 FY26 results-க்கு அப்புறம் intraday −15% (revenue −34%, profit −49%).'],
+['Q1 FY27 (11 Aug) confirmed the slowdown was not a one-quarter blip.','Q1 FY27 (11 Aug) — slowdown ஒரு quarter-ஓட முடியலைனு உறுதி ஆச்சு.'],
+['Since results day the stock is down ~14% (₹4,576 → ₹3,925).','Results நாள்ல இருந்து stock ~14% இறக்கம் (₹4,576 → ₹3,925).'],
+['Rich multiple (~9× book) leaves little room for misses.','அதிக multiple (~9× book) — miss ஆனா இடம் கம்மி.'],
+['Promoter holding drifted to 62.1% (64.0% a year ago).','Promoter holding 62.1%-க்கு குறைஞ்சிருக்கு (ஒரு வருஷம் முன்னாடி 64.0%).']]))+
+card(L('What has held it up','எது தாங்கிப் பிடிக்குது'),ul([
+['Guidance maintained; Q2 fully booked; ~₹500 cr order book.','Guidance மாத்தலை; Q2 full booked; ~₹500 cr order book.'],
+['Export orders delayed, not cancelled (custom-built units).','Export order தள்ளிப்போச்சு, cancel இல்லை (custom units).'],
+['Debt-free balance sheet and visible capacity doubling.','கடன் இல்லாத balance sheet, capacity double ஆகப்போறது தெரியுது.'],
+['Shareholding: FII 2.6%, DII 2.0%, public 33.4% — low institutional ownership.','Shareholding: FII 2.6%, DII 2.0%, public 33.4% — institutions கம்மி.']]))+'</div>'}},
+/* ---------------- TRIGGERS & CYCLE ---------------- */
+{id:'trig',l:['Triggers &amp; Cycle','Triggers &amp; Cycle'],html:function(){var tr=[
+{n:['Gavasad Expansion #3 (+6,500 MVA, Apr 2027)','Gavasad Expansion #3 (+6,500 MVA, Apr 2027)'],s:1,I:4,C:0.7,W:0.7,P:1.0,w:['Commissioning date; first 220 kV prototypes 3–4 months later','Commissioning தேதி; 3–4 மாசத்துல 220 kV prototype'],src:'Q4/Q1 concalls, May &amp; Aug 2026'},
+{n:['Margin recovery in Q2–Q3 (order book priced at current RM)','Q2–Q3 margin recovery (order book இப்போ RM விலையில)'],s:1,I:3,C:0.4,W:1.0,P:1.0,w:['Q2 OPM back above 25%?','Q2 OPM 25%-க்கு மேல வருமா?'],src:'Q1 FY27 concall, 14 Aug 2026'},
+{n:['Export recovery (Middle East, US)','Export recovery (Middle East, US)'],s:1,I:3,C:0.4,W:0.7,P:1.0,w:['Export share of revenue; shipping costs','Revenue-ல export share; shipping cost'],src:'Q1 FY27 concall, Aug 2026'},
+{n:['Prolonged West Asia / shipping disruption','West Asia / shipping பிரச்சனை நீடிப்பு'],s:-1,I:3,C:0.7,W:1.0,P:1.0,w:['Dispatch delays, utilisation below 70%','Dispatch delay, utilisation 70%-க்கு கீழ'],src:'Q1 FY27 results, 11 Aug 2026'},
+{n:['Raw material squeeze (oil, CRGO, bushings)','Raw material நெருக்கடி (oil, CRGO, bushings)'],s:-1,I:3,C:0.7,W:1.0,P:0.7,w:['Gross margin trend; bushing shortage','Gross margin trend; bushing பற்றாக்குறை'],src:'Results &amp; industry notes, 2026'}];
+return '<div class="g2">'+card(L('Cycle clock — Power T&amp;D equipment','Cycle clock — Power T&amp;D equipment'),cycleClock(2,A('Weinstein Stage 4 (decline)','Weinstein Stage 4 (இறக்கம்)'))+ul([
+['Sector: capex/order-book + structural (renewables). Phase P3 Expansion → 70.','Sector: capex/order-book + structural (renewables). Phase P3 Expansion → 70.'],
+['Evidence: ~55 GW renewables commissioned in FY26; domestic orders firm; transformer capacity being added industry-wide.','ஆதாரம்: FY26-ல ~55 GW renewables; domestic order நல்லா இருக்கு; industry முழுக்க transformer capacity சேருது.']]))+
+card(L('Scores','Scores'),'<div class="grid"><div class="kpi"><div class="l">CY</div><div class="v">57</div><div class="c neu">'+L('= 50% sector 70 + 50% stock 44','= 50% sector 70 + 50% stock 44')+'</div></div><div class="kpi"><div class="l">TG</div><div class="v">53</div><div class="c neu">'+L('= 50 + 8×4.00 − 8×3.57','= 50 + 8×4.00 − 8×3.57')+'</div></div></div>'+
+table([L('Stock cycle item','Stock cycle item'),L('Reading','நிலை'),L('Score','Score')],[[L('Lifecycle','Lifecycle'),L('Scaling (capacity doubling)','Scaling (capacity double)'),80],[L('Earnings cycle','Earnings cycle'),L('Margin falling (33% → 16%)','Margin இறங்குது (33% → 16%)'),25],[L('Valuation cycle','Valuation cycle'),L('In band, but on falling earnings','Band-க்குள்ள, ஆனா earnings இறங்குது'),55],[L('Price stage','Price stage'),L('Stage 4 — below falling 30-wk MA','Stage 4 — இறங்கும் 30-wk MA-க்கு கீழ'),15]]))+'</div>'+
+card(L('Trigger table','Trigger table'),trigTable(tr))+
+card(L('Trigger timeline','Trigger timeline'),timeline([{d:'May 26',t:A('Q4 shock','Q4 shock'),neg:1},{d:'Aug 26',t:A('Q1: weak','Q1: weak'),neg:1},{d:'Nov 26',t:A('Q2 test','Q2 test')},{d:'Feb 27',t:A('Q3 run-rate','Q3 run-rate')},{d:'Apr 27',t:A('Gavasad #3','Gavasad #3')},{d:'May 27',t:A('FY27 vs ₹800 cr','FY27 vs ₹800 cr')}]))+
+card(L('What would change this view','இந்த view எப்போ மாறும்'),ul([
+['Q2 revenue ≥ ₹200 cr with OPM back near 28–30% → earnings cycle turns up.','Q2 revenue ≥ ₹200 cr, OPM 28–30% பக்கம் வந்தா → earnings cycle மேல திரும்பும்.'],
+['Price reclaims a rising 30-week average → Stage 4 gate lifts.','Price மறுபடி ஏறும் 30-week average-க்கு மேல வந்தா → Stage 4 gate போயிடும்.'],
+['Gavasad slips beyond April 2027 or guidance is cut → TG falls.','Gavasad April 2027-ஐ தாண்டி போனாலோ, guidance குறைச்சாலோ → TG இறங்கும்.']]))}},
+/* ---------------- SWOT ---------------- */
+{id:'swot',l:['SWOT','SWOT'],html:function(){return '<div class="sw">'+
+card(L('Strengths','பலங்கள்'),ul([['Debt-free, ROCE ~51%','கடன் இல்லை, ROCE ~51%'],['Export franchise in 25+ countries','25+ நாடுகள்ல export'],['Renewable-transformer know-how (17 yrs)','Renewable transformer அனுபவம் (17 வருஷம்)'],['Self-funded capacity doubling','சொந்த பணத்துல capacity double']]),'S')+
+card(L('Weaknesses','பலவீனங்கள்'),ul([['High export/Middle East dependence','Export / Middle East மேல அதிக சார்பு'],['Single site, single segment','ஒரே site, ஒரே segment'],['Capacity-capped until Apr 2027','April 2027 வரை capacity limit'],['Low institutional ownership','Institutions கம்மி']]),'W')+
+card(L('Opportunities','வாய்ப்புகள்'),ul([['Grid capex + renewables + storage','Grid capex + renewables + storage'],['220 kV / 160 MVA range from FY28','FY28-ல 220 kV / 160 MVA'],['Data-centre and industrial demand','Data centre, industrial demand'],['4.5 acres extra land bought','4.5 acres extra land வாங்கியிருக்காங்க']]),'O')+
+card(L('Threats','அச்சுறுத்தல்கள்'),ul([['West Asia / shipping shocks','West Asia / shipping shock'],['US tariff policy','US tariff policy'],['Input cost spikes (oil, CRGO, bushings)','Input cost (oil, CRGO, bushings) ஏற்றம்'],['Industry-wide capacity additions → price competition','Industry முழுக்க capacity → விலை போட்டி']]),'T')+'</div>'}},
+/* ---------------- ASSIST ---------------- */
+{id:'assist',l:['Cauvery Assist','Cauvery Assist'],html:function(){return card('',ul([['Ask by typing or tap 🎤. Answers are one or two lines; tap "More details" for tables.','Type பண்ணுங்க இல்லனா 🎤 அழுத்துங்க. பதில் ஒண்ணு ரெண்டு வரி; table வேணும்னா "மேலும் விவரம்".'],['Voice input works on the GitHub Pages copy in Chrome/Edge; read-aloud works everywhere.','Voice input GitHub Pages copy-ல Chrome/Edge-ல வேலை செய்யும்; read-aloud எல்லா இடத்துலயும்.']]),'hl')+'<div id="assist"></div>'}},
+/* ---------------- SOCRATES ---------------- */
+{id:'quiz',l:['Cauvery Socrates','Cauvery Socrates'],html:function(){return card('',ul([['Test what you learned — 8 quick questions.','நீங்க கத்துக்கிட்டதை test பண்ணுங்க — 8 கேள்விகள்.']]),'hl')+'<div id="quiz"></div>'}},
+/* ---------------- ANALYST VIEW ---------------- */
+{id:'view',l:['Analyst View','Analyst View'],html:function(){return ''+
+card(L('CB Analyst View (education only)','CB Analyst View (education மட்டும்)'),ul([
+['A high-quality, debt-free transformer maker going through an export-led air pocket.','தரமான, கடன் இல்லாத transformer company — export-னால ஒரு air pocket-ல இருக்கு.'],
+['Q1 FY27 was weak on every line except the balance sheet; margin halved to ~16%.','Balance sheet தவிர Q1 FY27-ல எல்லாமே weak; margin பாதியா ~16%.'],
+['The story now rests on H2 FY27 execution and the April 2027 capacity step-up.','இப்போ கதை H2 FY27 execution, April 2027 capacity மேல தான் நிக்குது.'],
+['Cycle: sector in P3 Expansion; stock in Stage 4 with a falling earnings cycle (CY 57).','Cycle: sector P3 Expansion; stock Stage 4, earnings cycle இறங்குது (CY 57).'],
+['Top positive triggers: Gavasad #3 and Q2–Q3 margin recovery. Top risk: prolonged West Asia shipping disruption (TG 53).','முக்கிய positive triggers: Gavasad #3, Q2–Q3 margin recovery. முக்கிய risk: West Asia shipping பிரச்சனை நீடிப்பு (TG 53).']]),'hl')+
+card(L('Monitorables for Q2 FY27 (Nov 2026)','Q2 FY27-ல பாக்க வேண்டியது (Nov 2026)'),ul([
+['Revenue run-rate vs ~₹222 cr needed per quarter.','Revenue run-rate vs quarter-க்கு வேண்டிய ~₹222 cr.'],
+['OPM recovery toward 28–30%.','OPM 28–30% பக்கம் திரும்புதா.'],
+['Export share and fresh US/Middle East order intake.','Export share, புது US/Middle East orders.'],
+['Gavasad #3 construction progress and bushing supply.','Gavasad #3 வேலை முன்னேற்றம், bushing supply.']]))+
+'<div class="note">'+L('CB Research is not SEBI-registered. This is not a buy/sell/hold recommendation.','CB Research SEBI-registered இல்லை. இது buy/sell/hold recommendation இல்லை.')+'</div>'}}
+],
+assist:{title:A('Cauvery Assist','Cauvery Assist'),storageKey:'cba_q1fy27_shilchar',lang:'en',
+placeholder:A('Ask: Why did profit fall?','கேளுங்க: Profit ஏன் குறைஞ்சுது?'),
+greeting:A('Vanakam! Ask me anything about Shilchar\'s Q1 FY27 results — I\'ll answer in a line or two.','வணக்கம்! Shilchar Q1 FY27 results பத்தி என்ன வேணும்னாலும் கேளுங்க — ஒண்ணு ரெண்டு வரில பதில் சொல்றேன்.'),
+noAdvice:A('I can\'t say buy, sell or hold — CB Research is not SEBI-registered. I can explain the numbers, risks and triggers so you decide yourself.','Buy, sell, hold-னு சொல்ல முடியாதுங்க — CB Research SEBI-registered இல்லை. Numbers, risks, triggers எல்லாம் விளக்கறேன், முடிவு நீங்களே எடுங்க.'),
+fallback:A('I don\'t have that on this dashboard. Try asking about revenue, margin, profit, exports, order book, capacity, valuation or risks.','இந்த dashboard-ல அது இல்லைங்க. Revenue, margin, profit, exports, order book, capacity, valuation, risks பத்தி கேளுங்க.'),
+onOpenTab:function(id){showTab(id)},
+kb:[
+{k:['revenue','sales','turnover','ரெவின்யூ','வருமானம்','விற்பனை','sales எவ்வளவு'],a:A('Q1 FY27 revenue was ₹134.6 cr, down 15.2% YoY and 11.2% QoQ.','Q1 FY27 revenue ₹134.6 cr — YoY 15.2% குறைவு, QoQ 11.2% குறைவு.'),d:A('<ul><li>Q1 FY26: ₹159 cr</li><li>Q4 FY26: ₹152 cr</li></ul>','<ul><li>Q1 FY26: ₹159 cr</li><li>Q4 FY26: ₹152 cr</li></ul>'),tab:'fin'},
+{k:['profit','pat','net profit','earnings','eps','லாபம்','ப்ராஃபிட்','பிராபிட்','நிகர லாபம்'],a:A('Net profit was ₹20.9 cr, down 49.7% YoY; EPS ₹18.23.','Net profit ₹20.9 cr — YoY 49.7% குறைவு; EPS ₹18.23.'),d:A('Q1 FY26 PAT ₹41 cr; Q4 FY26 ₹28 cr.','Q1 FY26 PAT ₹41 cr; Q4 FY26 ₹28 cr.'),tab:'fin'},
+{k:['why did','profit fall','profit fell','why','fall','fell','drop','decline','reason','weak','ஏன்','குறைஞ்ச','இறங்க','காரணம்'],a:A('Export dispatches slowed due to the West Asia crisis, costly shipping and US tariff doubt, so utilisation fell to 60–65%.','West Asia crisis, shipping cost, US tariff குழப்பம் — export dispatch slow ஆச்சு, utilisation 60–65%-க்கு இறங்கிடுச்சு.'),d:A('Management says orders were deferred, not cancelled.','Order cancel இல்லை, தள்ளிப்போச்சுனு management சொல்றாங்க.'),tab:'take'},
+{k:['margin','opm','ebitda','மார்ஜின்','ஈபிட்டா','லாப வரம்பு'],a:A('Operating margin fell to about 16% from 33% a year ago; EBITDA including other income was ₹29.2 cr.','Operating margin ~16% — போன வருஷம் 33%; other income சேர்த்து EBITDA ₹29.2 cr.'),d:A('Management expects higher margins in Q2 and Q3 as orders are priced at current raw-material costs.','Q2, Q3-ல margin ஏறும்னு management எதிர்பாக்குது — order-கள் இப்போ RM விலையில price ஆயிருக்கு.'),tab:'fin'},
+{k:['export','exports','middle east','us ','america','tariff','எக்ஸ்போர்ட்','ஏற்றுமதி','அமெரிக்கா'],a:A('Exports slowed sharply; export is ~30% of the order book and the Middle East was ~30% of revenue in FY25–26.','Exports ரொம்ப slow; order book-ல export ~30%, FY25–26 revenue-ல Middle East ~30%.'),d:A('US was ~18–19% of revenue. Q4 FY26 exports ₹52 cr vs domestic ₹100 cr.','US ~18–19% revenue. Q4 FY26-ல exports ₹52 cr, domestic ₹100 cr.'),tab:'seg'},
+{k:['order book','orders','order','ஆர்டர்','order book'],a:A('The order book is about ₹500 cr — 70% domestic, 30% export — and Q2 is fully booked.','Order book ~₹500 cr — 70% domestic, 30% export; Q2 full-ஆ book ஆயிருக்கு.'),tab:'seg'},
+{k:['capacity','plant','gavasad','expansion','mva','கெபாசிட்டி','பிளாண்ட்','விரிவாக்கம்'],a:A('Capacity is 7,500 MVA today; Gavasad Expansion #3 adds 6,500 MVA in April 2027, taking it to 14,000 MVA.','இப்போ 7,500 MVA; April 2027-ல Gavasad Expansion #3 6,500 MVA சேர்க்குது — மொத்தம் 14,000 MVA.'),d:A('₹120 cr capex, funded internally; enables up to 160 MVA, 220 kV units.','₹120 cr capex, சொந்த பணத்துல; 160 MVA, 220 kV வரை.'),tab:'biz'},
+{k:['utilisation','utilization','யூட்டிலைசேஷன்','பயன்பாடு'],a:A('Q1 utilisation was 60–65%, versus about 79% in FY26.','Q1 utilisation 60–65%; FY26-ல ~79%.'),tab:'seg'},
+{k:['guidance','target','outlook','fy27','800','கைடன்ஸ்','எதிர்பார்ப்பு'],a:A('Management kept FY27 revenue guidance at ₹800 cr with 29–31% EBITDA margin.','FY27-க்கு ₹800 cr revenue, 29–31% EBITDA margin — guidance மாத்தலை.'),d:A('That needs ~₹222 cr per quarter in Q2–Q4, above any quarter so far.','அதுக்கு Q2–Q4-ல quarter-க்கு ~₹222 cr வேணும் — இதுவரை வராத அளவு.'),tab:'val'},
+{k:['valuation','pe ','p/e','pb','p/b','expensive','cheap','multiple','வேல்யுவேஷன்','விலை அதிகமா','மதிப்பு'],a:A('At ₹3,925 the stock trades at about 32.6× trailing earnings and ~9× book.','₹3,925-ல stock ~32.6× trailing earnings, ~9× book-ல trade ஆகுது.'),d:A('If ₹800 cr guidance is met, it would be ~23× FY27 earnings (CB illustration).','₹800 cr guidance வந்தா FY27 earnings-க்கு ~23× (CB உதாரணம்).'),tab:'val'},
+{k:['debt','cash','balance sheet','கடன்','கேஷ்','பணம்'],a:A('Shilchar is debt-free with about ₹202 cr in investments.','Shilchar-க்கு கடன் இல்லை; ~₹202 cr investments இருக்கு.'),tab:'cash'},
+{k:['cash flow','cfo','working capital','debtor','inventory','கேஷ் ஃப்ளோ','வொர்க்கிங் கேபிடல்'],a:A('FY26 operating cash flow was ₹192 cr, 122% of profit; working capital days were 91.','FY26 operating cash flow ₹192 cr — profit-ஓட 122%; working capital days 91.'),tab:'cash'},
+{k:['roce','roe','return','ரிட்டர்ன்'],a:A('ROCE is about 51% and ROE about 38% — very high for a manufacturer.','ROCE ~51%, ROE ~38% — manufacturer-க்கு ரொம்ப அதிகம்.'),tab:'cash'},
+{k:['share price','stock price','fall in share','down','crash','ஷேர் விலை','பங்கு விலை','இறக்கம்'],a:A('The stock is at ₹3,925, about 14% below its results-day level and 27% below its 52-week high.','Stock ₹3,925 — results நாள விட ~14%, 52-week high-ஐ விட 27% கீழ.'),tab:'mkt'},
+{k:['risk','risks','threat','danger','ரிஸ்க்','அபாயம்'],a:A('The biggest risk is a prolonged West Asia shipping disruption keeping exports and utilisation low.','பெரிய risk: West Asia shipping பிரச்சனை நீடிச்சா exports, utilisation குறைஞ்சே இருக்கும்.'),d:A('<ul><li>Raw material spikes (oil, CRGO, bushings)</li><li>US tariff policy</li><li>Missing ₹800 cr guidance</li></ul>','<ul><li>Raw material ஏற்றம் (oil, CRGO, bushings)</li><li>US tariff policy</li><li>₹800 cr guidance miss</li></ul>'),tab:'trig'},
+{k:['trigger','catalyst','ட்ரிகர்','கேடலிஸ்ட்'],a:A('Top positive trigger: the 6,500 MVA Gavasad plant in April 2027; then Q2–Q3 margin recovery.','முக்கிய trigger: April 2027 Gavasad 6,500 MVA plant; அடுத்து Q2–Q3 margin recovery.'),tab:'trig'},
+{k:['cycle','stage','phase','சைக்கிள்','சுழற்சி'],a:A('The sector is in P3 Expansion, but the stock is in Weinstein Stage 4; CY score 57.','Sector P3 Expansion-ல இருக்கு, ஆனா stock Weinstein Stage 4; CY score 57.'),tab:'trig'},
+{k:['business','what does','products','product','make','transformer','பிசினஸ்','என்ன செய்யுது','டிரான்ஸ்ஃபார்மர்','ப்ராடக்ட்','பொருட்கள்'],a:A('Shilchar makes inverter-duty (solar), wind/hydro step-up, power, distribution, furnace and electronics transformers.','Shilchar inverter-duty (solar), wind/hydro step-up, power, distribution, furnace, electronics transformers செய்யுது.'),d:A('<ul><li>Power transformers up to 50 MVA / 132 kV today</li><li>160 MVA / 220 kV from FY28</li><li>Revenue by product is not disclosed</li></ul>','<ul><li>Power transformers இப்போ 50 MVA / 132 kV வரை</li><li>FY28-ல இருந்து 160 MVA / 220 kV</li><li>Product-wise revenue disclose பண்றதில்லை</li></ul>'),tab:'prod'},
+{k:['inverter duty transformer','inverter','inverter duty','solar transformer','solar','இன்வெர்ட்டர்','சோலார்'],a:A('Inverter-duty transformers take solar inverter output and raise it to the park\'s grid voltage — Shilchar\'s core growth product.','Inverter-duty transformer solar inverter power-ஐ park grid voltage-க்கு ஏத்துது — Shilchar-ஓட முக்கிய growth product.'),tab:'prod'},
+{k:['furnace transformer','furnace','steel','converter','ஃபர்னஸ்','ஸ்டீல்'],a:A('Furnace and converter-duty transformers feed high current to steel and ferro-alloy furnaces — a niche that diversifies beyond renewables.','Furnace, converter-duty transformers steel, ferro-alloy furnace-க்கு அதிக current கொடுக்குது — renewables-ஐ தாண்டின niche.'),tab:'prod'},
+{k:['electronics','telecom','r-core','ferrite','toroidal','ev charg','எலக்ட்ரானிக்ஸ்','டெலிகாம்'],a:A('Its electronics arm makes small R-core, ferrite and toroidal transformers for telecom, medical, industrial and EV-charging equipment; it is a small, legacy business.','Electronics பிரிவு telecom, medical, industrial, EV charging-க்கு சின்ன R-core, ferrite, toroidal transformers செய்யுது; சின்ன, பழைய business.'),tab:'prod'},
+{k:['distribution transformer','power transformer','220 kv','220kv','160 mva','132 kv','rating','size','டிஸ்ட்ரிபியூஷன்','பவர் டிரான்ஸ்ஃபார்மர்'],a:A('Power transformers go up to 50 MVA / 132 kV today, rising to 160 MVA / 220 kV from FY28; distribution transformers handle last-mile step-down.','Power transformers இப்போ 50 MVA / 132 kV வரை, FY28-ல 160 MVA / 220 kV; distribution transformers கடைசி step-down.'),tab:'prod'},
+{k:['dividend','டிவிடெண்ட்','ஈவுத்தொகை'],a:A('No dividend with Q1; FY26 final dividend was ₹12.50 per share.','Q1-ல dividend இல்லை; FY26 final dividend share-க்கு ₹12.50.'),tab:'cash'},
+{k:['promoter','shareholding','fii','dii','ப்ரொமோட்டர்','ஷேர்ஹோல்டிங்'],a:A('Promoters hold 62.1%, FIIs 2.6%, DIIs 2.0% and the public 33.4%.','Promoters 62.1%, FII 2.6%, DII 2.0%, public 33.4%.'),tab:'mkt'}],
+suggestions:[['What products does it make?','என்ன products செய்யுது?'],['Why did profit fall?','Profit ஏன் குறைஞ்சுது?'],['What is the order book?','Order book எவ்வளவு?'],['When does the new plant start?','புது plant எப்போ?'],['Is it expensive?','விலை அதிகமா?'],['What is the biggest risk?','பெரிய risk என்ன?']]},
+quiz:[
+{q:['By how much did Shilchar\'s Q1 FY27 revenue change YoY?','Shilchar Q1 FY27 revenue YoY எவ்வளவு மாறுச்சு?'],o:[['+15%','+15%'],['−15%','−15%'],['−34%','−34%'],['Flat','மாற்றம் இல்லை']],c:1,e:['Revenue fell 15.2% to ₹134.6 cr.','Revenue 15.2% குறைஞ்சு ₹134.6 cr.']},
+{q:['What was the main reason for the weak quarter?','Weak quarter-க்கு முக்கிய காரணம்?'],o:[['Domestic demand collapse','Domestic demand சரிவு'],['Export dispatch delays (West Asia, shipping, US tariffs)','Export dispatch delay (West Asia, shipping, US tariff)'],['Plant fire','Plant தீ விபத்து'],['Debt repayment','கடன் திருப்பி கட்டினது']],c:1,e:['Exports slowed; domestic demand stayed firm.','Exports slow ஆச்சு; domestic demand நல்லா இருந்துச்சு.']},
+{q:['Operating margin fell from ~33% to about…','Operating margin ~33%-ல இருந்து எவ்வளவுக்கு இறங்குச்சு?'],o:[['30%','30%'],['25%','25%'],['16%','16%'],['5%','5%']],c:2,e:['Lower utilisation and costlier inputs cut OPM to ~16%.','Utilisation குறைவு, input cost ஏற்றம் — OPM ~16%.']},
+{q:['How much capacity does Gavasad Expansion #3 add?','Gavasad Expansion #3 எவ்வளவு capacity சேர்க்குது?'],o:[['1,500 MVA','1,500 MVA'],['6,500 MVA','6,500 MVA'],['14,000 MVA','14,000 MVA'],['500 MVA','500 MVA']],c:1,e:['+6,500 MVA, taking total to 14,000 MVA from FY28.','+6,500 MVA — FY28-ல இருந்து மொத்தம் 14,000 MVA.']},
+{q:['To reach ₹800 cr in FY27, Q2–Q4 must average roughly…','FY27-ல ₹800 cr வர, Q2–Q4 சராசரி எவ்வளவு வேணும்?'],o:[['₹150 cr','₹150 cr'],['₹180 cr','₹180 cr'],['₹222 cr','₹222 cr'],['₹300 cr','₹300 cr']],c:2,e:['(800 − 134.6) ÷ 3 ≈ ₹222 cr — a record pace.','(800 − 134.6) ÷ 3 ≈ ₹222 cr — record வேகம்.']},
+{q:['Which cycle stage is the stock price in (CB read)?','CB படி stock price எந்த stage-ல இருக்கு?'],o:[['Stage 1 base','Stage 1 base'],['Stage 2 advance','Stage 2 ஏற்றம்'],['Stage 3 top','Stage 3 உச்சி'],['Stage 4 decline','Stage 4 இறக்கம்']],c:3,e:['Price is below a falling 30-week average → Stage 4, which caps Conviction at 55.','இறங்கும் 30-week average-க்கு கீழ price → Stage 4; Conviction max 55.']},
+{q:['Which Shilchar product connects solar parks to the grid?','Solar park-ஐ grid-ஓட இணைக்கற Shilchar product எது?'],o:[['Furnace transformer','Furnace transformer'],['Inverter-duty transformer','Inverter-duty transformer'],['Ferrite transformer','Ferrite transformer'],['Distribution transformer only','Distribution transformer மட்டும்']],c:1,e:['Inverter-duty transformers raise solar inverter output to grid voltage.','Inverter-duty transformer solar inverter power-ஐ grid voltage-க்கு ஏத்துது.']},
+{q:['Why did "investing" cash outflow jump to ₹169 cr in FY26?','FY26-ல "investing" outflow ஏன் ₹169 cr ஆச்சு?'],o:[['Big acquisition','பெரிய acquisition'],['Surplus cash parked in investments','மிச்ச cash investments-ல போட்டது'],['Debt repayment','கடன் திருப்பி கட்டினது'],['Dividend','Dividend']],c:1,e:['Investments rose from ₹54 cr to ₹202 cr.','Investments ₹54 cr-ல இருந்து ₹202 cr.']}]
+};
+
+
+/* ===== CB 6-Pillar helpers ===== */
+var PILLARS=[['Business Quality','Business தரம்'],['Competitive Advantage','போட்டி பலம் (Moat)'],['Growth Opportunity','Growth வாய்ப்பு'],['Financial Strength','Financial பலம்'],['Valuations','Valuations'],['Risks &amp; Reward','Risk &amp; Reward']];
+function grade(s){return s>=8?A('Strong','வலுவானது'):s>=6.5?A('Good','நல்லது'):s>=5?A('Average','சராசரி'):A('Weak','பலவீனம்')}
+function sColor(s){return s>=8?'#16803A':s>=6.5?'#1F5FAD':s>=5?'#C9661A':'#C62828'}
+function ring(s,size){size=size||96;var r=size/2-8,c=2*Math.PI*r,f=s/10;return '<svg viewBox="0 0 '+size+' '+size+'" width="'+size+'" height="'+size+'"><circle cx="'+size/2+'" cy="'+size/2+'" r="'+r+'" fill="none" stroke="#F1F1F1" stroke-width="9"/><circle cx="'+size/2+'" cy="'+size/2+'" r="'+r+'" fill="none" stroke="'+sColor(s)+'" stroke-width="9" stroke-linecap="round" stroke-dasharray="'+(c*f)+' '+c+'" transform="rotate(-90 '+size/2+' '+size/2+')"/><text x="50%" y="50%" dy="7" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-weight="700" font-size="'+(size/4)+'" fill="#111">'+s.toFixed(1)+'</text></svg>'}
+function q1chip(d,en,ta){var m={up:['▲','#16803A',A('Improved by Q1','Q1-ல மேம்பட்டது')],flat:['■','#1F5FAD',A('Unchanged by Q1','Q1-ல மாற்றம் இல்லை')],down:['▼','#C62828',A('Weakened by Q1','Q1-ல பலவீனமானது')]}[d];
+  return '<span class="chip" style="border-color:'+m[1]+';color:'+m[1]+'">'+m[0]+' '+L(m[2].en,m[2].ta)+'</span>'+(en?'<div class="note" style="margin-top:4px">'+L(en,ta)+'</div>':'')}
+function checks(arr){return '<div>'+arr.map(function(x){var ic=x[0]>0?['✓','#16803A','#EAF6EE']:x[0]<0?['✗','#C62828','#FDECEC']:['~','#8A5A00','#FFF4E8'];
+  return '<div style="display:flex;gap:10px;align-items:flex-start;margin:7px 0"><span style="flex:0 0 26px;height:26px;border-radius:50%;background:'+ic[2]+';color:'+ic[1]+';font-weight:800;display:flex;align-items:center;justify-content:center">'+ic[0]+'</span><div style="font-weight:600">'+L(x[1],x[2])+'</div></div>'}).join('')+'</div>'}
+function pillarHead(n,s,verdict,q1){return '<div class="card hl" style="display:flex;gap:16px;align-items:center;flex-wrap:wrap">'+ring(s)+'<div style="flex:1;min-width:220px"><div class="prog">'+L('Pillar '+n+' of 6','Pillar '+n+' / 6')+' · '+L(grade(s).en,grade(s).ta)+' · '+L('score out of 10','10-க்கு score')+'</div><h3 style="font-size:19px;margin:4px 0">'+L(verdict[0],verdict[1])+'</h3>'+q1chip(q1[0],q1[1],q1[2])+'</div></div>'}
+function changeBox(arr){return card(L('What would change this score','இந்த score எப்போ மாறும்'),ul(arr))}
+function radar(sc){var cx=170,cy=165,R=115,n=sc.length,s='<svg viewBox="0 0 340 340" width="100%" style="max-width:380px;height:auto">';
+  for(var g=1;g<=5;g++){var pts=[];for(var i=0;i<n;i++){var a=-Math.PI/2+i*2*Math.PI/n;pts.push((cx+R*g/5*Math.cos(a))+','+(cy+R*g/5*Math.sin(a)))}s+='<polygon points="'+pts.join(' ')+'" fill="none" stroke="#E6E6E6"/>'}
+  var pp=[];for(var i=0;i<n;i++){var a=-Math.PI/2+i*2*Math.PI/n;s+='<line x1="'+cx+'" y1="'+cy+'" x2="'+(cx+R*Math.cos(a))+'" y2="'+(cy+R*Math.sin(a))+'" stroke="#E6E6E6"/>';pp.push([cx+R*sc[i]/10*Math.cos(a),cy+R*sc[i]/10*Math.sin(a)]);
+    var lx=cx+(R+30)*Math.cos(a),ly=cy+(R+22)*Math.sin(a);
+    s+='<text x="'+lx+'" y="'+ly+'" font-size="11.5" font-weight="800" text-anchor="middle" fill="#222"><tspan class="en">'+(i+1)+'. '+PILLARS[i][0].replace('&amp;','&').split(' ')[0]+'</tspan><tspan class="ta">'+(i+1)+'. '+PILLARS[i][1].replace('&amp;','&').split(' ')[0]+'</tspan></text><text x="'+lx+'" y="'+(ly+14)+'" font-size="12" font-weight="800" text-anchor="middle" fill="'+sColor(sc[i])+'">'+sc[i].toFixed(1)+'</text>'}
+  s+='<polygon points="'+pp.map(function(p){return p.join(',')}).join(' ')+'" fill="rgba(242,140,40,.25)" stroke="#F28C28" stroke-width="3"/>';
+  pp.forEach(function(p){s+='<circle cx="'+p[0]+'" cy="'+p[1]+'" r="4.5" fill="#F28C28"/>'});return s+'</svg>'}
+function scoreBars(sc,q1){var arrows={up:['▲','#16803A'],flat:['■','#1F5FAD'],down:['▼','#C62828']};return sc.map(function(s,i){var a=arrows[q1[i]];
+  return '<div style="display:flex;align-items:center;gap:8px;margin:9px 0;cursor:pointer" onclick="showTab(\'p'+(i+1)+'\')"><div style="flex:0 0 46%;font-weight:800;font-size:14px">'+(i+1)+'. '+L(PILLARS[i][0],PILLARS[i][1])+'</div><div class="bar" style="flex:1"><i style="width:'+s*10+'%;background:'+sColor(s)+'"></i></div><b style="font-family:IBM Plex Mono,monospace;width:34px;text-align:right">'+s.toFixed(1)+'</b><span style="color:'+a[1]+';font-weight:800;width:14px">'+a[0]+'</span></div>'}).join('')+
+  '<div class="note">'+L('▲ improved · ■ unchanged · ▼ weakened by Q1 FY27. Tap a pillar to open it. Scores are CB educational ratings, not recommendations.','▲ மேம்பட்டது · ■ மாற்றம் இல்லை · ▼ Q1 FY27-ல பலவீனம். Pillar-ஐ அழுத்தி திறங்க. Scores CB education ratings — recommendation இல்லை.')+'</div>'}
+function riskMatrix(items){var W=340,H=300,x0=60,y0=20,cw=90,ch=80,s='<svg viewBox="0 0 '+W+' '+H+'" width="100%" style="max-width:400px;height:auto">';
+  var fills=[['#FFF4E8','#FDE2C4','#F9C8A0'],['#EAF6EE','#FFF4E8','#FDE2C4'],['#EAF6EE','#EAF6EE','#FFF4E8']];
+  for(var r=0;r<3;r++)for(var c=0;c<3;c++)s+='<rect x="'+(x0+c*cw)+'" y="'+(y0+r*ch)+'" width="'+cw+'" height="'+ch+'" fill="'+fills[r][c]+'" stroke="#fff" stroke-width="2"/>';
+  ['Low','Med','High'].forEach(function(t,i){s+='<text x="'+(x0+i*cw+cw/2)+'" y="'+(y0+3*ch+18)+'" font-size="12" font-weight="800" text-anchor="middle" fill="#333">'+t+'</text><text x="'+(x0-8)+'" y="'+(y0+(2-i)*ch+ch/2+4)+'" font-size="12" font-weight="800" text-anchor="end" fill="#333">'+t+'</text>'});
+  s+='<text x="'+(x0+1.5*cw)+'" y="'+(H-2)+'" font-size="12" font-weight="800" text-anchor="middle" fill="#7A3A00" class="en">Probability →</text><text x="'+(x0+1.5*cw)+'" y="'+(H-2)+'" font-size="12" font-weight="800" text-anchor="middle" fill="#7A3A00" class="ta">வாய்ப்பு →</text>';
+  s+='<text x="14" y="'+(y0+1.5*ch)+'" font-size="12" font-weight="800" text-anchor="middle" fill="#7A3A00" transform="rotate(-90 14 '+(y0+1.5*ch)+')" class="en">Impact →</text><text x="14" y="'+(y0+1.5*ch)+'" font-size="12" font-weight="800" text-anchor="middle" fill="#7A3A00" transform="rotate(-90 14 '+(y0+1.5*ch)+')" class="ta">பாதிப்பு →</text>';
+  var cnt={};items.forEach(function(it,i){var k=it.p+'_'+it.i;cnt[k]=(cnt[k]||0)+1;var off=(cnt[k]-1);var cx=x0+it.p*cw+22+(off%3)*24,cy=y0+(2-it.i)*ch+26+Math.floor(off/3)*26;
+    s+='<circle cx="'+cx+'" cy="'+cy+'" r="11" fill="#C62828"/><text x="'+cx+'" y="'+(cy+4.5)+'" font-size="12" font-weight="800" text-anchor="middle" fill="#fff">'+(i+1)+'</text>'});
+  s+='</svg>';return s+'<ol style="margin:6px 0 0;padding-left:22px;font-weight:600;font-size:14px">'+items.map(function(it){return '<li>'+L(it.n[0],it.n[1])+'</li>'}).join('')+'</ol>'}
+function balance(rew,risk){function col(arr,clr,ttl){return '<div class="card" style="border-top:5px solid '+clr+'"><h3>'+ttl+'</h3>'+arr.map(function(x){return '<div style="margin:8px 0"><div style="display:flex;justify-content:space-between;gap:8px;font-weight:700;font-size:14px"><span>'+L(x[1],x[2])+'</span><b style="font-family:IBM Plex Mono,monospace">'+x[0]+'/5</b></div><div class="bar" style="height:9px;margin-top:3px"><i style="width:'+x[0]*20+'%;background:'+clr+'"></i></div></div>'}).join('')+'</div>'}
+  var sr=rew.reduce(function(a,x){return a+x[0]},0),sk=risk.reduce(function(a,x){return a+x[0]},0);
+  return '<div class="g2">'+col(rew,'#16803A',L('Reward drivers','Reward காரணிகள்'))+col(risk,'#C62828',L('Risk drivers','Risk காரணிகள்'))+'</div>'+
+  '<div class="card hl"><h3>'+L('Balance','சமநிலை')+': <span class="pos">'+L('Reward','Reward')+' '+sr+'</span> vs <span class="neg">'+L('Risk','Risk')+' '+sk+'</span></h3><div class="bar" style="height:18px;display:flex"><i style="width:'+(sr/(sr+sk)*100)+'%;background:#16803A"></i><i style="width:'+(sk/(sr+sk)*100)+'%;background:#C62828"></i></div><div class="note">'+L('Weights = CB judgement of size × likelihood (1–5). Education only.','Weights = size × வாய்ப்பு-க்கு CB மதிப்பீடு (1–5). Education மட்டும்.')+'</div></div>'}
+
+
+/* ===== Shilchar: 6-pillar restructure ===== */
+(function(){
+var old={};D.tabs.forEach(function(t){old[t.id]=t});
+var SC=[7.5,6.0,8.0,9.0,4.5,5.5],Q1=['down','down','flat','flat','down','down'];
+var avg=SC.reduce(function(a,b){return a+b},0)/6;
+D.key='cb_q1fy27_shilchar_6p';
+D.title=L('Shilchar Technologies — Q1 FY27 · 6-Pillar Analysis','Shilchar Technologies — Q1 FY27 · 6-Pillar அலசல்');
+var risks=[{n:['West Asia / shipping disruption keeps exports low','West Asia / shipping பிரச்சனையால exports குறைஞ்சே இருக்கும்'],p:2,i:2},{n:['₹800 cr FY27 guidance missed','₹800 cr FY27 guidance miss'],p:1,i:2},{n:['Raw material squeeze (oil, CRGO, bushings)','Raw material நெருக்கடி (oil, CRGO, bushings)'],p:1,i:1},{n:['Valuation de-rating from ~33× P/E','~33× P/E-ல இருந்து de-rating'],p:1,i:1},{n:['Gavasad #3 delayed beyond Apr 2027','Gavasad #3 April 2027-ஐ தாண்டி தாமதம்'],p:0,i:2},{n:['Industry capacity glut → price competition','Industry capacity glut → விலை போட்டி'],p:1,i:1},{n:['US tariff policy shifts','US tariff policy மாற்றம்'],p:1,i:1}];
+var dash={id:'dash',l:['Dashboard','Dashboard'],html:function(){return ''+
+ '<div class="grid">'+
+ kpi(L('Revenue','Revenue'),'₹134.6 cr','<span class="dn">▼ 15.2% YoY</span>')+kpi(L('Operating margin','Operating margin'),'~16%','<span class="dn">vs 33% Q1 FY26</span>')+kpi('PAT','₹20.9 cr','<span class="dn">▼ 49.7% YoY</span>')+kpi(L('Order book','Order book'),'~₹500 cr','<span class="neu">70% domestic · 30% export</span>')+kpi(L('Debt','கடன்'),'₹0','<span class="up">'+L('₹202 cr investments','₹202 cr investments')+'</span>')+kpi(L('Price · P/E','Price · P/E'),'₹3,925','<span class="neu">32.6× TTM · Mcap ₹4,491 cr</span>')+'</div>'+
+ '<div class="g2">'+card(L('CB 6-Pillar Scorecard','CB 6-Pillar Scorecard'),'<div style="display:flex;align-items:center;gap:14px;margin-bottom:6px">'+ring(avg,84)+'<div><div class="prog">'+L('CB Pillar Score (average)','CB Pillar Score (சராசரி)')+'</div><b style="font-size:17px">'+L(grade(avg).en+' business, uncomfortable price and a weak quarter','நல்ல business, விலை அதிகம், quarter weak')+'</b></div></div>'+scoreBars(SC,Q1))+
+ card(L('Pillar shape','Pillar வடிவம்'),'<div style="text-align:center">'+radar(SC)+'</div>'+ul([['Strongest: Financial Strength (9.0) and Growth Opportunity (8.0).','பலம்: Financial Strength (9.0), Growth Opportunity (8.0).'],['Weakest: Valuations (4.5) — price runs ahead of current earnings.','பலவீனம்: Valuations (4.5) — இப்போ earnings-ஐ விட விலை முன்னாடி.']]))+'</div>'+
+ card(L('CB lenses','CB lenses'),'<span class="chip">CY <b>57</b></span><span class="chip">TG <b>53</b></span><span class="chip" style="border-color:#C62828;color:#C62828">'+L('Weinstein Stage 4 → Conviction capped at 55','Weinstein Stage 4 → Conviction max 55')+'</span>')+
+ card(L('Q1 FY27 in one look','Q1 FY27 ஒரே பார்வையில'),ul([
+ ['A high-quality, debt-free transformer maker hit by an export air pocket.','தரமான, கடன் இல்லாத transformer company — export air pocket-ல மாட்டியிருக்கு.'],
+ ['Q1 hurt Business Quality, Competitive position and Valuation comfort; Growth and Balance sheet are intact.','Q1 Business Quality, போட்டி நிலை, Valuation comfort-ஐ பாதிச்சுது; Growth, Balance sheet அப்படியே.'],
+ ['Peers Voltamp (+28%) and Indo Tech (+39%) grew in Q1 while Shilchar fell 15% — the problem is export-specific.','Q1-ல Voltamp (+28%), Indo Tech (+39%) வளர்ந்தாங்க, Shilchar −15% — பிரச்சனை export-ல மட்டும்.'],
+ ['Next tests: Q2 run-rate (~₹222 cr/quarter needed) and Gavasad #3 in April 2027.','அடுத்த test: Q2 run-rate (quarter-க்கு ~₹222 cr வேணும்), April 2027 Gavasad #3.']]))}};
+var p1={id:'p1',l:['1 · Business Quality','1 · Business தரம்'],html:function(){return pillarHead(1,SC[0],['High-return, asset-light manufacturer — but earnings swing with exports','அதிக return, குறைந்த asset manufacturer — ஆனா export-ஓட earnings ஆடுது'],['down','Q1 operating margin halved to ~16% (33% a year ago).','Q1 operating margin பாதி ~16% (போன வருஷம் 33%).'])+
+ '<div class="g2">'+card(L('Quality checklist','Quality checklist'),checks([
+ [1,'ROCE ~51% in FY26 (75% in FY24) — top-tier returns on capital.','FY26 ROCE ~51% (FY24-ல 75%) — மிக உயர்ந்த return.'],
+ [1,'Operating margin ~29–30% through FY24–FY26 before the dip.','Dip-க்கு முன்னாடி FY24–FY26-ல operating margin ~29–30%.'],
+ [1,'Made-to-order, custom units: orders get delayed, rarely cancelled.','Order-க்கு ஏத்த custom units: order தள்ளிப்போகும், cancel அரிது.'],
+ [1,'Asset-light: ~₹75 cr fixed assets generated ~₹652 cr sales in FY26.','குறைஞ்ச asset: ~₹75 cr fixed assets-ல FY26 ~₹652 cr sales.'],
+ [-1,'Single segment, single site (Gavasad, Gujarat) — concentration risk.','ஒரே segment, ஒரே site (Gavasad, Gujarat) — concentration risk.'],
+ [-1,'Earnings are volatile: OPM 33% → 21% → 16% in three quarters.','Earnings ஆடுது: மூணு quarter-ல OPM 33% → 21% → 16%.'],
+ [0,'Promoter holding drifted down to 62.1% (64.0% a year ago).','Promoter holding 62.1%-க்கு குறைஞ்சிருக்கு (ஒரு வருஷம் முன்னாடி 64.0%).']]))+
+ card(L('Returns and margins (%)','Returns, margins (%)'),chart({labels:['FY22','FY23','FY24','FY25','FY26','Q1 FY27'],series:[{name:A('ROCE','ROCE'),color:'#16803A',vals:[24,54,75,71,51,null]},{name:A('Operating margin','Operating margin'),color:'#F28C28',vals:[11,19,29,30,29,16]}]})+'<div class="note">'+L('Q1 FY27 ROCE not reported for a single quarter.','Q1 FY27 ROCE single quarter-க்கு report இல்லை.')+'</div>')+'</div>'+
+ changeBox([['Q2–Q3 OPM back near 25–30% → score returns to ~8.','Q2–Q3 OPM 25–30% பக்கம் வந்தா → score ~8.'],['Another sub-20% margin quarter → score falls toward 6.','இன்னொரு quarter-உம் 20%-க்கு கீழ margin → score ~6-க்கு.']])}};
+var p2={id:'p2',l:['2 · Competitive Advantage','2 · போட்டி பலம் (Moat)'],html:function(){return pillarHead(2,SC[1],['A real niche (renewables + exports), but no wide moat yet','நிஜமான niche (renewables + exports), ஆனா பெரிய moat இன்னும் இல்லை'],['down','Domestic-focused peers grew strongly in Q1 while Shilchar shrank.','Q1-ல domestic peers நல்லா வளர்ந்தாங்க, Shilchar குறைஞ்சுது.'])+
+ '<div class="g2">'+card(L('Moat checklist','Moat checklist'),checks([
+ [1,'Export franchise in 25+ countries — Middle East ~30% and US ~18–19% of revenue (FY25–26). Rare for a small Indian maker.','25+ நாடுகள்ல export — Middle East ~30%, US ~18–19% (FY25–26). சின்ன இந்திய company-க்கு அரிது.'],
+ [1,'17 years in renewable (inverter-duty) transformers — early mover in solar.','Renewable (inverter-duty) transformers-ல 17 வருஷம் — solar-ல early mover.'],
+ [1,'Lean costs and fast turnaround → industry-leading margins in good times.','குறைஞ்ச cost, வேகமான delivery → நல்ல காலத்துல industry-லயே அதிக margin.'],
+ [-1,'Size ceiling: 50 MVA / 132 kV today — shut out of large utility orders that Hitachi Energy, Siemens Energy, GE Vernova, TARIL and CG Power win.','Size limit: இப்போ 50 MVA / 132 kV — Hitachi Energy, Siemens, GE Vernova, TARIL, CG Power ஜெயிக்கற பெரிய utility orders கிடைக்காது.'],
+ [-1,'Transformers are spec-driven tenders — buyers can switch suppliers.','Transformers spec-படி tender — buyers supplier மாத்தலாம்.'],
+ [-1,'Industry adding ~200–220 GVA capacity in 2–3 years → pricing pressure later.','2–3 வருஷத்துல industry ~200–220 GVA capacity சேர்க்குது → பின்னாடி விலை போட்டி.']]))+
+ card(L('Q1 FY27 YoY growth vs listed peers (%)','Q1 FY27 YoY growth — listed peers-ஓட (%)'),chart({labels:['Shilchar','Voltamp','Indo Tech'],series:[{name:A('Revenue growth','Revenue growth'),color:'#F28C28',vals:[-15.2,28.4,39.0]},{name:A('Profit growth','Profit growth'),color:'#1F5FAD',vals:[-49.7,14.7,34.1]}]})+
+ table([L('Company','Company'),L('Q1 FY27 revenue','Q1 FY27 revenue'),L('Q1 FY27 PAT','Q1 FY27 PAT'),L('Note','குறிப்பு')],[['Shilchar','₹134.6 cr','₹20.9 cr',L('Export-heavy','Export அதிகம்')],['Voltamp','₹543.8 cr','₹91.2 cr',L('Margin −238 bps on input costs','Input cost-னால margin −238 bps')],['Indo Tech','₹227.9 cr','₹25.7 cr',L('Domestic utilities, renewables','Domestic utilities, renewables')]])+'<div class="note">'+L('Peer figures from results summaries (Aug 2026).','Peer figures results summary-ல இருந்து (Aug 2026).')+'</div>')+'</div>'+
+ pic('Think of Shilchar as a skilled tailor for mid-size transformers: excellent at custom fits for solar parks and overseas clients, but it cannot yet stitch the "extra-large" suits that big utilities order. Gavasad #3 is the bigger sewing room.','Shilchar-ஐ mid-size transformers-க்கு ஒரு திறமையான tailor-னு நினைங்க: solar parks, வெளிநாட்டு customers-க்கு custom fit-ல சூப்பர், ஆனா பெரிய utilities கேக்கற "extra-large" இன்னும் தைக்க முடியாது. Gavasad #3 தான் பெரிய தையல் அறை.')+
+ changeBox([['First 220 kV / 160 MVA approvals (e.g., PGCIL) → moat widens, score ~7.','முதல் 220 kV / 160 MVA approvals (PGCIL மாதிரி) → moat விரியும், score ~7.'],['Export customers shift to other suppliers → score toward 5.','Export customers வேற supplier-க்கு போனா → score ~5.']])}};
+var p3={id:'p3',l:['3 · Growth Opportunity','3 · Growth வாய்ப்பு'],html:function(){return pillarHead(3,SC[2],['Large runway — grid, renewables and a capacity doubling','பெரிய runway — grid, renewables, capacity double'],['flat','Demand and the expansion plan are intact; timing of exports is the question.','Demand, expansion plan அப்படியே; export timing தான் கேள்வி.'])+
+ '<div class="grid">'+kpi(L('Grid MVA added FY26','FY26 grid MVA'),'1,13,013',L('90% of CEA target','CEA target-ல 90%'),'neu')+kpi(L('FY27 CEA target','FY27 CEA target'),'1,58,339 MVA',L('+40% vs FY26 actual','FY26-ஐ விட +40%'),'up')+kpi(L('Transmission plan to FY32','FY32 வரை transmission'),'₹9.15 lakh cr',L('National Electricity Plan','National Electricity Plan'),'up')+kpi(L('Non-fossil target','Non-fossil target'),'500 GW',L('by 2030','2030-க்குள்ள'),'up')+kpi(L('Battery storage target','Battery storage'),'51.5 GW',L('by FY32 (13.5 GW FY27)','FY32-க்குள்ள (FY27 13.5 GW)'),'up')+kpi(L('Data centres','Data centres'),'~1.8 GW',L('~3.9 GW pipeline','~3.9 GW pipeline'),'up')+'</div>'+
+ '<div class="g2">'+card(L('Shilchar revenue path (₹ cr)','Shilchar revenue path (₹ cr)'),chart({labels:['FY22','FY23','FY24','FY25','FY26','FY27 guide','Potential*'],series:[{name:A('Revenue','Revenue'),color:'#F28C28',vals:[180,280,397,623,652,800,1500]}]})+'<div class="note">'+L('*Management\'s ~₹1,500 cr potential once the new facility is fully used (FY29–30). Not a CB forecast.','*புது facility முழுசா பயன்படுத்தினா ~₹1,500 cr — management (FY29–30). CB forecast இல்லை.')+'</div>')+
+ card(L('Growth checklist','Growth checklist'),checks([
+ [1,'Capacity 7,500 → 14,000 MVA from April 2027, funded internally (₹120 cr).','April 2027-ல capacity 7,500 → 14,000 MVA, சொந்த பணத்துல (₹120 cr).'],
+ [1,'Bigger products (160 MVA / 220 kV) open utility and pooling-station orders.','பெரிய products (160 MVA / 220 kV) — utility, pooling-station orders.'],
+ [1,'India grid build-out: FY27 target +40% MVA; ₹7.93 lakh cr more planned for FY27–36.','இந்திய grid: FY27 target +40% MVA; FY27–36-க்கு இன்னும் ₹7.93 lakh cr.'],
+ [1,'Renewables + storage + data centres all need step-up transformers.','Renewables, storage, data centres — எல்லாத்துக்கும் step-up transformers வேணும்.'],
+ [1,'4.5 acres of extra land bought next to Gavasad for future phases.','எதிர்கால phase-க்கு Gavasad பக்கத்துல 4.5 acres extra land.'],
+ [0,'FY27 ₹800 cr needs a record ~₹222 cr per quarter in Q2–Q4.','FY27 ₹800 cr-க்கு Q2–Q4-ல quarter-க்கு record ~₹222 cr வேணும்.'],
+ [-1,'New large units start at lower margins to win share.','புது பெரிய units ஆரம்பத்துல share பிடிக்க குறைஞ்ச margin.']]))+'</div>'+
+ changeBox([['Q2 revenue ≥ ₹200 cr → confidence in FY27 rises.','Q2 revenue ≥ ₹200 cr → FY27 நம்பிக்கை ஏறும்.'],['Grid tenders slow or Gavasad slips → score toward 7.','Grid tenders slow ஆனாலோ Gavasad தாமதமானாலோ → score ~7.']])}};
+var p4={id:'p4',l:['4 · Financial Strength','4 · Financial பலம்'],html:function(){return pillarHead(4,SC[3],['Fortress balance sheet — no debt, cash-rich, self-funded growth','கோட்டை மாதிரி balance sheet — கடன் இல்லை, cash அதிகம், சொந்த பணத்துல growth'],['flat','Q1 loss of earnings does not touch the balance sheet.','Q1 earnings இழப்பு balance sheet-ஐ தொடலை.'])+
+ '<div class="grid">'+kpi(L('Borrowings','கடன்'),'₹0',L('since FY23','FY23-ல இருந்து'),'up')+kpi(L('Investments','Investments'),'₹202 cr',L('~4.5% of market cap','Market cap-ல ~4.5%'),'up')+kpi(L('Net worth','Net worth'),'₹490 cr','Mar 2026','neu')+kpi('CFO FY26','₹192 cr',L('122% of PAT','PAT-ஓட 122%'),'up')+kpi(L('Working capital days','Working capital days'),'91','FY26 (112 FY25)','neu')+kpi(L('Capex funding','Capex funding'),'₹120 cr',L('internal accruals','சொந்த பணம்'),'up')+'</div>'+
+ '<div class="g2">'+card(L('Balance sheet build (₹ cr)','Balance sheet வளர்ச்சி (₹ cr)'),chart({labels:['Mar 24','Mar 25','Mar 26'],series:[{name:A('Net worth','Net worth'),color:'#1F5FAD',vals:[210,347,490]},{name:A('Investments','Investments'),color:'#16803A',vals:[20,54,202]},{name:A('Borrowings','Borrowings'),color:'#C62828',vals:[0,0,0]}]}))+
+ card(L('Strength checklist','Strength checklist'),checks([
+ [1,'Debt-free since FY23; interest cost ~nil.','FY23-ல இருந்து கடன் இல்லை; interest கிட்டத்தட்ட zero.'],
+ [1,'FY26 cash conversion excellent: CFO ₹192 cr vs PAT ₹158 cr.','FY26 cash conversion சூப்பர்: CFO ₹192 cr, PAT ₹158 cr.'],
+ [1,'Treasury income (~₹7 cr/quarter) cushions weak operating quarters.','Treasury income (~₹7 cr/quarter) weak quarter-ஐ தாங்குது.'],
+ [1,'Pays dividends (₹12.50/share for FY26) while funding expansion.','Expansion-க்கு பணம் போட்டும் dividend (FY26 ₹12.50/share).'],
+ [-1,'Debtor days swing (134 in FY25, 86 in FY26) with export timing.','Export timing-ஓட debtor days ஆடுது (FY25 134, FY26 86).']]))+'</div>'+
+ changeBox([['Bunched H2 dispatches lift receivables → watch CFO in H1 results.','H2-ல dispatch ஒண்ணா வந்தா receivables ஏறும் → H1 results-ல CFO பாருங்க.']])}};
+var p5={id:'val',l:['5 · Valuations','5 · Valuations'],html:function(){return pillarHead(5,SC[4],['Priced for recovery — little margin of safety on current earnings','Recovery-க்கு விலை போட்டாச்சு — இப்போ earnings-ல safety margin கம்மி'],['down','P/E rose as earnings fell: ~28× FY26 EPS → ~54× Q1 annualised.','Earnings குறைஞ்சதால P/E ஏறிடுச்சு: FY26 EPS-ல ~28× → Q1 annualised-ல ~54×.'])+
+ card(L('Same price, different earnings base — P/E at ₹3,925','ஒரே விலை, வேற earnings — ₹3,925-ல P/E'),chart({h:250,labels:['FY26 EPS ₹138','TTM EPS ₹120','Q1×4 EPS ₹73','FY27 guide ~₹172*'],series:[{name:A('P/E (×)','P/E (×)'),color:'#F28C28',vals:[28.4,32.6,53.8,22.8]}]})+'<div class="note">'+L('*CB illustration if ₹800 cr guidance is met at 30% OPM.','*₹800 cr guidance 30% OPM-ல வந்தா — CB உதாரணம்.')+'</div>')+
+ old.val.html()}};
+var p6={id:'p6',l:['6 · Risks &amp; Reward','6 · Risk &amp; Reward'],html:function(){return pillarHead(6,SC[5],['Balanced: big rewards if H2 delivers, real downside if exports stay stuck','சமநிலை: H2 வந்தா பெரிய reward, exports மாட்டினா நிஜமான downside'],['down','Q1 shifted the burden of proof to H2 FY27.','Q1-க்கு அப்புறம் நிரூபிக்கற பொறுப்பு H2 FY27 மேல.'])+
+ balance([[4,'Capacity doubling from April 2027','April 2027-ல capacity double'],[4,'Grid &amp; renewable capex tailwind','Grid, renewable capex ஆதரவு'],[3,'Export recovery (orders deferred, not cancelled)','Export recovery (order cancel இல்லை)'],[3,'Margin back to 29–31% guidance','Margin 29–31% guidance-க்கு திரும்புதல்'],[2,'Entry into 220 kV / 160 MVA','220 kV / 160 MVA entry']],
+  [[4,'Prolonged West Asia / shipping disruption','West Asia / shipping பிரச்சனை நீடிப்பு'],[3,'Missing ₹800 cr FY27 guidance','₹800 cr FY27 guidance miss'],[3,'Raw material squeeze','Raw material நெருக்கடி'],[3,'De-rating from a rich multiple','அதிக multiple-ல இருந்து de-rating'],[2,'Industry capacity glut','Industry capacity glut']])+
+ '<div class="g2">'+card(L('Risk map','Risk map'),riskMatrix(risks))+
+ card(L('What the price already assumes (CB reverse math)','விலை ஏற்கனவே என்ன நம்புது (CB reverse கணக்கு)'),table([L('If the market pays','Market கொடுக்கற multiple'),L('EPS needed for ₹3,925','₹3,925-க்கு வேண்டிய EPS'),L('PAT needed','வேண்டிய PAT'),L('vs FY26 PAT ₹158 cr','FY26 PAT ₹158 cr-ஓட')],[['30×','₹131','₹150 cr','−5%'],['25×','₹157','₹180 cr','<b class="neg">+14%</b>'],['20×','₹196','₹225 cr','<b class="neg">+42%</b>']],L('1.144 cr shares. At 25× the price needs earnings ~14% above FY26 — i.e., a full recovery plus some growth.','1.144 cr shares. 25×-ல FY26-ஐ விட ~14% அதிக earnings வேணும் — முழு recovery-உம் கொஞ்சம் growth-உம்.'))+
+  ul([['Reward is real but back-ended (FY28 onward).','Reward நிஜம், ஆனா FY28-ல இருந்து தான்.'],['Near-term risk is concentrated in one factor: export dispatches.','Near-term risk ஒரே காரணியில: export dispatches.']]))+'</div>'}};
+var view={id:'view',l:['Analyst View','Analyst View'],html:function(){return card(L('6-pillar summary','6-pillar சுருக்கம்'),table([L('Pillar','Pillar'),L('Score','Score'),L('Q1 effect','Q1 விளைவு'),L('One line','ஒரு வரி')],[
+ ['1. '+L(PILLARS[0][0],PILLARS[0][1]),'7.5','▼',L('High ROCE, volatile margins','அதிக ROCE, ஆடும் margin')],['2. '+L(PILLARS[1][0],PILLARS[1][1]),'6.0','▼',L('Export niche; size ceiling till FY28','Export niche; FY28 வரை size limit')],['3. '+L(PILLARS[2][0],PILLARS[2][1]),'8.0','■',L('Grid + renewables + capacity doubling','Grid + renewables + capacity double')],['4. '+L(PILLARS[3][0],PILLARS[3][1]),'9.0','■',L('Debt-free, cash-rich','கடன் இல்லை, cash அதிகம்')],['5. '+L(PILLARS[4][0],PILLARS[4][1]),'4.5','▼',L('~33× trailing on falling earnings','இறங்கும் earnings-ல ~33×')],['6. '+L(PILLARS[5][0],PILLARS[5][1]),'5.5','▼',L('Balanced; H2 decides','சமநிலை; H2 முடிவு பண்ணும்')],['<b>'+L('CB Pillar Score','CB Pillar Score')+'</b>','<b>'+avg.toFixed(1)+'</b>','','']]))+old.view.html()}};
+D.tabs=[dash,p1,p2,p3,p4,p5,p6,old.take,old.biz,old.prod,old.seg,old.fin,old.cash,old.mkt,old.trig,old.swot,old.assist,{id:'quiz',l:['Cauvery Socrates','Cauvery Socrates'],html:function(){return card('',ul([['Test what you learned — '+D.quiz.length+' quick questions.','நீங்க கத்துக்கிட்டதை test பண்ணுங்க — '+D.quiz.length+' கேள்விகள்.']]),'hl')+'<div id="quiz"></div>'}},view];
+D.assist.storageKey='cba_q1fy27_shilchar_6p';
+D.assist.kb.forEach(function(e){if(e.tab==='val')e.tab='val'});
+var K=[
+{k:['pillar','pillars','scorecard','score','overall','ஸ்கோர்','பில்லர்'],a:A('Shilchar\'s CB Pillar Score is '+avg.toFixed(1)+'/10 — strongest on Financial Strength (9.0), weakest on Valuations (4.5).','Shilchar CB Pillar Score '+avg.toFixed(1)+'/10 — Financial Strength (9.0) பலம், Valuations (4.5) பலவீனம்.'),tab:'dash'},
+{k:['business quality','quality','தரம்','குவாலிட்டி'],a:A('Business Quality scores 7.5/10: ROCE ~51% and 29–30% margins, but earnings swing with exports.','Business Quality 7.5/10: ROCE ~51%, margin 29–30%, ஆனா export-ஓட earnings ஆடுது.'),tab:'p1'},
+{k:['competitive advantage','moat','competition','competitor','peer','peers','voltamp','indo tech','மோட்','போட்டி'],a:A('Competitive Advantage scores 6/10: a real export and renewable niche, but limited to 50 MVA / 132 kV until FY28.','போட்டி பலம் 6/10: export, renewable niche இருக்கு, ஆனா FY28 வரை 50 MVA / 132 kV limit.'),d:A('Q1 FY27 growth: Voltamp revenue +28%, Indo Tech +39%, Shilchar −15%.','Q1 FY27 growth: Voltamp +28%, Indo Tech +39%, Shilchar −15%.'),tab:'p2'},
+{k:['growth opportunity','opportunity','runway','grid capex','future','வாய்ப்பு','எதிர்காலம்'],a:A('Growth Opportunity scores 8/10: capacity nearly doubles in April 2027 and India\'s FY27 grid target is 40% higher than FY26.','Growth வாய்ப்பு 8/10: April 2027-ல capacity கிட்டத்தட்ட double; FY27 grid target FY26-ஐ விட 40% அதிகம்.'),tab:'p3'},
+{k:['financial strength','balance sheet strength','strong balance','நிதி பலம்','ஃபைனான்ஷியல்'],a:A('Financial Strength scores 9/10: zero debt, ₹202 cr investments and internally funded capex.','Financial பலம் 9/10: கடன் இல்லை, ₹202 cr investments, capex சொந்த பணத்துல.'),tab:'p4'},
+{k:['risk reward','risk and reward','reward','upside','downside','ரிவார்டு'],a:A('Risk & Reward scores 5.5/10 — balanced: big rewards if H2 delivers, real downside if exports stay stuck.','Risk & Reward 5.5/10 — சமநிலை: H2 வந்தா பெரிய reward, exports மாட்டினா downside.'),d:A('At 25×, the price needs PAT ~₹180 cr — about 14% above FY26.','25×-ல விலைக்கு PAT ~₹180 cr வேணும் — FY26-ஐ விட ~14% அதிகம்.'),tab:'p6'},
+{k:['price assume','priced in','reverse','what is priced','விலை நம்புது'],a:A('At 25× earnings, ₹3,925 needs PAT of about ₹180 cr — roughly 14% above FY26\'s ₹158 cr.','25× earnings-ல ₹3,925-க்கு PAT ~₹180 cr வேணும் — FY26 ₹158 cr-ஐ விட ~14% அதிகம்.'),tab:'p6'}];
+D.assist.kb=K.concat(D.assist.kb);
+D.assist.suggestions=[['What is the pillar score?','Pillar score என்ன?'],['Is the moat strong?','Moat பலமா?'],['What does the price assume?','விலை என்ன நம்புது?']].concat(D.assist.suggestions.slice(0,3));
+D.quiz.push({q:['Which pillar scores highest for Shilchar?','Shilchar-க்கு அதிக score எந்த pillar?'],o:[['Valuations','Valuations'],['Financial Strength','Financial Strength'],['Competitive Advantage','Competitive Advantage'],['Risks & Reward','Risks & Reward']],c:1,e:['Financial Strength 9/10 — zero debt, ₹202 cr investments.','Financial Strength 9/10 — கடன் இல்லை, ₹202 cr investments.']},
+{q:['In Q1 FY27, how did Shilchar\'s revenue growth compare with peers Voltamp and Indo Tech?','Q1 FY27-ல Voltamp, Indo Tech-ஓட Shilchar revenue growth எப்படி?'],o:[['Higher than both','ரெண்டையும் விட அதிகம்'],['Same','ஒரே மாதிரி'],['Lower — Shilchar fell while peers grew','குறைவு — peers வளர்ந்தாங்க, Shilchar இறங்குச்சு'],['Not comparable','ஒப்பிட முடியாது']],c:2,e:['Shilchar −15% vs Voltamp +28%, Indo Tech +39% — an export-specific problem.','Shilchar −15%, Voltamp +28%, Indo Tech +39% — export பிரச்சனை.']});
+})();
+
+
+/* ---------- Page wiring ---------- */
+var LANG='en';
+document.getElementById('ttl').innerHTML=D.title;document.getElementById('subt').innerHTML=D.sub;
+var tabsEl=document.getElementById('tabs'),mainEl=document.getElementById('main');
+D.tabs.forEach(function(t){var b=document.createElement('button');b.id='tb_'+t.id;b.innerHTML=L(t.l[0],t.l[1]);b.onclick=function(){showTab(t.id)};tabsEl.appendChild(b);
+  var p=document.createElement('section');p.className='panel';p.id='p_'+t.id;p.innerHTML='<h2>'+L(t.l[0],t.l[1])+'</h2>'+t.html();mainEl.appendChild(p)});
+function showTab(id){D.tabs.forEach(function(t){document.getElementById('p_'+t.id).classList.toggle('act',t.id===id);document.getElementById('tb_'+t.id).classList.toggle('act',t.id===id)});
+  var b=document.getElementById('tb_'+id);if(b&&b.scrollIntoView)b.scrollIntoView({block:'nearest',inline:'center'});window.scrollTo(0,0);try{localStorage.setItem(D.key+'_tab',id)}catch(e){}}
+function setLang(l){LANG=l;document.body.className='lang-'+l;document.documentElement.lang=l;document.getElementById('bEN').classList.toggle('on',l==='en');document.getElementById('bTA').classList.toggle('on',l==='ta');if(window.assist)assist.setLang(l);try{localStorage.setItem(D.key+'_lang',l)}catch(e){}}
+function readTab(){var p=document.querySelector('.panel.act');if(p&&window.assist)assist.speak(p.innerText.replace(/\s+\n/g,'\n'))}
+
+/* ---------- Cauvery Assist (compact built-in engine; CONFIG-compatible) ---------- */
+var CauveryAssist=(function(){
+  function mount(el,CFG){
+    var S={rate:0.8,wait:3,voice:'',review:false,conv:false},lang=CFG.lang||'en',queue=[],rec=null,listening=false,finalTxt='',silT=null,cdT=null,lastTab=null;
+    try{var sv=JSON.parse(localStorage.getItem(CFG.storageKey)||'{}');for(var k in sv)S[k]=sv[k]}catch(e){}
+    function save(){try{localStorage.setItem(CFG.storageKey,JSON.stringify(S))}catch(e){}}
+    var T=function(o){return o?(o[lang]||o.en):''};
+    el.innerHTML='<div class="as"><div class="as-h"><div class="t">🎙️ '+T(CFG.title)+'</div><div class="as-c">'+
+      '<span class="en">Speed</span><span class="ta">வேகம்</span> <button data-a="minus">−</button><b class="rv"></b><button data-a="plus">+</button>'+
+      '<button data-r="0.6">'+L('Slow','மெதுவா')+'</button><button data-r="0.8">'+L('Relaxed','நிதானமா')+'</button><button data-r="1">'+L('Normal','Normal')+'</button><button data-r="1.25">'+L('Fast','வேகமா')+'</button>'+
+      '<input type="range" min="0.5" max="1.5" step="0.05" class="sl" style="width:90px">'+
+      '<button data-a="pause">⏯</button><button data-a="stop">⏹</button></div>'+
+      '<div class="as-c"><span class="en">Wait after I stop speaking</span><span class="ta">பேசி முடிச்சதும் wait</span><select class="wt"><option value="2">2s</option><option value="3">3s</option><option value="5">5s</option><option value="0">'+T(A('Only when I tap Done','Done அழுத்தும் போது மட்டும்'))+'</option></select>'+
+      '<label><input type="checkbox" class="rvw"> '+L('Check text before sending','அனுப்பறதுக்கு முன்னாடி text பாக்கணும்')+'</label>'+
+      '<label><input type="checkbox" class="cnv"> '+L('Conversation mode','Conversation mode')+'</label>'+
+      '<select class="vc" style="max-width:170px"></select></div></div>'+
+      '<div class="as-note vn" style="display:none"></div><div class="as-log"></div><div class="cd"><i></i></div>'+
+      '<div class="as-in"><input class="q" type="text"><button class="mic" title="Mic">🎤</button><button class="go">'+L('Ask','கேளுங்க')+'</button></div><div class="sug"></div></div>';
+    var $=function(s){return el.querySelector(s)},log=$('.as-log'),inp=$('.q'),micB=$('.mic'),bar=$('.cd i'),vn=$('.vn');
+    function syncUI(){$('.rv').textContent=S.rate.toFixed(2)+'×';$('.sl').value=S.rate;$('.wt').value=String(S.wait);$('.rvw').checked=!!S.review;$('.cnv').checked=!!S.conv;inp.placeholder=T(CFG.placeholder);
+      el.querySelectorAll('[data-r]').forEach(function(b){b.classList.toggle('on',Math.abs(+b.dataset.r-S.rate)<0.01)});fillVoices();renderSug()}
+    function renderSug(){$('.sug').innerHTML='';CFG.suggestions.forEach(function(s){var b=document.createElement('button');b.textContent=lang==='ta'?s[1]:s[0];b.onclick=function(){ask(b.textContent)};$('.sug').appendChild(b)})}
+    function voicesFor(){if(!('speechSynthesis' in window))return [];var want=lang==='ta'?'ta':'en';return speechSynthesis.getVoices().filter(function(v){return v.lang.toLowerCase().indexOf(want)===0}).sort(function(a,b){return (/in/i.test(b.lang.slice(-2))?1:0)-(/in/i.test(a.lang.slice(-2))?1:0)})}
+    function fillVoices(){var vs=voicesFor(),sel=$('.vc');sel.innerHTML=vs.map(function(v){return '<option'+(v.name===S.voice?' selected':'')+'>'+v.name+'</option>'}).join('')||'<option>'+T(A('Default voice','Default voice'))+'</option>';
+      if(lang==='ta'&&!vs.length){vn.style.display='block';vn.innerHTML=L('','இந்த device-ல Tamil voice இல்லை — text-ஆ பாருங்க, இல்லனா Chrome/Android-ல try பண்ணுங்க.')}else vn.style.display='none'}
+    if('speechSynthesis' in window)speechSynthesis.onvoiceschanged=fillVoices;
+    function speak(text){if(!('speechSynthesis' in window))return;stop();queue=String(text).replace(/\n+/g,'. ').split(/(?<=[.!?।])\s+/).map(function(x){return x.trim()}).filter(function(x){return x.length>1});next()}
+    function next(){if(!queue.length){if(S.conv&&!listening)setTimeout(listen,500);return}var u=new SpeechSynthesisUtterance(queue.shift());u.rate=S.rate;u.lang=lang==='ta'?'ta-IN':'en-IN';var vs=voicesFor(),pk=vs.filter(function(v){return v.name===S.voice})[0]||vs[0];if(pk)u.voice=pk;u.onend=function(){setTimeout(next,320)};speechSynthesis.speak(u)}
+    function stop(){queue=[];if('speechSynthesis' in window)speechSynthesis.cancel()}
+    function setRate(r){S.rate=Math.max(0.5,Math.min(1.5,Math.round(r*100)/100));save();syncUI()}
+    el.querySelectorAll('[data-r]').forEach(function(b){b.onclick=function(){setRate(+b.dataset.r)}});
+    el.querySelector('[data-a=minus]').onclick=function(){setRate(S.rate-0.05)};el.querySelector('[data-a=plus]').onclick=function(){setRate(S.rate+0.05)};
+    $('.sl').oninput=function(){setRate(+this.value)};
+    el.querySelector('[data-a=pause]').onclick=function(){if(!('speechSynthesis' in window))return;if(speechSynthesis.paused)speechSynthesis.resume();else speechSynthesis.pause()};
+    el.querySelector('[data-a=stop]').onclick=stop;
+    $('.wt').onchange=function(){S.wait=+this.value;save()};$('.rvw').onchange=function(){S.review=this.checked;save()};$('.cnv').onchange=function(){S.conv=this.checked;save()};$('.vc').onchange=function(){S.voice=this.value;save()};
+    var NOADV=/\b(buy|sell|hold|target price|price target|should i invest|invest now|accumulate|exit|stop ?loss|multibagger|recommend)\b|வாங்கலாமா|விக்கலாமா|விற்கலாமா|டார்கெட்|முதலீடு பண்ணலாமா|வாங்கணுமா/i;
+    function find(q){var s=q.toLowerCase();if(NOADV.test(s))return {a:CFG.noAdvice};var best=null,bs=0;
+      CFG.kb.forEach(function(e){var sc=0;e.k.forEach(function(k){if(s.indexOf(k.toLowerCase())>-1)sc+=k.length>4?2:1});if(sc>bs){bs=sc;best=e}});
+      if(!best&&lastTab&&/\b(its|it|that|why)\b|அது|ஏன்/.test(s)){best=CFG.kb.filter(function(e){return e.tab===lastTab})[0]}
+      return best||{a:CFG.fallback}}
+    function add(cls,html){var d=document.createElement('div');d.className='msg '+cls;d.innerHTML=html;log.appendChild(d);log.scrollTop=log.scrollHeight;return d}
+    function ask(q){q=String(q||'').trim();if(!q)return;inp.value='';add('u',q.replace(/</g,'&lt;'));var r=find(q),direct=T(r.a);if(r.tab)lastTab=r.tab;
+      var h='<div class="d1">'+direct+'</div>'+(r.d?'<details><summary>'+T(A('More details','மேலும் விவரம்'))+'</summary>'+T(r.d)+'</details>':'')+'<div class="ac"><button class="sp">🔊 '+T(A('Read aloud','படிச்சு காட்டு'))+'</button>'+(r.tab&&CFG.onOpenTab?'<button class="ot">↗ '+T(A('Open related tab','அந்த tab-ஐ திறங்க'))+'</button>':'')+'</div>';
+      var m=add('a',h);m.querySelector('.sp').onclick=function(){speak(direct)};if(m.querySelector('.ot'))m.querySelector('.ot').onclick=function(){CFG.onOpenTab(r.tab)};speak(direct)}
+    function startBar(sec){clearInterval(cdT);var t0=Date.now();bar.style.width='0';cdT=setInterval(function(){var f=(Date.now()-t0)/(sec*1000);bar.style.width=Math.min(100,f*100)+'%';if(f>=1)clearInterval(cdT)},80)}
+    function listen(){var SR=window.SpeechRecognition||window.webkitSpeechRecognition;if(!SR){add('a','<div class="d1">'+T(A('Voice input is not supported in this browser. Please type your question, or open this page in Chrome/Edge.','இந்த browser-ல voice input வேலை செய்யாது — type பண்ணுங்க, இல்லனா Chrome/Edge-ல திறங்க.'))+'</div>');return}
+      stop();rec=new SR();rec.lang=lang==='ta'?'ta-IN':'en-IN';rec.continuous=true;rec.interimResults=true;finalTxt='';listening=true;micB.classList.add('rec');micB.textContent=S.wait===0?T(A('Done','Done')):'⏺';
+      rec.onresult=function(e){var it='';for(var i=e.resultIndex;i<e.results.length;i++){var r=e.results[i];if(r.isFinal)finalTxt+=r[0].transcript+' ';else it+=r[0].transcript}inp.value=(finalTxt+it).trim();if(S.wait>0){clearTimeout(silT);startBar(S.wait);silT=setTimeout(done,S.wait*1000)}};
+      rec.onend=function(){if(listening){try{rec.start()}catch(e){}}};
+      rec.onerror=function(e){if(e.error==='not-allowed'||e.error==='service-not-allowed'||e.error==='audio-capture'){listening=false;micB.classList.remove('rec');micB.textContent='🎤';add('a','<div class="d1">'+T(A('Microphone is blocked here. Read-aloud still works — type your question, or open the GitHub Pages copy in Chrome/Edge for voice input.','இங்க mic block ஆயிருக்கு. Read-aloud வேலை செய்யும் — type பண்ணுங்க, இல்லனா GitHub Pages copy-ஐ Chrome/Edge-ல திறங்க.'))+'</div>')}};
+      try{rec.start()}catch(e){}}
+    function done(){listening=false;clearTimeout(silT);clearInterval(cdT);bar.style.width='0';try{rec&&rec.stop()}catch(e){}micB.classList.remove('rec');micB.textContent='🎤';var q=inp.value.trim();if(!q)return;if(S.review){inp.focus();return}ask(q)}
+    micB.onclick=function(){if(listening)done();else listen()};
+    $('.go').onclick=function(){ask(inp.value)};inp.onkeydown=function(e){if(e.key==='Enter')ask(inp.value)};
+    function greet(){add('a','<div class="d1">'+T(CFG.greeting)+'</div>')}
+    syncUI();greet();
+    return {setLang:function(l){lang=l;syncUI()},speak:speak,stop:stop,ask:ask,plain:function(h){var d=document.createElement('div');d.innerHTML=h;return d.innerText}};
+  }
+  return {mount:mount,A:A};
+})();
+var assist=CauveryAssist.mount(document.getElementById('assist'),D.assist);
+
+/* ---------- Cauvery Socrates quiz ---------- */
+(function(){var el=document.getElementById('quiz');if(!el)return;var i=0,score=0,Q=D.quiz;
+  function draw(){if(i>=Q.length){el.innerHTML='<div class="card hl"><h3>'+L('Done! Your score','முடிஞ்சுது! உங்க score')+': <span class="prog">'+score+' / '+Q.length+'</span></h3>'+L(score>=Q.length-1?'Excellent — you read the results closely.':'Good try — revisit the tabs and try again.',score>=Q.length-1?'சூப்பர் — results-ஐ நல்லா படிச்சிருக்கீங்க.':'நல்ல முயற்சி — tabs-ஐ ஒரு தடவை பாத்துட்டு மறுபடி try பண்ணுங்க.')+'<div style="margin-top:10px"><button class="btn" id="qr">'+L('Restart','மறுபடி')+'</button></div></div>';document.getElementById('qr').onclick=function(){i=0;score=0;draw()};return}
+    var q=Q[i];el.innerHTML='<div class="card"><div class="prog">Q'+(i+1)+' / '+Q.length+' · '+L('Score','Score')+' '+score+'</div><h3 style="margin-top:6px">'+L(q.q[0],q.q[1])+'</h3><div class="qz">'+q.o.map(function(o,j){return '<button class="opt" data-j="'+j+'">'+L(o[0],o[1])+'</button>'}).join('')+'</div><div class="qx"></div></div>';
+    el.querySelectorAll('.opt').forEach(function(b){b.onclick=function(){if(el.querySelector('.opt.ok'))return;var j=+b.dataset.j;if(j===q.c)score++;el.querySelectorAll('.opt').forEach(function(x,k){if(k===q.c)x.classList.add('ok');else if(k===j)x.classList.add('no')});
+      el.querySelector('.qx').innerHTML='<div class="ex"><b>'+(j===q.c?L('Correct!','சரி!'):L('Not quite.','இல்லைங்க.'))+'</b> '+L(q.e[0],q.e[1])+'</div><div style="margin-top:10px"><button class="btn" id="qn">'+L('Next ➜','அடுத்தது ➜')+'</button></div>';document.getElementById('qn').onclick=function(){i++;draw()}}})}
+  draw()})();
+
+var st0='dash',lg0='en';try{st0=localStorage.getItem(D.key+'_tab')||'dash';lg0=localStorage.getItem(D.key+'_lang')||'en'}catch(e){}
+if(!document.getElementById('p_'+st0))st0='dash';showTab(st0);setLang(lg0);
+</script>
+</body>
+</html>
