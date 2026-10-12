@@ -1,0 +1,656 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Studds 6-Pillar</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&family=IBM+Plex+Mono:wght@500;700&family=Inter:wght@500;600;700;800&family=Noto+Sans+Tamil:wght@500;700&display=swap" rel="stylesheet">
+<style>
+:root{--or:#F28C28;--or-d:#C9661A;--or-l:#FFF4E8;--ink:#111111;--mut:#3A3A3A;--line:#E3E3E3;--grn:#16803A;--red:#C62828;--blu:#1F5FAD;--bg:#FFFFFF;--soft:#FAFAFA}
+*{box-sizing:border-box}
+html,body{background:var(--bg);color:var(--ink)}
+body{margin:0;font-family:Inter,'Noto Sans Tamil',system-ui,sans-serif;font-weight:500;font-size:15.5px;line-height:1.55;overflow-x:hidden}
+body.lang-en .ta{display:none!important} body.lang-ta .en{display:none!important}
+body.lang-ta{font-family:'Noto Sans Tamil',Inter,system-ui,sans-serif}
+.wrap{max-width:1180px;margin:0 auto;padding:0 16px}
+header{border-bottom:3px solid var(--or);background:#fff}
+.top{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;padding:14px 0 6px}
+.brand{font-family:'IBM Plex Mono',monospace;font-weight:700;font-size:13px;letter-spacing:.06em;color:var(--or-d);text-transform:uppercase}
+.slogan{display:inline-block;margin-top:4px;background:var(--or-l);border:1px solid #F6C89A;color:#7A3A00;font-weight:800;font-size:13px;padding:3px 10px;border-radius:20px}
+h1{font-family:'Playfair Display',serif;font-weight:800;font-size:clamp(24px,4vw,36px);margin:6px 0 2px;line-height:1.15}
+.sub{color:var(--mut);font-weight:600;font-size:14px;padding-bottom:12px}
+.ctrl{display:flex;gap:8px;flex-wrap:wrap}
+.btn{border:2px solid var(--or);background:#fff;color:#7A3A00;font-weight:800;border-radius:10px;padding:7px 12px;cursor:pointer;font-size:14px;font-family:inherit}
+.btn.on,.btn:hover{background:var(--or);color:#fff}
+nav{position:sticky;top:0;z-index:20;background:#fff;border-bottom:1px solid var(--line)}
+nav .wrap{display:flex;gap:4px;overflow-x:auto;scrollbar-width:thin;padding-top:6px;padding-bottom:6px}
+nav button{flex:0 0 auto;border:0;background:#fff;font-family:inherit;font-weight:800;font-size:14px;color:#222;padding:8px 12px;border-radius:9px;cursor:pointer;border:1.5px solid transparent}
+nav button.act{background:var(--or-l);border-color:var(--or);color:#7A3A00}
+main{padding:18px 0 120px}
+.panel{display:none}.panel.act{display:block}
+h2{font-family:'Playfair Display',serif;font-size:26px;margin:4px 0 12px}
+h3{font-size:17px;font-weight:800;margin:0 0 8px}
+.card{background:#fff;border:1.5px solid var(--line);border-radius:14px;padding:16px;margin-bottom:14px}
+.card.hl{border-color:var(--or);background:var(--or-l)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin-bottom:14px}
+.g2{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:14px}
+.kpi{background:#fff;border:1.5px solid var(--line);border-left:5px solid var(--or);border-radius:12px;padding:12px 14px}
+.kpi .l{font-size:13px;font-weight:700;color:var(--mut)}
+.kpi .v{font-family:'IBM Plex Mono',monospace;font-size:25px;font-weight:700;line-height:1.2}
+.kpi .c{font-size:13px;font-weight:800}
+.up{color:var(--grn)}.dn{color:var(--red)}.neu{color:#7A3A00}
+ul.b{margin:0;padding-left:20px} ul.b li{margin:4px 0;font-weight:600}
+.tw{overflow-x:auto;-webkit-overflow-scrolling:touch}
+table{width:100%;border-collapse:collapse;font-size:14px;min-width:520px}
+th{background:var(--or-l);color:#5A2A00;font-weight:800;text-align:right;padding:8px;border-bottom:2px solid var(--or);white-space:nowrap}
+td{padding:8px;border-bottom:1px solid var(--line);text-align:right;font-family:'IBM Plex Mono',monospace;font-weight:600;white-space:nowrap}
+th:first-child,td:first-child{text-align:left;font-family:inherit;white-space:normal}
+td.t{font-family:inherit;text-align:left;white-space:normal;font-weight:600}
+.note{font-size:13px;color:var(--mut);font-weight:600;margin-top:6px}
+.chip{display:inline-flex;align-items:center;gap:6px;border:2px solid var(--or);border-radius:20px;padding:3px 12px;font-weight:800;font-size:14px;margin:3px 6px 3px 0;background:#fff}
+.chip b{font-family:'IBM Plex Mono',monospace}
+.flow{display:flex;flex-wrap:wrap;align-items:stretch;gap:6px}
+.fbox{flex:1 1 170px;border:2px solid var(--or);border-radius:12px;padding:10px 12px;background:#fff}
+.fbox .h{font-weight:800;color:#7A3A00;margin-bottom:4px}
+.fbox ul{margin:0;padding-left:18px;font-size:14px;font-weight:600}
+.arr{align-self:center;font-size:26px;font-weight:800;color:var(--or)}
+.pic{border:2px dashed var(--or);background:var(--or-l);border-radius:12px;padding:12px 14px;font-weight:700}
+.pic .h{font-family:'Playfair Display',serif;font-size:18px;color:#7A3A00}
+.sw{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px}
+.sw .card h3{font-size:18px}
+.sw .S{border-top:5px solid var(--grn)}.sw .W{border-top:5px solid var(--red)}.sw .O{border-top:5px solid var(--blu)}.sw .T{border-top:5px solid #8A5A00}
+.take{display:flex;gap:12px;align-items:flex-start}
+.take .n{flex:0 0 38px;height:38px;border-radius:50%;background:var(--or);color:#fff;font-weight:800;display:flex;align-items:center;justify-content:center;font-family:'IBM Plex Mono',monospace;font-size:18px}
+svg text{font-family:Inter,'Noto Sans Tamil',sans-serif}
+.bar{height:14px;border-radius:7px;background:#EEE;overflow:hidden}.bar i{display:block;height:100%;background:var(--or)}
+.pos{color:var(--grn);font-weight:800}.neg{color:var(--red);font-weight:800}
+/* CB badge */
+#cb{position:fixed;right:16px;bottom:16px;z-index:60;width:48px;height:48px;border-radius:50%;background:var(--or);color:#fff;font-family:'IBM Plex Mono',monospace;font-weight:700;font-size:17px;display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 2px 10px rgba(0,0,0,.18);animation:blink 1.6s ease-in-out infinite;border:0}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.45}}
+#disc{position:fixed;right:16px;bottom:72px;z-index:61;max-width:340px;background:#fff;border:2px solid var(--or);border-radius:12px;padding:12px;font-size:13px;font-weight:600;color:#222;display:none;box-shadow:0 4px 18px rgba(0,0,0,.15)}
+#cb:hover+#disc,#disc.open,#disc:hover{display:block}
+#vbub{position:fixed;right:16px;bottom:74px;z-index:59;background:#fff;color:#7A3A00;border:2px solid var(--or);border-radius:24px;padding:8px 14px;font-weight:800;font-size:14px;cursor:pointer;box-shadow:0 2px 10px rgba(0,0,0,.12);font-family:inherit}
+body.discopen #vbub{display:none}
+/* Assist */
+.as{border:2px solid var(--or);border-radius:14px;overflow:hidden}
+.as-h{background:var(--or-l);padding:10px 12px;display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:space-between;border-bottom:1.5px solid #F6C89A}
+.as-h .t{font-weight:800;color:#7A3A00;font-size:16px}
+.as-c{display:flex;flex-wrap:wrap;gap:6px;align-items:center;font-size:13px;font-weight:700}
+.as-c button,.as-c select{font-family:inherit;font-weight:800;font-size:13px;border:1.5px solid var(--or);background:#fff;border-radius:8px;padding:4px 8px;cursor:pointer;color:#5A2A00}
+.as-c button.on{background:var(--or);color:#fff}
+.as-log{height:380px;overflow-y:auto;padding:12px;background:#fff}
+.msg{margin:8px 0;max-width:92%}
+.msg.u{margin-left:auto;background:#F3F3F3;border-radius:12px 12px 2px 12px;padding:8px 12px;font-weight:700}
+.msg.a{background:#fff;border:1.5px solid var(--line);border-left:4px solid var(--or);border-radius:12px;padding:10px 12px}
+.msg.a .d1{font-weight:800;font-size:15.5px}
+.msg.a details{margin-top:6px;font-size:14px}.msg.a summary{cursor:pointer;color:var(--or-d);font-weight:800}
+.msg.a .ac{margin-top:6px;display:flex;gap:6px;flex-wrap:wrap}
+.msg.a .ac button{font-family:inherit;font-size:12.5px;font-weight:800;border:1.5px solid var(--or);background:#fff;border-radius:8px;padding:3px 8px;cursor:pointer;color:#5A2A00}
+.as-in{display:flex;gap:6px;padding:10px;border-top:1.5px solid var(--line);background:#fff}
+.as-in input{flex:1;min-width:0;border:2px solid #CCC;border-radius:10px;padding:9px 10px;font-size:15px;font-family:inherit;font-weight:600}
+.as-in input:focus{outline:none;border-color:var(--or)}
+.as-in button{font-family:inherit;font-weight:800;border:0;background:var(--or);color:#fff;border-radius:10px;padding:0 14px;cursor:pointer;font-size:15px}
+.as-in button.mic.rec{background:var(--red)}
+.cd{height:4px;background:#EEE}.cd i{display:block;height:100%;width:0;background:var(--red)}
+.sug{display:flex;flex-wrap:wrap;gap:6px;padding:8px 10px;border-top:1px solid var(--line)}
+.sug button{font-family:inherit;font-size:13px;font-weight:700;border:1.5px solid var(--line);background:var(--soft);border-radius:16px;padding:4px 10px;cursor:pointer}
+.sug button:hover{border-color:var(--or)}
+.as-note{font-size:12.5px;font-weight:700;color:#7A3A00;padding:6px 12px;background:#FFFBF6}
+/* Quiz */
+.qz .opt{display:block;width:100%;text-align:left;border:2px solid var(--line);background:#fff;border-radius:10px;padding:10px 12px;margin:6px 0;font-family:inherit;font-weight:700;font-size:15px;cursor:pointer}
+.qz .opt:hover{border-color:var(--or)}
+.qz .opt.ok{border-color:var(--grn);background:#EAF6EE}.qz .opt.no{border-color:var(--red);background:#FDECEC}
+.qz .ex{margin-top:8px;padding:10px;border-radius:10px;background:var(--or-l);font-weight:600}
+.prog{font-family:'IBM Plex Mono',monospace;font-weight:700;color:#7A3A00}
+@media (max-width:600px){.grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.kpi{padding:10px}.kpi .c{font-size:12px}h2{font-size:22px}.kpi .v{font-size:21px}#vbub{bottom:72px}.as-log{height:330px}}
+</style>
+</head>
+<body class="lang-en">
+<header><div class="wrap">
+  <div class="top">
+    <div>
+      <div class="brand">CB Research · Cauvery Business Research</div>
+      <span class="slogan"><span class="en">Learn before you Buy</span><span class="ta">வாங்கறதுக்கு முன்னாடி கத்துக்குங்க!</span></span>
+    </div>
+    <div class="ctrl">
+      <button class="btn on" id="bEN" onclick="setLang('en')">English</button>
+      <button class="btn" id="bTA" onclick="setLang('ta')">தமிழ்</button>
+      <button class="btn" onclick="readTab()">🔊 <span class="en">Read this tab</span><span class="ta">இந்த tab-ஐ படிங்க</span></button>
+    </div>
+  </div>
+  <h1 id="ttl"></h1>
+  <div class="sub" id="subt"></div>
+</div></header>
+<nav><div class="wrap" id="tabs"></div></nav>
+<main><div class="wrap" id="main"></div></main>
+<button id="vbub" onclick="showTab('assist')">🎙️ <span class="en">Voice Assist</span><span class="ta">Voice Assist</span></button>
+<button id="cb" aria-label="Disclaimer" onclick="document.getElementById('disc').classList.toggle('open');document.body.classList.toggle('discopen')">CB</button>
+<div id="disc"><span class="en"><b>Disclaimer:</b> CB Research (Cauvery Business Research) is an education platform and is <b>not SEBI-registered</b>. Nothing here is a buy, sell or hold recommendation. Figures come from company filings, concall summaries and market data pages as cited; verify with BSE/NSE filings before acting. Scenarios are illustrative, not forecasts.</span><span class="ta"><b>Disclaimer:</b> CB Research ஒரு education platform மட்டும் தாங்க — <b>SEBI-registered இல்லை</b>. இங்க buy, sell, hold-னு எந்த recommendation-உம் இல்லை. Numbers எல்லாம் company filings, concall summary, market data-ல இருந்து எடுத்தது; BSE/NSE filing-ல ஒரு தடவை check பண்ணிக்குங்க. Scenarios எல்லாம் உதாரணத்துக்கு தான், forecast இல்லை.</span></div>
+<script>
+function L(en,ta){return '<span class="en">'+en+'</span><span class="ta">'+ta+'</span>'}
+function A(en,ta){return {en:en,ta:ta}}
+function ul(arr){return '<ul class="b">'+arr.map(function(x){return '<li>'+L(x[0],x[1])+'</li>'}).join('')+'</ul>'}
+function card(title,body,cls){return '<div class="card '+(cls||'')+'">'+(title?'<h3>'+title+'</h3>':'')+body+'</div>'}
+function kpi(l,v,c,cls){return '<div class="kpi"><div class="l">'+l+'</div><div class="v">'+v+'</div><div class="c '+(cls||'')+'">'+(c||'')+'</div></div>'}
+function table(head,rows,note){var h='<div class="tw"><table><thead><tr>'+head.map(function(x){return '<th>'+x+'</th>'}).join('')+'</tr></thead><tbody>';rows.forEach(function(r){h+='<tr>'+r.map(function(c,i){return '<td'+(i>0&&typeof c==='string'&&c.indexOf('class="en"')>-1?' class="t"':'')+'>'+(c==null?'—':c)+'</td>'}).join('')+'</tr>'});return h+'</tbody></table></div>'+(note?'<div class="note">'+note+'</div>':'')}
+function fmt(v,d){return v==null?'—':(+v).toFixed(d==null?0:d)}
+/* SVG bar + optional line chart */
+function chart(o){
+  var W=660,H=o.h||270,pl=44,pr=o.line?48:12,pt=34,pb=46,n=o.labels.length;
+  var all=[];o.series.forEach(function(s){s.vals.forEach(function(v){if(v!=null)all.push(v)})});
+  var mx=Math.max.apply(null,all.concat([0]))*1.18,mn=Math.min.apply(null,all.concat([0]));if(mn<0)mn*=1.18;
+  var ih=H-pt-pb,iw=W-pl-pr,gw=iw/n,y=function(v){return pt+(mx-v)/(mx-mn)*ih};
+  var s='<svg viewBox="0 0 '+W+' '+H+'" width="100%" role="img" style="max-width:100%;height:auto">';
+  for(var g=0;g<=4;g++){var gv=mn+(mx-mn)*g/4,gy=y(gv);s+='<line x1="'+pl+'" x2="'+(W-pr)+'" y1="'+gy+'" y2="'+gy+'" stroke="#EEE"/><text x="'+(pl-6)+'" y="'+(gy+4)+'" font-size="11" text-anchor="end" fill="#555" font-weight="600">'+Math.round(gv)+'</text>'}
+  s+='<line x1="'+pl+'" x2="'+(W-pr)+'" y1="'+y(0)+'" y2="'+y(0)+'" stroke="#999"/>';
+  var ns=o.series.length,bw=Math.min(46,gw*0.72/ns);
+  o.labels.forEach(function(lb,i){var cx=pl+gw*i+gw/2;
+    o.series.forEach(function(se,j){var v=se.vals[i];if(v==null)return;var x=cx-bw*ns/2+bw*j,y0=y(Math.max(v,0)),hh=Math.abs(y(v)-y(0));
+      s+='<rect x="'+x+'" y="'+y0+'" width="'+(bw-3)+'" height="'+Math.max(hh,1)+'" rx="3" fill="'+se.color+'"/>';
+      s+='<text x="'+(x+(bw-3)/2)+'" y="'+(v>=0?y0-5:y0+hh+13)+'" font-size="11.5" font-weight="800" text-anchor="middle" fill="#111">'+(se.fmt?se.fmt(v):v)+'</text>'});
+    s+='<text x="'+cx+'" y="'+(H-pb+17)+'" font-size="12" font-weight="700" text-anchor="middle" fill="#222">'+lb+'</text>'});
+  if(o.line){var lv=o.line.vals.filter(function(v){return v!=null}),lmx=Math.max.apply(null,lv)*2.1,lmn=0,ly=function(v){return pt+(lmx-v)/(lmx-lmn)*ih},pts=[];
+    o.line.vals.forEach(function(v,i){if(v!=null)pts.push([pl+gw*i+gw/2,ly(v),v])});
+    s+='<polyline fill="none" stroke="'+o.line.color+'" stroke-width="3" points="'+pts.map(function(p){return p[0]+','+p[1]}).join(' ')+'"/>';
+    pts.forEach(function(p){s+='<circle cx="'+p[0]+'" cy="'+p[1]+'" r="5" fill="#fff" stroke="'+o.line.color+'" stroke-width="3"/><text x="'+p[0]+'" y="'+(p[1]-10)+'" font-size="12" font-weight="800" text-anchor="middle" fill="'+o.line.color+'">'+p[2]+(o.line.unit||'')+'</text>'});}
+  var lx=pl;o.series.concat(o.line?[o.line]:[]).forEach(function(se){s+='<rect x="'+lx+'" y="8" width="12" height="12" rx="2" fill="'+se.color+'"/><text x="'+(lx+17)+'" y="18" font-size="12" font-weight="800" fill="#222" class="en">'+se.name.en+'</text><text x="'+(lx+17)+'" y="18" font-size="12" font-weight="800" fill="#222" class="ta">'+se.name.ta+'</text>';lx+=Math.max(se.name.en.length,se.name.ta.length*0.9)*7+36});
+  return s+'</svg>';
+}
+/* Cycle clock */
+function cycleClock(active,stageTxt){
+  var ph=[A('P1 Trough','P1 அடிமட்டம்'),A('P2 Early recovery','P2 ஆரம்ப recovery'),A('P3 Expansion','P3 Expansion'),A('P4 Late / peak','P4 Peak'),A('P5 Downturn','P5 இறக்கம்')];
+  var cx=170,cy=150,r=110,s='<svg viewBox="0 0 340 300" width="100%" style="max-width:380px;height:auto">';
+  for(var i=0;i<5;i++){var a0=(-90+i*72)*Math.PI/180,a1=(-90+(i+1)*72)*Math.PI/180;
+    var x0=cx+r*Math.cos(a0),y0=cy+r*Math.sin(a0),x1=cx+r*Math.cos(a1),y1=cy+r*Math.sin(a1);
+    s+='<path d="M'+cx+','+cy+' L'+x0+','+y0+' A'+r+','+r+' 0 0,1 '+x1+','+y1+' Z" fill="'+(i===active?'#F28C28':'#FFF4E8')+'" stroke="#fff" stroke-width="3"/>';
+    var am=(-90+i*72+36)*Math.PI/180,tx=cx+(r*0.66)*Math.cos(am),ty=cy+(r*0.66)*Math.sin(am);
+    var w=ph[i];s+='<text x="'+tx+'" y="'+ty+'" font-size="11" font-weight="800" text-anchor="middle" fill="'+(i===active?'#fff':'#7A3A00')+'" class="en">'+w.en.split(' ')[0]+'</text><text x="'+tx+'" y="'+(ty+13)+'" font-size="9.5" font-weight="700" text-anchor="middle" fill="'+(i===active?'#fff':'#7A3A00')+'" class="en">'+w.en.split(' ').slice(1).join(' ')+'</text>';
+    s+='<text x="'+tx+'" y="'+ty+'" font-size="11" font-weight="800" text-anchor="middle" fill="'+(i===active?'#fff':'#7A3A00')+'" class="ta">'+w.ta.split(' ')[0]+'</text><text x="'+tx+'" y="'+(ty+13)+'" font-size="9.5" font-weight="700" text-anchor="middle" fill="'+(i===active?'#fff':'#7A3A00')+'" class="ta">'+w.ta.split(' ').slice(1).join(' ')+'</text>';}
+  var am2=(-90+active*72+36)*Math.PI/180;s+='<line x1="'+cx+'" y1="'+cy+'" x2="'+(cx+(r*0.42)*Math.cos(am2))+'" y2="'+(cy+(r*0.42)*Math.sin(am2))+'" stroke="#111" stroke-width="3"/><circle cx="'+cx+'" cy="'+cy+'" r="7" fill="#111"/>';
+  s+='<text x="'+cx+'" y="292" font-size="13" font-weight="800" text-anchor="middle" fill="#C62828" class="en">Stock: '+stageTxt.en+'</text><text x="'+cx+'" y="292" font-size="13" font-weight="800" text-anchor="middle" fill="#C62828" class="ta">Stock: '+stageTxt.ta+'</text>';
+  return s+'</svg>';
+}
+/* Timeline */
+function timeline(ev){
+  var W=660,H=180,pl=44,pr=44,s='<svg viewBox="0 0 '+W+' '+H+'" width="100%" style="height:auto">';
+  s+='<line x1="'+pl+'" x2="'+(W-pr)+'" y1="76" y2="76" stroke="#F28C28" stroke-width="4"/>';
+  ev.forEach(function(e,i){var x=pl+(W-pl-pr)*i/(ev.length-1),up=i%2===0;
+    s+='<circle cx="'+x+'" cy="76" r="9" fill="'+(e.neg?'#C62828':e.done?'#16803A':'#fff')+'" stroke="#F28C28" stroke-width="3"/>';
+    s+='<text x="'+x+'" y="'+(up?40:112)+'" font-size="15" font-weight="800" text-anchor="middle" fill="#111">'+e.d+'</text>';
+    s+='<text x="'+x+'" y="'+(up?20:134)+'" font-size="14" font-weight="700" text-anchor="middle" fill="#444" class="en">'+e.t.en+'</text><text x="'+x+'" y="'+(up?20:134)+'" font-size="14" font-weight="700" text-anchor="middle" fill="#444" class="ta">'+e.t.ta+'</text>';});
+  return s+'</svg>';
+}
+function flow(steps){return '<div class="flow">'+steps.map(function(s,i){return (i?'<div class="arr">➜</div>':'')+'<div class="fbox"><div class="h">'+L(s.h[0],s.h[1])+'</div>'+ul(s.p)+'</div>'}).join('')+'</div>'}
+function pic(en,ta){return '<div class="pic"><div class="h">🖼️ '+L('Picture it','இப்படி யோசிங்க')+'</div>'+L(en,ta)+'</div>'}
+function trigTable(tr){var rows=tr.map(function(t){var p=(t.I*t.C*t.W*t.P);return [L(t.n[0],t.n[1]),'<span class="'+(t.s>0?'pos':'neg')+'">'+(t.s>0?'+':'−')+'</span>',t.I,t.C,t.W,t.P,'<b>'+(t.s>0?'+':'−')+p.toFixed(2)+'</b>',L(t.w[0],t.w[1]),t.src]});
+  return table([L('Trigger','Trigger'),'+/−','I','C','W','P',L('Points','Points'),L('What to watch','என்ன பாக்கணும்'),L('Source & date','Source')],rows.map(function(r){return r.map(function(c,i){return (i===0||i===7||i===8)?'<span style="font-family:Inter;white-space:normal;display:block;text-align:left;min-width:'+(i===7?'180px':'120px')+'">'+c+'</span>':c})}),L('I = impact (1–5) · C = certainty · W = timing · P = priced-in. Points = I×C×W×P.','I = impact (1–5) · C = certainty · W = timing · P = priced-in. Points = I×C×W×P.'))}
+
+var OR='#F28C28',BL='#1F5FAD',RD='#C62828',GR='#16803A',DK='#5A2A00';
+var D={key:'cb_q1fy27_studds',
+title:L('Studds Accessories — Q1 FY27 Business &amp; Investment Analysis','Studds Accessories — Q1 FY27 Business &amp; Investment அலசல்'),
+sub:L('NSE: STUDDS · BSE: 544599 · Two-wheeler helmets &amp; accessories · Quarter ended 30 Jun 2026 · Results 7–8 Aug 2026 · Price data as of 9 Oct 2026','NSE: STUDDS · BSE: 544599 · Two-wheeler helmets &amp; accessories · June 30, 2026 quarter · Results 7–8 Aug 2026 · Price 9 Oct 2026 நிலவரம்'),
+tabs:[
+{id:'dash',l:['Dashboard','Dashboard'],html:function(){return ''+
+'<div class="grid">'+
+kpi(L('Revenue (consolidated)','Revenue (consolidated)'),'₹169.7 cr','<span class="up">▲ 13.7% YoY</span> · <span class="up">▲ 1.3% QoQ</span>')+
+kpi(L('EBITDA margin','EBITDA margin'),'11.5%','<span class="dn">'+L('vs ~19.3% for FY26','FY26-ல ~19.3%')+'</span>')+
+kpi(L('Net profit (consolidated)','Net profit (consolidated)'),'₹12.3 cr','<span class="dn">▼ 39.3% YoY</span> · <span class="dn">▼ 41.7% QoQ</span>')+
+kpi(L('EPS (consolidated)','EPS (consolidated)'),'₹3.12','<span class="dn">vs ₹5.14 Q1 FY26</span>')+
+kpi(L('Standalone revenue · PAT','Standalone revenue · PAT'),'₹166.9 · 13.3','<span class="neu">cr · PAT −35.2% YoY</span>')+
+kpi(L('Export share','Export share'),'~21%','<span class="neu">'+L('target 30%','target 30%')+'</span>')+
+kpi(L('Capacity utilisation','Capacity utilisation'),'~81%','<span class="neu">'+L('+1.5 mn units from late Oct 2026','Oct 2026 கடைசியில +1.5 mn units')+'</span>')+
+kpi(L('Share price · Mcap','Share price · Mcap'),'₹414.5','<span class="neu">₹1,631 cr · P/E 21.8×</span>')+
+'</div>'+
+card(L('CB lenses','CB lenses'),'<span class="chip">CY <b>54</b></span><span class="chip">TG <b>51</b></span><span class="chip" style="border-color:'+RD+';color:'+RD+'">'+L('Weinstein Stage 4 gate → Conviction capped at 55','Weinstein Stage 4 gate → Conviction max 55')+'</span><div class="note">'+L('CY = cycle score, TG = trigger score (see Triggers &amp; Cycle tab).','CY = cycle score, TG = trigger score (Triggers &amp; Cycle tab-ல பாருங்க).')+'</div>')+
+'<div class="g2">'+card(L('5-quarter trend (₹ cr, consolidated)','5 quarter trend (₹ cr, consolidated)'),chart({labels:['Q1 FY26','Q2 FY26','Q3 FY26*','Q4 FY26','Q1 FY27'],series:[{name:A('Revenue','Revenue'),color:OR,vals:[149.2,154.4,163.1,167.5,169.7]},{name:A('PAT','PAT'),color:BL,vals:[20.3,20.6,20.8,21.1,12.3]}]})+'<div class="note">'+L('*Q3 FY26 derived as FY26 total minus other quarters.','*Q3 FY26 = FY26 total − மத்த quarters (கணக்கு).')+'</div>')+
+card(L('In one look','ஒரே பார்வையில'),ul([
+['Sales grew a healthy 13.7% on higher volumes.','Volume அதிகமானதால sales 13.7% நல்லா வளர்ந்திருக்கு.'],
+['But profit fell 39%: raw material (plastics) and other costs rose faster than prices.','ஆனா profit 39% குறைஞ்சுது: raw material (plastics), மத்த செலவுகள் விலையை விட வேகமா ஏறிடுச்சு.'],
+['EBITDA margin dropped to 11.5% from ~19% last year.','EBITDA margin போன வருஷம் ~19%-ல இருந்து 11.5%-க்கு இறங்கிடுச்சு.'],
+['Management guides 14–15% in Q2, rising to 18–20% by Q4 if raw materials stay stable.','Raw material நிலையா இருந்தா Q2-ல 14–15%, Q4-க்குள்ள 18–20%-னு management guidance.'],
+['New Faridabad Facility-V (+1.5 mn units) starts late Oct 2026.','புது Faridabad Facility-V (+1.5 mn units) Oct 2026 கடைசியில ஆரம்பம்.'],
+['Stock is ~29% below its ₹585 IPO price.','Stock ₹585 IPO விலையை விட ~29% கீழ இருக்கு.']]))+'</div>'}},
+{id:'biz',l:['Business Model','Business Model'],html:function(){return ''+
+card(L('How Studds makes money','Studds எப்படி சம்பாதிக்குது'),flow([
+{h:['Inputs','Inputs'],p:[['Plastics: ABS, polycarbonate, EPS foam','Plastics: ABS, polycarbonate, EPS foam'],['Paints, visors, straps','Paint, visor, strap'],['Price-sensitive to crude-linked resins','Crude-linked resin விலைக்கு sensitive']]},
+{h:['Factories','Factories'],p:[['4 plants in Faridabad, ~9.5 mn units/yr','Faridabad-ல 4 plants, ~9.5 mn units/வருஷம்'],['Facility-V +1.5 mn (late Oct 2026)','Facility-V +1.5 mn (Oct 2026 கடைசி)'],['Target 12.5 mn units','Target 12.5 mn units']]},
+{h:['Brands &amp; products','Brands &amp; products'],p:[['Studds — mass helmets','Studds — mass helmets'],['SMK — premium helmets','SMK — premium helmets'],['Boxes, gloves, rainwear; new Bluetooth &amp; jackets','Boxes, gloves, rainwear; புதுசா Bluetooth &amp; jackets']]},
+{h:['Customers','Customers'],p:[['Dealers &amp; retail across India (~79%)','இந்தியா முழுக்க dealers &amp; retail (~79%)'],['Exports to US &amp; Europe (~21%)','US &amp; Europe exports (~21%)'],['Private label (e.g., Alpinestars), Decathlon','Private label (Alpinestars மாதிரி), Decathlon']]},
+{h:['Money','பணம்'],p:[['Volume × price; premium SMK lifts margin','Volume × price; premium SMK margin ஏத்துது'],['Export EBITDA 30–35% vs domestic 16–18%','Export EBITDA 30–35%, domestic 16–18%'],['Near debt-free; capex from cash flow','கிட்டத்தட்ட கடன் இல்லை; capex cash flow-ல']]}]))+
+pic('Every new two-wheeler on Indian roads needs at least one helmet — often two. Studds is the "toll gate" on that traffic: when 2W sales rise, helmet sales follow.','இந்திய road-ல ஒவ்வொரு புது two-wheeler-க்கும் குறைஞ்சது ஒரு helmet வேணும் — பல நேரம் ரெண்டு. அந்த traffic-ல Studds ஒரு "toll gate" மாதிரி: 2W sales ஏறினா helmet sales-உம் ஏறும்.')+
+'<div class="g2" style="margin-top:14px">'+card(L('Edge (moat)','பலம் (moat)'),ul([
+['World\'s largest helmet maker by volume; India #1 by revenue.','Volume-ல உலகத்துலயே பெரிய helmet maker; revenue-ல இந்தியாவுல #1.'],
+['~27% of India\'s helmet volume.','இந்திய helmet volume-ல ~27%.'],
+['Two-brand ladder: Studds (mass) + SMK (premium, ~27% EBITDA).','ரெண்டு brand: Studds (mass) + SMK (premium, ~27% EBITDA).'],
+['Scale + in-house moulds keep costs low vs unorganised players.','Scale, in-house moulds — unorganised players-ஐ விட cost கம்மி.']]))+
+card(L('What it depends on','எதை நம்பி இருக்கு'),ul([
+['Two-wheeler sales and helmet-law enforcement.','Two-wheeler sales, helmet law enforcement.'],
+['Plastic resin prices (crude-linked).','Plastic resin விலை (crude-linked).'],
+['Export growth to US/Europe — highest-margin channel.','US/Europe export வளர்ச்சி — அதிக margin channel.'],
+['Ability to pass on price hikes (8–9% taken around Q4 FY26).','Price hike pass பண்ண முடியுமா (Q4 FY26 சுமார் 8–9% ஏத்தினாங்க).']]))+'</div>'}},
+{id:'seg',l:['Segments','Segments'],html:function(){return ''+
+card('',ul([['Studds reports one segment (helmets &amp; accessories). We track mix by geography, brand and product.','Studds ஒரே segment report பண்றாங்க (helmets &amp; accessories). Geography, brand, product வச்சு பாக்கறோம்.']]),'hl')+
+'<div class="g2">'+card(L('Geography: revenue share vs EBITDA margin','Geography: revenue share vs EBITDA margin'),chart({h:240,labels:['Domestic','Export'],series:[{name:A('Revenue share %','Revenue share %'),color:OR,vals:[79,21]},{name:A('EBITDA margin % (mid)','EBITDA margin % (நடு)'),color:GR,vals:[17,32.5]}]})+'<div class="note">'+L('Export margin 30–35%, domestic 16–18% (concall). Every 1 pp shift to exports helps margin.','Export margin 30–35%, domestic 16–18% (concall). Export பங்கு 1 pp ஏறினாலும் margin-க்கு நல்லது.')+'</div>')+
+card(L('Brand: EBITDA margin %','Brand: EBITDA margin %'),chart({h:240,labels:['Studds (mass)','SMK (premium)'],series:[{name:A('EBITDA margin %','EBITDA margin %'),color:BL,vals:[17,27]}]})+'<div class="note">'+L('Premiumisation is a structural margin lever.','Premiumisation — margin-க்கு நீண்டகால lever.')+'</div>')+'</div>'+
+'<div class="g2">'+card(L('Capacity path (mn units/yr)','Capacity path (mn units/வருஷம்)'),chart({h:230,labels:['Now','Late Oct 2026','FY28 target'],series:[{name:A('Installed capacity','Installed capacity'),color:OR,vals:[9.5,11,12.5]}]}))+
+card(L('Segment read','Segment அலசல்'),ul([
+['Export ~21% of revenue; target 30% in 2–3 years (could add 200–300 bps to margin).','Export ~21%; 2–3 வருஷத்துல 30% target (margin-க்கு 200–300 bps சேர்க்கலாம்).'],
+['Europe: Italian subsidiary (SMK Helmets Europe) and direct dealers; ~€1 mn extra revenue in FY28.','Europe: Italy subsidiary (SMK Helmets Europe), direct dealers; FY28-ல ~€1 mn extra revenue.'],
+['US: small investment in Bikerz US approved.','US: Bikerz US-ல சின்ன investment approve ஆயிருக்கு.'],
+['New products (Bluetooth, riding jackets): ₹15–20 cr revenue hoped in FY27, ~₹2–3 cr initial loss.','புது products (Bluetooth, riding jackets): FY27-ல ₹15–20 cr revenue, ஆரம்பத்துல ~₹2–3 cr loss.'],
+['Utilisation ~81% for helmets &amp; boxes → new plant arrives on time.','Helmets &amp; boxes utilisation ~81% → புது plant சரியான நேரத்துல வருது.']]))+'</div>'}},
+/* ---------------- SMK & EXPORTS ---------------- */
+{id:'smk',l:['SMK &amp; Exports','SMK &amp; Exports'],html:function(){return ''+
+'<div class="grid">'+kpi(L('SMK share of helmet revenue','Helmet revenue-ல SMK'),'20.1%',L('Q1 FY26 (13.2% in FY25)','Q1 FY26 (FY25-ல 13.2%)'),'up')+kpi(L('SMK EBITDA margin','SMK EBITDA margin'),'~27%',L('vs ~17% for Studds brand','Studds brand ~17%'),'up')+kpi(L('Export share of revenue','Revenue-ல export'),'~21%',L('Q1 FY27 (22.8% in Q1 FY26)','Q1 FY27 (Q1 FY26-ல 22.8%)'),'neu')+kpi(L('Export EBITDA margin','Export EBITDA margin'),'30–35%',L('vs 16–18% domestic','Domestic 16–18%'),'up')+kpi(L('Export markets','Export markets'),'70+',L('countries','நாடுகள்'),'neu')+kpi(L('Export target','Export target'),'30%',L('of sales in 2–3 years','2–3 வருஷத்துல sales-ல'),'neu')+'</div>'+
+'<div class="g2">'+card(L('SMK — the premium brand','SMK — premium brand'),ul([
+['Launched in 2016 as Studds\' premium helmet brand; it opened the door to export markets.','2016-ல Studds-ஓட premium helmet brand-ஆ launch; export market-க்கு கதவு திறந்தது இது தான்.'],
+['MRP ₹3,000–12,800, vs mass Studds helmets at much lower price points.','MRP ₹3,000–12,800 — mass Studds helmets-ஐ விட ரொம்ப அதிகம்.'],
+['Positioned for premium bikers in India and the mid-market in Europe.','இந்தியாவுல premium bikers, Europe-ல mid-market-க்கு.'],
+['Earns ~27% EBITDA vs ~17% for Studds — every rupee shifted to SMK lifts margin.','SMK ~27% EBITDA, Studds ~17% — SMK பக்கம் போற ஒவ்வொரு ரூபாயும் margin-ஐ ஏத்தும்.'],
+['Italian subsidiary SMK Helmets Europe SRL (up to €1 mn) for warehousing and direct dealers.','Italy subsidiary SMK Helmets Europe SRL (€1 mn வரை) — warehouse, direct dealers.']]))+
+card(L('SMK revenue (₹ cr) and share of helmet revenue','SMK revenue (₹ cr), helmet revenue-ல பங்கு'),chart({h:250,labels:['FY23','FY24','FY25','Q1 FY26'],series:[{name:A('SMK ₹ cr','SMK ₹ cr'),color:OR,vals:[53,38,69,27]}],line:{name:A('Share of helmets %','Helmets-ல பங்கு %'),color:BL,unit:'%',vals:[11.6,7.8,13.2,20.1]}})+'<div class="note">'+L('Source: IPO notes (RHP data). Post-listing brand split not disclosed.','Source: IPO notes (RHP data). Listing-க்கு அப்புறம் brand split disclose பண்ணலை.')+'</div>')+'</div>'+
+'<div class="g2">'+card(L('Export revenue (₹ cr) and share of sales','Export revenue (₹ cr), sales-ல பங்கு'),chart({h:250,labels:['FY23','FY24','FY25','Q1 FY26','Q1 FY27'],series:[{name:A('Exports ₹ cr','Exports ₹ cr'),color:GR,vals:[68,53,97,34,36]}],line:{name:A('Share of sales %','Sales-ல பங்கு %'),color:RD,unit:'%',vals:[13.6,10.1,16.6,22.8,21]}})+'<div class="note">'+L('Q1 FY27 ₹ value derived (~21% × ₹169.7 cr).','Q1 FY27 ₹ value கணக்கு (~21% × ₹169.7 cr).')+'</div>')+
+card(L('Where exports go (FY25, ₹ cr)','Exports எங்க போகுது (FY25, ₹ cr)'),chart({h:250,labels:['Europe','Americas','Asia ex-India','Rest of world'],series:[{name:A('₹ cr','₹ cr'),color:BL,vals:[29,28,28,12]}]}))+'</div>'+
+card(L('Three ways Studds exports','Studds export பண்ற 3 வழி'),flow([
+{h:['Own brand: SMK','சொந்த brand: SMK'],p:[['Sold via distributors in 70+ markets','70+ markets-ல distributors மூலம்'],['Now direct dealers in Europe (Italy hub)','இப்போ Europe-ல direct dealers (Italy hub)']]},
+{h:['Private label / OEM','Private label / OEM'],p:[['Daytona (Jay Squared LLC, USA)','Daytona (Jay Squared LLC, USA)'],['O\'Neal — Europe, USA, Australia','O\'Neal — Europe, USA, Australia'],['Alpinestars being onboarded','Alpinestars சேர்க்கறாங்க']]},
+{h:['US base','US base'],p:[['Small stake in Bikerz US (~US$1 lakh)','Bikerz US-ல சின்ன stake (~US$1 lakh)'],['Seed for direct US sales','US direct sales-க்கு விதை']]}]))+
+'<div class="g2">'+card(L('Mix math — why exports &amp; SMK matter (CB illustration)','Mix கணக்கு — exports, SMK ஏன் முக்கியம் (CB உதாரணம்)'),table([L('Shift','மாற்றம்'),L('Blended EBITDA before','முன்னாடி'),L('After','அப்புறம்'),L('Margin gain','Margin லாபம்')],[
+[L('Exports 21% → 30% (32.5% vs 17% margin)','Exports 21% → 30% (32.5% vs 17% margin)'),'20.3%','21.7%','<b class="pos">+1.4 pp</b>'],
+[L('SMK 13% → 20% of helmets (27% vs 17%)','SMK 13% → 20% (27% vs 17%)'),'18.3%','19.0%','<b class="pos">+0.7 pp</b>']],
+L('Simple weighted averages using concall margins; management guides +200–300 bps from exports including operating leverage. SMK and exports overlap partly.','Concall margins வச்சு simple weighted average; operating leverage சேர்த்து exports-ல +200–300 bps-னு management. SMK, exports கொஞ்சம் overlap.')))+
+card(L('SMK &amp; export read','SMK &amp; export அலசல்'),ul([
+['Exports rose from 10% (FY24) to ~21–23% — the main reason margins expanded in FY24–26.','Exports 10% (FY24) → ~21–23% — FY24–26 margin ஏறினதுக்கு முக்கிய காரணம்.'],
+['Q1 FY27 export share (~21%) slipped slightly vs Q1 FY26 (22.8%) — mix did not help this quarter.','Q1 FY27 export share (~21%) Q1 FY26 (22.8%)-ஐ விட கொஞ்சம் கம்மி — இந்த quarter mix உதவலை.'],
+['Private label (Daytona, O\'Neal) gives volume but depends on a few customers.','Private label (Daytona, O\'Neal) volume தருது, ஆனா சில customers-ஐ நம்பி இருக்கு.'],
+['Europe direct model adds ~€1 mn (₹11–12 cr) in FY28 — small but builds SMK\'s brand.','Europe direct model FY28-ல ~€1 mn (₹11–12 cr) — சின்னது, ஆனா SMK brand-ஐ வளர்க்கும்.'],
+['Risks: US/EU tariffs, currency swings, and a slowdown in leisure biking abroad.','Risks: US/EU tariffs, currency மாற்றம், வெளிநாட்டு leisure biking slowdown.']]))+'</div>'}},
+/* ---------------- RAW MATERIALS & MARGINS ---------------- */
+{id:'rm',l:['Raw Materials &amp; Margins','Raw Materials &amp; Margins'],html:function(){return ''+
+'<div class="grid">'+kpi(L('Raw material cost / revenue','Raw material / revenue'),'~44–46%',L('FY25 ~46%, Q1 FY26 ~44%','FY25 ~46%, Q1 FY26 ~44%'),'neu')+kpi(L('Biggest input','பெரிய input'),'ABS',L('22% of RM cost (styrene-based)','RM cost-ல 22% (styrene-based)'),'neu')+kpi(L('Imported share of RM','Import பங்கு'),'16%',L('Q1 FY26 (4.6% in FY23)','Q1 FY26 (FY23-ல 4.6%)'),'dn')+kpi(L('EBITDA margin','EBITDA margin'),'11.5%',L('Q1 FY27 vs 20.3% Q1 FY26 (−880 bps)','Q1 FY27; Q1 FY26 20.3% (−880 bps)'),'dn')+kpi(L('Price hike taken','Price hike'),'~9%',L('~5% realised in Q1, rest from Q2','Q1-ல ~5%, மீதி Q2-ல இருந்து'),'up')+kpi(L('Annualised ROE (Q1 FY27)','Annualised ROE (Q1 FY27)'),'~9%',L('vs ~17% in FY26','FY26-ல ~17%'),'dn')+'</div>'+
+'<div class="g2">'+card(L('What goes into a helmet (FY25, % of raw-material cost)','Helmet-க்குள்ள என்ன இருக்கு (FY25, RM cost %)'),chart({h:260,labels:['ABS','Packaging','Polycarb.','Paints','Cloth','EPS foam','Others'],series:[{name:A('% of RM cost','RM cost %'),color:OR,vals:[22.1,9.9,9.6,7.9,7.8,4.1,38.6]}]})+'<div class="note">'+L('ABS, polycarbonate, EPS and paints are crude/styrene-linked — together ~44% of RM cost.','ABS, polycarbonate, EPS, paints — crude/styrene-linked; சேர்த்து RM cost-ல ~44%.')+'</div>')+
+pic('Think of a helmet as a plastic shell (ABS/polycarbonate) with a foam cushion (EPS), paint, a visor and a fabric lining. Most of it starts life as crude oil → styrene → plastic. When styrene jumps, almost half of Studds\' material bill jumps with it — but the helmet\'s shop price can only be changed every few months.','Helmet-ஐ ஒரு plastic shell (ABS/polycarbonate), உள்ள foam cushion (EPS), paint, visor, துணி lining-னு நினைங்க. இதுல பெரும்பாலானது crude oil → styrene → plastic-ல இருந்து வருது. Styrene விலை ஏறினா Studds material bill-ல கிட்டத்தட்ட பாதி ஏறும் — ஆனா கடை விலையை சில மாசத்துக்கு ஒரு தடவை தான் மாத்த முடியும்.')+'</div>'+
+card(L('How costs flow into margin — the Q1 FY27 story','Cost எப்படி margin-ஐ பாதிக்குது — Q1 FY27 கதை'),flow([
+{h:['Styrene up','Styrene ஏற்றம்'],p:[['ABS, PC, EPS, paint costs rise','ABS, PC, EPS, paint cost ஏறுது'],['Crude-linked; some imports','Crude-linked; கொஞ்சம் import']]},
+{h:['Price lag','Price lag'],p:[['~9% hike announced','~9% hike அறிவிப்பு'],['Only ~5% realised in Q1','Q1-ல ~5% தான் வந்தது']]},
+{h:['Other costs','மத்த செலவுகள்'],p:[['Higher wages','Wages ஏற்றம்'],['Brand spend, new product start-up','Brand செலவு, புது product start-up']]},
+{h:['Result','விளைவு'],p:[['Expenses +23.8% vs sales +12.7%','Expenses +23.8%, sales +12.7%'],['EBITDA margin 20.3% → 11.5%','EBITDA margin 20.3% → 11.5%']]},
+{h:['Returns','Returns'],p:[['Annualised ROE ~9% (vs ~17%)','Annualised ROE ~9% (~17%-ல இருந்து)'],['ROCE ~13% (vs ~23%)','ROCE ~13% (~23%-ல இருந்து)']]}]))+
+'<div class="g2">'+card(L('Margin and returns move together (%)','Margin, returns சேர்ந்தே நகருது (%)'),chart({labels:['FY23','FY24','FY25','FY26','Q1 FY27*'],series:[{name:A('EBITDA margin','EBITDA margin'),color:OR,vals:[12,17,18,19.3,11.5]},{name:A('ROE','ROE'),color:BL,vals:[9.8,14.8,15.5,17,9.4]},{name:A('ROCE','ROCE'),color:GR,vals:[13.4,20.1,21.3,23,13]}]})+'<div class="note">'+L('*Q1 FY27 ROE/ROCE are CB annualised estimates (quarter × 4 on Mar-26 equity ~₹525 cr). FY26 ROCE approx.','*Q1 FY27 ROE/ROCE CB annualised கணக்கு (quarter × 4, Mar-26 equity ~₹525 cr). FY26 ROCE தோராயம்.')+'</div>')+
+card(L('Gross margin history — the cushion built since FY23','Gross margin வரலாறு — FY23-ல இருந்து கட்டின cushion'),chart({h:260,labels:['FY23','FY24','FY25','Q1 FY26'],series:[{name:A('Gross margin %','Gross margin %'),color:OR,vals:[47.6,54.9,56.2,59.4]}],line:{name:A('EBITDA margin %','EBITDA margin %'),color:RD,unit:'%',vals:[12,17,18,20.3]}})+'<div class="note">'+L('Every +1 pp of gross margin flowed almost fully to EBITDA in FY23–26. Q1 FY27 gross margin not disclosed in summaries.','FY23–26-ல gross margin ஒவ்வொரு +1 pp-உம் கிட்டத்தட்ட முழுசா EBITDA-க்கு போச்சு. Q1 FY27 gross margin summary-ல இல்லை.')+'</div>')+'</div>'+
+'<div class="g2">'+card(L('Sensitivity: raw-material inflation without price hikes','Sensitivity: price hike இல்லாம RM விலை ஏறினா'),table([L('RM price rise','RM விலை ஏற்றம்'),L('Margin hit (RM ≈ 45% of sales)','Margin இழப்பு (RM ≈ sales-ல 45%)'),L('FY27 EBITDA hit*','FY27 EBITDA இழப்பு*'),L('ROE hit','ROE இழப்பு')],[
+['+5%','<span class="neg">−2.3 pp</span>','~₹17 cr','~−2.2 pp'],['+10%','<span class="neg">−4.5 pp</span>','~₹33 cr','~−4.4 pp'],['+15%','<span class="neg">−6.8 pp</span>','~₹50 cr','~−6.6 pp']],
+L('*On ~₹740 cr FY27 revenue; ROE impact after 26% tax on ~₹560 cr equity. Rule of thumb: 1 pp EBITDA margin ≈ ₹7.4 cr EBITDA ≈ 1 pp ROE.','*FY27 ~₹740 cr revenue-ல; 26% tax, ~₹560 cr equity-ல ROE. Rule of thumb: 1 pp EBITDA margin ≈ ₹7.4 cr EBITDA ≈ 1 pp ROE.')))+
+card(L('The recovery math (CB illustration)','Recovery கணக்கு (CB உதாரணம்)'),table([L('Step','Step'),L('Assumption','அனுமானம்'),L('EBITDA margin','EBITDA margin')],[
+[L('Q1 FY27 actual','Q1 FY27 actual'),L('~5% of the 9% hike realised','9% hike-ல ~5% வந்தது'),'11.5%'],
+[L('Rest of hike flows (~4%)','மீதி hike (~4%) வந்தா'),L('Costs flat, volumes hold','Cost flat, volume நிக்குது'),'<b>~14.9%</b>'],
+[L('+ styrene eases 5%','+ styrene 5% குறைஞ்சா'),L('RM ~45% of sales','RM ≈ sales-ல 45%'),'<b>~17%</b>'],
+[L('+ export/SMK mix, operating leverage','+ export/SMK mix, operating leverage'),L('New capacity utilised','புது capacity பயன்பாடு'),'<b>~18–20%</b>']],
+L('Matches management\'s 14–15% (Q2) and 18–20% (Q4) guidance — which is why it depends on styrene staying calm.','Management-ஓட 14–15% (Q2), 18–20% (Q4) guidance-ஓட ஒத்துப்போகுது — அதனால தான் styrene அமைதியா இருக்கணும்.')))+'</div>'+
+card(L('Raw material read','Raw material அலசல்'),ul([
+['Styrene-based plastics are the swing factor; management says prices began easing from July 2026.','Styrene-based plastics தான் swing factor; July 2026-ல இருந்து விலை குறைய ஆரம்பிச்சிருக்குனு management.'],
+['Studds has pricing power as the leader, but hikes reach dealers with a lag of a quarter or so.','Leader-ஆ இருக்கறதால pricing power இருக்கு, ஆனா hike dealers-கிட்ட போக ஒரு quarter ஆகும்.'],
+['No long-term supply contracts; imports rose to 16% of RM — adds currency risk.','Long-term supply contract இல்லை; import RM-ல 16%-க்கு ஏறிடுச்சு — currency risk.'],
+['FY22–23 was the same pattern: margin fell to 12%, then rebuilt to ~19–20% over two years.','FY22–23-லயும் இதே pattern: margin 12%-க்கு இறங்கி, ரெண்டு வருஷத்துல ~19–20%-க்கு திரும்புச்சு.'],
+['Returns follow margins: ROE dipped below 10% in weak-margin periods and reached ~17% at ~19% margin.','Returns margin-ஐ follow பண்ணுது: margin weak-ஆ இருந்தப்போ ROE 10%-க்கு கீழ, ~19% margin-ல ~17%.']]))}},
+{id:'fin',l:['Financials','Financials'],html:function(){return ''+
+card(L('Quarterly snapshot (₹ cr, consolidated)','Quarterly snapshot (₹ cr, consolidated)'),table(['','Q1 FY26','Q2 FY26','Q3 FY26*','Q4 FY26','Q1 FY27','YoY'],[
+[L('Revenue','Revenue'),149.2,154.4,163.1,167.5,'<b>169.7</b>','<span class="pos">+13.7%</span>'],
+[L('Net profit','Net profit'),20.3,20.6,20.8,21.1,'<b>12.3</b>','<span class="neg">−39.3%</span>'],
+[L('PAT margin','PAT margin'),'13.6%','13.3%','12.7%','12.6%','<b>7.2%</b>','<span class="neg">−6.4 pp</span>'],
+[L('EPS (₹)','EPS (₹)'),'5.14','—','—','—','<b>3.12</b>','<span class="neg">−39%</span>']],
+L('*Derived. Standalone Q1 FY27: revenue ₹166.94 cr (+12.7%), expenses ₹152.38 cr (+23.8%), PBT ₹17.81 cr (−35.9%), PAT ₹13.25 cr (−35.2%), EPS ₹3.37.','*கணக்கு போட்டது. Standalone Q1 FY27: revenue ₹166.94 cr (+12.7%), expenses ₹152.38 cr (+23.8%), PBT ₹17.81 cr (−35.9%), PAT ₹13.25 cr (−35.2%), EPS ₹3.37.')))+
+card(L('Annual P&amp;L (₹ cr, standalone)','வருஷ P&amp;L (₹ cr, standalone)'),table(['','FY21','FY22','FY23','FY24','FY25','FY26'],[
+[L('Sales','Sales'),480,463,499,529,583,'<b>630</b>'],[L('Operating profit','Operating profit'),111,54,60,91,106,'<b>124</b>'],[L('OPM %','OPM %'),'23%','12%','12%','17%','18%','<b>20%</b>'],[L('Other income','Other income'),5,5,7,6,12,12],[L('Depreciation','Depreciation'),13,17,18,19,21,21],[L('Net profit','Net profit'),74,29,33,57,71,'<b>84</b>']],
+L('FY26 consolidated: revenue ₹634.2 cr (+8.6%), PAT ₹82.7 cr (+18.7%).','FY26 consolidated: revenue ₹634.2 cr (+8.6%), PAT ₹82.7 cr (+18.7%).')))+
+'<div class="g2">'+card(L('Annual trend (₹ cr)','வருஷ trend (₹ cr)'),chart({labels:['FY21','FY22','FY23','FY24','FY25','FY26'],series:[{name:A('Sales','Sales'),color:OR,vals:[480,463,499,529,583,630]},{name:A('PAT','PAT'),color:BL,vals:[74,29,33,57,71,84]}],line:{name:A('OPM %','OPM %'),color:RD,unit:'%',vals:[23,12,12,17,18,20]}}))+
+card(L('Reading the numbers','Numbers சொல்றது என்ன'),ul([
+['Expenses rose 23.8% vs revenue 12.7% — the classic margin squeeze.','Revenue 12.7%, expenses 23.8% — classic margin squeeze.'],
+['FY22–23 shows this has happened before: margin fell to 12% on resin costs, then recovered to 20% by FY26.','FY22–23-லயும் இப்படி நடந்திருக்கு: resin cost-னால margin 12%, அப்புறம் FY26-ல 20%-க்கு திரும்புச்சு.'],
+['Q1 EBITDA ≈ ₹19.5 cr (11.5% × ₹170 cr) vs ~₹122 cr for full FY26.','Q1 EBITDA ≈ ₹19.5 cr (11.5% × ₹170 cr); FY26 முழுக்க ~₹122 cr.'],
+['Guidance: FY27 revenue growth mid-to-high teens; volumes +8–10%.','Guidance: FY27 revenue growth mid-to-high teens; volume +8–10%.']]))+'</div>'}},
+{id:'cash',l:['Cash Flow &amp; Ratios','Cash Flow &amp; Ratios'],html:function(){return ''+
+'<div class="g2">'+card(L('Operating cash vs free cash (₹ cr)','Operating cash vs free cash (₹ cr)'),chart({labels:['FY21','FY22','FY23','FY24','FY25','FY26'],series:[{name:A('CFO','CFO'),color:GR,vals:[73,12,28,72,64,88]},{name:A('Free cash flow','Free cash flow'),color:BL,vals:[37,-45,10,40,22,41]}]}))+
+card(L('Cash flow table (₹ cr)','Cash flow table (₹ cr)'),table(['','FY23','FY24','FY25','FY26'],[[L('Operating (CFO)','Operating (CFO)'),28,72,64,'<b>88</b>'],[L('Investing','Investing'),1,-18,-49,-44],[L('Financing','Financing'),-23,-41,-12,-12],[L('Free cash flow','Free cash flow'),10,40,22,'<b>41</b>'],[L('CFO / operating profit','CFO / operating profit'),'65%','99%','78%','<b>96%</b>']]))+'</div>'+
+card(L('Working capital days','Working capital days'),table(['','FY22','FY23','FY24','FY25','FY26'],[[L('Debtor days','Debtor days'),22,23,20,28,'<b>26</b>'],[L('Inventory days','Inventory days'),62,49,62,79,'<b>103</b>'],[L('Payable days','Payable days'),73,48,47,46,'<b>69</b>'],[L('Cash conversion cycle','Cash conversion cycle'),11,23,34,61,'<b>60</b>'],[L('Working capital days','Working capital days'),-5,-1,9,26,'<b>30</b>']],L('Source: Screener (standalone, annual).','Source: Screener (standalone, annual).')))+
+'<div class="grid">'+kpi('ROE','~17%','FY26','neu')+kpi('ROCE','~23%',L('FY25','FY25'),'neu')+kpi(L('Borrowings','கடன்'),'₹4 cr',L('Mar 2026 — near debt-free','Mar 2026 — கிட்டத்தட்ட கடன் இல்லை'),'up')+kpi(L('Capex','Capex'),'₹48 cr',L('FY26 · FY27 budget ₹58 cr','FY26 · FY27 budget ₹58 cr'),'neu')+kpi(L('Dividend','Dividend'),'₹3/sh',L('FY26 final','FY26 final'),'neu')+'</div>'+
+card(L('What it means','இதுக்கு அர்த்தம்'),ul([
+['Cash conversion is strong: FY26 CFO was 96% of operating profit.','Cash conversion நல்லா இருக்கு: FY26 CFO operating profit-ஓட 96%.'],
+['Inventory days jumped 62 → 79 → 103 in two years (new warehouses, Europe stock).','Inventory days ரெண்டு வருஷத்துல 62 → 79 → 103 (புது warehouses, Europe stock).'],
+['Management expects inventory to settle at 85–90 days — a key check for cash flow.','Inventory 85–90 days-ல நிக்கும்னு management சொல்றாங்க — cash flow-க்கு முக்கியமான check.'],
+['Facility-V (~₹160 cr total) is being funded from internal accruals.','Facility-V (~₹160 cr மொத்தம்) சொந்த பணத்துல.']]))}},
+{id:'val',l:['Valuations','Valuations'],html:function(){return ''+
+'<div class="grid">'+kpi(L('Price (9 Oct 2026)','Price (9 Oct 2026)'),'₹414.5','52W ₹389–600','neu')+kpi('Market cap','₹1,631 cr','','neu')+kpi('P/E (TTM)','~21.8×',L('TTM EPS ~₹19','TTM EPS ~₹19'),'neu')+kpi('P/B','~3.1×',L('Book ~₹133/sh (Mar 26)','Book ~₹133/sh (Mar 26)'),'neu')+kpi(L('Mcap / Sales','Mcap / Sales'),'~2.5×',L('TTM sales ~₹655 cr','TTM sales ~₹655 cr'),'neu')+kpi(L('vs IPO price','IPO விலையோட'),'−29%',L('IPO ₹585 (Nov 2025)','IPO ₹585 (Nov 2025)'),'dn')+'</div>'+
+card(L('Illustrative scenarios (CB, not forecasts)','Scenarios — உதாரணத்துக்கு (forecast இல்லை)'),table([L('Scenario','Scenario'),L('Revenue','Revenue'),'EBITDA %',L('PAT','PAT'),'EPS',L('P/E at ₹414.5','₹414.5-ல P/E')],[
+[L('A · FY27 guidance path (+17%, margin recovers to 18–20% by Q4)','A · FY27 guidance (+17%, Q4-க்குள்ள 18–20%)'),'₹742 cr','16%','~₹79 cr','~₹20','<b>~21×</b>'],
+[L('B · FY27 costs stay sticky','B · FY27 cost குறையலை'),'₹710 cr','14%','~₹65 cr','~₹16','<b>~25×</b>'],
+[L('C · FY28 if margin back to 19%','C · FY28 margin 19%-க்கு திரும்பினா'),'₹870 cr','19%','~₹110 cr','~₹28','<b>~15×</b>']],
+L('Assumes other income ~₹12 cr, depreciation ₹23–28 cr, tax 26%, 3.94 cr shares.','Other income ~₹12 cr, depreciation ₹23–28 cr, tax 26%, 3.94 cr shares-னு வச்சு கணக்கு.')))+
+card(L('Valuation read','Valuation அலசல்'),ul([
+['The stock has de-rated from IPO levels; ~22× trailing earnings is on a depressed quarter.','IPO-ல இருந்து stock de-rate ஆயிடுச்சு; ~22× trailing — ஒரு weak quarter-ஓட earnings மேல.'],
+['FY27 EPS may stay flat (~₹20) even in the guidance case because H1 margins are low.','Guidance வந்தாலும் H1 margin கம்மியா இருக்கறதால FY27 EPS flat-ஆ (~₹20) இருக்கலாம்.'],
+['The real test is FY28: if margins return to ~19%, earnings could rise sharply.','நிஜ test FY28: margin ~19%-க்கு திரும்பினா earnings நல்லா ஏறலாம்.'],
+['P/B ~3× with ROE ~17% — reasonable for a market leader, not a bargain.','P/B ~3×, ROE ~17% — market leader-க்கு நியாயமான அளவு, bargain இல்லை.']]))}},
+{id:'take',l:['5 Key Takeaways','5 முக்கிய பாடங்கள்'],html:function(){var t=[
+['Demand is fine; costs are the problem.','Demand நல்லா இருக்கு; cost தான் பிரச்சனை.','Revenue +13.7% on volumes, but expenses +23.8% (standalone).','Volume-னால revenue +13.7%, ஆனா expenses +23.8% (standalone).'],
+['Margin dropped to 11.5% — a 2022-style squeeze.','Margin 11.5% — 2022 மாதிரி squeeze.','Resin-linked inputs rose; price hikes lag. History shows recovery when inputs cool.','Resin input விலை ஏறிடுச்சு; price hike பின்னாடி வருது. Input குறைஞ்சா recovery ஆனது வரலாறு.'],
+['Management has drawn a recovery path.','Management recovery path சொல்லியிருக்காங்க.','14–15% EBITDA in Q2 → 18–20% by Q4, if raw materials stay stable.','Raw material நிலையா இருந்தா Q2-ல 14–15% → Q4-க்குள்ள 18–20%.'],
+['Capacity + exports are the growth engines.','Capacity + exports தான் growth engine.','+1.5 mn units from late Oct 2026; exports (30–35% margin) targeted at 30% of sales.','Oct 2026 கடைசியில +1.5 mn units; exports (30–35% margin) 30% target.'],
+['Watch inventory and cash.','Inventory, cash-ஐ கவனிங்க.','Inventory days at 103 vs 62 two years ago; management targets 85–90.','Inventory days 103 — ரெண்டு வருஷம் முன்னாடி 62; target 85–90.']];
+return t.map(function(x,i){return card('','<div class="take"><div class="n">'+(i+1)+'</div><div><h3>'+L(x[0],x[1])+'</h3>'+ul([[x[2],x[3]]])+'</div></div>')}).join('')}},
+{id:'mkt',l:['Reasons for share market activity','Share market நகர்வுக்கு காரணம்'],html:function(){return ''+
+card(L('Price points (₹)','Price points (₹)'),chart({h:250,labels:['IPO (Nov 25)','52W high','52W low','9 Oct 26'],series:[{name:A('Share price ₹','Share price ₹'),color:OR,vals:[585,600,389,414.5]}]})+'<div class="note">'+L('Returns: 1M −0.9% · 3M −10.2% · 6M −8.5% · 1Y −29.2% (to 9 Oct 2026).','Returns: 1M −0.9% · 3M −10.2% · 6M −8.5% · 1Y −29.2% (9 Oct 2026 வரை).')+'</div>')+
+'<div class="g2">'+card(L('Why it fell','ஏன் இறங்குச்சு'),ul([
+['IPO at ₹585 priced in steady 19–20% margins; Q1 showed 11.5%.','₹585 IPO விலை 19–20% margin-ஐ நம்பி இருந்துச்சு; Q1-ல 11.5% தான்.'],
+['Q1 FY27 profit −39% YoY despite 14% sales growth.','Sales 14% வளர்ந்தும் Q1 FY27 profit −39%.'],
+['Analyst meet in September 2026 was cancelled citing "business exigencies" — hurt sentiment.','September 2026 analyst meet "business exigencies"-னு cancel ஆச்சு — sentiment அடிபட்டுச்சு.'],
+['Rising inventory days raise working-capital questions.','Inventory days ஏறுது — working capital பத்தி கேள்வி.']]))+
+card(L('What has held it up','எது தாங்கிப் பிடிக்குது'),ul([
+['Clear margin-recovery guidance for Q2–Q4.','Q2–Q4-க்கு தெளிவான margin recovery guidance.'],
+['Revenue still growing double digits; market leadership intact.','Revenue இன்னும் double digit வளர்ச்சி; market leadership அப்படியே.'],
+['New capacity on schedule; near debt-free.','புது capacity சரியான நேரத்துல; கிட்டத்தட்ட கடன் இல்லை.'],
+['Shareholding: promoters 61.8%, mutual funds 7.2%, FII 1.5%, public 27.6%.','Shareholding: promoters 61.8%, mutual funds 7.2%, FII 1.5%, public 27.6%.']]))+'</div>'}},
+{id:'trig',l:['Triggers &amp; Cycle','Triggers &amp; Cycle'],html:function(){var tr=[
+{n:['Facility-V: +1.5 mn units (late Oct 2026)','Facility-V: +1.5 mn units (Oct 2026 கடைசி)'],s:1,I:3,C:0.7,W:1.0,P:1.0,w:['Commercial production start; Q3 volumes','Commercial production ஆரம்பம்; Q3 volumes'],src:'Company update, 1 Oct 2026'},
+{n:['Margin recovery to 18–20% by Q4 FY27','Q4 FY27-க்குள்ள margin 18–20%'],s:1,I:4,C:0.4,W:1.0,P:1.0,w:['Q2 EBITDA margin vs 14–15% guide','Q2 EBITDA margin vs 14–15% guidance'],src:'Q1 FY27 concall, 10 Aug 2026'},
+{n:['Export push to 30% (Europe subsidiary, private label)','Export 30% push (Europe subsidiary, private label)'],s:1,I:3,C:0.4,W:0.7,P:1.0,w:['Export share each quarter','ஒவ்வொரு quarter export share'],src:'Q4 FY26 &amp; Q1 FY27 concalls'},
+{n:['Rule for two BIS helmets with each new 2W (reported proposal)','புது 2W-க்கு ரெண்டு BIS helmet rule (proposal)'],s:1,I:4,C:0.2,W:0.7,P:1.0,w:['MoRTH notification, if any','MoRTH notification வருமா'],src:'Media reports, 2025 (unverified status)'},
+{n:['Resin / raw-material inflation persists','Resin / raw material விலை ஏற்றம் நீடிப்பு'],s:-1,I:3,C:0.7,W:1.0,P:0.7,w:['Crude &amp; polymer prices','Crude &amp; polymer விலை'],src:'Q1 FY27 results, Aug 2026'},
+{n:['Inventory build-up (103 days)','Inventory ஏற்றம் (103 days)'],s:-1,I:2,C:1.0,W:1.0,P:1.0,w:['Inventory days in H1 balance sheet','H1 balance sheet-ல inventory days'],src:'FY26 annual data'},
+{n:['Analyst meet cancelled — disclosure/sentiment overhang','Analyst meet cancel — sentiment பாரம்'],s:-1,I:1,C:1.0,W:1.0,P:1.0,w:['Next investor interaction','அடுத்த investor meet'],src:'Exchange filing, Sep 2026'}];
+return '<div class="g2">'+card(L('Cycle clock — 2W consumption','Cycle clock — 2W consumption'),cycleClock(2,A('Weinstein Stage 4 (decline)','Weinstein Stage 4 (இறக்கம்)'))+ul([
+['Sector: consumption (2W) + global-linked exports. Phase P3 Expansion → 70.','Sector: consumption (2W) + global exports. Phase P3 Expansion → 70.'],
+['Evidence: 2W demand healthy after the Sept 2025 GST cut; Studds volumes up; utilisation ~81%.','ஆதாரம்: Sept 2025 GST cut-க்கு அப்புறம் 2W demand நல்லா இருக்கு; Studds volume ஏறுது; utilisation ~81%.']]))+
+card(L('Scores','Scores'),'<div class="grid"><div class="kpi"><div class="l">CY</div><div class="v">54</div><div class="c neu">'+L('= 50% sector 70 + 50% stock 38','= 50% sector 70 + 50% stock 38')+'</div></div><div class="kpi"><div class="l">TG</div><div class="v">51</div><div class="c neu">'+L('= 50 + 8×4.54 − 8×4.47','= 50 + 8×4.54 − 8×4.47')+'</div></div></div>'+
+table([L('Stock cycle item','Stock cycle item'),L('Reading','நிலை'),L('Score','Score')],[[L('Lifecycle','Lifecycle'),L('Mature leader','Mature leader'),55],[L('Earnings cycle','Earnings cycle'),L('Margin falling (20% → 11.5%)','Margin இறங்குது (20% → 11.5%)'),25],[L('Valuation cycle','Valuation cycle'),L('In band (short listing history)','Band-க்குள்ள (listing history கம்மி)'),55],[L('Price stage','Price stage'),L('Stage 4 — near 52W low','Stage 4 — 52W low பக்கம்'),15]]))+'</div>'+
+card(L('Trigger table','Trigger table'),trigTable(tr))+
+card(L('Trigger timeline','Trigger timeline'),timeline([{d:'Aug 26',t:A('Q1: squeeze','Q1: squeeze'),neg:1},{d:'Sep 26',t:A('Meet cancelled','Meet cancel'),neg:1},{d:'Oct 26',t:A('Facility-V','Facility-V')},{d:'Nov 26',t:A('Q2: 14–15%?','Q2: 14–15%?')},{d:'Feb 27',t:A('Q3 margin','Q3 margin')},{d:'May 27',t:A('Q4: 18–20%?','Q4: 18–20%?')}]))+
+card(L('What would change this view','இந்த view எப்போ மாறும்'),ul([
+['Q2 margin at or above 14–15% → earnings cycle turns, CY rises.','Q2 margin 14–15% அல்லது அதுக்கு மேல → earnings cycle திரும்பும், CY ஏறும்.'],
+['Price moves back above a rising 30-week average → Stage 4 gate lifts.','Price ஏறும் 30-week average-க்கு மேல வந்தா → Stage 4 gate போகும்.'],
+['Another quarter of cost overrun or inventory rise → TG falls below 45.','இன்னொரு quarter-உம் cost/inventory ஏறினா → TG 45-க்கு கீழ.']]))}},
+{id:'swot',l:['SWOT','SWOT'],html:function(){return '<div class="sw">'+
+card(L('Strengths','பலங்கள்'),ul([['Largest helmet maker by volume; ~27% India share','Volume-ல பெரிய helmet maker; இந்தியாவுல ~27%'],['Two brands (Studds, SMK)','ரெண்டு brands (Studds, SMK)'],['Near debt-free, strong cash conversion','கிட்டத்தட்ட கடன் இல்லை, நல்ல cash conversion'],['High-margin export channel','அதிக margin export channel']]),'S')+
+card(L('Weaknesses','பலவீனங்கள்'),ul([['Margin swings with resin prices','Resin விலையோட margin ஆடுது'],['Inventory days at 103','Inventory days 103'],['All plants in one city (Faridabad)','எல்லா plants-உம் ஒரே ஊர் (Faridabad)'],['Short listed track record','Listing ஆன காலம் கம்மி']]),'W')+
+card(L('Opportunities','வாய்ப்புகள்'),ul([['Premiumisation via SMK','SMK மூலம் premiumisation'],['Exports to 30%; Europe subsidiary','Exports 30%; Europe subsidiary'],['Possible two-helmet rule for new 2Ws','புது 2W-க்கு ரெண்டு helmet rule வரலாம்'],['Bluetooth, riding gear','Bluetooth, riding gear']]),'O')+
+card(L('Threats','அச்சுறுத்தல்கள்'),ul([['Crude/polymer price spikes','Crude/polymer விலை ஏற்றம்'],['Competition from Steelbird, Vega and imports','Steelbird, Vega, imports போட்டி'],['2W demand slowdown','2W demand slowdown'],['US/EU tariffs on exports','Exports மேல US/EU tariffs']]),'T')+'</div>'}},
+{id:'assist',l:['Cauvery Assist','Cauvery Assist'],html:function(){return card('',ul([['Ask by typing or tap 🎤. Answers are one or two lines; tap "More details" for tables.','Type பண்ணுங்க இல்லனா 🎤 அழுத்துங்க. பதில் ஒண்ணு ரெண்டு வரி; table வேணும்னா "மேலும் விவரம்".'],['Voice input works on the GitHub Pages copy in Chrome/Edge; read-aloud works everywhere.','Voice input GitHub Pages copy-ல Chrome/Edge-ல வேலை செய்யும்; read-aloud எல்லா இடத்துலயும்.']]),'hl')+'<div id="assist"></div>'}},
+{id:'quiz',l:['Cauvery Socrates','Cauvery Socrates'],html:function(){return card('',ul([['Test what you learned — 9 quick questions.','நீங்க கத்துக்கிட்டதை test பண்ணுங்க — 9 கேள்விகள்.']]),'hl')+'<div id="quiz"></div>'}},
+{id:'view',l:['Analyst View','Analyst View'],html:function(){return ''+
+card(L('CB Analyst View (education only)','CB Analyst View (education மட்டும்)'),ul([
+['A market leader with healthy demand, hit by a raw-material margin squeeze.','Demand நல்லா இருக்கற market leader — raw material margin squeeze-ல மாட்டியிருக்கு.'],
+['Q1 FY27: sales +13.7%, profit −39%, EBITDA margin 11.5%.','Q1 FY27: sales +13.7%, profit −39%, EBITDA margin 11.5%.'],
+['The FY22→FY26 history shows margins can recover once inputs cool and price hikes stick.','FY22→FY26 வரலாறு: input குறைஞ்சு price hike நின்னா margin திரும்பும்.'],
+['Cycle: sector in P3 Expansion; stock in Stage 4 with a falling earnings cycle (CY 54).','Cycle: sector P3 Expansion; stock Stage 4, earnings cycle இறங்குது (CY 54).'],
+['Top positive triggers: Facility-V and Q2–Q4 margin recovery. Top risk: sticky resin inflation (TG 51).','முக்கிய positive triggers: Facility-V, Q2–Q4 margin recovery. முக்கிய risk: resin விலை ஏற்றம் நீடிப்பு (TG 51).']]),'hl')+
+card(L('Monitorables for Q2 FY27 (Nov 2026)','Q2 FY27-ல பாக்க வேண்டியது (Nov 2026)'),ul([
+['EBITDA margin vs 14–15% guidance.','EBITDA margin vs 14–15% guidance.'],
+['Export share moving above 21%.','Export share 21%-க்கு மேல போகுதா.'],
+['Inventory days trending to 85–90.','Inventory days 85–90 பக்கம் வருதா.'],
+['Facility-V ramp-up and SMK mix.','Facility-V ramp-up, SMK mix.']]))+
+'<div class="note">'+L('CB Research is not SEBI-registered. This is not a buy/sell/hold recommendation.','CB Research SEBI-registered இல்லை. இது buy/sell/hold recommendation இல்லை.')+'</div>'}}
+],
+assist:{title:A('Cauvery Assist','Cauvery Assist'),storageKey:'cba_q1fy27_studds',lang:'en',
+placeholder:A('Ask: Why did profit fall?','கேளுங்க: Profit ஏன் குறைஞ்சுது?'),
+greeting:A('Vanakam! Ask me anything about Studds\' Q1 FY27 results — I\'ll answer in a line or two.','வணக்கம்! Studds Q1 FY27 results பத்தி என்ன வேணும்னாலும் கேளுங்க — ஒண்ணு ரெண்டு வரில பதில் சொல்றேன்.'),
+noAdvice:A('I can\'t say buy, sell or hold — CB Research is not SEBI-registered. I can explain the numbers, risks and triggers so you decide yourself.','Buy, sell, hold-னு சொல்ல முடியாதுங்க — CB Research SEBI-registered இல்லை. Numbers, risks, triggers எல்லாம் விளக்கறேன், முடிவு நீங்களே எடுங்க.'),
+fallback:A('I don\'t have that on this dashboard. Try asking about revenue, margin, profit, exports, capacity, inventory, valuation or risks.','இந்த dashboard-ல அது இல்லைங்க. Revenue, margin, profit, exports, capacity, inventory, valuation, risks பத்தி கேளுங்க.'),
+onOpenTab:function(id){showTab(id)},
+kb:[
+{k:['revenue','sales','turnover','ரெவின்யூ','வருமானம்','விற்பனை'],a:A('Consolidated Q1 FY27 revenue was ₹169.7 cr, up 13.7% YoY.','Consolidated Q1 FY27 revenue ₹169.7 cr — YoY 13.7% ஏற்றம்.'),d:A('Standalone ₹166.94 cr (+12.7%). Q4 FY26 was ₹167.5 cr.','Standalone ₹166.94 cr (+12.7%). Q4 FY26 ₹167.5 cr.'),tab:'fin'},
+{k:['profit','pat','net profit','earnings','eps','லாபம்','ப்ராஃபிட்','பிராபிட்'],a:A('Consolidated net profit was ₹12.3 cr, down 39.3% YoY; EPS ₹3.12.','Consolidated net profit ₹12.3 cr — YoY 39.3% குறைவு; EPS ₹3.12.'),d:A('Standalone PAT ₹13.25 cr (−35.2%).','Standalone PAT ₹13.25 cr (−35.2%).'),tab:'fin'},
+{k:['why did','profit fall','profit fell','why','fall','fell','drop','decline','reason','weak','ஏன்','குறைஞ்ச','இறங்க','காரணம்'],a:A('Profit fell because styrene-based raw materials and wages rose while only ~5% of the 9% price hike reached customers — expenses +23.8% vs sales +12.7%.','Styrene-based raw material, wages ஏறிடுச்சு; 9% price hike-ல ~5% தான் customers-கிட்ட போச்சு — expenses +23.8%, sales +12.7%.'),d:A('EBITDA margin fell from 20.3% to 11.5% (−880 bps).','EBITDA margin 20.3%-ல இருந்து 11.5% (−880 bps).'),tab:'rm'},
+{k:['margin','ebitda','opm','மார்ஜின்','ஈபிட்டா','லாப வரம்பு'],a:A('EBITDA margin fell to 11.5% from about 19% in FY26.','EBITDA margin FY26-ல ~19%, இப்போ 11.5%.'),d:A('Guidance: 14–15% in Q2, 18–20% by Q4 if raw materials stay stable.','Guidance: Q2-ல 14–15%, Q4-க்குள்ள 18–20% (raw material நிலையா இருந்தா).'),tab:'fin'},
+{k:['guidance','outlook','fy27','fy28','கைடன்ஸ்','எதிர்பார்ப்பு'],a:A('Management guides mid-to-high-teens revenue growth for FY27 and margin recovery to 18–20% by Q4.','FY27-க்கு mid-to-high teens revenue growth, Q4-க்குள்ள 18–20% margin-னு guidance.'),d:A('Volumes +8–10% in FY27, +13–14% in FY28.','FY27 volume +8–10%, FY28 +13–14%.'),tab:'val'},
+{k:['export','exports','europe','italy','us ','america','எக்ஸ்போர்ட்','ஏற்றுமதி'],a:A('Exports are about 21% of revenue and earn 30–35% EBITDA margin; the target is 30% of sales.','Exports revenue-ல ~21%, அதுல 30–35% EBITDA margin; target 30%.'),d:A('FY25 exports ₹97 cr: Europe ₹29 cr, Americas ₹28 cr, Asia ex-India ₹28 cr, rest ₹12 cr. 70+ markets.','FY25 exports ₹97 cr: Europe ₹29 cr, Americas ₹28 cr, Asia ex-India ₹28 cr, மீதி ₹12 cr. 70+ markets.'),tab:'smk'},
+{k:['smk','brand','premium','எஸ்எம்கே','பிராண்ட்'],a:A('SMK, the premium brand (MRP ₹3,000–12,800), was 20% of helmet revenue in Q1 FY26 and earns ~27% EBITDA vs ~17% for Studds.','Premium brand SMK (MRP ₹3,000–12,800) — Q1 FY26-ல helmet revenue-ல 20%; EBITDA ~27%, Studds ~17%.'),d:A('SMK revenue: FY23 ₹53 cr, FY24 ₹38 cr, FY25 ₹69 cr. Launched 2016; Italian subsidiary for Europe.','SMK revenue: FY23 ₹53 cr, FY24 ₹38 cr, FY25 ₹69 cr. 2016-ல launch; Europe-க்கு Italy subsidiary.'),tab:'smk'},
+{k:['raw material','raw materials','styrene','abs','polycarbonate','plastic','resin','input cost','ரா மெட்டீரியல்','மூலப்பொருள்','ஸ்டைரீன்','பிளாஸ்டிக்'],a:A('Raw materials are ~44–46% of revenue; ABS and other styrene-based plastics drove Q1\'s cost jump, and prices began easing from July.','Raw material revenue-ல ~44–46%; ABS, styrene-based plastics தான் Q1 cost ஏற்றத்துக்கு காரணம்; July-ல இருந்து விலை குறையுது.'),d:A('ABS 22% of RM cost, packaging 10%, polycarbonate 10%, paints 8%, cloth 8%, EPS 4% (FY25). Imports 16% of RM.','ABS 22%, packaging 10%, polycarbonate 10%, paints 8%, cloth 8%, EPS 4% (FY25). Import RM-ல 16%.'),tab:'rm'},
+{k:['price hike','pricing','hike','ப்ரைஸ் ஹைக்','விலை ஏற்றம்'],a:A('Studds took a ~9% price hike; about 5% was realised in Q1 and the rest flows from Q2.','Studds ~9% price hike எடுத்தாங்க; Q1-ல ~5%, மீதி Q2-ல இருந்து.'),tab:'rm'},
+{k:['roe','roce','return on','returns','ரிட்டர்ன்'],a:A('Annualised Q1 ROE fell to about 9% from ~17% in FY26, because margins halved.','Margin பாதி ஆனதால annualised Q1 ROE ~9% — FY26-ல ~17%.'),d:A('Rule of thumb: each 1 pp of EBITDA margin ≈ 1 pp of ROE.','Rule of thumb: 1 pp EBITDA margin ≈ 1 pp ROE.'),tab:'rm'},
+{k:['private label','oem','daytona','oneal',"o'neal",'alpinestars','ப்ரைவேட் லேபிள்'],a:A('Studds makes helmets for Daytona (USA) and O\'Neal (Europe, USA, Australia), and is onboarding Alpinestars.','Studds Daytona (USA), O\'Neal (Europe, USA, Australia)-க்கு helmets செய்யுது; Alpinestars சேர்க்கறாங்க.'),tab:'smk'},
+{k:['capacity','plant','facility','expansion','faridabad','கெபாசிட்டி','பிளாண்ட்','விரிவாக்கம்'],a:A('Facility-V adds 1.5 mn units from late October 2026, taking capacity to about 11 mn, and 12.5 mn later.','Facility-V Oct 2026 கடைசியில 1.5 mn units சேர்க்குது — ~11 mn, அப்புறம் 12.5 mn.'),tab:'seg'},
+{k:['inventory','working capital','cash flow','cfo','இன்வென்டரி','வொர்க்கிங் கேபிடல்','கேஷ் ஃப்ளோ'],a:A('Inventory days rose to 103 in FY26 from 62 in FY24; FY26 operating cash flow was ₹88 cr.','Inventory days FY24-ல 62, FY26-ல 103; FY26 operating cash flow ₹88 cr.'),d:A('Management expects inventory to settle at 85–90 days.','Inventory 85–90 days-ல நிக்கும்னு management.'),tab:'cash'},
+{k:['debt','balance sheet','கடன்'],a:A('Studds is near debt-free, with borrowings of about ₹4 cr in March 2026.','Studds கிட்டத்தட்ட கடன் இல்லாம இருக்கு — March 2026-ல ~₹4 cr தான்.'),tab:'cash'},
+{k:['valuation','pe ','p/e','p/b','pb','expensive','cheap','multiple','வேல்யுவேஷன்','மதிப்பு','விலை அதிகமா'],a:A('At ₹414.5 the stock trades at about 22× trailing earnings and 3.1× book.','₹414.5-ல stock ~22× trailing earnings, 3.1× book-ல trade ஆகுது.'),d:A('If margins return to ~19% in FY28, it would be ~15× FY28 earnings (CB illustration).','FY28-ல margin ~19%-க்கு திரும்பினா ~15× FY28 earnings (CB உதாரணம்).'),tab:'val'},
+{k:['ipo','listing','share price','stock price','ஐபிஓ','ஷேர் விலை','பங்கு விலை'],a:A('The stock is at ₹414.5, about 29% below its ₹585 IPO price.','Stock ₹414.5 — ₹585 IPO விலையை விட ~29% கீழ.'),tab:'mkt'},
+{k:['analyst meet','cancel','meeting','கேன்சல்'],a:A('The September 2026 analyst meet was cancelled citing business exigencies, which weighed on sentiment.','September 2026 analyst meet "business exigencies"-னு cancel ஆச்சு — sentiment-ஐ பாதிச்சுது.'),tab:'mkt'},
+{k:['risk','risks','threat','ரிஸ்க்','அபாயம்'],a:A('The biggest risk is resin and raw-material inflation lasting longer than management expects.','பெரிய risk: resin, raw material விலை ஏற்றம் management நினைக்கறதை விட நீடிக்கறது.'),d:A('<ul><li>Inventory build-up</li><li>2W demand slowdown</li><li>Export tariffs</li></ul>','<ul><li>Inventory ஏற்றம்</li><li>2W demand slowdown</li><li>Export tariffs</li></ul>'),tab:'trig'},
+{k:['trigger','catalyst','ட்ரிகர்'],a:A('Top positive triggers: Facility-V from late Oct 2026 and margin recovery to 18–20% by Q4.','முக்கிய triggers: Oct 2026 Facility-V, Q4-க்குள்ள 18–20% margin recovery.'),tab:'trig'},
+{k:['cycle','stage','phase','சைக்கிள்','சுழற்சி'],a:A('The 2W sector is in P3 Expansion, but the stock is in Weinstein Stage 4; CY score 54.','2W sector P3 Expansion-ல இருக்கு, ஆனா stock Weinstein Stage 4; CY score 54.'),tab:'trig'},
+{k:['business','what does','products','helmet','பிசினஸ்','ஹெல்மெட்','என்ன செய்யுது'],a:A('Studds makes two-wheeler helmets (Studds and SMK brands) and accessories; it is the world\'s largest helmet maker by volume.','Studds two-wheeler helmets (Studds, SMK brands), accessories செய்யுது; volume-ல உலகத்துலயே பெரிய helmet maker.'),tab:'biz'},
+{k:['market share','share of','மார்க்கெட் ஷேர்'],a:A('Studds has about 27% of India\'s helmet volume.','இந்திய helmet volume-ல Studds-க்கு ~27%.'),tab:'biz'},
+{k:['dividend','டிவிடெண்ட்'],a:A('The FY26 final dividend is ₹3 per share.','FY26 final dividend share-க்கு ₹3.'),tab:'cash'},
+{k:['promoter','shareholding','fii','mutual fund','ப்ரொமோட்டர்','ஷேர்ஹோல்டிங்'],a:A('Promoters hold 61.8%, mutual funds 7.2%, FIIs 1.5% and the public 27.6%.','Promoters 61.8%, mutual funds 7.2%, FII 1.5%, public 27.6%.'),tab:'mkt'},
+{k:['bluetooth','jacket','new product','புது product'],a:A('New Bluetooth and riding-jacket lines may add ₹15–20 cr revenue in FY27, with a ₹2–3 cr initial loss.','புது Bluetooth, riding jacket — FY27-ல ₹15–20 cr revenue, ஆரம்பத்துல ₹2–3 cr loss.'),tab:'seg'}],
+suggestions:[['Why did profit fall?','Profit ஏன் குறைஞ்சுது?'],['How do raw materials hit margin?','Raw material margin-ஐ எப்படி பாதிக்குது?'],['What is SMK?','SMK என்ன?'],['What is the margin guidance?','Margin guidance என்ன?'],['How big are exports?','Exports எவ்வளவு?'],['Is it expensive?','விலை அதிகமா?'],['What is the biggest risk?','பெரிய risk என்ன?']]},
+quiz:[
+{q:['How did Studds\' consolidated revenue change in Q1 FY27?','Q1 FY27-ல Studds consolidated revenue எப்படி மாறுச்சு?'],o:[['−14%','−14%'],['+13.7%','+13.7%'],['+39%','+39%'],['Flat','மாற்றம் இல்லை']],c:1,e:['Revenue rose 13.7% to ₹169.7 cr on volumes.','Volume-னால revenue 13.7% ஏறி ₹169.7 cr.']},
+{q:['Why did profit fall 39% despite sales growth?','Sales வளர்ந்தும் profit ஏன் 39% குறைஞ்சுது?'],o:[['Lower volumes','Volume குறைவு'],['Costs (raw material etc.) rose faster than revenue','Cost (raw material) revenue-ஐ விட வேகமா ஏறிச்சு'],['Big tax demand','பெரிய tax demand'],['Interest costs','Interest cost']],c:1,e:['Standalone expenses +23.8% vs revenue +12.7%.','Standalone expenses +23.8%, revenue +12.7%.']},
+{q:['What was the Q1 FY27 EBITDA margin?','Q1 FY27 EBITDA margin எவ்வளவு?'],o:[['19.3%','19.3%'],['15%','15%'],['11.5%','11.5%'],['30%','30%']],c:2,e:['11.5%, vs ~19.3% for FY26.','11.5% — FY26-ல ~19.3%.']},
+{q:['Which channel has the highest EBITDA margin?','எந்த channel-க்கு அதிக EBITDA margin?'],o:[['Domestic Studds','Domestic Studds'],['Exports','Exports'],['Bluetooth devices','Bluetooth devices'],['Rainwear','Rainwear']],c:1,e:['Exports earn 30–35% vs 16–18% domestic.','Exports 30–35%, domestic 16–18%.']},
+{q:['How much capacity does Facility-V add?','Facility-V எவ்வளவு capacity சேர்க்குது?'],o:[['0.5 mn units','0.5 mn units'],['1.5 mn units','1.5 mn units'],['5 mn units','5 mn units'],['12.5 mn units','12.5 mn units']],c:1,e:['+1.5 mn units from late Oct 2026.','Oct 2026 கடைசியில +1.5 mn units.']},
+{q:['Which working-capital item worries investors most?','எந்த working capital item கவலை தருது?'],o:[['Debtor days','Debtor days'],['Inventory days (103)','Inventory days (103)'],['Payable days','Payable days'],['Cash balance','Cash balance']],c:1,e:['Inventory days rose from 62 (FY24) to 103 (FY26).','Inventory days FY24-ல 62 → FY26-ல 103.']},
+{q:['What is the biggest raw-material input in a Studds helmet?','Studds helmet-ல பெரிய raw material எது?'],o:[['Steel','Steel'],['ABS plastic','ABS plastic'],['Leather','Leather'],['Glass','Glass']],c:1,e:['ABS is ~22% of raw-material cost; it is styrene-based, so crude moves matter.','ABS RM cost-ல ~22%; styrene-based, அதனால crude விலை முக்கியம்.']},
+{q:['What share of helmet revenue came from SMK in Q1 FY26?','Q1 FY26-ல helmet revenue-ல SMK பங்கு சுமார் எவ்வளவு?'],o:[['5%','5%'],['20%','20%'],['50%','50%'],['80%','80%']],c:1,e:['SMK was 20.1% of helmet revenue, up from 13.2% in FY25.','SMK helmet revenue-ல 20.1% — FY25-ல 13.2%.']},
+{q:['The stock\'s price stage (CB read) caps Conviction at…','CB படி stock price stage-னால Conviction max எவ்வளவு?'],o:[['45','45'],['55','55'],['70','70'],['No cap','Cap இல்லை']],c:1,e:['Stage 4 (decline) caps Conviction at 55.','Stage 4 (இறக்கம்) → Conviction max 55.']}]
+};
+
+
+/* ===== CB 6-Pillar helpers ===== */
+var PILLARS=[['Business Quality','Business தரம்'],['Competitive Advantage','போட்டி பலம் (Moat)'],['Growth Opportunity','Growth வாய்ப்பு'],['Financial Strength','Financial பலம்'],['Valuations','Valuations'],['Risks &amp; Reward','Risk &amp; Reward']];
+function grade(s){return s>=8?A('Strong','வலுவானது'):s>=6.5?A('Good','நல்லது'):s>=5?A('Average','சராசரி'):A('Weak','பலவீனம்')}
+function sColor(s){return s>=8?'#16803A':s>=6.5?'#1F5FAD':s>=5?'#C9661A':'#C62828'}
+function ring(s,size){size=size||96;var r=size/2-8,c=2*Math.PI*r,f=s/10;return '<svg viewBox="0 0 '+size+' '+size+'" width="'+size+'" height="'+size+'"><circle cx="'+size/2+'" cy="'+size/2+'" r="'+r+'" fill="none" stroke="#F1F1F1" stroke-width="9"/><circle cx="'+size/2+'" cy="'+size/2+'" r="'+r+'" fill="none" stroke="'+sColor(s)+'" stroke-width="9" stroke-linecap="round" stroke-dasharray="'+(c*f)+' '+c+'" transform="rotate(-90 '+size/2+' '+size/2+')"/><text x="50%" y="50%" dy="7" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-weight="700" font-size="'+(size/4)+'" fill="#111">'+s.toFixed(1)+'</text></svg>'}
+function q1chip(d,en,ta){var m={up:['▲','#16803A',A('Improved by Q1','Q1-ல மேம்பட்டது')],flat:['■','#1F5FAD',A('Unchanged by Q1','Q1-ல மாற்றம் இல்லை')],down:['▼','#C62828',A('Weakened by Q1','Q1-ல பலவீனமானது')]}[d];
+  return '<span class="chip" style="border-color:'+m[1]+';color:'+m[1]+'">'+m[0]+' '+L(m[2].en,m[2].ta)+'</span>'+(en?'<div class="note" style="margin-top:4px">'+L(en,ta)+'</div>':'')}
+function checks(arr){return '<div>'+arr.map(function(x){var ic=x[0]>0?['✓','#16803A','#EAF6EE']:x[0]<0?['✗','#C62828','#FDECEC']:['~','#8A5A00','#FFF4E8'];
+  return '<div style="display:flex;gap:10px;align-items:flex-start;margin:7px 0"><span style="flex:0 0 26px;height:26px;border-radius:50%;background:'+ic[2]+';color:'+ic[1]+';font-weight:800;display:flex;align-items:center;justify-content:center">'+ic[0]+'</span><div style="font-weight:600">'+L(x[1],x[2])+'</div></div>'}).join('')+'</div>'}
+function pillarHead(n,s,verdict,q1){return '<div class="card hl" style="display:flex;gap:16px;align-items:center;flex-wrap:wrap">'+ring(s)+'<div style="flex:1;min-width:220px"><div class="prog">'+L('Pillar '+n+' of 6','Pillar '+n+' / 6')+' · '+L(grade(s).en,grade(s).ta)+' · '+L('score out of 10','10-க்கு score')+'</div><h3 style="font-size:19px;margin:4px 0">'+L(verdict[0],verdict[1])+'</h3>'+q1chip(q1[0],q1[1],q1[2])+'</div></div>'}
+function changeBox(arr){return card(L('What would change this score','இந்த score எப்போ மாறும்'),ul(arr))}
+function radar(sc){var cx=170,cy=165,R=115,n=sc.length,s='<svg viewBox="0 0 340 340" width="100%" style="max-width:380px;height:auto">';
+  for(var g=1;g<=5;g++){var pts=[];for(var i=0;i<n;i++){var a=-Math.PI/2+i*2*Math.PI/n;pts.push((cx+R*g/5*Math.cos(a))+','+(cy+R*g/5*Math.sin(a)))}s+='<polygon points="'+pts.join(' ')+'" fill="none" stroke="#E6E6E6"/>'}
+  var pp=[];for(var i=0;i<n;i++){var a=-Math.PI/2+i*2*Math.PI/n;s+='<line x1="'+cx+'" y1="'+cy+'" x2="'+(cx+R*Math.cos(a))+'" y2="'+(cy+R*Math.sin(a))+'" stroke="#E6E6E6"/>';pp.push([cx+R*sc[i]/10*Math.cos(a),cy+R*sc[i]/10*Math.sin(a)]);
+    var lx=cx+(R+30)*Math.cos(a),ly=cy+(R+22)*Math.sin(a);
+    s+='<text x="'+lx+'" y="'+ly+'" font-size="11.5" font-weight="800" text-anchor="middle" fill="#222"><tspan class="en">'+(i+1)+'. '+PILLARS[i][0].replace('&amp;','&').split(' ')[0]+'</tspan><tspan class="ta">'+(i+1)+'. '+PILLARS[i][1].replace('&amp;','&').split(' ')[0]+'</tspan></text><text x="'+lx+'" y="'+(ly+14)+'" font-size="12" font-weight="800" text-anchor="middle" fill="'+sColor(sc[i])+'">'+sc[i].toFixed(1)+'</text>'}
+  s+='<polygon points="'+pp.map(function(p){return p.join(',')}).join(' ')+'" fill="rgba(242,140,40,.25)" stroke="#F28C28" stroke-width="3"/>';
+  pp.forEach(function(p){s+='<circle cx="'+p[0]+'" cy="'+p[1]+'" r="4.5" fill="#F28C28"/>'});return s+'</svg>'}
+function scoreBars(sc,q1){var arrows={up:['▲','#16803A'],flat:['■','#1F5FAD'],down:['▼','#C62828']};return sc.map(function(s,i){var a=arrows[q1[i]];
+  return '<div style="display:flex;align-items:center;gap:8px;margin:9px 0;cursor:pointer" onclick="showTab(\'p'+(i+1)+'\')"><div style="flex:0 0 46%;font-weight:800;font-size:14px">'+(i+1)+'. '+L(PILLARS[i][0],PILLARS[i][1])+'</div><div class="bar" style="flex:1"><i style="width:'+s*10+'%;background:'+sColor(s)+'"></i></div><b style="font-family:IBM Plex Mono,monospace;width:34px;text-align:right">'+s.toFixed(1)+'</b><span style="color:'+a[1]+';font-weight:800;width:14px">'+a[0]+'</span></div>'}).join('')+
+  '<div class="note">'+L('▲ improved · ■ unchanged · ▼ weakened by Q1 FY27. Tap a pillar to open it. Scores are CB educational ratings, not recommendations.','▲ மேம்பட்டது · ■ மாற்றம் இல்லை · ▼ Q1 FY27-ல பலவீனம். Pillar-ஐ அழுத்தி திறங்க. Scores CB education ratings — recommendation இல்லை.')+'</div>'}
+function riskMatrix(items){var W=340,H=300,x0=60,y0=20,cw=90,ch=80,s='<svg viewBox="0 0 '+W+' '+H+'" width="100%" style="max-width:400px;height:auto">';
+  var fills=[['#FFF4E8','#FDE2C4','#F9C8A0'],['#EAF6EE','#FFF4E8','#FDE2C4'],['#EAF6EE','#EAF6EE','#FFF4E8']];
+  for(var r=0;r<3;r++)for(var c=0;c<3;c++)s+='<rect x="'+(x0+c*cw)+'" y="'+(y0+r*ch)+'" width="'+cw+'" height="'+ch+'" fill="'+fills[r][c]+'" stroke="#fff" stroke-width="2"/>';
+  ['Low','Med','High'].forEach(function(t,i){s+='<text x="'+(x0+i*cw+cw/2)+'" y="'+(y0+3*ch+18)+'" font-size="12" font-weight="800" text-anchor="middle" fill="#333">'+t+'</text><text x="'+(x0-8)+'" y="'+(y0+(2-i)*ch+ch/2+4)+'" font-size="12" font-weight="800" text-anchor="end" fill="#333">'+t+'</text>'});
+  s+='<text x="'+(x0+1.5*cw)+'" y="'+(H-2)+'" font-size="12" font-weight="800" text-anchor="middle" fill="#7A3A00" class="en">Probability →</text><text x="'+(x0+1.5*cw)+'" y="'+(H-2)+'" font-size="12" font-weight="800" text-anchor="middle" fill="#7A3A00" class="ta">வாய்ப்பு →</text>';
+  s+='<text x="14" y="'+(y0+1.5*ch)+'" font-size="12" font-weight="800" text-anchor="middle" fill="#7A3A00" transform="rotate(-90 14 '+(y0+1.5*ch)+')" class="en">Impact →</text><text x="14" y="'+(y0+1.5*ch)+'" font-size="12" font-weight="800" text-anchor="middle" fill="#7A3A00" transform="rotate(-90 14 '+(y0+1.5*ch)+')" class="ta">பாதிப்பு →</text>';
+  var cnt={};items.forEach(function(it,i){var k=it.p+'_'+it.i;cnt[k]=(cnt[k]||0)+1;var off=(cnt[k]-1);var cx=x0+it.p*cw+22+(off%3)*24,cy=y0+(2-it.i)*ch+26+Math.floor(off/3)*26;
+    s+='<circle cx="'+cx+'" cy="'+cy+'" r="11" fill="#C62828"/><text x="'+cx+'" y="'+(cy+4.5)+'" font-size="12" font-weight="800" text-anchor="middle" fill="#fff">'+(i+1)+'</text>'});
+  s+='</svg>';return s+'<ol style="margin:6px 0 0;padding-left:22px;font-weight:600;font-size:14px">'+items.map(function(it){return '<li>'+L(it.n[0],it.n[1])+'</li>'}).join('')+'</ol>'}
+function balance(rew,risk){function col(arr,clr,ttl){return '<div class="card" style="border-top:5px solid '+clr+'"><h3>'+ttl+'</h3>'+arr.map(function(x){return '<div style="margin:8px 0"><div style="display:flex;justify-content:space-between;gap:8px;font-weight:700;font-size:14px"><span>'+L(x[1],x[2])+'</span><b style="font-family:IBM Plex Mono,monospace">'+x[0]+'/5</b></div><div class="bar" style="height:9px;margin-top:3px"><i style="width:'+x[0]*20+'%;background:'+clr+'"></i></div></div>'}).join('')+'</div>'}
+  var sr=rew.reduce(function(a,x){return a+x[0]},0),sk=risk.reduce(function(a,x){return a+x[0]},0);
+  return '<div class="g2">'+col(rew,'#16803A',L('Reward drivers','Reward காரணிகள்'))+col(risk,'#C62828',L('Risk drivers','Risk காரணிகள்'))+'</div>'+
+  '<div class="card hl"><h3>'+L('Balance','சமநிலை')+': <span class="pos">'+L('Reward','Reward')+' '+sr+'</span> vs <span class="neg">'+L('Risk','Risk')+' '+sk+'</span></h3><div class="bar" style="height:18px;display:flex"><i style="width:'+(sr/(sr+sk)*100)+'%;background:#16803A"></i><i style="width:'+(sk/(sr+sk)*100)+'%;background:#C62828"></i></div><div class="note">'+L('Weights = CB judgement of size × likelihood (1–5). Education only.','Weights = size × வாய்ப்பு-க்கு CB மதிப்பீடு (1–5). Education மட்டும்.')+'</div></div>'}
+
+
+/* ===== Studds: 6-pillar restructure ===== */
+(function(){
+var old={};D.tabs.forEach(function(t){old[t.id]=t});
+var SC=[6.5,7.0,6.5,8.0,6.0,6.0],Q1=['down','flat','flat','flat','down','down'];
+var avg=SC.reduce(function(a,b){return a+b},0)/6;
+D.key='cb_q1fy27_studds_6p';
+D.title=L('Studds Accessories — Q1 FY27 · 6-Pillar Analysis','Studds Accessories — Q1 FY27 · 6-Pillar அலசல்');
+var risks=[{n:['Styrene / resin inflation lasts longer','Styrene / resin விலை ஏற்றம் நீடிப்பு'],p:2,i:2},{n:['Price-hike lag and competitor pricing','Price-hike lag, போட்டியாளர் விலை'],p:1,i:1},{n:['Inventory build-up (103 days)','Inventory ஏற்றம் (103 days)'],p:1,i:1},{n:['Two-wheeler demand slowdown','Two-wheeler demand slowdown'],p:0,i:2},{n:['US / EU tariffs on exports','Exports மேல US / EU tariffs'],p:1,i:1},{n:['New products (Bluetooth, jackets) start-up losses','புது products (Bluetooth, jackets) ஆரம்ப loss'],p:2,i:0},{n:['Disclosure / sentiment (analyst meet cancelled)','Disclosure / sentiment (analyst meet cancel)'],p:1,i:0},{n:['All plants in one city (Faridabad)','எல்லா plants-உம் ஒரே ஊர் (Faridabad)'],p:0,i:2}];
+var dash={id:'dash',l:['Dashboard','Dashboard'],html:function(){return ''+
+ '<div class="grid">'+
+ kpi(L('Revenue (consol.)','Revenue (consol.)'),'₹169.7 cr','<span class="up">▲ 13.7% YoY</span>')+kpi(L('EBITDA margin','EBITDA margin'),'11.5%','<span class="dn">vs 20.3% Q1 FY26</span>')+kpi('PAT','₹12.3 cr','<span class="dn">▼ 39.3% YoY</span>')+kpi(L('Export share','Export share'),'~21%','<span class="neu">'+L('target 30%','target 30%')+'</span>')+kpi(L('Borrowings','கடன்'),'₹4 cr','<span class="up">'+L('near debt-free','கிட்டத்தட்ட கடன் இல்லை')+'</span>')+kpi(L('Price · P/E','Price · P/E'),'₹414.5','<span class="neu">21.8× TTM · Mcap ₹1,631 cr</span>')+'</div>'+
+ '<div class="g2">'+card(L('CB 6-Pillar Scorecard','CB 6-Pillar Scorecard'),'<div style="display:flex;align-items:center;gap:14px;margin-bottom:6px">'+ring(avg,84)+'<div><div class="prog">'+L('CB Pillar Score (average)','CB Pillar Score (சராசரி)')+'</div><b style="font-size:17px">'+L('Strong franchise, healthy balance sheet — margins under raw-material pressure','வலுவான franchise, நல்ல balance sheet — raw material-னால margin அழுத்தம்')+'</b></div></div>'+scoreBars(SC,Q1))+
+ card(L('Pillar shape','Pillar வடிவம்'),'<div style="text-align:center">'+radar(SC)+'</div>'+ul([['Strongest: Financial Strength (8.0) and Competitive Advantage (7.0).','பலம்: Financial Strength (8.0), Competitive Advantage (7.0).'],['Weakest: Valuations and Risk &amp; Reward (6.0) — margin recovery still to be proven.','பலவீனம்: Valuations, Risk &amp; Reward (6.0) — margin recovery இன்னும் நிரூபிக்கணும்.']]))+'</div>'+
+ card(L('CB lenses','CB lenses'),'<span class="chip">CY <b>54</b></span><span class="chip">TG <b>51</b></span><span class="chip" style="border-color:#C62828;color:#C62828">'+L('Weinstein Stage 4 → Conviction capped at 55','Weinstein Stage 4 → Conviction max 55')+'</span>')+
+ card(L('Q1 FY27 in one look','Q1 FY27 ஒரே பார்வையில'),ul([
+ ['India\'s helmet leader: demand is fine (sales +13.7%), costs are the problem (profit −39%).','இந்தியாவோட helmet leader: demand நல்லா இருக்கு (sales +13.7%), cost தான் பிரச்சனை (profit −39%).'],
+ ['Q1 hurt Business Quality, Valuation comfort and Risk/Reward; the moat, growth runway and balance sheet are intact.','Q1 Business Quality, Valuation comfort, Risk/Reward-ஐ பாதிச்சுது; moat, growth, balance sheet அப்படியே.'],
+ ['Margin guide: 14–15% in Q2, 18–20% by Q4 — if styrene stays calm.','Margin guidance: Q2-ல 14–15%, Q4-க்குள்ள 18–20% — styrene அமைதியா இருந்தா.'],
+ ['At ₹414.5 the price already discounts earnings ~20% below FY26 (at 25×).','₹414.5-ல (25×) FY26-ஐ விட ~20% குறைஞ்ச earnings-ஐ விலை ஏற்கனவே எடுத்துக்கிட்டிருக்கு.']]))}};
+var p1={id:'p1',l:['1 · Business Quality','1 · Business தரம்'],html:function(){return pillarHead(1,SC[0],['A cash-generating consumer franchise — with commodity-sensitive margins','Cash தர்ற consumer franchise — commodity-க்கு sensitive-ஆன margin'],['down','EBITDA margin fell 880 bps to 11.5%; annualised ROE ~9%.','EBITDA margin 880 bps இறங்கி 11.5%; annualised ROE ~9%.'])+
+ '<div class="g2">'+card(L('Quality checklist','Quality checklist'),checks([
+ [1,'Market leader: ~27% of India\'s helmet volume; world\'s largest maker by volume.','Market leader: இந்திய helmet volume-ல ~27%; volume-ல உலகத்துலயே பெரியது.'],
+ [1,'Strong cash conversion: FY26 CFO was 96% of operating profit.','நல்ல cash conversion: FY26 CFO = operating profit-ல 96%.'],
+ [1,'Near debt-free; growth capex funded from internal cash.','கிட்டத்தட்ட கடன் இல்லை; growth capex சொந்த cash-ல.'],
+ [1,'Consumer brand with a wide dealer network — not dependent on a few buyers at home.','பரந்த dealer network உள்ள consumer brand — உள்நாட்டுல சில buyers-ஐ மட்டும் நம்பலை.'],
+ [-1,'Margins swing with plastics: 23% (FY21) → 12% (FY22–23) → 20% (FY26) → 11.5% (Q1 FY27).','Plastics-ஓட margin ஆடுது: 23% (FY21) → 12% (FY22–23) → 20% (FY26) → 11.5% (Q1 FY27).'],
+ [-1,'ROE only mid-teens even in good years (~17% in FY26).','நல்ல வருஷத்துலயும் ROE ~17% தான் (FY26).'],
+ [-1,'Inventory days rose from 62 to 103 in two years.','ரெண்டு வருஷத்துல inventory days 62 → 103.']]))+
+ card(L('Margin vs return (%)','Margin vs return (%)'),chart({labels:['FY23','FY24','FY25','FY26','Q1 FY27*'],series:[{name:A('EBITDA margin','EBITDA margin'),color:'#F28C28',vals:[12,17,18,19.3,11.5]},{name:A('ROE','ROE'),color:'#1F5FAD',vals:[9.8,14.8,15.5,17,9.4]}]})+'<div class="note">'+L('*Q1 FY27 ROE is a CB annualised estimate.','*Q1 FY27 ROE CB annualised கணக்கு.')+'</div>')+'</div>'+
+ changeBox([['Q2 margin ≥ 14–15% and Q4 near 18–20% → score back to ~7.5.','Q2 margin ≥ 14–15%, Q4 18–20% பக்கம் → score ~7.5.'],['Margins stuck near 12% → score toward 5.5.','Margin 12% பக்கமே நின்னா → score ~5.5.']])}};
+var p2={id:'p2',l:['2 · Competitive Advantage','2 · போட்டி பலம் (Moat)'],html:function(){return pillarHead(2,SC[1],['Scale, brands and export reach give a durable — but not unbeatable — edge','Scale, brands, export reach — நிலையான edge, ஆனா வெல்ல முடியாதது இல்லை'],['flat','Volumes still grew in Q1; the margin hit was industry-wide input inflation.','Q1-லயும் volume வளர்ந்துச்சு; margin அடி industry முழுக்க input inflation.'])+
+ '<div class="g2">'+card(L('Moat checklist','Moat checklist'),checks([
+ [1,'Scale: ~9.5 mn helmets/year — 27.3% volume and 25.5% value share in India.','Scale: வருஷத்துக்கு ~9.5 mn helmets — இந்தியாவுல volume 27.3%, value 25.5%.'],
+ [1,'Two-brand ladder: Studds (mass) + SMK (premium, MRP ₹3,000–12,800, ~27% EBITDA).','ரெண்டு brand: Studds (mass) + SMK (premium, MRP ₹3,000–12,800, ~27% EBITDA).'],
+ [1,'Export reach in 70+ markets; trusted maker for Daytona (USA) and O\'Neal.','70+ markets-ல export; Daytona (USA), O\'Neal-க்கு நம்பகமான maker.'],
+ [1,'In-house moulds and certification know-how (BIS, ECE, DOT) — a barrier for small makers.','In-house moulds, certification know-how (BIS, ECE, DOT) — சின்ன makers-க்கு தடை.'],
+ [-1,'Steelbird is bigger by revenue (₹787 cr vs ₹584 cr in FY25) and Vega is close behind.','Revenue-ல Steelbird பெருசு (FY25 ₹787 cr vs ₹584 cr); Vega பக்கத்துலயே.'],
+ [-1,'Helmets are price-sensitive; hikes reach dealers with a lag, as Q1 showed.','Helmet விலை-sensitive; hike dealers-கிட்ட போக lag ஆகும் — Q1 காட்டுச்சு.']]))+
+ card(L('FY25 peer comparison (₹ cr)','FY25 peer ஒப்பீடு (₹ cr)'),chart({h:240,labels:['Studds','Steelbird','Vega'],series:[{name:A('Revenue','Revenue'),color:'#F28C28',vals:[583.8,787,474]},{name:A('PAT','PAT'),color:'#1F5FAD',vals:[69.6,27.3,53]}]})+
+ table([L('Company','Company'),L('Revenue','Revenue'),'PAT',L('PAT margin','PAT margin'),'ROCE'],[['Studds','₹584 cr','₹69.6 cr','11.9%','20.3%'],['Steelbird','₹787 cr','₹27.3 cr','3.5%','29.1%'],['Vega','₹474 cr','₹53.0 cr','11.2%','16.1%']])+'<div class="note">'+L('Steelbird and Vega are unlisted; figures from IPO-period peer tables.','Steelbird, Vega listed இல்லை; IPO நேர peer table-ல இருந்து.')+'</div>')+'</div>'+
+ pic('Studds is like the biggest bakery in town: its ovens (moulds) are the largest, so each helmet costs less to make, and it has both a value bread (Studds) and a premium cake (SMK). But when flour (plastic) prices jump, even the biggest bakery waits a few weeks before raising prices.','Studds ஊர்லயே பெரிய bakery மாதிரி: அதோட oven (moulds) பெருசு, அதனால ஒவ்வொரு helmet-க்கும் cost கம்மி; value bread (Studds), premium cake (SMK) ரெண்டும் இருக்கு. ஆனா மாவு (plastic) விலை ஏறினா, பெரிய bakery-யும் விலை ஏத்த சில வாரம் காத்திருக்கணும்.')+
+ changeBox([['SMK share rises beyond 20% and exports reach 25%+ → score ~8.','SMK பங்கு 20%-ஐ தாண்டி, exports 25%+ வந்தா → score ~8.'],['Market-share loss to Steelbird/Vega or imports → score toward 6.','Steelbird/Vega, imports-க்கு share போனா → score ~6.']])}};
+var p3={id:'p3',l:['3 · Growth Opportunity','3 · Growth வாய்ப்பு'],html:function(){return pillarHead(3,SC[2],['Steady market growth plus mix upgrades — not a hyper-growth story','நிலையான market growth + mix upgrade — hyper-growth கதை இல்லை'],['flat','Volumes +8–10% and revenue growth in the mid-to-high teens still guided for FY27.','FY27-க்கு volume +8–10%, revenue mid-to-high teens growth — guidance அப்படியே.'])+
+ '<div class="grid">'+kpi(L('India helmet market','இந்திய helmet market'),'₹2,080 cr','FY24','neu')+kpi(L('FY29 estimate','FY29 மதிப்பீடு'),'₹3,150 cr','8.7% CAGR','up')+kpi(L('Organised share','Organised பங்கு'),'55% → 80%',L('by FY30','FY30-க்குள்ள'),'up')+kpi(L('Helmet penetration','Helmet penetration'),'60%',L('vs ~75% global','உலக சராசரி ~75%'),'up')+kpi(L('Capacity','Capacity'),'9.5 → 12.5 mn','+30%','up')+kpi(L('FY30 ambition','FY30 இலக்கு'),'>₹1,000 cr',L('revenue (management)','revenue (management)'),'up')+'</div>'+
+ '<div class="g2">'+card(L('Helmet market and the organised shift','Helmet market, organised மாற்றம்'),chart({h:250,labels:['FY24','FY29E'],series:[{name:A('Market ₹ cr','Market ₹ cr'),color:'#F28C28',vals:[2080,3150]}]})+chart({h:220,labels:['Now','FY30E'],series:[{name:A('Organised share %','Organised பங்கு %'),color:'#16803A',vals:[55,80]}]})+'<div class="note">'+L('Industry estimates cited in IPO-period research (CareEdge/QY Research).','IPO நேர research-ல சொன்ன industry மதிப்பீடு (CareEdge/QY Research).')+'</div>')+
+ card(L('Growth checklist','Growth checklist'),checks([
+ [1,'Organised players gain as unorganised share falls from ~45% to ~20% (BIS enforcement).','Unorganised பங்கு ~45%-ல இருந்து ~20%-க்கு குறைய, organised players-க்கு லாபம் (BIS enforcement).'],
+ [1,'Replacement every 3–4 years plus rising 2W sales keep the base growing.','3–4 வருஷத்துக்கு ஒரு தடவை replacement, 2W sales ஏற்றம் — base வளரும்.'],
+ [1,'Exports from ~21% to 30% of sales; Europe subsidiary, Alpinestars private label.','Exports ~21%-ல இருந்து 30%; Europe subsidiary, Alpinestars private label.'],
+ [1,'Premiumisation via SMK; new Bluetooth and riding-gear lines (₹15–20 cr hoped in FY27).','SMK premiumisation; புது Bluetooth, riding gear (FY27-ல ₹15–20 cr).'],
+ [1,'Capacity +1.5 mn from late Oct 2026, another +1.5 mn later (12.5 mn total).','Oct 2026 கடைசியில +1.5 mn, அப்புறம் இன்னொரு +1.5 mn (மொத்தம் 12.5 mn).'],
+ [0,'Possible rule for two helmets with each new 2W — status unconfirmed.','புது 2W-க்கு ரெண்டு helmet rule வரலாம் — உறுதி இல்லை.'],
+ [-1,'Core market grows only ~9% a year — growth above that needs exports and mix.','Core market வருஷத்துக்கு ~9% தான் — அதுக்கு மேல exports, mix வேணும்.']]))+'</div>'+
+ changeBox([['Export share crossing 25% → score ~7.5.','Export பங்கு 25%-ஐ தாண்டினா → score ~7.5.'],['2W slowdown or weak replacement demand → score toward 5.5.','2W slowdown, replacement demand குறைஞ்சா → score ~5.5.']])}};
+var p4={id:'p4',l:['4 · Financial Strength','4 · Financial பலம்'],html:function(){return pillarHead(4,SC[3],['Near debt-free and self-funding — inventory is the one soft spot','கிட்டத்தட்ட கடன் இல்லை, சொந்த பணத்துல growth — inventory தான் பலவீனம்'],['flat','Lower Q1 profit does not threaten the balance sheet.','Q1 profit குறைஞ்சது balance sheet-ஐ அச்சுறுத்தலை.'])+
+ '<div class="grid">'+kpi(L('Borrowings','கடன்'),'₹4 cr','Mar 2026','up')+kpi(L('Net worth','Net worth'),'₹525 cr','Mar 2026','neu')+kpi('CFO FY26','₹88 cr',L('96% of operating profit','Operating profit-ல 96%'),'up')+kpi(L('Free cash flow','Free cash flow'),'₹41 cr','FY26','up')+kpi(L('Inventory days','Inventory days'),'103',L('target 85–90','target 85–90'),'dn')+kpi(L('Facility-V capex','Facility-V capex'),'~₹160 cr',L('internal accruals','சொந்த பணம்'),'neu')+'</div>'+
+ '<div class="g2">'+card(L('Debt down, equity up (₹ cr)','கடன் குறைவு, equity ஏற்றம் (₹ cr)'),chart({labels:['Mar 22','Mar 23','Mar 24','Mar 25','Mar 26'],series:[{name:A('Net worth','Net worth'),color:'#1F5FAD',vals:[311,338,388,451,525]},{name:A('Borrowings','Borrowings'),color:'#C62828',vals:[46,32,9,6,4]}]}))+
+ card(L('Strength checklist','Strength checklist'),checks([
+ [1,'Borrowings cut from ₹46 cr (FY22) to ₹4 cr (FY26).','கடன் ₹46 cr (FY22)-ல இருந்து ₹4 cr (FY26).'],
+ [1,'Positive free cash flow in four of the last five years.','கடைசி 5 வருஷத்துல 4-ல positive free cash flow.'],
+ [1,'Expansion and dividends (₹3/share) funded from operations.','Expansion, dividend (₹3/share) operations பணத்துல.'],
+ [-1,'Inventory days 62 → 103 locks up cash (warehouses, Europe stock).','Inventory days 62 → 103 — cash மாட்டிக்குது (warehouses, Europe stock).'],
+ [-1,'Payable days rose to 69 — supplier credit is part of the cushion.','Payable days 69-க்கு ஏறிடுச்சு — supplier credit-உம் cushion-ல ஒரு பங்கு.']]))+'</div>'+
+ changeBox([['Inventory back to 85–90 days → score ~8.5.','Inventory 85–90 days-க்கு வந்தா → score ~8.5.'],['Inventory keeps rising with weak margins → score toward 7.','Margin weak-ஆ இருக்கும்போது inventory ஏறிக்கிட்டே இருந்தா → score ~7.']])}};
+var p5={id:'val',l:['5 · Valuations','5 · Valuations'],html:function(){return pillarHead(5,SC[4],['Reasonable on normal earnings, stretched on today\'s depressed earnings','சாதாரண earnings-ல நியாயமான விலை, இப்போதைய குறைஞ்ச earnings-ல அதிகம்'],['down','P/E on current-run-rate earnings jumped to ~33× even though the price fell.','விலை இறங்கியும், இப்போதைய run-rate earnings-ல P/E ~33× ஆயிடுச்சு.'])+
+ card(L('Same price, different earnings base — P/E at ₹414.5','ஒரே விலை, வேற earnings — ₹414.5-ல P/E'),chart({h:250,labels:['FY26 EPS ₹21.3','TTM EPS ~₹19','Q1×4 EPS ₹12.5','FY28 margin-recovery ~₹28*'],series:[{name:A('P/E (×)','P/E (×)'),color:'#F28C28',vals:[19.5,21.8,33.2,14.8]}]})+'<div class="note">'+L('*CB illustration (scenario C on this tab), not a forecast.','*CB உதாரணம் (இந்த tab-ல scenario C) — forecast இல்லை.')+'</div>')+
+ old.val.html()}};
+var p6={id:'p6',l:['6 · Risks &amp; Reward','6 · Risk &amp; Reward'],html:function(){return pillarHead(6,SC[5],['Tilted mildly to reward if margins recover; raw materials are the key risk','Margin திரும்பினா reward பக்கம் கொஞ்சம் சாயுது; raw material தான் முக்கிய risk'],['down','Q1 showed how fast input costs can cut profit.','Input cost எவ்வளவு வேகமா profit-ஐ வெட்டும்னு Q1 காட்டுச்சு.'])+
+ balance([[4,'Margin recovery to 18–20% by Q4 FY27','Q4 FY27-க்குள்ள margin 18–20%'],[3,'Exports to 30% (30–35% margin)','Exports 30% (30–35% margin)'],[3,'SMK premiumisation (~27% EBITDA)','SMK premiumisation (~27% EBITDA)'],[3,'Organised shift + capacity +30%','Organised மாற்றம் + capacity +30%'],[1,'Two-helmet rule (unconfirmed)','ரெண்டு helmet rule (உறுதி இல்லை)']],
+  [[4,'Styrene / resin inflation persists','Styrene / resin விலை ஏற்றம் நீடிப்பு'],[2,'Competition and price-hike lag','போட்டி, price-hike lag'],[2,'Inventory and working capital','Inventory, working capital'],[2,'Two-wheeler slowdown','Two-wheeler slowdown'],[1,'New-product losses, disclosure','புது product loss, disclosure']])+
+ '<div class="g2">'+card(L('Risk map','Risk map'),riskMatrix(risks))+
+ card(L('What the price already assumes (CB reverse math)','விலை ஏற்கனவே என்ன நம்புது (CB reverse கணக்கு)'),table([L('If the market pays','Market கொடுக்கற multiple'),L('EPS needed for ₹414.5','₹414.5-க்கு வேண்டிய EPS'),L('PAT needed','வேண்டிய PAT'),L('vs FY26 PAT ₹82.7 cr','FY26 PAT ₹82.7 cr-ஓட')],[['25×','₹16.6','₹65 cr','<b class="pos">−21%</b>'],['20×','₹20.7','₹82 cr','≈ 0%'],['15×','₹27.6','₹109 cr','<b class="neg">+32%</b>']],L('3.94 cr shares. At 20–25× the price assumes earnings at or below FY26 — it does not demand a big recovery.','3.94 cr shares. 20–25×-ல FY26 அளவு அல்லது அதுக்கு கீழ earnings-ஐ தான் விலை நம்புது — பெரிய recovery எதிர்பாக்கலை.'))+
+  ul([['Reward depends on one swing factor: margins returning toward 18–20%.','Reward ஒரே காரணியை நம்பி: margin 18–20%-க்கு திரும்புதல்.'],['Downside is cushioned by a clean balance sheet and leadership; upside is gradual, not explosive.','Downside-ஐ clean balance sheet, leadership தாங்குது; upside மெதுவா, வெடிப்பு இல்லை.']]))+'</div>'}};
+var view={id:'view',l:['Analyst View','Analyst View'],html:function(){return card(L('6-pillar summary','6-pillar சுருக்கம்'),table([L('Pillar','Pillar'),L('Score','Score'),L('Q1 effect','Q1 விளைவு'),L('One line','ஒரு வரி')],[
+ ['1. '+L(PILLARS[0][0],PILLARS[0][1]),'6.5','▼',L('Cash-generating leader; volatile margins','Cash தர்ற leader; ஆடும் margin')],['2. '+L(PILLARS[1][0],PILLARS[1][1]),'7.0','■',L('Scale + two brands + exports','Scale + ரெண்டு brand + exports')],['3. '+L(PILLARS[2][0],PILLARS[2][1]),'6.5','■',L('~9% market growth + mix upgrade','~9% market growth + mix upgrade')],['4. '+L(PILLARS[3][0],PILLARS[3][1]),'8.0','■',L('Near debt-free; watch inventory','கிட்டத்தட்ட கடன் இல்லை; inventory கவனிங்க')],['5. '+L(PILLARS[4][0],PILLARS[4][1]),'6.0','▼',L('~20× normal earnings; ~33× Q1 run-rate','சாதாரண earnings-ல ~20×; Q1 run-rate-ல ~33×')],['6. '+L(PILLARS[5][0],PILLARS[5][1]),'6.0','▼',L('Mild reward tilt if margins recover','Margin திரும்பினா reward பக்கம் சாய்வு')],['<b>'+L('CB Pillar Score','CB Pillar Score')+'</b>','<b>'+avg.toFixed(1)+'</b>','','']]))+old.view.html()}};
+D.tabs=[dash,p1,p2,p3,p4,p5,p6,old.take,old.biz,old.smk,old.rm,old.seg,old.fin,old.cash,old.mkt,old.trig,old.swot,old.assist,{id:'quiz',l:['Cauvery Socrates','Cauvery Socrates'],html:function(){return card('',ul([['Test what you learned — '+D.quiz.length+' quick questions.','நீங்க கத்துக்கிட்டதை test பண்ணுங்க — '+D.quiz.length+' கேள்விகள்.']]),'hl')+'<div id="quiz"></div>'}},view];
+D.assist.storageKey='cba_q1fy27_studds_6p';
+var K=[
+{k:['pillar','pillars','scorecard','score','overall','ஸ்கோர்','பில்லர்'],a:A('Studds\' CB Pillar Score is '+avg.toFixed(1)+'/10 — strongest on Financial Strength (8.0), weakest on Valuations and Risk & Reward (6.0).','Studds CB Pillar Score '+avg.toFixed(1)+'/10 — Financial Strength (8.0) பலம்; Valuations, Risk & Reward (6.0) பலவீனம்.'),tab:'dash'},
+{k:['business quality','quality','தரம்','குவாலிட்டி'],a:A('Business Quality scores 6.5/10: a cash-generating leader, but margins swing with plastic prices.','Business Quality 6.5/10: cash தர்ற leader, ஆனா plastic விலையோட margin ஆடுது.'),tab:'p1'},
+{k:['competitive advantage','moat','competition','competitor','peer','peers','steelbird','vega','மோட்','போட்டி'],a:A('Competitive Advantage scores 7/10: scale, two brands and exports; Steelbird is bigger by revenue (₹787 cr vs ₹584 cr in FY25).','போட்டி பலம் 7/10: scale, ரெண்டு brand, exports; FY25 revenue-ல Steelbird பெருசு (₹787 cr vs ₹584 cr).'),d:A('FY25 PAT: Studds ₹69.6 cr, Vega ₹53 cr, Steelbird ₹27.3 cr.','FY25 PAT: Studds ₹69.6 cr, Vega ₹53 cr, Steelbird ₹27.3 cr.'),tab:'p2'},
+{k:['growth opportunity','opportunity','runway','market size','future','வாய்ப்பு','எதிர்காலம்'],a:A('Growth Opportunity scores 6.5/10: the helmet market grows ~9% a year (₹2,080 cr → ₹3,150 cr by FY29), with extra growth from exports and SMK.','Growth வாய்ப்பு 6.5/10: helmet market வருஷத்துக்கு ~9% (₹2,080 cr → FY29-ல ₹3,150 cr); exports, SMK-ல extra growth.'),tab:'p3'},
+{k:['organised','unorganised','penetration','ஆர்கனைஸ்டு'],a:A('Organised players hold ~55% of the market, expected to reach ~80% by FY30.','Organised players ~55%, FY30-க்குள்ள ~80% ஆகும்னு எதிர்பார்ப்பு.'),tab:'p3'},
+{k:['financial strength','balance sheet strength','நிதி பலம்','ஃபைனான்ஷியல்'],a:A('Financial Strength scores 8/10: borrowings just ₹4 cr and positive free cash flow; inventory at 103 days is the soft spot.','Financial பலம் 8/10: கடன் ₹4 cr தான், positive free cash flow; inventory 103 days தான் பலவீனம்.'),tab:'p4'},
+{k:['risk reward','risk and reward','reward','upside','downside','ரிவார்டு'],a:A('Risk & Reward scores 6/10 — tilted mildly to reward if margins recover; raw materials are the key risk.','Risk & Reward 6/10 — margin திரும்பினா reward பக்கம் கொஞ்சம்; raw material தான் முக்கிய risk.'),tab:'p6'},
+{k:['price assume','priced in','reverse','what is priced','விலை நம்புது'],a:A('At 20× earnings, ₹414.5 needs PAT of about ₹82 cr — roughly FY26\'s level; at 25× it needs ~21% less.','20× earnings-ல ₹414.5-க்கு PAT ~₹82 cr — கிட்டத்தட்ட FY26 அளவு; 25×-ல ~21% குறைவு போதும்.'),tab:'p6'}];
+D.assist.kb.forEach(function(e){if(e.tab==='val')e.tab='val'});
+D.assist.kb=K.concat(D.assist.kb);
+D.assist.suggestions=[['What is the pillar score?','Pillar score என்ன?'],['How strong is the moat?','Moat எவ்வளவு பலம்?'],['What does the price assume?','விலை என்ன நம்புது?']].concat(D.assist.suggestions.slice(0,3));
+D.quiz.push({q:['Which pillar scores highest for Studds?','Studds-க்கு அதிக score எந்த pillar?'],o:[['Valuations','Valuations'],['Financial Strength','Financial Strength'],['Growth Opportunity','Growth Opportunity'],['Risks & Reward','Risks & Reward']],c:1,e:['Financial Strength 8/10 — borrowings only ₹4 cr.','Financial Strength 8/10 — கடன் ₹4 cr தான்.']},
+{q:['Organised players\' share of India\'s helmet market is expected to move from ~55% to…','இந்திய helmet market-ல organised பங்கு ~55%-ல இருந்து எவ்வளவுக்கு?'],o:[['~40%','~40%'],['~60%','~60%'],['~80% by FY30','FY30-க்குள்ள ~80%'],['100%','100%']],c:2,e:['~80% by FY30 as BIS enforcement squeezes unorganised makers.','BIS enforcement-னால FY30-க்குள்ள ~80%.']});
+})();
+
+
+/* ---------- Page wiring ---------- */
+var LANG='en';
+document.getElementById('ttl').innerHTML=D.title;document.getElementById('subt').innerHTML=D.sub;
+var tabsEl=document.getElementById('tabs'),mainEl=document.getElementById('main');
+D.tabs.forEach(function(t){var b=document.createElement('button');b.id='tb_'+t.id;b.innerHTML=L(t.l[0],t.l[1]);b.onclick=function(){showTab(t.id)};tabsEl.appendChild(b);
+  var p=document.createElement('section');p.className='panel';p.id='p_'+t.id;p.innerHTML='<h2>'+L(t.l[0],t.l[1])+'</h2>'+t.html();mainEl.appendChild(p)});
+function showTab(id){D.tabs.forEach(function(t){document.getElementById('p_'+t.id).classList.toggle('act',t.id===id);document.getElementById('tb_'+t.id).classList.toggle('act',t.id===id)});
+  var b=document.getElementById('tb_'+id);if(b&&b.scrollIntoView)b.scrollIntoView({block:'nearest',inline:'center'});window.scrollTo(0,0);try{localStorage.setItem(D.key+'_tab',id)}catch(e){}}
+function setLang(l){LANG=l;document.body.className='lang-'+l;document.documentElement.lang=l;document.getElementById('bEN').classList.toggle('on',l==='en');document.getElementById('bTA').classList.toggle('on',l==='ta');if(window.assist)assist.setLang(l);try{localStorage.setItem(D.key+'_lang',l)}catch(e){}}
+function readTab(){var p=document.querySelector('.panel.act');if(p&&window.assist)assist.speak(p.innerText.replace(/\s+\n/g,'\n'))}
+
+/* ---------- Cauvery Assist (compact built-in engine; CONFIG-compatible) ---------- */
+var CauveryAssist=(function(){
+  function mount(el,CFG){
+    var S={rate:0.8,wait:3,voice:'',review:false,conv:false},lang=CFG.lang||'en',queue=[],rec=null,listening=false,finalTxt='',silT=null,cdT=null,lastTab=null;
+    try{var sv=JSON.parse(localStorage.getItem(CFG.storageKey)||'{}');for(var k in sv)S[k]=sv[k]}catch(e){}
+    function save(){try{localStorage.setItem(CFG.storageKey,JSON.stringify(S))}catch(e){}}
+    var T=function(o){return o?(o[lang]||o.en):''};
+    el.innerHTML='<div class="as"><div class="as-h"><div class="t">🎙️ '+T(CFG.title)+'</div><div class="as-c">'+
+      '<span class="en">Speed</span><span class="ta">வேகம்</span> <button data-a="minus">−</button><b class="rv"></b><button data-a="plus">+</button>'+
+      '<button data-r="0.6">'+L('Slow','மெதுவா')+'</button><button data-r="0.8">'+L('Relaxed','நிதானமா')+'</button><button data-r="1">'+L('Normal','Normal')+'</button><button data-r="1.25">'+L('Fast','வேகமா')+'</button>'+
+      '<input type="range" min="0.5" max="1.5" step="0.05" class="sl" style="width:90px">'+
+      '<button data-a="pause">⏯</button><button data-a="stop">⏹</button></div>'+
+      '<div class="as-c"><span class="en">Wait after I stop speaking</span><span class="ta">பேசி முடிச்சதும் wait</span><select class="wt"><option value="2">2s</option><option value="3">3s</option><option value="5">5s</option><option value="0">'+T(A('Only when I tap Done','Done அழுத்தும் போது மட்டும்'))+'</option></select>'+
+      '<label><input type="checkbox" class="rvw"> '+L('Check text before sending','அனுப்பறதுக்கு முன்னாடி text பாக்கணும்')+'</label>'+
+      '<label><input type="checkbox" class="cnv"> '+L('Conversation mode','Conversation mode')+'</label>'+
+      '<select class="vc" style="max-width:170px"></select></div></div>'+
+      '<div class="as-note vn" style="display:none"></div><div class="as-log"></div><div class="cd"><i></i></div>'+
+      '<div class="as-in"><input class="q" type="text"><button class="mic" title="Mic">🎤</button><button class="go">'+L('Ask','கேளுங்க')+'</button></div><div class="sug"></div></div>';
+    var $=function(s){return el.querySelector(s)},log=$('.as-log'),inp=$('.q'),micB=$('.mic'),bar=$('.cd i'),vn=$('.vn');
+    function syncUI(){$('.rv').textContent=S.rate.toFixed(2)+'×';$('.sl').value=S.rate;$('.wt').value=String(S.wait);$('.rvw').checked=!!S.review;$('.cnv').checked=!!S.conv;inp.placeholder=T(CFG.placeholder);
+      el.querySelectorAll('[data-r]').forEach(function(b){b.classList.toggle('on',Math.abs(+b.dataset.r-S.rate)<0.01)});fillVoices();renderSug()}
+    function renderSug(){$('.sug').innerHTML='';CFG.suggestions.forEach(function(s){var b=document.createElement('button');b.textContent=lang==='ta'?s[1]:s[0];b.onclick=function(){ask(b.textContent)};$('.sug').appendChild(b)})}
+    function voicesFor(){if(!('speechSynthesis' in window))return [];var want=lang==='ta'?'ta':'en';return speechSynthesis.getVoices().filter(function(v){return v.lang.toLowerCase().indexOf(want)===0}).sort(function(a,b){return (/in/i.test(b.lang.slice(-2))?1:0)-(/in/i.test(a.lang.slice(-2))?1:0)})}
+    function fillVoices(){var vs=voicesFor(),sel=$('.vc');sel.innerHTML=vs.map(function(v){return '<option'+(v.name===S.voice?' selected':'')+'>'+v.name+'</option>'}).join('')||'<option>'+T(A('Default voice','Default voice'))+'</option>';
+      if(lang==='ta'&&!vs.length){vn.style.display='block';vn.innerHTML=L('','இந்த device-ல Tamil voice இல்லை — text-ஆ பாருங்க, இல்லனா Chrome/Android-ல try பண்ணுங்க.')}else vn.style.display='none'}
+    if('speechSynthesis' in window)speechSynthesis.onvoiceschanged=fillVoices;
+    function speak(text){if(!('speechSynthesis' in window))return;stop();queue=String(text).replace(/\n+/g,'. ').split(/(?<=[.!?।])\s+/).map(function(x){return x.trim()}).filter(function(x){return x.length>1});next()}
+    function next(){if(!queue.length){if(S.conv&&!listening)setTimeout(listen,500);return}var u=new SpeechSynthesisUtterance(queue.shift());u.rate=S.rate;u.lang=lang==='ta'?'ta-IN':'en-IN';var vs=voicesFor(),pk=vs.filter(function(v){return v.name===S.voice})[0]||vs[0];if(pk)u.voice=pk;u.onend=function(){setTimeout(next,320)};speechSynthesis.speak(u)}
+    function stop(){queue=[];if('speechSynthesis' in window)speechSynthesis.cancel()}
+    function setRate(r){S.rate=Math.max(0.5,Math.min(1.5,Math.round(r*100)/100));save();syncUI()}
+    el.querySelectorAll('[data-r]').forEach(function(b){b.onclick=function(){setRate(+b.dataset.r)}});
+    el.querySelector('[data-a=minus]').onclick=function(){setRate(S.rate-0.05)};el.querySelector('[data-a=plus]').onclick=function(){setRate(S.rate+0.05)};
+    $('.sl').oninput=function(){setRate(+this.value)};
+    el.querySelector('[data-a=pause]').onclick=function(){if(!('speechSynthesis' in window))return;if(speechSynthesis.paused)speechSynthesis.resume();else speechSynthesis.pause()};
+    el.querySelector('[data-a=stop]').onclick=stop;
+    $('.wt').onchange=function(){S.wait=+this.value;save()};$('.rvw').onchange=function(){S.review=this.checked;save()};$('.cnv').onchange=function(){S.conv=this.checked;save()};$('.vc').onchange=function(){S.voice=this.value;save()};
+    var NOADV=/\b(buy|sell|hold|target price|price target|should i invest|invest now|accumulate|exit|stop ?loss|multibagger|recommend)\b|வாங்கலாமா|விக்கலாமா|விற்கலாமா|டார்கெட்|முதலீடு பண்ணலாமா|வாங்கணுமா/i;
+    function find(q){var s=q.toLowerCase();if(NOADV.test(s))return {a:CFG.noAdvice};var best=null,bs=0;
+      CFG.kb.forEach(function(e){var sc=0;e.k.forEach(function(k){if(s.indexOf(k.toLowerCase())>-1)sc+=k.length>4?2:1});if(sc>bs){bs=sc;best=e}});
+      if(!best&&lastTab&&/\b(its|it|that|why)\b|அது|ஏன்/.test(s)){best=CFG.kb.filter(function(e){return e.tab===lastTab})[0]}
+      return best||{a:CFG.fallback}}
+    function add(cls,html){var d=document.createElement('div');d.className='msg '+cls;d.innerHTML=html;log.appendChild(d);log.scrollTop=log.scrollHeight;return d}
+    function ask(q){q=String(q||'').trim();if(!q)return;inp.value='';add('u',q.replace(/</g,'&lt;'));var r=find(q),direct=T(r.a);if(r.tab)lastTab=r.tab;
+      var h='<div class="d1">'+direct+'</div>'+(r.d?'<details><summary>'+T(A('More details','மேலும் விவரம்'))+'</summary>'+T(r.d)+'</details>':'')+'<div class="ac"><button class="sp">🔊 '+T(A('Read aloud','படிச்சு காட்டு'))+'</button>'+(r.tab&&CFG.onOpenTab?'<button class="ot">↗ '+T(A('Open related tab','அந்த tab-ஐ திறங்க'))+'</button>':'')+'</div>';
+      var m=add('a',h);m.querySelector('.sp').onclick=function(){speak(direct)};if(m.querySelector('.ot'))m.querySelector('.ot').onclick=function(){CFG.onOpenTab(r.tab)};speak(direct)}
+    function startBar(sec){clearInterval(cdT);var t0=Date.now();bar.style.width='0';cdT=setInterval(function(){var f=(Date.now()-t0)/(sec*1000);bar.style.width=Math.min(100,f*100)+'%';if(f>=1)clearInterval(cdT)},80)}
+    function listen(){var SR=window.SpeechRecognition||window.webkitSpeechRecognition;if(!SR){add('a','<div class="d1">'+T(A('Voice input is not supported in this browser. Please type your question, or open this page in Chrome/Edge.','இந்த browser-ல voice input வேலை செய்யாது — type பண்ணுங்க, இல்லனா Chrome/Edge-ல திறங்க.'))+'</div>');return}
+      stop();rec=new SR();rec.lang=lang==='ta'?'ta-IN':'en-IN';rec.continuous=true;rec.interimResults=true;finalTxt='';listening=true;micB.classList.add('rec');micB.textContent=S.wait===0?T(A('Done','Done')):'⏺';
+      rec.onresult=function(e){var it='';for(var i=e.resultIndex;i<e.results.length;i++){var r=e.results[i];if(r.isFinal)finalTxt+=r[0].transcript+' ';else it+=r[0].transcript}inp.value=(finalTxt+it).trim();if(S.wait>0){clearTimeout(silT);startBar(S.wait);silT=setTimeout(done,S.wait*1000)}};
+      rec.onend=function(){if(listening){try{rec.start()}catch(e){}}};
+      rec.onerror=function(e){if(e.error==='not-allowed'||e.error==='service-not-allowed'||e.error==='audio-capture'){listening=false;micB.classList.remove('rec');micB.textContent='🎤';add('a','<div class="d1">'+T(A('Microphone is blocked here. Read-aloud still works — type your question, or open the GitHub Pages copy in Chrome/Edge for voice input.','இங்க mic block ஆயிருக்கு. Read-aloud வேலை செய்யும் — type பண்ணுங்க, இல்லனா GitHub Pages copy-ஐ Chrome/Edge-ல திறங்க.'))+'</div>')}};
+      try{rec.start()}catch(e){}}
+    function done(){listening=false;clearTimeout(silT);clearInterval(cdT);bar.style.width='0';try{rec&&rec.stop()}catch(e){}micB.classList.remove('rec');micB.textContent='🎤';var q=inp.value.trim();if(!q)return;if(S.review){inp.focus();return}ask(q)}
+    micB.onclick=function(){if(listening)done();else listen()};
+    $('.go').onclick=function(){ask(inp.value)};inp.onkeydown=function(e){if(e.key==='Enter')ask(inp.value)};
+    function greet(){add('a','<div class="d1">'+T(CFG.greeting)+'</div>')}
+    syncUI();greet();
+    return {setLang:function(l){lang=l;syncUI()},speak:speak,stop:stop,ask:ask,plain:function(h){var d=document.createElement('div');d.innerHTML=h;return d.innerText}};
+  }
+  return {mount:mount,A:A};
+})();
+var assist=CauveryAssist.mount(document.getElementById('assist'),D.assist);
+
+/* ---------- Cauvery Socrates quiz ---------- */
+(function(){var el=document.getElementById('quiz');if(!el)return;var i=0,score=0,Q=D.quiz;
+  function draw(){if(i>=Q.length){el.innerHTML='<div class="card hl"><h3>'+L('Done! Your score','முடிஞ்சுது! உங்க score')+': <span class="prog">'+score+' / '+Q.length+'</span></h3>'+L(score>=Q.length-1?'Excellent — you read the results closely.':'Good try — revisit the tabs and try again.',score>=Q.length-1?'சூப்பர் — results-ஐ நல்லா படிச்சிருக்கீங்க.':'நல்ல முயற்சி — tabs-ஐ ஒரு தடவை பாத்துட்டு மறுபடி try பண்ணுங்க.')+'<div style="margin-top:10px"><button class="btn" id="qr">'+L('Restart','மறுபடி')+'</button></div></div>';document.getElementById('qr').onclick=function(){i=0;score=0;draw()};return}
+    var q=Q[i];el.innerHTML='<div class="card"><div class="prog">Q'+(i+1)+' / '+Q.length+' · '+L('Score','Score')+' '+score+'</div><h3 style="margin-top:6px">'+L(q.q[0],q.q[1])+'</h3><div class="qz">'+q.o.map(function(o,j){return '<button class="opt" data-j="'+j+'">'+L(o[0],o[1])+'</button>'}).join('')+'</div><div class="qx"></div></div>';
+    el.querySelectorAll('.opt').forEach(function(b){b.onclick=function(){if(el.querySelector('.opt.ok'))return;var j=+b.dataset.j;if(j===q.c)score++;el.querySelectorAll('.opt').forEach(function(x,k){if(k===q.c)x.classList.add('ok');else if(k===j)x.classList.add('no')});
+      el.querySelector('.qx').innerHTML='<div class="ex"><b>'+(j===q.c?L('Correct!','சரி!'):L('Not quite.','இல்லைங்க.'))+'</b> '+L(q.e[0],q.e[1])+'</div><div style="margin-top:10px"><button class="btn" id="qn">'+L('Next ➜','அடுத்தது ➜')+'</button></div>';document.getElementById('qn').onclick=function(){i++;draw()}}})}
+  draw()})();
+
+var st0='dash',lg0='en';try{st0=localStorage.getItem(D.key+'_tab')||'dash';lg0=localStorage.getItem(D.key+'_lang')||'en'}catch(e){}
+if(!document.getElementById('p_'+st0))st0='dash';showTab(st0);setLang(lg0);
+</script>
+</body>
+</html>
