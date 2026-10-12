@@ -1,0 +1,1575 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Amber Enterprises Q1 FY27</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&family=Noto+Sans+Tamil:wght@400;600;700&display=swap">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<style>
+/* Layout: sticky circuit-trace masthead + scrollable tab rail; each tab is a stack of full-width sections with 2–3 column grids that collapse to one column on phones. Single light theme by house rule. */
+:root{
+  --bg:#ffffff;          /* page */
+  --panel:#fff8ef;       /* warm panel tint */
+  --line:#efe3d2;        /* hairlines */
+  --ink:#1c1a17;         /* near-black text */
+  --muted:#6b6257;       /* secondary text */
+  --accent:#e2711d;      /* CB orange */
+  --accent-soft:#fde9d6;
+  --cd:#e2711d;          /* Consumer Durables */
+  --el:#0f7c80;          /* Electronics */
+  --rl:#5146c9;          /* Railway & Defence */
+  --good:#1f8a4c; --warn:#b7791f; --bad:#c2410c;
+  --f-display:"Archivo", "Helvetica Neue", Arial, sans-serif;
+  --f-body:"IBM Plex Sans", "Segoe UI", Roboto, Arial, sans-serif;
+  --f-mono:"IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace;
+  --f-ta:"Noto Sans Tamil", "Latha", "Nirmala UI", sans-serif;
+  color-scheme: light;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html,body{background:var(--bg);color:var(--ink)}
+body{margin:0;font-family:var(--f-body);font-size:15px;line-height:1.55;-webkit-text-size-adjust:100%}
+body.lang-ta{font-family:var(--f-ta),var(--f-body)}
+.wrap{max-width:1240px;margin:0 auto;padding-inline:16px;padding-block:0 120px}
+h1,h2,h3,h4{font-family:var(--f-display);text-wrap:balance;line-height:1.2;margin:0}
+body.lang-ta h1,body.lang-ta h2,body.lang-ta h3,body.lang-ta h4{font-family:var(--f-ta)}
+h2{font-size:1.45rem;font-weight:800;margin-bottom:.35rem}
+h3{font-size:1.08rem;font-weight:700;margin-bottom:.5rem}
+p{margin:.35rem 0 .7rem;max-width:78ch}
+.muted{color:var(--muted)}
+.mono,.num{font-family:var(--f-mono);font-variant-numeric:tabular-nums}
+.ta{display:none}
+body.lang-ta .ta{display:block}
+body.lang-ta span.ta{display:inline}
+body.lang-ta .en{display:none}
+
+/* watermark */
+body::before{content:"CB Research";position:fixed;inset:0;display:flex;align-items:center;justify-content:center;font-family:var(--f-display);font-weight:800;font-size:12vw;color:rgba(226,113,29,.045);transform:rotate(-18deg);pointer-events:none;z-index:0;white-space:nowrap}
+
+/* masthead */
+.mast{position:sticky;top:env(safe-area-inset-top,0px);z-index:30;background:#fff;border-bottom:1px solid var(--line)}
+.mast-in{max-width:1240px;margin:0 auto;padding:10px 16px 0;display:flex;flex-wrap:wrap;gap:8px 16px;align-items:center;justify-content:space-between}
+.brand{display:flex;gap:12px;align-items:center;min-width:0}
+.brand .tick{font-family:var(--f-mono);font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);font-weight:500}
+.brand h1{font-size:1.25rem;font-weight:800}
+.brand .sub{font-size:.8rem;color:var(--muted)}
+.mast-tools{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.pill{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--line);background:#fff;border-radius:999px;padding:5px 12px;font:500 .8rem var(--f-body);color:var(--ink);cursor:pointer}
+.pill:hover,.pill:focus-visible{border-color:var(--accent);outline:none}
+.pill.on{background:var(--accent);border-color:var(--accent);color:#fff}
+.trace{display:block;width:100%;height:14px}
+.tabs{max-width:1240px;margin:0 auto;padding:6px 16px 0;display:flex;gap:2px;overflow-x:auto;scrollbar-width:thin}
+.tab{flex:0 0 auto;border:0;background:none;padding:9px 12px 10px;font:600 .84rem var(--f-body);color:var(--muted);cursor:pointer;border-bottom:3px solid transparent;white-space:nowrap}
+body.lang-ta .tab{font-family:var(--f-ta)}
+.tab:hover{color:var(--ink)}
+.tab.active{color:var(--ink);border-bottom-color:var(--accent)}
+.tab:focus-visible{outline:2px solid var(--accent);outline-offset:-2px}
+
+/* panels */
+.pane{display:none;position:relative;z-index:1;padding-top:22px}
+.pane.active{display:block}
+.sec{margin-bottom:26px}
+.eyebrow{font:500 .72rem var(--f-mono);letter-spacing:.09em;text-transform:uppercase;color:var(--accent);margin-bottom:4px}
+.grid{display:grid;gap:16px}
+.g2{grid-template-columns:repeat(2,minmax(0,1fr))}
+.g3{grid-template-columns:repeat(3,minmax(0,1fr))}
+.g4{grid-template-columns:repeat(4,minmax(0,1fr))}
+@media (max-width:900px){.g3,.g4{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:620px){.g2,.g3,.g4{grid-template-columns:minmax(0,1fr)}}
+.card{background:#fff;border:1px solid var(--line);border-radius:10px;padding:14px 16px;min-width:0}
+.card.tint{background:var(--panel)}
+.kpi .lab{font-size:.78rem;color:var(--muted);text-transform:uppercase;letter-spacing:.05em}
+.kpi .val{font:700 1.65rem var(--f-display);font-variant-numeric:tabular-nums;margin:2px 0}
+.kpi .chg{font:500 .82rem var(--f-mono)}
+.up{color:var(--good)} .dn{color:var(--bad)} .flat{color:var(--warn)}
+.chip{display:inline-block;font:600 .7rem var(--f-body);padding:2px 8px;border-radius:999px;border:1px solid currentColor;white-space:nowrap}
+.chip.g{color:var(--good)} .chip.w{color:var(--warn)} .chip.b{color:var(--bad)} .chip.n{color:var(--muted)}
+.summary-ta{background:var(--panel);border:1px dashed #e9c9a6;border-radius:10px;padding:12px 16px;margin:4px 0 18px}
+.summary-ta h4{font-size:.95rem;margin-bottom:4px;color:var(--accent)}
+.note{font-size:.8rem;color:var(--muted)}
+ul.clean{margin:.3rem 0 .6rem;padding-left:1.1rem} ul.clean li{margin:.25rem 0}
+
+/* tables */
+.tw{overflow-x:auto;border:1px solid var(--line);border-radius:10px;background:#fff}
+table{border-collapse:collapse;width:100%;font-size:.86rem}
+th,td{padding:8px 10px;border-bottom:1px solid var(--line);text-align:right;white-space:nowrap}
+th:first-child,td:first-child{text-align:left}
+td.l,th.l{text-align:left;white-space:normal}
+thead th{background:var(--panel);font-weight:600;font-size:.78rem;color:var(--muted);text-transform:uppercase;letter-spacing:.03em;position:sticky;top:0}
+tbody tr:hover{background:#fffaf4}
+td.num,th.num{font-family:var(--f-mono);font-variant-numeric:tabular-nums}
+tr.hl td{background:#fff3e6;font-weight:600}
+tr.tot td{font-weight:700;border-top:2px solid var(--line)}
+td.src{font-size:.74rem;color:var(--muted);white-space:normal;min-width:160px;text-align:left}
+
+/* charts */
+.chart{position:relative;height:300px}
+.chart.tall{height:380px}
+.chart.short{height:240px}
+.cap{font-size:.78rem;color:var(--muted);margin-top:6px}
+
+/* business map */
+.bmap{width:100%;min-width:760px;height:auto;display:block}
+.bmap .node{cursor:pointer}
+.bmap .node rect{transition:stroke-width .15s}
+.bmap .node:hover rect,.bmap .node.sel rect{stroke-width:3}
+.bmap text{font-family:var(--f-body);font-size:12px;fill:var(--ink)}
+.bmap .hd{font-family:var(--f-display);font-weight:700;font-size:13px}
+.bmap .col{font-family:var(--f-mono);font-size:10.5px;fill:var(--muted);letter-spacing:.08em}
+#mapInfo{min-height:86px}
+
+/* timeline */
+.tl{position:relative;padding-left:22px}
+.tl::before{content:"";position:absolute;left:7px;top:4px;bottom:4px;width:2px;background:var(--line)}
+.tl .ev{position:relative;margin-bottom:14px}
+.tl .ev::before{content:"";position:absolute;left:-20px;top:5px;width:12px;height:12px;border-radius:50%;background:#fff;border:3px solid var(--accent)}
+.tl .ev.f::before{border-color:var(--el);border-style:dashed}
+.tl .d{font:500 .76rem var(--f-mono);color:var(--muted)}
+
+/* value scorecard */
+.vrow{display:grid;grid-template-columns:minmax(0,1.3fr) 110px minmax(0,2fr);gap:12px;align-items:start;padding:12px 0;border-bottom:1px solid var(--line)}
+@media (max-width:620px){.vrow{grid-template-columns:minmax(0,1fr)}}
+.meter{height:8px;border-radius:6px;background:#f1e8dc;overflow:hidden;margin-top:6px}
+.meter i{display:block;height:100%;background:var(--accent)}
+.sens td.c{font-family:var(--f-mono);text-align:center}
+input[type=range]{width:100%;accent-color:var(--accent)}
+
+/* layers diagram */
+.layers{display:grid;gap:6px}
+.layer{display:grid;grid-template-columns:150px minmax(0,1fr) 120px;gap:10px;align-items:center;border:1px solid var(--line);border-radius:8px;padding:8px 12px;background:#fff}
+@media (max-width:620px){.layer{grid-template-columns:minmax(0,1fr)}}
+.layer b{font-family:var(--f-display)}
+.layer .who{font-size:.8rem;color:var(--muted)}
+.layer.amber{border-color:var(--accent);background:#fff6ec}
+
+/* CBF score bars */
+.sbar{display:flex;align-items:center;gap:8px;font-size:.82rem}
+.sbar .t{width:150px;flex:0 0 auto}
+.sbar .b{flex:1;height:10px;background:#f3ebe1;border-radius:6px;overflow:hidden}
+.sbar .b i{display:block;height:100%}
+.sbar .v{width:44px;text-align:right;font-family:var(--f-mono)}
+
+/* CB badge + disclaimer + assist */
+#cbBadge{position:fixed;right:16px;bottom:calc(16px + env(safe-area-inset-bottom,0px));z-index:60;width:58px;height:58px;border-radius:50%;background:var(--accent);color:#fff;border:3px solid #fff;box-shadow:0 4px 14px rgba(226,113,29,.45);font:800 1.15rem var(--f-display);cursor:pointer;animation:blink 2.4s ease-in-out infinite}
+@keyframes blink{0%,100%{box-shadow:0 0 0 0 rgba(226,113,29,.55)}50%{box-shadow:0 0 0 10px rgba(226,113,29,0)}}
+@media (prefers-reduced-motion:reduce){#cbBadge{animation:none}}
+#disc{position:fixed;right:16px;bottom:calc(84px + env(safe-area-inset-bottom,0px));z-index:61;max-width:360px;background:#fff;border:1px solid var(--line);border-radius:12px;box-shadow:0 10px 30px rgba(0,0,0,.12);padding:14px 16px;font-size:.82rem}
+#assistBtn{position:fixed;right:84px;bottom:calc(22px + env(safe-area-inset-bottom,0px));z-index:59;border:1px solid var(--accent);background:#fff;color:var(--accent);border-radius:999px;padding:9px 14px;font:600 .85rem var(--f-body);cursor:pointer;box-shadow:0 3px 10px rgba(0,0,0,.08)}
+body.lang-ta #assistBtn{font-family:var(--f-ta)}
+#assist{position:fixed;right:16px;bottom:calc(84px + env(safe-area-inset-bottom,0px));z-index:62;width:min(400px,calc(100vw - 32px));height:min(540px,70vh);background:#fff;border:1px solid var(--line);border-radius:14px;box-shadow:0 14px 40px rgba(0,0,0,.16);display:flex;flex-direction:column}
+#assist header{padding:10px 14px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center}
+#assist .log{flex:1;overflow-y:auto;padding:12px 14px;display:flex;flex-direction:column;gap:8px}
+#assist .m{padding:8px 11px;border-radius:10px;max-width:92%;font-size:.86rem;white-space:pre-line}
+#assist .m.u{align-self:flex-end;background:var(--accent-soft)}
+#assist .m.b{align-self:flex-start;background:#f7f4ef}
+#assist form{display:flex;gap:6px;padding:10px;border-top:1px solid var(--line)}
+#assist input{flex:1;min-width:0;border:1px solid var(--line);border-radius:8px;padding:8px 10px;font:inherit}
+#assist input:focus{outline:2px solid var(--accent)}
+.ibtn{border:1px solid var(--line);background:#fff;border-radius:8px;padding:6px 10px;cursor:pointer;font:600 .82rem var(--f-body)}
+.ibtn.rec{background:var(--bad);color:#fff;border-color:var(--bad)}
+.sugg{display:flex;flex-wrap:wrap;gap:6px;padding:0 14px 8px}
+.sugg button{font-size:.74rem;padding:3px 9px}
+
+/* socrates */
+.q{border:1px solid var(--line);border-radius:10px;padding:14px 16px;margin-bottom:14px;background:#fff}
+.opts{display:grid;gap:8px;margin-top:8px}
+.opt{text-align:left;border:1px solid var(--line);background:#fff;border-radius:8px;padding:9px 12px;cursor:pointer;font:inherit}
+.opt:hover{border-color:var(--accent)}
+.opt.ok{border-color:var(--good);background:#eef8f1}
+.opt.no{border-color:var(--bad);background:#fdf0ea}
+.fb{margin-top:8px;font-size:.88rem}
+textarea{width:100%;min-height:90px;border:1px solid var(--line);border-radius:8px;padding:10px;font:inherit}
+textarea:focus{outline:2px solid var(--accent)}
+</style>
+</head>
+<body>
+<header class="mast">
+  <div class="mast-in">
+    <div class="brand">
+      <div>
+        <div class="tick">NSE: AMBER · BSE: 540902 · Q1 FY27 (Apr–Jun 2026)</div>
+        <h1><span class="en">Amber Enterprises India · Business &amp; Investment Analysis</span><span class="ta">அம்பர் என்டர்பிரைசஸ் · வணிக மற்றும் முதலீட்டு ஆய்வு</span></h1>
+        <div class="sub"><span class="en">Prepared 11 Oct 2026, 17:54 IST · Price as of 9 Oct 2026 close (BSE ₹6,449.30)</span><span class="ta">தயாரித்தது 11 அக்டோபர் 2026, மாலை 5:54 · விலை 9 அக்டோபர் 2026 முடிவு (₹6,449.30)</span></div>
+      </div>
+    </div>
+    <div class="mast-tools">
+      <button class="pill on" id="btnEn" type="button">English</button>
+      <button class="pill" id="btnTa" type="button">தமிழ்</button>
+    </div>
+  </div>
+  <svg class="trace" viewBox="0 0 1200 14" preserveAspectRatio="none" aria-hidden="true">
+    <path d="M0 7 H180 L192 2 H360 L372 12 H520 L532 7 H760 L772 2 H930 L942 12 H1200" fill="none" stroke="#f3c9a3" stroke-width="1.5"/>
+    <circle cx="192" cy="2" r="2" fill="#e2711d"/><circle cx="372" cy="12" r="2" fill="#0f7c80"/><circle cx="532" cy="7" r="2" fill="#e2711d"/><circle cx="772" cy="2" r="2" fill="#5146c9"/><circle cx="942" cy="12" r="2" fill="#e2711d"/>
+  </svg>
+  <nav class="tabs" id="tabs" role="tablist">
+    <button class="tab active" data-t="ov" role="tab"><span class="en">Overview</span><span class="ta">சுருக்கம்</span></button>
+    <button class="tab" data-t="bm" role="tab"><span class="en">Business Model</span><span class="ta">வணிக மாதிரி</span></button>
+    <button class="tab" data-t="fin" role="tab"><span class="en">Q1 Results</span><span class="ta">முதல் காலாண்டு முடிவுகள்</span></button>
+    <button class="tab" data-t="cf" role="tab"><span class="en">Cash Flow &amp; WC</span><span class="ta">பணப்புழக்கம்</span></button>
+    <button class="tab" data-t="val" role="tab"><span class="en">Valuations</span><span class="ta">மதிப்பீடு</span></button>
+    <button class="tab" data-t="plans" role="tab"><span class="en">Plans &amp; JVs</span><span class="ta">திட்டங்கள் &amp; கூட்டு முயற்சிகள்</span></button>
+    <button class="tab" data-t="acq" role="tab"><span class="en">Acquisitions</span><span class="ta">கையகப்படுத்தல்கள்</span></button>
+    <button class="tab" data-t="model" role="tab"><span class="en">Model Shift: Value Test</span><span class="ta">மாதிரி மாற்றம்: மதிப்பு சோதனை</span></button>
+    <button class="tab" data-t="school" role="tab"><span class="en">EMS School</span><span class="ta">இஎம்எஸ் பள்ளி</span></button>
+    <button class="tab" data-t="peers" role="tab"><span class="en">Peer Comparison</span><span class="ta">போட்டியாளர் ஒப்பீடு</span></button>
+    <button class="tab" data-t="mkt" role="tab"><span class="en">Market Activity</span><span class="ta">சந்தை நகர்வு</span></button>
+    <button class="tab" data-t="swot" role="tab"><span class="en">SWOT &amp; Risks</span><span class="ta">பலம் &amp; அபாயம்</span></button>
+    <button class="tab" data-t="an" role="tab"><span class="en">Analysts' Rating</span><span class="ta">ஆய்வாளர் மதிப்பீடு</span></button>
+    <button class="tab" data-t="mg" role="tab"><span class="en">Management &amp; Board</span><span class="ta">நிர்வாகம் &amp; இயக்குநர் குழு</span></button>
+    <button class="tab" data-t="so" role="tab"><span class="en">Cauvery Socrates</span><span class="ta">காவேரி சாக்ரடீஸ்</span></button>
+  </nav>
+</header>
+
+<main class="wrap">
+
+<!-- ================= OVERVIEW ================= -->
+<section class="pane active" id="ov">
+  <div class="summary-ta ta"><h4>ஒரு நிமிஷத்துல</h4>
+  இந்த முதல் காலாண்டுல அம்பர் ₹3,888 கோடி வருமானம் பார்த்திருக்காங்க. போன வருஷம் இதே காலாண்ட விட 13% அதிகம். செயல்பாட்டு லாபம் ₹337 கோடி, 28% வளர்ச்சி, மார்ஜின் 8.7%. ஆனா அஸென்ட் சர்க்யூட்ஸ் நிறுவனத்துல மீதி பங்க வாங்கும்போது ₹123 கோடி ஒருமுறை நஷ்டம் கணக்குல வந்துச்சு. அதனால கையில நின்ன லாபம் வெறும் ₹3 கோடி தான். அந்த ஒருமுறை செலவ தள்ளி பார்த்தா லாபம் ₹126 கோடி, 19% வளர்ச்சி. இப்போ ஹீரோ எலக்ட்ரானிக்ஸ் பிரிவு தான். அதோட லாபம் இரண்டு மடங்குக்கு மேல ஏறியிருக்கு. கடன் மூணு மாசத்துல ₹510 கோடில இருந்து ₹1,225 கோடிக்கு ஏறியிருக்கு, அதையும் கவனிக்கணும்.</div>
+
+  <div class="sec">
+    <div class="eyebrow">Q1 FY27 snapshot · ₹ Crore</div>
+    <div class="grid g4" id="kpis"></div>
+  </div>
+
+  <div class="sec grid g2">
+    <div class="card">
+      <h3><span class="en">Five things that matter this quarter</span><span class="ta">இந்த காலாண்டுல முக்கியமான ஐந்து விஷயம்</span></h3>
+      <ol class="en" style="padding-left:1.1rem;margin:.2rem 0">
+        <li><b>Quality of growth improved.</b> Gross margin rose from 15.7% to 19.2% as the mix moved toward electronics. Operating EBITDA rose 28% on 13% revenue growth.</li>
+        <li><b>Electronics is now the profit engine.</b> Electronics EBITDA more than doubled to ₹107 Cr (+117%), with a 10.8% margin. It is 25% of revenue and 32% of EBITDA.</li>
+        <li><b>The headline PAT of ₹3 Cr is an accounting event.</b> A ₹123 Cr exceptional loss came from settling the Ascent Circuits put liability. Adjusted PAT is ₹126 Cr (+19%).</li>
+        <li><b>The balance sheet is stretching.</b> Net debt is about ₹1,225 Cr (vs about ₹510 Cr in March). FY26 CFO was only ₹240 Cr, and the board holds a ₹5,000 Cr fund-raise enabling resolution.</li>
+        <li><b>The business model is being rebuilt.</b> Mobile phones for Oppo (from Q1 FY28), HDI and multilayer PCBs under ECMS, and medical, defence and aero electronics move Amber from an AC ODM toward a component-led EMS platform.</li>
+      </ol>
+      <ol class="ta" style="padding-left:1.1rem;margin:.2rem 0">
+        <li><b>வளர்ச்சியோட தரம் கூடியிருக்கு.</b> மொத்த மார்ஜின் 15.7% ல இருந்து 19.2% ஆச்சு. வருமானம் 13% ஏறினப்போ செயல்பாட்டு லாபம் 28% ஏறியிருக்கு.</li>
+        <li><b>எலக்ட்ரானிக்ஸ் தான் லாப இன்ஜின்.</b> அந்த பிரிவோட லாபம் ₹107 கோடி, 117% வளர்ச்சி.</li>
+        <li><b>₹3 கோடி நிகர லாபம் ஒரு கணக்கியல் நிகழ்வு.</b> ₹123 கோடி ஒருமுறை நஷ்டத்த தள்ளினா லாபம் ₹126 கோடி.</li>
+        <li><b>கடன் ஏறுது.</b> நிகர கடன் சுமார் ₹1,225 கோடி. ₹5,000 கோடி நிதி திரட்ட இயக்குநர் குழு அனுமதி கொடுத்திருக்கு.</li>
+        <li><b>வணிக மாதிரியே மாறுது.</b> ஒப்போ மொபைல் தயாரிப்பு, அச்சு சர்க்யூட் போர்டு ஆலைகள், மருத்துவ மற்றும் பாதுகாப்பு மின்னணு.</li>
+      </ol>
+    </div>
+    <div class="card">
+      <h3><span class="en">Revenue &amp; EBITDA mix by division, Q1 FY27</span><span class="ta">பிரிவு வாரியா வருமானம் &amp; லாபம்</span></h3>
+      <div class="chart short"><canvas id="cMix"></canvas></div>
+      <p class="cap"><span class="en">Inner ring: revenue ₹3,887 Cr. Outer ring: operating EBITDA ₹337 Cr. Electronics is 25% of revenue but 32% of EBITDA.</span><span class="ta">உள் வளையம் வருமானம், வெளி வளையம் லாபம்.</span></p>
+    </div>
+  </div>
+
+  <div class="sec grid g2">
+    <div class="card">
+      <h3><span class="en">CBF26 six-factor score</span><span class="ta">சிபிஎஃப்26 ஆறு அம்ச மதிப்பெண்</span></h3>
+      <div id="cbfAmber" class="grid" style="gap:8px"></div>
+      <p class="note en">Scores are computed in this file from the peer data (Peer Comparison tab), so they are rule-based and reproducible. g = Q1 revenue growth, m = EBITDA margin, d = working-capital discipline (CCC days), v = valuation (trailing P/E), t = true earnings (FY26 CFO ÷ PAT), r = returns (ROCE). Each factor is out of 10, and the total is scaled to 100.</p>
+      <p class="note ta">இந்த மதிப்பெண் இந்த கோப்புலேயே கணக்கிடப்படுது: வளர்ச்சி, மார்ஜின், நடைமுறை மூலதனம், மதிப்பீடு, பணமா மாறுற லாபம், மூலதன வருவாய்.</p>
+    </div>
+    <div class="card tint">
+      <h3><span class="en">CB reading</span><span class="ta">சிபி பார்வை</span></h3>
+      <p class="en">Operationally this was a good quarter: margins rose in Consumer Durables and electronics margins nearly doubled. Reported earnings, cash flow and the balance sheet tell a heavier story. Amber is mid-way through a capital-intensive change of identity. It plans about ₹4,200 Cr of PCB capex (Jewar ₹3,200 Cr, Hosur ₹1,000 Cr), has spent about ₹1,509 Cr on acquisitions since mid-2025 (Acquisitions tab), and is starting a new low-margin, high-volume mobile line. At ₹6,449 the stock trades at about 32x the brokers' average FY28E EPS of ₹199. The market has priced in a good part of that transition.</p>
+      <p class="ta">செயல்பாட்டு ரீதியா இது நல்ல காலாண்டு. ஆனா கணக்குல வந்த லாபம், பணப்புழக்கம், கடன், இந்த மூணும் சுமையான கதை சொல்லுது. அம்பர் இப்போ அதிக முதலீடு தேவைப்படுற மாற்றத்தோட நடுவுல இருக்கு. ₹6,449 விலைல, 2028 நிதியாண்டு எதிர்பார்ப்பு லாபத்துக்கு சுமார் 32 மடங்கு விலை. அந்த மாற்றத்தோட ஒரு நல்ல பகுதி ஏற்கனவே விலைல இருக்கு.</p>
+      <p class="note en">CB Research does not issue buy, sell or hold calls. Third-party broker views are on the Analysts' Rating tab.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ================= BUSINESS MODEL ================= -->
+<section class="pane" id="bm">
+  <div class="summary-ta ta"><h4>அம்பர் என்ன செய்யுது?</h4>
+  அம்பர் சொந்த பிராண்டுல பொருள் விக்கல. ஏசி விக்கிற பெரிய பிராண்டுகளுக்கு, அவங்க பேர்ல ஏசி வடிவமைச்சு தயாரிச்சு கொடுக்குது. இதுக்கு பேரு "ஒடிஎம்". அதோட ஏசிக்குள்ள போற வெப்பப் பரிமாற்றி, மோட்டார், உலோகத் தகடு மாதிரி உதிரி பாகங்களையும் அவங்களே செய்றாங்க. இரண்டாவது பிரிவு எலக்ட்ரானிக்ஸ். அச்சு சர்க்யூட் போர்டு செஞ்சு, அதுல பாகங்கள பொருத்தி, மத்த நிறுவனங்களுக்கு கொடுக்குறாங்க. மூணாவது பிரிவு ரயில்வே, மெட்ரோ, பாதுகாப்புத் துறைக்கான ஏசி மற்றும் துணை அமைப்புகள். கீழ இருக்குற படத்துல ஒவ்வொரு பெட்டியையும் தொட்டா விளக்கம் வரும்.</div>
+
+  <div class="sec">
+    <div class="eyebrow">Interactive business-model map · tap any box</div>
+    <h2><span class="en">From copper coil to finished AC, PCB, phone and train HVAC</span><span class="ta">செம்புச் சுருளில் இருந்து ஏசி, சர்க்யூட் போர்டு, மொபைல், ரயில் ஏசி வரை</span></h2>
+    <div class="tw" style="padding:8px">
+      <svg class="bmap" id="bmap" viewBox="0 0 1000 470" role="img" aria-label="Amber business model map"></svg>
+    </div>
+    <div class="card tint" id="mapInfo" style="margin-top:10px"><b class="en">Tap a box to see what Amber does at that step and how it earns.</b><b class="ta">ஒரு பெட்டியை தொட்டா அந்த படியில அம்பர் என்ன செய்யுது, எப்படி சம்பாதிக்குதுன்னு வரும்.</b></div>
+  </div>
+
+  <div class="sec grid g3">
+    <div class="card" style="border-top:4px solid var(--cd)">
+      <div class="eyebrow" style="color:var(--cd)">Consumer Durables · 71% of Q1 revenue</div>
+      <h3><span class="en">RAC ODM + components</span><span class="ta">ஏசி ஒடிஎம் + உதிரி பாகங்கள்</span></h3>
+      <p class="en">Amber designs and builds complete room ACs (indoor and outdoor units) for brands under their labels, plus heat exchangers, motors and sheet metal for ACs, washing machines and refrigerators. It earns a conversion margin, and pricing is largely pass-through on copper and aluminium. The business is seasonal: Q4 and Q1 are peak, and Q2 is weak.</p>
+      <p class="ta">பிராண்டுகளுக்காக முழு ஏசியும், அதோட உதிரி பாகங்களும் தயாரிக்கிறாங்க. செம்பு, அலுமினியம் விலை உயர்வ வாடிக்கையாளர் கிட்ட மாத்தி விடுவாங்க. கோடை காலம் தான் உச்ச பருவம்.</p>
+      <table><tbody>
+        <tr><td>Q1 FY27 revenue</td><td class="num">2,758</td></tr>
+        <tr><td>Operating EBITDA</td><td class="num">214</td></tr>
+        <tr><td>Margin</td><td class="num">7.8%</td></tr>
+        <tr><td>FY27 guidance</td><td class="l" style="text-align:right">In line with RAC industry (~13–15%)</td></tr>
+      </tbody></table>
+    </div>
+    <div class="card" style="border-top:4px solid var(--el)">
+      <div class="eyebrow" style="color:var(--el)">Electronics · 25% of Q1 revenue</div>
+      <h3><span class="en">PCBA, bare PCB, box-build, industrial</span><span class="ta">சர்க்யூட் போர்டு, பொருத்துதல், தொழில் மின்னணு</span></h3>
+      <p class="en">IL JIN Electronics builds PCB assemblies for consumer durables, EV, telecom, hearables and industrial customers. Ascent and Shogini make bare multilayer, flex and metal-clad PCBs. Power-One adds inverters, UPS and BESS, and Unitronics adds PLC and HMI automation. Margins are higher (bare PCB normally about 16%, now about 12%), and so is capital intensity.</p>
+      <p class="ta">அச்சு சர்க்யூட் போர்டு தயாரிப்பு, அதுல பாகங்கள் பொருத்துதல், சூரிய இன்வெர்ட்டர், தொழிற்சாலை கட்டுப்பாட்டு கருவிகள். மார்ஜின் அதிகம், ஆனா முதலீடும் அதிகம்.</p>
+      <table><tbody>
+        <tr><td>Q1 FY27 revenue</td><td class="num">985</td></tr>
+        <tr><td>Operating EBITDA</td><td class="num">107</td></tr>
+        <tr><td>Margin</td><td class="num">10.8%</td></tr>
+        <tr><td>FY27 guidance</td><td class="l" style="text-align:right">40%+ growth</td></tr>
+      </tbody></table>
+    </div>
+    <div class="card" style="border-top:4px solid var(--rl)">
+      <div class="eyebrow" style="color:var(--rl)">Railway Sub-systems &amp; Defence · 4%</div>
+      <h3><span class="en">Sidwal: rail &amp; metro HVAC, sub-systems</span><span class="ta">சித்வால்: ரயில் &amp; மெட்ரோ ஏசி</span></h3>
+      <p class="en">Sidwal supplies HVAC and other sub-systems for Indian Railways, metros, defence and bus AC. Indian Railways contracts are mostly fixed-price, so copper, FX and wage inflation hit margins (Q1: 11.3% vs 17.9%). The order book is ₹2,750 Cr+, and a Yujin Machinery JV is waiting on RDSO approval.</p>
+      <p class="ta">ரயில், மெட்ரோ, பாதுகாப்பு துறைக்கு ஏசி மற்றும் துணை அமைப்புகள். நிலையான விலை ஒப்பந்தம் என்பதால செலவு ஏறினா மார்ஜின் குறையும். ஆர்டர் புத்தகம் ₹2,750 கோடிக்கு மேல்.</p>
+      <table><tbody>
+        <tr><td>Q1 FY27 revenue</td><td class="num">144</td></tr>
+        <tr><td>Operating EBITDA</td><td class="num">16</td></tr>
+        <tr><td>Margin</td><td class="num">11.3%</td></tr>
+        <tr><td>FY27 guidance</td><td class="l" style="text-align:right">30–35% growth, 15–16% margin</td></tr>
+      </tbody></table>
+    </div>
+  </div>
+
+  <div class="sec">
+    <h3><span class="en">Group structure: who does what</span><span class="ta">குழும அமைப்பு</span></h3>
+    <div class="tw"><table>
+      <thead><tr><th class="l">Entity</th><th class="l">What it does</th><th class="l">Amber's holding</th><th class="l">Division</th><th class="l">Sources</th></tr></thead>
+      <tbody>
+        <tr><td class="l"><b>Amber Enterprises India Ltd</b></td><td class="l">Parent; RAC ODM, CD components</td><td class="l">Listed parent</td><td class="l">Consumer Durables</td><td class="src">Company filings</td></tr>
+        <tr><td class="l">IL JIN Electronics (India) Pvt Ltd</td><td class="l">Electronics holding company; PCBA / EMS</td><td class="l">Material subsidiary</td><td class="l">Electronics</td><td class="src">Company filings</td></tr>
+        <tr><td class="l">Ascent Circuits Pvt Ltd (Hosur, TN)</td><td class="l">Bare multilayer PCB; new Hosur plant (ECMS)</td><td class="l">98.5% via IL JIN (Jul 2026)</td><td class="l">Electronics</td><td class="src">Q1 FY27 presentation; exchange filing 3 Jul 2026</td></tr>
+        <tr><td class="l">Shogini Technoarts (Pune)</td><td class="l">Bare PCB: multilayer, flex, metal-clad</td><td class="l">80% via IL JIN (closed 1 Dec 2025, ~₹506 Cr)</td><td class="l">Electronics</td><td class="src">Exchange filing Dec 2025</td></tr>
+        <tr><td class="l">Power-One Micro Systems</td><td class="l">Solar inverters, UPS, EV chargers, BESS</td><td class="l">60% via IL JIN (~₹262 Cr, 2025)</td><td class="l">Electronics</td><td class="src">Exchange filing Aug 2025</td></tr>
+        <tr><td class="l">Unitronics (1989) (R"G) Ltd, Israel</td><td class="l">PLCs and HMI for industrial automation</td><td class="l">Controlling stake (40.24% for ILS 156 mn ≈ ₹404 Cr, plus further stake in Nov 2025)</td><td class="l">Electronics</td><td class="src">Exchange filings Jul &amp; Nov 2025</td></tr>
+        <tr><td class="l">Ascent-K Circuit</td><td class="l">HDI, flex and substrate PCB at YEIDA, Jewar (UP)</td><td class="l">JV of IL JIN and Korea Circuit (split n/a)</td><td class="l">Electronics</td><td class="src">Q1 FY27 presentation</td></tr>
+        <tr><td class="l">ILJIN Technologies Pvt Ltd</td><td class="l">Medical, defence and aerospace electronics</td><td class="l">60% IL JIN : 40% Singularity Des Electronics</td><td class="l">Electronics</td><td class="src">Exchange filing Jun 2026</td></tr>
+        <tr><td class="l">Sidwal Refrigeration Industries</td><td class="l">Rail and metro HVAC, sub-systems, defence</td><td class="l">Subsidiary</td><td class="l">Railway &amp; Defence</td><td class="src">Company filings</td></tr>
+        <tr><td class="l">Yujin Machinery JV</td><td class="l">Railway sub-systems; plant ready, production H2 FY27 subject to RDSO</td><td class="l">JV (split n/a)</td><td class="l">Railway &amp; Defence</td><td class="src">Q1 FY27 presentation</td></tr>
+      </tbody>
+    </table></div>
+    <p class="note">n/a = not disclosed in the filings reviewed.</p>
+  </div>
+</section>
+
+<!-- ================= Q1 RESULTS ================= -->
+<section class="pane" id="fin">
+  <div class="summary-ta ta"><h4>முடிவுகள் சுருக்கமா</h4>
+  வருமானம் ₹3,888 கோடி, 13% ஏற்றம். ஆனா முந்தைய காலாண்ட விட 6% குறைவு, ஏன்னா ஜனவரி–மார்ச் தான் ஏசி விற்பனையோட உச்சம். மொத்த மார்ஜின் 19.2%, போன வருஷம் 15.7%. தேய்மானம் ₹62 கோடில இருந்து ₹108 கோடி, வட்டி ₹63 கோடில இருந்து ₹85 கோடி. புதுசா வாங்கின நிறுவனங்களும் புது ஆலைகளும் தான் காரணம். ₹123 கோடி ஒருமுறை நஷ்டத்துக்கு வரி சலுகை கிடைக்காததால வரி ₹40 கோடி, அதனால நிகர லாபம் ₹3 கோடி.</div>
+
+  <div class="sec">
+    <div class="eyebrow">Consolidated P&amp;L · ₹ Crore</div>
+    <h2><span class="en">Quarterly results table</span><span class="ta">காலாண்டு முடிவு அட்டவணை</span></h2>
+    <div class="tw"><table>
+      <thead><tr><th class="l">Line item</th><th>Q1 FY27</th><th>Q1 FY26</th><th>YoY</th><th>Q4 FY26</th><th>QoQ</th><th>FY26</th></tr></thead>
+      <tbody>
+        <tr class="hl"><td class="l">Revenue from operations</td><td class="num">3,888</td><td class="num">3,449</td><td class="num up">+12.7%</td><td class="num">4,148</td><td class="num dn">−6.3%</td><td class="num">12,186</td></tr>
+        <tr><td class="l">Gross profit</td><td class="num">746</td><td class="num">542</td><td class="num up">+37.6%</td><td class="num">n/a</td><td class="num">–</td><td class="num">2,239</td></tr>
+        <tr><td class="l">Gross margin</td><td class="num">19.2%</td><td class="num">15.7%</td><td class="num up">+350 bps</td><td class="num">n/a</td><td class="num">–</td><td class="num">18.4%</td></tr>
+        <tr class="hl"><td class="l">Operating EBITDA (mgmt, pre-ESOP)</td><td class="num">337</td><td class="num">263</td><td class="num up">+28.1%</td><td class="num">362</td><td class="num dn">−6.9%</td><td class="num">970</td></tr>
+        <tr><td class="l">Operating EBITDA margin</td><td class="num">8.7%</td><td class="num">7.6%</td><td class="num up">+104 bps</td><td class="num">8.7%</td><td class="num flat">flat</td><td class="num">8.0%</td></tr>
+        <tr><td class="l">Reported EBITDA (exchange P&amp;L, ex other income)</td><td class="num">312</td><td class="num">250</td><td class="num up">+24.7%</td><td class="num">291</td><td class="num up">+7.0%</td><td class="num">865</td></tr>
+        <tr><td class="l">Depreciation &amp; amortisation</td><td class="num">108</td><td class="num">62</td><td class="num dn">+74.2%</td><td class="num">n/a</td><td class="num">–</td><td class="num">323</td></tr>
+        <tr><td class="l">Finance cost</td><td class="num">85</td><td class="num">63</td><td class="num dn">+34.9%</td><td class="num">n/a</td><td class="num">–</td><td class="num">284</td></tr>
+        <tr><td class="l">EBIT</td><td class="num">267</td><td class="num">225</td><td class="num up">+18.7%</td><td class="num">n/a</td><td class="num">–</td><td class="num">750</td></tr>
+        <tr><td class="l">PBT before exceptional &amp; JV</td><td class="num">182</td><td class="num">161</td><td class="num up">+13.0%</td><td class="num">n/a</td><td class="num">–</td><td class="num">466</td></tr>
+        <tr><td class="l">Acquisition inventory (PPA) adjustment</td><td class="num">−15</td><td class="num">–</td><td class="num">–</td><td class="num">–</td><td class="num">–</td><td class="num">–</td></tr>
+        <tr><td class="l">Exceptional item (Ascent put liability)</td><td class="num dn">−123</td><td class="num">−39†</td><td class="num">–</td><td class="num">nil</td><td class="num">–</td><td class="num">−112†</td></tr>
+        <tr><td class="l">Share of JV loss</td><td class="num">−1</td><td class="num">−7</td><td class="num">–</td><td class="num">n/a</td><td class="num">–</td><td class="num">−90†</td></tr>
+        <tr><td class="l">PBT</td><td class="num">43</td><td class="num">154</td><td class="num dn">−72.1%</td><td class="num">n/a</td><td class="num">–</td><td class="num">336</td></tr>
+        <tr><td class="l">Tax</td><td class="num">40</td><td class="num">48</td><td class="num">–</td><td class="num">n/a</td><td class="num">–</td><td class="num">110</td></tr>
+        <tr class="hl"><td class="l">Reported PAT</td><td class="num dn">3</td><td class="num">106</td><td class="num dn">−97.1%</td><td class="num">162</td><td class="num dn">−98.1%</td><td class="num">226</td></tr>
+        <tr class="hl"><td class="l">Adjusted PAT (pre-exceptional)</td><td class="num">126</td><td class="num">106</td><td class="num up">+18.9%</td><td class="num">162</td><td class="num dn">−22.2%</td><td class="num">338</td></tr>
+      </tbody>
+    </table></div>
+    <p class="note">Sources: Amber Q1 FY27 investor presentation and press release (NSE, 14 Aug 2026); Q4 FY26 press release (16 May 2026); reported EBITDA from the exchange-filed P&amp;L as compiled by Screener. † The presentation shows prior-period exceptional and JV lines in a layout that makes column allocation unclear. FY26 exceptional per the Q4 release was ₹112 Cr (Shivalik impairment and JV share of loss). n/a = not given in the documents reviewed. Q1 FY26 reported EBITDA (₹250 Cr) is the exchange P&amp;L figure.</p>
+  </div>
+
+  <div class="sec grid g2">
+    <div class="card">
+      <h3><span class="en">From operating EBITDA ₹337 Cr to PAT ₹3 Cr</span><span class="ta">₹337 கோடி லாபம் ₹3 கோடி ஆனது எப்படி</span></h3>
+      <div class="chart"><canvas id="cBridge"></canvas></div>
+      <p class="cap en">Other income net of ESOP and non-operating items was +₹38 Cr (derived: EBIT 267 − EBITDA 337 + D&amp;A 108). Tax of ₹40 Cr on a PBT of ₹43 Cr because the exceptional loss is not tax-deductible.</p>
+    </div>
+    <div class="card">
+      <h3><span class="en">Division scorecard: Q1 FY27 vs Q1 FY26</span><span class="ta">பிரிவு வாரி ஒப்பீடு</span></h3>
+      <div class="tw"><table>
+        <thead><tr><th class="l">Division</th><th>Revenue</th><th>YoY</th><th>EBITDA</th><th>YoY</th><th>Margin</th><th>Margin LY</th></tr></thead>
+        <tbody>
+          <tr><td class="l" style="color:var(--cd)"><b>Consumer Durables</b></td><td class="num">2,758</td><td class="num up">+7.7%</td><td class="num">214</td><td class="num up">+11.5%</td><td class="num">7.8%</td><td class="num">7.5%</td></tr>
+          <tr><td class="l" style="color:var(--el)"><b>Electronics</b></td><td class="num">985</td><td class="num up">+28.6%</td><td class="num">107</td><td class="num up">+118.4%</td><td class="num">10.8%</td><td class="num">6.4%</td></tr>
+          <tr><td class="l" style="color:var(--rl)"><b>Railway &amp; Defence</b></td><td class="num">144</td><td class="num up">+17.1%</td><td class="num">16</td><td class="num dn">−27.3%</td><td class="num">11.3%</td><td class="num">17.9%</td></tr>
+          <tr class="tot"><td class="l">Total</td><td class="num">3,887</td><td class="num up">+12.7%</td><td class="num">337</td><td class="num up">+28.1%</td><td class="num">8.7%</td><td class="num">7.6%</td></tr>
+        </tbody>
+      </table></div>
+      <div class="chart short" style="margin-top:12px"><canvas id="cSegBar"></canvas></div>
+      <p class="note">Source: Q1 FY27 investor presentation. Divisional figures are management figures and, as the company notes, not strictly comparable with published segment results. Growth rates are computed from the rounded crore figures, so they may differ slightly from the company's rounded percentages.</p>
+    </div>
+  </div>
+
+  <div class="sec">
+    <div class="card">
+      <h3><span class="en">Five-quarter trend: revenue, EBITDA (absolute) and margin</span><span class="ta">ஐந்து காலாண்டு போக்கு</span></h3>
+      <div class="chart tall"><canvas id="cTrend"></canvas></div>
+      <p class="cap en">Reported figures from the exchange P&amp;L (Screener). Q2 is the RAC off-season; Q2 FY26 also carried a loss. Seasonality makes YoY the right comparison, not QoQ.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ================= CASH FLOW & WC ================= -->
+<section class="pane" id="cf">
+  <div class="summary-ta ta"><h4>பணம் எங்கே போகுது?</h4>
+  லாபம் கணக்குல வந்தா மட்டும் போதாது, அது பணமா கைக்கு வரணும். 2024 நிதியாண்டுல அம்பர் ₹965 கோடி செயல்பாட்டு பணம் சம்பாதிச்சாங்க. 2026ல அது ₹240 கோடியா குறைஞ்சிருச்சு. காரணம்: சரக்கு இருப்பு நாட்கள் 56ல இருந்து 90 ஆச்சு. சப்ளையர்களுக்கு பணம் கொடுக்குற நாட்கள் 144ல இருந்து 104 ஆச்சு. அதனால பணச் சுழற்சி மைனஸ் 3 நாள்ல இருந்து 53 நாள் ஆச்சு. ஒவ்வொரு 10 நாள் கூடுதலுக்கும் சுமார் ₹334 கோடி பணம் உள்ள மாட்டிக்குது. அதோட ஆலை முதலீடும் சேர்ந்து, இலவச பணப்புழக்கம் மைனஸ் ₹1,048 கோடி.</div>
+
+  <div class="sec grid g4" id="cfKpis"></div>
+
+  <div class="sec grid g2">
+    <div class="card">
+      <h3><span class="en">Cash flow statement, FY24–FY26 (₹ Cr)</span><span class="ta">பணப்புழக்க அறிக்கை</span></h3>
+      <div class="tw"><table>
+        <thead><tr><th class="l">₹ Crore</th><th>FY24</th><th>FY25</th><th>FY26</th></tr></thead>
+        <tbody>
+          <tr class="hl"><td class="l">Cash from operations (CFO)</td><td class="num">965</td><td class="num">711</td><td class="num">240</td></tr>
+          <tr><td class="l">Cash from investing (CFI)</td><td class="num">−1,035</td><td class="num">−953</td><td class="num">−2,904</td></tr>
+          <tr><td class="l">Cash from financing (CFF)</td><td class="num">−122</td><td class="num">323</td><td class="num">2,683</td></tr>
+          <tr><td class="l">Net cash flow</td><td class="num">−191</td><td class="num">81</td><td class="num">19</td></tr>
+          <tr class="hl"><td class="l">Free cash flow (CFO − capex)</td><td class="num up">567</td><td class="num">155</td><td class="num dn">−1,048</td></tr>
+          <tr><td class="l">Reported EBITDA</td><td class="num">491</td><td class="num">736</td><td class="num">865</td></tr>
+          <tr><td class="l">Reported PAT</td><td class="num">139</td><td class="num">251</td><td class="num">226</td></tr>
+          <tr><td class="l">CFO ÷ EBITDA</td><td class="num">196.5%</td><td class="num">96.6%</td><td class="num dn">27.7%</td></tr>
+          <tr><td class="l">CFO ÷ PAT</td><td class="num">6.94x</td><td class="num">2.83x</td><td class="num dn">1.06x</td></tr>
+        </tbody>
+      </table></div>
+      <p class="note">Source: annual cash flow statements as compiled by Screener. CFO ÷ EBITDA and CFO ÷ PAT computed by CB. Indian listed companies file the cash flow statement half-yearly, so no Q1 FY27 CFO is available. It will come with H1 results.</p>
+    </div>
+    <div class="card">
+      <h3><span class="en">CFO vs EBITDA vs FCF (₹ Cr)</span><span class="ta">செயல்பாட்டு பணம் எதிர் லாபம்</span></h3>
+      <div class="chart"><canvas id="cCF"></canvas></div>
+      <p class="cap en">EBITDA rose every year, but CFO fell from ₹965 Cr to ₹240 Cr. The gap is working capital, plus capex of about ₹1,288 Cr in FY26.</p>
+    </div>
+  </div>
+
+  <div class="sec grid g2">
+    <div class="card">
+      <h3><span class="en">Working-capital days and the cash conversion cycle</span><span class="ta">நடைமுறை மூலதன நாட்கள்</span></h3>
+      <div class="tw"><table>
+        <thead><tr><th class="l">Days</th><th>FY24</th><th>FY25</th><th>FY26</th><th>FY27E (ICICI)</th><th>FY28E (ICICI)</th></tr></thead>
+        <tbody>
+          <tr><td class="l">Inventory days</td><td class="num">56</td><td class="num">74</td><td class="num dn">90</td><td class="num">67</td><td class="num">57</td></tr>
+          <tr><td class="l">Receivable days</td><td class="num">85</td><td class="num">64</td><td class="num">67</td><td class="num">66</td><td class="num">62</td></tr>
+          <tr><td class="l">Payable days</td><td class="num">144</td><td class="num">110</td><td class="num dn">104</td><td class="num">84</td><td class="num">85</td></tr>
+          <tr class="hl"><td class="l">Cash conversion cycle</td><td class="num up">−3</td><td class="num">27</td><td class="num dn">53</td><td class="num">50</td><td class="num">34</td></tr>
+        </tbody>
+      </table></div>
+      <p class="note">Sources: FY24–FY26 from Screener's ratio table. FY27E/FY28E from ICICI Securities (17 Aug 2026), CCC derived by CB. ICICI's own FY26 basis differs slightly (inventory 73, receivables 67, payables 85 days). BOB Capital Markets projects payables back at 100 days.</p>
+      <div class="chart short" style="margin-top:10px"><canvas id="cWC"></canvas></div>
+    </div>
+    <div class="card tint">
+      <h3><span class="en">How working capital drove CFO and cash conversion</span><span class="ta">பணச் சுழற்சியும் செயல்பாட்டு பணமும்</span></h3>
+      <div class="chart short"><canvas id="cCCC"></canvas></div>
+      <ul class="clean en">
+        <li><b>The CCC moved 56 days in two years</b> (−3 to +53). At FY26 revenue of ₹12,186 Cr, every 10 days of CCC is about ₹334 Cr of cash. FY25→FY26 alone (+26 days) is about ₹868 Cr, close to the roughly ₹700 Cr working-capital drag cited after Q4.</li>
+        <li><b>Payables fell 40 days.</b> Amber earlier funded its RAC inventory with long supplier credit (144 days). New electronics businesses (PCB, Power-One, Unitronics) buy imported chips and laminates on shorter terms. That is a structural change, not just seasonal.</li>
+        <li><b>Inventory rose 34 days.</b> Reasons include a weak RAC summer in 2025, BEE labelling and QCO pre-stocking, and the acquired businesses carrying more inventory. Management expects the label-change inventory to clear by Diwali 2026.</li>
+        <li><b>Cash conversion fell</b> from 2.8x PAT (FY25) to 1.1x (FY26). Brokers expect CFO of ₹1,508 Cr (ICICI) to ₹1,674 Cr (PL) in FY27E as working capital unwinds. That is the key thing to check in the H1 FY27 cash flow.</li>
+      </ul>
+      <ul class="clean ta">
+        <li>இரண்டு வருஷத்துல பணச் சுழற்சி 56 நாள் கூடியிருக்கு.</li>
+        <li>சப்ளையர் கடன் நாட்கள் 40 நாள் குறைஞ்சிருக்கு. புது மின்னணு வணிகத்துக்கு இறக்குமதி சிப்கள குறுகிய கடனுக்கு வாங்க வேண்டியிருக்கு.</li>
+        <li>சரக்கு இருப்பு 34 நாள் கூடியிருக்கு.</li>
+        <li>2027ல நடைமுறை மூலதனம் குறைஞ்சா செயல்பாட்டு பணம் ₹1,500 கோடிக்கு மேல வரும்னு தரகு நிறுவனங்கள் எதிர்பார்க்குது.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="sec grid g2">
+    <div class="card">
+      <h3><span class="en">Balance-sheet ratios</span><span class="ta">இருப்புநிலை விகிதங்கள்</span></h3>
+      <div class="tw"><table>
+        <thead><tr><th class="l">Ratio</th><th>Value</th><th class="l">Basis</th></tr></thead>
+        <tbody>
+          <tr><td class="l">Net debt, 30 Jun 2026</td><td class="num">~1,225</td><td class="l">Management (concall); ~510 at 31 Mar 2026</td></tr>
+          <tr><td class="l">Gross borrowings, 31 Mar 2026</td><td class="num">2,702</td><td class="l">Balance sheet (incl. leases), Screener</td></tr>
+          <tr><td class="l">Net worth (book value ₹1,242 × 3.53 Cr shares)</td><td class="num">~4,381</td><td class="l">CB derived</td></tr>
+          <tr><td class="l">Gross debt ÷ equity</td><td class="num">0.62x</td><td class="l">CB derived</td></tr>
+          <tr><td class="l">Net debt ÷ TTM reported EBITDA (₹924 Cr)</td><td class="num">1.33x</td><td class="l">CB derived</td></tr>
+          <tr><td class="l">Interest cover, Q1 FY27 (EBIT ÷ finance cost)</td><td class="num">3.1x</td><td class="l">267 ÷ 85</td></tr>
+          <tr><td class="l">Interest cover, FY26</td><td class="num">2.6x</td><td class="l">750 ÷ 284</td></tr>
+          <tr><td class="l">ROCE / ROE (TTM)</td><td class="num">10.3% / 6.0%</td><td class="l">Screener</td></tr>
+        </tbody>
+      </table></div>
+      <p class="note">Management's net-debt figure nets off cash, bank balances and liquid investments. Broker balance sheets (debt less cash only) show a higher FY26 net debt of about ₹1,840 Cr. The difference is classification, so treat ~₹1,225 Cr as the company's own measure.</p>
+    </div>
+    <div class="card">
+      <h3><span class="en">What added ₹715 Cr to net debt in Q1</span><span class="ta">ஒரே காலாண்டுல கடன் ஏன் ஏறிச்சு</span></h3>
+      <ul class="clean en">
+        <li><b>Ascent Circuits stake to 98.5%:</b> ₹336.75 Cr paid by IL JIN (Jun–Jul 2026).</li>
+        <li><b>Capex:</b> the Sidwal greenfield plant (now operational), Hosur multilayer PCB construction, Pune electronics expansion and Jewar groundbreaking.</li>
+        <li><b>Seasonal working capital:</b> Q1 is the RAC peak, and pre-stocking ahead of QCO enforcement helped revenue but used cash.</li>
+        <li><b>Next:</b> about ₹3,200 Cr (Jewar HDI) and about ₹1,000 Cr (Hosur) of approved ECMS projects, plus the mobile ramp. That explains the ₹5,000 Cr enabling resolution, which is about 22% of the current market cap. If raised fully as equity at the current price, it would be about 18% dilution post-issue.</li>
+      </ul>
+      <ul class="clean ta">
+        <li>அஸென்ட் சர்க்யூட்ஸ் பங்கு வாங்க ₹336.75 கோடி.</li>
+        <li>புது ஆலைகளுக்கான முதலீடு.</li>
+        <li>கோடை பருவத்துக்கான சரக்கு இருப்பு.</li>
+        <li>அடுத்து ஜேவர், ஓசூர் ஆலைகளுக்கு சுமார் ₹4,200 கோடி தேவை. அதனால தான் ₹5,000 கோடி நிதி திரட்ட அனுமதி.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ================= VALUATIONS ================= -->
+<section class="pane" id="val">
+  <div class="summary-ta ta"><h4>விலை சரியா?</h4>
+  இன்னைக்கு விலை ₹6,449. கடந்த 12 மாத லாபத்த வெச்சு பார்த்தா விலை லாபத்தோட 110 மடங்கு. அது ரொம்ப அதிகமா தெரியும். ஆனா அந்த லாபத்துல ஒருமுறை நஷ்டங்கள் இருக்கு. தரகு நிறுவனங்களோட 2028 எதிர்பார்ப்பு லாபம் ஒரு பங்குக்கு சுமார் ₹199. அதை வெச்சு பார்த்தா 32 மடங்கு தான். அதாவது, மொபைல் வணிகமும் சர்க்யூட் போர்டு ஆலைகளும் திட்டமிட்ட மாதிரி நடந்தா மட்டும் இந்த விலை நியாயம்.</div>
+
+  <div class="sec grid g4" id="valKpis"></div>
+
+  <div class="sec grid g2">
+    <div class="card">
+      <h3><span class="en">Multiples at ₹6,449 (9 Oct 2026)</span><span class="ta">மதிப்பீட்டு விகிதங்கள்</span></h3>
+      <div class="tw"><table>
+        <thead><tr><th class="l">Metric</th><th>Value</th><th class="l">Working</th></tr></thead>
+        <tbody>
+          <tr><td class="l">Market capitalisation</td><td class="num">₹22,747 Cr</td><td class="l">BSE close</td></tr>
+          <tr><td class="l">Enterprise value</td><td class="num">₹23,972 Cr</td><td class="l">M-cap + net debt ~₹1,225 Cr</td></tr>
+          <tr><td class="l">P/E, trailing (reported)</td><td class="num">110x</td><td class="l">Distorted by exceptional items</td></tr>
+          <tr><td class="l">P/E, FY27E (broker avg EPS ₹129.9)</td><td class="num">49.7x</td><td class="l">PL 140.5 · ICICI 110.3 · BOBCAPS 138.8</td></tr>
+          <tr class="hl"><td class="l">P/E, FY28E (broker avg EPS ₹199.0)</td><td class="num">32.4x</td><td class="l">PL 199.0 · ICICI 198.3 · BOBCAPS 199.8</td></tr>
+          <tr><td class="l">EV / TTM reported EBITDA (₹924 Cr)</td><td class="num">25.9x</td><td class="l">Q2 FY26 to Q1 FY27</td></tr>
+          <tr><td class="l">EV / FY27E EBITDA (avg ₹1,211 Cr)</td><td class="num">19.8x</td><td class="l">PL 1,267 · ICICI 1,217 · BOBCAPS 1,150</td></tr>
+          <tr><td class="l">P/B</td><td class="num">5.2x</td><td class="l">Book value ₹1,242/share</td></tr>
+          <tr><td class="l">M-cap ÷ FY26 sales</td><td class="num">1.87x</td><td class="l">Second-lowest in the peer set (Dixon 1.60x)</td></tr>
+        </tbody>
+      </table></div>
+      <p class="note">Sources: price and market cap from Business Standard / BSE (9 Oct 2026); estimates from PL Capital (15 Aug 2026), ICICI Securities and BOB Capital Markets (17 Aug 2026). Averages and ratios computed by CB.</p>
+    </div>
+    <div class="card">
+      <h3><span class="en">What does the price imply? P/E you pay vs EPS delivered</span><span class="ta">இந்த விலை என்ன எதிர்பார்க்குது?</span></h3>
+      <div class="chart"><canvas id="cPE"></canvas></div>
+      <p class="cap en">Bars: EPS (₹). Line: P/E at ₹6,449. FY25/FY26 use brokers' adjusted EPS (BOBCAPS). FY27E/FY28E use the three-broker average. The stock needs EPS to roughly triple from FY26 to FY28 to make a ~32x multiple look normal for Indian EMS.</p>
+    </div>
+  </div>
+
+  <div class="sec grid g2">
+    <div class="card">
+      <h3><span class="en">Reverse check: what must go right</span><span class="ta">எது சரியா நடக்கணும்</span></h3>
+      <ul class="clean en">
+        <li>FY28E revenue estimates range from ₹18,328 Cr (BOBCAPS) to ₹24,513 Cr (PL). The ₹6,000 Cr gap is essentially how much mobile revenue each broker books in year one.</li>
+        <li>Mobiles are a 2–4% EBITDA-margin business at peers (Dixon's consolidated margin was 3.0% in Q1). ICICI's FY28E margin therefore falls to 6.9% even as absolute EBITDA rises 39%.</li>
+        <li>PCB margins need to return to 15–16% from Q3 FY27, which assumes copper-clad laminate prices stay flat.</li>
+        <li>Working capital needs to unwind (CCC from 53 to about 34–43 days) so that the capex can be funded without the full ₹5,000 Cr in equity.</li>
+      </ul>
+      <ul class="clean ta">
+        <li>2028 வருமான எதிர்பார்ப்பு ₹18,328 கோடில இருந்து ₹24,513 கோடி வரை. வித்தியாசம் மொபைல் வருமானம் தான்.</li>
+        <li>மொபைல் தயாரிப்புல மார்ஜின் 2–4% தான்.</li>
+        <li>சர்க்யூட் போர்டு மார்ஜின் மீண்டும் 15–16% ஆகணும்.</li>
+        <li>நடைமுறை மூலதனம் குறையணும்.</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3><span class="en">Broker estimate grid (₹ Cr)</span><span class="ta">தரகு நிறுவன எதிர்பார்ப்புகள்</span></h3>
+      <div class="tw"><table>
+        <thead><tr><th class="l">Broker</th><th>Rev FY27E</th><th>Rev FY28E</th><th>EBITDA FY27E</th><th>EBITDA FY28E</th><th>EPS FY27E</th><th>EPS FY28E</th></tr></thead>
+        <tbody>
+          <tr><td class="l">PL Capital</td><td class="num">15,032</td><td class="num">24,513</td><td class="num">1,267</td><td class="num">1,674</td><td class="num">140.5</td><td class="num">199.0</td></tr>
+          <tr><td class="l">ICICI Securities</td><td class="num">14,847</td><td class="num">24,460</td><td class="num">1,217</td><td class="num">1,695</td><td class="num">110.3</td><td class="num">198.3</td></tr>
+          <tr><td class="l">BOB Capital Markets</td><td class="num">14,541</td><td class="num">18,328</td><td class="num">1,150</td><td class="num">1,529</td><td class="num">138.8</td><td class="num">199.8</td></tr>
+          <tr class="tot"><td class="l">Average</td><td class="num">14,807</td><td class="num">22,434</td><td class="num">1,211</td><td class="num">1,633</td><td class="num">129.9</td><td class="num">199.0</td></tr>
+        </tbody>
+      </table></div>
+      <p class="note">Sources: PL Capital result update (15 Aug 2026; figures converted from ₹ mn); ICICI Securities (17 Aug 2026); BOB Capital Markets (17 Aug 2026; converted from ₹ mn). ICICI's lower FY27E EPS reflects PAT after minority interest and the Q1 exceptional item.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ================= PLANS & JVs ================= -->
+<section class="pane" id="plans">
+  <div class="summary-ta ta"><h4>எதிர்கால திட்டங்கள்</h4>
+  ஒப்போ, ஒன்பிளஸ், ரியல்மி மொபைல் போன்கள தயாரிக்க ஒப்போ இந்தியா கூட ஜூன் 2026ல ஒப்பந்தம் போட்டிருக்காங்க. சோதனை உற்பத்தி 2027 ஜனவரி–மார்ச்ல, வணிக உற்பத்தி 2027 ஏப்ரல்ல இருந்து. முதல் வருஷம் சுமார் 80 லட்சம் போன், அடுத்த வருஷம் 1.5–1.6 கோடி. கொரியாவோட கொரியா சர்க்யூட் நிறுவனம் கூட சேர்ந்து உத்தர பிரதேசம் ஜேவர்ல உயர் அடர்த்தி சர்க்யூட் போர்டு ஆலை கட்டுறாங்க. தமிழ்நாட்டு ஓசூர்ல பல அடுக்கு சர்க்யூட் போர்டு ஆலை இந்த வருஷமே தொடங்கும். மருத்துவ, பாதுகாப்பு, விமானத் துறை மின்னணுக்கு ஒரு 60:40 கூட்டு நிறுவனமும் தொடங்கியிருக்காங்க.</div>
+
+  <div class="sec grid g2">
+    <div class="card">
+      <h3><span class="en">Joint ventures and collaborations signed</span><span class="ta">கையெழுத்தான கூட்டு முயற்சிகள்</span></h3>
+      <div class="tw"><table>
+        <thead><tr><th class="l">Deal</th><th class="l">Partner &amp; structure</th><th class="l">Purpose</th><th class="l">Status</th><th class="l">Sources</th></tr></thead>
+        <tbody>
+          <tr><td class="l"><b>Mobile manufacturing collaboration</b><br><span class="mono">18 Jun 2026</span></td><td class="l">Oppo Mobiles India (licensed maker for OPPO, OnePlus, Realme). Contract manufacturing, no equity; investment "not applicable" per filing</td><td class="l">Make phones in India for the three brands. Exports and PLI under discussion</td><td class="l">Trial Q4 FY27, commercial Q1 FY28; ~8 mn units Y1 → 15–16 mn Y2; COO hired</td><td class="src">Exchange filing 18 Jun 2026; Q1 concall</td></tr>
+          <tr><td class="l"><b>Ascent-K Circuit</b></td><td class="l">IL JIN + Korea Circuit (Korea) JV</td><td class="l">HDI, flex and semiconductor-substrate PCBs for import substitution</td><td class="l">Groundbreaking done at YEIDA, Jewar; ECMS approval for ~₹3,200 Cr project; trial ~18 months</td><td class="src">Q1 FY27 presentation; ICICI Securities</td></tr>
+          <tr><td class="l"><b>ILJIN Technologies Pvt Ltd</b><br><span class="mono">4 Jun 2026</span></td><td class="l">IL JIN 60% : Singularity Des Electronics 40%; initial capital ₹1 Cr</td><td class="l">Platform for medical, defence and aerospace electronics</td><td class="l">Incorporated; 3–4 year build-out</td><td class="src">Exchange filing Jun 2026</td></tr>
+          <tr><td class="l"><b>Yujin Machinery JV</b></td><td class="l">Railway JV with Yujin Machinery</td><td class="l">Railway sub-systems</td><td class="l">Facility ready; commercial production H2 FY27 subject to RDSO approval</td><td class="src">Q1 FY27 presentation</td></tr>
+          <tr><td class="l"><b>CCL (copper-clad laminate) JV</b></td><td class="l">Partner under evaluation</td><td class="l">Backward integration into the PCB's key raw material</td><td class="l">Own plant targeted FY29–30</td><td class="src">Q1 concall (BOBCAPS, ICICI notes)</td></tr>
+        </tbody>
+      </table></div>
+    </div>
+    <div class="card">
+      <h3><span class="en">Acquisitions in the last 15 months</span><span class="ta">சமீபத்திய கையகப்படுத்தல்கள்</span></h3>
+      <div class="tw"><table>
+        <thead><tr><th class="l">Target</th><th class="l">Stake</th><th>₹ Cr</th><th class="l">Logic</th><th class="l">Sources</th></tr></thead>
+        <tbody>
+          <tr><td class="l">Power-One Micro Systems</td><td class="l">60%</td><td class="num">262</td><td class="l">Solar inverters, BESS, EV chargers</td><td class="src">Filing Aug 2025</td></tr>
+          <tr><td class="l">Unitronics (Israel)</td><td class="l">40.24% + more</td><td class="num">~404</td><td class="l">PLC/HMI: industrial automation, first overseas buy</td><td class="src">Filings Jul &amp; Nov 2025</td></tr>
+          <tr><td class="l">Shogini Technoarts</td><td class="l">80%</td><td class="num">~506</td><td class="l">Bare PCB capacity (multilayer, flex, metal-clad)</td><td class="src">Filing Dec 2025</td></tr>
+          <tr><td class="l">Ascent Circuits (step-up)</td><td class="l">60% → 98.5%</td><td class="num">336.75</td><td class="l">Full control of PCB platform; triggered ₹123 Cr exceptional loss</td><td class="src">Filings Jun–Jul 2026</td></tr>
+          <tr class="tot"><td class="l">Total disclosed</td><td class="l"></td><td class="num">~1,509</td><td class="l">≈ 6.6% of today's market cap</td><td class="src">CB sum</td></tr>
+        </tbody>
+      </table></div>
+    </div>
+  </div>
+
+  <div class="sec grid g2">
+    <div class="card">
+      <h3><span class="en">Roadmap timeline</span><span class="ta">கால வரிசை</span></h3>
+      <div class="tl">
+        <div class="ev"><div class="d">Jun–Aug 2025</div><b>Power-One 60% and Unitronics controlling stake.</b> Entry into energy electronics and industrial automation.</div>
+        <div class="ev"><div class="d">1 Dec 2025</div><b>Shogini Technoarts 80% closes.</b> Second bare-PCB platform.</div>
+        <div class="ev"><div class="d">4 Jun 2026</div><b>ILJIN Technologies JV (60:40)</b> for medical, defence and aero electronics.</div>
+        <div class="ev"><div class="d">18 Jun 2026</div><b>Oppo India collaboration</b> and Ascent stake raised to 97.5%.</div>
+        <div class="ev"><div class="d">Jul 2026</div><b>Ascent at 98.5%.</b> The Sidwal greenfield plant is operational.</div>
+        <div class="ev"><div class="d">13 Aug 2026</div><b>Q1 FY27 results.</b> ₹5,000 Cr fund-raise enabling resolution; Jewar groundbreaking done.</div>
+        <div class="ev f"><div class="d">H2 FY27 (planned)</div>Yujin JV production (RDSO); Hosur multilayer PCB plant operational; PCB margins back to 15–16% from Q3.</div>
+        <div class="ev f"><div class="d">Q4 FY27 (planned)</div>Mobile trial production.</div>
+        <div class="ev f"><div class="d">Q1 FY28 (planned)</div>Commercial mobile production (~8 mn units in year 1).</div>
+        <div class="ev f"><div class="d">~Early 2028 (planned)</div>Jewar HDI PCB trial production (~18 months from Aug 2026).</div>
+        <div class="ev f"><div class="d">FY29–30 (planned)</div>Own CCL plant via JV.</div>
+      </div>
+      <p class="note">Solid markers = done; dashed = management targets.</p>
+    </div>
+    <div class="card">
+      <h3><span class="en">Guidance and planned capex</span><span class="ta">வழிகாட்டல் &amp; முதலீடு</span></h3>
+      <div class="tw"><table>
+        <thead><tr><th class="l">Item</th><th class="l">Management statement</th></tr></thead>
+        <tbody>
+          <tr><td class="l">Consumer Durables FY27</td><td class="l">Grow in line with RAC industry (~13–15%); Q1 margins helped by QCO pre-stocking, don't extrapolate</td></tr>
+          <tr><td class="l">Electronics FY27</td><td class="l">40%+ revenue growth; PCB margin ~12% now, 15–16% from Q3 if CCL is stable</td></tr>
+          <tr><td class="l">Railway &amp; Defence FY27</td><td class="l">30–35% revenue growth; 15–16% margin; order book ₹2,750 Cr+</td></tr>
+          <tr><td class="l">Jewar HDI PCB (Ascent-K)</td><td class="l">~₹3,200 Cr ECMS-approved project</td></tr>
+          <tr><td class="l">Hosur multilayer PCB (Ascent)</td><td class="l">~₹1,000 Cr ECMS-approved; operational within FY27</td></tr>
+          <tr><td class="l">Shogini, Pune</td><td class="l">~₹500 Cr ECMS-approved expansion</td></tr>
+          <tr><td class="l">Funding</td><td class="l">Enabling resolution up to ₹5,000 Cr; instrument and timing undecided</td></tr>
+          <tr><td class="l">Medical, defence, aero</td><td class="l">Build over 3–4 years via ILJIN Technologies</td></tr>
+        </tbody>
+      </table></div>
+      <div class="chart short" style="margin-top:12px"><canvas id="cCapex"></canvas></div>
+      <p class="note">Sources: Q1 FY27 presentation and concall (as reported by Multibagg, ICICI Securities, BOB Capital Markets). ECMS amounts are project sizes approved under the scheme, not cash already spent.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ================= ACQUISITIONS ================= -->
+<section class="pane" id="acq">
+  <div class="summary-ta ta"><h4>வாங்கின நிறுவனங்கள் அம்பருக்கு எப்படி உதவும்?</h4>
+  2024ல இருந்து அம்பர் ஐந்து பெரிய ஒப்பந்தங்கள் செஞ்சிருக்கு. அதுக்கு மொத்தம் சுமார் ₹1,820 கோடி கொடுத்திருக்காங்க. அஸென்ட் சர்க்யூட்ஸ், ஷோகினி ரெண்டும் சர்க்யூட் போர்டு தயாரிக்கிறவங்க. இனிமே அம்பர் தனக்கு தேவையான போர்டுகள தானே செய்யலாம், இறக்குமதி குறையும். பவர்-ஒன் சூரிய இன்வெர்ட்டர், பேட்டரி சேமிப்பு செய்யுது. அதோட மார்ஜின் 17–18%. யூனிட்ரானிக்ஸ் இஸ்ரேல் நிறுவனம், தொழிற்சாலை கட்டுப்பாட்டு கருவி செய்யுது. அதோட விற்பனைல 95% அமெரிக்கா, ஐரோப்பா தான். இதெல்லாம் சேர்ந்து மின்னணு பிரிவோட மார்ஜின் 6.4% ல இருந்து 10.8% ஆ ஏறியிருக்கு. ஆனா கொடுத்த விலைக்கு இப்போ கிடைக்குற லாபம் சுமார் 7–12% தான். அதனால கூட்டு பலன் வந்தா தான் இது உண்மையான மதிப்பு கூட்டும். யூனிட்ரானிக்ஸ் விற்பனை 2023ல இருந்து 27% குறைஞ்சிருக்கு, அதை கவனிக்கணும்.</div>
+
+  <div class="sec">
+    <div class="eyebrow">Acquisitions &amp; majority stakes · Jan 2024 – Jul 2026</div>
+    <h2><span class="en">Buying a full-stack electronics company, one piece at a time</span><span class="ta">ஒவ்வொரு துண்டா ஒரு முழு மின்னணு நிறுவனத்த உருவாக்குறாங்க</span></h2>
+    <p class="en">Since January 2024, Amber has used its electronics arm, IL JIN Electronics, to buy into five businesses for about ₹1,820 Cr in disclosed cash. Each deal fills a gap in one plan: turn IL JIN from a PCB-assembly job-shop into what management calls a "full-stack electronics company". That means bare boards, assembly, and its own branded power and automation products.</p>
+    <div class="grid g4" id="acqKpis"></div>
+  </div>
+
+  <div class="sec">
+    <h3><span class="en">Deal ledger: what was bought, at what price</span><span class="ta">ஒப்பந்தப் பட்டியல்</span></h3>
+    <div class="tw"><table>
+      <thead><tr><th class="l">Target</th><th class="l">Business</th><th class="l">Closed</th><th class="l">Stake</th><th>Paid ₹ Cr</th><th>Implied 100% ₹ Cr</th><th>Target revenue ₹ Cr</th><th class="l">Target margin</th><th>Price ÷ sales</th><th class="l">Sources</th></tr></thead>
+      <tbody>
+        <tr><td class="l"><b>Ascent Circuits</b> (initial)</td><td class="l">Bare multilayer PCB, Bengaluru/Hosur; aero, defence, industrial</td><td class="l mono">Jan 2024</td><td class="l">60%</td><td class="num">~311</td><td class="num">~518</td><td class="num">278 (FY23)</td><td class="l">n/a</td><td class="num">1.86x</td><td class="src">Outlook Business; Sahi</td></tr>
+        <tr><td class="l"><b>Power-One Micro Systems</b></td><td class="l">Solar inverters, UPS, EV chargers, BESS; Bengaluru; 7 lakh+ units sold</td><td class="l mono">Aug 2025</td><td class="l">60%</td><td class="num">262</td><td class="num">~437</td><td class="num">~245 (proj. 325)</td><td class="l">EBITDA 17–18%</td><td class="num">1.78x</td><td class="src">ScanX; Energetica India</td></tr>
+        <tr><td class="l"><b>Unitronics (1989) (R"G)</b>, Israel</td><td class="l">PLCs, HMIs, drives, servo, SaaS; ~55% US, ~40% Europe</td><td class="l mono">Oct 2025 →</td><td class="l">40.24% → ~45.5% → 50.4%</td><td class="num">~404 + n/a</td><td class="num">~1,004</td><td class="num">497 (CY24) · 400 (CY25)</td><td class="l">Op. margin 23.2% → 17.1%</td><td class="num">2.02x</td><td class="src">The Week; Q3 FY26 presentation; BOBCAPS; StockAnalysis (TASE)</td></tr>
+        <tr><td class="l"><b>Shogini Technoarts</b></td><td class="l">Single, double, multilayer, metal-clad and flex PCB; Pune; ~4.5 lakh sq m capacity</td><td class="l mono">1 Dec 2025</td><td class="l">80%</td><td class="num">~506</td><td class="num">~633</td><td class="num">391 (FY25)</td><td class="l">n/a</td><td class="num">1.62x</td><td class="src">The Week; Angel One; Q3 FY26 presentation</td></tr>
+        <tr><td class="l"><b>Ascent Circuits</b> (step-up)</td><td class="l">Buy out minority / settle put option</td><td class="l mono">Jun–Jul 2026</td><td class="l">60% → 98.5%</td><td class="num">336.75</td><td class="num">~875</td><td class="num">n/a</td><td class="l">n/a</td><td class="num">–</td><td class="src">Sahi; exchange filing</td></tr>
+        <tr class="tot"><td class="l">Total disclosed</td><td class="l"></td><td class="l"></td><td class="l"></td><td class="num">~1,820</td><td class="num"></td><td class="num">~1,314†</td><td class="l"></td><td class="num"></td><td class="src">CB sum</td></tr>
+      </tbody>
+    </table></div>
+    <p class="note">Implied 100% = paid ÷ stake (CB derived; it ignores control premium, debt and earn-outs). Unitronics figures are converted at the deal rate (ILS 156.08 mn = ₹403.78 Cr, i.e. ₹25.87/ILS). Unitronics' later stake increases (to ~50.4%) were not priced in the sources reviewed. † Latest annual revenue of Power-One (245), Unitronics (400), Shogini (391) and Ascent (278, FY23). That is about 40% of FY26 Electronics revenue of ₹3,269 Cr, before overlap and inter-company sales. Sources: as listed per row; Electronics FY26 from BOB Capital Markets Q4 FY26 review.</p>
+  </div>
+
+  <div class="sec">
+    <h3><span class="en">How the pieces fit: the internal supply chain these deals create</span><span class="ta">இந்த ஒப்பந்தங்கள் உருவாக்குற உள் விநியோக சங்கிலி</span></h3>
+    <div class="tw" style="padding:8px"><svg class="bmap" id="acqMap" viewBox="0 0 1000 400" role="img" aria-label="Acquisition synergy map"></svg></div>
+    <p class="note en">Read left to right. Bare boards from Ascent and Shogini feed IL JIN's assembly lines. Those assembled boards go into Amber's ACs, the Oppo phones from FY28, and the products of the two acquired brands, Power-One and Unitronics. Each arrow is margin that used to go to an outside supplier, often an importer.</p>
+  </div>
+
+  <div class="sec grid g2">
+    <div class="card">
+      <h3><span class="en">Six ways the acquisitions benefit Amber</span><span class="ta">ஆறு பலன்கள்</span></h3>
+      <div class="tw"><table>
+        <thead><tr><th class="l">Benefit</th><th class="l">From which deal</th><th class="l">Evidence so far</th></tr></thead>
+        <tbody>
+          <tr><td class="l"><b>1. Backward integration into bare PCB</b></td><td class="l">Ascent, Shogini (+ Ascent-K JV)</td><td class="l">One of India's broadest PCB ranges, from single-layer to HDI. 85–90% of India's PCBs are imported.</td></tr>
+          <tr><td class="l"><b>2. Margin mix</b></td><td class="l">Power-One (17–18%), Unitronics (17–24% op.)</td><td class="l">Electronics margin 6.4% → 10.8% (Q1 FY26 → Q1 FY27); FY26 8.7% (+180 bps)</td></tr>
+          <tr><td class="l"><b>3. Own products and IP</b></td><td class="l">Power-One, Unitronics</td><td class="l">First branded products with their own R&amp;D. Moves Amber up from build-to-print work.</td></tr>
+          <tr><td class="l"><b>4. New, non-seasonal end-markets</b></td><td class="l">Power-One (solar, BESS, EV, data centres), Unitronics (factory automation)</td><td class="l">Reduces dependence on the Indian summer</td></tr>
+          <tr><td class="l"><b>5. Exports and global customers</b></td><td class="l">Unitronics (~95% US + Europe)</td><td class="l">Amber's first overseas sales channel. Unitronics can move PCBA and bare PCB to IL JIN in India.</td></tr>
+          <tr><td class="l"><b>6. Policy money and scale</b></td><td class="l">Ascent (Hosur ~₹991–1,000 Cr), Shogini (~₹500 Cr)</td><td class="l">ECMS approvals; group purchasing leverage on laminates, copper and chips</td></tr>
+        </tbody>
+      </table></div>
+      <p class="note">Sources: Q3 FY26 investor presentation (synergy slides); BOB Capital Markets Q4 FY26 review; Kotak MF (import dependence).</p>
+    </div>
+    <div class="card">
+      <h3><span class="en">Electronics division: before and after the buying spree (₹ Cr)</span><span class="ta">மின்னணு பிரிவு வளர்ச்சி</span></h3>
+      <div class="chart"><canvas id="acqEl"></canvas></div>
+      <p class="cap en">FY25 and FY26 actual (BOBCAPS Q4 FY26 review). FY27E applies management's ~40% growth and 9.5–10% margin guidance (midpoint 9.75%) as a CB illustration. Acquisitions are a large part of this growth, so organic growth is lower than the headline.</p>
+    </div>
+  </div>
+
+  <div class="sec grid g2">
+    <div class="card">
+      <h3><span class="en">Price paid vs implied 100% value (₹ Cr)</span><span class="ta">கொடுத்த விலை</span></h3>
+      <div class="chart"><canvas id="acqPaid"></canvas></div>
+      <p class="cap en">Ascent's implied value rose from ~₹518 Cr (2024) to ~₹875 Cr (2026), about 69% higher. The minority holders were paid for the growth Amber helped create. That gap is why the ₹123 Cr exceptional loss appeared.</p>
+    </div>
+    <div class="card">
+      <h3><span class="en">Watch-point: Unitronics' trend (ILS mn)</span><span class="ta">கவனிக்க வேண்டியது: யூனிட்ரானிக்ஸ்</span></h3>
+      <div class="chart"><canvas id="acqUnit"></canvas></div>
+      <p class="cap en">Revenue fell 27% from CY23 to CY25 and net profit roughly halved in CY25. Amber bought in when profits were near their peak (about 8.9x CY24 earnings), and the price looks like about 17x on CY25 earnings. Source: StockAnalysis (TASE filings).</p>
+    </div>
+  </div>
+
+  <div class="sec grid g2">
+    <div class="card">
+      <h3><span class="en">Does the price pay back? Earnings yield on cash paid</span><span class="ta">கொடுத்த பணத்துக்கு லாபம் வருமா?</span></h3>
+      <div class="tw"><table>
+        <thead><tr><th class="l">Deal</th><th class="l">Attributable profit (pre-tax)</th><th>₹ Cr</th><th>Paid ₹ Cr</th><th>Yield</th></tr></thead>
+        <tbody>
+          <tr><td class="l">Power-One (60%)</td><td class="l">EBITDA ~17.5% × ₹245 Cr × 60%</td><td class="num">25.7</td><td class="num">262</td><td class="num">9.8%</td></tr>
+          <tr><td class="l">Unitronics (40.24%) · CY24</td><td class="l">Operating income ILS 44.57 mn × 40.24%</td><td class="num">46.4</td><td class="num">404</td><td class="num">11.5%</td></tr>
+          <tr><td class="l">Unitronics (40.24%) · CY25</td><td class="l">Operating income ILS 26.43 mn × 40.24%</td><td class="num">27.5</td><td class="num">404</td><td class="num dn">6.8%</td></tr>
+          <tr><td class="l">Shogini (80%) · illustrative</td><td class="l">If 16% EBITDA (mgmt "normal PCB") × ₹391 Cr × 80%</td><td class="num">50.0</td><td class="num">506</td><td class="num">9.9%</td></tr>
+          <tr><td class="l">Ascent step-up (38.5%)</td><td class="l">Not disclosed</td><td class="num">n/a</td><td class="num">336.75</td><td class="num">n/a</td></tr>
+        </tbody>
+      </table></div>
+      <p class="note en">CB computation from disclosed revenue and margins. These are pre-tax, pre-depreciation yields (EBITDA or operating income) before synergies, compared with a 12.5% pre-tax hurdle. Shogini's margin is not disclosed, so its row uses management's "normal PCB" margin and is illustrative only.</p>
+      <p class="en"><b>Read:</b> on stand-alone numbers the deals earn roughly 7–12% before tax on the price paid, around or below the hurdle. They create value only if the synergies arrive: in-sourcing PCBs, Unitronics' boards moving to India, Power-One scaling on IL JIN's plants, and ECMS-backed capacity.</p>
+    </div>
+    <div class="card">
+      <h3><span class="en">What the acquisitions cost the P&amp;L and balance sheet</span><span class="ta">இதுக்கான செலவு</span></h3>
+      <div class="tw"><table>
+        <thead><tr><th class="l">Item</th><th class="l">Before</th><th class="l">After</th></tr></thead>
+        <tbody>
+          <tr><td class="l">Intangible assets (incl. acquired)</td><td class="l num">₹838 Cr (FY25)</td><td class="l num">₹2,697 Cr (FY26)</td></tr>
+          <tr><td class="l">Quarterly depreciation &amp; amortisation</td><td class="l num">₹62 Cr (Q1 FY26)</td><td class="l num">₹108 Cr (Q1 FY27)</td></tr>
+          <tr><td class="l">Quarterly finance cost</td><td class="l num">₹63 Cr</td><td class="l num">₹85 Cr</td></tr>
+          <tr><td class="l">One-offs</td><td class="l">PPA inventory −₹15 Cr</td><td class="l">Ascent put −₹123 Cr (Q1 FY27)</td></tr>
+          <tr><td class="l">Minority leakage</td><td class="l" colspan="2">40% of Power-One, 20% of Shogini, ~50% of Unitronics, 1.5% of Ascent go to other shareholders</td></tr>
+        </tbody>
+      </table></div>
+      <p class="note">Sources: BOB Capital Markets Q4 FY26 review (intangibles, D&amp;A); Q1 FY27 presentation. Amber has also written down an earlier JV, Shivalik (FY26 impairment), which shows that minority structures carry risk.</p>
+    </div>
+  </div>
+
+  <div class="sec">
+    <h3><span class="en">Deal-by-deal scorecard</span><span class="ta">ஒவ்வொரு ஒப்பந்தத்துக்கும் மதிப்பெண்</span></h3>
+    <div class="tw"><table>
+      <thead><tr><th class="l">Deal</th><th class="l">Strategic fit</th><th class="l">Price discipline</th><th class="l">Integration risk</th><th class="l">CB reading</th></tr></thead>
+      <tbody>
+        <tr><td class="l"><b>Ascent Circuits</b></td><td class="l"><span class="chip g">High</span></td><td class="l"><span class="chip w">Mixed</span></td><td class="l"><span class="chip g">Low</span></td><td class="l">Core of the PCB platform, with ECMS-backed Hosur expansion. The 2026 buy-out was expensive (~69% re-rating), but it brings full control and ends the put liability.</td></tr>
+        <tr><td class="l"><b>Shogini Technoarts</b></td><td class="l"><span class="chip g">High</span></td><td class="l"><span class="chip g">Reasonable</span></td><td class="l"><span class="chip w">Medium</span></td><td class="l">Paid ~1.6x sales for a ₹391 Cr PCB maker with large capacity. Adds product range (flex, metal-clad) and customers. The best-priced deal.</td></tr>
+        <tr><td class="l"><b>Power-One</b></td><td class="l"><span class="chip g">High</span></td><td class="l"><span class="chip g">Reasonable</span></td><td class="l"><span class="chip w">Medium</span></td><td class="l">~10x EBITDA for a 17–18% margin business riding solar and BESS demand. Its value depends on scaling (₹245 → ₹325 Cr target) and keeping the margin.</td></tr>
+        <tr><td class="l"><b>Unitronics</b></td><td class="l"><span class="chip w">Medium</span></td><td class="l"><span class="chip b">Weak timing</span></td><td class="l"><span class="chip b">High</span></td><td class="l">Brings global IP and export channels, but revenue is shrinking (−27% over two years) and the business is overseas and listed. This is the deal to watch.</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+
+  <div class="sec card tint">
+    <h3><span class="en">CB verdict on the acquisitions</span><span class="ta">சிபி தீர்ப்பு</span></h3>
+    <p class="en"><b>Strategically coherent, financially not yet proven.</b> Together the deals turn Amber's electronics arm into a vertically integrated platform: boards, assembly and branded end-products. That is the main reason Electronics margin has reached double digits and Amber can call itself more than an AC maker. On stand-alone numbers, though, the price paid earns roughly 7–12% before tax, around or below a 12.5% hurdle. Higher amortisation, interest and minority leakage also absorb part of the gain, which is why adjusted PAT grew only 19% while operating EBITDA grew 28%.</p>
+    <p class="en"><b>Signposts that the acquisitions are working:</b> (1) Electronics margin holds at or above 10% through FY27 as guided (9.5–10%); (2) management discloses Unitronics returning to revenue growth; (3) Power-One reaches its ~₹325 Cr revenue target; (4) the Hosur plant starts trial production and bare-PCB margin returns to ~16%; (5) no further exceptional charges from put options or JV impairments.</p>
+    <p class="ta"><b>திட்டம் சரியானது, பணப் பலன் இன்னும் நிரூபிக்கப்படல.</b> இந்த ஒப்பந்தங்கள் அம்பரோட மின்னணு பிரிவ போர்டு, பொருத்துதல், சொந்த பிராண்ட் பொருள் வரை ஒருங்கிணைக்குது. அதனால தான் மார்ஜின் இரட்டை இலக்கத்துக்கு வந்திருக்கு. ஆனா கொடுத்த விலைக்கு இப்போ கிடைக்குற லாபம் சுமார் 7–12% தான். தேய்மானம், வட்டி, சிறுபான்மை பங்குதாரர் பங்கு எல்லாம் லாபத்துல ஒரு பகுதிய எடுத்துக்குது. கவனிக்க வேண்டியவை: மின்னணு மார்ஜின் 10% க்கு மேல நிக்கணும், யூனிட்ரானிக்ஸ் விற்பனை மீண்டும் வளரணும், பவர்-ஒன் ₹325 கோடி தொடணும், ஓசூர் ஆலை தொடங்கணும்.</p>
+  </div>
+</section>
+
+<!-- ================= MODEL SHIFT ================= -->
+<section class="pane" id="model">
+  <div class="summary-ta ta"><h4>இந்த மாற்றம் மதிப்பை கூட்டுமா?</h4>
+  ஒரு மாற்றம் பங்குதாரருக்கு மதிப்பு கூட்டணும்னா, அதுல போடுற முதலீட்டுக்கு கிடைக்குற வருமானம் அந்த பணத்தோட செலவ விட அதிகமா இருக்கணும். இப்போ அம்பரோட மூலதன வருவாய் சுமார் 10%. நம்ம கணக்குப்படி மூலதனச் செலவு சுமார் 12.5%. அதனால இப்போதைக்கு மதிப்பு கூடல. திசை சரியா இருக்கு: மார்ஜின் அதிகமான, பருவ காலத்த சாராத, அரசு ஆதரவு இருக்குற துறைகளுக்கு நகர்றாங்க. ஆனா பலன் 2029க்கு அப்புறம் தான் வரும். பங்கு நீர்த்துப் போறதும் கடனும் இப்போவே வந்துடுது. கீழ இருக்குற கணக்கியில மானியத்த மாத்தி பாருங்க.</div>
+
+  <div class="sec">
+    <div class="eyebrow">Is the new model value-accretive?</div>
+    <h2><span class="en">Old Amber vs new Amber</span><span class="ta">பழைய அம்பர் எதிர் புதிய அம்பர்</span></h2>
+    <div class="tw"><table>
+      <thead><tr><th class="l">Dimension</th><th class="l">Old model (FY18–FY24)</th><th class="l">New model (FY26–FY29)</th><th class="l">Effect on value</th></tr></thead>
+      <tbody>
+        <tr><td class="l">Core identity</td><td class="l">RAC ODM + AC components</td><td class="l">Component-led, multi-vertical EMS: PCB, PCBA, mobiles, industrial, rail and defence</td><td class="l"><span class="chip g">Positive</span> less single-product risk</td></tr>
+        <tr><td class="l">Seasonality</td><td class="l">High (summer-dependent)</td><td class="l">Lower: electronics, mobiles and rail are year-round</td><td class="l"><span class="chip g">Positive</span> steadier cash flow</td></tr>
+        <tr><td class="l">EBITDA margin</td><td class="l">~7–8%</td><td class="l">Mix of 2–4% (mobile), 8% (CD), 12–16% (PCB, rail)</td><td class="l"><span class="chip w">Mixed</span> % may fall, absolute rises</td></tr>
+        <tr><td class="l">Capital intensity</td><td class="l">Moderate; supplier-funded working capital (CCC −3 days)</td><td class="l">High: ~₹4,700 Cr PCB projects; CCC 53 days</td><td class="l"><span class="chip b">Negative</span> near term</td></tr>
+        <tr><td class="l">Policy support</td><td class="l">PLI (AC components)</td><td class="l">ECMS (PCB), possible mobile PLI, defence indigenisation</td><td class="l"><span class="chip g">Positive</span> subsidies lower capital at risk</td></tr>
+        <tr><td class="l">Funding</td><td class="l">Internal accruals + modest debt</td><td class="l">Net debt up to ~₹1,225 Cr; up to ₹5,000 Cr raise enabled</td><td class="l"><span class="chip b">Negative</span> ~18% dilution if fully equity</td></tr>
+        <tr><td class="l">Moat</td><td class="l">Scale, ~1/4 of RAC ODM market, customer stickiness</td><td class="l">Domestic HDI and multilayer PCB capability (scarce in India); Korean tech partner</td><td class="l"><span class="chip g">Positive</span> if executed</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+
+  <div class="sec">
+    <h3><span class="en">Change-by-change scorecard</span><span class="ta">ஒவ்வொரு மாற்றத்துக்கும் மதிப்பெண்</span></h3>
+    <p class="note en">Bar = CB's assessed likelihood that the change earns more than its cost of capital over 3–5 years. This is an analytical judgement, not a price call.</p>
+    <div id="vScore"></div>
+  </div>
+
+  <div class="sec grid g2">
+    <div class="card">
+      <h3><span class="en">The ROCE test: returns vs cost of capital</span><span class="ta">மூலதன வருவாய் சோதனை</span></h3>
+      <div class="chart"><canvas id="cRoce"></canvas></div>
+      <p class="cap en">FY24–FY26 actual (Screener). FY27E and FY28E are the average of PL (13.7%, 15.7%), ICICI (9.2%, 12.4%) and BOBCAPS (7.7%, 9.0%). The dashed line is a 12.5% hurdle (CB assumption for a mid-cap Indian manufacturer). Value is created only above the line.</p>
+    </div>
+    <div class="card tint">
+      <h3><span class="en">PCB plant economics: interactive sensitivity</span><span class="ta">சர்க்யூட் போர்டு ஆலை கணக்கு</span></h3>
+      <p class="en" style="font-size:.88rem">Pre-tax ROCE ≈ (asset turn × EBITDA margin − depreciation) ÷ (1 − capex subsidy). Depreciation is assumed at 8.3% of gross block (12-year life). Working capital is excluded. This is an illustrative CB model, not company guidance.</p>
+      <label for="subs" class="note"><span class="en">Capex support / subsidy share:</span><span class="ta">முதலீட்டு மானியம்:</span> <b id="subsV">0%</b></label>
+      <input id="subs" type="range" min="0" max="50" step="5" value="0">
+      <div class="tw" style="margin-top:8px"><table class="sens" id="sensT"></table></div>
+      <p class="note en">Read: at 1.0x asset turn and 16% margin (normal PCB), a plant earns about 7.7% pre-tax, below the hurdle. It needs about 1.2x turns or meaningful ECMS support to clear 12.5%. Orange cells clear the hurdle.</p>
+    </div>
+  </div>
+
+  <div class="sec card">
+    <h3><span class="en">CB verdict on the model shift</span><span class="ta">சிபி தீர்ப்பு</span></h3>
+    <p class="en"><b>Directionally accretive, but the value is back-ended.</b> The shift moves Amber toward higher-margin, less seasonal, policy-backed businesses where India has very little domestic capacity (85–90% of PCBs are imported). Those are the right places to compete. The economics, though, depend on things that are not yet proven:</p>
+    <ul class="clean en">
+      <li><b>Accretive now:</b> the Ascent buyout (removes minority leakage), rail and defence (15–16% margin, ₹2,750 Cr+ order book), and the medical/defence JV (tiny capital, real option value).</li>
+      <li><b>Accretive only if executed:</b> HDI and multilayer PCB, which need about 1.2x asset turns or ECMS support plus stable CCL prices. Unitronics and Power-One need integration and ROIC on about ₹666 Cr paid.</li>
+      <li><b>Margin-dilutive, ROCE-neutral to positive:</b> Oppo mobiles. Value depends on keeping working capital near zero, as Dixon does, and on whether revenue is booked gross or as conversion.</li>
+      <li><b>Dilutive near term:</b> the up-to-₹5,000 Cr raise, the jump in D&amp;A and interest (+₹68 Cr YoY in Q1 alone), and the working-capital build.</li>
+    </ul>
+    <p class="en">For investors, the signposts are: PCB margin back to 15–16% by Q3 FY27, H1 FY27 CFO turning clearly positive, CCC back below 40 days, the pricing and size of the fund-raise, and mobile revenue-recognition terms.</p>
+    <p class="ta"><b>திசை சரி, பலன் தாமதம்.</b> இறக்குமதி அதிகமா இருக்குற துறைகள்ல (சர்க்யூட் போர்டுல 85–90% இறக்குமதி) போட்டி போடுறது நல்ல முடிவு. ஆனா சர்க்யூட் போர்டு ஆலை லாபகரமா ஆக, முதலீட்டோட 1.2 மடங்கு வருமானம் அல்லது அரசு மானியம் தேவை. மொபைல் வணிகம் மார்ஜின குறைக்கும், ஆனா நடைமுறை மூலதனம் குறைவா இருந்தா மூலதன வருவாய பாதிக்காது. கவனிக்க வேண்டியவை: சர்க்யூட் போர்டு மார்ஜின், அரையாண்டு பணப்புழக்கம், நிதி திரட்டல் விலை.</p>
+  </div>
+</section>
+
+<!-- ================= EMS SCHOOL ================= -->
+<section class="pane" id="school">
+  <div class="summary-ta ta"><h4>இஎம்எஸ் பள்ளி: இந்திய மின்னணு உற்பத்தி துறை எப்படி பிரிக்கப்படுது</h4>
+  ஒரு மொபைல் போன யோசிங்க. அதுல பிராண்ட் பேரு ஒரு நிறுவனத்தோடது. அதை வடிவமைச்சு தயாரிக்கிறது இன்னொரு நிறுவனம், அது ஒடிஎம். வடிவமைப்பு இல்லாம வெறும் தயாரிப்பு மட்டும் செய்றது இஎம்எஸ். உள்ள இருக்குற சர்க்யூட் போர்டு, கேமரா, திரை தயாரிக்கிறவங்க உதிரி பாக நிறுவனங்கள். அதுக்கும் கீழ சிப் தயாரிப்பு. இந்தியாவுல பெரும்பாலான நிறுவனங்கள் பொருத்துதல் வேலைல தான் இருக்காங்க. அதிக அளவு, குறைந்த வகை கொண்ட நுகர்வோர் பொருள்ல மார்ஜின் 3–9%. குறைந்த அளவு, அதிக வகை கொண்ட தொழில், பாதுகாப்பு, மருத்துவ பொருள்ல மார்ஜின் 10–16%, ஆனா பணம் அதிக நாள் மாட்டிக்கும். அம்பர் இந்த ரெண்டுக்கும் நடுவுல இருக்குற கலப்பு மாதிரி.</div>
+
+  <div class="sec">
+    <div class="eyebrow">Lesson 1 · The value-chain ladder</div>
+    <h2><span class="en">Who does what inside an electronic product</span><span class="ta">ஒரு மின்னணு பொருளுக்குள்ள யார் என்ன செய்றாங்க</span></h2>
+    <div class="layers" id="layers"></div>
+    <p class="note">Classification follows HDFC Securities' EMS thematic (Apr 2026): design/ODM, component makers (build-to-print or build-to-spec), assemblers/EMS, OEMs. India's presence is strongest in assembly. Import dependence per Kotak MF (Jul 2026): semiconductors ~95%, displays 85–90%, PCBs 85–90%, camera modules 85–90%.</p>
+  </div>
+
+  <div class="sec grid g2">
+    <div class="card">
+      <div class="eyebrow">Lesson 2 · Volume vs mix</div>
+      <h3><span class="en">HVLM vs LVHM: the two economic models</span><span class="ta">இரண்டு பொருளாதார மாதிரிகள்</span></h3>
+      <div class="tw"><table>
+        <thead><tr><th class="l">Trait</th><th class="l">High-volume, low-mix (HVLM)</th><th class="l">Low-volume, high-mix (LVHM)</th></tr></thead>
+        <tbody>
+          <tr><td class="l">Products</td><td class="l">Mobiles, TVs, ACs, washing machines, laptops</td><td class="l">Industrial, auto/EV, medical, aerospace, defence, rail</td></tr>
+          <tr><td class="l">Customer</td><td class="l">B2C brands</td><td class="l">B2B OEMs, often global</td></tr>
+          <tr><td class="l">EBITDA margin (peers, Q1 FY27)</td><td class="l">3–8% (Dixon 3.0%, PG 7.3%, Amber CD 7.8%)</td><td class="l">10–16% (Syrma 10.2%, Cyient DLM 10.5%, Avalon 12.0%, Kaynes 15.6%)</td></tr>
+          <tr><td class="l">Cash conversion cycle (FY26)</td><td class="l">Low or negative (Dixon −7 days)</td><td class="l">Long (Avalon 160, Kaynes 193, Cyient DLM 280† days)</td></tr>
+          <tr><td class="l">ROCE driver</td><td class="l">Asset turns and negative working capital</td><td class="l">Margin and pricing power</td></tr>
+          <tr><td class="l">Main risk</td><td class="l">Client concentration, price wars</td><td class="l">Working capital, order slippage</td></tr>
+        </tbody>
+      </table></div>
+      <p class="note">Peer figures from Screener and company releases; † Cyient DLM standalone basis.</p>
+    </div>
+    <div class="card">
+      <div class="eyebrow">Lesson 3 · Size of the prize</div>
+      <h3><span class="en">India electronics and EMS market (₹ trillion)</span><span class="ta">இந்திய சந்தை அளவு</span></h3>
+      <div class="chart short"><canvas id="cMarket"></canvas></div>
+      <ul class="clean en" style="font-size:.86rem">
+        <li>Electronics production grew from ₹1.9 trn (FY15) to ₹11.3 trn (FY25), a 20% CAGR. Mobiles were ₹5.5 trn of that.</li>
+        <li>The EMS market was about ₹2.5 trn in FY24, projected at ₹8.2 trn by FY29 (27% CAGR). Contract manufacturing was 79% and ODM 21%; B2C ₹1,951 bn and B2B ₹519 bn.</li>
+      </ul>
+      <p class="note">Source: HDFC Securities EMS thematic, Apr 2026.</p>
+    </div>
+  </div>
+
+  <div class="sec grid g2">
+    <div class="card">
+      <div class="eyebrow">Lesson 4 · Policy buckets</div>
+      <h3><span class="en">How government schemes sort the industry</span><span class="ta">அரசு திட்டங்கள்</span></h3>
+      <div class="tw"><table>
+        <thead><tr><th class="l">Scheme</th><th class="l">What it supports</th><th class="l">Relevance to Amber</th></tr></thead>
+        <tbody>
+          <tr><td class="l">PLI – Large-scale electronics</td><td class="l">Mobile phones: 4–6% of incremental sales</td><td class="l">Under discussion for the Oppo line</td></tr>
+          <tr><td class="l">PLI – White goods</td><td class="l">AC and LED components</td><td class="l">Existing beneficiary (AC components)</td></tr>
+          <tr><td class="l">ECMS (notified Apr 2025)</td><td class="l">Components: PCB, camera and display modules, passives. Outlay ₹22,900 Cr, raised to ₹40,000 Cr (Feb 2026)</td><td class="l">Jewar ~₹3,200 Cr, Hosur ~₹1,000 Cr, Shogini ~₹500 Cr projects approved</td></tr>
+          <tr><td class="l">ISM / semiconductor</td><td class="l">Fabs, OSAT/ATMP</td><td class="l">Not present (Kaynes is)</td></tr>
+          <tr><td class="l">Defence indigenisation</td><td class="l">Domestic sourcing of defence electronics</td><td class="l">ILJIN Technologies JV, Sidwal defence</td></tr>
+        </tbody>
+      </table></div>
+      <p class="note">Sources: HDFC Securities (Apr 2026); Kotak MF (Jul 2026); Amber Q1 FY27 concall.</p>
+    </div>
+    <div class="card">
+      <div class="eyebrow">Lesson 5 · Where each company sits</div>
+      <h3><span class="en">Classification matrix</span><span class="ta">வகைப்பாட்டு அட்டவணை</span></h3>
+      <div class="tw"><table>
+        <thead><tr><th class="l">Company</th><th class="l">Layer</th><th class="l">Model</th><th class="l">Mix</th><th class="l">Scale tier</th></tr></thead>
+        <tbody>
+          <tr><td class="l"><b>Dixon</b></td><td class="l">EMS/ODM → components (camera, display)</td><td class="l">ODM + CM</td><td class="l">HVLM, B2C (mobile ~85%)</td><td class="l">Large</td></tr>
+          <tr class="hl"><td class="l"><b>Amber</b></td><td class="l">ODM + components (PCB, motors, HX) + sub-systems</td><td class="l">ODM + CM + component</td><td class="l">Hybrid: HVLM core, LVHM add-ons</td><td class="l">Large</td></tr>
+          <tr><td class="l"><b>PG Electroplast</b></td><td class="l">ODM (AC, WM, fridge) + plastics</td><td class="l">ODM</td><td class="l">HVLM, B2C</td><td class="l">Mid</td></tr>
+          <tr><td class="l"><b>Syrma SGS</b></td><td class="l">EMS + RFID + PCB JV</td><td class="l">CM + ODM</td><td class="l">Mixed: consumer, auto, industrial, medical</td><td class="l">Mid</td></tr>
+          <tr><td class="l"><b>Kaynes</b></td><td class="l">EMS + OSAT + PCB</td><td class="l">CM + ODM + semi</td><td class="l">LVHM, B2B</td><td class="l">Mid</td></tr>
+          <tr><td class="l"><b>Avalon</b></td><td class="l">Box-build EMS, US-heavy</td><td class="l">CM (build-to-print)</td><td class="l">LVHM, B2B exports</td><td class="l">Small</td></tr>
+          <tr><td class="l"><b>Cyient DLM</b></td><td class="l">Build-to-print PCBA, box-build</td><td class="l">CM</td><td class="l">LVHM: aero, defence, medical</td><td class="l">Small</td></tr>
+        </tbody>
+      </table></div>
+    </div>
+  </div>
+
+  <div class="sec card tint">
+    <h3><span class="en">So which category is Amber?</span><span class="ta">அப்போ அம்பர் எந்த வகை?</span></h3>
+    <p class="en">Amber is a <b>large, vertically integrated hybrid</b>. Its core (71% of revenue) is a <b>high-volume B2C ODM</b> for room ACs, built on in-house components (heat exchangers, motors, PCBs). That puts it alongside PG Electroplast, with deeper component integration. Around this core it is adding:</p>
+    <ul class="clean en">
+      <li>a <b>component maker</b> layer (bare multilayer and HDI PCB), the scarcest layer in India;</li>
+      <li>a <b>contract EMS</b> layer (PCBA for others, and Oppo phones from FY28, which looks like Dixon);</li>
+      <li><b>LVHM sub-systems</b> (rail, defence, industrial automation, medical), which look like Kaynes and Cyient DLM.</li>
+    </ul>
+    <p class="en">Best label: <b>"Component-led diversified ODM/EMS"</b>. It is the only peer trying to be in the ODM, component and LVHM layers at the same time. That breadth is the bull case, and execution across all of them at once is the bear case.</p>
+    <p class="ta">அம்பர் ஒரு <b>பெரிய, செங்குத்தா ஒருங்கிணைந்த கலப்பு நிறுவனம்</b>. மையம் ஏசி ஒடிஎம். அதைச் சுற்றி சர்க்யூட் போர்டு உதிரி பாக தயாரிப்பு, மத்தவங்களுக்கான இஎம்எஸ் தயாரிப்பு, ரயில் மற்றும் பாதுகாப்பு துணை அமைப்புகள். "உதிரி பாகத்த மையமா கொண்ட பன்முக ஒடிஎம் மற்றும் இஎம்எஸ்" அப்படின்னு சொல்லலாம்.</p>
+  </div>
+</section>
+
+<!-- ================= PEERS ================= -->
+<section class="pane" id="peers">
+  <div class="summary-ta ta"><h4>போட்டியாளர்கள் கூட ஒப்பீடு</h4>
+  வருமான அளவுல டிக்சன் தான் பெரியவர், காலாண்டு வருமானம் ₹15,548 கோடி. அம்பர் இரண்டாவது, ₹3,888 கோடி. ஆனா வளர்ச்சில அம்பர் கடைசி, 13% தான். சிர்மா 68%, அவலான் 50%, கேய்ன்ஸ் 41%. மார்ஜின்ல கேய்ன்ஸ் முதல், 15.6%. டிக்சன் கடைசி, 3%. பணச் சுழற்சில டிக்சன் சிறப்பு, மைனஸ் 7 நாள். சையன்ட் டிஎல்எம் 280 நாள், கேய்ன்ஸ் 193 நாள். விற்பனைக்கு ஒப்பிட்டா டிக்சனும் அம்பரும் தான் மலிவு. அவலான், சிர்மா விலை அதிகம்.</div>
+
+  <div class="sec">
+    <div class="eyebrow">Q1 FY27 · ₹ Crore · prices at 9 Oct 2026 close</div>
+    <h2><span class="en">Peer comparison table</span><span class="ta">ஒப்பீட்டு அட்டவணை</span></h2>
+    <div class="tw"><table id="peerT"></table></div>
+    <p class="note">EBITDA = operating profit excluding other income, from the exchange-filed P&amp;L as compiled by Screener (for Cyient DLM, the consolidated figure from its Q1 release). Dixon's Q1 PAT includes ₹528 Cr of other income (vs ₹2 Cr a year ago), so its core profit growth is much lower than the headline. † Cyient DLM's P/E, CFO and working-capital days are standalone. Its ROCE is from the latest available consolidated year.</p>
+  </div>
+
+  <div class="sec grid g2">
+    <div class="card"><h3><span class="en">Q1 revenue growth, YoY</span><span class="ta">வருமான வளர்ச்சி</span></h3><div class="chart"><canvas id="pGrowth"></canvas></div></div>
+    <div class="card"><h3><span class="en">EBITDA absolute, Q1 FY27 vs Q1 FY26 (₹ Cr)</span><span class="ta">லாபம் (கோடி)</span></h3><div class="chart"><canvas id="pEbitda"></canvas></div></div>
+  </div>
+  <div class="sec grid g2">
+    <div class="card"><h3><span class="en">EBITDA margin vs cash conversion cycle</span><span class="ta">மார்ஜின் எதிர் பணச் சுழற்சி</span></h3><div class="chart tall"><canvas id="pScatter"></canvas></div><p class="cap en">Bubble size = market cap. Top-left (high margin, short cycle) is the sweet spot, and nobody is there yet. HVLM players sit bottom-left, LVHM players top-right. Amber sits between the two groups.</p></div>
+    <div class="card"><h3><span class="en">Valuation vs returns: P/E and ROCE</span><span class="ta">மதிப்பீடு எதிர் வருவாய்</span></h3><div class="chart tall"><canvas id="pVal"></canvas></div><p class="cap en">Dixon has the highest ROCE and the lowest P/E in the set. Amber's 110x trailing P/E reflects depressed reported earnings. On FY28E it is about 32x.</p></div>
+  </div>
+  <div class="sec grid g2">
+    <div class="card">
+      <h3><span class="en">CBF26 scores: all seven companies</span><span class="ta">சிபிஎஃப்26 மதிப்பெண்கள்</span></h3>
+      <div class="tw"><table id="cbfT"></table></div>
+      <p class="note">Computed in this file from the table above. g: growth ÷ 5; m: margin ÷ 1.6; d: 10 − CCC ÷ 30; v: 10 − (P/E − 30) ÷ 10; t: CFO/PAT × 8; r: ROCE ÷ 2. Each factor is capped to 0–10, and the total is scaled to 100.</p>
+    </div>
+    <div class="card">
+      <h3><span class="en">Business equals: one line each</span><span class="ta">ஒவ்வொருவரும் ஒரு வரியில்</span></h3>
+      <ul class="clean en">
+        <li><b>Dixon:</b> India's largest EMS. Mobiles drive ~85% of revenue. Moving into camera and display modules. Q1 core margin 3.0%; PAT boosted by other income.</li>
+        <li><b>PG Electroplast:</b> the closest like-for-like for Amber's CD division (RAC ₹1,401 Cr in Q1, +38%). Washing machines +67%. Refrigerator and compressor plants coming.</li>
+        <li><b>Kaynes:</b> LVHM leader with OSAT (Sanand) and PCB (Chennai). Highest margin, but CCC of 193 days and negative FY26 CFO (−₹600 Cr). PAT fell 24% in Q1.</li>
+        <li><b>Syrma SGS:</b> fastest Q1 grower (+68%) on auto, consumer and exports. PCB JV with Shinhyup (~₹1,500 Cr) and a KAGA JV. Credit rating upgraded to IND AA.</li>
+        <li><b>Avalon:</b> US-heavy box-build. Q1 revenue +50%, margin 12%, order book ₹2,196 Cr. Among the richest valuations in the set (P/E 115; only Cyient DLM is higher at 122†).</li>
+        <li><b>Cyient DLM:</b> aero, defence and medical build-to-print. Order book ₹2,599 Cr (book-to-bill 1.5x in Q1). FY26 revenue fell 17%; recovering in Q1 (+34%).</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ================= MARKET ACTIVITY ================= -->
+<section class="pane" id="mkt">
+  <div class="summary-ta ta"><h4>பங்கு விலை ஏன் ஏறி இறங்குது?</h4>
+  ஜனவரி 2026ல ₹5,404 குறைந்தபட்சம். மே 7ல ₹8,970 அதிகபட்சம். நான்காம் காலாண்டு முடிவுக்கு அப்புறம் 15% க்கு மேல சரிவு. மந்தமான ஏசி விற்பனை, மார்ஜின் அழுத்தம், சரக்கு இருப்பு உயர்வு தான் காரணம். முதல் காலாண்டு முடிவுக்கு அப்புறம் ₹7,222. இப்போ ₹6,449. வெளிநாட்டு நிறுவன முதலீட்டாளர்கள் பங்கு 30.6% ல இருந்து 20.5% ஆ குறைஞ்சிருக்கு. உள்நாட்டு பரஸ்பர நிதிகள் 15.6% ல இருந்து 22.4% ஆ கூட்டியிருக்காங்க.</div>
+
+  <div class="sec grid g2">
+    <div class="card">
+      <h3><span class="en">Key price points, 2026 (₹)</span><span class="ta">முக்கிய விலை புள்ளிகள்</span></h3>
+      <div class="chart"><canvas id="mPrice"></canvas></div>
+      <p class="cap en">These are dated reference points from filings and market data, not a continuous price series. Sources: Business Standard / BSE (52-week high and low, 9 Oct close); PL Capital and BOBCAPS (14 Aug CMP ₹7,222).</p>
+    </div>
+    <div class="card">
+      <h3><span class="en">Shareholding trend (%)</span><span class="ta">பங்குதாரர் மாற்றம்</span></h3>
+      <div class="chart"><canvas id="mShare"></canvas></div>
+      <p class="cap en">FIIs sold for four straight quarters (30.60% → 20.48%). Mutual funds (15.59% → 22.42%) and other DIIs (4.61% → 8.13%) absorbed it. Promoters are steady at about 38.1%. Source: Upstox and Screener shareholding (Jun 2026 latest).</p>
+    </div>
+  </div>
+  <div class="sec card">
+    <h3><span class="en">Why the stock moved</span><span class="ta">விலை நகர்வுக்கான காரணங்கள்</span></h3>
+    <div class="tw"><table>
+      <thead><tr><th class="l">Date</th><th class="l">Move</th><th class="l">Reason</th><th class="l">Sources</th></tr></thead>
+      <tbody>
+        <tr><td class="l mono">27 Jan 2026</td><td class="l">52-week low ₹5,404</td><td class="l">Q2 FY26 loss (₹32 Cr) and weak RAC season weighed through the winter</td><td class="src">Business Standard</td></tr>
+        <tr><td class="l mono">7 May 2026</td><td class="l">52-week high ₹8,970</td><td class="l">Re-rating on the electronics/PCB story and the early-summer AC season ahead of Q4</td><td class="src">Business Standard; CB reading</td></tr>
+        <tr><td class="l mono">18 May 2026</td><td class="l">Fell over 15% in a day</td><td class="l">Q4 FY26: CD margin 8.4% → 7.5%, copper +34%, NWC days 9 → 29, CFO ₹711 → ₹240 Cr</td><td class="src">INDmoney; Zee Business</td></tr>
+        <tr><td class="l mono">18–19 Jun 2026</td><td class="l">In focus</td><td class="l">Oppo mobile collaboration; Ascent stake to 97.5%</td><td class="src">Upstox; exchange filing</td></tr>
+        <tr><td class="l mono">14 Aug 2026</td><td class="l">₹7,222</td><td class="l">Q1 FY27: strong operating EBITDA, ₹3 Cr reported PAT, ₹5,000 Cr raise enabled</td><td class="src">PL Capital; BOBCAPS</td></tr>
+        <tr><td class="l mono">Aug–Oct 2026</td><td class="l">−10.7% to ₹6,449</td><td class="l">No single reported trigger. CB reading: equity-dilution overhang from the enabling resolution, management's "modest festive demand" comment, and continued FII selling</td><td class="src">CB interpretation</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+</section>
+
+<!-- ================= SWOT ================= -->
+<section class="pane" id="swot">
+  <div class="summary-ta ta"><h4>பலம், பலவீனம், வாய்ப்பு, அபாயம்</h4>
+  பலம்: ஏசி ஒடிஎம்ல பெரிய பங்கு, உதிரி பாக ஒருங்கிணைப்பு, சர்க்யூட் போர்டு திறன். பலவீனம்: குறைந்த மூலதன வருவாய், பணப்புழக்க வீழ்ச்சி, ஏசி பருவ சார்பு. வாய்ப்பு: இறக்குமதி மாற்று, அரசு மானியம், மொபைல், பாதுகாப்பு. அபாயம்: பங்கு நீர்த்தல், செம்பு விலை, ஒரே நேரத்துல பல திட்டங்கள செயல்படுத்துறது.</div>
+  <div class="sec grid g2">
+    <div class="card" style="border-left:4px solid var(--good)"><h3><span class="en">Strengths</span><span class="ta">பலம்</span></h3><ul class="clean en">
+      <li>About 27% share of India's RAC ODM market (HDFC Securities); deep backward integration in heat exchangers, motors and PCBs</li>
+      <li>Electronics EBITDA +117% YoY; diversified customer base across CD, EV, telecom and industrial</li>
+      <li>Domestic multilayer PCB capability (Ascent, Shogini), which is scarce in India</li>
+      <li>Rail order book ₹2,750 Cr+, about 4.8x annualised Q1 rail revenue (₹144 Cr × 4 = ₹576 Cr; CB estimate)</li></ul></div>
+    <div class="card" style="border-left:4px solid var(--bad)"><h3><span class="en">Weaknesses</span><span class="ta">பலவீனம்</span></h3><ul class="clean en">
+      <li>ROCE 10.3% and ROE 6.0%, below the cost of capital</li>
+      <li>CFO collapsed to ₹240 Cr in FY26; CCC from −3 to 53 days</li>
+      <li>71% of revenue still seasonal and weather-dependent (RAC)</li>
+      <li>Rail contracts are fixed-price, with no copper pass-through (Q1 margin −660 bps)</li>
+      <li>Repeated exceptional items (FY26 ₹112 Cr, Q1 FY27 ₹123 Cr) cloud reported earnings</li></ul></div>
+    <div class="card" style="border-left:4px solid var(--el)"><h3><span class="en">Opportunities</span><span class="ta">வாய்ப்புகள்</span></h3><ul class="clean en">
+      <li>PCB import substitution (85–90% imported) with ECMS support</li>
+      <li>Oppo, OnePlus and Realme volumes: 8 mn → 15–16 mn units, plus possible exports and PLI</li>
+      <li>India's RAC penetration is low; RAC industry guided at 13–15% growth for FY27</li>
+      <li>Defence, medical and aero electronics via the 60:40 JV; metro and Vande Bharat-type rail capex</li>
+      <li>CCL backward integration (FY29–30) would protect PCB margins</li></ul></div>
+    <div class="card" style="border-left:4px solid var(--warn)"><h3><span class="en">Threats</span><span class="ta">அச்சுறுத்தல்கள்</span></h3><ul class="clean en">
+      <li>Equity dilution of up to ~18% from the ₹5,000 Cr raise</li>
+      <li>CCL and copper inflation; rupee depreciation on imported components</li>
+      <li>Execution overload: four PCB sites, mobiles, two overseas and domestic integrations, and JVs at once</li>
+      <li>Mobile EMS client concentration and price pressure (Dixon, Foxconn, Tata Electronics as competition)</li>
+      <li>Policy risk: a reduction in government support was flagged by ICICI Securities</li>
+      <li>ILJIN facility disruption (insured; reconstruction permission received)</li></ul></div>
+  </div>
+  <div class="sec card">
+    <h3><span class="en">Risk heat-map</span><span class="ta">அபாய வரைபடம்</span></h3>
+    <div class="tw"><table>
+      <thead><tr><th class="l">Risk</th><th class="l">Likelihood</th><th class="l">Impact</th><th class="l">What to watch</th></tr></thead>
+      <tbody>
+        <tr><td class="l">Equity dilution</td><td class="l"><span class="chip b">High</span></td><td class="l"><span class="chip w">Medium</span></td><td class="l">QIP or preferential pricing, size</td></tr>
+        <tr><td class="l">PCB margin fails to recover</td><td class="l"><span class="chip w">Medium</span></td><td class="l"><span class="chip b">High</span></td><td class="l">Q3 FY27 electronics margin; CCL prices</td></tr>
+        <tr><td class="l">Working capital stays high</td><td class="l"><span class="chip w">Medium</span></td><td class="l"><span class="chip b">High</span></td><td class="l">H1 FY27 CFO; inventory days</td></tr>
+        <tr><td class="l">Mobile ramp delay</td><td class="l"><span class="chip w">Medium</span></td><td class="l"><span class="chip w">Medium</span></td><td class="l">Q4 FY27 trial start; revenue model</td></tr>
+        <tr><td class="l">Weak RAC season</td><td class="l"><span class="chip w">Medium</span></td><td class="l"><span class="chip w">Medium</span></td><td class="l">Summer 2027 sell-through; channel inventory</td></tr>
+        <tr><td class="l">Jewar HDI execution</td><td class="l"><span class="chip w">Medium</span></td><td class="l"><span class="chip b">High</span></td><td class="l">Trial by ~early 2028; tech transfer from Korea Circuit</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+</section>
+
+<!-- ================= ANALYSTS ================= -->
+<section class="pane" id="an">
+  <div class="summary-ta ta"><h4>தரகு நிறுவனங்கள் என்ன சொல்றாங்க</h4>
+  முதல் காலாண்டு முடிவுக்கு அப்புறம் மூணு தரகு நிறுவனங்களும் "வாங்கலாம்" அப்படின்னு சொல்லியிருக்காங்க. இலக்கு விலை ₹8,500 முதல் ₹9,244 வரை. இன்றைய விலைல இருந்து 32% முதல் 43% வரை ஏற்றம். கவனிங்க: இது மூன்றாம் தரப்பு கருத்து. சிபி ஆய்வு எந்த பரிந்துரையும் கொடுக்கல.</div>
+  <div class="sec grid g2">
+    <div class="card">
+      <h3><span class="en">Third-party ratings after Q1 FY27</span><span class="ta">மூன்றாம் தரப்பு மதிப்பீடுகள்</span></h3>
+      <div class="tw"><table>
+        <thead><tr><th class="l">Broker</th><th class="l">Date</th><th class="l">Rating</th><th>Target ₹</th><th>Upside vs ₹6,449</th><th class="l">Basis</th><th class="l">Sources</th></tr></thead>
+        <tbody>
+          <tr><td class="l">PL Capital (Prabhudas Lilladher)</td><td class="l mono">15 Aug 2026</td><td class="l"><span class="chip g">Buy</span></td><td class="num">9,244</td><td class="num up">+43.3%</td><td class="l">SOTP; CD at 23x EV/EBITDA Mar-28E (implied 46x P/E)</td><td class="src">PL result update</td></tr>
+          <tr><td class="l">ICICI Securities</td><td class="l mono">17 Aug 2026</td><td class="l"><span class="chip g">Buy</span></td><td class="num">8,500</td><td class="num up">+31.8%</td><td class="l">43x FY28E EPS ₹198.3</td><td class="src">ICICI Direct report</td></tr>
+          <tr><td class="l">BOB Capital Markets</td><td class="l mono">17 Aug 2026</td><td class="l"><span class="chip g">Buy</span></td><td class="num">8,500</td><td class="num up">+31.8%</td><td class="l">40x Jun-28E EPS; TP cut from ₹9,300</td><td class="src">BOBCAPS result review</td></tr>
+          <tr class="tot"><td class="l">Average</td><td></td><td></td><td class="num">8,748</td><td class="num up">+35.6%</td><td></td><td class="src">CB computed</td></tr>
+        </tbody>
+      </table></div>
+      <p class="note">These are third-party views, quoted for information. CB Research does not issue buy, sell or hold recommendations. Targets were set when the price was ₹7,222–7,259; the upside shown is recomputed at the 9 Oct close.</p>
+    </div>
+    <div class="card">
+      <h3><span class="en">Targets vs price (₹)</span><span class="ta">இலக்கு எதிர் விலை</span></h3>
+      <div class="chart"><canvas id="aTP"></canvas></div>
+      <p class="cap en">The common thread across all three: FY27 is a transition year, and FY28 EPS (~₹199) depends on mobiles and PCB. BOBCAPS cut its target on lower estimates, and PL flagged margin pressure as temporary.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ================= MANAGEMENT ================= -->
+<section class="pane" id="mg">
+  <div class="summary-ta ta"><h4>நிர்வாகம் மற்றும் இயக்குநர் குழு</h4>
+  ஜஸ்பீர் சிங் செயல் தலைவர் மற்றும் தலைமை நிர்வாக அதிகாரி. அவரோட சகோதரர் தல்ஜித் சிங் நிர்வாக இயக்குநர். ப்ரோமோட்டர் பங்கு சுமார் 38%, நிலையா இருக்கு. மூணு சுயாதீன இயக்குநர்கள் இருக்காங்க. சுதீர் கோயல் நிதி அதிகாரி. ஆகஸ்ட் 2026ல இருந்து மின்னணு துணை நிறுவனத்துக்கும் அவர் தான் நிதி அதிகாரி.</div>
+  <div class="sec grid g2">
+    <div class="card">
+      <h3><span class="en">Board of directors</span><span class="ta">இயக்குநர் குழு</span></h3>
+      <div class="tw"><table>
+        <thead><tr><th class="l">Name</th><th class="l">Role</th><th class="l">Notes</th></tr></thead>
+        <tbody>
+          <tr><td class="l"><b>Jasbir Singh</b></td><td class="l">Executive Chairman &amp; CEO</td><td class="l">Promoter; leads strategy and the Oppo deal</td></tr>
+          <tr><td class="l"><b>Daljit Singh</b></td><td class="l">Managing Director</td><td class="l">Promoter; operations</td></tr>
+          <tr><td class="l">Sachin Gupta</td><td class="l">Executive Director &amp; Whole-time Director</td><td class="l"></td></tr>
+          <tr><td class="l">Arvind Uppal</td><td class="l">Independent Director</td><td class="l"></td></tr>
+          <tr><td class="l">Sabina Moti Bhavnani</td><td class="l">Independent Director</td><td class="l">Second 5-year term from 19 Sep 2026 (AGM approval)</td></tr>
+          <tr><td class="l">Prakash Iyer</td><td class="l">Independent Director</td><td class="l">Second 5-year term from 19 Sep 2026 (AGM approval)</td></tr>
+        </tbody>
+      </table></div>
+      <p class="note">Sources: Arihant Capital board listing; board-meeting outcome 13 Aug 2026 (as reported by Investywise).</p>
+    </div>
+    <div class="card">
+      <h3><span class="en">Key management and governance notes</span><span class="ta">முக்கிய நிர்வாகிகள்</span></h3>
+      <div class="tw"><table>
+        <thead><tr><th class="l">Name</th><th class="l">Role</th></tr></thead>
+        <tbody>
+          <tr><td class="l">Sudhir Goyal</td><td class="l">CFO, Amber; also CFO of IL JIN Electronics from 13 Aug 2026</td></tr>
+          <tr><td class="l">Konica Yadav</td><td class="l">Company Secretary &amp; Compliance Officer</td></tr>
+          <tr><td class="l">COO, Mobile vertical</td><td class="l">Newly onboarded (name not disclosed in sources reviewed)</td></tr>
+        </tbody>
+      </table></div>
+      <ul class="clean en" style="margin-top:10px">
+        <li><b>Promoter holding steady</b> at 38.09% (Jun 2026), with no pledge reported in the sources reviewed.</li>
+        <li><b>Capital-allocation track record</b> has been mixed. FY26 saw a Shivalik impairment (part of a ₹112 Cr exceptional), and Q1 FY27 had the ₹123 Cr put-liability loss. Both came from JV and minority structures.</li>
+        <li><b>Disclosure quality is good:</b> divisional EBITDA, PPA adjustments and ECMS amounts are all disclosed. Net-debt definitions differ from broker balance sheets, though.</li>
+        <li>The 36th AGM was held on 16 Sep 2026.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ================= SOCRATES ================= -->
+<section class="pane" id="so">
+  <div class="summary-ta ta"><h4>காவேரி சாக்ரடீஸ்</h4>
+  கேள்விகள் மூலமா கத்துக்கலாம். ஒவ்வொரு கேள்விக்கும் ஒரு பதில தேர்ந்தெடுங்க. அப்புறம் அடுத்து எதை பார்க்கணும்னு ஒரு குறிப்பு வரும். கடைசில உங்க சொந்த கருத்த எழுதுங்க.</div>
+  <div class="sec">
+    <div class="eyebrow">Learn by questioning · real Q1 FY27 figures</div>
+    <h2><span class="en">Cauvery Socrates</span><span class="ta">காவேரி சாக்ரடீஸ்</span></h2>
+    <div id="socr"></div>
+    <div class="q">
+      <b class="en">Your turn: in two or three sentences, is Amber's move into PCBs and mobiles good for shareholders? Write your reasoning.</b>
+      <b class="ta">உங்க முறை: சர்க்யூட் போர்டு, மொபைல் நோக்கி அம்பர் நகர்வது பங்குதாரர்களுக்கு நல்லதா? இரண்டு மூணு வரியில எழுதுங்க.</b>
+      <textarea id="freeT" aria-label="Your answer"></textarea>
+      <button class="pill" id="freeB" type="button" style="margin-top:8px"><span class="en">Get a Socratic follow-up</span><span class="ta">அடுத்த கேள்வி</span></button>
+      <div class="fb" id="freeF"></div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- CB badge, disclaimer, assist -->
+<button id="cbBadge" type="button" aria-label="CB Research disclaimer">CB</button>
+<div id="disc" hidden>
+  <b>Prepared by CB Research (Cauvery Business Research)</b>
+  <p class="en" style="margin:.4rem 0 0">For education and information only. CB Research is not a SEBI-registered investment adviser or research analyst, and this is not investment advice or a recommendation to buy, sell or hold any security. Figures come from company filings, exchange data and named broker reports as of 11 Oct 2026. Items marked n/a or † are undisclosed or flagged. Broker ratings are third-party views. Please consult a SEBI-registered adviser before investing.</p>
+  <p class="ta" style="margin:.4rem 0 0">இது கல்வி நோக்கத்துக்கு மட்டும். சிபி ஆய்வு செபியில் பதிவு செய்யப்பட்ட ஆலோசகர் இல்லை. இது முதலீட்டு ஆலோசனை இல்லை. முதலீடு செய்யும் முன் பதிவு செய்யப்பட்ட ஆலோசகரை அணுகவும்.</p>
+</div>
+<button id="assistBtn" type="button"><span class="en">Ask CB Assist</span><span class="ta">சிபி உதவி</span></button>
+<div id="assist" hidden role="dialog" aria-label="CB Assist">
+  <header><b><span class="en">CB Assist · voice Q&amp;A</span><span class="ta">சிபி உதவி · குரல் கேள்வி பதில்</span></b><button class="ibtn" id="assistX" type="button" aria-label="Close">✕</button></header>
+  <div class="log" id="aLog"></div>
+  <div class="sugg" id="aSugg"></div>
+  <form id="aForm"><button class="ibtn" id="aMic" type="button" aria-label="Ask by voice">🎤</button><input id="aIn" type="text" autocomplete="off" placeholder="Ask: who has the best margin?"><button class="ibtn" type="submit">Ask</button></form>
+</div>
+
+<script>
+/* ===================== DATA ===================== */
+var CO = {
+  meta:{name:"Amber Enterprises India Ltd", nse:"AMBER", bse:"540902", quarter:"Q1 FY27", asOf:"2026-10-09", prepared:"2026-10-11 17:54 IST"},
+  price:6449.30, mcap:22747, shares:3.527, bookValue:1242, netDebtJun26:1225, netDebtMar26:510,
+  q1:{rev:3888, revLY:3449, revQ4:4148, gp:746, gpLY:542, opEbitda:337, opEbitdaLY:263, opEbitdaQ4:362, repEbitda:311.5,
+      da:108, fin:85, ebit:267, pbtPre:182, ppa:-15, exc:-123, jv:-1, pbt:43, tax:40, pat:3.09, adjPat:126, adjPatLY:106, adjPatQ4:162},
+  seg:[{k:"Consumer Durables",ta:"நுகர்வோர் பொருட்கள்",rev:2758,revLY:2560,e:214,eLY:192,c:"#e2711d"},
+       {k:"Electronics",ta:"மின்னணு",rev:985,revLY:766,e:107,eLY:49,c:"#0f7c80"},
+       {k:"Railway & Defence",ta:"ரயில் & பாதுகாப்பு",rev:144,revLY:123,e:16,eLY:22,c:"#5146c9"}],
+  quarters:{lab:["Q1 FY26","Q2 FY26","Q3 FY26","Q4 FY26","Q1 FY27"],rev:[3449.13,1647.01,2942.82,4147.52,3887.72],ebitda:[249.81,83.77,237.47,291.23,311.51],opm:[7.24,5.09,8.07,7.02,8.01],pat:[105.98,-32.15,-9.34,161.96,3.09]},
+  fy:{lab:["FY24","FY25","FY26"],rev:[6729,9973,12186],ebitda:[491,736,865],pat:[139,251,226],cfo:[965,711,240],cfi:[-1035,-953,-2904],cff:[-122,323,2683],fcf:[567,155,-1048],
+      inv:[56,74,90],deb:[85,64,67],pay:[144,110,104],ccc:[-3,27,53],roce:[10,14,10]},
+  est:{PL:{rev:[15032,24513],ebitda:[1267,1674],eps:[140.5,199.0],tp:9244,date:"15 Aug 2026"},
+       ICICI:{rev:[14847,24460],ebitda:[1217,1695],eps:[110.3,198.3],tp:8500,date:"17 Aug 2026"},
+       BOBCAPS:{rev:[14541,18328],ebitda:[1150,1529],eps:[138.8,199.8],tp:8500,date:"17 Aug 2026"}},
+  share:{lab:["Sep 2025","Dec 2025","Mar 2026","Jun 2026"],prom:[38.22,38.19,38.17,38.09],fii:[30.60,26.98,23.96,20.48],mf:[15.59,18.58,21.66,22.42],odii:[4.61,5.28,6.26,8.13],ret:[10.98,10.97,9.95,10.89]}
+};
+var PEERS = [
+ {n:"Amber",ta:"அம்பர்",rev:3888,revLY:3449,e:311.5,eLY:249.8,pat:3.1,mcap:22747,price:6449,pe:110,roce:10.3,roe:6.0,fyRev:12186,fyPat:226,cfo:240,deb:67,inv:90,pay:104,ccc:53,prom:38.09,src:"Company Q1 FY27 release; Screener; BSE",c:"#e2711d"},
+ {n:"Dixon",ta:"டிக்சன்",rev:15548,revLY:12836,e:463,eLY:482,pat:718,mcap:78139,price:12774,pe:41.6,roce:29.2,roe:18.9,fyRev:48873,fyPat:1644,cfo:1782,deb:49,inv:31,pay:86,ccc:-7,prom:28.55,src:"Screener; Q1 FY27 filing via Sahi/Investywise",c:"#334155"},
+ {n:"Kaynes",ta:"கேய்ன்ஸ்",rev:946,revLY:673,e:148,eLY:113,pat:56,mcap:21941,price:3264,pe:63.2,roce:12.7,roe:8.7,fyRev:3626,fyPat:364,cfo:-600,deb:154,inv:169,pay:131,ccc:193,prom:53.46,src:"Screener; Ventura (Q1 release)",c:"#0e7490"},
+ {n:"PG Electroplast",ta:"பிஜி எலக்ட்ரோபிளாஸ்ட்",rev:2034,revLY:1504,e:148,eLY:121,pat:76,mcap:14676,price:512,pe:71.3,roce:10.3,roe:6.7,fyRev:5288,fyPat:197,cfo:70,deb:82,inv:134,pay:147,ccc:69,prom:43.20,src:"Screener; Investywise (Q1 release)",c:"#9333ea"},
+ {n:"Syrma SGS",ta:"சிர்மா எஸ்ஜிஎஸ்",rev:1589,revLY:944,e:162,eLY:87,pat:106,mcap:33165,price:1720,pe:89.3,roce:16.8,roe:14.0,fyRev:4819,fyPat:346,cfo:290,deb:139,inv:108,pay:199,ccc:48,prom:42.28,src:"Screener; Autocar Pro (Q1 release)",c:"#16a34a"},
+ {n:"Cyient DLM",ta:"சையன்ட் டிஎல்எம்",rev:373.8,revLY:278.3,e:39.2,eLY:25.1,pat:16.3,mcap:7560,price:952,pe:122,roce:11.0,roe:7.3,fyRev:1261.5,fyPat:73.3,cfo:52,deb:100,inv:344,pay:164,ccc:280,prom:52.11,src:"Cyient DLM Q1/Q4 releases; Screener (standalone†)",c:"#b45309",dag:true},
+ {n:"Avalon",ta:"அவலான்",rev:484,revLY:323,e:58,eLY:30,pat:35,mcap:15386,price:2300,pe:115,roce:19.3,roe:16.5,fyRev:1603,fyPat:113,cfo:57,deb:87,inv:161,pay:87,ccc:160,prom:44.39,src:"Screener; Q1 release via Cofacto",c:"#be123c"}
+];
+PEERS.forEach(function(p){p.g=(p.rev/p.revLY-1)*100;p.m=p.e/p.rev*100;p.cp=p.cfo/p.fyPat;p.ms=p.mcap/p.fyRev;});
+
+/* ===================== HELPERS ===================== */
+function fmt(n,d){if(n===null||n===undefined||isNaN(n))return "n/a";d=(d===undefined)?0:d;return Number(n).toLocaleString("en-IN",{minimumFractionDigits:d,maximumFractionDigits:d});}
+function pct(n,d){return (n>0?"+":"")+fmt(n,d===undefined?1:d)+"%";}
+function cap(v){return Math.max(0,Math.min(10,v));}
+function $(id){return document.getElementById(id);}
+var LANG="en";
+var INK="#1c1a17",MUTED="#6b6257",GRID="rgba(28,26,23,.07)";
+if(window.Chart){
+  Chart.defaults.font.family='"IBM Plex Sans","Segoe UI",Roboto,Arial,sans-serif';
+  Chart.defaults.color=MUTED;
+  Chart.defaults.plugins.legend.labels.boxWidth=12;
+  Chart.defaults.maintainAspectRatio=false;
+  Chart.defaults.plugins.tooltip.callbacks.label=function(ctx){var v=ctx.raw;if(Array.isArray(v))v=v[1]-v[0];if(v&&typeof v==="object"&&"y" in v)v=v.y;return (ctx.dataset.label?ctx.dataset.label+": ":"")+fmt(v,Math.abs(v)<100&&v%1!==0?1:0);};
+}
+/* value labels on bar tops */
+var valLabels={id:"valLabels",afterDatasetsDraw:function(chart,args,opt){
+  if(opt===false||!opt||!opt.on)return;var ctx=chart.ctx;ctx.save();ctx.font='500 11px "IBM Plex Mono",monospace';ctx.fillStyle=INK;ctx.textAlign="center";
+  chart.data.datasets.forEach(function(ds,i){var meta=chart.getDatasetMeta(i);if(meta.hidden||(meta.type!=="bar"))return;
+    meta.data.forEach(function(el,j){var raw=ds.data[j];if(raw===null||raw===undefined)return;var lbl;
+      if(ds.labelsTxt)lbl=ds.labelsTxt[j];else{var v=Array.isArray(raw)?raw[1]-raw[0]:raw;lbl=fmt(v,(opt.dec!==undefined?opt.dec:(Math.abs(v)<100&&v%1!==0?1:0)))+(opt.suf||"");}
+      var horiz=chart.options.indexAxis==="y";
+      if(horiz){ctx.textAlign="left";ctx.textBaseline="middle";var x=Math.max(el.x,el.base);ctx.fillText(lbl,x+4,el.y);}
+      else{ctx.textBaseline="bottom";var neg=(Array.isArray(raw)?raw[1]<raw[0]:raw<0);var y=neg?Math.max(el.y,el.base)+13:Math.min(el.y,el.base)-3;ctx.fillText(lbl,el.x,y);}
+    });});ctx.restore();}};
+if(window.Chart)Chart.register(valLabels);
+function axes(yt,y2){var o={x:{grid:{display:false},ticks:{color:MUTED}},y:{grid:{color:GRID},ticks:{color:MUTED,callback:function(v){return fmt(v);}},title:{display:!!yt,text:yt||"",color:MUTED}}};
+  if(y2){o.y2={position:"right",grid:{display:false},ticks:{color:MUTED,callback:function(v){return fmt(v,1)+"%";}},title:{display:true,text:y2,color:MUTED}};}return o;}
+var charts={};
+function mk(id,cfg){var el=$(id);if(!el||!window.Chart)return;if(charts[id])charts[id].destroy();charts[id]=new Chart(el,cfg);}
+</script>
+
+<script>
+/* ===================== KPIs ===================== */
+function kpi(lab,val,chg,cls,sub){return '<div class="card kpi"><div class="lab">'+lab+'</div><div class="val">'+val+'</div><div class="chg '+(cls||"")+'">'+chg+'</div>'+(sub?'<div class="note">'+sub+'</div>':'')+'</div>';}
+function renderKpis(){
+  var q=CO.q1;
+  $("kpis").innerHTML=
+    kpi("Revenue","₹"+fmt(q.rev),pct((q.rev/q.revLY-1)*100)+" YoY · "+pct((q.rev/q.revQ4-1)*100)+" QoQ","up")+
+    kpi("Operating EBITDA","₹"+fmt(q.opEbitda),pct((q.opEbitda/q.opEbitdaLY-1)*100)+" YoY · margin "+fmt(q.opEbitda/q.rev*100,1)+"%","up")+
+    kpi("Adjusted PAT","₹"+fmt(q.adjPat),pct((q.adjPat/q.adjPatLY-1)*100)+" YoY","up","Reported PAT ₹"+fmt(q.pat,2)+" Cr after ₹123 Cr exceptional")+
+    kpi("Net debt (30 Jun)","~₹"+fmt(CO.netDebtJun26),"from ~₹"+fmt(CO.netDebtMar26)+" in Mar 2026","dn")+
+    kpi("Gross margin",fmt(q.gp/q.rev*100,1)+"%","vs "+fmt(q.gpLY/q.revLY*100,1)+"% a year ago","up")+
+    kpi("Electronics EBITDA","₹107","+117% YoY · 10.8% margin","up")+
+    kpi("Market cap","₹"+fmt(CO.mcap),"Price ₹"+fmt(CO.price,2)+" (9 Oct)","flat")+
+    kpi("P/E on FY28E","32.4x","Broker avg EPS ₹199.0","flat");
+  $("cfKpis").innerHTML=
+    kpi("FY26 CFO","₹240","vs ₹711 FY25","dn")+
+    kpi("FY26 free cash flow","−₹1,048","capex ~₹1,288 Cr","dn")+
+    kpi("Cash conversion cycle","53 days","vs −3 days FY24","dn")+
+    kpi("CFO ÷ EBITDA FY26","27.7%","vs 96.6% FY25","dn");
+  $("valKpis").innerHTML=
+    kpi("Trailing P/E","110x","reported; distorted","flat")+
+    kpi("FY28E P/E","32.4x","avg EPS ₹199.0","flat")+
+    kpi("EV / FY27E EBITDA","19.8x","EV ₹23,972 Cr","flat")+
+    kpi("Avg broker target","₹8,748","+35.6% vs ₹6,449","up");
+}
+
+/* ===================== CBF26 ===================== */
+function cbf(p){var s={g:cap(p.g/5),m:cap(p.m/1.6),d:cap(10-p.ccc/30),v:cap(10-(p.pe-30)/10),t:cap(p.cp*8),r:cap(p.roce/2)};s.tot=Math.round((s.g+s.m+s.d+s.v+s.t+s.r)/60*100);return s;}
+function renderCbfAmber(){var s=cbf(PEERS[0]);var names={g:["g · Growth","வளர்ச்சி"],m:["m · Margin","மார்ஜின்"],d:["d · WC discipline","நடைமுறை மூலதனம்"],v:["v · Valuation","மதிப்பீடு"],t:["t · True earnings","பணமா மாறும் லாபம்"],r:["r · Returns","மூலதன வருவாய்"]};
+  var h="";["g","m","d","v","t","r"].forEach(function(k){var c=s[k]>=7?"var(--good)":(s[k]>=4?"var(--warn)":"var(--bad)");
+    h+='<div class="sbar"><span class="t"><span class="en">'+names[k][0]+'</span><span class="ta">'+names[k][1]+'</span></span><span class="b"><i style="width:'+(s[k]*10)+'%;background:'+c+'"></i></span><span class="v">'+fmt(s[k],1)+'</span></div>';});
+  h+='<div class="sbar" style="margin-top:6px"><b class="t">CBF26 total</b><span class="b"><i style="width:'+s.tot+'%;background:var(--accent)"></i></span><b class="v">'+s.tot+'</b></div>';
+  $("cbfAmber").innerHTML=h;}
+
+/* ===================== BUSINESS MAP ===================== */
+var MAP={cols:[["INPUTS",20],["AMBER BUILDS",265],["SELLS AS",520],["CUSTOMERS",775]],
+ nodes:[
+  {id:"i1",c:0,y:50,t:"Copper & aluminium",col:"#94a3b8",en:"Main raw materials for heat exchangers and motors. RAC contracts largely pass metal prices on to the brand, but with a lag. Rail contracts are fixed-price, so copper inflation hits Sidwal's margins.",ta:"வெப்பப் பரிமாற்றி, மோட்டாருக்கான முக்கிய மூலப்பொருள். ஏசி ஒப்பந்தங்கள்ல விலை உயர்வு பிராண்டுக்கு மாறும். ரயில் ஒப்பந்தங்கள்ல மாறாது."},
+  {id:"i2",c:0,y:125,t:"Copper-clad laminate",col:"#94a3b8",en:"CCL is the base board of every PCB. Its price spike cut bare-PCB margins from ~16% to ~12% in Q1. Amber plans its own CCL plant via a JV by FY29–30.",ta:"ஒவ்வொரு சர்க்யூட் போர்டுக்கும் அடிப்படை பலகை. அதோட விலை ஏறினதால மார்ஜின் 16% ல இருந்து 12% ஆச்சு."},
+  {id:"i3",c:0,y:200,t:"Chips & passives (imported)",col:"#94a3b8",en:"India imports ~95% of semiconductors and 80–85% of passives. These go into PCB assemblies, inverters and PLCs. Shorter supplier credit here is one reason payable days fell.",ta:"சிப்கள்ல 95% இறக்குமதி. சப்ளையர் கடன் நாட்கள் குறைஞ்சதுக்கு இதுவும் ஒரு காரணம்."},
+  {id:"i4",c:0,y:275,t:"Compressors & bought-outs",col:"#94a3b8",en:"Compressors are bought in (PG Electroplast is building its own compressor plant). They are a large share of an AC's bill of materials.",ta:"கம்ப்ரசர்கள வெளியில வாங்குறாங்க. ஏசி செலவுல பெரிய பங்கு."},
+  {id:"b1",c:1,y:50,t:"Heat exchangers, motors, sheet metal",col:"#e2711d",en:"In-house components give Amber cost control and let it supply parts to brands that assemble their own ACs. This backward integration is Amber's classic edge.",ta:"சொந்தமா உதிரி பாகம் தயாரிக்கிறது தான் அம்பரோட பழைய பலம்."},
+  {id:"b2",c:1,y:115,t:"Bare PCB · Ascent, Shogini",col:"#0f7c80",en:"Multilayer, flex and metal-clad boards from Hosur (TN) and Pune, plus HDI at Jewar (UP) via Ascent-K. About ₹4,700 Cr of ECMS-approved projects. Normal margin is ~16%.",ta:"ஓசூர், புனே, ஜேவர் ஆலைகள். அரசு அனுமதி பெற்ற சுமார் ₹4,700 கோடி திட்டங்கள்."},
+  {id:"b3",c:1,y:180,t:"PCB assembly · IL JIN",col:"#0f7c80",en:"Surface-mount assembly of boards for ACs, washing machines, EVs, telecom and hearables. The same lines can serve the Oppo phone programme.",ta:"சர்க்யூட் போர்டுல பாகங்கள பொருத்துதல். ஏசி, மின்சார வாகனம், தொலைத்தொடர்பு எல்லாத்துக்கும்."},
+  {id:"b4",c:1,y:245,t:"Inverters, BESS · Power-One",col:"#0f7c80",en:"60% stake (~₹262 Cr). Solar inverters, UPS, EV chargers and battery storage, which ride India's solar and storage build-out.",ta:"சூரிய இன்வெர்ட்டர், பேட்டரி சேமிப்பு. 60% பங்கு."},
+  {id:"b5",c:1,y:310,t:"PLC & HMI · Unitronics",col:"#0f7c80",en:"Israeli automation brand with its own products. This is Amber's first owned-IP, higher-margin industrial business and its first overseas acquisition.",ta:"இஸ்ரேல் தொழில் கட்டுப்பாட்டு கருவி நிறுவனம். சொந்த தொழில்நுட்பம் உள்ள முதல் வணிகம்."},
+  {id:"b6",c:1,y:375,t:"Rail HVAC & sub-systems · Sidwal",col:"#5146c9",en:"Air-conditioning and sub-systems for Indian Railways, metros, defence and buses. Order book ₹2,750 Cr+. The new greenfield plant is operational, and a Yujin JV is pending RDSO approval.",ta:"ரயில், மெட்ரோ, பாதுகாப்பு துறைக்கான ஏசி. ஆர்டர் ₹2,750 கோடிக்கு மேல்."},
+  {id:"s1",c:2,y:50,t:"Complete room ACs (ODM)",col:"#e2711d",en:"Indoor and outdoor units designed and built under the brand's label. About 27% of India's RAC ODM market. The business earns a conversion margin and is seasonal.",ta:"பிராண்டு பேர்ல முழு ஏசி. இந்திய ஏசி ஒடிஎம் சந்தையில சுமார் 27% பங்கு."},
+  {id:"s2",c:2,y:125,t:"Components for ACs, WM, fridges",col:"#e2711d",en:"Parts sold to brands that assemble in-house. Lower risk and steadier than full units.",ta:"சொந்தமா பொருத்துற பிராண்டுகளுக்கு உதிரி பாகங்கள்."},
+  {id:"s3",c:2,y:200,t:"PCBA & box-build for OEMs",col:"#0f7c80",en:"Contract electronics manufacturing for non-AC customers. FY27 guidance is 40%+ growth for the electronics division.",ta:"மத்த நிறுவனங்களுக்கு மின்னணு ஒப்பந்த தயாரிப்பு. 40%+ வளர்ச்சி இலக்கு."},
+  {id:"s4",c:2,y:275,t:"Mobile phones (from FY28)",col:"#0f7c80",dash:true,en:"Oppo, OnePlus and Realme under the 18 Jun 2026 collaboration. About 8 mn units in year 1 and 15–16 mn in year 2. This is high-volume, low-margin work, where value depends on working capital.",ta:"ஒப்போ, ஒன்பிளஸ், ரியல்மி போன்கள். முதல் வருஷம் 80 லட்சம்."},
+  {id:"s5",c:2,y:350,t:"Rail, metro & defence systems",col:"#5146c9",en:"Guided 30–35% growth in FY27 at a 15–16% margin, although Q1 margin was 11.3% due to copper, FX and wage costs.",ta:"2027ல 30–35% வளர்ச்சி இலக்கு."},
+  {id:"c1",c:3,y:50,t:"AC & appliance brands",col:"#475569",en:"Most of India's large RAC brands outsource some volume to ODMs. The relationships are sticky, but customers are concentrated.",ta:"பெரிய ஏசி பிராண்டுகள். நீண்ட உறவு, ஆனா சில வாடிக்கையாளர்கள சார்ந்தது."},
+  {id:"c2",c:3,y:135,t:"EV, telecom, industrial, energy OEMs",col:"#475569",en:"The B2B electronics customer base. This diversifies Amber away from the summer season.",ta:"தொழில் மின்னணு வாடிக்கையாளர்கள். கோடை பருவ சார்ப குறைக்குது."},
+  {id:"c3",c:3,y:220,t:"Oppo · OnePlus · Realme",col:"#475569",dash:true,en:"Oppo India's FY25 revenue was ₹31,981 Cr, so the customer is large. Exports and PLI are under discussion.",ta:"ஒப்போ இந்தியாவோட வருமானம் ₹31,981 கோடி. பெரிய வாடிக்கையாளர்."},
+  {id:"c4",c:3,y:305,t:"Indian Railways, metros, defence",col:"#475569",en:"Government buyers with long contracts. Mostly fixed-price, except metro, defence and bus AC, which have price-variation clauses.",ta:"அரசு வாடிக்கையாளர்கள். நீண்ட கால, நிலையான விலை ஒப்பந்தங்கள்."},
+  {id:"c5",c:3,y:390,t:"Global automation buyers",col:"#475569",en:"Unitronics sells PLCs worldwide, which gives Amber its first global product channel.",ta:"யூனிட்ரானிக்ஸ் மூலமா உலக சந்தை."}
+ ],
+ edges:[["i1","b1"],["i1","b6"],["i2","b2"],["i3","b3"],["i3","b4"],["i3","b5"],["i4","s1"],["b1","s1"],["b1","s2"],["b2","s3"],["b3","s3"],["b3","s1"],["b3","s4"],["b4","s3"],["b5","c5"],["b6","s5"],["s1","c1"],["s2","c1"],["s3","c2"],["s4","c3"],["s5","c4"]]};
+function renderMap(){var svg=$("bmap"),W=200,H=52,ns="http://www.w3.org/2000/svg",byId={};var h="";
+  MAP.cols.forEach(function(c){h+='<text class="col" x="'+c[1]+'" y="30">'+c[0]+'</text>';});
+  MAP.nodes.forEach(function(n){n.x=MAP.cols[n.c][1];byId[n.id]=n;});
+  MAP.edges.forEach(function(e){var a=byId[e[0]],b=byId[e[1]];var x1=a.x+W,y1=a.y+H/2,x2=b.x,y2=b.y+H/2,mx=(x1+x2)/2;
+    h+='<path d="M'+x1+' '+y1+' C'+mx+' '+y1+' '+mx+' '+y2+' '+x2+' '+y2+'" fill="none" stroke="'+a.col+'" stroke-opacity=".45" stroke-width="1.6"'+((a.dash||b.dash)?' stroke-dasharray="5 4"':'')+'/>';});
+  MAP.nodes.forEach(function(n){var words=n.t.split(" "),l1="",l2="";words.forEach(function(w){if((l1+" "+w).trim().length<=26&&!l2)l1=(l1+" "+w).trim();else l2=(l2+" "+w).trim();});
+    h+='<g class="node" tabindex="0" data-id="'+n.id+'"><rect x="'+n.x+'" y="'+n.y+'" width="'+W+'" height="'+H+'" rx="8" fill="#ffffff" stroke="'+n.col+'" stroke-width="1.6"'+(n.dash?' stroke-dasharray="5 4"':'')+'/>'+
+      '<rect x="'+n.x+'" y="'+n.y+'" width="6" height="'+H+'" rx="3" fill="'+n.col+'"/>'+
+      '<text x="'+(n.x+14)+'" y="'+(n.y+(l2?22:31))+'">'+l1.replace(/&/g,"&amp;")+'</text>'+(l2?'<text x="'+(n.x+14)+'" y="'+(n.y+38)+'">'+l2.replace(/&/g,"&amp;")+'</text>':'')+'</g>';});
+  h+='<g transform="translate(20,440)"><rect width="10" height="10" fill="#e2711d"/><text x="14" y="9">Consumer Durables</text><rect x="150" width="10" height="10" fill="#0f7c80"/><text x="164" y="9">Electronics</text><rect x="260" width="10" height="10" fill="#5146c9"/><text x="274" y="9">Railway &amp; Defence</text><line x1="420" y1="5" x2="450" y2="5" stroke="#0f7c80" stroke-dasharray="5 4" stroke-width="2"/><text x="456" y="9">Planned (FY28)</text></g>';
+  svg.setAttribute("viewBox","0 0 1000 460");svg.innerHTML=h;
+  function sel(id){var n=byId[id];svg.querySelectorAll(".node").forEach(function(g){g.classList.toggle("sel",g.getAttribute("data-id")===id);});
+    $("mapInfo").innerHTML='<div class="eyebrow" style="color:'+n.col+'">'+MAP.cols[n.c][0]+'</div><b>'+n.t.replace(/&/g,"&amp;")+'</b><p class="en" style="margin:.3rem 0 0">'+n.en+'</p><p class="ta" style="margin:.3rem 0 0">'+n.ta+'</p>';}
+  svg.querySelectorAll(".node").forEach(function(g){g.addEventListener("click",function(){sel(g.getAttribute("data-id"));});g.addEventListener("keydown",function(e){if(e.key==="Enter"||e.key===" "){e.preventDefault();sel(g.getAttribute("data-id"));}});});
+}
+
+/* ===================== EMS LAYERS ===================== */
+var LAYERS=[
+ {l:"Brand / OEM",ta:"பிராண்ட்",d:"Owns the product brief, the brand, distribution and the end customer.",who:"e.g. AC and phone brands",a:"No",cls:"n"},
+ {l:"ODM",ta:"வடிவமைப்பு + தயாரிப்பு",d:"Designs and manufactures complete products sold under the client's label.",who:"Amber (RAC), PG Electroplast, Dixon",a:"Yes · core",cls:"g"},
+ {l:"EMS / contract manufacturer",ta:"ஒப்பந்த தயாரிப்பு",d:"Builds to the client's design: PCB assembly, box-build, testing.",who:"Kaynes, Syrma, Avalon, Cyient DLM, Dixon",a:"Yes · IL JIN; Oppo from FY28",cls:"g"},
+ {l:"Components",ta:"உதிரி பாகங்கள்",d:"PCBs, motors, heat exchangers, camera and display modules, passives.",who:"Amber, Kaynes (PCB), Syrma (PCB JV), Dixon (camera/display)",a:"Yes · expanding",cls:"g"},
+ {l:"Semiconductors",ta:"சிப் தயாரிப்பு",d:"Wafer fabs, OSAT/ATMP (assembly, test, packaging of chips).",who:"Kaynes (OSAT, Sanand)",a:"No",cls:"n"},
+ {l:"Materials",ta:"மூலப்பொருள்",d:"Copper-clad laminate, copper foil, resins and specialty chemicals.",who:"Very few Indian players",a:"Planned · CCL JV FY29–30",cls:"w"}];
+function renderLayers(){$("layers").innerHTML=LAYERS.map(function(x){return '<div class="layer'+(x.cls==="g"?" amber":"")+'"><div><b>'+x.l+'</b><div class="ta" style="font-size:.8rem">'+x.ta+'</div></div><div><div>'+x.d+'</div><div class="who">'+x.who+'</div></div><div><span class="chip '+x.cls+'">Amber: '+x.a+'</span></div></div>';}).join("");}
+
+/* ===================== VALUE SCORECARD ===================== */
+var VS=[
+ {t:"Ascent Circuits buyout to 98.5%",ta:"அஸென்ட் முழு கட்டுப்பாடு",s:70,chip:["g","Accretive"],en:"Removes minority leakage and the put liability. ₹336.75 Cr paid; the ₹123 Cr charge is a one-off accounting true-up."},
+ {t:"Railway & defence (Sidwal, Yujin JV)",ta:"ரயில் & பாதுகாப்பு",s:72,chip:["g","Accretive"],en:"Guided 15–16% margins and a ₹2,750 Cr+ order book. Risk: fixed-price railway contracts (Q1 margin −660 bps)."},
+ {t:"Medical, defence, aero JV (60:40)",ta:"மருத்துவ/பாதுகாப்பு கூட்டு",s:65,chip:["g","Option value"],en:"₹1 Cr seed capital with a 3–4 year build. Small downside, and access to high-margin LVHM work."},
+ {t:"Bare & HDI PCB (Hosur, Jewar, Shogini)",ta:"சர்க்யூட் போர்டு ஆலைகள்",s:50,chip:["w","Conditional"],en:"Scarce capability with ECMS support, but about ₹4,700 Cr of projects. Needs ~1.2x asset turns or subsidy to beat a 12.5% hurdle (see sensitivity). Payback FY29+."},
+ {t:"Oppo mobile manufacturing",ta:"ஒப்போ மொபைல்",s:48,chip:["w","Margin-dilutive"],en:"Large revenue at a 2–4% margin. ROCE-accretive only if working capital stays near zero (Dixon CCC −7 days). Revenue-recognition terms are still pending."},
+ {t:"Unitronics & Power-One acquisitions",ta:"யூனிட்ரானிக்ஸ் & பவர்-ஒன்",s:45,chip:["w","Unproven"],en:"About ₹666 Cr paid for higher-margin industrial and energy electronics. Integration and overseas execution risk, and no standalone returns disclosed yet."},
+ {t:"Up to ₹5,000 Cr fund-raise",ta:"₹5,000 கோடி நிதி திரட்டல்",s:30,chip:["b","Dilutive"],en:"About 18% dilution if fully equity at the current price. Accretive only if the funded projects earn above the cost of equity."}];
+function renderVS(){$("vScore").innerHTML=VS.map(function(v){var col=v.s>=60?"var(--good)":(v.s>=40?"var(--warn)":"var(--bad)");
+  return '<div class="vrow"><div><b>'+v.t+'</b><div class="ta" style="font-size:.85rem">'+v.ta+'</div><div class="meter"><i style="width:'+v.s+'%;background:'+col+'"></i></div></div><div><span class="chip '+v.chip[0]+'">'+v.chip[1]+'</span><div class="mono" style="font-size:.8rem;margin-top:4px">'+v.s+'/100</div></div><div class="en" style="font-size:.88rem">'+v.en+'</div></div>';}).join("");}
+
+/* ===================== SENSITIVITY ===================== */
+function renderSens(){var s=+$("subs").value/100;$("subsV").textContent=Math.round(s*100)+"%";var turns=[0.8,1.0,1.2,1.5],mg=[12,16,20],dep=8.3;
+  var h='<thead><tr><th class="l">Asset turn ↓ / EBITDA margin →</th>'+mg.map(function(m){return '<th>'+m+'%</th>';}).join("")+'</tr></thead><tbody>';
+  turns.forEach(function(t){h+='<tr><td class="l">'+t.toFixed(1)+'x</td>';mg.forEach(function(m){var r=(t*m-dep)/(1-s);var ok=r>=12.5;h+='<td class="c" style="background:'+(ok?"#fde3c8":"#fff")+';font-weight:'+(ok?700:400)+'">'+fmt(r,1)+'%</td>';});h+='</tr>';});
+  $("sensT").innerHTML=h+'</tbody>';}
+
+/* ===================== PEER TABLE ===================== */
+function renderPeers(){var h='<thead><tr><th class="l">Company</th><th>Q1 FY27 Rev</th><th>Q1 FY26 Rev</th><th>YoY</th><th>EBITDA</th><th>EBITDA LY</th><th>Margin</th><th>PAT</th><th>M-cap</th><th>Price ₹</th><th>P/E</th><th>ROCE</th><th>ROE</th><th>FY26 Rev</th><th>FY26 CFO</th><th>CFO/PAT</th><th>Inv d</th><th>Rec d</th><th>Pay d</th><th>CCC</th><th>M-cap/Sales</th><th>Promoter</th><th class="l">Sources</th></tr></thead><tbody>';
+  PEERS.forEach(function(p,i){var d=p.dag?"†":"";h+='<tr'+(i===0?' class="hl"':'')+'><td class="l"><b style="color:'+p.c+'">'+p.n+'</b></td><td class="num">'+fmt(p.rev,p.rev%1?1:0)+'</td><td class="num">'+fmt(p.revLY,p.revLY%1?1:0)+'</td><td class="num up">'+pct(p.g)+'</td><td class="num">'+fmt(p.e,p.e%1?1:0)+'</td><td class="num">'+fmt(p.eLY,p.eLY%1?1:0)+'</td><td class="num">'+fmt(p.m,1)+'%</td><td class="num">'+fmt(p.pat,p.pat%1?1:0)+(i===0?' <span class="note">(adj 126)</span>':'')+(p.n==="Dixon"?' <span class="note">(incl. OI 528)</span>':'')+'</td><td class="num">'+fmt(p.mcap)+'</td><td class="num">'+fmt(p.price)+'</td><td class="num">'+fmt(p.pe,1)+d+'</td><td class="num">'+fmt(p.roce,1)+'%</td><td class="num">'+fmt(p.roe,1)+'%</td><td class="num">'+fmt(p.fyRev,p.fyRev%1?1:0)+'</td><td class="num '+(p.cfo<0?"dn":"")+'">'+fmt(p.cfo)+d+'</td><td class="num">'+fmt(p.cp,2)+'x</td><td class="num">'+p.inv+d+'</td><td class="num">'+p.deb+d+'</td><td class="num">'+p.pay+d+'</td><td class="num">'+p.ccc+d+'</td><td class="num">'+fmt(p.ms,2)+'x</td><td class="num">'+fmt(p.prom,2)+'%</td><td class="src">'+p.src+'</td></tr>';});
+  $("peerT").innerHTML=h+'</tbody>';
+  var rows=PEERS.map(function(p){return {p:p,s:cbf(p)};}).sort(function(a,b){return b.s.tot-a.s.tot;});
+  var t='<thead><tr><th class="l">Rank</th><th class="l">Company</th><th>g</th><th>m</th><th>d</th><th>v</th><th>t</th><th>r</th><th>Total</th></tr></thead><tbody>';
+  rows.forEach(function(x,i){t+='<tr'+(x.p.n==="Amber"?' class="hl"':'')+'><td class="l">'+(i+1)+'</td><td class="l">'+x.p.n+'</td>'+["g","m","d","v","t","r"].map(function(k){return '<td class="num">'+fmt(x.s[k],1)+'</td>';}).join("")+'<td class="num"><b>'+x.s.tot+'</b></td></tr>';});
+  $("cbfT").innerHTML=t+'</tbody>';}
+</script>
+
+<script>
+/* ===================== CHARTS PER TAB ===================== */
+var built={};
+var BUILD={
+ ov:function(){var s=CO.seg;
+  mk("cMix",{type:"doughnut",data:{labels:s.map(function(x){return x.k;}),datasets:[
+    {label:"EBITDA ₹ Cr",data:s.map(function(x){return x.e;}),backgroundColor:s.map(function(x){return x.c;}),borderColor:"#fff",borderWidth:2,weight:1},
+    {label:"Revenue ₹ Cr",data:s.map(function(x){return x.rev;}),backgroundColor:s.map(function(x){return x.c+"aa";}),borderColor:"#fff",borderWidth:2,weight:1.4}]},
+   options:{cutout:"38%",plugins:{legend:{position:"right"},tooltip:{callbacks:{label:function(c){var tot=c.dataset.data.reduce(function(a,b){return a+b;},0);return c.dataset.label+": "+fmt(c.raw)+" ("+fmt(c.raw/tot*100,1)+"%)";}}}}}});},
+ fin:function(){
+  var steps=[["Op EBITDA",0,337,"t"],["D&A",337,229,"n"],["Other inc. (net)",229,267,"p"],["Finance cost",267,182,"n"],["PBT pre-exc.",0,182,"t"],["PPA inventory",182,167,"n"],["Exceptional",167,44,"n"],["JV share",44,43,"n"],["PBT",0,43,"t"],["Tax",43,3,"n"],["PAT",0,3,"t"]];
+  var txt=["337","−108","+38","−85","182","−15","−123","−1","43","−40","3"];
+  mk("cBridge",{type:"bar",data:{labels:steps.map(function(x){return x[0];}),datasets:[{label:"₹ Cr",data:steps.map(function(x){return [Math.min(x[1],x[2]),Math.max(x[1],x[2])];}),labelsTxt:txt,
+    backgroundColor:steps.map(function(x){return x[3]==="t"?"#e2711d":(x[3]==="p"?"#1f8a4c":"#c2410c");}),borderRadius:3}]},
+   options:{plugins:{legend:{display:false},valLabels:{on:true}},scales:axes("₹ Crore")}});
+  mk("cSegBar",{type:"bar",data:{labels:CO.seg.map(function(x){return x.k;}),datasets:[{label:"EBITDA Q1 FY26",data:CO.seg.map(function(x){return x.eLY;}),backgroundColor:"#e5d6c4"},{label:"EBITDA Q1 FY27",data:CO.seg.map(function(x){return x.e;}),backgroundColor:CO.seg.map(function(x){return x.c;})}]},
+   options:{plugins:{valLabels:{on:true}},scales:axes("₹ Crore")}});
+  var q=CO.quarters;
+  mk("cTrend",{type:"bar",data:{labels:q.lab,datasets:[{label:"Revenue",data:q.rev,backgroundColor:"#f6c79c",yAxisID:"y",order:2},{label:"EBITDA (reported)",data:q.ebitda,backgroundColor:"#e2711d",yAxisID:"y",order:2},{type:"line",label:"EBITDA margin %",data:q.opm,borderColor:"#0f7c80",backgroundColor:"#0f7c80",yAxisID:"y2",tension:.3,order:1,pointRadius:4}]},
+   options:{plugins:{valLabels:{on:true,dec:0}},scales:axes("₹ Crore","Margin")}});},
+ cf:function(){var f=CO.fy;
+  mk("cCF",{type:"bar",data:{labels:f.lab,datasets:[{label:"EBITDA",data:f.ebitda,backgroundColor:"#e2711d"},{label:"CFO",data:f.cfo,backgroundColor:"#0f7c80"},{label:"Free cash flow",data:f.fcf,backgroundColor:f.fcf.map(function(v){return v<0?"#c2410c":"#1f8a4c";})}]},options:{plugins:{valLabels:{on:true}},scales:axes("₹ Crore")}});
+  mk("cWC",{type:"line",data:{labels:["FY24","FY25","FY26","FY27E","FY28E"],datasets:[
+    {label:"Inventory days",data:[56,74,90,67,57],borderColor:"#e2711d",backgroundColor:"#e2711d"},
+    {label:"Receivable days",data:[85,64,67,66,62],borderColor:"#5146c9",backgroundColor:"#5146c9"},
+    {label:"Payable days",data:[144,110,104,84,85],borderColor:"#64748b",backgroundColor:"#64748b"},
+    {label:"CCC",data:[-3,27,53,50,34],borderColor:"#c2410c",backgroundColor:"#c2410c",borderWidth:3}].map(function(d){d.tension=.25;d.pointRadius=3;d.segment={borderDash:function(c){return c.p0DataIndex>=2?[5,4]:undefined;}};return d;})},
+   options:{scales:axes("Days")}});
+  mk("cCCC",{type:"bar",data:{labels:f.lab,datasets:[{label:"CFO ₹ Cr",data:f.cfo,backgroundColor:"#0f7c80",yAxisID:"y",order:2},{type:"line",label:"Cash conversion cycle (days)",data:f.ccc,borderColor:"#c2410c",backgroundColor:"#c2410c",yAxisID:"y2",order:1,pointRadius:5}]},
+   options:{plugins:{valLabels:{on:true}},scales:(function(){var a=axes("CFO ₹ Crore");a.y2={position:"right",grid:{display:false},title:{display:true,text:"CCC days",color:MUTED}};return a;})()}});},
+ val:function(){
+  mk("cPE",{type:"bar",data:{labels:["FY25","FY26","FY27E","FY28E"],datasets:[{label:"EPS ₹",data:[72.3,64.5,129.9,199.0],backgroundColor:["#e5d6c4","#e5d6c4","#f6c79c","#e2711d"],yAxisID:"y",order:2},{type:"line",label:"P/E at ₹6,449 (x)",data:[89.2,100.0,49.7,32.4],borderColor:"#0f7c80",backgroundColor:"#0f7c80",yAxisID:"y2",order:1,pointRadius:5}]},
+   options:{plugins:{valLabels:{on:true,dec:1}},scales:(function(){var a=axes("EPS ₹");a.y2={position:"right",grid:{display:false},title:{display:true,text:"P/E (x)",color:MUTED}};return a;})()}});},
+ plans:function(){
+  mk("cCapex",{type:"bar",data:{labels:["Jewar HDI PCB (ECMS)","Hosur multilayer PCB (ECMS)","Shogini Pune (ECMS)","Acquisitions paid (15 m)","Fund-raise enabled"],datasets:[{label:"₹ Cr",data:[3200,1000,500,1509,5000],backgroundColor:["#0f7c80","#0f7c80","#0f7c80","#5146c9","#e2711d"]}]},
+   options:{indexAxis:"y",plugins:{legend:{display:false},valLabels:{on:true}},scales:{x:{grid:{color:GRID},ticks:{callback:function(v){return fmt(v);}},max:6200},y:{grid:{display:false}}}}});},
+ model:function(){
+  mk("cRoce",{type:"bar",data:{labels:["FY24","FY25","FY26","FY27E","FY28E"],datasets:[{label:"ROCE %",data:[10,14,10,10.2,12.4],backgroundColor:["#e5d6c4","#e5d6c4","#e5d6c4","#f6c79c","#f6c79c"],order:2},{type:"line",label:"Hurdle 12.5% (CB assumption)",data:[12.5,12.5,12.5,12.5,12.5],borderColor:"#c2410c",borderDash:[6,4],pointRadius:0,order:1}]},
+   options:{plugins:{valLabels:{on:true,dec:1,suf:"%"}},scales:axes("%")}});
+  renderSens();},
+ school:function(){
+  mk("cMarket",{type:"bar",data:{labels:["Electronics prod. FY15","Electronics prod. FY25","EMS market FY24","EMS market FY29E"],datasets:[{label:"₹ trillion",data:[1.9,11.3,2.5,8.2],backgroundColor:["#e5d6c4","#e2711d","#bfe3e4","#0f7c80"]}]},
+   options:{plugins:{legend:{display:false},valLabels:{on:true,dec:1}},scales:axes("₹ trillion")}});},
+ peers:function(){var P=PEERS.slice();
+  var g=P.slice().sort(function(a,b){return b.g-a.g;});
+  mk("pGrowth",{type:"bar",data:{labels:g.map(function(p){return p.n;}),datasets:[{label:"Revenue growth %",data:g.map(function(p){return +p.g.toFixed(1);}),backgroundColor:g.map(function(p){return p.n==="Amber"?"#e2711d":"#cbd5e1";})}]},options:{plugins:{legend:{display:false},valLabels:{on:true,dec:1,suf:"%"}},scales:axes("%")}});
+  mk("pEbitda",{type:"bar",data:{labels:P.map(function(p){return p.n;}),datasets:[{label:"Q1 FY26",data:P.map(function(p){return p.eLY;}),backgroundColor:"#e5d6c4"},{label:"Q1 FY27",data:P.map(function(p){return p.e;}),backgroundColor:P.map(function(p){return p.c;})}]},options:{plugins:{valLabels:{on:true,dec:0}},scales:axes("₹ Crore")}});
+  mk("pScatter",{type:"bubble",data:{datasets:P.map(function(p){return {label:p.n,data:[{x:p.ccc,y:+p.m.toFixed(1),r:Math.max(6,Math.sqrt(p.mcap)/9)}],backgroundColor:p.c+"99",borderColor:p.c};})},
+   options:{plugins:{tooltip:{callbacks:{label:function(c){var p=PEERS[c.datasetIndex];return p.n+": margin "+fmt(p.m,1)+"%, CCC "+p.ccc+" d, M-cap ₹"+fmt(p.mcap)+" Cr";}}}},scales:{x:{title:{display:true,text:"Cash conversion cycle, FY26 (days)"},grid:{color:GRID},min:-40,max:320},y:{title:{display:true,text:"Q1 FY27 EBITDA margin %"},grid:{color:GRID},min:0,max:19}}}});
+  mk("pVal",{type:"bar",data:{labels:P.map(function(p){return p.n;}),datasets:[{label:"P/E (x)",data:P.map(function(p){return p.pe;}),backgroundColor:P.map(function(p){return p.n==="Amber"?"#e2711d":"#cbd5e1";}),yAxisID:"y",order:2},{type:"line",label:"ROCE %",data:P.map(function(p){return p.roce;}),borderColor:"#0f7c80",backgroundColor:"#0f7c80",yAxisID:"y2",showLine:false,pointRadius:7,pointStyle:"rectRot",order:1}]},
+   options:{plugins:{valLabels:{on:true,dec:1}},scales:(function(){var a=axes("P/E (x)");a.y2={position:"right",grid:{display:false},min:0,max:35,title:{display:true,text:"ROCE %",color:MUTED}};return a;})()}});},
+ mkt:function(){
+  mk("mPrice",{type:"line",data:{labels:["27 Jan 2026 (52w low)","7 May 2026 (52w high)","14 Aug 2026 (post-Q1)","9 Oct 2026"],datasets:[{label:"Price ₹",data:[5404,8970,7222,6449.3],borderColor:"#e2711d",backgroundColor:"#e2711d",pointRadius:6,tension:0},{label:"Avg broker target ₹8,748",data:[null,null,8748,8748],borderColor:"#1f8a4c",borderDash:[6,4],pointRadius:0}]},
+   options:{scales:{y:{min:5000,max:9500,grid:{color:GRID},ticks:{callback:function(v){return "₹"+fmt(v);}}},x:{grid:{display:false}}}}});
+  var s=CO.share;
+  mk("mShare",{type:"line",data:{labels:s.lab,datasets:[{label:"Promoter",data:s.prom,borderColor:"#1c1a17"},{label:"FII",data:s.fii,borderColor:"#c2410c"},{label:"Mutual funds",data:s.mf,borderColor:"#0f7c80"},{label:"Other DII",data:s.odii,borderColor:"#5146c9"},{label:"Retail & others",data:s.ret,borderColor:"#b7791f"}].map(function(d){d.backgroundColor=d.borderColor;d.tension=.25;d.pointRadius=4;return d;})},options:{scales:axes("% holding")}});},
+ an:function(){
+  var L=["52-week low","Price 9 Oct","ICICI Securities","BOB Capital Mkts","Average target","52-week high","PL Capital"],V=[5404,6449.3,8500,8500,8748,8970,9244];
+  mk("aTP",{type:"bar",data:{labels:L,datasets:[{label:"₹",data:V,backgroundColor:["#cbd5e1","#e2711d","#bfe3e4","#bfe3e4","#0f7c80","#cbd5e1","#bfe3e4"]}]},options:{indexAxis:"y",plugins:{legend:{display:false},valLabels:{on:true}},scales:{x:{min:0,max:10500,grid:{color:GRID},ticks:{callback:function(v){return "₹"+fmt(v);}}},y:{grid:{display:false}}}}});}
+};
+function show(t){document.querySelectorAll(".tab").forEach(function(b){var on=b.getAttribute("data-t")===t;b.classList.toggle("active",on);b.setAttribute("aria-selected",on);});
+  document.querySelectorAll(".pane").forEach(function(p){p.classList.toggle("active",p.id===t);});
+  if(!built[t]&&BUILD[t]){try{BUILD[t]();}catch(e){console.error(e);}built[t]=true;}
+  try{localStorage.setItem("amberQ1tab",t);}catch(e){}
+  try{if(history.replaceState)history.replaceState(null,"","#"+t);}catch(e){}
+  window.scrollTo({top:0});}
+document.querySelectorAll(".tab").forEach(function(b){b.addEventListener("click",function(){show(b.getAttribute("data-t"));});});
+
+/* ===================== LANGUAGE ===================== */
+function setLang(l){LANG=l;document.body.classList.toggle("lang-ta",l==="ta");document.documentElement.lang=(l==="ta"?"ta":"en");
+  $("btnEn").classList.toggle("on",l==="en");$("btnTa").classList.toggle("on",l==="ta");
+  $("aIn").placeholder=l==="ta"?"கேளுங்க: யாருக்கு அதிக மார்ஜின்?":"Ask: who has the best margin?";
+  try{localStorage.setItem("amberQ1lang",l);}catch(e){}renderSugg();renderSoc();}
+$("btnEn").addEventListener("click",function(){setLang("en");});
+$("btnTa").addEventListener("click",function(){setLang("ta");});
+
+/* ===================== BADGE ===================== */
+var discPinned=false;
+$("cbBadge").addEventListener("click",function(e){e.stopPropagation();discPinned=!discPinned;$("disc").hidden=!discPinned;if(discPinned)$("assist").hidden=true;});
+$("cbBadge").addEventListener("mouseenter",function(){$("disc").hidden=false;});
+$("cbBadge").addEventListener("mouseleave",function(){setTimeout(function(){if(!discPinned&&!$("disc").matches(":hover"))$("disc").hidden=true;},400);});
+document.addEventListener("click",function(e){if(discPinned&&!$("disc").contains(e.target)){discPinned=false;$("disc").hidden=true;}});
+</script>
+
+<script>
+/* ===================== ACQUISITIONS TAB ===================== */
+var ACQ={deals:[
+  {n:"Ascent (2024, 60%)",paid:311,full:518},
+  {n:"Power-One (60%)",paid:262,full:437},
+  {n:"Unitronics (40.24%)",paid:404,full:1004},
+  {n:"Shogini (80%)",paid:506,full:633},
+  {n:"Ascent step-up (38.5%)",paid:336.75,full:875}],
+ unit:{lab:["CY2023","CY2024","CY2025"],rev:[211.67,192.24,154.78],op:[51.13,44.57,26.43],ni:[41.21,43.71,22.68]},
+ el:{lab:["FY25","FY26","FY27E (guided)"],rev:[2193.6,3268.5,4575.9],ebitda:[150.9,283.7,446.2],m:[6.9,8.7,9.75]}};
+CO.acquisitions=ACQ;
+function renderAcq(){
+  $("acqKpis").innerHTML=
+    kpi("Cash paid (disclosed)","~₹1,820 Cr","5 deals since Jan 2024","flat")+
+    kpi("Acquired revenue base","~₹1,314 Cr","≈40% of FY26 Electronics","up")+
+    kpi("Electronics margin","10.8%","from 6.4% a year ago","up")+
+    kpi("Pre-tax yield on price","~7–12%","vs 12.5% hurdle","dn");
+  var svg=$("acqMap"),W=190,H=50,h="";
+  var N=[
+   {id:"a",x:20,y:60,t:["Ascent Circuits","bare multilayer PCB"],c:"#0f7c80"},
+   {id:"s",x:20,y:150,t:["Shogini Technoarts","flex, metal-clad PCB"],c:"#0f7c80"},
+   {id:"k",x:20,y:240,t:["Ascent-K (JV)","HDI PCB · from FY28"],c:"#0f7c80",d:1},
+   {id:"i",x:290,y:150,t:["IL JIN Electronics","PCB assembly (PCBA)"],c:"#1c1a17"},
+   {id:"ac",x:560,y:20,t:["Amber room ACs","in-house control boards"],c:"#e2711d"},
+   {id:"op",x:560,y:100,t:["Oppo phones","from Q1 FY28"],c:"#e2711d",d:1},
+   {id:"p",x:560,y:180,t:["Power-One","inverters · BESS · EV"],c:"#5146c9"},
+   {id:"u",x:560,y:260,t:["Unitronics","PLC · HMI · drives"],c:"#5146c9"},
+   {id:"m1",x:800,y:60,t:["India: brands,","appliances, mobiles"],c:"#64748b"},
+   {id:"m2",x:800,y:180,t:["India: solar, BESS,","data centres, rail"],c:"#64748b"},
+   {id:"m3",x:800,y:260,t:["US ~55% · Europe ~40%","factory automation"],c:"#64748b"}];
+  var B={};N.forEach(function(n){B[n.id]=n;});
+  var E=[["a","i"],["s","i"],["k","i"],["i","ac"],["i","op"],["i","p"],["i","u"],["ac","m1"],["op","m1"],["p","m2"],["u","m3"]];
+  E.forEach(function(e){var a=B[e[0]],b=B[e[1]],x1=a.x+W,y1=a.y+H/2,x2=b.x,y2=b.y+H/2,mx=(x1+x2)/2;
+    h+='<path d="M'+x1+' '+y1+' C'+mx+' '+y1+' '+mx+' '+y2+' '+x2+' '+y2+'" fill="none" stroke="'+a.c+'" stroke-opacity=".5" stroke-width="2"'+((a.d||b.d)?' stroke-dasharray="5 4"':'')+'/>';});
+  N.forEach(function(n){var w=n.x>=800?180:W;h+='<g><rect x="'+n.x+'" y="'+n.y+'" width="'+w+'" height="'+H+'" rx="8" fill="#ffffff" stroke="'+n.c+'" stroke-width="1.6"'+(n.d?' stroke-dasharray="5 4"':'')+'/><rect x="'+n.x+'" y="'+n.y+'" width="6" height="'+H+'" rx="3" fill="'+n.c+'"/>'+
+    '<text class="hd" x="'+(n.x+14)+'" y="'+(n.y+21)+'">'+n.t[0]+'</text><text x="'+(n.x+14)+'" y="'+(n.y+38)+'">'+n.t[1]+'</text></g>';});
+  h+='<text class="col" x="20" y="45">BOARDS (ACQUIRED)</text><text class="col" x="290" y="135">ASSEMBLY</text><text class="col" x="560" y="12">END PRODUCTS</text><text class="col" x="800" y="45">MARKETS</text>';
+  h+='<g transform="translate(20,350)"><rect width="10" height="10" fill="#0f7c80"/><text x="14" y="9">Bare PCB (acquired / JV)</text><rect x="200" width="10" height="10" fill="#5146c9"/><text x="214" y="9">Acquired product brands</text><rect x="400" width="10" height="10" fill="#e2711d"/><text x="414" y="9">Amber own / contract products</text><line x1="640" y1="5" x2="670" y2="5" stroke="#0f7c80" stroke-dasharray="5 4" stroke-width="2"/><text x="676" y="9">Planned</text></g>';
+  svg.innerHTML=h;}
+BUILD.acq=function(){var e=ACQ.el,d=ACQ.deals,u=ACQ.unit;
+  mk("acqEl",{type:"bar",data:{labels:e.lab,datasets:[{label:"Revenue",data:e.rev,backgroundColor:["#bfe3e4","#0f7c80","#9fd3d5"],yAxisID:"y",order:2},{label:"EBITDA",data:e.ebitda,backgroundColor:["#f6c79c","#e2711d","#f3b27a"],yAxisID:"y",order:2},{type:"line",label:"EBITDA margin %",data:e.m,borderColor:"#5146c9",backgroundColor:"#5146c9",yAxisID:"y2",pointRadius:5,order:1}]},
+    options:{plugins:{valLabels:{on:true,dec:0}},scales:axes("₹ Crore","Margin")}});
+  mk("acqPaid",{type:"bar",data:{labels:d.map(function(x){return x.n;}),datasets:[{label:"Cash paid",data:d.map(function(x){return x.paid;}),backgroundColor:"#e2711d"},{label:"Implied 100% value",data:d.map(function(x){return x.full;}),backgroundColor:"#e5d6c4"}]},
+    options:{plugins:{valLabels:{on:true,dec:0}},scales:axes("₹ Crore")}});
+  mk("acqUnit",{type:"bar",data:{labels:u.lab,datasets:[{label:"Revenue",data:u.rev,backgroundColor:"#cbd5e1",yAxisID:"y",order:2},{label:"Operating income",data:u.op,backgroundColor:"#5146c9",yAxisID:"y",order:2},{label:"Net income",data:u.ni,backgroundColor:"#e2711d",yAxisID:"y",order:2},{type:"line",label:"Operating margin %",data:u.op.map(function(v,i){return +(v/u.rev[i]*100).toFixed(1);}),borderColor:"#c2410c",backgroundColor:"#c2410c",yAxisID:"y2",pointRadius:5,order:1}]},
+    options:{plugins:{valLabels:{on:true,dec:1}},scales:axes("ILS million","Op. margin")}});};
+renderAcq();
+</script>
+
+<script>
+/* ===================== CB ASSIST (offline, voice) ===================== */
+function nm(p){return LANG==="ta"?p.ta:p.n;}
+function rank(key,desc,lab,unit,dec){var a=PEERS.slice().sort(function(x,y){return desc?y[key]-x[key]:x[key]-y[key];});
+  var list=a.map(function(p,i){return (i+1)+". "+nm(p)+" "+fmt(p[key],dec)+unit;}).join("\n");
+  var am=a.findIndex(function(p){return p.n==="Amber";})+1;
+  return LANG==="ta"?(lab.ta+":\n"+list+"\nஅம்பர் "+am+"வது இடம்."):(lab.en+":\n"+list+"\nAmber ranks "+am+" of 7.");}
+var INTENTS=[
+ {k:/(best|highest|top|lowest|worst|rank|which|who|யார்|எது|அதிக|குறைந்த|முதல்).*(margin|மார்ஜின்)|(margin|மார்ஜின்).*(best|highest|rank|யார்|அதிக)/i,f:function(){return rank("m",true,{en:"Q1 FY27 EBITDA margin ranking",ta:"லாப மார்ஜின் தரவரிசை"},"%",1);}},
+ {k:/(fast|growth|grow|வளர்ச்சி).*(rank|who|which|best|highest|யார்|அதிக)|(who|which|யார்).*(grow|வளர்)/i,f:function(){return rank("g",true,{en:"Q1 FY27 revenue growth ranking",ta:"வருமான வளர்ச்சி தரவரிசை"},"%",1);}},
+ {k:/(cheap|expensive|valuation rank|p\/e rank|lowest p\/?e|மலிவு|விலை அதிக)/i,f:function(){return rank("pe",false,{en:"Trailing P/E, cheapest first",ta:"விலை–லாப விகிதம், மலிவானது முதல்"},"x",1);}},
+ {k:/(roce|return on capital|மூலதன வருவாய்)/i,f:function(){return rank("roce",true,{en:"ROCE ranking",ta:"மூலதன வருவாய் தரவரிசை"},"%",1);}},
+ {k:/(ccc|cash conversion|working capital|பணச் சுழற்சி|நடைமுறை மூலதன)/i,f:function(){return LANG==="ta"?"அம்பரோட பணச் சுழற்சி 2024ல மைனஸ் 3 நாள், 2026ல 53 நாள். சரக்கு இருப்பு 90 நாள், வரவு 67, சப்ளையர் கடன் 104 நாள். ஒவ்வொரு 10 நாளுக்கும் சுமார் ₹334 கோடி பணம் மாட்டிக்குது. அதனால செயல்பாட்டு பணம் ₹965 கோடில இருந்து ₹240 கோடி ஆச்சு.\n\n"+rank("ccc",false,{en:"",ta:"போட்டியாளர் பணச் சுழற்சி (குறைவு சிறப்பு)"}," நாள்",0):"Amber's cash conversion cycle went from −3 days (FY24) to 53 days (FY26): inventory 90, receivables 67, payables 104. Every 10 days is about ₹334 Cr of cash, which is why CFO fell from ₹965 Cr to ₹240 Cr.\n\n"+rank("ccc",false,{en:"Peer CCC, shortest first",ta:""}," d",0);}},
+ {k:/(acqui|bought|takeover|stake|unitronics|power.?one|shogini|ascent|synerg|கையகப்படுத்|வாங்கின|யூனிட்ரானிக்ஸ்|ஷோகினி|பவர்)/i,f:function(){return LANG==="ta"?"2024ல இருந்து அம்பர் ஐந்து ஒப்பந்தங்களுக்கு சுமார் ₹1,820 கோடி கொடுத்திருக்கு: அஸென்ட் சர்க்யூட்ஸ் (60%, பிறகு 98.5%), பவர்-ஒன் (60%, ₹262 கோடி), யூனிட்ரானிக்ஸ் (சுமார் ₹404 கோடி, இப்போ 50.4%), ஷோகினி (80%, ₹506 கோடி). பலன்கள்: சொந்த சர்க்யூட் போர்டு, அதிக மார்ஜின் பொருட்கள், சொந்த பிராண்ட், ஏற்றுமதி, அரசு மானியம். மின்னணு மார்ஜின் 6.4% ல இருந்து 10.8%. ஆனா கொடுத்த விலைக்கு லாபம் சுமார் 7–12% தான், யூனிட்ரானிக்ஸ் விற்பனை குறையுது.":"Since Jan 2024 Amber has paid about ₹1,820 Cr across five deals: Ascent Circuits (60%, then 98.5%), Power-One (60%, ₹262 Cr, 17–18% EBITDA margin), Unitronics (~₹404 Cr, now ~50.4%) and Shogini (80%, ~₹506 Cr). Benefits: in-house bare PCB, a higher-margin mix, own products and IP, exports and ECMS support. Electronics margin rose from 6.4% to 10.8%. On stand-alone numbers the deals yield only about 7–12% pre-tax on the price paid, and Unitronics' revenue fell 27% over two years. See the Acquisitions tab.";}},
+ {k:/(cash ?flow|cfo|fcf|free cash|பணப்புழக்க)/i,f:function(){return LANG==="ta"?"செயல்பாட்டு பணம்: 2024ல ₹965 கோடி, 2025ல ₹711 கோடி, 2026ல ₹240 கோடி. இலவச பணப்புழக்கம் 2026ல மைனஸ் ₹1,048 கோடி. செயல்பாட்டு பணம், லாபத்துல 27.7% தான். காலாண்டு பணப்புழக்க அறிக்கை இல்ல, அரையாண்டுல தான் வரும்.":"CFO: ₹965 Cr (FY24), ₹711 Cr (FY25), ₹240 Cr (FY26). FY26 free cash flow was −₹1,048 Cr after about ₹1,288 Cr of capex. CFO was only 27.7% of EBITDA. There is no Q1 cash flow statement; it comes with H1 results.";}},
+ {k:/(debt|borrow|leverage|கடன்)/i,f:function(){return LANG==="ta"?"நிர்வாகம் சொன்னபடி நிகர கடன் ஜூன் 30 அன்று சுமார் ₹1,225 கோடி. மார்ச்ல ₹510 கோடி. அஸென்ட் பங்கு வாங்க ₹336.75 கோடி, ஆலை முதலீடு, பருவ கால சரக்கு தான் காரணம். ₹5,000 கோடி நிதி திரட்ட அனுமதி இருக்கு. வட்டிக் காப்பு 3.1 மடங்கு.":"Net debt was about ₹1,225 Cr at 30 Jun 2026 (management), up from about ₹510 Cr in March. The drivers were the Ascent stake (₹336.75 Cr), capex and seasonal inventory. Interest cover in Q1 was 3.1x, and there is a ₹5,000 Cr fund-raise enabling resolution.";}},
+ {k:/(exceptional|put|one.?off|ஒருமுறை|நிகர லாபம்|pat|profit)/i,f:function(){return LANG==="ta"?"கணக்குல வந்த நிகர லாபம் ₹3 கோடி தான். அஸென்ட் சர்க்யூட்ஸ் பங்க 98.5% க்கு உயர்த்தும்போது, பழைய விருப்பப் பொறுப்பு மதிப்புக்கும் கொடுத்த தொகைக்கும் இடையிலான ₹123 கோடி ஒருமுறை நஷ்டமா பதிவாச்சு. அதை தள்ளினா லாபம் ₹126 கோடி, 19% வளர்ச்சி.":"Reported PAT was ₹3 Cr. Raising the Ascent Circuits stake to 98.5% created a ₹123 Cr exceptional loss: the difference between the put liability's carrying value and the consideration paid. Before that item, adjusted PAT was ₹126 Cr, up 19% YoY.";}},
+ {k:/(segment|division|electronic|railway|rail|consumer durable|பிரிவு|மின்னணு|ரயில்)/i,f:function(){return LANG==="ta"?"நுகர்வோர் பொருட்கள்: வருமானம் ₹2,758 கோடி (+8%), லாபம் ₹214 கோடி, மார்ஜின் 7.8%.\nமின்னணு: ₹985 கோடி (+29%), லாபம் ₹107 கோடி (+117%), மார்ஜின் 10.8%.\nரயில் & பாதுகாப்பு: ₹144 கோடி (+18%), லாபம் ₹16 கோடி (−26%), மார்ஜின் 11.3%.":"Consumer Durables: revenue ₹2,758 Cr (+8%), EBITDA ₹214 Cr, 7.8% margin.\nElectronics: ₹985 Cr (+29%), EBITDA ₹107 Cr (+117%), 10.8% margin.\nRailway & Defence: ₹144 Cr (+18%), EBITDA ₹16 Cr (−26%), 11.3% margin.";}},
+ {k:/(revenue|sales|turnover|result|வருமானம்|விற்பனை|முடிவு)/i,f:function(){return LANG==="ta"?"முதல் காலாண்டு வருமானம் ₹3,888 கோடி, போன வருஷத்த விட 12.7% அதிகம், முந்தைய காலாண்ட விட 6.3% குறைவு. செயல்பாட்டு லாபம் ₹337 கோடி, மார்ஜின் 8.7%. மொத்த மார்ஜின் 19.2%.":"Q1 FY27 revenue was ₹3,888 Cr: +12.7% YoY and −6.3% QoQ (Q4 is the AC peak). Operating EBITDA was ₹337 Cr (+28%) at an 8.7% margin, and gross margin was 19.2% vs 15.7%.";}},
+ {k:/(ebitda|operating profit|செயல்பாட்டு லாபம்)/i,f:function(){return LANG==="ta"?"செயல்பாட்டு லாபம் ₹337 கோடி, 28% வளர்ச்சி, மார்ஜின் 8.7%. பரிமாற்ற அறிக்கை அடிப்படையில ₹312 கோடி, 8.0%.":"Management operating EBITDA was ₹337 Cr (+28% YoY, 8.7% margin). The exchange P&L basis is ₹312 Cr (8.0%), which is the figure used for peer comparison.";}},
+ {k:/(valuation|value|\bp\/?e\b|multiple|\bev\b|மதிப்பீடு)/i,f:function(){return LANG==="ta"?"விலை ₹6,449. கடந்த 12 மாத லாபத்துக்கு 110 மடங்கு. 2027 எதிர்பார்ப்புக்கு 49.7 மடங்கு, 2028 எதிர்பார்ப்புக்கு 32.4 மடங்கு. நிறுவன மதிப்பு / லாபம் 2027க்கு 19.8 மடங்கு. புத்தக மதிப்புக்கு 5.2 மடங்கு.":"At ₹6,449 the stock trades at 110x trailing P/E (distorted), 49.7x FY27E and 32.4x FY28E on broker-average EPS. EV/FY27E EBITDA is 19.8x and P/B is 5.2x.";}},
+ {k:/(target|analyst|broker|rating|buy|இலக்கு|ஆய்வாளர்|தரகு)/i,f:function(){return LANG==="ta"?"மூணு தரகு நிறுவனங்களும் வாங்கலாம்னு சொல்றாங்க: பிஎல் ₹9,244, ஐசிஐசிஐ செக்யூரிட்டீஸ் ₹8,500, பிஓபி கேப்பிடல் ₹8,500. சராசரி ₹8,748, இன்றைய விலையில இருந்து 35.6% ஏற்றம். இது மூன்றாம் தரப்பு கருத்து, சிபி பரிந்துரை இல்ல.":"Third-party views: PL Capital Buy at ₹9,244, ICICI Securities Buy at ₹8,500, BOB Capital Markets Buy at ₹8,500. The average is ₹8,748, 35.6% above ₹6,449. CB Research makes no recommendation.";}},
+ {k:/(jv|joint|oppo|mobile|phone|collab|கூட்டு|மொபைல்|ஒப்போ)/i,f:function(){return LANG==="ta"?"1) ஒப்போ இந்தியா கூட மொபைல் தயாரிப்பு ஒப்பந்தம் (18 ஜூன் 2026). சோதனை 2027 ஜனவரி–மார்ச், வணிக உற்பத்தி 2027 ஏப்ரல். 80 லட்சம் போன்ல தொடங்கி 1.5–1.6 கோடி.\n2) கொரியா சர்க்யூட் கூட ஜேவர் உயர் அடர்த்தி சர்க்யூட் போர்டு கூட்டு.\n3) மருத்துவ/பாதுகாப்பு/விமான மின்னணுக்கு 60:40 கூட்டு நிறுவனம்.\n4) ரயிலுக்கு யுஜின் கூட்டு.":"1) Oppo India manufacturing collaboration (18 Jun 2026): trial Q4 FY27, commercial Q1 FY28, ~8 mn → 15–16 mn units.\n2) Ascent-K Circuit JV with Korea Circuit: HDI PCB at Jewar (~₹3,200 Cr ECMS project).\n3) ILJIN Technologies 60:40 JV with Singularity Des Electronics: medical, defence, aero.\n4) Yujin Machinery rail JV: production in H2 FY27 subject to RDSO.";}},
+ {k:/(plan|future|capex|guidance|expansion|திட்ட|எதிர்கால|முதலீடு)/i,f:function(){return LANG==="ta"?"2027 வழிகாட்டல்: நுகர்வோர் பொருள் தொழில் வளர்ச்சி அளவுக்கு, மின்னணு 40%+, ரயில் 30–35%. ஜேவர் ₹3,200 கோடி, ஓசூர் ₹1,000 கோடி, ஷோகினி ₹500 கோடி திட்டங்கள். செம்பு லேமினேட் ஆலை 2029–30.":"FY27 guidance: CD in line with the industry (~13–15%), Electronics 40%+, Rail 30–35% at a 15–16% margin. ECMS projects: Jewar ~₹3,200 Cr, Hosur ~₹1,000 Cr, Shogini ~₹500 Cr. Own CCL plant targeted FY29–30. Up to ₹5,000 Cr raise enabled.";}},
+ {k:/(accret|value creat|model|shift|change|worth|மதிப்பு கூட|மாற்றம்)/i,f:function(){return LANG==="ta"?"திசை சரி, ஆனா பலன் தாமதம். இப்போ மூலதன வருவாய் 10.3%, தடைக்கோடு 12.5%. ரயில், அஸென்ட் முழு கட்டுப்பாடு மதிப்பு கூட்டும். சர்க்யூட் போர்டு ஆலைக்கு 1.2 மடங்கு சுழற்சி அல்லது மானியம் தேவை. மொபைல் மார்ஜின குறைக்கும். நிதி திரட்டல் 18% வரை நீர்த்தல்.":"Directionally accretive, but the value is back-ended. ROCE is 10.3% against a 12.5% hurdle (CB assumption). Accretive now: rail and defence, the Ascent buyout, and the med/defence JV. Conditional: PCB plants (need ~1.2x asset turns or subsidy). Margin-dilutive: Oppo mobiles. Dilutive: the ₹5,000 Cr raise (~18%).";}},
+ {k:/(ems|classif|category|odm|hvlm|lvhm|வகை|ஒடிஎம்|இஎம்எஸ்)/i,f:function(){return LANG==="ta"?"இந்திய இஎம்எஸ் துறைய ஐந்து விதமா பிரிக்கலாம்: மதிப்பு சங்கிலி அடுக்கு, அதிக அளவு எதிர் அதிக வகை, நுகர்வோர் எதிர் தொழில் வாடிக்கையாளர், அரசு திட்டம், அளவு. அம்பர், உதிரி பாகத்த மையமா கொண்ட பன்முக ஒடிஎம்/இஎம்எஸ். மையம் ஏசி ஒடிஎம், அதோட சர்க்யூட் போர்டு, மொபைல், ரயில் துணை அமைப்புகள்.":"Indian EMS can be classified by value-chain layer (OEM, ODM, EMS, components, semiconductors, materials), by volume and mix (HVLM vs LVHM), by customer (B2C vs B2B), by policy bucket (PLI, ECMS, ISM) and by scale. Amber is a component-led diversified ODM/EMS: a high-volume AC ODM core, plus PCB components, contract EMS (Oppo) and LVHM rail and defence.";}},
+ {k:/(risk|threat|concern|அபாய|ஆபத்து)/i,f:function(){return LANG==="ta"?"முக்கிய அபாயங்கள்: பங்கு நீர்த்தல் (₹5,000 கோடி), சர்க்யூட் போர்டு மார்ஜின் திரும்பாதது, நடைமுறை மூலதனம் அதிகமாவே இருக்குறது, மொபைல் தாமதம், மந்தமான ஏசி பருவம், ஜேவர் செயல்படுத்தல்.":"Key risks: dilution from the ₹5,000 Cr raise, PCB margin not recovering (CCL), working capital staying high, mobile ramp delays, a weak RAC season, and Jewar HDI execution.";}},
+ {k:/(management|board|ceo|director|promoter|cfo|நிர்வாக|இயக்குநர்|ப்ரோமோட்டர்)/i,f:function(){return LANG==="ta"?"ஜஸ்பீர் சிங் செயல் தலைவர் மற்றும் தலைமை நிர்வாகி. தல்ஜித் சிங் நிர்வாக இயக்குநர். சுதீர் கோயல் நிதி அதிகாரி. ப்ரோமோட்டர் பங்கு 38.09%. மூணு சுயாதீன இயக்குநர்கள்.":"Jasbir Singh is Executive Chairman & CEO, Daljit Singh is MD, and Sachin Gupta is Whole-time Director. Independent directors: Arvind Uppal, Sabina Moti Bhavnani and Prakash Iyer. CFO: Sudhir Goyal. Promoter holding is 38.09% (Jun 2026).";}},
+ {k:/(peer|compare|competitor|போட்டியாளர்|ஒப்பீ)/i,f:function(){var h=LANG==="ta"?"போட்டியாளர்கள் (வருமானம் கோடி, வளர்ச்சி, மார்ஜின், விலை–லாப விகிதம்):\n":"Peers (Q1 revenue ₹ Cr, YoY, EBITDA margin, P/E):\n";return h+PEERS.map(function(p){return nm(p)+": "+fmt(p.rev)+", "+pct(p.g)+", "+fmt(p.m,1)+"%, "+fmt(p.pe,1)+"x";}).join("\n");}},
+ {k:/(sharehold|fii|mutual fund|dii|பங்குதாரர்)/i,f:function(){return LANG==="ta"?"வெளிநாட்டு நிறுவன பங்கு 30.60% ல இருந்து 20.48% ஆ குறைஞ்சிருக்கு. பரஸ்பர நிதிகள் 15.59% ல இருந்து 22.42% ஆ கூடியிருக்கு. ப்ரோமோட்டர் 38.09%.":"FIIs fell from 30.60% (Sep 2025) to 20.48% (Jun 2026). Mutual funds rose from 15.59% to 22.42% and other DIIs to 8.13%. Promoters hold 38.09%.";}}
+];
+(function(){var order=["ebitda|operating profit","accret","valuation"];/* move EBITDA before exceptional, accretion before valuation */
+  var iE=INTENTS.findIndex(function(i){return /ebitda\|operating profit/.test(i.k.source);}),iX=INTENTS.findIndex(function(i){return /exceptional/.test(i.k.source);});
+  var e=INTENTS.splice(iE,1)[0];INTENTS.splice(iX,0,e);
+  var iA=INTENTS.findIndex(function(i){return /accret/.test(i.k.source);}),iV=INTENTS.findIndex(function(i){return /valuation\|value/.test(i.k.source);});
+  var a=INTENTS.splice(iA,1)[0];INTENTS.splice(iV,0,a);})();
+function peerAnswer(q){var p=PEERS.find(function(x){return new RegExp("\\b"+x.n.split(" ")[0]+"\\b","i").test(q)||q.indexOf(x.ta.split(" ")[0])>=0;});if(!p||p.n==="Amber")return null;
+  return LANG==="ta"?(nm(p)+": முதல் காலாண்டு வருமானம் ₹"+fmt(p.rev)+" கோடி ("+pct(p.g)+"), லாப மார்ஜின் "+fmt(p.m,1)+"%, நிகர லாபம் ₹"+fmt(p.pat)+" கோடி, சந்தை மதிப்பு ₹"+fmt(p.mcap)+" கோடி, விலை–லாப விகிதம் "+fmt(p.pe,1)+", பணச் சுழற்சி "+p.ccc+" நாள். அம்பர்: ₹3,888 கோடி, 8.0%, 53 நாள்."):
+   (p.n+": Q1 FY27 revenue ₹"+fmt(p.rev)+" Cr ("+pct(p.g)+"), EBITDA margin "+fmt(p.m,1)+"%, PAT ₹"+fmt(p.pat)+" Cr, M-cap ₹"+fmt(p.mcap)+" Cr, P/E "+fmt(p.pe,1)+"x, ROCE "+fmt(p.roce,1)+"%, CCC "+p.ccc+" days. Amber for comparison: ₹3,888 Cr, 8.0% margin, 53 days.");}
+function answer(q){var pa=peerAnswer(q);var hi=INTENTS.findIndex(function(i){return i.k.test(q);});var isRank=hi>=0&&hi<5;
+  if(isRank)return INTENTS[hi].f();if(pa)return pa;if(hi>=0)return INTENTS[hi].f();
+  return LANG==="ta"?"இதை கேட்டு பாருங்க: வருமானம், பிரிவுகள், நிகர லாபம், கடன், பணப்புழக்கம், மதிப்பீடு, இலக்கு விலை, கூட்டு முயற்சி, திட்டங்கள், இஎம்எஸ் வகை, யாருக்கு அதிக மார்ஜின், அபாயம், நிர்வாகம்.":"Try asking about: revenue, segments, PAT/exceptional, debt, cash flow, working capital, valuation, analyst targets, JVs/Oppo, future plans, EMS classification, \"who has the best margin\", risks, management, or any peer by name.";}
+function addMsg(t,who){var d=document.createElement("div");d.className="m "+who;d.textContent=t;$("aLog").appendChild(d);$("aLog").scrollTop=1e6;}
+function speak(t){try{if(!window.speechSynthesis)return;speechSynthesis.cancel();var u=new SpeechSynthesisUtterance(t.replace(/₹/g,LANG==="ta"?"ரூபாய் ":"rupees ").replace(/Cr\b/g,"crore").replace(/\n/g,". "));u.lang=LANG==="ta"?"ta-IN":"en-IN";u.rate=1;speechSynthesis.speak(u);}catch(e){}}
+function ask(q,voice){if(!q.trim())return;addMsg(q,"u");var a=answer(q);addMsg(a,"b");if(voice)speak(a);}
+var SUG={en:["Q1 results","Who has the best margin?","Why is PAT only ₹3 Cr?","Debt","JVs signed","Is the model shift value-accretive?","Which EMS category?","Analyst targets"],ta:["முடிவுகள்","யாருக்கு அதிக மார்ஜின்?","நிகர லாபம் ஏன் குறைவு?","கடன்","கூட்டு முயற்சி","மாற்றம் மதிப்பு கூட்டுமா?","இஎம்எஸ் வகை","இலக்கு விலை"]};
+function renderSugg(){$("aSugg").innerHTML=SUG[LANG].map(function(s){return '<button class="ibtn" type="button">'+s+'</button>';}).join("");$("aSugg").querySelectorAll("button").forEach(function(b){b.addEventListener("click",function(){ask(b.textContent,true);});});}
+$("assistBtn").addEventListener("click",function(){var a=$("assist");a.hidden=!a.hidden;$("disc").hidden=true;if(!a.hidden&&!$("aLog").children.length)addMsg(LANG==="ta"?"வணக்கம்! அம்பர் பத்தி குரல்லயோ எழுத்துலயோ கேளுங்க. நான் பதில சொல்லி, படிச்சும் காட்டுவேன்.":"Hello! Ask about Amber or its peers by voice (🎤) or by typing. I'll answer and read it aloud.","b");if(!a.hidden)$("aIn").focus();});
+$("assistX").addEventListener("click",function(){$("assist").hidden=true;try{speechSynthesis.cancel();}catch(e){}});
+$("aForm").addEventListener("submit",function(e){e.preventDefault();var v=$("aIn").value;$("aIn").value="";ask(v,true);});
+(function(){var SR=window.SpeechRecognition||window.webkitSpeechRecognition,btn=$("aMic"),rec=null,on=false;
+  btn.addEventListener("click",function(){if(!SR){addMsg(LANG==="ta"?"இந்த உலாவியில குரல் உள்ளீடு இல்ல. தட்டச்சு செய்யுங்க, பதில படிச்சு காட்டுவேன்.":"Voice input isn't available in this browser or view. Type your question and I'll still answer aloud.","b");return;}
+    if(on){try{rec.stop();}catch(e){}return;}
+    try{rec=new SR();rec.lang=LANG==="ta"?"ta-IN":"en-IN";rec.interimResults=false;rec.maxAlternatives=1;
+      rec.onstart=function(){on=true;btn.classList.add("rec");};rec.onend=function(){on=false;btn.classList.remove("rec");};
+      rec.onerror=function(ev){on=false;btn.classList.remove("rec");addMsg((LANG==="ta"?"குரல் பிழை: ":"Voice error: ")+ev.error+(LANG==="ta"?". தட்டச்சு செய்யுங்க.":". Please type instead."),"b");};
+      rec.onresult=function(ev){ask(ev.results[0][0].transcript,true);};rec.start();}catch(e){addMsg("Voice input could not start here. Please type.","b");}});})();
+
+/* ===================== SOCRATES ===================== */
+var SOC=[
+ {q:{en:"Amber paid ~₹262 Cr for 60% of Power-One, which has ~₹245 Cr revenue at a 17–18% EBITDA margin. What pre-tax yield does the attributable EBITDA give on the price paid?",ta:"பவர்-ஒன் 60% பங்குக்கு சுமார் ₹262 கோடி கொடுத்தாங்க. அதோட வருமானம் ₹245 கோடி, மார்ஜின் 17–18%. கொடுத்த விலைக்கு லாபம் எத்தனை சதவீதம்?"},a:1,
+  o:[{en:"About 4%",ta:"சுமார் 4%"},{en:"About 10%",ta:"சுமார் 10%"},{en:"About 17%",ta:"சுமார் 17%"},{en:"About 28%",ta:"சுமார் 28%"}],
+  f:[{en:"That would need a much lower margin or a far higher price. Multiply ₹245 Cr by 17.5% and by 60%, then divide by ₹262 Cr.",ta:"அதுக்கு மார்ஜின் ரொம்ப குறைவா இருக்கணும். ₹245 × 17.5% × 60% கணக்கிட்டு ₹262 ஆல வகுங்க."},
+     {en:"Right: about ₹25.7 Cr ÷ ₹262 Cr is roughly 9.8%, below a 12.5% hurdle. Next, ask which synergies could close that gap.",ta:"சரி, ₹25.7 ÷ ₹262 ≈ 9.8%, தடைக்கோட்டுக்கு கீழ. அடுத்து, எந்த கூட்டு பலன் இடைவெளிய மூடும்னு யோசிங்க."},
+     {en:"17% is Power-One's own margin, not the yield on Amber's price. Multiply ₹245 Cr by 17.5% and by 60%, then divide by ₹262 Cr.",ta:"17% பவர்-ஒன் மார்ஜின், விலைக்கான லாபம் இல்ல. ₹245 × 17.5% × 60% கணக்கிட்டு ₹262 ஆல வகுங்க."},
+     {en:"That ignores the 40% that belongs to other owners. Multiply ₹245 Cr by 17.5% and by 60%, then divide by ₹262 Cr.",ta:"மீதி 40% பங்க விட்டுட்டீங்க. ₹245 × 17.5% × 60% கணக்கிட்டு ₹262 ஆல வகுங்க."}]},
+ {q:{en:"Amber's reported Q1 FY27 PAT was ₹3 Cr, but adjusted PAT was ₹126 Cr. What explains most of the gap?",ta:"முதல் காலாண்டுல அம்பரோட நிகர லாபம் ₹3 கோடி, சரிசெய்த லாபம் ₹126 கோடி. இந்த இடைவெளிக்கு முக்கிய காரணம் என்ன?"},a:1,
+  o:[{en:"A higher tax rate on operating profit",ta:"செயல்பாட்டு லாபத்துக்கு அதிக வரி"},{en:"A ₹123 Cr exceptional loss on settling the Ascent Circuits put liability",ta:"அஸென்ட் சர்க்யூட்ஸ் பங்கு ஒப்பந்தத்துல ₹123 கோடி ஒருமுறை நஷ்டம்"},{en:"A fall in Consumer Durables revenue",ta:"நுகர்வோர் பொருள் வருமானம் குறைஞ்சது"},{en:"A large forex loss on imports",ta:"இறக்குமதில பெரிய அந்நிய செலாவணி நஷ்டம்"}],
+  f:[{en:"Tax was ₹40 Cr, but it looks high only because the exceptional loss is not deductible. Look at the line just above PBT in the results table.",ta:"வரி ₹40 கோடி தான், ஒருமுறை நஷ்டத்துக்கு வரி கழிவு இல்லாததால அதிகமா தெரியுது. முடிவு அட்டவணையில வரிக்கு முந்தைய லாபத்துக்கு மேல இருக்குற வரிய பாருங்க."},
+     {en:"Yes, the ₹123 Cr put-liability charge, plus the tax that could not be offset, drives the gap. Next, check whether similar charges also appeared in FY26.",ta:"சரி, ₹123 கோடி ஒருமுறை நஷ்டமும் அதோட வரியும் தான் இடைவெளிக்கு காரணம். அடுத்து, 2026லயும் இப்படி நஷ்டம் வந்ததான்னு பாருங்க."},
+     {en:"Consumer Durables revenue actually rose about 8% to ₹2,758 Cr this quarter. Look at the items between PBT before exceptionals and reported PBT.",ta:"நுகர்வோர் பொருள் வருமானம் உண்மையில 8% ஏறி ₹2,758 கோடி ஆச்சு. முடிவு அட்டவணையில வரிக்கு முந்தைய லாபத்துக்கு கீழ இருக்குறத பாருங்க."},
+     {en:"No forex line of that size appears in the presentation. Look at the line just above PBT in the results table and what it relates to.",ta:"அவ்வளவு பெரிய அந்நிய செலாவணி நஷ்டம் அறிக்கையில இல்ல. முடிவு அட்டவணையில வரிக்கு முந்தைய லாபத்துக்கு மேல இருக்குற வரிய பாருங்க."}]},
+ {q:{en:"Electronics EBITDA grew 117% while its revenue grew 29%. What is the most likely driver?",ta:"மின்னணு பிரிவோட வருமானம் 29% ஏறினப்போ லாபம் 117% ஏறிச்சு. முக்கிய காரணம் என்னவா இருக்கும்?"},a:0,
+  o:[{en:"Higher-margin bare PCB and acquired businesses improving the mix",ta:"அதிக மார்ஜின் கொண்ட சர்க்யூட் போர்டு, வாங்கின நிறுவனங்களால கலவை மாற்றம்"},{en:"Cuts in employee costs across the group",ta:"குழுமம் முழுக்க ஊழியர் செலவு குறைப்பு"},{en:"Sale of a subsidiary booked as income",ta:"துணை நிறுவன விற்பனை வருமானமா பதிவு"},{en:"Lower copper prices during the quarter",ta:"காலாண்டுல செம்பு விலை குறைஞ்சது"}],
+  f:[{en:"Right, the shift toward PCB and acquired businesses lifted margin from 6.4% to 10.8%. Next, ask why PCB margin is still 12% against a normal 16%.",ta:"சரி, கலவை மாற்றத்தால மார்ஜின் 6.4% ல இருந்து 10.8% ஆச்சு. அடுத்து, சர்க்யூட் போர்டு மார்ஜின் ஏன் இன்னும் 12% தான்னு கேளுங்க."},
+     {en:"The filings do not point to group-wide cost cuts this quarter. Compare the divisional margins of 6.4% and 10.8% and ask what changed in the mix.",ta:"இந்த காலாண்டுல அப்படி செலவு குறைப்பு எதுவும் அறிக்கையில இல்ல. 6.4%, 10.8% மார்ஜின்கள ஒப்பிட்டு கலவைல என்ன மாறிச்சுன்னு பாருங்க."},
+     {en:"No divestment gain sits inside divisional EBITDA this quarter. Compare the divisional margins of 6.4% and 10.8% and ask what changed in the mix.",ta:"பிரிவு லாபத்துல அப்படி விற்பனை லாபம் எதுவும் இல்ல. 6.4%, 10.8% மார்ஜின்கள ஒப்பிட்டு கலவைல என்ன மாறிச்சுன்னு பாருங்க."},
+     {en:"Copper and laminate costs actually rose, squeezing bare-PCB margins. Compare the divisional margins of 6.4% and 10.8% and ask what changed in the mix.",ta:"செம்பு மற்றும் லேமினேட் விலை உண்மையில ஏறிச்சு. 6.4%, 10.8% மார்ஜின்கள ஒப்பிட்டு கலவைல என்ன மாறிச்சுன்னு பாருங்க."}]},
+ {q:{en:"Amber's cash conversion cycle moved from −3 days (FY24) to 53 days (FY26). At FY26 revenue of ₹12,186 Cr, roughly how much extra cash does that lock up?",ta:"பணச் சுழற்சி மைனஸ் 3 நாள்ல இருந்து 53 நாள் ஆச்சு. ₹12,186 கோடி வருமானத்துல எவ்வளவு கூடுதல் பணம் மாட்டிக்குது?"},a:2,
+  o:[{en:"About ₹190 Cr",ta:"சுமார் ₹190 கோடி"},{en:"About ₹600 Cr",ta:"சுமார் ₹600 கோடி"},{en:"About ₹1,870 Cr",ta:"சுமார் ₹1,870 கோடி"},{en:"About ₹5,000 Cr",ta:"சுமார் ₹5,000 கோடி"}],
+  f:[{en:"That matches only about 6 days of sales, not the full shift. Divide ₹12,186 Cr by 365 and multiply by the 56-day change.",ta:"அது சுமார் 6 நாள் விற்பனைக்கு தான் சமம். ₹12,186 கோடிய 365 ஆல வகுத்து 56 நாளால பெருக்குங்க."},
+     {en:"That matches roughly 18 days of sales, not the full shift. Divide ₹12,186 Cr by 365 and multiply by the 56-day change.",ta:"அது சுமார் 18 நாளுக்கு தான் சமம். ₹12,186 கோடிய 365 ஆல வகுத்து 56 நாளால பெருக்குங்க."},
+     {en:"Correct: 56 days × about ₹33.4 Cr a day is roughly ₹1,870 Cr. Next, compare that with CFO falling from ₹965 Cr to ₹240 Cr.",ta:"சரி, 56 நாள் × நாளுக்கு ₹33.4 கோடி ≈ ₹1,870 கோடி. அடுத்து, செயல்பாட்டு பணம் ₹965ல இருந்து ₹240 ஆனதோட ஒப்பிடுங்க."},
+     {en:"That is the size of the fund-raise enabled, not the working-capital change. Divide ₹12,186 Cr by 365 and multiply by the 56-day change.",ta:"அது நிதி திரட்டல் அளவு, நடைமுறை மூலதன மாற்றம் இல்ல. ₹12,186 கோடிய 365 ஆல வகுத்து 56 நாளால பெருக்குங்க."}]},
+ {q:{en:"Which peer has the lowest EBITDA margin yet the highest ROCE in the set, and why?",ta:"குறைந்த மார்ஜின் இருந்தும் அதிக மூலதன வருவாய் கொண்ட போட்டியாளர் யார், ஏன்?"},a:1,
+  o:[{en:"Kaynes, because of its OSAT business",ta:"கேய்ன்ஸ், சிப் பொதியிடல் காரணமா"},{en:"Dixon, because of high asset turns and negative working capital",ta:"டிக்சன், வேகமான சொத்து சுழற்சியும் மைனஸ் பணச் சுழற்சியும்"},{en:"Avalon, because of US exports",ta:"அவலான், அமெரிக்க ஏற்றுமதி காரணமா"},{en:"PG Electroplast, because of plastics",ta:"பிஜி எலக்ட்ரோபிளாஸ்ட், பிளாஸ்டிக் வணிகம் காரணமா"}],
+  f:[{en:"Kaynes has the highest margin at 15.6%, but its ROCE is 12.7% with a 193-day cycle. Find the lowest-margin name and check its CCC.",ta:"கேய்ன்ஸ்க்கு மார்ஜின் அதிகம், 15.6%, ஆனா மூலதன வருவாய் 12.7% தான். குறைந்த மார்ஜின் நிறுவனத்தோட பணச் சுழற்சிய பாருங்க."},
+     {en:"Yes, Dixon earns 29.2% ROCE on a 3.0% margin because its CCC is −7 days. Next, ask whether Amber's mobile line can copy that.",ta:"சரி, மைனஸ் 7 நாள் பணச் சுழற்சியால டிக்சன் 3% மார்ஜின்லயே 29.2% வருவாய் பெறுது. அடுத்து, அம்பர் மொபைல் வணிகம் இதை செய்யுமான்னு யோசிங்க."},
+     {en:"Avalon's ROCE is 19.3%, but on a 12% margin, which is not the lowest. Find the lowest-margin name and check its CCC.",ta:"அவலான் மார்ஜின் 12%, அது குறைவானது இல்ல. குறைந்த மார்ஜின் நிறுவனத்தோட பணச் சுழற்சிய பாருங்க."},
+     {en:"PG's margin is 7.3%, but its ROCE is only 10.3%, below several peers. Find the lowest-margin name and check its CCC.",ta:"பிஜி மார்ஜின் 7.3%, ஆனா மூலதன வருவாய் 10.3% தான். குறைந்த மார்ஜின் நிறுவனத்தோட பணச் சுழற்சிய பாருங்க."}]},
+ {q:{en:"A PCB plant runs at 1.0x asset turn and a 16% EBITDA margin, with depreciation of about 8.3% of gross block. Does it clear a 12.5% hurdle?",ta:"ஒரு சர்க்யூட் போர்டு ஆலை 1.0 மடங்கு சொத்து சுழற்சி, 16% மார்ஜின், 8.3% தேய்மானத்தோட ஓடுது. 12.5% தடைக்கோட்ட தாண்டுமா?"},a:2,
+  o:[{en:"Yes, about 16% pre-tax ROCE",ta:"ஆமா, சுமார் 16%"},{en:"Yes, about 13% pre-tax ROCE",ta:"ஆமா, சுமார் 13%"},{en:"No, about 7.7%, so it needs higher turns or subsidy",ta:"இல்ல, சுமார் 7.7%, அதிக சுழற்சி அல்லது மானியம் தேவை"},{en:"No, the plant is loss-making",ta:"இல்ல, நஷ்டத்துல ஓடும்"}],
+  f:[{en:"16% is the EBITDA margin, before any depreciation is charged. Subtract 8.3% from 1.0 × 16% and compare the result with 12.5%.",ta:"16% தேய்மானத்துக்கு முந்தைய மார்ஜின். 1.0 × 16% ல இருந்து 8.3% கழிச்சு 12.5% கூட ஒப்பிடுங்க."},
+     {en:"That figure ignores most of the depreciation charge on the plant. Subtract 8.3% from 1.0 × 16% and compare the result with 12.5%.",ta:"அந்த எண் பெரும்பாலான தேய்மானத்த விட்டுடுது. 1.0 × 16% ல இருந்து 8.3% கழிச்சு 12.5% கூட ஒப்பிடுங்க."},
+     {en:"Right, 16% − 8.3% ≈ 7.7%, below the hurdle. Next, use the slider on the Model Shift tab to find the subsidy that closes the gap.",ta:"சரி, 16% − 8.3% ≈ 7.7%, தடைக்கோட்டுக்கு கீழ. அடுத்து, மாதிரி மாற்றம் பகுதில மானிய ஸ்லைடர நகர்த்தி பாருங்க."},
+     {en:"At a 16% margin it still earns a positive pre-tax return. Subtract 8.3% from 1.0 × 16% and compare the result with 12.5%.",ta:"16% மார்ஜின்ல இன்னும் நேர்மறை வருவாய் தான். 1.0 × 16% ல இருந்து 8.3% கழிச்சு 12.5% கூட ஒப்பிடுங்க."}]}
+];
+var socState={};
+function renderSoc(){var L=LANG;var letters=L==="ta"?["அ","ஆ","இ","ஈ"]:["A","B","C","D"];
+  $("socr").innerHTML=SOC.map(function(s,i){return '<div class="q"><div class="eyebrow">'+(L==="ta"?"கேள்வி ":"Question ")+(i+1)+' / '+SOC.length+'</div><b>'+s.q[L]+'</b><div class="opts">'+s.o.map(function(o,j){return '<button type="button" class="opt" data-q="'+i+'" data-o="'+j+'">'+letters[j]+'. '+o[L]+'</button>';}).join("")+'</div><div class="fb" id="fb'+i+'"></div></div>';}).join("");
+  $("socr").querySelectorAll(".opt").forEach(function(b){b.addEventListener("click",function(){var i=+b.dataset.q,j=+b.dataset.o;socState[i]=j;paintSoc(i);});});
+  Object.keys(socState).forEach(function(i){paintSoc(+i);});}
+function paintSoc(i){var j=socState[i],s=SOC[i],ok=j===s.a,L=LANG;
+  $("socr").querySelectorAll('.opt[data-q="'+i+'"]').forEach(function(b){b.classList.remove("ok","no");if(+b.dataset.o===j)b.classList.add(ok?"ok":"no");});
+  $("fb"+i).innerHTML='<span class="chip '+(ok?"g":"w")+'">'+(ok?(L==="ta"?"சரி":"Correct"):(L==="ta"?"மீண்டும் யோசிங்க":"Rethink"))+'</span> '+s.f[j][L];}
+$("freeB").addEventListener("click",function(){var t=$("freeT").value.toLowerCase(),L=LANG,r;
+  if(!t.trim()){r=L==="ta"?"முதல்ல உங்க கருத்த எழுதுங்க.":"Write your view first, even one sentence.";}
+  else if(/dilut|equity|qip|raise|நீர்த்|நிதி/.test(t))r=L==="ta"?"நீர்த்தல பத்தி யோசிச்சீங்க. அந்த ₹5,000 கோடி 12.5% க்கு மேல வருவாய் தர்ற திட்டங்களுக்கு போனா, நீர்த்தல் கூட மதிப்ப கூட்டுமா? எந்த எண் அதை நிரூபிக்கும்?":"You focused on dilution. If the ₹5,000 Cr goes into projects that earn more than 12.5%, could dilution still create value? Which reported number would prove it?";
+  else if(/subsid|ecms|pli|மானிய/.test(t))r=L==="ta"?"மானியத்த குறிப்பிட்டீங்க. அரசு மானியம் இல்லாமலே சர்க்யூட் போர்டு ஆலை லாபகரமா இருக்குமா? அப்படின்னா என்ன சொத்து சுழற்சி வேணும்?":"You mentioned subsidies. Would the PCB plants still clear the hurdle without them? What asset turn would they need?";
+  else if(/mobile|oppo|phone|மொபைல்|ஒப்போ/.test(t))r=L==="ta"?"மொபைல பத்தி பேசினீங்க. மார்ஜின் 3% தான்னா, டிக்சன் மாதிரி பணச் சுழற்சி மைனஸ்ல வெச்சுக்க அம்பரால முடியுமா? அதுக்கு என்ன ஆதாரம் தேடுவீங்க?":"You discussed mobiles. With roughly 3% margins, can Amber keep working capital negative like Dixon (−7 days)? What evidence would you look for?";
+  else if(/margin|மார்ஜின்/.test(t))r=L==="ta"?"மார்ஜின பார்த்தீங்க. மார்ஜின் சதவீதம் குறைஞ்சாலும் மொத்த லாபமும் மூலதன வருவாயும் கூடினா, அது மோசமா?":"You looked at margins. If the margin % falls but absolute EBITDA and ROCE rise, is that bad for shareholders?";
+  else if(/debt|interest|கடன்|வட்டி/.test(t))r=L==="ta"?"கடன கவனிச்சீங்க. வட்டிக் காப்பு 3.1 மடங்கு. ஜேவர் ஆலை தாமதமானா அது எவ்வளவு குறையும்?":"You noticed the debt. Interest cover is 3.1x. How far would it fall if Jewar is delayed while its debt is already drawn?";
+  else r=L==="ta"?"நல்ல தொடக்கம். எந்த மூலதன வருவாய் கிடைச்சா நீங்க ஆமான்னு சொல்வீங்க? அடுத்த இரண்டு காலாண்டுல எந்த எண் உங்க கருத்த மாத்தும்?":"Good start. What return on capital would make you say yes? And which number in the next two quarters would change your mind?";
+  $("freeF").innerHTML='<div class="card tint" style="margin-top:8px">'+r+'</div>';});
+
+/* ===================== INIT ===================== */
+renderKpis();renderCbfAmber();renderMap();renderLayers();renderVS();renderPeers();
+$("subs").addEventListener("input",renderSens);
+(function(){var l="en",t="ov";try{l=localStorage.getItem("amberQ1lang")||"en";t=localStorage.getItem("amberQ1tab")||"ov";}catch(e){}
+  var h=(location.hash||"").replace("#","");if(h&&document.getElementById(h)&&document.getElementById(h).classList.contains("pane"))t=h;
+  setLang(l);show(t);})();
+</script>
+</body>
+</html>
