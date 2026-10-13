@@ -1,0 +1,964 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DMart Q2FY27 Analysis</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+Tamil:wght@400;600;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f7f8fa;--card:#ffffff;--ink:#1b2430;--ink2:#4a5566;--muted:#7a8494;--line:#e3e7ee;
+  --brand:#0b6e4f;--brand2:#12a06f;--accent:#f28c28;--accentS:#fff2e4;
+  --green:#1f9d55;--greenS:#e7f6ee;--amber:#d98a00;--amberS:#fff6e0;--red:#d64545;--redS:#fdecec;
+  --blue:#2563eb;--blueS:#e8f0ff;--purple:#7c3aed;--purpleS:#f1ebff;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:var(--bg);color:var(--ink);font-family:'Inter','Noto Sans Tamil',system-ui,sans-serif;font-size:15px;line-height:1.55}
+body::before{content:"CB Research";position:fixed;top:45%;left:50%;transform:translate(-50%,-50%) rotate(-28deg);font-size:110px;font-weight:800;color:rgba(11,110,79,.035);pointer-events:none;z-index:0;white-space:nowrap}
+.wrap{max-width:1200px;margin:0 auto;padding:0 16px 120px;position:relative;z-index:1}
+header.top{background:linear-gradient(135deg,#ffffff 0%,#eef8f3 100%);border-bottom:1px solid var(--line);padding:18px 0 12px}
+.top-row{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;flex-wrap:wrap}
+.co-name{font-size:26px;font-weight:800;letter-spacing:-.4px;color:var(--brand)}
+.co-sub{color:var(--ink2);font-size:13.5px;margin-top:2px}
+.tag{display:inline-block;padding:3px 10px;border-radius:999px;font-size:12px;font-weight:600;margin:6px 6px 0 0}
+.tag.g{background:var(--greenS);color:var(--green)}.tag.a{background:var(--amberS);color:var(--amber)}.tag.r{background:var(--redS);color:var(--red)}.tag.b{background:var(--blueS);color:var(--blue)}.tag.o{background:var(--accentS);color:#b35d00}
+.lang-btn{border:1px solid var(--brand);background:#fff;color:var(--brand);border-radius:999px;padding:7px 14px;font-weight:700;cursor:pointer;font-size:13px}
+.lang-btn:hover{background:var(--brand);color:#fff}
+.stamp{font-size:12px;color:var(--muted);margin-top:6px;text-align:right}
+nav.tabs{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.97);border-bottom:1px solid var(--line);overflow-x:auto;white-space:nowrap;-webkit-overflow-scrolling:touch}
+nav.tabs .in{max-width:1200px;margin:0 auto;padding:0 10px;display:flex;gap:2px}
+nav.tabs button{background:none;border:none;padding:13px 13px;font-size:13.5px;font-weight:600;color:var(--ink2);cursor:pointer;border-bottom:3px solid transparent;font-family:inherit}
+nav.tabs button.on{color:var(--brand);border-bottom-color:var(--accent)}
+.tab{display:none;padding-top:20px;animation:fade .3s}
+.tab.on{display:block}
+@keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+h2.sec{font-size:21px;font-weight:800;margin:6px 0 4px;color:var(--ink)}
+p.lead{color:var(--ink2);margin-bottom:14px;max-width:900px}
+h3{font-size:16px;font-weight:700;margin:4px 0 8px}
+.grid{display:grid;gap:14px}
+.g2{grid-template-columns:repeat(auto-fit,minmax(300px,1fr))}
+.g3{grid-template-columns:repeat(auto-fit,minmax(240px,1fr))}
+.g4{grid-template-columns:repeat(auto-fit,minmax(170px,1fr))}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px;box-shadow:0 1px 2px rgba(20,30,50,.04)}
+.kpi .l{font-size:12px;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.4px}
+.kpi .v{font-size:23px;font-weight:800;margin-top:2px;font-family:'Inter'}
+.kpi .d{font-size:12.5px;font-weight:600;margin-top:2px}
+.up{color:var(--green)}.dn{color:var(--red)}.fl{color:var(--amber)}
+.mt{margin-top:16px}.mt2{margin-top:24px}
+table{width:100%;border-collapse:collapse;font-size:13.5px}
+th,td{padding:8px 10px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+th{background:#f2f5f9;font-weight:700;color:var(--ink2);font-size:12.5px;text-transform:uppercase;letter-spacing:.3px}
+td.n,th.n{text-align:right;font-variant-numeric:tabular-nums}
+td.src{font-size:11.5px;color:var(--muted)}
+.tbl{overflow-x:auto;border:1px solid var(--line);border-radius:12px;background:#fff}
+.tbl table th:first-child,.tbl table td:first-child{position:sticky;left:0;background:inherit}
+.tbl tr:nth-child(even) td{background:#fafbfd}
+.chartbox{overflow-x:auto;background:#fff;border:1px solid var(--line);border-radius:14px;padding:12px}
+.chartbox .cv{min-width:720px;height:330px;position:relative}
+.note{font-size:12.5px;color:var(--muted);margin-top:6px}
+.callout{border-left:4px solid var(--accent);background:var(--accentS);padding:12px 14px;border-radius:10px;margin:12px 0}
+.callout.g{border-color:var(--green);background:var(--greenS)}
+.callout.r{border-color:var(--red);background:var(--redS)}
+.callout.b{border-color:var(--blue);background:var(--blueS)}
+ul.dots{padding-left:18px}ul.dots li{margin:5px 0}
+.reason{display:flex;gap:12px;align-items:flex-start;padding:12px;border:1px solid var(--line);border-radius:12px;background:#fff}
+.reason .ic{flex:0 0 38px;height:38px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-weight:800;color:#fff}
+.reason h4{font-size:14.5px;margin-bottom:3px}
+.reason p{font-size:13.5px;color:var(--ink2)}
+.reason .ev{font-size:12px;color:var(--muted);margin-top:4px;font-family:'JetBrains Mono',monospace}
+.pill{display:inline-block;font-size:11.5px;font-weight:700;padding:2px 8px;border-radius:6px}
+.ta{display:none;font-family:'Noto Sans Tamil','Inter',sans-serif}
+body.tamil .ta{display:block}body.tamil span.ta{display:inline}
+body.tamil .en{display:none}
+/* business model */
+.bm-svg{width:100%;min-width:860px;height:auto;display:block}
+.bm-wrap{overflow-x:auto;background:#fff;border:1px solid var(--line);border-radius:14px;padding:10px}
+.bm-box{cursor:pointer;transition:filter .2s}
+.bm-box:hover{filter:brightness(.95)}
+.bm-box.sel rect{stroke:#111;stroke-width:2.5}
+#bmCard{min-height:90px}
+/* temple */
+.temple-wrap{overflow-x:auto;background:#fff;border:1px solid var(--line);border-radius:14px;padding:10px}
+.temple{width:100%;min-width:720px;height:auto}
+.col-hit{cursor:pointer}
+.pillar-card{transition:box-shadow .3s,border-color .3s}
+.pillar-card.hl{box-shadow:0 0 0 3px var(--accent);border-color:var(--accent)}
+/* cb badge */
+#cbBadge{position:fixed;right:18px;bottom:18px;width:58px;height:58px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#ffb35c,#f28c28 60%,#c96a10);color:#fff;font-weight:900;font-size:20px;display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:200;box-shadow:0 6px 18px rgba(242,140,40,.45);animation:blink 2.2s infinite;border:3px solid #fff}
+@keyframes blink{0%,100%{box-shadow:0 0 0 0 rgba(242,140,40,.55),0 6px 18px rgba(242,140,40,.45)}50%{box-shadow:0 0 0 12px rgba(242,140,40,0),0 6px 18px rgba(242,140,40,.45)}}
+#cbPop{position:fixed;right:18px;bottom:86px;width:min(360px,calc(100vw - 32px));background:#fff;border:1px solid var(--line);border-radius:14px;padding:14px;font-size:12.5px;color:var(--ink2);box-shadow:0 12px 32px rgba(20,30,50,.18);z-index:201;display:none}
+#cbPop b{color:var(--ink)}
+/* assist */
+#asBtn{position:fixed;right:86px;bottom:24px;height:46px;padding:0 16px;border-radius:999px;background:var(--brand);color:#fff;font-weight:700;border:none;cursor:pointer;z-index:200;box-shadow:0 6px 18px rgba(11,110,79,.35);font-family:inherit;font-size:13.5px}
+#asPanel{position:fixed;right:18px;bottom:86px;width:min(390px,calc(100vw - 32px));height:min(540px,calc(100vh - 120px));background:#fff;border:1px solid var(--line);border-radius:16px;box-shadow:0 14px 40px rgba(20,30,50,.22);z-index:202;display:none;flex-direction:column;overflow:hidden}
+#asPanel.on{display:flex}
+#asHead{background:var(--brand);color:#fff;padding:12px 14px;font-weight:700;display:flex;justify-content:space-between;align-items:center}
+#asHead button{background:none;border:none;color:#fff;font-size:20px;cursor:pointer}
+#asLog{flex:1;overflow-y:auto;padding:12px;background:#f8faf9}
+.msg{max-width:88%;padding:9px 12px;border-radius:12px;margin:6px 0;font-size:13.5px;white-space:pre-wrap}
+.msg.u{background:var(--blueS);margin-left:auto}
+.msg.b{background:#fff;border:1px solid var(--line)}
+#asChips{padding:6px 10px;display:flex;gap:6px;flex-wrap:wrap;border-top:1px solid var(--line)}
+#asChips button{font-size:11.5px;border:1px solid var(--line);background:#fff;border-radius:999px;padding:4px 9px;cursor:pointer;font-family:inherit}
+#asForm{display:flex;gap:6px;padding:10px;border-top:1px solid var(--line)}
+#asIn{flex:1;border:1px solid var(--line);border-radius:10px;padding:9px 10px;font-family:inherit;font-size:13.5px}
+#asMic,#asSend{border:none;border-radius:10px;padding:0 12px;font-weight:700;cursor:pointer}
+#asMic{background:var(--accentS);color:#b35d00;font-size:17px}
+#asMic.rec{background:var(--red);color:#fff;animation:blink 1s infinite}
+#asSend{background:var(--brand);color:#fff}
+/* socrates */
+.q{border:1px solid var(--line);border-radius:12px;padding:14px;background:#fff;margin-bottom:12px}
+.q .opts button{display:block;width:100%;text-align:left;margin:6px 0;padding:9px 12px;border:1px solid var(--line);border-radius:9px;background:#fff;cursor:pointer;font-family:inherit;font-size:13.5px}
+.q .opts button.ok{background:var(--greenS);border-color:var(--green)}
+.q .opts button.no{background:var(--redS);border-color:var(--red)}
+.q .fb{margin-top:8px;font-size:13px;display:none}
+.q textarea{width:100%;min-height:70px;border:1px solid var(--line);border-radius:9px;padding:9px;font-family:inherit;margin-top:6px}
+.btn{background:var(--brand);color:#fff;border:none;padding:8px 14px;border-radius:9px;font-weight:700;cursor:pointer;font-family:inherit;margin-top:8px}
+.btn.alt{background:#fff;color:var(--brand);border:1px solid var(--brand)}
+.score-chip{display:inline-flex;align-items:center;gap:6px;padding:6px 12px;border-radius:999px;font-weight:700;font-size:13px;margin:4px 6px 0 0;border:1px solid var(--line);background:#fff}
+.score-chip b{font-size:16px}
+.cycle-svg{width:100%;max-width:420px;height:auto;display:block;margin:0 auto}
+.tl{display:flex;gap:0;overflow-x:auto;padding:14px 4px}
+.tl .ev{flex:0 0 190px;border-top:3px solid var(--brand);padding:10px 10px 0;position:relative}
+.tl .ev::before{content:"";position:absolute;top:-8px;left:10px;width:13px;height:13px;border-radius:50%;background:var(--accent);border:2px solid #fff}
+.tl .ev .dt{font-weight:700;font-size:12.5px;color:var(--brand)}
+.tl .ev .tx{font-size:12.5px;color:var(--ink2)}
+.swot{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px}
+.swot .card h3{display:flex;align-items:center;gap:8px}
+.foot-src{font-size:12px;color:var(--muted);margin-top:18px;border-top:1px dashed var(--line);padding-top:10px}
+@media (max-width:640px){.co-name{font-size:21px}.kpi .v{font-size:20px}body::before{font-size:60px}}
+</style>
+</head>
+<body>
+<header class="top">
+ <div class="wrap" style="padding-bottom:0">
+  <div class="top-row">
+   <div>
+    <div class="co-name">Avenue Supermarts Ltd (DMart)</div>
+    <div class="co-sub">NSE: DMART · BSE: 540376 · Q2FY27 (Jul–Sep 2026) Business &amp; Investment Analysis · Results declared 10 Oct 2026</div>
+    <span class="tag b">Revenue ₹19,644 cr · +17.8% YoY</span>
+    <span class="tag a">PAT ₹743 cr · +8.5% YoY · −13.6% QoQ</span>
+    <span class="tag r">EBITDA margin 7.1% (7.3%)</span>
+    <span class="tag g">518 stores · LFL 9.5%</span>
+    <span class="tag o">CB Score 5.8 / 10</span>
+   </div>
+   <div style="text-align:right;margin-left:auto">
+    <button class="lang-btn" id="langBtn" onclick="toggleLang()">தமிழ் / English</button>
+    <div class="stamp" id="stamp">Prepared: 13 Oct 2026, IST · Quarter: Q2FY27</div>
+    <div class="stamp">Price ₹3,365 (12 Oct 2026 close)</div>
+   </div>
+  </div>
+ </div>
+</header>
+<nav class="tabs"><div class="in" id="tabNav"></div></nav>
+
+<div class="wrap">
+
+<!-- ================= OVERVIEW ================= -->
+<section class="tab on" id="t-overview">
+ <h2 class="sec en">Q2FY27 at a glance</h2><h2 class="sec ta">Q2FY27 – ஒரு பார்வையில்</h2>
+ <p class="lead en">Sales grew fast (+17.8%) and more shoppers came in, but each rupee of sales kept less profit. Profit grew only 8.5% from last year and fell 13.6% from the June quarter. The share fell about 4% to a fresh 52-week low on 12 Oct 2026.</p>
+ <p class="lead ta">விற்பனை வேகமா வளர்ந்திருக்கு (+17.8%), கடைக்கு வர்றவங்க எண்ணிக்கையும் கூடியிருக்கு. ஆனா ஒவ்வொரு ரூபாய் விற்பனையிலயும் லாபம் குறைஞ்சிருக்கு. போன வருஷத்தோட ஒப்பிட்டா லாபம் 8.5% தான் கூடியிருக்கு; ஜூன் காலாண்டோட ஒப்பிட்டா 13.6% குறைஞ்சிருக்கு. 12 அக்டோபர் 2026 அன்னிக்கு பங்கு விலை சுமார் 4% இறங்கி, 52 வாரத்துல இல்லாத அளவுக்கு கீழ வந்துடுச்சு.</p>
+
+ <div class="grid g4">
+  <div class="card kpi"><div class="l">Revenue (consol.)</div><div class="v">₹19,644 cr</div><div class="d up">▲ 17.8% YoY · ▲ 4.5% QoQ</div></div>
+  <div class="card kpi"><div class="l">EBITDA (consol.)</div><div class="v">₹1,393 cr</div><div class="d fl">▲ 14.7% YoY · ▼ 7.1% QoQ</div></div>
+  <div class="card kpi"><div class="l">Net profit (consol.)</div><div class="v">₹743 cr</div><div class="d dn">▲ 8.5% YoY · ▼ 13.6% QoQ</div></div>
+  <div class="card kpi"><div class="l">EBITDA margin</div><div class="v">7.1%</div><div class="d dn">from 7.3% (Q2FY26), 8.0% (Q1FY27)</div></div>
+  <div class="card kpi"><div class="l">PAT margin</div><div class="v">3.8%</div><div class="d dn">from 4.1% (Q2FY26)</div></div>
+  <div class="card kpi"><div class="l">Stores</div><div class="v">518</div><div class="d up">+15 in Q2 · +86 YoY</div></div>
+  <div class="card kpi"><div class="l">Like-for-like growth</div><div class="v">9.5%</div><div class="d up">6.8% Q2FY26 · 5.5% Q1FY27</div></div>
+  <div class="card kpi"><div class="l">EPS (consol.)</div><div class="v">₹11.40</div><div class="d up">₹10.53 in Q2FY26</div></div>
+ </div>
+
+ <div class="mt">
+  <span class="score-chip">CB Score <b style="color:var(--red)">5.8</b>/10</span>
+  <span class="score-chip">Cycle (CY) <b style="color:var(--amber)">57</b>/100</span>
+  <span class="score-chip">Trigger (TG) <b style="color:var(--red)">37</b>/100</span>
+  <span class="score-chip">Price stage <b style="color:var(--red)">Stage 4</b></span>
+ </div>
+
+ <h3 class="mt2 en">Results table (₹ crore, consolidated)</h3><h3 class="mt2 ta">முடிவுகள் அட்டவணை (₹ கோடி, ஒருங்கிணைந்தது)</h3>
+ <div class="tbl"><table>
+  <thead><tr><th>Item</th><th class="n">Q2FY27</th><th class="n">Q2FY26</th><th class="n">YoY</th><th class="n">Q1FY27</th><th class="n">QoQ</th></tr></thead>
+  <tbody id="resTbl"></tbody>
+ </table></div>
+ <p class="note">Standalone (DMart stores only): revenue ₹19,206 cr (+18.4%), EBITDA ₹1,403 cr (+14.1%, margin 7.3% vs 7.6%), PAT ₹804 cr (+7.6%). The ₹61 cr gap between standalone and consolidated profit is mostly the online arm DMart Ready, which lost ₹75 cr in the quarter.</p>
+
+ <h3 class="mt2 en">Your three questions — short answers</h3><h3 class="mt2 ta">உங்க மூணு கேள்விகளுக்கு சுருக்கமான பதில்</h3>
+ <div class="grid g3">
+  <div class="card"><span class="pill" style="background:var(--greenS);color:var(--green)">1 · Why DMart leads</span>
+   <p class="en mt" style="margin-top:8px">It runs the cheapest store system in Indian grocery: it owns most stores, pays suppliers in about 8 days in return for better prices, keeps a narrow range that sells fast, and passes the savings to shoppers. Low prices bring footfall (11.1 crore bills a quarter), and footfall brings scale.</p>
+   <p class="ta" style="margin-top:8px">இந்திய மளிகை சில்லறை வியாபாரத்துலயே செலவு கம்மியா கடை நடத்துறது DMart தான். பெரும்பாலான கடைகள் சொந்தம், சப்ளையர்களுக்கு சுமார் 8 நாள்ல பணம் கொடுத்து குறைஞ்ச விலைக்கு வாங்குறாங்க, வேகமா விக்கிற பொருட்களை மட்டும் வைக்கிறாங்க, மிச்சத்தை வாடிக்கையாளருக்கு விலை குறைப்பா கொடுக்குறாங்க.</p>
+   <button class="btn alt" onclick="go('lead')">See details →</button></div>
+  <div class="card"><span class="pill" style="background:var(--redS);color:var(--red)">2 · Why profit is under pressure</span>
+   <p class="en" style="margin-top:8px">Costs grew faster than sales: entry-level wage hikes, a thinner gross margin (more food, less high-margin apparel), depreciation and interest from the store-building spree (+26% and +83%), lower other income and online losses. Q2 is also seasonally weaker than Q1 every year.</p>
+   <p class="ta" style="margin-top:8px">விற்பனையை விட செலவு வேகமா கூடியிருக்கு: அடிமட்ட ஊழியர் சம்பள உயர்வு, மொத்த லாப விகிதம் குறைஞ்சது (உணவுப் பொருள் அதிகம், அதிக லாபம் தர்ற துணி/பொது பொருள் குறைவு), புது கடைகளால தேய்மானம் +26%, வட்டி +83%, ஆன்லைன் நஷ்டம். அது மட்டும் இல்ல, ஒவ்வொரு வருஷமும் Q2 லாபம் Q1-ஐ விட குறைவா தான் இருக்கும்.</p>
+   <button class="btn alt" onclick="go('decline')">See details →</button></div>
+  <div class="card"><span class="pill" style="background:var(--blueS);color:var(--blue)">3 · The business model</span>
+   <p class="en" style="margin-top:8px">EDLC → EDLP: Everyday Low Cost lets it charge Everyday Low Prices. Revenue = retail area × sales per sq ft. Profit comes from very fast stock turnover on a thin 14% gross margin, not from high markups.</p>
+   <p class="ta" style="margin-top:8px">EDLC → EDLP: தினமும் குறைஞ்ச செலவு, அதனால தினமும் குறைஞ்ச விலை. வருவாய் = கடை பரப்பளவு × ஒரு சதுர அடிக்கு விற்பனை. லாபம் அதிக மார்ஜின்ல இருந்து வரல; 14% மெல்லிய மார்ஜின்ல, சரக்கை ரொம்ப வேகமா சுழற்றுறதுல இருந்து வருது.</p>
+   <button class="btn alt" onclick="go('model')">See details →</button></div>
+ </div>
+</section>
+
+<!-- ================= BUSINESS MODEL ================= -->
+<section class="tab" id="t-model">
+ <h2 class="sec en">Business model — how DMart makes money</h2><h2 class="sec ta">வியாபார மாதிரி – DMart எப்படி பணம் சம்பாதிக்குது</h2>
+ <p class="lead en">Tap any box to see what it means. Flow: customers → stores and app → DMart → product segments → revenue → costs → profit → shareholders.</p>
+ <p class="lead ta">ஏதாவது ஒரு பெட்டியை தொட்டா அதோட விளக்கம் கீழே வரும். ஓட்டம்: வாடிக்கையாளர் → கடை / ஆப் → DMart → பொருள் பிரிவுகள் → வருவாய் → செலவு → லாபம் → பங்குதாரர்கள்.</p>
+ <div class="bm-wrap">
+ <svg class="bm-svg" viewBox="0 0 1120 600" id="bmSvg" xmlns="http://www.w3.org/2000/svg">
+  <defs><marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#9aa4b2"/></marker></defs>
+  <g stroke="#9aa4b2" stroke-width="2" fill="none" marker-end="url(#ar)">
+   <path d="M175,300 L215,190"/><path d="M175,300 L215,410"/>
+   <path d="M395,190 L440,280"/><path d="M395,410 L440,320"/>
+   <path d="M640,300 L680,90"/><path d="M640,300 L680,225"/><path d="M640,300 L680,360"/><path d="M640,300 L680,495"/>
+   <path d="M870,90 L905,170"/><path d="M870,225 L905,180"/><path d="M870,360 L905,195"/><path d="M870,495 L905,205"/>
+   <path d="M1010,235 L1010,265"/><path d="M1010,365 L1010,395"/><path d="M1010,495 L1010,520"/>
+  </g>
+  <g class="bm-box" data-k="cust"><rect x="20" y="230" width="155" height="140" rx="14" fill="#e8f0ff" stroke="#2563eb"/>
+   <text x="97" y="268" text-anchor="middle" font-weight="800" font-size="15" fill="#1e3a8a">Customers</text>
+   <text x="97" y="292" text-anchor="middle" font-size="12" fill="#334">Value-seeking</text><text x="97" y="308" text-anchor="middle" font-size="12" fill="#334">families, shops</text>
+   <text x="97" y="340" text-anchor="middle" font-weight="800" font-size="14" fill="#2563eb">11.1 cr bills</text><text x="97" y="357" text-anchor="middle" font-size="11" fill="#556">in Q2 · +14.4%</text></g>
+  <g class="bm-box" data-k="stores"><rect x="215" y="120" width="180" height="140" rx="14" fill="#e7f6ee" stroke="#1f9d55"/>
+   <text x="305" y="155" text-anchor="middle" font-weight="800" font-size="15" fill="#0b6e4f">518 DMart stores</text>
+   <text x="305" y="178" text-anchor="middle" font-size="12" fill="#334">21.4 mn sq ft</text><text x="305" y="196" text-anchor="middle" font-size="12" fill="#334">11 markets incl. NCR</text>
+   <text x="305" y="226" text-anchor="middle" font-weight="800" font-size="13" fill="#1f9d55">₹8,975 / sq ft</text><text x="305" y="243" text-anchor="middle" font-size="11" fill="#556">sales in the quarter</text></g>
+  <g class="bm-box" data-k="ready"><rect x="215" y="345" width="180" height="130" rx="14" fill="#f1ebff" stroke="#7c3aed"/>
+   <text x="305" y="380" text-anchor="middle" font-weight="800" font-size="15" fill="#5b21b6">DMart Ready</text>
+   <text x="305" y="402" text-anchor="middle" font-size="12" fill="#334">Online orders</text><text x="305" y="419" text-anchor="middle" font-size="12" fill="#334">11 cities (19 a year ago)</text>
+   <text x="305" y="450" text-anchor="middle" font-weight="800" font-size="13" fill="#d64545">Loss ₹75 cr in Q2</text></g>
+  <g class="bm-box" data-k="core"><rect x="440" y="215" width="200" height="170" rx="16" fill="#fff2e4" stroke="#f28c28" stroke-width="2.5"/>
+   <text x="540" y="252" text-anchor="middle" font-weight="900" font-size="16" fill="#b35d00">Avenue Supermarts</text>
+   <text x="540" y="276" text-anchor="middle" font-size="13" fill="#334">EDLC → EDLP</text>
+   <text x="540" y="296" text-anchor="middle" font-size="11.5" fill="#556">low cost → low price</text>
+   <text x="540" y="330" text-anchor="middle" font-weight="800" font-size="15" fill="#b35d00">₹19,644 cr</text>
+   <text x="540" y="348" text-anchor="middle" font-size="11.5" fill="#556">Q2FY27 revenue</text>
+   <text x="540" y="368" text-anchor="middle" font-size="11.5" fill="#556">Promoter 74.48%</text></g>
+  <g class="bm-box" data-k="foods"><rect x="680" y="40" width="190" height="100" rx="12" fill="#e7f6ee" stroke="#1f9d55"/>
+   <text x="775" y="68" text-anchor="middle" font-weight="800" font-size="14" fill="#0b6e4f">Foods · 56.9%</text>
+   <text x="775" y="90" text-anchor="middle" font-size="12" fill="#334">Staples, grocery, dairy</text>
+   <text x="775" y="114" text-anchor="middle" font-weight="700" font-size="12.5" fill="#1f9d55">≈ ₹21,366 cr in H1</text><text x="775" y="130" text-anchor="middle" font-size="10.5" fill="#667">Low margin · drives footfall</text></g>
+  <g class="bm-box" data-k="fmcg"><rect x="680" y="175" width="190" height="100" rx="12" fill="#e8f0ff" stroke="#2563eb"/>
+   <text x="775" y="203" text-anchor="middle" font-weight="800" font-size="14" fill="#1e3a8a">Non-food FMCG · 19.5%</text>
+   <text x="775" y="225" text-anchor="middle" font-size="12" fill="#334">Soaps, detergents, care</text>
+   <text x="775" y="249" text-anchor="middle" font-weight="700" font-size="12.5" fill="#2563eb">≈ ₹7,322 cr in H1</text><text x="775" y="265" text-anchor="middle" font-size="10.5" fill="#667">Mid margin · brand-led</text></g>
+  <g class="bm-box" data-k="gma"><rect x="680" y="310" width="190" height="100" rx="12" fill="#fff6e0" stroke="#d98a00"/>
+   <text x="775" y="338" text-anchor="middle" font-weight="800" font-size="14" fill="#8a5a00">GM &amp; Apparel · 23.6%</text>
+   <text x="775" y="360" text-anchor="middle" font-size="12" fill="#334">Clothes, kitchen, home</text>
+   <text x="775" y="384" text-anchor="middle" font-weight="700" font-size="12.5" fill="#d98a00">≈ ₹8,862 cr in H1</text><text x="775" y="400" text-anchor="middle" font-size="10.5" fill="#667">Highest margin · the swing factor</text></g>
+  <g class="bm-box" data-k="online"><rect x="680" y="445" width="190" height="100" rx="12" fill="#fdecec" stroke="#d64545"/>
+   <text x="775" y="473" text-anchor="middle" font-weight="800" font-size="14" fill="#9b1c1c">Online (subsidiary)</text>
+   <text x="775" y="495" text-anchor="middle" font-size="12" fill="#334">Avenue E-Commerce</text>
+   <text x="775" y="519" text-anchor="middle" font-weight="700" font-size="12.5" fill="#d64545">Loss ₹166.6 cr in H1</text><text x="775" y="535" text-anchor="middle" font-size="10.5" fill="#667">Cut to 11 cities</text></g>
+  <g class="bm-box" data-k="rev"><rect x="905" y="135" width="195" height="100" rx="12" fill="#e7f6ee" stroke="#0b6e4f"/>
+   <text x="1002" y="165" text-anchor="middle" font-weight="800" font-size="14" fill="#0b6e4f">Revenue</text>
+   <text x="1002" y="192" text-anchor="middle" font-weight="900" font-size="17" fill="#0b6e4f">₹19,644 cr</text>
+   <text x="1002" y="215" text-anchor="middle" font-size="11.5" fill="#556">+17.8% YoY</text></g>
+  <g class="bm-box" data-k="cost"><rect x="905" y="265" width="195" height="100" rx="12" fill="#fdecec" stroke="#d64545"/>
+   <text x="1002" y="292" text-anchor="middle" font-weight="800" font-size="14" fill="#9b1c1c">Costs</text>
+   <text x="1002" y="314" text-anchor="middle" font-size="12" fill="#334">Goods ≈ 85.9% of sales</text>
+   <text x="1002" y="332" text-anchor="middle" font-size="12" fill="#334">+ staff, power, upkeep</text>
+   <text x="1002" y="352" text-anchor="middle" font-size="11.5" fill="#d64545">Expenses +18.3% YoY</text></g>
+  <g class="bm-box" data-k="profit"><rect x="905" y="395" width="195" height="100" rx="12" fill="#fff2e4" stroke="#f28c28"/>
+   <text x="1002" y="420" text-anchor="middle" font-weight="800" font-size="14" fill="#b35d00">Profit</text>
+   <text x="1002" y="442" text-anchor="middle" font-size="12.5" fill="#334">EBITDA ₹1,393 cr (7.1%)</text>
+   <text x="1002" y="462" text-anchor="middle" font-size="12.5" fill="#334">PAT ₹743 cr (3.8%)</text>
+   <text x="1002" y="482" text-anchor="middle" font-size="11" fill="#556">EPS ₹11.40</text></g>
+  <g class="bm-box" data-k="sh"><rect x="905" y="520" width="195" height="62" rx="12" fill="#e8f0ff" stroke="#2563eb"/>
+   <text x="1002" y="545" text-anchor="middle" font-weight="800" font-size="13.5" fill="#1e3a8a">Shareholders</text>
+   <text x="1002" y="565" text-anchor="middle" font-size="11.5" fill="#334">No dividend · cash reinvested</text></g>
+ </svg>
+ </div>
+ <div class="card mt" id="bmCard"><b class="en">Tap a box above.</b><b class="ta">மேல இருக்கிற ஒரு பெட்டியை தொடுங்க.</b></div>
+ <p class="note">Formula: Standalone revenue ≈ Retail area × Sales per sq ft = 21.4 mn sq ft × ₹8,975 ≈ ₹19,206 cr. Same revenue ≈ Bills × Average bill = 11.1 crore × ₹1,730.<br>Segment rupee values are CB Research estimates: H1FY27 standalone revenue ₹37,550 cr × the company's reported H1 mix.</p>
+
+ <h3 class="mt2 en">Revenue engine — the drivers to watch</h3><h3 class="mt2 ta">வருவாய் இயந்திரம் – கவனிக்க வேண்டிய காரணிகள்</h3>
+ <div class="tbl"><table>
+  <thead><tr><th>Driver</th><th class="n">Q2FY27</th><th class="n">Q2FY26</th><th class="n">Change</th><th>What it tells you</th></tr></thead>
+  <tbody>
+   <tr><td>Stores</td><td class="n">518</td><td class="n">432</td><td class="n up">+19.9%</td><td>Main growth engine. 85 stores added in FY26.</td></tr>
+   <tr><td>Retail area (mn sq ft)</td><td class="n">21.4</td><td class="n">n/a</td><td class="n">—</td><td>Capacity to sell.</td></tr>
+   <tr><td>Revenue per sq ft (quarter)</td><td class="n">₹8,975</td><td class="n">≈ ₹9,057</td><td class="n dn">−0.9%</td><td>Productivity falling: new stores sell less per sq ft.</td></tr>
+   <tr><td>EBITDA per sq ft</td><td class="n">₹656</td><td class="n">≈ ₹688</td><td class="n dn">−4.6%</td><td>Profit per sq ft is falling faster than sales.</td></tr>
+   <tr><td>Bills (crore)</td><td class="n">11.1</td><td class="n">9.7</td><td class="n up">+14.4%</td><td>Footfall is healthy.</td></tr>
+   <tr><td>Average bill (computed)</td><td class="n">₹1,730</td><td class="n">₹1,672</td><td class="n up">+3.5%</td><td>Standalone revenue ÷ bills.</td></tr>
+   <tr><td>LFL growth (stores ≥ 2 yrs)</td><td class="n">9.5%</td><td class="n">6.8%</td><td class="n up">+2.7 pts</td><td>Mature stores recovered from 5.5% in Q1.</td></tr>
+   <tr><td>Gross margin</td><td class="n">14.15%</td><td class="n">n/a</td><td class="n">—</td><td>Thin margin; mix decides it.</td></tr>
+  </tbody></table></div>
+</section>
+
+<!-- ================= WHY DMART LEADS ================= -->
+<section class="tab" id="t-lead">
+ <h2 class="sec en">Why DMart leads Indian value retail</h2><h2 class="sec ta">இந்திய மலிவு விலை சில்லறை வியாபாரத்துல DMart ஏன் முன்னணியில இருக்கு</h2>
+ <p class="lead en">DMart doesn't win with ads, loyalty points or huge range. It wins by running every rupee of cost lower than rivals and handing that saving to shoppers as permanently low prices. Each advantage below reinforces the others — a "flywheel".</p>
+ <p class="lead ta">விளம்பரம், லாயல்டி பாயிண்ட், ஏகப்பட்ட பொருட்கள் இதெல்லாம் வச்சு DMart ஜெயிக்கல. ஒவ்வொரு ரூபாய் செலவையும் போட்டியாளர்களை விட கம்மியா வச்சு, அந்த மிச்சத்தை நிரந்தரமான குறைஞ்ச விலையா வாடிக்கையாளருக்கு கொடுக்குது. கீழ இருக்கிற ஒவ்வொரு பலமும் இன்னொன்னை வலுப்படுத்துது – இதை "சக்கரம்" (flywheel) னு சொல்லலாம்.</p>
+
+ <div class="bm-wrap" style="max-width:720px;margin:0 auto">
+ <svg viewBox="0 0 640 400" style="width:100%;min-width:560px" xmlns="http://www.w3.org/2000/svg">
+  <defs><marker id="ar2" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#f28c28"/></marker></defs>
+  <circle cx="320" cy="200" r="135" fill="none" stroke="#f2d3b0" stroke-width="22"/>
+  <g fill="none" stroke="#f28c28" stroke-width="3" marker-end="url(#ar2)">
+   <path d="M380,78 A135,135 0 0 1 452,158"/><path d="M455,250 A135,135 0 0 1 390,318"/>
+   <path d="M260,322 A135,135 0 0 1 190,250"/><path d="M188,152 A135,135 0 0 1 255,80"/>
+  </g>
+  <circle cx="320" cy="200" r="70" fill="#fff2e4" stroke="#f28c28" stroke-width="2"/>
+  <text x="320" y="192" text-anchor="middle" font-weight="900" font-size="17" fill="#b35d00">EDLC → EDLP</text>
+  <text x="320" y="214" text-anchor="middle" font-size="12" fill="#556">the flywheel</text>
+  <g font-size="13" font-weight="700" text-anchor="middle">
+   <rect x="250" y="20" width="140" height="50" rx="10" fill="#e7f6ee" stroke="#1f9d55"/><text x="320" y="41" fill="#0b6e4f">Lowest prices</text><text x="320" y="58" font-size="11" font-weight="500" fill="#334">every day</text>
+   <rect x="470" y="175" width="150" height="50" rx="10" fill="#e8f0ff" stroke="#2563eb"/><text x="545" y="196" fill="#1e3a8a">More footfall</text><text x="545" y="213" font-size="11" font-weight="500" fill="#334">11.1 cr bills / qtr</text>
+   <rect x="250" y="330" width="140" height="50" rx="10" fill="#fff6e0" stroke="#d98a00"/><text x="320" y="351" fill="#8a5a00">Fast stock turns</text><text x="320" y="368" font-size="11" font-weight="500" fill="#334">~37 inventory days</text>
+   <rect x="20" y="175" width="150" height="50" rx="10" fill="#f1ebff" stroke="#7c3aed"/><text x="95" y="196" fill="#5b21b6">Better buying</text><text x="95" y="213" font-size="11" font-weight="500" fill="#334">pay suppliers ~8 days</text>
+  </g>
+ </svg></div>
+
+ <div class="grid g2 mt">
+  <div class="reason"><div class="ic" style="background:#0b6e4f">1</div><div>
+   <h4 class="en">Everyday Low Cost → Everyday Low Price</h4><h4 class="ta">தினமும் குறைஞ்ச செலவு → தினமும் குறைஞ்ச விலை</h4>
+   <p class="en">No sale gimmicks, no frills. Plain stores, low staff cost per sq ft, little advertising. Savings go into prices, not into marketing.</p>
+   <p class="ta">"சேல்" வித்தைகள் இல்ல, ஆடம்பரம் இல்ல. எளிமையான கடை, விளம்பரச் செலவு குறைவு. மிச்சம் எல்லாம் விலைக் குறைப்புக்கு போகுது.</p>
+   <div class="ev">Gross margin only ~14% yet consistently profitable</div></div></div>
+  <div class="reason"><div class="ic" style="background:#2563eb">2</div><div>
+   <h4 class="en">Owns its stores</h4><h4 class="ta">சொந்த கடைகள்</h4>
+   <p class="en">Most stores are owned or on very long leases, so there is no rent escalation every few years. That makes long-run cost per sq ft far lower than for rent-paying rivals. The trade-off: heavy upfront capex.</p>
+   <p class="ta">பெரும்பாலான கடைகள் சொந்தமா வாங்கினது அல்லது ரொம்ப நீண்ட குத்தகை. அதனால வாடகை உயர்வு பிரச்சனை இல்ல. ஆனா ஆரம்பத்துல பெரிய முதலீடு தேவை.</p>
+   <div class="ev">Fixed assets ₹21,588 cr (Sep 2026) vs ₹9,260 cr (Mar 2022)</div></div></div>
+  <div class="reason"><div class="ic" style="background:#7c3aed">3</div><div>
+   <h4 class="en">Pays suppliers fast</h4><h4 class="ta">சப்ளையருக்கு சீக்கிரம் பணம்</h4>
+   <p class="en">DMart pays FMCG suppliers in about 8 days, versus 30–60 days usual in trade. Suppliers give it sharper buying prices in return, and that is the root of its price edge.</p>
+   <p class="ta">சாதாரணமா கடைகள் 30–60 நாள் கழிச்சு பணம் கொடுக்கும்; DMart சுமார் 8 நாள்ல கொடுக்குது. அதுக்கு பதிலா சப்ளையர்கள் குறைஞ்ச விலைக்கு சரக்கு தர்றாங்க.</p>
+   <div class="ev">Days payable: 8 (FY22–FY26, every year)</div></div></div>
+  <div class="reason"><div class="ic" style="background:#d98a00">4</div><div>
+   <h4 class="en">Narrow range, fast turns</h4><h4 class="ta">குறைஞ்ச வகை, வேகமான சுழற்சி</h4>
+   <p class="en">It stocks what sells fastest in each category, not every brand. Fast-moving shelves mean less waste, less dead stock and more sales from each square foot.</p>
+   <p class="ta">எல்லா பிராண்டையும் வைக்காம, வேகமா விக்கிறதை மட்டும் வைக்கிறாங்க. அதனால வீணாகுறது குறைவு, ஒவ்வொரு சதுர அடியிலயும் விற்பனை அதிகம்.</p>
+   <div class="ev">Revenue/sq ft ≈ ₹35,900 a year (₹8,975 × 4)</div></div></div>
+  <div class="reason"><div class="ic" style="background:#1f9d55">5</div><div>
+   <h4 class="en">Cluster-based expansion</h4><h4 class="ta">கொத்தா விரிவாக்கம்</h4>
+   <p class="en">New stores open near existing warehouses and stores, so logistics are cheap and the brand is already known. It now pushes into tier-2/3 towns, where competition is weaker.</p>
+   <p class="ta">ஏற்கனவே இருக்கிற கிடங்கு, கடைகள் பக்கத்துலயே புதுக் கடைகள் திறக்குறாங்க. அதனால போக்குவரத்து செலவு கம்மி. இப்போ சின்ன நகரங்கள்ல வேகமா விரிவடையுறாங்க.</p>
+   <div class="ev">518 stores; 85 added in FY26 vs 50 in FY25</div></div></div>
+  <div class="reason"><div class="ic" style="background:#d64545">6</div><div>
+   <h4 class="en">Patient promoter and conservative balance sheet</h4><h4 class="ta">பொறுமையான உரிமையாளர், கவனமான நிதி நிலை</h4>
+   <p class="en">Founder R.K. Damani's family holds 74.48%. The company historically ran with little debt, paid no dividend and put all cash back into stores. It is built for decades, not quarters.</p>
+   <p class="ta">நிறுவனர் ஆர்.கே. தமானி குடும்பத்துக்கு 74.48% பங்கு இருக்கு. கடன் கம்மி, டிவிடெண்ட் கிடையாது, எல்லா பணமும் புதுக் கடைகளுக்கு. காலாண்டு கணக்கு இல்ல, பல பத்தாண்டு கணக்கு.</p>
+   <div class="ev">Debt-to-equity ≈ 0.16 (Sep 2026, incl. leases)</div></div></div>
+ </div>
+
+ <h3 class="mt2 en">How DMart compares with rivals (qualitative)</h3><h3 class="mt2 ta">போட்டியாளர்களோட ஒப்பீடு</h3>
+ <div class="tbl"><table>
+  <thead><tr><th>Player</th><th>Model</th><th>Edge over DMart</th><th>Where DMart wins</th></tr></thead>
+  <tbody>
+   <tr><td>DMart</td><td>Owned hypermarkets, EDLP, grocery-led</td><td>—</td><td>Lowest cost, price trust, store economics</td></tr>
+   <tr><td>Reliance Retail (Smart Bazaar)</td><td>Multi-format, leased, deep pockets</td><td>Scale, data, supply chain, capital</td><td>Single-format focus, cost per sq ft</td></tr>
+   <tr><td>Quick commerce (Blinkit, Zepto, Instamart)</td><td>10–15 min delivery from dark stores</td><td>Convenience in metros; eats top-up buying</td><td>Monthly bulk shopping, lower prices</td></tr>
+   <tr><td>Amazon / Flipkart grocery</td><td>Online, scheduled delivery</td><td>Range, doorstep delivery</td><td>Price on staples, instant availability</td></tr>
+   <tr><td>Vishal Mega Mart</td><td>Value fashion + grocery, smaller towns</td><td>Apparel-led, higher margin mix</td><td>Grocery throughput and price</td></tr>
+   <tr><td>Kirana stores</td><td>Neighbourhood, credit, home delivery</td><td>Proximity, credit, relationships</td><td>Price, range, hygiene</td></tr>
+  </tbody></table></div>
+ <div class="callout r mt en"><b>Where the moat is being tested:</b> in big metros, quick commerce is taking the small, frequent top-up purchases. Management said in Q1FY27 that older metro stores had flat growth. The low-price moat is intact, but the convenience gap is real.</div>
+ <div class="callout r mt ta"><b>கோட்டைக்கு சவால் எங்கே:</b> பெரிய நகரங்கள்ல அடிக்கடி வாங்குற சின்ன சின்ன பொருட்களை quick commerce எடுத்துக்கிட்டு போகுது. Q1FY27-ல பழைய மெட்ரோ கடைகள்ல வளர்ச்சியே இல்லனு நிர்வாகமே சொல்லியிருக்கு. குறைஞ்ச விலை பலம் அப்படியே இருக்கு; ஆனா வசதி இடைவெளி உண்மை.</div>
+</section>
+
+<!-- ================= PROFIT DECLINE ================= -->
+<section class="tab" id="t-decline">
+ <h2 class="sec en">Why profit and performance are slipping</h2><h2 class="sec ta">லாபமும் செயல்திறனும் ஏன் சறுக்குது</h2>
+ <p class="lead en">Strictly, profit did not fall from last year (+8.5%). What fell is profit from the June quarter (−13.6%), the margins, and the quality of growth. Profit has grown much slower than sales for three years.</p>
+ <p class="lead ta">சரியா சொல்லணும்னா போன வருஷத்தை விட லாபம் குறையல (+8.5%). குறைஞ்சது ஜூன் காலாண்டை விட லாபம் (−13.6%), மார்ஜின், வளர்ச்சியோட தரம். மூணு வருஷமா விற்பனையை விட லாபம் ரொம்ப மெதுவா தான் வளருது.</p>
+
+ <div class="grid g4">
+  <div class="card kpi"><div class="l">Sales CAGR, 3 yrs</div><div class="v up">17%</div><div class="d">FY23–FY26</div></div>
+  <div class="card kpi"><div class="l">Profit CAGR, 3 yrs</div><div class="v dn">8%</div><div class="d">FY23–FY26</div></div>
+  <div class="card kpi"><div class="l">PAT margin</div><div class="v dn">4.32%</div><div class="d">FY26, down from 5.55% in FY23</div></div>
+  <div class="card kpi"><div class="l">Profit lagged sales</div><div class="v dn">11 of 14</div><div class="d">quarters</div></div>
+ </div>
+
+ <h3 class="mt2 en">Profit bridge — Q2FY26 to Q2FY27 (₹ crore)</h3><h3 class="mt2 ta">லாப பாலம் – Q2FY26 → Q2FY27 (₹ கோடி)</h3>
+ <div class="chartbox"><div class="cv"><canvas id="cBridgeY"></canvas></div></div>
+ <p class="note">EBITDA added ₹179 cr, but depreciation (−₹65 cr), interest (−₹29 cr), lower other income (−₹6 cr) and higher tax (−₹21 cr) took ₹121 cr of it back. Only ₹58 cr reached net profit.</p>
+
+ <h3 class="mt2 en">Profit bridge — Q1FY27 to Q2FY27 (₹ crore)</h3><h3 class="mt2 ta">லாப பாலம் – Q1FY27 → Q2FY27 (₹ கோடி)</h3>
+ <div class="chartbox"><div class="cv"><canvas id="cBridgeQ"></canvas></div></div>
+
+ <h3 class="mt2 en">Eight reasons, with evidence</h3><h3 class="mt2 ta">எட்டு காரணங்கள் – ஆதாரத்தோட</h3>
+ <div class="grid g2">
+  <div class="reason"><div class="ic" style="background:#d64545">1</div><div>
+   <h4 class="en">Entry-level wage inflation</h4><h4 class="ta">அடிமட்ட ஊழியர் சம்பள உயர்வு</h4>
+   <p class="en">Management itself named this. Minimum-wage hikes raise store staff costs, and DMart chose not to pass them on through prices.</p>
+   <p class="ta">நிர்வாகமே இதை சொல்லியிருக்கு. குறைந்தபட்ச சம்பள உயர்வால கடை ஊழியர் செலவு கூடியிருக்கு; அதை விலையில ஏத்தாம DMart தானே தாங்கிக்கிச்சு.</p>
+   <div class="ev">Expenses +18.3% vs revenue +17.8%; EBITDA margin −28 bps</div></div></div>
+  <div class="reason"><div class="ic" style="background:#d64545">2</div><div>
+   <h4 class="en">Thinner gross margin: food-heavy mix</h4><h4 class="ta">உணவுப் பொருள் அதிகம், மார்ஜின் குறைவு</h4>
+   <p class="en">Food (low margin) is 56.9% of sales; general merchandise and apparel (high margin) only 23.6%. Discretionary buying is weak, so the mix pulls margin down.</p>
+   <p class="ta">விற்பனையில 56.9% உணவுப் பொருள் (குறைஞ்ச மார்ஜின்); அதிக மார்ஜின் தர்ற துணி, வீட்டுப் பொருள் 23.6% தான். விருப்ப செலவு பலவீனமா இருக்கிறதால மார்ஜின் கீழ இழுக்கப்படுது.</p>
+   <div class="ev">Gross margin 14.15%; food share 56.9%</div></div></div>
+  <div class="reason"><div class="ic" style="background:#d98a00">3</div><div>
+   <h4 class="en">Depreciation from the store rush</h4><h4 class="ta">புதுக் கடைகளால தேய்மானச் செலவு</h4>
+   <p class="en">85 stores in FY26 and 15 more in Q2. Each new store starts charging depreciation on day one but takes about two years to reach full sales.</p>
+   <p class="ta">FY26-ல 85 கடை, Q2-ல இன்னும் 15. புதுக் கடைக்கு முதல் நாள்ல இருந்தே தேய்மானம் கணக்குல வரும்; ஆனா முழு விற்பனைக்கு வர சுமார் ரெண்டு வருஷம் ஆகும்.</p>
+   <div class="ev">Depreciation ₹318 cr vs ₹253 cr (+25.7% YoY)</div></div></div>
+  <div class="reason"><div class="ic" style="background:#d98a00">4</div><div>
+   <h4 class="en">Interest cost: debt is rising</h4><h4 class="ta">கடன் கூடுது, வட்டியும் கூடுது</h4>
+   <p class="en">Store capex now exceeds operating cash, so DMart is borrowing (commercial paper and NCDs). Interest almost doubled.</p>
+   <p class="ta">கடை கட்டுற செலவு, தொழில்ல வர்ற பணத்தை விட அதிகமா இருக்கு. அதனால DMart கடன் வாங்குது (CP, NCD). வட்டி கிட்டத்தட்ட இரட்டிப்பாயிடுச்சு.</p>
+   <div class="ev">Interest ₹64 cr vs ₹35 cr (+82.9%); gross debt ₹2,630 cr vs ₹970 cr at FY26-end</div></div></div>
+  <div class="reason"><div class="ic" style="background:#d98a00">5</div><div>
+   <h4 class="en">Falling store productivity</h4><h4 class="ta">கடை உற்பத்தித்திறன் குறையுது</h4>
+   <p class="en">New stores in smaller towns sell less per square foot, and metro stores face quick commerce. Sales per sq ft slipped and profit per sq ft fell faster.</p>
+   <p class="ta">சின்ன நகரப் புதுக் கடைகள் ஒரு சதுர அடிக்கு கம்மியா விக்குது; மெட்ரோ கடைகளுக்கு quick commerce போட்டி. சதுர அடி விற்பனை சறுக்குது, சதுர அடி லாபம் இன்னும் வேகமா குறையுது.</p>
+   <div class="ev">Revenue/sq ft −0.9%; EBITDA/sq ft −4.6% YoY</div></div></div>
+  <div class="reason"><div class="ic" style="background:#7c3aed">6</div><div>
+   <h4 class="en">DMart Ready still loses money</h4><h4 class="ta">DMart Ready இன்னும் நஷ்டத்துல</h4>
+   <p class="en">The online arm was shrunk from 19 to 11 cities to stem losses, but it still lost ₹75 cr in Q2 and ₹167 cr in H1.</p>
+   <p class="ta">நஷ்டத்தை குறைக்க ஆன்லைன் பிரிவை 19 நகரத்துல இருந்து 11 நகரமா சுருக்கினாங்க. இருந்தும் Q2-ல ₹75 கோடி, H1-ல ₹167 கோடி நஷ்டம்.</p>
+   <div class="ev">Standalone PAT ₹804 cr vs consolidated ₹743 cr</div></div></div>
+  <div class="reason"><div class="ic" style="background:#2563eb">7</div><div>
+   <h4 class="en">Lower other income</h4><h4 class="ta">மற்ற வருமானம் குறைவு</h4>
+   <p class="en">Surplus cash that used to earn treasury income has been spent on stores, so other income keeps shrinking.</p>
+   <p class="ta">முன்னாடி வட்டி சம்பாதிச்ச உபரி பணம் இப்போ கடைகளுக்கு செலவாயிடுச்சு. அதனால மற்ற வருமானம் குறைஞ்சுகிட்டே வருது.</p>
+   <div class="ev">₹14 cr vs ₹20 cr YoY; ₹145 cr in FY24 → ₹72 cr in FY26</div></div></div>
+  <div class="reason"><div class="ic" style="background:#2563eb">8</div><div>
+   <h4 class="en">Seasonality explains the QoQ drop</h4><h4 class="ta">காலாண்டு சரிவுக்கு பருவகாலமும் காரணம்</h4>
+   <p class="en">The June quarter (summer, school reopening, marriages) is always stronger than September. The QoQ fall repeats every year, so it is not alarming on its own.</p>
+   <p class="ta">ஜூன் காலாண்டு (கோடை, பள்ளி திறப்பு, கல்யாணம்) எப்பவுமே செப்டம்பரை விட பலமா இருக்கும். இந்த சரிவு ஒவ்வொரு வருஷமும் நடக்குது; இது மட்டும் பயப்பட வேண்டிய விஷயம் இல்ல.</p>
+   <div class="ev">PAT Jun→Sep: 774→659 (FY25), 773→685 (FY26), 860→743 (FY27)</div></div></div>
+ </div>
+ <div class="callout b mt en"><b>Bottom line:</b> demand is fine (LFL 9.5%, bills +14%). The squeeze comes from cost: wages, the cost of building stores faster than they mature, and the online drag. Margins recover only if new stores mature, the apparel/general-merchandise mix improves and DMart Ready narrows its losses.</div>
+ <div class="callout b mt ta"><b>சுருக்கமா:</b> தேவை நல்லா இருக்கு (LFL 9.5%, பில்கள் +14%). அழுத்தம் செலவுல இருந்து வருது: சம்பளம், கடைகள் முதிர்ச்சி அடையறதுக்கு முன்னாடியே வேகமா கட்டுறது, ஆன்லைன் நஷ்டம். புதுக் கடைகள் முதிர்ந்து, துணி/பொதுப் பொருள் விற்பனை கூடி, DMart Ready நஷ்டம் குறைஞ்சா தான் மார்ஜின் திரும்ப வரும்.</div>
+
+ <h3 class="mt2 en">Margin trend — 9 quarters</h3><h3 class="mt2 ta">மார்ஜின் போக்கு – 9 காலாண்டுகள்</h3>
+ <div class="chartbox"><div class="cv"><canvas id="cMargin"></canvas></div></div>
+</section>
+
+<!-- ================= FINANCIALS ================= -->
+<section class="tab" id="t-fin">
+ <h2 class="sec en">Financials</h2><h2 class="sec ta">நிதி நிலை</h2>
+ <p class="lead en">Quarterly and annual consolidated figures in ₹ crore. EBITDA is shown in full on every chart.</p>
+ <p class="lead ta">காலாண்டு மற்றும் வருடாந்திர ஒருங்கிணைந்த எண்கள், ₹ கோடியில். ஒவ்வொரு வரைபடத்துலயும் EBITDA முழு எண்ணா காட்டப்பட்டிருக்கு.</p>
+ <h3 class="en">Quarterly revenue, EBITDA and net profit</h3><h3 class="ta">காலாண்டு வருவாய், EBITDA, நிகர லாபம்</h3>
+ <div class="chartbox"><div class="cv" style="height:360px"><canvas id="cQtr"></canvas></div></div>
+ <div class="tbl mt"><table><thead id="qHead"></thead><tbody id="qBody"></tbody></table></div>
+ 
+
+ <h3 class="mt2 en">Annual trend FY22–FY26</h3><h3 class="mt2 ta">வருடாந்திர போக்கு FY22–FY26</h3>
+ <div class="chartbox"><div class="cv"><canvas id="cAnn"></canvas></div></div>
+ <div class="tbl mt"><table>
+  <thead><tr><th>₹ crore</th><th class="n">FY22</th><th class="n">FY23</th><th class="n">FY24</th><th class="n">FY25</th><th class="n">FY26</th></tr></thead>
+  <tbody>
+   <tr><td>Revenue</td><td class="n">30,976</td><td class="n">42,840</td><td class="n">50,789</td><td class="n">59,358</td><td class="n">68,821</td></tr>
+   <tr><td>EBITDA</td><td class="n">2,502</td><td class="n">3,639</td><td class="n">4,106</td><td class="n">4,495</td><td class="n">5,189</td></tr>
+   <tr><td>EBITDA margin</td><td class="n">8.08%</td><td class="n">8.49%</td><td class="n">8.08%</td><td class="n">7.57%</td><td class="n">7.54%</td></tr>
+   <tr><td>Depreciation</td><td class="n">498</td><td class="n">639</td><td class="n">731</td><td class="n">870</td><td class="n">1,037</td></tr>
+   <tr><td>Interest</td><td class="n">54</td><td class="n">67</td><td class="n">58</td><td class="n">69</td><td class="n">142</td></tr>
+   <tr><td>Net profit</td><td class="n">1,492</td><td class="n">2,378</td><td class="n">2,536</td><td class="n">2,707</td><td class="n">2,970</td></tr>
+   <tr><td>PAT margin</td><td class="n">4.82%</td><td class="n">5.55%</td><td class="n">4.99%</td><td class="n">4.56%</td><td class="n">4.32%</td></tr>
+   <tr><td>EPS (₹)</td><td class="n">23.04</td><td class="n">36.69</td><td class="n">38.97</td><td class="n">41.61</td><td class="n">45.56</td></tr>
+   <tr><td>ROCE</td><td class="n">16%</td><td class="n">20%</td><td class="n">19%</td><td class="n">18%</td><td class="n">17%</td></tr>
+  </tbody></table></div>
+
+ <h3 class="mt2 en">Key ratios</h3><h3 class="mt2 ta">முக்கிய விகிதங்கள்</h3>
+ <div class="grid g4">
+  <div class="card kpi"><div class="l">ROE (FY26)</div><div class="v">12.9%</div><div class="d fl">3-yr avg 13.5%</div></div>
+  <div class="card kpi"><div class="l">ROCE (FY26)</div><div class="v">17%</div><div class="d dn">from 20% in FY23</div></div>
+  <div class="card kpi"><div class="l">Debt / equity</div><div class="v">0.16</div><div class="d dn">from 0.04 (FY25)</div></div>
+  <div class="card kpi"><div class="l">Net worth (Sep 26)</div><div class="v">₹26,099 cr</div><div class="d">BVPS ₹400</div></div>
+ </div>
+ <p class="note">Debt/equity uses borrowings of ₹4,264 cr at Sep 2026 (₹820 cr at Mar 2025), which include lease liabilities. The gross debt figure of ₹2,630 cr excludes leases.</p>
+</section>
+
+<!-- ================= CASH FLOW & WC ================= -->
+<section class="tab" id="t-cash">
+ <h2 class="sec en">Cash flow &amp; working capital</h2><h2 class="sec ta">பணப்புழக்கம் &amp; நடைமுறை மூலதனம்</h2>
+ <p class="lead en">DMart's operations generate cash, but building stores uses even more. Free cash flow has been negative in most years, and the gap widened sharply in H1FY27.</p>
+ <p class="lead ta">தொழில்ல இருந்து பணம் வருது; ஆனா கடை கட்ட அதை விட அதிகம் செலவாகுது. பெரும்பாலான வருஷங்கள்ல இலவச பணப்புழக்கம் (FCF) மைனஸ் தான்; H1FY27-ல அந்த இடைவெளி ரொம்ப அதிகமாயிடுச்சு.</p>
+ <div class="chartbox"><div class="cv"><canvas id="cCF"></canvas></div></div>
+ <div class="tbl mt"><table>
+  <thead><tr><th>₹ crore</th><th class="n">FY22</th><th class="n">FY23</th><th class="n">FY24</th><th class="n">FY25</th><th class="n">FY26</th></tr></thead>
+  <tbody>
+   <tr><td>Cash from operations (CFO)</td><td class="n">1,372</td><td class="n">2,630</td><td class="n">2,746</td><td class="n">2,463</td><td class="n">3,467</td></tr>
+   <tr><td>Cash from investing (CFI)</td><td class="n">−1,289</td><td class="n">−2,313</td><td class="n">−2,468</td><td class="n">−2,185</td><td class="n">−4,207</td></tr>
+   <tr><td>Cash from financing (CFF)</td><td class="n">−179</td><td class="n">−205</td><td class="n">−148</td><td class="n">−259</td><td class="n">288</td></tr>
+   <tr><td>Free cash flow</td><td class="n dn">−1,017</td><td class="n up">424</td><td class="n up">24</td><td class="n dn">−954</td><td class="n dn">−646</td></tr>
+   <tr><td>CFO / EBITDA</td><td class="n">54.8%</td><td class="n">72.3%</td><td class="n">66.9%</td><td class="n">54.8%</td><td class="n">66.8%</td></tr>
+   <tr><td>CFO / PAT</td><td class="n">0.92×</td><td class="n">1.11×</td><td class="n">1.08×</td><td class="n">0.91×</td><td class="n">1.17×</td></tr>
+  </tbody></table></div>
+ <div class="callout r mt en"><b>H1FY27:</b> free cash flow was −₹1,640 cr against −₹320 cr in H1FY26, and gross debt rose to ₹2,630 cr from ₹970 cr at FY26-end. Inventory also built up. The FY26 CFO of ₹3,467 cr could not cover ₹4,207 cr of investing outflow, which is why borrowing began.</div>
+ <div class="callout r mt ta"><b>H1FY27:</b> FCF −₹1,640 கோடி (போன வருஷம் இதே காலத்துல −₹320 கோடி). மொத்த கடன் ₹970 கோடில இருந்து ₹2,630 கோடியா கூடியிருக்கு. சரக்கு இருப்பும் கூடியிருக்கு.</div>
+
+ <h3 class="mt2 en">Working capital cycle</h3><h3 class="mt2 ta">நடைமுறை மூலதன சுழற்சி</h3>
+ <div class="chartbox"><div class="cv"><canvas id="cWC"></canvas></div></div>
+ <div class="tbl mt"><table>
+  <thead><tr><th>Days</th><th class="n">FY22</th><th class="n">FY23</th><th class="n">FY24</th><th class="n">FY25</th><th class="n">FY26</th></tr></thead>
+  <tbody>
+   <tr><td>Inventory days</td><td class="n">38</td><td class="n">33</td><td class="n">33</td><td class="n">36</td><td class="n">37</td></tr>
+   <tr><td>Receivable days</td><td class="n">1</td><td class="n">1</td><td class="n">1</td><td class="n">1</td><td class="n">1</td></tr>
+   <tr><td>Payable days</td><td class="n">8</td><td class="n">8</td><td class="n">8</td><td class="n">8</td><td class="n">8</td></tr>
+   <tr><td>Cash conversion cycle</td><td class="n">31</td><td class="n">26</td><td class="n">26</td><td class="n">30</td><td class="n">29</td></tr>
+  </tbody></table></div>
+ <div class="grid g2 mt">
+  <div class="card"><h3 class="en">How working capital links to CFO</h3><h3 class="ta">நடைமுறை மூலதனம் – CFO தொடர்பு</h3>
+   <ul class="dots en">
+    <li>Customers pay cash at the till (1 receivable day), but DMart holds stock for about 37 days and pays suppliers in 8. So it must fund roughly 29 days of sales itself.</li>
+    <li>When sales grow 18%, that 29-day pool grows too. At current sales (about ₹215 cr a day), each extra day of inventory locks up about ₹215 cr of cash.</li>
+    <li>That is why CFO/EBITDA swings between 55% and 72%. It drops in years when inventory days rise (FY22, FY25).</li>
+    <li>The fast-payment policy hurts cash flow on paper but buys lower purchase prices. It is a deliberate trade.</li>
+   </ul>
+   <ul class="dots ta">
+    <li>வாடிக்கையாளர் உடனே பணம் கட்டுறாங்க (1 நாள்); ஆனா DMart சரக்கை சுமார் 37 நாள் வச்சிருக்கு, சப்ளையருக்கு 8 நாள்ல பணம் கொடுக்குது. அதனால சுமார் 29 நாள் விற்பனைக்கான பணத்தை தானே போடணும்.</li>
+    <li>விற்பனை 18% கூடினா இந்த 29 நாள் தேவையும் கூடும். ஒரு நாள் கூடுதல் சரக்கு = சுமார் ₹215 கோடி பணம் முடங்கும்.</li>
+    <li>அதனால தான் CFO/EBITDA 55%–72% இடையே மாறுது.</li>
+    <li>சீக்கிரம் பணம் கொடுக்கிறது பணப்புழக்கத்தை பாதிக்கும்; ஆனா குறைஞ்ச கொள்முதல் விலை கிடைக்குது. இது வேணும்னே எடுத்த முடிவு.</li>
+   </ul></div>
+  <div class="card"><h3 class="en">Cash conversion verdict</h3><h3 class="ta">பண மாற்ற தீர்ப்பு</h3>
+   <p class="en">Earnings quality is good: CFO has exceeded PAT in 3 of the last 5 years, and receivables are nil. The problem is reinvestment, not leakage. Capex for about 15% annual store growth now exceeds internal cash, so the business has moved from self-funded to partly debt-funded growth.</p>
+   <p class="ta">லாபத்தோட தரம் நல்லா இருக்கு: கடந்த 5 வருஷத்துல 3 வருஷம் CFO, PAT-ஐ விட அதிகம்; வரவேண்டிய கடன் கிட்டத்தட்ட இல்ல. பிரச்சனை பணம் கசியறது இல்ல, மறுமுதலீடு. வருஷத்துக்கு சுமார் 15% கடை வளர்ச்சிக்கான செலவு உள் பணத்தை விட அதிகம். அதனால சுய நிதியில இருந்து பகுதி கடன் நிதி வளர்ச்சிக்கு மாறியிருக்கு.</p>
+   <div class="grid g2 mt"><div class="kpi"><div class="l">Inventory days</div><div class="v">37</div></div><div class="kpi"><div class="l">CCC</div><div class="v">29 days</div></div></div></div>
+ </div>
+</section>
+
+<!-- ================= VALUATIONS ================= -->
+<section class="tab" id="t-val">
+ <h2 class="sec en">Valuations</h2><h2 class="sec ta">மதிப்பீடு</h2>
+ <p class="lead en">Even after a 19% fall over the past year, DMart trades at about 70 times trailing earnings. That multiple assumes many years of strong growth, so any margin slip hits the share price hard.</p>
+ <p class="lead ta">ஒரு வருஷத்துல 19% இறங்கின பிறகும் DMart பங்கு கடந்த 12 மாத லாபத்தோட சுமார் 70 மடங்கு விலையில இருக்கு. இவ்வளவு உயர்ந்த மதிப்பு பல வருஷ வலுவான வளர்ச்சியை எதிர்பார்க்குது; அதனால மார்ஜின் கொஞ்சம் சறுக்கினாலும் விலை நிறைய அடிபடும்.</p>
+ <div class="grid g4">
+  <div class="card kpi"><div class="l">Price (12 Oct 2026)</div><div class="v">₹3,365</div><div class="d dn">52-wk high ₹4,644</div></div>
+  <div class="card kpi"><div class="l">Market cap</div><div class="v">₹2,19,398 cr</div><div class="d">65.2 crore shares</div></div>
+  <div class="card kpi"><div class="l">P/E (TTM)</div><div class="v">70.4×</div><div class="d">TTM EPS ₹47.81</div></div>
+  <div class="card kpi"><div class="l">P/BV</div><div class="v">8.4×</div><div class="d">BVPS ₹400</div></div>
+  <div class="card kpi"><div class="l">EV / EBITDA (TTM)</div><div class="v">≈ 40.2×</div><div class="d">cash not netted†</div></div>
+  <div class="card kpi"><div class="l">Market cap / sales</div><div class="v">2.96×</div><div class="d">TTM sales ₹74,223 cr</div></div>
+  <div class="card kpi"><div class="l">Dividend yield</div><div class="v">0%</div><div class="d">all cash reinvested</div></div>
+  <div class="card kpi"><div class="l">Earnings yield</div><div class="v">1.4%</div><div class="d">1 ÷ P/E</div></div>
+ </div>
+ <p class="note">† EV = market cap + ₹4,264 cr borrowings (incl. leases); cash balance at Sep 2026 was not available, so EV/EBITDA is slightly overstated.</p>
+ <div class="callout mt en"><b>What the price implies:</b> at 70× earnings and about 10% recent profit growth, the stock needs profit growth to return to the high teens for several years. Analysts' fair values (₹3,250–₹5,723) are spread unusually wide, which shows how much depends on whether margins recover.</div>
+ <div class="callout mt ta"><b>விலை என்ன சொல்லுது:</b> 70 மடங்கு மதிப்பீட்டுக்கும் சமீபத்திய சுமார் 10% லாப வளர்ச்சிக்கும் பொருந்தணும்னா, பல வருஷம் லாபம் 15–20% வளரணும். ஆய்வாளர்களின் இலக்கு விலைகள் ₹3,250 முதல் ₹5,723 வரை ரொம்ப பரந்து இருக்கு; மார்ஜின் திரும்புமா இல்லையா என்பதை பொறுத்து தான் எல்லாமே.</div>
+</section>
+
+<!-- ================= MARKET ACTIVITY ================= -->
+<section class="tab" id="t-mkt">
+ <h2 class="sec en">Market activity — why the share moved</h2><h2 class="sec ta">சந்தை நகர்வு – பங்கு விலை ஏன் மாறுச்சு</h2>
+ <div class="tbl"><table>
+  <thead><tr><th>Date</th><th>Move</th><th>Reason</th></tr></thead>
+  <tbody>
+   <tr><td>11 Jul 2026</td><td>Closed ₹4,083</td><td>Q1FY27 results: profit +11.3%, but LFL slowed to 5.5% and older metro stores were flat.</td></tr>
+   <tr><td>9 Oct 2026</td><td class="dn">−1.9% to ₹3,517</td><td>Caution ahead of results after a weak margin outlook.</td></tr>
+   <tr><td>10 Oct 2026</td><td>Results (Saturday)</td><td>Revenue +17.8%, PAT +8.5%; EBITDA and PAT missed estimates (MOSL: −3% and −7%).</td></tr>
+   <tr><td>12 Oct 2026</td><td class="dn">≈ −4.3% to ₹3,365</td><td>Fresh 52-week low. Margin contraction, negative free cash flow, and target cuts by Jefferies, Citi and MOSL.</td></tr>
+  </tbody></table></div>
+ <div class="grid g3 mt">
+  <div class="card kpi"><div class="l">Since Q1 results</div><div class="v dn">−17.6%</div><div class="d">₹4,083 → ₹3,365</div></div>
+  <div class="card kpi"><div class="l">1 year</div><div class="v dn">≈ −19%</div><div class="d">past 12 months</div></div>
+  <div class="card kpi"><div class="l">From 52-wk high</div><div class="v dn">−27.5%</div><div class="d">₹4,644 → ₹3,365</div></div>
+ </div>
+ <h3 class="mt2 en">Shareholding (Jun 2026)</h3><h3 class="mt2 ta">பங்குதாரர் அமைப்பு (ஜூன் 2026)</h3>
+ <div class="chartbox"><div class="cv" style="min-width:520px;height:300px"><canvas id="cSH"></canvas></div></div>
+ <p class="note">Promoters 74.48% · FIIs 9.22% · DIIs 8.67% · Government 0.07% · Public 7.55%. FIIs rose from 8.25% to 9.22% over the past year. Retail shareholders fell from 6.19 lakh to 5.42 lakh.</p>
+</section>
+
+<!-- ================= TRIGGERS & CYCLE ================= -->
+<section class="tab" id="t-trig">
+ <h2 class="sec en">Triggers &amp; cycle</h2><h2 class="sec ta">தூண்டுதல்கள் &amp; சுழற்சி</h2>
+ <p class="lead en">Where DMart sits in the consumption cycle, and which events could re-rate or de-rate the stock. This is educational analysis, not advice.</p>
+ <p class="lead ta">நுகர்வு சுழற்சியில DMart எங்க இருக்கு, எந்த நிகழ்வுகள் பங்கு மதிப்பை ஏத்தவோ இறக்கவோ செய்யலாம். இது கல்வி நோக்கத்துக்கான பகுப்பாய்வு மட்டும்; முதலீட்டு ஆலோசனை இல்ல.</p>
+ <div class="grid g2">
+  <div class="card">
+   <svg class="cycle-svg" viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
+    <g stroke="#fff" stroke-width="3">
+     <path d="M200,200 L200,40 A160,160 0 0 1 352.2,150.6 Z" fill="#fde7c4"/>
+     <path d="M200,200 L352.2,150.6 A160,160 0 0 1 294.1,329.4 Z" fill="#c8ecd7"/>
+     <path d="M200,200 L294.1,329.4 A160,160 0 0 1 105.9,329.4 Z" fill="#a8dcc0"/>
+     <path d="M200,200 L105.9,329.4 A160,160 0 0 1 47.8,150.6 Z" fill="#fcd9b8"/>
+     <path d="M200,200 L47.8,150.6 A160,160 0 0 1 200,40 Z" fill="#f8c4c4"/>
+    </g>
+    <g font-size="12.5" font-weight="700" text-anchor="middle" fill="#334">
+     <text x="268" y="105">P1 Trough</text><text x="318" y="250">P2 Recovery</text><text x="200" y="335">P3 Expansion</text><text x="88" y="250">P4 Peak</text><text x="135" y="105">P5 Downturn</text>
+    </g>
+    <line x1="200" y1="200" x2="200" y2="318" stroke="#0b6e4f" stroke-width="5" stroke-linecap="round" id="cyPtr"/>
+    <circle cx="200" cy="200" r="34" fill="#fff" stroke="#0b6e4f" stroke-width="3"/>
+    <text x="200" y="196" text-anchor="middle" font-weight="900" font-size="18" fill="#0b6e4f">CY 57</text>
+    <text x="200" y="213" text-anchor="middle" font-size="10" fill="#556">sector P3</text>
+    <circle cx="80" cy="128" r="13" fill="#d64545"/><text x="80" y="132" text-anchor="middle" font-size="10" font-weight="800" fill="#fff">S4</text>
+    <text x="80" y="160" text-anchor="middle" font-size="10" font-weight="700" fill="#d64545">stock: Stage 4</text>
+   </svg>
+   <p class="note en">Green pointer: sector phase (retail consumption, P3 Expansion). Red marker: stock price stage (Weinstein Stage 4 decline: price below a falling 30-week average after a fresh 52-week low).</p>
+   <p class="note ta">பச்சை முள்: துறை சுழற்சி நிலை (P3 விரிவாக்கம்). சிவப்பு குறி: பங்கு விலை நிலை (Stage 4 – இறக்கம்).</p>
+  </div>
+  <div class="card">
+   <h3>Cycle lens (CY) = 57 / 100</h3>
+   <ul class="dots">
+    <li><b>Sector cycle type:</b> consumption. <b>Phase:</b> P3 Expansion (score 70). Evidence: LFL rose from 5.5% to 9.5%, bills grew 14.4%, and the GST rate cuts were passed on. Indicators disagree with the Nifty's 13.9% YTD fall, so we chose P3 over the higher-scoring P2.</li>
+    <li><b>Stock cycle (43.75):</b> business lifecycle scaling 80 · earnings cycle with margins falling 25 · valuation in its own band 55 · price Stage 4 at 15.</li>
+   </ul>
+   <h3 class="mt">Trigger lens (TG) = 37 / 100</h3>
+   <p class="note">TG = 50 + 8 × (1.47 + 0.56 + 0.56) − 8 × (1.40 + 1.47 + 1.40) = 36.6</p>
+   <div class="callout r"><b>Gate:</b> Stage 4 price action caps CB Conviction at 55 regardless of other lenses.</div>
+  </div>
+ </div>
+ <h3 class="mt2 en">Trigger table</h3><h3 class="mt2 ta">தூண்டுதல் அட்டவணை</h3>
+ <div class="tbl"><table>
+  <thead><tr><th>Trigger</th><th>+/−</th><th class="n">Impact</th><th class="n">Certainty</th><th class="n">Timing</th><th class="n">Priced-in</th><th class="n">Points</th><th>What to watch</th></tr></thead>
+  <tbody>
+   <tr><td>Store additions at ~15% of base a year</td><td class="up">+</td><td class="n">3</td><td class="n">0.7</td><td class="n">0.7</td><td class="n">1.0</td><td class="n">1.47</td><td>Store count each quarter</td></tr>
+   <tr><td>Sustained LFL above 8%</td><td class="up">+</td><td class="n">2</td><td class="n">0.4</td><td class="n">0.7</td><td class="n">1.0</td><td class="n">0.56</td><td>LFL in Q3FY27</td></tr>
+   <tr><td>DMart Ready losses narrow after 11-city focus</td><td class="up">+</td><td class="n">2</td><td class="n">0.4</td><td class="n">0.7</td><td class="n">1.0</td><td class="n">0.56</td><td>Subsidiary loss per quarter</td></tr>
+   <tr><td>Wage inflation and opex squeeze</td><td class="dn">−</td><td class="n">2</td><td class="n">1.0</td><td class="n">1.0</td><td class="n">0.7</td><td class="n">1.40</td><td>EBITDA margin vs 7.1%</td></tr>
+   <tr><td>Quick-commerce pressure in metros</td><td class="dn">−</td><td class="n">3</td><td class="n">0.7</td><td class="n">1.0</td><td class="n">0.7</td><td class="n">1.47</td><td>Metro LFL, revenue/sq ft</td></tr>
+   <tr><td>Negative FCF and rising debt</td><td class="dn">−</td><td class="n">2</td><td class="n">1.0</td><td class="n">1.0</td><td class="n">0.7</td><td class="n">1.40</td><td>H2 FCF, interest cost</td></tr>
+  </tbody></table></div>
+ <h3 class="mt2 en">Trigger timeline</h3><h3 class="mt2 ta">நிகழ்வு காலவரிசை</h3>
+ <div class="tl">
+  <div class="ev"><div class="dt">Oct–Nov 2026</div><div class="tx">Festive season: GM&amp;A (apparel, home) demand test</div></div>
+  <div class="ev"><div class="dt">Early Jan 2027 (expected)</div><div class="tx">Q3FY27 revenue update and store count</div></div>
+  <div class="ev"><div class="dt">Jan 2027 (expected)</div><div class="tx">Q3FY27 results: margin and FCF check</div></div>
+  <div class="ev"><div class="dt">Apr 2027 (expected)</div><div class="tx">FY27 store additions vs 85 in FY26</div></div>
+  <div class="ev"><div class="dt">FY27–FY28</div><div class="tx">New-store maturity: revenue/sq ft recovery</div></div>
+ </div>
+ <div class="card mt"><h3>What would change this view</h3>
+  <ul class="dots"><li>EBITDA margin back above 8% with LFL holding near 9–10%.</li><li>DMart Ready loss falling below ₹50 cr a quarter.</li><li>Free cash flow turning positive as FY26 stores mature.</li></ul></div>
+</section>
+
+<!-- ================= SWOT ================= -->
+<section class="tab" id="t-swot">
+ <h2 class="sec en">SWOT</h2><h2 class="sec ta">SWOT பகுப்பாய்வு</h2>
+ <div class="swot">
+  <div class="card" style="border-top:4px solid var(--green)"><h3>💪 Strengths</h3><ul class="dots">
+   <li>Lowest-cost operator; trusted price image</li><li>Owned stores: no rent escalation</li><li>8-day supplier payment buys better terms</li><li>Strong footfall: 11.1 cr bills a quarter, +14%</li><li>74.48% promoter stake, long-term mindset</li></ul>
+   <ul class="dots ta"><li>குறைஞ்ச செலவுல நடத்துறவங்க; விலை மேல நம்பிக்கை</li><li>சொந்த கடைகள்</li><li>வாடிக்கையாளர் வருகை அதிகம்</li></ul></div>
+  <div class="card" style="border-top:4px solid var(--red)"><h3>⚠️ Weaknesses</h3><ul class="dots">
+   <li>Thin 14% gross margin with no room to absorb shocks</li><li>Food-heavy mix; apparel/general merchandise lagging</li><li>Online arm loss-making (₹167 cr in H1)</li><li>Capex-heavy model: negative FCF, rising debt</li><li>Falling revenue and EBITDA per sq ft</li></ul>
+   <ul class="dots ta"><li>மெல்லிய மார்ஜின்</li><li>ஆன்லைன் நஷ்டம்</li><li>அதிக முதலீடு, மைனஸ் FCF</li></ul></div>
+  <div class="card" style="border-top:4px solid var(--blue)"><h3>🚀 Opportunities</h3><ul class="dots">
+   <li>Tier-2/3 towns barely served by organised retail</li><li>Long-term store potential cited at up to 1,900</li><li>Revival of high-margin apparel and home goods</li><li>Professional management under Anshul Asawa</li><li>Shift from kiranas to organised retail</li></ul>
+   <ul class="dots ta"><li>சின்ன நகரங்கள்ல பெரிய வாய்ப்பு</li><li>1,900 கடை வரை சாத்தியம்</li><li>துணி/வீட்டுப் பொருள் மீட்சி</li></ul></div>
+  <div class="card" style="border-top:4px solid var(--amber)"><h3>🌪️ Threats</h3><ul class="dots">
+   <li>Quick commerce eating metro top-up spend</li><li>Reliance Retail's deep-pocket pricing</li><li>Minimum-wage hikes across states</li><li>FMCG price competition squeezing margin</li><li>Rich valuation, so disappointments are punished</li></ul>
+   <ul class="dots ta"><li>Quick commerce போட்டி</li><li>Reliance பெரிய போட்டி</li><li>சம்பள உயர்வு</li></ul></div>
+ </div>
+</section>
+
+<!-- ================= ANALYSTS ================= -->
+<section class="tab" id="t-ana">
+ <h2 class="sec en">Analysts' rating (post Q2FY27)</h2><h2 class="sec ta">ஆய்வாளர்களின் மதிப்பீடு (Q2FY27 முடிவுக்கு பிறகு)</h2>
+ <p class="lead en">Third-party broker views only, attributed to each broker. CB Research does not give buy, sell or hold recommendations. Upside is measured from the ₹3,365 close on 12 Oct 2026.</p>
+ <p class="lead ta">இவை வெளி தரகு நிறுவனங்களின் கருத்துகள் மட்டும். CB Research வாங்க/விற்க பரிந்துரை தருவதில்லை.</p>
+ <div class="chartbox"><div class="cv"><canvas id="cTgt"></canvas></div></div>
+ <div class="tbl mt"><table>
+  <thead><tr><th>Broker</th><th>Rating</th><th class="n">Target ₹</th><th class="n">Previous ₹</th><th class="n">vs ₹3,365</th><th>Key view</th></tr></thead>
+  <tbody>
+   <tr><td>CLSA</td><td class="up">Outperform (high conviction)</td><td class="n">5,723</td><td class="n">n/a</td><td class="n up">+70.1%</td><td>LFL and gross margin in line; margin hit from minimum-wage hikes</td></tr>
+   <tr><td>Jefferies</td><td class="fl">Hold</td><td class="n">4,000</td><td class="n">4,500</td><td class="n up">+18.9%</td><td>Food mix, wage inflation, inventory build; EBITDA/store at multi-quarter low</td></tr>
+   <tr><td>Motilal Oswal</td><td class="fl">Neutral</td><td class="n">3,925</td><td class="n">4,000</td><td class="n up">+16.6%</td><td>EBITDA/PAT missed by 3%/7%; growth improving</td></tr>
+   <tr><td>ICICI Securities</td><td class="fl">Hold</td><td class="n">3,700</td><td class="n">n/a</td><td class="n up">+10.0%</td><td>Weaker margins and free cash flow</td></tr>
+   <tr><td>Citi</td><td class="dn">Sell</td><td class="n">3,250</td><td class="n">n/a</td><td class="n dn">−3.4%</td><td>Profit lagged revenue in 11 of 14 quarters; FCF −₹1,640 cr in H1</td></tr>
+   <tr><td>Morgan Stanley</td><td>n/a</td><td class="n">n/a</td><td class="n">n/a</td><td class="n">—</td><td>Sees FY27 EBITDA margin about 7.5%; cut FY27–29 EPS by 4%</td></tr>
+  </tbody></table></div>
+ <p class="note">Average of the five targets: ₹4,120. Spread from ₹3,250 to ₹5,723. Count: 1 positive, 3 neutral, 1 negative.</p>
+</section>
+
+<!-- ================= MANAGEMENT ================= -->
+<section class="tab" id="t-mgmt">
+ <h2 class="sec en">Management &amp; Board</h2><h2 class="sec ta">நிர்வாகம் &amp; இயக்குநர் குழு</h2>
+ <div class="tbl"><table>
+  <thead><tr><th>Name</th><th>Role</th><th>Background / note</th></tr></thead>
+  <tbody>
+   <tr><td>Radhakishan Damani</td><td>Founder &amp; promoter</td><td>Started DMart in 2002 (company set up in 2000). His family holds 74.48%.</td></tr>
+   <tr><td>Chandrashekhar Bhaskar Bhave</td><td>Chairman, independent director</td><td>Former SEBI chairman; chairs the board.</td></tr>
+   <tr><td>Anshul Asawa</td><td>MD &amp; CEO (from 1 Feb 2026)</td><td>About 30 years at Unilever; joined as CEO-designate in Mar 2025. IIT Roorkee, IIM Lucknow.</td></tr>
+   <tr><td>Ramakant Baheti</td><td>Whole-time director &amp; Group CFO</td><td>Long-serving finance head.</td></tr>
+   <tr><td>Niladri Deb</td><td>CFO, Avenue Supermarts</td><td>Finance lead for the store business.</td></tr>
+   <tr><td>Lalit Ahuja</td><td>Chief Operating Officer (from 13 Jul 2026)</td><td>New senior management appointment.</td></tr>
+   <tr><td>Vikram Dasu</td><td>WTD &amp; CEO, Avenue E-Commerce</td><td>Runs DMart Ready; focus on efficiency in 11 cities.</td></tr>
+   <tr><td>Ignatius Navil (Neville) Noronha</td><td>Former MD &amp; CEO (2004 – 31 Jan 2026)</td><td>Built DMart from 5 to 380+ stores; did not seek renewal.</td></tr>
+  </tbody></table></div>
+ <div class="callout b mt en"><b>Governance read:</b> succession was planned a year ahead and the handover was smooth. The new CEO's FMCG background fits the push to revive general merchandise and apparel and to modernise technology. Watch whether the new team keeps DMart's famous cost discipline while speeding up expansion.</div>
+ <div class="callout b mt ta"><b>நிர்வாகப் பார்வை:</b> தலைமை மாற்றம் ஒரு வருஷம் முன்னாடியே திட்டமிட்டு சுமூகமா நடந்துச்சு. புது CEO-வோட FMCG அனுபவம் துணி/பொதுப் பொருள் மீட்சிக்கு உதவலாம். வேகமா விரிவடையும்போதும் DMart-ன் செலவுக் கட்டுப்பாடு தொடருமான்னு பார்க்கணும்.</div>
+</section>
+
+<!-- ================= CB SCORE TEMPLE ================= -->
+<section class="tab" id="t-score">
+ <h2 class="sec en">CB Score — six pillars (CBF26)</h2><h2 class="sec ta">CB மதிப்பெண் – ஆறு தூண்கள்</h2>
+ <p class="lead en">Tap a column to jump to its explanation. Colours: green 8–10, amber 6–8, red below 6.</p>
+ <p class="lead ta">ஒரு தூணை தொட்டா அதோட விளக்கத்துக்கு போகும். பச்சை 8–10, மஞ்சள் 6–8, சிவப்பு 6-க்கு கீழ்.</p>
+ <div class="temple-wrap"><svg class="temple" viewBox="0 0 760 505" id="temple" xmlns="http://www.w3.org/2000/svg"></svg></div>
+ <div class="grid g2 mt" id="pillarCards"></div>
+</section>
+
+<!-- ================= SOCRATES ================= -->
+<section class="tab" id="t-soc">
+ <h2 class="sec en">Cauvery Socrates — test your understanding</h2><h2 class="sec ta">காவேரி சாக்ரடீஸ் – உங்க புரிதலை சோதிங்க</h2>
+ <p class="lead en">Answer, then read why. The free-text questions have no single right answer; compare yours with the model answer.</p>
+ <p class="lead ta">பதில் சொல்லுங்க, அப்புறம் விளக்கம் படிங்க.</p>
+ <div id="socBox"></div>
+ <div class="card"><b>Score: <span id="socScore">0</span> / <span id="socTotal">0</span></b></div>
+</section>
+
+</div><!-- /wrap -->
+
+<!-- CB badge + disclaimer -->
+<div id="cbBadge" title="CB Research" onclick="toggleDisc()">CB</div>
+<div id="cbPop"><b>Prepared by CB Research (Cauvery Business Research).</b><br>For education only. This is not investment advice, and CB Research is not a SEBI-registered research analyst. Figures come from company filings and cited third-party reports as of 13 Oct 2026 IST. Broker views belong to the brokers named. Verify the facts and consult a registered adviser before investing.</div>
+
+<!-- CB Assist -->
+<button id="asBtn" onclick="toggleAssist()">🎙️ CB Assist</button>
+<div id="asPanel">
+ <div id="asHead"><span>CB Assist · DMart Q2FY27</span><button onclick="toggleAssist()">×</button></div>
+ <div id="asLog"></div>
+ <div id="asChips"></div>
+ <form id="asForm" onsubmit="event.preventDefault();ask(document.getElementById('asIn').value)">
+  <button type="button" id="asMic" onclick="mic()" title="Ask by voice">🎤</button>
+  <input id="asIn" placeholder="Ask: why did profit fall?" autocomplete="off">
+  <button id="asSend" type="submit">Ask</button>
+ </form>
+</div>
+
+<script>
+/* ===== Machine-readable data object ===== */
+var CO = {
+ name:"Avenue Supermarts Ltd", ticker:"DMART", bse:"540376", quarter:"Q2FY27", resultDate:"2026-10-10",
+ price:3365, priceDate:"2026-10-12", shares_cr:65.2, mcap_cr:219398, pe_ttm:70.4, pbv:8.4, ev_ebitda_ttm:40.2,
+ q:{labels:["Q2FY25","Q3FY25","Q4FY25","Q1FY26","Q2FY26","Q3FY26","Q4FY26","Q1FY27","Q2FY27"],
+    rev:[14444,15973,14872,16360,16676,18101,17684,18795,19644],
+    ebitda:[1094,1217,955,1299,1214,1463,1211,1499,1393],
+    oi:[34,24,25,19,20,17,18,26,14], int:[16,18,19,29,35,37,41,54,64], dep:[208,228,241,232,253,268,284,288,318],
+    pbt:[903,995,720,1057,945,1175,904,1183,1025], pat:[659,724,551,773,685,856,656,860,743],
+    eps:[10.14,11.12,8.47,11.88,10.53,13.15,10.07,13.19,11.40]},
+ fy:{labels:["FY22","FY23","FY24","FY25","FY26"],rev:[30976,42840,50789,59358,68821],ebitda:[2502,3639,4106,4495,5189],pat:[1492,2378,2536,2707,2970],
+     cfo:[1372,2630,2746,2463,3467],cfi:[-1289,-2313,-2468,-2185,-4207],cff:[-179,-205,-148,-259,288],fcf:[-1017,424,24,-954,-646],
+     invDays:[38,33,33,36,37],recDays:[1,1,1,1,1],payDays:[8,8,8,8,8],ccc:[31,26,26,30,29]},
+ ops:{stores:518,storesPY:432,areaMnSqft:21.4,revPerSqft:8975,ebitdaPerSqft:656,billsCr:11.1,billsCrPY:9.7,lfl:9.5,lflPY:6.8,lflQ1:5.5,grossMargin:14.15,
+      mixH1:{foods:56.9,nonFoodFMCG:19.5,gma:23.6},readyCities:11,readyLossQ2:75.35,readyLossH1:166.62},
+ standalone:{rev:19206.18,ebitda:1403,pat:803.60,ebitdaMargin:7.3},
+ share:{promoter:74.48,fii:9.22,dii:8.67,govt:0.07,public:7.55,asOf:"Jun 2026"},
+ analysts:[{b:"CLSA",r:"Outperform",t:5723},{b:"Jefferies",r:"Hold",t:4000},{b:"Motilal Oswal",r:"Neutral",t:3925},{b:"ICICI Securities",r:"Hold",t:3700},{b:"Citi",r:"Sell",t:3250}],
+ cbScore:{g:8.0,m:5.0,d:7.0,v:4.0,t:4.5,r:6.5,composite:5.8},
+ cycle:{sectorPhase:"P3",stockStage:"Stage 4",cy:57},
+ triggers:[
+  {name:"Store additions ~15% of base",sign:"+",I:3,C:0.7,W:0.7,P:1.0,pts:1.47,source:"Q1FY27 call",date:"2026-07",status:"Executing"},
+  {name:"LFL sustained >8%",sign:"+",I:2,C:0.4,W:0.7,P:1.0,pts:0.56,source:"Q2FY27 release",date:"2026-10-10",status:"Watch"},
+  {name:"DMart Ready losses narrow",sign:"+",I:2,C:0.4,W:0.7,P:1.0,pts:0.56,source:"Q2FY27 release",date:"2026-10-10",status:"Announced"},
+  {name:"Wage inflation / opex",sign:"-",I:2,C:1.0,W:1.0,P:0.7,pts:1.40,source:"Q2FY27 release",date:"2026-10-10",status:"Executing"},
+  {name:"Quick commerce in metros",sign:"-",I:3,C:0.7,W:1.0,P:0.7,pts:1.47,source:"Q1FY27 release; Citi",date:"2026-10-12",status:"Executing"},
+  {name:"Negative FCF, rising debt",sign:"-",I:2,C:1.0,W:1.0,P:0.7,pts:1.40,source:"Citi",date:"2026-10-12",status:"Executing"}],
+ tg:37
+};
+var inr=function(n,d){return Number(n).toLocaleString('en-IN',{minimumFractionDigits:d||0,maximumFractionDigits:d||0});};
+
+/* ===== Tabs ===== */
+var TABS=[["overview","Overview","கண்ணோட்டம்"],["model","Business Model","வியாபார மாதிரி"],["lead","Why DMart Leads","ஏன் முன்னணி"],["decline","Profit Pressure","லாப அழுத்தம்"],["fin","Financials","நிதி"],["cash","Cash Flow & WC","பணப்புழக்கம்"],["val","Valuations","மதிப்பீடு"],["mkt","Market Activity","சந்தை நகர்வு"],["trig","Triggers & Cycle","தூண்டுதல்"],["swot","SWOT","SWOT"],["ana","Analysts' Rating","ஆய்வாளர்கள்"],["mgmt","Management & Board","நிர்வாகம்"],["score","CB Score","CB மதிப்பெண்"],["soc","Cauvery Socrates","சாக்ரடீஸ்"]];
+var nav=document.getElementById('tabNav');
+TABS.forEach(function(t,i){var b=document.createElement('button');b.id='nb-'+t[0];b.innerHTML='<span class="en">'+t[1]+'</span><span class="ta">'+t[2]+'</span>';if(i===0)b.className='on';b.onclick=function(){go(t[0]);};nav.appendChild(b);});
+var drawn={};
+function go(id){
+ document.querySelectorAll('.tab').forEach(function(s){s.classList.remove('on');});
+ document.querySelectorAll('#tabNav button').forEach(function(b){b.classList.remove('on');});
+ document.getElementById('t-'+id).classList.add('on');document.getElementById('nb-'+id).classList.add('on');
+ window.scrollTo({top:0,behavior:'smooth'});
+ if(!drawn[id]){drawn[id]=1;setTimeout(function(){draw(id);},60);}
+ if(id==='score')setTimeout(animTemple,150);
+}
+function toggleLang(){document.body.classList.toggle('tamil');}
+
+/* ===== IST stamp ===== */
+(function(){try{var s=new Date().toLocaleString('en-IN',{timeZone:'Asia/Kolkata',day:'2-digit',month:'short',year:'numeric',hour:'2-digit',minute:'2-digit'});document.getElementById('stamp').textContent='Viewed: '+s+' IST · Quarter: Q2FY27 · Data as of 13 Oct 2026';}catch(e){}})();
+
+/* ===== Results table ===== */
+(function(){
+ var rows=[["Revenue from operations",19644.01,16676.30,18794.53],["Total expenses",18632.70,15751.08,null],["EBITDA",1393,1214,1499],["Other income",14,20,26],["Interest",64,35,54],["Depreciation",318,253,288],["Profit before tax",1025,945,1183.14],["Net profit (PAT)",742.98,684.85,860.44],["EPS (₹)",11.40,10.53,13.19]];
+ var h='';rows.forEach(function(r,i){
+  var y=(r[1]&&r[2])?((r[1]/r[2]-1)*100):null,q=(r[1]&&r[3])?((r[1]/r[3]-1)*100):null;
+  var c=function(v,inv){if(v===null)return '<td class="n">n/a</td>';var good=inv?v<0:v>=0;return '<td class="n '+(good?'up':'dn')+'">'+(v>=0?'+':'')+v.toFixed(1)+'%</td>';};
+  var inv=(i===1||i===4||i===5);
+  var d=i===8?2:0;
+  h+='<tr><td>'+r[0]+'</td><td class="n"><b>'+inr(r[1],d)+'</b></td><td class="n">'+inr(r[2],d)+'</td>'+c(y,inv)+'<td class="n">'+(r[3]===null?'n/a':inr(r[3],d))+'</td>'+c(q,inv)+'</tr>';});
+ h+='<tr><td>EBITDA margin</td><td class="n"><b>7.1%</b></td><td class="n">7.3%</td><td class="n dn">−0.2 pts</td><td class="n">8.0%</td><td class="n dn">−0.9 pts</td></tr>';
+ h+='<tr><td>PAT margin</td><td class="n"><b>3.8%</b></td><td class="n">4.1%</td><td class="n dn">−0.3 pts</td><td class="n">4.6%</td><td class="n dn">−0.8 pts</td></tr>';
+ document.getElementById('resTbl').innerHTML=h;
+ var qh='<tr><th>₹ crore</th>'+CO.q.labels.map(function(l){return '<th class="n">'+l+'</th>';}).join('')+'</tr>';
+ document.getElementById('qHead').innerHTML=qh;
+ var lines=[["Revenue","rev"],["EBITDA","ebitda"],["Other income","oi"],["Interest","int"],["Depreciation","dep"],["PBT","pbt"],["Net profit","pat"],["EPS (₹)","eps"]];
+ var qb='';lines.forEach(function(l){qb+='<tr><td>'+l[0]+'</td>'+CO.q[l[1]].map(function(v){return '<td class="n">'+inr(v,l[1]==='eps'?2:0)+'</td>';}).join('')+'</tr>';});
+ qb+='<tr><td>EBITDA margin</td>'+CO.q.rev.map(function(v,i){return '<td class="n">'+(CO.q.ebitda[i]/v*100).toFixed(2)+'%</td>';}).join('')+'</tr>';
+ qb+='<tr><td>PAT margin</td>'+CO.q.rev.map(function(v,i){return '<td class="n">'+(CO.q.pat[i]/v*100).toFixed(2)+'%</td>';}).join('')+'</tr>';
+ document.getElementById('qBody').innerHTML=qb;
+})();
+
+/* ===== Charts ===== */
+var valLbl={id:'valLbl',afterDatasetsDraw:function(ch){var ctx=ch.ctx;ch.data.datasets.forEach(function(ds,di){var m=ch.getDatasetMeta(di);if(m.hidden||ds.noLbl)return;m.data.forEach(function(el,i){var v=ds.data[i];if(v===null||v===undefined)return;var txt;if(Array.isArray(v)){txt=ds.lbls?ds.lbls[i]:'';}else{txt=(ds.pct?v.toFixed(2)+'%':(ds.suf?inr(v,ds.dec||0)+ds.suf:inr(v,ds.dec||0)));}ctx.save();ctx.font='600 10.5px Inter';ctx.fillStyle='#334';ctx.textAlign='center';var y=el.y-6;if(!Array.isArray(v)&&v<0&&ds.type!=='line'){y=el.y+13;}ctx.fillText(txt,el.x,y);ctx.restore();});});}};
+Chart.register(valLbl);
+Chart.defaults.font.family='Inter';Chart.defaults.color='#4a5566';
+var tk={callback:function(v){return inr(v);}};
+function draw(id){
+ if(id==='decline'){
+  bridge('cBridgeY',['PAT Q2FY26','EBITDA ↑','Other income ↓','Interest ↑','Depreciation ↑','Tax ↑','PAT Q2FY27'],685,[179,-6,-29,-65,-21],743);
+  bridge('cBridgeQ',['PAT Q1FY27','EBITDA ↓','Other income ↓','Interest ↑','Depreciation ↑','Tax ↓','PAT Q2FY27'],860,[-106,-12,-10,-30,41],743);
+  new Chart(document.getElementById('cMargin'),{type:'line',data:{labels:CO.q.labels,datasets:[
+   {label:'EBITDA margin %',data:CO.q.rev.map(function(v,i){return +(CO.q.ebitda[i]/v*100).toFixed(2);}),borderColor:'#0b6e4f',backgroundColor:'#0b6e4f',pct:1,tension:.3},
+   {label:'PAT margin %',data:CO.q.rev.map(function(v,i){return +(CO.q.pat[i]/v*100).toFixed(2);}),borderColor:'#f28c28',backgroundColor:'#f28c28',pct:1,tension:.3}]},
+   options:{maintainAspectRatio:false,scales:{y:{min:3,max:9,ticks:{callback:function(v){return v+'%';}}}},plugins:{legend:{position:'bottom'}}}});
+ }
+ if(id==='fin'){
+  new Chart(document.getElementById('cQtr'),{data:{labels:CO.q.labels,datasets:[
+   {type:'bar',label:'Revenue (₹ cr)',data:CO.q.rev,backgroundColor:'#bfe3d2',yAxisID:'y'},
+   {type:'bar',label:'EBITDA (₹ cr)',data:CO.q.ebitda,backgroundColor:'#f28c28',yAxisID:'y1'},
+   {type:'line',label:'Net profit (₹ cr)',data:CO.q.pat,borderColor:'#2563eb',backgroundColor:'#2563eb',yAxisID:'y1',tension:.3}]},
+   options:{maintainAspectRatio:false,scales:{y:{position:'left',ticks:tk,title:{display:true,text:'Revenue'}},y1:{position:'right',grid:{display:false},ticks:tk,title:{display:true,text:'EBITDA / PAT'},min:0,max:2000}},plugins:{legend:{position:'bottom'}}}});
+  new Chart(document.getElementById('cAnn'),{type:'bar',data:{labels:CO.fy.labels,datasets:[
+   {label:'Revenue (₹ cr)',data:CO.fy.rev,backgroundColor:'#bfe3d2'},{label:'EBITDA (₹ cr)',data:CO.fy.ebitda,backgroundColor:'#f28c28'},{label:'Net profit (₹ cr)',data:CO.fy.pat,backgroundColor:'#2563eb'}]},
+   options:{maintainAspectRatio:false,scales:{y:{type:'logarithmic',ticks:tk}},plugins:{legend:{position:'bottom'}}}});
+ }
+ if(id==='cash'){
+  new Chart(document.getElementById('cCF'),{type:'bar',data:{labels:CO.fy.labels,datasets:[
+   {label:'CFO',data:CO.fy.cfo,backgroundColor:'#1f9d55'},{label:'CFI',data:CO.fy.cfi,backgroundColor:'#d64545'},{label:'CFF',data:CO.fy.cff,backgroundColor:'#9aa4b2'},
+   {type:'line',label:'Free cash flow',data:CO.fy.fcf,borderColor:'#f28c28',backgroundColor:'#f28c28',tension:.3},
+   {type:'line',label:'EBITDA',data:CO.fy.ebitda,borderColor:'#0b6e4f',backgroundColor:'#0b6e4f',borderDash:[5,4],tension:.3}]},
+   options:{maintainAspectRatio:false,scales:{y:{ticks:tk}},plugins:{legend:{position:'bottom'}}}});
+  new Chart(document.getElementById('cWC'),{type:'bar',data:{labels:CO.fy.labels,datasets:[
+   {label:'Inventory days',data:CO.fy.invDays,backgroundColor:'#f28c28'},{label:'Receivable days',data:CO.fy.recDays,backgroundColor:'#2563eb'},{label:'Payable days',data:CO.fy.payDays,backgroundColor:'#7c3aed'},
+   {type:'line',label:'Cash conversion cycle',data:CO.fy.ccc,borderColor:'#0b6e4f',backgroundColor:'#0b6e4f',tension:.3}]},
+   options:{maintainAspectRatio:false,scales:{y:{min:0,max:45}},plugins:{legend:{position:'bottom'}}}});
+ }
+ if(id==='mkt'){
+  new Chart(document.getElementById('cSH'),{type:'bar',data:{labels:['Promoters','FIIs','DIIs','Public','Govt'],datasets:[{label:'% holding',data:[74.48,9.22,8.67,7.55,0.07],backgroundColor:['#0b6e4f','#2563eb','#7c3aed','#f28c28','#9aa4b2'],pct:1}]},
+   options:{indexAxis:'x',maintainAspectRatio:false,scales:{y:{max:85,ticks:{callback:function(v){return v+'%';}}}},plugins:{legend:{display:false}}}});
+ }
+ if(id==='ana'){
+  var a=CO.analysts.slice().sort(function(x,y){return y.t-x.t;});
+  new Chart(document.getElementById('cTgt'),{type:'bar',data:{labels:a.map(function(x){return x.b+' ('+x.r+')';}),datasets:[
+   {label:'Target price ₹',data:a.map(function(x){return x.t;}),backgroundColor:a.map(function(x){return x.t>=3365*1.15?'#1f9d55':(x.t>=3365?'#d98a00':'#d64545');})},
+   {type:'line',label:'Price ₹3,365 (12 Oct 2026)',data:a.map(function(){return 3365;}),borderColor:'#111',borderDash:[6,4],pointRadius:0,noLbl:1}]},
+   options:{maintainAspectRatio:false,scales:{y:{min:0,ticks:tk}},plugins:{legend:{position:'bottom'}}}});
+ }
+}
+function bridge(cid,labels,start,deltas,end){
+ var data=[[0,start]],cum=start,lbls=[inr(start)],cols=['#2563eb'];
+ deltas.forEach(function(d){var a=cum,b=cum+d;data.push([Math.min(a,b),Math.max(a,b)]);lbls.push((d>=0?'+':'−')+inr(Math.abs(d)));cols.push(d>=0?'#1f9d55':'#d64545');cum=b;});
+ data.push([0,end]);lbls.push(inr(end));cols.push('#0b6e4f');
+ new Chart(document.getElementById(cid),{type:'bar',data:{labels:labels,datasets:[{label:'₹ crore',data:data,backgroundColor:cols,lbls:lbls}]},
+  options:{maintainAspectRatio:false,scales:{y:{min:0,ticks:tk}},plugins:{legend:{display:false},tooltip:{callbacks:{label:function(c){return lbls[c.dataIndex]+' cr';}}}}}});
+}
+draw('overview');
+
+/* ===== Business model cards ===== */
+var BM={
+ cust:["Customers","Middle- and lower-middle-income families who plan monthly shopping, plus small shops and caterers who buy in bulk. 11.1 crore bills in Q2 (+14.4%) shows footfall is growing.","நடுத்தர குடும்பங்கள், மாசாந்திர சாமான் வாங்குறவங்க, மொத்தமா வாங்குற சின்னக் கடைக்காரங்க. Q2-ல 11.1 கோடி பில்கள் (+14.4%)."],
+ stores:["518 DMart stores","Large single-format stores, mostly owned, clustered around warehouses. 21.4 mn sq ft sold ₹8,975 per sq ft in the quarter. New stores in smaller towns ramp up over about two years.","பெரும்பாலும் சொந்தமான பெரிய கடைகள், கிடங்கு பக்கத்துல கொத்தா. ஒரு சதுர அடிக்கு காலாண்டுல ₹8,975 விற்பனை."],
+ ready:["DMart Ready","Online orders with planned delivery or pick-up within about 6 hours, aimed at monthly baskets, not 10-minute top-ups. Cut from 19 to 11 cities to fix unit economics; lost ₹75 cr in Q2.","ஆன்லைன் ஆர்டர், சுமார் 6 மணி நேரத்துல டெலிவரி. 19-ல இருந்து 11 நகரமா குறைச்சாங்க; Q2-ல ₹75 கோடி நஷ்டம்."],
+ core:["Avenue Supermarts: EDLC → EDLP","Everyday Low Cost (owned stores, fast supplier payment, frugal operations) funds Everyday Low Prices. Low prices bring footfall; footfall raises sales per sq ft; scale wins better buying terms. That loop is the moat.","தினமும் குறைஞ்ச செலவு → தினமும் குறைஞ்ச விலை → அதிக கூட்டம் → அதிக விற்பனை → நல்ல கொள்முதல் விலை. இந்த சக்கரம் தான் DMart-ன் கோட்டை."],
+ foods:["Foods: 56.9% of H1 sales","Staples, grocery, dairy, frozen and processed foods. Very thin margins, but they bring people in every week. A rising food share drags the overall margin down.","அரிசி, பருப்பு, மளிகை, பால் பொருட்கள். மார்ஜின் குறைவு, ஆனா வாராவாரம் கூட்டத்தை கொண்டு வருது."],
+ fmcg:["Non-food FMCG: 19.5%","Home care and personal care brands such as detergents, soaps and shampoos. Branded, so prices are easy to compare; quick commerce competes hardest here.","சோப்பு, டிடர்ஜெண்ட், ஷாம்பு போன்ற பிராண்டட் பொருட்கள். விலை ஒப்பிட சுலபம்; quick commerce போட்டி இங்க அதிகம்."],
+ gma:["General merchandise & apparel: 23.6%","Clothes, kitchenware, plastics, home goods and toys. The highest-margin part of the store and the swing factor for profits. It has stayed weak as discretionary spending stays soft.","துணிமணி, சமையல் பாத்திரம், வீட்டுப் பொருள். அதிக மார்ஜின் தர்ற பகுதி; இது கூடினா லாபம் கூடும்."],
+ online:["Avenue E-Commerce (subsidiary)","Runs DMart Ready. Loss ₹75.35 cr in Q2 and ₹166.62 cr in H1FY27. Management is proving profitability in 11 cities before any re-expansion.","DMart Ready நடத்துற துணை நிறுவனம். H1-ல ₹166.62 கோடி நஷ்டம்."],
+ rev:["Revenue ₹19,644 cr","Consolidated, +17.8% YoY. Growth came about 20% from more stores, 9.5% from like-for-like growth in older stores, partly offset by lower productivity at new stores.","ஒருங்கிணைந்த வருவாய் +17.8%. புதுக் கடைகளும் பழைய கடை வளர்ச்சியும் (9.5%) காரணம்."],
+ cost:["Costs","Goods cost is about 85.9% of sales (gross margin 14.15%). The rest pays staff, power, upkeep and logistics. Total expenses grew 18.3%, faster than revenue, due to wage inflation.","பொருள் கொள்முதல் செலவு விற்பனையில சுமார் 85.9%. மீதி சம்பளம், மின்சாரம், பராமரிப்பு. மொத்த செலவு +18.3%."],
+ profit:["Profit","EBITDA ₹1,393 cr (7.1% margin). After depreciation ₹318 cr, interest ₹64 cr and tax ₹282 cr, net profit is ₹743 cr: about ₹3.80 of every ₹100 of sales.","EBITDA ₹1,393 கோடி; தேய்மானம், வட்டி, வரி போக நிகர லாபம் ₹743 கோடி – ₹100 விற்பனையில ₹3.80."],
+ sh:["Shareholders","No dividend has ever been paid. All profit plus new borrowing goes into store expansion. Shareholders are paid through compounding growth, which is why margins matter so much to the valuation.","இதுவரை டிவிடெண்ட் கொடுக்கல. எல்லா லாபமும் புதுக் கடைகளுக்கு. பங்குதாரருக்கு லாபம் வளர்ச்சி மூலமா தான்."]
+};
+document.querySelectorAll('.bm-box').forEach(function(g){g.addEventListener('click',function(){
+ document.querySelectorAll('.bm-box').forEach(function(x){x.classList.remove('sel');});g.classList.add('sel');
+ var d=BM[g.getAttribute('data-k')];
+ document.getElementById('bmCard').innerHTML='<h3>'+d[0]+'</h3><p class="en">'+d[1]+'</p><p class="ta">'+d[2]+'</p>';});});
+
+/* ===== Temple ===== */
+var PILLARS=[
+ ["g","Growth",8.0,"Revenue +17.8%, stores +19.9% YoY, LFL back to 9.5%, bills +14%. Expansion is accelerating (85 stores in FY26).","வருவாய் +17.8%, கடைகள் +19.9%, LFL 9.5%."],
+ ["m","Margins",5.0,"EBITDA margin 7.1% vs 7.3%; PAT margin 3.8% vs 4.1%. PAT margin fell from 5.55% (FY23) to 4.32% (FY26). EBITDA per sq ft −4.6%.","மார்ஜின் தொடர்ந்து குறையுது."],
+ ["d","Balance sheet",7.0,"Net worth ₹26,099 cr, debt/equity about 0.16 and receivables near zero. But debt is rising and FCF was −₹1,640 cr in H1FY27.","நிதி நிலை வலுவா இருக்கு; ஆனா கடன் கூடுது."],
+ ["v","Valuation",4.0,"P/E about 70× TTM, P/BV 8.4×, EV/EBITDA about 40×. Expensive against roughly 10% profit growth, even after the 27% fall from the high.","மதிப்பீடு இன்னும் அதிகம் – P/E 70 மடங்கு."],
+ ["t","Trend & triggers",4.5,"Price in Stage 4 at a fresh 52-week low; TG 37 with negatives outweighing positives; brokers cutting targets.","விலை இறக்கப் போக்குல; இலக்கு விலைகள் குறைப்பு."],
+ ["r","Risk & governance",6.5,"Strong promoter, planned CEO succession, clean earnings (no receivables). Risks: quick commerce, wage costs and execution of fast expansion.","நல்ல நிர்வாகம்; போட்டி அபாயம் அதிகம்."]];
+function pc(s){return s>=8?'#1f9d55':(s>=6?'#d98a00':'#d64545');}
+(function(){
+ var svg=document.getElementById('temple'),h='';
+ h+='<polygon points="40,140 380,30 720,140" fill="#f28c28" stroke="#c96a10" stroke-width="3"/>';
+ h+='<text x="380" y="92" text-anchor="middle" font-size="14" font-weight="700" fill="#fff">CB SCORE</text><text x="380" y="126" text-anchor="middle" font-size="32" font-weight="900" fill="#fff">5.8 / 10</text>';
+ h+='<rect x="50" y="140" width="660" height="34" fill="#fff2e4" stroke="#c96a10" stroke-width="2"/><text x="380" y="163" text-anchor="middle" font-size="14" font-weight="800" fill="#8a4a00">AVENUE SUPERMARTS (DMart) · Q2FY27</text>';
+ PILLARS.forEach(function(p,i){var x=78+i*108,top=184,ht=230;
+  h+='<g class="col-hit" onclick="pillarJump(\''+p[0]+'\')"><rect x="'+x+'" y="'+top+'" width="64" height="'+ht+'" rx="4" fill="#f4f1ea" stroke="#cfc6b4"/>';
+  for(var f=1;f<4;f++)h+='<line x1="'+(x+f*16)+'" y1="'+(top+4)+'" x2="'+(x+f*16)+'" y2="'+(top+ht-4)+'" stroke="#e2dbcc"/>';
+  h+='<rect id="fill-'+p[0]+'" x="'+(x+3)+'" y="'+(top+ht)+'" width="58" height="0" fill="'+pc(p[2])+'" opacity=".85" data-h="'+((ht-70)*p[2]/10)+'" data-b="'+(top+ht)+'"/>';
+  h+='<circle cx="'+(x+32)+'" cy="'+(top+32)+'" r="22" fill="#fff" stroke="'+pc(p[2])+'" stroke-width="3"/><text x="'+(x+32)+'" y="'+(top+38)+'" text-anchor="middle" font-size="15" font-weight="800" fill="'+pc(p[2])+'">'+p[2].toFixed(1)+'</text></g>';});
+ h+='<rect x="45" y="414" width="670" height="14" fill="#ddd3c0"/><rect x="30" y="428" width="700" height="14" fill="#cfc4ae"/><rect x="15" y="442" width="730" height="14" fill="#c2b59b"/>';
+ PILLARS.forEach(function(p,i){var x=78+i*108,w=p[1].split(' & ');h+='<text x="'+(x+32)+'" y="476" text-anchor="middle" font-size="12.5" font-weight="700" fill="#334">'+w[0]+(w[1]?' &amp;':'')+'</text>';if(w[1])h+='<text x="'+(x+32)+'" y="492" text-anchor="middle" font-size="12.5" font-weight="700" fill="#334">'+w[1]+'</text>';});
+ svg.innerHTML=h;
+ var pcs='';PILLARS.forEach(function(p){pcs+='<div class="card pillar-card" id="pc-'+p[0]+'" style="border-left:5px solid '+pc(p[2])+'"><h3>'+p[1]+' <span style="color:'+pc(p[2])+'">'+p[2].toFixed(1)+'/10</span></h3><p class="en">'+p[3]+'</p><p class="ta">'+p[4]+'</p></div>';});
+ document.getElementById('pillarCards').innerHTML=pcs;
+})();
+function animTemple(){PILLARS.forEach(function(p){var r=document.getElementById('fill-'+p[0]),H=+r.getAttribute('data-h'),B=+r.getAttribute('data-b'),t0=null;r.setAttribute('height',0);r.setAttribute('y',B);
+ function st(ts){if(!t0)t0=ts;var k=Math.min(1,(ts-t0)/1100),e=1-Math.pow(1-k,3);r.setAttribute('height',H*e);r.setAttribute('y',B-H*e);if(k<1)requestAnimationFrame(st);}requestAnimationFrame(st);});}
+function pillarJump(k){document.querySelectorAll('.pillar-card').forEach(function(c){c.classList.remove('hl');});var c=document.getElementById('pc-'+k);c.classList.add('hl');c.scrollIntoView({behavior:'smooth',block:'center'});}
+
+/* ===== Disclaimer ===== */
+function toggleDisc(){var p=document.getElementById('cbPop');p.style.display=p.style.display==='block'?'none':'block';document.getElementById('asPanel').classList.remove('on');}
+</script>
+
+<script>
+/* ===== CB Assist (offline keyword engine + voice) ===== */
+var KB=[
+ {k:["why","lead","leader","moat","advantage","win","முன்னணி","ஏன் முன்னணி","பலம்"],en:"DMart leads because it runs the lowest-cost store system in Indian grocery. It owns most stores, so there is no rent escalation. It pays suppliers in about 8 days in exchange for lower buying prices. It keeps a narrow, fast-selling range (about 37 inventory days) and passes savings on as everyday low prices. That brings 11.1 crore bills a quarter, and the volume strengthens its buying power further.",ta:"DMart முன்னணியில இருக்க காரணம் – செலவு கம்மியான கடை முறை. சொந்த கடைகள், சப்ளையருக்கு 8 நாள்ல பணம், வேகமா விக்கிற பொருட்கள் மட்டும், அந்த மிச்சத்தை குறைஞ்ச விலையா கொடுக்குறாங்க. அதனால காலாண்டுக்கு 11.1 கோடி பில்கள்."},
+ {k:["profit","fall","decline","drop","pressure","lower","லாபம்","குறை","சரிவு"],en:"Profit grew 8.5% YoY to ₹743 crore but fell 13.6% from Q1's ₹860 crore. The reasons: entry-level wage inflation; a food-heavy mix with gross margin of 14.15%; depreciation up 25.7% and interest up 82.9% from rapid store building; other income down 30%; and the DMart Ready loss of ₹75 crore. The Q1-to-Q2 dip is also seasonal and happens every year.",ta:"லாபம் போன வருஷத்தை விட 8.5% கூடி ₹743 கோடி; ஆனா Q1-ஐ விட 13.6% குறைவு. காரணம்: சம்பள உயர்வு, உணவுப் பொருள் அதிகம், தேய்மானம் +25.7%, வட்டி +82.9%, மற்ற வருமானம் குறைவு, DMart Ready ₹75 கோடி நஷ்டம். Q1-ல இருந்து Q2-க்கு இறக்கம் ஒவ்வொரு வருஷமும் வரும்."},
+ {k:["model","business model","how","make money","edlp","edlc","மாதிரி","வியாபார"],en:"Business model: EDLC → EDLP, meaning everyday low cost funds everyday low prices. Revenue = retail area × sales per sq ft = 21.4 mn sq ft × ₹8,975 ≈ ₹19,206 crore standalone. Profit comes from very fast stock turnover on a thin 14% gross margin. Mix: Foods 56.9%, non-food FMCG 19.5%, general merchandise and apparel 23.6%.",ta:"வியாபார மாதிரி: தினமும் குறைஞ்ச செலவு → தினமும் குறைஞ்ச விலை. வருவாய் = கடை பரப்பளவு × சதுர அடி விற்பனை. உணவு 56.9%, மற்ற FMCG 19.5%, துணி/பொதுப் பொருள் 23.6%."},
+ {k:["revenue","sales","வருவாய்","விற்பனை"],en:"Q2FY27 consolidated revenue was ₹19,644 crore, up 17.8% YoY and 4.5% QoQ. Standalone DMart stores did ₹19,206 crore (+18.4%). H1FY27 consolidated revenue: ₹38,439 crore (+16.4%).",ta:"Q2FY27 வருவாய் ₹19,644 கோடி, +17.8%. H1-ல ₹38,439 கோடி."},
+ {k:["ebitda","margin","மார்ஜின்"],en:"EBITDA was ₹1,393 crore (+14.7% YoY), with margin at 7.1% vs 7.3% a year ago and 8.0% in Q1. Standalone EBITDA margin was 7.3% vs 7.6%. EBITDA per sq ft fell 4.6% to ₹656.",ta:"EBITDA ₹1,393 கோடி; மார்ஜின் 7.1% (போன வருஷம் 7.3%)."},
+ {k:["store","stores","expansion","கடை"],en:"518 stores at 30 Sep 2026: 15 added in Q2 and 18 in H1, with 85 added in FY26. Retail area is 21.4 mn sq ft. Management targets about 15% annual growth in the store base.",ta:"518 கடைகள்; Q2-ல 15 புதுசு; FY26-ல 85. ஒவ்வொரு வருஷமும் சுமார் 15% கடை வளர்ச்சி இலக்கு."},
+ {k:["lfl","same store","like","sssg"],en:"Like-for-like growth in stores two years or older was 9.5% in Q2FY27, up from 6.8% in Q2FY26 and 5.5% in Q1FY27. In Q1, older metro stores had been flat.",ta:"2 வருஷத்துக்கு மேல ஆன கடைகள் வளர்ச்சி 9.5% (Q1-ல 5.5%)."},
+ {k:["ready","online","e-commerce","ecommerce","ஆன்லைன்"],en:"DMart Ready (Avenue E-Commerce) now runs in 11 cities, down from 19 a year ago. It lost ₹75.35 crore in Q2 and ₹166.62 crore in H1FY27. It offers planned delivery within about 6 hours, not 10-minute quick commerce.",ta:"DMart Ready இப்போ 11 நகரங்கள்ல மட்டும். Q2-ல ₹75 கோடி நஷ்டம்."},
+ {k:["cash","fcf","cash flow","debt","borrow","கடன்","பணப்புழக்க"],en:"FY26: CFO ₹3,467 crore, CFI −₹4,207 crore, FCF −₹646 crore. In H1FY27, FCF was −₹1,640 crore and gross debt rose to ₹2,630 crore from ₹970 crore. Store capex now exceeds internal cash.",ta:"FY26-ல CFO ₹3,467 கோடி, FCF −₹646 கோடி. H1FY27-ல FCF −₹1,640 கோடி; கடன் ₹2,630 கோடி."},
+ {k:["working capital","inventory","payable","ccc","days","சரக்கு","நடைமுறை"],en:"FY26: inventory 37 days, receivables 1 day, payables 8 days, cash conversion cycle 29 days. Paying suppliers quickly ties up cash but buys lower prices. CFO/EBITDA was 66.8% in FY26.",ta:"சரக்கு 37 நாள், சப்ளையர் கடன் 8 நாள், சுழற்சி 29 நாள்."},
+ {k:["valuation","pe","p/e","expensive","cheap","மதிப்பீடு"],en:"At ₹3,365 (12 Oct 2026): P/E about 70.4× TTM, P/BV 8.4×, EV/EBITDA about 40×, market cap ₹2,19,398 crore. No dividend. It remains expensive against about 10% recent profit growth.",ta:"₹3,365 விலையில P/E சுமார் 70 மடங்கு, P/BV 8.4 மடங்கு."},
+ {k:["analyst","target","broker","rating","clsa","citi","jefferies","motilal","ஆய்வாளர்","இலக்கு"],en:"Broker targets: CLSA Outperform ₹5,723; Jefferies Hold ₹4,000; Motilal Oswal Neutral ₹3,925; ICICI Securities Hold ₹3,700; Citi Sell ₹3,250. The average is ₹4,120. These are the brokers' views; CB Research gives no recommendation.",ta:"CLSA ₹5,723, Jefferies ₹4,000, MOSL ₹3,925, ICICI Sec ₹3,700, Citi ₹3,250. இது தரகு நிறுவனங்களோட கருத்து மட்டும்."},
+ {k:["management","ceo","board","damani","asawa","நிர்வாக"],en:"Anshul Asawa (ex-Unilever) has been MD & CEO since 1 Feb 2026, succeeding Neville Noronha. C.B. Bhave is the independent chairman. Ramakant Baheti is WTD and Group CFO, and Lalit Ahuja became COO from 13 Jul 2026. Founder R.K. Damani's family holds 74.48%.",ta:"அன்ஷுல் அசாவா – MD & CEO (பிப் 2026 முதல்). தலைவர் சி.பி. பாவே. தமானி குடும்பம் 74.48%."},
+ {k:["score","cb score","pillar","மதிப்பெண்"],en:"CB Score is 5.8/10. Growth 8.0, margins 5.0, balance sheet 7.0, valuation 4.0, trend & triggers 4.5, risk & governance 6.5. Cycle lens 57, trigger lens 37, and the price is in Stage 4.",ta:"CB மதிப்பெண் 5.8/10. வளர்ச்சி 8, மார்ஜின் 5, மதிப்பீடு 4."},
+ {k:["quick commerce","blinkit","zepto","competition","reliance","போட்டி"],en:"The main threat is quick commerce (Blinkit, Zepto, Instamart) taking metro top-up purchases; older metro stores were flat in Q1. Reliance Retail is the deep-pocket rival. DMart's defence is lower prices on monthly bulk baskets and expansion into smaller towns.",ta:"Quick commerce பெரிய நகரங்கள்ல சின்ன வாங்குதல்களை எடுக்குது. DMart-ன் பதில்: மாசாந்திர மொத்த வாங்குதலுக்கு குறைஞ்ச விலை, சின்ன நகரங்கள்ல விரிவாக்கம்."},
+ {k:["share price","stock","fall","52","price","பங்கு விலை"],en:"The share fell about 4.3% to ₹3,365 on 12 Oct 2026, a fresh 52-week low, on margin misses and broker target cuts. It is down about 17.6% since the Q1 results (₹4,083) and 27.5% from the 52-week high of ₹4,644.",ta:"12 அக்டோபர் அன்னிக்கு பங்கு சுமார் 4.3% இறங்கி ₹3,365 – 52 வார குறைந்த அளவு."}
+];
+var chips=["Why does DMart lead?","Why did profit fall?","Explain the business model","Cash flow and debt","Analyst targets","Is it expensive?"];
+var asLog=document.getElementById('asLog');
+chips.forEach(function(c){var b=document.createElement('button');b.textContent=c;b.onclick=function(){ask(c);};document.getElementById('asChips').appendChild(b);});
+function addMsg(t,who){var d=document.createElement('div');d.className='msg '+who;d.textContent=t;asLog.appendChild(d);asLog.scrollTop=asLog.scrollHeight;}
+function isTamil(s){return /[஀-௿]/.test(s);}
+function ask(q){q=(q||'').trim();if(!q)return;addMsg(q,'u');document.getElementById('asIn').value='';
+ var low=q.toLowerCase(),best=null,bs=0;
+ KB.forEach(function(e){var s=0;e.k.forEach(function(k){if(low.indexOf(k)>-1)s+=k.length>4?2:1;});if(s>bs){bs=s;best=e;}});
+ var ta=isTamil(q)||document.body.classList.contains('tamil');
+ var ans=best?(ta?best.ta:best.en):(ta?"மன்னிக்கவும், அந்த கேள்விக்கு பதில் இல்ல. லாபம், வியாபார மாதிரி, கடைகள், பணப்புழக்கம், மதிப்பீடு, ஆய்வாளர்கள் பத்தி கேளுங்க.":"I can answer about profit, business model, why DMart leads, stores, LFL, DMart Ready, cash flow, working capital, valuation, analysts, management, competition and the CB Score. Try one of the chips below.");
+ setTimeout(function(){addMsg(ans,'b');speak(ans,ta);},200);}
+function speak(t,ta){try{if(!window.speechSynthesis)return;speechSynthesis.cancel();var u=new SpeechSynthesisUtterance(t);u.lang=ta?'ta-IN':'en-IN';u.rate=1;var v=speechSynthesis.getVoices().filter(function(x){return x.lang===u.lang;})[0];if(v)u.voice=v;speechSynthesis.speak(u);}catch(e){}}
+var rec=null;
+function mic(){var SR=window.SpeechRecognition||window.webkitSpeechRecognition;var m=document.getElementById('asMic');
+ if(!SR){addMsg('Voice input is not supported in this browser. Please type your question.','b');return;}
+ if(rec){rec.stop();return;}
+ rec=new SR();rec.lang=document.body.classList.contains('tamil')?'ta-IN':'en-IN';rec.interimResults=false;
+ rec.onresult=function(e){ask(e.results[0][0].transcript);};
+ rec.onend=function(){m.classList.remove('rec');rec=null;};rec.onerror=function(){m.classList.remove('rec');rec=null;};
+ m.classList.add('rec');rec.start();}
+function toggleAssist(){var p=document.getElementById('asPanel');p.classList.toggle('on');document.getElementById('cbPop').style.display='none';
+ if(p.classList.contains('on')&&!asLog.children.length)addMsg("Hi! Ask me by voice 🎤 or text about DMart's Q2FY27: why it leads, why profit is under pressure, the business model, cash flow, valuation or analyst views. Tamil questions are welcome too.",'b');}
+
+/* ===== Cauvery Socrates ===== */
+var SOC=[
+ {q:"Revenue grew 17.8% but net profit grew only 8.5%. Which single line took the biggest bite out of the extra EBITDA?",o:["Tax","Depreciation","Other income","Interest"],a:1,w:"Depreciation rose by ₹65 cr (+25.7%), the largest drag of the ₹179 cr EBITDA gain. New stores add depreciation from day one but take about two years to reach full sales."},
+ {q:"Why does DMart pay suppliers in about 8 days when most retailers take 30–60 days?",o:["It has no choice by law","To win lower purchase prices","To reduce inventory","To avoid GST"],a:1,w:"Quick payment is a deliberate trade: it ties up cash but earns sharper buying prices, the root of the low-price advantage."},
+ {q:"Profit fell 13.6% from Q1FY27 to Q2FY27. What is the best first check before calling it a crisis?",o:["Compare with the same Q1→Q2 move in past years","Look only at the share price","Ignore it","Check the dividend"],a:0,w:"The June quarter is stronger every year (PAT 774→659 in FY25, 773→685 in FY26). Seasonality explains part of the fall. The YoY margin squeeze is the real signal."},
+ {q:"Which product segment carries the highest margin and decides whether DMart's overall margin improves?",o:["Foods","Non-food FMCG","General merchandise & apparel","DMart Ready"],a:2,w:"GM&A is only 23.6% of sales but has the best margins. Its weak share, with food at 56.9%, keeps the gross margin near 14%."},
+ {q:"Free cash flow was −₹1,640 cr in H1FY27. What is the main cause?",o:["Customers not paying","Heavy store capex plus inventory build","Large dividend payout","Write-offs"],a:1,w:"Receivables are about 1 day and no dividend is paid. Capex for rapid store growth plus inventory build absorbed more cash than operations generated, so debt rose."},
+ {q:"The stock trades near 70× earnings. What does that high multiple mainly imply?",o:["Profit must grow fast for years","The company is loss-making","The share is cheap","Dividends will be high"],a:0,w:"A high P/E prices in long, strong growth. With profit growth near 10% and margins slipping, the multiple is under pressure; that is what drove the 52-week low."}
+];
+var FREE=[
+ {q:"In your own words: if quick commerce takes the small top-up purchases in metros, which parts of DMart's model still protect it, and which do not?",m:"Protects: lowest prices on monthly bulk baskets, owned-store cost base, expansion into tier-2/3 towns where quick commerce is thin. Does not protect: convenience for urgent small buys in big metros. That is why older metro-store LFL was flat in Q1."},
+ {q:"What three numbers would you track next quarter to judge whether margins are recovering? Why each?",m:"(1) EBITDA margin vs 7.1%, the direct test. (2) Revenue/EBITDA per sq ft, showing whether new stores are maturing. (3) DMart Ready loss, the consolidated drag. Also useful: GM&A share and LFL."}
+];
+(function(){var box=document.getElementById('socBox'),h='';
+ SOC.forEach(function(s,i){h+='<div class="q"><b>Q'+(i+1)+'. '+s.q+'</b><div class="opts">'+s.o.map(function(o,j){return '<button onclick="socAns('+i+','+j+',this)">'+o+'</button>';}).join('')+'</div><div class="fb" id="fb'+i+'"></div></div>';});
+ FREE.forEach(function(f,i){h+='<div class="q"><b>Think: '+f.q+'</b><textarea placeholder="Write your answer…"></textarea><button class="btn" onclick="this.nextElementSibling.style.display=\'block\'">Show model answer</button><div class="fb" style="display:none"><b>Model answer:</b> '+f.m+'</div></div>';});
+ box.innerHTML=h;document.getElementById('socTotal').textContent=SOC.length;})();
+var socDone={},socSc=0;
+function socAns(i,j,el){if(socDone[i])return;socDone[i]=1;var bs=el.parentNode.querySelectorAll('button');bs[SOC[i].a].classList.add('ok');if(j!==SOC[i].a)el.classList.add('no');else socSc++;
+ var fb=document.getElementById('fb'+i);fb.style.display='block';fb.innerHTML=(j===SOC[i].a?'✅ Correct. ':'❌ Not quite. ')+SOC[i].w;document.getElementById('socScore').textContent=socSc;}
+</script>
+</body>
+</html>
