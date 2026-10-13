@@ -116,6 +116,12 @@ ul{margin:6px 0 6px 18px;padding:0}
 .sim .out{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:8px;margin-top:12px}
 .sim .out div{background:var(--soft);border-radius:10px;padding:8px 10px}
 .sim .out b{display:block;font-size:18px}
+
+.temple svg{min-width:760px;width:100%;height:auto}
+.temple .col{cursor:pointer}
+.temple .col:hover .shaft{stroke:#0f6e74;stroke-width:2}
+.pill.hl{animation:hl 1.6s ease}
+@keyframes hl{0%,60%{box-shadow:0 0 0 4px var(--hlc,#f57c00);transform:scale(1.01)}100%{box-shadow:none;transform:none}}
 @media(max-width:600px){header{padding:10px 12px 8px}header h1{font-size:17px}header .sub{font-size:11.5px}.langbtn{position:static;margin-top:6px;padding:4px 12px;font-size:13px}nav button{padding:10px 11px;font-size:14px}}
 </style>
 </head>
@@ -466,12 +472,11 @@ ul{margin:6px 0 6px 18px;padding:0}
 <!-- SIX PILLARS -->
 <section class="tab" id="t-pillars" data-name="Six Pillars">
   <h2>The six-pillar Investment Test</h2>
-  <div class="grid2">
-    <div id="pillarList"></div>
-    <div class="card"><h3>Pillar radar (score out of 10)</h3><div class="cw"><div class="ci" style="height:420px"><canvas id="cRadar"></canvas></div></div>
-      <p><b>Overall: <span class="score">7.0 / 10</span></b> — <span class="en">Financial strength and growth runway are top-tier now; valuation and franchise quality (CASA, ROA) are the weak pillars.</span><span class="ta">நிதி பலமும் வளர்ச்சி வாய்ப்பும் இப்போ ரொம்ப நல்லா இருக்கு; மதிப்பீடும் (விலை) CASA, ROA போன்ற அடிப்படை தரமும் தான் பலவீனம்.</span></p>
-    </div>
+  <div class="card temple"><div class="tw"><svg id="templeSvg" viewBox="0 0 960 500" xmlns="http://www.w3.org/2000/svg" font-family="Inter,sans-serif" role="img" aria-label="Six-pillar temple"></svg></div>
+    <p class="note" style="text-align:center;margin:4px 0 0">Tap a pillar to jump to its explanation · <span style="color:#2eaa5a;font-weight:700">■ 8–10 strong</span> · <span style="color:#e89a00;font-weight:700">■ 6–8 moderate</span> · <span style="color:#ef5350;font-weight:700">■ below 6 weak</span></p>
+    <p style="margin:10px 0 0"><b>Overall: <span class="score">7.0 / 10</span></b> — <span class="en">Financial strength and growth runway are top-tier now; valuation and franchise quality (CASA, ROA) are the weak pillars.</span><span class="ta">நிதி பலமும் வளர்ச்சி வாய்ப்பும் இப்போ ரொம்ப நல்லா இருக்கு; மதிப்பீடும் (விலை) CASA, ROA போன்ற அடிப்படை தரமும் தான் பலவீனம்.</span></p>
   </div>
+  <div id="pillarList" class="grid2"></div>
 </section>
 
 <!-- CASH FLOW & LIQUIDITY -->
@@ -808,7 +813,47 @@ var P=[
  ["Valuation",6.0,"1.43x P/BV (₹394.40 vs BVPS ₹275.37) against ~4.5% annualised ROE; run-rate P/E ~32x; average broker target ₹417.50 (+5.9%). The price already assumes ROA climbs to 1.2–1.4%.","விலை ~1.5x புத்தக மதிப்பு; ROE ~4.5% தான். எதிர்கால வளர்ச்சியை விலை ஏற்கனவே எடுத்துக்கிச்சு."],
  ["Risk and Reward",6.0,"Reward: lower card losses and capital deployment could double ROA. Risk: Q3 NIM dip, banca rules, CASA erosion, FCNR maturity wall, stock near 52-week high.","லாபம்: கார்டு இழப்பு குறைஞ்சா ROA இரட்டிப்பாகலாம். ஆபத்து: NIM குறைவு, CASA சரிவு, விலை உச்சத்துல."]
 ];
-(function(){var h='';P.forEach(function(p,i){h+='<div class="pill"><div class="n">'+(i+1)+'</div><div style="flex:1"><b>'+p[0]+'</b> <span class="score" style="float:right">'+p[1].toFixed(1)+'/10</span><div class="bar"><i style="width:'+(p[1]*10)+'%"></i></div><p class="en" style="margin:6px 0 0">'+p[2]+'</p><p class="ta" style="margin:6px 0 0">'+p[3]+'</p></div></div>';});document.getElementById('pillarList').innerHTML=h;})();
+function pCol(v){return v>=8?'#2eaa5a':(v>=6?'#f5a623':'#ef5350');}
+function pTxt(v){return v>=8?'#1e8e46':(v>=6?'#c47f00':'#d93025');}
+(function(){var h='';P.forEach(function(p,i){var c=pCol(p[1]);h+='<div class="pill" id="pc'+i+'" style="border-left:6px solid '+c+';--hlc:'+c+'"><div class="n" style="background:'+c+'">'+(i+1)+'</div><div style="flex:1"><b>'+p[0]+'</b> <span class="score" style="float:right;color:'+pTxt(p[1])+'">'+p[1].toFixed(1)+'/10</span><div class="bar"><i style="width:'+(p[1]*10)+'%;background:'+c+'"></i></div><p class="en" style="margin:6px 0 0">'+p[2]+'</p><p class="ta" style="margin:6px 0 0">'+p[3]+'</p></div></div>';});document.getElementById('pillarList').innerHTML=h;})();
+/* temple graphic */
+(function(){
+ var svg=document.getElementById('templeSvg');if(!svg)return;var NS='http://www.w3.org/2000/svg';
+ var avg=P.reduce(function(s,p){return s+p[1];},0)/P.length;
+ var lab=[['Business','Quality'],['Competitive','Advantage'],['Growth','Opportunity'],['Financial','Strength'],['Valuation',''],['Risk &','Reward']];
+ var top=150,bot=410,H=bot-top-14,W=84,gap=(960-120-W*6)/5;
+ var s='<defs><linearGradient id="roofG" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffb26b"/><stop offset="1" stop-color="#f57c00"/></linearGradient></defs>';
+ s+='<polygon points="480,12 40,118 920,118" fill="url(#roofG)" stroke="#c75b00" stroke-width="2"/>';
+ s+='<text x="480" y="72" text-anchor="middle" fill="#fff" font-size="15" font-weight="700" letter-spacing="1">CB SCORE</text>';
+ s+='<text x="480" y="104" text-anchor="middle" fill="#fff" font-size="28" font-weight="800">'+avg.toFixed(1)+' / 10</text>';
+ s+='<rect x="52" y="118" width="856" height="26" rx="4" fill="#fde68a" stroke="#c75b00"/>';
+ s+='<text x="480" y="136" text-anchor="middle" fill="#7a3a00" font-size="13" font-weight="800" letter-spacing=".5">RBL BANK · Q2 FY27</text>';
+ P.forEach(function(p,i){
+  var x=60+i*(W+gap),c=pCol(p[1]),fh=H*p[1]/10;
+  s+='<g class="col" data-i="'+i+'" tabindex="0">';
+  s+='<rect x="'+(x-6)+'" y="'+top+'" width="'+(W+12)+'" height="10" rx="2" fill="#e7ebf0" stroke="#b8c1cc"/>';
+  s+='<rect class="shaft" x="'+x+'" y="'+(top+10)+'" width="'+W+'" height="'+H+'" fill="#eef2f7" stroke="#d3dae3"/>';
+  s+='<rect class="fill" data-h="'+fh+'" x="'+x+'" y="'+(bot-4)+'" width="'+W+'" height="0" fill="'+c+'"/>';
+  for(var k=1;k<5;k++)s+='<line x1="'+(x+k*W/5)+'" y1="'+(top+10)+'" x2="'+(x+k*W/5)+'" y2="'+(bot-4)+'" stroke="rgba(255,255,255,.55)" stroke-width="1.2"/>';
+  s+='<rect x="'+(x-6)+'" y="'+(bot-4)+'" width="'+(W+12)+'" height="10" rx="2" fill="#e7ebf0" stroke="#b8c1cc"/>';
+  s+='<g class="badge" data-h="'+fh+'"><circle cx="'+(x+W/2)+'" cy="'+(bot-24)+'" r="21" fill="#fff" stroke="'+c+'" stroke-width="3"/><text x="'+(x+W/2)+'" y="'+(bot-18)+'" text-anchor="middle" font-size="15" font-weight="800" fill="'+pTxt(p[1])+'">'+(p[1]%1?p[1].toFixed(1):p[1])+'</text></g>';
+  s+='<text x="'+(x+W/2)+'" y="'+(bot+44)+'" text-anchor="middle" font-size="13.5" font-weight="700" fill="#1b2430">'+lab[i][0]+'</text>';
+  if(lab[i][1])s+='<text x="'+(x+W/2)+'" y="'+(bot+61)+'" text-anchor="middle" font-size="12.5" fill="#5b6878">'+lab[i][1]+'</text>';
+  s+='</g>';
+ });
+ s='<rect x="40" y="'+(bot+6)+'" width="880" height="12" fill="#cbd5e1"/><rect x="24" y="'+(bot+18)+'" width="912" height="5" fill="#94a3b8"/>'+s;
+ svg.innerHTML=s;
+ var done=false;
+ function grow(){if(done)return;done=true;var fills=svg.querySelectorAll('.fill'),bad=svg.querySelectorAll('.badge'),t0=null,D=1100;
+  function step(t){if(!t0)t0=t;var k=Math.min((t-t0)/D,1),e=1-Math.pow(1-k,3);
+   fills.forEach(function(r){var fh=parseFloat(r.dataset.h)*e;r.setAttribute('height',fh);r.setAttribute('y',bot-4-fh);});
+   bad.forEach(function(g){var fh=parseFloat(g.dataset.h)*e;g.setAttribute('transform','translate(0,'+(-Math.max(fh-48,0))+')');});
+   if(k<1)requestAnimationFrame(step);}
+  if(window.requestAnimationFrame)requestAnimationFrame(step);else step(1e9);}
+ if('IntersectionObserver' in window){var io=new IntersectionObserver(function(en){en.forEach(function(x){if(x.isIntersecting){grow();io.disconnect();}});});io.observe(svg);}else grow();
+ svg.querySelectorAll('.col').forEach(function(g){function go(){var c=document.getElementById('pc'+g.dataset.i);if(!c)return;c.scrollIntoView({behavior:'smooth',block:'center'});c.classList.remove('hl');void c.offsetWidth;c.classList.add('hl');}
+  g.addEventListener('click',go);g.addEventListener('keydown',function(ev){if(ev.key==='Enter')go();});});
+})();
 
 /* charts */
 if(window.Chart){try{
@@ -836,8 +881,7 @@ new Chart(document.getElementById('cMix'),{type:'bar',data:{labels:['Wholesale',
  options:{indexAxis:'y',maintainAspectRatio:false,plugins:{legend:{display:false},datalabels:{anchor:'end',align:'right',font:{weight:'700'},formatter:fmt}},scales:{x:{ticks:{callback:fmt},suggestedMax:75000}}}});
 new Chart(document.getElementById('cDep'),{type:'bar',data:{labels:['CASA','Rupee term deposits','FCNR(B) deposits'],datasets:[{label:'₹ crore',data:[42526,81446,32300],backgroundColor:['#0f9d58','#1d4ed8','#f57c00']}]},
  options:{indexAxis:'y',maintainAspectRatio:false,plugins:{legend:{display:false},datalabels:{anchor:'end',align:'right',font:{weight:'700'},formatter:fmt}},scales:{x:{ticks:{callback:fmt},suggestedMax:95000}}}});
-new Chart(document.getElementById('cRadar'),{type:'radar',data:{labels:P.map(function(p){return p[0];}),datasets:[{label:'RBL Bank',data:P.map(function(p){return p[1];}),backgroundColor:'rgba(15,110,116,.18)',borderColor:'#0f6e74',pointBackgroundColor:'#0f6e74'}]},
- options:{maintainAspectRatio:false,plugins:{datalabels:{display:false}},scales:{r:{min:0,max:10,ticks:{stepSize:2}}}}});
+
 
 }catch(e){console.warn(e);}}
 
