@@ -1,0 +1,965 @@
+<title>HCLTech vs TCS Q2 FY27</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&family=Inter:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@500;600&family=Noto+Sans+Tamil:wght@400;600;700&display=swap">
+<style>
+/* Layout: sticky header + scrollable tab strip; each section one panel; white ground, light-orange UI accent, blue = HCLTech, purple = TCS */
+:root{
+  --bg:#ffffff; --ink:#15120e; --muted:#55493d; --line:#eadccd; --soft:#fff4e8;
+  --accent:#F28C28; --accent-ink:#9a4f05;
+  --hcl:#0F5FA8; --hcl-soft:#e8f1fb; --tcs:#7A3E9D; --tcs-soft:#f3ebf8;
+  --good:#1d7a43; --bad:#b3261e; --warn:#9a6400;
+  --f-display:"Playfair Display",Georgia,serif;
+  --f-body:"Inter","Noto Sans Tamil",system-ui,sans-serif;
+  --f-data:"IBM Plex Mono",ui-monospace,monospace;
+  color-scheme:light;
+}
+html,body{background:var(--bg);color:var(--ink)}
+body{font-family:var(--f-body);font-size:15px;line-height:1.55;font-weight:500}
+body:not(.ta) .ta{display:none!important}
+body.ta .en{display:none!important}
+body.ta{font-size:15.5px}
+.wrap{max-width:1120px;margin:0 auto;padding-inline:16px}
+header.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:var(--bg);border-bottom:2px solid var(--accent)}
+.brandrow{display:flex;flex-wrap:wrap;gap:10px 16px;align-items:center;justify-content:space-between;padding-block:10px}
+.brand{display:flex;align-items:center;gap:10px;min-width:0}
+.logo{width:38px;height:38px;border-radius:50%;background:var(--accent);color:#fff;display:grid;place-items:center;font-family:var(--f-display);font-weight:800;font-size:16px;flex:none}
+.brand h1{font-family:var(--f-display);font-size:clamp(18px,3.4vw,26px);margin:0;line-height:1.15;text-wrap:balance}
+.brand .sub{font-size:12.5px;color:var(--muted);font-weight:600}
+.slogan{font-weight:800;color:var(--accent-ink)}
+.ctrls{display:flex;gap:8px;flex-wrap:wrap}
+button{font:inherit;cursor:pointer}
+.btn{border:2px solid var(--accent);background:#fff;color:var(--ink);font-weight:700;border-radius:999px;padding:6px 14px;font-size:13px}
+.btn.on,.btn:hover{background:var(--accent);color:#fff}
+.btn:focus-visible,.tab:focus-visible{outline:3px solid var(--ink);outline-offset:2px}
+.tabs{display:flex;gap:4px;overflow-x:auto;padding-bottom:8px;scrollbar-width:thin}
+.tab{flex:none;border:1.5px solid var(--line);background:#fff;border-radius:8px;padding:6px 11px;font-weight:700;font-size:13px;color:var(--muted);white-space:nowrap}
+.tab.on{background:var(--soft);border-color:var(--accent);color:var(--ink)}
+main{padding-block:18px 120px}
+section.panel{display:none}
+section.panel.on{display:block}
+h2{font-family:var(--f-display);font-size:clamp(21px,3vw,28px);margin:4px 0 6px;text-wrap:balance}
+h3{font-size:16px;margin:18px 0 8px;font-weight:800}
+.lede{color:var(--muted);font-weight:600;margin:0 0 14px}
+ul.pts{margin:6px 0;padding-left:20px}
+ul.pts li{margin:4px 0}
+.grid{display:grid;gap:14px}
+.g2{grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr))}
+.g3{grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr))}
+.g2>*,.g3>*{min-width:0}
+.box{border:1.5px solid var(--line);border-radius:12px;padding:14px 16px;background:#fff}
+.box.hcl{border-top:5px solid var(--hcl)}
+.box.tcs{border-top:5px solid var(--tcs)}
+.box.note{background:var(--soft);border-color:#f6c896}
+.verdict{border:2px solid var(--accent);background:var(--soft);border-radius:14px;padding:14px 16px;display:grid;gap:6px}
+.verdict .big{font-family:var(--f-display);font-size:clamp(19px,2.6vw,24px);font-weight:800;line-height:1.25}
+.chips{display:flex;gap:8px;flex-wrap:wrap}
+.chip{display:inline-flex;gap:6px;align-items:center;border-radius:999px;padding:3px 10px;font-weight:800;font-size:12.5px;border:1.5px solid var(--line);background:#fff}
+.chip.g{color:var(--good);border-color:#9fd3b4}
+.chip.r{color:var(--bad);border-color:#efaaa5}
+.chip.w{color:var(--warn);border-color:#e8c98a}
+.chip.h{color:var(--hcl);border-color:#9cc2e8}
+.chip.t{color:var(--tcs);border-color:#cfaee2}
+.tw{overflow-x:auto;border:1.5px solid var(--line);border-radius:12px}
+table{border-collapse:collapse;width:100%;min-width:540px;font-size:14px}
+th,td{padding:8px 10px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+thead th{background:var(--soft);font-weight:800;font-size:12.5px;letter-spacing:.03em;text-transform:uppercase}
+td.n,th.n{text-align:right;font-family:var(--f-data);font-variant-numeric:tabular-nums;white-space:nowrap}
+.hc{color:var(--hcl);font-weight:800}.tc{color:var(--tcs);font-weight:800}
+.up{color:var(--good);font-weight:800}.dn{color:var(--bad);font-weight:800}
+.chart{border:1.5px solid var(--line);border-radius:12px;padding:10px;overflow-x:auto;background:#fff}
+.chart svg{display:block;width:100%;height:auto;min-width:300px}
+.legend{display:flex;gap:14px;flex-wrap:wrap;font-size:12.5px;font-weight:700;margin:4px 4px 0}
+.sw{display:inline-block;width:12px;height:12px;border-radius:3px;vertical-align:-1px;margin-right:5px}
+.cap{font-size:12.5px;color:var(--muted);font-weight:600;margin-top:6px}
+.score{font-family:var(--f-data);font-weight:600}
+.flow{display:flex;flex-wrap:wrap;gap:8px;align-items:stretch}
+.step{flex:1 1 150px;min-width:0;border:1.5px solid var(--line);border-radius:10px;padding:10px;background:#fff;position:relative}
+.step b{display:block;font-size:13.5px}
+.step .who{display:flex;gap:6px;margin-top:6px;flex-wrap:wrap}
+.tl{position:relative;padding-left:22px;display:grid;gap:10px}
+.tl::before{content:"";position:absolute;left:7px;top:4px;bottom:4px;width:3px;background:var(--line);border-radius:2px}
+.tl .ev{position:relative}
+.tl .ev::before{content:"";position:absolute;left:-20px;top:5px;width:12px;height:12px;border-radius:50%;background:#fff;border:3px solid var(--accent)}
+.tl .ev.done::before{background:var(--accent)}
+.tl .when{font-family:var(--f-data);font-size:12px;font-weight:600;color:var(--accent-ink)}
+.prow{display:grid;grid-template-columns:minmax(120px,1.2fr) 3fr;gap:4px 12px;align-items:center;padding:5px 0;border-bottom:1px solid var(--line)}
+.prow:last-child{border-bottom:none}
+.pb{display:grid;gap:3px}
+.pb div{display:flex;align-items:center;gap:6px;font-family:var(--f-data);font-size:12px;font-weight:600}
+.pb i{display:block;height:9px;border-radius:5px}
+.pcard h4{margin:0 0 6px;font-size:16px;font-weight:800;display:flex;gap:8px;flex-wrap:wrap;align-items:center;justify-content:space-between}
+.pcard .who{font-weight:800;font-size:13px;margin-top:8px}
+.pcard .vd{margin-top:8px;padding-top:8px;border-top:1px dashed var(--line);font-weight:700}
+.swot{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,230px),1fr));gap:10px}
+.swot .box h4{margin:0 0 4px;font-size:14px}
+.qz{display:grid;gap:12px}
+.q{border:1.5px solid var(--line);border-radius:12px;padding:12px 14px}
+.q .opts{display:grid;gap:6px;margin-top:8px}
+.q .opt{text-align:left;border:1.5px solid var(--line);background:#fff;border-radius:8px;padding:7px 10px;font-weight:600}
+.q .opt.ok{border-color:var(--good);background:#eaf6ef}
+.q .opt.no{border-color:var(--bad);background:#fbecea}
+.q .ex{margin-top:8px;font-size:13.5px;color:var(--muted);font-weight:600}
+/* Assist */
+.assist{border:2px solid var(--accent);border-radius:14px;overflow:hidden}
+.ahead{display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:space-between;background:var(--soft);padding:10px 12px}
+.ahead b{font-family:var(--f-display);font-size:18px}
+.aset{display:flex;gap:6px;flex-wrap:wrap;align-items:center;font-size:12.5px;font-weight:700}
+.aset input[type=range]{width:110px;accent-color:var(--accent)}
+.alog{padding:12px;display:grid;gap:10px;max-height:420px;overflow-y:auto;background:#fff}
+.msg{max-width:92%;border-radius:12px;padding:9px 12px;font-weight:600}
+.msg.u{justify-self:end;background:var(--hcl-soft)}
+.msg.a{justify-self:start;background:#fff;border:1.5px solid var(--line)}
+.msg details{margin-top:6px;font-size:13px;color:var(--muted)}
+.ain{display:flex;gap:8px;padding:10px 12px;border-top:1.5px solid var(--line);flex-wrap:wrap}
+.ain input{flex:1 1 200px;min-width:0;font:inherit;border:1.5px solid var(--line);border-radius:999px;padding:8px 14px}
+.sugg{display:flex;gap:6px;flex-wrap:wrap;padding:0 12px 12px}
+.sugg button{border:1.5px solid var(--line);background:#fff;border-radius:999px;padding:4px 10px;font-size:12.5px;font-weight:700}
+.bar{height:4px;background:var(--line)}
+.bar i{display:block;height:100%;width:0;background:var(--accent);transition:width .1s linear}
+/* Floating */
+.cb{position:fixed;right:16px;bottom:calc(16px + env(safe-area-inset-bottom,0px));z-index:30}
+.cbb{width:46px;height:46px;border-radius:50%;background:var(--accent);color:#fff;border:none;font-family:var(--f-display);font-weight:800;font-size:17px;box-shadow:0 2px 8px rgba(0,0,0,.18);animation:blink 1.6s ease-in-out infinite}
+.cbt{display:none;position:absolute;right:0;bottom:56px;width:min(300px,calc(100vw - 32px));background:#fff;border:2px solid var(--accent);border-radius:12px;padding:10px 12px;font-size:12.5px;font-weight:600;color:var(--ink);box-shadow:0 4px 14px rgba(0,0,0,.12)}
+.cb:hover .cbt,.cb.open .cbt{display:block}
+.vbub{position:fixed;right:16px;bottom:calc(72px + env(safe-area-inset-bottom,0px));z-index:30;border:2px solid var(--accent);background:#fff;color:var(--ink);font-weight:800;border-radius:999px;padding:7px 12px;font-size:12.5px;box-shadow:0 2px 8px rgba(0,0,0,.12)}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.45}}
+@media (prefers-reduced-motion:reduce){.cbb{animation:none}.bar i{transition:none}}
+</style>
+
+<header class="top">
+ <div class="wrap">
+  <div class="brandrow">
+   <div class="brand">
+    <div class="logo">CB</div>
+    <div style="min-width:0">
+     <h1><span class="en">HCLTech vs TCS · Q2 FY27</span><span class="ta">HCLTech vs TCS · Q2 FY27 ரிசல்ட்</span></h1>
+     <div class="sub"><span class="en">Quarter ended 30 Sep 2026 · HCLTech reported 12 Oct, TCS 8 Oct · </span><span class="ta">30 Sep 2026 காலாண்டு · HCLTech 12 Oct, TCS 8 Oct · </span><span class="slogan"><span class="en">Know before you own</span><span class="ta">புரிஞ்சு வாங்குங்க!</span></span></div>
+    </div>
+   </div>
+   <div class="ctrls">
+    <button class="btn on" id="bEN" type="button">English</button>
+    <button class="btn" id="bTA" type="button">தமிழ்</button>
+    <button class="btn" id="bRead" type="button"><span class="en">🔊 Read this tab</span><span class="ta">🔊 இந்த tab-ஐ படிங்க</span></button>
+   </div>
+  </div>
+  <nav class="tabs" id="tabs" aria-label="Sections"></nav>
+ </div>
+</header>
+
+<main class="wrap" id="main">
+
+<!-- DASHBOARD -->
+<section class="panel" id="dash" data-en="Dashboard" data-ta="டாஷ்போர்டு">
+ <div class="verdict">
+  <div class="big"><span class="en">Did HCLTech beat the street? On margin and profit, yes. On revenue, it was only in line.</span><span class="ta">HCLTech street-ஐ beat பண்ணுச்சா? Margin, profit-ல ஆமாம். Revenue-ல just in line தான்.</span></div>
+  <ul class="pts">
+   <li><span class="en">Real growth is low single digit for both: constant currency (CC) YoY HCLTech 2.6%, TCS 2.8%.</span><span class="ta">ரெண்டுக்குமே real growth கம்மி தான்: constant currency (CC) YoY HCLTech 2.6%, TCS 2.8%.</span></li>
+   <li><span class="en">Rupee growth of 11%+ is mostly a weaker rupee, not more business.</span><span class="ta">Rupee-ல 11%+ growth — பெரும்பாலும் rupee வீக் ஆனதால தான், business அதிகமானதால இல்ல.</span></li>
+   <li><span class="en">HCLTech had the better quarter (CC +2.3% QoQ vs TCS +0.5%), but about 1 point came from acquisitions.</span><span class="ta">இந்த quarter HCLTech-க்கு தான் better (CC +2.3% QoQ vs TCS +0.5%) — ஆனா சுமார் 1 point acquisitions-ல இருந்து வந்தது.</span></li>
+   <li><span class="en">HCLTech EBIT margin jumped 131 bps to 18.2%; TCS held 24.0%. TCS still earns ~5.8 points more per ₹100 of revenue.</span><span class="ta">HCLTech EBIT margin 131 bps ஏறி 18.2%; TCS 24.0%-ல அப்படியே. இன்னும் ₹100 revenue-க்கு TCS ~5.8 point அதிகமா சம்பாதிக்குது.</span></li>
+  </ul>
+  <div class="chips">
+   <span class="chip h">HCLTech · CY 68 · TG 74</span>
+   <span class="chip t">TCS · CY 56 · TG 59</span>
+   <span class="chip h"><span class="en">6 Pillars 42/60</span><span class="ta">6 தூண் 42/60</span></span>
+   <span class="chip t"><span class="en">6 Pillars 46/60</span><span class="ta">6 தூண் 46/60</span></span>
+  </div>
+ </div>
+
+ <h3><span class="en">6 Pillars at a glance</span><span class="ta">6 தூண் — ஒரே பார்வையில்</span></h3>
+ <div class="box"><div id="pilDash"></div>
+  <div class="legend"><span><i class="sw" style="background:var(--hcl)"></i>HCLTech 42/60</span><span><i class="sw" style="background:var(--tcs)"></i>TCS 46/60</span><button class="btn" type="button" id="goPil" style="margin-left:auto"><span class="en">See full pillar analysis →</span><span class="ta">முழு தூண் analysis →</span></button></div></div>
+
+ <h3><span class="en">Three ways to measure growth — Q2 FY27</span><span class="ta">Growth-ஐ அளக்க மூணு வழி — Q2 FY27</span></h3>
+ <div class="tw"><table>
+  <thead><tr><th><span class="en">Measure</span><span class="ta">அளவு</span></th><th class="n hc">HCLTech QoQ</th><th class="n hc">HCLTech YoY</th><th class="n tc">TCS QoQ</th><th class="n tc">TCS YoY</th></tr></thead>
+  <tbody>
+   <tr><td><span class="en">Rupee (INR) revenue</span><span class="ta">Rupee (INR) revenue</span></td><td class="n">+3.0%</td><td class="n">+11.5%</td><td class="n">+1.3%</td><td class="n">+11.2%</td></tr>
+   <tr><td><span class="en">Dollar (USD) revenue</span><span class="ta">Dollar (USD) revenue</span></td><td class="n">+2.0%</td><td class="n">+2.2%</td><td class="n">+0.2%</td><td class="n">+2.4%</td></tr>
+   <tr><td><span class="en">Constant currency (CC)</span><span class="ta">Constant currency (CC)</span></td><td class="n">+2.3%</td><td class="n">+2.6%</td><td class="n">+0.5%</td><td class="n">+2.8%</td></tr>
+   <tr><td><span class="en">CC excluding acquisitions (CB est.)</span><span class="ta">Acquisition இல்லாம CC (CB கணக்கு)</span></td><td class="n">~+1.3%</td><td class="n">—</td><td class="n">+0.5%</td><td class="n">+2.8%</td></tr>
+  </tbody></table></div>
+ <div class="chart" style="margin-top:12px"><div id="cGrowth"></div>
+  <div class="legend"><span><i class="sw" style="background:var(--hcl)"></i>HCLTech</span><span><i class="sw" style="background:var(--tcs)"></i>TCS</span></div></div>
+
+ <h3><span class="en">Beat or miss? HCLTech vs street estimates</span><span class="ta">Beat-ஆ miss-ஆ? HCLTech vs street estimate</span></h3>
+ <div class="tw"><table>
+  <thead><tr><th><span class="en">Item</span><span class="ta">விவரம்</span></th><th class="n"><span class="en">Estimate</span><span class="ta">Estimate</span></th><th class="n"><span class="en">Actual</span><span class="ta">Actual</span></th><th><span class="en">Result</span><span class="ta">முடிவு</span></th></tr></thead>
+  <tbody>
+   <tr><td><span class="en">Revenue (Zee Business est.)</span><span class="ta">Revenue (Zee Business est.)</span></td><td class="n">₹35,890 cr</td><td class="n">₹35,620 cr</td><td><span class="chip w"><span class="en">Slight miss −0.8%</span><span class="ta">கொஞ்சம் miss −0.8%</span></span></td></tr>
+   <tr><td><span class="en">Revenue (Axis Direct est.)</span><span class="ta">Revenue (Axis Direct est.)</span></td><td class="n">₹35,443 cr</td><td class="n">₹35,620 cr</td><td><span class="chip g"><span class="en">Small beat +0.5%</span><span class="ta">சின்ன beat +0.5%</span></span></td></tr>
+   <tr><td>EBIT margin</td><td class="n">17.3%</td><td class="n">18.2%</td><td><span class="chip g"><span class="en">Beat +90 bps</span><span class="ta">Beat +90 bps</span></span></td></tr>
+   <tr><td><span class="en">Net profit</span><span class="ta">Net profit</span></td><td class="n">₹4,910 cr</td><td class="n">₹5,132 cr</td><td><span class="chip g"><span class="en">Beat +4.5%</span><span class="ta">Beat +4.5%</span></span></td></tr>
+   <tr><td><span class="en">FY27 CC growth guidance</span><span class="ta">FY27 CC growth guidance</span></td><td class="n">1–4%</td><td class="n">2.5–4%</td><td><span class="chip g"><span class="en">Lower end raised</span><span class="ta">கீழ் அளவு ஏத்தியிருக்காங்க</span></span></td></tr>
+  </tbody></table></div>
+
+ <h3><span class="en">Scorecard at a glance</span><span class="ta">ஒரே பார்வையில்</span></h3>
+ <div class="tw"><table>
+  <thead><tr><th><span class="en">Metric</span><span class="ta">Metric</span></th><th class="n hc">HCLTech</th><th class="n tc">TCS</th><th><span class="en">Edge</span><span class="ta">யாருக்கு</span></th></tr></thead>
+  <tbody>
+   <tr><td>Revenue</td><td class="n">₹35,620 cr · $3,724M</td><td class="n">₹73,188 cr · $7,642M</td><td class="tc">TCS (2×)</td></tr>
+   <tr><td>EBIT margin</td><td class="n">18.2% (19.0% adj.)</td><td class="n">24.0%</td><td class="tc">TCS</td></tr>
+   <tr><td><span class="en">Margin change QoQ / YoY</span><span class="ta">Margin மாற்றம் QoQ / YoY</span></td><td class="n up">+131 / +71 bps</td><td class="n">0 / <span class="dn">−120 bps</span></td><td class="hc">HCLTech</td></tr>
+   <tr><td><span class="en">Net profit (YoY)</span><span class="ta">Net profit (YoY)</span></td><td class="n">₹5,132 cr (+21.2%)</td><td class="n">₹13,884 cr (+15.0%)</td><td class="hc">HCLTech</td></tr>
+   <tr><td><span class="en">Deal wins (TCV / bookings)</span><span class="ta">Deal wins (TCV / bookings)</span></td><td class="n">$3.26B (+27% YoY)</td><td class="n">$9.6B (−4% YoY)</td><td><span class="en">Split</span><span class="ta">சமம்</span></td></tr>
+   <tr><td><span class="en">AI revenue (annualised)</span><span class="ta">AI revenue (வருடக் கணக்கில்)</span></td><td class="n">$876M (+78% YoY)</td><td class="n">$3.1B (&gt;10% of rev)</td><td><span class="en">TCS size · HCL speed</span><span class="ta">TCS size · HCL speed</span></td></tr>
+   <tr><td><span class="en">Headcount (net add)</span><span class="ta">Headcount (புதுசா)</span></td><td class="n">230,339 (+6,450)</td><td class="n">598,056 (+4,258)</td><td>—</td></tr>
+  </tbody></table></div>
+</section>
+
+<!-- 6 PILLARS -->
+<section class="panel" id="pil" data-en="6 Pillars" data-ta="6 தூண்கள்">
+ <h2><span class="en">Q2 FY27 results through the 6 Pillars</span><span class="ta">Q2 FY27 ரிசல்ட் — 6 தூண் பார்வையில்</span></h2>
+ <p class="lede"><span class="en">Each pillar is scored 1–10 using this quarter's numbers. Total out of 60.</span><span class="ta">ஒவ்வொரு தூணுக்கும் இந்த quarter numbers வச்சு 1–10 score. மொத்தம் 60-க்கு.</span></p>
+ <div class="grid g2">
+  <div class="chart"><div id="cRadar"></div><div class="legend"><span><i class="sw" style="background:var(--hcl)"></i>HCLTech 42/60</span><span><i class="sw" style="background:var(--tcs)"></i>TCS 46/60</span></div></div>
+  <div class="box note"><b><span class="en">Verdict</span><span class="ta">முடிவு</span></b>
+   <div class="chips" style="margin:8px 0"><span class="chip h">HCLTech 42 / 60</span><span class="chip t">TCS 46 / 60</span></div>
+   <ul class="pts">
+    <li><span class="en">TCS leads on 4 pillars: quality, moat, financial strength, valuation.</span><span class="ta">TCS 4 தூண்ல முன்னாடி: quality, moat, financial strength, valuation.</span></li>
+    <li><span class="en">HCLTech leads only on growth — but Q2 moved it up on quality and growth.</span><span class="ta">HCLTech growth-ல மட்டும் முன்னாடி — ஆனா Q2 quality, growth-ல அதை மேல தூக்கியிருக்கு.</span></li>
+    <li><span class="en">Risk & reward is a tie: each has one clear weak spot.</span><span class="ta">Risk & reward சமம்: ரெண்டுக்கும் ஒரு தெளிவான பலவீனம் இருக்கு.</span></li>
+    <li><span class="en">Gap closing: HCLTech is improving; TCS is steady, not improving.</span><span class="ta">இடைவெளி குறையுது: HCLTech முன்னேறுது; TCS நிலையா இருக்கு, முன்னேறல.</span></li>
+   </ul></div>
+ </div>
+ <h3><span class="en">Pillar by pillar — what the Q2 numbers say</span><span class="ta">ஒவ்வொரு தூணா — Q2 numbers என்ன சொல்லுது</span></h3>
+ <div class="grid g2" id="pilCards"></div>
+ <h3><span class="en">How the scores were graded</span><span class="ta">Score எப்படி போட்டோம்</span></h3>
+ <ul class="pts">
+  <li><span class="en">9–10 best-in-class · 7–8 strong · 5–6 average · below 5 weak.</span><span class="ta">9–10 சிறந்தது · 7–8 வலுவானது · 5–6 சராசரி · 5-க்கு கீழே பலவீனம்.</span></li>
+  <li><span class="en">Each score compares Q2 FY27 numbers with the peer and the company's own recent quarters.</span><span class="ta">Q2 FY27 numbers-ஐ peer, company-யோட சமீபத்திய quarters-ஓட ஒப்பிட்டு.</span></li>
+  <li><span class="en">"Q2 effect" shows whether this quarter's results lifted (↑), held (→) or weakened (↓) the pillar.</span><span class="ta">"Q2 effect" — இந்த quarter அந்த தூணை ஏத்துச்சா (↑), அப்படியே வச்சுதா (→), இறக்குச்சா (↓).</span></li>
+  <li><span class="en">Valuation uses a CB estimate of P/E (H1 FY27 EPS × 2). Education only, not a recommendation.</span><span class="ta">Valuation-க்கு CB கணக்கு P/E (H1 FY27 EPS × 2). கல்விக்காக மட்டும், recommendation இல்ல.</span></li>
+ </ul>
+</section>
+
+<!-- SENTIMENT CHECK -->
+<section class="panel" id="sent" data-en="Sentiment Check" data-ta="சந்தை மனநிலை">
+ <h2><span class="en">IT services sentiment: red flags vs green shoots</span><span class="ta">IT services மனநிலை: எச்சரிக்கை vs நம்பிக்கை துளிர்</span></h2>
+ <p class="lede"><span class="en">The market is negative on Indian IT. Here are the points that confirm it, and the early signs that it may be turning.</span><span class="ta">Indian IT மேல market negative-ஆ இருக்கு. அதை உறுதிப்படுத்தும் points, மாறக்கூடும்னு காட்டும் ஆரம்ப அறிகுறிகள் — ரெண்டும் இங்கே.</span></p>
+ <div class="grid g2">
+  <div class="chart"><div id="cSent"></div><div class="cap"><span class="en">CB sentiment read, 0 = very negative, 100 = very positive. Scale is a judgement, not a measured index.</span><span class="ta">CB மனநிலை பார்வை, 0 = ரொம்ப negative, 100 = ரொம்ப positive. இது ஒரு மதிப்பீடு, அளந்த index இல்ல.</span></div></div>
+  <div class="verdict"><div class="big"><span class="en">Still negative, but turning at the margin.</span><span class="ta">இன்னும் negative தான், ஆனா மெதுவா மாற ஆரம்பிச்சிருக்கு.</span></div>
+   <ul class="pts">
+    <li><span class="en">The negatives are about the long term: AI shrinking old work, low growth, falling deal values.</span><span class="ta">Negatives நீண்டகாலம் பத்தி: AI பழைய வேலையை சுருக்குது, growth கம்மி, deal value இறங்குது.</span></li>
+    <li><span class="en">The green shoots are about the near term: sequential growth up, a guidance raise, AI revenue scaling, hiring back.</span><span class="ta">நம்பிக்கை துளிர் near term பத்தி: QoQ growth ஏறுது, guidance ஏற்றம், AI revenue வளருது, hiring திரும்புது.</span></li>
+    <li><span class="en">One good quarter does not end a down-cycle. Q3 FY27 results in January are the real test.</span><span class="ta">ஒரு நல்ல quarter-ல down-cycle முடிஞ்சிடாது. January-ல Q3 FY27 ரிசல்ட் தான் உண்மையான சோதனை.</span></li>
+   </ul></div>
+ </div>
+
+ <h3 style="color:var(--bad)"><span class="en">🔴 Points that confirm the negative sentiment</span><span class="ta">🔴 Negative மனநிலையை உறுதிப்படுத்தும் points</span></h3>
+ <div class="tw"><table>
+  <thead><tr><th style="width:26%"><span class="en">Red flag</span><span class="ta">எச்சரிக்கை</span></th><th><span class="en">Evidence</span><span class="ta">ஆதாரம்</span></th></tr></thead>
+  <tbody>
+   <tr><td><b><span class="en">1. Growth is stuck at 2–3%</span><span class="ta">1. Growth 2–3%-ல நிக்குது</span></b></td><td><span class="en">CC YoY: HCLTech 2.6%, TCS 2.8%. HCLTech's FY27 guidance of 2.5–4% is below its FY26 growth of 3.9%.</span><span class="ta">CC YoY: HCLTech 2.6%, TCS 2.8%. HCLTech FY27 guidance 2.5–4% — FY26-ன் 3.9%-ஐ விட கம்மி.</span></td></tr>
+   <tr><td><b><span class="en">2. Rupee growth hides the slowdown</span><span class="ta">2. Rupee growth மந்தத்தை மறைக்குது</span></b></td><td><span class="en">11%+ rupee growth falls to ~2% in dollars. About 9 points is a weaker rupee.</span><span class="ta">11%+ rupee growth, dollar-ல ~2% தான். ~9 point rupee வீக் ஆனதால.</span></td></tr>
+   <tr><td><b><span class="en">3. AI is shrinking old work</span><span class="ta">3. AI பழைய வேலையை சுருக்குது</span></b></td><td><span class="en">Clients use AI for coding, testing and support, so billable hours fall. HCLTech management talks openly of "AI-led deflation" in core services.</span><span class="ta">Coding, testing, support-க்கு clients AI பயன்படுத்துறாங்க — billable hours குறையுது. Core services-ல "AI-led deflation"-னு HCLTech management-ஏ சொல்றாங்க.</span></td></tr>
+   <tr><td><b><span class="en">4. Global peer warning</span><span class="ta">4. Global peer எச்சரிக்கை</span></b></td><td><span class="en">On 19 Jun 2026 Accenture cut its FY26 growth forecast to 3–4%; its shares fell over 17% and Nifty IT fell 6% in one day.</span><span class="ta">19 Jun 2026-ல Accenture FY26 growth forecast-ஐ 3–4%-க்கு குறைச்சது; அதன் share 17%-க்கு மேல விழுந்தது, Nifty IT ஒரே நாளில 6% விழுந்தது.</span></td></tr>
+   <tr><td><b><span class="en">5. Deep stock damage</span><span class="ta">5. Stock-ல பெரிய அடி</span></b></td><td><span class="en">Nifty IT fell ~28% from its peak by March 2026. TCS −35.7% YTD; HCLTech hit ₹1,030 on 1 Jul, ~42% below its ₹1,780 high.</span><span class="ta">March 2026-க்குள்ள Nifty IT peak-ல இருந்து ~28% விழுந்தது. TCS YTD −35.7%; HCLTech 1 Jul-ல ₹1,030 — ₹1,780 high-ல இருந்து ~42% கீழே.</span></td></tr>
+   <tr><td><b><span class="en">6. Foreign investors are selling</span><span class="ta">6. வெளிநாட்டு முதலீட்டாளர்கள் விக்கறாங்க</span></b></td><td><span class="en">FII outflows of ₹52,704 cr in March 2026 alone, one of the largest monthly outflows on record.</span><span class="ta">March 2026-ல மட்டும் FII outflow ₹52,704 cr — சாதனை அளவு outflow-ல ஒன்று.</span></td></tr>
+   <tr><td><b><span class="en">7. Deal values are not growing</span><span class="ta">7. Deal value வளரல</span></b></td><td><span class="en">TCS TCV $9.6B vs $10B a year ago and $12B in Q4 FY26.</span><span class="ta">TCS TCV $9.6B — போன வருஷம் $10B, Q4 FY26-ல $12B.</span></td></tr>
+   <tr><td><b><span class="en">8. Weak pockets</span><span class="ta">8. பலவீனமான பகுதிகள்</span></b></td><td><span class="en">TCS India −10.3% QoQ, Consumer −0.7%, Energy −0.5%. HCLTech Europe −0.3% YoY, Software −5.8% QoQ.</span><span class="ta">TCS India −10.3% QoQ, Consumer −0.7%, Energy −0.5%. HCLTech Europe −0.3% YoY, Software −5.8% QoQ.</span></td></tr>
+   <tr><td><b><span class="en">9. Growth is being bought</span><span class="ta">9. Growth வாங்கப்படுது</span></b></td><td><span class="en">~1 point of HCLTech's 2.3% QoQ growth came from acquisitions; organic ~1.3%.</span><span class="ta">HCLTech-ன் 2.3% QoQ growth-ல ~1 point acquisitions; organic ~1.3%.</span></td></tr>
+   <tr><td><b><span class="en">10. Restructuring every quarter</span><span class="ta">10. ஒவ்வொரு quarter-உம் restructuring</span></b></td><td><span class="en">HCLTech restructuring cost: 122 bps (Q4 FY26), 62 bps (Q1), 84 bps (Q2). TCS margin −120 bps YoY.</span><span class="ta">HCLTech restructuring cost: 122 bps (Q4 FY26), 62 bps (Q1), 84 bps (Q2). TCS margin YoY −120 bps.</span></td></tr>
+  </tbody></table></div>
+
+ <h3 style="color:var(--good)"><span class="en">🟢 Green shoots</span><span class="ta">🟢 நம்பிக்கை துளிர்கள்</span></h3>
+ <div class="tw"><table>
+  <thead><tr><th style="width:26%"><span class="en">Green shoot</span><span class="ta">நம்பிக்கை துளிர்</span></th><th><span class="en">Evidence</span><span class="ta">ஆதாரம்</span></th></tr></thead>
+  <tbody>
+   <tr><td><b><span class="en">1. Sequential growth turning up</span><span class="ta">1. QoQ growth ஏற ஆரம்பிச்சிருக்கு</span></b></td><td><span class="en">HCLTech CC: −3.3% (Q4 FY26) → −0.5% (Q1) → +2.3% (Q2). TCS: +0.4% → +0.5%.</span><span class="ta">HCLTech CC: −3.3% (Q4 FY26) → −0.5% (Q1) → +2.3% (Q2). TCS: +0.4% → +0.5%.</span></td></tr>
+   <tr><td><b><span class="en">2. First guidance raise</span><span class="ta">2. முதல் guidance ஏற்றம்</span></b></td><td><span class="en">HCLTech raised FY27 CC guidance to 2.5–4% from 1–4%; services to 3–4%.</span><span class="ta">HCLTech FY27 CC guidance 1–4%-ல இருந்து 2.5–4%; services 3–4%.</span></td></tr>
+   <tr><td><b><span class="en">3. AI is now real revenue</span><span class="ta">3. AI இப்போ உண்மையான revenue</span></b></td><td><span class="en">TCS AI $3.1B annualised (was $1.5B a year ago), over 10% of revenue. HCLTech Advanced AI $876M run-rate, +78% YoY; agentic AI over $100M a quarter.</span><span class="ta">TCS AI $3.1B (போன வருஷம் $1.5B), revenue-ல 10%-க்கு மேல. HCLTech Advanced AI $876M, +78% YoY; agentic AI quarter-க்கு $100M-க்கு மேல.</span></td></tr>
+   <tr><td><b><span class="en">4. AI lifts margins</span><span class="ta">4. AI margin-ஐ ஏத்துது</span></b></td><td><span class="en">AI work added ~32 bps to HCLTech's margin, which rose 131 bps to 18.2%. AI is not only a threat.</span><span class="ta">AI work HCLTech margin-க்கு ~32 bps சேர்த்தது; margin 131 bps ஏறி 18.2%. AI வெறும் ஆபத்து மட்டும் இல்ல.</span></td></tr>
+   <tr><td><b><span class="en">5. Deals are still coming</span><span class="ta">5. Deals இன்னும் வருது</span></b></td><td><span class="en">HCLTech bookings $3.26B, +27% YoY, record first half. TCS book-to-bill 1.26×; new partnership deals with Porsche ($1.46B) and Best Buy.</span><span class="ta">HCLTech bookings $3.26B, +27% YoY, record first half. TCS book-to-bill 1.26×; Porsche ($1.46B), Best Buy-யோட புது deals.</span></td></tr>
+   <tr><td><b><span class="en">6. Hiring is back</span><span class="ta">6. Hiring திரும்புது</span></b></td><td><span class="en">HCLTech added 6,450 people, with 6,136 freshers vs 1,056 in Q1. TCS added 4,258 — third straight quarterly rise.</span><span class="ta">HCLTech 6,450 பேர் சேர்த்தது; freshers 6,136 (Q1-ல 1,056). TCS 4,258 — தொடர்ந்து மூணாவது quarter ஏற்றம்.</span></td></tr>
+   <tr><td><b><span class="en">7. Key clients spending again</span><span class="ta">7. முக்கிய clients மறுபடி செலவு</span></b></td><td><span class="en">TCS BFSI +2.5%, Manufacturing +3.1%, Tech +3.1%, UK +3.5% QoQ. HCLTech services grew across all verticals and regions.</span><span class="ta">TCS BFSI +2.5%, Manufacturing +3.1%, Tech +3.1%, UK +3.5% QoQ. HCLTech services எல்லா vertical, region-லயும் வளர்ந்தது.</span></td></tr>
+   <tr><td><b><span class="en">8. Market rewarding results</span><span class="ta">8. Result-க்கு market வரவேற்பு</span></b></td><td><span class="en">TCS +5.46% on 9 Oct (Nifty IT +2.7%). HCLTech +5.2% to ₹1,286 on 13 Oct.</span><span class="ta">9 Oct TCS +5.46% (Nifty IT +2.7%). 13 Oct HCLTech +5.2% ஏறி ₹1,286.</span></td></tr>
+   <tr><td><b><span class="en">9. Valuations already reset</span><span class="ta">9. Valuation ஏற்கனவே இறங்கியாச்சு</span></b></td><td><span class="en">TCS ~14.5× vs a historical 25–28× average; HCLTech ~18× (CB est.). Much bad news may be priced in.</span><span class="ta">TCS ~14.5× — வழக்கமான 25–28× சராசரி; HCLTech ~18× (CB கணக்கு). நிறைய bad news ஏற்கனவே விலையில இருக்கலாம்.</span></td></tr>
+   <tr><td><b><span class="en">10. Cash and weak rupee</span><span class="ta">10. Cash, வீக் rupee</span></b></td><td><span class="en">Both debt-free; TCS OCF 102% of profit, ₹57,353 cr cash. A weaker rupee supports margins.</span><span class="ta">ரெண்டும் debt இல்ல; TCS OCF profit-ல 102%, ₹57,353 cr cash. வீக் rupee margin-க்கு உதவுது.</span></td></tr>
+  </tbody></table></div>
+
+ <h3><span class="en">What would confirm the turn</span><span class="ta">மாற்றம் உறுதியாக என்ன வேணும்</span></h3>
+ <div class="grid g3">
+  <div class="box"><b><span class="en">15 Oct 2026</span><span class="ta">15 Oct 2026</span></b><ul class="pts"><li><span class="en">Wipro and Tech Mahindra also show positive QoQ CC growth.</span><span class="ta">Wipro, Tech Mahindra-வும் positive QoQ CC growth காட்டணும்.</span></li></ul></div>
+  <div class="box"><b><span class="en">Next 2 quarters</span><span class="ta">அடுத்த 2 quarters</span></b><ul class="pts"><li><span class="en">TCS TCV back above $10B; HCLTech organic growth above 1% QoQ.</span><span class="ta">TCS TCV மறுபடி $10B-க்கு மேல; HCLTech organic growth 1% QoQ-க்கு மேல.</span></li></ul></div>
+  <div class="box"><b><span class="en">Flows</span><span class="ta">Flows</span></b><ul class="pts"><li><span class="en">FIIs turn buyers; US rate cuts support client budgets.</span><span class="ta">FII வாங்க ஆரம்பிக்கணும்; US rate cuts client budget-க்கு உதவணும்.</span></li></ul></div>
+ </div>
+</section>
+
+<!-- BUSINESS MODEL -->
+<section class="panel" id="bm" data-en="Business Model" data-ta="பிசினஸ் மாடல்">
+ <h2><span class="en">How each company makes money</span><span class="ta">ரெண்டு company-யும் எப்படி சம்பாதிக்குது</span></h2>
+ <p class="lede"><span class="en">Both sell technology services to global companies and bill mostly in dollars, euros and pounds. Costs are mostly salaries in rupees.</span><span class="ta">ரெண்டுமே global company-களுக்கு tech services விக்குது; bill பெரும்பாலும் dollar, euro, pound-ல. Cost பெரும்பாலும் rupee-ல salary.</span></p>
+ <div class="grid g2">
+  <div class="box hcl"><h3 class="hc" style="margin-top:0">HCLTech</h3>
+   <ul class="pts">
+    <li><span class="en">Three engines: IT & Business Services, Engineering & R&D (ER&D), and HCLSoftware (own products).</span><span class="ta">மூணு engine: IT & Business Services, Engineering & R&D (ER&D), HCLSoftware (சொந்த products).</span></li>
+    <li><span class="en">Services = $3,442M (~92%); Software = $294M (~7.9%) this quarter.</span><span class="ta">இந்த quarter Services = $3,442M (~92%); Software = $294M (~7.9%).</span></li>
+    <li><span class="en">ER&D is a niche strength: designs chips, cars, devices for product companies.</span><span class="ta">ER&D தான் தனி பலம்: product company-களுக்கு chip, car, device design.</span></li>
+    <li><span class="en">"Advanced AI" (AI Factory, physical AI, agentic AI, AI advisory) is the new growth line.</span><span class="ta">"Advanced AI" (AI Factory, physical AI, agentic AI, AI advisory) — புது growth line.</span></li>
+    <li><span class="en">Also buys companies; acquisitions added $35.6M revenue this quarter.</span><span class="ta">Company-களையும் வாங்குது; இந்த quarter acquisitions-ல $35.6M revenue சேர்ந்தது.</span></li>
+   </ul></div>
+  <div class="box tcs"><h3 class="tc" style="margin-top:0">TCS</h3>
+   <ul class="pts">
+    <li><span class="en">Pure services company; India's largest by revenue and headcount (~5.98 lakh people).</span><span class="ta">முழுக்க services company; revenue, headcount (~5.98 லட்சம் பேர்) ரெண்டுலயும் India-வுல பெரிசு.</span></li>
+    <li><span class="en">Organised by industry: BFSI is the biggest vertical; also Manufacturing, Consumer, Tech & Services, Life Sciences, Energy.</span><span class="ta">Industry வாரியா: BFSI தான் பெரிய vertical; அப்புறம் Manufacturing, Consumer, Tech & Services, Life Sciences, Energy.</span></li>
+    <li><span class="en">Strength: long multi-year contracts and very high margin (24%).</span><span class="ta">பலம்: பல வருஷ contracts, ரொம்ப high margin (24%).</span></li>
+    <li><span class="en">New "transformation partnership" deals (Porsche, Best Buy) this quarter.</span><span class="ta">இந்த quarter புது "transformation partnership" deals (Porsche, Best Buy).</span></li>
+    <li><span class="en">Has an India business (govt and domestic clients), which fell sharply this quarter.</span><span class="ta">India business-உம் இருக்கு (govt, domestic clients) — இந்த quarter அது நல்லா இறங்குச்சு.</span></li>
+   </ul></div>
+ </div>
+ <h3><span class="en">Picture it: why rupee revenue grows faster than dollar revenue</span><span class="ta">இப்படி யோசிங்க: rupee revenue ஏன் dollar revenue-ஐ விட வேகமா வளருது</span></h3>
+ <div class="box note"><ul class="pts">
+  <li><span class="en">A client pays $100 a year ago and $102 today → dollar growth 2%.</span><span class="ta">ஒரு client போன வருஷம் $100, இப்போ $102 கொடுக்கறாங்க → dollar growth 2%.</span></li>
+  <li><span class="en">If the rupee weakened ~9% vs the dollar, those $102 convert into ~11% more rupees.</span><span class="ta">Rupee dollar-க்கு எதிரா ~9% வீக் ஆனா, அதே $102 rupee-ல ~11% அதிகமா வரும்.</span></li>
+  <li><span class="en">So rupee growth flatters; CC growth shows real business growth.</span><span class="ta">அதனால rupee growth அழகா தெரியும்; CC growth தான் உண்மையான business growth.</span></li>
+ </ul></div>
+ <div class="chart" style="margin-top:12px"><div id="cBridge"></div>
+  <div class="cap"><span class="en">YoY bridge, approximate (CB calculation): CC growth → cross-currency → rupee move = rupee growth.</span><span class="ta">YoY bridge, தோராயமா (CB கணக்கு): CC growth → cross-currency → rupee மாற்றம் = rupee growth.</span></div></div>
+</section>
+
+<!-- SEGMENTS -->
+<section class="panel" id="seg" data-en="Segments" data-ta="பிரிவுகள்">
+ <h2><span class="en">Segment performance</span><span class="ta">Segment performance</span></h2>
+ <h3 class="hc">HCLTech <span class="en">— by business (CC)</span><span class="ta">— business வாரியா (CC)</span></h3>
+ <div class="tw"><table>
+  <thead><tr><th><span class="en">Segment</span><span class="ta">Segment</span></th><th class="n">QoQ</th><th class="n">YoY</th><th><span class="en">Read</span><span class="ta">அர்த்தம்</span></th></tr></thead>
+  <tbody>
+   <tr><td>IT & Business Services</td><td class="n up">+2.7%</td><td class="n up">+4.4%</td><td><span class="en">Steady core</span><span class="ta">நிலையான core</span></td></tr>
+   <tr><td>Engineering & R&D</td><td class="n up">+4.1%</td><td class="n">+2.1%</td><td><span class="en">Strong rebound QoQ</span><span class="ta">QoQ நல்ல rebound</span></td></tr>
+   <tr><td><b>Services total</b></td><td class="n up">+3.0%</td><td class="n up">+4.0%</td><td><span class="en">Organic ~2.3% QoQ</span><span class="ta">Organic ~2.3% QoQ</span></td></tr>
+   <tr><td>HCLSoftware ($294M)</td><td class="n dn">−5.8%</td><td class="n dn"><span class="en">Lower</span><span class="ta">குறைவு</span></td><td><span class="en">Weak spot; EBIT margin ~20%</span><span class="ta">பலவீனம்; EBIT margin ~20%</span></td></tr>
+   <tr><td><span class="en">Europe (geography)</span><span class="ta">Europe (geography)</span></td><td class="n">—</td><td class="n dn">−0.3%</td><td><span class="en">Soft region</span><span class="ta">மந்தமான region</span></td></tr>
+  </tbody></table></div>
+ <h3 class="tc">TCS <span class="en">— by industry and market (CC, QoQ)</span><span class="ta">— industry, market வாரியா (CC, QoQ)</span></h3>
+ <div class="tw"><table>
+  <thead><tr><th><span class="en">Segment</span><span class="ta">Segment</span></th><th class="n">QoQ CC</th><th><span class="en">Read</span><span class="ta">அர்த்தம்</span></th></tr></thead>
+  <tbody>
+   <tr><td>Manufacturing</td><td class="n up">+3.1%</td><td><span class="en">Porsche-type deals</span><span class="ta">Porsche மாதிரி deals</span></td></tr>
+   <tr><td>Technology & Services</td><td class="n up">+3.1%</td><td><span class="en">Tech clients spending</span><span class="ta">Tech clients செலவு பண்றாங்க</span></td></tr>
+   <tr><td>BFSI</td><td class="n up">+2.5%</td><td><span class="en">Biggest vertical growing</span><span class="ta">பெரிய vertical வளருது</span></td></tr>
+   <tr><td>Consumer</td><td class="n dn">−0.7%</td><td><span class="en">Retail weak</span><span class="ta">Retail மந்தம்</span></td></tr>
+   <tr><td>Energy, Resources & Utilities</td><td class="n dn">−0.5%</td><td><span class="en">Soft</span><span class="ta">மந்தம்</span></td></tr>
+   <tr><td>UK / Asia Pacific</td><td class="n up">+3.5% / +2.0%</td><td><span class="en">Leading markets</span><span class="ta">முன்னணி markets</span></td></tr>
+   <tr><td><span class="en">International total</span><span class="ta">International மொத்தம்</span></td><td class="n up">+1.2%</td><td><span class="en">Better than headline</span><span class="ta">Headline-ஐ விட நல்லது</span></td></tr>
+   <tr><td>India</td><td class="n dn">−10.3%</td><td><span class="en">Dragged total to +0.5%</span><span class="ta">மொத்தத்தை +0.5%-க்கு இழுத்தது</span></td></tr>
+  </tbody></table></div>
+</section>
+
+<!-- FINANCIALS -->
+<section class="panel" id="fin" data-en="Financials" data-ta="நிதி நிலை">
+ <h2><span class="en">Revenue, EBIT and margin</span><span class="ta">Revenue, EBIT, margin</span></h2>
+ <div class="tw"><table>
+  <thead><tr><th>₹ cr</th><th class="n">Q2 FY26</th><th class="n">Q1 FY27</th><th class="n">Q2 FY27</th><th class="n">QoQ</th><th class="n">YoY</th></tr></thead>
+  <tbody>
+   <tr><td class="hc">HCLTech revenue</td><td class="n">31,942</td><td class="n">34,579</td><td class="n">35,620</td><td class="n">+3.0%</td><td class="n">+11.5%</td></tr>
+   <tr><td class="hc">HCLTech USD rev ($M)</td><td class="n">3,644</td><td class="n">3,650</td><td class="n">3,724</td><td class="n">+2.0%</td><td class="n">+2.2%</td></tr>
+   <tr><td class="hc">HCLTech EBIT</td><td class="n">5,550</td><td class="n">5,831</td><td class="n">6,465</td><td class="n up">+10.9%</td><td class="n up">+16.5%</td></tr>
+   <tr><td class="hc">HCLTech EBIT margin</td><td class="n">17.4%</td><td class="n">16.9%</td><td class="n">18.2%</td><td class="n up">+131 bps</td><td class="n up">+71 bps</td></tr>
+   <tr><td class="hc">HCLTech net profit</td><td class="n">4,235</td><td class="n">4,624</td><td class="n">5,132</td><td class="n up">+11.0%</td><td class="n up">+21.2%</td></tr>
+   <tr><td class="tc">TCS revenue</td><td class="n">65,799</td><td class="n">72,275</td><td class="n">73,188</td><td class="n">+1.3%</td><td class="n">+11.2%</td></tr>
+   <tr><td class="tc">TCS USD rev ($M)</td><td class="n">7,466</td><td class="n">7,624</td><td class="n">7,642</td><td class="n">+0.2%</td><td class="n">+2.4%</td></tr>
+   <tr><td class="tc">TCS EBIT (operating income)*</td><td class="n">16,565</td><td class="n">17,317</td><td class="n">17,553</td><td class="n">+1.4%</td><td class="n">+6.0%</td></tr>
+   <tr><td class="tc">TCS operating margin*</td><td class="n">25.2%</td><td class="n">24.0%</td><td class="n">24.0%</td><td class="n">0 bps</td><td class="n dn">−120 bps</td></tr>
+   <tr><td class="tc">TCS net profit</td><td class="n">12,075</td><td class="n">13,349</td><td class="n">13,884</td><td class="n up">+4.0%</td><td class="n up">+15.0%</td></tr>
+  </tbody></table></div>
+ <p class="cap"><span class="en">* TCS Q2 FY26 and Q1 FY27 exclude exceptional items. TCS Q1 FY27 profit included a ₹668 cr legal-settlement loss. HCLTech margins include restructuring cost (84 bps in Q2 FY27, 62 bps in Q1 FY27).</span><span class="ta">* TCS Q2 FY26, Q1 FY27 exceptional items இல்லாம. TCS Q1 FY27 profit-ல ₹668 cr legal settlement நஷ்டம் இருந்தது. HCLTech margin-ல restructuring cost சேர்த்து (Q2 FY27 84 bps, Q1 FY27 62 bps).</span></p>
+ <h3><span class="en">EBIT margin trend</span><span class="ta">EBIT margin போக்கு</span></h3>
+ <div class="chart"><div id="cMargin"></div>
+  <div class="legend"><span><i class="sw" style="background:var(--hcl)"></i>HCLTech</span><span><i class="sw" style="background:var(--tcs)"></i>TCS</span><span><i class="sw" style="background:#f9d9b4"></i><span class="en">HCLTech FY27 guidance band 17.5–18.5%</span><span class="ta">HCLTech FY27 guidance 17.5–18.5%</span></span></div>
+  <div class="cap"><span class="en">TCS Q3 FY26 not shown.</span><span class="ta">TCS Q3 FY26 காட்டல.</span></div></div>
+ <h3><span class="en">What drove HCLTech's margin jump</span><span class="ta">HCLTech margin ஏன் ஏறுச்சு</span></h3>
+ <ul class="pts">
+  <li><span class="en">Higher-margin Advanced AI work added ~32 bps.</span><span class="ta">அதிக margin உள்ள Advanced AI work ~32 bps சேர்த்தது.</span></li>
+  <li><span class="en">"Project Ascent" cost programme and AI-led delivery efficiency.</span><span class="ta">"Project Ascent" cost திட்டம், AI-ஆல delivery efficiency.</span></li>
+  <li><span class="en">Weaker rupee helps every exporter's margin.</span><span class="ta">Rupee வீக் ஆனா எல்லா exporter margin-க்கும் உதவும்.</span></li>
+  <li><span class="en">Excluding 84 bps restructuring, margin was 19.0% — top of the 17.5–18.5% guidance.</span><span class="ta">84 bps restructuring இல்லாம margin 19.0% — 17.5–18.5% guidance-ஐ தாண்டி.</span></li>
+ </ul>
+</section>
+
+<!-- CASH FLOW & RATIOS -->
+<section class="panel" id="cash" data-en="Cash Flow & Ratios" data-ta="பணப்புழக்கம் & விகிதங்கள்">
+ <h2><span class="en">Cash flow, ratios and working capital</span><span class="ta">Cash flow, ratios, working capital</span></h2>
+ <div class="tw"><table>
+  <thead><tr><th><span class="en">Item</span><span class="ta">விவரம்</span></th><th class="n hc">HCLTech</th><th class="n tc">TCS</th></tr></thead>
+  <tbody>
+   <tr><td><span class="en">Operating cash flow</span><span class="ta">Operating cash flow</span></td><td class="n">OCF/NI 111% (LTM, Jun-26)</td><td class="n">₹14,190 cr · 102.2% of NP (Q2)</td></tr>
+   <tr><td><span class="en">Free cash flow</span><span class="ta">Free cash flow</span></td><td class="n">$1.98B LTM · FCF/NI 99%</td><td class="n">₹12,731 cr (Q2)</td></tr>
+   <tr><td><span class="en">OCF as % of sales</span><span class="ta">Sales-ல OCF %</span></td><td class="n">—</td><td class="n">19.4% (Q1: 17.2%)</td></tr>
+   <tr><td><span class="en">Cash & investments</span><span class="ta">Cash & investments</span></td><td class="n">Net cash $2.84B (Jun-26)</td><td class="n">₹57,353 cr (Sep-26)</td></tr>
+   <tr><td>ROIC / ROE</td><td class="n">ROIC 40.3% (FY26) · ROE ~22%</td><td class="n">—</td></tr>
+   <tr><td><span class="en">Net margin</span><span class="ta">Net margin</span></td><td class="n">14.4%</td><td class="n">19.0%</td></tr>
+   <tr><td><span class="en">Revenue per employee (yr)</span><span class="ta">ஒரு ஊழியருக்கு revenue (வருடம்)</span></td><td class="n">$65.4K (+2.4% YoY)</td><td class="n">~$51K (CB calc.)</td></tr>
+   <tr><td><span class="en">LTM attrition</span><span class="ta">LTM attrition</span></td><td class="n">12.8%</td><td class="n">13.3%</td></tr>
+   <tr><td><span class="en">Book-to-bill (TCV ÷ quarterly revenue)</span><span class="ta">Book-to-bill (TCV ÷ quarterly revenue)</span></td><td class="n">0.87×</td><td class="n">1.26×</td></tr>
+   <tr><td><span class="en">Working capital days (DSO)</span><span class="ta">Working capital days (DSO)</span></td><td class="n">n.d.</td><td class="n">n.d.</td></tr>
+  </tbody></table></div>
+ <p class="cap"><span class="en">n.d. = Q2 FY27 receivable days not available at the time of writing; HCLTech's Q2 cash-flow statement figures were not yet published in the material reviewed, so the latest LTM (June 2026) figures are shown.</span><span class="ta">n.d. = Q2 FY27 receivable days இப்போ கிடைக்கல; HCLTech Q2 cash flow இன்னும் வரல, அதனால latest LTM (June 2026) கணக்கு போட்டிருக்கோம்.</span></p>
+ <ul class="pts">
+  <li><span class="en">Both are debt-free cash machines; cash conversion near or above 100% of profit.</span><span class="ta">ரெண்டுமே debt இல்லாத cash machines; profit-ல 100% அளவுக்கு cash ஆகுது.</span></li>
+  <li><span class="en">TCS cash conversion recovered to 102% after a weak 93% in Q1.</span><span class="ta">TCS cash conversion Q1-ல 93%, இப்போ 102%-க்கு திரும்பிடுச்சு.</span></li>
+  <li><span class="en">HCLTech LTM FCF/NI slipped to 99% (from 107% in FY26) — watch whether Q2 restores it.</span><span class="ta">HCLTech LTM FCF/NI 107%-ல இருந்து 99% — Q2-ல மீண்டு வருதான்னு பாருங்க.</span></li>
+ </ul>
+</section>
+
+<!-- VALUATIONS -->
+<section class="panel" id="val" data-en="Valuations" data-ta="மதிப்பீடு">
+ <h2><span class="en">Valuation snapshot</span><span class="ta">Valuation ஒரு பார்வை</span></h2>
+ <div class="tw"><table>
+  <thead><tr><th><span class="en">Item</span><span class="ta">விவரம்</span></th><th class="n hc">HCLTech</th><th class="n tc">TCS</th></tr></thead>
+  <tbody>
+   <tr><td><span class="en">Share price (post-result)</span><span class="ta">Share விலை (ரிசல்ட்-க்கு அப்புறம்)</span></td><td class="n">~₹1,286 (13 Oct, +5.2%)</td><td class="n">₹2,187.6 (9 Oct, +5.46%)</td></tr>
+   <tr><td><span class="en">Market cap</span><span class="ta">Market cap</span></td><td class="n">~₹3.5 lakh cr</td><td class="n">~₹7.9 lakh cr</td></tr>
+   <tr><td><span class="en">52-week range / fall from high</span><span class="ta">52 வார range / high-ல இருந்து வீழ்ச்சி</span></td><td class="n">₹1,030–1,780 · −28%</td><td class="n">−35.7% YTD</td></tr>
+   <tr><td><span class="en">EPS, H1 FY27 annualised (CB est.)</span><span class="ta">EPS, H1 FY27 × 2 (CB கணக்கு)</span></td><td class="n">~₹72</td><td class="n">~₹150</td></tr>
+   <tr><td>P/E <span class="en">(on that EPS)</span><span class="ta">(அந்த EPS-ல)</span></td><td class="n">~18×</td><td class="n">~14.5×</td></tr>
+   <tr><td><span class="en">Q2 interim dividend</span><span class="ta">Q2 interim dividend</span></td><td class="n">₹12</td><td class="n">₹12 (record 14 Oct)</td></tr>
+   <tr><td><span class="en">Brokerage targets (pre-result)</span><span class="ta">Brokerage targets (ரிசல்ட் முன்)</span></td><td class="n">JPM ₹1,080 · JM ₹1,135 · MOSL ₹1,450</td><td class="n">JM ₹2,375</td></tr>
+  </tbody></table></div>
+ <ul class="pts">
+  <li><span class="en">Both trade far below their own past P/E ranges after the 2026 IT sell-off.</span><span class="ta">2026 IT sell-off-க்கு அப்புறம் ரெண்டுமே பழைய P/E range-ஐ விட ரொம்ப கீழே.</span></li>
+  <li><span class="en">HCLTech now gets a small premium to TCS — the market is paying for faster growth and AI momentum.</span><span class="ta">இப்போ HCLTech-க்கு TCS-ஐ விட சின்ன premium — வேகமான growth, AI momentum-க்கு market பணம் கொடுக்குது.</span></li>
+  <li><span class="en">P/E here is a simple CB estimate; it is not a target or a recommendation.</span><span class="ta">இந்த P/E ஒரு simple CB கணக்கு; target-உம் இல்ல, recommendation-உம் இல்ல.</span></li>
+ </ul>
+</section>
+
+<!-- 5 KEY TAKEAWAYS -->
+<section class="panel" id="kt" data-en="5 Key Takeaways" data-ta="5 முக்கிய பாடங்கள்">
+ <h2><span class="en">5 key takeaways</span><span class="ta">5 முக்கிய விஷயங்கள்</span></h2>
+ <div class="grid g2">
+  <div class="box"><b><span class="en">1. Growth is real but small</span><span class="ta">1. Growth உண்மை, ஆனா சின்னது</span></b><ul class="pts"><li><span class="en">CC YoY: HCLTech 2.6%, TCS 2.8%. USD YoY: 2.2% vs 2.4%.</span><span class="ta">CC YoY: HCLTech 2.6%, TCS 2.8%. USD YoY: 2.2% vs 2.4%.</span></li><li><span class="en">11%+ rupee growth is ~9 points currency.</span><span class="ta">11%+ rupee growth-ல ~9 point currency.</span></li></ul></div>
+  <div class="box"><b><span class="en">2. HCLTech won the quarter, with help</span><span class="ta">2. இந்த quarter HCLTech-க்கு — உதவியோட</span></b><ul class="pts"><li><span class="en">CC +2.3% QoQ vs TCS +0.5%.</span><span class="ta">CC +2.3% QoQ vs TCS +0.5%.</span></li><li><span class="en">Acquisitions added ~1 point; organic ~1.3%.</span><span class="ta">Acquisitions ~1 point; organic ~1.3%.</span></li></ul></div>
+  <div class="box"><b><span class="en">3. Margin: HCLTech up, TCS steady</span><span class="ta">3. Margin: HCLTech ஏற்றம், TCS நிலை</span></b><ul class="pts"><li><span class="en">HCLTech 18.2% (+131 bps); 19.0% ex-restructuring.</span><span class="ta">HCLTech 18.2% (+131 bps); restructuring இல்லாம 19.0%.</span></li><li><span class="en">TCS 24.0%, flat QoQ, −120 bps YoY.</span><span class="ta">TCS 24.0%, QoQ அதே, YoY −120 bps.</span></li></ul></div>
+  <div class="box"><b><span class="en">4. AI: TCS bigger, HCLTech faster</span><span class="ta">4. AI: TCS பெரிசு, HCLTech வேகம்</span></b><ul class="pts"><li><span class="en">TCS $3.1B annualised (&gt;10%). HCLTech $876M, +78% YoY.</span><span class="ta">TCS $3.1B (&gt;10%). HCLTech $876M, +78% YoY.</span></li><li><span class="en">Definitions differ; don't compare them one-to-one.</span><span class="ta">Definition வேற வேற; நேரடியா ஒப்பிடாதீங்க.</span></li></ul></div>
+  <div class="box"><b><span class="en">5. Guidance and the weak spots</span><span class="ta">5. Guidance, பலவீனங்கள்</span></b><ul class="pts"><li><span class="en">HCLTech FY27 CC guidance raised to 2.5–4%.</span><span class="ta">HCLTech FY27 CC guidance 2.5–4%-க்கு ஏத்தியாச்சு.</span></li><li><span class="en">Watch HCLSoftware (−5.8% QoQ) and TCS India (−10.3% QoQ).</span><span class="ta">HCLSoftware (−5.8% QoQ), TCS India (−10.3% QoQ) — கவனிங்க.</span></li></ul></div>
+ </div>
+</section>
+
+<!-- SHARE MARKET ACTIVITY -->
+<section class="panel" id="mkt" data-en="Market Activity" data-ta="சந்தை நகர்வு">
+ <h2><span class="en">Reasons for share market activity</span><span class="ta">Share விலை ஏன் நகருது</span></h2>
+ <div class="grid g2">
+  <div class="box hcl"><h3 class="hc" style="margin-top:0">HCLTech</h3><ul class="pts">
+   <li><span class="en">Hit ₹1,030 on 1 Jul 2026; still ~28% below its ₹1,780 high.</span><span class="ta">1 Jul 2026-ல ₹1,030; இன்னும் ₹1,780 high-ல இருந்து ~28% கீழே.</span></li>
+   <li><span class="en">Rose 3.4% on 9 Oct and ~2% on 12 Oct as IT stocks recovered after TCS.</span><span class="ta">TCS-க்கு அப்புறம் IT stocks மீண்டதால 9 Oct 3.4%, 12 Oct ~2% ஏறுச்சு.</span></li>
+   <li><span class="en">On 13 Oct the stock rose ~5.2% to ₹1,286 on the beat, guidance raise, record bookings and a new partnership with Anthropic for agentic AI.</span><span class="ta">13 Oct share ~5.2% ஏறி ₹1,286 — beat, guidance ஏற்றம், record bookings, agentic AI-க்கு Anthropic-யோட புது partnership.</span></li>
+   <li><span class="en">Interim dividend ₹12; record date 16 Oct.</span><span class="ta">Interim dividend ₹12; record date 16 Oct.</span></li>
+   <li><span class="en">After Q1 the stock fell 3% despite a beat because guidance was unchanged — this time guidance was raised.</span><span class="ta">Q1-ல beat பண்ணியும் guidance மாறாததால 3% விழுந்துச்சு — இந்த தடவை guidance ஏத்தியிருக்காங்க.</span></li>
+  </ul></div>
+  <div class="box tcs"><h3 class="tc" style="margin-top:0">TCS</h3><ul class="pts">
+   <li><span class="en">Fell 14.5% in September on sector pressure; −35.7% YTD.</span><span class="ta">Sector அழுத்தத்தால September-ல 14.5% விழுந்தது; YTD −35.7%.</span></li>
+   <li><span class="en">Jumped 5.46% to ₹2,187.6 on 9 Oct: CC growth ≥0.5% and margin ~24% met the market's bar.</span><span class="ta">9 Oct 5.46% ஏறி ₹2,187.6: CC growth ≥0.5%, margin ~24% — market எதிர்பார்த்தது கிடைச்சுது.</span></li>
+   <li><span class="en">TCV $9.6B was just below the $10B many wanted.</span><span class="ta">TCV $9.6B — பலர் எதிர்பார்த்த $10B-க்கு கொஞ்சம் கீழே.</span></li>
+   <li><span class="en">Nifty IT rose ~2.7% the same day.</span><span class="ta">அதே நாள் Nifty IT ~2.7% ஏறுச்சு.</span></li>
+  </ul></div>
+ </div>
+</section>
+
+<!-- TRIGGERS & CYCLE -->
+<section class="panel" id="tc" data-en="Triggers & Cycle" data-ta="தூண்டுதல் & சுழற்சி">
+ <h2><span class="en">Triggers & cycle</span><span class="ta">Triggers & cycle</span></h2>
+ <div class="grid g2">
+  <div class="chart"><div id="cClock"></div><div class="cap"><span class="en">IT services is a global-linked cycle. CB read: P1 trough / bottoming (score 60).</span><span class="ta">IT services ஒரு global-linked cycle. CB பார்வை: P1 trough / அடிமட்டம் (score 60).</span></div></div>
+  <div class="box"><b><span class="en">Why P1 (bottoming)</span><span class="ta">ஏன் P1 (அடிமட்டம்)</span></b><ul class="pts">
+   <li><span class="en">Industry CC growth only ~2–3% YoY for leaders.</span><span class="ta">பெரிய company-களுக்கே CC growth ~2–3% YoY தான்.</span></li>
+   <li><span class="en">Stocks down 30–36% from highs; P/E de-rated to mid-teens.</span><span class="ta">Stocks high-ல இருந்து 30–36% கீழே; P/E 15 அளவுக்கு இறங்கிடுச்சு.</span></li>
+   <li><span class="en">First signs: sequential growth turning up, guidance raised, deals steady.</span><span class="ta">முதல் அறிகுறி: QoQ growth ஏறுது, guidance ஏறுது, deals நிலையா.</span></li>
+   <li><span class="en">Not P2 yet: AI-led price deflation still pressures core services.</span><span class="ta">இன்னும் P2 இல்ல: AI-ஆல விலை குறைப்பு core services-ஐ அழுத்துது.</span></li>
+  </ul></div>
+ </div>
+ <h3><span class="en">Stock cycle (0–100)</span><span class="ta">Stock cycle (0–100)</span></h3>
+ <div class="tw"><table>
+  <thead><tr><th><span class="en">Sub-item</span><span class="ta">பகுதி</span></th><th class="n hc">HCLTech</th><th class="n tc">TCS</th></tr></thead>
+  <tbody>
+   <tr><td><span class="en">Business lifecycle</span><span class="ta">Business வாழ்க்கைச் சுழற்சி</span></td><td class="n">75 <span class="en">re-inventing</span><span class="ta">புதுப்பிக்குது</span></td><td class="n">55 <span class="en">mature</span><span class="ta">முதிர்ந்தது</span></td></tr>
+   <tr><td><span class="en">Earnings cycle (margin)</span><span class="ta">Earnings cycle (margin)</span></td><td class="n">70 <span class="en">rising mid-range</span><span class="ta">நடுவுல ஏறுது</span></td><td class="n">50 <span class="en">flat</span><span class="ta">அதே</span></td></tr>
+   <tr><td><span class="en">Valuation cycle</span><span class="ta">Valuation cycle</span></td><td class="n">85</td><td class="n">85</td></tr>
+   <tr><td><span class="en">Price stage (CB read, approx.)</span><span class="ta">விலை stage (CB பார்வை)</span></td><td class="n">70 Stage 1 late</td><td class="n">15 Stage 4</td></tr>
+   <tr><td><b><span class="en">Stock cycle avg</span><span class="ta">Stock cycle சராசரி</span></b></td><td class="n">75</td><td class="n">51</td></tr>
+   <tr><td><b>CY = 50% sector + 50% stock</b></td><td class="n hc">68</td><td class="n tc">56</td></tr>
+  </tbody></table></div>
+ <h3><span class="en">Trigger table</span><span class="ta">Trigger அட்டவணை</span></h3>
+ <div class="tw"><table>
+  <thead><tr><th>Trigger</th><th>+/−</th><th class="n">I</th><th class="n">C</th><th class="n">W</th><th class="n">P</th><th class="n">Pts</th><th><span class="en">What to watch</span><span class="ta">கவனிக்க வேண்டியது</span></th></tr></thead>
+  <tbody>
+   <tr><td class="hc">HCL · Advanced AI scaling ($876M run-rate)</td><td class="up">+</td><td class="n">3</td><td class="n">1.0</td><td class="n">1.0</td><td class="n">1.0</td><td class="n">3.00</td><td><span class="en">Quarterly AI revenue &gt;$250M</span><span class="ta">Quarterly AI revenue &gt;$250M</span></td></tr>
+   <tr><td class="hc">HCL · Record H1 bookings + July mega deal</td><td class="up">+</td><td class="n">3</td><td class="n">0.7</td><td class="n">0.7</td><td class="n">1.0</td><td class="n">1.47</td><td><span class="en">Ramp in FY28</span><span class="ta">FY28-ல ramp</span></td></tr>
+   <tr><td class="hc">HCL · Margin into 17.5–18.5% band</td><td class="up">+</td><td class="n">2</td><td class="n">0.7</td><td class="n">1.0</td><td class="n">1.0</td><td class="n">1.40</td><td><span class="en">Restructuring cost fading</span><span class="ta">Restructuring cost குறையுதா</span></td></tr>
+   <tr><td class="hc">HCL · HCLSoftware decline</td><td class="dn">−</td><td class="n">2</td><td class="n">1.0</td><td class="n">1.0</td><td class="n">1.0</td><td class="n">2.00</td><td><span class="en">Software ARR trend</span><span class="ta">Software ARR போக்கு</span></td></tr>
+   <tr><td class="hc">HCL · AI deflation in core services</td><td class="dn">−</td><td class="n">3</td><td class="n">0.4</td><td class="n">0.7</td><td class="n">1.0</td><td class="n">0.84</td><td><span class="en">Renewal pricing</span><span class="ta">Renewal விலை</span></td></tr>
+   <tr><td class="tc">TCS · AI revenue $3.1B, &gt;10% of revenue</td><td class="up">+</td><td class="n">3</td><td class="n">1.0</td><td class="n">1.0</td><td class="n">1.0</td><td class="n">3.00</td><td><span class="en">AI share toward 15%</span><span class="ta">AI பங்கு 15% நோக்கி</span></td></tr>
+   <tr><td class="tc">TCS · Porsche / Best Buy partnerships ($9.6B TCV)</td><td class="up">+</td><td class="n">2</td><td class="n">0.7</td><td class="n">0.7</td><td class="n">1.0</td><td class="n">0.98</td><td><span class="en">Conversion to revenue</span><span class="ta">Revenue-ஆ மாறுதா</span></td></tr>
+   <tr><td class="tc">TCS · India revenue −10.3% QoQ</td><td class="dn">−</td><td class="n">2</td><td class="n">1.0</td><td class="n">1.0</td><td class="n">1.0</td><td class="n">2.00</td><td><span class="en">Q3 India recovery</span><span class="ta">Q3 India மீட்சி</span></td></tr>
+   <tr><td class="tc">TCS · AI deflation in core services</td><td class="dn">−</td><td class="n">3</td><td class="n">0.4</td><td class="n">0.7</td><td class="n">1.0</td><td class="n">0.84</td><td><span class="en">Margin vs pricing</span><span class="ta">Margin vs விலை</span></td></tr>
+  </tbody></table></div>
+ <p class="cap"><span class="en">TG = 50 + 8 × positives − 8 × negatives → HCLTech 74, TCS 59. I = impact, C = certainty, W = timing, P = priced-in.</span><span class="ta">TG = 50 + 8 × positives − 8 × negatives → HCLTech 74, TCS 59. I = impact, C = certainty, W = timing, P = priced-in.</span></p>
+ <h3><span class="en">Dated events ahead</span><span class="ta">வரப்போகும் நிகழ்வுகள்</span></h3>
+ <div class="tl">
+  <div class="ev done"><div class="when">8 Oct 2026</div><span class="en">TCS Q2 results</span><span class="ta">TCS Q2 ரிசல்ட்</span></div>
+  <div class="ev done"><div class="when">12 Oct 2026</div><span class="en">HCLTech Q2 results, guidance raised</span><span class="ta">HCLTech Q2 ரிசல்ட், guidance ஏற்றம்</span></div>
+  <div class="ev"><div class="when">13 Oct 2026</div><span class="en">HCLTech +5.2% to ₹1,286 on results</span><span class="ta">ரிசல்ட்-ஆல HCLTech +5.2%, ₹1,286</span></div>
+  <div class="ev"><div class="when">14 / 16 Oct 2026</div><span class="en">Dividend record dates: TCS (14 Oct), HCLTech (16 Oct)</span><span class="ta">Dividend record dates: TCS (14 Oct), HCLTech (16 Oct)</span></div>
+  <div class="ev"><div class="when">15 Oct 2026</div><span class="en">Wipro and Tech Mahindra results — peer check</span><span class="ta">Wipro, Tech Mahindra ரிசல்ட் — peer ஒப்பீடு</span></div>
+  <div class="ev"><div class="when">Jan 2027</div><span class="en">Q3 FY27: seasonally weak quarter (furloughs) — test of HCLTech guidance</span><span class="ta">Q3 FY27: வழக்கமா மந்தமான quarter (furloughs) — HCLTech guidance-க்கு சோதனை</span></div>
+ </div>
+ <h3><span class="en">What would change this view</span><span class="ta">இந்த பார்வை எப்போ மாறும்</span></h3>
+ <ul class="pts">
+  <li><span class="en">HCLTech organic CC growth slipping below 1% QoQ in Q3.</span><span class="ta">Q3-ல HCLTech organic CC growth 1% QoQ-க்கு கீழே போனா.</span></li>
+  <li><span class="en">TCS margin breaking below 24% or TCV staying under $10B.</span><span class="ta">TCS margin 24%-க்கு கீழே, இல்ல TCV $10B-க்கு கீழேயே இருந்தா.</span></li>
+  <li><span class="en">A sharp rupee rebound (cuts rupee growth and margin for both).</span><span class="ta">Rupee திடீர்னு வலுவானா (ரெண்டுக்கும் rupee growth, margin குறையும்).</span></li>
+ </ul>
+</section>
+
+<!-- AI RACE -->
+<section class="panel" id="ai" data-en="AI Race" data-ta="AI போட்டி">
+ <h2><span class="en">The big bet: the AI services race</span><span class="ta">பெரிய பந்தயம்: AI services போட்டி</span></h2>
+ <div class="chart"><div id="cAI"></div><div class="cap"><span class="en">Annualised AI revenue, $M. HCLTech counts only "Advanced AI" (new offerings); TCS counts a broader AI pool. Q2 FY26 HCLTech is a floor (quarter "crossed $100M").</span><span class="ta">வருடக் கணக்கில் AI revenue, $M. HCLTech "Advanced AI" (புது offerings) மட்டும்; TCS பெரிய AI pool. Q2 FY26 HCLTech குறைந்தபட்சம் ("$100M தாண்டியது").</span></div></div>
+ <div class="grid g2" style="margin-top:14px">
+  <div class="box"><b><span class="en">Who is ahead?</span><span class="ta">யாரு முன்னாடி?</span></b><ul class="pts">
+   <li><span class="en">Size: TCS, clearly — $3.1B vs $0.9B.</span><span class="ta">Size: TCS தான் — $3.1B vs $0.9B.</span></li>
+   <li><span class="en">Speed: HCLTech — +28.4% QoQ, +78% YoY CC.</span><span class="ta">வேகம்: HCLTech — +28.4% QoQ, +78% YoY CC.</span></li>
+   <li><span class="en">Profit proof: HCLTech showed AI lifted margin by ~32 bps; TCS did not split this out.</span><span class="ta">லாப ஆதாரம்: AI margin-ஐ ~32 bps ஏத்துச்சுன்னு HCLTech காட்டுச்சு; TCS பிரிச்சு சொல்லல.</span></li>
+  </ul></div>
+  <div class="box note"><b><span class="en">How HCLTech got here</span><span class="ta">HCLTech இங்கே எப்படி வந்தது</span></b><ul class="pts">
+   <li><span class="en">Built separate AI offerings (AI Factory, physical AI, agentic AI, advisory) and reported them as one line.</span><span class="ta">தனி AI offerings (AI Factory, physical AI, agentic AI, advisory) உருவாக்கி, ஒரே line-ஆ report பண்றாங்க.</span></li>
+   <li><span class="en">Used its ER&D base for physical AI and its infra base for AI Factory (GPU cluster build-outs).</span><span class="ta">ER&D பலத்தை physical AI-க்கும், infra பலத்தை AI Factory-க்கும் (GPU cluster) பயன்படுத்துறாங்க.</span></li>
+   <li><span class="en">Agentic AI services crossed $100M a quarter; AI Factory grew 64% QoQ.</span><span class="ta">Agentic AI services quarter-க்கு $100M தாண்டியாச்சு; AI Factory 64% QoQ வளர்ந்தது.</span></li>
+  </ul></div>
+ </div>
+ <h3><span class="en">Milestones: done vs guided</span><span class="ta">மைல்கற்கள்: முடிஞ்சது vs சொன்னது</span></h3>
+ <div class="tl">
+  <div class="ev done"><div class="when">Q2 FY26 · done</div><span class="en">HCLTech quarterly Advanced AI revenue crosses $100M. TCS annualised AI $1.5B.</span><span class="ta">HCLTech quarterly Advanced AI $100M தாண்டியது. TCS AI $1.5B.</span></div>
+  <div class="ev done"><div class="when">Q1 FY27 · done</div><span class="en">HCLTech $171M/qtr (+62% YoY). TCS $2.6B.</span><span class="ta">HCLTech $171M/qtr (+62% YoY). TCS $2.6B.</span></div>
+  <div class="ev done"><div class="when">Q2 FY27 · done</div><span class="en">HCLTech $219M/qtr ($876M run-rate); agentic &gt;$100M/qtr. TCS $3.1B, &gt;10% of revenue.</span><span class="ta">HCLTech $219M/qtr ($876M run-rate); agentic &gt;$100M/qtr. TCS $3.1B, revenue-ல &gt;10%.</span></div>
+  <div class="ev"><div class="when">FY28 · guided</div><span class="en">HCLTech July mega deal reaches steady state (negligible FY27 revenue).</span><span class="ta">HCLTech July mega deal FY28-ல steady state (FY27-ல revenue கம்மி).</span></div>
+  <div class="ev"><div class="when">Watch</div><span class="en">HCLTech AI run-rate crossing $1B — not yet guided by management.</span><span class="ta">HCLTech AI run-rate $1B தாண்டுதான்னு — management இன்னும் guide பண்ணல.</span></div>
+ </div>
+</section>
+
+<!-- VALUE CHAIN -->
+<section class="panel" id="vc" data-en="Sector Need & Value Chain" data-ta="துறை தேவை & மதிப்புச் சங்கிலி">
+ <h2><span class="en">Why clients need this, and where each plays</span><span class="ta">Clients-க்கு ஏன் தேவை, யாரு எங்கே</span></h2>
+ <ul class="pts">
+  <li><span class="en">Global firms want AI to cut cost, but most lack the data, infrastructure and people to run it.</span><span class="ta">Global firms AI-ஆல cost குறைக்கணும்னு நினைக்கறாங்க — ஆனா data, infra, ஆட்கள் பத்தல.</span></li>
+  <li><span class="en">The same AI shrinks old work (testing, support) — so IT firms must win new AI work faster than old work shrinks.</span><span class="ta">அதே AI பழைய வேலைகளை (testing, support) சுருக்குது — அதனால பழையது குறையறதை விட வேகமா புது AI வேலை ஜெயிக்கணும்.</span></li>
+ </ul>
+ <h3><span class="en">Enterprise AI value chain</span><span class="ta">Enterprise AI மதிப்புச் சங்கிலி</span></h3>
+ <div class="flow">
+  <div class="step"><b><span class="en">1 · Advise</span><span class="ta">1 · ஆலோசனை</span></b><span class="en">AI strategy, governance</span><span class="ta">AI strategy, governance</span><div class="who"><span class="chip h">HCL</span><span class="chip t">TCS</span></div></div>
+  <div class="step"><b><span class="en">2 · Build infra</span><span class="ta">2 · Infra கட்டு</span></b><span class="en">GPU clusters, AI Factory, data centres</span><span class="ta">GPU clusters, AI Factory, data centres</span><div class="who"><span class="chip h">HCL ★</span><span class="chip t">TCS</span></div></div>
+  <div class="step"><b><span class="en">3 · Data & models</span><span class="ta">3 · Data & models</span></b><span class="en">Data platforms, model tuning</span><span class="ta">Data platforms, model tuning</span><div class="who"><span class="chip h">HCL</span><span class="chip t">TCS ★</span></div></div>
+  <div class="step"><b><span class="en">4 · Agents & apps</span><span class="ta">4 · Agents & apps</span></b><span class="en">Agentic workflows in banks, retail</span><span class="ta">Banks, retail-ல agentic workflows</span><div class="who"><span class="chip h">HCL</span><span class="chip t">TCS ★</span></div></div>
+  <div class="step"><b><span class="en">5 · Physical AI</span><span class="ta">5 · Physical AI</span></b><span class="en">Vision, robotics, devices (ER&D)</span><span class="ta">Vision, robotics, devices (ER&D)</span><div class="who"><span class="chip h">HCL ★</span></div></div>
+  <div class="step"><b><span class="en">6 · Run & own IP</span><span class="ta">6 · Run & சொந்த IP</span></b><span class="en">Managed ops, software products</span><span class="ta">Managed ops, software products</span><div class="who"><span class="chip h">HCL (Software)</span><span class="chip t">TCS ★</span></div></div>
+ </div>
+ <p class="cap"><span class="en">★ = relative strength (CB read).</span><span class="ta">★ = ஒப்பீட்டு பலம் (CB பார்வை).</span></p>
+</section>
+
+<!-- SWOT -->
+<section class="panel" id="swot" data-en="SWOT" data-ta="SWOT">
+ <h2>SWOT</h2>
+ <h3 class="hc">HCLTech</h3>
+ <div class="swot">
+  <div class="box"><h4 class="up">Strengths</h4><span class="en">Fastest QoQ growth among leaders; ER&D depth; AI margin proof; ROIC ~40%.</span><span class="ta">பெரிய company-களில் வேகமான QoQ growth; ER&D ஆழம்; AI margin ஆதாரம்; ROIC ~40%.</span></div>
+  <div class="box"><h4 class="dn">Weaknesses</h4><span class="en">Margin 580 bps below TCS; HCLSoftware shrinking; growth partly bought.</span><span class="ta">TCS-ஐ விட margin 580 bps கம்மி; HCLSoftware சுருங்குது; growth-ல ஒரு பகுதி வாங்கியது.</span></div>
+  <div class="box"><h4 class="hc">Opportunities</h4><span class="en">AI Factory and physical AI demand; record bookings ramp in FY28.</span><span class="ta">AI Factory, physical AI demand; record bookings FY28-ல ramp.</span></div>
+  <div class="box"><h4 class="warn" style="color:var(--warn)">Threats</h4><span class="en">AI deflation in core work; Europe weakness; rupee rebound.</span><span class="ta">Core வேலையில AI deflation; Europe மந்தம்; rupee வலுவாகுறது.</span></div>
+ </div>
+ <h3 class="tc">TCS</h3>
+ <div class="swot">
+  <div class="box"><h4 class="up">Strengths</h4><span class="en">Industry-best 24% margin; $3.1B AI book; huge cash (₹57,353 cr).</span><span class="ta">Industry-லயே best 24% margin; $3.1B AI; நிறைய cash (₹57,353 cr).</span></div>
+  <div class="box"><h4 class="dn">Weaknesses</h4><span class="en">Slow growth (+0.5% QoQ CC); margin down 120 bps YoY; India drag.</span><span class="ta">மெதுவான growth (+0.5% QoQ CC); margin YoY 120 bps இறக்கம்; India இழுப்பு.</span></div>
+  <div class="box"><h4 class="hc">Opportunities</h4><span class="en">New partnership deals (Porsche, Best Buy); BFSI recovery.</span><span class="ta">புது partnership deals (Porsche, Best Buy); BFSI மீட்சி.</span></div>
+  <div class="box"><h4 style="color:var(--warn)">Threats</h4><span class="en">TCV below $10B; size makes high growth harder; AI deflation.</span><span class="ta">TCV $10B-க்கு கீழே; பெரிய size-ல growth கஷ்டம்; AI deflation.</span></div>
+ </div>
+</section>
+
+<!-- CAUVERY ASSIST -->
+<section class="panel" id="assistTab" data-en="Cauvery Assist" data-ta="காவேரி அசிஸ்ட்">
+ <h2>Cauvery Assist</h2>
+ <p class="lede"><span class="en">Ask by typing or voice. Direct one-line answers, read aloud slowly. Education only — no buy/sell advice.</span><span class="ta">Type பண்ணுங்க, இல்ல பேசுங்க. நேரடி ஒரு-வரி பதில், மெதுவா படிக்கும். கல்விக்காக மட்டும் — buy/sell advice இல்ல.</span></p>
+ <div id="assist"></div>
+</section>
+
+<!-- SOCRATES -->
+<section class="panel" id="quiz" data-en="Cauvery Socrates" data-ta="காவேரி சாக்ரடீஸ்">
+ <h2>Cauvery Socrates</h2>
+ <p class="lede"><span class="en">Test yourself. Tap an answer to see why.</span><span class="ta">உங்களை நீங்களே test பண்ணுங்க. பதிலை tap பண்ணுங்க, ஏன்னு தெரியும்.</span></p>
+ <div class="qz" id="qz"></div>
+ <p class="lede" id="qscore"></p>
+</section>
+
+<!-- ANALYST VIEW -->
+<section class="panel" id="av" data-en="Analyst View" data-ta="ஆய்வாளர் பார்வை">
+ <h2><span class="en">Analyst view</span><span class="ta">ஆய்வாளர் பார்வை</span></h2>
+ <div class="box note"><ul class="pts">
+  <li><span class="en">The "beat" is margin-led. Revenue was in line; profit beat because margin came back faster than expected.</span><span class="ta">"Beat" margin-ஆல தான். Revenue in line; margin எதிர்பார்த்ததை விட வேகமா திரும்பியதால profit beat.</span></li>
+  <li><span class="en">Growth test: in dollars and CC both companies grow only ~2–3% a year. Rupee growth of 11% is mostly currency.</span><span class="ta">Growth சோதனை: dollar, CC-ல ரெண்டும் வருஷத்துக்கு ~2–3% தான். 11% rupee growth பெரும்பாலும் currency.</span></li>
+  <li><span class="en">HCLTech has momentum (QoQ CC, guidance raise, AI margin); TCS has quality (24% margin, $9.6B TCV, cash).</span><span class="ta">HCLTech-க்கு momentum (QoQ CC, guidance ஏற்றம், AI margin); TCS-க்கு quality (24% margin, $9.6B TCV, cash).</span></li>
+  <li><span class="en">Cycle: IT services sits in P1 (bottoming). Top HCLTech triggers: AI scale-up, record bookings. Top risk: HCLSoftware decline.</span><span class="ta">Cycle: IT services P1 (அடிமட்டம்). HCLTech முக்கிய triggers: AI வளர்ச்சி, record bookings. பெரிய risk: HCLSoftware இறக்கம்.</span></li>
+  <li><span class="en">Next check: Q3 FY27 (Jan 2027) — can HCLTech keep organic growth above 1% QoQ in a seasonally weak quarter?</span><span class="ta">அடுத்த சோதனை: Q3 FY27 (Jan 2027) — மந்தமான quarter-லயும் HCLTech organic growth 1% QoQ-க்கு மேல வைக்குமா?</span></li>
+ </ul></div>
+ <p class="cap"><span class="en">CB Research is not SEBI-registered. This is education, not a buy, sell or hold recommendation.</span><span class="ta">CB Research SEBI-ல பதிவு செய்யப்படல. இது கல்விக்காக மட்டும்; buy, sell, hold recommendation இல்ல.</span></p>
+</section>
+</main>
+
+<button class="vbub" id="vbub" type="button">🎙 <span class="en">Voice Assist</span><span class="ta">Voice Assist</span></button>
+<div class="cb" id="cb"><button class="cbb" id="cbb" type="button" aria-label="Disclaimer">CB</button>
+ <div class="cbt"><span class="en"><b>CB Research · Know before you own.</b> Independent education platform; not SEBI-registered; no buy/sell/hold recommendations. Figures are from company releases and press reports as of 13 Oct 2026; CB estimates are marked. Verify before acting.</span><span class="ta"><b>CB Research · புரிஞ்சு வாங்குங்க!</b> சுயாதீன கல்வித் தளம்; SEBI பதிவு இல்ல; buy/sell/hold recommendation இல்ல. Numbers 13 Oct 2026 வரை company releases, செய்திகள்ல இருந்து; CB கணக்குகள் குறிச்சிருக்கோம். முடிவெடுக்கும் முன் சரிபாருங்க.</span></div></div>
+
+<script src="cauvery-assist.js"></script>
+<script>
+(function(){
+"use strict";
+var LANG="en";
+function A(en,ta){return {en:en,ta:ta};}
+function L(o){return (o&&typeof o==="object")?(o[LANG]||o.en):o;}
+var C={hcl:"#0F5FA8",tcs:"#7A3E9D",ink:"#15120e",muted:"#55493d",line:"#eadccd",acc:"#F28C28",band:"#f9d9b4"};
+
+/* ---------- tabs ---------- */
+var panels=[].slice.call(document.querySelectorAll("section.panel"));
+var nav=document.getElementById("tabs");
+panels.forEach(function(p){
+  var b=document.createElement("button");b.type="button";b.className="tab";b.dataset.id=p.id;
+  b.innerHTML='<span class="en">'+p.dataset.en+'</span><span class="ta">'+p.dataset.ta+'</span>';
+  b.addEventListener("click",function(){showTab(p.id);});
+  nav.appendChild(b);
+});
+function showTab(id){
+  panels.forEach(function(p){p.classList.toggle("on",p.id===id);});
+  [].forEach.call(nav.children,function(b){b.classList.toggle("on",b.dataset.id===id);});
+  try{localStorage.setItem("cb_q2hcltcs_tab",id);}catch(e){}
+  var tb=nav.querySelector('[data-id="'+id+'"]'); if(tb&&tb.scrollIntoView){tb.scrollIntoView({block:"nearest",inline:"nearest"});}
+}
+var start="dash";
+var h=(location.hash||"").replace("#","");
+if(h&&document.getElementById(h)&&document.getElementById(h).classList.contains("panel"))start=h;
+else{try{var s=localStorage.getItem("cb_q2hcltcs_tab");if(s&&document.getElementById(s))start=s;}catch(e){}}
+showTab(start);
+
+/* ---------- language ---------- */
+function setLang(l){
+  LANG=l;document.body.classList.toggle("ta",l==="ta");
+  document.getElementById("bEN").classList.toggle("on",l==="en");
+  document.getElementById("bTA").classList.toggle("on",l==="ta");
+  document.documentElement.lang=l==="ta"?"ta":"en";
+  try{localStorage.setItem("cb_q2hcltcs_lang",l);}catch(e){}
+  if(assistApi&&assistApi.setLang)assistApi.setLang(l);
+  renderCharts();
+}
+document.getElementById("bEN").addEventListener("click",function(){setLang("en");});
+document.getElementById("bTA").addEventListener("click",function(){setLang("ta");});
+
+/* ---------- SVG helpers ---------- */
+function esc(s){return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;");}
+function txt(x,y,s,o){o=o||{};return '<text x="'+x+'" y="'+y+'" font-size="'+(o.fs||12)+'" font-weight="'+(o.fw||700)+'" fill="'+(o.c||C.ink)+'" text-anchor="'+(o.a||"middle")+'" font-family="Inter,Noto Sans Tamil,sans-serif">'+esc(s)+'</text>';}
+
+function growthChart(){
+  var groups=[{l:A("Rupee YoY","Rupee YoY"),h:11.5,t:11.2},{l:A("Dollar YoY","Dollar YoY"),h:2.2,t:2.4},{l:A("CC YoY","CC YoY"),h:2.6,t:2.8},
+              {l:A("Rupee QoQ","Rupee QoQ"),h:3.0,t:1.3},{l:A("Dollar QoQ","Dollar QoQ"),h:2.0,t:0.2},{l:A("CC QoQ","CC QoQ"),h:2.3,t:0.5}];
+  var W=720,H=280,pl=40,pr=10,pt=20,pb=46,max=12,cw=(W-pl-pr)/groups.length;
+  var y=function(v){return pt+(H-pt-pb)*(1-v/max);};
+  var s='<svg viewBox="0 0 '+W+' '+H+'" role="img" aria-label="Growth comparison">';
+  [0,3,6,9,12].forEach(function(v){s+='<line x1="'+pl+'" x2="'+(W-pr)+'" y1="'+y(v)+'" y2="'+y(v)+'" stroke="'+C.line+'" stroke-width="1"/>'+txt(pl-6,y(v)+4,v+"%",{a:"end",fs:11,fw:600,c:C.muted});});
+  groups.forEach(function(g,i){
+    var x0=pl+i*cw+cw*0.18,bw=cw*0.3;
+    [["h",C.hcl],["t",C.tcs]].forEach(function(k,j){var v=g[k[0]],x=x0+j*(bw+4);
+      s+='<rect x="'+x+'" y="'+y(v)+'" width="'+bw+'" height="'+(y(0)-y(v))+'" fill="'+k[1]+'" rx="3"/>'+txt(x+bw/2,y(v)-5,v.toFixed(1),{fs:11,c:k[1]});});
+    s+=txt(pl+i*cw+cw/2,H-pb+18,L(g.l),{fs:11.5});
+  });
+  s+='<line x1="'+(pl+3*cw)+'" x2="'+(pl+3*cw)+'" y1="'+pt+'" y2="'+(H-pb+28)+'" stroke="'+C.acc+'" stroke-dasharray="4 4"/>';
+  return s+'</svg>';
+}
+function bridgeChart(){
+  var rows=[{n:"HCLTech",c:C.hcl,cc:2.6,x:-0.4,r:9.1,tot:11.5},{n:"TCS",c:C.tcs,cc:2.8,x:-0.4,r:8.6,tot:11.2}];
+  var W=720,H=200,pl=96,pr=60,max=12,sc=(W-pl-pr)/max;
+  var s='<svg viewBox="0 0 '+W+' '+H+'" role="img" aria-label="Currency bridge">';
+  rows.forEach(function(r,i){var yy=30+i*80,x=pl;
+    s+=txt(pl-8,yy+22,r.n,{a:"end",c:r.c,fs:13,fw:800});
+    s+='<rect x="'+x+'" y="'+yy+'" width="'+(r.cc*sc)+'" height="34" fill="'+r.c+'" rx="3"/>';
+    s+=txt(x+r.cc*sc/2,yy+22,"CC "+r.cc+"%",{c:"#fff",fs:11});
+    x+=r.cc*sc;
+    s+='<rect x="'+(x+r.x*sc)+'" y="'+(yy+6)+'" width="'+(-r.x*sc)+'" height="22" fill="#b3261e" rx="2"/>';
+    x+=r.x*sc;
+    s+='<rect x="'+x+'" y="'+yy+'" width="'+(r.r*sc)+'" height="34" fill="'+C.band+'" stroke="'+C.acc+'" rx="3"/>';
+    s+=txt(x+r.r*sc/2,yy+22,(LANG==="ta"?"Rupee வீக் ":"Weaker rupee ")+"+"+r.r+"%",{fs:11,c:C.ink});
+    s+=txt(W-pr+6,yy+22,"= "+r.tot+"%",{a:"start",fs:13,fw:800});
+    s+=txt(pl+(r.cc+r.x/2)*sc,yy+48,(LANG==="ta"?"cross-ccy ":"cross-ccy ")+r.x+"%",{fs:10.5,c:"#b3261e"});
+  });
+  return s+'</svg>';
+}
+function marginChart(){
+  var q=["Q2 FY26","Q3 FY26","Q4 FY26","Q1 FY27","Q2 FY27"];
+  var hcl=[17.4,18.6,16.5,16.9,18.2],tcs=[25.2,null,24.5,24.0,24.0];
+  var W=720,H=280,pl=44,pr=20,pt=20,pb=36,mn=15,mx=26;
+  var x=function(i){return pl+(W-pl-pr)*i/(q.length-1);};
+  var y=function(v){return pt+(H-pt-pb)*(1-(v-mn)/(mx-mn));};
+  var s='<svg viewBox="0 0 '+W+' '+H+'" role="img" aria-label="EBIT margin trend">';
+  s+='<rect x="'+pl+'" y="'+y(18.5)+'" width="'+(W-pl-pr)+'" height="'+(y(17.5)-y(18.5))+'" fill="'+C.band+'" opacity=".7"/>';
+  [16,18,20,22,24,26].forEach(function(v){s+='<line x1="'+pl+'" x2="'+(W-pr)+'" y1="'+y(v)+'" y2="'+y(v)+'" stroke="'+C.line+'"/>'+txt(pl-6,y(v)+4,v+"%",{a:"end",fs:11,fw:600,c:C.muted});});
+  q.forEach(function(l,i){s+=txt(x(i),H-12,l,{fs:11.5});});
+  function line(arr,c){var pts=[];arr.forEach(function(v,i){if(v!=null)pts.push([x(i),y(v),v]);});
+    var d=pts.map(function(p,i){return (i?"L":"M")+p[0]+" "+p[1];}).join(" ");
+    var o='<path d="'+d+'" fill="none" stroke="'+c+'" stroke-width="3"/>';
+    pts.forEach(function(p,i){var last=i===pts.length-1;o+='<circle cx="'+p[0]+'" cy="'+p[1]+'" r="'+(last?6:4)+'" fill="'+(last?c:"#fff")+'" stroke="'+c+'" stroke-width="2.5"/>'+txt(p[0],p[1]-11,p[2].toFixed(1)+"%",{fs:11.5,c:c});});
+    return o;}
+  s+=line(tcs,C.tcs)+line(hcl,C.hcl);
+  return s+'</svg>';
+}
+function clockChart(){
+  var ph=[["P1",A("Trough","அடிமட்டம்")],["P2",A("Early recovery","ஆரம்ப மீட்சி")],["P3",A("Expansion","விரிவாக்கம்")],["P4",A("Peak","உச்சம்")],["P5",A("Downturn","சரிவு")]];
+  var W=340,H=300,cx=170,cy=150,r=105;
+  var s='<svg viewBox="0 0 '+W+' '+H+'" role="img" aria-label="Cycle clock">';
+  s+='<circle cx="'+cx+'" cy="'+cy+'" r="'+r+'" fill="#fff" stroke="'+C.line+'" stroke-width="14"/>';
+  ph.forEach(function(p,i){var a=-Math.PI/2+i*2*Math.PI/5,px=cx+r*Math.cos(a),py=cy+r*Math.sin(a),on=i===0;
+    s+='<circle cx="'+px+'" cy="'+py+'" r="'+(on?19:15)+'" fill="'+(on?C.acc:"#fff")+'" stroke="'+C.acc+'" stroke-width="2.5"/>'+txt(px,py+4,p[0],{fs:11.5,c:on?"#fff":C.ink});
+    var lx=cx+(r+38)*Math.cos(a),ly=cy+(r+38)*Math.sin(a);if(i===0)ly=cy-r-30;
+    s+=txt(lx,ly+4,L(p[1]),{fs:11,fw:700,c:C.muted});});
+  s+='<line x1="'+cx+'" y1="'+cy+'" x2="'+cx+'" y2="'+(cy-r+26)+'" stroke="'+C.ink+'" stroke-width="3" stroke-linecap="round"/><circle cx="'+cx+'" cy="'+cy+'" r="5" fill="'+C.ink+'"/>';
+  s+=txt(cx,cy+28,LANG==="ta"?"HCL: Stage 1 late":"HCL: Stage 1 late",{fs:11,c:C.hcl});
+  s+=txt(cx,cy+44,"TCS: Stage 4",{fs:11,c:C.tcs});
+  return s+'</svg>';
+}
+var PIL=[
+ {k:A("Business quality","Business quality"),h:7,t:9,he:"↑",te:"→",
+  hb:[A("EBIT margin 18.2% (+131 bps QoQ); 19.0% ex-restructuring","EBIT margin 18.2% (+131 bps QoQ); restructuring இல்லாம 19.0%"),A("Net margin 14.4%; ROIC ~40%","Net margin 14.4%; ROIC ~40%"),A("Revenue per employee $65.4K, +2.4% YoY","ஒரு ஊழியருக்கு revenue $65.4K, +2.4% YoY")],
+  tb:[A("Operating margin 24.0%, industry best","Operating margin 24.0%, industry-லயே best"),A("Net margin 19.0%; cash conversion 102% of profit","Net margin 19.0%; profit-ல 102% cash"),A("But margin −120 bps YoY","ஆனா margin YoY −120 bps")],
+  v:A("TCS is the higher-quality earner; HCLTech's quality improved most this quarter.","TCS தான் அதிக quality; இந்த quarter அதிகம் முன்னேறியது HCLTech.")},
+ {k:A("Competitive advantage","போட்டி நன்மை (Moat)"),h:7,t:8,he:"↑",te:"→",
+  hb:[A("ER&D grew 4.1% QoQ — niche strength in engineering","ER&D 4.1% QoQ — engineering-ல தனி பலம்"),A("AI work lifted margin ~32 bps: pricing power in new work","AI work margin-ஐ ~32 bps ஏத்துச்சு: புது வேலையில pricing power"),A("Own software IP, but HCLSoftware fell 5.8% QoQ","சொந்த software IP, ஆனா HCLSoftware 5.8% QoQ இறக்கம்")],
+  tb:[A("Scale: 5.98 lakh people, $9.6B TCV in one quarter","Scale: 5.98 லட்சம் பேர், ஒரே quarter-ல $9.6B TCV"),A("New partnership deals with Porsche, Best Buy","Porsche, Best Buy-யோட புது partnership deals"),A("AI revenue $3.1B — biggest AI book in Indian IT","AI revenue $3.1B — Indian IT-லயே பெரிய AI")],
+  v:A("TCS's scale moat holds; HCLTech's niche moat (ER&D, AI infra) is showing up in margin.","TCS scale moat அப்படியே; HCLTech niche moat (ER&D, AI infra) margin-ல தெரியுது.")},
+ {k:A("Growth opportunity","Growth வாய்ப்பு"),h:7,t:6,he:"↑",te:"→",
+  hb:[A("CC +2.3% QoQ, +2.6% YoY; organic ~1.3% QoQ","CC +2.3% QoQ, +2.6% YoY; organic ~1.3% QoQ"),A("FY27 guidance raised to 2.5–4% CC","FY27 guidance 2.5–4% CC-க்கு ஏற்றம்"),A("Bookings $3.26B, +27% YoY; Advanced AI +78% YoY","Bookings $3.26B, +27% YoY; Advanced AI +78% YoY")],
+  tb:[A("CC only +0.5% QoQ, +2.8% YoY","CC +0.5% QoQ, +2.8% YoY மட்டும்"),A("India −10.3% QoQ dragged growth","India −10.3% QoQ growth-ஐ இழுத்தது"),A("TCV $9.6B, below last year's $10B; book-to-bill 1.26×","TCV $9.6B, போன வருஷ $10B-க்கு கீழே; book-to-bill 1.26×")],
+  v:A("HCLTech has the better near-term growth; TCS has the bigger order book but slower conversion.","Near-term growth HCLTech-க்கு better; TCS order book பெரிசு, ஆனா மெதுவா revenue ஆகுது.")},
+ {k:A("Financial strength","நிதி பலம்"),h:8,t:9,he:"→",te:"↑",
+  hb:[A("Debt-free; net cash $2.84B (Jun-26)","Debt இல்ல; net cash $2.84B (Jun-26)"),A("LTM FCF $1.98B; FCF/NI 99% (down from 107%)","LTM FCF $1.98B; FCF/NI 99% (107%-ல இருந்து இறக்கம்)"),A("Q2 cash flow not yet published","Q2 cash flow இன்னும் வரல")],
+  tb:[A("Cash & investments ₹57,353 cr","Cash & investments ₹57,353 cr"),A("Q2 FCF ₹12,731 cr; OCF 102% of profit (Q1: 93%)","Q2 FCF ₹12,731 cr; OCF profit-ல 102% (Q1: 93%)"),A("Debt-free","Debt இல்ல")],
+  v:A("Both very strong; TCS's cash conversion recovered this quarter.","ரெண்டுமே ரொம்ப strong; TCS cash conversion இந்த quarter மீண்டுச்சு.")},
+ {k:A("Valuation","Valuation"),h:7,t:8,he:"↑",te:"→",
+  hb:[A("~18× H1 FY27 EPS annualised (CB est.)","~18× (H1 FY27 EPS × 2, CB கணக்கு)"),A("Price ~28% below 52-week high even after +5.2% on results","Result-ல +5.2% ஏறியும் 52 வார high-ல இருந்து ~28% கீழே"),A("Profit +21.2% YoY makes the multiple look cheaper","Profit +21.2% YoY — multiple மலிவா தெரியுது")],
+  tb:[A("~14.5× (CB est.) — cheaper than HCLTech","~14.5× (CB கணக்கு) — HCLTech-ஐ விட மலிவு"),A("Stock −35.7% YTD even after the post-result rally","Result rally-க்கு அப்புறமும் YTD −35.7%"),A("Profit +15.0% YoY","Profit +15.0% YoY")],
+  v:A("Both are far below their own history; TCS is the cheaper of the two.","ரெண்டும் சொந்த history-ஐ விட ரொம்ப கீழே; ரெண்டுல TCS மலிவு.")},
+ {k:A("Risk & reward","Risk & reward"),h:6,t:6,he:"→",te:"↓",
+  hb:[A("Risk: HCLSoftware decline; ~1 pt growth from acquisitions; Europe −0.3% YoY","Risk: HCLSoftware இறக்கம்; ~1 pt growth acquisitions-ல; Europe −0.3% YoY"),A("Reward: margin back in guidance band; AI scale-up","Reward: margin guidance band-க்குள்ள; AI வளர்ச்சி")],
+  tb:[A("Risk: India drag; margin −120 bps YoY; price still in a downtrend","Risk: India இழுப்பு; margin YoY −120 bps; price இன்னும் இறக்க trend-ல"),A("Reward: cheapest valuation with top quality","Reward: top quality, மலிவான valuation")],
+  v:A("Even: HCLTech's risk is in its mix; TCS's risk is slow growth.","சமம்: HCLTech risk அதன் mix-ல; TCS risk மெதுவான growth.")}
+];
+function radarChart(){
+  var W=360,H=330,cx=180,cy=168,R=110,n=PIL.length;
+  var pt=function(i,v){var a=-Math.PI/2+i*2*Math.PI/n;return [cx+R*v/10*Math.cos(a),cy+R*v/10*Math.sin(a)];};
+  var s='<svg viewBox="0 0 '+W+' '+H+'" role="img" aria-label="Six pillars radar">';
+  [2,4,6,8,10].forEach(function(v){var d=PIL.map(function(_,i){return pt(i,v).join(",");}).join(" ");s+='<polygon points="'+d+'" fill="none" stroke="'+C.line+'"/>';});
+  PIL.forEach(function(p,i){var e=pt(i,10);s+='<line x1="'+cx+'" y1="'+cy+'" x2="'+e[0]+'" y2="'+e[1]+'" stroke="'+C.line+'"/>';var lb=pt(i,12.3);s+=txt(lb[0],lb[1]+4,L(p.k),{fs:10.5,fw:700,c:C.muted});});
+  [["t",C.tcs],["h",C.hcl]].forEach(function(k){var d=PIL.map(function(p,i){return pt(i,p[k[0]]).join(",");}).join(" ");s+='<polygon points="'+d+'" fill="'+k[1]+'" fill-opacity=".14" stroke="'+k[1]+'" stroke-width="2.5"/>';});
+  return s+'</svg>';
+}
+function aiChart(){
+  var q=["Q2 FY26","Q1 FY27","Q2 FY27"],hcl=[400,684,876],tcs=[1500,2600,3100];
+  var W=720,H=250,pl=50,pr=10,pt=24,pb=34,max=3500,cw=(W-pl-pr)/3;
+  var y=function(v){return pt+(H-pt-pb)*(1-v/max);};
+  var s='<svg viewBox="0 0 '+W+' '+H+'" role="img" aria-label="AI revenue">';
+  [0,1000,2000,3000].forEach(function(v){s+='<line x1="'+pl+'" x2="'+(W-pr)+'" y1="'+y(v)+'" y2="'+y(v)+'" stroke="'+C.line+'"/>'+txt(pl-6,y(v)+4,"$"+(v/1000)+"B",{a:"end",fs:11,fw:600,c:C.muted});});
+  q.forEach(function(l,i){var bw=cw*0.28,x0=pl+i*cw+cw*0.2;
+    [[hcl[i],C.hcl,i===0?"≥$400M":"$"+hcl[i]+"M"],[tcs[i],C.tcs,"$"+(tcs[i]/1000).toFixed(1)+"B"]].forEach(function(b,j){var x=x0+j*(bw+6);
+      s+='<rect x="'+x+'" y="'+y(b[0])+'" width="'+bw+'" height="'+(y(0)-y(b[0]))+'" fill="'+b[1]+'" rx="3"/>'+txt(x+bw/2,y(b[0])-6,b[2],{fs:11,c:b[1]});});
+    s+=txt(pl+i*cw+cw/2,H-10,l,{fs:11.5});});
+  return s+'</svg>';
+}
+function sentChart(){
+  var W=640,H=230,cx=320,cy=190,r=150;
+  var s='<svg viewBox="0 0 '+W+' '+H+'" role="img" aria-label="Sentiment meter">';
+  var segs=[["#c4372e",0,20],["#e0753a",20,40],["#e8b23a",40,60],["#8bbf5a",60,80],["#2f8f4e",80,100]];
+  function pol(v,rr){var a=Math.PI*(1-v/100);return [cx+rr*Math.cos(a),cy-rr*Math.sin(a)];}
+  segs.forEach(function(g){var a=pol(g[1],r),b=pol(g[2],r),c=pol(g[2],r-34),d=pol(g[1],r-34);
+    s+='<path d="M'+a[0]+' '+a[1]+' A'+r+' '+r+' 0 0 1 '+b[0]+' '+b[1]+' L'+c[0]+' '+c[1]+' A'+(r-34)+' '+(r-34)+' 0 0 0 '+d[0]+' '+d[1]+' Z" fill="'+g[0]+'"/>';});
+  var lab=LANG==="ta"?[["ரொம்ப negative",0],["Negative",30],["நடுநிலை",50],["Positive",70],["ரொம்ப positive",100]]:[["Very negative",0],["Negative",30],["Neutral",50],["Positive",70],["Very positive",100]];
+  lab.forEach(function(l){var p=pol(l[1],r+16);s+=txt(p[0],p[1]+4,l[0],{fs:11,c:C.muted,a:l[1]<40?"end":(l[1]>60?"start":"middle")});});
+  var o=pol(20,r-46);s+='<line x1="'+cx+'" y1="'+cy+'" x2="'+o[0]+'" y2="'+o[1]+'" stroke="'+C.muted+'" stroke-width="3" stroke-dasharray="5 4"/>';
+  s+=txt(o[0]-6,o[1]-8,LANG==="ta"?"Jun–Sep: 20":"Jun–Sep: 20",{fs:11,c:C.muted,a:"end"});
+  var n=pol(38,r-40);s+='<line x1="'+cx+'" y1="'+cy+'" x2="'+n[0]+'" y2="'+n[1]+'" stroke="'+C.ink+'" stroke-width="5" stroke-linecap="round"/><circle cx="'+cx+'" cy="'+cy+'" r="8" fill="'+C.ink+'"/>';
+  s+=txt(n[0]+8,n[1]-6,LANG==="ta"?"இப்போ: 38":"Now: 38",{fs:13,fw:800,a:"start"});
+  return s+'</svg>';
+}
+function renderCharts(){
+  document.getElementById("cSent").innerHTML=sentChart();
+  document.getElementById("cGrowth").innerHTML=growthChart();
+  document.getElementById("cBridge").innerHTML=bridgeChart();
+  document.getElementById("cMargin").innerHTML=marginChart();
+  document.getElementById("cClock").innerHTML=clockChart();
+  document.getElementById("cRadar").innerHTML=radarChart();
+  document.getElementById("cAI").innerHTML=aiChart();
+}
+function bi(o){return '<span class="en">'+o.en+'</span><span class="ta">'+o.ta+'</span>';}
+function li(arr){return '<ul class="pts">'+arr.map(function(x){return '<li>'+bi(x)+'</li>';}).join("")+'</ul>';}
+document.getElementById("pilCards").innerHTML=PIL.map(function(p,i){
+  return '<div class="box pcard"><h4><span>'+(i+1)+'. '+bi(p.k)+'</span><span class="chips"><span class="chip h">HCL '+p.h+'/10 '+p.he+'</span><span class="chip t">TCS '+p.t+'/10 '+p.te+'</span></span></h4>'+
+   '<div class="who hc">HCLTech</div>'+li(p.hb)+'<div class="who tc">TCS</div>'+li(p.tb)+'<div class="vd">'+bi(p.v)+'</div></div>';}).join("");
+document.getElementById("pilDash").innerHTML=PIL.map(function(p){
+  return '<div class="prow"><div style="font-weight:800">'+bi(p.k)+'</div><div class="pb"><div><i style="width:'+(p.h*10)+'%;background:var(--hcl)"></i>'+p.h+'</div><div><i style="width:'+(p.t*10)+'%;background:var(--tcs)"></i>'+p.t+'</div></div></div>';}).join("");
+document.getElementById("goPil").addEventListener("click",function(){showTab("pil");window.scrollTo(0,0);});
+
+/* ---------- quiz ---------- */
+var QZ=[
+ {q:A("HCLTech's rupee revenue grew 11.5% YoY. What was its real (constant currency) growth?","HCLTech rupee revenue 11.5% YoY. உண்மையான (constant currency) growth எவ்வளவு?"),o:["11.5%","6.0%","2.6%","0.5%"],a:2,x:A("CC growth was 2.6%. The rest came mostly from a weaker rupee.","CC growth 2.6% தான். மீதி பெரும்பாலும் rupee வீக் ஆனதால.")},
+ {q:A("Which company grew faster quarter-on-quarter in CC?","QoQ CC-ல எந்த company வேகமா வளர்ந்தது?"),o:["HCLTech","TCS",A("Both equal","ரெண்டும் சமம்"),A("Neither grew","யாரும் வளரல")],a:0,x:A("HCLTech +2.3% vs TCS +0.5% — though ~1 point of HCLTech's came from acquisitions.","HCLTech +2.3% vs TCS +0.5% — ஆனா HCLTech-ல ~1 point acquisitions.")},
+ {q:A("Why did HCLTech beat profit estimates?","HCLTech profit estimate-ஐ ஏன் beat பண்ணுச்சு?"),o:[A("Revenue far above estimates","Revenue ரொம்ப அதிகம்"),A("Margin rose to 18.2% vs 17.3% expected","Margin 17.3% எதிர்பார்ப்பு, 18.2% வந்தது"),A("Tax refund","Tax refund"),A("Share buyback","Share buyback")],a:1,x:A("Revenue was in line; the margin beat (+90 bps) drove profit.","Revenue in line தான்; margin beat (+90 bps) தான் profit-ஐ ஏத்துச்சு.")},
+ {q:A("Which phase of the cycle is IT services in, per CB?","CB படி IT services cycle-ல எந்த phase?"),o:[A("P1 trough / bottoming","P1 அடிமட்டம்"),A("P3 expansion","P3 விரிவாக்கம்"),A("P4 peak","P4 உச்சம்"),A("P5 downturn","P5 சரிவு")],a:0,x:A("Low growth, de-rated stocks, but first signs of sequential improvement.","Growth கம்மி, stocks இறங்கியிருக்கு, ஆனா QoQ முன்னேற்றம் ஆரம்பம்.")},
+ {q:A("Which of these is a green shoot for Indian IT this quarter?","இந்த quarter Indian IT-க்கு எது நம்பிக்கை துளிர்?"),o:[A("Accenture cut its growth forecast","Accenture growth forecast குறைச்சது"),A("HCLTech raised its FY27 guidance","HCLTech FY27 guidance ஏத்துச்சு"),A("TCS India revenue fell 10.3%","TCS India revenue 10.3% இறங்குச்சு"),A("FII outflows in March","March FII outflow")],a:1,x:A("A guidance raise signals better demand; the others confirm the negative mood.","Guidance ஏற்றம் demand நல்லாகுதுன்னு காட்டுது; மத்தவை negative மனநிலையை உறுதிப்படுத்துது.")},
+ {q:A("What is TCS's EBIT (operating) margin in Q2 FY27?","Q2 FY27-ல TCS EBIT margin எவ்வளவு?"),o:["18.2%","21.0%","24.0%","25.2%"],a:2,x:A("24.0%, flat QoQ and 120 bps lower YoY (25.2%).","24.0% — QoQ அதே, YoY 120 bps கம்மி (25.2%).")},
+ {q:A("Which HCLTech segment declined this quarter?","இந்த quarter HCLTech-ல எந்த segment இறங்குச்சு?"),o:["ER&D","IT & Business Services","HCLSoftware","Advanced AI"],a:2,x:A("HCLSoftware fell 5.8% QoQ to $294M.","HCLSoftware 5.8% QoQ இறங்கி $294M.")}
+];
+var qzEl=document.getElementById("qz"),qs=0,qa=0;
+QZ.forEach(function(it,i){
+  var d=document.createElement("div");d.className="q";
+  d.innerHTML='<b>'+(i+1)+'. <span class="en">'+it.q.en+'</span><span class="ta">'+it.q.ta+'</span></b><div class="opts"></div><div class="ex" hidden><span class="en">'+it.x.en+'</span><span class="ta">'+it.x.ta+'</span></div>';
+  var ob=d.querySelector(".opts"),done=false;
+  it.o.forEach(function(o,j){var b=document.createElement("button");b.type="button";b.className="opt";
+    b.innerHTML=typeof o==="string"?esc(o):'<span class="en">'+o.en+'</span><span class="ta">'+o.ta+'</span>';
+    b.addEventListener("click",function(){if(done)return;done=true;qa++;
+      if(j===it.a){b.classList.add("ok");qs++;}else{b.classList.add("no");ob.children[it.a].classList.add("ok");}
+      d.querySelector(".ex").hidden=false;
+      document.getElementById("qscore").innerHTML='<span class="en">Score: '+qs+' / '+qa+'</span><span class="ta">மதிப்பெண்: '+qs+' / '+qa+'</span>';});
+    ob.appendChild(b);});
+  qzEl.appendChild(d);
+});
+
+/* ---------- Cauvery Assist CONFIG ---------- */
+var CONFIG={
+ title:"Cauvery Assist",storageKey:"cba_q2fy27_hcltcs",lang:"en",
+ placeholder:A("Ask: Did HCLTech beat estimates?","கேளுங்க: HCLTech estimate-ஐ beat பண்ணுச்சா?"),
+ greeting:A("Vanakam! Ask me about HCLTech vs TCS Q2 FY27 — growth, margin, deals, AI.","வணக்கம்! HCLTech vs TCS Q2 FY27 பத்தி கேளுங்க — growth, margin, deals, AI."),
+ noAdvice:A("I can't say buy or sell. CB Research is not SEBI-registered; this is for learning only.","Buy-ஆ sell-ஆன்னு நான் சொல்ல முடியாது. CB Research SEBI-ல பதிவு இல்ல; இது கற்றுக்கொள்ள மட்டும்."),
+ fallback:A("I don't have that on this dashboard. Try: margin, CC growth, deals, AI revenue.","இந்த dashboard-ல அது இல்ல. Margin, CC growth, deals, AI revenue பத்தி கேளுங்க."),
+ onOpenTab:function(id){showTab(id);},
+ metrics:[
+  {key:"ccyoy",kw:["cc","constant currency","real growth","yoy","year","கான்ஸ்டன்ட்","உண்மையான growth"],label:A("constant currency growth (YoY)","constant currency growth (YoY)"),unit:"%"},
+  {key:"ccqoq",kw:["qoq","quarter on quarter","sequential","காலாண்டு"],label:A("CC growth (QoQ)","CC growth (QoQ)"),unit:"%"},
+  {key:"usd",kw:["dollar","usd","டாலர்"],label:A("dollar revenue growth (YoY)","dollar revenue growth (YoY)"),unit:"%"},
+  {key:"inr",kw:["rupee","inr","ரூபாய்"],label:A("rupee revenue growth (YoY)","rupee revenue growth (YoY)"),unit:"%"},
+  {key:"margin",kw:["margin","ebit","operating","மார்ஜின்","லாப வரம்பு"],label:A("EBIT margin","EBIT margin"),unit:"%"},
+  {key:"pat",kw:["profit","pat","net income","லாபம்","ப்ராஃபிட்"],label:A("net profit growth (YoY)","net profit growth (YoY)"),unit:"%"},
+  {key:"tcv",kw:["deal","tcv","booking","order","டீல்"],label:A("deal wins ($B)","deal wins ($B)"),fmt:function(v){return "$"+v+"B";}},
+  {key:"ai",kw:["ai","artificial","ஏஐ"],label:A("annualised AI revenue ($B)","வருட AI revenue ($B)"),fmt:function(v){return "$"+v+"B";}},
+  {key:"hc",kw:["headcount","employees","staff","ஊழியர்","ஹெட்கவுண்ட்"],label:A("headcount","headcount"),fmt:function(v){return v.toLocaleString("en-IN");}},
+  {key:"att",kw:["attrition","அட்ரிஷன்"],label:A("attrition (LTM)","attrition (LTM)"),unit:"%",lowerIsBetter:true},
+  {key:"pe",kw:["pe","p/e","valuation","multiple","வேல்யுவேஷன்"],label:A("P/E (CB est.)","P/E (CB கணக்கு)"),fmt:function(v){return v+"×";},lowerIsBetter:true}
+ ],
+ entities:[
+  {id:"hcl",name:"HCLTech",aliases:["hcl","hcltech","ஹெச்சிஎல்","எச்சிஎல்"],values:{ccyoy:2.6,ccqoq:2.3,usd:2.2,inr:11.5,margin:18.2,pat:21.2,tcv:3.26,ai:0.876,hc:230339,att:12.8,pe:18},
+   why:A("CC grew 2.3% QoQ and margin rose 131 bps to 18.2%.","CC 2.3% QoQ வளர்ந்தது, margin 131 bps ஏறி 18.2%."),
+   risk:A("HCLSoftware fell 5.8% QoQ; about 1 point of growth came from acquisitions.","HCLSoftware 5.8% QoQ இறங்குச்சு; growth-ல ~1 point acquisitions."),tab:"fin"},
+  {id:"tcs",name:"TCS",aliases:["tcs","tata","டிசிஎஸ்","டாடா"],values:{ccyoy:2.8,ccqoq:0.5,usd:2.4,inr:11.2,margin:24.0,pat:15.0,tcv:9.6,ai:3.1,hc:598056,att:13.3,pe:14.5},
+   why:A("Margin held at 24% and AI revenue reached $3.1B.","Margin 24%-ல நின்னுச்சு, AI revenue $3.1B."),
+   risk:A("India revenue fell 10.3% QoQ and TCV of $9.6B was below last year's $10B.","India revenue 10.3% QoQ இறங்குச்சு; TCV $9.6B, போன வருஷ $10B-க்கு கீழே."),tab:"fin"}
+ ],
+ kb:[
+  {k:["beat","estimate","street","expectation","எதிர்பார்ப்பு","பீட்"],preferOverMetric:true,a:A("Yes on margin and profit: HCLTech profit ₹5,132 cr vs ₹4,910 cr expected; revenue was only in line.","Margin, profit-ல ஆமாம்: profit ₹5,132 cr vs எதிர்பார்ப்பு ₹4,910 cr; revenue in line தான்."),d:A("<ul><li>EBIT margin 18.2% vs 17.3% est.</li><li>Revenue ₹35,620 cr vs ₹35,443–35,890 cr est.</li></ul>","<ul><li>EBIT margin 18.2% vs 17.3% est.</li><li>Revenue ₹35,620 cr vs ₹35,443–35,890 cr est.</li></ul>"),tab:"dash"},
+  {k:["currency","why rupee","rupee growth","weaker rupee","கரன்சி"],preferOverMetric:true,a:A("About 9 of HCLTech's 11.5 points of rupee growth came from a weaker rupee, not more business.","HCLTech-ன் 11.5% rupee growth-ல ~9 point rupee வீக் ஆனதால — business அதிகமானதால இல்ல."),tab:"bm"},
+  {k:["organic","acquisition","inorganic","வாங்கிய"],preferOverMetric:true,a:A("Acquisitions added $35.6M, about 1 point; HCLTech's organic CC growth was ~1.3% QoQ.","Acquisitions $35.6M, ~1 point; HCLTech organic CC growth ~1.3% QoQ."),tab:"dash"},
+  {k:["guidance","outlook","forecast","கைடன்ஸ்"],preferOverMetric:true,a:A("HCLTech raised FY27 CC growth guidance to 2.5–4% from 1–4%; margin guidance stays 17.5–18.5%.","HCLTech FY27 CC guidance 1–4%-ல இருந்து 2.5–4%; margin guidance 17.5–18.5% அப்படியே."),tab:"dash"},
+  {k:["what is cc","constant currency mean","meaning of cc","cc என்றால்","cc-னா"],preferOverMetric:true,a:A("Constant currency growth removes exchange-rate changes, so it shows real business growth.","Constant currency growth exchange rate மாற்றத்தை நீக்கிடும் — உண்மையான business growth காட்டும்."),tab:"bm"},
+  {k:["software","hclsoftware","சாஃப்ட்வேர்"],preferOverMetric:true,a:A("HCLSoftware revenue fell 5.8% QoQ to $294M — the weak spot this quarter.","HCLSoftware 5.8% QoQ இறங்கி $294M — இந்த quarter பலவீனம்."),tab:"seg"},
+  {k:["india","இந்தியா"],preferOverMetric:true,a:A("TCS India revenue fell 10.3% QoQ in CC, pulling total growth down to 0.5%.","TCS India revenue 10.3% QoQ CC இறங்குச்சு, மொத்த growth-ஐ 0.5%-க்கு இழுத்துச்சு."),tab:"seg"},
+  {k:["gap","difference margin","why lower margin","இடைவெளி"],preferOverMetric:true,a:A("TCS earns about 5.8 points more margin (24.0% vs 18.2%) thanks to scale and pricing.","TCS ~5.8 point அதிக margin (24.0% vs 18.2%) — scale, pricing காரணம்."),tab:"fin"},
+  {k:["cycle","phase","சுழற்சி","சைக்கிள்"],preferOverMetric:true,a:A("CB reads IT services in P1, bottoming; HCLTech cycle score 68, TCS 56.","CB பார்வையில IT services P1, அடிமட்டம்; HCLTech cycle score 68, TCS 56."),tab:"tc"},
+  {k:["trigger","catalyst","தூண்டுதல்"],preferOverMetric:true,a:A("HCLTech's top trigger is its AI scale-up ($876M run-rate); top risk is HCLSoftware's decline.","HCLTech முக்கிய trigger AI வளர்ச்சி ($876M); பெரிய risk HCLSoftware இறக்கம்."),tab:"tc"},
+  {k:["restructuring","one-time","adjusted","ரீஸ்ட்ரக்சரிங்"],preferOverMetric:true,a:A("Excluding 84 bps restructuring cost, HCLTech's margin was 19.0%.","84 bps restructuring cost இல்லாம HCLTech margin 19.0%."),tab:"fin"},
+  {k:["sentiment","negative","mood","red flag","green shoot","sector","மனநிலை","சென்டிமென்ட்","நெகட்டிவ்"],preferOverMetric:true,a:A("Sentiment on IT is still negative but turning: growth is only 2–3%, yet sequential growth, guidance and AI revenue are improving.","IT மேல மனநிலை இன்னும் negative, ஆனா மாறுது: growth 2–3% தான், ஆனா QoQ growth, guidance, AI revenue முன்னேறுது."),d:A("<ul><li>Red flags: low growth, AI deflation, Accenture cut, FII selling, TCV not growing</li><li>Green shoots: HCL guidance raise, AI $3.1B / $876M, hiring back, stocks +5% on results</li></ul>","<ul><li>எச்சரிக்கை: growth கம்மி, AI deflation, Accenture cut, FII விற்பனை, TCV வளரல</li><li>நம்பிக்கை: HCL guidance ஏற்றம், AI $3.1B / $876M, hiring, ரிசல்ட்-ல stocks +5%</li></ul>"),tab:"sent"},
+  {k:["pillar","6 pillars","six pillars","தூண்","பில்லர்"],preferOverMetric:true,a:A("On the 6 Pillars, TCS scores 46/60 and HCLTech 42/60; HCLTech leads only on growth.","6 தூண்ல TCS 46/60, HCLTech 42/60; HCLTech growth-ல மட்டும் முன்னாடி."),d:A("<ul><li>Quality 7 vs 9</li><li>Moat 7 vs 8</li><li>Growth 7 vs 6</li><li>Financial strength 8 vs 9</li><li>Valuation 7 vs 8</li><li>Risk & reward 6 vs 6</li></ul>","<ul><li>Quality 7 vs 9</li><li>Moat 7 vs 8</li><li>Growth 7 vs 6</li><li>Financial strength 8 vs 9</li><li>Valuation 7 vs 8</li><li>Risk & reward 6 vs 6</li></ul>"),tab:"pil"},
+  {k:["better","who won","winner","which is better","யாரு ஜெயிச்சா","எது பெட்டர்"],preferOverMetric:true,a:A("HCLTech had the better quarter on momentum; TCS still leads on margin, deals and size.","Momentum-ல HCLTech-க்கு better quarter; margin, deals, size-ல TCS இன்னும் முன்னாடி."),tab:"kt"}
+ ],
+ suggestions:[["Did HCLTech beat estimates?","HCLTech estimate-ஐ beat பண்ணுச்சா?"],["Which has the higher margin?","எதுக்கு margin அதிகம்?"],["HCLTech vs TCS CC growth","HCLTech vs TCS CC growth"],["How much growth is currency?","Currency-ல எவ்வளவு growth?"],["What is HCLTech's guidance?","HCLTech guidance என்ன?"],["Should I buy HCLTech?","HCLTech வாங்கலாமா?"]]
+};
+
+/* ---------- Assist: master component if loaded, else built-in lite version ---------- */
+var assistApi=null;
+function mountLite(root,cfg){
+  var lang=cfg.lang,rate=0.8,wait=3,lastEnt=null,lastMet=null,rec=null,silT=null,heard="",tick=null;
+  try{var r=parseFloat(localStorage.getItem(cfg.storageKey+"_rate"));if(r>=0.5&&r<=1.5)rate=r;}catch(e){}
+  root.innerHTML='<div class="assist"><div class="ahead"><b>'+cfg.title+'</b><div class="aset"><label for="aRate"><span class="en">Speed</span><span class="ta">வேகம்</span></label><input type="range" id="aRate" min="0.5" max="1.5" step="0.05"><span id="aRateV"></span><label for="aWait"><span class="en">Wait</span><span class="ta">காத்திரு</span></label><select id="aWait"><option value="2">2s</option><option value="3" selected>3s</option><option value="5">5s</option></select><button class="btn" type="button" id="aStop"><span class="en">Stop</span><span class="ta">நிறுத்து</span></button></div></div><div class="bar"><i id="aBar"></i></div><div class="alog" id="aLog" aria-live="polite"></div><div class="ain"><input id="aIn" type="text" autocomplete="off"><button class="btn" type="button" id="aAsk"><span class="en">Ask</span><span class="ta">கேள்</span></button><button class="btn" type="button" id="aMic">🎙</button></div><div class="sugg" id="aSug"></div></div>';
+  var $=function(id){return root.querySelector("#"+id);};
+  var log=$("aLog"),inp=$("aIn");
+  $("aRate").value=rate;$("aRateV").textContent=rate.toFixed(2)+"×";
+  $("aRate").addEventListener("input",function(){rate=parseFloat(this.value);$("aRateV").textContent=rate.toFixed(2)+"×";try{localStorage.setItem(cfg.storageKey+"_rate",rate);}catch(e){}});
+  $("aWait").addEventListener("change",function(){wait=parseInt(this.value,10);});
+  $("aStop").addEventListener("click",function(){try{speechSynthesis.cancel();}catch(e){}});
+  function voice(){try{var vs=speechSynthesis.getVoices(),want=lang==="ta"?"ta":"en-IN";return vs.filter(function(v){return v.lang&&v.lang.indexOf(want)===0;})[0]||vs.filter(function(v){return v.lang&&v.lang.indexOf(lang==="ta"?"ta":"en")===0;})[0]||null;}catch(e){return null;}}
+  function speak(t){try{speechSynthesis.cancel();var parts=String(t).split(/(?<=[.!?।])\s+/);parts.forEach(function(p){if(!p.trim())return;var u=new SpeechSynthesisUtterance(p);u.rate=rate;u.lang=lang==="ta"?"ta-IN":"en-IN";var v=voice();if(v)u.voice=v;speechSynthesis.speak(u);});}catch(e){}}
+  function add(cls,html){var d=document.createElement("div");d.className="msg "+cls;d.innerHTML=html;log.appendChild(d);log.scrollTop=log.scrollHeight;return d;}
+  function fmt(m,v){if(v==null)return lang==="ta"?"தகவல் இல்ல":"not disclosed";return m.fmt?m.fmt(v):(v+(m.unit||""));}
+  function has(q,list){for(var i=0;i<list.length;i++){var k=list[i].toLowerCase();if(k.length<=3){if(new RegExp("(^|[^a-z])"+k.replace(/[.*+?^${}()|[\]\\\/]/g,"\\$&")+"([^a-z]|$)").test(q))return true;}else if(q.indexOf(k)>-1)return true;}return false;}
+  function answer(raw){
+    var q=" "+raw.toLowerCase()+" ",out={a:"",d:"",tab:null};
+    if(has(q,["buy","sell","hold","invest","target price","வாங்கலாமா","விக்கலாமா","வாங்க","முதலீடு"])){out.a=L(cfg.noAdvice);return out;}
+    var ents=cfg.entities.filter(function(e){return has(q,[e.name].concat(e.aliases));});
+    var met=null;cfg.metrics.forEach(function(m){if(!met&&has(q,m.kw))met=m;});
+    var kbHit=null,best=0;cfg.kb.forEach(function(k){var s=0;k.k.forEach(function(w){if(q.indexOf(w.toLowerCase())>-1)s+=w.length;});if(s>best){best=s;kbHit=k;}});
+    if(kbHit&&(kbHit.preferOverMetric||!met)&&!(met&&ents.length===2)){out.a=L(kbHit.a);out.d=kbHit.d?L(kbHit.d):"";out.tab=kbHit.tab;return out;}
+    var follow=/\b(its|their|it|that|what about)\b/.test(q)||q.indexOf("அதோட")>-1||q.indexOf("அதுக்கு")>-1;
+    if(!ents.length&&follow&&lastEnt)ents=lastEnt;
+    if(!met&&follow&&lastMet)met=lastMet;
+    var cmp=has(q,["highest","higher","more","better","best","lowest","lower","less","vs","versus","compare","which","அதிகம்","கம்மி","எது","ஒப்பிடு"]);
+    if(met&&(ents.length===2||(cmp&&!ents.length))){
+      var es=cfg.entities.slice().sort(function(a,b){return (b.values[met.key]||0)-(a.values[met.key]||0);});
+      var low=has(q,["lowest","lower","less","கம்மி"]);var w=(low!==!!met.lowerIsBetter)?es[1]:es[0],o=w===es[0]?es[1]:es[0];
+      if(has(q,["lowest","lower","less","கம்மி"])){w=es[1];o=es[0];}else{w=es[0];o=es[1];}
+      out.a=lang==="ta"?(w.name+"-க்கு "+L(met.label)+" அதிகம்/முன்னாடி: "+fmt(met,w.values[met.key])+". "+o.name+": "+fmt(met,o.values[met.key])+"."):(w.name+" leads on "+L(met.label)+" at "+fmt(met,w.values[met.key])+", vs "+o.name+" at "+fmt(met,o.values[met.key])+".");
+      if(has(q,["lowest","lower","less","கம்மி"]))out.a=lang==="ta"?(w.name+"-க்கு "+L(met.label)+" கம்மி: "+fmt(met,w.values[met.key])+". "+o.name+": "+fmt(met,o.values[met.key])+"."):(w.name+" has the lower "+L(met.label)+" at "+fmt(met,w.values[met.key])+", vs "+o.name+" at "+fmt(met,o.values[met.key])+".");
+      lastEnt=cfg.entities.slice();lastMet=met;out.tab="dash";return out;}
+    if(met&&ents.length===1){var e=ents[0];out.a=lang==="ta"?(e.name+" "+L(met.label)+": "+fmt(met,e.values[met.key])+"."):(e.name+"'s "+L(met.label)+" is "+fmt(met,e.values[met.key])+".");lastEnt=[e];lastMet=met;out.tab=e.tab;return out;}
+    if(ents.length===1){var e2=ents[0];lastEnt=[e2];
+      if(has(q,["risk","weak","problem","ரிஸ்க்","பலவீனம்"]))out.a=L(e2.risk);else out.a=L(e2.why);
+      out.d=lang==="ta"?("<ul><li>Risk: "+L(e2.risk)+"</li></ul>"):("<ul><li>Risk: "+L(e2.risk)+"</li></ul>");out.tab=e2.tab;return out;}
+    if(kbHit){out.a=L(kbHit.a);out.d=kbHit.d?L(kbHit.d):"";out.tab=kbHit.tab;return out;}
+    out.a=L(cfg.fallback);return out;
+  }
+  function ask(t){t=(t||"").trim();if(!t)return;add("u",esc(t));var r=answer(t);
+    var html=esc(r.a);if(r.d)html+='<details><summary>'+(lang==="ta"?"மேலும் விவரம்":"More details")+'</summary>'+r.d+'</details>';
+    var m=add("a",html);
+    if(r.tab&&cfg.onOpenTab){var b=document.createElement("button");b.type="button";b.className="btn";b.style.marginTop="6px";b.textContent=lang==="ta"?"தொடர்புடைய tab-ஐ திற":"Open related tab";b.addEventListener("click",function(){cfg.onOpenTab(r.tab);});m.appendChild(document.createElement("br"));m.appendChild(b);}
+    speak(r.a);}
+  $("aAsk").addEventListener("click",function(){ask(inp.value);inp.value="";});
+  inp.addEventListener("keydown",function(e){if(e.key==="Enter"){ask(inp.value);inp.value="";}});
+  function sugg(){var s=$("aSug");s.innerHTML="";cfg.suggestions.forEach(function(p){var b=document.createElement("button");b.type="button";b.textContent=lang==="ta"?p[1]:p[0];b.addEventListener("click",function(){ask(b.textContent);});s.appendChild(b);});inp.placeholder=L(cfg.placeholder);}
+  /* mic: waits for silence before sending */
+  $("aMic").addEventListener("click",function(){
+    var SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+    if(!SR){add("a",esc(lang==="ta"?"இந்த browser-ல mic வேலை செய்யாது. Chrome/Edge-ல GitHub Pages-ல try பண்ணுங்க.":"Voice input isn't available here. Try Chrome or Edge on GitHub Pages."));return;}
+    if(rec){try{rec.stop();}catch(e){}return;}
+    heard="";rec=new SR();rec.lang=lang==="ta"?"ta-IN":"en-IN";rec.continuous=true;rec.interimResults=true;
+    var bar=$("aBar");
+    function arm(){clearTimeout(silT);clearInterval(tick);var t0=Date.now();bar.style.width="100%";
+      tick=setInterval(function(){var f=1-(Date.now()-t0)/(wait*1000);bar.style.width=Math.max(0,f*100)+"%";},100);
+      silT=setTimeout(function(){try{rec.stop();}catch(e){}},wait*1000);}
+    rec.onresult=function(ev){var s="";for(var i=0;i<ev.results.length;i++)s+=ev.results[i][0].transcript;heard=s;inp.value=s;arm();};
+    rec.onerror=function(ev){if(ev.error==="not-allowed"||ev.error==="service-not-allowed")add("a",esc(lang==="ta"?"Mic block ஆகியிருக்கு. GitHub Pages-ல Chrome/Edge-ல try பண்ணுங்க.":"The microphone is blocked here. Open the dashboard on GitHub Pages in Chrome or Edge."));};
+    rec.onend=function(){clearTimeout(silT);clearInterval(tick);bar.style.width="0";rec=null;$("aMic").classList.remove("on");if(heard.trim()){ask(heard);inp.value="";}};
+    try{speechSynthesis.cancel();}catch(e){}
+    $("aMic").classList.add("on");try{rec.start();}catch(e){rec=null;}
+  });
+  add("a",esc(L(cfg.greeting)));sugg();
+  return {setLang:function(l){lang=l;sugg();},speak:speak,plain:function(h){var d=document.createElement("div");d.innerHTML=h;return d.textContent.replace(/\s+/g," ").trim();}};
+}
+var aRoot=document.getElementById("assist");
+if(window.CauveryAssist&&window.CauveryAssist.mount){
+  try{assistApi=window.CauveryAssist.mount(aRoot,CONFIG);}catch(e){assistApi=mountLite(aRoot,CONFIG);}
+}else{assistApi=mountLite(aRoot,CONFIG);}
+
+/* read this tab */
+document.getElementById("bRead").addEventListener("click",function(){
+  var p=document.querySelector("section.panel.on");if(!p)return;
+  var clone=p.cloneNode(true);[].forEach.call(clone.querySelectorAll(LANG==="ta"?".en":".ta"),function(n){n.remove();});
+  [].forEach.call(clone.querySelectorAll("svg,script,.tw"),function(n){n.remove();});
+  var t=clone.textContent.replace(/\s+/g," ").trim().slice(0,2500);
+  if(assistApi&&assistApi.speak)assistApi.speak(t);
+});
+document.getElementById("vbub").addEventListener("click",function(){showTab("assistTab");var i=document.getElementById("aIn");if(i)i.focus();});
+document.getElementById("cbb").addEventListener("click",function(){document.getElementById("cb").classList.toggle("open");});
+
+var saved="en";try{saved=localStorage.getItem("cb_q2hcltcs_lang")||"en";}catch(e){}
+setLang(saved==="ta"?"ta":"en");
+})();
+</script>
