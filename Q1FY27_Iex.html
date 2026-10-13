@@ -1,0 +1,1065 @@
+<title>IEX Q1 FY27 Analysis</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Noto+Sans:wght@400;600;700;800&family=Noto+Sans+Tamil:wght@400;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<style>
+/* Layout: sticky brand bar + scrollable tab rail; each section is one tab panel on a white page. Single light theme by design (CB house style). */
+:root{
+  --bg:#ffffff; --ink:#15120f; --ink2:#3b342d; --mute:#6b6158;
+  --line:#ece4db; --tint:#fff4e8; --acc:#f28c28; --acc2:#d96f0c;
+  --good:#1f8a4c; --warn:#b7791f; --bad:#c0392b; --blue:#2563a8;
+  --disp:"Bricolage Grotesque","Noto Sans",system-ui,sans-serif;
+  --body:"Noto Sans","Noto Sans Tamil",system-ui,sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,monospace;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:15px;line-height:1.55;font-weight:500}
+body.ta{font-family:"Noto Sans Tamil","Noto Sans",system-ui,sans-serif}
+body:not(.ta) .ta{display:none!important} body.ta .en{display:none!important}
+.wrap{max-width:1180px;margin:0 auto;padding-inline:16px;padding-block:0 120px}
+header.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:var(--bg);border-bottom:2px solid var(--line)}
+.brand{display:flex;flex-wrap:wrap;gap:10px 18px;align-items:center;justify-content:space-between;max-width:1180px;margin:0 auto;padding:12px 16px 8px}
+.brand h1{font-family:var(--disp);font-weight:800;font-size:clamp(19px,3vw,26px);margin:0;letter-spacing:-.01em;text-wrap:balance}
+.brand h1 small{display:block;font-family:var(--body);font-size:12.5px;font-weight:700;color:var(--mute);letter-spacing:.02em}
+.slogan{font-weight:800;color:var(--acc2);font-size:13px}
+.ctrl{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.btn{font:inherit;font-weight:800;font-size:13px;border:2px solid var(--acc);background:var(--bg);color:var(--ink);border-radius:999px;padding:6px 14px;cursor:pointer}
+.btn.on,.btn:hover{background:var(--acc);color:#fff}
+.btn:focus-visible,.tab:focus-visible{outline:3px solid var(--ink);outline-offset:2px}
+nav.tabs{display:flex;gap:6px;overflow-x:auto;max-width:1180px;margin:0 auto;padding:4px 16px 10px;scrollbar-width:thin}
+.tab{flex:0 0 auto;font:inherit;font-size:13px;font-weight:800;border:1.5px solid var(--line);background:var(--bg);color:var(--ink2);padding:7px 12px;border-radius:8px;cursor:pointer;white-space:nowrap}
+.tab[aria-selected=true]{background:var(--tint);border-color:var(--acc);color:var(--ink)}
+section.panel{padding-top:22px}
+h2{font-family:var(--disp);font-weight:800;font-size:clamp(22px,3.2vw,30px);margin:0 0 6px;text-wrap:balance}
+h3{font-family:var(--disp);font-weight:800;font-size:18px;margin:18px 0 8px}
+.lede{color:var(--ink2);font-weight:600;max-width:72ch;margin:0 0 16px}
+.grid{display:grid;gap:14px}
+.g2{grid-template-columns:repeat(auto-fit,minmax(min(100%,340px),1fr))}
+.g3{grid-template-columns:repeat(auto-fit,minmax(min(100%,250px),1fr))}
+.g4{grid-template-columns:repeat(auto-fit,minmax(min(100%,190px),1fr))}
+.card{border:1.5px solid var(--line);border-radius:12px;padding:14px 16px;background:var(--bg);min-width:0}
+.card.hl{border-color:var(--acc);background:var(--tint)}
+.kpi .lab{font-size:12px;font-weight:800;color:var(--mute);text-transform:uppercase;letter-spacing:.06em}
+.kpi .val{font-family:var(--mono);font-weight:700;font-size:26px;font-variant-numeric:tabular-nums;line-height:1.2}
+.kpi .sub{font-size:13px;font-weight:700;color:var(--ink2)}
+.up{color:var(--good)} .dn{color:var(--bad)} .wa{color:var(--warn)}
+ul.b{margin:0;padding-left:20px} ul.b li{margin:4px 0}
+ul.b li b{font-weight:800}
+.tw{overflow-x:auto;border:1.5px solid var(--line);border-radius:12px}
+table{border-collapse:collapse;width:100%;font-size:14px;min-width:520px}
+th,td{padding:9px 12px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+th{background:var(--tint);font-weight:800;font-size:12.5px;text-transform:uppercase;letter-spacing:.04em}
+td.n,th.n{text-align:right;font-family:var(--mono);font-variant-numeric:tabular-nums;white-space:nowrap}
+tr:last-child td{border-bottom:0}
+.chip{display:inline-block;font-size:12px;font-weight:800;padding:3px 10px;border-radius:999px;border:1.5px solid currentColor;margin:2px 4px 2px 0}
+.chip.g{color:var(--good)} .chip.r{color:var(--bad)} .chip.a{color:var(--warn)} .chip.o{color:var(--acc2)}
+.cw{position:relative;height:280px}
+.svgw{overflow-x:auto} .svgw svg{display:block;max-width:100%;height:auto}
+.note{font-size:13px;color:var(--mute);font-weight:600}
+.pic{border-left:4px solid var(--acc);background:var(--tint);padding:10px 14px;border-radius:0 10px 10px 0;font-weight:700}
+.tl{list-style:none;margin:0;padding:0;border-left:3px solid var(--acc)}
+.tl li{position:relative;padding:4px 0 12px 18px}
+.tl li::before{content:"";position:absolute;left:-8px;top:9px;width:13px;height:13px;border-radius:50%;background:var(--bg);border:3px solid var(--acc)}
+.tl li.done::before{background:var(--acc)}
+.tl .d{font-family:var(--mono);font-size:12.5px;font-weight:700;color:var(--acc2)}
+.score{display:flex;align-items:center;gap:10px;margin:6px 0}
+.score .bar{flex:1;height:10px;background:var(--line);border-radius:6px;overflow:hidden}
+.score .bar i{display:block;height:100%;background:var(--acc)}
+.score .s{font-family:var(--mono);font-weight:700;width:46px;text-align:right}
+.readbtn{float:right;margin-top:2px}
+/* CB badge + voice bubble */
+.cb{position:fixed;right:16px;bottom:calc(16px + env(safe-area-inset-bottom,0px));z-index:40}
+.cb .logo{width:46px;height:46px;border-radius:50%;background:var(--acc);color:#fff;font-family:var(--disp);font-weight:800;display:grid;place-items:center;font-size:17px;cursor:pointer;border:3px solid #fff;box-shadow:0 2px 8px rgba(0,0,0,.18);animation:blink 1.8s ease-in-out infinite}
+@keyframes blink{50%{opacity:.45}}
+@media (prefers-reduced-motion:reduce){.cb .logo{animation:none}}
+.cb .tip{display:none;position:absolute;right:0;bottom:56px;width:min(320px,82vw);background:#fff;border:2px solid var(--acc);border-radius:10px;padding:10px 12px;font-size:12.5px;font-weight:700;color:var(--ink)}
+.cb:hover .tip,.cb.open .tip{display:block}
+.vbub{position:fixed;right:16px;bottom:calc(76px + env(safe-area-inset-bottom,0px));z-index:40;font:inherit;font-weight:800;font-size:13px;background:#fff;border:2px solid var(--acc);color:var(--ink);border-radius:999px;padding:8px 14px;cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,.12)}
+/* Assist */
+.assist{border:2px solid var(--acc);border-radius:14px;padding:14px;background:#fff}
+.alog{height:340px;overflow-y:auto;display:flex;flex-direction:column;gap:8px;padding:6px 2px;margin-bottom:10px}
+.msg{max-width:88%;padding:9px 12px;border-radius:12px;font-weight:600}
+.msg.u{align-self:flex-end;background:var(--tint);border:1.5px solid var(--acc)}
+.msg.b{align-self:flex-start;border:1.5px solid var(--line)}
+.msg details{margin-top:6px;font-size:13px} .msg summary{cursor:pointer;color:var(--acc2);font-weight:800}
+.arow{display:flex;gap:8px;flex-wrap:wrap}
+.arow input[type=text]{flex:1 1 220px;min-width:0;font:inherit;font-weight:600;padding:9px 12px;border:2px solid var(--line);border-radius:10px}
+.sugg{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+.sugg button{font:inherit;font-size:12.5px;font-weight:700;border:1.5px solid var(--line);background:#fff;border-radius:999px;padding:5px 10px;cursor:pointer}
+.vbar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:10px;font-size:13px;font-weight:700}
+.vbar input[type=range]{width:120px}
+/* Quiz */
+.q{border:1.5px solid var(--line);border-radius:12px;padding:12px 14px;margin-bottom:12px}
+.q .opts{display:grid;gap:6px;margin-top:8px}
+.q button.o{font:inherit;font-weight:700;text-align:left;border:1.5px solid var(--line);background:#fff;border-radius:8px;padding:8px 10px;cursor:pointer}
+.q button.o.ok{border-color:var(--good);background:#eaf7ef} .q button.o.no{border-color:var(--bad);background:#fdecea}
+.q .fb{margin-top:8px;font-weight:700}
+</style>
+
+<header class="top">
+  <div class="brand">
+    <h1>Indian Energy Exchange (IEX) · Q1 FY27
+      <small><span class="en">NSE: IEX · BSE: 540750 · Q1 FY27 results + Q2 FY27 volume update · as of 13 Oct 2026</span><span class="ta">NSE: IEX · BSE: 540750 · Q1 FY27 results + Q2 FY27 volume update · 13 Oct 2026 நிலவரம்</span></small>
+    </h1>
+    <div class="ctrl">
+      <span class="slogan"><span class="en">Know before you own</span><span class="ta">புரிஞ்சு வாங்குங்க!</span></span>
+      <button class="btn on" id="bEN" type="button">English</button>
+      <button class="btn" id="bTA" type="button">தமிழ்</button>
+    </div>
+  </div>
+  <nav class="tabs" id="tabs" role="tablist" aria-label="Sections"></nav>
+</header>
+
+<main class="wrap" id="main">
+
+<!-- DASHBOARD -->
+<section class="panel" id="dash" data-en="Dashboard" data-ta="Dashboard">
+  <button class="btn readbtn" type="button" data-read>🔊 <span class="en">Read this tab</span><span class="ta">இந்த tab-ஐ படிங்க</span></button>
+  <h2><span class="en">IEX at a glance</span><span class="ta">IEX — ஒரே பார்வையில்</span></h2>
+  <p class="lede"><span class="en">Q2 FY27 financial results are not out yet (expected late October). This analysis uses Q1 FY27 results plus the Q2 FY27 volume update of 6 Oct 2026.</span><span class="ta">Q2 FY27 financial results இன்னும் வரலை (October கடைசியில வரலாம்). அதனால Q1 FY27 results + 6 Oct 2026 Q2 volume update வச்சு இந்த analysis.</span></p>
+  <div class="grid g4">
+    <div class="card kpi"><div class="lab">Revenue (Q1)</div><div class="val">₹157.9 cr</div><div class="sub up">+11.4% YoY</div></div>
+    <div class="card kpi"><div class="lab">PAT (Q1)</div><div class="val">₹134.8 cr</div><div class="sub up">+11.7% YoY</div></div>
+    <div class="card kpi"><div class="lab">EBITDA margin</div><div class="val">82.9%</div><div class="sub"><span class="en">ex other income</span><span class="ta">other income இல்லாம</span></div></div>
+    <div class="card kpi"><div class="lab">Q2 volume</div><div class="val">39.7 BU</div><div class="sub up">+12.7% YoY</div></div>
+    <div class="card kpi"><div class="lab">DAM price Q2</div><div class="val">₹5.7/unit</div><div class="sub dn">+46% YoY</div></div>
+    <div class="card kpi"><div class="lab">Share price</div><div class="val">₹105</div><div class="sub"><span class="en">6 Oct 2026</span><span class="ta">6 Oct 2026</span></div></div>
+    <div class="card kpi"><div class="lab">P/E (TTM)</div><div class="val">~18.5x</div><div class="sub">Mcap ~₹9,380 cr</div></div>
+    <div class="card kpi hl"><div class="lab">6 Pillars</div><div class="val">41/60</div><div class="sub">CY 52 · TG 59</div></div>
+  </div>
+  <h3><span class="en">The story in four lines</span><span class="ta">நாலு வரியில கதை</span></h3>
+  <ul class="b">
+    <li class="en"><b>Business is fine:</b> volumes and profit grow at double digits; margins above 80%.</li>
+    <li class="ta"><b>Business நல்லா இருக்கு:</b> volume, profit ரெண்டும் double digit-ல வளருது; margin 80%-க்கு மேல.</li>
+    <li class="en"><b>Moat is under attack:</b> CERC's market coupling would set one price across all exchanges.</li>
+    <li class="ta"><b>Moat-க்கு ஆபத்து:</b> CERC-ன் market coupling வந்தா எல்லா exchange-க்கும் ஒரே விலை.</li>
+    <li class="en"><b>Supreme Court:</b> no stay; CERC can finish the rules; IEX can challenge only after they are notified.</li>
+    <li class="ta"><b>Supreme Court:</b> stay இல்ல; CERC rules-ஐ முடிக்கலாம்; notify ஆன பிறகுதான் IEX challenge பண்ணலாம்.</li>
+    <li class="en"><b>Power scarcity:</b> high prices help price discovery, but IEX earns per unit (~4 paise), not per rupee of price.</li>
+    <li class="ta"><b>மின் பற்றாக்குறை:</b> விலை ஏறினாலும் IEX-க்கு கிடைக்கிறது ஒரு unit-க்கு ~4 பைசா fee தான், விலைக்கு ஏத்த மாதிரி இல்ல.</li>
+  </ul>
+  <div class="grid g2" style="margin-top:14px">
+    <div class="card"><h3 style="margin-top:0"><span class="en">Quarterly electricity volume (BU)</span><span class="ta">காலாண்டு மின் volume (BU)</span></h3><div class="cw"><canvas id="cVol"></canvas></div></div>
+    <div class="card"><h3 style="margin-top:0"><span class="en">Day-Ahead price (₹/unit)</span><span class="ta">Day-Ahead விலை (₹/unit)</span></h3><div class="cw"><canvas id="cPrice"></canvas></div></div>
+  </div>
+</section>
+
+<!-- BUSINESS MODEL -->
+<section class="panel" id="bm" data-en="Business Model" data-ta="Business Model" hidden>
+  <button class="btn readbtn" type="button" data-read>🔊 <span class="en">Read this tab</span><span class="ta">இந்த tab-ஐ படிங்க</span></button>
+  <h2><span class="en">How IEX makes money</span><span class="ta">IEX எப்படி சம்பாதிக்குது</span></h2>
+  <p class="lede"><span class="en">IEX is a marketplace, not a power producer. It matches buyers and sellers and charges a small fee on every unit traded.</span><span class="ta">IEX மின்சாரம் தயாரிக்கிற company இல்ல — ஒரு சந்தை. வாங்குறவங்க, விக்கிறவங்களை match பண்ணி, ஒவ்வொரு unit-க்கும் சின்ன fee வாங்குது.</span></p>
+  <div class="svgw card">
+    <svg viewBox="0 0 860 230" role="img" aria-label="IEX marketplace flow">
+      <rect x="10" y="40" width="200" height="150" rx="12" fill="#fff4e8" stroke="#f28c28" stroke-width="2"/>
+      <text x="110" y="70" text-anchor="middle" font-weight="800" font-size="16" fill="#15120f">Sellers</text>
+      <text x="110" y="96" text-anchor="middle" font-size="13" fill="#3b342d">Coal / gas plants</text>
+      <text x="110" y="116" text-anchor="middle" font-size="13" fill="#3b342d">Solar / wind / hydro</text>
+      <text x="110" y="136" text-anchor="middle" font-size="13" fill="#3b342d">Surplus discoms</text>
+      <text x="110" y="156" text-anchor="middle" font-size="13" fill="#3b342d">Captive, storage</text>
+      <rect x="330" y="20" width="200" height="190" rx="14" fill="#f28c28"/>
+      <text x="430" y="62" text-anchor="middle" font-weight="800" font-size="20" fill="#fff">IEX</text>
+      <text x="430" y="90" text-anchor="middle" font-size="13" fill="#fff" font-weight="700">Collects bids every</text>
+      <text x="430" y="108" text-anchor="middle" font-size="13" fill="#fff" font-weight="700">15-min block</text>
+      <text x="430" y="136" text-anchor="middle" font-size="13" fill="#fff" font-weight="700">Discovers one clearing</text>
+      <text x="430" y="154" text-anchor="middle" font-size="13" fill="#fff" font-weight="700">price per block</text>
+      <text x="430" y="186" text-anchor="middle" font-size="14" fill="#fff" font-weight="800">Fee ≈ 4 paise / unit</text>
+      <rect x="650" y="40" width="200" height="150" rx="12" fill="#fff4e8" stroke="#f28c28" stroke-width="2"/>
+      <text x="750" y="70" text-anchor="middle" font-weight="800" font-size="16" fill="#15120f">Buyers</text>
+      <text x="750" y="96" text-anchor="middle" font-size="13" fill="#3b342d">State discoms (e.g. TN)</text>
+      <text x="750" y="116" text-anchor="middle" font-size="13" fill="#3b342d">Industries (open access)</text>
+      <text x="750" y="136" text-anchor="middle" font-size="13" fill="#3b342d">Traders</text>
+      <text x="750" y="156" text-anchor="middle" font-size="13" fill="#3b342d">Railways, SEZs</text>
+      <path d="M212 115 H326" stroke="#15120f" stroke-width="2.5" fill="none" marker-end="url(#ar)"/>
+      <path d="M534 115 H646" stroke="#15120f" stroke-width="2.5" fill="none" marker-end="url(#ar)"/>
+      <defs><marker id="ar" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#15120f"/></marker></defs>
+    </svg>
+  </div>
+  <div class="grid g2" style="margin-top:14px">
+    <div class="card">
+      <h3 style="margin-top:0"><span class="en">Revenue engine</span><span class="ta">வருமான engine</span></h3>
+      <ul class="b en">
+        <li><b>Transaction fee</b> from both buyer and seller on every unit traded.</li>
+        <li>Q1 FY27: ₹157.9 cr on 37.5 BU → <b>~4.2 paise per unit</b>.</li>
+        <li><b>Volume drives revenue</b>, not the price of power.</li>
+        <li><b>Other income</b> (treasury on cash): ₹44.9 cr in Q1 — 22% of total income.</li>
+        <li>Annual membership and certificate (REC) trading fees add a little.</li>
+      </ul>
+      <ul class="b ta">
+        <li>ஒவ்வொரு unit-க்கும் வாங்குறவர், விக்கிறவர் ரெண்டு பேர்கிட்டயும் <b>transaction fee</b>.</li>
+        <li>Q1 FY27: 37.5 BU-க்கு ₹157.9 கோடி → <b>ஒரு unit-க்கு ~4.2 பைசா</b>.</li>
+        <li><b>Revenue-ஐ தீர்மானிக்கிறது volume</b> தான், மின் விலை இல்ல.</li>
+        <li><b>Other income</b> (கையில இருக்கிற cash-ல வட்டி): Q1-ல ₹44.9 கோடி — total income-ல 22%.</li>
+        <li>Membership fee, REC trading fee கொஞ்சம் சேர்க்குது.</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3 style="margin-top:0"><span class="en">Why it was a moat</span><span class="ta">ஏன் இது ஒரு moat-ஆ இருந்தது</span></h3>
+      <ul class="b en">
+        <li><b>Liquidity begets liquidity:</b> most sellers are on IEX, so buyers come to IEX.</li>
+        <li>About <b>80–85% share</b> of India's power-exchange market; 9,000+ participants; every discom trades.</li>
+        <li><b>Asset-light:</b> software platform, tiny capex, no debt.</li>
+        <li>Market coupling targets exactly this advantage — see the Market Coupling tab.</li>
+      </ul>
+      <ul class="b ta">
+        <li><b>Liquidity-ஏ liquidity-ஐ கொண்டு வரும்:</b> seller-கள் IEX-ல இருக்காங்க, அதனால buyer-களும் IEX-க்கு வர்றாங்க.</li>
+        <li>இந்திய power exchange market-ல <b>80–85% share</b>; 9,000+ participants; எல்லா discom-உம் trade பண்றாங்க.</li>
+        <li><b>Asset-light:</b> software platform, capex ரொம்ப கம்மி, கடன் இல்ல.</li>
+        <li>Market coupling இந்த advantage-ஐ தான் target பண்ணுது — Market Coupling tab பாருங்க.</li>
+      </ul>
+    </div>
+  </div>
+  <p class="pic" style="margin-top:14px"><span class="en">Picture it: IEX is the toll booth on a busy highway. More trucks (units) = more toll. A costlier load inside the truck does not raise the toll.</span><span class="ta">இப்படி யோசிங்க: IEX ஒரு highway toll gate மாதிரி. லாரி (unit) அதிகமா போனா toll அதிகம். லாரிக்குள்ள இருக்கிற சரக்கு விலை ஏறினாலும் toll ஏறாது.</span></p>
+</section>
+
+<!-- SEGMENTS -->
+<section class="panel" id="seg" data-en="Segments" data-ta="Segments" hidden>
+  <button class="btn readbtn" type="button" data-read>🔊 <span class="en">Read this tab</span><span class="ta">இந்த tab-ஐ படிங்க</span></button>
+  <h2><span class="en">Segment performance — Q2 FY27 volumes</span><span class="ta">Segment performance — Q2 FY27 volume</span></h2>
+  <p class="lede"><span class="en">IEX does not report revenue by segment. Volume share is the best proxy, since fees are charged per unit.</span><span class="ta">IEX segment வாரியா revenue சொல்றதில்ல. Fee unit கணக்கில வர்றதால volume share-ஐ proxy-ஆ எடுத்துக்கலாம்.</span></p>
+  <div class="grid g2">
+    <div class="card"><div class="cw"><canvas id="cSeg"></canvas></div></div>
+    <div class="tw"><table>
+      <thead><tr><th>Segment</th><th class="n">Q2 FY27 (MU)</th><th class="n">YoY</th><th><span class="en">Read</span><span class="ta">புரிதல்</span></th></tr></thead>
+      <tbody>
+        <tr><td><b>Real-Time (RTM)</b></td><td class="n">16,490</td><td class="n up">+10.5%</td><td><span class="en">Largest; balances solar/wind swings</span><span class="ta">பெரிய segment; solar/wind ஏற்ற இறக்கத்தை balance பண்ணுது</span></td></tr>
+        <tr><td><b>Day-Ahead incl. HP-DAM</b></td><td class="n">14,855</td><td class="n">+2.2%</td><td><span class="en">Flat — high prices cap cleared volume</span><span class="ta">Flat — விலை உச்சத்தில volume clear ஆகுறது குறையுது</span></td></tr>
+        <tr><td><b>Term-Ahead + Contingency</b></td><td class="n">5,477</td><td class="n up">+101.5%</td><td><span class="en">Discoms locking supply in advance</span><span class="ta">Discom-கள் முன்கூட்டியே supply book பண்றாங்க</span></td></tr>
+        <tr><td><b>Green (G-DAM, G-TAM)</b></td><td class="n">2,863</td><td class="n dn">−5.8%</td><td><span class="en">Weak; Sept −32%</span><span class="ta">பலவீனம்; September −32%</span></td></tr>
+        <tr><td><b>Total electricity</b></td><td class="n">39,685</td><td class="n up">+12.7%</td><td><span class="en">H1 FY27: 77.2 BU, +14.2%</span><span class="ta">H1 FY27: 77.2 BU, +14.2%</span></td></tr>
+        <tr><td><b>RECs (lakh)</b></td><td class="n">15.27</td><td class="n dn">−65.5%</td><td><span class="en">Certificate market slumped</span><span class="ta">Certificate market சரிவு</span></td></tr>
+      </tbody></table></div>
+  </div>
+  <h3><span class="en">Group businesses</span><span class="ta">Group business-கள்</span></h3>
+  <div class="tw"><table>
+    <thead><tr><th>Entity</th><th><span class="en">What it does</span><span class="ta">என்ன பண்ணுது</span></th><th><span class="en">Latest</span><span class="ta">சமீபத்திய நிலை</span></th><th><span class="en">Status</span><span class="ta">நிலை</span></th></tr></thead>
+    <tbody>
+      <tr><td><b>IGX</b> (47.3% stake)</td><td><span class="en">Gas exchange</span><span class="ta">Gas exchange</span></td><td>Q1: 27.5 mn MMBtu (+11.9%), PAT ₹16.3 cr (+15.5%)</td><td><span class="chip o">Associate</span><span class="chip a">DRHP filed 14 Jul 2026</span></td></tr>
+      <tr><td><b>ICX</b></td><td><span class="en">International renewable certificates (I-RECs)</span><span class="ta">International renewable certificate (I-REC)</span></td><td>Q1: 42.4 lakh issued, revenue ₹2.1 cr (+16%)</td><td><span class="chip g">Operating</span></td></tr>
+      <tr><td><b>Indian Coal Exchange Ltd</b></td><td><span class="en">Coal trading platform</span><span class="ta">Coal trading platform</span></td><td><span class="en">Incorporated 1 Jun 2026; applied to the Coal Controller for a licence on 29 Sep 2026</span><span class="ta">1 Jun 2026-ல incorporate; 29 Sep 2026-ல Coal Controller-கிட்ட licence-க்கு apply பண்ணியிருக்கு</span></td><td><span class="chip a">Licence applied — not trading</span></td></tr>
+    </tbody></table></div>
+</section>
+
+<!-- FINANCIALS -->
+<section class="panel" id="fin" data-en="Financials" data-ta="Financials" hidden>
+  <button class="btn readbtn" type="button" data-read>🔊 <span class="en">Read this tab</span><span class="ta">இந்த tab-ஐ படிங்க</span></button>
+  <h2><span class="en">Financials (consolidated, ₹ crore)</span><span class="ta">Financials (consolidated, ₹ கோடி)</span></h2>
+  <div class="tw"><table>
+    <thead><tr><th>Metric</th><th class="n">Q1 FY27</th><th class="n">Q1 FY26</th><th class="n">YoY</th><th class="n">Q4 FY26</th><th class="n">QoQ</th></tr></thead>
+    <tbody>
+      <tr><td>Revenue from operations</td><td class="n">157.9</td><td class="n">141.8</td><td class="n up">+11.4%</td><td class="n">174.3</td><td class="n dn">−9.4%</td></tr>
+      <tr><td>EBITDA (ex other income)</td><td class="n">130.9</td><td class="n">115.3</td><td class="n up">+13.5%</td><td class="n">149.4</td><td class="n dn">−12.3%</td></tr>
+      <tr><td>EBITDA margin</td><td class="n">82.9%</td><td class="n">81.3%</td><td class="n up">+160 bps</td><td class="n">85.7%</td><td class="n dn">−280 bps</td></tr>
+      <tr><td>Other income</td><td class="n">44.9</td><td class="n">—</td><td class="n">—</td><td class="n">22.1</td><td class="n up">+103%</td></tr>
+      <tr><td>Total income</td><td class="n">202.8</td><td class="n">184.2</td><td class="n up">+10.1%</td><td class="n">196.4</td><td class="n up">+3.2%</td></tr>
+      <tr><td>Profit before tax</td><td class="n">176.8</td><td class="n">158.4</td><td class="n up">+11.6%</td><td class="n">—</td><td class="n">—</td></tr>
+      <tr><td><b>PAT</b></td><td class="n"><b>134.8</b></td><td class="n">120.7</td><td class="n up">+11.7%</td><td class="n">~130</td><td class="n up">+~4%</td></tr>
+      <tr><td>EPS (₹)</td><td class="n">1.52</td><td class="n">—</td><td class="n">—</td><td class="n">1.45</td><td class="n up">+4.8%</td></tr>
+    </tbody></table></div>
+  <p class="note"><span class="en">Q4 has seasonally higher volumes; the QoQ dip in revenue is normal. Q1 profit was helped by a doubling of other income.</span><span class="ta">Q4-ல volume பொதுவா அதிகம்; QoQ revenue குறைஞ்சது சாதாரணம். Q1 profit-க்கு other income இரட்டிப்பானது உதவிச்சு.</span></p>
+  <div class="grid g2">
+    <div class="card"><h3 style="margin-top:0"><span class="en">PAT trend (₹ cr)</span><span class="ta">PAT trend (₹ கோடி)</span></h3><div class="cw"><canvas id="cPat"></canvas></div></div>
+    <div class="card">
+      <h3 style="margin-top:0"><span class="en">Q2 FY27 preview (results due late Oct)</span><span class="ta">Q2 FY27 preview (results October கடைசியில)</span></h3>
+      <ul class="b en">
+        <li>Volume +12.7% YoY → fee revenue likely grows at a <b>similar low-teens pace</b>.</li>
+        <li>REC volume −65.5% is a small drag.</li>
+        <li>Q2 FY26 base: revenue ₹153.9 cr, PAT ₹123.3 cr.</li>
+        <li>Watch: other income (was unusually high in Q1) and legal costs.</li>
+      </ul>
+      <ul class="b ta">
+        <li>Volume +12.7% → fee revenue-உம் <b>ஏறக்குறைய அதே low-teens வேகத்தில</b> வளரலாம்.</li>
+        <li>REC volume −65.5% கொஞ்சம் இழுக்கும்.</li>
+        <li>Q2 FY26 base: revenue ₹153.9 கோடி, PAT ₹123.3 கோடி.</li>
+        <li>கவனிங்க: other income (Q1-ல வழக்கத்தை விட அதிகம்), legal செலவு.</li>
+      </ul>
+      <p class="note"><span class="en">Preview is an expectation from volumes, not a reported number.</span><span class="ta">இது volume வச்சு எதிர்பார்ப்பு மட்டும் — reported number இல்ல.</span></p>
+    </div>
+  </div>
+</section>
+
+<!-- CASH FLOW & RATIOS -->
+<section class="panel" id="cf" data-en="Cash Flow & Ratios" data-ta="Cash Flow & Ratios" hidden>
+  <button class="btn readbtn" type="button" data-read>🔊 <span class="en">Read this tab</span><span class="ta">இந்த tab-ஐ படிங்க</span></button>
+  <h2><span class="en">Cash flow, ratios and working capital</span><span class="ta">Cash flow, ratios, working capital</span></h2>
+  <div class="grid g4">
+    <div class="card kpi"><div class="lab">PAT margin</div><div class="val">85.4%</div><div class="sub"><span class="en">on revenue, Q1</span><span class="ta">revenue மேல, Q1</span></div></div>
+    <div class="card kpi"><div class="lab">ROE (TTM)</div><div class="val">~37%</div><div class="sub"><span class="en">TTM PAT ₹506 cr / equity ₹1,365 cr</span><span class="ta">TTM PAT ₹506 கோடி / equity ₹1,365 கோடி</span></div></div>
+    <div class="card kpi"><div class="lab">Own cash (approx)</div><div class="val">~₹1,100 cr</div><div class="sub"><span class="en">gross ₹2,106 cr less ~₹1,000 cr member money</span><span class="ta">மொத்தம் ₹2,106 கோடி − ~₹1,000 கோடி member பணம்</span></div></div>
+    <div class="card kpi"><div class="lab">Dividend FY26</div><div class="val">₹267 cr</div><div class="sub"><span class="en">~₹3/share · 64% of FCF</span><span class="ta">~₹3/share · FCF-ல 64%</span></div></div>
+  </div>
+  <h3><span class="en">Cash and cash flow (₹ crore)</span><span class="ta">Cash, cash flow (₹ கோடி)</span></h3>
+  <div class="tw"><table>
+    <thead><tr><th>Item</th><th class="n">FY26</th><th class="n">FY25</th></tr></thead>
+    <tbody>
+      <tr><td>Cash &amp; equivalents</td><td class="n">105</td><td class="n">113</td></tr>
+      <tr><td>Short-term investments</td><td class="n">1,700</td><td class="n">267</td></tr>
+      <tr><td>Long-term investments</td><td class="n">301</td><td class="n">434</td></tr>
+      <tr><td><b>Gross cash + investments</b></td><td class="n"><b>2,106</b></td><td class="n"><b>814</b></td></tr>
+      <tr><td><span class="en">Other current liabilities (largely member money)</span><span class="ta">Other current liabilities (பெரும்பாலும் member பணம்)</span></td><td class="n">1,001</td><td class="n">960</td></tr>
+      <tr><td>Shareholders' equity</td><td class="n">1,365</td><td class="n">1,136</td></tr>
+      <tr><td>Operating cash flow</td><td class="n">433</td><td class="n">427</td></tr>
+      <tr><td>Capex</td><td class="n">15</td><td class="n">8</td></tr>
+      <tr><td><b>Free cash flow</b></td><td class="n"><b>418</b></td><td class="n"><b>419</b></td></tr>
+      <tr><td>Dividends paid</td><td class="n">267</td><td class="n">267</td></tr>
+    </tbody></table></div>
+  <p class="pic" style="margin-top:12px"><span class="en">Low EPS (₹5.7) comes from ~89.5 crore shares of ₹1 face value, not from a bloated equity base — ROE is ~37%. Own cash is ~₹12 per share, about 11% of the share price.</span><span class="ta">EPS (₹5.7) குறைவா தெரியறது ~89.5 கோடி share (₹1 face value) இருக்கிறதால தான், equity அதிகமா இருக்கிறதால இல்ல — ROE ~37%. சொந்த cash ஒரு share-க்கு ~₹12, share விலையில ~11%.</span></p>
+  <div class="grid g2" style="margin-top:14px">
+    <div class="card">
+      <h3 style="margin-top:0"><span class="en">Cash flow pattern</span><span class="ta">Cash flow pattern</span></h3>
+      <ul class="b en">
+        <li><b>Operating cash ≈ profit:</b> fees are collected at settlement, so profit turns into cash quickly.</li>
+        <li><b>Capex is tiny</b> (software, data centres) — nearly all operating cash is free cash.</li>
+        <li>Free cash goes to <b>dividends</b> and a <b>treasury</b> that earns other income (₹44.9 cr in Q1).</li>
+        <li>Member margin money and settlement funds pass through the books; they are not IEX's own cash.</li>
+      </ul>
+      <ul class="b ta">
+        <li><b>Operating cash ≈ profit:</b> settlement-லயே fee வசூல் ஆகுறதால profit சீக்கிரம் cash-ஆ மாறுது.</li>
+        <li><b>Capex ரொம்ப கம்மி</b> (software, data centre) — operating cash கிட்டத்தட்ட முழுசும் free cash.</li>
+        <li>Free cash → <b>dividend</b> + <b>treasury</b>; treasury-ல இருந்து other income (Q1-ல ₹44.9 கோடி).</li>
+        <li>Member margin, settlement பணம் books வழியா போகுது; அது IEX-ன் சொந்த cash இல்ல.</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3 style="margin-top:0"><span class="en">Working capital days</span><span class="ta">Working capital days</span></h3>
+      <div class="tw" style="border:0"><table style="min-width:0">
+        <thead><tr><th>Item</th><th class="n">Days</th><th><span class="en">Why</span><span class="ta">ஏன்</span></th></tr></thead>
+        <tbody>
+          <tr><td>Receivable days</td><td class="n">~0</td><td><span class="en">Fees deducted at settlement</span><span class="ta">Settlement-லயே fee பிடிக்கப்படுது</span></td></tr>
+          <tr><td>Inventory days</td><td class="n">0</td><td><span class="en">No physical stock</span><span class="ta">Stock எதுவும் இல்ல</span></td></tr>
+          <tr><td>Net working capital</td><td class="n">Negative</td><td><span class="en">Members fund trades before delivery</span><span class="ta">Delivery-க்கு முன்னாடியே member-கள் பணம் கட்டுறாங்க</span></td></tr>
+        </tbody></table></div>
+      <p class="pic" style="margin-top:10px"><span class="en">Picture it: a cinema that sells tickets before the show. The cash arrives first; the service comes later.</span><span class="ta">இப்படி யோசிங்க: show-க்கு முன்னாடியே ticket வித்துடுற theatre மாதிரி. பணம் முதல்ல, service அப்புறம்.</span></p>
+    </div>
+  </div>
+</section>
+
+<!-- VALUATIONS -->
+<section class="panel" id="val" data-en="Valuations" data-ta="Valuations" hidden>
+  <button class="btn readbtn" type="button" data-read>🔊 <span class="en">Read this tab</span><span class="ta">இந்த tab-ஐ படிங்க</span></button>
+  <h2><span class="en">Valuation and the coupling discount</span><span class="ta">Valuation, coupling discount</span></h2>
+  <div class="grid g4">
+    <div class="card kpi"><div class="lab">Price</div><div class="val">₹105.25</div><div class="sub">6 Oct 2026</div></div>
+    <div class="card kpi"><div class="lab">Market cap</div><div class="val">~₹9,380 cr</div><div class="sub">~89.1 cr shares</div></div>
+    <div class="card kpi"><div class="lab">TTM EPS</div><div class="val">₹5.68</div><div class="sub">P/E ~18.5x</div></div>
+    <div class="card kpi"><div class="lab">P/B</div><div class="val">~6.7x</div><div class="sub"><span class="en">vs ROE ~36%</span><span class="ta">ROE ~36%-க்கு எதிரா</span></div></div>
+  </div>
+  <p class="lede" style="margin-top:14px"><span class="en">P/E was 27.4x in Jan 2026 at ₹127.55. The market now prices IEX as a business that may lose its pricing power.</span><span class="ta">Jan 2026-ல ₹127.55-ல P/E 27.4x. இப்போ market, IEX தன் pricing power-ஐ இழக்கலாம்னு நினைச்சு விலை போடுது.</span></p>
+  <h3><span class="en">Illustrative coupling scenarios (annualised Q1 run-rate)</span><span class="ta">Coupling scenario-கள் (Q1 run-rate annualise பண்ணி — உதாரணம் மட்டும்)</span></h3>
+  <div class="tw"><table>
+    <thead><tr><th>Scenario</th><th class="n">DAM+RTM share</th><th class="n">Fee cut</th><th class="n">Revenue</th><th class="n">PAT</th><th class="n">EPS</th><th class="n">P/E @₹105</th></tr></thead>
+    <tbody>
+      <tr><td><b>Base</b> — <span class="en">no coupling effect</span><span class="ta">coupling பாதிப்பு இல்ல</span></td><td class="n">85%</td><td class="n">0%</td><td class="n">₹631 cr</td><td class="n">₹535 cr</td><td class="n">₹6.00</td><td class="n">17.5x</td></tr>
+      <tr><td><b>Mild</b></td><td class="n">75%</td><td class="n">−10%</td><td class="n">₹529 cr</td><td class="n">₹457 cr</td><td class="n">₹5.12</td><td class="n">20.5x</td></tr>
+      <tr><td><b>Severe</b></td><td class="n">55%</td><td class="n">−25%</td><td class="n">₹375 cr</td><td class="n">₹339 cr</td><td class="n">₹3.81</td><td class="n">27.6x</td></tr>
+    </tbody></table></div>
+  <ul class="b en" style="margin-top:10px">
+    <li>DAM + RTM = <b>79%</b> of Q2 FY27 volume, so coupling touches most of the business.</li>
+    <li>Costs (~₹27 cr/qtr) and other income (~₹45 cr/qtr) held flat; tax 24%.</li>
+    <li>Even in the severe case IEX stays highly profitable — the question is the multiple, not survival.</li>
+  </ul>
+  <ul class="b ta" style="margin-top:10px">
+    <li>DAM + RTM = Q2 FY27 volume-ல <b>79%</b> — coupling business-ன் பெரும்பகுதியைத் தொடுது.</li>
+    <li>செலவு (~₹27 கோடி/காலாண்டு), other income (~₹45 கோடி/காலாண்டு) மாறாம வச்சிருக்கோம்; tax 24%.</li>
+    <li>Severe case-லயும் IEX நல்ல லாபத்தில தான் இருக்கும் — கேள்வி multiple பத்தி, survival பத்தி இல்ல.</li>
+  </ul>
+  <p class="note"><span class="en">Scenario inputs are assumptions for learning, not forecasts.</span><span class="ta">Scenario input-கள் கத்துக்கிறதுக்கான assumption-கள் மட்டும், forecast இல்ல.</span></p>
+</section>
+
+<!-- 5 TAKEAWAYS -->
+<section class="panel" id="key" data-en="5 Key Takeaways" data-ta="5 முக்கிய பாடங்கள்" hidden>
+  <button class="btn readbtn" type="button" data-read>🔊 <span class="en">Read this tab</span><span class="ta">இந்த tab-ஐ படிங்க</span></button>
+  <h2><span class="en">5 key takeaways</span><span class="ta">5 முக்கிய பாடங்கள்</span></h2>
+  <div class="grid g3">
+    <div class="card"><h3 style="margin-top:0">1 · <span class="en">Steady earner</span><span class="ta">நிலையான வருமானம்</span></h3><p class="en">PAT +11.7%, volume +15.9% in Q1; Q2 volume +12.7%.</p><p class="ta">Q1-ல PAT +11.7%, volume +15.9%; Q2 volume +12.7%.</p></div>
+    <div class="card"><h3 style="margin-top:0">2 · <span class="en">Price ≠ revenue</span><span class="ta">விலை ≠ revenue</span></h3><p class="en">DAM price +46%, but IEX earns ~4 paise per unit. Scarcity does not fatten its fee.</p><p class="ta">DAM விலை +46%, ஆனா IEX-க்கு unit-க்கு ~4 பைசா தான். பற்றாக்குறை fee-ஐ ஏத்தாது.</p></div>
+    <div class="card hl"><h3 style="margin-top:0">3 · <span class="en">Coupling is coming</span><span class="ta">Coupling வருது</span></h3><p class="en">SC refused a stay; CERC's draft names Grid-India as the operator for DAM and RTM.</p><p class="ta">SC stay தரலை; CERC draft-ல DAM, RTM-க்கு Grid-India தான் operator.</p></div>
+    <div class="card"><h3 style="margin-top:0">4 · <span class="en">Cheap vs its past</span><span class="ta">பழைய விலையோட ஒப்பிட்டா மலிவு</span></h3><p class="en">P/E ~18.5x vs 27.4x in Jan 2026; debt-free, ROE ~36%.</p><p class="ta">P/E ~18.5x; Jan 2026-ல 27.4x. கடன் இல்ல, ROE ~36%.</p></div>
+    <div class="card"><h3 style="margin-top:0">5 · <span class="en">New legs are early</span><span class="ta">புது business-கள் ஆரம்ப நிலை</span></h3><p class="en">IGX (DRHP filed), coal exchange (incorporated, not trading), I-RECs — small but optional upside.</p><p class="ta">IGX (DRHP file ஆச்சு), coal exchange (incorporate ஆச்சு, trading இல்ல), I-REC — சின்னது, ஆனா கூடுதல் வாய்ப்பு.</p></div>
+  </div>
+</section>
+
+<!-- MARKET COUPLING & SC -->
+<section class="panel" id="mc" data-en="Market Coupling & SC" data-ta="Market Coupling & SC" hidden>
+  <button class="btn readbtn" type="button" data-read>🔊 <span class="en">Read this tab</span><span class="ta">இந்த tab-ஐ படிங்க</span></button>
+  <h2><span class="en">Market coupling and the Supreme Court</span><span class="ta">Market coupling, Supreme Court</span></h2>
+  <p class="lede"><span class="en">Today each exchange discovers its own price. Under coupling, Grid-India pools bids from IEX, PXIL and HPX and sets one national price.</span><span class="ta">இப்போ ஒவ்வொரு exchange-உம் தன் விலையை தானே கண்டுபிடிக்குது. Coupling வந்தா IEX, PXIL, HPX bid-களை Grid-India ஒன்னா சேர்த்து ஒரே தேசிய விலை போடும்.</span></p>
+  <div class="svgw card">
+    <svg viewBox="0 0 860 250" role="img" aria-label="Before and after market coupling">
+      <text x="200" y="24" text-anchor="middle" font-weight="800" font-size="16" fill="#15120f">TODAY</text>
+      <text x="640" y="24" text-anchor="middle" font-weight="800" font-size="16" fill="#15120f">AFTER COUPLING</text>
+      <g font-size="14" font-weight="800">
+        <rect x="40" y="50" width="100" height="56" rx="10" fill="#f28c28"/><text x="90" y="76" text-anchor="middle" fill="#fff">IEX</text><text x="90" y="96" text-anchor="middle" fill="#fff" font-size="12">₹5.70</text>
+        <rect x="150" y="50" width="100" height="56" rx="10" fill="#fff4e8" stroke="#f28c28" stroke-width="2"/><text x="200" y="76" text-anchor="middle" fill="#15120f">PXIL</text><text x="200" y="96" text-anchor="middle" fill="#15120f" font-size="12">own price</text>
+        <rect x="260" y="50" width="100" height="56" rx="10" fill="#fff4e8" stroke="#f28c28" stroke-width="2"/><text x="310" y="76" text-anchor="middle" fill="#15120f">HPX</text><text x="310" y="96" text-anchor="middle" fill="#15120f" font-size="12">own price</text>
+      </g>
+      <text x="200" y="140" text-anchor="middle" font-size="13" fill="#3b342d" font-weight="700">Deepest pool → best price → traders choose IEX</text>
+      <line x1="430" y1="40" x2="430" y2="230" stroke="#ece4db" stroke-width="2"/>
+      <g font-size="13" font-weight="800">
+        <rect x="480" y="46" width="90" height="40" rx="8" fill="#fff4e8" stroke="#f28c28" stroke-width="2"/><text x="525" y="71" text-anchor="middle" fill="#15120f">IEX bids</text>
+        <rect x="595" y="46" width="90" height="40" rx="8" fill="#fff4e8" stroke="#f28c28" stroke-width="2"/><text x="640" y="71" text-anchor="middle" fill="#15120f">PXIL bids</text>
+        <rect x="710" y="46" width="90" height="40" rx="8" fill="#fff4e8" stroke="#f28c28" stroke-width="2"/><text x="755" y="71" text-anchor="middle" fill="#15120f">HPX bids</text>
+        <path d="M525 88 L620 128 M640 88 L640 128 M755 88 L660 128" stroke="#15120f" stroke-width="2" fill="none"/>
+        <rect x="560" y="130" width="160" height="50" rx="10" fill="#f28c28"/><text x="640" y="152" text-anchor="middle" fill="#fff">Grid-India (MCO)</text><text x="640" y="170" text-anchor="middle" fill="#fff" font-size="12">one uniform price</text>
+      </g>
+      <text x="640" y="210" text-anchor="middle" font-size="13" fill="#3b342d" font-weight="700">Same price everywhere → choice by fee &amp; service</text>
+      <text x="640" y="230" text-anchor="middle" font-size="12" fill="#6b6158" font-weight="700">Market splitting by region if lines congest</text>
+    </svg>
+  </div>
+  <div class="grid g2" style="margin-top:14px">
+    <div class="card">
+      <h3 style="margin-top:0"><span class="en">Legal timeline</span><span class="ta">சட்ட timeline</span></h3>
+      <ul class="tl">
+        <li class="done"><span class="d">23 Jul 2025</span><br><span class="en">CERC orders DAM coupling (round-robin) by Jan 2026. Stock falls ~28% next day.</span><span class="ta">CERC, Jan 2026-க்குள்ள DAM coupling (round-robin) order. அடுத்த நாள் share ~28% சரிவு.</span></li>
+        <li class="done"><span class="d">13 Feb 2026</span><br><span class="en">APTEL declines to set aside CERC's directions; says coupling needs notified regulations first.</span><span class="ta">APTEL, CERC directions-ஐ ரத்து பண்ணலை; regulations notify ஆன பிறகுதான் coupling-னு சொல்லிச்சு.</span></li>
+        <li class="done"><span class="d">Apr 2026</span><br><span class="en">Draft Power Market (Second Amendment) Regulations: Grid-India as operator; DAM + RTM first.</span><span class="ta">Draft Power Market (Second Amendment) Regulations: Grid-India operator; முதல்ல DAM + RTM.</span></li>
+        <li class="done"><span class="d">27 Jul 2026</span><br><span class="en">SC hearing: no interim stay. CERC says rules are due shortly.</span><span class="ta">SC hearing: interim stay இல்ல. CERC, rules சீக்கிரம் வரும்னு சொல்லிச்சு.</span></li>
+        <li class="done"><span class="d">3 Aug 2026</span><br><span class="en">SC declines to intervene at this stage; IEX may challenge final rules once notified. Stock −4%.</span><span class="ta">இந்த நிலையில SC தலையிட மறுப்பு; final rules notify ஆனதும் IEX challenge பண்ணலாம். Share −4%.</span></li>
+        <li><span class="d">Watch</span><br><span class="en">Final notification; Grid-India's coupling procedure (PMCP); start date per segment.</span><span class="ta">Final notification; Grid-India-ன் coupling procedure (PMCP); segment வாரியா start date.</span></li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3 style="margin-top:0"><span class="en">What the Supreme Court did — and did not — decide</span><span class="ta">Supreme Court என்ன முடிவு பண்ணுச்சு, என்ன பண்ணலை</span></h3>
+      <ul class="b en">
+        <li><b>Did:</b> refused a stay; let CERC keep framing the rules.</li>
+        <li><b>Did:</b> observed the power-exchange space needs regulation.</li>
+        <li><b>Did not:</b> rule on merits. The Court said it expressed no view on them.</li>
+        <li><b>IEX's case:</b> pooling prices kills competition — "you can't force Khan Market shoppers to buy at RK Puram".</li>
+        <li><b>Next fight:</b> the final notified regulations.</li>
+      </ul>
+      <ul class="b ta">
+        <li><b>பண்ணது:</b> stay மறுத்துச்சு; CERC rules-ஐ தயார் பண்ண அனுமதி.</li>
+        <li><b>பண்ணது:</b> power exchange துறைக்கு regulation தேவைன்னு கருத்து.</li>
+        <li><b>பண்ணலை:</b> merits மேல தீர்ப்பு சொல்லலை — எந்த கருத்தும் சொல்லலைன்னு Court தெளிவா சொல்லிச்சு.</li>
+        <li><b>IEX வாதம்:</b> விலையை ஒன்னா சேர்த்தா போட்டி அழியும் — "Khan Market-க்கு வர்றவங்களை RK Puram-ல வாங்க வைக்க முடியாது".</li>
+        <li><b>அடுத்த போர்:</b> notify ஆகுற final regulations.</li>
+      </ul>
+      <p class="pic" style="margin-top:10px"><span class="en">Status word check: these are <b>draft</b> regulations. Coupling is <b>not live</b> in India's power exchanges as of 13 Oct 2026, based on public reports.</span><span class="ta">Status தெளிவு: இவை <b>draft</b> regulations தான். Public report-களின்படி 13 Oct 2026 நிலவரப்படி coupling <b>இன்னும் நடைமுறைக்கு வரலை</b>.</span></p>
+    </div>
+  </div>
+</section>
+
+<!-- TN POWER PUZZLE -->
+<section class="panel" id="tn" data-en="TN ₹34 Power Puzzle" data-ta="TN ₹34 மின் புதிர்" hidden>
+  <button class="btn readbtn" type="button" data-read>🔊 <span class="en">Read this tab</span><span class="ta">இந்த tab-ஐ படிங்க</span></button>
+  <h2><span class="en">Why pay ₹34 when IEX shows ₹10?</span><span class="ta">IEX-ல ₹10-னு இருக்கும்போது ஏன் ₹34 குடுக்கணும்?</span></h2>
+  <p class="lede"><span class="en">Short answer: ₹10 on IEX is a legal ceiling, not a promise of supply. In evening peak blocks, many states bid at ₹10 and not enough power clears.</span><span class="ta">சுருக்கமா: IEX-ல ₹10 ஒரு சட்ட உச்சவரம்பு (ceiling) தான், supply கிடைக்கும்னு உத்தரவாதம் இல்ல. Evening peak-ல நிறைய மாநிலங்கள் ₹10-க்கு bid பண்றாங்க, தேவையான அளவு power clear ஆகுறதில்ல.</span></p>
+  <div class="grid g4">
+    <div class="card kpi"><div class="lab">TN peak demand</div><div class="val">19,921 MW</div><div class="sub"><span class="en">October 2026</span><span class="ta">October 2026</span></div></div>
+    <div class="card kpi"><div class="lab">Peak vs last year</div><div class="val">+3,000 MW</div><div class="sub"><span class="en">evening hours</span><span class="ta">மாலை நேரம்</span></div></div>
+    <div class="card kpi"><div class="lab">Emergency tender</div><div class="val">3,000 MW</div><div class="sub">+1,500 MW 12–2 am · 12–31 Oct</div></div>
+    <div class="card kpi"><div class="lab">Tender rate (Oct)</div><div class="val dn">₹32–37</div><div class="sub"><span class="en">vs exchange cap ₹10 / ₹20</span><span class="ta">exchange cap ₹10 / ₹20-க்கு எதிரா</span></div></div>
+  </div>
+  <h3><span class="en">Picture it: the ₹10 queue</span><span class="ta">இப்படி யோசிங்க: ₹10 வரிசை</span></h3>
+  <div class="svgw card">
+    <svg viewBox="0 0 860 220" role="img" aria-label="Evening block: demand at price cap exceeds supply">
+      <text x="20" y="28" font-size="14" font-weight="800" fill="#15120f">One evening 15-min block on the exchange (illustrative)</text>
+      <rect x="20" y="50" width="520" height="44" rx="8" fill="#fff4e8" stroke="#f28c28" stroke-width="2"/>
+      <text x="30" y="77" font-size="13" font-weight="800" fill="#15120f">Buy bids at ₹10 from many states — e.g. 10,000 MW</text>
+      <rect x="20" y="110" width="260" height="44" rx="8" fill="#f28c28"/>
+      <text x="30" y="137" font-size="13" font-weight="800" fill="#fff">Sell offers available — e.g. 5,000 MW</text>
+      <text x="560" y="78" font-size="13" font-weight="800" fill="#c0392b">Price hits ceiling ₹10</text>
+      <text x="300" y="137" font-size="13" font-weight="800" fill="#15120f">→ each buyer gets only ~50% (pro-rata)</text>
+      <text x="20" y="190" font-size="13" font-weight="700" fill="#3b342d">The shortfall must come from outside the exchange: bilateral / DEEP tenders, swaps, gas peakers — none capped at ₹10.</text>
+    </svg>
+  </div>
+  <div class="grid g2" style="margin-top:14px">
+    <div class="card">
+      <h3 style="margin-top:0"><span class="en">Is power unavailable — or is it a long-term deal?</span><span class="ta">Power கிடைக்கலையா, இல்ல long-term deal-ஆ?</span></h3>
+      <ul class="b en">
+        <li><b>Power is short only in evening hours.</b> TN has daytime solar surplus.</li>
+        <li><b>The October tender is short-term</b> (12–31 Oct), not a long-term PPA.</li>
+        <li><b>Long-term firm power is far cheaper:</b> 5-year RTC contracts at ₹5.38–₹6.06; Greenko pumped storage ₹7.38.</li>
+        <li><b>Earlier peak deals</b> via DEEP: ₹9.29 to ₹20 per unit.</li>
+        <li><b>₹34/unit is real:</b> in the 12–31 Oct tender, the midnight–2 am slot cleared at <b>₹31.99–₹34.49</b> and evening bids reached <b>₹37</b> — the highest TNPDCL has paid. These are 20-day emergency rates, not a long-term contract.</li>
+        <li><b>Even at ₹37, not enough came:</b> TN sought 3,000 MW for 6 pm–midnight; only <b>2,001 MW</b> was offered.</li>
+      </ul>
+      <ul class="b ta">
+        <li><b>பற்றாக்குறை மாலை நேரத்தில மட்டும்.</b> பகல்ல solar அதிகமா இருக்கு.</li>
+        <li><b>October tender short-term</b> (12–31 Oct) தான், long-term PPA இல்ல.</li>
+        <li><b>Long-term firm power ரொம்ப மலிவு:</b> 5 வருஷ RTC contract ₹5.38–₹6.06; Greenko pumped storage ₹7.38.</li>
+        <li><b>முந்தைய peak deal-கள்</b> DEEP வழியா: unit-க்கு ₹9.29 முதல் ₹20 வரை.</li>
+        <li><b>₹34/unit உண்மை தான்:</b> 12–31 Oct tender-ல நள்ளிரவு–2 மணி slot <b>₹31.99–₹34.49</b>, மாலை bid-கள் <b>₹37</b> வரை — TNPDCL இதுவரை குடுத்ததுலயே அதிகம். இது 20 நாள் emergency rate, long-term contract இல்ல.</li>
+        <li><b>₹37-க்கும் போதுமான அளவு வரலை:</b> மாலை 6–12 மணிக்கு 3,000 MW கேட்டாங்க; offer வந்தது <b>2,001 MW</b> மட்டும்.</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3 style="margin-top:0"><span class="en">Why ₹32–37: what the tender shows</span><span class="ta">ஏன் ₹32–37: tender என்ன காட்டுது</span></h3>
+      <ul class="b en">
+        <li><b>All bidders were gas-based plants.</b> Officials said coal power was not on offer.</li>
+        <li><b>Fixed charges are low</b> (under ₹1–2/unit, per officials). The price is mostly costly gas fuel plus scarcity — TN pays only for power actually drawn.</li>
+        <li><b>~4,000 MW of central stations</b> were out on scheduled maintenance; wind season ended; reservoirs low.</li>
+        <li><b>Late buying:</b> bids invited on 6 Oct for supply from 12 Oct. Andhra Pradesh locked 150 MW for the same period on 9 Sept at ₹16–20.</li>
+        <li><b>Policy choice:</b> officials said some states chose load-shedding; TN chose uninterrupted supply.</li>
+      </ul>
+      <ul class="b ta">
+        <li><b>Bid போட்ட எல்லாமே gas plant-கள் தான்.</b> Coal power market-ல கிடைக்கலைன்னு அதிகாரிகள் சொல்றாங்க.</li>
+        <li><b>Fixed charge குறைவு</b> (அதிகாரிகள் சொன்னபடி ₹1–2/unit-க்கு கீழ). விலைக்கு காரணம் விலை உயர்ந்த gas எரிபொருள் + பற்றாக்குறை — எடுக்கிற power-க்கு மட்டும் தான் TN பணம் கட்டுது.</li>
+        <li><b>~4,000 MW மத்திய station-கள்</b> scheduled maintenance-ல; காற்று season முடிஞ்சது; அணைகளில நீர் கம்மி.</li>
+        <li><b>தாமதமா வாங்கினது:</b> 6 Oct-ல bid கேட்டு, 12 Oct-ல இருந்து supply. அதே காலத்துக்கு Andhra Pradesh 9 Sept-லயே 150 MW-ஐ ₹16–20-க்கு முடிச்சுட்டாங்க.</li>
+        <li><b>கொள்கை முடிவு:</b> சில மாநிலங்கள் மின்வெட்டை தேர்ந்தெடுத்தாங்க; TN தடையில்லா supply-ஐ தேர்ந்தெடுத்துச்சு.</li>
+      </ul>
+    </div>
+  </div>
+  <h3><span class="en">Price ladder TN faces (₹/unit)</span><span class="ta">TN சந்திக்கும் விலை ஏணி (₹/unit)</span></h3>
+  <div class="card"><div class="cw" style="height:300px"><canvas id="cLadder"></canvas></div></div>
+  <div class="grid g2" style="margin-top:14px">
+    <div class="card">
+      <h3 style="margin-top:0"><span class="en">Why now — and is it only TN?</span><span class="ta">ஏன் இப்போ — TN மட்டும் தானா?</span></h3>
+      <ul class="b en">
+        <li>Extended hot spell into October; El Niño conditions.</li>
+        <li>Wind season ending; solar zero after sunset.</li>
+        <li>Delayed plants: Ennore SEZ, Udangudi, Kudankulam Unit-4.</li>
+        <li><b>Not only TN:</b> Kerala's regulator approved peak buying for Oct 2026–May 2027 at ₹10.04 average; Sept DAM price all-India ₹7.3 (+105%).</li>
+        <li>Relief expected when the northeast monsoon sets in (around 20 Oct).</li>
+      </ul>
+      <ul class="b ta">
+        <li>October வரைக்கும் நீடிச்ச வெயில்; El Niño நிலை.</li>
+        <li>காற்று season முடியுது; சூரியன் மறைஞ்சா solar zero.</li>
+        <li>தாமதமான plant-கள்: Ennore SEZ, Udangudi, Kudankulam Unit-4.</li>
+        <li><b>TN மட்டும் இல்ல:</b> Kerala regulator Oct 2026–May 2027 peak power-க்கு சராசரி ₹10.04-க்கு ஒப்புதல்; September அகில இந்திய DAM விலை ₹7.3 (+105%).</li>
+        <li>வடகிழக்கு பருவமழை (~20 Oct) வந்தா நிவாரணம் எதிர்பார்க்கலாம்.</li>
+      </ul>
+    </div>
+    <div class="card hl">
+      <h3 style="margin-top:0"><span class="en">What it means for IEX</span><span class="ta">IEX-க்கு இதன் அர்த்தம்</span></h3>
+      <ul class="b en">
+        <li>Scarcity <b>limits</b> cleared DAM volume (only +2.2%) even as prices soar.</li>
+        <li>Discoms shift to advance contracts: TAM/contingency <b>+101.5%</b>.</li>
+        <li>High prices bring political heat — more support for regulation like coupling and price caps.</li>
+      </ul>
+      <ul class="b ta">
+        <li>விலை ஏறினாலும் பற்றாக்குறை DAM volume-ஐ <b>கட்டுப்படுத்துது</b> (+2.2% மட்டும்).</li>
+        <li>Discom-கள் முன்கூட்டிய contract-க்கு மாறுறாங்க: TAM/contingency <b>+101.5%</b>.</li>
+        <li>அதிக விலை அரசியல் அழுத்தத்தை கொண்டு வரும் — coupling, price cap மாதிரி regulation-க்கு ஆதரவு கூடும்.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- COAL IRONY -->
+<section class="panel" id="coal" data-en="The Coal Irony" data-ta="நிலக்கரி முரண்" hidden>
+  <button class="btn readbtn" type="button" data-read>🔊 <span class="en">Read this tab</span><span class="ta">இந்த tab-ஐ படிங்க</span></button>
+  <h2><span class="en">The irony: idle coal plants then, power shortage now</span><span class="ta">முரண்: அன்று சும்மா நின்ன coal plant-கள், இன்று மின் பற்றாக்குறை</span></h2>
+  <div class="grid g4">
+    <div class="card kpi"><div class="lab">Coal fleet Mar 2020</div><div class="val">205 GW</div><div class="sub"><span class="en">55% of capacity</span><span class="ta">மொத்த capacity-ல 55%</span></div></div>
+    <div class="card kpi"><div class="lab">PLF FY20</div><div class="val">55.4%</div><div class="sub dn"><span class="en">vs 78.6% in FY08</span><span class="ta">FY08-ல 78.6%</span></div></div>
+    <div class="card kpi"><div class="lab">Idle-equivalent</div><div class="val">~90 GW</div><div class="sub"><span class="en">45% of 205 GW, on average</span><span class="ta">205 GW-ல சராசரியா 45%</span></div></div>
+    <div class="card kpi"><div class="lab">Coal adds</div><div class="val">18.5 → 4.4 GW</div><div class="sub">FY12 → FY20</div></div>
+  </div>
+  <div class="grid g2" style="margin-top:14px">
+    <div class="card">
+      <h3 style="margin-top:0"><span class="en">How it happened</span><span class="ta">எப்படி நடந்தது</span></h3>
+      <ul class="tl">
+        <li class="done"><span class="d">2008–2012</span><br><span class="en">Coal building boom; PLF near 79%.</span><span class="ta">Coal plant கட்டுமான boom; PLF ~79%.</span></li>
+        <li class="done"><span class="d">2015–2020</span><br><span class="en">Fleet grows 165 → 205 GW but demand lags; discoms back down plants; renewables get must-run priority.</span><span class="ta">Fleet 165 → 205 GW, ஆனா demand கூடலை; discom-கள் plant-களை back down பண்ணாங்க; renewable-க்கு must-run முன்னுரிமை.</span></li>
+        <li class="done"><span class="d">Apr 2020</span><br><span class="en">COVID lockdown: utilisation about half of the 70%+ plants are built for; 30+ plants flagged as NPAs.</span><span class="ta">COVID lockdown: plant-கள் 70%+-க்கு கட்டப்பட்டவை, ஓடினது பாதி தான்; 30+ plant-கள் NPA.</span></li>
+        <li class="done"><span class="d">Oct 2021</span><br><span class="en">Swing to crisis: 101 plants (~121 GW) had under 8 days of coal.</span><span class="ta">அப்படியே நெருக்கடி: 101 plant-களில் (~121 GW) 8 நாளுக்கும் குறைவான coal.</span></li>
+        <li class="done"><span class="d">Oct 2026</span><br><span class="en">Evening shortages; emergency peak buying across southern states.</span><span class="ta">மாலை நேர பற்றாக்குறை; தென் மாநிலங்களில் emergency peak வாங்குதல்.</span></li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3 style="margin-top:0"><span class="en">Why the irony exists</span><span class="ta">இந்த முரண் ஏன்</span></h3>
+      <ul class="b en">
+        <li><b>Energy ≠ capacity:</b> solar adds lots of daytime energy but almost nothing at 7 pm.</li>
+        <li><b>Status check:</b> most "idle" coal units were backed down or stranded, not scrapped. The ~1 lakh MW figure matches idle-equivalent capacity, not permanent closures.</li>
+        <li><b>Boom-bust investing:</b> low PLF scared lenders; new coal orders dried up just as demand recovered.</li>
+        <li><b>Missing piece:</b> storage and firm evening supply, now being contracted at ₹6–9.</li>
+      </ul>
+      <ul class="b ta">
+        <li><b>Energy ≠ capacity:</b> solar பகல்ல நிறைய energy தரும், ஆனா இரவு 7 மணிக்கு கிட்டத்தட்ட zero.</li>
+        <li><b>Status தெளிவு:</b> "சும்மா நின்ன" coal unit-கள் பெரும்பாலும் back down அல்லது stranded — scrap பண்ணலை. ~1 லட்சம் MW என்பது idle-equivalent capacity-க்கு பொருந்தும், நிரந்தர மூடலுக்கு இல்ல.</li>
+        <li><b>Boom-bust முதலீடு:</b> குறைஞ்ச PLF lender-களை பயமுறுத்துச்சு; demand திரும்பும்போது புது coal order-கள் இல்ல.</li>
+        <li><b>விடுபட்ட பகுதி:</b> storage, firm evening supply — இப்போ ₹6–9-க்கு contract ஆகுது.</li>
+      </ul>
+    </div>
+  </div>
+  <h3><span class="en">Picture it: TN's duck curve</span><span class="ta">இப்படி யோசிங்க: TN-ன் duck curve</span></h3>
+  <div class="card"><div class="cw" style="height:280px"><canvas id="cDuck"></canvas></div><p class="note"><span class="en">Shape is illustrative: demand vs solar+wind over a day. The gap after sunset is what costs ₹10–20+.</span><span class="ta">வடிவம் உதாரணம் மட்டும்: ஒரு நாள்ல demand vs solar+wind. சூரியன் மறைஞ்ச பிறகு வர்ற இடைவெளி தான் ₹10–20+ செலவு.</span></p></div>
+</section>
+
+<!-- REASONS FOR SHARE ACTIVITY -->
+<section class="panel" id="why" data-en="Share Price Moves" data-ta="Share விலை நகர்வு" hidden>
+  <button class="btn readbtn" type="button" data-read>🔊 <span class="en">Read this tab</span><span class="ta">இந்த tab-ஐ படிங்க</span></button>
+  <h2><span class="en">Reasons for share market activity</span><span class="ta">Share market நகர்வுக்கான காரணங்கள்</span></h2>
+  <div class="tw"><table>
+    <thead><tr><th>Date</th><th class="n">Move</th><th><span class="en">Trigger</span><span class="ta">காரணம்</span></th></tr></thead>
+    <tbody>
+      <tr><td>24 Jul 2025</td><td class="n dn">−28% intraday</td><td><span class="en">CERC approves phased DAM coupling</span><span class="ta">CERC, phased DAM coupling-க்கு ஒப்புதல்</span></td></tr>
+      <tr><td>Jan 2026</td><td class="n">₹127.55</td><td><span class="en">1-year return −22%; P/E 27.4x</span><span class="ta">1 வருஷ return −22%; P/E 27.4x</span></td></tr>
+      <tr><td>6 Apr 2026</td><td class="n up">+3.2% → ₹123.6</td><td><span class="en">Record FY26 volume 141 BU</span><span class="ta">FY26 record volume 141 BU</span></td></tr>
+      <tr><td>Apr–May 2026</td><td class="n dn">−6% → ₹127.5 low</td><td><span class="en">Draft coupling regulations</span><span class="ta">Draft coupling regulations</span></td></tr>
+      <tr><td>24 Jul 2026</td><td class="n up">+2.4% → ₹124.9</td><td><span class="en">Q1 FY27 PAT +11.7%</span><span class="ta">Q1 FY27 PAT +11.7%</span></td></tr>
+      <tr><td>3 Aug 2026</td><td class="n dn">−4%</td><td><span class="en">SC declines to intervene</span><span class="ta">SC தலையிட மறுப்பு</span></td></tr>
+      <tr><td>6 Oct 2026</td><td class="n">₹105.25</td><td><span class="en">Q2 volume +12.7%; stock ~16% below post-results level</span><span class="ta">Q2 volume +12.7%; results-க்கு பிறகான விலையை விட ~16% கீழ</span></td></tr>
+    </tbody></table></div>
+  <p class="pic" style="margin-top:12px"><span class="en">Pattern: good numbers lift the stock by 2–3%; every coupling headline takes away more. Regulation, not results, sets the price.</span><span class="ta">Pattern: நல்ல results 2–3% தூக்குது; ஒவ்வொரு coupling செய்தியும் அதை விட அதிகமா இறக்குது. விலையை தீர்மானிக்கிறது results இல்ல, regulation.</span></p>
+</section>
+
+<!-- TRIGGERS & CYCLE -->
+<section class="panel" id="tc" data-en="Triggers & Cycle" data-ta="Triggers & Cycle" hidden>
+  <button class="btn readbtn" type="button" data-read>🔊 <span class="en">Read this tab</span><span class="ta">இந்த tab-ஐ படிங்க</span></button>
+  <h2><span class="en">Triggers and cycle</span><span class="ta">Triggers, Cycle</span></h2>
+  <div class="grid g2">
+    <div class="card">
+      <h3 style="margin-top:0"><span class="en">Cycle clock</span><span class="ta">Cycle கடிகாரம்</span></h3>
+      <div class="svgw"><svg viewBox="0 0 360 300" role="img" aria-label="Cycle clock">
+        <circle cx="180" cy="150" r="110" fill="#fff" stroke="#ece4db" stroke-width="16"/>
+        <g font-size="12" font-weight="800" fill="#3b342d" text-anchor="middle">
+          <text x="180" y="28">Emerging</text><text x="315" y="120">Rapid adoption</text><text x="300" y="262">Maturing</text><text x="60" y="262">Saturation</text><text x="45" y="120">Re-start</text>
+        </g>
+        <line x1="180" y1="150" x2="262" y2="222" stroke="#f28c28" stroke-width="6" stroke-linecap="round"/>
+        <circle cx="180" cy="150" r="9" fill="#f28c28"/>
+        <circle cx="110" cy="232" r="10" fill="#c0392b"/>
+        <text x="180" y="300" text-anchor="middle" font-size="12" font-weight="800" fill="#15120f">Pointer: sector · Red dot: stock (Stage 4)</text>
+      </svg></div>
+      <ul class="b en">
+        <li><b>Sector:</b> structural growth, <b>Maturing</b> (55) — volume +12–14%, new rivals via coupling.</li>
+        <li><b>Stock:</b> mature 55 · margin near high 40 · valuation below band 85 · Weinstein <b>Stage 4</b> 15 → 49.</li>
+        <li><b>CY = 52.</b></li>
+      </ul>
+      <ul class="b ta">
+        <li><b>Sector:</b> structural growth, <b>Maturing</b> (55) — volume +12–14%, coupling வழியா புது போட்டி.</li>
+        <li><b>Stock:</b> mature 55 · margin உச்சத்துக்கு அருகில் 40 · valuation band-க்கு கீழ 85 · Weinstein <b>Stage 4</b> 15 → 49.</li>
+        <li><b>CY = 52.</b></li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3 style="margin-top:0"><span class="en">Scores and gates</span><span class="ta">Score-கள், gate-கள்</span></h3>
+      <div class="score"><b style="width:60px">CY</b><div class="bar"><i style="width:52%"></i></div><span class="s">52</span></div>
+      <div class="score"><b style="width:60px">TG</b><div class="bar"><i style="width:59%"></i></div><span class="s">59</span></div>
+      <ul class="b en" style="margin-top:10px">
+        <li><b>Gate 1:</b> Stage 4 price trend → conviction capped at 55.</li>
+        <li><b>Gate 2:</b> coupling is a negative trigger with I 4 and C 0.7 → conviction capped at <b>50</b>.</li>
+        <li>TG = 50 + 8 × 2.70 − 8 × 1.61 = <b>59</b>.</li>
+      </ul>
+      <ul class="b ta" style="margin-top:10px">
+        <li><b>Gate 1:</b> Stage 4 price trend → conviction 55-க்கு மேல போகாது.</li>
+        <li><b>Gate 2:</b> coupling, I 4, C 0.7 உள்ள negative trigger → conviction <b>50</b>-க்கு மேல போகாது.</li>
+        <li>TG = 50 + 8 × 2.70 − 8 × 1.61 = <b>59</b>.</li>
+      </ul>
+    </div>
+  </div>
+  <h3><span class="en">Trigger table</span><span class="ta">Trigger table</span></h3>
+  <div class="tw"><table>
+    <thead><tr><th>Trigger</th><th>±</th><th class="n">I</th><th class="n">C</th><th class="n">W</th><th class="n">P</th><th class="n">Pts</th><th><span class="en">What to watch</span><span class="ta">கவனிக்க வேண்டியது</span></th><th>Status</th></tr></thead>
+    <tbody>
+      <tr><td><span class="en">Market coupling final rules (DAM+RTM)</span><span class="ta">Market coupling final rules (DAM+RTM)</span></td><td class="dn"><b>−</b></td><td class="n">4</td><td class="n">0.7</td><td class="n">1.0</td><td class="n">0.4</td><td class="n">1.12</td><td><span class="en">Notification, fee rules, start date</span><span class="ta">Notification, fee rules, start date</span></td><td><span class="chip a">Approved draft</span></td></tr>
+      <tr><td><span class="en">Coal exchange competition (SEBI let NSE, MCX invest in subsidiaries; no licence yet)</span><span class="ta">Coal exchange போட்டி (NSE, MCX subsidiary-ல invest பண்ண SEBI அனுமதி; licence இன்னும் இல்ல)</span></td><td class="dn"><b>−</b></td><td class="n">1</td><td class="n">0.7</td><td class="n">0.7</td><td class="n">1.0</td><td class="n">0.49</td><td><span class="en">Which Coal Controller licence comes first</span><span class="ta">Coal Controller licence யாருக்கு முதல்ல</span></td><td><span class="chip a">Announced</span></td></tr>
+      <tr><td><span class="en">H2 FY27 volume growth (RTM, TAM)</span><span class="ta">H2 FY27 volume growth (RTM, TAM)</span></td><td class="up"><b>+</b></td><td class="n">2</td><td class="n">0.7</td><td class="n">1.0</td><td class="n">1.0</td><td class="n">1.40</td><td><span class="en">Monthly volume updates</span><span class="ta">மாதாந்திர volume update</span></td><td><span class="chip g">Executing</span></td></tr>
+      <tr><td><span class="en">IGX IPO value unlock</span><span class="ta">IGX IPO value unlock</span></td><td class="up"><b>+</b></td><td class="n">2</td><td class="n">0.7</td><td class="n">0.7</td><td class="n">1.0</td><td class="n">0.98</td><td><span class="en">SEBI nod, listing price</span><span class="ta">SEBI ஒப்புதல், listing விலை</span></td><td><span class="chip a">Announced</span></td></tr>
+      <tr><td><span class="en">Indian Coal Exchange start</span><span class="ta">Indian Coal Exchange ஆரம்பம்</span></td><td class="up"><b>+</b></td><td class="n">2</td><td class="n">0.4</td><td class="n">0.4</td><td class="n">1.0</td><td class="n">0.32</td><td><span class="en">Licence, first trades</span><span class="ta">Licence, முதல் trade</span></td><td><span class="chip o">Watch</span></td></tr>
+    </tbody></table></div>
+  <h3><span class="en">What would change this view</span><span class="ta">இந்த பார்வையை எது மாத்தும்</span></h3>
+  <ul class="b en"><li>Final rules that let exchanges compete on fees with modest share loss → positive.</li><li>Coupling extended to TAM and green markets → more negative.</li><li>A Supreme Court win on merits after notification → large positive.</li></ul>
+  <ul class="b ta"><li>Final rules-ல exchange-கள் fee-ல போட்டி போடலாம், share இழப்பு கம்மி → positive.</li><li>TAM, green market-க்கும் coupling → இன்னும் negative.</li><li>Notification-க்கு பிறகு merits-ல SC வெற்றி → பெரிய positive.</li></ul>
+</section>
+
+<!-- 6 PILLARS -->
+<section class="panel" id="pil" data-en="6 Pillars" data-ta="6 தூண்கள்" hidden>
+  <button class="btn readbtn" type="button" data-read>🔊 <span class="en">Read this tab</span><span class="ta">இந்த tab-ஐ படிங்க</span></button>
+  <h2><span class="en">6 Pillars — 41 / 60</span><span class="ta">6 தூண்கள் — 41 / 60</span></h2>
+  <div class="grid g2">
+    <div class="card"><div class="cw" style="height:330px"><canvas id="cRadar"></canvas></div></div>
+    <div class="card">
+      <div class="score"><b style="flex:0 0 150px"><span class="en">Business quality</span><span class="ta">Business தரம்</span></b><div class="bar"><i style="width:90%"></i></div><span class="s">9</span></div>
+      <p class="note"><span class="en">82.9% EBITDA margin, asset-light, cash before service.</span><span class="ta">82.9% EBITDA margin, asset-light, service-க்கு முன்னாடியே cash.</span></p>
+      <div class="score"><b style="flex:0 0 150px"><span class="en">Competitive advantage</span><span class="ta">போட்டி நன்மை</span></b><div class="bar"><i style="width:50%"></i></div><span class="s">5</span></div>
+      <p class="note"><span class="en">80–85% share today; coupling targets the liquidity moat.</span><span class="ta">இன்னைக்கு 80–85% share; coupling liquidity moat-ஐ குறி வைக்குது.</span></p>
+      <div class="score"><b style="flex:0 0 150px"><span class="en">Growth opportunity</span><span class="ta">வளர்ச்சி வாய்ப்பு</span></b><div class="bar"><i style="width:70%"></i></div><span class="s">7</span></div>
+      <p class="note"><span class="en">Volume +14% H1; RTM, gas, coal, certificates; demand +11.5%.</span><span class="ta">H1 volume +14%; RTM, gas, coal, certificate; demand +11.5%.</span></p>
+      <div class="score"><b style="flex:0 0 150px"><span class="en">Financial strength</span><span class="ta">நிதி பலம்</span></b><div class="bar"><i style="width:90%"></i></div><span class="s">9</span></div>
+      <p class="note"><span class="en">Debt-free, ROE ~36%, regular dividends.</span><span class="ta">கடன் இல்ல, ROE ~36%, தொடர்ந்து dividend.</span></p>
+      <div class="score"><b style="flex:0 0 150px"><span class="en">Valuation</span><span class="ta">Valuation</span></b><div class="bar"><i style="width:70%"></i></div><span class="s">7</span></div>
+      <p class="note"><span class="en">P/E ~18.5x vs 27.4x in Jan 2026; severe case ~27.6x.</span><span class="ta">P/E ~18.5x; Jan 2026-ல 27.4x; severe case ~27.6x.</span></p>
+      <div class="score"><b style="flex:0 0 150px"><span class="en">Risk &amp; reward</span><span class="ta">Risk, reward</span></b><div class="bar"><i style="width:40%"></i></div><span class="s">4</span></div>
+      <p class="note"><span class="en">Binary regulatory outcome; Stage 4 price trend.</span><span class="ta">Regulation முடிவு ஒரு பக்கமா போகலாம்; Stage 4 price trend.</span></p>
+    </div>
+  </div>
+  <p class="pic" style="margin-top:12px"><span class="en">How we graded: 9–10 = best-in-class with numbers to prove it; 7–8 = strong with a gap; 5–6 = average or contested; 3–4 = clear weakness; 1–2 = broken. Evidence comes only from the figures in this dashboard.</span><span class="ta">எப்படி grade பண்ணோம்: 9–10 = எண்களோட சிறந்தது; 7–8 = வலுவானது, ஒரு குறை; 5–6 = சராசரி அல்லது சர்ச்சை; 3–4 = தெளிவான பலவீனம்; 1–2 = உடைஞ்சது. ஆதாரம் இந்த dashboard-ல உள்ள எண்கள் மட்டும்.</span></p>
+</section>
+
+<!-- STRATEGIC BET -->
+<section class="panel" id="bet" data-en="The Big Bet" data-ta="பெரிய Bet" hidden>
+  <button class="btn readbtn" type="button" data-read>🔊 <span class="en">Read this tab</span><span class="ta">இந்த tab-ஐ படிங்க</span></button>
+  <h2><span class="en">The big bet: life beyond the DAM monopoly</span><span class="ta">பெரிய bet: DAM ஏகபோகத்துக்கு அப்பால</span></h2>
+  <p class="lede"><span class="en">IEX's race is to build new markets before coupling equalises the old one.</span><span class="ta">Coupling பழைய market-ஐ சமமாக்குறதுக்குள்ள புது market-களை கட்டணும் — இது தான் IEX-ன் ஓட்டம்.</span></p>
+  <div class="grid g2">
+    <div class="card">
+      <h3 style="margin-top:0"><span class="en">Done vs guided</span><span class="ta">முடிஞ்சது vs திட்டம்</span></h3>
+      <ul class="tl">
+        <li class="done"><span class="d">Mar 2023 · Done</span><br><span class="en">High-Price DAM launched (cap ₹20).</span><span class="ta">High-Price DAM launch (cap ₹20).</span></li>
+        <li class="done"><span class="d">H1 FY26 · Done</span><br><span class="en">RTM overtakes DAM in volume share (36%).</span><span class="ta">Volume share-ல RTM, DAM-ஐ முந்துச்சு (36%).</span></li>
+        <li class="done"><span class="d">1 Jun / 29 Sep 2026 · Done</span><br><span class="en">Indian Coal Exchange Ltd incorporated; licence application filed with the Coal Controller.</span><span class="ta">Indian Coal Exchange Ltd incorporate; Coal Controller-கிட்ட licence application.</span></li>
+        <li class="done"><span class="d">14 Jul 2026 · Done</span><br><span class="en">IGX files DRHP for IPO.</span><span class="ta">IGX IPO-க்கு DRHP file.</span></li>
+        <li><span class="d">Pending</span><br><span class="en">IGX listing; coal exchange licence and first trades.</span><span class="ta">IGX listing; coal exchange licence, முதல் trade.</span></li>
+        <li><span class="d">Pending (regulator)</span><br><span class="en">Capacity market (CERC staff paper, May 2026).</span><span class="ta">Capacity market (CERC staff paper, May 2026).</span></li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3 style="margin-top:0"><span class="en">Who is ahead?</span><span class="ta">யார் முன்னால?</span></h3>
+      <div class="tw" style="border:0"><table style="min-width:0">
+        <thead><tr><th>Race</th><th><span class="en">Leader</span><span class="ta">முன்னணி</span></th></tr></thead>
+        <tbody>
+          <tr><td>Electricity spot</td><td>IEX (80–85%)</td></tr>
+          <tr><td>Gas exchange</td><td>IGX (IEX associate)</td></tr>
+          <tr><td>Coal exchange</td><td><span class="en">Open — no licence granted yet; IEX has applied, MCX and NSE have SEBI nod to set up</span><span class="ta">திறந்த போட்டி — யாருக்கும் licence இல்ல; IEX apply பண்ணியிருக்கு, MCX, NSE-க்கு setup பண்ண SEBI அனுமதி</span></td></tr>
+          <tr><td>Power derivatives</td><td>NSE, MCX</td></tr>
+        </tbody></table></div>
+      <div class="pic" style="margin-top:12px"><b><span class="en">How IEX got there</span><span class="ta">IEX இங்க எப்படி வந்தது</span></b><br>
+        <span class="en">Launched in 2008 as a first mover, it won the deepest pool of sellers. Liquidity pulled in every discom. Listed in Oct 2017. Seventeen years of being "where the price is" built the moat now under review.</span>
+        <span class="ta">2008-ல முதல் ஆளா ஆரம்பிச்சு, அதிக seller-களை ஈர்த்தது. அந்த liquidity எல்லா discom-ஐயும் கொண்டு வந்தது. Oct 2017-ல listing. 17 வருஷமா "விலை இங்க தான்"-னு இருந்ததே moat — அது தான் இப்போ கேள்விக்குறி.</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTOR VALUE CHAIN -->
+<section class="panel" id="vc" data-en="Sector & Value Chain" data-ta="Sector, Value Chain" hidden>
+  <button class="btn readbtn" type="button" data-read>🔊 <span class="en">Read this tab</span><span class="ta">இந்த tab-ஐ படிங்க</span></button>
+  <h2><span class="en">Where IEX sits in the power value chain</span><span class="ta">Power value chain-ல IEX எங்க இருக்கு</span></h2>
+  <div class="svgw card">
+    <svg viewBox="0 0 900 190" role="img" aria-label="Power value chain">
+      <defs><marker id="ar2" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#15120f"/></marker></defs>
+      <g font-weight="800" font-size="14" text-anchor="middle">
+        <rect x="10" y="40" width="150" height="80" rx="10" fill="#fff4e8" stroke="#f28c28" stroke-width="2"/><text x="85" y="72" fill="#15120f">Generation</text><text x="85" y="94" font-size="12" fill="#3b342d">coal·RE·gas·storage</text>
+        <rect x="190" y="40" width="150" height="80" rx="10" fill="#fff4e8" stroke="#f28c28" stroke-width="2"/><text x="265" y="72" fill="#15120f">Transmission</text><text x="265" y="94" font-size="12" fill="#3b342d">Grid-India · CTU</text>
+        <rect x="370" y="30" width="170" height="100" rx="12" fill="#f28c28"/><text x="455" y="66" fill="#fff">Price discovery</text><text x="455" y="88" font-size="12" fill="#fff">IEX · PXIL · HPX</text><text x="455" y="108" font-size="12" fill="#fff">IEX plays here</text>
+        <rect x="570" y="40" width="150" height="80" rx="10" fill="#fff4e8" stroke="#f28c28" stroke-width="2"/><text x="645" y="72" fill="#15120f">Distribution</text><text x="645" y="94" font-size="12" fill="#3b342d">TNPDCL &amp; discoms</text>
+        <rect x="750" y="40" width="140" height="80" rx="10" fill="#fff4e8" stroke="#f28c28" stroke-width="2"/><text x="820" y="72" fill="#15120f">Consumers</text><text x="820" y="94" font-size="12" fill="#3b342d">homes·industry</text>
+      </g>
+      <g stroke="#15120f" stroke-width="2"><line x1="162" y1="80" x2="186" y2="80" marker-end="url(#ar2)"/><line x1="342" y1="80" x2="366" y2="80" marker-end="url(#ar2)"/><line x1="542" y1="80" x2="566" y2="80" marker-end="url(#ar2)"/><line x1="722" y1="80" x2="746" y2="80" marker-end="url(#ar2)"/></g>
+      <text x="450" y="170" text-anchor="middle" font-size="13" font-weight="700" fill="#3b342d">Short-term market ≈ 13% of generation (FY25); most power still moves on long-term PPAs</text>
+    </svg>
+  </div>
+  <div class="grid g2" style="margin-top:14px">
+    <div class="card">
+      <h3 style="margin-top:0"><span class="en">Sector need</span><span class="ta">Sector தேவை</span></h3>
+      <ul class="b en">
+        <li>Demand +11.5% in Q2 FY27; national peak ~270 GW.</li>
+        <li>More solar and wind → more balancing → more real-time trading.</li>
+        <li>Evening deficits push discoms to short-term and advance markets.</li>
+        <li>Policy push: one grid, one price — good for consumers, tough for IEX's margin.</li>
+      </ul>
+      <ul class="b ta">
+        <li>Q2 FY27 demand +11.5%; தேசிய peak ~270 GW.</li>
+        <li>Solar, wind கூடக் கூட balancing தேவை → real-time trading கூடும்.</li>
+        <li>மாலை பற்றாக்குறை discom-களை short-term, advance market-க்கு தள்ளுது.</li>
+        <li>Policy: ஒரே grid, ஒரே விலை — நுகர்வோருக்கு நல்லது, IEX margin-க்கு கஷ்டம்.</li>
+      </ul>
+    </div>
+    <div class="card hl">
+      <h3 style="margin-top:0"><span class="en">IEX's edge in the chain</span><span class="ta">Chain-ல IEX-ன் பலம்</span></h3>
+      <ul class="b en"><li>Owns no plants or wires; earns on every trade.</li><li>Gains when more power moves from long-term PPAs to markets.</li><li>Loses pricing power if price discovery is centralised.</li></ul>
+      <ul class="b ta"><li>Plant, line எதுவும் சொந்தம் இல்ல; ஒவ்வொரு trade-லயும் வருமானம்.</li><li>Long-term PPA-ல இருந்து market-க்கு power நகர்ந்தா லாபம்.</li><li>விலை கண்டுபிடிப்பு centralise ஆனா pricing power போகும்.</li></ul>
+    </div>
+  </div>
+</section>
+
+<!-- SWOT -->
+<section class="panel" id="swot" data-en="SWOT" data-ta="SWOT" hidden>
+  <button class="btn readbtn" type="button" data-read>🔊 <span class="en">Read this tab</span><span class="ta">இந்த tab-ஐ படிங்க</span></button>
+  <h2>SWOT</h2>
+  <div class="grid g2">
+    <div class="card"><h3 style="margin-top:0" class="up"><span class="en">Strengths</span><span class="ta">பலம்</span></h3><ul class="b en"><li>80–85% market share</li><li>82.9% EBITDA margin, debt-free</li><li>Every discom on platform</li></ul><ul class="b ta"><li>80–85% market share</li><li>82.9% EBITDA margin, கடன் இல்ல</li><li>எல்லா discom-உம் platform-ல</li></ul></div>
+    <div class="card"><h3 style="margin-top:0" class="dn"><span class="en">Weaknesses</span><span class="ta">பலவீனம்</span></h3><ul class="b en"><li>Revenue tied to fee per unit set by regulator</li><li>Green market and RECs falling</li><li>Single-country, single-regulator exposure</li></ul><ul class="b ta"><li>Regulator நிர்ணயிக்கும் unit fee-ஐ நம்பி revenue</li><li>Green market, REC சரிவு</li><li>ஒரே நாடு, ஒரே regulator</li></ul></div>
+    <div class="card"><h3 style="margin-top:0" class="up"><span class="en">Opportunities</span><span class="ta">வாய்ப்புகள்</span></h3><ul class="b en"><li>IGX IPO, coal exchange, carbon/I-RECs</li><li>Capacity market, storage trading</li><li>Rising RE → more RTM</li></ul><ul class="b ta"><li>IGX IPO, coal exchange, carbon/I-REC</li><li>Capacity market, storage trading</li><li>RE கூடுது → RTM கூடும்</li></ul></div>
+    <div class="card"><h3 style="margin-top:0" class="dn"><span class="en">Threats</span><span class="ta">அச்சுறுத்தல்</span></h3><ul class="b en"><li>Market coupling (DAM, RTM)</li><li>NSE, MCX in coal and derivatives</li><li>Price caps and political pressure in scarcity</li></ul><ul class="b ta"><li>Market coupling (DAM, RTM)</li><li>Coal, derivatives-ல NSE, MCX</li><li>பற்றாக்குறையில price cap, அரசியல் அழுத்தம்</li></ul></div>
+  </div>
+</section>
+
+<!-- CAUVERY ASSIST -->
+<section class="panel" id="ask" data-en="Cauvery Assist" data-ta="Cauvery Assist" hidden>
+  <h2>Cauvery Assist</h2>
+  <p class="lede"><span class="en">Ask in English or Tamil. Answers come first, in one or two lines. Education only — no buy/sell advice.</span><span class="ta">English-லயோ தமிழ்லயோ கேளுங்க. பதில் முதல்ல, ஒன்னு ரெண்டு வரியில. கல்விக்கு மட்டும் — buy/sell ஆலோசனை இல்ல.</span></p>
+  <div id="assist"></div>
+</section>
+
+<!-- SOCRATES -->
+<section class="panel" id="quiz" data-en="Cauvery Socrates" data-ta="Cauvery Socrates" hidden>
+  <h2>Cauvery Socrates</h2>
+  <p class="lede"><span class="en">Test yourself. Tap an answer to see why.</span><span class="ta">உங்களை சோதிச்சுப் பாருங்க. பதிலை tap பண்ணுங்க, காரணம் தெரியும்.</span></p>
+  <div id="qz"></div>
+  <p id="qscore" class="pic"></p>
+</section>
+
+<!-- ANALYST VIEW -->
+<section class="panel" id="av" data-en="Analyst View" data-ta="Analyst View" hidden>
+  <button class="btn readbtn" type="button" data-read>🔊 <span class="en">Read this tab</span><span class="ta">இந்த tab-ஐ படிங்க</span></button>
+  <h2><span class="en">Analyst view</span><span class="ta">Analyst பார்வை</span></h2>
+  <div class="grid g2">
+    <div class="card">
+      <ul class="b en">
+        <li><b>Business:</b> a high-margin toll on India's power trades; Q1 delivered double-digit growth.</li>
+        <li><b>Regulation:</b> the Supreme Court did not save the moat — it only postponed the fight to the final rules.</li>
+        <li><b>Power crisis:</b> scarcity raises prices, not IEX's fee; it pushes volume to advance contracts and adds political support for coupling.</li>
+        <li><b>Cycle:</b> sector maturing; stock in Stage 4 decline.</li>
+        <li><b>Top positive triggers:</b> H2 volume growth, IGX IPO.</li>
+        <li><b>Top risk trigger:</b> final coupling regulations.</li>
+        <li><b>Learning point:</b> a cheap P/E can stay cheap when the rules of the market are being rewritten.</li>
+      </ul>
+      <ul class="b ta">
+        <li><b>Business:</b> இந்திய power trade-ல high-margin toll; Q1-ல double-digit வளர்ச்சி.</li>
+        <li><b>Regulation:</b> Supreme Court moat-ஐ காப்பாத்தலை — final rules வரைக்கும் சண்டையை தள்ளி வச்சது மட்டும் தான்.</li>
+        <li><b>மின் நெருக்கடி:</b> பற்றாக்குறை விலையை ஏத்துது, IEX fee-ஐ இல்ல; volume-ஐ advance contract-க்கு தள்ளுது, coupling-க்கு அரசியல் ஆதரவு கூடுது.</li>
+        <li><b>Cycle:</b> sector maturing; share Stage 4 சரிவில.</li>
+        <li><b>முக்கிய positive trigger:</b> H2 volume வளர்ச்சி, IGX IPO.</li>
+        <li><b>முக்கிய risk trigger:</b> final coupling regulations.</li>
+        <li><b>பாடம்:</b> Market விதிகளே மாறும்போது, மலிவான P/E மலிவாவே இருக்கலாம்.</li>
+      </ul>
+    </div>
+    <div class="card hl">
+      <h3 style="margin-top:0"><span class="en">Scorecard</span><span class="ta">Scorecard</span></h3>
+      <div class="tw" style="border:0"><table style="min-width:0"><tbody>
+        <tr><td>6 Pillars</td><td class="n"><b>41 / 60</b></td></tr>
+        <tr><td>Cycle (CY)</td><td class="n">52</td></tr>
+        <tr><td>Trigger (TG)</td><td class="n">59</td></tr>
+        <tr><td><span class="en">Conviction cap (gates)</span><span class="ta">Conviction cap (gate-கள்)</span></td><td class="n">50</td></tr>
+      </tbody></table></div>
+      <p class="note"><span class="en">Scores are for learning and comparison, not recommendations.</span><span class="ta">Score-கள் கற்றல், ஒப்பீட்டுக்கு மட்டும் — பரிந்துரை இல்ல.</span></p>
+    </div>
+  </div>
+  <h3><span class="en">The case at ₹105 — points for, and the test each must pass</span><span class="ta">₹105-ல case — சாதக point-கள், ஒவ்வொன்றும் தாண்ட வேண்டிய சோதனை</span></h3>
+  <div class="tw"><table>
+    <thead><tr><th><span class="en">Point for</span><span class="ta">சாதக point</span></th><th><span class="en">Evidence</span><span class="ta">ஆதாரம்</span></th><th><span class="en">The test</span><span class="ta">சோதனை</span></th></tr></thead>
+    <tbody>
+      <tr><td><span class="en">Bad news is known and priced</span><span class="ta">கெட்ட செய்தி தெரிஞ்சதுதான், விலையில இருக்கு</span></td><td><span class="en">P/E 27.4x → 18.5x since Jan 2026</span><span class="ta">Jan 2026-ல இருந்து P/E 27.4x → 18.5x</span></td><td><span class="en">Do final rules turn out milder than the severe case?</span><span class="ta">Final rules severe case-ஐ விட மென்மையா வருமா?</span></td></tr>
+      <tr><td><span class="en">Volumes grew after the coupling order</span><span class="ta">Coupling order-க்கு பிறகும் volume வளர்ந்தது</span></td><td><span class="en">FY26 +17%; H1 FY27 +14%</span><span class="ta">FY26 +17%; H1 FY27 +14%</span></td><td><span class="en">Coupling isn't live yet — share holds only if it survives implementation</span><span class="ta">Coupling இன்னும் வரலை — அமலான பிறகும் share நிக்கணும்</span></td></tr>
+      <tr><td><span class="en">Cash yield while waiting</span><span class="ta">காத்திருக்கும்போது cash வருமானம்</span></td><td><span class="en">Dividend yield ~2.8%; FCF yield ~4.4%; own cash ~₹12/share</span><span class="ta">Dividend yield ~2.8%; FCF yield ~4.4%; சொந்த cash ~₹12/share</span></td><td><span class="en">Payout stays near 64% of FCF</span><span class="ta">Payout FCF-ல ~64% தொடரணும்</span></td></tr>
+      <tr><td><span class="en">Coupling covers only DAM + RTM first</span><span class="ta">முதல்ல DAM + RTM-க்கு மட்டும் coupling</span></td><td><span class="en">TAM/contingency (+101.5%), green, RECs, HP segments outside the first phase</span><span class="ta">TAM/contingency (+101.5%), green, REC, HP segment-கள் முதல் phase-க்கு வெளியே</span></td><td><span class="en">CERC can extend coupling to other segments later</span><span class="ta">CERC பின்னாடி மற்ற segment-களுக்கும் நீட்டலாம்</span></td></tr>
+      <tr><td><span class="en">One national price may grow total volume</span><span class="ta">ஒரே தேசிய விலை மொத்த volume-ஐ கூட்டலாம்</span></td><td><span class="en">Deeper pooled liquidity, more participants</span><span class="ta">ஆழமான liquidity, அதிக participants</span></td><td><span class="en">IEX keeps share on fees, tech and service</span><span class="ta">Fee, tech, service-ல IEX share-ஐ தக்க வைக்கணும்</span></td></tr>
+      <tr><td><span class="en">Option value</span><span class="ta">கூடுதல் வாய்ப்பு</span></td><td><span class="en">IGX IPO (DRHP filed); coal licence applied; capacity market</span><span class="ta">IGX IPO (DRHP file); coal licence apply; capacity market</span></td><td><span class="en">Each needs approval; none is in earnings yet</span><span class="ta">ஒவ்வொன்றுக்கும் ஒப்புதல் தேவை; எதுவும் இன்னும் earnings-ல இல்ல</span></td></tr>
+      <tr><td><span class="en">Legal route still open</span><span class="ta">சட்ட வழி இன்னும் திறந்திருக்கு</span></td><td><span class="en">SC expressed no view on merits</span><span class="ta">Merits-ல SC கருத்து சொல்லலை</span></td><td><span class="en">A fresh challenge after notification</span><span class="ta">Notification-க்கு பிறகு புது challenge</span></td></tr>
+    </tbody></table></div>
+  <div class="grid g2" style="margin-top:14px">
+    <div class="card">
+      <h3 style="margin-top:0"><span class="en">Is IEX a victim of "regulatory cholesterol"?</span><span class="ta">IEX "regulatory cholesterol"-ஆல பாதிக்கப்பட்டதா?</span></h3>
+      <ul class="b en">
+        <li><b>Partly, yes.</b> One regulator (CERC) sets its fees, price caps and market design.</li>
+        <li>To a regulator, an 85% share with 83% margins looks like a blockage to clear — hence coupling.</li>
+        <li>Price caps (₹10 / ₹20) push scarce power off the exchange into uncapped tenders.</li>
+        <li>But cholesterol is chronic, not fatal: the business stays profitable even in the severe scenario.</li>
+      </ul>
+      <ul class="b ta">
+        <li><b>ஓரளவுக்கு ஆமாம்.</b> ஒரே regulator (CERC) fee, price cap, market design எல்லாத்தையும் தீர்மானிக்குது.</li>
+        <li>Regulator பார்வையில 85% share + 83% margin ஒரு அடைப்பு மாதிரி — அதனால தான் coupling.</li>
+        <li>Price cap (₹10 / ₹20) பற்றாக்குறை power-ஐ exchange-க்கு வெளியே, cap இல்லாத tender-க்கு தள்ளுது.</li>
+        <li>ஆனா இந்த cholesterol நாள்பட்டது, உயிருக்கு ஆபத்தானது இல்ல: severe scenario-லயும் business லாபத்தில தான்.</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3 style="margin-top:0"><span class="en">Does the market grow only a little each year?</span><span class="ta">Market ஒவ்வொரு வருஷமும் கொஞ்சம் தான் வளருதா?</span></h3>
+      <ul class="b en">
+        <li><b>No — volume grows fast:</b> +17% in FY26, +14% in H1 FY27.</li>
+        <li><b>Revenue grows slower</b> (~11%) because RECs fell and the fee per unit is fixed.</li>
+        <li><b>Room to grow:</b> the short-term market is ~13% of generation; most power still moves on long-term PPAs.</li>
+        <li>Scarcity caps cleared volume: DAM only +2.2% in Q2 despite strong demand.</li>
+      </ul>
+      <ul class="b ta">
+        <li><b>இல்ல — volume வேகமா வளருது:</b> FY26 +17%, H1 FY27 +14%.</li>
+        <li><b>Revenue மெதுவா வளருது</b> (~11%) — REC சரிவு, unit fee நிலையானது.</li>
+        <li><b>வளர இடம் இருக்கு:</b> short-term market generation-ல ~13% தான்; பெரும்பாலான power இன்னும் long-term PPA-ல.</li>
+        <li>பற்றாக்குறை clear ஆகுற volume-ஐ கட்டுப்படுத்துது: demand அதிகமா இருந்தும் Q2-ல DAM +2.2% மட்டும்.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+</main>
+
+<button class="vbub" id="vbub" type="button">🎙️ <span class="en">Voice Assist</span><span class="ta">Voice Assist</span></button>
+<div class="cb" id="cb">
+  <div class="tip"><span class="en">CB Research (Cauvery Business Research) is an education platform, not SEBI-registered. Nothing here is a buy, sell or hold recommendation. Figures are from public filings and reports as of 13 Oct 2026; scenario numbers are illustrative. Please consult a SEBI-registered adviser before investing.</span><span class="ta">CB Research (Cauvery Business Research) ஒரு கல்வி platform; SEBI-registered இல்ல. இங்க உள்ள எதுவும் buy, sell, hold பரிந்துரை இல்ல. எண்கள் 13 Oct 2026 வரையிலான public filing, report-களில் இருந்து; scenario எண்கள் உதாரணம் மட்டும். முதலீடு பண்றதுக்கு முன்னாடி SEBI-registered adviser-ஐ கலந்தாலோசிங்க.</span></div>
+  <div class="logo" tabindex="0" role="button" aria-label="Disclaimer">CB</div>
+</div>
+
+<script>
+(function(){
+var lang="en";
+function T(en,ta){return lang==="ta"?ta:en;}
+/* ---------- Tabs ---------- */
+var panels=[].slice.call(document.querySelectorAll("section.panel"));
+var nav=document.getElementById("tabs");
+function buildTabs(){
+  nav.innerHTML="";
+  panels.forEach(function(p){
+    var b=document.createElement("button");b.className="tab";b.type="button";b.setAttribute("role","tab");
+    b.textContent=p.getAttribute(lang==="ta"?"data-ta":"data-en");
+    b.setAttribute("aria-selected",p.hidden?"false":"true");
+    b.onclick=function(){showTab(p.id);};nav.appendChild(b);
+  });
+}
+var charts={};
+function showTab(id){
+  panels.forEach(function(p){p.hidden=(p.id!==id);});
+  buildTabs();
+  try{localStorage.setItem("iex_tab",id);}catch(e){}
+  drawCharts(id);
+  window.scrollTo({top:0});
+}
+/* ---------- Language ---------- */
+function setLang(l){
+  lang=l;document.body.classList.toggle("ta",l==="ta");
+  document.getElementById("bEN").classList.toggle("on",l==="en");
+  document.getElementById("bTA").classList.toggle("on",l==="ta");
+  buildTabs();renderQuiz();if(assistApi)assistApi.setLang(l);
+  try{localStorage.setItem("iex_lang",l);}catch(e){}
+}
+document.getElementById("bEN").onclick=function(){setLang("en");};
+document.getElementById("bTA").onclick=function(){setLang("ta");};
+/* ---------- Charts ---------- */
+var ORG="#f28c28",ORG2="#d96f0c",INK="#15120f",MUTE="#6b6158",GRID="#ece4db";
+function base(){return{responsive:true,maintainAspectRatio:false,plugins:{legend:{labels:{color:INK,font:{weight:"700"}}}},scales:{x:{ticks:{color:INK,font:{weight:"700"}},grid:{color:GRID}},y:{ticks:{color:INK,font:{weight:"700"}},grid:{color:GRID}}}};}
+function drawCharts(id){
+  if(typeof Chart==="undefined")return;
+  Chart.defaults.font.family='"Noto Sans","Noto Sans Tamil",sans-serif';
+  if(id==="dash"&&!charts.vol){
+    charts.vol=new Chart(document.getElementById("cVol"),{type:"bar",data:{labels:["Q2 FY26","Q1 FY27","Q2 FY27"],datasets:[{label:"BU",data:[35.2,37.5,39.7],backgroundColor:[GRID,ORG,ORG2],borderRadius:6}]},options:Object.assign(base(),{plugins:{legend:{display:false}}})});
+    charts.pr=new Chart(document.getElementById("cPrice"),{type:"line",data:{labels:["Q2 FY26","FY26 avg","Q2 FY27","Sep 2026"],datasets:[{label:"DAM ₹/unit",data:[3.93,3.86,5.7,7.3],borderColor:ORG,backgroundColor:"rgba(242,140,40,.15)",fill:true,tension:.3,pointRadius:5,pointBackgroundColor:ORG2}]},options:Object.assign(base(),{plugins:{legend:{display:false}}})});
+  }
+  if(id==="seg"&&!charts.seg){
+    charts.seg=new Chart(document.getElementById("cSeg"),{type:"doughnut",data:{labels:["RTM","DAM + HP-DAM","TAM + DAC","Green"],datasets:[{data:[16490,14855,5477,2863],backgroundColor:[ORG2,ORG,"#f7b97a","#1f8a4c"],borderColor:"#fff",borderWidth:3}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:"bottom",labels:{color:INK,font:{weight:"700"}}}}}});
+  }
+  if(id==="fin"&&!charts.pat){
+    charts.pat=new Chart(document.getElementById("cPat"),{type:"bar",data:{labels:["Q2 FY25","Q1 FY26","Q2 FY26","Q4 FY26","Q1 FY27"],datasets:[{label:"PAT",data:[108.3,120.7,123.3,130,134.8],backgroundColor:[GRID,GRID,GRID,"#f7b97a",ORG],borderRadius:6}]},options:Object.assign(base(),{plugins:{legend:{display:false}}})});
+  }
+  if(id==="tn"&&!charts.lad){
+    var o=base();o.indexAxis="y";o.plugins={legend:{display:false}};
+    charts.lad=new Chart(document.getElementById("cLadder"),{type:"bar",data:{labels:["5-yr RTC contract (low)","5-yr RTC contract (high)","Greenko pumped storage","Summer market avg (TN)","DAM / RTM ceiling","Kerala peak (Oct'26–May'27)","AP 150 MW (booked 9 Sep)","HP-DAM ceiling","TN 12–2 am slot (Oct)","TN evening slot (Oct, max)"],datasets:[{data:[5.38,6.06,7.38,8.70,10,10.04,20,20,34.49,37],backgroundColor:["#1f8a4c","#1f8a4c","#1f8a4c",ORG,ORG,ORG,ORG2,ORG2,"#c0392b","#c0392b"],borderRadius:5}]},options:o});
+  }
+  if(id==="coal"&&!charts.duck){
+    var h=["0","2","4","6","8","10","12","14","16","18","20","22"];
+    charts.duck=new Chart(document.getElementById("cDuck"),{type:"line",data:{labels:h.map(function(x){return x+":00";}),datasets:[{label:"Demand",data:[15,14.5,14.5,15.5,17,18,18.5,18.5,18.5,19.9,19.5,17],borderColor:INK,tension:.35,pointRadius:0,borderWidth:3},{label:"Solar + wind (Oct)",data:[2,2,2,2.5,6,10,12,11,7,2.5,2,2],borderColor:ORG,backgroundColor:"rgba(242,140,40,.18)",fill:true,tension:.35,pointRadius:0,borderWidth:3}]},options:Object.assign(base(),{scales:{x:{ticks:{color:INK},grid:{color:GRID}},y:{title:{display:true,text:"GW",color:INK},ticks:{color:INK},grid:{color:GRID}}}})});
+  }
+  if(id==="pil"&&!charts.rad){
+    charts.rad=new Chart(document.getElementById("cRadar"),{type:"radar",data:{labels:["Business quality","Competitive adv.","Growth","Financial strength","Valuation","Risk & reward"],datasets:[{label:"IEX",data:[9,5,7,9,7,4],borderColor:ORG2,backgroundColor:"rgba(242,140,40,.25)",pointBackgroundColor:ORG2}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{r:{min:0,max:10,ticks:{stepSize:2,color:MUTE,backdropColor:"#fff"},grid:{color:GRID},angleLines:{color:GRID},pointLabels:{color:INK,font:{weight:"800",size:12}}}}}});
+  }
+}
+/* ---------- Speech ---------- */
+var rate=0.8;try{var r0=parseFloat(localStorage.getItem("cba_iex_rate"));if(r0)rate=r0;}catch(e){}
+var synth=window.speechSynthesis;
+function pickVoice(){
+  if(!synth)return null;var vs=synth.getVoices();var want=lang==="ta"?"ta":"en-IN";
+  return vs.find(function(v){return v.lang&&v.lang.indexOf(want)===0;})||vs.find(function(v){return v.lang&&v.lang.indexOf(lang==="ta"?"ta":"en")===0;})||null;
+}
+function speak(text){
+  if(!synth)return;synth.cancel();
+  var parts=text.replace(/\s+/g," ").split(/(?<=[.!?।])\s+/).filter(Boolean);
+  parts.forEach(function(s){var u=new SpeechSynthesisUtterance(s);u.rate=rate;u.lang=lang==="ta"?"ta-IN":"en-IN";var v=pickVoice();if(v)u.voice=v;synth.speak(u);});
+}
+function plain(el){
+  var c=el.cloneNode(true);
+  [].slice.call(c.querySelectorAll(lang==="ta"?".en":".ta")).forEach(function(n){n.remove();});
+  [].slice.call(c.querySelectorAll("button,canvas,svg,script")).forEach(function(n){n.remove();});
+  return c.textContent;
+}
+[].slice.call(document.querySelectorAll("[data-read]")).forEach(function(b){b.onclick=function(){speak(plain(b.closest("section")));};});
+/* ---------- Cauvery Assist CONFIG (component schema) ---------- */
+var A=function(en,ta){return{en:en,ta:ta};};
+var CONFIG={
+  title:"Cauvery Assist",storageKey:"cba_iex_q1fy27",lang:"en",
+  placeholder:A("Ask: Why is Tamil Nadu paying so much for power?","கேளுங்க: TN ஏன் இவ்வளவு விலை குடுக்குது?"),
+  greeting:A("Vanakam! Ask me about IEX results, market coupling, the Supreme Court case, Tamil Nadu's power costs or the coal irony.","வணக்கம்! IEX results, market coupling, Supreme Court case, TN மின் செலவு, coal முரண் — எது வேணாலும் கேளுங்க."),
+  noAdvice:A("CB Research is not SEBI-registered, so I can't say buy, sell or hold. I can explain the numbers and risks so you can decide with an adviser.","CB Research SEBI-registered இல்ல, அதனால buy, sell, hold சொல்ல முடியாது. எண்களையும் risk-களையும் விளக்குறேன் — adviser கூட பேசி நீங்களே முடிவு பண்ணுங்க."),
+  fallback:A("I don't have that in this dashboard. Try asking about results, coupling, the Supreme Court, TN power prices, valuation or triggers.","இந்த dashboard-ல அது இல்ல. Results, coupling, Supreme Court, TN மின் விலை, valuation, trigger பத்தி கேட்டுப் பாருங்க."),
+  onOpenTab:function(t){showTab(t);},
+  kb:[
+    {k:["profit","pat","result","q1","லாபம்","ரிசல்ட்","பிராஃபிட்"],tab:"fin",a:A("Q1 FY27 PAT was ₹134.8 crore, up 11.7% YoY; revenue ₹157.9 crore, up 11.4%.","Q1 FY27 PAT ₹134.8 கோடி, YoY +11.7%; revenue ₹157.9 கோடி, +11.4%.")},
+    {k:["q2","second quarter","volume","வால்யூம்","அளவு"],tab:"seg",a:A("Q2 FY27 results aren't out yet; Q2 volume was 39.7 BU, up 12.7% YoY.","Q2 FY27 results இன்னும் வரலை; Q2 volume 39.7 BU, YoY +12.7%.")},
+    {k:["coupling","கப்ளிங்","couple","uniform price","ஒரே விலை"],tab:"mc",a:A("Market coupling pools bids from all exchanges so Grid-India sets one price; it removes IEX's liquidity edge.","Market coupling எல்லா exchange bid-களையும் சேர்த்து Grid-India ஒரே விலை போடும்; IEX-ன் liquidity பலம் போயிடும்.")},
+    {k:["supreme","court","sc","judgment","appeal","உச்ச","நீதிமன்ற","கோர்ட்","தீர்ப்பு"],tab:"mc",a:A("The Supreme Court refused a stay and let CERC finish the rules; IEX can challenge them once notified.","Supreme Court stay தரலை, CERC rules-ஐ முடிக்க அனுமதிச்சது; notify ஆனதும் IEX challenge பண்ணலாம்."),d:A("<ul><li>27 Jul 2026: no interim stay.</li><li>3 Aug 2026: not the stage to intervene; no view on merits.</li></ul>","<ul><li>27 Jul 2026: interim stay இல்ல.</li><li>3 Aug 2026: தலையிடும் நிலை இல்ல; merits-ல கருத்து இல்ல.</li></ul>")},
+    {k:["34","tamil nadu","tn","high cost","why pay","தமிழ்நாடு","34 ரூபாய்","ஏன்"],preferOverMetric:true,tab:"tn",a:A("Because ₹10 on IEX is a ceiling, not guaranteed supply; TN's gap was filled by gas plants in a late emergency tender at ₹31.99–₹34.49 (midnight–2 am) and up to ₹37 (evening).","IEX-ல ₹10 ஒரு ceiling தான், supply உத்தரவாதம் இல்ல; தாமதமான emergency tender-ல gas plant-கள் நள்ளிரவு–2 மணிக்கு ₹31.99–₹34.49, மாலை ₹37 வரை விலை போட்டாங்க."),d:A("<ul><li>Supply 12–31 Oct only; not a long-term deal.</li><li>Only 2,001 MW offered against 3,000 MW sought in the evening.</li><li>~4,000 MW of central stations on maintenance; coal power not on offer.</li><li>AP booked 150 MW on 9 Sept at ₹16–20.</li></ul>","<ul><li>12–31 Oct மட்டும்; long-term deal இல்ல.</li><li>மாலை 3,000 MW கேட்டதுக்கு 2,001 MW தான் offer.</li><li>~4,000 MW மத்திய station maintenance-ல; coal power கிடைக்கலை.</li><li>AP 9 Sept-லயே 150 MW-ஐ ₹16–20-க்கு book பண்ணுச்சு.</li></ul>")},
+    {k:["long term","firm","ppa","agreement","ஒப்பந்தம்","நீண்ட கால"],tab:"tn",a:A("No — the ₹32–37 purchase is a 20-day emergency tender for 12–31 Oct; TN's 5-year firm contracts are at ₹5.38–₹6.06.","இல்ல — ₹32–37 வாங்குதல் 12–31 Oct-க்கான 20 நாள் emergency tender; TN-ன் 5 வருஷ firm contract ₹5.38–₹6.06.")},
+    {k:["available","not available","shortage","power cut","கிடைக்கல","பற்றாக்குறை","மின்வெட்டு"],tab:"tn",a:A("Power is short only in evening hours; daytime has a solar surplus.","மாலை நேரத்தில மட்டும் பற்றாக்குறை; பகல்ல solar அதிகம்.")},
+    {k:["coal","irony","shut","idle","நிலக்கரி","முரண்","கோல்"],tab:"coal",a:A("In FY20 coal plants ran at 55% PLF, leaving ~90 GW idle on average; now evening peaks are short because solar adds energy but not evening capacity.","FY20-ல coal plant-கள் 55% PLF-ல ஓடிச்சு, சராசரியா ~90 GW சும்மா நின்னுச்சு; இப்போ solar energy தருது, ஆனா evening capacity தரலை — அதனால பற்றாக்குறை.")},
+    {k:["valuation","pe","p/e","cheap","expensive","வேல்யுவேஷன்","மதிப்பு"],tab:"val",a:A("IEX trades near 18.5x trailing earnings at ₹105, down from 27.4x in January 2026.","₹105-ல IEX trailing P/E ~18.5x; Jan 2026-ல 27.4x.")},
+    {k:["pillar","score","6 pillar","தூண்","ஸ்கோர்"],tab:"pil",a:A("IEX scores 41 out of 60 on the 6 Pillars; strongest in business quality and finances, weakest on risk.","6 தூண்களில் IEX-க்கு 41/60; business quality, நிதி பலம் அதிகம், risk-ல குறைவு.")},
+    {k:["trigger","cycle","catalyst","ட்ரிக்கர்","சைக்கிள்"],tab:"tc",a:A("Cycle score is 52 and trigger score 59; the biggest risk trigger is the final coupling rules.","Cycle score 52, trigger score 59; பெரிய risk trigger final coupling rules.")},
+    {k:["fee","earn","revenue model","business model","how","சம்பாதி","ஃபீ","பிசினஸ்"],tab:"bm",a:A("IEX earns about 4 paise per unit traded from buyers and sellers, so volume — not price — drives revenue.","வாங்குறவர், விக்கிறவர்கிட்ட ஒரு unit-க்கு ~4 பைசா fee; அதனால revenue-ஐ தீர்மானிக்கிறது volume, விலை இல்ல.")},
+    {k:["price rise","high price","benefit","விலை ஏற","லாபமா"],tab:"tn",a:A("High power prices don't raise IEX's fee; in Q2 they kept DAM volume almost flat at +2.2%.","மின் விலை ஏறினா IEX fee ஏறாது; Q2-ல DAM volume +2.2% தான்.")},
+    {k:["igx","gas","coal exchange","கேஸ்"],tab:"seg",a:A("IGX, 47.3% owned by IEX, earned ₹16.3 crore in Q1 and filed its IPO DRHP on 14 July 2026.","IEX-க்கு 47.3% உள்ள IGX, Q1-ல ₹16.3 கோடி PAT; 14 July 2026-ல IPO DRHP file.")},
+    {k:["dividend","debt","roe","டிவிடெண்ட்","கடன்"],tab:"cf",a:A("IEX is debt-free with ROE around 36% and recent dividends of ₹1.5 per share.","IEX-க்கு கடன் இல்ல, ROE ~36%, சமீப dividend ₹1.5/share.")}
+  ],
+  suggestions:[["Why is TN paying ₹34?","TN ஏன் ₹34 குடுக்குது?"],["What did the Supreme Court say?","Supreme Court என்ன சொல்லிச்சு?"],["What is market coupling?","Market coupling-னா என்ன?"],["Q1 profit?","Q1 profit எவ்வளவு?"],["Coal irony?","Coal முரண் என்ன?"],["Should I buy IEX?","IEX வாங்கலாமா?"]]
+};
+/* ---------- Assist mount: master component if present, else built-in lite ---------- */
+var assistApi=null;
+function mountLite(root,C){
+  root.innerHTML='<div class="assist"><div class="alog" id="alog" aria-live="polite"></div><div class="arow"><input type="text" id="aq" aria-label="Question"><button class="btn on" id="ago" type="button">Ask</button><button class="btn" id="amic" type="button">🎙️</button></div><div class="vbar"><span id="spdL"></span><button class="btn" id="sm" type="button">−</button><input type="range" id="spd" min="0.5" max="1.5" step="0.05"><button class="btn" id="sp" type="button">+</button><span id="spdV"></span><button class="btn" id="stop" type="button">⏹</button></div><div class="sugg" id="sugg"></div><p class="note" id="micn"></p></div>';
+  var log=root.querySelector("#alog"),q=root.querySelector("#aq"),L=C.lang;
+  function t(o){return o[L]||o.en;}
+  function add(cls,html){var d=document.createElement("div");d.className="msg "+cls;d.innerHTML=html;log.appendChild(d);log.scrollTop=log.scrollHeight;return d;}
+  function answer(text){
+    var s=text.toLowerCase();
+    if(/\b(buy|sell|hold|invest|target)\b|வாங்கலாமா|விக்கலாமா|வாங்கணுமா|முதலீடு/.test(s))return{a:C.noAdvice};
+    var best=null,bs=0;C.kb.forEach(function(e){var sc=0;e.k.forEach(function(k){if(s.indexOf(k.toLowerCase())>-1)sc+=k.length+(e.preferOverMetric?2:0);});if(sc>bs){bs=sc;best=e;}});
+    return best?best:{a:C.fallback};
+  }
+  function ask(text){
+    if(!text)return;add("u",text.replace(/</g,"&lt;"));
+    var e=answer(text),main=t(e.a),h=main;
+    if(e.d)h+='<details><summary>'+(L==="ta"?"மேலும் விவரம்":"More details")+'</summary>'+t(e.d)+'</details>';
+    var m=add("b",h);
+    if(e.tab&&C.onOpenTab){var b=document.createElement("button");b.className="btn";b.style.marginTop="6px";b.type="button";b.textContent=L==="ta"?"தொடர்புடைய tab-ஐ திறங்க":"Open related tab";b.onclick=function(){C.onOpenTab(e.tab);};m.appendChild(b);}
+    speak(main);
+  }
+  function paint(){
+    q.placeholder=t(C.placeholder);root.querySelector("#ago").textContent=L==="ta"?"கேளுங்க":"Ask";
+    root.querySelector("#spdL").textContent=L==="ta"?"வாசிப்பு வேகம்":"Read-aloud speed";
+    var sg=root.querySelector("#sugg");sg.innerHTML="";C.suggestions.forEach(function(p){var b=document.createElement("button");b.type="button";b.textContent=L==="ta"?p[1]:p[0];b.onclick=function(){ask(b.textContent);};sg.appendChild(b);});
+    root.querySelector("#micn").textContent=L==="ta"?"Mic: claude.ai-ல block ஆகும்; GitHub Pages-ல Chrome/Edge-ல வேலை செய்யும். பேசி முடிச்சு 3 வினாடி அமைதிக்கு பிறகு தான் பதில்.":"Mic: blocked inside claude.ai; works on GitHub Pages in Chrome/Edge. It answers only after 3 seconds of silence.";
+  }
+  var spd=root.querySelector("#spd");function setR(v){rate=Math.max(.5,Math.min(1.5,v));spd.value=rate;root.querySelector("#spdV").textContent=rate.toFixed(2)+"×";try{localStorage.setItem("cba_iex_rate",rate);}catch(e){}}
+  setR(rate);spd.oninput=function(){setR(parseFloat(spd.value));};
+  root.querySelector("#sm").onclick=function(){setR(rate-.1);};root.querySelector("#sp").onclick=function(){setR(rate+.1);};
+  root.querySelector("#stop").onclick=function(){if(synth)synth.cancel();};
+  root.querySelector("#ago").onclick=function(){ask(q.value.trim());q.value="";};
+  q.addEventListener("keydown",function(ev){if(ev.key==="Enter"){ask(q.value.trim());q.value="";}});
+  root.querySelector("#amic").onclick=function(){
+    var SR=window.SpeechRecognition||window.webkitSpeechRecognition;if(!SR){add("b",L==="ta"?"இந்த browser-ல mic வசதி இல்ல.":"Voice input isn't available in this browser.");return;}
+    try{var rec=new SR();rec.lang=L==="ta"?"ta-IN":"en-IN";rec.continuous=true;rec.interimResults=true;var buf="",timer=null;
+      rec.onresult=function(ev){buf="";for(var i=0;i<ev.results.length;i++)buf+=ev.results[i][0].transcript;q.value=buf;clearTimeout(timer);timer=setTimeout(function(){rec.stop();},3000);};
+      rec.onend=function(){if(buf.trim()){ask(buf.trim());q.value="";}};
+      rec.onerror=function(){add("b",L==="ta"?"Mic அனுமதி இல்ல — type பண்ணுங்க.":"Microphone isn't allowed here — please type.");};
+      rec.start();}catch(e){add("b",L==="ta"?"Mic அனுமதி இல்ல — type பண்ணுங்க.":"Microphone isn't allowed here — please type.");}
+  };
+  paint();add("b",t(C.greeting));
+  return{setLang:function(l){L=l;paint();},speak:speak,plain:function(h){var d=document.createElement("div");d.innerHTML=h;return d.textContent;}};
+}
+var root=document.getElementById("assist");
+if(window.CauveryAssist&&window.CauveryAssist.mount){assistApi=window.CauveryAssist.mount(root,CONFIG);}else{assistApi=mountLite(root,CONFIG);}
+document.getElementById("vbub").onclick=function(){showTab("ask");setTimeout(function(){var i=document.getElementById("aq");if(i)i.focus();},50);};
+var cb=document.getElementById("cb");cb.querySelector(".logo").onclick=function(){cb.classList.toggle("open");};
+/* ---------- Socrates quiz ---------- */
+var QZ=[
+ {q:A("How does IEX mainly earn revenue?","IEX முக்கியமா எப்படி சம்பாதிக்குது?"),o:[A("A fee per unit traded","ஒரு unit-க்கு fee"),A("Selling power it generates","தான் தயாரிக்கும் மின்சாரம் விற்று"),A("A share of the power price","மின் விலையில ஒரு பங்கு")],c:0,e:A("About 4 paise per unit — volume drives revenue.","ஒரு unit-க்கு ~4 பைசா — volume தான் revenue.")},
+ {q:A("What did the Supreme Court do on market coupling?","Market coupling-ல Supreme Court என்ன பண்ணுச்சு?"),o:[A("Struck it down","ரத்து பண்ணுச்சு"),A("Refused a stay; IEX can challenge final rules","Stay மறுத்துச்சு; final rules-ஐ IEX challenge பண்ணலாம்"),A("Ordered coupling from Jan 2026","Jan 2026 முதல் coupling order")],c:1,e:A("No stay, no view on merits; the fight moves to the notified rules.","Stay இல்ல, merits-ல கருத்து இல்ல; சண்டை notify ஆகும் rules-க்கு நகருது.")},
+ {q:A("Who is the proposed market coupling operator?","Market coupling operator யாரு?"),o:[A("IEX","IEX"),A("Grid-India","Grid-India"),A("NSE","NSE")],c:1,e:A("The April 2026 draft names Grid-India.","April 2026 draft-ல Grid-India.")},
+ {q:A("Why can TN pay above ₹10 when IEX's cap is ₹10?","IEX cap ₹10-ஆ இருக்கும்போது TN ஏன் அதுக்கு மேல குடுக்குது?"),o:[A("At the cap, not enough power clears; the gap is bought outside the exchange","Cap-ல போதுமான power clear ஆகாது; மீதி exchange-க்கு வெளியே வாங்கப்படுது"),A("IEX overcharges TN","IEX TN-கிட்ட அதிகம் வாங்குது"),A("It is a 25-year PPA","அது 25 வருஷ PPA")],c:0,e:A("DEEP tenders have no ₹10 cap; gas plants bid ₹31.99–₹37 for 12–31 Oct.","DEEP tender-க்கு ₹10 cap இல்ல; 12–31 Oct-க்கு gas plant-கள் ₹31.99–₹37 bid.")},
+ {q:A("Which Q2 FY27 segment more than doubled?","Q2 FY27-ல இரட்டிப்புக்கு மேல வளர்ந்த segment?"),o:[A("Green market","Green market"),A("Term-Ahead + Contingency","Term-Ahead + Contingency"),A("RECs","REC")],c:1,e:A("+101.5% as discoms booked power in advance.","Discom-கள் முன்கூட்டியே book பண்ணதால +101.5%.")},
+ {q:A("Coal PLF in FY20 was about…","FY20-ல coal PLF சுமார்…"),o:[A("78.6%","78.6%"),A("55.4%","55.4%"),A("90%","90%")],c:1,e:A("Down from 78.6% in FY08 — ~90 GW idle-equivalent.","FY08-ல 78.6%-ல இருந்து சரிவு — ~90 GW idle-equivalent.")},
+ {q:A("IEX's stock is in which Weinstein stage?","IEX share எந்த Weinstein stage-ல இருக்கு?"),o:[A("Stage 2 advance","Stage 2 ஏற்றம்"),A("Stage 4 decline","Stage 4 சரிவு"),A("Stage 1 base","Stage 1 base")],c:1,e:A("That caps CB conviction at 55; the coupling trigger caps it at 50.","அதனால CB conviction 55; coupling trigger-ஆல 50 cap.")},
+ {q:A("IEX's 6 Pillars total is…","IEX-ன் 6 தூண்கள் மொத்தம்…"),o:[A("41/60","41/60"),A("52/60","52/60"),A("30/60","30/60")],c:0,e:A("Strong business and finances; weak moat and risk scores.","Business, நிதி பலம் அதிகம்; moat, risk score குறைவு.")}
+];
+var qa={};
+function renderQuiz(){
+  var box=document.getElementById("qz");box.innerHTML="";
+  QZ.forEach(function(it,i){
+    var d=document.createElement("div");d.className="q";d.innerHTML="<b>"+(i+1)+". "+T(it.q.en,it.q.ta)+"</b>";
+    var os=document.createElement("div");os.className="opts";
+    it.o.forEach(function(op,j){var b=document.createElement("button");b.type="button";b.className="o";b.textContent=T(op.en,op.ta);
+      if(qa[i]!==undefined){if(j===it.c)b.classList.add("ok");else if(j===qa[i])b.classList.add("no");}
+      b.onclick=function(){if(qa[i]!==undefined)return;qa[i]=j;renderQuiz();};os.appendChild(b);});
+    d.appendChild(os);
+    if(qa[i]!==undefined){var f=document.createElement("div");f.className="fb "+(qa[i]===it.c?"up":"dn");f.textContent=(qa[i]===it.c?T("Correct. ","சரி! "):T("Not quite. ","கொஞ்சம் தவறு. "))+T(it.e.en,it.e.ta);d.appendChild(f);}
+    box.appendChild(d);
+  });
+  var n=Object.keys(qa).length,s=Object.keys(qa).filter(function(k){return qa[k]===QZ[k].c;}).length;
+  document.getElementById("qscore").textContent=T("Score: "+s+" / "+QZ.length+" (answered "+n+")","Score: "+s+" / "+QZ.length+" ("+n+" பதில்)");
+}
+/* ---------- Init ---------- */
+var startLang="en",startTab="dash";
+try{startLang=localStorage.getItem("iex_lang")||"en";startTab=localStorage.getItem("iex_tab")||"dash";}catch(e){}
+if(location.hash&&document.getElementById(location.hash.slice(1)))startTab=location.hash.slice(1);
+setLang(startLang);showTab(document.getElementById(startTab)?startTab:"dash");
+})();
+</script>
