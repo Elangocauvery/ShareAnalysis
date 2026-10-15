@@ -1,0 +1,1536 @@
+<title>IPO Tracker 2026</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anek+Latin:wght@500;700;800&family=Anek+Tamil:wght@500;700;800&family=Noto+Sans:wght@400;600;700&family=Noto+Sans+Tamil:wght@400;600;700&display=swap">
+<style>
+/* Layout: sticky masthead + scrolling tab rail; each tab is a ledger-style sheet on white. Single light theme by house rule (CB dashboards are always white). */
+:root{
+  --bg:#FFFFFF; --ink:#16130F; --ink2:#3F3A33; --muted:#6A635A; --line:#E9E2D8; --wash:#FBF8F4;
+  --acc:#F28C28; --accInk:#A2510A; --accSoft:#FFF2E4; --accLine:#F7C894;
+  --good:#16794A; --goodSoft:#E8F5EE; --bad:#B42318; --badSoft:#FDECEA; --warn:#8A5A00; --warnSoft:#FFF6DB;
+  --fresh:#0A84A0; --ofs:#F28C28;
+  --fd:"Anek Latin","Anek Tamil","Noto Sans",system-ui,sans-serif;
+  --fb:"Noto Sans","Noto Sans Tamil",system-ui,-apple-system,"Segoe UI",sans-serif;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--fb);font-size:15px;line-height:1.5;font-weight:400}
+body.ta{font-family:"Noto Sans Tamil","Noto Sans",system-ui,sans-serif}
+.ta-only{display:none} body.ta .ta-only{display:revert} body.ta .en-only{display:none}
+span.ta,li.ta,p.ta,div.ta{display:none} body.ta span.ta,body.ta li.ta,body.ta p.ta,body.ta div.ta{display:revert} body.ta span.en,body.ta li.en,body.ta p.en,body.ta div.en{display:none}
+.wrap{max-width:1180px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+h1,h2,h3,h4{font-family:var(--fd);text-wrap:balance;margin:0;color:var(--ink)}
+a{color:var(--accInk);font-weight:700}
+button,select,input{font:inherit}
+:focus-visible{outline:3px solid var(--acc);outline-offset:2px}
+.num{font-variant-numeric:tabular-nums}
+
+/* masthead */
+.mast{position:sticky;top:env(safe-area-inset-top,0px);z-index:30;background:var(--bg);border-bottom:2px solid var(--ink)}
+.mast .row{display:flex;flex-wrap:wrap;align-items:center;gap:10px 18px;padding-block:10px}
+.brand{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;min-width:0}
+.brand b{font-family:var(--fd);font-weight:800;font-size:22px;letter-spacing:.2px}
+.brand .tag{font-family:var(--fd);font-weight:700;color:var(--accInk);font-size:15px}
+.mast .sp{flex:1}
+.pxchip{display:inline-flex;align-items:center;gap:6px;border:1.5px solid var(--line);border-radius:999px;padding:4px 10px;font-size:12.5px;font-weight:700;color:var(--ink2);background:var(--wash);cursor:pointer}
+.pxchip i{width:9px;height:9px;border-radius:50%;background:var(--muted);display:inline-block}
+.pxchip.live i{background:var(--good);box-shadow:0 0 0 3px var(--goodSoft)}
+.lang{display:inline-flex;border:2px solid var(--ink);border-radius:8px;overflow:hidden}
+.lang button{border:0;background:var(--bg);padding:5px 12px;font-weight:800;cursor:pointer;color:var(--ink)}
+.lang button.on{background:var(--ink);color:#fff}
+.tabs{display:flex;gap:4px;overflow-x:auto;scrollbar-width:thin;padding-bottom:0}
+.tabs button{flex:0 0 auto;border:0;border-bottom:3px solid transparent;background:none;padding:9px 11px 8px;font-weight:700;font-size:13.5px;color:var(--ink2);cursor:pointer;white-space:nowrap}
+.tabs button:hover{color:var(--ink)}
+.tabs button.on{color:var(--ink);border-bottom-color:var(--acc)}
+
+/* sheets */
+main{padding-block:22px 120px}
+section.tab{display:block}
+section.tab[hidden]{display:none!important}
+.kicker{font-family:var(--fd);font-weight:700;font-size:12.5px;letter-spacing:1.2px;text-transform:uppercase;color:var(--accInk);margin-bottom:4px}
+h2.tt{font-size:30px;font-weight:800;line-height:1.1;margin-bottom:8px}
+ul.b{margin:6px 0 0;padding-left:20px;display:grid;gap:4px;color:var(--ink2);font-weight:600}
+ul.b.lede{margin-bottom:18px;max-width:76ch}
+.grid{display:grid;gap:14px}
+.g2{grid-template-columns:repeat(auto-fit,minmax(min(100%,340px),1fr))}
+.g3{grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr))}
+.g6{grid-template-columns:repeat(auto-fit,minmax(min(100%,165px),1fr))}
+.g4{grid-template-columns:repeat(auto-fit,minmax(min(100%,180px),1fr))}
+.card{border:1.5px solid var(--line);border-radius:10px;padding:14px 16px;background:var(--bg);min-width:0}
+.card h3{font-size:18px;font-weight:800;margin-bottom:6px}
+.card.hl{border-color:var(--accLine);background:var(--accSoft)}
+.mt{margin-top:16px}.mt2{margin-top:26px}
+.tile{border-left:4px solid var(--acc);padding:6px 12px;min-width:0}
+.tile .v{font-family:var(--fd);font-weight:800;font-size:30px;line-height:1.05}
+.tile .l{font-size:13px;font-weight:700;color:var(--muted)}
+.tile .s{font-size:12.5px;font-weight:600;color:var(--ink2)}
+.up{color:var(--good)}.dn{color:var(--bad)}
+.chip{display:inline-flex;align-items:center;gap:4px;border-radius:999px;padding:2px 9px;font-size:12px;font-weight:800;white-space:nowrap}
+.chip.g{background:var(--goodSoft);color:var(--good)}.chip.r{background:var(--badSoft);color:var(--bad)}.chip.y{background:var(--warnSoft);color:var(--warn)}.chip.n{background:var(--wash);color:var(--ink2);border:1px solid var(--line)}.chip.o{background:var(--accSoft);color:var(--accInk)}
+.small{font-size:12.5px;color:var(--muted);font-weight:600}
+
+/* tables */
+.tw{overflow-x:auto;border:1.5px solid var(--line);border-radius:10px}
+table{border-collapse:collapse;width:100%;font-size:13.5px;font-variant-numeric:tabular-nums}
+th,td{padding:8px 10px;text-align:right;border-bottom:1px solid var(--line);white-space:nowrap}
+th:first-child,td:first-child{text-align:left}
+td.l,th.l{text-align:left}
+th{font-weight:800;color:var(--ink);background:var(--wash);position:sticky;top:0;cursor:pointer;user-select:none;font-size:12.5px}
+th.nos{cursor:default}
+tbody tr:hover{background:var(--accSoft)}
+tbody tr.click{cursor:pointer}
+td .nm{font-weight:800;color:var(--ink)}
+td .sm{display:block;font-size:11.5px;color:var(--muted);font-weight:600}
+.split{display:flex;height:9px;width:90px;border-radius:5px;overflow:hidden;background:var(--line);margin-left:auto}
+.split i{display:block;height:100%}
+.split i+i{border-left:2px solid #fff}
+
+/* controls */
+.ctrl{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:12px}
+.ctrl select,.ctrl input[type=search],.ctrl input[type=text],.ctrl input[type=number]{border:1.5px solid var(--line);border-radius:8px;padding:7px 10px;background:var(--bg);color:var(--ink);font-weight:600;min-width:0}
+.btn{border:2px solid var(--ink);background:var(--bg);color:var(--ink);border-radius:8px;padding:6px 12px;font-weight:800;cursor:pointer}
+.btn.pri{background:var(--acc);border-color:var(--acc);color:#1b1006}
+.btn.ghost{border-color:var(--line)}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+.seg{display:inline-flex;border:1.5px solid var(--line);border-radius:8px;overflow:hidden}
+.seg button{border:0;background:var(--bg);padding:6px 10px;font-weight:700;cursor:pointer;color:var(--ink2)}
+.seg button.on{background:var(--ink);color:#fff}
+
+/* charts */
+.chart{position:relative;overflow-x:auto}
+.chart svg{display:block;max-width:100%;height:auto}
+.chart text{font-family:var(--fb);fill:var(--ink2);font-size:11px;font-weight:600}
+.legend{display:flex;flex-wrap:wrap;gap:12px;font-size:12.5px;font-weight:700;color:var(--ink2);margin:6px 0}
+.legend i{display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:5px;vertical-align:-1px}
+.tip{position:fixed;z-index:60;pointer-events:none;background:var(--ink);color:#fff;border-radius:8px;padding:7px 10px;font-size:12.5px;font-weight:600;max-width:260px;display:none;box-shadow:0 6px 18px rgba(0,0,0,.18)}
+.tip b{font-weight:800}
+
+/* stock explorer */
+.shead{display:flex;flex-wrap:wrap;gap:12px;align-items:flex-end;justify-content:space-between}
+.shead h3{font-size:26px;font-weight:800}
+.journey{margin-top:8px}.journey svg{max-width:760px;margin:0 auto}
+.kv{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,150px),1fr));gap:10px}
+.kv div{border-top:2px solid var(--line);padding-top:6px}
+.kv b{display:block;font-family:var(--fd);font-size:20px;font-weight:800}
+.kv span{font-size:12px;color:var(--muted);font-weight:700}
+.pv{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr));gap:12px}
+.pv .card h4{font-size:13px;letter-spacing:1px;text-transform:uppercase;color:var(--accInk);margin-bottom:4px}
+.pv .card p{margin:0;font-weight:600;color:var(--ink)}
+.trg td{white-space:normal}
+.score{display:inline-flex;align-items:center;gap:6px;font-weight:800}
+.bar{height:8px;border-radius:4px;background:var(--line);overflow:hidden;width:120px;display:inline-block}
+.bar i{display:block;height:100%;background:var(--acc)}
+
+/* self-check */
+.sc{border:1.5px solid var(--accLine);background:var(--accSoft);border-radius:12px;padding:16px}
+.sc h3{font-size:19px;font-weight:800;margin-bottom:10px}
+.sc label{display:grid;grid-template-columns:24px 1fr;gap:10px;padding:7px 0;cursor:pointer;align-items:start}
+.sc input[type=checkbox]{width:20px;height:20px;margin:2px 0 0;accent-color:var(--acc)}
+.sc .q{font-weight:700;color:var(--ink)}
+.sc .f{display:block;font-size:12.5px;font-weight:600;color:var(--ink2);margin-top:2px}
+.sc .meter{height:12px;border-radius:6px;background:#F1E6D7;overflow:hidden;margin:12px 0 8px}
+.sc .meter i{display:block;height:100%;background:var(--acc);transition:width .3s}
+.sc .res{font-weight:800;font-size:15px}
+.sc .fine{font-size:12.5px;color:var(--muted);font-weight:600;margin-top:6px}
+
+/* timeline */
+.tl{position:relative;padding-left:22px;border-left:3px solid var(--line);display:grid;gap:10px}
+.tl .ev{position:relative}
+.tl .ev::before{content:"";position:absolute;left:-30px;top:5px;width:13px;height:13px;border-radius:50%;background:var(--bg);border:3px solid var(--acc)}
+.tl .ev.past::before{border-color:var(--line);background:var(--line)}
+.tl .ev b{font-family:var(--fd)}
+
+/* quiz */
+.qz .opt{display:block;width:100%;text-align:left;border:1.5px solid var(--line);border-radius:8px;background:var(--bg);padding:9px 12px;margin-top:7px;font-weight:700;cursor:pointer;color:var(--ink)}
+.qz .opt.ok{border-color:var(--good);background:var(--goodSoft)}
+.qz .opt.no{border-color:var(--bad);background:var(--badSoft)}
+
+/* assist */
+.as{border:2px solid var(--ink);border-radius:12px;overflow:hidden}
+.as .hd{display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:space-between;padding:10px 14px;background:var(--accSoft);border-bottom:1.5px solid var(--accLine)}
+.as .hd b{font-family:var(--fd);font-size:18px}
+.as .log{padding:14px;display:grid;gap:10px;max-height:460px;overflow-y:auto;background:var(--bg)}
+.as .m{max-width:88%;padding:9px 12px;border-radius:10px;font-weight:600}
+.as .m.u{justify-self:end;background:var(--ink);color:#fff}
+.as .m.a{background:var(--wash);border:1.5px solid var(--line)}
+.as .m.a details{margin-top:6px;font-size:13px}
+.as .in{display:flex;gap:8px;padding:10px;border-top:1.5px solid var(--line);flex-wrap:wrap}
+.as .in input{flex:1;min-width:0;border:1.5px solid var(--line);border-radius:8px;padding:9px 10px;font-weight:600}
+.sugg{display:flex;flex-wrap:wrap;gap:6px;padding:0 14px 12px}
+.sugg button{border:1.5px solid var(--accLine);background:var(--bg);border-radius:999px;padding:4px 10px;font-size:12.5px;font-weight:700;cursor:pointer;color:var(--ink2)}
+.cd{height:4px;background:var(--acc);width:0;transition:width .1s linear}
+
+/* floating */
+.va{position:fixed;right:calc(18px + env(safe-area-inset-right,0px));bottom:calc(84px + env(safe-area-inset-bottom,0px));z-index:40;border:2px solid var(--ink);background:var(--acc);color:#1b1006;border-radius:999px;padding:9px 14px;font-weight:800;cursor:pointer;box-shadow:0 6px 16px rgba(0,0,0,.15)}
+.cb-badge{position:fixed;right:calc(18px + env(safe-area-inset-right,0px));bottom:calc(18px + env(safe-area-inset-bottom,0px));z-index:41}
+.cb-badge .b{width:52px;height:52px;border-radius:50%;background:var(--ink);color:var(--acc);font-family:var(--fd);font-weight:800;font-size:19px;display:grid;place-items:center;cursor:pointer;animation:blink 2.2s ease-in-out infinite;border:3px solid var(--acc)}
+@keyframes blink{0%,100%{box-shadow:0 0 0 0 rgba(242,140,40,.55)}50%{box-shadow:0 0 0 9px rgba(242,140,40,0)}}
+.cb-badge .tipd{display:none;position:absolute;right:0;bottom:62px;width:min(320px,80vw);background:var(--bg);border:2px solid var(--ink);border-radius:10px;padding:12px;font-size:12.5px;font-weight:600;color:var(--ink2);box-shadow:0 10px 26px rgba(0,0,0,.18)}
+.cb-badge:hover .tipd,.cb-badge.open .tipd,.cb-badge .b:focus+.tipd{display:block}
+.readtab{margin-left:auto}
+.toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(20px + env(safe-area-inset-bottom,0px));background:var(--ink);color:#fff;padding:9px 14px;border-radius:8px;font-weight:700;z-index:70;display:none}
+@media (prefers-reduced-motion:reduce){.cb-badge .b{animation:none}.sc .meter i{transition:none}}
+@media (max-width:640px){h2.tt{font-size:24px}.brand b{font-size:19px}.tile .v{font-size:24px}.va{bottom:calc(80px + env(safe-area-inset-bottom,0px))}}
+</style>
+
+<header class="mast">
+  <div class="wrap">
+    <div class="row">
+      <div class="brand"><b>CB Research · IPO Tracker 2026</b><span class="tag"><span class="en">Know before you own</span><span class="ta">புரிஞ்சு வாங்குங்க!</span></span></div>
+      <div class="sp"></div>
+      <button class="pxchip" id="pxChip" type="button" title="Price source"><i></i><span id="pxText">Ref prices</span></button>
+      <div class="lang" role="group" aria-label="Language"><button type="button" id="lgEn" class="on">EN</button><button type="button" id="lgTa">தமிழ்</button></div>
+    </div>
+    <nav class="tabs" id="tabs" aria-label="Sections"></nav>
+  </div>
+</header>
+
+<main class="wrap">
+
+<!-- DASHBOARD -->
+<section class="tab" id="t-dash" data-en="Dashboard" data-ta="Dashboard">
+  <div class="kicker"><span class="en">2026 so far · mainboard IPOs</span><span class="ta">2026 இதுவரை · mainboard IPOs</span></div>
+  <h2 class="tt"><span class="en">A record year for money raised — but listing day is not the whole story</span><span class="ta">பணம் திரட்டுறதுல record வருஷம் — ஆனா listing நாள் மட்டும் முழு கதை இல்ல</span></h2>
+  <ul class="b lede">
+    <li class="en">About ₹1.23 lakh crore raised through ~100 IPOs to 13 Oct, even as Nifty fell ~14% this year.</li>
+    <li class="ta">13 Oct வரை ~100 IPOs மூலமா சுமார் ₹1.23 lakh crore — இந்த வருஷம் Nifty ~14% இறங்கியும் கூட.</li>
+    <li class="en">Many weak debuts later doubled (Shadowfax, SEDEMAC); some hot listings faded (BCCL, SBI Funds).</li>
+    <li class="ta">Weak-ஆ list ஆனது பல ரெட்டிப்பு ஆச்சு (Shadowfax, SEDEMAC); hot listing சில மங்கிச்சு (BCCL, SBI Funds).</li>
+  </ul>
+  <div class="grid g6" id="kpis"></div>
+  <div class="grid g2 mt2">
+    <div class="card"><h3><span class="en">Listing-day gain vs return today</span><span class="ta">Listing நாள் gain vs இன்றைய return</span></h3>
+      <div class="legend"><span><i style="background:#fff;border:2px solid var(--ink2)"></i><span class="en">Listing-day open</span><span class="ta">Listing நாள் open</span></span><span><i style="background:var(--good)"></i><span class="en">Today, above issue ▲</span><span class="ta">இன்று, issue-க்கு மேல ▲</span></span><span><i style="background:var(--bad)"></i><span class="en">Today, below issue ▼</span><span class="ta">இன்று, issue-க்கு கீழ ▼</span></span></div>
+      <div class="chart" id="chDumb"></div></div>
+    <div class="grid" style="gap:14px">
+      <div class="card"><h3><span class="en">Money raised by month (₹ cr)</span><span class="ta">மாசம் வாரியா திரட்டியது (₹ cr)</span></h3><div class="chart" id="chMonth"></div><div class="small"><span class="en">* Oct to 13 Oct. NSE alone was 56% of September.</span><span class="ta">* Oct — 13 Oct வரை. September-ல NSE மட்டும் 56%.</span></div></div>
+      <div class="card"><h3><span class="en">Where the money went</span><span class="ta">பணம் எங்க போச்சு</span></h3><div class="chart" id="chStruct"></div>
+        <ul class="b"><li class="en">Only ~10% of money came from fresh-only issues; most went to selling shareholders.</li><li class="ta">Fresh மட்டும் issues-ல இருந்து ~10% தான்; பெரும்பாலும் விக்கிற shareholders-க்கு போச்சு.</li></ul></div>
+    </div>
+  </div>
+  <div class="card hl mt2"><h3><span class="en">At a glance</span><span class="ta">ஒரு பார்வையில்</span></h3><div id="glance"></div></div>
+</section>
+
+<!-- TRACKER -->
+<section class="tab" id="t-track" data-en="Tracker" data-ta="Tracker" hidden>
+  <div class="kicker"><span class="en">35 important IPOs of 2026</span><span class="ta">2026-ன் 35 முக்கிய IPOs</span></div>
+  <h2 class="tt"><span class="en">Every number that matters, side by side</span><span class="ta">முக்கியமான எல்லா எண்களும் ஒரே இடத்துல</span></h2>
+  <ul class="b lede"><li class="en">Tap a column to sort; tap a row to open the stock.</li><li class="ta">Column-ஐ தட்டினா sort; row-ஐ தட்டினா stock திறக்கும்.</li></ul>
+  <div class="ctrl">
+    <input type="search" id="trQ" placeholder="Search company" aria-label="Search">
+    <select id="trSec" aria-label="Sector"></select>
+    <select id="trRes" aria-label="Result"></select>
+    <button class="btn ghost" id="trCsv" type="button"><span class="en">Download CSV</span><span class="ta">CSV download</span></button>
+  </div>
+  <div class="tw"><table id="trTbl"></table></div>
+  <div class="small mt"><span class="en">Fresh/OFS bar: blue = fresh money to the company, orange = shares sold by existing holders. Prices: see the chip at the top.</span><span class="ta">Fresh/OFS bar: நீலம் = company-க்கு புது பணம், orange = பழைய shareholders விற்றது. விலை: மேல chip பாருங்க.</span></div>
+</section>
+
+<!-- STOCK EXPLORER -->
+<section class="tab" id="t-stock" data-en="Stock Explorer" data-ta="Stock Explorer" hidden>
+  <div class="ctrl"><select id="stSel" aria-label="Choose IPO"></select><button class="btn ghost" id="stPrev" type="button">◀</button><button class="btn ghost" id="stNext" type="button">▶</button></div>
+  <div id="stBody"></div>
+</section>
+
+<!-- PROMISE VS LISTING -->
+<section class="tab" id="t-promise" data-en="Promise vs Listing" data-ta="Promise vs Listing" hidden>
+  <div class="kicker"><span class="en">What the IPO promised · how it listed · what happened next</span><span class="ta">IPO சொன்னது · எப்படி list ஆச்சு · அப்புறம் என்ன ஆச்சு</span></div>
+  <h2 class="tt"><span class="en">Hot demand did not guarantee lasting gains</span><span class="ta">அதிக demand நீடித்த gain-க்கு guarantee இல்ல</span></h2>
+  <ul class="b lede"><li class="en">Each dot is one IPO: subscription on the left-right axis, return today on the up-down axis.</li><li class="ta">ஒவ்வொரு dot-உம் ஒரு IPO: இடம்-வலம் = subscription, மேல்-கீழ் = இன்றைய return.</li></ul>
+  <div class="card"><div class="chart" id="chScatter"></div><div id="scNote" class="mt"></div></div>
+  <div class="grid g3 mt2" id="pvCards"></div>
+</section>
+
+<!-- FRESH VS OFS -->
+<section class="tab" id="t-fresh" data-en="Fresh vs OFS" data-ta="Fresh vs OFS" hidden>
+  <div class="kicker"><span class="en">Who gets your money</span><span class="ta">உங்க பணம் யாருக்கு போகுது</span></div>
+  <h2 class="tt"><span class="en">Fresh issue builds the company; OFS pays the seller</span><span class="ta">Fresh issue company-ஐ வளர்க்கும்; OFS விக்கிறவங்களுக்கு பணம்</span></h2>
+  <div class="card"><div class="chart" id="picFresh"></div></div>
+  <div class="grid g2 mt2">
+    <div class="card"><h3><span class="en">Return today by issue type (tracked IPOs)</span><span class="ta">Issue வகை வாரியா இன்றைய return</span></h3><div id="frStats"></div></div>
+    <div class="card hl"><h3><span class="en">How to read OFS</span><span class="ta">OFS-ஐ எப்படி பார்க்கணும்</span></h3><ul class="b">
+      <li class="en">OFS is not bad by itself: PSU and PE exits (BCCL, SEDEMAC) can be fairly priced.</li><li class="ta">OFS தானா மோசம் இல்ல: PSU, PE exits (BCCL, SEDEMAC) சரியான விலையிலும் இருக்கலாம்.</li>
+      <li class="en">Ask why the seller is selling now, and at what valuation versus listed peers.</li><li class="ta">விக்கிறவர் ஏன் இப்போ விக்கிறார், listed peers-ஐ விட என்ன valuation-னு கேளுங்க.</li>
+      <li class="en">Fresh money used to repay debt shows up as lower interest cost next year.</li><li class="ta">கடன் அடைக்க fresh money — அடுத்த வருஷம் interest cost குறைவா தெரியும்.</li></ul></div>
+  </div>
+  <div class="card mt2"><h3><span class="en">Fresh vs OFS for each IPO</span><span class="ta">ஒவ்வொரு IPO-க்கும் Fresh vs OFS</span></h3><div class="legend"><span><i style="background:var(--fresh)"></i>Fresh</span><span><i style="background:var(--ofs)"></i>OFS</span></div><div class="chart" id="chFresh"></div></div>
+</section>
+
+<!-- SECTORS -->
+<section class="tab" id="t-sector" data-en="Sectors & Future" data-ta="Sectors & எதிர்காலம்" hidden>
+  <div class="kicker"><span class="en">Sector cycle & triggers</span><span class="ta">Sector cycle & triggers</span></div>
+  <h2 class="tt"><span class="en">Where each sector sits in its cycle, and what can move it</span><span class="ta">ஒவ்வொரு sector-உம் cycle-ல எங்க இருக்கு, எது நகர்த்தும்</span></h2>
+  <ul class="b lede"><li class="en">CY = sector cycle score (0–100). Higher means the next 12–24 months look like the better part of the cycle.</li><li class="ta">CY = sector cycle score (0–100). அதிகம்னா அடுத்த 12–24 மாசம் cycle-ல நல்ல பகுதி.</li>
+  <li class="en">These are CB education estimates, revised every quarter.</li><li class="ta">இவை CB கல்வி மதிப்பீடுகள்; ஒவ்வொரு quarter-உம் மாறும்.</li></ul>
+  <div class="grid g2"><div class="card"><h3><span class="en">Cycle clock</span><span class="ta">Cycle clock</span></h3><div class="chart" id="clock"></div></div>
+  <div class="card"><h3><span class="en">Average return today by sector</span><span class="ta">Sector வாரியா சராசரி return</span></h3><div class="chart" id="chSec"></div></div></div>
+  <div class="grid g2 mt2" id="secCards"></div>
+</section>
+
+<!-- UNLOCK CALENDAR -->
+<section class="tab" id="t-unlock" data-en="Lock-in Calendar" data-ta="Lock-in Calendar" hidden>
+  <div class="kicker"><span class="en">Supply that can hit the price</span><span class="ta">விலையை பாதிக்கக்கூடிய supply</span></div>
+  <h2 class="tt"><span class="en">When locked shares become free to sell</span><span class="ta">Lock ஆன shares எப்போ விற்க free ஆகும்</span></h2>
+  <ul class="b lede"><li class="en">Anchor investors: 50% free after 30 days, the rest after 90 days. Pre-IPO investors: 6 months. Promoters: 18 months (3 years for their minimum stake).</li><li class="ta">Anchor investors: 30 நாள்ல 50%, 90 நாள்ல மீதி. Pre-IPO investors: 6 மாசம். Promoters: 18 மாசம் (minimum stake-க்கு 3 வருஷம்).</li>
+  <li class="en">Dates are estimated from the listing date (allotment ≈ listing − 3 days). Check exchange filings for exact dates.</li><li class="ta">தேதிகள் listing date-ல இருந்து கணக்கு (allotment ≈ listing − 3 நாள்). சரியான தேதி exchange filing-ல பாருங்க.</li></ul>
+  <div class="ctrl"><div class="seg" id="ulWin"><button type="button" data-d="30">30d</button><button type="button" data-d="90" class="on">90d</button><button type="button" data-d="180">180d</button></div></div>
+  <div class="grid g2"><div class="card"><h3><span class="en">Coming up</span><span class="ta">வரப்போகுது</span></h3><div class="tl" id="ulList"></div></div>
+  <div class="card hl"><h3><span class="en">Why unlocks matter</span><span class="ta">Unlock ஏன் முக்கியம்</span></h3><ul class="b">
+  <li class="en">More sellable shares can push prices down for a few days around the date.</li><li class="ta">விற்க கூடிய shares அதிகமானா, அந்த தேதி பக்கத்துல சில நாள் விலை இறங்கலாம்.</li>
+  <li class="en">Big gainers (ESDS, Indo-MIM) face more profit-taking at unlocks.</li><li class="ta">பெரிய gainers (ESDS, Indo-MIM) unlock-ல அதிக profit booking பார்க்கலாம்.</li>
+  <li class="en">Long-term funds holding after an unlock is a good sign.</li><li class="ta">Unlock-க்கு அப்புறமும் long-term funds வெச்சிருந்தா நல்ல அறிகுறி.</li></ul></div></div>
+</section>
+
+<!-- UPCOMING -->
+<section class="tab" id="t-up" data-en="Upcoming & Jio" data-ta="வரப்போகுது & Jio" hidden>
+  <div class="kicker"><span class="en">Open now and coming soon</span><span class="ta">இப்போ open & சீக்கிரம் வருது</span></div>
+  <h2 class="tt"><span class="en">Jio Platforms opens 21 Oct — the biggest test of 2026</span><span class="ta">Jio Platforms 21 Oct திறக்குது — 2026-ன் பெரிய test</span></h2>
+  <div class="grid g2"><div class="card hl" id="jioCard"></div><div id="upSc"></div></div>
+  <div class="card mt2"><h3><span class="en">Open and upcoming mainboard IPOs</span><span class="ta">Open & வரப்போகும் mainboard IPOs</span></h3><div class="tw"><table id="upTbl"></table></div></div>
+  <div class="card mt2"><h3><span class="en">Pipeline to watch</span><span class="ta">கவனிக்க வேண்டிய pipeline</span></h3><div class="tw"><table id="pipeTbl"></table></div></div>
+</section>
+
+<!-- ALL -->
+<section class="tab" id="t-all" data-en="All 2026 IPOs" data-ta="2026 எல்லா IPOs" hidden>
+  <div class="kicker"><span class="en">Every mainboard listing of 2026 (incl. REITs/InvITs)</span><span class="ta">2026-ன் எல்லா mainboard listings (REITs/InvITs உட்பட)</span></div>
+  <h2 class="tt"><span class="en">The full scoreboard</span><span class="ta">முழு scoreboard</span></h2>
+  <div class="grid g4" id="allKpi"></div>
+  <div class="ctrl mt"><input type="search" id="alQ" placeholder="Search" aria-label="Search all"><select id="alMon" aria-label="Month"></select></div>
+  <div class="tw"><table id="alTbl"></table></div>
+  <div class="small mt"><span class="en">† Cordelia: 1:10 split — today's price shown per new share; return uses the old-share equivalent. ‡ Aastha Spintex: check for a bonus/split before reading the fall.</span><span class="ta">† Cordelia: 1:10 split — புது share விலை; return பழைய share கணக்கு. ‡ Aastha Spintex: இறக்கத்தை படிக்கும் முன் bonus/split இருக்கான்னு பாருங்க.</span></div>
+</section>
+
+<!-- LIVE PRICES -->
+<section class="tab" id="t-live" data-en="Live Prices" data-ta="Live விலை" hidden>
+  <div class="kicker"><span class="en">NSE / BSE prices</span><span class="ta">NSE / BSE விலை</span></div>
+  <h2 class="tt"><span class="en">How prices update on this page</span><span class="ta">இந்த page-ல விலை எப்படி update ஆகுது</span></h2>
+  <div class="grid g2">
+    <div class="card"><h3><span class="en">Price feed status</span><span class="ta">Price feed நிலை</span></h3><div id="feedStatus"></div></div>
+    <div class="card hl"><h3><span class="en">Three ways prices arrive</span><span class="ta">விலை 3 வழியில வரும்</span></h3><ul class="b">
+      <li class="en"><b>Auto snapshot:</b> CB's scheduled updater saves NSE/BSE prices three times each trading day; every viewer sees them.</li><li class="ta"><b>Auto snapshot:</b> CB scheduled updater ஒவ்வொரு trading நாளும் 3 முறை NSE/BSE விலை save பண்ணும்; எல்லோருக்கும் தெரியும்.</li>
+      <li class="en"><b>Live sheet (GitHub Pages copy):</b> link a Google Sheet that uses GOOGLEFINANCE — prices refresh every minute.</li><li class="ta"><b>Live sheet (GitHub Pages copy):</b> GOOGLEFINANCE use பண்ற Google Sheet-ஐ link பண்ணுங்க — ஒவ்வொரு நிமிஷமும் refresh.</li>
+      <li class="en"><b>Your own entry:</b> type a price you see on NSE/BSE; it stays in this browser only.</li><li class="ta"><b>நீங்களே:</b> NSE/BSE-ல பார்த்த விலையை type பண்ணுங்க; இந்த browser-ல மட்டும் இருக்கும்.</li></ul></div>
+  </div>
+  <div class="card mt2"><h3><span class="en">Live Google Sheet (works in the downloaded / GitHub Pages copy)</span><span class="ta">Live Google Sheet (download / GitHub Pages copy-ல வேலை செய்யும்)</span></h3>
+    <ul class="b"><li class="en">Make a sheet: column A = symbol (e.g. ESDS), column B = <code>=GOOGLEFINANCE("NSE:"&amp;A2,"price")</code>. For NSE Ltd use <code>BOM:544937</code>.</li><li class="ta">Sheet: column A = symbol (உதா. ESDS), column B = <code>=GOOGLEFINANCE("NSE:"&amp;A2,"price")</code>. NSE Ltd-க்கு <code>BOM:544937</code>.</li>
+    <li class="en">File → Share → Publish to web → CSV. Paste that link below.</li><li class="ta">File → Share → Publish to web → CSV. அந்த link-ஐ கீழ paste பண்ணுங்க.</li></ul>
+    <div class="ctrl mt"><input type="text" id="gsUrl" placeholder="https://docs.google.com/.../pub?output=csv" style="flex:1;min-width:220px" aria-label="Sheet CSV link"><button class="btn pri" id="gsSave" type="button"><span class="en">Connect</span><span class="ta">Connect</span></button><button class="btn ghost" id="gsCopy" type="button"><span class="en">Copy symbol list</span><span class="ta">Symbol list copy</span></button></div>
+    <div class="small" id="gsMsg"></div>
+  </div>
+  <div class="card mt2"><h3><span class="en">Enter or paste prices</span><span class="ta">விலை type / paste பண்ணுங்க</span></h3>
+    <ul class="b"><li class="en">Paste lines like <code>ESDS,1580.5</code> (one per line), or edit single prices in the Stock Explorer.</li><li class="ta"><code>ESDS,1580.5</code> மாதிரி lines paste பண்ணுங்க, அல்லது Stock Explorer-ல ஒண்ணொண்ணா மாத்துங்க.</li></ul>
+    <textarea id="pasteBox" rows="4" style="width:100%;border:1.5px solid var(--line);border-radius:8px;padding:8px;font-family:var(--fb);font-weight:600" aria-label="Paste prices"></textarea>
+    <div class="ctrl mt"><button class="btn pri" id="pasteGo" type="button"><span class="en">Apply for me</span><span class="ta">எனக்கு apply</span></button><button class="btn" id="pasteAll" type="button" hidden><span class="en">Save for all viewers</span><span class="ta">எல்லோருக்கும் save</span></button><button class="btn ghost" id="pasteClear" type="button"><span class="en">Clear my prices</span><span class="ta">என் விலைகளை அழி</span></button></div>
+    <div class="small" id="pasteMsg"></div>
+  </div>
+</section>
+
+<!-- TAKEAWAYS -->
+<section class="tab" id="t-take" data-en="5 Key Takeaways" data-ta="5 முக்கிய பாடங்கள்" hidden>
+  <div class="kicker"><span class="en">What 2026 taught IPO investors</span><span class="ta">2026 IPO investors-க்கு கத்துக்கொடுத்தது</span></div>
+  <h2 class="tt"><span class="en">Five lessons from this year's listings</span><span class="ta">இந்த வருஷ listings-ல இருந்து 5 பாடங்கள்</span></h2>
+  <div class="grid g2" id="takeCards"></div>
+</section>
+
+<!-- ASSIST -->
+<section class="tab" id="t-assist" data-en="Cauvery Assist" data-ta="Cauvery Assist" hidden>
+  <div class="kicker"><span class="en">Ask in English or Tamil</span><span class="ta">English அல்லது தமிழ்ல கேளுங்க</span></div>
+  <h2 class="tt"><span class="en">Cauvery Assist — IPO questions, direct answers</span><span class="ta">Cauvery Assist — IPO கேள்விகள், நேரடி பதில்</span></h2>
+  <div id="assist"></div>
+  <div class="small mt"><span class="en">Read-aloud works here. Voice input needs the GitHub Pages copy in Chrome or Edge.</span><span class="ta">Read-aloud இங்க வேலை செய்யும். Voice input-க்கு GitHub Pages copy, Chrome/Edge தேவை.</span></div>
+</section>
+
+<!-- QUIZ -->
+<section class="tab" id="t-quiz" data-en="Cauvery Socrates" data-ta="Cauvery Socrates" hidden>
+  <div class="kicker"><span class="en">Test yourself</span><span class="ta">உங்களை test பண்ணுங்க</span></div>
+  <h2 class="tt"><span class="en">Cauvery Socrates — 8 questions on 2026 IPOs</span><span class="ta">Cauvery Socrates — 2026 IPOs பற்றி 8 கேள்விகள்</span></h2>
+  <div class="card qz" id="quiz"></div>
+</section>
+
+<!-- ANALYST VIEW -->
+<section class="tab" id="t-view" data-en="Analyst View" data-ta="Analyst View" hidden>
+  <div class="kicker"><span class="en">CB Research · education only</span><span class="ta">CB Research · கல்விக்காக மட்டும்</span></div>
+  <h2 class="tt"><span class="en">Analyst view on the 2026 IPO market</span><span class="ta">2026 IPO market பற்றி Analyst view</span></h2>
+  <div class="grid g2">
+    <div class="card"><h3><span class="en">What the data says</span><span class="ta">Data சொல்றது</span></h3><ul class="b" id="avData"></ul></div>
+    <div class="card"><h3><span class="en">Cycle & triggers</span><span class="ta">Cycle & triggers</span></h3><ul class="b">
+      <li class="en"><b>Cycle:</b> engineering, power equipment and healthcare sit in expansion; exchanges/AMCs and coal look late-cycle.</li><li class="ta"><b>Cycle:</b> engineering, power equipment, healthcare — expansion; exchanges/AMCs, coal — late cycle.</li>
+      <li class="en"><b>Top triggers:</b> Jio's listing (21–23 Oct) and any revival in market mood; grid and data-centre capex.</li><li class="ta"><b>முக்கிய triggers:</b> Jio listing (21–23 Oct), market mood மீட்சி; grid, data centre capex.</li>
+      <li class="en"><b>Top risk:</b> a wave of anchor and pre-IPO unlocks for Aug–Sep listings through Mar 2027.</li><li class="ta"><b>முக்கிய risk:</b> Aug–Sep listings-க்கு Mar 2027 வரை anchor, pre-IPO unlock அலை.</li></ul></div>
+    <div class="card hl"><h3><span class="en">What would change this view</span><span class="ta">இந்த பார்வையை எது மாத்தும்</span></h3><ul class="b">
+      <li class="en">Jio lists strongly and holds → sentiment for large IPOs improves.</li><li class="ta">Jio நல்லா list ஆகி நிலைச்சா → பெரிய IPOs sentiment மேம்படும்.</li>
+      <li class="en">Nifty breaks lower again → more listings slip below issue price.</li><li class="ta">Nifty இன்னும் இறங்கினா → இன்னும் பல listings issue-க்கு கீழ போகும்.</li>
+      <li class="en">Q2 results of the 2026 batch confirm (or miss) IPO-time growth claims.</li><li class="ta">2026 batch-ஓட Q2 results IPO-ல சொன்ன growth-ஐ உறுதி பண்ணுமா இல்லையா.</li></ul></div>
+    <div class="card"><h3><span class="en">Disclaimer</span><span class="ta">Disclaimer</span></h3><ul class="b">
+      <li class="en">Education only. CB Research is not SEBI-registered and gives no buy, sell, hold or apply advice.</li><li class="ta">கல்விக்காக மட்டும். CB Research SEBI-registered இல்ல; buy, sell, hold, apply advice தர்றதில்ல.</li>
+      <li class="en">Prices marked "Ref" are reference closes and may be stale; verify on NSE/BSE.</li><li class="ta">"Ref" விலைகள் reference close; பழையதா இருக்கலாம். NSE/BSE-ல சரிபாருங்க.</li></ul></div>
+  </div>
+</section>
+</main>
+
+<button class="va" id="vaBtn" type="button">🎙 Voice Assist</button>
+<div class="cb-badge" id="cbBadge">
+  <div class="b" tabindex="0" role="button" aria-label="Disclaimer">CB</div>
+  <div class="tipd"><b>CB Research · Disclaimer</b><br><span class="en">Education only. CB Research (Cauvery Business Research) is not SEBI-registered and does not give buy, sell, hold or apply advice. Reference prices may be stale; read the RHP and verify on NSE/BSE. Do your own research or consult a registered adviser.</span><span class="ta">கல்விக்காக மட்டும். CB Research (Cauvery Business Research) SEBI-registered இல்ல; buy, sell, hold, apply advice தர்றதில்ல. Reference விலைகள் பழையதா இருக்கலாம்; RHP படிங்க, NSE/BSE-ல சரிபாருங்க. சொந்தமா research பண்ணுங்க அல்லது registered adviser-ஐ கேளுங்க.</span><br><b style="color:var(--accInk)"><span class="en">Know before you own</span><span class="ta">புரிஞ்சு வாங்குங்க!</span></b></div>
+</div>
+<div class="tip" id="tip"></div>
+<div class="toast" id="toast"></div>
+<script>
+/* ===== CB Research · IPO Tracker 2026 · DATA (reference prices: close ~14 Oct 2026) ===== */
+var REF_DATE = "14 Oct 2026";
+function A(en, ta) { return { en: en, ta: ta }; }
+
+/* Sectors: cycle phase, CY sector score, triggers, outlook */
+var SECTORS = {
+  mkt: { n: A("Exchanges & AMCs", "Exchanges & AMCs"), type: A("Policy / market-linked", "Policy / market-linked"),
+    phase: "P4", score: 35,
+    ev: [A("Nifty is down about 14% in 2026; NSE and SBI Funds both trade below issue price.", "2026-ல Nifty சுமார் 14% இறங்கியிருக்கு; NSE, SBI Funds ரெண்டும் issue விலைக்கு கீழ."),
+         A("F&O curbs cut trading volumes, the main earnings engine for exchanges.", "F&O கட்டுப்பாடு trading volume-ஐ குறைச்சுது — exchange-க்கு அது தான் main earning.")],
+    pos: [A("Market recovery and SIP inflows", "Market recovery, SIP inflows"), A("Mega IPO pipeline (Jio, PhonePe) lifts activity", "Mega IPO pipeline (Jio, PhonePe) activity-ஐ ஏத்தும்")],
+    neg: [A("More SEBI F&O curbs or fee (TER) cuts", "இன்னும் SEBI F&O கட்டுப்பாடு, TER cut"), A("Further market correction", "இன்னும் market correction")],
+    fut: A("Long-term story (more Indians investing) is intact; the next 12 months depend on market mood.", "நீண்ட கால story (அதிக மக்கள் invest பண்றது) அப்படியே இருக்கு; அடுத்த 12 மாசம் market mood மேல depend.") },
+  fin: { n: A("Fintech & lending", "Fintech & lending"), type: A("Credit cycle", "Credit cycle"),
+    phase: "P3", score: 70,
+    ev: [A("Digital lenders Kissht (+119%) and Moneyview (+83%) re-rated after listing.", "Digital lenders Kissht (+119%), Moneyview (+83%) listing-க்கு அப்புறம் re-rate ஆச்சு."),
+         A("Insurtech Turtlemint (−55%) shows the market pays only for profits.", "Insurtech Turtlemint (−55%) — profit இருந்தா தான் market பணம் தரும்.")],
+    pos: [A("Credit costs easing in small-ticket loans", "Small-ticket loans-ல credit cost குறையுது"), A("Rate cuts lower funding costs", "Rate cut — funding cost குறையும்")],
+    neg: [A("RBI tightening on unsecured lending", "Unsecured lending-ல RBI கட்டுப்பாடு"), A("Commission caps for insurance distributors", "Insurance distributors-க்கு commission cap")],
+    fut: A("Profitable lenders keep winning; loss-making platforms stay under pressure.", "Profit உள்ள lenders ஜெயிப்பாங்க; நஷ்ட platforms-க்கு pressure தொடரும்.") },
+  log: { n: A("Logistics & e-commerce", "Logistics & e-commerce"), type: A("Structural growth", "Structural growth"),
+    phase: "S2", score: 80,
+    ev: [A("Quick commerce drove Shadowfax up ~138% from issue.", "Quick commerce-ஆல Shadowfax issue-ல இருந்து ~138% ஏறிச்சு."),
+         A("Loss-makers (Shiprocket, Snapdeal) trade well below listing-day highs.", "நஷ்ட companies (Shiprocket, Snapdeal) listing day high-க்கு ரொம்ப கீழ.")],
+    pos: [A("Quick-commerce and D2C volume growth", "Quick commerce, D2C volume வளர்ச்சி"), A("GST-led formalisation of logistics", "GST-ஆல logistics organised ஆகுது")],
+    neg: [A("Client concentration and price wars", "சில clients மேல depend, price war"), A("Pre-IPO investor unlocks", "Pre-IPO investors unlock")],
+    fut: A("Volumes keep growing fast; profits decide which names hold their gains.", "Volume வேகமா வளரும்; gain-ஐ தக்க வைக்கிறது profit தான்.") },
+  pwr: { n: A("Power, T&D, cables & renewables", "Power, T&D, cables & renewables"), type: A("Capex / order-book + structural", "Capex / order-book + structural"),
+    phase: "P3", score: 70,
+    ev: [A("Transformer maker Kanohar (+78%) and Orient Cables (+51%) show strong order demand.", "Transformer maker Kanohar (+78%), Orient Cables (+51%) — order demand வலுவா இருக்கு."),
+         A("Debt-heavy developers (CleanMax, Juniper) gained less (+21–23%).", "கடன் அதிகமான developers (CleanMax, Juniper) கம்மியா ஏறிச்சு (+21–23%).")],
+    pos: [A("Transmission and storage tenders", "Transmission, storage tenders"), A("Data-centre power demand", "Data centre power demand")],
+    neg: [A("Industry-wide capacity additions in transformers", "Transformer-ல industry முழுக்க capacity additions"), A("Module price swings and curtailment", "Module விலை மாற்றம், curtailment")],
+    fut: A("India's grid build-out runs for years; watch margins as new capacity arrives.", "India grid build-out பல வருஷம் தொடரும்; புது capacity வர்றப்போ margin-ஐ பாருங்க.") },
+  auto: { n: A("Auto parts & engineering", "Auto parts & engineering"), type: A("Consumption + global-linked", "Consumption + global-linked"),
+    phase: "P3", score: 70,
+    ev: [A("SEDEMAC (+138%), Indo-MIM (+156%), Hero Motors (+85%) — engineering IPOs led 2026.", "SEDEMAC (+138%), Indo-MIM (+156%), Hero Motors (+85%) — 2026-ல engineering IPOs முன்னணி."),
+         A("Export-heavy names depend on US/EU demand and tariffs.", "Export அதிகமான companies US/EU demand, tariff மேல depend.")],
+    pos: [A("EV and hybrid content per vehicle", "EV, hybrid — ஒரு vehicle-க்கு content அதிகம்"), A("China+1 export programmes, aerospace & defence", "China+1 export, aerospace & defence")],
+    neg: [A("US tariffs on Indian components", "Indian components மேல US tariff"), A("2W/OEM volume slowdown", "2W/OEM volume slowdown")],
+    fut: A("Precision makers with export approvals have a long runway; valuations already price a lot.", "Export approvals உள்ள precision makers-க்கு நீண்ட வாய்ப்பு; valuation-ல ஏற்கனவே நிறைய price ஆயிடுச்சு.") },
+  tech: { n: A("IT, AI & data centres", "IT, AI & data centres"), type: A("Structural (AI infra) + global (services)", "Structural (AI infra) + global (services)"),
+    phase: "S3", score: 55,
+    ev: [A("AI infra (ESDS +266%) is booming; analytics services (Fractal −22%) lag.", "AI infra (ESDS +266%) பூம்; analytics services (Fractal −22%) பின்தங்குது."),
+         A("Signals disagree, so CB uses the lower stage (maturing).", "Signals ஒத்துப்போகல — அதனால CB கீழ stage-ஐ (maturing) எடுக்குது.")],
+    pos: [A("GPU-as-a-service and sovereign cloud", "GPU-as-a-service, sovereign cloud"), A("GenAI deal wins", "GenAI deal wins")],
+    neg: [A("US client budget cuts", "US client budget cut"), A("Very high valuations in AI names", "AI stocks-ல valuation ரொம்ப அதிகம்")],
+    fut: A("Data-centre demand is real; separate durable revenue from AI hype.", "Data centre demand உண்மை; நிலையான revenue-ஐயும் AI hype-ஐயும் பிரிச்சு பாருங்க.") },
+  hc: { n: A("Healthcare & pharma", "Healthcare & pharma"), type: A("Structural growth", "Structural growth"),
+    phase: "S2", score: 80,
+    ev: [A("Molbio (+79%) and Manipal (+15%) held gains; Symbiotec (+11%) listed flat.", "Molbio (+79%), Manipal (+15%) gain-ஐ தக்க வெச்சுது; Symbiotec (+11%) flat listing."),
+         A("Hospital beds and insurance cover keep expanding.", "Hospital beds, insurance cover தொடர்ந்து அதிகமாகுது.")],
+    pos: [A("Bed additions and insurance penetration", "Bed additions, insurance penetration"), A("CDMO / China+1 sourcing", "CDMO / China+1 sourcing")],
+    neg: [A("Price caps on procedures", "Procedure விலை cap"), A("USFDA inspection outcomes", "USFDA inspection முடிவு")],
+    fut: A("Steady long-term demand; returns depend on price paid.", "நிலையான நீண்ட கால demand; return நீங்க கொடுக்கிற விலையை பொறுத்தது.") },
+  cons: { n: A("Consumer: dairy, jewellery, leisure", "Consumer: dairy, jewellery, leisure"), type: A("Consumption cycle", "Consumption cycle"),
+    phase: "P3", score: 70,
+    ev: [A("Milky Mist (+123%) and Lalithaa (+81%) — South Indian consumer names rewarded.", "Milky Mist (+123%), Lalithaa (+81%) — South India consumer companies-க்கு நல்ல reward."),
+         A("Wedding and festive season demand supports jewellers.", "கல்யாணம், பண்டிகை season jewellers-க்கு support.")],
+    pos: [A("Festive & wedding season; organised shift", "பண்டிகை, கல்யாண season; organised shift"), A("Value-added dairy growth", "Value-added dairy வளர்ச்சி")],
+    neg: [A("Gold price spike hurting volumes", "Gold விலை ஏற்றம் volume-ஐ பாதிக்கும்"), A("Milk procurement cost inflation", "Milk procurement cost ஏற்றம்")],
+    fut: A("Strong brands with store expansion keep compounding; watch input costs.", "Store expansion உள்ள strong brands வளரும்; input cost-ஐ கவனிங்க.") },
+  coal: { n: A("Coal & mining", "Coal & mining"), type: A("Commodity", "Commodity"),
+    phase: "P4", score: 35,
+    ev: [A("BCCL is ~28% below its listing price; 52-week range ₹29.7–45.1.", "BCCL listing விலையை விட ~28% கீழ; 52-week range ₹29.7–45.1."),
+         A("Coal India subsidiaries are being listed via OFS, adding supply.", "Coal India subsidiaries OFS மூலமா list ஆகுது — supply அதிகம்.")],
+    pos: [A("Steel capacity additions need coking coal", "Steel capacity additions-க்கு coking coal வேணும்"), A("High dividends from PSU miners", "PSU miners-ல அதிக dividend")],
+    neg: [A("Weak coal prices", "Coal விலை பலவீனம்"), A("More PSU stake sales (Mahanadi Coalfields IPO)", "இன்னும் PSU stake sale (Mahanadi Coalfields IPO)")],
+    fut: A("Cyclical; returns depend on entry price and coal prices, not on growth stories.", "Cyclical; growth story இல்ல — entry விலை, coal விலை தான் return-ஐ தீர்மானிக்கும்.") },
+  re: { n: A("Real estate, warehousing, REITs & InvITs", "Real estate, warehousing, REITs & InvITs"), type: A("Interest-rate cycle", "Interest-rate cycle"),
+    phase: "P3", score: 70,
+    ev: [A("InvITs and REITs listed calmly (+2% to +7%) and trade near or above issue.", "InvITs, REITs அமைதியா list ஆச்சு (+2% முதல் +7%), issue-க்கு அருகில் அல்லது மேல."),
+         A("Horizon Industrial Parks is ~18% below issue on low yields.", "Yield கம்மியால Horizon Industrial Parks issue-ஐ விட ~18% கீழ.")],
+    pos: [A("Rate cuts", "Rate cut"), A("Office leasing by GCCs", "GCCs office leasing")],
+    neg: [A("Rate hikes", "Rate hike"), A("Warehouse oversupply", "Warehouse oversupply")],
+    fut: A("Income-style returns; best when bond yields fall.", "Income மாதிரி return; bond yield குறையும் போது சிறப்பு.") },
+  tel: { n: A("Telecom (Jio — upcoming)", "Telecom (Jio — வரப்போகுது)"), type: A("Policy / regulated", "Policy / regulated"),
+    phase: "P3", score: 70,
+    ev: [A("Three-player market with steady tariff hikes since 2024.", "3 player market; 2024 முதல் tariff hike தொடருது."),
+         A("Jio's ₹30,213 cr fresh issue opens 21 Oct.", "Jio-வோட ₹30,213 cr fresh issue 21 Oct திறக்குது.")],
+    pos: [A("Tariff hikes and home broadband", "Tariff hike, home broadband"), A("Debt prepayment from IPO money", "IPO பணத்துல கடன் அடைப்பு")],
+    neg: [A("Price war or tariff freeze", "Price war அல்லது tariff freeze"), A("Pre-IPO and anchor unlock supply in 2027", "2027-ல pre-IPO, anchor unlock supply")],
+    fut: A("Mature but cash-rich; upside depends on tariff hikes.", "Mature ஆனா cash அதிகம்; upside tariff hike மேல depend.") }
+};
+var PHASE = {
+  P1: A("P1 Trough", "P1 அடிமட்டம்"), P2: A("P2 Early recovery", "P2 ஆரம்ப மீட்சி"), P3: A("P3 Expansion", "P3 விரிவாக்கம்"),
+  P4: A("P4 Late cycle / peak", "P4 உச்சம்"), P5: A("P5 Downturn", "P5 இறக்கம்"),
+  S1: A("Emerging", "Emerging"), S2: A("Rapid adoption", "Rapid adoption"), S3: A("Maturing", "Maturing"), S4: A("Saturation", "Saturation")
+};
+
+/* Key 2026 IPOs. size/fr/ofs in ₹ crore. ip issue, lp listing open, lc listing-day close, ref price on REF_DATE.
+   life = business lifecycle score, earn = earnings-cycle score (CB estimates). tg = [label, sign, I, C, W, P] */
+var STOCKS = [
+ { id:"bccl", n:"Bharat Coking Coal", sym:"BHARATCOAL", sec:"coal", d:"2026-01-19", size:1071.11, fr:0, ofs:1071.11, ip:23, lp:45, lc:null, sub:146.87, ref:32.21, refNote:"15 Oct",
+   promise:A("India's largest coking-coal miner (58.5% of FY25 output), priced at ~6.4x EV/EBITDA.","இந்தியாவோட பெரிய coking coal miner (FY25 output-ல 58.5%), ~6.4x EV/EBITDA-ல price பண்ணாங்க."),
+   after:A("Best listing of 2026 (~+96%), then gave back gains; now ~28% below its listing price.","2026-ன் best listing (~+96%), அப்புறம் gain-ஐ திருப்பி கொடுத்துச்சு; இப்போ listing விலையை விட ~28% கீழ."),
+   out:A("Steel demand and coal prices decide earnings; imported-coal blending sets margins.","Steel demand, coal விலை தான் earnings; imported coal blending margin-ஐ தீர்மானிக்கும்."),
+   risk:A("Pure OFS by Coal India — no new money for the company; coal price cycle.","Coal India-வோட முழு OFS — company-க்கு புது பணம் இல்ல; coal price cycle."),
+   life:55, earn:45, tg:[[A("Steel capacity additions lift coking-coal demand","Steel capacity additions coking coal demand-ஐ ஏத்தும்"),1,3,0.7,0.7,1],[A("Soft coal prices; more PSU coal listings","Coal விலை பலவீனம்; இன்னும் PSU coal listings"),-1,3,0.4,0.7,1]] },
+ { id:"amagi", n:"Amagi Media Labs", sym:"AMAGI", sec:"tech", d:"2026-01-21", size:1788.62, fr:816, ofs:972.62, ip:361, lp:318, lc:348.25, sub:30.24, ref:567.75,
+   promise:A("Cloud software for TV and streaming channels; turned profitable in H1 FY26.","TV, streaming channels-க்கு cloud software; H1 FY26-ல profit-க்கு வந்துச்சு."),
+   after:A("Listed 12% below issue, then climbed to ~57% above it.","Issue-ஐ விட 12% கீழ list, அப்புறம் ~57% மேல ஏறிச்சு."),
+   out:A("Grows with free ad-supported streaming (FAST) and global media clients.","FAST streaming, global media clients கூட வளரும்."),
+   risk:A("Depends on US media clients and ad cycles.","US media clients, ad cycle மேல depend."),
+   life:80, earn:70, tg:[[A("Profitability scaling up","Profit அளவு கூடுது"),1,3,0.7,0.7,0.4],[A("US ad-spend slowdown","US ad spend slowdown"),-1,2,0.4,0.7,1]] },
+ { id:"shadowfax", n:"Shadowfax Technologies", sym:"SHADOWFAX", sec:"log", d:"2026-01-28", size:1907.27, fr:1000, ofs:907.27, ip:124, lp:112.6, lc:109.98, sub:2.86, ref:295,
+   promise:A("Last-mile delivery for e-commerce and quick commerce; H1 FY26 profit more than doubled.","E-commerce, quick commerce-க்கு last-mile delivery; H1 FY26 profit ரெண்டு மடங்கு."),
+   after:A("Listed 9% below issue; now ~138% above it — weak debut, strong follow-through.","Issue-ஐ விட 9% கீழ list; இப்போ ~138% மேல — weak debut, strong follow-through."),
+   out:A("Quick-commerce growth is the main volume driver.","Quick commerce வளர்ச்சி தான் main volume driver."),
+   risk:A("A few large clients; thin margin per parcel.","சில பெரிய clients மேல depend; parcel-க்கு margin கம்மி."),
+   life:80, earn:85, tg:[[A("Quick-commerce volume growth","Quick commerce volume வளர்ச்சி"),1,3,1,1,0.2],[A("Client concentration","Client concentration"),-1,3,0.4,0.7,1]] },
+ { id:"fractal", n:"Fractal Analytics", sym:"FRACTAL", sec:"tech", d:"2026-02-16", size:2833.9, fr:1023.54, ofs:1810.36, ip:900, lp:876, lc:847.4, sub:2.8, ref:700.25,
+   promise:A("AI and analytics services for global enterprises.","Global companies-க்கு AI, analytics services."),
+   after:A("Listed below issue and kept sliding; ~22% below issue now.","Issue-க்கு கீழ list ஆகி இன்னும் இறங்குச்சு; இப்போ ~22% கீழ."),
+   out:A("GenAI demand is real, but analytics services face pricing pressure.","GenAI demand இருக்கு, ஆனா analytics services-ல pricing pressure."),
+   risk:A("64% OFS; H1 FY26 profit down ~3%; priced above IT peers.","64% OFS; H1 FY26 profit ~3% இறக்கம்; IT peers-ஐ விட அதிக விலை."),
+   life:55, earn:45, tg:[[A("Large GenAI deal wins","பெரிய GenAI deal wins"),1,3,0.4,0.7,1],[A("US client budget cuts","US client budget cut"),-1,3,0.4,0.7,1]] },
+ { id:"aye", n:"Aye Finance", sym:"AYE", sec:"fin", d:"2026-02-16", size:1010, fr:710, ofs:300, ip:129, lp:129, lc:128.91, sub:1.03, ref:161.73,
+   promise:A("Lender to small businesses (MSMEs); fresh money to grow the loan book.","சின்ன business (MSME) lender; fresh money loan book வளர."),
+   after:A("Listed flat at issue price on just 1x demand; up ~25% since.","1x demand-ல flat listing; அப்புறம் ~25% ஏறிச்சு."),
+   out:A("Gains if credit costs keep easing in small-ticket loans.","Small-ticket loans-ல credit cost குறைஞ்சா பலன்."),
+   risk:A("H1 FY26 profit fell 40%; MSME asset quality.","H1 FY26 profit 40% இறக்கம்; MSME asset quality."),
+   life:80, earn:40, tg:[[A("Credit costs easing","Credit cost குறையுது"),1,3,0.4,0.7,0.7],[A("Asset-quality stress","Asset quality stress"),-1,3,0.4,0.7,1]] },
+ { id:"cleanmax", n:"Clean Max Enviro Energy", sym:"CLEANMAX", sec:"pwr", d:"2026-03-02", size:3079.88, fr:1196, ofs:1884, ip:1053, lp:960, lc:867.9, sub:1.0, ref:1296.1,
+   promise:A("Largest commercial & industrial renewable supplier: 2.54 GW running, 2.53 GW being built; fresh money to cut debt.","பெரிய C&I renewable supplier: 2.54 GW ஓடுது, 2.53 GW build ஆகுது; fresh money கடன் குறைக்க."),
+   after:A("Barely subscribed (1x), listed 9% down; now ~23% above issue.","Subscription 1x தான், 9% கீழ list; இப்போ ~23% மேல."),
+   out:A("Company demand for green power and data centres drives growth.","Companies-ஓட green power demand, data centres வளர்ச்சி தரும்."),
+   risk:A("Heavy debt (~₹10,100 cr, Sep-25) and thin profit.","கடன் அதிகம் (~₹10,100 cr, Sep-25), profit கம்மி."),
+   life:80, earn:60, tg:[[A("Data-centre power contracts","Data centre power contracts"),1,3,0.7,0.7,0.7],[A("High leverage if rates rise","Rate ஏறினா கடன் சுமை"),-1,3,0.7,0.7,1]] },
+ { id:"omnitech", n:"Omnitech Engineering", sym:"OMNI", sec:"auto", d:"2026-03-05", size:583, fr:null, ofs:null, ip:227, lp:202, lc:205.15, sub:1.2, ref:656.65,
+   promise:A("Precision-engineered components maker.","Precision engineered components செய்யுற company."),
+   after:A("Listed 11% down on 1.2x demand; now ~189% above issue — 2026's second-best return.","1.2x demand-ல 11% கீழ list; இப்போ ~189% மேல — 2026-ன் 2-வது best return."),
+   out:A("Export-led precision engineering demand.","Export சார்ந்த precision engineering demand."),
+   risk:A("Very sharp rally on a short trading history.","குறைந்த trading history-ல ரொம்ப வேகமான rally."),
+   life:80, earn:70, tg:[[A("Export orders","Export orders"),1,3,0.4,0.7,0.2],[A("Valuation after +189%","+189%-க்கு அப்புறம் valuation"),-1,3,0.4,0.7,1]] },
+ { id:"sedemac", n:"SEDEMAC Mechatronics", sym:"SEDEMAC", sec:"auto", d:"2026-03-11", size:1087.35, fr:0, ofs:1087.35, ip:1352, lp:1535, lc:1452.1, sub:2.68, ref:3223.2,
+   promise:A("Deep-tech engine and motor control electronics for 2W/3W and gensets.","2W/3W, gensets-க்கு engine, motor control electronics — deep-tech."),
+   after:A("Listed +13.5%; now ~138% above issue.","+13.5% list; இப்போ ~138% மேல."),
+   out:A("EV and hybrid controllers widen its market.","EV, hybrid controllers market-ஐ பெருசாக்கும்."),
+   risk:A("100% OFS; much of the good news is now in the price.","100% OFS; நல்ல news நிறைய ஏற்கனவே விலையில."),
+   life:80, earn:70, tg:[[A("EV controller wins","EV controller wins"),1,4,0.7,0.7,0.2],[A("Valuation de-rating","Valuation de-rating"),-1,3,0.4,0.7,1]] },
+ { id:"cmpdi", n:"Central Mine Planning (CMPDI)", sym:"CMPDI", sec:"coal", d:"2026-03-30", size:1841.45, fr:0, ofs:1841.45, ip:172, lp:160, lc:154.06, sub:1.05, ref:205.19,
+   promise:A("Coal India's asset-light planning and design consultancy.","Coal India-வோட asset-light planning, design consultancy."),
+   after:A("Weak demand (1.05x), listed 7% down; now ~19% above issue.","Demand கம்மி (1.05x), 7% கீழ list; இப்போ ~19% மேல."),
+   out:A("Work tracks Coal India's mine expansion and exploration budgets.","Coal India mine expansion, exploration budget மேல வேலை."),
+   risk:A("One parent as main client; pure OFS.","ஒரே parent தான் main client; முழு OFS."),
+   life:55, earn:55, tg:[[A("Critical-mineral exploration work","Critical mineral exploration வேலை"),1,2,0.4,0.4,1],[A("Coal India capex slowdown","Coal India capex slowdown"),-1,3,0.4,0.7,1]] },
+ { id:"powerica", n:"Powerica", sym:"POWERICA", sec:"pwr", d:"2026-04-02", size:1100, fr:700, ofs:400, ip:395, lp:366, lc:390, sub:1.53, ref:611.2,
+   promise:A("Diesel gensets plus 280 MW of wind farms in Gujarat; fresh money to cut debt.","Diesel gensets + Gujarat-ல 280 MW wind farms; fresh money கடன் குறைக்க."),
+   after:A("Listed 7% down; now ~55% above issue.","7% கீழ list; இப்போ ~55% மேல."),
+   out:A("Backup power for data centres and the wind pipeline drive growth.","Data centre backup power, wind pipeline வளர்ச்சி."),
+   risk:A("Emission norms on diesel gensets; wind variability.","Diesel genset emission norms; wind variability."),
+   life:75, earn:70, tg:[[A("Data-centre genset demand","Data centre genset demand"),1,3,0.7,1,0.4],[A("Stricter emission norms","கடுமையான emission norms"),-1,2,0.4,0.7,1]] },
+ { id:"kissht", n:"OnEMI Technology (Kissht)", sym:"KISSHT", sec:"fin", d:"2026-05-08", size:925.92, fr:850, ofs:75.92, ip:171, lp:190, lc:208.63, sub:9.96, ref:373.65,
+   promise:A("Digital consumer lender; 9M FY26 profit ₹199 cr.","Digital consumer lender; 9M FY26 profit ₹199 cr."),
+   after:A("Listed +11%; now ~119% above issue.","+11% list; இப்போ ~119% மேல."),
+   out:A("Re-rated as digital-lending credit costs normalised.","Digital lending credit cost normal ஆனதால re-rating."),
+   risk:A("RBI rules on unsecured loans; higher-risk borrowers.","Unsecured loans-ல RBI rules; risk அதிகமான borrowers."),
+   life:80, earn:80, tg:[[A("Loan growth with stable credit costs","Stable credit cost-ஓட loan growth"),1,3,1,1,0.2],[A("RBI tightening on unsecured loans","Unsecured loans-ல RBI கட்டுப்பாடு"),-1,4,0.4,0.7,1]] },
+ { id:"turtlemint", n:"Turtlemint Fintech", sym:"TURTLEMINT", sec:"fin", d:"2026-06-29", size:882.67, fr:660.7, ofs:221.97, ip:152, lp:134.9, lc:135.4, sub:1.24, ref:68.36,
+   promise:A("Insurance sold through a network of agents (insurtech).","Agents network மூலமா insurance விற்பனை (insurtech)."),
+   after:A("1.24x demand, listed 11% down; now ~55% below issue — the weakest large startup listing of 2026.","1.24x demand, 11% கீழ list; இப்போ ~55% கீழ — 2026-ன் weak startup listing."),
+   out:A("Must prove profitable growth; commission rules matter.","Profit-ஓட growth காட்டணும்; commission rules முக்கியம்."),
+   risk:A("Losses; IRDAI commission caps.","நஷ்டம்; IRDAI commission cap."),
+   life:50, earn:25, tg:[[A("Path to breakeven","Breakeven-க்கு வழி"),1,3,0.2,0.7,1],[A("Commission caps","Commission cap"),-1,3,0.4,0.7,1]] },
+ { id:"cordelia", n:"Waterways Leisure (Cordelia)", sym:"CORDELIA", sec:"cons", d:"2026-07-01", size:585, fr:null, ofs:null, ip:808, lp:680, lc:668.1, sub:1.53, ref:104.53, split:10,
+   promise:A("Cordelia Cruises — India's domestic cruise operator.","Cordelia Cruises — இந்தியாவோட domestic cruise operator."),
+   after:A("Listed ~16% below issue. After a 1:10 split, today's price equals ~₹1,045 per old share (~+29%). Swung to a ₹58.5 cr profit (Oct).","Issue-ஐ விட ~16% கீழ list. 1:10 split-க்கு அப்புறம் பழைய share கணக்குல ~₹1,045 (~+29%). ₹58.5 cr profit-க்கு வந்துச்சு (Oct)."),
+   out:A("Domestic cruising is early-stage; port facilities are improving.","Domestic cruise ஆரம்ப நிலை; port வசதி மேம்படுது."),
+   risk:A("Seasonal, fuel-heavy business.","Season business, fuel cost அதிகம்."),
+   life:50, earn:75, tg:[[A("Profit turnaround","Profit turnaround"),1,4,1,1,0.4],[A("Fuel cost spike","Fuel cost ஏற்றம்"),-1,2,0.4,0.7,1]] },
+ { id:"sbifunds", n:"SBI Funds Management", sym:"SBIFUNDS", sec:"mkt", d:"2026-07-21", size:9812.91, fr:0, ofs:9812.91, ip:574, lp:613.3, lc:609.9, sub:41.73, ref:518.55,
+   promise:A("India's largest mutual fund house; 100% OFS by SBI and Amundi.","இந்தியாவோட பெரிய mutual fund house; SBI, Amundi-யோட 100% OFS."),
+   after:A("Listed +6.9% on 41.7x demand; now ~10% below issue as markets fell.","41.7x demand-ல +6.9% list; market இறங்கினதால ~10% கீழ."),
+   out:A("SIP flows and market levels drive assets and fees.","SIP flows, market level தான் AUM, fees."),
+   risk:A("SEBI fee (TER) changes; equity market falls.","SEBI TER மாற்றம்; market இறக்கம்."),
+   life:55, earn:55, tg:[[A("Steady SIP inflows","நிலையான SIP inflows"),1,2,1,1,1],[A("TER / fee cuts","TER / fee cut"),-1,3,0.4,0.7,1]] },
+ { id:"indomim", n:"Indo-MIM", sym:"INDOMIM", sec:"auto", d:"2026-07-30", size:3811.21, fr:500, ofs:3311.21, ip:485, lp:700, lc:741.8, sub:72.35, ref:1241,
+   promise:A("World's largest metal-injection-moulding maker; 77% export revenue; FY26 profit ₹534 cr.","உலகத்துலயே பெரிய MIM maker; 77% export revenue; FY26 profit ₹534 cr."),
+   after:A("Listed +44%; now ~156% above issue.","+44% list; இப்போ ~156% மேல."),
+   out:A("Aerospace, defence and medical parts add higher-value demand.","Aerospace, defence, medical parts — அதிக value demand."),
+   risk:A("87% OFS; US tariffs; rich valuation after the rally.","87% OFS; US tariff; rally-க்கு அப்புறம் valuation அதிகம்."),
+   life:75, earn:80, tg:[[A("Aerospace & defence parts","Aerospace & defence parts"),1,4,0.7,0.7,0.2],[A("US tariffs on exports","Export மேல US tariff"),-1,3,0.4,0.7,1]] },
+ { id:"lohia", n:"Lohia Corp", sym:"LCL", sec:"auto", d:"2026-07-30", size:1101.28, fr:0, ofs:1101.28, ip:425, lp:461, lc:494.65, sub:7.26, ref:634.6,
+   promise:A("Kanpur maker of machines for woven plastic sacks and tapes; 100% OFS.","Kanpur-ல woven plastic sack, tape machines; 100% OFS."),
+   after:A("Listed +8.5%; now ~49% above issue.","+8.5% list; இப்போ ~49% மேல."),
+   out:A("Packaging and export machinery demand.","Packaging, export machinery demand."),
+   risk:A("Pure OFS; depends on customers' capex cycle.","முழு OFS; customers capex cycle மேல depend."),
+   life:55, earn:60, tg:[[A("Export machinery orders","Export machinery orders"),1,2,0.4,0.7,0.7],[A("Capex slowdown","Capex slowdown"),-1,2,0.4,0.7,1]] },
+ { id:"manipal", n:"Manipal Health Enterprises", sym:"MANIPALHOS", sec:"hc", d:"2026-08-05", size:9275.22, fr:8000, ofs:1275.22, ip:590, lp:652, lc:666.95, sub:5.12, ref:679.05,
+   promise:A("Largest hospital chain by beds (49 hospitals, 12,600+ beds); ₹5,378 cr to repay debt.","Beds கணக்குல பெரிய hospital chain (49 hospitals, 12,600+ beds); ₹5,378 cr கடன் அடைக்க."),
+   after:A("Listed +10.5%; now ~15% above issue.","+10.5% list; இப்போ ~15% மேல."),
+   out:A("New beds and lower interest costs can lift profit.","புது beds, குறைந்த interest cost profit-ஐ ஏத்தலாம்."),
+   risk:A("Still ~₹78k cr valuation; procedure price caps.","Valuation இன்னும் ~₹78k cr; procedure price cap."),
+   life:80, earn:70, tg:[[A("Interest savings after debt repayment","கடன் அடைச்சதுல interest saving"),1,3,1,1,1],[A("Price caps on procedures","Procedure price cap"),-1,3,0.2,0.7,1]] },
+ { id:"juniper", n:"Juniper Green Energy", sym:"JNPR", sec:"pwr", d:"2026-08-06", size:1800, fr:1800, ofs:0, ip:225, lp:245, lc:259.71, sub:8.38, ref:272.15,
+   promise:A("Renewable developer; 100% fresh issue to repay subsidiary debt.","Renewable developer; 100% fresh issue — subsidiaries கடன் அடைக்க."),
+   after:A("Listed +8.9%; now ~21% above issue.","+8.9% list; இப்போ ~21% மேல."),
+   out:A("Hybrid and storage tenders feed the project pipeline.","Hybrid, storage tenders project pipeline-க்கு உதவும்."),
+   risk:A("Tariff competition, curtailment, interest rates.","Tariff போட்டி, curtailment, interest rate."),
+   life:80, earn:60, tg:[[A("Storage tender wins","Storage tender wins"),1,3,0.4,0.7,1],[A("Curtailment","Curtailment"),-1,2,0.4,0.7,1]] },
+ { id:"leap", n:"LEAP India", sym:"LEAPIND", sec:"log", d:"2026-08-14", size:2480, fr:480, ofs:2000, ip:159, lp:165.9, lc:145.1, sub:8.82, ref:142.28,
+   promise:A("Pallet and container pooling for supply chains; FY26 profit up 65%.","Supply chain-க்கு pallet, container pooling; FY26 profit 65% ஏற்றம்."),
+   after:A("Listed +4%, fell below issue the same day; ~10% below now.","+4% list, அதே நாள் issue-க்கு கீழ; இப்போ ~10% கீழ."),
+   out:A("Organised logistics keeps growing; the model is asset-heavy.","Organised logistics வளரும்; asset-heavy model."),
+   risk:A("81% OFS — mostly an investor exit.","81% OFS — பெரும்பாலும் investor exit."),
+   life:75, earn:70, tg:[[A("Pooling adoption by FMCG/auto","FMCG/auto pooling adoption"),1,2,0.7,0.7,1],[A("Selling-shareholder overhang","Selling shareholders overhang"),-1,2,0.7,1,1]] },
+ { id:"molbio", n:"Molbio Diagnostics", sym:"MOLBIO", sec:"hc", d:"2026-08-17", size:939.7, fr:200, ofs:739.7, ip:807, lp:980, lc:1041.7, sub:70.27, ref:1442.3,
+   promise:A("Goa maker of Truenat portable molecular tests (TB and infections).","Goa company — Truenat portable molecular tests (TB, infections)."),
+   after:A("Listed +21%; now ~79% above issue.","+21% list; இப்போ ~79% மேல."),
+   out:A("Point-of-care testing and global TB programmes support growth.","Point-of-care testing, global TB programmes வளர்ச்சிக்கு support."),
+   risk:A("Government tender dependence; 79% OFS.","Government tender மேல depend; 79% OFS."),
+   life:80, earn:70, tg:[[A("Global TB tenders","Global TB tenders"),1,3,0.4,0.7,0.4],[A("Tender pricing pressure","Tender pricing pressure"),-1,2,0.4,0.7,1]] },
+ { id:"dhoot", n:"Dhoot Transmission", sym:"DHOOTTRANS", sec:"auto", d:"2026-08-17", size:3066.89, fr:1400, ofs:1666.89, ip:871, lp:1200, lc:1187.5, sub:75.06, ref:1498.1,
+   promise:A("Wiring harnesses and sensors for 2W/3W; new plants at Jhajjar and Hosur (TN).","2W/3W-க்கு wiring harness, sensors; Jhajjar, Hosur (TN)-ல புது plants."),
+   after:A("Listed +38%; now ~72% above issue.","+38% list; இப்போ ~72% மேல."),
+   out:A("EVs carry more wiring per vehicle — a tailwind.","EV-ல ஒரு vehicle-க்கு wiring அதிகம் — tailwind."),
+   risk:A("Bain Capital exit via OFS; 2W demand cycle.","Bain Capital OFS exit; 2W demand cycle."),
+   life:80, earn:70, tg:[[A("EV wiring content","EV wiring content"),1,3,0.7,0.7,0.4],[A("2W demand slowdown","2W demand slowdown"),-1,3,0.4,0.7,1]] },
+ { id:"milkymist", n:"Milky Mist Dairy Food", sym:"MILKYMIST", sec:"cons", d:"2026-08-18", size:1553, fr:1428, ofs:125, ip:140, lp:165, lc:181.5, sub:59.08, ref:312.45,
+   promise:A("Erode (TN) dairy brand — paneer, curd, cheese; 92% fresh issue.","Erode (TN) dairy brand — paneer, curd, cheese; 92% fresh issue."),
+   after:A("Listed +18%; now ~123% above issue.","+18% list; இப்போ ~123% மேல."),
+   out:A("Value-added dairy grows faster than milk; capacity is expanding.","Value-added dairy, milk-ஐ விட வேகமா வளரும்; capacity விரிவாகுது."),
+   risk:A("Milk procurement costs; valuation after doubling.","Milk procurement cost; ரெட்டிப்புக்கு அப்புறம் valuation."),
+   life:80, earn:70, tg:[[A("New capacity ramp-up","புது capacity ramp-up"),1,3,0.7,0.7,0.2],[A("Milk cost inflation","Milk cost ஏற்றம்"),-1,3,0.4,1,1]] },
+ { id:"shiprocket", n:"Shiprocket", sym:"SHIPROCKET", sec:"log", d:"2026-08-19", size:1617.48, fr:885.5, ofs:731.98, ip:97, lp:131, lc:143.5, sub:102.28, ref:134.11,
+   promise:A("Shipping and logistics software for online (D2C) sellers.","Online (D2C) sellers-க்கு shipping, logistics software."),
+   after:A("Listed +35% on 102x demand; ~38% above issue, but below its listing-day close.","102x demand-ல +35% list; இப்போ ~38% மேல, ஆனா listing day close-க்கு கீழ."),
+   out:A("Grows with small online sellers.","சின்ன online sellers கூட வளரும்."),
+   risk:A("FY26 loss widened to ₹79 cr.","FY26 loss ₹79 cr-க்கு அதிகமாச்சு."),
+   life:80, earn:40, tg:[[A("Path to breakeven","Breakeven-க்கு வழி"),1,3,0.4,0.7,0.7],[A("Widening losses","அதிகமாகும் நஷ்டம்"),-1,3,0.7,1,1]] },
+ { id:"lalithaa", n:"Lalithaa Jewellery Mart", sym:"LALITHAA", sec:"cons", d:"2026-08-24", size:1700, fr:1200, ofs:500, ip:201, lp:265, lc:248.44, sub:66.63, ref:363.5,
+   promise:A("Chennai-based South India jewellery chain; fresh money for new showrooms.","Chennai jewellery chain (South India); fresh money புது showrooms-க்கு."),
+   after:A("Listed +32%; now ~81% above issue.","+32% list; இப்போ ~81% மேல."),
+   out:A("Store expansion and the shift to organised jewellers.","Store expansion, organised jewellers பக்கம் shift."),
+   risk:A("Gold price spikes can cut volumes.","Gold விலை ஏற்றம் volume-ஐ குறைக்கலாம்."),
+   life:80, earn:70, tg:[[A("Wedding & festive season","கல்யாண, பண்டிகை season"),1,2,1,1,0.4],[A("Gold price spike","Gold விலை ஏற்றம்"),-1,3,0.4,1,1]] },
+ { id:"horizon", n:"Horizon Industrial Parks", sym:"HORIZONIND", sec:"re", d:"2026-08-24", size:2600.04, fr:2600.04, ofs:0, ip:60, lp:60.25, lc:58.16, sub:1.52, ref:49.04,
+   promise:A("India's largest warehousing and industrial-park network; 100% fresh issue.","இந்தியாவோட பெரிய warehousing, industrial park network; 100% fresh issue."),
+   after:A("Flat listing on 1.5x demand; ~18% below issue.","1.5x demand-ல flat listing; ~18% கீழ."),
+   out:A("Leasing demand from e-commerce and manufacturing.","E-commerce, manufacturing leasing demand."),
+   risk:A("Low rental yields versus bonds; rate-sensitive.","Bond-ஐ விட rental yield கம்மி; rate sensitive."),
+   life:75, earn:55, tg:[[A("Rate cuts","Rate cut"),1,3,0.4,0.7,1],[A("Warehouse oversupply","Warehouse oversupply"),-1,2,0.4,0.7,1]] },
+ { id:"tempsens", n:"Tempsens Instruments", sym:"TEMPSENS", sec:"auto", d:"2026-08-28", size:650, fr:95, ofs:555, ip:300, lp:634, lc:586.8, sub:184.22, ref:591.55,
+   promise:A("Temperature sensors, heaters and specialised cables (Udaipur).","Temperature sensors, heaters, special cables (Udaipur)."),
+   after:A("Best mainboard listing gain of 2026 (+111%); flat since.","2026-ன் best mainboard listing gain (+111%); அதுக்கப்புறம் flat."),
+   out:A("Demand from semiconductor, power and steel plants.","Semiconductor, power, steel plants demand."),
+   risk:A("85% OFS; the listing priced in a lot.","85% OFS; listing-லயே நிறைய price ஆயிடுச்சு."),
+   life:80, earn:70, tg:[[A("Semiconductor fab orders","Semiconductor fab orders"),1,3,0.4,0.4,0.2],[A("Valuation after doubling","ரெட்டிப்புக்கு அப்புறம் valuation"),-1,2,0.4,0.7,1]] },
+ { id:"symbiotec", n:"Symbiotec Pharmalab", sym:"SYMBIOTEC", sec:"hc", d:"2026-09-01", size:1757, fr:150, ofs:1607, ip:988, lp:988, lc:1097.7, sub:75.08, ref:1101.2,
+   promise:A("Global leader in steroid and hormone APIs; ~55x FY26 P/E at issue.","Steroid, hormone APIs-ல global leader; issue-ல ~55x FY26 P/E."),
+   after:A("Flat listing despite 75x demand; ~11% above issue now.","75x demand இருந்தும் flat listing; இப்போ ~11% மேல."),
+   out:A("CDMO and complex injectables are the growth bets.","CDMO, complex injectables தான் growth bet."),
+   risk:A("91% OFS; ~11% ROE is modest for the price.","91% OFS; ~11% ROE விலைக்கு கம்மி."),
+   life:75, earn:55, tg:[[A("CDMO contracts","CDMO contracts"),1,3,0.4,0.7,1],[A("USFDA inspection risk","USFDA inspection risk"),-1,4,0.2,0.7,1]] },
+ { id:"esds", n:"ESDS Software Solution", sym:"ESDS", sec:"tech", d:"2026-09-04", size:720, fr:720, ofs:0, ip:429, lp:757, lc:908.4, sub:142.88, ref:1571.1,
+   promise:A("Cloud and data-centre services; 100% fresh issue, ₹576 cr for cloud/DC equipment.","Cloud, data centre services; 100% fresh — ₹576 cr cloud/DC equipment-க்கு."),
+   after:A("2026's biggest gainer: listed +76%, now ~266% above issue, near ~169x trailing EPS.","2026-ன் பெரிய gainer: +76% list, இப்போ ~266% மேல, trailing EPS-ஐ விட ~169x."),
+   out:A("GPU-as-a-service and sovereign cloud demand.","GPU-as-a-service, sovereign cloud demand."),
+   risk:A("Valuation; the $1.25 bn Sharon AI deal is ESDS buying GPU capacity, not revenue.","Valuation; $1.25 bn Sharon AI deal — ESDS GPU capacity வாங்குறது, revenue இல்ல."),
+   life:80, earn:85, tg:[[A("GPU capacity going live","GPU capacity live ஆகுது"),1,4,0.7,0.7,0.2],[A("Valuation and lock-in supply","Valuation, lock-in supply"),-1,3,0.7,1,1]] },
+ { id:"kanohar", n:"Kanohar Electricals", sym:"KANOHAR", sec:"pwr", d:"2026-09-16", size:1055.74, fr:300, ofs:755.74, ip:632, lp:685.5, lc:751.5, sub:90.59, ref:1122.5,
+   promise:A("Meerut transformer maker for power, railways and renewables; FY26 profit doubled to ₹130 cr.","Meerut transformer maker — power, railways, renewables; FY26 profit ரெட்டிப்பு ₹130 cr."),
+   after:A("Listed +8.5%; now ~78% above issue.","+8.5% list; இப்போ ~78% மேல."),
+   out:A("Transmission and railway capex; transformers are in short supply.","Transmission, railway capex; transformer பற்றாக்குறை."),
+   risk:A("72% OFS by the promoter trust; new capacity across the industry.","Promoter trust 72% OFS; industry முழுக்க புது capacity."),
+   life:80, earn:85, tg:[[A("T&D order inflow","T&D order inflow"),1,3,0.7,1,0.2],[A("Transformer capacity glut","Transformer capacity glut"),-1,3,0.4,0.4,1]] },
+ { id:"rentomojo", n:"RentoMojo", sym:"RENTOMOJO", sec:"log", d:"2026-09-17", size:1255.57, fr:150, ofs:1105.57, ip:404, lp:482.45, lc:534.25, sub:72.89, ref:593.65,
+   promise:A("Furniture and appliance rental platform.","Furniture, appliance rental platform."),
+   after:A("Listed +19%; now ~47% above issue.","+19% list; இப்போ ~47% மேல."),
+   out:A("Urban renters who prefer to rent rather than buy.","வாங்குறதை விட வாடகைக்கு எடுக்கிற நகர மக்கள்."),
+   risk:A("88% OFS; a co-founder's NCLT petition.","88% OFS; co-founder NCLT petition."),
+   life:80, earn:60, tg:[[A("Subscriber growth","Subscriber growth"),1,2,0.7,1,0.4],[A("NCLT dispute","NCLT வழக்கு"),-1,3,0.4,0.7,1]] },
+ { id:"heromotors", n:"Hero Motors", sym:"HEROMOTORS", sec:"auto", d:"2026-09-23", size:1000, fr:600, ofs:400, ip:84, lp:82, lc:98.51, sub:7.01, ref:155.71,
+   promise:A("Powertrains and e-bike drive units for BMW, Ducati and others.","BMW, Ducati போன்றவங்களுக்கு powertrain, e-bike drive units."),
+   after:A("Listed 2% down; now ~85% above issue.","2% கீழ list; இப்போ ~85% மேல."),
+   out:A("EV transmissions and exports to Europe.","EV transmissions, Europe export."),
+   risk:A("Thin margins: FY26 profit ₹41 cr on ₹1,217 cr income.","Margin கம்மி: FY26 profit ₹41 cr, income ₹1,217 cr."),
+   life:75, earn:60, tg:[[A("EV programme wins","EV programme wins"),1,3,0.4,0.7,0.2],[A("European demand slowdown","Europe demand slowdown"),-1,3,0.4,0.7,1]] },
+ { id:"nse", n:"National Stock Exchange (NSE)", sym:null, bse:"544937", sec:"mkt", d:"2026-09-24", size:22561.57, fr:0, ofs:22561.57, ip:1785, lp:1800, lc:1818, sub:5.71, ref:1729.45,
+   promise:A("India's biggest exchange — listed only on BSE. 2026's largest IPO, 100% OFS.","இந்தியாவோட பெரிய exchange — BSE-ல மட்டும் list. 2026-ன் பெரிய IPO, 100% OFS."),
+   after:A("Listed just +0.8%; slipped ~3% below issue.","வெறும் +0.8% list; issue-ஐ விட ~3% கீழ."),
+   out:A("Volumes depend on market mood and F&O rules.","Market mood, F&O rules மேல volume depend."),
+   risk:A("SEBI F&O curbs; weak market.","SEBI F&O கட்டுப்பாடு; weak market."),
+   life:55, earn:55, tg:[[A("Market recovery and IPO boom","Market recovery, IPO boom"),1,3,0.4,0.7,1],[A("More F&O curbs","இன்னும் F&O கட்டுப்பாடு"),-1,4,0.4,0.7,1]] },
+ { id:"moneyview", n:"Moneyview", sym:"MONEYVIEW", sec:"fin", d:"2026-10-01", size:1091.68, fr:750, ofs:341.68, ip:34, lp:55, lc:54.03, sub:101.87, ref:62.12,
+   promise:A("Personal-loan and credit app; fresh issue cut to ₹750 cr.","Personal loan, credit app; fresh issue ₹750 cr-க்கு குறைச்சாங்க."),
+   after:A("Listed +62% on 102x demand; ~83% above issue.","102x demand-ல +62% list; இப்போ ~83% மேல."),
+   out:A("Benefits from easing credit costs in digital lending.","Digital lending credit cost குறைஞ்சா பலன்."),
+   risk:A("Unsecured-loan rules; listing euphoria can fade.","Unsecured loan rules; listing உற்சாகம் குறையலாம்."),
+   life:80, earn:75, tg:[[A("Loan growth","Loan growth"),1,3,0.7,1,0.2],[A("RBI tightening","RBI கட்டுப்பாடு"),-1,4,0.4,0.7,1]] },
+ { id:"orient", n:"Orient Cables (India)", sym:"ORIENTCABL", sec:"pwr", d:"2026-10-05", size:552, fr:320, ofs:232, ip:272, lp:450, lc:405, sub:97.28, ref:410.6,
+   promise:A("Networking, fibre and power cables; ~23% share; FY26 revenue +42%, profit flat.","Networking, fibre, power cables; ~23% share; FY26 revenue +42%, profit flat."),
+   after:A("Listed +65%; ~51% above issue.","+65% list; இப்போ ~51% மேல."),
+   out:A("Data centres and broadband roll-out need more cable.","Data centres, broadband-க்கு அதிக cable வேணும்."),
+   risk:A("Profit did not grow with revenue in FY26; copper prices.","FY26-ல revenue கூட profit வளரல; copper விலை."),
+   life:80, earn:55, tg:[[A("Data-centre cabling demand","Data centre cabling demand"),1,3,0.4,0.7,0.4],[A("Copper price spike","Copper விலை ஏற்றம்"),-1,2,0.4,1,1]] },
+ { id:"acevector", n:"AceVector (Snapdeal)", sym:"ACEVECTOR", sec:"log", d:"2026-10-05", size:420, fr:287, ofs:133, ip:32, lp:28.32, lc:26.1, sub:5.07, ref:29,
+   promise:A("Snapdeal's parent (value e-commerce); FY26 loss narrowed to ₹45.5 cr.","Snapdeal-ஓட parent (value e-commerce); FY26 loss ₹45.5 cr-க்கு குறைஞ்சுது."),
+   after:A("Listed 11.5% down; ~9% below issue.","11.5% கீழ list; இப்போ ~9% கீழ."),
+   out:A("Value e-commerce is crowded (Meesho, Shopsy).","Value e-commerce-ல போட்டி அதிகம் (Meesho, Shopsy)."),
+   risk:A("Still loss-making; tough competition.","இன்னும் நஷ்டம்; கடும் போட்டி."),
+   life:50, earn:55, tg:[[A("Breakeven","Breakeven"),1,3,0.2,0.7,1],[A("Competition from Meesho","Meesho போட்டி"),-1,3,0.7,1,1]] }
+];
+
+/* All 2026 mainboard listings (incl. REITs/InvITs). [name, symbol, listDate, size Cr, subscription x, issue, listing, listing-day close, ref price, flag]
+   flag: "s10" = 1:10 split (price shown per new share), "ca" = check corporate action */
+var ALL = [
+["Nityas Gems & Jewellery","NITYAS","2026-10-08",108.35,2.26,75,80,84.15,75.81],["Vishal Nirmiti","VNL","2026-10-08",178,1.79,220,215,204.25,184.34],
+["SRIT India","SRIT","2026-10-06",218.4,125.16,130,148,155.09,126.35],["Shah Investor's Home","SHAHINVEST","2026-10-06",90.17,38.12,167,171,173.79,143.64],
+["AceVector (Snapdeal)","ACEVECTOR","2026-10-05",420,5.07,32,28.32,26.1,29],["Runwal Enterprises","RUNWALENTR","2026-10-05",500,2.64,305,305,301.45,273.1],
+["German Green Steel","GERMAN","2026-10-05",303.9,30.42,139,142,128.33,106.5],["Orient Cables","ORIENTCABL","2026-10-05",552,97.28,272,450,405,410.6],
+["Moneyview","MONEYVIEW","2026-10-01",1091.68,101.87,34,55,54.03,62.12],["A-One Steels","AONESTEELS","2026-10-01",405,12.23,405,455,417,401.7],
+["Adroit Industries","ADROITIND","2026-09-30",150.71,176.85,134,235,248.39,193.27],["Elevate Campuses","ELEVATE","2026-09-30",2100,1.89,362,355.1,322.95,329.85],
+["ArMee Infotech","ARMEE","2026-09-30",300,2.62,375,375,300,245.8],["Swastika Infra","SWASTIKAIN","2026-09-30",160.88,7.91,185,200,210,209.38],
+["Varmora Granito","VARMORA","2026-09-29",708.02,1.6,148,155,152.8,133.05],["NSE (BSE: 544937)","544937","2026-09-24",22561.57,5.71,1785,1800,1818,1729.45],
+["Sonaselection India","SONA","2026-09-24",141.57,2.01,99,102.31,107.42,97.82],["SS Retail","SSRETAIL","2026-09-23",500,107.41,424,624,765.15,692.2],
+["Jindal Supreme","JSIPL","2026-09-23",124.88,177.03,93,120,127.99,159.45],["Hero Motors","HEROMOTORS","2026-09-23",1000,7.01,84,82,98.51,155.71],
+["Manika Plastech","MANIKA","2026-09-21",125.5,29.46,43,43,43.14,55.11],["Veegaland Developers","VEEGALAND","2026-09-18",210,14.6,140,154,146.3,132.22],
+["Manipal Payment & Identity","MPIMANIPAL","2026-09-17",805,1.42,339,330,345.75,354.3],["LCC Projects","LCCPROJECT","2026-09-17",427.14,49.57,146,189,170.1,140.14],
+["Steamhouse","STEAMHOUSE","2026-09-17",414,32.07,81,94.5,102.55,123.82],["RentoMojo","RENTOMOJO","2026-09-17",1255.57,72.89,404,482.45,534.25,593.65],
+["Asset Reconstruction (ARCIL)","ARCIL","2026-09-17",732.97,20.1,139,139,137.05,152.88],["Karamtara Engineering","KARAMTARA","2026-09-17",875,66.01,254,320,352,388.25],
+["Glass Wall Systems","GLASSWALL","2026-09-16",427.89,81.65,182,194,215.35,261.35],["Prasol Chemicals","PRASOLCHEM","2026-09-16",500,3.47,676,610,672.05,824.75],
+["Kanohar Electricals","KANOHAR","2026-09-16",1055.74,90.59,632,685.5,751.5,1122.5],["Pranav Constructions","PRANAV","2026-09-15",351.03,126.34,124,165,132,98.14],
+["Deepa Jewellers","DEEPA","2026-09-08",459.72,43.4,177,221,194.37,253.85],["Rays of Belief","MOMSBELIEF","2026-09-08",125,107.71,239,239,228.34,210.33],
+["Purple Style Labs","PERNIASPOP","2026-09-07",680,1.36,575,535,568.55,519.95],["ESDS Software","ESDS","2026-09-04",720,142.88,429,757,908.4,1571.1],
+["Priority Jewels","PRIORITY","2026-09-04",91.5,100.45,200,230,241.5,359.25],["Lumino Industries","LUMINO","2026-09-03",700,124.02,82,110,110.39,105.12],
+["Annu Projects","ANNU","2026-09-02",175.06,2.93,99,72,77.9,46.6],["Symbiotec Pharmalab","SYMBIOTEC","2026-09-01",1757,75.08,988,988,1097.7,1101.2],
+["Skyways Air","SKYWAYS","2026-09-01",582.8,71.25,138,124,125.65,110.35],["Hy-Tech Engineers","544891","2026-09-01",135.73,247.39,53,75,78.75,90.75],
+["Augmont Enterprises","AUGMONT","2026-08-31",825,111.18,788,961,908.15,1368.5],["Tempsens Instruments","TEMPSENS","2026-08-28",650,184.22,300,634,586.8,591.55],
+["Gaja Alternative AMC","GAJA","2026-08-26",550,32.98,160,185,168.7,144.27],["Shankesh Jewellers","SHANKESH","2026-08-25",367.18,2.8,93,103.3,95.03,98.58],
+["Sunshine Pictures","SUNSHINE","2026-08-25",282.14,105.81,360,395.9,369.2,440.95],["Horizon Industrial Parks","HORIZONIND","2026-08-24",2600.04,1.52,60,60.25,58.16,49.04],
+["Lalithaa Jewellery Mart","LALITHAA","2026-08-24",1700,66.63,201,265,248.44,363.5],["Shiprocket","SHIPROCKET","2026-08-19",1617.48,102.28,97,131,143.5,134.11],
+["Behari Lal Engineering","BLEL","2026-08-19",301.62,108.5,285,465,502.55,504.65],["Milky Mist Dairy","MILKYMIST","2026-08-18",1553,59.08,140,165,181.5,312.45],
+["Dhoot Transmission","DHOOTTRANS","2026-08-17",3066.89,75.06,871,1200,1187.5,1498.1],["Molbio Diagnostics","MOLBIO","2026-08-17",939.7,70.27,807,980,1041.7,1442.3],
+["Technocraft Ventures","TECHNOCRAF","2026-08-14",251.88,38.69,212,284,311.15,472.95],["LEAP India","LEAPIND","2026-08-14",2480,8.82,159,165.9,145.1,142.28],
+["Ardee Industries","ARDEE","2026-08-12",425.87,138.83,53,72,67.13,47.93],["Juniper Green Energy","JNPR","2026-08-06",1800,8.38,225,245,259.71,272.15],
+["MV Electrosystems","MVELECTRO","2026-08-06",290,200.66,425,520,624,847.8],["Manipal Health","MANIPALHOS","2026-08-05",9275.22,5.12,590,652,666.95,679.05],
+["Cube Highways InvIT","CUBEINVIT","2026-07-31",5000,5.86,152,155,156.96,153.11],["Indo-MIM","INDOMIM","2026-07-30",3811.21,72.35,485,700,741.8,1241],
+["Xtranet Technologies","XTRANET","2026-07-30",166.8,12.24,127,136,129.2,301.55],["Lohia Corp","LCL","2026-07-30",1101.28,7.26,425,461,494.65,634.6],
+["Caliber Mining","CMLL","2026-07-24",450,154.66,424,500.25,528.5,563.2],["Alpine Texworld","ALPINETEX","2026-07-21",126.25,1.4,105,105,99.75,43.3],
+["SBI Funds Management","SBIFUNDS","2026-07-21",9812.91,41.73,574,613.3,609.9,518.55],["Laser Power & Infra","LASERPOWER","2026-07-16",742,41.05,214,250,262.85,261.75],
+["Kusumgar","KUSUMGAR","2026-07-15",650.36,135.69,419,569,604.45,582.05],["Knack Packaging","KNACK","2026-07-08",439.71,87.11,170,188,182.98,213.69],
+["Aastha Spintex","AASTHA","2026-07-06",170,5.05,136,130,136.49,27.44,"ca"],["CSM Technologies","CSM","2026-07-02",145.78,1.37,113,113,107.35,88.82],
+["Waterways Leisure (Cordelia)","CORDELIA","2026-07-01",585,1.53,808,680,668.1,104.53,"s10"],["Advit Jewels","RAMBHAJO","2026-07-01",165.16,212.63,138,190,179.46,375.3],
+["Turtlemint Fintech","TURTLEMINT","2026-06-29",882.67,1.24,152,134.9,135.4,68.36],["Hexagon Nutrition","HEXAGON","2026-06-12",138.87,53.68,45,48.25,53.19,70.74],
+["CMR Green Technologies","CMRGREEN","2026-06-10",630.62,127.07,192,268,247.9,214.67],["Bagmane REIT","BAGMANE","2026-05-14",3405,15.55,100,103.5,103.66,106.16],
+["OnEMI Technology (Kissht)","KISSHT","2026-05-08",925.92,9.96,171,190,208.63,373.65],["Citius Transnet InvIT","CITIUSINVT","2026-04-29",1105,20.63,100,104.6,106.23,114.92],
+["Om Power Transmission","OMPOWER","2026-04-17",150.06,3.33,175,178,193.38,164.43],["Sai Parenteral's","SAIPARENT","2026-04-02",408.79,1.08,392,400,406.4,504],
+["Amir Chand Jagdish Kumar","AMIRCHAND","2026-04-02",440,3.41,212,200,180,221.55],["Powerica","POWERICA","2026-04-02",1100,1.53,395,366,390,611.2],
+["Central Mine Planning (CMPDI)","CMPDI","2026-03-30",1841.45,1.05,172,160,154.06,205.19],["GSP Crop Science","GSPCROP","2026-03-24",400,1.64,320,328,356.25,478.75],
+["Raajmarg Infra InvIT","RIIT","2026-03-24",6000,6.86,100,107,106.83,121.56],["Innovision","INNOVISION","2026-03-23",319.25,3.46,519,467.7,374.2,249.3],
+["Rajputana Stainless","RSL","2026-03-19",254.98,1.12,122,122,113.03,170.63],["SEDEMAC Mechatronics","SEDEMAC","2026-03-11",1087.35,2.68,1352,1535,1452.1,3223.2],
+["Omnitech Engineering","OMNI","2026-03-05",583,1.2,227,202,205.15,656.65],["PNGS Reva Diamond","PNGSREVA","2026-03-04",379.52,1.3,386,375,413.95,667.85],
+["Clean Max Enviro Energy","CLEANMAX","2026-03-02",3079.88,1,1053,960,867.9,1296.1],["Shree Ram Twistex","SRTL","2026-03-02",110.24,43.66,104,68,73.45,36.02],
+["Gaudium IVF","GAUDIUMIVF","2026-02-27",165,7.27,79,83,80.48,105.61],["Aye Finance","AYE","2026-02-16",1010,1.03,129,129,128.91,161.73],
+["Fractal Analytics","FRACTAL","2026-02-16",2833.9,2.8,900,876,847.4,700.25],["Shadowfax Technologies","SHADOWFAX","2026-01-28",1907.27,2.86,124,112.6,109.98,295],
+["Amagi Media Labs","AMAGI","2026-01-21",1788.62,30.24,361,318,348.25,567.75],["Bharat Coking Coal","BHARATCOAL","2026-01-19",1071.11,146.87,23,45,null,32.21]
+];
+
+/* Money raised by month, 2026 (₹ cr, to 13 Oct) and issue structure */
+var MONTHS = [["Jan",4767],["Feb",8182],["Mar",11788],["Apr",396],["May",4331],["Jun",2548],["Jul",26728],["Aug",23051],["Sep",40585],["Oct*",286]];
+var STRUCT = [[A("OFS only","OFS மட்டும்"),37421,30.5],[A("Fresh + OFS","Fresh + OFS"),61798,50.4],[A("Fresh only","Fresh மட்டும்"),11990,9.8],[A("Not stated","தெரியல"),11455,9.3]];
+
+/* Open, upcoming and pipeline */
+var UPCOMING = [
+ { id:"jio", n:"Jio Platforms", sec:"tel", dates:"21–23 Oct", anchor:"2026-10-19", close:"2026-10-23", band:"₹1,065–1,119", size:30213, fr:30213, ofs:0, lot:12, status:A("Opens 21 Oct","21 Oct திறக்குது"),
+   note:A("Largest-ever Indian IPO. 100% fresh issue to prepay Reliance Jio Infocomm debt. RIL shareholder quota (₹2,500 cr) for holders on 14 Oct; employee quota at ₹54 off. Market cap ~₹10.3 lakh cr at the top of the band.","இந்தியாவின் மிகப்பெரிய IPO. 100% fresh — Reliance Jio Infocomm கடன் அடைக்க. 14 Oct RIL shareholders-க்கு ₹2,500 cr quota; employees-க்கு ₹54 discount. Band உச்சத்துல market cap ~₹10.3 lakh cr.") },
+ { id:"tonbo", n:"Tonbo Imaging", sec:"auto", dates:"15–19 Oct", close:"2026-10-19", band:"₹665–700", size:852, fr:null, ofs:null, status:A("Open now","இப்போ open"),
+   note:A("Defence thermal-imaging and night-vision maker; OFS by existing investors.","Defence thermal imaging, night vision maker; existing investors OFS.") },
+ { id:"zetwerk", n:"Zetwerk Manufacturing", sec:"auto", dates:"15–19 Oct", close:"2026-10-19", band:"₹143–151", size:null, status:A("Open now","இப்போ open"),
+   note:A("Contract-manufacturing marketplace (steel structures, electronics, energy).","Contract manufacturing marketplace (steel structures, electronics, energy).") },
+ { id:"bonfig", n:"Bonfiglioli Transmissions", sec:"auto", dates:"15–19 Oct", close:"2026-10-19", band:"₹558–586", size:2533.7, status:A("Open now","இப்போ open"),
+   note:A("Gearboxes and drives; mostly OFS by the Italian parent (4.32 cr shares).","Gearboxes, drives; பெரும்பாலும் Italian parent OFS (4.32 cr shares).") },
+ { id:"smt", n:"Sahajanand Medical Tech", sec:"hc", dates:"15–19 Oct", close:"2026-10-19", band:"₹327–344", size:475.5, status:A("Open now","இப்போ open"),
+   note:A("Cardiac stents and medical devices.","Cardiac stents, medical devices.") },
+ { id:"fusion", n:"Fusion CX", sec:"tech", dates:"14–16 Oct", close:"2026-10-16", band:"₹275–289", size:702, status:A("Closes 16 Oct","16 Oct மூடும்"),
+   note:A("Customer-experience outsourcing; listing 21 Oct.","Customer experience outsourcing; 21 Oct listing.") },
+ { id:"hdfire", n:"HD Fire Protect", sec:"auto", dates:"13–15 Oct", close:"2026-10-15", band:"₹271", size:712.13, status:A("Closes today","இன்னைக்கு மூடும்"),
+   note:A("Fire-safety equipment.","Fire safety equipment.") }
+];
+var PIPELINE = [
+ [A("PhonePe","PhonePe"),"fin","₹10,700–13,400 cr",A("Filed","Filed")],
+ [A("Zepto","Zepto"),"log",A("Fresh ₹8,010 cr + OFS","Fresh ₹8,010 cr + OFS").en,A("SEBI nod","SEBI nod")],
+ [A("Mahanadi Coalfields","Mahanadi Coalfields"),"coal","~₹10,000 cr",A("DRHP Sep 2026","DRHP Sep 2026")],
+ [A("Avaada Electro","Avaada Electro"),"pwr","₹7,600 cr",A("SEBI cleared","SEBI cleared")],
+ [A("OYO (PRISM)","OYO (PRISM)"),"cons","₹6,650 cr",A("Filed","Filed")],
+ [A("Razorpay","Razorpay"),"fin","₹4,760–6,664 cr",A("Filed","Filed")],
+ [A("Infra.Market","Infra.Market"),"log","₹5,000 cr",A("Filed","Filed")],
+ [A("boAt","boAt"),"cons","₹1,500 cr",A("Filed","Filed")],
+ [A("Fibe","Fibe"),"fin","Fresh ₹750 cr + OFS",A("SEBI nod Sep 2026","SEBI nod Sep 2026")]
+];
+
+</script>
+<!-- On GitHub Pages the master Cauvery Assist component loads here; a built-in lite engine runs if it is absent. -->
+<script src="cauvery-assist.js"></script>
+<script>
+(function () {
+"use strict";
+var LANG = "en";
+var $ = function (id) { return document.getElementById(id); };
+function L(o) { return o == null ? "" : (typeof o === "string" ? o : (o[LANG] || o.en)); }
+function T(en, ta) { return LANG === "ta" ? ta : en; }
+function esc(s) { return String(s == null ? "" : s).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); }
+function store(k, v) { try { if (v === undefined) return localStorage.getItem(k); if (v === null) localStorage.removeItem(k); else localStorage.setItem(k, v); } catch (e) { return null; } }
+function inr(n, d) { if (n == null || isNaN(n)) return "—"; return Number(n).toLocaleString("en-IN", { minimumFractionDigits: d || 0, maximumFractionDigits: d == null ? 2 : d }); }
+function pct(x, d) { if (x == null || isNaN(x)) return "—"; var v = (x * 100).toFixed(d == null ? 1 : d); return (x > 0 ? "+" : "") + v + "%"; }
+function arrow(x) { return x == null ? "" : (x >= 0 ? "▲ " : "▼ "); }
+function cls(x) { return x == null ? "" : (x >= 0 ? "up" : "dn"); }
+function cr(n) { return n == null ? "—" : "₹" + inr(n, 0) + " cr"; }
+var MON_EN = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+var MON_TA = ["ஜன","பிப்","மார்","ஏப்","மே","ஜூன்","ஜூலை","ஆக","செப்","அக்","நவ","டிச"];
+function pd(s) { var p = s.split("-"); return new Date(+p[0], +p[1] - 1, +p[2]); }
+function fd(d, y) { return d.getDate() + " " + (LANG === "ta" ? MON_TA : MON_EN)[d.getMonth()] + (y ? " " + d.getFullYear() : ""); }
+function addD(d, n) { var x = new Date(d); x.setDate(x.getDate() + n); return x; }
+function addM(d, n) { var x = new Date(d); x.setMonth(x.getMonth() + n); return x; }
+var TODAY = new Date(); TODAY.setHours(0, 0, 0, 0);
+function days(a, b) { return Math.round((b - a) / 864e5); }
+function toast(m) { var t = $("toast"); t.textContent = m; t.style.display = "block"; clearTimeout(toast._t); toast._t = setTimeout(function () { t.style.display = "none"; }, 2600); }
+
+/* ---------------- Prices ---------------- */
+var MINE = {}; try { MINE = JSON.parse(store("cbipo_px_mine") || "{}") || {}; } catch (e) { MINE = {}; }
+var DBPX = null, SHEET = null, DB = null, CANWRITE = false;
+function keyOf(s) { return s.sym || s.bse; }
+function priceOf(sym, ref) {
+  if (sym && MINE[sym] != null) return { v: +MINE[sym], src: "mine", at: T("your entry", "உங்க entry") };
+  if (sym && SHEET && SHEET.px[sym] != null) return { v: SHEET.px[sym], src: "sheet", at: SHEET.at };
+  if (sym && DBPX && DBPX.px && DBPX.px[sym] != null) return { v: +DBPX.px[sym], src: "db", at: DBPX.asOf };
+  return { v: ref, src: "ref", at: REF_DATE };
+}
+function sPx(s) { var p = priceOf(keyOf(s), s.ref); if (s.id === "bccl" && p.src === "ref") p.at = "15 Oct 2026"; return p; }
+function sRet(s) { var p = sPx(s).v; return p == null ? null : (p * (s.split || 1) - s.ip) / s.ip; }
+function sLG(s) { return (s.lp - s.ip) / s.ip; }
+function sVsList(s) { var p = sPx(s).v; return (p * (s.split || 1) - s.lp) / s.lp; }
+function freshPct(s) { return (s.fr == null || s.size == null) ? null : s.fr / s.size; }
+function srcChip(p) {
+  var m = { mine: ["o", T("Mine", "என்")], sheet: ["g", T("Live", "Live")], db: ["g", T("Snapshot", "Snapshot")], ref: ["n", T("Ref", "Ref")] }[p.src];
+  return '<span class="chip ' + m[0] + '" title="' + esc(p.at || "") + '">' + m[1] + "</span>";
+}
+
+/* ---------------- Tabs ---------------- */
+var tabs = [].slice.call(document.querySelectorAll("section.tab"));
+var nav = $("tabs"), CUR = "t-dash";
+function buildTabs() {
+  nav.innerHTML = "";
+  tabs.forEach(function (s) {
+    var b = document.createElement("button"); b.type = "button"; b.textContent = s.dataset[LANG] || s.dataset.en; b.dataset.t = s.id;
+    if (s.id === CUR) b.className = "on";
+    b.onclick = function () { showTab(s.id); };
+    nav.appendChild(b);
+  });
+}
+function showTab(id) {
+  if (!$(id)) id = "t-dash";
+  CUR = id;
+  tabs.forEach(function (s) { s.hidden = s.id !== id; });
+  [].forEach.call(nav.children, function (b) { b.className = b.dataset.t === id ? "on" : ""; if (b.dataset.t === id) b.scrollIntoView({ block: "nearest", inline: "center" }); });
+  store("cbipo_tab", id);
+  try { history.replaceState(null, "", "#" + id.slice(2)); } catch (e) {}
+  window.scrollTo(0, 0);
+}
+
+/* ---------------- Tooltip ---------------- */
+var tip = $("tip");
+function bindTips(root) {
+  [].forEach.call(root.querySelectorAll("[data-tip]"), function (el) {
+    el.addEventListener("mousemove", function (e) { tip.innerHTML = el.getAttribute("data-tip"); tip.style.display = "block"; var x = Math.min(e.clientX + 14, window.innerWidth - 270); tip.style.left = x + "px"; tip.style.top = (e.clientY + 14) + "px"; });
+    el.addEventListener("mouseleave", function () { tip.style.display = "none"; });
+    el.addEventListener("click", function (e) { if (el.dataset.go) { tip.style.display = "none"; openStock(el.dataset.go); } });
+  });
+}
+
+/* ---------------- Dashboard ---------------- */
+function kpiTile(v, l, s, c) { return '<div class="tile"><div class="l">' + l + '</div><div class="v num ' + (c || "") + '">' + v + '</div>' + (s ? '<div class="s">' + s + "</div>" : "") + "</div>"; }
+function stats(list) {
+  var r = list.map(sRet), lg = list.map(sLG);
+  var avg = function (a) { return a.reduce(function (x, y) { return x + y; }, 0) / a.length; };
+  var med = function (a) { var b = a.slice().sort(function (x, y) { return x - y; }); var m = Math.floor(b.length / 2); return b.length % 2 ? b[m] : (b[m - 1] + b[m]) / 2; };
+  return { avgR: avg(r), medR: med(r), avgLG: avg(lg), up: r.filter(function (x) { return x >= 0; }).length, n: list.length };
+}
+function renderDash() {
+  var st = stats(STOCKS);
+  var best = STOCKS.slice().sort(function (a, b) { return sRet(b) - sRet(a); });
+  var w = best[best.length - 1], b0 = best[0];
+  $("kpis").innerHTML =
+    kpiTile("₹1.23 L cr", T("Raised in 2026 (to 13 Oct)", "2026-ல திரட்டியது (13 Oct வரை)"), T("~100 IPOs · record pace", "~100 IPOs · record வேகம்")) +
+    kpiTile("70 / 15", T("Mainboard: listed up / down", "Mainboard: ஏற்றம் / இறக்கம் listing"), T("of 101 mainboard listings", "101 mainboard listings-ல")) +
+    kpiTile(st.up + " / " + st.n, T("Tracked IPOs above issue today", "இன்று issue-க்கு மேல உள்ளவை"), T("median return ", "median return ") + pct(st.medR), st.medR >= 0 ? "up" : "dn") +
+    kpiTile(arrow(sRet(b0)) + pct(sRet(b0), 0), T("Best: ", "Best: ") + b0.n, T("issue ₹", "issue ₹") + inr(b0.ip), "up") +
+    kpiTile(arrow(sRet(w)) + pct(sRet(w), 0), T("Weakest: ", "Weakest: ") + w.n, T("issue ₹", "issue ₹") + inr(w.ip), "dn") +
+    kpiTile(pct(st.avgLG), T("Average listing-day gain", "சராசரி listing gain"), T("vs average return today ", "இன்றைய சராசரி return ") + pct(st.avgR));
+  dumbbell(); monthBars(); structBar();
+  var g = [
+    A("Biggest issue: NSE (₹22,562 cr, 100% OFS) — listed +0.8%, now below issue.", "பெரிய issue: NSE (₹22,562 cr, 100% OFS) — +0.8% list, இப்போ issue-க்கு கீழ."),
+    A("Best listing: Bharat Coking Coal (~+96%) — but it has since fallen ~28% from that level.", "Best listing: Bharat Coking Coal (~+96%) — அதுக்கப்புறம் ~28% இறங்கியிருக்கு."),
+    A("Biggest gainer from issue: ESDS (~+266%), a 100% fresh issue.", "Issue-ல இருந்து பெரிய gainer: ESDS (~+266%) — 100% fresh issue."),
+    A("Weak debuts that recovered: Shadowfax, SEDEMAC, Powerica, Hero Motors, Amagi.", "Weak debut-ஆ இருந்து மீண்டவை: Shadowfax, SEDEMAC, Powerica, Hero Motors, Amagi."),
+    A("Next big test: Jio Platforms (₹30,213 cr), bidding 21–23 Oct.", "அடுத்த பெரிய test: Jio Platforms (₹30,213 cr), 21–23 Oct bidding.")
+  ];
+  $("glance").innerHTML = '<ul class="b">' + g.map(function (x) { return "<li>" + L(x) + "</li>"; }).join("") + "</ul>";
+}
+function dumbbell() {
+  var rows = STOCKS.slice().sort(function (a, b) { return sRet(b) - sRet(a); });
+  var vals = []; rows.forEach(function (s) { vals.push(sRet(s), sLG(s)); });
+  var mn = Math.min(-0.6, Math.min.apply(null, vals)), mx = Math.max(1, Math.max.apply(null, vals));
+  mn = Math.floor(mn * 5) / 5; mx = Math.ceil(mx * 2) / 2;
+  var W = 620, lw = 168, rh = 21, top = 26, H = top + rows.length * rh + 10, pw = W - lw - 50;
+  var X = function (v) { return lw + (v - mn) / (mx - mn) * pw; };
+  var svg = '<svg viewBox="0 0 ' + W + " " + H + '" role="img" aria-label="Listing gain vs return today">';
+  var stp = (mx - mn > 2 ? 0.5 : 0.25); for (var t = Math.ceil(mn / stp) * stp; t <= mx + 1e-9; t += stp) { var x = X(t); svg += '<line x1="' + x + '" y1="' + (top - 6) + '" x2="' + x + '" y2="' + (H - 6) + '" stroke="' + (Math.abs(t) < 1e-9 ? "#16130F" : "#EFE9E1") + '" stroke-width="' + (Math.abs(t) < 1e-9 ? 1.5 : 1) + '"/><text x="' + x + '" y="14" text-anchor="middle">' + (t > 0 ? "+" : "") + Math.round(t * 100) + "%</text>"; }
+  rows.forEach(function (s, i) {
+    var y = top + i * rh + rh / 2, r = sRet(s), l = sLG(s), c = r >= 0 ? "#16794A" : "#B42318";
+    svg += '<g data-go="' + s.id + '" style="cursor:pointer" data-tip="<b>' + esc(s.n) + "</b><br>" + T("Listing open ", "Listing open ") + pct(l) + "<br>" + T("Today ", "இன்று ") + pct(r) + " (" + T("issue ₹", "issue ₹") + inr(s.ip) + ')">';
+    svg += '<rect x="0" y="' + (y - rh / 2) + '" width="' + W + '" height="' + rh + '" fill="transparent"/>';
+    svg += '<text x="' + (lw - 8) + '" y="' + (y + 4) + '" text-anchor="end" style="font-weight:700;fill:#16130F">' + esc(s.n.length > 24 ? s.n.slice(0, 23) + "…" : s.n) + "</text>";
+    svg += '<line x1="' + X(l) + '" y1="' + y + '" x2="' + X(r) + '" y2="' + y + '" stroke="#D9D0C4" stroke-width="2"/>';
+    svg += '<circle cx="' + X(l) + '" cy="' + y + '" r="4.5" fill="#fff" stroke="#3F3A33" stroke-width="2"/>';
+    svg += '<circle cx="' + X(r) + '" cy="' + y + '" r="5.5" fill="' + c + '" stroke="#fff" stroke-width="2"/>';
+    svg += '<text x="' + (X(Math.max(r, l)) + 9) + '" y="' + (y + 4) + '" style="font-weight:800;fill:' + c + '">' + pct(r, 0) + "</text></g>";
+  });
+  svg += "</svg>";
+  $("chDumb").innerHTML = svg; bindTips($("chDumb"));
+}
+function monthBars() {
+  var W = 520, H = 200, l = 44, b = 24, t = 12, mx = 45000, bw = (W - l - 10) / MONTHS.length;
+  var Y = function (v) { return t + (1 - v / mx) * (H - t - b); };
+  var svg = '<svg viewBox="0 0 ' + W + " " + H + '" role="img" aria-label="Money raised by month">';
+  [0, 10000, 20000, 30000, 40000].forEach(function (v) { svg += '<line x1="' + l + '" x2="' + W + '" y1="' + Y(v) + '" y2="' + Y(v) + '" stroke="#EFE9E1"/><text x="' + (l - 6) + '" y="' + (Y(v) + 4) + '" text-anchor="end">' + (v / 1000) + "k</text>"; });
+  MONTHS.forEach(function (m, i) {
+    var x = l + i * bw + 5, h = Y(0) - Y(m[1]);
+    svg += '<g data-tip="<b>' + m[0] + "</b>: ₹" + inr(m[1]) + ' cr"><rect x="' + x + '" y="' + Y(m[1]) + '" width="' + (bw - 10) + '" height="' + Math.max(h, 1) + '" rx="4" fill="#F28C28"/>';
+    svg += '<rect x="' + (x - 4) + '" y="' + t + '" width="' + (bw - 2) + '" height="' + (H - t - b) + '" fill="transparent"/>';
+    svg += '<text x="' + (x + (bw - 10) / 2) + '" y="' + (H - 6) + '" text-anchor="middle">' + m[0] + "</text>";
+    if (m[1] > 20000) svg += '<text x="' + (x + (bw - 10) / 2) + '" y="' + (Y(m[1]) - 5) + '" text-anchor="middle" style="font-weight:800;fill:#16130F">' + Math.round(m[1] / 1000) + "k</text>";
+    svg += "</g>";
+  });
+  $("chMonth").innerHTML = svg + "</svg>"; bindTips($("chMonth"));
+}
+function structBar() {
+  var cols = ["#F28C28", "#C9B8A3", "#0A84A0", "#EDE6DC"], W = 520, x = 0;
+  var svg = '<svg viewBox="0 0 ' + W + ' 60" role="img" aria-label="Issue structure">';
+  STRUCT.forEach(function (s, i) { var w = s[2] / 100 * W; svg += '<rect data-tip="<b>' + esc(L(s[0])) + "</b>: " + s[2] + "% · ₹" + inr(s[1]) + ' cr" x="' + x + '" y="4" width="' + Math.max(w - 2, 1) + '" height="22" rx="3" fill="' + cols[i] + '"/>'; if (w > 60) svg += '<text x="' + (x + 4) + '" y="44" style="font-weight:800;fill:#16130F">' + s[2] + "%</text><text x=\"" + (x + 4) + '" y="57">' + esc(L(s[0])) + "</text>"; x += w; });
+  $("chStruct").innerHTML = svg + "</svg>"; bindTips($("chStruct"));
+}
+
+/* ---------------- Tracker ---------------- */
+var TR = { k: "ret", dir: -1 };
+function secName(k) { return SECTORS[k] ? L(SECTORS[k].n) : k; }
+function verdict(s) {
+  var r = sRet(s), lg = sLG(s);
+  if (r >= 0.5) return ["g", T("Strong winner", "பெரிய winner")];
+  if (lg < 0 && r >= 0) return ["g", T("Recovered", "மீண்டது")];
+  if (r >= 0 && sVsList(s) < -0.1) return ["y", T("Faded from listing", "Listing-ல இருந்து இறங்கியது")];
+  if (r >= 0) return ["g", T("Above issue", "Issue-க்கு மேல")];
+  if (lg >= 0 && r < 0) return ["r", T("Gains lost", "Gain போச்சு")];
+  return ["r", T("Below issue", "Issue-க்கு கீழ")];
+}
+function fillSelect(sel, opts, val) { sel.innerHTML = opts.map(function (o) { return '<option value="' + esc(o[0]) + '"' + (o[0] === val ? " selected" : "") + ">" + esc(o[1]) + "</option>"; }).join(""); }
+function renderTracker() {
+  var sv = $("trSec").value || "", rv = $("trRes").value || "";
+  fillSelect($("trSec"), [["", T("All sectors", "எல்லா sectors")]].concat(Object.keys(SECTORS).filter(function (k) { return STOCKS.some(function (s) { return s.sec === k; }); }).map(function (k) { return [k, secName(k)]; })), sv);
+  fillSelect($("trRes"), [["", T("All results", "எல்லா results")], ["up", T("Above issue", "Issue-க்கு மேல")], ["dn", T("Below issue", "Issue-க்கு கீழ")], ["rec", T("Weak debut, recovered", "Weak debut, மீண்டது")], ["fade", T("Good debut, faded", "நல்ல debut, மங்கியது")]], rv);
+  var q = ($("trQ").value || "").toLowerCase();
+  var rows = STOCKS.filter(function (s) {
+    if (q && s.n.toLowerCase().indexOf(q) < 0 && (s.sym || "").toLowerCase().indexOf(q) < 0) return false;
+    if (sv && s.sec !== sv) return false;
+    var r = sRet(s), lg = sLG(s);
+    if (rv === "up" && r < 0) return false; if (rv === "dn" && r >= 0) return false;
+    if (rv === "rec" && !(lg < 0 && r >= 0)) return false; if (rv === "fade" && !(lg > 0 && sVsList(s) < 0)) return false;
+    return true;
+  });
+  var get = { n: function (s) { return s.n; }, d: function (s) { return s.d; }, size: function (s) { return s.size; }, fr: function (s) { var f = freshPct(s); return f == null ? -1 : f; }, ip: function (s) { return s.ip; }, sub: function (s) { return s.sub; }, lg: sLG, px: function (s) { return sPx(s).v; }, ret: sRet, vl: sVsList };
+  rows.sort(function (a, b) { var x = get[TR.k](a), y = get[TR.k](b); return (x > y ? 1 : x < y ? -1 : 0) * TR.dir; });
+  var H = [["n", T("Company", "Company"), "l"], ["d", T("Listed", "Listed")], ["size", T("Size", "Size")], ["fr", "Fresh / OFS"], ["ip", T("Issue ₹", "Issue ₹")], ["sub", "Sub (x)"], ["lg", T("Listing", "Listing")], ["px", T("Price now ₹", "இப்போ ₹")], ["ret", T("Return", "Return")], ["vl", T("vs listing", "vs listing")], ["v", T("Result", "Result"), "l nos"]];
+  var h = "<thead><tr>" + H.map(function (c) { return '<th class="' + (c[2] || "") + '" data-k="' + c[0] + '">' + c[1] + (TR.k === c[0] ? (TR.dir > 0 ? " ▲" : " ▼") : "") + "</th>"; }).join("") + "</tr></thead><tbody>";
+  rows.forEach(function (s) {
+    var p = sPx(s), r = sRet(s), lg = sLG(s), vl = sVsList(s), f = freshPct(s), v = verdict(s);
+    h += '<tr class="click" data-id="' + s.id + '"><td><span class="nm">' + esc(s.n) + '</span><span class="sm">' + esc(secName(s.sec)) + "</span></td>" +
+      "<td>" + fd(pd(s.d)) + "</td><td>" + cr(s.size) + "</td>" +
+      "<td>" + (f == null ? '<span class="small">' + T("n/a", "தெரியல") + "</span>" : '<div class="split" title="Fresh ' + Math.round(f * 100) + '%"><i style="width:' + f * 100 + '%;background:var(--fresh)"></i><i style="width:' + (100 - f * 100) + '%;background:var(--ofs)"></i></div><span class="sm">' + Math.round(f * 100) + "% fresh</span>") + "</td>" +
+      "<td>" + inr(s.ip) + "</td><td>" + inr(s.sub, 1) + "</td>" +
+      '<td class="' + cls(lg) + '">' + pct(lg) + "</td>" +
+      "<td>" + inr(p.v) + (s.split ? "†" : "") + " " + srcChip(p) + "</td>" +
+      '<td class="' + cls(r) + '"><b>' + arrow(r) + pct(r) + "</b></td>" +
+      '<td class="' + cls(vl) + '">' + pct(vl) + "</td>" +
+      '<td class="l"><span class="chip ' + v[0] + '">' + v[1] + "</span></td></tr>";
+  });
+  $("trTbl").innerHTML = h + "</tbody>";
+  [].forEach.call($("trTbl").querySelectorAll("th[data-k]"), function (th) { if (th.dataset.k === "v") return; th.onclick = function () { var k = th.dataset.k; if (TR.k === k) TR.dir *= -1; else { TR.k = k; TR.dir = k === "n" ? 1 : -1; } renderTracker(); }; });
+  [].forEach.call($("trTbl").querySelectorAll("tr.click"), function (tr) { tr.onclick = function () { openStock(tr.dataset.id); }; });
+}
+async function downloadCSV() {
+  var head = ["Company", "Symbol", "Sector", "Listed", "Size_cr", "Fresh_cr", "OFS_cr", "Issue", "Subscription_x", "Listing", "ListingGain_pct", "Price", "PriceSource", "PriceAsOf", "Return_pct"];
+  var lines = [head.join(",")];
+  STOCKS.forEach(function (s) { var p = sPx(s); lines.push(['"' + s.n + '"', keyOf(s), '"' + SECTORS[s.sec].n.en + '"', s.d, s.size, s.fr == null ? "" : s.fr, s.ofs == null ? "" : s.ofs, s.ip, s.sub, s.lp, (sLG(s) * 100).toFixed(2), p.v, p.src, '"' + p.at + '"', (sRet(s) * 100).toFixed(2)].join(",")); });
+  var csv = lines.join("\n"), name = "cb_ipo_tracker_2026.csv";
+  try {
+    if (window.claude && window.claude.use) { var dl = await window.claude.use("downloads"); if (dl) { await dl.save({ filename: name, data: csv }); return; } }
+  } catch (e) { toast(T("Download was not completed.", "Download முடியல.")); return; }
+  try { var a = document.createElement("a"); a.href = URL.createObjectURL(new Blob([csv], { type: "text/csv" })); a.download = name; document.body.appendChild(a); a.click(); a.remove(); } catch (e) { toast(T("Download is not available here.", "இங்க download வேலை செய்யாது.")); }
+}
+
+/* ---------------- Cycle & trigger maths (cb-trigger-cycle-analysis) ---------------- */
+function stageScore(s) { var base = s.lc || s.lp, r = (sPx(s).v * (s.split || 1) - base) / base; if (r > 0.4) return [50, T("Stage 2, extended", "Stage 2, ரொம்ப மேல")]; if (r > 0.05) return [85, T("Stage 2, early", "Stage 2, ஆரம்பம்")]; if (r > -0.05) return [70, T("Stage 1, base", "Stage 1, base")]; if (r > -0.2) return [35, T("Stage 3, topping", "Stage 3, உச்சம்")]; return [15, T("Stage 4, decline", "Stage 4, இறக்கம்")]; }
+function cyOf(s) { var st = stageScore(s); var stock = (s.life + s.earn + 55 + st[0]) / 4; return { sector: SECTORS[s.sec].score, stock: Math.round(stock), cy: Math.round(SECTORS[s.sec].score * 0.5 + stock * 0.5), stage: st }; }
+function unlocks(s) {
+  var allot = addD(pd(s.d), -3);
+  return [
+    { d: addD(allot, 30), l: A("Anchor 50% free", "Anchor 50% free"), k: "a" },
+    { d: addD(allot, 90), l: A("Anchor balance free", "Anchor மீதி free"), k: "a" },
+    { d: addM(allot, 6), l: A("Pre-IPO investors free", "Pre-IPO investors free"), k: "p" },
+    { d: addM(allot, 18), l: A("Promoter lock-in ends (18 m)", "Promoter lock-in முடிவு (18 மா)"), k: "m" }
+  ];
+}
+function nextUnlock(s) { var u = unlocks(s).filter(function (x) { return x.d >= TODAY; }); return u[0] || null; }
+function tgOf(s) {
+  var list = s.tg.map(function (t) { return { l: t[0], sign: t[1], I: t[2], C: t[3], W: t[4], P: t[5], pts: t[2] * t[3] * t[4] * t[5] }; });
+  var u = nextUnlock(s);
+  if (u && u.k !== "m") { var dd = days(TODAY, u.d), W = dd <= 180 ? 1 : 0.7, I = u.k === "p" ? 2 : 1; list.push({ l: A("Lock-in expiry: " + u.l.en + " (~" + fd(u.d, 1) + ")", "Lock-in முடிவு: " + u.l.ta + " (~" + fd(u.d, 1) + ")"), sign: -1, I: I, C: 1, W: W, P: 1, pts: I * W }); }
+  var pos = list.filter(function (t) { return t.sign > 0; }).sort(function (a, b) { return b.pts - a.pts; }).slice(0, 3);
+  var neg = list.filter(function (t) { return t.sign < 0; });
+  var tg = 50 + 8 * pos.reduce(function (a, t) { return a + t.pts; }, 0) - 8 * neg.reduce(function (a, t) { return a + t.pts; }, 0);
+  return { list: list, tg: Math.max(0, Math.min(100, Math.round(tg))) };
+}
+
+/* ---------------- Stock explorer ---------------- */
+var SEL = store("cbipo_sel") || "esds";
+function openStock(id) { SEL = id; store("cbipo_sel", id); renderStock(); showTab("t-stock"); }
+function journeySVG(s) {
+  var p = sPx(s).v * (s.split || 1), pts = [[T("Issue", "Issue"), s.ip], [T("Listing open", "Listing open"), s.lp]];
+  if (s.lc != null) pts.push([T("Listing close", "Listing close"), s.lc]);
+  pts.push([T("Now", "இப்போ") + (s.split ? " (adj.)" : ""), p]);
+  var mn = Math.min.apply(null, pts.map(function (x) { return x[1]; })), mx = Math.max.apply(null, pts.map(function (x) { return x[1]; }));
+  var pad = (mx - mn) * 0.15 || mx * 0.1; mn -= pad; mx += pad;
+  var W = 640, H = 170, l = 40, r = 40, t = 24, b = 40, Y = function (v) { return t + (1 - (v - mn) / (mx - mn)) * (H - t - b); }, X = function (i) { return l + i * (W - l - r) / (pts.length - 1); };
+  var svg = '<svg viewBox="0 0 ' + W + " " + H + '" role="img" aria-label="Price journey">';
+  svg += '<line x1="' + l + '" x2="' + (W - r) + '" y1="' + Y(s.ip) + '" y2="' + Y(s.ip) + '" stroke="#16130F" stroke-dasharray="4 4"/><text x="' + (W - r) + '" y="' + (Y(s.ip) - 6) + '" text-anchor="end">' + T("issue price", "issue விலை") + " ₹" + inr(s.ip) + "</text>";
+  var d = pts.map(function (q, i) { return (i ? "L" : "M") + X(i) + " " + Y(q[1]); }).join(" ");
+  svg += '<path d="' + d + '" fill="none" stroke="#F28C28" stroke-width="3" stroke-linejoin="round"/>';
+  pts.forEach(function (q, i) {
+    var c = q[1] >= s.ip ? "#16794A" : "#B42318", lab = (i ? pct((q[1] - s.ip) / s.ip, 0) : "");
+    svg += '<circle cx="' + X(i) + '" cy="' + Y(q[1]) + '" r="7" fill="' + (i ? c : "#fff") + '" stroke="' + (i ? "#fff" : "#16130F") + '" stroke-width="2.5"/>';
+    var anc = i === 0 ? "start" : i === pts.length - 1 ? "end" : "middle", tx = i === 0 ? X(i) - 8 : i === pts.length - 1 ? X(i) + 8 : X(i);
+    svg += '<text x="' + tx + '" y="' + (H - 22) + '" text-anchor="' + anc + '" style="font-weight:700;fill:#16130F">' + q[0] + "</text>";
+    svg += '<text x="' + tx + '" y="' + (H - 7) + '" text-anchor="' + anc + '">₹' + inr(q[1]) + (lab ? " · " + lab : "") + "</text>";
+  });
+  return svg + "</svg>";
+}
+function renderStock() {
+  fillSelect($("stSel"), STOCKS.map(function (s) { return [s.id, s.n]; }), SEL);
+  var s = STOCKS.filter(function (x) { return x.id === SEL; })[0] || STOCKS[0]; SEL = s.id;
+  var p = sPx(s), r = sRet(s), lg = sLG(s), f = freshPct(s), cy = cyOf(s), tg = tgOf(s), sec = SECTORS[s.sec], v = verdict(s);
+  var nseUrl = s.sym ? "https://www.nseindia.com/get-quotes/equity?symbol=" + encodeURIComponent(s.sym) : null;
+  var bseUrl = "https://www.bseindia.com/getquote.aspx?ss=" + encodeURIComponent(s.bse || s.sym || s.n);
+  var h = '<div class="shead"><div><div class="kicker">' + esc(secName(s.sec)) + " · " + T("listed ", "listed ") + fd(pd(s.d), 1) + "</div><h3>" + esc(s.n) + "</h3>" +
+    '<div class="ctrl" style="margin:6px 0 0"><span class="chip ' + v[0] + '">' + v[1] + '</span><span class="chip o">CY ' + cy.cy + '</span><span class="chip o">TG ' + tg.tg + "</span>" + (s.sym ? '<span class="chip n">NSE: ' + esc(s.sym) + "</span>" : '<span class="chip n">BSE: ' + esc(s.bse) + "</span>") + "</div></div>" +
+    '<div class="ctrl" style="margin:0">' + (nseUrl ? '<a href="' + nseUrl + '" target="_blank" rel="noopener">NSE quote ↗</a>' : "") + '<a href="' + bseUrl + '" target="_blank" rel="noopener">BSE quote ↗</a></div></div>';
+  h += '<div class="kv mt"><div><span>' + T("Issue size", "Issue size") + "</span><b>" + cr(s.size) + "</b></div><div><span>Fresh / OFS</span><b>" + (s.fr == null ? T("n/a", "தெரியல") : cr(s.fr) + " / " + cr(s.ofs)) + "</b></div><div><span>" + T("Issue price", "Issue விலை") + "</span><b>₹" + inr(s.ip) + "</b></div><div><span>" + T("Subscription", "Subscription") + "</span><b>" + inr(s.sub, 2) + "x</b></div><div><span>" + T("Listing open", "Listing open") + '</span><b class="' + cls(lg) + '">₹' + inr(s.lp) + " · " + pct(lg) + "</b></div><div><span>" + T("Price now", "இப்போ விலை") + " " + srcChip(p) + "</span><b>₹" + inr(p.v) + '</b><span>' + esc(p.at) + "</span></div><div><span>" + T("Return vs issue", "Issue-ஐ விட return") + '</span><b class="' + cls(r) + '">' + arrow(r) + pct(r) + "</b></div></div>";
+  if (s.split) h += '<div class="small mt">† ' + T("1:10 split: price shown per new share; returns use ×10 (old-share equivalent).", "1:10 split: புது share விலை; return-க்கு ×10 (பழைய share கணக்கு).") + "</div>";
+  h += '<div class="card mt"><h3>' + T("Price journey", "விலை பயணம்") + '</h3><div class="chart journey">' + journeySVG(s) + "</div></div>";
+  h += '<div class="pv mt"><div class="card"><h4>' + T("What was promised", "என்ன சொன்னாங்க") + "</h4><p>" + L(s.promise) + '</p></div><div class="card"><h4>' + T("Result after listing", "Listing-க்கு அப்புறம்") + "</h4><p>" + L(s.after) + '</p></div><div class="card"><h4>' + T("Future of this share", "இந்த share-ன் எதிர்காலம்") + "</h4><p>" + L(s.out) + '</p></div><div class="card"><h4>' + T("Main risk", "முக்கிய risk") + "</h4><p>" + L(s.risk) + "</p></div></div>";
+  h += '<div class="grid g2 mt"><div class="card"><h3>' + T("Sector outlook: ", "Sector outlook: ") + esc(secName(s.sec)) + '</h3><ul class="b"><li>' + T("Cycle: ", "Cycle: ") + L(PHASE[sec.phase]) + " · CY " + sec.score + "</li><li>" + L(sec.fut) + "</li><li>" + T("Watch (+): ", "கவனிங்க (+): ") + sec.pos.map(L).join("; ") + "</li><li>" + T("Watch (−): ", "கவனிங்க (−): ") + sec.neg.map(L).join("; ") + "</li></ul></div>";
+  h += '<div class="card"><h3>' + T("Cycle score (CY ", "Cycle score (CY ") + cy.cy + ')</h3><ul class="b"><li>' + T("Sector cycle: ", "Sector cycle: ") + cy.sector + "</li><li>" + T("Stock cycle: ", "Stock cycle: ") + cy.stock + " (" + T("lifecycle ", "lifecycle ") + s.life + ", " + T("earnings ", "earnings ") + s.earn + ", " + T("valuation band n/a → 55", "valuation band இல்ல → 55") + ", " + cy.stage[1] + " " + cy.stage[0] + ")</li><li>" + T("New listing: price stage judged from the listing-day close, not a 30-week average.", "புது listing: 30-week average இல்ல, listing-day close வெச்சு stage.") + "</li></ul></div></div>";
+  h += '<div class="card mt"><h3>' + T("Triggers (TG ", "Triggers (TG ") + tg.tg + ')</h3><div class="tw"><table class="trg"><thead><tr><th class="l nos">' + T("Trigger", "Trigger") + '</th><th class="nos">+/−</th><th class="nos">I</th><th class="nos">C</th><th class="nos">W</th><th class="nos">P</th><th class="nos">' + T("Points", "Points") + "</th></tr></thead><tbody>" +
+    tg.list.map(function (t) { return '<tr><td class="l">' + L(t.l) + '</td><td class="' + (t.sign > 0 ? "up" : "dn") + '"><b>' + (t.sign > 0 ? "+" : "−") + "</b></td><td>" + t.I + "</td><td>" + t.C + "</td><td>" + t.W + "</td><td>" + t.P + '</td><td class="' + (t.sign > 0 ? "up" : "dn") + '"><b>' + (t.sign > 0 ? "+" : "−") + t.pts.toFixed(2) + "</b></td></tr>"; }).join("") +
+    '</tbody></table></div><div class="small mt">' + T("Points = Impact × Certainty × Timing × Priced-in. TG = 50 + 8 × top-3 positives − 8 × negatives. CB education estimates.", "Points = Impact × Certainty × Timing × Priced-in. TG = 50 + 8 × top-3 positives − 8 × negatives. CB கல்வி மதிப்பீடு.") + "</div></div>";
+  var ul = unlocks(s);
+  h += '<div class="grid g2 mt"><div class="card"><h3>' + T("Lock-in dates (estimated)", "Lock-in தேதிகள் (மதிப்பீடு)") + '</h3><div class="tl">' + ul.map(function (u) { return '<div class="ev' + (u.d < TODAY ? " past" : "") + '"><b>' + fd(u.d, 1) + "</b> · " + L(u.l) + (u.d < TODAY ? ' <span class="small">(' + T("passed", "முடிஞ்சுது") + ")</span>" : ' <span class="small">(' + T("in ", "") + days(TODAY, u.d) + T(" days", " நாள்ல") + ")</span>") + "</div>"; }).join("") + "</div></div>";
+  h += '<div class="card"><h3>' + T("Your price for this stock", "இந்த stock-க்கு உங்க விலை") + '</h3><ul class="b"><li>' + T("Saw a newer price on NSE/BSE? Enter it — it stays in this browser.", "NSE/BSE-ல புது விலை பார்த்தீங்களா? Type பண்ணுங்க — இந்த browser-ல மட்டும்.") + '</li></ul><div class="ctrl mt"><input type="number" step="0.05" id="myPx" placeholder="₹" value="' + (MINE[keyOf(s)] != null ? MINE[keyOf(s)] : "") + '" style="width:140px" aria-label="My price"><button class="btn pri" id="myPxGo" type="button">' + T("Use", "Use") + '</button><button class="btn ghost" id="myPxClr" type="button">' + T("Reset", "Reset") + "</button></div></div></div>";
+  h += '<div class="mt" id="stSc"></div>';
+  $("stBody").innerHTML = h;
+  $("myPxGo").onclick = function () { var v = parseFloat($("myPx").value); if (!(v > 0)) { toast(T("Enter a price above zero.", "பூஜ்யத்துக்கு மேல விலை கொடுங்க.")); return; } MINE[keyOf(s)] = v; store("cbipo_px_mine", JSON.stringify(MINE)); renderAll(); toast(T("Price updated for you.", "உங்களுக்கு விலை update ஆச்சு.")); };
+  $("myPxClr").onclick = function () { delete MINE[keyOf(s)]; store("cbipo_px_mine", JSON.stringify(MINE)); renderAll(); };
+  selfCheck($("stSc"), scListed(s));
+}
+
+/* ---------------- Self-check (from the CB attachment) ---------------- */
+function scListed(s) {
+  var p = sPx(s), r = sRet(s), u = nextUnlock(s), a90 = unlocks(s)[1].d;
+  var vl = sVsList(s);
+  return { key: "cbipo_sc_" + s.id, title: A("Your self-check for " + s.n + ": tick what is true for you", s.n + "-க்கு உங்க self-check: உண்மையானதை tick பண்ணுங்க"), items: [
+    [A("I'm clear whether I want a quick gain or a 3–5 year hold.", "Quick gain-ஆ, 3–5 வருஷ hold-ஆ — எனக்கு தெளிவா தெரியும்."), A("Listing gain was " + pct(sLG(s)) + "; return from issue is " + pct(r) + ".", "Listing gain " + pct(sLG(s)) + "; issue-ல இருந்து return " + pct(r) + ".")],
+    [A("I can sit through a fall back to the issue price (₹" + inr(s.ip) + ") without panic-selling.", "Issue விலை (₹" + inr(s.ip) + ") வரை இறங்கினாலும் பயந்து விற்க மாட்டேன்."), A("Today it is " + pct(r) + " from issue and " + pct(vl) + " from the listing price.", "இன்று issue-ல இருந்து " + pct(r) + ", listing விலையில இருந்து " + pct(vl) + ".")],
+    [A("This money is a small part of my portfolio.", "இந்த பணம் என் portfolio-ல சின்ன பகுதி தான்."), null],
+    [A("I'm buying at today's price on its merits, not hoping to get back to the IPO price.", "IPO விலை கிடைக்கும்னு இல்லாம, இன்றைய விலையில தகுதி பார்த்து வாங்குறேன்."), A("Price now ₹" + inr(p.v) + " (" + p.at + ").", "இப்போ விலை ₹" + inr(p.v) + " (" + p.at + ").")],
+    [A("I've read the RHP's risk factors and related-party sections.", "RHP-ல risk factors, related-party பகுதிகளை படிச்சுட்டேன்."), A("CB's main risk: " + s.risk.en, "CB பார்வையில் முக்கிய risk: " + s.risk.ta)],
+    [A("Long-term funds stayed invested after the anchor lock-in ended.", "Anchor lock-in முடிஞ்ச அப்புறமும் long-term funds தொடர்ந்தாங்க."), a90 < TODAY ? A("The 90-day anchor lock-in ended ~" + fd(a90, 1) + " — check the shareholding pattern.", "90 நாள் anchor lock-in ~" + fd(a90, 1) + " முடிஞ்சுது — shareholding pattern பாருங்க.") : A("Anchor lock-in ends ~" + fd(a90, 1) + " — too early to know.", "Anchor lock-in ~" + fd(a90, 1) + " முடியும் — இப்போ சொல்ல முடியாது.")],
+    [A("Institutional demand was strong (QIB portion heavily oversubscribed).", "Institutional demand வலுவா இருந்துச்சு (QIB பகுதி நிறைய oversubscribe)."), A("Overall subscription was " + inr(s.sub, 2) + "x" + (s.sub < 3 ? " — on the low side." : s.sub > 50 ? " — very high." : "."), "மொத்த subscription " + inr(s.sub, 2) + "x" + (s.sub < 3 ? " — கம்மி." : s.sub > 50 ? " — ரொம்ப அதிகம்." : "."))],
+    [A("Market mood has steadied (Nifty holding, FPI selling easing).", "Market mood நிலையாச்சு (Nifty நிக்குது, FPI selling குறையுது)."), A("Nifty is down ~14% in 2026 so far.", "2026-ல இதுவரை Nifty ~14% இறக்கம்.")],
+    [A("If holding, I'm ready for a dip around the next unlock.", "Hold பண்ணினா, அடுத்த unlock-ல இறக்கத்துக்கு தயார்."), u ? A("Next: " + u.l.en + " ~" + fd(u.d, 1) + ".", "அடுத்து: " + u.l.ta + " ~" + fd(u.d, 1) + ".") : A("No major unlock in the next 18 months.", "அடுத்த 18 மாசம் பெரிய unlock இல்ல.")]
+  ] };
+}
+function scUpcoming(u) {
+  var close = u.close ? pd(u.close) : null, anchor = u.anchor ? pd(u.anchor) : null;
+  var unl = close ? addM(addD(close, 1), 6) : null;
+  return { key: "cbipo_sc_up_" + u.id, title: A("Your self-check for " + u.n + ": tick what is true for you", u.n + "-க்கு உங்க self-check: உண்மையானதை tick பண்ணுங்க"), items: [
+    [A("I'm clear whether I want a listing gain or a 3–5 year hold.", "Listing gain-ஆ, 3–5 வருஷ hold-ஆ — எனக்கு தெளிவா தெரியும்."), A("2026: average mainboard listing gain was modest; NSE listed just +0.8%.", "2026: mainboard சராசரி listing gain கம்மி; NSE வெறும் +0.8%.")],
+    [A("I can sit through a −8% listing (LIC-like) without panic-selling.", "−8% listing (LIC மாதிரி) வந்தாலும் பயந்து விற்க மாட்டேன்."), A("In 2026, 15 of 101 mainboard IPOs listed below issue.", "2026-ல 101 mainboard IPOs-ல 15 issue-க்கு கீழ list ஆச்சு.")],
+    [A("This money is a small part of my portfolio.", "இந்த பணம் என் portfolio-ல சின்ன பகுதி தான்."), null],
+    [A("I'm fine if I get only one lot — or none — in the lottery.", "Lottery-ல ஒரு lot தான் — இல்ல ஒண்ணுமே கிடைக்கலனாலும் பரவாயில்ல."), u.lot ? A("Lot: " + u.lot + " shares · band " + u.band + ".", "Lot: " + u.lot + " shares · band " + u.band + ".") : A("Band " + u.band + ".", "Band " + u.band + ".")],
+    [A("I've read the RHP's risk factors and related-party sections.", "RHP-ல risk factors, related-party பகுதிகளை படிச்சுட்டேன்."), null],
+    [A("The anchor book" + (anchor ? " (" + fd(anchor) + ")" : "") + " had strong long-term funds.", "Anchor book" + (anchor ? " (" + fd(anchor) + ")" : "") + "-ல வலுவான long-term funds இருந்தாங்க."), anchor && anchor > TODAY ? A("Can be ticked only after " + fd(anchor) + ".", fd(anchor) + "-க்கு அப்புறம் தான் tick பண்ண முடியும்.") : null],
+    [A("The QIB portion is heavily oversubscribed by the last day.", "கடைசி நாள்ல QIB பகுதி நிறைய oversubscribe ஆச்சு."), close ? A("Last bidding day: " + fd(close) + ".", "கடைசி bidding நாள்: " + fd(close) + ".") : null],
+    [A("Market mood has steadied: Nifty above 22,600, FPI selling easing.", "Market mood நிலையாச்சு: Nifty 22,600-க்கு மேல, FPI selling குறையுது."), null],
+    [A("If holding, I'm ready for a dip around the " + (unl ? MON_EN[unl.getMonth()] + " " + unl.getFullYear() : "6-month") + " unlock.", "Hold பண்ணினா, " + (unl ? MON_TA[unl.getMonth()] + " " + unl.getFullYear() : "6 மாச") + " unlock-ல இறக்கத்துக்கு தயார்."), null]
+  ] };
+}
+function selfCheck(el, cfg) {
+  var saved = {}; try { saved = JSON.parse(store(cfg.key) || "{}") || {}; } catch (e) {}
+  var h = '<div class="sc"><h3>' + L(cfg.title) + "</h3>";
+  cfg.items.forEach(function (it, i) { h += '<label><input type="checkbox" data-i="' + i + '"' + (saved[i] ? " checked" : "") + '><span><span class="q">' + L(it[0]) + "</span>" + (it[1] ? '<span class="f">' + T("Data: ", "Data: ") + L(it[1]) + "</span>" : "") + "</span></label>"; });
+  h += '<div class="meter"><i></i></div><div class="res"></div><div class="fine">' + T("This only counts how many of your own conditions line up. It is not a recommendation.", "உங்க சொந்த conditions எத்தனை ஒத்துப்போகுதுன்னு மட்டும் எண்ணுது. இது recommendation இல்ல.") + "</div></div>";
+  el.innerHTML = h;
+  function upd() {
+    var boxes = el.querySelectorAll("input[type=checkbox]"), n = 0, st = {};
+    [].forEach.call(boxes, function (b) { if (b.checked) { n++; st[b.dataset.i] = 1; } });
+    store(cfg.key, JSON.stringify(st));
+    var t = boxes.length;
+    el.querySelector(".meter i").style.width = (n / t * 100) + "%";
+    var msg = n <= 3 ? T("Most of your own conditions don't line up yet.", "உங்க conditions பெரும்பாலும் இன்னும் ஒத்துப்போகல.") : n <= 6 ? T("Some of your conditions line up; some don't.", "சில conditions ஒத்துப்போகுது; சில இல்ல.") : n < t ? T("Most of your own conditions line up.", "உங்க conditions பெரும்பாலும் ஒத்துப்போகுது.") : T("All of your own conditions line up.", "உங்க எல்லா conditions-உம் ஒத்துப்போகுது.");
+    el.querySelector(".res").textContent = n + " / " + t + " — " + msg;
+  }
+  [].forEach.call(el.querySelectorAll("input[type=checkbox]"), function (b) { b.onchange = upd; });
+  upd();
+}
+
+/* ---------------- Promise vs listing ---------------- */
+function renderPromise() {
+  var W = 620, H = 330, l = 50, r = 16, t = 16, b = 40;
+  var xs = [0.8, 2, 5, 10, 20, 50, 100, 200], lx = function (v) { return Math.log10(v); };
+  var X = function (v) { return l + (lx(Math.max(v, 0.8)) - lx(0.8)) / (lx(200) - lx(0.8)) * (W - l - r); };
+  var rets = STOCKS.map(sRet), ymn = Math.floor(Math.min(-0.6, Math.min.apply(null, rets)) * 2) / 2, ymx = Math.ceil(Math.max.apply(null, rets) * 2) / 2;
+  var Y = function (v) { return t + (1 - (v - ymn) / (ymx - ymn)) * (H - t - b); };
+  var svg = '<svg viewBox="0 0 ' + W + " " + H + '" role="img" aria-label="Subscription vs return">';
+  for (var y = ymn; y <= ymx + 1e-9; y += 0.5) svg += '<line x1="' + l + '" x2="' + (W - r) + '" y1="' + Y(y) + '" y2="' + Y(y) + '" stroke="' + (Math.abs(y) < 1e-9 ? "#16130F" : "#EFE9E1") + '"/><text x="' + (l - 6) + '" y="' + (Y(y) + 4) + '" text-anchor="end">' + (y > 0 ? "+" : "") + Math.round(y * 100) + "%</text>";
+  xs.forEach(function (v) { svg += '<text x="' + X(v) + '" y="' + (H - 22) + '" text-anchor="middle">' + v + "x</text>"; });
+  svg += '<text x="' + ((W + l) / 2) + '" y="' + (H - 4) + '" text-anchor="middle" style="font-weight:700">' + T("Subscription (times, log scale)", "Subscription (தடவை, log scale)") + "</text>";
+  STOCKS.forEach(function (s) {
+    var rr = sRet(s), c = rr >= 0 ? "#16794A" : "#B42318";
+    svg += '<g data-go="' + s.id + '" style="cursor:pointer" data-tip="<b>' + esc(s.n) + "</b><br>" + T("Subscription ", "Subscription ") + inr(s.sub, 1) + "x<br>" + T("Listing ", "Listing ") + pct(sLG(s)) + " · " + T("today ", "இன்று ") + pct(rr) + '"><circle cx="' + X(s.sub) + '" cy="' + Y(rr) + '" r="12" fill="transparent"/><circle cx="' + X(s.sub) + '" cy="' + Y(rr) + '" r="6" fill="' + c + '" stroke="#fff" stroke-width="2"/></g>';
+    if (["esds", "omnitech", "turtlemint", "nse", "bccl", "tempsens", "shadowfax", "fractal"].indexOf(s.id) >= 0) svg += '<text x="' + (X(s.sub) + 9) + '" y="' + (Y(rr) + 4) + '" style="font-weight:700;fill:#16130F">' + esc(s.n.split(" ")[0]) + "</text>";
+  });
+  $("chScatter").innerHTML = svg + "</svg>"; bindTips($("chScatter"));
+  var hi = STOCKS.filter(function (s) { return s.sub >= 50; }), lo = STOCKS.filter(function (s) { return s.sub < 5; });
+  var sh = stats(hi), sl = stats(lo);
+  $("scNote").innerHTML = '<div class="grid g2"><div class="tile"><div class="l">' + T("IPOs subscribed 50x or more", "50x-க்கு மேல subscribe ஆனவை") + " (" + hi.length + ')</div><div class="v num">' + pct(sh.avgLG, 0) + " → " + pct(sh.avgR, 0) + '</div><div class="s">' + T("avg listing gain → avg return today", "சராசரி listing gain → இன்றைய return") + '</div></div><div class="tile"><div class="l">' + T("IPOs subscribed under 5x", "5x-க்கு கீழ subscribe ஆனவை") + " (" + lo.length + ')</div><div class="v num">' + pct(sl.avgLG, 0) + " → " + pct(sl.avgR, 0) + '</div><div class="s">' + T("avg listing gain → avg return today", "சராசரி listing gain → இன்றைய return") + "</div></div></div>" +
+    '<ul class="b"><li>' + T("Hot books gave better listing days; after listing, quiet books like Shadowfax, SEDEMAC and Omnitech caught up.", "Hot books-க்கு listing நாள் நல்லா இருந்துச்சு; அப்புறம் Shadowfax, SEDEMAC, Omnitech மாதிரி அமைதியான books பிடிச்சுது.") + "</li></ul>";
+  $("pvCards").innerHTML = STOCKS.slice().sort(function (a, b) { return pd(a.d) - pd(b.d); }).map(function (s) {
+    var r = sRet(s), lg = sLG(s), v = verdict(s);
+    return '<div class="card" style="cursor:pointer" data-id="' + s.id + '"><div class="kicker">' + fd(pd(s.d)) + " · " + esc(secName(s.sec)) + "</div><h3>" + esc(s.n) + '</h3><div class="ctrl" style="margin:2px 0 6px"><span class="chip n">' + T("Listing ", "Listing ") + pct(lg, 0) + '</span><span class="chip ' + (r >= 0 ? "g" : "r") + '">' + T("Now ", "இப்போ ") + arrow(r) + pct(r, 0) + '</span><span class="chip ' + v[0] + '">' + v[1] + '</span></div><ul class="b"><li><b>' + T("Promise: ", "சொன்னது: ") + "</b>" + L(s.promise) + "</li><li><b>" + T("Result: ", "நடந்தது: ") + "</b>" + L(s.after) + "</li></ul></div>";
+  }).join("");
+  [].forEach.call($("pvCards").children, function (c) { c.onclick = function () { openStock(c.dataset.id); }; });
+}
+
+/* ---------------- Fresh vs OFS ---------------- */
+function renderFresh() {
+  var svg = '<svg viewBox="0 0 720 210" role="img" aria-label="Where IPO money goes"><defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="#16130F"/></marker></defs>';
+  svg += '<rect x="10" y="78" width="150" height="56" rx="10" fill="#FFF2E4" stroke="#F7C894" stroke-width="2"/><text x="85" y="102" text-anchor="middle" style="font-weight:800;fill:#16130F;font-size:14px">' + T("You (₹)", "நீங்க (₹)") + '</text><text x="85" y="121" text-anchor="middle">' + T("bid in the IPO", "IPO-ல bid") + "</text>";
+  svg += '<rect x="255" y="78" width="160" height="56" rx="10" fill="#fff" stroke="#16130F" stroke-width="2"/><text x="335" y="102" text-anchor="middle" style="font-weight:800;fill:#16130F;font-size:14px">' + T("IPO book", "IPO book") + '</text><text x="335" y="121" text-anchor="middle">' + T("one price for all", "எல்லோருக்கும் ஒரே விலை") + "</text>";
+  svg += '<line x1="162" y1="106" x2="250" y2="106" stroke="#16130F" stroke-width="2" marker-end="url(#ah)"/>';
+  svg += '<rect x="510" y="14" width="200" height="70" rx="10" fill="#E6F4F8" stroke="#0A84A0" stroke-width="2"/><text x="610" y="40" text-anchor="middle" style="font-weight:800;fill:#0A84A0;font-size:14px">FRESH → ' + T("company", "company") + '</text><text x="610" y="60" text-anchor="middle">' + T("new shares; repay debt, build plants", "புது shares; கடன், plants") + '</text><text x="610" y="76" text-anchor="middle">' + T("e.g. ESDS, Juniper, Horizon (100%)", "உதா. ESDS, Juniper, Horizon (100%)") + "</text>";
+  svg += '<rect x="510" y="128" width="200" height="70" rx="10" fill="#FFF2E4" stroke="#F28C28" stroke-width="2"/><text x="610" y="154" text-anchor="middle" style="font-weight:800;fill:#A2510A;font-size:14px">OFS → ' + T("old shareholders", "பழைய shareholders") + '</text><text x="610" y="174" text-anchor="middle">' + T("existing shares change hands", "இருக்கிற shares கை மாறும்") + '</text><text x="610" y="190" text-anchor="middle">' + T("e.g. NSE, SBI Funds, BCCL (100%)", "உதா. NSE, SBI Funds, BCCL (100%)") + "</text>";
+  svg += '<path d="M417 96 C460 96 460 50 505 50" fill="none" stroke="#0A84A0" stroke-width="3" marker-end="url(#ah)"/><path d="M417 116 C460 116 460 162 505 162" fill="none" stroke="#F28C28" stroke-width="3" marker-end="url(#ah)"/>';
+  $("picFresh").innerHTML = svg + "</svg>";
+  var grp = [[T("Mostly fresh (≥60%)", "பெரும்பாலும் fresh (≥60%)"), function (f) { return f >= 0.6; }], [T("Mixed (20–60%)", "கலவை (20–60%)"), function (f) { return f >= 0.2 && f < 0.6; }], [T("Mostly OFS (<20%)", "பெரும்பாலும் OFS (<20%)"), function (f) { return f < 0.2; }]];
+  $("frStats").innerHTML = '<div class="grid" style="gap:10px">' + grp.map(function (g) { var l = STOCKS.filter(function (s) { var f = freshPct(s); return f != null && g[1](f); }); var st = stats(l); return '<div class="tile"><div class="l">' + g[0] + " · " + l.length + " IPOs</div><div class=\"v num " + (st.medR >= 0 ? "up" : "dn") + '">' + pct(st.medR, 0) + '</div><div class="s">' + T("median return from issue; ", "issue-ல இருந்து median return; ") + st.up + "/" + st.n + T(" above issue", " issue-க்கு மேல") + "</div></div>"; }).join("") + '</div><div class="small mt">' + T("Small sample; structure alone does not decide returns.", "Sample சின்னது; structure மட்டும் return-ஐ தீர்மானிக்காது.") + "</div>";
+  var rows = STOCKS.filter(function (s) { return s.fr != null; }).sort(function (a, b) { return freshPct(b) - freshPct(a); });
+  var W = 620, lw = 170, rh = 20, H = rows.length * rh + 10, pw = W - lw - 60;
+  var s2 = '<svg viewBox="0 0 ' + W + " " + H + '" role="img" aria-label="Fresh vs OFS share per IPO">';
+  rows.forEach(function (s, i) {
+    var y = 4 + i * rh, f = freshPct(s), fw = f * pw;
+    s2 += '<g data-go="' + s.id + '" style="cursor:pointer" data-tip="<b>' + esc(s.n) + "</b><br>Fresh " + cr(s.fr) + " (" + Math.round(f * 100) + "%)<br>OFS " + cr(s.ofs) + '"><text x="' + (lw - 8) + '" y="' + (y + 13) + '" text-anchor="end" style="font-weight:700;fill:#16130F">' + esc(s.n.length > 24 ? s.n.slice(0, 23) + "…" : s.n) + "</text>";
+    if (fw > 0) s2 += '<rect x="' + lw + '" y="' + (y + 3) + '" width="' + Math.max(fw - (f < 1 ? 1 : 0), 1) + '" height="13" rx="3" fill="#0A84A0"/>';
+    if (f < 1) s2 += '<rect x="' + (lw + fw + (fw > 0 ? 1 : 0)) + '" y="' + (y + 3) + '" width="' + Math.max(pw - fw - 1, 1) + '" height="13" rx="3" fill="#F28C28"/>';
+    s2 += '<text x="' + (lw + pw + 6) + '" y="' + (y + 13) + '" style="font-weight:800;fill:#16130F">' + Math.round(f * 100) + "%</text></g>";
+  });
+  $("chFresh").innerHTML = s2 + "</svg>"; bindTips($("chFresh"));
+}
+
+/* ---------------- Sectors ---------------- */
+var PH_ORDER = { P1: 0, P2: 1, P3: 2, P4: 3, P5: 4, S1: 1, S2: 2, S3: 3, S4: 4 };
+function renderSectors() {
+  var keys = Object.keys(SECTORS);
+  var cx = 170, cy = 165, R = 120, W = 560, H = 330;
+  var names = ["P1", "P2", "P3", "P4", "P5"], colors = ["#FFF2E4", "#E8F5EE", "#D5EEDF", "#FFF6DB", "#FDECEA"];
+  var svg = '<svg viewBox="0 0 ' + W + " " + H + '" role="img" aria-label="Cycle clock">';
+  names.forEach(function (n, i) {
+    var a0 = (-90 + i * 72) * Math.PI / 180, a1 = (-90 + (i + 1) * 72) * Math.PI / 180;
+    var x0 = cx + R * Math.cos(a0), y0 = cy + R * Math.sin(a0), x1 = cx + R * Math.cos(a1), y1 = cy + R * Math.sin(a1);
+    svg += '<path d="M' + cx + " " + cy + " L" + x0 + " " + y0 + " A" + R + " " + R + " 0 0 1 " + x1 + " " + y1 + ' Z" fill="' + colors[i] + '" stroke="#fff" stroke-width="3"/>';
+    var am = (-90 + i * 72 + 36) * Math.PI / 180;
+    svg += '<text x="' + (cx + (R + 18) * Math.cos(am)) + '" y="' + (cy + (R + 18) * Math.sin(am) + 4) + '" text-anchor="middle" style="font-weight:800;fill:#16130F">' + L(PHASE[n]).replace(/^P\d /, "") + "</text>";
+  });
+  var by = {}; keys.forEach(function (k) { var o = PH_ORDER[SECTORS[k].phase]; (by[o] = by[o] || []).push(k); });
+  Object.keys(by).forEach(function (o) {
+    by[o].forEach(function (k, j) {
+      var a = (-90 + o * 72 + 14 + j * (44 / Math.max(by[o].length - 1, 1))) * Math.PI / 180, rr = 52 + (j % 2) * 34;
+      var x = cx + rr * Math.cos(a), y = cy + rr * Math.sin(a), sc = SECTORS[k].score;
+      svg += '<g data-tip="<b>' + esc(L(SECTORS[k].n)) + "</b><br>" + esc(L(PHASE[SECTORS[k].phase])) + " · CY " + sc + '"><circle cx="' + x + '" cy="' + y + '" r="11" fill="#16130F" stroke="#fff" stroke-width="2"/><text x="' + x + '" y="' + (y + 4) + '" text-anchor="middle" style="fill:#fff;font-weight:800;font-size:9.5px">' + (keys.indexOf(k) + 1) + "</text></g>";
+    });
+  });
+  keys.forEach(function (k, i) { svg += '<text x="340" y="' + (34 + i * 26) + '" style="font-weight:700;fill:#16130F"><tspan style="font-weight:800">' + (i + 1) + ".</tspan> " + esc(L(SECTORS[k].n)) + '</text><text x="340" y="' + (46 + i * 26) + '" style="font-size:10px">' + esc(L(PHASE[SECTORS[k].phase])) + " · CY " + SECTORS[k].score + "</text>"; });
+  $("clock").innerHTML = svg + "</svg>"; bindTips($("clock"));
+  // avg return by sector
+  var rows = keys.map(function (k) { var l = STOCKS.filter(function (s) { return s.sec === k; }); return { k: k, n: l.length, r: l.length ? stats(l).avgR : null }; }).filter(function (x) { return x.n; }).sort(function (a, b) { return b.r - a.r; });
+  var Wd = 560, lw = 210, rh = 26, Hh = rows.length * rh + 24, mn = Math.min(-0.2, Math.min.apply(null, rows.map(function (x) { return x.r; }))), mx = Math.max.apply(null, rows.map(function (x) { return x.r; })) + 0.15;
+  var X = function (v) { return lw + (v - mn) / (mx - mn) * (Wd - lw - 50); };
+  var s2 = '<svg viewBox="0 0 ' + Wd + " " + Hh + '" role="img" aria-label="Average return by sector"><line x1="' + X(0) + '" x2="' + X(0) + '" y1="4" y2="' + (Hh - 18) + '" stroke="#16130F"/>';
+  rows.forEach(function (x, i) { var y = 6 + i * rh, c = x.r >= 0 ? "#16794A" : "#B42318", x0 = Math.min(X(0), X(x.r)), w = Math.abs(X(x.r) - X(0));
+    s2 += '<g data-tip="<b>' + esc(secName(x.k)) + "</b><br>" + x.n + " IPOs · " + T("avg ", "சராசரி ") + pct(x.r) + '"><text x="' + (lw - 8) + '" y="' + (y + 14) + '" text-anchor="end" style="font-weight:700;fill:#16130F">' + esc(secName(x.k)) + " (" + x.n + ')</text><rect x="' + x0 + '" y="' + (y + 3) + '" width="' + Math.max(w, 1) + '" height="15" rx="4" fill="' + c + '"/><text x="' + (x.r >= 0 ? X(x.r) + 5 : X(0) + 5) + '" y="' + (y + 14) + '" style="font-weight:800;fill:' + c + '">' + pct(x.r, 0) + "</text></g>"; });
+  $("chSec").innerHTML = s2 + "</svg>"; bindTips($("chSec"));
+  $("secCards").innerHTML = keys.map(function (k) {
+    var S = SECTORS[k], list = STOCKS.filter(function (s) { return s.sec === k; }), up = UPCOMING.filter(function (u) { return u.sec === k; });
+    return '<div class="card"><div class="kicker">' + esc(L(S.type)) + "</div><h3>" + esc(L(S.n)) + '</h3><div class="ctrl" style="margin:4px 0 6px"><span class="chip o">' + esc(L(PHASE[S.phase])) + '</span><span class="score">CY ' + S.score + ' <span class="bar"><i style="width:' + S.score + '%"></i></span></span></div>' +
+      '<ul class="b">' + S.ev.map(function (e) { return "<li>" + L(e) + "</li>"; }).join("") + "</ul>" +
+      '<div class="grid g2 mt" style="gap:8px"><div><b class="up">▲ ' + T("Positive triggers", "Positive triggers") + '</b><ul class="b">' + S.pos.map(function (e) { return "<li>" + L(e) + "</li>"; }).join("") + '</ul></div><div><b class="dn">▼ ' + T("Negative triggers", "Negative triggers") + '</b><ul class="b">' + S.neg.map(function (e) { return "<li>" + L(e) + "</li>"; }).join("") + "</ul></div></div>" +
+      '<p style="margin:10px 0 4px;font-weight:700"><b>' + T("What the future holds: ", "எதிர்காலம்: ") + "</b>" + L(S.fut) + "</p>" +
+      '<div class="small">' + T("2026 IPOs here: ", "இங்க 2026 IPOs: ") + (list.length ? list.map(function (s) { return '<a href="#" data-go="' + s.id + '">' + esc(s.n) + "</a> (" + pct(sRet(s), 0) + ")"; }).join(", ") : "—") + (up.length ? " · " + T("Upcoming: ", "வரப்போகுது: ") + up.map(function (u) { return esc(u.n); }).join(", ") : "") + "</div></div>";
+  }).join("");
+  [].forEach.call($("secCards").querySelectorAll("a[data-go]"), function (a) { a.onclick = function (e) { e.preventDefault(); openStock(a.dataset.go); }; });
+}
+
+/* ---------------- Lock-in calendar ---------------- */
+var UWIN = 90;
+function renderUnlock() {
+  [].forEach.call($("ulWin").children, function (b) { b.className = +b.dataset.d === UWIN ? "on" : ""; b.onclick = function () { UWIN = +b.dataset.d; renderUnlock(); }; });
+  var ev = [];
+  STOCKS.forEach(function (s) { unlocks(s).forEach(function (u) { var dd = days(TODAY, u.d); if (dd >= -7 && dd <= UWIN) ev.push({ s: s, u: u, dd: dd }); }); });
+  ev.sort(function (a, b) { return a.u.d - b.u.d; });
+  $("ulList").innerHTML = ev.length ? ev.map(function (e) { var r = sRet(e.s); return '<div class="ev' + (e.dd < 0 ? " past" : "") + '"><b>' + fd(e.u.d) + '</b> · <a href="#" data-go="' + e.s.id + '">' + esc(e.s.n) + "</a> — " + L(e.u.l) + ' <span class="chip ' + (r >= 0 ? "g" : "r") + '">' + pct(r, 0) + T(" from issue", " issue-ல இருந்து") + '</span> <span class="small">' + (e.dd < 0 ? T("just passed", "இப்போ முடிஞ்சுது") : T("in ", "") + e.dd + T(" days", " நாள்ல")) + "</span></div>"; }).join("") : '<div class="small">' + T("No unlocks in this window.", "இந்த காலத்துல unlock இல்ல.") + "</div>";
+  [].forEach.call($("ulList").querySelectorAll("a[data-go]"), function (a) { a.onclick = function (e) { e.preventDefault(); openStock(a.dataset.go); }; });
+}
+
+/* ---------------- Upcoming ---------------- */
+var UPSEL = store("cbipo_upsel") || "jio";
+function renderUpcoming() {
+  var j = UPCOMING[0], an = pd(j.anchor), cl = pd(j.close), lst = addD(cl, 5);
+  var ev = [[an, A("Anchor book", "Anchor book")], [pd("2026-10-21"), A("Bidding opens", "Bidding திறக்குது")], [cl, A("Bidding closes — watch QIB demand", "Bidding முடிவு — QIB demand பாருங்க")], [lst, A("Expected listing (~T+3 working days)", "எதிர்பார்க்கும் listing (~T+3 வேலை நாள்)")], [addM(addD(cl, 1), 6), A("Pre-IPO unlock (~6 months)", "Pre-IPO unlock (~6 மாசம்)")]];
+  $("jioCard").innerHTML = '<div class="kicker">' + T("Telecom · 100% fresh issue", "Telecom · 100% fresh issue") + "</div><h3>Jio Platforms</h3>" +
+    '<div class="kv"><div><span>' + T("Price band", "Price band") + "</span><b>" + j.band + "</b></div><div><span>" + T("Size (top of band)", "Size (band உச்சம்)") + "</span><b>" + cr(j.size) + "</b></div><div><span>" + T("Lot", "Lot") + "</span><b>12 · ₹13,428</b></div><div><span>" + T("Market cap (top)", "Market cap (உச்சம்)") + "</span><b>~₹10.3 L cr</b></div></div>" +
+    '<ul class="b mt"><li>' + L(j.note) + "</li><li>" + T("Lesson from NSE: a giant issue in a weak market listed just +0.8% and then slipped below issue.", "NSE பாடம்: weak market-ல பெரிய issue வெறும் +0.8% list ஆகி அப்புறம் issue-க்கு கீழ போச்சு.") + "</li></ul>" +
+    '<div class="tl mt">' + ev.map(function (e) { return '<div class="ev' + (e[0] < TODAY ? " past" : "") + '"><b>' + fd(e[0], 1) + "</b> · " + L(e[1]) + "</div>"; }).join("") + "</div>";
+  var opts = UPCOMING.map(function (u) { return [u.id, u.n]; });
+  $("upSc").innerHTML = '<div class="ctrl"><label class="small" for="upSel">' + T("Self-check for:", "Self-check:") + '</label><select id="upSel"></select></div><div id="upScBox"></div>';
+  fillSelect($("upSel"), opts, UPSEL);
+  $("upSel").onchange = function () { UPSEL = this.value; store("cbipo_upsel", UPSEL); renderUpcoming(); };
+  var u = UPCOMING.filter(function (x) { return x.id === UPSEL; })[0] || UPCOMING[0];
+  selfCheck($("upScBox"), scUpcoming(u));
+  $("upTbl").innerHTML = "<thead><tr><th class=\"l nos\">" + T("Company", "Company") + '</th><th class="nos">' + T("Dates", "தேதிகள்") + '</th><th class="nos">' + T("Price band", "Price band") + '</th><th class="nos">' + T("Size", "Size") + '</th><th class="l nos">' + T("Status", "நிலை") + '</th><th class="l nos">' + T("What it does", "என்ன செய்யுது") + "</th></tr></thead><tbody>" +
+    UPCOMING.map(function (u) { return '<tr><td class="l"><span class="nm">' + esc(u.n) + '</span><span class="sm">' + esc(secName(u.sec)) + "</span></td><td>" + u.dates + "</td><td>" + u.band + "</td><td>" + cr(u.size) + '</td><td class="l"><span class="chip o">' + L(u.status) + '</span></td><td class="l" style="white-space:normal;min-width:240px">' + L(u.note) + "</td></tr>"; }).join("") + "</tbody>";
+  $("pipeTbl").innerHTML = "<thead><tr><th class=\"l nos\">" + T("Company", "Company") + '</th><th class="l nos">' + T("Sector", "Sector") + '</th><th class="nos">' + T("Planned size", "திட்ட size") + '</th><th class="l nos">' + T("Status", "நிலை") + "</th></tr></thead><tbody>" +
+    PIPELINE.map(function (p) { return '<tr><td class="l"><span class="nm">' + L(p[0]) + '</span></td><td class="l">' + esc(secName(p[1])) + "</td><td>" + esc(p[2]) + '</td><td class="l">' + L(p[3]) + "</td></tr>"; }).join("") + "</tbody>";
+}
+
+/* ---------------- All IPOs ---------------- */
+var AL = { k: 2, dir: -1 };
+function allRet(r) { var p = priceOf(r[1], r[8]).v * (r[9] === "s10" ? 10 : 1); return (p - r[5]) / r[5]; }
+function renderAll2() {
+  var n = ALL.length, tot = ALL.reduce(function (a, r) { return a + r[3]; }, 0), upL = ALL.filter(function (r) { return r[6] > r[5]; }).length, dnL = ALL.filter(function (r) { return r[6] < r[5]; }).length, upN = ALL.filter(function (r) { return allRet(r) >= 0; }).length;
+  $("allKpi").innerHTML = kpiTile(n, T("Listings tracked", "Listings"), T("mainboard incl. REIT/InvIT", "mainboard, REIT/InvIT உட்பட")) + kpiTile("₹" + inr(tot / 1000, 1) + "k cr", T("Total raised", "மொத்தம் திரட்டியது"), "") + kpiTile(upL + " / " + dnL, T("Listed above / below issue", "Issue-க்கு மேல / கீழ listing"), T("rest at par", "மீதி par")) + kpiTile(upN + " / " + n, T("Above issue today", "இன்று issue-க்கு மேல"), Math.round(upN / n * 100) + "%", upN / n >= 0.5 ? "up" : "dn");
+  var mv = $("alMon").value || "";
+  var mons = []; ALL.forEach(function (r) { var m = r[2].slice(0, 7); if (mons.indexOf(m) < 0) mons.push(m); });
+  fillSelect($("alMon"), [["", T("All months", "எல்லா மாசம்")]].concat(mons.map(function (m) { var d = pd(m + "-01"); return [m, (LANG === "ta" ? MON_TA : MON_EN)[d.getMonth()] + " 2026"]; })), mv);
+  var q = ($("alQ").value || "").toLowerCase();
+  var rows = ALL.filter(function (r) { return (!q || r[0].toLowerCase().indexOf(q) >= 0 || String(r[1]).toLowerCase().indexOf(q) >= 0) && (!mv || r[2].indexOf(mv) === 0); });
+  var get = [function (r) { return r[0]; }, function (r) { return r[1]; }, function (r) { return r[2]; }, function (r) { return r[3]; }, function (r) { return r[4]; }, function (r) { return r[5]; }, function (r) { return (r[6] - r[5]) / r[5]; }, function (r) { return r[7] == null ? -9 : (r[7] - r[5]) / r[5]; }, function (r) { return priceOf(r[1], r[8]).v; }, allRet];
+  rows.sort(function (a, b) { var x = get[AL.k](a), y = get[AL.k](b); return (x > y ? 1 : x < y ? -1 : 0) * AL.dir; });
+  var H = [T("Company", "Company"), T("Symbol", "Symbol"), T("Listed", "Listed"), T("Size ₹ cr", "Size ₹ cr"), "Sub (x)", T("Issue ₹", "Issue ₹"), T("Listing", "Listing"), T("Day-1 close", "முதல் நாள் close"), T("Price ₹", "விலை ₹"), T("Return", "Return")];
+  var h = "<thead><tr>" + H.map(function (c, i) { return '<th class="' + (i < 2 ? "l" : "") + '" data-k="' + i + '">' + c + (AL.k === i ? (AL.dir > 0 ? " ▲" : " ▼") : "") + "</th>"; }).join("") + "</tr></thead><tbody>";
+  rows.forEach(function (r) {
+    var lg = (r[6] - r[5]) / r[5], c1 = r[7] == null ? null : (r[7] - r[5]) / r[5], p = priceOf(r[1], r[8]), rt = allRet(r), key = STOCKS.filter(function (s) { return keyOf(s) === r[1]; })[0];
+    h += "<tr" + (key ? ' class="click" data-id="' + key.id + '"' : "") + '><td class="l"><span class="nm">' + esc(r[0]) + (r[9] === "s10" ? " †" : r[9] === "ca" ? " ‡" : "") + "</span>" + (key ? '<span class="sm">' + T("in tracker ›", "tracker-ல ›") + "</span>" : "") + '</td><td class="l">' + esc(r[1]) + "</td><td>" + fd(pd(r[2])) + "</td><td>" + inr(r[3], 0) + "</td><td>" + inr(r[4], 1) + "</td><td>" + inr(r[5]) + '</td><td class="' + cls(lg) + '">' + pct(lg) + '</td><td class="' + cls(c1) + '">' + pct(c1) + "</td><td>" + inr(p.v) + " " + srcChip(p) + '</td><td class="' + cls(rt) + '"><b>' + arrow(rt) + pct(rt) + "</b></td></tr>";
+  });
+  $("alTbl").innerHTML = h + "</tbody>";
+  [].forEach.call($("alTbl").querySelectorAll("th[data-k]"), function (th) { th.onclick = function () { var k = +th.dataset.k; if (AL.k === k) AL.dir *= -1; else { AL.k = k; AL.dir = k < 2 ? 1 : -1; } renderAll2(); }; });
+  [].forEach.call($("alTbl").querySelectorAll("tr.click"), function (tr) { tr.onclick = function () { openStock(tr.dataset.id); }; });
+}
+
+/* ---------------- Live prices ---------------- */
+function allSyms() { var o = []; ALL.forEach(function (r) { if (o.indexOf(r[1]) < 0) o.push(r[1]); }); return o; }
+function renderFeed() {
+  var nm = Object.keys(MINE).length;
+  var rows = [
+    [T("Auto snapshot (all viewers)", "Auto snapshot (எல்லோருக்கும்)"), DBPX ? '<span class="chip g">' + T("Connected", "Connected") + "</span> " + esc(DBPX.asOf || "") + " · " + Object.keys(DBPX.px || {}).length + T(" prices", " விலைகள்") : (DB ? '<span class="chip y">' + T("Waiting for first snapshot", "முதல் snapshot-க்கு காத்திருக்கு") + "</span>" : '<span class="chip n">' + T("Not available in this copy", "இந்த copy-ல இல்ல") + "</span>")],
+    [T("Live Google Sheet", "Live Google Sheet"), SHEET ? '<span class="chip g">' + T("Live", "Live") + "</span> " + esc(SHEET.at) + " · " + Object.keys(SHEET.px).length + T(" prices", " விலைகள்") : '<span class="chip n">' + T("Not connected", "Connect ஆகல") + "</span>"],
+    [T("Your own entries", "உங்க entries"), nm ? '<span class="chip o">' + nm + "</span>" : '<span class="chip n">0</span>'],
+    [T("Fallback", "Fallback"), '<span class="chip n">Ref</span> ' + T("closing prices of ", "closing விலைகள் ") + REF_DATE]
+  ];
+  $("feedStatus").innerHTML = '<div class="tw"><table><tbody>' + rows.map(function (r) { return '<tr><td class="l"><b>' + r[0] + '</b></td><td class="l" style="white-space:normal">' + r[1] + "</td></tr>"; }).join("") + "</tbody></table></div>" + '<div class="small mt">' + T("Order used: your entry → live sheet → auto snapshot → reference close.", "வரிசை: உங்க entry → live sheet → auto snapshot → reference close.") + "</div>";
+  $("pasteAll").hidden = !(DB && CANWRITE);
+  var gs = store("cbipo_gs") || ""; if (!$("gsUrl").value) $("gsUrl").value = gs;
+  // header chip
+  var src = SHEET ? "sheet" : DBPX ? "db" : "ref";
+  $("pxChip").className = "pxchip" + (src !== "ref" ? " live" : "");
+  $("pxText").textContent = src === "sheet" ? T("Live sheet · ", "Live sheet · ") + SHEET.at : src === "db" ? T("Snapshot · ", "Snapshot · ") + (DBPX.asOf || "") : T("Ref prices · ", "Ref விலை · ") + REF_DATE;
+}
+function parseCSV(txt) {
+  var px = {};
+  txt.split(/\r?\n/).forEach(function (line) { var c = line.split(/[,\t]/).map(function (x) { return x.replace(/^"|"$/g, "").trim(); }); if (c.length >= 2) { var sym = c[0].toUpperCase().replace(/^(NSE|BOM|BSE):/, ""), v = parseFloat(String(c[1]).replace(/[₹,\s]/g, "")); if (sym && v > 0) px[sym] = v; } });
+  return px;
+}
+async function pullSheet() {
+  var u = store("cbipo_gs"); if (!u) return;
+  try { var r = await fetch(u, { cache: "no-store" }); if (!r.ok) throw new Error(r.status); var px = parseCSV(await r.text()); if (Object.keys(px).length) { var d = new Date(); SHEET = { px: px, at: d.toLocaleTimeString("en-IN", { hour: "2-digit", minute: "2-digit" }) + " " + fd(d) }; renderAll(); $("gsMsg").textContent = T("Connected. Refreshing every 60 seconds.", "Connect ஆச்சு. 60 வினாடிக்கு ஒரு முறை refresh."); } }
+  catch (e) { $("gsMsg").textContent = T("This copy can't reach the sheet. Use the downloaded file on GitHub Pages; in claude.ai the auto snapshot is used instead.", "இந்த copy sheet-ஐ அடைய முடியல. GitHub Pages-ல downloaded file use பண்ணுங்க; claude.ai-ல auto snapshot use ஆகும்."); }
+}
+function wireLive() {
+  $("gsSave").onclick = function () { var u = $("gsUrl").value.trim(); if (!/^https:\/\//.test(u)) { $("gsMsg").textContent = T("Paste the published CSV link (starts with https://).", "Publish பண்ண CSV link-ஐ paste பண்ணுங்க (https:// ல ஆரம்பிக்கும்)."); return; } store("cbipo_gs", u); pullSheet(); };
+  $("gsCopy").onclick = function () { var t = allSyms().filter(function (s) { return !/^\d+$/.test(s); }).join("\n"); try { navigator.clipboard.writeText(t).then(function () { toast(T("Copied", "Copy ஆச்சு")); }, function () { $("pasteBox").value = t; $("pasteBox").select(); }); } catch (e) { $("pasteBox").value = t; $("pasteBox").select(); } };
+  $("pasteGo").onclick = function () { var px = parseCSV($("pasteBox").value); var n = Object.keys(px).length; if (!n) { $("pasteMsg").textContent = T("No valid lines. Use SYMBOL,price.", "சரியான lines இல்ல. SYMBOL,price மாதிரி."); return; } Object.keys(px).forEach(function (k) { MINE[k] = px[k]; }); store("cbipo_px_mine", JSON.stringify(MINE)); renderAll(); $("pasteMsg").textContent = n + T(" prices applied for you.", " விலைகள் உங்களுக்கு apply ஆச்சு."); };
+  $("pasteClear").onclick = function () { MINE = {}; store("cbipo_px_mine", null); renderAll(); $("pasteMsg").textContent = T("Your prices cleared.", "உங்க விலைகள் அழிக்கப்பட்டது."); };
+  $("pasteAll").onclick = async function () {
+    var px = parseCSV($("pasteBox").value); if (!Object.keys(px).length) { $("pasteMsg").textContent = T("No valid lines. Use SYMBOL,price.", "சரியான lines இல்ல."); return; }
+    var merged = Object.assign({}, (DBPX && DBPX.px) || {}, px), d = new Date();
+    try { await DB.doc("prices/latest").set({ px: merged, asOf: d.toLocaleString("en-IN", { day: "numeric", month: "short", year: "numeric", hour: "2-digit", minute: "2-digit" }), src: "manual" }); $("pasteMsg").textContent = T("Saved for all viewers.", "எல்லோருக்கும் save ஆச்சு."); }
+    catch (e) { $("pasteMsg").textContent = T("Could not save for everyone: ", "எல்லோருக்கும் save ஆகல: ") + (e && e.code || "error"); }
+  };
+  $("pxChip").onclick = function () { showTab("t-live"); };
+}
+async function connectDB() {
+  try {
+    if (!window.claude || !window.claude.use) return;
+    var db = await window.claude.use("db"); if (!db) return; DB = db; renderFeed();
+    db.doc("prices/latest").onSnapshot(function (snap) { if (snap.exists) { var d = snap.data(); DBPX = { px: d.px || {}, asOf: d.asOf || "", src: d.src || "" }; renderAll(); } }, function () {});
+    var u = await window.claude.use("user");
+    if (u) { var c = null; try { c = await u.can("data.write"); } catch (e) {} if (c === null) { try { c = await u.canEdit(); } catch (e) { c = false; } } CANWRITE = !!c; renderFeed(); }
+  } catch (e) {}
+}
+
+/* ---------------- Takeaways, analyst data ---------------- */
+function renderTake() {
+  var K = [
+    [A("1 · Listing day is a poor guide", "1 · Listing நாள் நல்ல வழிகாட்டி இல்ல"), A("Shadowfax (−9% debut) is up ~138%; BCCL (~+96% debut) is ~28% below its listing price.", "Shadowfax (−9% debut) ~138% ஏறிச்சு; BCCL (~+96% debut) listing விலையை விட ~28% கீழ.")],
+    [A("2 · Size does not mean safety", "2 · பெரிய size = பாதுகாப்பு இல்ல"), A("The three biggest issues — NSE, SBI Funds, Manipal — returned between −10% and +15%.", "மூணு பெரிய issues — NSE, SBI Funds, Manipal — −10% முதல் +15% வரை தான்.")],
+    [A("3 · Profits beat stories", "3 · Story-ஐ விட profit முக்கியம்"), A("Profitable lenders (Kissht, Moneyview) re-rated; loss-making Turtlemint fell ~55%.", "Profit உள்ள lenders (Kissht, Moneyview) re-rate ஆச்சு; நஷ்ட Turtlemint ~55% இறங்குச்சு.")],
+    [A("4 · Know where the money goes", "4 · பணம் எங்க போகுதுன்னு தெரிஞ்சுக்குங்க"), A("Only ~10% of 2026 money came from fresh-only issues. Ask what the company itself gets.", "2026 பணத்துல ~10% தான் fresh-only issues. Company-க்கு என்ன கிடைக்குதுன்னு கேளுங்க.")],
+    [A("5 · Mark the unlock dates", "5 · Unlock தேதிகளை குறிச்சுக்குங்க"), A("Aug–Sep listings face anchor and pre-IPO unlocks through Mar 2027 — supply can weigh on prices.", "Aug–Sep listings-க்கு Mar 2027 வரை anchor, pre-IPO unlocks — supply விலையை அழுத்தலாம்.")]
+  ];
+  $("takeCards").innerHTML = K.map(function (k) { return '<div class="card"><h3>' + L(k[0]) + '</h3><p style="margin:0;font-weight:600">' + L(k[1]) + "</p></div>"; }).join("");
+  var st = stats(STOCKS);
+  $("avData").innerHTML = ["<li>" + T("Tracked IPOs above issue today: ", "இன்று issue-க்கு மேல: ") + st.up + "/" + st.n + "; " + T("median return ", "median return ") + pct(st.medR) + ".</li>",
+    "<li>" + T("Engineering and power-equipment IPOs did best; exchanges/AMCs and insurtech did worst.", "Engineering, power equipment IPOs சிறப்பு; exchanges/AMCs, insurtech மோசம்.") + "</li>",
+    "<li>" + T("Low subscription did not stop recoveries: CleanMax (1x) and Powerica (1.5x) are up 23–55%.", "குறைந்த subscription மீட்சியை தடுக்கல: CleanMax (1x), Powerica (1.5x) 23–55% ஏற்றம்.") + "</li>"].join("");
+}
+
+/* ---------------- Quiz ---------------- */
+var QZ = [
+  [A("Which 2026 IPO had the biggest listing-day gain among large issues?", "பெரிய issues-ல 2026-ன் பெரிய listing gain எது?"), [A("NSE", "NSE"), A("Bharat Coking Coal", "Bharat Coking Coal"), A("SBI Funds", "SBI Funds")], 1, A("BCCL listed ~96% up — then fell ~28% from that level.", "BCCL ~96% மேல list — அப்புறம் ~28% இறங்குச்சு.")],
+  [A("In an OFS, who receives the money?", "OFS-ல பணம் யாருக்கு போகும்?"), [A("The company", "Company"), A("Existing shareholders who sell", "விக்கிற பழைய shareholders"), A("SEBI", "SEBI")], 1, A("OFS money goes to sellers; only a fresh issue funds the company.", "OFS பணம் விக்கிறவங்களுக்கு; fresh issue தான் company-க்கு.")],
+  [A("NSE's IPO was 100% OFS and listed on…", "NSE IPO 100% OFS, list ஆனது…"), [A("NSE", "NSE"), A("BSE only", "BSE மட்டும்"), A("Both", "ரெண்டும்")], 1, A("An exchange can't list on itself, so NSE trades on BSE (code 544937).", "Exchange தன்னிலேயே list ஆக முடியாது — NSE BSE-ல (544937).")],
+  [A("Shadowfax listed 9% below issue. What happened next?", "Shadowfax 9% கீழ list. அப்புறம்?"), [A("Fell further", "இன்னும் இறங்குச்சு"), A("Rose ~138% from issue", "Issue-ல இருந்து ~138% ஏறிச்சு"), A("Was delisted", "Delist ஆச்சு")], 1, A("A weak debut is not a verdict on the business.", "Weak debut business மேல தீர்ப்பு இல்ல.")],
+  [A("Anchor investors' first 50% unlock comes after about…", "Anchor investors-ன் முதல் 50% unlock எப்போ?"), [A("7 days", "7 நாள்"), A("30 days", "30 நாள்"), A("1 year", "1 வருஷம்")], 1, A("50% after 30 days, the rest after 90 days.", "30 நாள்ல 50%, 90 நாள்ல மீதி.")],
+  [A("Which sector looks late-cycle (P4) in CB's view?", "CB பார்வையில் late-cycle (P4) sector எது?"), [A("Coal & mining", "Coal & mining"), A("Healthcare", "Healthcare"), A("Logistics", "Logistics")], 0, A("Coal is commodity-driven; BCCL sits well below its listing price.", "Coal commodity சார்ந்தது; BCCL listing விலைக்கு ரொம்ப கீழ.")],
+  [A("Jio Platforms' IPO is mainly…", "Jio Platforms IPO பெரும்பாலும்…"), [A("100% fresh issue", "100% fresh issue"), A("100% OFS", "100% OFS"), A("A rights issue", "Rights issue")], 0, A("About ₹30,213 cr of new shares, mainly to prepay debt.", "சுமார் ₹30,213 cr புது shares — பெரும்பாலும் கடன் அடைக்க.")],
+  [A("A 1:10 split makes the share price…", "1:10 split share விலையை…"), [A("10x higher", "10 மடங்கு அதிகம்"), A("About one-tenth, with value unchanged", "~1/10, மதிப்பு மாறாது"), A("Zero", "பூஜ்யம்")], 1, A("Cordelia trades near ₹105 after its split — about ₹1,045 per old share.", "Split-க்கு அப்புறம் Cordelia ~₹105 — பழைய share கணக்குல ~₹1,045.")]
+];
+var QI = 0, QS = 0, QA = false;
+function renderQuiz() {
+  var el = $("quiz");
+  if (QI >= QZ.length) { el.innerHTML = "<h3>" + T("Score: ", "Score: ") + QS + " / " + QZ.length + '</h3><p style="font-weight:600">' + T("Know before you own.", "புரிஞ்சு வாங்குங்க!") + '</p><button class="btn pri" type="button" id="qzR">' + T("Try again", "மறுபடி") + "</button>"; $("qzR").onclick = function () { QI = 0; QS = 0; QA = false; renderQuiz(); }; return; }
+  var q = QZ[QI];
+  el.innerHTML = '<div class="kicker">' + (QI + 1) + " / " + QZ.length + "</div><h3>" + L(q[0]) + "</h3>" + q[1].map(function (o, i) { return '<button class="opt" type="button" data-i="' + i + '">' + L(o) + "</button>"; }).join("") + '<div id="qzF" class="mt"></div>';
+  [].forEach.call(el.querySelectorAll(".opt"), function (b) { b.onclick = function () { if (QA) return; QA = true; var i = +b.dataset.i; if (i === q[2]) { QS++; b.className = "opt ok"; } else { b.className = "opt no"; el.querySelectorAll(".opt")[q[2]].className = "opt ok"; } $("qzF").innerHTML = '<p style="font-weight:700">' + (i === q[2] ? T("Right. ", "சரி. ") : T("Not quite. ", "இல்ல. ")) + L(q[3]) + '</p><button class="btn pri" type="button" id="qzN">' + T("Next", "அடுத்து") + "</button>"; $("qzN").onclick = function () { QI++; QA = false; renderQuiz(); }; }; });
+}
+
+/* ---------------- Cauvery Assist CONFIG ---------------- */
+function buildConfig() {
+  return {
+    title: "Cauvery Assist", storageKey: "cba_ipo2026", lang: LANG,
+    placeholder: A("Ask: Which 2026 IPO gave the best return?", "கேளுங்க: 2026-ல எந்த IPO best return?"),
+    greeting: A("Vanakam! Ask me about any 2026 IPO — returns, listing gains, fresh vs OFS, unlocks or Jio.", "வணக்கம்! 2026 IPO எதைப் பத்தியும் கேளுங்க — return, listing gain, fresh vs OFS, unlock, Jio."),
+    noAdvice: A("I can't tell you to buy, sell or apply — CB Research is not SEBI-registered. Try the self-check to test your own conditions.", "Buy, sell, apply-னு சொல்ல முடியாது — CB Research SEBI-registered இல்ல. உங்க conditions-ஐ self-check-ல test பண்ணுங்க."),
+    fallback: A("I don't have that on this dashboard. Try asking about a company's return, listing gain, size or unlock date.", "இந்த dashboard-ல அது இல்ல. ஒரு company-ஓட return, listing gain, size, unlock பத்தி கேளுங்க."),
+    onOpenTab: function (t) { showTab(t); },
+    metrics: [
+      { key: "ret", kw: ["return", "now", "today", "gain from issue", "performance", "ரிட்டர்ன்", "இப்போ", "இன்று", "லாபம்"], label: A("return from issue", "issue-ல இருந்து return"), fmt: function (v) { return pct(v); } },
+      { key: "lg", kw: ["listing", "debut", "listed", "லிஸ்டிங்", "லிஸ்ட்"], label: A("listing-day gain", "listing gain"), fmt: function (v) { return pct(v); } },
+      { key: "size", kw: ["size", "raised", "biggest", "largest", "crore", "சைஸ்", "பெரிய", "கோடி"], label: A("issue size", "issue size"), fmt: function (v) { return "₹" + inr(v, 0) + " cr"; } },
+      { key: "sub", kw: ["subscription", "subscribed", "demand", "சப்ஸ்கிரிப்ஷன்", "டிமாண்ட்"], label: A("subscription", "subscription"), fmt: function (v) { return inr(v, 1) + "x"; } },
+      { key: "fresh", kw: ["fresh", "ofs", "offer for sale", "ஃப்ரெஷ்", "ஓஎஃப்எஸ்"], label: A("fresh-issue share", "fresh பங்கு"), fmt: function (v) { return Math.round(v * 100) + "%"; } },
+      { key: "px", kw: ["price", "share price", "விலை", "ப்ரைஸ்"], label: A("price", "விலை"), fmt: function (v) { return "₹" + inr(v); } },
+      { key: "tg", kw: ["trigger", "catalyst", "ட்ரிக்கர்"], label: A("trigger score (TG)", "trigger score (TG)"), fmt: function (v) { return String(v); } },
+      { key: "cy", kw: ["cycle", "சைக்கிள்"], label: A("cycle score (CY)", "cycle score (CY)"), fmt: function (v) { return String(v); } }
+    ],
+    entities: STOCKS.map(function (s) {
+      var first = s.n.split(/[ (]/)[0].toLowerCase();
+      var al = [first, (s.sym || "").toLowerCase(), s.id].concat(ALIASES[s.id] || []);
+      return { id: s.id, name: s.n, short: s.n.split(" (")[0], aliases: al, tab: "t-stock",
+        values: { ret: sRet(s), lg: sLG(s), size: s.size, sub: s.sub, fresh: freshPct(s), px: sPx(s).v, tg: tgOf(s).tg, cy: cyOf(s).cy },
+        why: s.after, risk: s.risk, summary: A(s.n + " is " + pct(sRet(s)) + " from its ₹" + inr(s.ip) + " issue price; it listed " + pct(sLG(s)) + ".", s.n + " ₹" + inr(s.ip) + " issue விலையில இருந்து " + pct(sRet(s)) + "; listing " + pct(sLG(s)) + "."),
+        unlock: (function () { var u = nextUnlock(s); return u ? A("Next unlock for " + s.n + ": " + u.l.en + " around " + fd(u.d, 1) + ".", s.n + " அடுத்த unlock: " + u.l.ta + ", ~" + fd(u.d, 1) + ".") : null; })() };
+    }),
+    kb: [
+      { k: ["jio", "ஜியோ", "reliance", "ரிலையன்ஸ்"], a: A("Jio Platforms bids 21–23 Oct at ₹1,065–1,119, a ₹30,213 cr fresh issue; anchor book on 19 Oct.", "Jio Platforms 21–23 Oct bidding, ₹1,065–1,119 band, ₹30,213 cr fresh issue; 19 Oct anchor book."), tab: "t-up" },
+      { k: ["ofs", "offer for sale", "fresh issue", "fresh vs", "ஓஎஃப்எஸ்", "ஃப்ரெஷ்"], a: A("Fresh issue money goes to the company; OFS money goes to the existing shareholders who sell.", "Fresh issue பணம் company-க்கு; OFS பணம் விக்கிற பழைய shareholders-க்கு."), tab: "t-fresh", preferOverMetric: true, needNoEntity: true },
+      { k: ["lock-in", "lock in", "unlock", "anchor", "லாக்", "அன்லாக்", "ஆங்கர்"], a: A("Anchor shares unlock 50% after 30 days and the rest after 90; pre-IPO holders after 6 months.", "Anchor shares 30 நாள்ல 50%, 90 நாள்ல மீதி unlock; pre-IPO holders 6 மாசம்."), tab: "t-unlock" },
+      { k: ["how much raised", "total raised", "money raised", "மொத்தம்", "திரட்டி"], a: A("About ₹1.23 lakh crore was raised through ~100 IPOs in 2026 up to 13 Oct.", "2026-ல 13 Oct வரை ~100 IPOs மூலமா சுமார் ₹1.23 lakh crore."), tab: "t-dash" },
+      { k: ["gmp", "grey market", "ஜிஎம்பி"], a: A("Grey-market premium is unofficial and often wrong; 43 of 2026's mainboard IPOs listed below their GMP estimate.", "GMP official இல்ல, அடிக்கடி தப்பு; 2026-ல 43 mainboard IPOs GMP-க்கு கீழ list ஆச்சு."), tab: "t-promise" },
+      { k: ["live price", "price update", "nse price", "bse price", "லைவ்"], a: A("Prices update from CB's auto snapshot three times a trading day; you can also link a Google Sheet or type your own.", "CB auto snapshot ஒரு trading நாளுக்கு 3 முறை விலை update பண்ணும்; Google Sheet link அல்லது நீங்களே type பண்ணலாம்."), tab: "t-live" },
+      { k: ["self check", "self-check", "should i apply", "செல்ஃப்"], a: A("Open the self-check: tick the conditions that are true for you. It counts them; it is not advice.", "Self-check திறங்க: உங்களுக்கு உண்மையானதை tick பண்ணுங்க. எண்ணும் — advice இல்ல."), tab: "t-up" }
+    ],
+    suggestions: [["Which IPO gave the best return?", "எந்த IPO best return?"], ["Which IPO had the biggest listing gain?", "எந்த IPO-க்கு listing gain அதிகம்?"], ["ESDS vs Fractal", "ESDS vs Fractal"], ["What is OFS?", "OFS-னா என்ன?"], ["When does Jio open?", "Jio எப்போ திறக்குது?"], ["Should I buy Indo-MIM?", "Indo-MIM வாங்கலாமா?"]]
+  };
+}
+var ALIASES = { bccl: ["bharat coking", "coking", "பிசிசிஎல்", "பாரத் கோக்கிங்"], amagi: ["அமாகி"], shadowfax: ["ஷேடோஃபாக்ஸ்"], fractal: ["ஃப்ராக்டல்"], aye: ["ஆயி"], cleanmax: ["clean max", "க்ளீன்மேக்ஸ்"], omnitech: ["ஆம்னிடெக்"], sedemac: ["செடெமாக்"], cmpdi: ["central mine", "சிஎம்பிடிஐ"], powerica: ["பவரிகா"], kissht: ["onemi", "கிஷ்ட்"], turtlemint: ["டர்டில்மின்ட்"], cordelia: ["waterways", "cruise", "கோர்டேலியா"], sbifunds: ["sbi", "sbi mf", "sbi mutual", "எஸ்பிஐ"], indomim: ["indo mim", "indo-mim", "இண்டோ"], lohia: ["லோஹியா"], manipal: ["manipal health", "மணிப்பால்"], juniper: ["ஜூனிபர்"], leap: ["லீப்"], molbio: ["truenat", "மோல்பயோ"], dhoot: ["தூத்"], milkymist: ["milky mist", "milky", "மில்கி"], shiprocket: ["ஷிப்ராக்கெட்"], lalithaa: ["lalitha", "லலிதா"], horizon: ["ஹொரைசன்"], tempsens: ["டெம்ப்சென்ஸ்"], symbiotec: ["சிம்பயோடெக்"], esds: ["இஎஸ்டிஎஸ்"], kanohar: ["கனோஹர்"], rentomojo: ["rento", "ரென்டோமோஜோ"], heromotors: ["hero motors", "ஹீரோ"], nse: ["national stock exchange", "என்எஸ்இ"], moneyview: ["money view", "மணிவியூ"], orient: ["orient cables", "ஓரியன்ட்"], acevector: ["snapdeal", "ஸ்னாப்டீல்"] };
+
+/* ---------------- Lite Cauvery Assist engine (used when cauvery-assist.js is absent) ---------------- */
+var LiteAssist = (function () {
+  function norm(s) { return " " + String(s).toLowerCase().replace(/[?!.,]/g, " ").replace(/\s+/g, " ") + " "; }
+  function has(q, kws) { return kws.some(function (k) { return q.indexOf(k.toLowerCase()) >= 0; }); }
+  function mount(el, cfg) {
+    var lang = cfg.lang || "en", rate = parseFloat(store(cfg.storageKey + "_rate") || "0.8"), wait = parseInt(store(cfg.storageKey + "_wait") || "3", 10), ctx = { ents: [], metric: null }, voices = [];
+    function Lx(o) { return o == null ? "" : (typeof o === "string" ? o : (o[lang] || o.en)); }
+    function Tx(en, ta) { return lang === "ta" ? ta : en; }
+    el.innerHTML = '<div class="as"><div class="hd"><b>' + esc(cfg.title) + '</b><div class="ctrl" style="margin:0"><span class="small">' + Tx("Speed", "வேகம்") + '</span><div class="seg" data-r><button type="button" data-v="0.65">' + Tx("Slow", "மெது") + '</button><button type="button" data-v="0.8">' + Tx("Relaxed", "நிதானம்") + '</button><button type="button" data-v="1">' + Tx("Normal", "சாதாரணம்") + '</button><button type="button" data-v="1.2">' + Tx("Fast", "வேகம்") + '</button></div><input type="range" min="0.5" max="1.5" step="0.05" aria-label="Speed" data-sl style="width:90px"><button class="btn ghost" type="button" data-stop>■ ' + Tx("Stop", "நிறுத்து") + '</button><select data-w aria-label="Wait"><option value="2">2s</option><option value="3">3s</option><option value="5">5s</option><option value="0">' + Tx("Tap Done", "Done தட்டு") + '</option></select></div></div><div class="cd" data-cd></div><div class="log" data-log></div><div class="sugg" data-sg></div><div class="in"><input type="text" data-q aria-label="Question"><button class="btn" type="button" data-mic>🎤</button><button class="btn pri" type="button" data-go>' + Tx("Ask", "கேளு") + "</button></div></div>";
+    var q = function (s) { return el.querySelector("[" + s + "]"); };
+    var log = q("data-log"), inp = q("data-q");
+    inp.placeholder = Lx(cfg.placeholder);
+    q("data-w").value = String(wait);
+    q("data-sl").value = rate;
+    function paintRate() { [].forEach.call(q("data-r").children, function (b) { b.className = Math.abs(+b.dataset.v - rate) < 0.01 ? "on" : ""; }); q("data-sl").value = rate; store(cfg.storageKey + "_rate", rate); }
+    [].forEach.call(q("data-r").children, function (b) { b.onclick = function () { rate = +b.dataset.v; paintRate(); }; });
+    q("data-sl").oninput = function () { rate = +this.value; paintRate(); };
+    q("data-w").onchange = function () { wait = +this.value; store(cfg.storageKey + "_wait", wait); };
+    q("data-stop").onclick = function () { try { speechSynthesis.cancel(); } catch (e) {} };
+    paintRate();
+    q("data-sg").innerHTML = (cfg.suggestions || []).map(function (s) { return '<button type="button">' + esc(lang === "ta" ? s[1] : s[0]) + "</button>"; }).join("");
+    [].forEach.call(q("data-sg").children, function (b) { b.onclick = function () { ask(b.textContent); }; });
+    function add(who, html, extra) { var d = document.createElement("div"); d.className = "m " + who; d.innerHTML = html + (extra || ""); log.appendChild(d); log.scrollTop = log.scrollHeight; return d; }
+    add("a", esc(Lx(cfg.greeting)));
+    try { voices = speechSynthesis.getVoices(); speechSynthesis.onvoiceschanged = function () { voices = speechSynthesis.getVoices(); }; } catch (e) {}
+    function speak(text) {
+      try {
+        speechSynthesis.cancel();
+        var want = lang === "ta" ? "ta" : "en", vs = voices.filter(function (v) { return v.lang && v.lang.toLowerCase().indexOf(want) === 0; });
+        vs.sort(function (a, b) { return (/IN/i.test(b.lang) ? 1 : 0) - (/IN/i.test(a.lang) ? 1 : 0); });
+        String(text).split(/(?<=[.!?।])\s+/).forEach(function (s) { if (!s.trim()) return; var u = new SpeechSynthesisUtterance(s); u.rate = rate; u.lang = lang === "ta" ? "ta-IN" : "en-IN"; if (vs[0]) u.voice = vs[0]; speechSynthesis.speak(u); });
+        if (lang === "ta" && !vs.length && !speak._warned) { speak._warned = 1; add("a", esc(Tx("", "இந்த device-ல Tamil voice இல்ல; வேற voice-ல படிக்கும்."))); }
+      } catch (e) {}
+    }
+    function findEnts(t) { var out = []; cfg.entities.forEach(function (e) { if (e.aliases.concat([e.name.toLowerCase()]).some(function (a) { return a && a.length > 1 && t.indexOf(" " + a.toLowerCase()) >= 0; })) out.push(e); }); return out; }
+    function findMetric(t) { var m = null; cfg.metrics.forEach(function (x) { if (!m && has(t, x.kw)) m = x; }); return m; }
+    function answer(raw) {
+      var t = norm(raw), ents = findEnts(t), met = findMetric(t);
+      var follow = /\b(its|it|their|they|அதோட|அதன்|அவங்க)\b/.test(t) || (/what about|அப்போ|அப்புறம்/.test(t));
+      if (!ents.length && follow && ctx.ents.length) ents = ctx.ents;
+      if (has(t, ["should i buy", "should i sell", "should i apply", "buy ", " sell", "apply ", "invest in", "hold ", "வாங்கலாமா", "விக்கலாமா", "apply பண்ணலாமா", "வாங்க", "விற்க"]) && !has(t, ["self check", "self-check"])) return { a: Lx(cfg.noAdvice), tab: "t-up" };
+      var hi = has(t, ["highest", "best", "top", "most", "biggest", "largest", "maximum", "அதிகம்", "பெரிய", "பெஸ்ட்", "best"]), lo = has(t, ["lowest", "worst", "least", "smallest", "weakest", "கம்மி", "மோசம்", "குறைவு"]);
+      var kb = null; cfg.kb.forEach(function (k) { if (!kb && has(t, k.k)) kb = k; });
+      var isUnlockQ = kb && /unlock|lock/.test(kb.k.join(" ")) && ents.length === 1;
+      if (kb && !isUnlockQ && ((!ents.length && !(hi || lo)) || (kb.preferOverMetric && !met && !(hi || lo)))) return { a: Lx(kb.a), tab: kb.tab };
+      if (has(t, ["unlock", "lock-in", "lock in", "அன்லாக்"]) && ents.length === 1 && ents[0].unlock) return { a: Lx(ents[0].unlock), tab: "t-unlock" };
+      if ((hi || lo) && !ents.length) {
+        met = met || cfg.metrics[0];
+        var list = cfg.entities.filter(function (e) { return e.values[met.key] != null; }).sort(function (a, b) { return b.values[met.key] - a.values[met.key]; });
+        if (lo) list.reverse();
+        var a = list[0], b = list[1];
+        ctx = { ents: [a], metric: met };
+        return { a: Tx(a.name + " has the " + (lo ? "lowest " : "highest ") + Lx(met.label) + ": " + met.fmt(a.values[met.key]) + ". Next is " + b.name + " (" + met.fmt(b.values[met.key]) + ").", a.name + "-க்கு தான் " + Lx(met.label) + " " + (lo ? "கம்மி" : "அதிகம்") + " — " + met.fmt(a.values[met.key]) + ". அடுத்து " + b.name + " (" + met.fmt(b.values[met.key]) + ")."), d: "<ol>" + list.slice(0, 5).map(function (e) { return "<li>" + esc(e.name) + " — " + met.fmt(e.values[met.key]) + "</li>"; }).join("") + "</ol>", tab: "t-track" };
+      }
+      if (ents.length >= 2) {
+        met = met || ctx.metric || cfg.metrics[0];
+        var x = ents[0], y = ents[1], vx = x.values[met.key], vy = y.values[met.key], w = vx >= vy ? x : y, l = w === x ? y : x;
+        ctx = { ents: [x, y], metric: met };
+        return { a: Tx(w.name + " leads on " + Lx(met.label) + ": " + met.fmt(w.values[met.key]) + " vs " + met.fmt(l.values[met.key]) + " for " + l.name + ".", Lx(met.label) + "-ல " + w.name + " முன்னால — " + met.fmt(w.values[met.key]) + "; " + l.name + " " + met.fmt(l.values[met.key]) + "."), d: "<ul><li>" + esc(x.name) + ": " + Lx(x.why) + "</li><li>" + esc(y.name) + ": " + Lx(y.why) + "</li></ul>", tab: "t-track" };
+      }
+      if (ents.length === 1) {
+        var e = ents[0]; ctx = { ents: [e], metric: met || ctx.metric };
+        if (has(t, ["risk", "ரிஸ்க்", "ஆபத்து"])) return { a: Tx(e.name + "'s main risk: " + Lx(e.risk), e.name + " முக்கிய risk: " + Lx(e.risk)), go: e.id };
+        if (has(t, ["why", "what happened", "ஏன்", "என்ன ஆச்சு"])) return { a: Lx(e.why), go: e.id };
+        if (met) return { a: Tx(e.name + "'s " + Lx(met.label) + " is " + met.fmt(e.values[met.key]) + ".", e.name + " " + Lx(met.label) + " " + met.fmt(e.values[met.key]) + "."), d: Lx(e.why), go: e.id };
+        return { a: Lx(e.summary), d: Lx(e.why), go: e.id };
+      }
+      if (kb) return { a: Lx(kb.a), tab: kb.tab };
+      return { a: Lx(cfg.fallback) };
+    }
+    function ask(text) {
+      text = String(text || "").trim(); if (!text) return;
+      add("u", esc(text)); inp.value = "";
+      var r = answer(text);
+      var extra = (r.d ? "<details><summary>" + Tx("More details", "மேலும் விவரம்") + "</summary>" + r.d + "</details>" : "") + ((r.tab || r.go) ? '<div style="margin-top:6px"><button class="btn ghost" type="button">' + Tx("Open related tab", "தொடர்புடைய tab திற") + "</button></div>" : "");
+      var m = add("a", esc(r.a), extra);
+      var b = m.querySelector(".btn"); if (b) b.onclick = function () { if (r.go) openStock(r.go); else if (cfg.onOpenTab) cfg.onOpenTab(r.tab); };
+      speak(r.a);
+    }
+    q("data-go").onclick = function () { ask(inp.value); };
+    inp.onkeydown = function (e) { if (e.key === "Enter") ask(inp.value); };
+    var SR = window.SpeechRecognition || window.webkitSpeechRecognition, rec = null, timer = null, buf = "", listening = false;
+    q("data-mic").onclick = function () {
+      if (!SR) { add("a", esc(Tx("Voice input isn't available here. Use the GitHub Pages copy in Chrome or Edge.", "Voice input இங்க இல்ல. GitHub Pages copy-ஐ Chrome/Edge-ல use பண்ணுங்க."))); return; }
+      if (listening) { finish(); return; }
+      buf = ""; listening = true; q("data-mic").textContent = "✓ " + Tx("Done", "Done");
+      rec = new SR(); rec.lang = lang === "ta" ? "ta-IN" : "en-IN"; rec.continuous = true; rec.interimResults = true;
+      rec.onresult = function (ev) { var s = ""; for (var i = 0; i < ev.results.length; i++) s += ev.results[i][0].transcript; buf = s; inp.value = s; arm(); };
+      rec.onerror = function (ev) { if (ev.error === "not-allowed" || ev.error === "service-not-allowed") { listening = false; q("data-mic").textContent = "🎤"; add("a", esc(Tx("The microphone is blocked here. Voice input works in the GitHub Pages copy.", "Microphone இங்க block. GitHub Pages copy-ல voice input வேலை செய்யும்."))); } };
+      rec.onend = function () { if (listening) { try { rec.start(); } catch (e) {} } };
+      try { rec.start(); } catch (e) {}
+    };
+    function arm() { clearInterval(timer); if (!wait) return; var t0 = Date.now(), cd = q("data-cd"); timer = setInterval(function () { var f = (Date.now() - t0) / (wait * 1000); cd.style.width = Math.min(100, f * 100) + "%"; if (f >= 1) finish(); }, 100); }
+    function finish() { clearInterval(timer); q("data-cd").style.width = "0"; listening = false; q("data-mic").textContent = "🎤"; try { rec && rec.stop(); } catch (e) {} if (buf.trim()) ask(buf); buf = ""; }
+    return {
+      setLang: function (l) { lang = l; cfg.lang = l; var keep = log.innerHTML; mount(el, cfg); },
+      speak: speak, plain: function (html) { var d = document.createElement("div"); d.innerHTML = html; return (d.textContent || "").replace(/\s+/g, " ").trim(); }
+    };
+  }
+  return { mount: function (el, cfg) { return mount(el, cfg); }, A: A };
+})();
+var ASSIST = null;
+function mountAssist() {
+  var cfg = buildConfig();
+  var Eng = (window.CauveryAssist && window.CauveryAssist.mount) ? window.CauveryAssist : LiteAssist;
+  try { ASSIST = Eng.mount($("assist"), cfg); } catch (e) { ASSIST = LiteAssist.mount($("assist"), cfg); }
+}
+
+/* ---------------- Read-this-tab + floating ---------------- */
+function addReadButtons() {
+  tabs.forEach(function (s) {
+    if (s.querySelector(".readtab") || s.id === "t-assist") return;
+    var b = document.createElement("button"); b.type = "button"; b.className = "btn ghost readtab"; b.innerHTML = '<span class="en">🔊 Read this tab</span><span class="ta">🔊 இந்த tab-ஐ படி</span>';
+    b.style.float = "right"; b.onclick = function () { if (!ASSIST) return; var c = s.cloneNode(true); [].forEach.call(c.querySelectorAll(LANG === "ta" ? ".en" : ".ta"), function (x) { x.remove(); }); [].forEach.call(c.querySelectorAll("svg,table,button,.readtab"), function (x) { x.remove(); }); ASSIST.speak(ASSIST.plain(c.innerHTML).slice(0, 1600)); };
+    s.insertBefore(b, s.firstChild);
+  });
+}
+
+/* ---------------- Render all / language ---------------- */
+function renderAll() {
+  renderFeed(); renderDash(); renderTracker(); renderStock(); renderPromise(); renderFresh(); renderSectors(); renderUnlock(); renderUpcoming(); renderAll2(); renderTake();
+}
+function setLang(l) {
+  LANG = l; document.body.classList.toggle("ta", l === "ta"); document.documentElement.lang = l === "ta" ? "ta" : "en";
+  $("lgEn").className = l === "en" ? "on" : ""; $("lgTa").className = l === "ta" ? "on" : "";
+  store("cbipo_lang", l); buildTabs(); renderAll(); renderQuiz();
+  $("trQ").placeholder = T("Search company", "Company தேடுங்க"); $("alQ").placeholder = T("Search", "தேடுங்க");
+  mountAssist();
+}
+
+/* ---------------- Init ---------------- */
+$("lgEn").onclick = function () { setLang("en"); };
+$("lgTa").onclick = function () { setLang("ta"); };
+["trQ", "trSec", "trRes"].forEach(function (id) { $(id).addEventListener(id === "trQ" ? "input" : "change", renderTracker); });
+["alQ", "alMon"].forEach(function (id) { $(id).addEventListener(id === "alQ" ? "input" : "change", renderAll2); });
+$("trCsv").onclick = downloadCSV;
+$("stSel").onchange = function () { SEL = this.value; store("cbipo_sel", SEL); renderStock(); };
+$("stPrev").onclick = function () { var i = STOCKS.findIndex(function (s) { return s.id === SEL; }); SEL = STOCKS[(i - 1 + STOCKS.length) % STOCKS.length].id; renderStock(); };
+$("stNext").onclick = function () { var i = STOCKS.findIndex(function (s) { return s.id === SEL; }); SEL = STOCKS[(i + 1) % STOCKS.length].id; renderStock(); };
+$("vaBtn").onclick = function () { showTab("t-assist"); setTimeout(function () { var i = document.querySelector("#assist [data-q]"); if (i) i.focus(); }, 50); };
+$("cbBadge").querySelector(".b").onclick = function () { $("cbBadge").classList.toggle("open"); };
+wireLive();
+var startTab = (location.hash && $("t-" + location.hash.slice(1))) ? "t-" + location.hash.slice(1) : (store("cbipo_tab") || "t-dash");
+CUR = $(startTab) ? startTab : "t-dash";
+setLang(store("cbipo_lang") === "ta" ? "ta" : "en");
+showTab(CUR);
+addReadButtons();
+connectDB();
+pullSheet(); setInterval(pullSheet, 60000);
+})();
+
+</script>
