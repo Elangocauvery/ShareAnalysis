@@ -133,6 +133,17 @@ td .sm{display:block;font-size:11.5px;color:var(--muted);font-weight:600}
 .sc .res{font-weight:800;font-size:15px}
 .sc .fine{font-size:12.5px;color:var(--muted);font-weight:600;margin-top:6px}
 
+.sccat{border-top:1.5px solid var(--accLine);padding-top:10px;margin-top:10px}
+.scch{display:flex;gap:10px;align-items:center;margin-bottom:2px}
+.scch>div{flex:1;min-width:0}.scch b{display:block;font-family:var(--fd);font-size:16px}
+.scn{width:28px;height:28px;border-radius:50%;background:var(--ink);color:#fff;display:grid;place-items:center;font-weight:800;flex:0 0 auto}
+.scc{font-weight:800;font-size:12.5px;color:var(--ink2);background:#fff;border:1.5px solid var(--line);border-radius:999px;padding:2px 9px;white-space:nowrap}
+.scc.full{background:var(--goodSoft);color:var(--good);border-color:var(--good)}
+.sc label{position:relative}
+.scx{position:absolute;right:0;top:6px;border:0;background:none;color:var(--muted);font-weight:800;cursor:pointer}
+.scsum{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,170px),1fr));gap:6px 14px;margin-bottom:6px}
+.scsum div{display:flex;flex-direction:column;gap:3px;font-size:12px;font-weight:700;color:var(--ink2)}
+.scsum .mb{height:7px;border-radius:4px;background:#F1E6D7;overflow:hidden}.scsum .mb i{display:block;height:100%;background:var(--acc)}
 /* timeline */
 .tl{position:relative;padding-left:22px;border-left:3px solid var(--line);display:grid;gap:10px}
 .tl .ev{position:relative}
@@ -288,6 +299,16 @@ td .sm{display:block;font-size:11.5px;color:var(--muted);font-weight:600}
   <div class="grid g2"><div class="card hl" id="jioCard"></div><div id="upSc"></div></div>
   <div class="card mt2"><h3><span class="en">Open and upcoming mainboard IPOs</span><span class="ta">Open & வரப்போகும் mainboard IPOs</span></h3><div class="tw"><table id="upTbl"></table></div></div>
   <div class="card mt2"><h3><span class="en">Pipeline to watch</span><span class="ta">கவனிக்க வேண்டிய pipeline</span></h3><div class="tw"><table id="pipeTbl"></table></div></div>
+</section>
+
+<!-- SELF-CHECK -->
+<section class="tab" id="t-sc" data-en="Self-check" data-ta="Self-check" hidden>
+  <div class="kicker"><span class="en">For any IPO · education only</span><span class="ta">எந்த IPO-க்கும் · கல்விக்காக மட்டும்</span></div>
+  <h2 class="tt"><span class="en">Work it out for yourself, in five steps</span><span class="ta">5 படிகள்ல நீங்களே யோசிச்சு பாருங்க</span></h2>
+  <ul class="b lede"><li class="en">1 the issue · 2 the problems you face · 3 what you did about them · 4 what anchors and analysts say · 5 your own conditions.</li><li class="ta">1 issue · 2 உங்க சிக்கல்கள் · 3 அதுக்கு நீங்க பண்ணது · 4 anchors, analysts சொல்றது · 5 உங்க சொந்த conditions.</li>
+  <li class="en">CB Research does not say apply, buy or skip. Ticks stay in this browser.</li><li class="ta">Apply, buy, skip-னு CB Research சொல்லாது. Ticks இந்த browser-ல மட்டும்.</li></ul>
+  <div class="ctrl"><label class="small" for="scSel"><span class="en">Choose an IPO:</span><span class="ta">IPO-வை தேர்வு பண்ணுங்க:</span></label><select id="scSel" style="max-width:100%"></select><span id="scOtherWrap" hidden><input type="text" id="scOther" maxlength="60" aria-label="IPO name"></span></div>
+  <div id="scBox"></div>
 </section>
 
 <!-- ALL -->
@@ -1050,57 +1071,197 @@ function renderStock() {
   $("stBody").innerHTML = h;
   $("myPxGo").onclick = function () { var v = parseFloat($("myPx").value); if (!(v > 0)) { toast(T("Enter a price above zero.", "பூஜ்யத்துக்கு மேல விலை கொடுங்க.")); return; } MINE[keyOf(s)] = v; store("cbipo_px_mine", JSON.stringify(MINE)); renderAll(); toast(T("Price updated for you.", "உங்களுக்கு விலை update ஆச்சு.")); };
   $("myPxClr").onclick = function () { delete MINE[keyOf(s)]; store("cbipo_px_mine", JSON.stringify(MINE)); renderAll(); };
-  selfCheck($("stSc"), scListed(s));
+  selfCheck($("stSc"), scStock(s));
 }
 
-/* ---------------- Self-check (from the CB attachment) ---------------- */
-function scListed(s) {
-  var p = sPx(s), r = sRet(s), u = nextUnlock(s), a90 = unlocks(s)[1].d;
-  var vl = sVsList(s);
-  return { key: "cbipo_sc_" + s.id, title: A("Your self-check for " + s.n + ": tick what is true for you", s.n + "-க்கு உங்க self-check: உண்மையானதை tick பண்ணுங்க"), items: [
-    [A("I'm clear whether I want a quick gain or a 3–5 year hold.", "Quick gain-ஆ, 3–5 வருஷ hold-ஆ — எனக்கு தெளிவா தெரியும்."), A("Listing gain was " + pct(sLG(s)) + "; return from issue is " + pct(r) + ".", "Listing gain " + pct(sLG(s)) + "; issue-ல இருந்து return " + pct(r) + ".")],
-    [A("I can sit through a fall back to the issue price (₹" + inr(s.ip) + ") without panic-selling.", "Issue விலை (₹" + inr(s.ip) + ") வரை இறங்கினாலும் பயந்து விற்க மாட்டேன்."), A("Today it is " + pct(r) + " from issue and " + pct(vl) + " from the listing price.", "இன்று issue-ல இருந்து " + pct(r) + ", listing விலையில இருந்து " + pct(vl) + ".")],
-    [A("This money is a small part of my portfolio.", "இந்த பணம் என் portfolio-ல சின்ன பகுதி தான்."), null],
-    [A("I'm buying at today's price on its merits, not hoping to get back to the IPO price.", "IPO விலை கிடைக்கும்னு இல்லாம, இன்றைய விலையில தகுதி பார்த்து வாங்குறேன்."), A("Price now ₹" + inr(p.v) + " (" + p.at + ").", "இப்போ விலை ₹" + inr(p.v) + " (" + p.at + ").")],
-    [A("I've read the RHP's risk factors and related-party sections.", "RHP-ல risk factors, related-party பகுதிகளை படிச்சுட்டேன்."), A("CB's main risk: " + s.risk.en, "CB பார்வையில் முக்கிய risk: " + s.risk.ta)],
-    [A("Long-term funds stayed invested after the anchor lock-in ended.", "Anchor lock-in முடிஞ்ச அப்புறமும் long-term funds தொடர்ந்தாங்க."), a90 < TODAY ? A("The 90-day anchor lock-in ended ~" + fd(a90, 1) + " — check the shareholding pattern.", "90 நாள் anchor lock-in ~" + fd(a90, 1) + " முடிஞ்சுது — shareholding pattern பாருங்க.") : A("Anchor lock-in ends ~" + fd(a90, 1) + " — too early to know.", "Anchor lock-in ~" + fd(a90, 1) + " முடியும் — இப்போ சொல்ல முடியாது.")],
-    [A("Institutional demand was strong (QIB portion heavily oversubscribed).", "Institutional demand வலுவா இருந்துச்சு (QIB பகுதி நிறைய oversubscribe)."), A("Overall subscription was " + inr(s.sub, 2) + "x" + (s.sub < 3 ? " — on the low side." : s.sub > 50 ? " — very high." : "."), "மொத்த subscription " + inr(s.sub, 2) + "x" + (s.sub < 3 ? " — கம்மி." : s.sub > 50 ? " — ரொம்ப அதிகம்." : "."))],
-    [A("Market mood has steadied (Nifty holding, FPI selling easing).", "Market mood நிலையாச்சு (Nifty நிக்குது, FPI selling குறையுது)."), A("Nifty is down ~14% in 2026 so far.", "2026-ல இதுவரை Nifty ~14% இறக்கம்.")],
-    [A("If holding, I'm ready for a dip around the next unlock.", "Hold பண்ணினா, அடுத்த unlock-ல இறக்கத்துக்கு தயார்."), u ? A("Next: " + u.l.en + " ~" + fd(u.d, 1) + ".", "அடுத்து: " + u.l.ta + " ~" + fd(u.d, 1) + ".") : A("No major unlock in the next 18 months.", "அடுத்த 18 மாசம் பெரிய unlock இல்ல.")]
-  ] };
+/* ---------------- Self-check: 5 categories for any IPO ---------------- */
+var SC_CATS = [
+  { k: "issue", t: A("Questions about the issue", "Issue பத்தின கேள்விகள்"), s: A("Size, fresh vs OFS, price, demand, lock-ins", "Size, fresh vs OFS, விலை, demand, lock-ins") },
+  { k: "prob", t: A("Problems investors face", "Investors சந்திக்கிற சிக்கல்கள்"), s: A("Understanding the business, connecting with it, earnings and risks", "Business புரிதல், அதோட connect ஆகுறது, earnings, risks") },
+  { k: "sol", t: A("Solutions — what I did about them", "தீர்வுகள் — அதுக்கு நான் என்ன பண்ணேன்"), s: A("Steps that turn a problem into a checked condition", "சிக்கலை சரிபார்த்த condition-ஆ மாத்துற steps") },
+  { k: "view", t: A("Anchors' and analysts' view", "Anchors, analysts பார்வை"), s: A("What institutions and research say", "Institutions, research என்ன சொல்லுது") },
+  { k: "mine", t: A("My own conditions", "என் சொந்த conditions"), s: A("Add the checks that matter to you", "உங்களுக்கு முக்கியமான checks-ஐ சேருங்க") }
+];
+function scPeers(sec, id) { var l = STOCKS.filter(function (x) { return x.sec === sec && x.id !== id; }).map(function (x) { return x.n.split(" (")[0]; }); return l.slice(0, 3); }
+function scSplit(fr, ofs, size) {
+  if (fr == null || ofs == null) return A("Fresh/OFS split not on file — check the RHP's 'The Offer' page.", "Fresh/OFS பிரிவு இங்க இல்ல — RHP-ல 'The Offer' பக்கம் பாருங்க.");
+  var f = size ? Math.round(fr / size * 100) : 0;
+  return A("Fresh " + cr(fr) + " (" + f + "% to the company) · OFS " + cr(ofs) + " (to selling shareholders).", "Fresh " + cr(fr) + " (" + f + "% company-க்கு) · OFS " + cr(ofs) + " (விக்கிறவங்களுக்கு).");
+}
+function scEarn(e) { return e >= 70 ? A("CB reads earnings as rising.", "CB பார்வையில் earnings ஏறுது.") : e >= 50 ? A("CB reads earnings as mixed or flat.", "CB பார்வையில் earnings கலவை / flat.") : A("CB reads earnings as weak or loss-making.", "CB பார்வையில் earnings பலவீனம் / நஷ்டம்."); }
+function scCommonSol(peers, lotNote, unlockNote) {
+  return [
+    [A("I read the 'Our Business' and 'Risk Factors' pages of the RHP.", "RHP-ல 'Our Business', 'Risk Factors' பக்கங்களை படிச்சேன்."), A("Start with these two sections; they answer most doubts.", "இந்த ரெண்டு பகுதிகளை முதல்ல படிங்க; பெரும்பாலான சந்தேகம் தீரும்.")],
+    [A("I compared it with a listed peer in the same sector.", "அதே sector-ல listed peer-ஓட compare பண்ணேன்."), peers.length ? A("2026 peers here: " + peers.join(", ") + ".", "இங்க 2026 peers: " + peers.join(", ") + ".") : A("Pick one listed company doing similar work.", "இதே வேலை செய்யுற ஒரு listed company-ஐ எடுங்க.")],
+    [A("I kept the amount small — one lot or a small part of my portfolio.", "தொகையை சின்னதா வெச்சேன் — ஒரு lot அல்லது portfolio-ல சின்ன பகுதி."), lotNote],
+    [A("I fixed my horizon (listing gain or 3–5 years) and a review point, such as the next results.", "என் horizon (listing gain அல்லது 3–5 வருஷம்), review point (அடுத்த results மாதிரி) முடிவு பண்ணேன்."), null],
+    [A("I'm ready for a dip around the next unlock or results.", "அடுத்த unlock அல்லது results-ல இறக்கத்துக்கு தயார்."), unlockNote]
+  ];
+}
+function scStock(s) {
+  var p = sPx(s), r = sRet(s), u = nextUnlock(s), a90 = unlocks(s)[1].d, cy = cyOf(s), tg = tgOf(s), sec = SECTORS[s.sec], v = verdict(s);
+  var unl = u ? A("Next: " + u.l.en + " ~" + fd(u.d, 1) + ".", "அடுத்து: " + u.l.ta + " ~" + fd(u.d, 1) + ".") : A("No major unlock in the next 18 months.", "அடுத்த 18 மாசம் பெரிய unlock இல்ல.");
+  return { key: "cbipo_sc2_" + s.id, name: s.n, cats: {
+    issue: [
+      [A("I know how much was fresh money and how much was OFS.", "Fresh money எவ்வளவு, OFS எவ்வளவுன்னு தெரியும்."), scSplit(s.fr, s.ofs, s.size)],
+      [A("I know what the company will do with the fresh money.", "Fresh money-ஐ company என்ன பண்ணும்னு தெரியும்."), s.promise],
+      [A("I know the price I'm paying versus the issue and listing price.", "Issue, listing விலையோட ஒப்பிட்டு நான் கொடுக்கிற விலை தெரியும்."), A("Issue ₹" + inr(s.ip) + " · listing ₹" + inr(s.lp) + " · now ₹" + inr(p.v) + " (" + pct(r) + " from issue).", "Issue ₹" + inr(s.ip) + " · listing ₹" + inr(s.lp) + " · இப்போ ₹" + inr(p.v) + " (issue-ல இருந்து " + pct(r) + ").")],
+      [A("I know how strong the demand was.", "Demand எவ்வளவு வலுவா இருந்துச்சுன்னு தெரியும்."), A("Subscribed " + inr(s.sub, 2) + "x" + (s.sub < 3 ? " — low." : s.sub > 50 ? " — very high." : "."), inr(s.sub, 2) + "x subscribe" + (s.sub < 3 ? " — கம்மி." : s.sub > 50 ? " — ரொம்ப அதிகம்." : "."))],
+      [A("I know when locked-in shares become free to sell.", "Lock ஆன shares எப்போ free ஆகும்னு தெரியும்."), unl]
+    ],
+    prob: [
+      [A("I understand what the company does and how it makes money.", "Company என்ன செய்யுது, எப்படி பணம் சம்பாதிக்குதுன்னு புரியுது."), s.promise],
+      [A("I can connect with the business — I use its products or follow its sector.", "இந்த business-ஓட connect ஆக முடியுது — product use பண்றேன் அல்லது sector-ஐ follow பண்றேன்."), A("Sector: " + sec.n.en + ".", "Sector: " + sec.n.ta + ".")],
+      [A("I understand its earnings — growing, flat or loss-making.", "Earnings புரியுது — வளருதா, flat-ஆ, நஷ்டமா."), scEarn(s.earn)],
+      [A("I know the biggest risk and can live with it.", "பெரிய risk தெரியும், அதை ஏத்துக்க முடியும்."), s.risk]
+    ],
+    sol: scCommonSol(scPeers(s.sec, s.id), A("Price now ₹" + inr(p.v) + " per share.", "இப்போ ஒரு share ₹" + inr(p.v) + "."), unl),
+    view: [
+      [A("Long-term funds stayed invested after the anchor lock-in ended.", "Anchor lock-in முடிஞ்ச அப்புறமும் long-term funds தொடர்ந்தாங்க."), a90 < TODAY ? A("90-day anchor lock-in ended ~" + fd(a90, 1) + " — check the latest shareholding pattern.", "90 நாள் anchor lock-in ~" + fd(a90, 1) + " முடிஞ்சுது — latest shareholding pattern பாருங்க.") : A("Anchor lock-in ends ~" + fd(a90, 1) + " — too early to know.", "Anchor lock-in ~" + fd(a90, 1) + " முடியும் — இப்போ சொல்ல முடியாது.")],
+      [A("Institutional (QIB) demand was strong.", "Institutional (QIB) demand வலுவா இருந்துச்சு."), A("Overall subscription " + inr(s.sub, 2) + "x.", "மொத்த subscription " + inr(s.sub, 2) + "x.")],
+      [A("Independent analyst reviews I read support my reasoning.", "நான் படிச்ச analyst reviews என் காரணத்தை support பண்ணுது."), A("Read at least two, from different research houses.", "குறைஞ்சது ரெண்டு, வேற வேற research houses-ல இருந்து படிங்க.")],
+      [A("CB's cycle and trigger view fits my horizon.", "CB-ஓட cycle, trigger பார்வை என் horizon-க்கு பொருந்துது."), A("CB: " + PHASE[sec.phase].en + " · CY " + cy.cy + " · TG " + tg.tg + " · " + v[1] + ".", "CB: " + PHASE[sec.phase].ta + " · CY " + cy.cy + " · TG " + tg.tg + " · " + v[1] + ".")],
+      [A("Market mood has steadied (Nifty holding, FPI selling easing).", "Market mood நிலையாச்சு (Nifty நிக்குது, FPI selling குறையுது)."), A("Nifty is down ~14% in 2026 so far.", "2026-ல இதுவரை Nifty ~14% இறக்கம்.")]
+    ]
+  } };
 }
 function scUpcoming(u) {
-  var close = u.close ? pd(u.close) : null, anchor = u.anchor ? pd(u.anchor) : null;
+  var close = u.close ? pd(u.close) : null, anchor = u.anchor ? pd(u.anchor) : null, sec = SECTORS[u.sec];
   var unl = close ? addM(addD(close, 1), 6) : null;
-  return { key: "cbipo_sc_up_" + u.id, title: A("Your self-check for " + u.n + ": tick what is true for you", u.n + "-க்கு உங்க self-check: உண்மையானதை tick பண்ணுங்க"), items: [
-    [A("I'm clear whether I want a listing gain or a 3–5 year hold.", "Listing gain-ஆ, 3–5 வருஷ hold-ஆ — எனக்கு தெளிவா தெரியும்."), A("2026: average mainboard listing gain was modest; NSE listed just +0.8%.", "2026: mainboard சராசரி listing gain கம்மி; NSE வெறும் +0.8%.")],
-    [A("I can sit through a −8% listing (LIC-like) without panic-selling.", "−8% listing (LIC மாதிரி) வந்தாலும் பயந்து விற்க மாட்டேன்."), A("In 2026, 15 of 101 mainboard IPOs listed below issue.", "2026-ல 101 mainboard IPOs-ல 15 issue-க்கு கீழ list ஆச்சு.")],
-    [A("This money is a small part of my portfolio.", "இந்த பணம் என் portfolio-ல சின்ன பகுதி தான்."), null],
-    [A("I'm fine if I get only one lot — or none — in the lottery.", "Lottery-ல ஒரு lot தான் — இல்ல ஒண்ணுமே கிடைக்கலனாலும் பரவாயில்ல."), u.lot ? A("Lot: " + u.lot + " shares · band " + u.band + ".", "Lot: " + u.lot + " shares · band " + u.band + ".") : A("Band " + u.band + ".", "Band " + u.band + ".")],
-    [A("I've read the RHP's risk factors and related-party sections.", "RHP-ல risk factors, related-party பகுதிகளை படிச்சுட்டேன்."), null],
-    [A("The anchor book" + (anchor ? " (" + fd(anchor) + ")" : "") + " had strong long-term funds.", "Anchor book" + (anchor ? " (" + fd(anchor) + ")" : "") + "-ல வலுவான long-term funds இருந்தாங்க."), anchor && anchor > TODAY ? A("Can be ticked only after " + fd(anchor) + ".", fd(anchor) + "-க்கு அப்புறம் தான் tick பண்ண முடியும்.") : null],
-    [A("The QIB portion is heavily oversubscribed by the last day.", "கடைசி நாள்ல QIB பகுதி நிறைய oversubscribe ஆச்சு."), close ? A("Last bidding day: " + fd(close) + ".", "கடைசி bidding நாள்: " + fd(close) + ".") : null],
-    [A("Market mood has steadied: Nifty above 22,600, FPI selling easing.", "Market mood நிலையாச்சு: Nifty 22,600-க்கு மேல, FPI selling குறையுது."), null],
-    [A("If holding, I'm ready for a dip around the " + (unl ? MON_EN[unl.getMonth()] + " " + unl.getFullYear() : "6-month") + " unlock.", "Hold பண்ணினா, " + (unl ? MON_TA[unl.getMonth()] + " " + unl.getFullYear() : "6 மாச") + " unlock-ல இறக்கத்துக்கு தயார்."), null]
-  ] };
+  var unlNote = close ? A("Anchor 50% ~" + fd(addD(close, 31), 1) + "; pre-IPO ~" + fd(unl, 1) + " (estimated).", "Anchor 50% ~" + fd(addD(close, 31), 1) + "; pre-IPO ~" + fd(unl, 1) + " (மதிப்பீடு).") : null;
+  return { key: "cbipo_sc2_up_" + u.id, name: u.n, cats: {
+    issue: [
+      [A("I know how much is fresh money and how much is OFS.", "Fresh money எவ்வளவு, OFS எவ்வளவுன்னு தெரியும்."), scSplit(u.fr, u.ofs, u.size)],
+      [A("I know what the company will do with the money.", "பணத்தை company என்ன பண்ணும்னு தெரியும்."), u.note],
+      [A("I'm clear on the price band and lot size.", "Price band, lot size தெளிவா தெரியும்."), A("Band " + u.band + (u.lot ? " · lot " + u.lot + " shares" : "") + (u.size ? " · size " + cr(u.size) : "") + ".", "Band " + u.band + (u.lot ? " · lot " + u.lot + " shares" : "") + (u.size ? " · size " + cr(u.size) : "") + ".")],
+      [A("I'll check day-wise subscription before bidding closes.", "Bidding முடியும் முன் நாள்வாரி subscription பார்ப்பேன்."), close ? A("Last bidding day: " + fd(close, 1) + ".", "கடைசி bidding நாள்: " + fd(close, 1) + ".") : null],
+      [A("I know when anchor and pre-IPO shares unlock after listing.", "Listing-க்கு அப்புறம் anchor, pre-IPO shares எப்போ unlock-னு தெரியும்."), unlNote]
+    ],
+    prob: [
+      [A("I understand what the company does and how it makes money.", "Company என்ன செய்யுது, எப்படி பணம் சம்பாதிக்குதுன்னு புரியுது."), u.note],
+      [A("I can connect with the business — I use its products or follow its sector.", "இந்த business-ஓட connect ஆக முடியுது — product use பண்றேன் அல்லது sector-ஐ follow பண்றேன்."), A("Sector: " + sec.n.en + " · CB cycle " + PHASE[sec.phase].en + ".", "Sector: " + sec.n.ta + " · CB cycle " + PHASE[sec.phase].ta + ".")],
+      [A("I understand its earnings — growing, flat or loss-making.", "Earnings புரியுது — வளருதா, flat-ஆ, நஷ்டமா."), A("Check the 3-year profit trend in the RHP.", "RHP-ல 3 வருஷ profit trend பாருங்க.")],
+      [A("I know the biggest risk and can live with it.", "பெரிய risk தெரியும், அதை ஏத்துக்க முடியும்."), A("Sector risks: " + sec.neg.map(function (x) { return x.en; }).join("; ") + ".", "Sector risks: " + sec.neg.map(function (x) { return x.ta; }).join("; ") + ".")]
+    ],
+    sol: scCommonSol(scPeers(u.sec, null), u.lot ? A("One lot = " + u.lot + " shares; allotment is a lottery, so you may get one lot or none.", "ஒரு lot = " + u.lot + " shares; allotment lottery — ஒரு lot அல்லது ஒண்ணுமே கிடைக்காம போகலாம்.") : A("Allotment is a lottery; you may get one lot or none.", "Allotment lottery — ஒரு lot அல்லது ஒண்ணுமே கிடைக்காம போகலாம்."), unlNote).concat([[A("I can sit through a −8% listing (LIC-like) without panic-selling.", "−8% listing (LIC மாதிரி) வந்தாலும் பயந்து விற்க மாட்டேன்."), A("In 2026, 15 of 101 mainboard IPOs listed below issue.", "2026-ல 101 mainboard IPOs-ல 15 issue-க்கு கீழ list ஆச்சு.")]]),
+    view: [
+      [A("The anchor book" + (anchor ? " (" + fd(anchor) + ")" : "") + " had strong long-term funds.", "Anchor book" + (anchor ? " (" + fd(anchor) + ")" : "") + "-ல வலுவான long-term funds இருந்தாங்க."), anchor && anchor > TODAY ? A("Can be ticked only after " + fd(anchor) + ".", fd(anchor) + "-க்கு அப்புறம் தான் tick பண்ண முடியும்.") : A("Check the anchor allotment list on the exchange website.", "Exchange website-ல anchor allotment list பாருங்க.")],
+      [A("The QIB portion is heavily oversubscribed by the last day.", "கடைசி நாள்ல QIB பகுதி நிறைய oversubscribe ஆச்சு."), close ? A("Final numbers on " + fd(close, 1) + ".", fd(close, 1) + "-ல இறுதி எண்கள்.") : null],
+      [A("Independent analyst reviews I read support my reasoning.", "நான் படிச்ச analyst reviews என் காரணத்தை support பண்ணுது."), A("Read at least two, from different research houses.", "குறைஞ்சது ரெண்டு, வேற வேற research houses-ல இருந்து படிங்க.")],
+      [A("Market mood has steadied: Nifty above 22,600, FPI selling easing.", "Market mood நிலையாச்சு: Nifty 22,600-க்கு மேல, FPI selling குறையுது."), A("Nifty is down ~14% in 2026 so far.", "2026-ல இதுவரை Nifty ~14% இறக்கம்.")]
+    ]
+  } };
 }
+function scRow(r) {
+  var p = priceOf(r[1], r[8]), ret = allRet(r), allot = addD(pd(r[2]), -3), a90 = addD(allot, 90), pre = addM(allot, 6);
+  var nxt = [[addD(allot, 30), "Anchor 50%", "Anchor 50%"], [a90, "Anchor balance", "Anchor மீதி"], [pre, "Pre-IPO investors", "Pre-IPO investors"]].filter(function (x) { return x[0] >= TODAY; })[0];
+  var unl = nxt ? A("Next: " + nxt[1] + " ~" + fd(nxt[0], 1) + " (estimated).", "அடுத்து: " + nxt[2] + " ~" + fd(nxt[0], 1) + " (மதிப்பீடு).") : A("Main anchor and pre-IPO unlocks have passed.", "முக்கிய anchor, pre-IPO unlocks முடிஞ்சுது.");
+  var nocov = A("Not covered in CB's notes — read the RHP.", "CB notes-ல இல்ல — RHP படிங்க.");
+  return { key: "cbipo_sc2_all_" + r[1], name: r[0], cats: {
+    issue: [
+      [A("I know how much was fresh money and how much was OFS.", "Fresh money எவ்வளவு, OFS எவ்வளவுன்னு தெரியும்."), A("Issue size " + cr(r[3]) + ". Split: check the RHP's 'The Offer' page.", "Issue size " + cr(r[3]) + ". பிரிவு: RHP-ல 'The Offer' பக்கம்.")],
+      [A("I know what the company will do with the fresh money.", "Fresh money-ஐ company என்ன பண்ணும்னு தெரியும்."), nocov],
+      [A("I know the price I'm paying versus the issue and listing price.", "Issue, listing விலையோட ஒப்பிட்டு நான் கொடுக்கிற விலை தெரியும்."), A("Issue ₹" + inr(r[5]) + " · listing ₹" + inr(r[6]) + " · now ₹" + inr(p.v) + " (" + pct(ret) + " from issue).", "Issue ₹" + inr(r[5]) + " · listing ₹" + inr(r[6]) + " · இப்போ ₹" + inr(p.v) + " (issue-ல இருந்து " + pct(ret) + ").")],
+      [A("I know how strong the demand was.", "Demand எவ்வளவு வலுவா இருந்துச்சுன்னு தெரியும்."), A("Subscribed " + inr(r[4], 2) + "x.", inr(r[4], 2) + "x subscribe.")],
+      [A("I know when locked-in shares become free to sell.", "Lock ஆன shares எப்போ free ஆகும்னு தெரியும்."), unl]
+    ],
+    prob: [
+      [A("I understand what the company does and how it makes money.", "Company என்ன செய்யுது, எப்படி பணம் சம்பாதிக்குதுன்னு புரியுது."), nocov],
+      [A("I can connect with the business — I use its products or follow its sector.", "இந்த business-ஓட connect ஆக முடியுது — product use பண்றேன் அல்லது sector-ஐ follow பண்றேன்."), null],
+      [A("I understand its earnings — growing, flat or loss-making.", "Earnings புரியுது — வளருதா, flat-ஆ, நஷ்டமா."), A("Check the 3-year profit trend in the RHP.", "RHP-ல 3 வருஷ profit trend பாருங்க.")],
+      [A("I know the biggest risk and can live with it.", "பெரிய risk தெரியும், அதை ஏத்துக்க முடியும்."), null]
+    ],
+    sol: scCommonSol([], A("Price now ₹" + inr(p.v) + " per share.", "இப்போ ஒரு share ₹" + inr(p.v) + "."), unl),
+    view: [
+      [A("Long-term funds stayed invested after the anchor lock-in ended.", "Anchor lock-in முடிஞ்ச அப்புறமும் long-term funds தொடர்ந்தாங்க."), a90 < TODAY ? A("Anchor lock-in ended ~" + fd(a90, 1) + " — check the shareholding pattern.", "Anchor lock-in ~" + fd(a90, 1) + " முடிஞ்சுது — shareholding pattern பாருங்க.") : A("Anchor lock-in ends ~" + fd(a90, 1) + ".", "Anchor lock-in ~" + fd(a90, 1) + " முடியும்.")],
+      [A("Institutional (QIB) demand was strong.", "Institutional (QIB) demand வலுவா இருந்துச்சு."), A("Overall subscription " + inr(r[4], 2) + "x.", "மொத்த subscription " + inr(r[4], 2) + "x.")],
+      [A("Independent analyst reviews I read support my reasoning.", "நான் படிச்ச analyst reviews என் காரணத்தை support பண்ணுது."), A("Read at least two, from different research houses.", "குறைஞ்சது ரெண்டு, வேற வேற research houses-ல இருந்து படிங்க.")],
+      [A("Market mood has steadied (Nifty holding, FPI selling easing).", "Market mood நிலையாச்சு (Nifty நிக்குது, FPI selling குறையுது)."), A("Nifty is down ~14% in 2026 so far.", "2026-ல இதுவரை Nifty ~14% இறக்கம்.")]
+    ]
+  } };
+}
+function scOther(name) {
+  var n = name || T("this IPO", "இந்த IPO");
+  return { key: "cbipo_sc2_other_" + String(name || "x").toLowerCase().replace(/[^a-z0-9]+/g, "-").slice(0, 40), name: n, cats: {
+    issue: [
+      [A("I know how much is fresh money and how much is OFS.", "Fresh money எவ்வளவு, OFS எவ்வளவுன்னு தெரியும்."), null],
+      [A("I know what the company will do with the money.", "பணத்தை company என்ன பண்ணும்னு தெரியும்."), null],
+      [A("I'm clear on the price band, lot size and issue size.", "Price band, lot size, issue size தெளிவா தெரியும்."), null],
+      [A("I'll check day-wise subscription before bidding closes.", "Bidding முடியும் முன் நாள்வாரி subscription பார்ப்பேன்."), null],
+      [A("I know when anchor and pre-IPO shares unlock after listing.", "Listing-க்கு அப்புறம் anchor, pre-IPO shares எப்போ unlock-னு தெரியும்."), A("Anchors: 50% after 30 days, rest after 90. Pre-IPO: 6 months.", "Anchors: 30 நாள்ல 50%, 90 நாள்ல மீதி. Pre-IPO: 6 மாசம்.")]
+    ],
+    prob: [
+      [A("I understand what the company does and how it makes money.", "Company என்ன செய்யுது, எப்படி பணம் சம்பாதிக்குதுன்னு புரியுது."), null],
+      [A("I can connect with the business — I use its products or follow its sector.", "இந்த business-ஓட connect ஆக முடியுது — product use பண்றேன் அல்லது sector-ஐ follow பண்றேன்."), null],
+      [A("I understand its earnings — growing, flat or loss-making.", "Earnings புரியுது — வளருதா, flat-ஆ, நஷ்டமா."), null],
+      [A("I know the biggest risk and can live with it.", "பெரிய risk தெரியும், அதை ஏத்துக்க முடியும்."), null]
+    ],
+    sol: scCommonSol([], A("Allotment is a lottery; you may get one lot or none.", "Allotment lottery — ஒரு lot அல்லது ஒண்ணுமே கிடைக்காம போகலாம்."), null),
+    view: [
+      [A("The anchor book had strong long-term funds.", "Anchor book-ல வலுவான long-term funds இருந்தாங்க."), null],
+      [A("The QIB portion is heavily oversubscribed by the last day.", "கடைசி நாள்ல QIB பகுதி நிறைய oversubscribe ஆச்சு."), null],
+      [A("Independent analyst reviews I read support my reasoning.", "நான் படிச்ச analyst reviews என் காரணத்தை support பண்ணுது."), null],
+      [A("Market mood has steadied (Nifty holding, FPI selling easing).", "Market mood நிலையாச்சு (Nifty நிக்குது, FPI selling குறையுது)."), null]
+    ]
+  } };
+}
+var SC_SUGG = [A("The price is below my own target buy price.", "விலை என் target buy விலைக்கு கீழ இருக்கு."), A("Promoter holding stays above 50% after the IPO.", "IPO-க்கு அப்புறமும் promoter holding 50%-க்கு மேல."), A("I don't already hold too much of this sector.", "இந்த sector-ல ஏற்கனவே அதிகமா வெச்சிருக்கல."), A("The company has no big pending legal case.", "Company மேல பெரிய pending வழக்கு இல்ல.")];
 function selfCheck(el, cfg) {
-  var saved = {}; try { saved = JSON.parse(store(cfg.key) || "{}") || {}; } catch (e) {}
-  var h = '<div class="sc"><h3>' + L(cfg.title) + "</h3>";
-  cfg.items.forEach(function (it, i) { h += '<label><input type="checkbox" data-i="' + i + '"' + (saved[i] ? " checked" : "") + '><span><span class="q">' + L(it[0]) + "</span>" + (it[1] ? '<span class="f">' + T("Data: ", "Data: ") + L(it[1]) + "</span>" : "") + "</span></label>"; });
-  h += '<div class="meter"><i></i></div><div class="res"></div><div class="fine">' + T("This only counts how many of your own conditions line up. It is not a recommendation.", "உங்க சொந்த conditions எத்தனை ஒத்துப்போகுதுன்னு மட்டும் எண்ணுது. இது recommendation இல்ல.") + "</div></div>";
+  var saved = {}, custom = [];
+  try { saved = JSON.parse(store(cfg.key) || "{}") || {}; } catch (e) {}
+  try { custom = JSON.parse(store(cfg.key + "_my") || "[]") || []; } catch (e) {}
+  var h = '<div class="sc"><h3>' + T("Self-check for ", "Self-check: ") + esc(cfg.name) + '</h3><div class="small" style="margin:-6px 0 10px">' + T("Tick what is true for you. Five groups, in the order you'd think it through.", "உங்களுக்கு உண்மையானதை tick பண்ணுங்க. யோசிக்கிற வரிசையில 5 பிரிவுகள்.") + '</div><div class="scsum" data-sum></div>';
+  SC_CATS.forEach(function (c, ci) {
+    h += '<div class="sccat"><div class="scch"><span class="scn">' + (ci + 1) + '</span><div><b>' + L(c.t) + '</b><span class="small">' + L(c.s) + '</span></div><span class="scc" data-cc="' + c.k + '"></span></div>';
+    if (c.k !== "mine") {
+      (cfg.cats[c.k] || []).forEach(function (it, i) { var id = c.k + i; h += '<label><input type="checkbox" data-id="' + id + '" data-c="' + c.k + '"' + (saved[id] ? " checked" : "") + '><span><span class="q">' + L(it[0]) + "</span>" + (it[1] ? '<span class="f">' + T("Data: ", "Data: ") + L(it[1]) + "</span>" : "") + "</span></label>"; });
+    } else {
+      custom.forEach(function (t, i) { var id = "m" + i; h += '<label><input type="checkbox" data-id="' + id + '" data-c="mine"' + (saved[id] ? " checked" : "") + '><span><span class="q">' + esc(t) + '</span></span><button type="button" class="scx" data-del="' + i + '" aria-label="Remove">✕</button></label>'; });
+      h += '<div class="ctrl" style="margin:8px 0 4px"><input type="text" data-new maxlength="120" placeholder="' + esc(T("Add your own condition", "உங்க condition சேருங்க")) + '" style="flex:1;min-width:180px" aria-label="New condition"><button class="btn pri" type="button" data-add>' + T("Add", "சேர்") + '</button></div><div class="sugg" style="padding:0">' + SC_SUGG.map(function (s, i) { return '<button type="button" data-sg="' + i + '">+ ' + L(s) + "</button>"; }).join("") + "</div>";
+    }
+    h += "</div>";
+  });
+  h += '<div class="meter"><i></i></div><div class="res"></div><div class="fine">' + T("This only counts how many of your own conditions line up. It is not a recommendation.", "உங்க சொந்த conditions எத்தனை ஒத்துப்போகுதுன்னு மட்டும் எண்ணுது. இது recommendation இல்ல.") + '</div><div class="ctrl" style="margin-top:8px"><button class="btn ghost" type="button" data-reset>' + T("Clear ticks", "Tick-களை அழி") + "</button></div></div>";
   el.innerHTML = h;
+  function saveCustom() { store(cfg.key + "_my", JSON.stringify(custom)); selfCheck(el, cfg); }
+  function addC(t) { t = String(t || "").trim(); if (!t || custom.indexOf(t) >= 0 || custom.length >= 8) return; custom.push(t); saveCustom(); }
+  el.querySelector("[data-add]").onclick = function () { addC(el.querySelector("[data-new]").value); };
+  el.querySelector("[data-new]").onkeydown = function (e) { if (e.key === "Enter") addC(this.value); };
+  [].forEach.call(el.querySelectorAll("[data-sg]"), function (b) { b.onclick = function () { addC(L(SC_SUGG[+b.dataset.sg])); }; });
+  [].forEach.call(el.querySelectorAll("[data-del]"), function (b) { b.onclick = function (e) { e.preventDefault(); var i = +b.dataset.del; custom.splice(i, 1); var ns = {}; Object.keys(saved).forEach(function (k) { if (k[0] !== "m") ns[k] = saved[k]; }); store(cfg.key, JSON.stringify(ns)); saveCustom(); }; });
+  el.querySelector("[data-reset]").onclick = function () { store(cfg.key, "{}"); selfCheck(el, cfg); };
   function upd() {
-    var boxes = el.querySelectorAll("input[type=checkbox]"), n = 0, st = {};
-    [].forEach.call(boxes, function (b) { if (b.checked) { n++; st[b.dataset.i] = 1; } });
-    store(cfg.key, JSON.stringify(st));
-    var t = boxes.length;
-    el.querySelector(".meter i").style.width = (n / t * 100) + "%";
-    var msg = n <= 3 ? T("Most of your own conditions don't line up yet.", "உங்க conditions பெரும்பாலும் இன்னும் ஒத்துப்போகல.") : n <= 6 ? T("Some of your conditions line up; some don't.", "சில conditions ஒத்துப்போகுது; சில இல்ல.") : n < t ? T("Most of your own conditions line up.", "உங்க conditions பெரும்பாலும் ஒத்துப்போகுது.") : T("All of your own conditions line up.", "உங்க எல்லா conditions-உம் ஒத்துப்போகுது.");
-    el.querySelector(".res").textContent = n + " / " + t + " — " + msg;
+    var boxes = el.querySelectorAll("input[type=checkbox]"), n = 0, st = {}, per = {};
+    [].forEach.call(boxes, function (b) { var c = b.dataset.c; per[c] = per[c] || [0, 0]; per[c][1]++; if (b.checked) { n++; per[c][0]++; st[b.dataset.id] = 1; } });
+    saved = st; store(cfg.key, JSON.stringify(st));
+    SC_CATS.forEach(function (c) { var p = per[c.k] || [0, 0]; var x = el.querySelector('[data-cc="' + c.k + '"]'); x.textContent = p[1] ? p[0] + " / " + p[1] : T("none yet", "இன்னும் இல்ல"); x.className = "scc" + (p[1] && p[0] === p[1] ? " full" : ""); });
+    el.querySelector("[data-sum]").innerHTML = SC_CATS.map(function (c, ci) { var p = per[c.k] || [0, 0]; var w = p[1] ? p[0] / p[1] * 100 : 0; return '<div><span>' + (ci + 1) + ". " + L(c.t).split(" — ")[0] + '</span><span class="mb"><i style="width:' + w + '%"></i></span></div>'; }).join("");
+    var t = boxes.length, f = t ? n / t : 0;
+    el.querySelector(".meter i").style.width = (f * 100) + "%";
+    var msg = f < 0.4 ? T("Most of your own conditions don't line up yet.", "உங்க conditions பெரும்பாலும் இன்னும் ஒத்துப்போகல.") : f < 0.7 ? T("Some of your conditions line up; some don't.", "சில conditions ஒத்துப்போகுது; சில இல்ல.") : f < 1 ? T("Most of your own conditions line up.", "உங்க conditions பெரும்பாலும் ஒத்துப்போகுது.") : T("All of your own conditions line up.", "உங்க எல்லா conditions-உம் ஒத்துப்போகுது.");
+    var weak = SC_CATS.filter(function (c) { var p = per[c.k]; return p && p[1] && p[0] / p[1] < 0.5; }).map(function (c) { return L(c.t).split(" — ")[0]; });
+    el.querySelector(".res").innerHTML = n + " / " + t + " — " + msg + (weak.length && f < 1 ? '<span class="small" style="display:block;margin-top:3px">' + T("Fewest ticks in: ", "குறைவான tick: ") + esc(weak.join(", ")) + "</span>" : "");
   }
   [].forEach.call(el.querySelectorAll("input[type=checkbox]"), function (b) { b.onchange = upd; });
   upd();
+}
+var SCSEL = store("cbipo_scsel") || "up:jio", SCOTHER = store("cbipo_scother") || "";
+function renderSC() {
+  var sel = $("scSel");
+  var g = '<optgroup label="' + esc(T("Open & upcoming", "Open & வரப்போகுது")) + '">' + UPCOMING.map(function (u) { return '<option value="up:' + u.id + '">' + esc(u.n) + "</option>"; }).join("") + "</optgroup>";
+  g += '<optgroup label="' + esc(T("Tracked 2026 IPOs", "Track பண்ற 2026 IPOs")) + '">' + STOCKS.map(function (s) { return '<option value="st:' + s.id + '">' + esc(s.n) + "</option>"; }).join("") + "</optgroup>";
+  var tracked = STOCKS.map(keyOf);
+  g += '<optgroup label="' + esc(T("Other 2026 listings", "மற்ற 2026 listings")) + '">' + ALL.filter(function (r) { return tracked.indexOf(r[1]) < 0; }).map(function (r) { return '<option value="al:' + esc(r[1]) + '">' + esc(r[0]) + "</option>"; }).join("") + "</optgroup>";
+  g += '<option value="other">' + esc(T("Any other IPO (type its name)", "வேற எந்த IPO-வும் (பெயர் type பண்ணுங்க)")) + "</option>";
+  sel.innerHTML = g; sel.value = SCSEL; if (sel.value !== SCSEL) { SCSEL = "up:jio"; sel.value = SCSEL; }
+  $("scOtherWrap").hidden = SCSEL !== "other"; $("scOther").value = SCOTHER;
+  $("scOther").placeholder = T("IPO name", "IPO பெயர்");
+  var parts = SCSEL.split(":"), cfg;
+  if (parts[0] === "up") cfg = scUpcoming(UPCOMING.filter(function (u) { return u.id === parts[1]; })[0] || UPCOMING[0]);
+  else if (parts[0] === "st") cfg = scStock(STOCKS.filter(function (s) { return s.id === parts[1]; })[0] || STOCKS[0]);
+  else if (parts[0] === "al") cfg = scRow(ALL.filter(function (r) { return r[1] === parts[1]; })[0] || ALL[0]);
+  else cfg = scOther(SCOTHER);
+  selfCheck($("scBox"), cfg);
 }
 
 /* ---------------- Promise vs listing ---------------- */
@@ -1410,7 +1571,7 @@ function buildConfig() {
       { k: ["how much raised", "total raised", "money raised", "மொத்தம்", "திரட்டி"], a: A("About ₹1.23 lakh crore was raised through ~100 IPOs in 2026 up to 13 Oct.", "2026-ல 13 Oct வரை ~100 IPOs மூலமா சுமார் ₹1.23 lakh crore."), tab: "t-dash" },
       { k: ["gmp", "grey market", "ஜிஎம்பி"], a: A("Grey-market premium is unofficial and often wrong; 43 of 2026's mainboard IPOs listed below their GMP estimate.", "GMP official இல்ல, அடிக்கடி தப்பு; 2026-ல 43 mainboard IPOs GMP-க்கு கீழ list ஆச்சு."), tab: "t-promise" },
       { k: ["live price", "price update", "nse price", "bse price", "லைவ்"], a: A("On claude.ai, prices update every Friday with the week's close. The GitHub copy can link a Google Sheet for near-live prices, or you can type your own.", "claude.ai-ல ஒவ்வொரு வெள்ளியும் வார closing விலை update ஆகும். GitHub copy-ல Google Sheet link பண்ணா near-live விலை; இல்ல நீங்களே type பண்ணலாம்."), tab: "t-live" },
-      { k: ["self check", "self-check", "should i apply", "செல்ஃப்"], a: A("Open the self-check: tick the conditions that are true for you. It counts them; it is not advice.", "Self-check திறங்க: உங்களுக்கு உண்மையானதை tick பண்ணுங்க. எண்ணும் — advice இல்ல."), tab: "t-up" }
+      { k: ["self check", "self-check", "should i apply", "செல்ஃப்"], a: A("Open the self-check: tick the conditions that are true for you. It counts them; it is not advice.", "Self-check திறங்க: உங்களுக்கு உண்மையானதை tick பண்ணுங்க. எண்ணும் — advice இல்ல."), tab: "t-sc" }
     ],
     suggestions: [["Which IPO gave the best return?", "எந்த IPO best return?"], ["Which IPO had the biggest listing gain?", "எந்த IPO-க்கு listing gain அதிகம்?"], ["ESDS vs Fractal", "ESDS vs Fractal"], ["What is OFS?", "OFS-னா என்ன?"], ["When does Jio open?", "Jio எப்போ திறக்குது?"], ["Should I buy Indo-MIM?", "Indo-MIM வாங்கலாமா?"]]
   };
@@ -1457,7 +1618,7 @@ var LiteAssist = (function () {
       var t = norm(raw), ents = findEnts(t), met = findMetric(t);
       var follow = /\b(its|it|their|they|அதோட|அதன்|அவங்க)\b/.test(t) || (/what about|அப்போ|அப்புறம்/.test(t));
       if (!ents.length && follow && ctx.ents.length) ents = ctx.ents;
-      if (has(t, ["should i buy", "should i sell", "should i apply", "buy ", " sell", "apply ", "invest in", "hold ", "வாங்கலாமா", "விக்கலாமா", "apply பண்ணலாமா", "வாங்க", "விற்க"]) && !has(t, ["self check", "self-check"])) return { a: Lx(cfg.noAdvice), tab: "t-up" };
+      if (has(t, ["should i buy", "should i sell", "should i apply", "buy ", " sell", "apply ", "invest in", "hold ", "வாங்கலாமா", "விக்கலாமா", "apply பண்ணலாமா", "வாங்க", "விற்க"]) && !has(t, ["self check", "self-check"])) return { a: Lx(cfg.noAdvice), tab: "t-sc" };
       var hi = has(t, ["highest", "best", "top", "most", "biggest", "largest", "maximum", "அதிகம்", "பெரிய", "பெஸ்ட்", "best"]), lo = has(t, ["lowest", "worst", "least", "smallest", "weakest", "கம்மி", "மோசம்", "குறைவு"]);
       var kb = null; cfg.kb.forEach(function (k) { if (!kb && has(t, k.k)) kb = k; });
       var isUnlockQ = kb && /unlock|lock/.test(kb.k.join(" ")) && ents.length === 1;
@@ -1537,7 +1698,7 @@ function addReadButtons() {
 
 /* ---------------- Render all / language ---------------- */
 function renderAll() {
-  renderFeed(); renderDash(); renderTracker(); renderStock(); renderPromise(); renderFresh(); renderSectors(); renderUnlock(); renderUpcoming(); renderAll2(); renderTake();
+  renderFeed(); renderDash(); renderTracker(); renderStock(); renderPromise(); renderFresh(); renderSectors(); renderUnlock(); renderUpcoming(); renderSC(); renderAll2(); renderTake();
 }
 function setLang(l) {
   LANG = l; document.body.classList.toggle("ta", l === "ta"); document.documentElement.lang = l === "ta" ? "ta" : "en";
@@ -1559,6 +1720,8 @@ $("stNext").onclick = function () { var i = STOCKS.findIndex(function (s) { retu
 $("vaBtn").onclick = function () { showTab("t-assist"); setTimeout(function () { var i = document.querySelector("#assist [data-q]"); if (i) i.focus(); }, 50); };
 $("cbBadge").querySelector(".b").onclick = function () { $("cbBadge").classList.toggle("open"); };
 wireLive();
+$("scSel").onchange = function () { SCSEL = this.value; store("cbipo_scsel", SCSEL); renderSC(); };
+$("scOther").onchange = function () { SCOTHER = this.value.trim(); store("cbipo_scother", SCOTHER); renderSC(); };
 var startTab = (location.hash && $("t-" + location.hash.slice(1))) ? "t-" + location.hash.slice(1) : (store("cbipo_tab") || "t-dash");
 CUR = $(startTab) ? startTab : "t-dash";
 setLang(store("cbipo_lang") === "ta" ? "ta" : "en");
