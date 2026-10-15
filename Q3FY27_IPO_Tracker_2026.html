@@ -307,14 +307,15 @@ td .sm{display:block;font-size:11.5px;color:var(--muted);font-weight:600}
   <div class="grid g2">
     <div class="card"><h3><span class="en">Price feed status</span><span class="ta">Price feed நிலை</span></h3><div id="feedStatus"></div></div>
     <div class="card hl"><h3><span class="en">Three ways prices arrive</span><span class="ta">விலை 3 வழியில வரும்</span></h3><ul class="b">
-      <li class="en"><b>Auto snapshot:</b> CB's scheduled updater saves NSE/BSE prices three times each trading day; every viewer sees them.</li><li class="ta"><b>Auto snapshot:</b> CB scheduled updater ஒவ்வொரு trading நாளும் 3 முறை NSE/BSE விலை save பண்ணும்; எல்லோருக்கும் தெரியும்.</li>
-      <li class="en"><b>Live sheet (GitHub Pages copy):</b> link a Google Sheet that uses GOOGLEFINANCE — prices refresh every minute.</li><li class="ta"><b>Live sheet (GitHub Pages copy):</b> GOOGLEFINANCE use பண்ற Google Sheet-ஐ link பண்ணுங்க — ஒவ்வொரு நிமிஷமும் refresh.</li>
+      <li class="en"><b>Weekly snapshot (claude.ai page):</b> every Friday evening CB saves the week's closing prices; every viewer sees them.</li><li class="ta"><b>Weekly snapshot (claude.ai page):</b> ஒவ்வொரு வெள்ளி மாலையும் CB வாரத்தோட closing விலைகளை save பண்ணும்; எல்லோருக்கும் தெரியும்.</li>
+      <li class="en"><b>Live sheet (GitHub Pages copy):</b> link a Google Sheet that uses GOOGLEFINANCE — prices refresh about every 5 minutes (Google's NSE data can lag ~20 min).</li><li class="ta"><b>Live sheet (GitHub Pages copy):</b> GOOGLEFINANCE use பண்ற Google Sheet-ஐ link பண்ணுங்க — சுமார் 5 நிமிஷத்துக்கு ஒரு முறை refresh (Google NSE data ~20 நிமிஷம் தாமதம் ஆகலாம்).</li>
       <li class="en"><b>Your own entry:</b> type a price you see on NSE/BSE; it stays in this browser only.</li><li class="ta"><b>நீங்களே:</b> NSE/BSE-ல பார்த்த விலையை type பண்ணுங்க; இந்த browser-ல மட்டும் இருக்கும்.</li></ul></div>
   </div>
   <div class="card mt2"><h3><span class="en">Live Google Sheet (works in the downloaded / GitHub Pages copy)</span><span class="ta">Live Google Sheet (download / GitHub Pages copy-ல வேலை செய்யும்)</span></h3>
-    <ul class="b"><li class="en">Make a sheet: column A = symbol (e.g. ESDS), column B = <code>=GOOGLEFINANCE("NSE:"&amp;A2,"price")</code>. For NSE Ltd use <code>BOM:544937</code>.</li><li class="ta">Sheet: column A = symbol (உதா. ESDS), column B = <code>=GOOGLEFINANCE("NSE:"&amp;A2,"price")</code>. NSE Ltd-க்கு <code>BOM:544937</code>.</li>
-    <li class="en">File → Share → Publish to web → CSV. Paste that link below.</li><li class="ta">File → Share → Publish to web → CSV. அந்த link-ஐ கீழ paste பண்ணுங்க.</li></ul>
-    <div class="ctrl mt"><input type="text" id="gsUrl" placeholder="https://docs.google.com/.../pub?output=csv" style="flex:1;min-width:220px" aria-label="Sheet CSV link"><button class="btn pri" id="gsSave" type="button"><span class="en">Connect</span><span class="ta">Connect</span></button><button class="btn ghost" id="gsCopy" type="button"><span class="en">Copy symbol list</span><span class="ta">Symbol list copy</span></button></div>
+    <ul class="b"><li class="en">Import <b>cb_ipo_prices_sheet.csv</b> into Google Sheets (File → Import → Upload). Column B fills with GOOGLEFINANCE prices.</li><li class="ta"><b>cb_ipo_prices_sheet.csv</b>-ஐ Google Sheets-ல import பண்ணுங்க (File → Import → Upload). Column B-ல GOOGLEFINANCE விலைகள் வரும்.</li>
+    <li class="en">Click <b>Share → General access → Anyone with the link → Viewer</b>. Copy the sheet's link from the address bar and paste it below.</li><li class="ta"><b>Share → General access → Anyone with the link → Viewer</b> பண்ணுங்க. Address bar-ல இருக்கிற sheet link-ஐ copy பண்ணி கீழ paste பண்ணுங்க.</li>
+    <li class="en">A "Publish to web → CSV" link also works.</li><li class="ta">"Publish to web → CSV" link-உம் வேலை செய்யும்.</li></ul>
+    <div class="ctrl mt"><input type="text" id="gsUrl" placeholder="https://docs.google.com/spreadsheets/d/…" style="flex:1;min-width:220px" aria-label="Sheet CSV link"><button class="btn pri" id="gsSave" type="button"><span class="en">Connect</span><span class="ta">Connect</span></button><button class="btn ghost" id="gsCopy" type="button"><span class="en">Copy symbol list</span><span class="ta">Symbol list copy</span></button></div>
     <div class="small" id="gsMsg"></div>
   </div>
   <div class="card mt2"><h3><span class="en">Enter or paste prices</span><span class="ta">விலை type / paste பண்ணுங்க</span></h3>
@@ -1259,7 +1260,7 @@ function allSyms() { var o = []; ALL.forEach(function (r) { if (o.indexOf(r[1]) 
 function renderFeed() {
   var nm = Object.keys(MINE).length;
   var rows = [
-    [T("Auto snapshot (all viewers)", "Auto snapshot (எல்லோருக்கும்)"), DBPX ? '<span class="chip g">' + T("Connected", "Connected") + "</span> " + esc(DBPX.asOf || "") + " · " + Object.keys(DBPX.px || {}).length + T(" prices", " விலைகள்") : (DB ? '<span class="chip y">' + T("Waiting for first snapshot", "முதல் snapshot-க்கு காத்திருக்கு") + "</span>" : '<span class="chip n">' + T("Not available in this copy", "இந்த copy-ல இல்ல") + "</span>")],
+    [T("Weekly snapshot (claude.ai page)", "Weekly snapshot (claude.ai page)"), DBPX ? '<span class="chip g">' + T("Connected", "Connected") + "</span> " + esc(DBPX.asOf || "") + " · " + Object.keys(DBPX.px || {}).length + T(" prices", " விலைகள்") : (DB ? '<span class="chip y">' + T("Waiting for first snapshot", "முதல் snapshot-க்கு காத்திருக்கு") + "</span>" : '<span class="chip n">' + T("Only on the claude.ai page", "claude.ai page-ல மட்டும்") + "</span>")],
     [T("Live Google Sheet", "Live Google Sheet"), SHEET ? '<span class="chip g">' + T("Live", "Live") + "</span> " + esc(SHEET.at) + " · " + Object.keys(SHEET.px).length + T(" prices", " விலைகள்") : '<span class="chip n">' + T("Not connected", "Connect ஆகல") + "</span>"],
     [T("Your own entries", "உங்க entries"), nm ? '<span class="chip o">' + nm + "</span>" : '<span class="chip n">0</span>'],
     [T("Fallback", "Fallback"), '<span class="chip n">Ref</span> ' + T("closing prices of ", "closing விலைகள் ") + REF_DATE]
@@ -1277,13 +1278,47 @@ function parseCSV(txt) {
   txt.split(/\r?\n/).forEach(function (line) { var c = line.split(/[,\t]/).map(function (x) { return x.replace(/^"|"$/g, "").trim(); }); if (c.length >= 2) { var sym = c[0].toUpperCase().replace(/^(NSE|BOM|BSE):/, ""), v = parseFloat(String(c[1]).replace(/[₹,\s]/g, "")); if (sym && v > 0) px[sym] = v; } });
   return px;
 }
+function sheetId(u) { var m = String(u).match(/\/spreadsheets\/d\/([A-Za-z0-9_-]{20,})/); return m ? m[1] : null; }
+function fixPub(u) { return String(u).replace(/\/pubhtml(\?[^#]*)?(#.*)?$/, "/pub?output=csv").replace(/\/pub\?(?![^#]*output=csv)/, "/pub?output=csv&"); }
+function gotSheet(px, how) {
+  if (!Object.keys(px).length) throw new Error("empty");
+  var d = new Date(); SHEET = { px: px, at: d.toLocaleTimeString("en-IN", { hour: "2-digit", minute: "2-digit" }) + " " + fd(d) }; renderAll();
+  $("gsMsg").textContent = T("Connected (" + how + "): " + Object.keys(px).length + " prices. Checks the sheet every 60 seconds.", "Connect ஆச்சு (" + how + "): " + Object.keys(px).length + " விலைகள். 60 வினாடிக்கு ஒரு முறை sheet பார்க்கும்.");
+}
+function jsonp(id) {
+  return new Promise(function (res, rej) {
+    var cb = "__cbGs" + Date.now(), sc = document.createElement("script"), done = false;
+    var to = setTimeout(function () { if (!done) { done = true; cleanup(); rej(new Error("timeout")); } }, 12000);
+    function cleanup() { try { delete window[cb]; } catch (e) { window[cb] = undefined; } sc.remove(); clearTimeout(to); }
+    window[cb] = function (resp) {
+      if (done) return; done = true; cleanup();
+      try {
+        if (resp.status === "error") throw new Error("denied");
+        var px = {};
+        (resp.table.rows || []).forEach(function (r) { var c = r.c || []; var sym = c[0] && c[0].v != null ? String(c[0].v).toUpperCase().replace(/^(NSE|BOM|BSE):/, "").trim() : ""; var v = c[1] && typeof c[1].v === "number" ? c[1].v : parseFloat(c[1] && c[1].v); if (sym && v > 0) px[sym] = v; });
+        res(px);
+      } catch (e) { rej(e); }
+    };
+    sc.onerror = function () { if (!done) { done = true; cleanup(); rej(new Error("load")); } };
+    sc.src = "https://docs.google.com/spreadsheets/d/" + id + "/gviz/tq?tqx=out:json;responseHandler:" + cb + "&tq=" + encodeURIComponent("select A,B") + "&_=" + Date.now();
+    document.head.appendChild(sc);
+  });
+}
 async function pullSheet() {
   var u = store("cbipo_gs"); if (!u) return;
-  try { var r = await fetch(u, { cache: "no-store" }); if (!r.ok) throw new Error(r.status); var px = parseCSV(await r.text()); if (Object.keys(px).length) { var d = new Date(); SHEET = { px: px, at: d.toLocaleTimeString("en-IN", { hour: "2-digit", minute: "2-digit" }) + " " + fd(d) }; renderAll(); $("gsMsg").textContent = T("Connected. Refreshing every 60 seconds.", "Connect ஆச்சு. 60 வினாடிக்கு ஒரு முறை refresh."); } }
-  catch (e) { $("gsMsg").textContent = T("This copy can't reach the sheet. Use the downloaded file on GitHub Pages; in claude.ai the auto snapshot is used instead.", "இந்த copy sheet-ஐ அடைய முடியல. GitHub Pages-ல downloaded file use பண்ணுங்க; claude.ai-ல auto snapshot use ஆகும்."); }
+  var inClaude = !!(window.claude && window.claude.use);
+  try {
+    var id = sheetId(u);
+    if (id) { gotSheet(await jsonp(id), T("sheet link", "sheet link")); return; }
+    var r = await fetch(fixPub(u)); if (!r.ok) throw new Error(r.status);
+    gotSheet(parseCSV(await r.text()), "CSV");
+  } catch (e) {
+    $("gsMsg").textContent = inClaude ? T("The claude.ai page can't read Google Sheets. Use your downloaded / GitHub Pages copy for the live sheet; here the weekly snapshot is used.", "claude.ai page Google Sheet-ஐ படிக்க முடியாது. Live sheet-க்கு download / GitHub Pages copy use பண்ணுங்க; இங்க weekly snapshot.")
+      : T("Couldn't read the sheet. Easiest fix: in the sheet click Share → General access → 'Anyone with the link' → Viewer, then paste the sheet's normal link (from the address bar) here.", "Sheet-ஐ படிக்க முடியல. சுலபமான வழி: sheet-ல Share → General access → 'Anyone with the link' → Viewer பண்ணி, address bar-ல இருக்கிற sheet link-ஐ இங்க paste பண்ணுங்க.");
+  }
 }
 function wireLive() {
-  $("gsSave").onclick = function () { var u = $("gsUrl").value.trim(); if (!/^https:\/\//.test(u)) { $("gsMsg").textContent = T("Paste the published CSV link (starts with https://).", "Publish பண்ண CSV link-ஐ paste பண்ணுங்க (https:// ல ஆரம்பிக்கும்)."); return; } store("cbipo_gs", u); pullSheet(); };
+  $("gsSave").onclick = function () { var u = $("gsUrl").value.trim(); if (!/^https:\/\/docs\.google\.com\/spreadsheets\//.test(u)) { $("gsMsg").textContent = T("Paste a Google Sheets link (starts with https://docs.google.com/spreadsheets/).", "Google Sheets link-ஐ paste பண்ணுங்க (https://docs.google.com/spreadsheets/ ல ஆரம்பிக்கும்)."); return; } store("cbipo_gs", u); $("gsMsg").textContent = T("Connecting…", "Connect ஆகுது…"); pullSheet(); };
   $("gsCopy").onclick = function () { var t = allSyms().filter(function (s) { return !/^\d+$/.test(s); }).join("\n"); try { navigator.clipboard.writeText(t).then(function () { toast(T("Copied", "Copy ஆச்சு")); }, function () { $("pasteBox").value = t; $("pasteBox").select(); }); } catch (e) { $("pasteBox").value = t; $("pasteBox").select(); } };
   $("pasteGo").onclick = function () { var px = parseCSV($("pasteBox").value); var n = Object.keys(px).length; if (!n) { $("pasteMsg").textContent = T("No valid lines. Use SYMBOL,price.", "சரியான lines இல்ல. SYMBOL,price மாதிரி."); return; } Object.keys(px).forEach(function (k) { MINE[k] = px[k]; }); store("cbipo_px_mine", JSON.stringify(MINE)); renderAll(); $("pasteMsg").textContent = n + T(" prices applied for you.", " விலைகள் உங்களுக்கு apply ஆச்சு."); };
   $("pasteClear").onclick = function () { MINE = {}; store("cbipo_px_mine", null); renderAll(); $("pasteMsg").textContent = T("Your prices cleared.", "உங்க விலைகள் அழிக்கப்பட்டது."); };
@@ -1374,7 +1409,7 @@ function buildConfig() {
       { k: ["lock-in", "lock in", "unlock", "anchor", "லாக்", "அன்லாக்", "ஆங்கர்"], a: A("Anchor shares unlock 50% after 30 days and the rest after 90; pre-IPO holders after 6 months.", "Anchor shares 30 நாள்ல 50%, 90 நாள்ல மீதி unlock; pre-IPO holders 6 மாசம்."), tab: "t-unlock" },
       { k: ["how much raised", "total raised", "money raised", "மொத்தம்", "திரட்டி"], a: A("About ₹1.23 lakh crore was raised through ~100 IPOs in 2026 up to 13 Oct.", "2026-ல 13 Oct வரை ~100 IPOs மூலமா சுமார் ₹1.23 lakh crore."), tab: "t-dash" },
       { k: ["gmp", "grey market", "ஜிஎம்பி"], a: A("Grey-market premium is unofficial and often wrong; 43 of 2026's mainboard IPOs listed below their GMP estimate.", "GMP official இல்ல, அடிக்கடி தப்பு; 2026-ல 43 mainboard IPOs GMP-க்கு கீழ list ஆச்சு."), tab: "t-promise" },
-      { k: ["live price", "price update", "nse price", "bse price", "லைவ்"], a: A("Prices update from CB's auto snapshot three times a trading day; you can also link a Google Sheet or type your own.", "CB auto snapshot ஒரு trading நாளுக்கு 3 முறை விலை update பண்ணும்; Google Sheet link அல்லது நீங்களே type பண்ணலாம்."), tab: "t-live" },
+      { k: ["live price", "price update", "nse price", "bse price", "லைவ்"], a: A("On claude.ai, prices update every Friday with the week's close. The GitHub copy can link a Google Sheet for near-live prices, or you can type your own.", "claude.ai-ல ஒவ்வொரு வெள்ளியும் வார closing விலை update ஆகும். GitHub copy-ல Google Sheet link பண்ணா near-live விலை; இல்ல நீங்களே type பண்ணலாம்."), tab: "t-live" },
       { k: ["self check", "self-check", "should i apply", "செல்ஃப்"], a: A("Open the self-check: tick the conditions that are true for you. It counts them; it is not advice.", "Self-check திறங்க: உங்களுக்கு உண்மையானதை tick பண்ணுங்க. எண்ணும் — advice இல்ல."), tab: "t-up" }
     ],
     suggestions: [["Which IPO gave the best return?", "எந்த IPO best return?"], ["Which IPO had the biggest listing gain?", "எந்த IPO-க்கு listing gain அதிகம்?"], ["ESDS vs Fractal", "ESDS vs Fractal"], ["What is OFS?", "OFS-னா என்ன?"], ["When does Jio open?", "Jio எப்போ திறக்குது?"], ["Should I buy Indo-MIM?", "Indo-MIM வாங்கலாமா?"]]
