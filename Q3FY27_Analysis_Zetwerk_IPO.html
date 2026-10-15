@@ -1,0 +1,929 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Zetwerk IPO Analysis</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<style>
+:root{--bg:#ffffff;--soft:#f6f8fb;--ink:#1d2433;--mute:#5d6778;--line:#e3e8ef;--or:#f07c1b;--orl:#fff1e4;--bl:#2563eb;--bll:#e8f0ff;--pu:#7c3aed;--pul:#f1ebff;--gr:#16a34a;--grl:#e7f7ec;--am:#d97706;--aml:#fff6e0;--rd:#dc2626;--rdl:#fdecec;--te:#0d9488;--tel:#e2f6f3}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--ink);font-family:"Segoe UI",Roboto,"Noto Sans Tamil",Arial,sans-serif;font-size:15px;line-height:1.55}
+body::before{content:"CB Research";position:fixed;top:45%;left:50%;transform:translate(-50%,-50%) rotate(-24deg);font-size:64px;font-weight:800;color:rgba(240,124,27,.05);pointer-events:none;z-index:0;white-space:nowrap}
+body.ta .en{display:none!important}
+body:not(.ta) .ta{display:none!important}
+header{position:sticky;top:0;z-index:20;background:#fff;border-bottom:1px solid var(--line)}
+.hd{display:flex;align-items:center;gap:10px;padding:10px 16px}
+.hd h1{font-size:17px;margin:0;flex:1}
+.hd small{display:block;color:var(--mute);font-weight:400;font-size:12px}
+.lang{border:1px solid var(--or);background:var(--orl);color:#9a4a07;border-radius:20px;padding:6px 12px;font-weight:700;cursor:pointer;font-size:13px}
+nav{display:flex;overflow-x:auto;gap:6px;padding:0 12px 10px;scrollbar-width:none}
+nav::-webkit-scrollbar{display:none}
+nav button{flex:0 0 auto;border:1px solid var(--line);background:var(--soft);color:var(--ink);border-radius:18px;padding:7px 13px;font-size:13px;cursor:pointer;white-space:nowrap}
+nav button.on{background:var(--or);border-color:var(--or);color:#fff;font-weight:700}
+main{position:relative;z-index:1;max-width:1100px;margin:0 auto;padding:14px 16px 120px}
+section.tab{display:none}
+section.tab.on{display:block;animation:fd .25s}
+@keyframes fd{from{opacity:0;transform:translateY(6px)}to{opacity:1}}
+h2{font-size:20px;margin:6px 0 4px}
+h3{font-size:16px;margin:18px 0 8px;color:#22304a}
+p.lead{color:var(--mute);margin:0 0 12px}
+.grid{display:grid;gap:10px}
+.g2{grid-template-columns:repeat(auto-fit,minmax(150px,1fr))}
+.g3{grid-template-columns:repeat(auto-fit,minmax(230px,1fr))}
+.kpi{background:var(--soft);border:1px solid var(--line);border-radius:12px;padding:10px 12px}
+.kpi b{display:block;font-size:19px}
+.kpi span{color:var(--mute);font-size:12px}
+.card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:14px;margin:10px 0;box-shadow:0 1px 3px rgba(20,30,50,.04)}
+.card.hl{outline:3px solid var(--or);transition:outline .3s}
+.note{background:var(--aml);border-left:4px solid var(--am);padding:10px 12px;border-radius:8px;font-size:13.5px;margin:10px 0}
+.good{background:var(--grl);border-left:4px solid var(--gr);padding:10px 12px;border-radius:8px;font-size:13.5px;margin:10px 0}
+.bad{background:var(--rdl);border-left:4px solid var(--rd);padding:10px 12px;border-radius:8px;font-size:13.5px;margin:10px 0}
+.tw{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:8px 0}
+table{border-collapse:collapse;width:100%;font-size:13.5px;min-width:520px}
+th,td{border-bottom:1px solid var(--line);padding:8px 9px;text-align:left;vertical-align:top}
+th{background:var(--soft);font-weight:700;color:#2b3a55}
+td.n,th.n{text-align:right;font-variant-numeric:tabular-nums}
+.chip{display:inline-block;padding:3px 10px;border-radius:12px;font-size:12px;font-weight:700;margin:2px 4px 2px 0}
+.c-gr{background:var(--grl);color:#11692f}.c-am{background:var(--aml);color:#8a4b00}.c-rd{background:var(--rdl);color:#9b1c1c}.c-bl{background:var(--bll);color:#1e40af}.c-or{background:var(--orl);color:#9a4a07}.c-pu{background:var(--pul);color:#5b21b6}
+.cw{position:relative;overflow-x:auto}
+.cw .ci{min-width:620px;height:300px}
+.svgw{width:100%;overflow-x:auto}
+.svgw svg{display:block;margin:0 auto;max-width:100%;height:auto}
+.bx{cursor:pointer;transition:opacity .2s}
+.bx:hover{opacity:.85}
+#bmCard,#ipCard{min-height:70px}
+.pillar{cursor:pointer}
+.ana{display:grid;grid-template-columns:auto 1fr;gap:10px;align-items:start}
+.ana .badge{width:54px;height:54px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:12px;text-align:center;line-height:1.1}
+.meter{height:14px;border-radius:8px;background:#eee;overflow:hidden;display:flex}
+.meter i{display:block;height:100%}
+ul.t{padding-left:18px;margin:6px 0}
+ul.t li{margin:4px 0}
+.tl{position:relative;padding-left:22px;margin:8px 0}
+.tl::before{content:"";position:absolute;left:8px;top:4px;bottom:4px;width:2px;background:var(--line)}
+.tl div{position:relative;margin:0 0 12px}
+.tl div::before{content:"";position:absolute;left:-19px;top:5px;width:12px;height:12px;border-radius:50%;background:var(--or);border:2px solid #fff;box-shadow:0 0 0 1px var(--or)}
+.tl div.done::before{background:var(--gr);box-shadow:0 0 0 1px var(--gr)}
+.tl div.fut::before{background:#fff}
+.tl b{display:block}
+.q{border:1px solid var(--line);border-radius:12px;padding:12px;margin:10px 0}
+.q button{display:block;width:100%;text-align:left;margin:6px 0;padding:9px 11px;border:1px solid var(--line);border-radius:9px;background:var(--soft);cursor:pointer;font-size:14px}
+.q button.ok{background:var(--grl);border-color:var(--gr)}
+.q button.no{background:var(--rdl);border-color:var(--rd)}
+.q .ex{display:none;font-size:13.5px;margin-top:6px;color:#374151}
+textarea{width:100%;min-height:70px;border:1px solid var(--line);border-radius:9px;padding:9px;font:inherit}
+#cbBadge{position:fixed;right:16px;bottom:16px;z-index:50;width:56px;height:56px;border-radius:50%;background:var(--or);color:#fff;font-weight:900;font-size:20px;display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 4px 14px rgba(240,124,27,.45);animation:blink 2.2s infinite;border:3px solid #fff}
+@keyframes blink{0%,100%{box-shadow:0 0 0 0 rgba(240,124,27,.55)}50%{box-shadow:0 0 0 10px rgba(240,124,27,0)}}
+#disc{display:none;position:fixed;right:16px;bottom:82px;z-index:60;max-width:320px;background:#fff;border:1px solid var(--line);border-radius:14px;padding:14px;box-shadow:0 10px 30px rgba(0,0,0,.15);font-size:13px}
+#disc.on{display:block}
+#asBtn{position:fixed;right:84px;bottom:22px;z-index:50;border:none;background:var(--bl);color:#fff;border-radius:22px;padding:10px 14px;font-weight:700;font-size:13px;cursor:pointer;box-shadow:0 4px 12px rgba(37,99,235,.35)}
+#asBox{display:none;position:fixed;right:12px;left:12px;bottom:86px;z-index:61;max-width:420px;margin-left:auto;background:#fff;border:1px solid var(--line);border-radius:16px;box-shadow:0 12px 34px rgba(0,0,0,.18);overflow:hidden}
+#asBox.on{display:block}
+#asHd{background:var(--bll);padding:10px 12px;font-weight:700;display:flex;justify-content:space-between;align-items:center}
+#asLog{max-height:300px;overflow-y:auto;padding:10px 12px;font-size:14px}
+#asLog .u{background:var(--soft);border-radius:10px;padding:7px 10px;margin:6px 0 6px 30px}
+#asLog .b{background:var(--orl);border-radius:10px;padding:7px 10px;margin:6px 30px 6px 0}
+#asIn{display:flex;gap:6px;padding:10px;border-top:1px solid var(--line)}
+#asIn input{flex:1;border:1px solid var(--line);border-radius:10px;padding:9px;font:inherit}
+#asIn button{border:none;border-radius:10px;padding:0 12px;font-weight:700;cursor:pointer}
+#mic{background:var(--or);color:#fff}#mic.live{background:var(--rd)}
+#snd{background:var(--bl);color:#fff}
+.sugg{display:flex;flex-wrap:wrap;gap:6px;padding:0 12px 10px}
+.sugg button{border:1px solid var(--line);background:#fff;border-radius:14px;padding:4px 10px;font-size:12px;cursor:pointer}
+.src li{margin:5px 0;font-size:13px;word-break:break-word}
+.small{font-size:12.5px;color:var(--mute)}
+@media (max-width:520px){h2{font-size:18px}.kpi b{font-size:17px}}
+
+:root{--acc:#F28C28;--accSoft:#fff6ec;--accLine:#f6cfa3;--ink2:#374151;--muted:#5d6778;--good:#16a34a;--goodSoft:#e7f7ec;--fd:inherit}
+.sc{border:1.5px solid var(--accLine);background:var(--accSoft);border-radius:12px;padding:16px}
+.sc h3{font-size:19px;font-weight:800;margin:0 0 10px}
+.sc label{display:grid;grid-template-columns:24px 1fr;gap:10px;padding:7px 26px 7px 0;cursor:pointer;align-items:start;position:relative}
+.sc input[type=checkbox]{width:20px;height:20px;margin:2px 0 0;accent-color:var(--acc)}
+.sc .scq{font-weight:700;color:var(--ink)}
+.sc .f{display:block;font-size:12.5px;font-weight:600;color:var(--ink2);margin-top:2px}
+.sc .meter{height:12px;border-radius:6px;background:#F1E6D7;overflow:hidden;margin:12px 0 8px;display:block}
+.sc .meter i{display:block;height:100%;background:var(--acc);transition:width .3s}
+.sc .res{font-weight:800;font-size:15px}
+.sc .fine{font-size:12.5px;color:var(--muted);font-weight:600;margin-top:6px}
+.sccat{border-top:1.5px solid var(--accLine);padding-top:10px;margin-top:10px}
+.scch{display:flex;gap:10px;align-items:center;margin-bottom:2px}
+.scch>div{flex:1;min-width:0}.scch b{display:block;font-family:var(--fd);font-size:16px}
+.scn{width:28px;height:28px;border-radius:50%;background:var(--ink);color:#fff;display:grid;place-items:center;font-weight:800;flex:0 0 auto}
+.scc{font-weight:800;font-size:12.5px;color:var(--ink2);background:#fff;border:1.5px solid var(--line);border-radius:999px;padding:2px 9px;white-space:nowrap}
+.scc.full{background:var(--goodSoft);color:var(--good);border-color:var(--good)}
+.scx{position:absolute;right:0;top:6px;border:0;background:none;color:var(--muted);font-weight:800;cursor:pointer}
+.scsum{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,170px),1fr));gap:6px 14px;margin-bottom:6px}
+.scsum div{display:flex;flex-direction:column;gap:3px;font-size:12px;font-weight:700;color:var(--ink2)}
+.scsum .mb{height:7px;border-radius:4px;background:#F1E6D7;overflow:hidden}.scsum .mb i{display:block;height:100%;background:var(--acc)}
+.ctrl{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.ctrl input[type=text]{border:1.5px solid var(--accLine);border-radius:9px;padding:9px;font:inherit;background:#fff}
+.btn{border:1.5px solid var(--acc);border-radius:9px;padding:8px 14px;font-weight:800;cursor:pointer;font-size:14px}
+.btn.pri{background:var(--acc);color:#fff}.btn.ghost{background:#fff;color:#9a4a07}
+.sc .sugg{display:flex;flex-wrap:wrap;gap:6px}.sc .sugg button{border:1px solid var(--accLine);background:#fff;border-radius:14px;padding:5px 10px;font-size:12.5px;cursor:pointer;text-align:left}
+.asOpen{display:inline-block;margin-top:6px;border:1px solid var(--acc);background:#fff;color:#9a4a07;border-radius:12px;padding:4px 10px;font-weight:700;font-size:12.5px;cursor:pointer}
+</style>
+</head>
+<body>
+<header>
+ <div class="hd">
+  <h1><span class="en">Zetwerk Manufacturing Businesses — IPO Analysis</span><span class="ta">செட்வெர்க் மேனுஃபேக்சரிங் — ஐபிஓ அலசல்</span>
+  <small><span class="en">CB Research · Q1 FY27 data (June 2026) · Issue opens 15 Oct 2026</span><span class="ta">சிபி ரிசர்ச் · க்யூ1 எஃப்ஒய்27 தரவு (ஜூன் 2026) · ஐபிஓ 15 அக்டோபர் 2026 அன்று திறக்குது</span></small></h1>
+  <button class="lang" id="langBtn" onclick="toggleLang()">தமிழ்</button>
+ </div>
+ <nav id="nav"></nav>
+</header>
+
+<main>
+
+<!-- ============ OVERVIEW ============ -->
+<section class="tab on" id="t-ov">
+ <h2><span class="en">Overview</span><span class="ta">கண்ணோட்டம்</span></h2>
+ <p class="lead"><span class="en">Zetwerk is a technology-led manufacturing platform. Enterprises send it a requirement, and Zetwerk gets it built through 10,000+ partner suppliers and 26 of its own factories, then manages quality and delivery. The ₹5,012 crore IPO prices the company at ₹25,583 crore at the upper band.</span><span class="ta">செட்வெர்க் ஒரு டெக்னாலஜி அடிப்படையிலான உற்பத்தி தளம். பெரிய நிறுவனங்கள் தங்களுக்கு என்ன வேணும்னு சொல்லும். செட்வெர்க் அதை 10,000-க்கும் மேல பார்ட்னர் சப்ளையர்கள், அதோட சொந்த 26 ஃபேக்டரிகள் மூலமா செஞ்சு, குவாலிட்டி பார்த்து டெலிவரி பண்ணும். ₹5,012 கோடி ஐபிஓ, மேல் விலைப்பட்டையில நிறுவன மதிப்பு ₹25,583 கோடி.</span></p>
+ <div class="grid g2">
+  <div class="kpi"><b>₹143–₹151</b><span class="en">Price band</span><span class="ta">விலைப்பட்டை</span></div>
+  <div class="kpi"><b>₹5,012.33 Cr</b><span class="en">Issue size</span><span class="ta">ஐபிஓ அளவு</span></div>
+  <div class="kpi"><b>₹25,583 Cr</b><span class="en">Post-issue market cap</span><span class="ta">ஐபிஓ-க்கு அப்புறம் மார்க்கெட் கேப்</span></div>
+  <div class="kpi"><b>₹15,913 Cr</b><span class="en">FY26 revenue (+40.43%)</span><span class="ta">எஃப்ஒய்26 வருவாய் (+40.43%)</span></div>
+  <div class="kpi"><b>₹421 Cr</b><span class="en">FY26 Adj. EBITDA (2.65%)</span><span class="ta">எஃப்ஒய்26 அட்ஜஸ்டட் இபிஐடிடிஏ (2.65%)</span></div>
+  <div class="kpi"><b style="color:var(--rd)">−₹1,606 Cr</b><span class="en">FY26 net loss</span><span class="ta">எஃப்ஒய்26 நிகர நஷ்டம்</span></div>
+  <div class="kpi"><b>₹16,000+ Cr</b><span class="en">Order book (Jun 2026)</span><span class="ta">ஆர்டர் புக் (ஜூன் 2026)</span></div>
+  <div class="kpi"><b>₹2,251 Cr</b><span class="en">Anchor book (99 anchors)</span><span class="ta">ஆங்கர் புக் (99 ஆங்கர்கள்)</span></div>
+ </div>
+ <div style="margin-top:10px">
+  <span class="chip c-or">CB Score 5.8/10</span>
+  <span class="chip c-bl">CY 69</span>
+  <span class="chip c-gr">TG 72</span>
+  <span class="chip c-am"><span class="en">Analyst consensus: Long-term, high risk</span><span class="ta">அனலிஸ்ட் கருத்து: நீண்ட கால, அதிக ரிஸ்க்</span></span>
+ </div>
+
+ <h3><span class="en">CB six-pillar score (tap a column)</span><span class="ta">சிபி ஆறு தூண் ஸ்கோர் (ஒரு தூணைத் தொடுங்க)</span></h3>
+ <div class="svgw" id="temple"></div>
+ <div id="pillars"></div>
+
+ <div class="note"><span class="en"><b>The one-line story:</b> revenue is growing fast and the manufacturing arm earns 6%+ EBITDA margins with a large order book, but the group is still loss-making, burns operating cash, and 41% of revenue is a 1% margin metals-trading arm. The IPO cleans the balance sheet by repaying ₹2,160 crore of debt.</span><span class="ta"><b>ஒரு வரியில கதை:</b> வருவாய் வேகமா வளருது, மேனுஃபேக்சரிங் பிரிவு 6%-க்கு மேல இபிஐடிடிஏ மார்ஜின் தருது, ஆர்டர் புக்கும் பெருசு. ஆனா மொத்த கம்பெனி இன்னும் நஷ்டத்துல தான் இருக்கு, ஆபரேஷன்ல கேஷ் வெளியே போகுது, வருவாயில 41% வெறும் 1% மார்ஜின் இருக்கற உலோக டிரேடிங் பிரிவுல இருந்து வருது. ஐபிஓ பணத்துல ₹2,160 கோடி கடனை அடைச்சு பேலன்ஸ் ஷீட்டை சுத்தம் பண்ணப் போறாங்க.</span></div>
+</section>
+
+<!-- ============ IPO DETAILS ============ -->
+<section class="tab" id="t-ipo">
+ <h2><span class="en">IPO Details</span><span class="ta">ஐபிஓ விவரங்கள்</span></h2>
+ <p class="lead"><span class="en">Book-built issue on BSE and NSE. Face value ₹1. Registrar: KFin Technologies.</span><span class="ta">புக் பில்டிங் முறை ஐபிஓ, பிஎஸ்இ மற்றும் என்எஸ்இ-ல லிஸ்ட் ஆகும். முக மதிப்பு ₹1. ரெஜிஸ்ட்ரார்: கேஃபின் டெக்னாலஜீஸ்.</span></p>
+
+ <h3><span class="en">Where the ₹5,012 crore goes (tap a box)</span><span class="ta">₹5,012 கோடி எங்கே போகுது (பெட்டியைத் தொடுங்க)</span></h3>
+ <div class="svgw" id="ipoFlow"></div>
+ <div class="card" id="ipCard"><span class="en">Tap any box above to see what it means.</span><span class="ta">மேல இருக்கற எந்த பெட்டியைத் தொட்டாலும் அதோட விளக்கம் இங்கே வரும்.</span></div>
+
+ <h3><span class="en">Key dates</span><span class="ta">முக்கிய தேதிகள்</span></h3>
+ <div class="tl">
+  <div class="done"><b>14 Oct 2026</b><span class="en">Anchor book: ₹2,251.23 crore from 99 anchors at ₹151</span><span class="ta">ஆங்கர் புக்: 99 ஆங்கர்கள் கிட்ட இருந்து ₹151 விலையில ₹2,251.23 கோடி</span></div>
+  <div><b>15 Oct 2026</b><span class="en">Issue opens</span><span class="ta">ஐபிஓ திறக்குது</span></div>
+  <div class="fut"><b>19 Oct 2026</b><span class="en">Issue closes (UPI mandate cut-off 5 PM)</span><span class="ta">ஐபிஓ மூடுது (யுபிஐ மேண்டேட் மாலை 5 மணி வரை)</span></div>
+  <div class="fut"><b>21 Oct 2026</b><span class="en">Basis of allotment</span><span class="ta">அலாட்மென்ட் இறுதி</span></div>
+  <div class="fut"><b>22 Oct 2026</b><span class="en">Refunds and credit of shares to demat</span><span class="ta">ரீஃபண்ட், டீமேட்டுக்கு ஷேர் வரவு</span></div>
+  <div class="fut"><b>23 Oct 2026</b><span class="en">Listing on BSE and NSE (tentative)</span><span class="ta">பிஎஸ்இ, என்எஸ்இ-ல லிஸ்டிங் (தற்காலிக தேதி)</span></div>
+ </div>
+
+ <h3><span class="en">Issue structure</span><span class="ta">ஐபிஓ அமைப்பு</span></h3>
+ <div class="tw"><table>
+  <tr><th><span class="en">Item</span><span class="ta">விவரம்</span></th><th class="n"><span class="en">Shares</span><span class="ta">பங்குகள்</span></th><th class="n"><span class="en">₹ crore (at ₹151)</span><span class="ta">₹ கோடி (₹151-ல)</span></th></tr>
+  <tr><td><span class="en">Fresh issue</span><span class="ta">புதிய பங்கு வெளியீடு</span></td><td class="n">18,74,82,119</td><td class="n">2,830.00</td></tr>
+  <tr><td><span class="en">Offer for sale (OFS)</span><span class="ta">ஆஃபர் ஃபார் சேல் (ஓஎஃப்எஸ்)</span></td><td class="n">14,45,25,036</td><td class="n">2,182.33</td></tr>
+  <tr><th><span class="en">Total issue</span><span class="ta">மொத்த ஐபிஓ</span></th><th class="n">33,20,07,155</th><th class="n">5,012.33</th></tr>
+  <tr><td><span class="en">Shares pre-issue</span><span class="ta">ஐபிஓ-க்கு முன் பங்குகள்</span></td><td class="n">1,50,67,72,659</td><td class="n">22,752.27</td></tr>
+  <tr><td><span class="en">Shares post-issue</span><span class="ta">ஐபிஓ-க்கு பின் பங்குகள்</span></td><td class="n">1,69,42,54,778</td><td class="n">25,583.25</td></tr>
+  <tr><td><span class="en">Issue as % of post-issue capital</span><span class="ta">ஐபிஓ-க்கு பின் மூலதனத்துல ஐபிஓ பங்கு</span></td><td class="n">19.59%</td><td class="n">—</td></tr>
+ </table></div>
+
+ <h3><span class="en">How much can you apply for</span><span class="ta">எவ்வளவு அப்ளை பண்ணலாம்</span></h3>
+ <div class="tw"><table>
+  <tr><th><span class="en">Category</span><span class="ta">பிரிவு</span></th><th class="n"><span class="en">Lots</span><span class="ta">லாட்</span></th><th class="n"><span class="en">Shares</span><span class="ta">பங்குகள்</span></th><th class="n"><span class="en">Amount ₹</span><span class="ta">தொகை ₹</span></th><th><span class="en">Quota of net offer</span><span class="ta">நெட் ஆஃபர்ல ஒதுக்கீடு</span></th></tr>
+  <tr><td><span class="en">Retail (min)</span><span class="ta">ரீடெயில் (குறைந்தது)</span></td><td class="n">1</td><td class="n">99</td><td class="n">14,949</td><td rowspan="2"><span class="en">Up to 10%</span><span class="ta">10% வரை</span></td></tr>
+  <tr><td><span class="en">Retail (max)</span><span class="ta">ரீடெயில் (அதிகபட்சம்)</span></td><td class="n">13</td><td class="n">1,287</td><td class="n">1,94,337</td></tr>
+  <tr><td><span class="en">Small HNI (min)</span><span class="ta">ஸ்மால் எச்என்ஐ (குறைந்தது)</span></td><td class="n">14</td><td class="n">1,386</td><td class="n">2,09,286</td><td rowspan="3"><span class="en">Up to 15%</span><span class="ta">15% வரை</span></td></tr>
+  <tr><td><span class="en">Small HNI (max)</span><span class="ta">ஸ்மால் எச்என்ஐ (அதிகபட்சம்)</span></td><td class="n">66</td><td class="n">6,534</td><td class="n">9,86,634</td></tr>
+  <tr><td><span class="en">Big HNI (min)</span><span class="ta">பிக் எச்என்ஐ (குறைந்தது)</span></td><td class="n">67</td><td class="n">6,633</td><td class="n">10,01,583</td></tr>
+  <tr><td><span class="en">QIB (incl. anchors)</span><span class="ta">க்யூஐபி (ஆங்கர் உட்பட)</span></td><td class="n">—</td><td class="n">—</td><td class="n">—</td><td><span class="en">At least 75%</span><span class="ta">குறைந்தது 75%</span></td></tr>
+  <tr><td><span class="en">Employees (₹14 discount)</span><span class="ta">ஊழியர்கள் (₹14 தள்ளுபடி)</span></td><td class="n">—</td><td class="n"><span class="en">up to 7 lakh</span><span class="ta">7 லட்சம் வரை</span></td><td class="n">—</td><td><span class="en">Separate reservation</span><span class="ta">தனி ஒதுக்கீடு</span></td></tr>
+ </table></div>
+ <div class="note"><span class="en">Only 10% of the net offer is for retail. That is the minimum allowed for a company that has not made profits, so retail allotment odds depend heavily on the number of applications.</span><span class="ta">நெட் ஆஃபர்ல ரீடெயிலுக்கு வெறும் 10% தான். லாபம் இல்லாத கம்பெனிக்கு இது தான் விதிப்படி வரம்பு. அதனால ரீடெயில்ல அலாட்மென்ட் கிடைக்குமான்னு அப்ளிகேஷன் எண்ணிக்கையைப் பொறுத்து தான் இருக்கும்.</span></div>
+
+ <h3><span class="en">Who is selling in the OFS</span><span class="ta">ஓஎஃப்எஸ்-ல யார் விக்கறாங்க</span></h3>
+ <div class="cw"><div class="ci"><canvas id="cOFS"></canvas></div></div>
+
+ <h3><span class="en">Shareholding: before and after</span><span class="ta">பங்குதாரர் அமைப்பு: முன்னும் பின்னும்</span></h3>
+ <div class="cw"><div class="ci" style="height:200px"><canvas id="cSH"></canvas></div></div>
+ <p class="small"><span class="en">Promoters and promoter group hold only 15.86% before the issue and 11.36% after. Zetwerk is effectively a professionally run, investor-owned company.</span><span class="ta">புரோமோட்டர்கள் கையில ஐபிஓ-க்கு முன்னாடி 15.86% தான், அப்புறம் 11.36%. அதாவது இது முதலீட்டாளர்கள் கையில இருக்கற, ப்ரொஃபஷனலா நடத்தப்படற கம்பெனி.</span></p>
+
+ <h3><span class="en">Anchor book and grey market</span><span class="ta">ஆங்கர் புக் மற்றும் கிரே மார்க்கெட்</span></h3>
+ <div class="tw"><table>
+  <tr><th><span class="en">Signal</span><span class="ta">அறிகுறி</span></th><th><span class="en">Reading</span><span class="ta">நிலை</span></th></tr>
+  <tr><td><span class="en">Anchor amount</span><span class="ta">ஆங்கர் தொகை</span></td><td><span class="en">₹2,251.23 crore; 14.91 crore shares at ₹151 (top of band)</span><span class="ta">₹2,251.23 கோடி; ₹151 விலையில (மேல் வரம்பு) 14.91 கோடி பங்குகள்</span></td></tr>
+  <tr><td><span class="en">Domestic mutual funds</span><span class="ta">உள்நாட்டு மியூச்சுவல் ஃபண்டுகள்</span></td><td><span class="en">About 46% of anchor book (6.80 crore shares, 61 schemes, 22 fund houses)</span><span class="ta">ஆங்கர் புக்குல சுமார் 46% (6.80 கோடி பங்குகள், 61 திட்டங்கள், 22 ஃபண்ட் நிறுவனங்கள்)</span></td></tr>
+  <tr><td><span class="en">Global names</span><span class="ta">வெளிநாட்டு நிறுவனங்கள்</span></td><td><span class="en">Capital Group, BlackRock, Goldman Sachs, Nomura, Société Générale, Manulife, Susquehanna, First Sentier</span><span class="ta">கேப்பிடல் குரூப், பிளாக்ராக், கோல்ட்மேன் சாக்ஸ், நோமுரா, சொசைட்டி ஜெனரல், மேனுலைஃப், சஸ்குஹானா, ஃபர்ஸ்ட் சென்டியர்</span></td></tr>
+  <tr><td><span class="en">Insurers</span><span class="ta">இன்ஷூரன்ஸ் நிறுவனங்கள்</span></td><td><span class="en">SBI Life, ICICI Prudential Life, Bajaj Life, Axis Max Life</span><span class="ta">எஸ்பிஐ லைஃப், ஐசிஐசிஐ ப்ருடென்ஷியல் லைஃப், பஜாஜ் லைஃப், ஆக்சிஸ் மேக்ஸ் லைஃப்</span></td></tr>
+  <tr><td><span class="en">Grey market premium (unofficial)</span><span class="ta">கிரே மார்க்கெட் பிரீமியம் (அதிகாரப்பூர்வம் இல்லை)</span></td><td><span class="en">₹16 to ₹30 quoted on 11–12 Oct (about 11% to 20% over ₹151). Volatile and unregulated.</span><span class="ta">அக்டோபர் 11–12 அன்னிக்கு ₹16 முதல் ₹30 வரை சொல்லப்பட்டது (₹151-க்கு மேல சுமார் 11% முதல் 20%). இது நிலையில்லாதது, ஒழுங்குபடுத்தப்படாதது.</span></td></tr>
+  <tr><td><span class="en">Book-running lead managers</span><span class="ta">லீட் மேனேஜர்கள்</span></td><td><span class="en">Kotak, Morgan Stanley, Goldman Sachs, Avendus, JM Financial, HSBC, Pantomath</span><span class="ta">கோடக், மார்கன் ஸ்டான்லி, கோல்ட்மேன் சாக்ஸ், அவென்டஸ், ஜேஎம் ஃபைனான்ஷியல், எச்எஸ்பிசி, பேண்டோமேத்</span></td></tr>
+ </table></div>
+</section>
+
+<!-- ============ BUSINESS MODEL ============ -->
+<section class="tab" id="t-bm">
+ <h2><span class="en">Business Model</span><span class="ta">பிசினஸ் மாடல்</span></h2>
+ <p class="lead"><span class="en">Think of Zetwerk as a general contractor for factories. A customer wants 500 solar torque tubes or a power transformer. Zetwerk designs for manufacturing, picks the right supplier (or its own plant), watches quality and delivers. Tap any box to see how that step makes money.</span><span class="ta">செட்வெர்க்கை ஃபேக்டரிகளுக்கான ஒரு "மேஸ்திரி" மாதிரி நினைச்சுக்கோங்க. ஒரு கஸ்டமருக்கு 500 சோலார் டார்க் டியூப் இல்லன்னா ஒரு பவர் டிரான்ஸ்ஃபார்மர் வேணும். செட்வெர்க் அதை டிசைன் பண்ணி, சரியான சப்ளையரை (இல்லன்னா சொந்த ஃபேக்டரியை) தேர்ந்தெடுத்து, குவாலிட்டி பார்த்து டெலிவரி பண்ணும். ஒவ்வொரு பெட்டியையும் தொட்டு அந்த ஸ்டெப்ல எப்படி பணம் வருதுன்னு பாருங்க.</span></p>
+ <div class="card" style="border:2px solid var(--or);background:#fffaf4">
+  <h3 style="margin-top:0"><span class="en">The business model in 60 seconds</span><span class="ta">60 வினாடியில பிசினஸ் மாடல்</span></h3>
+  <p><span class="en">Zetwerk does <b>two different jobs</b>. They are reported as two segments.</span><span class="ta">செட்வெர்க் <b>ரெண்டு வேற வேற வேலை</b> செய்யுது. அது தான் ரெண்டு செக்மென்ட்.</span></p>
+
+  <div class="grid g3">
+   <div class="card" style="border-top:5px solid var(--bl);margin:0">
+    <b style="color:#1e40af"><span class="en">Job 1 · Manufacturing (59% of revenue)</span><span class="ta">வேலை 1 · மேனுஃபேக்சரிங் (வருவாயில 59%)</span></b>
+    <p style="margin:6px 0"><span class="en"><b>Like a building contractor, but for factory products.</b> A company says "I need 5,000 steel frames for my solar farm." Zetwerk designs the frame, gives the job to a suitable factory (one of 10,000+ partners, or one of its own 26 plants), checks quality, and delivers. The customer deals only with Zetwerk.</span><span class="ta"><b>வீடு கட்டற மேஸ்திரி மாதிரி, ஆனா ஃபேக்டரி பொருட்களுக்கு.</b> ஒரு கம்பெனி "என் சோலார் பண்ணைக்கு 5,000 ஸ்டீல் ஃபிரேம் வேணும்"னு சொல்லும். செட்வெர்க் ஃபிரேமை டிசைன் பண்ணி, பொருத்தமான ஃபேக்டரிக்கு (10,000+ பார்ட்னர்கள்ல ஒண்ணு, இல்லன்னா சொந்த 26 ஆலைகள்ல ஒண்ணு) வேலையைக் கொடுத்து, குவாலிட்டி பார்த்து, டெலிவரி பண்ணும். கஸ்டமர் செட்வெர்க்கிட்ட மட்டும் தான் பேசுவாங்க.</span></p>
+    <p class="small" style="margin:0"><span class="en">Three product groups: <b>Energy</b> (transformers, solar structures) ₹6,508 Cr · <b>Capital goods</b> (heavy fabrication) ₹1,464 Cr · <b>Precision</b> (electronics, aerospace parts) ₹1,397 Cr</span><span class="ta">மூணு தயாரிப்பு குழு: <b>எனர்ஜி</b> (டிரான்ஸ்ஃபார்மர், சோலார் கட்டமைப்பு) ₹6,508 கோடி · <b>கேப்பிடல் குட்ஸ்</b> (கனரக ஃபேப்ரிகேஷன்) ₹1,464 கோடி · <b>பிரிசிஷன்</b> (எலக்ட்ரானிக்ஸ், ஏரோஸ்பேஸ் பாகங்கள்) ₹1,397 கோடி</span></p>
+   </div>
+   <div class="card" style="border-top:5px solid var(--pu);margin:0">
+    <b style="color:#5b21b6"><span class="en">Job 2 · Ecosystem / Terra91 (41% of revenue)</span><span class="ta">வேலை 2 · எகோசிஸ்டம் / டெர்ரா91 (வருவாயில 41%)</span></b>
+    <p style="margin:6px 0"><span class="en"><b>Like a wholesale steel and metals dealer.</b> The small factories that build Zetwerk's orders need steel, aluminium and copper. Terra91 buys these in bulk from big mills and sells them on to those factories, often on credit. It makes no product; it only trades.</span><span class="ta"><b>ஸ்டீல், உலோக மொத்த வியாபாரி மாதிரி.</b> செட்வெர்க் ஆர்டர்களை செய்யற சின்ன ஃபேக்டரிகளுக்கு ஸ்டீல், அலுமினியம், காப்பர் தேவை. டெர்ரா91 பெரிய மில்கள்கிட்ட மொத்தமா வாங்கி, அந்த ஃபேக்டரிகளுக்கு பெரும்பாலும் கடன்ல விக்குது. எந்த பொருளையும் தயாரிக்கல; டிரேடிங் மட்டும் தான்.</span></p>
+    <p class="small" style="margin:0"><span class="en">Why do it? Suppliers get raw material easily, so they stay loyal to Zetwerk. The cost: huge revenue (₹6,539 Cr) but almost no margin.</span><span class="ta">ஏன் இதை செய்யறாங்க? சப்ளையர்களுக்கு கச்சாப் பொருள் சுலபமா கிடைக்கும், அதனால செட்வெர்க்கோட ஒட்டி இருப்பாங்க. விலை: வருவாய் பெருசு (₹6,539 கோடி), ஆனா மார்ஜின் கிட்டத்தட்ட இல்லை.</span></p>
+   </div>
+  </div>
+
+  <h3><span class="en">Out of every ₹100 of sales, how much does Zetwerk keep?</span><span class="ta">ஒவ்வொரு ₹100 விற்பனையிலும் செட்வெர்க்குக்கு எவ்வளவு மிஞ்சுது?</span></h3>
+  <div class="svgw"><svg viewBox="0 0 360 290" width="360" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI,Arial">
+   <text x="95" y="16" text-anchor="middle" font-size="12.5" font-weight="800" fill="#1e40af">Manufacturing</text>
+   <text x="265" y="16" text-anchor="middle" font-size="12.5" font-weight="800" fill="#5b21b6">Ecosystem (Terra91)</text>
+   <rect x="45" y="26" width="100" height="188" fill="#cbd5e1"/>
+   <text x="95" y="112" text-anchor="middle" font-size="12" font-weight="700" fill="#1f2937">₹94</text>
+   <text x="95" y="128" text-anchor="middle" font-size="10" fill="#374151">factory, material,</text>
+   <text x="95" y="141" text-anchor="middle" font-size="10" fill="#374151">freight, staff</text>
+   <rect x="45" y="214" width="100" height="12" fill="#16a34a"/>
+   <text x="95" y="244" text-anchor="middle" font-size="13" font-weight="800" fill="#16a34a">Keeps ≈ ₹6</text>
+   <rect x="215" y="26" width="100" height="197.6" fill="#ddd6fe"/>
+   <text x="265" y="112" text-anchor="middle" font-size="12" font-weight="700" fill="#1f2937">₹98.8</text>
+   <text x="265" y="128" text-anchor="middle" font-size="10" fill="#374151">paid to steel /</text>
+   <text x="265" y="141" text-anchor="middle" font-size="10" fill="#374151">metal mills</text>
+   <rect x="215" y="223.6" width="100" height="2.4" fill="#16a34a"/>
+   <text x="265" y="244" text-anchor="middle" font-size="13" font-weight="800" fill="#16a34a">Keeps ≈ ₹1.2</text>
+   <rect x="20" y="256" width="320" height="28" rx="8" fill="#fff6e0" stroke="#d97706"/>
+   <text x="180" y="275" text-anchor="middle" font-size="11.5" font-weight="700" fill="#8a4b00">Both mixed together → group keeps ≈ ₹2.65 per ₹100</text>
+  </svg></div>
+  <p class="small"><span class="en">Based on FY26 segment EBITDA margins: Manufacturing 6.03%, Ecosystem 1.24%, group adjusted EBITDA 2.65%. This is before interest, depreciation and tax.</span><span class="ta">எஃப்ஒய்26 செக்மென்ட் இபிஐடிடிஏ மார்ஜின் அடிப்படையில: மேனுஃபேக்சரிங் 6.03%, எகோசிஸ்டம் 1.24%, மொத்த கம்பெனி 2.65%. இது வட்டி, தேய்மானம், வரிக்கு முன்.</span></p>
+
+  <h3><span class="en">One order, start to finish</span><span class="ta">ஒரு ஆர்டர், ஆரம்பம் முதல் முடிவு வரை</span></h3>
+  <div class="tl">
+   <div><b><span class="en">1. Order</span><span class="ta">1. ஆர்டர்</span></b><span class="en">A solar developer orders mounting structures worth ₹100 crore from Zetwerk.</span><span class="ta">ஒரு சோலார் டெவலப்பர் செட்வெர்க்கிட்ட ₹100 கோடி மதிப்புள்ள மவுண்டிங் ஸ்ட்ரக்சர் ஆர்டர் கொடுக்கறாங்க.</span></div>
+   <div><b><span class="en">2. Pick the maker</span><span class="ta">2. செய்யறவங்களைத் தேர்வு</span></b><span class="en">Zetwerk OS (its software) picks a partner factory with spare capacity and the right skills.</span><span class="ta">செட்வெர்க் ஓஎஸ் (அதோட மென்பொருள்) காலியான திறனும் சரியான திறமையும் இருக்கற பார்ட்னர் ஃபேக்டரியைத் தேர்ந்தெடுக்குது.</span></div>
+   <div><b><span class="en">3. Supply the steel (Job 2)</span><span class="ta">3. ஸ்டீல் சப்ளை (வேலை 2)</span></b><span class="en">That factory needs steel; Terra91 sells it to them. This is a separate sale, counted in Ecosystem revenue.</span><span class="ta">அந்த ஃபேக்டரிக்கு ஸ்டீல் தேவை; டெர்ரா91 அதை விக்குது. இது தனி விற்பனை, எகோசிஸ்டம் வருவாயில சேரும்.</span></div>
+   <div><b><span class="en">4. Build and check</span><span class="ta">4. தயாரிப்பு, சோதனை</span></b><span class="en">The factory builds; Zetwerk's team inspects quality and tracks progress.</span><span class="ta">ஃபேக்டரி தயாரிக்குது; செட்வெர்க் குழு குவாலிட்டி பார்த்து முன்னேற்றத்தைக் கண்காணிக்குது.</span></div>
+   <div class="done"><b><span class="en">5. Deliver and bill (Job 1)</span><span class="ta">5. டெலிவரி, பில் (வேலை 1)</span></b><span class="en">Zetwerk delivers and bills the developer ₹100 crore, counted in Manufacturing revenue. It pays the factory about ₹94 crore and keeps about ₹6 crore.</span><span class="ta">செட்வெர்க் டெலிவரி பண்ணி டெவலப்பருக்கு ₹100 கோடி பில் போடுது, இது மேனுஃபேக்சரிங் வருவாய். ஃபேக்டரிக்கு சுமார் ₹94 கோடி கொடுத்து, சுமார் ₹6 கோடி வெச்சுக்குது.</span></div>
+  </div>
+  <p class="small"><span class="en">Illustrative order to show the mechanism; the ₹94 / ₹6 split uses the FY26 manufacturing margin.</span><span class="ta">எப்படி வேலை செய்யுதுன்னு காட்ட உதாரண ஆர்டர்; ₹94 / ₹6 பிரிப்பு எஃப்ஒய்26 மேனுஃபேக்சரிங் மார்ஜின் அடிப்படையில.</span></p>
+
+  <div class="tw"><table>
+   <tr><th></th><th><span class="en">Manufacturing</span><span class="ta">மேனுஃபேக்சரிங்</span></th><th><span class="en">Ecosystem (Terra91)</span><span class="ta">எகோசிஸ்டம் (டெர்ரா91)</span></th></tr>
+   <tr><td><b><span class="en">What it sells</span><span class="ta">என்ன விக்குது</span></b></td><td><span class="en">Finished custom products</span><span class="ta">ஆர்டர்படி செஞ்ச பொருட்கள்</span></td><td><span class="en">Raw steel, aluminium, copper</span><span class="ta">ஸ்டீல், அலுமினியம், காப்பர் கச்சாப் பொருள்</span></td></tr>
+   <tr><td><b><span class="en">Who buys</span><span class="ta">யார் வாங்கறாங்க</span></b></td><td><span class="en">Big companies (utilities, solar, electronics, aerospace)</span><span class="ta">பெரிய கம்பெனிகள் (யுடிலிட்டி, சோலார், எலக்ட்ரானிக்ஸ், ஏரோஸ்பேஸ்)</span></td><td><span class="en">Mostly the small factories in Zetwerk's network</span><span class="ta">பெரும்பாலும் செட்வெர்க் நெட்வொர்க்ல இருக்கற சின்ன ஃபேக்டரிகள்</span></td></tr>
+   <tr><td><b><span class="en">Who makes it</span><span class="ta">யார் தயாரிக்கறாங்க</span></b></td><td><span class="en">Partner factories (67%) and own plants</span><span class="ta">பார்ட்னர் ஃபேக்டரிகள் (67%), சொந்த ஆலைகள்</span></td><td><span class="en">Nobody — bought and resold</span><span class="ta">யாரும் இல்லை — வாங்கி திரும்ப விக்கறது</span></td></tr>
+   <tr><td><b><span class="en">FY26 revenue</span><span class="ta">எஃப்ஒய்26 வருவாய்</span></b></td><td>₹9,375 Cr (+50%)</td><td>₹6,539 Cr</td></tr>
+   <tr><td><b><span class="en">Keeps per ₹100</span><span class="ta">₹100-க்கு மிஞ்சுவது</span></b></td><td>≈ ₹6</td><td>≈ ₹1.2</td></tr>
+   <tr><td><b><span class="en">Share of profit</span><span class="ta">லாபத்துல பங்கு</span></b></td><td>≈ 87%</td><td>≈ 13%</td></tr>
+   <tr><td><b><span class="en">Why investors care</span><span class="ta">முதலீட்டாளர்களுக்கு ஏன் முக்கியம்</span></b></td><td><span class="en">The real value driver</span><span class="ta">உண்மையான மதிப்பு இங்க தான்</span></td><td><span class="en">Inflates revenue, ties up cash</span><span class="ta">வருவாயை பெருசா காட்டும், கேஷை முடக்கும்</span></td></tr>
+  </table></div>
+  <div class="note"><span class="en"><b>Key takeaway:</b> Judge Zetwerk by its Manufacturing segment (₹9,375 Cr, 6% margin, growing 50%). Terra91 makes the top line look big but adds little profit. A third segment, civil infrastructure construction, was shut down in FY26; its losses still sit in the reported net loss.</span><span class="ta"><b>முக்கிய புரிதல்:</b> செட்வெர்க்கை அதோட மேனுஃபேக்சரிங் செக்மென்ட் வெச்சு தான் மதிப்பிடணும் (₹9,375 கோடி, 6% மார்ஜின், 50% வளர்ச்சி). டெர்ரா91 வருவாயை பெருசா காட்டுது, ஆனா லாபத்துக்கு அதிகம் சேர்க்கல. மூணாவது செக்மென்ட், சிவில் இன்ஃப்ரா கட்டுமானம், எஃப்ஒய்26-ல மூடப்பட்டது; அதோட நஷ்டம் இன்னும் நிகர நஷ்டத்துல இருக்கு.</span></div>
+ </div>
+ <h3><span class="en">Full map (tap any box)</span><span class="ta">முழு மேப் (எந்த பெட்டியையும் தொடுங்க)</span></h3>
+ <div class="svgw" id="bmMap"></div>
+ <div class="card" id="bmCard"><span class="en">Tap any box in the map to see the explanation here.</span><span class="ta">மேப்ல எந்த பெட்டியைத் தொட்டாலும் விளக்கம் இங்கே வரும்.</span></div>
+ <p class="small"><span class="en"><b>Revenue formula:</b> Revenue = (orders won × average order value × execution rate) for Manufacturing + (metal tonnes traded × price) for Ecosystem.</span><span class="ta"><b>வருவாய் சூத்திரம்:</b> வருவாய் = மேனுஃபேக்சரிங்குக்கு (கிடைச்ச ஆர்டர்கள் × சராசரி ஆர்டர் மதிப்பு × முடிக்கற வேகம்) + எகோசிஸ்டத்துக்கு (டிரேட் ஆன உலோக டன் × விலை).</span></p>
+
+ <h3><span class="en">How one order flows (the managed-marketplace loop)</span><span class="ta">ஒரு ஆர்டர் எப்படி நகருது (மேனேஜ்டு மார்க்கெட்பிளேஸ் சுழற்சி)</span></h3>
+ <div class="svgw" id="loop"></div>
+ <p class="small"><span class="en">Why this matters: every completed order adds data to Zetwerk OS on supplier cost, speed and quality. Better data means better quotes and supplier picks, which wins more orders. That is the network effect investors are paying for.</span><span class="ta">இது ஏன் முக்கியம்: ஒவ்வொரு ஆர்டரும் முடியும்போது சப்ளையர் செலவு, வேகம், குவாலிட்டி பத்தின டேட்டா செட்வெர்க் ஓஎஸ்-ல சேருது. டேட்டா நல்லா இருந்தா கொட்டேஷனும் சப்ளையர் தேர்வும் நல்லா இருக்கும், அதனால இன்னும் நிறைய ஆர்டர் கிடைக்கும். முதலீட்டாளர்கள் காசு கொடுக்கறது இந்த நெட்வொர்க் எஃபெக்ட்டுக்குத் தான்.</span></p>
+
+ <h3><span class="en">Revenue engine: what drives each line</span><span class="ta">வருவாய் இன்ஜின்: ஒவ்வொரு பிரிவையும் எது ஓட்டுது</span></h3>
+ <div class="tw"><table>
+  <tr><th><span class="en">Line</span><span class="ta">பிரிவு</span></th><th class="n"><span class="en">FY26 ₹ Cr</span><span class="ta">எஃப்ஒய்26 ₹ கோடி</span></th><th class="n"><span class="en">Growth</span><span class="ta">வளர்ச்சி</span></th><th><span class="en">Main driver</span><span class="ta">முக்கிய காரணி</span></th><th><span class="en">Margin quality</span><span class="ta">மார்ஜின் தரம்</span></th></tr>
+  <tr><td><span class="en">Energy products</span><span class="ta">எனர்ஜி தயாரிப்புகள்</span></td><td class="n">6,508</td><td class="n">+87%</td><td><span class="en">Solar torque tubes, transformers, grid equipment; energy transition and AI data-centre power demand</span><span class="ta">சோலார் டார்க் டியூப், டிரான்ஸ்ஃபார்மர், கிரிட் உபகரணங்கள்; எனர்ஜி மாற்றம், ஏஐ டேட்டா சென்டர் மின் தேவை</span></td><td><span class="chip c-gr">High</span></td></tr>
+  <tr><td><span class="en">Capital goods</span><span class="ta">கேப்பிடல் குட்ஸ்</span></td><td class="n">1,464</td><td class="n">n/a</td><td><span class="en">Heavy fabrication, oil and gas, industrial equipment; weaker in FY25</span><span class="ta">பெரிய ஃபேப்ரிகேஷன், ஆயில் & கேஸ், தொழில் உபகரணங்கள்; எஃப்ஒய்25-ல பலவீனம்</span></td><td><span class="chip c-am">Medium</span></td></tr>
+  <tr><td><span class="en">Precision products</span><span class="ta">பிரிசிஷன் தயாரிப்புகள்</span></td><td class="n">1,397</td><td class="n">n/a</td><td><span class="en">Electronics, appliance components, aerospace parts</span><span class="ta">எலக்ட்ரானிக்ஸ், அப்ளையன்ஸ் பாகங்கள், ஏரோஸ்பேஸ் பாகங்கள்</span></td><td><span class="chip c-am">Medium</span></td></tr>
+  <tr><td><span class="en">Ecosystem (Terra91)</span><span class="ta">எகோசிஸ்டம் (டெர்ரா91)</span></td><td class="n">6,539</td><td class="n">+29%</td><td><span class="en">Buying and selling metals and raw materials for the supplier network</span><span class="ta">சப்ளையர் நெட்வொர்க்குக்கு உலோகம், கச்சாப் பொருள் வாங்கி விக்கறது</span></td><td><span class="chip c-rd">Low (1.24%)</span></td></tr>
+ </table></div>
+ <p class="small"><span class="en">Ecosystem growth is my calculation: ₹6,539 crore in FY26 against ₹5,083 crore in FY25 (total revenue minus Manufacturing). Capital goods and precision FY25 splits were not available, so their growth is shown as n/a.</span><span class="ta">எகோசிஸ்டம் வளர்ச்சி கணக்கு நம்ம கணக்கீடு: எஃப்ஒய்26-ல ₹6,539 கோடி, எஃப்ஒய்25-ல ₹5,083 கோடி (மொத்த வருவாய் கழிச்சு மேனுஃபேக்சரிங்). கேப்பிடல் குட்ஸ், பிரிசிஷன் எஃப்ஒய்25 பிரிவு தரவு கிடைக்கல, அதனால n/a.</span></p>
+
+ <h3><span class="en">Revenue mix FY26</span><span class="ta">எஃப்ஒய்26 வருவாய் கலவை</span></h3>
+ <div class="cw"><div class="ci" style="height:280px;min-width:320px"><canvas id="cMix"></canvas></div></div>
+
+ <div class="grid g2" style="margin-top:8px">
+  <div class="kpi"><b>1,802</b><span class="en">Customers (1,613 India, 189 abroad)</span><span class="ta">கஸ்டமர்கள் (இந்தியா 1,613, வெளிநாடு 189)</span></div>
+  <div class="kpi"><b>80.15%</b><span class="en">Manufacturing revenue from repeat customers</span><span class="ta">திரும்ப வரும் கஸ்டமர்களிடம் இருந்து மேனுஃபேக்சரிங் வருவாய்</span></div>
+  <div class="kpi"><b>120%</b><span class="en">Net revenue retention</span><span class="ta">நெட் ரெவென்யூ ரிடென்ஷன்</span></div>
+  <div class="kpi"><b>82.54% / 14.33%</b><span class="en">Revenue from India / USA</span><span class="ta">இந்தியா / அமெரிக்கா வருவாய்</span></div>
+ </div>
+</section>
+
+<!-- ============ FINANCIALS ============ -->
+<section class="tab" id="t-fin">
+ <h2><span class="en">Financials</span><span class="ta">நிதி நிலை</span></h2>
+ <p class="lead"><span class="en">Restated consolidated figures, ₹ crore. FY25 revenue fell 8.35% when Zetwerk dropped low-quality work, then FY26 grew 40.43%. Reported losses are swollen by the discontinued civil-infrastructure business.</span><span class="ta">ரீஸ்டேட்டட் கன்சாலிடேட்டட் தரவு, ₹ கோடியில. தரம் குறைஞ்ச வேலைகளை விட்டதால எஃப்ஒய்25-ல வருவாய் 8.35% குறைஞ்சது, அப்புறம் எஃப்ஒய்26-ல 40.43% வளர்ந்தது. நிறுத்தப்பட்ட சிவில் இன்ஃப்ரா பிசினஸால காட்டப்படற நஷ்டம் பெருசா தெரியுது.</span></p>
+ <div class="tw"><table>
+  <tr><th><span class="en">₹ crore</span><span class="ta">₹ கோடி</span></th><th class="n">FY24</th><th class="n">FY25</th><th class="n">FY26</th><th class="n">Q1 FY26</th><th class="n">Q1 FY27</th></tr>
+  <tr><td><span class="en">Revenue from operations</span><span class="ta">செயல்பாட்டு வருவாய்</span></td><td class="n">12,364.37</td><td class="n">11,331.86</td><td class="n">15,913.32</td><td class="n">2,649.40</td><td class="n">4,117.90</td></tr>
+  <tr><td><span class="en">Manufacturing segment</span><span class="ta">மேனுஃபேக்சரிங் பிரிவு</span></td><td class="n">6,082</td><td class="n">6,249.10</td><td class="n">9,374.68</td><td class="n">n/a</td><td class="n">n/a</td></tr>
+  <tr><td><span class="en">Ecosystem segment</span><span class="ta">எகோசிஸ்டம் பிரிவு</span></td><td class="n">6,282</td><td class="n">5,082.76</td><td class="n">6,538.65</td><td class="n">n/a</td><td class="n">n/a</td></tr>
+  <tr><td><span class="en">Adjusted EBITDA</span><span class="ta">அட்ஜஸ்டட் இபிஐடிடிஏ</span></td><td class="n">97.03</td><td class="n">322.59</td><td class="n">421.34</td><td class="n">31.11</td><td class="n">103.16</td></tr>
+  <tr><td><span class="en">Adjusted EBITDA margin</span><span class="ta">அட்ஜஸ்டட் இபிஐடிடிஏ மார்ஜின்</span></td><td class="n">0.78%</td><td class="n">2.85%</td><td class="n">2.65%</td><td class="n">1.17%</td><td class="n">2.51%</td></tr>
+  <tr><td><span class="en">Manufacturing EBITDA margin</span><span class="ta">மேனுஃபேக்சரிங் இபிஐடிடிஏ மார்ஜின்</span></td><td class="n">n/a</td><td class="n">n/a</td><td class="n">6.03%</td><td class="n">4.83%</td><td class="n">6.56%</td></tr>
+  <tr><td><span class="en">Loss from continuing operations</span><span class="ta">தொடரும் பிசினஸ் நஷ்டம்</span></td><td class="n">−853</td><td class="n">−215</td><td class="n">−964</td><td class="n">−881</td><td class="n">−64</td></tr>
+  <tr><td><span class="en">Net profit / (loss) — reported</span><span class="ta">நிகர லாபம் / (நஷ்டம்)</span></td><td class="n">−917.95</td><td class="n">−370.71</td><td class="n">−1,606.17</td><td class="n">−1,368.47</td><td class="n">−732.98</td></tr>
+  <tr><td><span class="en">Net worth</span><span class="ta">நிகர மதிப்பு</span></td><td class="n">4,062.46</td><td class="n">4,453.76</td><td class="n">4,813.72</td><td class="n">3,905.13</td><td class="n">4,094.13</td></tr>
+  <tr><td><span class="en">Total borrowings</span><span class="ta">மொத்த கடன்</span></td><td class="n">1,232.10</td><td class="n">1,746.55</td><td class="n">1,936.16</td><td class="n">1,707.21</td><td class="n">1,942.19</td></tr>
+  <tr><td><span class="en">Total assets</span><span class="ta">மொத்த சொத்துகள்</span></td><td class="n">10,330.85</td><td class="n">10,355.43</td><td class="n">13,384.63</td><td class="n">9,083.09</td><td class="n">12,016.09</td></tr>
+  <tr><td><span class="en">Manufacturing order book</span><span class="ta">மேனுஃபேக்சரிங் ஆர்டர் புக்</span></td><td class="n">6,170</td><td class="n">8,628.98</td><td class="n">12,370</td><td class="n">n/a</td><td class="n">16,000+</td></tr>
+ </table></div>
+ <p class="small"><span class="en">Q1 FY26 adjusted EBITDA margin (1.17%) is my calculation. FY24 segment split is rounded from secondary reports.</span><span class="ta">க்யூ1 எஃப்ஒய்26 இபிஐடிடிஏ மார்ஜின் (1.17%) நம்ம கணக்கீடு. எஃப்ஒய்24 பிரிவு பிரிப்பு மற்ற அறிக்கைகள்ல இருந்து சுமாரா எடுத்தது.</span></p>
+
+ <h3><span class="en">Revenue and Adjusted EBITDA (₹ crore)</span><span class="ta">வருவாய் மற்றும் அட்ஜஸ்டட் இபிஐடிடிஏ (₹ கோடி)</span></h3>
+ <div class="cw"><div class="ci"><canvas id="cRev"></canvas></div></div>
+ <h3><span class="en">Margins: group versus manufacturing</span><span class="ta">மார்ஜின்: மொத்த கம்பெனி vs மேனுஃபேக்சரிங்</span></h3>
+ <div class="cw"><div class="ci"><canvas id="cMar"></canvas></div></div>
+ <div class="good"><span class="en">The real business is improving: manufacturing margin went from 4.83% to 6.56% year on year in Q1, and loss from continuing operations shrank from ₹881 crore to ₹64 crore.</span><span class="ta">உண்மையான பிசினஸ் முன்னேறுது: க்யூ1-ல மேனுஃபேக்சரிங் மார்ஜின் 4.83%-ல இருந்து 6.56% ஆச்சு, தொடரும் பிசினஸ் நஷ்டம் ₹881 கோடியில இருந்து ₹64 கோடியா குறைஞ்சது.</span></div>
+ <h3><span class="en">Net loss: reported versus continuing business (₹ crore)</span><span class="ta">நிகர நஷ்டம்: காட்டப்பட்டது vs தொடரும் பிசினஸ் (₹ கோடி)</span></h3>
+ <div class="cw"><div class="ci"><canvas id="cPAT"></canvas></div></div>
+ <h3><span class="en">Order book (₹ crore)</span><span class="ta">ஆர்டர் புக் (₹ கோடி)</span></h3>
+ <div class="cw"><div class="ci" style="height:260px"><canvas id="cOB"></canvas></div></div>
+ <p class="small"><span class="en">New orders were 1.64 times revenue in FY26 (1.48 times in FY24). The ₹16,000+ crore book equals about 1.7 years of FY26 manufacturing revenue (my calculation).</span><span class="ta">எஃப்ஒய்26-ல புது ஆர்டர்கள் வருவாயை விட 1.64 மடங்கு (எஃப்ஒய்24-ல 1.48 மடங்கு). ₹16,000+ கோடி ஆர்டர் புக், எஃப்ஒய்26 மேனுஃபேக்சரிங் வருவாயில சுமார் 1.7 வருஷத்துக்கு சமம் (நம்ம கணக்கீடு).</span></p>
+
+ <h3><span class="en">Key ratios</span><span class="ta">முக்கிய விகிதங்கள்</span></h3>
+ <div class="tw"><table>
+  <tr><th><span class="en">Ratio</span><span class="ta">விகிதம்</span></th><th class="n">FY25</th><th class="n">FY26</th><th><span class="en">Read</span><span class="ta">அர்த்தம்</span></th></tr>
+  <tr><td><span class="en">Return on net worth</span><span class="ta">நிகர மதிப்பு மீதான வருமானம்</span></td><td class="n">−8.3%</td><td class="n">−21.11%</td><td><span class="en">Negative; equity is being consumed</span><span class="ta">எதிர்மறை; பங்கு மூலதனம் கரையுது</span></td></tr>
+  <tr><td><span class="en">Manufacturing ROCE</span><span class="ta">மேனுஃபேக்சரிங் ஆர்ஓசிஇ</span></td><td class="n">30.76%</td><td class="n">22.75%</td><td><span class="en">Healthy, but fell as capital grew</span><span class="ta">நல்லா இருக்கு, ஆனா மூலதனம் அதிகமானதால குறைஞ்சது</span></td></tr>
+  <tr><td><span class="en">Debt to equity</span><span class="ta">கடன் / பங்கு மூலதனம்</span></td><td class="n">0.39</td><td class="n">0.40</td><td><span class="en">Moderate; near zero after IPO repayment</span><span class="ta">மிதமானது; ஐபிஓ-க்கு அப்புறம் கிட்டத்தட்ட பூஜ்யம்</span></td></tr>
+  <tr><td><span class="en">Asset turnover (revenue / assets)</span><span class="ta">சொத்து சுழற்சி (வருவாய் / சொத்து)</span></td><td class="n">1.09</td><td class="n">1.19</td><td><span class="en">Asset-light model working</span><span class="ta">அசெட்-லைட் மாடல் வேலை செய்யுது</span></td></tr>
+ </table></div>
+ <p class="small"><span class="en">FY25 return on net worth, debt to equity and asset turnover are my calculations from the restated figures above.</span><span class="ta">எஃப்ஒய்25 ஆர்ஓஎன்டபிள்யூ, கடன்/பங்கு, சொத்து சுழற்சி மேலே இருக்கற தரவுல இருந்து நம்ம கணக்கீடு.</span></p>
+</section>
+
+<!-- ============ CASH FLOW & WC ============ -->
+<section class="tab" id="t-cf">
+ <h2><span class="en">Cash Flow and Working Capital</span><span class="ta">கேஷ் ஃப்ளோ மற்றும் வொர்க்கிங் கேப்பிடல்</span></h2>
+ <p class="lead"><span class="en">This is the weakest part of the story. The business shows positive adjusted EBITDA, but cash from operations has been negative for three years and the outflow is widening.</span><span class="ta">கதையில ரொம்ப பலவீனமான பகுதி இது தான். அட்ஜஸ்டட் இபிஐடிடிஏ பாசிட்டிவா இருக்கு, ஆனா மூணு வருஷமா ஆபரேஷன்ல இருந்து கேஷ் வெளியே தான் போகுது, அதுவும் அதிகமாகிட்டே வருது.</span></p>
+ <div class="cw"><div class="ci"><canvas id="cCF"></canvas></div></div>
+ <div class="tw"><table>
+  <tr><th><span class="en">₹ crore</span><span class="ta">₹ கோடி</span></th><th class="n">FY24</th><th class="n">FY25</th><th class="n">FY26</th></tr>
+  <tr><td><span class="en">Cash from operations (CFO)</span><span class="ta">ஆபரேஷன் கேஷ் (சிஎஃப்ஓ)</span></td><td class="n">−282</td><td class="n">−386</td><td class="n">−682</td></tr>
+  <tr><td><span class="en">Adjusted EBITDA</span><span class="ta">அட்ஜஸ்டட் இபிஐடிடிஏ</span></td><td class="n">97</td><td class="n">323</td><td class="n">421</td></tr>
+  <tr><td><span class="en">Cash conversion (CFO ÷ Adj. EBITDA)</span><span class="ta">கேஷ் மாற்றம் (சிஎஃப்ஓ ÷ இபிஐடிடிஏ)</span></td><td class="n">−291%</td><td class="n">−120%</td><td class="n">−162%</td></tr>
+  <tr><td><span class="en">Cash absorbed beyond EBITDA (EBITDA − CFO)</span><span class="ta">இபிஐடிடிஏ-க்கு மேல உறிஞ்சப்பட்ட கேஷ்</span></td><td class="n">379</td><td class="n">709</td><td class="n">1,103</td></tr>
+  <tr><td><span class="en">Net cash flow for the year</span><span class="ta">வருஷ நிகர கேஷ் ஓட்டம்</span></td><td class="n">n/a</td><td class="n">n/a</td><td class="n">+337</td></tr>
+  <tr><td><span class="en">Investing / financing cash flow</span><span class="ta">முதலீட்டு / நிதி கேஷ் ஓட்டம்</span></td><td class="n">n/a</td><td class="n">n/a</td><td class="n">n/a</td></tr>
+ </table></div>
+ <p class="small"><span class="en">Cash conversion and cash absorbed are my calculations. Investing and financing cash flows were not available in the sources checked and are shown as n/a.</span><span class="ta">கேஷ் மாற்றம், உறிஞ்சப்பட்ட கேஷ் நம்ம கணக்கீடு. முதலீட்டு, நிதி கேஷ் ஓட்டம் கிடைக்கல, அதனால n/a.</span></p>
+
+ <h3><span class="en">Working capital days</span><span class="ta">வொர்க்கிங் கேப்பிடல் நாட்கள்</span></h3>
+ <div class="tw"><table>
+  <tr><th><span class="en">Metric</span><span class="ta">அளவீடு</span></th><th class="n">FY24</th><th class="n">FY25</th><th class="n">FY26</th></tr>
+  <tr><td><span class="en">Inventory days</span><span class="ta">இன்வென்டரி நாட்கள்</span></td><td class="n">n/a†</td><td class="n">n/a†</td><td class="n">n/a†</td></tr>
+  <tr><td><span class="en">Receivable days</span><span class="ta">வசூல் நாட்கள்</span></td><td class="n">n/a†</td><td class="n">n/a†</td><td class="n">n/a†</td></tr>
+  <tr><td><span class="en">Payable days</span><span class="ta">பேமென்ட் நாட்கள்</span></td><td class="n">n/a†</td><td class="n">n/a†</td><td class="n">n/a†</td></tr>
+  <tr><td><span class="en">Cash conversion cycle</span><span class="ta">கேஷ் கன்வர்ஷன் சைக்கிள்</span></td><td class="n">n/a†</td><td class="n">n/a†</td><td class="n">n/a†</td></tr>
+ </table></div>
+ <div class="note"><span class="en">† Balance-sheet line items for inventory, receivables and payables were not available in verified sources. The days will be filled from the RHP balance sheet, not estimated. What the available numbers do show: total assets rose ₹3,029 crore in FY26 while borrowings rose only ₹190 crore, so most of the growth was funded by supplier credit and equity, and CFO went more negative. That pattern points to receivables and inventory building faster than payables.</span><span class="ta">† இன்வென்டரி, வசூல், பேமென்ட் தரவு சரிபார்க்கப்பட்ட ஆதாரங்கள்ல கிடைக்கல. அதனால நாட்களை ஊகிக்காம ஆர்எச்பி பேலன்ஸ் ஷீட்ல இருந்து தான் நிரப்புவோம். கிடைக்கற தரவு காட்டறது: எஃப்ஒய்26-ல மொத்த சொத்து ₹3,029 கோடி கூடிச்சு, ஆனா கடன் ₹190 கோடி தான் கூடிச்சு. அதாவது வளர்ச்சிக்கு சப்ளையர் கிரெடிட்டும் பங்கு மூலதனமும் தான் பணம் கொடுத்தது, சிஎஃப்ஓ இன்னும் மைனஸ் ஆச்சு. வசூலும் இன்வென்டரியும் பேமென்ட்டை விட வேகமா கூடுதுன்னு இது காட்டுது.</span></div>
+
+ <h3><span class="en">Why working capital eats Zetwerk's cash</span><span class="ta">வொர்க்கிங் கேப்பிடல் ஏன் செட்வெர்க் கேஷை சாப்பிடுது</span></h3>
+ <div class="svgw" id="wcLoop"></div>
+ <ul class="t">
+  <li><span class="en">Zetwerk pays suppliers (and buys metals for Terra91) before large customers pay it. Utilities and EPC customers often pay on milestones.</span><span class="ta">பெரிய கஸ்டமர்கள் பணம் கொடுக்கறதுக்கு முன்னாடியே செட்வெர்க் சப்ளையர்களுக்கு பணம் கொடுக்குது (டெர்ரா91-க்கு உலோகமும் வாங்குது). யுடிலிட்டி, இபிசி கஸ்டமர்கள் பெரும்பாலும் கட்டம் கட்டமா தான் பணம் தருவாங்க.</span></li>
+  <li><span class="en">When revenue grows 40%, the cash gap grows with it. Fast growth with thin margins burns cash even when EBITDA is positive.</span><span class="ta">வருவாய் 40% வளர்ந்தா, இந்த கேஷ் இடைவெளியும் அதோட சேர்ந்து வளரும். மார்ஜின் குறைவா இருந்து வளர்ச்சி வேகமா இருந்தா, இபிஐடிடிஏ பாசிட்டிவா இருந்தாலும் கேஷ் கரையும்.</span></li>
+  <li><span class="en">What to watch after listing: CFO turning positive and receivable days falling. That will prove the margin gains are real cash, not just accounting profit.</span><span class="ta">லிஸ்டிங்குக்கு அப்புறம் கவனிக்க வேண்டியது: சிஎஃப்ஓ பாசிட்டிவா மாறுதா, வசூல் நாட்கள் குறையுதா. அப்போ தான் மார்ஜின் முன்னேற்றம் உண்மையான கேஷ்னு நிரூபணமாகும்.</span></li>
+ </ul>
+</section>
+
+<!-- ============ VALUATION ============ -->
+<section class="tab" id="t-val">
+ <h2><span class="en">Valuation</span><span class="ta">மதிப்பீடு</span></h2>
+ <p class="lead"><span class="en">With losses, P/E does not work. Use sales and EBITDA multiples instead.</span><span class="ta">நஷ்டத்துல இருக்கறதால பி/இ விகிதம் பயன்படாது. அதனால விற்பனை, இபிஐடிடிஏ அடிப்படையிலான மல்டிபிள்களைப் பார்க்கணும்.</span></p>
+ <div class="tw"><table>
+  <tr><th><span class="en">Metric at ₹151</span><span class="ta">₹151-ல அளவீடு</span></th><th class="n"><span class="en">Value</span><span class="ta">மதிப்பு</span></th><th><span class="en">How derived</span><span class="ta">கணக்கீடு</span></th></tr>
+  <tr><td><span class="en">Market cap (post-issue)</span><span class="ta">மார்க்கெட் கேப் (ஐபிஓ-க்கு பின்)</span></td><td class="n">₹25,583 Cr</td><td><span class="en">169.43 crore shares × ₹151</span><span class="ta">169.43 கோடி பங்குகள் × ₹151</span></td></tr>
+  <tr><td><span class="en">Price to sales, FY26</span><span class="ta">விலை / விற்பனை, எஃப்ஒய்26</span></td><td class="n">1.61×</td><td><span class="en">25,583 ÷ 15,913 (calculation)</span><span class="ta">25,583 ÷ 15,913 (கணக்கீடு)</span></td></tr>
+  <tr><td><span class="en">Price to sales, Q1 FY27 annualised</span><span class="ta">விலை / விற்பனை, க்யூ1 எஃப்ஒய்27 வருஷக் கணக்கு</span></td><td class="n">1.55×</td><td><span class="en">25,583 ÷ (4,118 × 4) (calculation)</span><span class="ta">25,583 ÷ (4,118 × 4) (கணக்கீடு)</span></td></tr>
+  <tr><td><span class="en">Market cap to manufacturing revenue</span><span class="ta">மார்க்கெட் கேப் / மேனுஃபேக்சரிங் வருவாய்</span></td><td class="n">2.73×</td><td><span class="en">25,583 ÷ 9,375 (calculation)</span><span class="ta">25,583 ÷ 9,375 (கணக்கீடு)</span></td></tr>
+  <tr><td><span class="en">Market cap to Adj. EBITDA, FY26</span><span class="ta">மார்க்கெட் கேப் / அட்ஜஸ்டட் இபிஐடிடிஏ</span></td><td class="n">60.7×</td><td><span class="en">25,583 ÷ 421 (calculation)</span><span class="ta">25,583 ÷ 421 (கணக்கீடு)</span></td></tr>
+  <tr><td><span class="en">Price to book (pre-issue NAV ₹31.26)</span><span class="ta">விலை / புத்தக மதிப்பு (ஐபிஓ முன் என்ஏவி ₹31.26)</span></td><td class="n">4.83×</td><td><span class="en">As reported</span><span class="ta">அறிவிக்கப்பட்டது</span></td></tr>
+  <tr><td><span class="en">Price to book, post-issue (approx.)</span><span class="ta">விலை / புத்தக மதிப்பு, ஐபிஓ-க்கு பின் (சுமார்)</span></td><td class="n">~3.7×</td><td><span class="en">25,583 ÷ (4,094 + 2,830), before issue expenses (calculation)</span><span class="ta">25,583 ÷ (4,094 + 2,830), செலவுகள் கழிக்காம (கணக்கீடு)</span></td></tr>
+  <tr><td><span class="en">P/E</span><span class="ta">பி/இ</span></td><td class="n"><span class="en">Negative</span><span class="ta">எதிர்மறை</span></td><td><span class="en">FY26 EPS −₹10.66</span><span class="ta">எஃப்ஒய்26 இபிஎஸ் −₹10.66</span></td></tr>
+ </table></div>
+
+ <h3><span class="en">Who to compare it with</span><span class="ta">யாரோட ஒப்பிடலாம்</span></h3>
+ <div class="tw"><table>
+  <tr><th><span class="en">Peer type</span><span class="ta">போட்டியாளர் வகை</span></th><th><span class="en">Examples</span><span class="ta">உதாரணம்</span></th><th><span class="en">Similarity</span><span class="ta">ஒற்றுமை</span></th><th><span class="en">Key difference</span><span class="ta">முக்கிய வேறுபாடு</span></th></tr>
+  <tr><td><span class="en">Indian EMS makers</span><span class="ta">இந்திய ஈஎம்எஸ் நிறுவனங்கள்</span></td><td>Dixon, Kaynes, Amber, Syrma SGS</td><td><span class="en">Contract manufacturing for brands</span><span class="ta">பிராண்டுகளுக்கு கான்ட்ராக்ட் உற்பத்தி</span></td><td><span class="en">They own most capacity and are profitable</span><span class="ta">அவங்களுக்கு சொந்த ஃபேக்டரி அதிகம், லாபத்துல இருக்காங்க</span></td></tr>
+  <tr><td><span class="en">B2B industrial platforms</span><span class="ta">பி2பி தொழில் தளங்கள்</span></td><td>OfBusiness, Moglix (unlisted)</td><td><span class="en">Marketplace plus material trading</span><span class="ta">மார்க்கெட்பிளேஸ் + பொருள் டிரேடிங்</span></td><td><span class="en">Not listed, so no market multiple</span><span class="ta">லிஸ்ட் ஆகல, அதனால மார்க்கெட் மல்டிபிள் இல்லை</span></td></tr>
+  <tr><td><span class="en">Precision and energy engineering</span><span class="ta">பிரிசிஷன், எனர்ஜி இன்ஜினியரிங்</span></td><td>Bharat Forge, Aequs</td><td><span class="en">Precision and heavy engineering parts</span><span class="ta">பிரிசிஷன், கனரக இன்ஜினியரிங் பாகங்கள்</span></td><td><span class="en">Capital heavy, own factories</span><span class="ta">அதிக மூலதனம், சொந்த ஃபேக்டரிகள்</span></td></tr>
+  <tr><td><span class="en">Global contract manufacturers</span><span class="ta">உலக கான்ட்ராக்ட் உற்பத்தியாளர்கள்</span></td><td>Flex, Jabil</td><td><span class="en">Scale contract manufacturing</span><span class="ta">பெரிய அளவு கான்ட்ராக்ட் உற்பத்தி</span></td><td><span class="en">Mature, slower growth, lower multiples</span><span class="ta">முதிர்ந்தவை, வளர்ச்சி குறைவு, மல்டிபிள் குறைவு</span></td></tr>
+ </table></div>
+ <div class="note"><span class="en">Peer multiples move daily and were not verified from exchange filings for this file, so they are not tabulated. The read: 1.6 times sales looks moderate against Indian EMS names, but those names earn far higher margins. On EBITDA (about 61 times), Zetwerk is priced for a sharp margin rise that has not happened yet.</span><span class="ta">போட்டியாளர் மல்டிபிள்கள் தினமும் மாறும், இந்த ஃபைலுக்காக எக்ஸ்சேஞ்ச் தரவுல சரிபார்க்கல, அதனால அட்டவணையில போடல. புரிதல்: விற்பனைக்கு 1.6 மடங்கு, இந்திய ஈஎம்எஸ் நிறுவனங்களோட பார்த்தா மிதமா தெரியுது, ஆனா அவங்க மார்ஜின் ரொம்ப அதிகம். இபிஐடிடிஏ அடிப்படையில (சுமார் 61 மடங்கு) பார்த்தா, இன்னும் நடக்காத பெரிய மார்ஜின் உயர்வுக்கு இப்பவே விலை கொடுக்கறோம்.</span></div>
+
+ <h3><span class="en">What has to happen to justify ₹151</span><span class="ta">₹151 நியாயமாக என்ன நடக்கணும்</span></h3>
+ <div class="tw"><table>
+  <tr><th><span class="en">Scenario (FY28)</span><span class="ta">சூழ்நிலை (எஃப்ஒய்28)</span></th><th class="n"><span class="en">Revenue ₹ Cr</span><span class="ta">வருவாய் ₹ கோடி</span></th><th class="n"><span class="en">EBITDA margin</span><span class="ta">இபிஐடிடிஏ மார்ஜின்</span></th><th class="n"><span class="en">EBITDA ₹ Cr</span><span class="ta">இபிஐடிடிஏ ₹ கோடி</span></th><th class="n"><span class="en">Mcap ÷ EBITDA</span><span class="ta">மார்க்கெட் கேப் ÷ இபிஐடிடிஏ</span></th></tr>
+  <tr><td><span class="en">Slow (15% growth, margin stuck)</span><span class="ta">மெதுவா (15% வளர்ச்சி, மார்ஜின் அப்படியே)</span></td><td class="n">21,045</td><td class="n">2.7%</td><td class="n">568</td><td class="n">45×</td></tr>
+  <tr><td><span class="en">Base (25% growth, mix shift)</span><span class="ta">அடிப்படை (25% வளர்ச்சி, கலவை மாற்றம்)</span></td><td class="n">24,864</td><td class="n">4.0%</td><td class="n">995</td><td class="n">26×</td></tr>
+  <tr><td><span class="en">Strong (35% growth, manufacturing-led)</span><span class="ta">வலுவா (35% வளர்ச்சி, மேனுஃபேக்சரிங் முன்னணி)</span></td><td class="n">29,002</td><td class="n">5.0%</td><td class="n">1,450</td><td class="n">18×</td></tr>
+ </table></div>
+ <p class="small"><span class="en">Illustrative scenarios built by CB Research from FY26 actuals; not forecasts and not company guidance. Market cap held at ₹25,583 crore.</span><span class="ta">எஃப்ஒய்26 உண்மை தரவுல இருந்து சிபி ரிசர்ச் உருவாக்கின உதாரண சூழ்நிலைகள்; இது கணிப்பு இல்லை, கம்பெனி வழிகாட்டுதலும் இல்லை. மார்க்கெட் கேப் ₹25,583 கோடியா வெச்சிருக்கோம்.</span></p>
+</section>
+
+<!-- ============ TRIGGERS & CYCLE ============ -->
+<section class="tab" id="t-tc">
+ <h2><span class="en">Triggers and Cycle</span><span class="ta">ட்ரிகர்ஸ் மற்றும் சைக்கிள்</span></h2>
+ <p class="lead"><span class="en">Zetwerk sits in two clocks: a capex/order-book cycle (energy and capital goods) and a structural S-curve (electronics, AI infrastructure).</span><span class="ta">செட்வெர்க் ரெண்டு கடிகாரத்துல இருக்கு: கேப்பெக்ஸ்/ஆர்டர் புக் சைக்கிள் (எனர்ஜி, கேப்பிடல் குட்ஸ்), அப்புறம் நீண்ட கால எஸ்-கர்வ் வளர்ச்சி (எலக்ட்ரானிக்ஸ், ஏஐ உள்கட்டமைப்பு).</span></p>
+ <div class="svgw" id="clock"></div>
+ <div class="grid g2">
+  <div class="kpi"><b>CY 69</b><span class="en">Sector 75 (capex expansion + rapid adoption) · Stock 64 (scaling, margins rising, no price history)</span><span class="ta">துறை 75 (கேப்பெக்ஸ் விரிவாக்கம் + வேகமான பயன்பாடு) · பங்கு 64 (வளர்ந்துட்டு இருக்கு, மார்ஜின் கூடுது, விலை வரலாறு இல்லை)</span></div>
+  <div class="kpi"><b>TG 72</b><span class="en">Three positive catalysts outweigh lock-in and loss risks</span><span class="ta">மூணு நல்ல ட்ரிகர்கள், லாக்-இன், நஷ்ட அபாயங்களை விட அதிகம்</span></div>
+ </div>
+ <h3><span class="en">Trigger table</span><span class="ta">ட்ரிகர் அட்டவணை</span></h3>
+ <div class="tw"><table>
+  <tr><th><span class="en">Trigger</span><span class="ta">ட்ரிகர்</span></th><th>+/−</th><th class="n">I</th><th class="n">C</th><th class="n">W</th><th class="n">P</th><th class="n"><span class="en">Points</span><span class="ta">புள்ளி</span></th><th><span class="en">What to watch</span><span class="ta">கவனிக்க வேண்டியது</span></th></tr>
+  <tr><td><span class="en">Order book ₹16,000+ crore, book-to-bill 1.64×</span><span class="ta">₹16,000+ கோடி ஆர்டர் புக், புக்-டு-பில் 1.64×</span></td><td>+</td><td class="n">4</td><td class="n">1.0</td><td class="n">0.7</td><td class="n">1.0</td><td class="n">2.80</td><td><span class="en">Execution pace in Q2 and Q3 FY27</span><span class="ta">க்யூ2, க்யூ3 எஃப்ஒய்27 செயல்படுத்தும் வேகம்</span></td></tr>
+  <tr><td><span class="en">Debt repayment ₹2,160 crore from fresh issue</span><span class="ta">புதிய பங்கு பணத்துல ₹2,160 கோடி கடன் அடைப்பு</span></td><td>+</td><td class="n">3</td><td class="n">0.7</td><td class="n">1.0</td><td class="n">1.0</td><td class="n">2.10</td><td><span class="en">Finance cost falling in Q3 FY27</span><span class="ta">க்யூ3 எஃப்ஒய்27-ல வட்டி செலவு குறையுதா</span></td></tr>
+  <tr><td><span class="en">Manufacturing margin inflection (6.56% in Q1)</span><span class="ta">மேனுஃபேக்சரிங் மார்ஜின் திருப்பம் (க்யூ1-ல 6.56%)</span></td><td>+</td><td class="n">4</td><td class="n">0.7</td><td class="n">0.7</td><td class="n">1.0</td><td class="n">1.96</td><td><span class="en">Margin holding above 6% for two quarters</span><span class="ta">ரெண்டு காலாண்டு 6%-க்கு மேல நிக்குதா</span></td></tr>
+  <tr><td><span class="en">Anchor lock-in expiry (50% at 30 days, rest at 90 days)</span><span class="ta">ஆங்கர் லாக்-இன் முடிவு (30 நாள்ல 50%, 90 நாள்ல மீதி)</span></td><td>−</td><td class="n">2</td><td class="n">1.0</td><td class="n">1.0</td><td class="n">1.0</td><td class="n">2.00</td><td><span class="en">Around 20 Nov 2026 and 19 Jan 2027 (approx.)</span><span class="ta">சுமார் 20 நவம்பர் 2026, 19 ஜனவரி 2027</span></td></tr>
+  <tr><td><span class="en">Discontinued civil-infra losses keep reported profit negative</span><span class="ta">நிறுத்தப்பட்ட சிவில் இன்ஃப்ரா நஷ்டம், காட்டப்படற லாபத்தை மைனஸ்லயே வெச்சிருக்கு</span></td><td>−</td><td class="n">3</td><td class="n">0.7</td><td class="n">1.0</td><td class="n">1.0</td><td class="n">2.10</td><td><span class="en">Gap between reported and continuing loss</span><span class="ta">காட்டப்பட்ட நஷ்டம் vs தொடரும் நஷ்டம் இடைவெளி</span></td></tr>
+ </table></div>
+ <p class="small"><span class="en">TG = 50 + 8 × (2.80 + 2.10 + 1.96) − 8 × (2.00 + 2.10) = 72. I = impact 1–5, C = certainty, W = timing, P = priced-in (unlisted, so 1.0).</span><span class="ta">TG = 50 + 8 × (2.80 + 2.10 + 1.96) − 8 × (2.00 + 2.10) = 72. I = தாக்கம் 1–5, C = உறுதி, W = நேரம், P = விலையில ஏற்கனவே சேர்ந்ததா (லிஸ்ட் ஆகாததால 1.0).</span></p>
+ <h3><span class="en">Trigger timeline</span><span class="ta">ட்ரிகர் காலவரிசை</span></h3>
+ <div class="tl">
+  <div class="done"><b>14 Oct 2026</b><span class="en">Anchor book closed at top of band</span><span class="ta">மேல் விலையில ஆங்கர் புக் முடிஞ்சது</span></div>
+  <div><b>23 Oct 2026</b><span class="en">Listing day</span><span class="ta">லிஸ்டிங் நாள்</span></div>
+  <div class="fut"><b>Nov 2026</b><span class="en">First results as a listed company (Q2 FY27)</span><span class="ta">லிஸ்ட் ஆன பிறகு முதல் ரிசல்ட் (க்யூ2 எஃப்ஒய்27)</span></div>
+  <div class="fut"><b>~20 Nov 2026</b><span class="en">50% of anchor shares unlock</span><span class="ta">ஆங்கர் பங்குகள்ல 50% லாக்-இன் முடியும்</span></div>
+  <div class="fut"><b>~19 Jan 2027</b><span class="en">Remaining anchor shares unlock</span><span class="ta">மீதி ஆங்கர் பங்குகள் லாக்-இன் முடியும்</span></div>
+  <div class="fut"><b>Feb 2027</b><span class="en">Q3 FY27 results: first quarter after debt repayment</span><span class="ta">க்யூ3 எஃப்ஒய்27 ரிசல்ட்: கடன் அடைச்ச பிறகு முதல் காலாண்டு</span></div>
+ </div>
+ <h3><span class="en">What would change this view</span><span class="ta">இந்த பார்வையை எது மாற்றும்</span></h3>
+ <ul class="t">
+  <li><span class="en">CFO turning positive for two straight quarters would lift both TG and the debt pillar.</span><span class="ta">தொடர்ந்து ரெண்டு காலாண்டு சிஎஃப்ஓ பாசிட்டிவ் ஆனா, TG-யும் கடன் தூணும் உயரும்.</span></li>
+  <li><span class="en">Order inflow slowing below revenue (book-to-bill under 1.0) would push the capex clock towards late cycle.</span><span class="ta">புது ஆர்டர் வருவாயை விட குறைஞ்சா (புக்-டு-பில் 1.0-க்கு கீழ்), கேப்பெக்ஸ் கடிகாரம் லேட் சைக்கிள் பக்கம் நகரும்.</span></li>
+  <li><span class="en">Ecosystem share rising above 45% of revenue would dilute group margins further.</span><span class="ta">எகோசிஸ்டம் பங்கு வருவாயில 45%-க்கு மேல போனா, மொத்த மார்ஜின் இன்னும் குறையும்.</span></li>
+ </ul>
+</section>
+
+<!-- ============ SWOT ============ -->
+<section class="tab" id="t-sw">
+ <h2>SWOT</h2>
+ <div class="grid g3">
+  <div class="card" style="border-top:4px solid var(--gr)"><h3 style="margin-top:0"><span class="en">Strengths</span><span class="ta">பலங்கள்</span></h3><ul class="t">
+   <li><span class="en">Asset-light model: 10,000+ suppliers plus 26 own factories</span><span class="ta">அசெட்-லைட் மாடல்: 10,000+ சப்ளையர்கள், 26 சொந்த ஃபேக்டரிகள்</span></li>
+   <li><span class="en">Zetwerk OS runs the full order lifecycle</span><span class="ta">செட்வெர்க் ஓஎஸ் முழு ஆர்டர் சுழற்சியையும் நடத்துது</span></li>
+   <li><span class="en">80.15% repeat revenue, 120% net revenue retention</span><span class="ta">80.15% திரும்ப வரும் வருவாய், 120% நெட் ரிடென்ஷன்</span></li>
+   <li><span class="en">Energy vertical +87% in FY26</span><span class="ta">எனர்ஜி பிரிவு எஃப்ஒய்26-ல +87%</span></li>
+  </ul></div>
+  <div class="card" style="border-top:4px solid var(--rd)"><h3 style="margin-top:0"><span class="en">Weaknesses</span><span class="ta">பலவீனங்கள்</span></h3><ul class="t">
+   <li><span class="en">Losses in every year: ₹918 / ₹371 / ₹1,606 crore</span><span class="ta">ஒவ்வொரு வருஷமும் நஷ்டம்: ₹918 / ₹371 / ₹1,606 கோடி</span></li>
+   <li><span class="en">Group EBITDA margin under 3%</span><span class="ta">மொத்த இபிஐடிடிஏ மார்ஜின் 3%-க்கு கீழ்</span></li>
+   <li><span class="en">Negative operating cash flow three years running</span><span class="ta">மூணு வருஷமா ஆபரேஷன் கேஷ் மைனஸ்</span></li>
+   <li><span class="en">66.83% of manufacturing revenue relies on third-party suppliers</span><span class="ta">மேனுஃபேக்சரிங் வருவாயில 66.83% மூணாம் தரப்பு சப்ளையர்களை நம்பி இருக்கு</span></li>
+  </ul></div>
+  <div class="card" style="border-top:4px solid var(--bl)"><h3 style="margin-top:0"><span class="en">Opportunities</span><span class="ta">வாய்ப்புகள்</span></h3><ul class="t">
+   <li><span class="en">China+1 sourcing shift to India</span><span class="ta">சைனா+1 ஆர்டர்கள் இந்தியாவுக்கு நகர்வது</span></li>
+   <li><span class="en">Grid, solar and AI data-centre power capex</span><span class="ta">கிரிட், சோலார், ஏஐ டேட்டா சென்டர் மின் முதலீடுகள்</span></li>
+   <li><span class="en">US customers (14.33% of revenue) for exports</span><span class="ta">ஏற்றுமதிக்கு அமெரிக்க கஸ்டமர்கள் (வருவாயில 14.33%)</span></li>
+   <li><span class="en">Acquisitions funded by part of the fresh issue</span><span class="ta">புதிய பங்கு பணத்துல ஒரு பகுதியில கையகப்படுத்தல்கள்</span></li>
+  </ul></div>
+  <div class="card" style="border-top:4px solid var(--am)"><h3 style="margin-top:0"><span class="en">Threats</span><span class="ta">அச்சுறுத்தல்கள்</span></h3><ul class="t">
+   <li><span class="en">Metal price swings hit Terra91 trading</span><span class="ta">உலோக விலை ஏற்ற இறக்கம் டெர்ரா91 டிரேடிங்கை பாதிக்கும்</span></li>
+   <li><span class="en">US tariff changes on Indian goods</span><span class="ta">இந்திய பொருட்கள் மேல அமெரிக்க வரி மாற்றங்கள்</span></li>
+   <li><span class="en">Customers bypassing Zetwerk to deal with suppliers directly</span><span class="ta">கஸ்டமர்கள் நேரடியா சப்ளையர்கிட்ட போறது</span></li>
+   <li><span class="en">Recent new-age IPOs listing weak (e.g. Fractal fell about 6% on debut)</span><span class="ta">சமீபத்திய நியூ-ஏஜ் ஐபிஓக்கள் பலவீனமா லிஸ்ட் ஆனது (எ.கா. ஃப்ராக்டல் முதல் நாள் சுமார் 6% சரிவு)</span></li>
+  </ul></div>
+ </div>
+</section>
+
+<!-- ============ ANALYSTS ============ -->
+<section class="tab" id="t-an">
+ <h2><span class="en">Analysts' Rating</span><span class="ta">அனலிஸ்ட் ரேட்டிங்</span></h2>
+ <p class="lead"><span class="en">Third-party views as published, attributed to each analyst. CB Research does not issue its own buy, sell or subscribe call. No analyst has published a target price, which is normal for an IPO before listing.</span><span class="ta">ஒவ்வொரு அனலிஸ்டும் வெளியிட்ட கருத்து, அவங்க பேரோட. சிபி ரிசர்ச் சொந்தமா வாங்கு, விக்கு, அப்ளை பண்ணுன்னு சொல்லாது. லிஸ்டிங்குக்கு முன்னாடி எந்த அனலிஸ்டும் டார்கெட் விலை கொடுக்கல, ஐபிஓ-க்கு இது சாதாரணம்.</span></p>
+ <h3><span class="en">Consensus</span><span class="ta">ஒருமித்த கருத்து</span></h3>
+ <div class="meter"><i style="width:50%;background:var(--gr)"></i><i style="width:33.3%;background:var(--am)"></i><i style="width:16.7%;background:var(--rd)"></i></div>
+ <p class="small"><span class="en">Six analysts: 3 positive (Subscribe long term / Apply / May apply), 2 neutral or not rated, 1 avoid for conservative investors. Nobody recommends it for listing gains alone.</span><span class="ta">ஆறு அனலிஸ்ட்கள்: 3 சாதகம் (நீண்ட காலத்துக்கு சப்ஸ்க்ரைப் / அப்ளை / அப்ளை பண்ணலாம்), 2 நடுநிலை அல்லது ரேட்டிங் இல்லை, 1 பாதுகாப்பா முதலீடு செய்றவங்க தவிர்க்கணும். லிஸ்டிங் லாபத்துக்காக மட்டும் யாரும் பரிந்துரைக்கல.</span></p>
+ <div class="cw"><div class="ci" style="height:260px;min-width:320px"><canvas id="cAn"></canvas></div></div>
+ <div id="anaList"></div>
+ <div class="tw"><table>
+  <tr><th><span class="en">Analyst</span><span class="ta">அனலிஸ்ட்</span></th><th><span class="en">Rating</span><span class="ta">ரேட்டிங்</span></th><th><span class="en">Buy / Hold / Sell equivalent</span><span class="ta">வாங்கு / வெச்சிரு / விக்கு சமமானது</span></th><th><span class="en">Target price</span><span class="ta">டார்கெட் விலை</span></th><th><span class="en">Horizon</span><span class="ta">காலம்</span></th></tr>
+  <tr><td>SBI Securities</td><td><span class="chip c-gr">Subscribe – long term</span></td><td>Buy</td><td>n/a</td><td><span class="en">Long term</span><span class="ta">நீண்ட காலம்</span></td></tr>
+  <tr><td>Krijuna Research</td><td><span class="chip c-gr">Apply</span></td><td>Buy</td><td>n/a</td><td>n/a</td></tr>
+  <tr><td>IPOWatch</td><td><span class="chip c-gr">May Apply</span></td><td><span class="en">Buy (soft)</span><span class="ta">பை (மென்மையா)</span></td><td>n/a</td><td><span class="en">Medium term</span><span class="ta">நடுத்தர காலம்</span></td></tr>
+  <tr><td>Dilip Davda</td><td><span class="chip c-am">Not Rated</span></td><td><span class="en">Hold (risk seekers only)</span><span class="ta">ஹோல்ட் (ரிஸ்க் எடுக்கறவங்களுக்கு மட்டும்)</span></td><td>n/a</td><td><span class="en">Long term</span><span class="ta">நீண்ட காலம்</span></td></tr>
+  <tr><td>Swastik Investmart</td><td><span class="chip c-am">Neutral</span></td><td>Hold</td><td>n/a</td><td>n/a</td></tr>
+  <tr><td>Chanakya Nipothi</td><td><span class="chip c-rd">Avoid (conservative) · 2/5</span></td><td><span class="en">Sell for conservative; Buy for risk-takers</span><span class="ta">பாதுகாப்பானவங்களுக்கு செல்; ரிஸ்க் எடுக்கறவங்களுக்கு பை</span></td><td>n/a</td><td>n/a</td></tr>
+ </table></div>
+ <div class="note"><span class="en"><b>Common thread across all six:</b> the order book, energy growth and debt clean-up are real; the losses and cash burn mean this is a multi-year turnaround bet, sized as a small part of a portfolio, not a quick listing trade.</span><span class="ta"><b>ஆறு பேர் கருத்துலயும் இருக்கற பொதுவான விஷயம்:</b> ஆர்டர் புக், எனர்ஜி வளர்ச்சி, கடன் சுத்தம் எல்லாம் உண்மை தான்; ஆனா நஷ்டமும் கேஷ் கரைவும் இருக்கறதால, இது பல வருஷ திருப்பம் மேல வைக்கற பந்தயம். போர்ட்ஃபோலியோல சின்ன பங்கா தான் இருக்கணும், சீக்கிரம் லிஸ்டிங் லாபம் பார்க்கற டிரேட் இல்லை.</span></div>
+</section>
+
+<!-- ============ SELF-CHECK ============ -->
+<section class="tab" id="t-sc">
+ <h2><span class="en">Investor Self-check</span><span class="ta">முதலீட்டாளர் சுய சோதனை</span></h2>
+ <p class="lead"><span class="en">Before you act on this IPO, test your own conditions. Each box shows the Zetwerk fact behind it. Your ticks stay on this device only.</span><span class="ta">இந்த ஐபிஓ பத்தி முடிவு எடுக்கறதுக்கு முன்னாடி, உங்க சொந்த கண்டிஷன்களை சோதிச்சுப் பாருங்க. ஒவ்வொரு பெட்டிக்கும் கீழ செட்வெர்க் பத்தின தரவு இருக்கு. உங்க டிக்குகள் இந்த சாதனத்துல மட்டும் தான் சேமிக்கப்படும்.</span></p>
+ <div id="scBox"></div>
+</section>
+
+<!-- ============ MANAGEMENT ============ -->
+<section class="tab" id="t-mg">
+ <h2><span class="en">Management and Board</span><span class="ta">நிர்வாகம் மற்றும் போர்டு</span></h2>
+ <p class="lead"><span class="en">Founded in 2018 by five co-founders, many with ITC backgrounds. The founders run the company but own little of it after years of venture funding.</span><span class="ta">2018-ல ஐந்து இணை நிறுவனர்கள் ஆரம்பிச்சாங்க, பலருக்கு ஐடிசி பின்னணி. நிறுவனர்கள் தான் கம்பெனியை நடத்தறாங்க, ஆனா பல வருஷ வென்ச்சர் முதலீட்டுக்கு அப்புறம் அவங்க கையில பங்கு குறைவு.</span></p>
+ <div class="tw"><table>
+  <tr><th><span class="en">Name</span><span class="ta">பெயர்</span></th><th><span class="en">Role</span><span class="ta">பொறுப்பு</span></th><th><span class="en">Notes</span><span class="ta">குறிப்பு</span></th></tr>
+  <tr><td>Amrit Pratik Acharya</td><td><span class="en">Co-founder; Chairperson, MD and CEO</span><span class="ta">இணை நிறுவனர்; தலைவர், எம்டி, சிஇஓ</span></td><td><span class="en">Promoter; CEO since 2018; selling 1.42 crore shares in OFS</span><span class="ta">புரோமோட்டர்; 2018 முதல் சிஇஓ; ஓஎஃப்எஸ்-ல 1.42 கோடி பங்குகள் விக்கறார்</span></td></tr>
+  <tr><td>Srinath Ramakkrushnan</td><td><span class="en">Co-founder; Promoter</span><span class="ta">இணை நிறுவனர்; புரோமோட்டர்</span></td><td><span class="en">Selling 1.42 crore shares in OFS</span><span class="ta">ஓஎஃப்எஸ்-ல 1.42 கோடி பங்குகள் விக்கறார்</span></td></tr>
+  <tr><td>Ankit Fatehpuria</td><td><span class="en">Co-founder; Chief Financial Officer</span><span class="ta">இணை நிறுவனர்; தலைமை நிதி அதிகாரி</span></td><td><span class="en">With Zetwerk since March 2019; ex-ITC finance and IOC audit</span><span class="ta">மார்ச் 2019 முதல் செட்வெர்க்ல; முன்பு ஐடிசி ஃபைனான்ஸ், ஐஓசி ஆடிட்</span></td></tr>
+  <tr><td>Vishal Chaudhary, Rahul Sharma</td><td><span class="en">Co-founders</span><span class="ta">இணை நிறுவனர்கள்</span></td><td><span class="en">Each selling about 17.1 lakh shares</span><span class="ta">ஒவ்வொருத்தரும் சுமார் 17.1 லட்சம் பங்குகள் விக்கறாங்க</span></td></tr>
+  <tr><td>Sanjiv Rangrass</td><td><span class="en">Independent Director (since Oct 2022)</span><span class="ta">சுயாதீன இயக்குனர் (அக். 2022 முதல்)</span></td><td><span class="en">40 years at ITC; retired as Group Head R&D, Sustainability and Projects</span><span class="ta">ஐடிசி-ல 40 வருஷம்; ஆர்&டி, சஸ்டெயினபிலிட்டி, ப்ராஜெக்ட்ஸ் குரூப் தலைவரா ஓய்வு</span></td></tr>
+  <tr><td><span class="en">Dasari</span><span class="ta">தசாரி</span></td><td><span class="en">Independent Director (since Jul 2024)</span><span class="ta">சுயாதீன இயக்குனர் (ஜூலை 2024 முதல்)</span></td><td>n/a</td></tr>
+  <tr><td><span class="en">Krishnan</span><span class="ta">கிருஷ்ணன்</span></td><td><span class="en">Independent Director</span><span class="ta">சுயாதீன இயக்குனர்</span></td><td>n/a</td></tr>
+  <tr><td><span class="en">Former IAS officer (1982 cadre)</span><span class="ta">முன்னாள் ஐஏஎஸ் அதிகாரி (1982 பேட்ச்)</span></td><td><span class="en">Independent Director (since Jan 2026)</span><span class="ta">சுயாதீன இயக்குனர் (ஜனவரி 2026 முதல்)</span></td><td><span class="en">Former Secretary, Government of India (Telecom, IT, Steel)</span><span class="ta">முன்னாள் மத்திய அரசு செயலர் (டெலிகாம், ஐடி, ஸ்டீல்)</span></td></tr>
+  <tr><td><span class="en">Lakhani</span><span class="ta">லகானி</span></td><td><span class="en">Non-executive, non-independent Director (since Jan 2026)</span><span class="ta">நிர்வாகம் சாராத, சுயாதீனம் இல்லாத இயக்குனர் (ஜனவரி 2026 முதல்)</span></td><td><span class="en">Former MD, Peak XV Partners</span><span class="ta">பீக் XV பார்ட்னர்ஸ் முன்னாள் எம்டி</span></td></tr>
+  <tr><td><span class="en">Accel nominee</span><span class="ta">ஆக்செல் பிரதிநிதி</span></td><td><span class="en">Nominee Director</span><span class="ta">நியமன இயக்குனர்</span></td><td><span class="en">Represents Accel; no compensation</span><span class="ta">ஆக்செல் சார்பா; சம்பளம் இல்லை</span></td></tr>
+ </table></div>
+ <p class="small"><span class="en">Full names of some directors were not confirmed in verified sources and are shown by surname or role only.</span><span class="ta">சில இயக்குனர்களோட முழுப் பெயர் சரிபார்க்கப்பட்ட ஆதாரங்கள்ல உறுதியாகல, அதனால குடும்பப் பெயர் அல்லது பொறுப்பு மட்டும் காட்டியிருக்கோம்.</span></p>
+ <div class="note"><span class="en">Governance points: Chairperson and CEO roles are combined in one person. Promoters will hold only 11.36% after listing, so investor-nominee directors and institutional shareholders carry real weight. Major backers include Greenoaks, Khosla Ventures, Avenir, Baillie Gifford, Rakesh Gangwal, Accel, Lightspeed and Peak XV.</span><span class="ta">நிர்வாக குறிப்பு: தலைவர், சிஇஓ ரெண்டும் ஒரே நபர் கிட்ட இருக்கு. லிஸ்டிங்குக்கு அப்புறம் புரோமோட்டர்கள் கையில 11.36% தான் இருக்கும், அதனால முதலீட்டாளர் பிரதிநிதி இயக்குனர்களுக்கும் நிறுவன பங்குதாரர்களுக்கும் நிறைய செல்வாக்கு இருக்கும். கிரீன்ஓக்ஸ், கோஸ்லா வென்ச்சர்ஸ், அவெனிர், பெய்லி கிஃபோர்ட், ராகேஷ் கங்வால், ஆக்செல், லைட்ஸ்பீட், பீக் XV முக்கிய முதலீட்டாளர்கள்.</span></div>
+</section>
+
+<!-- ============ RISKS ============ -->
+<section class="tab" id="t-rk">
+ <h2><span class="en">Risks</span><span class="ta">அபாயங்கள்</span></h2>
+ <div class="tw"><table>
+  <tr><th><span class="en">Risk</span><span class="ta">அபாயம்</span></th><th><span class="en">Severity</span><span class="ta">தீவிரம்</span></th><th><span class="en">Why it matters</span><span class="ta">ஏன் முக்கியம்</span></th></tr>
+  <tr><td><span class="en">Continued losses</span><span class="ta">தொடர் நஷ்டம்</span></td><td><span class="chip c-rd">High</span></td><td><span class="en">Net loss in every year disclosed; negative EPS means no earnings support for the price</span><span class="ta">காட்டப்பட்ட எல்லா வருஷமும் நஷ்டம்; இபிஎஸ் மைனஸ், அதனால விலைக்கு லாப ஆதரவு இல்லை</span></td></tr>
+  <tr><td><span class="en">Cash burn</span><span class="ta">கேஷ் கரைவு</span></td><td><span class="chip c-rd">High</span></td><td><span class="en">CFO −₹682 crore in FY26; growth needs constant working-capital funding</span><span class="ta">எஃப்ஒய்26-ல சிஎஃப்ஓ −₹682 கோடி; வளர்ச்சிக்கு எப்பவும் வொர்க்கிங் கேப்பிடல் பணம் தேவை</span></td></tr>
+  <tr><td><span class="en">Thin margins in Terra91</span><span class="ta">டெர்ரா91-ல குறைஞ்ச மார்ஜின்</span></td><td><span class="chip c-am">Medium</span></td><td><span class="en">41% of revenue at a 1.24% margin; small price swings can erase profit</span><span class="ta">வருவாயில 41%, மார்ஜின் 1.24% தான்; சின்ன விலை மாற்றமே லாபத்தை அழிச்சிடும்</span></td></tr>
+  <tr><td><span class="en">Supplier dependence</span><span class="ta">சப்ளையர் சார்பு</span></td><td><span class="chip c-am">Medium</span></td><td><span class="en">Quality and delivery depend on partners Zetwerk does not own</span><span class="ta">சொந்தம் இல்லாத பார்ட்னர்களை நம்பி தான் குவாலிட்டியும் டெலிவரியும்</span></td></tr>
+  <tr><td><span class="en">OFS-heavy issue</span><span class="ta">அதிக ஓஎஃப்எஸ்</span></td><td><span class="chip c-am">Medium</span></td><td><span class="en">44% of the issue goes to sellers; the OFS was raised 49% close to launch</span><span class="ta">ஐபிஓ-ல 44% விக்கறவங்களுக்கு போகுது; லான்ச்சுக்கு கொஞ்சம் முன்னாடி ஓஎஃப்எஸ் 49% அதிகமாக்கப்பட்டது</span></td></tr>
+  <tr><td><span class="en">Unidentified acquisitions</span><span class="ta">அடையாளம் சொல்லப்படாத கையகப்படுத்தல்</span></td><td><span class="chip c-am">Medium</span></td><td><span class="en">Part of fresh issue is for deals not yet named</span><span class="ta">புதிய பங்கு பணத்துல ஒரு பகுதி இன்னும் பேர் சொல்லாத டீல்களுக்கு</span></td></tr>
+  <tr><td><span class="en">Export and tariff exposure</span><span class="ta">ஏற்றுமதி, வரி அபாயம்</span></td><td><span class="chip c-am">Medium</span></td><td><span class="en">About 30% of manufacturing revenue is international; the US alone is 14.33% of total revenue</span><span class="ta">மேனுஃபேக்சரிங் வருவாயில சுமார் 30% வெளிநாடு; அமெரிக்கா மட்டும் மொத்த வருவாயில 14.33%</span></td></tr>
+  <tr><td><span class="en">Post-listing supply</span><span class="ta">லிஸ்டிங்குக்கு அப்புறம் பங்கு விற்பனை அழுத்தம்</span></td><td><span class="chip c-bl">Low–Medium</span></td><td><span class="en">Anchor and pre-IPO investor lock-ins expire in stages</span><span class="ta">ஆங்கர், ஐபிஓ முன் முதலீட்டாளர் லாக்-இன் கட்டம் கட்டமா முடியும்</span></td></tr>
+ </table></div>
+</section>
+
+<!-- ============ VERDICT ============ -->
+<section class="tab" id="t-vd">
+ <h2><span class="en">Verdict: what is the rating for this IPO?</span><span class="ta">முடிவு: இந்த ஐபிஓ-க்கு என்ன ரேட்டிங்?</span></h2>
+ <div class="card" style="border-left:5px solid var(--or)">
+  <p><span class="en"><b>Analyst consensus:</b> cautiously positive for long-term, high-risk investors (3 positive, 2 neutral, 1 avoid). Not a listing-gain story.</span><span class="ta"><b>அனலிஸ்ட் ஒருமித்த கருத்து:</b> நீண்ட கால, அதிக ரிஸ்க் எடுக்கற முதலீட்டாளர்களுக்கு எச்சரிக்கையோட சாதகம் (3 சாதகம், 2 நடுநிலை, 1 தவிர்). லிஸ்டிங் லாபக் கதை இல்லை.</span></p>
+  <p><span class="en"><b>CB Score 5.8 / 10</b> (amber): strong growth and order-book pillars, weak margin, valuation and risk pillars. CY 69, TG 72.</span><span class="ta"><b>சிபி ஸ்கோர் 5.8 / 10</b> (மஞ்சள்): வளர்ச்சி, ஆர்டர் புக் தூண்கள் வலுவா இருக்கு; மார்ஜின், மதிப்பீடு, அபாய தூண்கள் பலவீனம். CY 69, TG 72.</span></p>
+ </div>
+ <h3><span class="en">The bull case in three lines</span><span class="ta">சாதகக் கதை மூணு வரியில</span></h3>
+ <ul class="t">
+  <li><span class="en">Energy vertical nearly doubled, and the order book doubled in two years.</span><span class="ta">எனர்ஜி பிரிவு கிட்டத்தட்ட இரட்டிப்பு, ஆர்டர் புக் ரெண்டு வருஷத்துல இரட்டிப்பு.</span></li>
+  <li><span class="en">Continuing-business loss down 93% in Q1; manufacturing margin above 6.5%.</span><span class="ta">க்யூ1-ல தொடரும் பிசினஸ் நஷ்டம் 93% குறைஞ்சது; மேனுஃபேக்சரிங் மார்ஜின் 6.5%-க்கு மேல.</span></li>
+  <li><span class="en">Post-IPO the company is close to debt-free, with strong institutional backing in the anchor book.</span><span class="ta">ஐபிஓ-க்கு அப்புறம் கிட்டத்தட்ட கடன் இல்லாத கம்பெனி, ஆங்கர் புக்குல வலுவான நிறுவன ஆதரவு.</span></li>
+ </ul>
+ <h3><span class="en">The bear case in three lines</span><span class="ta">பாதகக் கதை மூணு வரியில</span></h3>
+ <ul class="t">
+  <li><span class="en">Still loss-making with negative operating cash flow.</span><span class="ta">இன்னும் நஷ்டம், ஆபரேஷன் கேஷ் மைனஸ்.</span></li>
+  <li><span class="en">About 61 times EBITDA: the price already assumes a big margin jump.</span><span class="ta">இபிஐடிடிஏ-க்கு சுமார் 61 மடங்கு: பெரிய மார்ஜின் உயர்வை விலை ஏற்கனவே எதிர்பார்க்குது.</span></li>
+  <li><span class="en">Early investors are selling more than first planned.</span><span class="ta">ஆரம்ப முதலீட்டாளர்கள் முதல்ல சொன்னதை விட அதிகமா விக்கறாங்க.</span></li>
+ </ul>
+ <p><button class="btn pri" onclick="showTab('t-sc')"><span class="en">Open your Self-check</span><span class="ta">உங்க சுய சோதனையைத் திறங்க</span></button></p>
+ <div class="note"><span class="en">This is education, not advice. CB Research is not SEBI-registered and does not recommend subscribing or avoiding. Ratings above belong to the named analysts.</span><span class="ta">இது கல்விக்காக மட்டும், முதலீட்டு ஆலோசனை இல்லை. சிபி ரிசர்ச் செபி-யில பதிவு செய்யப்படல, அப்ளை பண்ணுங்க அல்லது தவிருங்கன்னு பரிந்துரைக்காது. மேல இருக்கற ரேட்டிங் அந்தந்த அனலிஸ்ட்களோடது.</span></div>
+</section>
+
+<!-- ============ SOCRATES ============ -->
+<section class="tab" id="t-so">
+ <h2><span class="en">Cauvery Socrates</span><span class="ta">காவேரி சாக்ரடீஸ்</span></h2>
+ <p class="lead"><span class="en">Test your understanding. Tap an answer.</span><span class="ta">உங்க புரிதலை சோதிச்சுப் பாருங்க. ஒரு பதிலைத் தொடுங்க.</span></p>
+ <div id="quiz"></div>
+ <div class="q">
+  <b><span class="en">Think it through: Zetwerk's adjusted EBITDA is positive, yet operating cash flow is negative. If you were the CFO, which two levers would you pull first, and why?</span><span class="ta">யோசிச்சுப் பாருங்க: செட்வெர்க் இபிஐடிடிஏ பாசிட்டிவ், ஆனா ஆபரேஷன் கேஷ் மைனஸ். நீங்க சிஎஃப்ஓ-வா இருந்தா முதல்ல எந்த ரெண்டு விஷயத்தை மாத்துவீங்க, ஏன்?</span></b>
+  <textarea id="soTxt"></textarea>
+  <button onclick="soReply()"><span class="en">Get a Socratic nudge</span><span class="ta">சாக்ரடீஸ் குறிப்பு வேணும்</span></button>
+  <div class="ex" id="soOut"></div>
+ </div>
+</section>
+
+</main>
+
+<div id="cbBadge" onclick="document.getElementById('disc').classList.toggle('on')">CB</div>
+<div id="disc">
+ <b><span class="en">Disclaimer</span><span class="ta">பொறுப்புத் துறப்பு</span></b>
+ <p><span class="en">Prepared by CB Research (Cauvery Business Research) for education only. CB Research is not a SEBI-registered investment adviser or research analyst. Nothing here is a recommendation to subscribe, buy, sell or hold. Figures as of 15 Oct 2026; cells marked n/a were not verified. Grey market data is unofficial. Please read the RHP and consult a registered adviser before investing.</span><span class="ta">சிபி ரிசர்ச் (காவேரி பிசினஸ் ரிசர்ச்) கல்விக்காக மட்டும் தயாரிச்சது. சிபி ரிசர்ச் செபி-யில பதிவு செய்த முதலீட்டு ஆலோசகரோ ரிசர்ச் அனலிஸ்ட்டோ இல்லை. இங்க இருக்கற எதுவும் அப்ளை பண்ண, வாங்க, விக்க, வெச்சிருக்க பரிந்துரை இல்லை. தரவு 15 அக்டோபர் 2026 வரை; n/a போட்ட இடங்கள் சரிபார்க்கப்படல. கிரே மார்க்கெட் தரவு அதிகாரப்பூர்வமானது இல்லை. முதலீடு செய்யறதுக்கு முன்னாடி ஆர்எச்பி படிச்சு, பதிவு செய்த ஆலோசகரை அணுகுங்க.</span></p>
+</div>
+
+<button id="asBtn" onclick="toggleAs()">🎙 CB Assist</button>
+<div id="asBox">
+ <div id="asHd"><span><span class="en">CB Assist — ask by voice or text</span><span class="ta">சிபி அசிஸ்ட் — குரல்லயோ எழுத்துலயோ கேளுங்க</span></span><button onclick="toggleAs()" style="border:none;background:none;font-size:18px;cursor:pointer">✕</button></div>
+ <div id="asLog"></div>
+ <div class="sugg" id="sugg"></div>
+ <div id="asIn"><input id="asQ" placeholder="Ask about Zetwerk IPO…"><button id="mic" onclick="micGo()">🎤</button><button id="snd" onclick="ask()">➤</button></div>
+</div>
+
+<script>
+var CO = {
+ name:"Zetwerk Manufacturing Businesses Ltd", quarter:"Q1 FY27", status:"IPO",
+ ipo:{open:"2026-10-15",close:"2026-10-19",allot:"2026-10-21",list:"2026-10-23",band:[143,151],lot:99,minAmt:14949,
+  fresh_cr:2830,ofs_cr:2182.33,total_cr:5012.33,fresh_sh:187482119,ofs_sh:144525036,pre_sh:1506772659,post_sh:1694254778,
+  mcap_pre_cr:22752.27,mcap_post_cr:25583.25,anchor_cr:2251.23,anchors:99,quota:{qib:75,nii:15,retail:10},
+  debt_repay_cr:2160,promoter_pre:15.86,promoter_post:11.36,gmp:[16,30]},
+ fin:{years:["FY24","FY25","FY26"],rev:[12364.37,11331.86,15913.32],ebitda:[97.03,322.59,421.34],pat:[-917.95,-370.71,-1606.17],
+  contLoss:[-853,-215,-964],nw:[4062.46,4453.76,4813.72],debt:[1232.10,1746.55,1936.16],assets:[10330.85,10355.43,13384.63],
+  cfo:[-282,-386,-682],mfg:[6082,6249.10,9374.68],eco:[6282,5082.76,6538.65],ob:[6170,8628.98,12370],
+  q1:{rev:[2649.4,4117.9],ebitda:[31.11,103.16],pat:[-1368.47,-732.98],contLoss:[-881,-64],mfgMargin:[4.83,6.56]}},
+ score:{g:8.0,m:4.0,d:6.5,v:4.5,t:7.0,r:4.5,cb:5.8},
+ cycle:{sectorPhase:"Capex P3 Expansion + Structural Rapid adoption",stockStage:"Unlisted",cy:69},
+ triggers:[{name:"Order book 16000+ Cr",sign:"+",I:4,C:1.0,W:0.7,P:1.0,pts:2.8,status:"Executing"},
+  {name:"Debt repayment 2160 Cr",sign:"+",I:3,C:0.7,W:1.0,P:1.0,pts:2.1,status:"Approved"},
+  {name:"Mfg margin inflection",sign:"+",I:4,C:0.7,W:0.7,P:1.0,pts:1.96,status:"Executing"},
+  {name:"Anchor lock-in expiry",sign:"-",I:2,C:1.0,W:1.0,P:1.0,pts:2.0,status:"Announced"},
+  {name:"Discontinued ops losses",sign:"-",I:3,C:0.7,W:1.0,P:1.0,pts:2.1,status:"Executing"}],tg:72
+};
+
+var TABS=[["t-ov","Overview","கண்ணோட்டம்"],["t-ipo","IPO Details","ஐபிஓ விவரங்கள்"],["t-bm","Business Model","பிசினஸ் மாடல்"],["t-fin","Financials","நிதி நிலை"],["t-cf","Cash Flow & WC","கேஷ் ஃப்ளோ & வொர்க்கிங் கேப்பிடல்"],["t-val","Valuation","மதிப்பீடு"],["t-tc","Triggers & Cycle","ட்ரிகர்ஸ் & சைக்கிள்"],["t-sw","SWOT","ஸ்வாட்"],["t-an","Analysts' Rating","அனலிஸ்ட் ரேட்டிங்"],["t-sc","Self-check","சுய சோதனை"],["t-mg","Management & Board","நிர்வாகம் & போர்டு"],["t-rk","Risks","அபாயங்கள்"],["t-vd","Verdict","முடிவு"],["t-so","Socrates","சாக்ரடீஸ்"]];
+var TA=false;
+function L(o){return TA?o.ta:o.en}
+function navBuild(){var n=document.getElementById('nav');n.innerHTML='';TABS.forEach(function(t,i){var b=document.createElement('button');b.textContent=TA?t[2]:t[1];b.dataset.t=t[0];if(document.getElementById(t[0]).classList.contains('on'))b.classList.add('on');b.onclick=function(){showTab(t[0])};n.appendChild(b)})}
+function showTab(id){document.querySelectorAll('section.tab').forEach(function(s){s.classList.toggle('on',s.id===id)});document.querySelectorAll('#nav button').forEach(function(b){b.classList.toggle('on',b.dataset.t===id)});window.scrollTo({top:0,behavior:'smooth'});initCharts(id)}
+function toggleLang(){TA=!TA;document.body.classList.toggle('ta',TA);document.getElementById('langBtn').textContent=TA?'English':'தமிழ்';document.getElementById('asQ').placeholder=TA?'செட்வெர்க் ஐபிஓ பத்தி கேளுங்க…':'Ask about Zetwerk IPO…';navBuild();buildPillars();buildAna();buildQuiz();buildSugg();buildTemple();buildSC();}
+var fmt=function(v){return Number(v).toLocaleString('en-IN')};
+
+/* ---------- Temple ---------- */
+var PIL=[{k:'g',en:'Growth',ta:'வளர்ச்சி',s:8.0,c:{en:'Revenue +40.43% in FY26 and +55.4% in Q1 FY27; order book doubled from ₹6,170 crore (FY24) to ₹12,370 crore (FY26) and now ₹16,000+ crore.',ta:'எஃப்ஒய்26-ல வருவாய் +40.43%, க்யூ1 எஃப்ஒய்27-ல +55.4%; ஆர்டர் புக் ₹6,170 கோடியில (எஃப்ஒய்24) இருந்து ₹12,370 கோடி (எஃப்ஒய்26), இப்போ ₹16,000+ கோடி.'}},
+{k:'m',en:'Margin',ta:'மார்ஜின்',s:4.0,c:{en:'Group adjusted EBITDA margin only 2.65% (FY26) and 2.51% (Q1 FY27). Manufacturing is better at 6.56%, but Terra91 at 1.24% drags it down. Reported net loss every year.',ta:'மொத்த இபிஐடிடிஏ மார்ஜின் எஃப்ஒய்26-ல 2.65%, க்யூ1-ல 2.51% தான். மேனுஃபேக்சரிங் 6.56%-ல நல்லா இருக்கு, ஆனா டெர்ரா91 1.24%-ல கீழே இழுக்குது. ஒவ்வொரு வருஷமும் நிகர நஷ்டம்.'}},
+{k:'d',en:'Debt',ta:'கடன்',s:6.5,c:{en:'Borrowings ₹1,942 crore against net worth ₹4,094 crore (June 2026). ₹2,160 crore of the fresh issue repays debt, leaving the company near debt-free. Negative CFO keeps the score from going higher.',ta:'ஜூன் 2026-ல கடன் ₹1,942 கோடி, நிகர மதிப்பு ₹4,094 கோடி. புதிய பங்கு பணத்துல ₹2,160 கோடி கடன் அடைப்பு, கிட்டத்தட்ட கடன் இல்லாத நிலை. சிஎஃப்ஓ மைனஸ்ல இருக்கறதால ஸ்கோர் இதுக்கு மேல போகல.'}},
+{k:'v',en:'Valuation',ta:'மதிப்பீடு',s:4.5,c:{en:'1.61 times FY26 sales looks fair, but about 61 times adjusted EBITDA and a negative P/E price in a big margin improvement that is not yet delivered.',ta:'எஃப்ஒய்26 விற்பனைக்கு 1.61 மடங்கு நியாயமா தெரியுது, ஆனா இபிஐடிடிஏ-க்கு சுமார் 61 மடங்கு, பி/இ மைனஸ். இன்னும் நடக்காத பெரிய மார்ஜின் முன்னேற்றம் விலையில ஏற்கனவே இருக்கு.'}},
+{k:'t',en:'Moat',ta:'அரண்',s:7.0,c:{en:'Zetwerk OS, 10,000+ suppliers, 26 own plants, 80.15% repeat revenue and 120% net revenue retention give real stickiness.',ta:'செட்வெர்க் ஓஎஸ், 10,000+ சப்ளையர்கள், 26 சொந்த ஃபேக்டரி, 80.15% திரும்ப வரும் வருவாய், 120% நெட் ரிடென்ஷன். கஸ்டமர்கள் ஒட்டிக்கிட்டு இருக்காங்க.'}},
+{k:'r',en:'Risk',ta:'அபாயம்',s:4.5,c:{en:'Cash burn, dependence on third-party suppliers, an OFS raised 49% near launch, and unnamed acquisitions. Higher score means lower risk; 4.5 means meaningful risk.',ta:'கேஷ் கரைவு, மூணாம் தரப்பு சப்ளையர் சார்பு, லான்ச்சுக்கு முன் 49% அதிகமான ஓஎஃப்எஸ், பேர் சொல்லாத கையகப்படுத்தல். ஸ்கோர் அதிகமா இருந்தா அபாயம் குறைவு; 4.5 என்றால் அபாயம் கணிசமா இருக்கு.'}}];
+function col(s){return s>=8?'#16a34a':s>=6?'#d97706':'#dc2626'}
+function buildTemple(){var W=360,H=330,cw=40,gap=14,x0=(W-(6*cw+5*gap))/2,top=110,ch=150;
+ var s='<svg viewBox="0 0 '+W+' '+H+'" width="'+W+'" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI,Arial">';
+ s+='<polygon points="20,70 180,8 340,70" fill="#f07c1b"/><text x="180" y="48" text-anchor="middle" fill="#fff" font-size="20" font-weight="800">CB 5.8</text>';
+ s+='<rect x="24" y="72" width="312" height="26" fill="#fde7d2" stroke="#f07c1b"/><text x="180" y="90" text-anchor="middle" font-size="12.5" font-weight="700" fill="#7a3a06">Zetwerk · Q1 FY27 IPO</text>';
+ PIL.forEach(function(p,i){var x=x0+i*(cw+gap),h=ch*p.s/10;
+  s+='<g class="pillar" onclick="pillarGo(\''+p.k+'\')"><rect x="'+x+'" y="'+top+'" width="'+cw+'" height="'+ch+'" fill="#f3f4f6" stroke="#d1d5db"/>';
+  for(var f=1;f<4;f++){s+='<line x1="'+(x+f*cw/4)+'" y1="'+top+'" x2="'+(x+f*cw/4)+'" y2="'+(top+ch)+'" stroke="#e5e7eb"/>'}
+  s+='<rect x="'+x+'" y="'+(top+ch)+'" width="'+cw+'" height="0" fill="'+col(p.s)+'" opacity=".85"><animate attributeName="y" from="'+(top+ch)+'" to="'+(top+ch-h)+'" dur="1.2s" fill="freeze"/><animate attributeName="height" from="0" to="'+h+'" dur="1.2s" fill="freeze"/></rect>';
+  s+='<circle cx="'+(x+cw/2)+'" cy="'+(top+ch-h-2)+'" r="15" fill="#fff" stroke="'+col(p.s)+'" stroke-width="2.5"/><text x="'+(x+cw/2)+'" y="'+(top+ch-h+3)+'" text-anchor="middle" font-size="11.5" font-weight="800" fill="'+col(p.s)+'">'+p.s.toFixed(1)+'</text>';
+  s+='<text x="'+(x+cw/2)+'" y="'+(top+ch+42)+'" text-anchor="middle" font-size="10.5" font-weight="700" fill="#374151">'+(TA?p.ta:p.en)+'</text></g>'});
+ s+='<rect x="14" y="'+(top+ch)+'" width="332" height="10" fill="#e5e7eb"/><rect x="6" y="'+(top+ch+10)+'" width="348" height="14" fill="#d1d5db"/>';
+ s+='</svg>';document.getElementById('temple').innerHTML=s}
+function buildPillars(){var h='';PIL.forEach(function(p){h+='<div class="card" id="p-'+p.k+'" style="border-left:5px solid '+col(p.s)+'"><b>'+(TA?p.ta:p.en)+' — '+p.s.toFixed(1)+'/10</b><div>'+L(p.c)+'</div></div>'});document.getElementById('pillars').innerHTML=h}
+function pillarGo(k){var e=document.getElementById('p-'+k);e.scrollIntoView({behavior:'smooth',block:'center'});e.classList.add('hl');setTimeout(function(){e.classList.remove('hl')},1600)}
+
+/* ---------- Business model map ---------- */
+var BM={
+ cust:{en:'<b>Customers.</b> 1,802 enterprises in FY26 (1,613 in India, 189 abroad) across utilities, renewables, AI infrastructure, consumer electronics, aerospace, oil and gas. They come to Zetwerk because one partner can deliver custom parts across many categories with tracked quality.',ta:'<b>கஸ்டமர்கள்.</b> எஃப்ஒய்26-ல 1,802 நிறுவனங்கள் (இந்தியா 1,613, வெளிநாடு 189) — யுடிலிட்டி, ரினியூவபிள், ஏஐ உள்கட்டமைப்பு, எலக்ட்ரானிக்ஸ், ஏரோஸ்பேஸ், ஆயில் & கேஸ். ஒரே பார்ட்னர் பல வகை பாகங்களை குவாலிட்டியோட கொடுக்கறதால செட்வெர்க்கிட்ட வர்றாங்க.'},
+ chan:{en:'<b>Channel.</b> Direct enterprise sales. A customer sends a request for quote; Zetwerk prices it, wins the order and often grows into multi-year contracts. 80.15% of manufacturing revenue comes from repeat customers and net revenue retention is 120%, meaning existing customers spend 20% more each year.',ta:'<b>சேனல்.</b> நேரடி நிறுவன விற்பனை. கஸ்டமர் கொட்டேஷன் கேட்பாங்க; செட்வெர்க் விலை சொல்லி ஆர்டர் வாங்கும், அது பல வருஷ ஒப்பந்தமா வளரும். மேனுஃபேக்சரிங் வருவாயில 80.15% திரும்ப வரும் கஸ்டமர்கள்கிட்ட இருந்து, நெட் ரிடென்ஷன் 120%, அதாவது பழைய கஸ்டமர்கள் ஒவ்வொரு வருஷமும் 20% அதிகமா செலவு பண்றாங்க.'},
+ sup:{en:'<b>Partner suppliers.</b> 10,000+ factories that Zetwerk does not own. This is what makes the model asset-light: Zetwerk can take bigger orders without building plants. In FY26, 66.83% of manufacturing revenue was delivered through third-party suppliers. The risk is less control over quality and timelines.',ta:'<b>பார்ட்னர் சப்ளையர்கள்.</b> செட்வெர்க்குக்கு சொந்தம் இல்லாத 10,000+ ஃபேக்டரிகள். இதனால தான் அசெட்-லைட்: ஃபேக்டரி கட்டாமலேயே பெரிய ஆர்டர் எடுக்க முடியும். எஃப்ஒய்26-ல மேனுஃபேக்சரிங் வருவாயில 66.83% சப்ளையர்கள் மூலமா. அபாயம்: குவாலிட்டி, நேரம் மேல கட்டுப்பாடு குறைவு.'},
+ os:{en:'<b>Zetwerk OS (the brain).</b> Proprietary software that handles enquiry management, supplier recommendation, design for manufacturing, order management, production planning, quality, inventory and logistics. It is the reason Zetwerk earns a margin between customer and supplier.',ta:'<b>செட்வெர்க் ஓஎஸ் (மூளை).</b> சொந்த மென்பொருள்: விசாரணை, சப்ளையர் பரிந்துரை, உற்பத்திக்கான டிசைன், ஆர்டர் மேலாண்மை, உற்பத்தித் திட்டம், குவாலிட்டி, இன்வென்டரி, லாஜிஸ்டிக்ஸ் எல்லாம் இதுல தான். கஸ்டமருக்கும் சப்ளையருக்கும் நடுவுல செட்வெர்க் மார்ஜின் சம்பாதிக்கறது இதனால தான்.'},
+ own:{en:'<b>Own factories.</b> 26 facilities across India, the US, Germany and Spain. Used where Zetwerk needs control: high-value energy equipment, specialised processes, or when export customers demand a qualified plant.',ta:'<b>சொந்த ஃபேக்டரிகள்.</b> இந்தியா, அமெரிக்கா, ஜெர்மனி, ஸ்பெயின்ல 26 ஆலைகள். கட்டுப்பாடு தேவைப்படற இடங்கள்ல பயன்படுத்தறாங்க: அதிக மதிப்பு எனர்ஜி உபகரணங்கள், சிறப்பு செயல்முறைகள், ஏற்றுமதி கஸ்டமர்கள் தகுதியான ஆலை கேட்கும்போது.'},
+ mfg:{en:'<b>Manufacturing Business — ₹9,375 crore, 58.91% of revenue, +50%.</b> Custom-built products. EBITDA margin 6.03% in FY26 and 6.56% in Q1 FY27. Manufacturing ROCE 22.75%. This is the business that will decide the stock.',ta:'<b>மேனுஃபேக்சரிங் பிசினஸ் — ₹9,375 கோடி, வருவாயில 58.91%, +50%.</b> ஆர்டர்படி செய்யற தயாரிப்புகள். இபிஐடிடிஏ மார்ஜின் எஃப்ஒய்26-ல 6.03%, க்யூ1-ல 6.56%. ஆர்ஓசிஇ 22.75%. பங்கு விலையைத் தீர்மானிக்கப் போறது இந்த பிசினஸ் தான்.'},
+ eco:{en:'<b>Ecosystem Business (Terra91) — ₹6,539 crore, 41.09% of revenue.</b> Buys and sells metals and raw materials, mostly to its supplier network. Big revenue, tiny 1.24% EBITDA margin, only 12.51% of segment EBITDA. It helps suppliers get material on credit, which keeps them loyal, but it inflates revenue and absorbs working capital.',ta:'<b>எகோசிஸ்டம் பிசினஸ் (டெர்ரா91) — ₹6,539 கோடி, வருவாயில 41.09%.</b> உலோகம், கச்சாப் பொருள் வாங்கி பெரும்பாலும் சப்ளையர்களுக்கே விக்குது. வருவாய் பெருசு, மார்ஜின் வெறும் 1.24%, பிரிவு இபிஐடிடிஏ-ல 12.51% தான். சப்ளையர்களுக்கு கடன்ல பொருள் கிடைக்கறதால அவங்க விசுவாசமா இருப்பாங்க, ஆனா வருவாய் பெருசா தெரியும், வொர்க்கிங் கேப்பிடல் அதிகம் தேவை.'},
+ en1:{en:'<b>Energy products — ₹6,508 crore, +87%.</b> Power transformers, solar torque tubes, grid equipment. Riding the energy transition and AI data-centre power demand. This is now the biggest single vertical and the growth engine.',ta:'<b>எனர்ஜி தயாரிப்புகள் — ₹6,508 கோடி, +87%.</b> பவர் டிரான்ஸ்ஃபார்மர், சோலார் டார்க் டியூப், கிரிட் உபகரணங்கள். எனர்ஜி மாற்றம், ஏஐ டேட்டா சென்டர் மின் தேவை மேல ஓடுது. இப்போ இது தான் பெரிய பிரிவு, வளர்ச்சி இன்ஜின்.'},
+ pr:{en:'<b>Precision products — about ₹1,397 crore.</b> Electronics, appliance components and aerospace parts. Smaller today but higher-skill work that can lift margins.',ta:'<b>பிரிசிஷன் தயாரிப்புகள் — சுமார் ₹1,397 கோடி.</b> எலக்ட்ரானிக்ஸ், அப்ளையன்ஸ் பாகங்கள், ஏரோஸ்பேஸ் பாகங்கள். இப்போ சின்னது, ஆனா திறமை அதிகம் தேவைப்படற வேலை, மார்ஜினை உயர்த்தலாம்.'},
+ cg:{en:'<b>Capital goods — ₹1,464 crore.</b> Heavy fabrication and industrial equipment, including oil and gas. Weak demand here caused part of the FY25 revenue dip.',ta:'<b>கேப்பிடல் குட்ஸ் — ₹1,464 கோடி.</b> கனரக ஃபேப்ரிகேஷன், ஆயில் & கேஸ் உட்பட தொழில் உபகரணங்கள். இங்க தேவை குறைஞ்சது தான் எஃப்ஒய்25 வருவாய் சரிவுக்கு ஒரு காரணம்.'},
+ rev:{en:'<b>Revenue — ₹15,913 crore in FY26, +40.43%.</b> Q1 FY27 revenue ₹4,118 crore, +55.4%. India 82.54%, USA 14.33%.',ta:'<b>வருவாய் — எஃப்ஒய்26-ல ₹15,913 கோடி, +40.43%.</b> க்யூ1 எஃப்ஒய்27-ல ₹4,118 கோடி, +55.4%. இந்தியா 82.54%, அமெரிக்கா 14.33%.'},
+ cost:{en:'<b>Costs.</b> About 97% of revenue goes out as supplier payments, raw materials, freight, staff and technology. That leaves a 2.65% adjusted EBITDA margin for the group.',ta:'<b>செலவுகள்.</b> வருவாயில சுமார் 97% சப்ளையர் பணம், கச்சாப் பொருள், சரக்கு, ஊழியர், டெக்னாலஜிக்கு போகுது. மொத்த கம்பெனிக்கு 2.65% அட்ஜஸ்டட் இபிஐடிடிஏ மார்ஜின் தான் மிஞ்சுது.'},
+ prof:{en:'<b>Profit.</b> Adjusted EBITDA ₹421 crore. After depreciation, interest, ESOP costs and the discontinued civil-infrastructure business, the reported FY26 net loss is ₹1,606 crore. Continuing business loss before exceptional items and tax was only ₹80.60 crore.',ta:'<b>லாபம்.</b> அட்ஜஸ்டட் இபிஐடிடிஏ ₹421 கோடி. தேய்மானம், வட்டி, இஎஸ்ஓபி செலவு, நிறுத்தப்பட்ட சிவில் இன்ஃப்ரா பிசினஸ் எல்லாம் கழிச்சா, எஃப்ஒய்26 நிகர நஷ்டம் ₹1,606 கோடி. தொடரும் பிசினஸ்ல விதிவிலக்கு, வரிக்கு முன் நஷ்டம் வெறும் ₹80.60 கோடி.'},
+ sh:{en:'<b>Shareholders.</b> Net worth ₹4,094 crore (June 2026). Post-IPO, about ₹2,830 crore of fresh equity comes in and ₹2,160 crore of debt goes out, so shareholders own a near debt-free platform. Returns will come only if margins scale up.',ta:'<b>பங்குதாரர்கள்.</b> ஜூன் 2026-ல நிகர மதிப்பு ₹4,094 கோடி. ஐபிஓ-க்கு அப்புறம் சுமார் ₹2,830 கோடி புதிய பணம் வரும், ₹2,160 கோடி கடன் அடைக்கப்படும், அதனால கிட்டத்தட்ட கடன் இல்லாத தளம். மார்ஜின் உயர்ந்தா தான் வருமானம் வரும்.'}};
+function box(id,x,y,w,h,fill,stroke,lines,fs){var s='<g class="bx" onclick="bmShow(\''+id+'\')"><rect x="'+x+'" y="'+y+'" width="'+w+'" height="'+h+'" rx="10" fill="'+fill+'" stroke="'+stroke+'" stroke-width="1.6"/>';var lh=(fs||11)+3,ty=y+h/2-(lines.length-1)*lh/2+4;lines.forEach(function(t,i){s+='<text x="'+(x+w/2)+'" y="'+(ty+i*lh)+'" text-anchor="middle" font-size="'+(i===0?(fs||11)+1:(fs||11))+'" font-weight="'+(i===0?800:500)+'" fill="#1f2937">'+t+'</text>'});return s+'</g>'}
+function arr(x1,y1,x2,y2){return '<line x1="'+x1+'" y1="'+y1+'" x2="'+x2+'" y2="'+y2+'" stroke="#94a3b8" stroke-width="1.8" marker-end="url(#ah)"/>'}
+function buildBM(){var s='<svg viewBox="0 0 360 740" width="360" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI,Arial"><defs><marker id="ah" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#94a3b8"/></marker></defs>';
+ s+=box('cust',20,8,320,52,'#e2f6f3','#0d9488',['1,802 Customers','Utilities · Renewables · AI infra · Electronics · Aero']);
+ s+=arr(180,60,180,80);
+ s+=box('chan',20,82,320,46,'#f6f8fb','#94a3b8',['Direct enterprise sales','RFQ → quote → order · 80.15% repeat']);
+ s+=arr(180,128,180,150);
+ s+=box('sup',8,152,104,76,'#f1f5f9','#64748b',['Suppliers','10,000+ partners','66.83% of mfg'],10);
+ s+=box('os',124,146,112,88,'#f07c1b','#c25e0c',['ZETWERK OS','design · match','QC · logistics'],10.5);
+ s+=box('own',248,152,104,76,'#f1f5f9','#64748b',['Own plants','26 factories','IN · US · DE · ES'],10);
+ s+=arr(112,190,122,190)+arr(248,190,238,190);
+ s+=arr(160,234,95,262)+arr(200,234,265,262);
+ s+=box('mfg',8,264,170,68,'#e8f0ff','#2563eb',['Manufacturing','₹9,375 Cr · 58.91%','+50% · EBITDA 6.03%'],10.5);
+ s+=box('eco',182,264,170,68,'#f1ebff','#7c3aed',['Ecosystem (Terra91)','₹6,539 Cr · 41.09%','EBITDA 1.24%'],10.5);
+ s+=arr(50,332,50,356)+arr(93,332,180,356)+arr(140,332,300,356);
+ s+=box('en1',8,358,108,66,'#e8f0ff','#2563eb',['Energy','₹6,508 Cr','+87%'],10.5);
+ s+=box('cg',126,358,108,66,'#e8f0ff','#2563eb',['Capital goods','₹1,464 Cr','heavy fab'],10.5);
+ s+=box('pr',244,358,108,66,'#e8f0ff','#2563eb',['Precision','₹1,397 Cr','electronics · aero'],10.5);
+ s+=arr(62,424,150,452)+arr(180,424,180,452)+arr(298,424,210,452)+'<path d="M352,300 C362,380 300,440 220,456" fill="none" stroke="#94a3b8" stroke-width="1.8" marker-end="url(#ah)"/>';
+ s+=box('rev',40,454,280,52,'#e7f7ec','#16a34a',['Revenue ₹15,913 Cr (FY26)','+40.43% · Q1 FY27 +55.4%']);
+ s+=arr(180,506,180,526);
+ s+=box('cost',40,528,280,52,'#fdecec','#dc2626',['Costs ≈ 97% of revenue','suppliers · metals · freight · staff']);
+ s+=arr(180,580,180,600);
+ s+=box('prof',40,602,280,52,'#fff6e0','#d97706',['Adj. EBITDA ₹421 Cr (2.65%)','Net loss ₹1,606 Cr (incl. discontinued)']);
+ s+=arr(180,654,180,674);
+ s+=box('sh',40,676,280,54,'#e2f6f3','#0d9488',['Shareholders','Net worth ₹4,094 Cr · near debt-free post-IPO']);
+ s+='</svg>';document.getElementById('bmMap').innerHTML=s}
+function bmShow(id){var c=document.getElementById('bmCard');c.innerHTML=L(BM[id]);c.classList.add('hl');setTimeout(function(){c.classList.remove('hl')},900);c.scrollIntoView({behavior:'smooth',block:'nearest'})}
+
+/* ---------- Order loop ---------- */
+function buildLoop(){var st=[['1','Customer RFQ','#0d9488'],['2','Design for mfg','#2563eb'],['3','Supplier match','#7c3aed'],['4','Build + QC','#d97706'],['5','Deliver + bill','#16a34a'],['6','Data to OS','#f07c1b']];
+ var cx=180,cy=150,R=105,s='<svg viewBox="0 0 360 300" width="360" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI,Arial">';
+ s+='<circle cx="'+cx+'" cy="'+cy+'" r="'+R+'" fill="none" stroke="#e5e7eb" stroke-width="10"/>';
+ s+='<circle cx="'+cx+'" cy="'+cy+'" r="44" fill="#fff1e4" stroke="#f07c1b" stroke-width="2"/><text x="'+cx+'" y="'+(cy-3)+'" text-anchor="middle" font-size="12" font-weight="800" fill="#9a4a07">Zetwerk</text><text x="'+cx+'" y="'+(cy+13)+'" text-anchor="middle" font-size="12" font-weight="800" fill="#9a4a07">OS</text>';
+ st.forEach(function(p,i){var a=-Math.PI/2+i*2*Math.PI/6,x=cx+R*Math.cos(a),y=cy+R*Math.sin(a);s+='<circle cx="'+x+'" cy="'+y+'" r="27" fill="'+p[2]+'"/><text x="'+x+'" y="'+(y-3)+'" text-anchor="middle" fill="#fff" font-size="12" font-weight="800">'+p[0]+'</text>';var w=p[1].split(' ');s+='<text x="'+x+'" y="'+(y+10)+'" text-anchor="middle" fill="#fff" font-size="8.5" font-weight="700">'+w[0]+'</text>';if(w.length>1)s+='<text x="'+x+'" y="'+(y+19)+'" text-anchor="middle" fill="#fff" font-size="8.5" font-weight="700">'+w.slice(1).join(' ')+'</text>'});
+ s+='</svg>';document.getElementById('loop').innerHTML=s}
+
+/* ---------- IPO money flow ---------- */
+var IP={tot:{en:'<b>Total issue ₹5,012.33 crore</b> at ₹151. 56% is fresh money for the company, 44% goes to selling shareholders.',ta:'<b>மொத்த ஐபிஓ ₹5,012.33 கோடி</b> ₹151 விலையில. 56% கம்பெனிக்கு புதிய பணம், 44% விக்கற பங்குதாரர்களுக்கு.'},
+ fr:{en:'<b>Fresh issue ₹2,830 crore</b> — 18.75 crore new shares. This money enters the company and dilutes existing holders by about 11%.',ta:'<b>புதிய பங்கு ₹2,830 கோடி</b> — 18.75 கோடி புது பங்குகள். இந்த பணம் கம்பெனிக்குள்ள போகும், பழைய பங்குதாரர்களோட பங்கு சுமார் 11% நீர்த்துப் போகும்.'},
+ of:{en:'<b>Offer for sale ₹2,182 crore</b> — 14.45 crore existing shares. Money goes to sellers, not the company. Promoter group sells about 5.14 crore shares; Lightspeed, Peak XV, Kae Capital and Accel are the largest investor sellers.',ta:'<b>ஓஎஃப்எஸ் ₹2,182 கோடி</b> — 14.45 கோடி பழைய பங்குகள். பணம் விக்கறவங்களுக்கு போகும், கம்பெனிக்கு இல்லை. புரோமோட்டர் குழு சுமார் 5.14 கோடி பங்குகள் விக்குது; லைட்ஸ்பீட், பீக் XV, கே கேப்பிடல், ஆக்செல் பெரிய விற்பனையாளர்கள்.'},
+ d1:{en:'<b>Repay company debt ₹1,300 crore.</b> Cuts interest cost directly at the parent level.',ta:'<b>கம்பெனி கடன் அடைப்பு ₹1,300 கோடி.</b> தாய் நிறுவன அளவுல நேரடியா வட்டி செலவு குறையும்.'},
+ d2:{en:'<b>Repay subsidiary debt ₹860 crore.</b> Together with the parent repayment, ₹2,160 crore (about 76% of the fresh issue) goes to debt, against ₹1,942 crore of borrowings at June 2026.',ta:'<b>துணை நிறுவன கடன் அடைப்பு ₹860 கோடி.</b> தாய் நிறுவனத்தோட சேர்த்து ₹2,160 கோடி (புதிய பணத்துல சுமார் 76%) கடனுக்கு; ஜூன் 2026-ல கடன் ₹1,942 கோடி.'},
+ aq:{en:'<b>Acquisitions and general corporate purposes ≈ ₹670 crore</b> (balance after debt, before issue expenses; split not disclosed in sources checked). Targets are not yet identified.',ta:'<b>கையகப்படுத்தல், பொது நோக்கங்கள் ≈ ₹670 கோடி</b> (கடன் போக மீதி, செலவுகள் கழிக்காம; பிரிப்பு கிடைக்கல). இலக்குகள் இன்னும் அறிவிக்கப்படல.'},
+ sel:{en:'<b>Selling shareholders.</b> Promoters Amrit Acharya and Srinath Ramakkrushnan (₹214.88 crore each), Creovate Innovation (₹346.92 crore), plus Peak XV, Lightspeed, Accel, Kae Capital, Kalysta and individuals.',ta:'<b>விக்கற பங்குதாரர்கள்.</b> புரோமோட்டர்கள் அம்ரித் ஆச்சார்யா, ஸ்ரீநாத் ராமகிருஷ்ணன் (தலா ₹214.88 கோடி), கிரியோவேட் இன்னோவேஷன் (₹346.92 கோடி), அப்புறம் பீக் XV, லைட்ஸ்பீட், ஆக்செல், கே கேப்பிடல், கலிஸ்டா, தனிநபர்கள்.'}};
+function buildIPO(){var s='<svg viewBox="0 0 360 330" width="360" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI,Arial"><defs><marker id="ah2" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#94a3b8"/></marker></defs>';
+ function b(id,x,y,w,h,f,st,l){var r='<g class="bx" onclick="ipShow(\''+id+'\')"><rect x="'+x+'" y="'+y+'" width="'+w+'" height="'+h+'" rx="10" fill="'+f+'" stroke="'+st+'" stroke-width="1.6"/>';l.forEach(function(t,i){r+='<text x="'+(x+w/2)+'" y="'+(y+h/2-(l.length-1)*7+4+i*14)+'" text-anchor="middle" font-size="'+(i?10.5:12)+'" font-weight="'+(i?500:800)+'" fill="#1f2937">'+t+'</text>'});return r+'</g>'}
+ function a(x1,y1,x2,y2){return '<line x1="'+x1+'" y1="'+y1+'" x2="'+x2+'" y2="'+y2+'" stroke="#94a3b8" stroke-width="1.8" marker-end="url(#ah2)"/>'}
+ s+=b('tot',70,8,220,48,'#f07c1b','#c25e0c',['Total ₹5,012 Cr','at ₹151 per share']);
+ s+=a(140,56,95,86)+a(220,56,265,86);
+ s+=b('fr',10,88,170,52,'#e8f0ff','#2563eb',['Fresh issue ₹2,830 Cr','→ to the company']);
+ s+=b('of',190,88,160,52,'#f1ebff','#7c3aed',['OFS ₹2,182 Cr','→ to sellers']);
+ s+=a(50,140,50,176)+a(95,140,150,176)+a(150,140,250,176)+a(270,140,320,246);
+ s+=b('d1',4,178,92,58,'#e7f7ec','#16a34a',['Debt','₹1,300 Cr','company']);
+ s+=b('d2',104,178,92,58,'#e7f7ec','#16a34a',['Debt','₹860 Cr','subsidiaries']);
+ s+=b('aq',204,178,92,58,'#fff6e0','#d97706',['Acq. + GCP','≈ ₹670 Cr','balance']);
+ s+=b('sel',190,250,166,66,'#f1ebff','#7c3aed',['Selling holders','Promoters ₹777 Cr','Investors ₹1,405 Cr']);
+ s+='<text x="10" y="270" font-size="11" fill="#5d6778">Debt total ₹2,160 Cr</text><text x="10" y="286" font-size="11" fill="#5d6778">≈ 76% of fresh issue</text><text x="10" y="302" font-size="11" fill="#5d6778">vs borrowings ₹1,942 Cr</text>';
+ s+='</svg>';document.getElementById('ipoFlow').innerHTML=s}
+function ipShow(id){var c=document.getElementById('ipCard');c.innerHTML=L(IP[id]);c.classList.add('hl');setTimeout(function(){c.classList.remove('hl')},900)}
+
+/* ---------- WC loop ---------- */
+function buildWC(){var s='<svg viewBox="0 0 360 170" width="360" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI,Arial"><defs><marker id="ah3" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#94a3b8"/></marker></defs>';
+ var bx=[[8,'Day 0','Pay supplier','#fdecec','#dc2626'],[128,'Day 30–90','Goods delivered','#fff6e0','#d97706'],[248,'Day 60–150','Customer pays','#e7f7ec','#16a34a']];
+ bx.forEach(function(b){s+='<rect x="'+b[0]+'" y="20" width="104" height="60" rx="10" fill="'+b[3]+'" stroke="'+b[4]+'"/><text x="'+(b[0]+52)+'" y="45" text-anchor="middle" font-size="12" font-weight="800">'+b[1]+'</text><text x="'+(b[0]+52)+'" y="62" text-anchor="middle" font-size="11">'+b[2]+'</text>'});
+ s+='<line x1="112" y1="50" x2="126" y2="50" stroke="#94a3b8" stroke-width="2" marker-end="url(#ah3)"/><line x1="232" y1="50" x2="246" y2="50" stroke="#94a3b8" stroke-width="2" marker-end="url(#ah3)"/>';
+ s+='<rect x="8" y="100" width="344" height="52" rx="10" fill="#f6f8fb" stroke="#cbd5e1"/><text x="180" y="122" text-anchor="middle" font-size="12" font-weight="800" fill="#9b1c1c">Cash gap = funded by debt, supplier credit or equity</text><text x="180" y="140" text-anchor="middle" font-size="11" fill="#374151">Bigger orders → bigger gap → negative CFO (−₹682 Cr FY26)</text>';
+ s+='</svg>';document.getElementById('wcLoop').innerHTML=s}
+
+/* ---------- Cycle clock ---------- */
+function buildClock(){var cx=180,cy=150,R=110,ph=[['P1 Trough','#94a3b8'],['P2 Early','#16a34a'],['P3 Expansion','#2563eb'],['P4 Late','#d97706'],['P5 Down','#dc2626']];
+ var s='<svg viewBox="0 0 360 320" width="360" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI,Arial">';
+ ph.forEach(function(p,i){var a0=-Math.PI/2+i*2*Math.PI/5,a1=a0+2*Math.PI/5,x0=cx+R*Math.cos(a0),y0=cy+R*Math.sin(a0),x1=cx+R*Math.cos(a1),y1=cy+R*Math.sin(a1);
+  s+='<path d="M'+cx+','+cy+' L'+x0+','+y0+' A'+R+','+R+' 0 0,1 '+x1+','+y1+' Z" fill="'+p[1]+'" opacity="'+(i===2?0.9:0.35)+'" stroke="#fff" stroke-width="2"/>';
+  var am=(a0+a1)/2,tx=cx+(R*0.66)*Math.cos(am),ty=cy+(R*0.66)*Math.sin(am);s+='<text x="'+tx+'" y="'+ty+'" text-anchor="middle" font-size="11" font-weight="800" fill="'+(i===2?'#fff':'#1f2937')+'">'+p[0]+'</text>'});
+ var ap=-Math.PI/2+2.5*2*Math.PI/5;s+='<line x1="'+cx+'" y1="'+cy+'" x2="'+(cx+(R-14)*Math.cos(ap))+'" y2="'+(cy+(R-14)*Math.sin(ap))+'" stroke="#111827" stroke-width="4" stroke-linecap="round"/><circle cx="'+cx+'" cy="'+cy+'" r="22" fill="#fff" stroke="#111827" stroke-width="2"/><text x="'+cx+'" y="'+(cy+4)+'" text-anchor="middle" font-size="11" font-weight="800">CY 69</text>';
+ s+='<text x="180" y="290" text-anchor="middle" font-size="11.5" font-weight="700" fill="#1e40af">Pointer: capex cycle in P3 Expansion</text><text x="180" y="307" text-anchor="middle" font-size="11" fill="#5d6778">S-curve: EMS / AI infra = Rapid adoption · Stock stage: unlisted</text>';
+ s+='</svg>';document.getElementById('clock').innerHTML=s}
+
+/* ---------- Analysts ---------- */
+var ANA=[{n:'SBI Securities',r:'Subscribe – long term',c:'#16a34a',bg:'#e7f7ec',en:'Recommends subscribing for the long term, citing the growth in manufacturing and the platform model. Did not frame it as a listing trade.',ta:'நீண்ட காலத்துக்கு சப்ஸ்க்ரைப் பண்ண பரிந்துரை, மேனுஃபேக்சரிங் வளர்ச்சி, தள மாடலைக் காரணமா சொல்றாங்க. லிஸ்டிங் டிரேடா சொல்லல.'},
+ {n:'Krijuna Research',r:'Apply',c:'#16a34a',bg:'#e7f7ec',en:'Positive call on the issue based on scale and order visibility.',ta:'அளவு, ஆர்டர் தெளிவு அடிப்படையில சாதகமான கருத்து.'},
+ {n:'IPOWatch',r:'May Apply',c:'#16a34a',bg:'#e7f7ec',en:'Suggests it may suit a medium-term investment. Flags dependence on third-party suppliers and India-heavy revenue (82.54%).',ta:'நடுத்தர கால முதலீட்டுக்கு பொருந்தலாம்னு சொல்றாங்க. மூணாம் தரப்பு சப்ளையர் சார்பு, இந்தியாவை அதிகம் நம்பற வருவாய் (82.54%) பத்தி எச்சரிக்கை.'},
+ {n:'Dilip Davda',r:'Not Rated',c:'#d97706',bg:'#fff6e0',en:'Calls it a long-term race horse after a business revamp, but notes a negative P/E and says only well-informed, cash-surplus, risk-seeking investors should park moderate funds for the long term.',ta:'பிசினஸ் மறுசீரமைப்புக்கு அப்புறம் நீண்ட கால பந்தயக் குதிரைன்னு சொல்றார், ஆனா பி/இ மைனஸ்னு குறிப்பிட்டு, நல்லா தெரிஞ்ச, உபரி பணம் இருக்கற, ரிஸ்க் எடுக்கறவங்க மட்டும் கொஞ்சம் பணம் நீண்ட காலத்துக்கு போடலாம்னு சொல்றார்.'},
+ {n:'Swastik Investmart',r:'Neutral',c:'#d97706',bg:'#fff6e0',en:'Neutral stance: growth is noted, but valuation and losses keep it from a positive call.',ta:'நடுநிலை: வளர்ச்சி இருக்குன்னு ஒப்புக்கறாங்க, ஆனா மதிப்பீடு, நஷ்டத்தால சாதகமா சொல்லல.'},
+ {n:'Chanakya Nipothi',r:'Avoid (conservative) · 2/5',c:'#dc2626',bg:'#fdecec',en:'Rates it 2 out of 5. Conservative investors should avoid; risk-takers may apply, treating it as a growth-and-turnaround bet. Suggests revisiting after listed results show progress to profit.',ta:'5-க்கு 2 ரேட்டிங். பாதுகாப்பா முதலீடு செய்றவங்க தவிர்க்கணும்; ரிஸ்க் எடுக்கறவங்க வளர்ச்சி-திருப்பம் பந்தயமா அப்ளை பண்ணலாம். லிஸ்ட் ஆன பிறகு லாபம் நோக்கி முன்னேற்றம் தெரிஞ்சா திரும்பப் பார்க்கச் சொல்றாங்க.'}];
+function buildAna(){var h='';ANA.forEach(function(a){h+='<div class="card ana"><div class="badge" style="background:'+a.bg+';color:'+a.c+';border:2px solid '+a.c+'">'+a.n.split(' ').map(function(w){return w[0]}).join('')+'</div><div><b>'+a.n+'</b> <span class="chip" style="background:'+a.bg+';color:'+a.c+'">'+a.r+'</span><div>'+(TA?a.ta:a.en)+'</div></div></div>'});document.getElementById('anaList').innerHTML=h}
+
+/* ---------- Charts ---------- */
+var drawn={};
+function tk(v){return '₹'+Number(v).toLocaleString('en-IN')}
+var topLbl={id:'topLbl',afterDatasetsDraw:function(c){var ctx=c.ctx;ctx.save();ctx.font='600 10.5px Segoe UI,Arial';ctx.fillStyle='#374151';ctx.textAlign='center';c.data.datasets.forEach(function(ds,i){if(ds.type==='line'||ds.noLbl)return;var m=c.getDatasetMeta(i);if(m.hidden)return;m.data.forEach(function(el,j){var v=ds.data[j];if(v===null||v===undefined)return;var y=v>=0?el.y-4:el.y+12;ctx.fillText(Number(v).toLocaleString('en-IN'),el.x,y)})});ctx.restore()}};
+function mk(id,cfg){var e=document.getElementById(id);if(!e||typeof Chart==='undefined')return;cfg.options=cfg.options||{};cfg.options.responsive=true;cfg.options.maintainAspectRatio=false;new Chart(e,cfg)}
+function initCharts(tab){if(drawn[tab])return;drawn[tab]=1;var F=CO.fin;
+ if(tab==='t-ipo'){
+  mk('cOFS',{type:'bar',plugins:[topLbl],data:{labels:['Creovate (promoter grp)','A. Acharya','S. Ramakkrushnan','Peak XV (2 funds)','Lightspeed (3 funds)','Kae Capital','Accel','Kalysta','Co-founders + others'],datasets:[{label:'₹ crore',data:[346.92,214.88,214.88,353.48,426.92,189.81,181.45,63.27,191.72],backgroundColor:['#f07c1b','#f07c1b','#f07c1b','#7c3aed','#7c3aed','#7c3aed','#7c3aed','#7c3aed','#94a3b8']}]},options:{plugins:{legend:{display:false}},scales:{y:{ticks:{callback:tk}}}}});
+  mk('cSH',{type:'bar',data:{labels:['Pre-IPO','Post-IPO'],datasets:[{label:'Promoter & group %',data:[15.86,11.36],backgroundColor:'#f07c1b'},{label:'Public %',data:[84.14,88.64],backgroundColor:'#2563eb'}]},options:{indexAxis:'y',scales:{x:{stacked:true,max:100},y:{stacked:true}}}});
+ }
+ if(tab==='t-bm'){mk('cMix',{type:'doughnut',data:{labels:['Energy ₹6,508 Cr','Capital goods ₹1,464 Cr','Precision ₹1,397 Cr','Ecosystem (Terra91) ₹6,539 Cr'],datasets:[{data:[6508,1464,1397,6539],backgroundColor:['#2563eb','#60a5fa','#93c5fd','#7c3aed']}]},options:{plugins:{legend:{position:'bottom'}}}})}
+ if(tab==='t-fin'){
+  mk('cRev',{type:'bar',plugins:[topLbl],data:{labels:['FY24','FY25','FY26','Q1 FY26','Q1 FY27'],datasets:[{label:'Revenue',data:[12364.37,11331.86,15913.32,2649.4,4117.9],backgroundColor:'#2563eb',yAxisID:'y'},{label:'Adj. EBITDA',data:[97.03,322.59,421.34,31.11,103.16],backgroundColor:'#f07c1b',yAxisID:'y1'}]},options:{scales:{y:{ticks:{callback:tk},title:{display:true,text:'Revenue ₹ Cr'}},y1:{position:'right',grid:{display:false},ticks:{callback:tk},title:{display:true,text:'EBITDA ₹ Cr'}}}}});
+  mk('cMar',{type:'line',data:{labels:['FY24','FY25','FY26','Q1 FY26','Q1 FY27'],datasets:[{label:'Group Adj. EBITDA %',data:[0.78,2.85,2.65,1.17,2.51],borderColor:'#f07c1b',backgroundColor:'#f07c1b',tension:.3},{label:'Manufacturing EBITDA %',data:[null,null,6.03,4.83,6.56],borderColor:'#2563eb',backgroundColor:'#2563eb',tension:.3,spanGaps:true}]},options:{scales:{y:{ticks:{callback:function(v){return v+'%'}}}}}});
+  mk('cPAT',{type:'bar',plugins:[topLbl],data:{labels:['FY24','FY25','FY26','Q1 FY26','Q1 FY27'],datasets:[{label:'Reported net loss',data:[-917.95,-370.71,-1606.17,-1368.47,-732.98],backgroundColor:'#dc2626'},{label:'Continuing-ops loss',data:[-853,-215,-964,-881,-64],backgroundColor:'#fca5a5'}]},options:{scales:{y:{ticks:{callback:tk}}}}});
+  mk('cOB',{type:'bar',plugins:[topLbl],data:{labels:['FY24','FY25','FY26','Jun 2026'],datasets:[{label:'Order book ₹ Cr',data:[6170,8628.98,12370,16000],backgroundColor:['#93c5fd','#60a5fa','#2563eb','#1e40af']}]},options:{plugins:{legend:{display:false}},scales:{y:{ticks:{callback:tk}}}}});
+ }
+ if(tab==='t-cf'){mk('cCF',{type:'bar',plugins:[topLbl],data:{labels:['FY24','FY25','FY26'],datasets:[{label:'Adj. EBITDA',data:[97,323,421],backgroundColor:'#16a34a'},{label:'Cash from operations',data:[-282,-386,-682],backgroundColor:'#dc2626'}]},options:{scales:{y:{ticks:{callback:tk}}}}})}
+ if(tab==='t-an'){mk('cAn',{type:'doughnut',data:{labels:['Positive (3)','Neutral / not rated (2)','Avoid for conservative (1)'],datasets:[{data:[3,2,1],backgroundColor:['#16a34a','#d97706','#dc2626']}]},options:{plugins:{legend:{position:'bottom'}}}})}
+}
+
+/* ---------- Quiz ---------- */
+var QZ=[{q:{en:'What share of FY26 revenue came from the low-margin Ecosystem (Terra91) business?',ta:'எஃப்ஒய்26 வருவாயில குறைஞ்ச மார்ஜின் எகோசிஸ்டம் (டெர்ரா91) பங்கு எவ்வளவு?'},o:['12.51%','41.09%','58.91%'],a:1,x:{en:'41.09%. It is large in revenue but earns only a 1.24% EBITDA margin, which is why the group margin stays under 3%.',ta:'41.09%. வருவாயில பெருசு, ஆனா மார்ஜின் வெறும் 1.24%, அதனால தான் மொத்த மார்ஜின் 3%-க்கு கீழ இருக்கு.'}},
+ {q:{en:'How much of the fresh issue goes to repaying debt?',ta:'புதிய பங்கு பணத்துல எவ்வளவு கடன் அடைக்கப் போகுது?'},o:['₹860 crore','₹1,300 crore','₹2,160 crore'],a:2,x:{en:'₹2,160 crore (₹1,300 crore company + ₹860 crore subsidiaries), about 76% of the ₹2,830 crore fresh issue.',ta:'₹2,160 கோடி (கம்பெனி ₹1,300 + துணை நிறுவனங்கள் ₹860), ₹2,830 கோடியில சுமார் 76%.'}},
+ {q:{en:'Adjusted EBITDA is positive, but CFO is negative. The most likely reason is…',ta:'இபிஐடிடிஏ பாசிட்டிவ், ஆனா சிஎஃப்ஓ மைனஸ். பெரும்பாலும் காரணம்…'},o:{en:['High dividend payouts','Working capital absorbing cash as revenue grows','Large capex on new factories'],ta:['அதிக டிவிடெண்ட்','வருவாய் வளரும்போது வொர்க்கிங் கேப்பிடல் கேஷை உறிஞ்சறது','புது ஃபேக்டரிக்கு பெரிய கேப்பெக்ஸ்']},a:1,x:{en:'Working capital. Capex sits in investing cash flow, not CFO, and a loss-making company pays no dividends.',ta:'வொர்க்கிங் கேப்பிடல் தான். கேப்பெக்ஸ் முதலீட்டு கேஷ்ல வரும், சிஎஃப்ஓ-ல இல்லை; நஷ்ட கம்பெனி டிவிடெண்ட் கொடுக்காது.'}},
+ {q:{en:'Which cycle phase did CB Research assign to Zetwerk\'s capex-linked business?',ta:'செட்வெர்க்கின் கேப்பெக்ஸ் பிசினஸுக்கு சிபி ரிசர்ச் எந்த சைக்கிள் கட்டம் கொடுத்தது?'},o:['P2 Early recovery','P3 Expansion','P4 Late cycle'],a:1,x:{en:'P3 Expansion: order inflow exceeds revenue (book-to-bill 1.64×) and growth is broad, but it is not an early-recovery bounce.',ta:'பி3 விரிவாக்கம்: புது ஆர்டர் வருவாயை விட அதிகம் (புக்-டு-பில் 1.64×), வளர்ச்சி பரவலா இருக்கு, ஆனா இது ஆரம்ப மீட்சி இல்லை.'}},
+ {q:{en:'Why is P/E not useful for valuing this IPO?',ta:'இந்த ஐபிஓ-வை மதிப்பிட பி/இ ஏன் பயன்படாது?'},o:{en:['EPS is negative','The share has no face value','P/E is banned for IPOs'],ta:['இபிஎஸ் மைனஸ்','பங்குக்கு முக மதிப்பு இல்லை','ஐபிஓ-க்கு பி/இ தடை']},a:0,x:{en:'FY26 EPS is −₹10.66, so P/E is negative. Price to sales (1.61×) and market cap to EBITDA (about 61×) are used instead.',ta:'எஃப்ஒய்26 இபிஎஸ் −₹10.66, அதனால பி/இ மைனஸ். அதுக்கு பதிலா விலை/விற்பனை (1.61×), மார்க்கெட் கேப்/இபிஐடிடிஏ (சுமார் 61×) பார்க்கறோம்.'}}];
+function buildQuiz(){var h='';QZ.forEach(function(z,i){var opts=Array.isArray(z.o)?z.o:(TA?z.o.ta:z.o.en);h+='<div class="q"><b>'+(i+1)+'. '+L(z.q)+'</b>';opts.forEach(function(o,j){h+='<button onclick="qa('+i+','+j+',this)">'+o+'</button>'});h+='<div class="ex" id="ex'+i+'">'+L(z.x)+'</div></div>'});document.getElementById('quiz').innerHTML=h}
+function qa(i,j,b){var btns=b.parentNode.querySelectorAll('button');btns.forEach(function(x,k){x.classList.remove('ok','no');if(k===QZ[i].a)x.classList.add('ok')});if(j!==QZ[i].a)b.classList.add('no');document.getElementById('ex'+i).style.display='block'}
+function soReply(){var t=document.getElementById('soTxt').value.toLowerCase(),o=document.getElementById('soOut'),m;
+ if(!t.trim())m={en:'Start with where the cash is stuck. Is it with customers, in stock, or with suppliers?',ta:'கேஷ் எங்கே மாட்டிக்கிட்டு இருக்குன்னு ஆரம்பிங்க. கஸ்டமர்கிட்டயா, ஸ்டாக்லயா, சப்ளையர்கிட்டயா?'};
+ else if(/receiv|collect|customer|வசூல்/.test(t)&&/terra|ecosystem|metal|எகோ|டெர்ரா/.test(t))m={en:'Strong answer. Faster collections and shrinking low-margin Terra91 volumes both free cash. Now ask: if Terra91 shrinks, what happens to supplier loyalty?',ta:'நல்ல பதில். வசூலை வேகப்படுத்தறதும், டெர்ரா91 அளவைக் குறைக்கறதும் கேஷை விடுவிக்கும். இப்போ யோசிங்க: டெர்ரா91 குறைஞ்சா சப்ளையர் விசுவாசம் என்ன ஆகும்?'};
+ else if(/receiv|collect|customer|advance|வசூல்/.test(t))m={en:'Good: customer terms are a key lever. What is the second lever on the other side of the cash gap, or in the business mix?',ta:'சரி: கஸ்டமர் பேமென்ட் விதிமுறை முக்கியம். கேஷ் இடைவெளியோட மறுபக்கத்துலயோ, பிசினஸ் கலவையிலயோ ரெண்டாவது வழி என்ன?'};
+ else if(/supplier|payable|credit|சப்ளையர்/.test(t))m={en:'Stretching supplier payments helps cash, but Zetwerk relies on 10,000+ suppliers. How far can it push before quality or loyalty suffers?',ta:'சப்ளையர் பேமென்ட்டை தள்ளிப் போட்டா கேஷ் கிடைக்கும், ஆனா செட்வெர்க் 10,000+ சப்ளையர்களை நம்பி இருக்கு. குவாலிட்டியோ விசுவாசமோ பாதிக்காம எவ்வளவு தூரம் தள்ள முடியும்?'};
+ else m={en:'Think about the three parts of working capital: receivables, inventory and payables. Which one does a 40% revenue jump inflate the most?',ta:'வொர்க்கிங் கேப்பிடலோட மூணு பகுதிகளை யோசிங்க: வசூல், இன்வென்டரி, பேமென்ட். 40% வருவாய் உயர்வு எதை அதிகமா பெருக்கும்?'};
+ o.innerHTML=L(m);o.style.display='block'}
+
+/* ---------- CB Assist (voice Q&A) ---------- */
+var KB=[{k:['should i','shall i','should we','can i buy','worth buying','worth applying','good to apply','வாங்கலாமா','பண்ணலாமா','போடலாமா'],tab:'t-sc',en:'I cannot tell you to apply, buy or skip. CB Research is not SEBI-registered. Open the Self-check tab and tick your own conditions; each box shows the Zetwerk fact behind it.',ta:'அப்ளை பண்ணுங்க, வாங்குங்க, தவிருங்கன்னு நான் சொல்ல முடியாது. சிபி ரிசர்ச் செபி-யில பதிவு செய்யப்படல. சுய சோதனை டேப்பைத் திறந்து உங்க சொந்த கண்டிஷன்களை டிக் பண்ணுங்க; ஒவ்வொரு பெட்டியிலும் செட்வெர்க் தரவு இருக்கு.'},{k:['rating','recommend','subscribe','apply','analyst','ரேட்டிங்','அனலிஸ்ட்','பரிந்துரை'],en:'Six analysts: SBI Securities says subscribe for the long term, Krijuna says apply, IPOWatch says may apply, Dilip Davda has not rated it, Swastik Investmart is neutral, and Chanakya Nipothi says avoid for conservative investors with 2 out of 5. Consensus is long-term and high-risk. CB Score is 5.8 out of 10.',ta:'ஆறு அனலிஸ்ட்கள்: எஸ்பிஐ செக்யூரிட்டீஸ் நீண்ட காலத்துக்கு சப்ஸ்க்ரைப், கிருஜுனா அப்ளை, ஐபிஓ வாட்ச் அப்ளை பண்ணலாம், திலீப் தவ்தா ரேட்டிங் கொடுக்கல, ஸ்வஸ்திக் நடுநிலை, சாணக்ய நிபோதி பாதுகாப்பானவங்க தவிர்க்கணும், 5-க்கு 2. ஒருமித்த கருத்து: நீண்ட கால, அதிக ரிஸ்க். சிபி ஸ்கோர் 10-க்கு 5.8.'},
+ {k:['price','band','lot','minimum','விலை','லாட்'],en:'Price band is 143 to 151 rupees. One lot is 99 shares, so the minimum retail bid is 14,949 rupees. Retail can bid up to 13 lots, 1,94,337 rupees.',ta:'விலைப்பட்டை 143 முதல் 151 ரூபாய். ஒரு லாட் 99 பங்குகள், அதனால குறைந்தபட்ச ரீடெயில் தொகை 14,949 ரூபாய். ரீடெயில் 13 லாட் வரை, அதாவது 1,94,337 ரூபாய் வரை அப்ளை பண்ணலாம்.'},
+ {k:['date','open','close','listing','allot','when','தேதி','லிஸ்டிங்','எப்போ'],en:'The issue opens 15 October and closes 19 October 2026. Allotment is on 21 October and listing is expected on 23 October on BSE and NSE.',ta:'ஐபிஓ அக்டோபர் 15 திறந்து அக்டோபர் 19 மூடுது. அலாட்மென்ட் அக்டோபர் 21, லிஸ்டிங் அக்டோபர் 23 அன்னிக்கு பிஎஸ்இ, என்எஸ்இ-ல எதிர்பார்க்கப்படுது.'},
+ {k:['gmp','grey','premium','கிரே'],en:'Grey market premium was quoted between 16 and 30 rupees on 11 and 12 October, roughly 11 to 20 percent. It is unofficial and can change quickly.',ta:'அக்டோபர் 11, 12 அன்னிக்கு கிரே மார்க்கெட் பிரீமியம் 16 முதல் 30 ரூபாய், சுமார் 11 முதல் 20 சதவீதம். இது அதிகாரப்பூர்வம் இல்லை, சீக்கிரம் மாறும்.'},
+ {k:['business','model','what does','do','பிசினஸ்','மாடல்','என்ன செய்'],en:'Zetwerk is a managed manufacturing platform. Customers send requirements, Zetwerk OS matches them to over 10,000 suppliers or its 26 own factories, controls quality and delivers. 59 percent of revenue is manufacturing, 41 percent is metal trading under Terra91.',ta:'செட்வெர்க் ஒரு மேனேஜ்டு உற்பத்தி தளம். கஸ்டமர் தேவையை சொல்லுவாங்க, செட்வெர்க் ஓஎஸ் அதை 10,000-க்கு மேல சப்ளையர்கள் அல்லது சொந்த 26 ஃபேக்டரிகளோட இணைச்சு, குவாலிட்டி பார்த்து டெலிவரி பண்ணும். வருவாயில 59 சதவீதம் மேனுஃபேக்சரிங், 41 சதவீதம் டெர்ரா91 உலோக டிரேடிங்.'},
+ {k:['revenue','sales','growth','வருவாய்','வளர்ச்சி'],en:'Revenue was 15,913 crore rupees in FY26, up 40.43 percent. Q1 FY27 revenue was 4,118 crore, up 55.4 percent. Energy products grew 87 percent to 6,508 crore.',ta:'எஃப்ஒய்26-ல வருவாய் 15,913 கோடி ரூபாய், 40.43 சதவீதம் உயர்வு. க்யூ1 எஃப்ஒய்27-ல 4,118 கோடி, 55.4 சதவீதம் உயர்வு. எனர்ஜி தயாரிப்புகள் 87 சதவீதம் வளர்ந்து 6,508 கோடி.'},
+ {k:['loss','profit','pat','நஷ்டம்','லாபம்'],en:'Reported net loss was 1,606 crore in FY26 and 733 crore in Q1 FY27. But the continuing business lost only 64 crore in Q1 FY27 versus 881 crore a year earlier; the rest is the discontinued civil infrastructure business.',ta:'எஃப்ஒய்26-ல நிகர நஷ்டம் 1,606 கோடி, க்யூ1 எஃப்ஒய்27-ல 733 கோடி. ஆனா தொடரும் பிசினஸ் க்யூ1-ல வெறும் 64 கோடி நஷ்டம், முந்தைய வருஷம் 881 கோடி; மீதி நிறுத்தப்பட்ட சிவில் இன்ஃப்ரா பிசினஸால.'},
+ {k:['ebitda','margin','மார்ஜின்','இபிஐடிடிஏ'],en:'Adjusted EBITDA was 421 crore in FY26, a 2.65 percent margin. Manufacturing alone earned 6.56 percent in Q1 FY27, up from 4.83 percent. Terra91 earns only 1.24 percent.',ta:'எஃப்ஒய்26-ல அட்ஜஸ்டட் இபிஐடிடிஏ 421 கோடி, மார்ஜின் 2.65 சதவீதம். மேனுஃபேக்சரிங் மட்டும் க்யூ1-ல 6.56 சதவீதம், முன்னாடி 4.83. டெர்ரா91 வெறும் 1.24 சதவீதம்.'},
+ {k:['debt','borrow','proceeds','use of','objects','கடன்','பணம் எங்கே'],en:'Borrowings were 1,942 crore in June 2026. Of the 2,830 crore fresh issue, 2,160 crore repays debt, 1,300 crore at the company and 860 crore at subsidiaries. The rest funds acquisitions and general purposes.',ta:'ஜூன் 2026-ல கடன் 1,942 கோடி. 2,830 கோடி புதிய பணத்துல 2,160 கோடி கடன் அடைப்பு, கம்பெனிக்கு 1,300, துணை நிறுவனங்களுக்கு 860. மீதி கையகப்படுத்தல், பொது நோக்கங்களுக்கு.'},
+ {k:['cash','cfo','working capital','கேஷ்','வொர்க்கிங்'],en:'Cash from operations was negative for three years: minus 282, minus 386 and minus 682 crore. Working capital grows with revenue because Zetwerk pays suppliers before customers pay. Working capital days were not verified and are marked n/a.',ta:'மூணு வருஷமா ஆபரேஷன் கேஷ் மைனஸ்: மைனஸ் 282, மைனஸ் 386, மைனஸ் 682 கோடி. கஸ்டமர் பணம் தர்றதுக்கு முன்னாடியே சப்ளையருக்கு கொடுக்கறதால வருவாயோட சேர்ந்து வொர்க்கிங் கேப்பிடலும் வளருது. வொர்க்கிங் கேப்பிடல் நாட்கள் சரிபார்க்கப்படல, n/a.'},
+ {k:['valuation','expensive','cheap','multiple','மதிப்பீடு','விலை அதிகம்'],en:'At 151 rupees the market cap is 25,583 crore: about 1.6 times FY26 sales, but about 61 times adjusted EBITDA, and P/E is negative. The price assumes strong margin improvement.',ta:'151 ரூபாயில மார்க்கெட் கேப் 25,583 கோடி: எஃப்ஒய்26 விற்பனைக்கு சுமார் 1.6 மடங்கு, ஆனா இபிஐடிடிஏ-க்கு சுமார் 61 மடங்கு, பி/இ மைனஸ். பெரிய மார்ஜின் முன்னேற்றத்தை விலை எதிர்பார்க்குது.'},
+ {k:['anchor','ஆங்கர்'],en:'Zetwerk raised 2,251 crore from 99 anchor investors at 151 rupees. Domestic mutual funds took about 46 percent. Names include Capital Group, BlackRock, Goldman Sachs, SBI MF, HDFC MF and ICICI Prudential MF.',ta:'99 ஆங்கர் முதலீட்டாளர்கள் கிட்ட இருந்து 151 ரூபாயில 2,251 கோடி. உள்நாட்டு மியூச்சுவல் ஃபண்டுகள் சுமார் 46 சதவீதம். கேப்பிடல் குரூப், பிளாக்ராக், கோல்ட்மேன் சாக்ஸ், எஸ்பிஐ எம்எஃப், எச்டிஎஃப்சி எம்எஃப், ஐசிஐசிஐ ப்ருடென்ஷியல் எம்எஃப் இருக்காங்க.'},
+ {k:['order','book','ஆர்டர்'],en:'The manufacturing order book was 12,370 crore at March 2026 and over 16,000 crore at June 2026, about 1.7 years of manufacturing revenue. New orders were 1.64 times revenue in FY26.',ta:'மார்ச் 2026-ல ஆர்டர் புக் 12,370 கோடி, ஜூன் 2026-ல 16,000 கோடிக்கு மேல, மேனுஃபேக்சரிங் வருவாயில சுமார் 1.7 வருஷம். எஃப்ஒய்26-ல புது ஆர்டர்கள் வருவாயை விட 1.64 மடங்கு.'},
+ {k:['risk','danger','அபாயம்','ரிஸ்க்'],en:'Main risks: continued losses, negative operating cash flow, thin Terra91 margins, dependence on third-party suppliers, a large offer for sale, unnamed acquisitions and anchor lock-in expiries after listing.',ta:'முக்கிய அபாயங்கள்: தொடர் நஷ்டம், மைனஸ் ஆபரேஷன் கேஷ், டெர்ரா91 குறைஞ்ச மார்ஜின், சப்ளையர் சார்பு, பெரிய ஓஎஃப்எஸ், பேர் சொல்லாத கையகப்படுத்தல், லிஸ்டிங்குக்கு அப்புறம் ஆங்கர் லாக்-இன் முடிவு.'},
+ {k:['promoter','founder','ceo','management','board','நிர்வாகம்','நிறுவனர்'],en:'Amrit Pratik Acharya is co-founder, chairperson, MD and CEO. Srinath Ramakkrushnan is the other promoter. Ankit Fatehpuria is co-founder and CFO. Promoters hold 15.86 percent before and 11.36 percent after the IPO.',ta:'அம்ரித் பிரதீக் ஆச்சார்யா இணை நிறுவனர், தலைவர், எம்டி, சிஇஓ. ஸ்ரீநாத் ராமகிருஷ்ணன் இன்னொரு புரோமோட்டர். அங்கித் ஃபதேபுரியா இணை நிறுவனர், சிஎஃப்ஓ. புரோமோட்டர் பங்கு ஐபிஓ-க்கு முன் 15.86, பின் 11.36 சதவீதம்.'},
+ {k:['trigger','cycle','catalyst','ட்ரிகர்','சைக்கிள்'],en:'Cycle score is 69: the capex cycle is in expansion and electronics and AI infrastructure are in rapid adoption. Trigger score is 72: positives are the order book, debt repayment and manufacturing margin gains; negatives are anchor lock-in expiry and discontinued-business losses.',ta:'சைக்கிள் ஸ்கோர் 69: கேப்பெக்ஸ் சைக்கிள் விரிவாக்கத்துல, எலக்ட்ரானிக்ஸ், ஏஐ உள்கட்டமைப்பு வேகமா வளருது. ட்ரிகர் ஸ்கோர் 72: சாதகம் ஆர்டர் புக், கடன் அடைப்பு, மேனுஃபேக்சரிங் மார்ஜின்; பாதகம் ஆங்கர் லாக்-இன், நிறுத்தப்பட்ட பிசினஸ் நஷ்டம்.'}];
+var SG={en:['Should I apply?','What is the rating?','Price band and lot','Business model','Use of proceeds','Valuation','Main risks'],ta:['அப்ளை பண்ணலாமா?','ரேட்டிங் என்ன?','விலைப்பட்டை, லாட்','பிசினஸ் மாடல்','பணம் எங்கே போகுது','மதிப்பீடு','முக்கிய அபாயங்கள்']};
+function buildSugg(){var h='';(TA?SG.ta:SG.en).forEach(function(s){h+='<button onclick="askT(\''+s.replace(/'/g,"\\'")+'\')">'+s+'</button>'});document.getElementById('sugg').innerHTML=h}
+function toggleAs(){var b=document.getElementById('asBox');b.classList.toggle('on');if(b.classList.contains('on')&&!document.getElementById('asLog').innerHTML)addMsg('b',TA?'வணக்கம்! செட்வெர்க் ஐபிஓ பத்தி குரல்லயோ எழுத்துலயோ கேளுங்க.':'Hello! Ask me anything about the Zetwerk IPO, by voice or text.')}
+function addMsg(w,t){var d=document.createElement('div');d.className=w;d.textContent=t;var l=document.getElementById('asLog');l.appendChild(d);l.scrollTop=l.scrollHeight}
+function answer(q){window._lastTab=null;q=q.toLowerCase();var best=null,bs=0;KB.forEach(function(e){var s=0;e.k.forEach(function(k){if(q.indexOf(k)>=0)s+=k.length});if(s>bs){bs=s;best=e}});
+ if(!best)return TA?'மன்னிக்கணும், அது புரியல. ரேட்டிங், விலை, தேதி, பிசினஸ் மாடல், கடன், கேஷ், மதிப்பீடு, அபாயம் பத்தி கேளுங்க.':'Sorry, I did not catch that. Try asking about the rating, price, dates, business model, debt, cash flow, valuation or risks.';
+ window._lastTab=best.tab||null;return TA?best.ta:best.en}
+function speak(t){try{if(!window.speechSynthesis)return;speechSynthesis.cancel();var u=new SpeechSynthesisUtterance(t);u.lang=TA?'ta-IN':'en-IN';u.rate=1;speechSynthesis.speak(u)}catch(e){}}
+function askT(q){addMsg('u',q);var a=answer(q);addMsg('b',a);if(window._lastTab){var tb=window._lastTab,l=document.getElementById('asLog'),bt=document.createElement('button');bt.className='asOpen';bt.textContent=TA?'தொடர்புடைய டேப்பைத் திற':'Open related tab';bt.onclick=function(){showTab(tb);toggleAs()};l.lastChild.appendChild(document.createElement('br'));l.lastChild.appendChild(bt);l.scrollTop=l.scrollHeight}speak(a)}
+function ask(){var i=document.getElementById('asQ');if(!i.value.trim())return;askT(i.value.trim());i.value=''}
+document.addEventListener('keydown',function(e){if(e.key==='Enter'&&document.activeElement&&document.activeElement.id==='asQ')ask()});
+var rec=null;
+function micGo(){var SR=window.SpeechRecognition||window.webkitSpeechRecognition,m=document.getElementById('mic');if(!SR){addMsg('b',TA?'இந்த பிரவுசர்ல குரல் உள்ளீடு இல்லை. எழுதிக் கேளுங்க.':'Voice input is not supported in this browser. Please type your question.');return}
+ if(rec){try{rec.stop()}catch(e){}rec=null;m.classList.remove('live');return}
+ rec=new SR();rec.lang=TA?'ta-IN':'en-IN';rec.interimResults=false;rec.maxAlternatives=1;m.classList.add('live');
+ rec.onresult=function(ev){var t=ev.results[0][0].transcript;askT(t)};rec.onend=function(){m.classList.remove('live');rec=null};rec.onerror=function(){m.classList.remove('live');rec=null};rec.start()}
+
+
+/* ---------- CB Investor Self-check ---------- */
+function A(en,ta){return {en:en,ta:ta}}
+function T(en,ta){return TA?ta:en}
+function esc(s){return String(s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})}
+function store(k,v){try{if(v===undefined)return localStorage.getItem(k);localStorage.setItem(k,v)}catch(e){return null}}
+var SC_CATS=[
+ {k:"issue",t:A("Questions about the issue","இஷ்யூ பத்தின கேள்விகள்"),s:A("Size, fresh vs OFS, price, demand, lock-ins","அளவு, புதிய பணம் எதிர் ஓஎஃப்எஸ், விலை, டிமாண்ட், லாக்-இன்")},
+ {k:"prob",t:A("Problems investors face","முதலீட்டாளர்கள் சந்திக்கிற சிக்கல்கள்"),s:A("Understanding the business, connecting with it, earnings and risks","பிசினஸ் புரிதல், அதோட கனெக்ட் ஆகுறது, வருமானம், அபாயங்கள்")},
+ {k:"sol",t:A("Solutions — what I did about them","தீர்வுகள் — அதுக்கு நான் என்ன பண்ணேன்"),s:A("Steps that turn a problem into a checked condition","சிக்கலை சரிபார்த்த கண்டிஷனா மாத்துற படிகள்")},
+ {k:"view",t:A("Anchors' and analysts' view","ஆங்கர்கள், அனலிஸ்ட்கள் பார்வை"),s:A("What institutions and research say","நிறுவனங்களும் ரிசர்ச்சும் என்ன சொல்லுது")},
+ {k:"mine",t:A("My own conditions","என் சொந்த கண்டிஷன்கள்"),s:A("Add the checks that matter to you","உங்களுக்கு முக்கியமான செக்குகளை சேருங்க")}];
+var SC_SUGG=[A("The price is below my own target buy price.","விலை என் டார்கெட் வாங்கும் விலைக்கு கீழ இருக்கு."),A("Promoter holding stays above 50% after the IPO.","ஐபிஓ-க்கு அப்புறமும் புரோமோட்டர் பங்கு 50%-க்கு மேல இருக்கு."),A("I don't already hold too much of this sector.","இந்த துறையில ஏற்கனவே அதிகமா வெச்சிருக்கல."),A("The company has no big pending legal case.","கம்பெனி மேல பெரிய நிலுவை வழக்கு இல்ல.")];
+var SCCFG={key:"cbipo_sc2_zetwerk",name:A("Zetwerk","செட்வெர்க்"),cats:{
+ issue:[
+  [A("I'm clear on the price band and lot size.","விலைப்பட்டை, லாட் அளவு எனக்கு தெளிவா தெரியும்."),A("₹143–₹151 · lot 99 shares (₹14,949 at ₹151) · issue size ₹5,012.33 Cr","₹143–₹151 · லாட் 99 பங்குகள் (₹151-ல ₹14,949) · ஐபிஓ அளவு ₹5,012.33 கோடி")],
+  [A("I know how much was fresh money and how much was OFS.","புதிய பணம் எவ்வளவு, ஓஎஃப்எஸ் எவ்வளவுன்னு தெரியும்."),A("Fresh ₹2,830 Cr (56% goes to the company) · OFS ₹2,182.33 Cr (44% goes to selling shareholders)","புதிய பணம் ₹2,830 கோடி (56% கம்பெனிக்கு) · ஓஎஃப்எஸ் ₹2,182.33 கோடி (44% விக்கற பங்குதாரர்களுக்கு)")],
+  [A("I know what the company will do with the fresh money.","புதிய பணத்தை கம்பெனி என்ன பண்ணும்னு தெரியும்."),A("₹2,160 Cr to repay debt (₹1,300 Cr company + ₹860 Cr subsidiaries); balance for acquisitions and general corporate purposes","₹2,160 கோடி கடன் அடைப்பு (கம்பெனி ₹1,300 + துணை நிறுவனங்கள் ₹860); மீதி கையகப்படுத்தல், பொது நோக்கங்களுக்கு")],
+  [A("I'll check day-wise subscription before bidding closes.","ஏலம் முடியறதுக்கு முன்னாடி தினசரி சப்ஸ்க்ரிப்ஷனை பார்ப்பேன்."),A("Last bidding day 19 Oct 2026 (UPI mandate by 5 PM) · allotment 21 Oct · listing 23 Oct (tentative)","கடைசி ஏல நாள் 19 அக்டோபர் 2026 (யுபிஐ மேண்டேட் மாலை 5 மணிக்குள்) · அலாட்மென்ட் 21 அக்டோபர் · லிஸ்டிங் 23 அக்டோபர் (தற்காலிகம்)")],
+  [A("I know when locked-in shares become free to sell.","லாக் ஆன பங்குகள் எப்போ விக்க ஃப்ரீ ஆகும்னு தெரியும்."),A("Estimated: anchors 50% ≈ 20 Nov 2026, rest ≈ 19 Jan 2027 · pre-IPO investors ≈ 21 Apr 2027 · promoters ≈ 21 Apr 2028. Exact dates are in exchange filings.","தோராயமா: ஆங்கர்கள் 50% ≈ 20 நவம்பர் 2026, மீதி ≈ 19 ஜனவரி 2027 · ஐபிஓ முன் முதலீட்டாளர்கள் ≈ 21 ஏப்ரல் 2027 · புரோமோட்டர்கள் ≈ 21 ஏப்ரல் 2028. சரியான தேதிகள் எக்ஸ்சேஞ்ச் அறிவிப்புகள்ல இருக்கும்.")]],
+ prob:[
+  [A("I understand what the company does and how it makes money.","கம்பெனி என்ன செய்யுது, எப்படி பணம் சம்பாதிக்குதுன்னு புரியுது."),A("Gets custom industrial products built through 10,000+ partner factories and 26 own plants (Manufacturing, 59% of revenue) and trades metals to those factories (Terra91, 41%)","10,000+ பார்ட்னர் ஃபேக்டரிகள், சொந்த 26 ஆலைகள் மூலமா ஆர்டர்படி தொழில் பொருட்களை செஞ்சு தருது (மேனுஃபேக்சரிங், வருவாயில 59%); அந்த ஃபேக்டரிகளுக்கு உலோகம் விக்குது (டெர்ரா91, 41%)")],
+  [A("I can connect with the business — I use its products or follow its sector.","இந்த பிசினஸோட கனெக்ட் ஆக முடியுது — அதோட பொருளை பயன்படுத்தறேன் அல்லது துறையை கவனிக்கறேன்."),A("Sectors: energy equipment, capital goods, electronics · CB cycle: capex cycle in P3 Expansion; electronics and AI infrastructure in rapid adoption","துறைகள்: எனர்ஜி உபகரணங்கள், கேப்பிடல் குட்ஸ், எலக்ட்ரானிக்ஸ் · சிபி சைக்கிள்: கேப்பெக்ஸ் சைக்கிள் பி3 விரிவாக்கம்; எலக்ட்ரானிக்ஸ், ஏஐ உள்கட்டமைப்பு வேகமான வளர்ச்சி")],
+  [A("I understand its earnings — growing, flat or loss-making.","வருமானம் புரியுது — வளருதா, ஒரே மாதிரியா, நஷ்டமா."),A("Loss-making but improving: revenue +40.43% in FY26; net loss ₹1,606 Cr; Q1 FY27 continuing-business loss down to ₹64 Cr from ₹881 Cr","நஷ்டம், ஆனா முன்னேறுது: எஃப்ஒய்26-ல வருவாய் +40.43%; நிகர நஷ்டம் ₹1,606 கோடி; க்யூ1 எஃப்ஒய்27-ல தொடரும் பிசினஸ் நஷ்டம் ₹881 கோடியில இருந்து ₹64 கோடியா குறைஞ்சது")],
+  [A("I know the biggest risk and can live with it.","பெரிய அபாயம் தெரியும், அதை ஏத்துக்க முடியும்."),A("Cash burn — operating cash flow −₹682 Cr in FY26 — and a thin 2.65% group margin","கேஷ் கரைவு — எஃப்ஒய்26-ல ஆபரேஷன் கேஷ் −₹682 கோடி — அப்புறம் மொத்த மார்ஜின் வெறும் 2.65%")]],
+ sol:[
+  [A("I read the 'Our Business' and 'Risk Factors' pages of the RHP.","ஆர்எச்பி-ல 'எங்கள் பிசினஸ்', 'அபாயக் காரணிகள்' பக்கங்களை படிச்சேன்."),A("Start with those two sections, then 'Objects of the Offer'","அந்த ரெண்டு பகுதியில ஆரம்பிங்க, அப்புறம் 'ஆஃபரின் நோக்கங்கள்'")],
+  [A("I compared it with a listed peer in the same sector.","அதே துறையில லிஸ்ட் ஆன போட்டியாளரோட ஒப்பிட்டேன்."),A("Dixon, Kaynes, Amber (contract electronics) · Bharat Forge (engineering)","டிக்சன், கெய்ன்ஸ், ஆம்பர் (கான்ட்ராக்ட் எலக்ட்ரானிக்ஸ்) · பாரத் ஃபோர்ஜ் (இன்ஜினியரிங்)")],
+  [A("I kept the amount small — one lot or a small part of my portfolio.","தொகையை சின்னதா வெச்சேன் — ஒரு லாட் அல்லது போர்ட்ஃபோலியோல சின்ன பகுதி."),A("1 lot = 99 shares = ₹14,949 at ₹151 · retail gets only 10% of the net offer, so allotment is a lottery","1 லாட் = 99 பங்குகள் = ₹151-ல ₹14,949 · ரீடெயிலுக்கு நெட் ஆஃபர்ல 10% தான், அதனால அலாட்மென்ட் ஒரு லாட்டரி மாதிரி")],
+  [A("I fixed my horizon (listing gain or 3–5 years) and a review point, such as the next results.","என் கால அளவு (லிஸ்டிங் லாபம் அல்லது 3–5 வருஷம்), மறுபரிசீலனை நேரம் (அடுத்த ரிசல்ட் மாதிரி) முடிவு பண்ணேன்."),null],
+  [A("I'm ready for a dip around the next unlock or results.","அடுத்த லாக்-இன் முடிவு அல்லது ரிசல்ட் சமயத்துல இறக்கத்துக்கு தயார்."),A("Q2 FY27 results due by mid-November 2026 · anchor 50% unlock ≈ 20 Nov 2026 (estimated)","க்யூ2 எஃப்ஒய்27 ரிசல்ட் நவம்பர் 2026 நடுவுக்குள் · ஆங்கர் 50% லாக்-இன் முடிவு ≈ 20 நவம்பர் 2026 (தோராயம்)")],
+  [A("I can sit through a −8% listing (LIC-like) without panic-selling.","−8% லிஸ்டிங் (எல்ஐசி மாதிரி) வந்தாலும் பயந்து விக்க மாட்டேன்."),A("Recent new-age listings: ArMee Infotech closed −20% on listing day; Fractal Analytics about −6% on debut","சமீபத்திய நியூ-ஏஜ் லிஸ்டிங்: ஆர்மீ இன்ஃபோடெக் லிஸ்டிங் நாள்ல −20%; ஃப்ராக்டல் அனலிட்டிக்ஸ் முதல் நாள் சுமார் −6%")]],
+ view:[
+  [A("The anchor book had strong long-term funds.","ஆங்கர் புக்குல வலுவான நீண்ட கால ஃபண்டுகள் இருந்தாங்க."),A("₹2,251 Cr from 99 anchors at ₹151; domestic mutual funds ≈ 46% (SBI, HDFC, ICICI Prudential); Capital Group, BlackRock. Whether they stay can be ticked only after ≈ 19 Jan 2027.","₹151-ல 99 ஆங்கர்கள் கிட்ட இருந்து ₹2,251 கோடி; உள்நாட்டு மியூச்சுவல் ஃபண்டுகள் ≈ 46% (எஸ்பிஐ, எச்டிஎஃப்சி, ஐசிஐசிஐ ப்ருடென்ஷியல்); கேப்பிடல் குரூப், பிளாக்ராக். அவங்க தொடர்ந்து இருக்காங்களான்னு ≈ 19 ஜனவரி 2027-க்கு அப்புறம் தான் டிக் பண்ண முடியும்.")],
+  [A("The QIB portion was heavily oversubscribed by the last day.","கடைசி நாளுக்குள் க்யூஐபி பகுதி பல மடங்கு சப்ஸ்க்ரைப் ஆச்சு."),A("QIB quota is 75% of the net offer · final numbers on 19 Oct 2026","க்யூஐபி ஒதுக்கீடு நெட் ஆஃபர்ல 75% · இறுதி எண்ணிக்கை 19 அக்டோபர் 2026 அன்னிக்கு")],
+  [A("Independent analyst reviews I read support my reasoning.","நான் படிச்ச அனலிஸ்ட் ரிவ்யூக்கள் என் காரணத்தை ஆதரிக்குது."),A("Read at least two, from different research houses. Of six reviewed here: 3 positive, 2 neutral or not rated, 1 avoid for conservative investors.","வேற வேற ரிசர்ச் நிறுவனங்கள்ல இருந்து குறைஞ்சது ரெண்டு படிங்க. இங்க பார்த்த ஆறுல: 3 சாதகம், 2 நடுநிலை அல்லது ரேட்டிங் இல்லை, 1 பாதுகாப்பானவங்க தவிர்க்கணும்.")],
+  [A("CB's cycle and trigger view fits my horizon.","சிபி-யோட சைக்கிள், ட்ரிகர் பார்வை என் கால அளவுக்கு பொருந்துது."),A("Capex P3 Expansion · CY 69 · TG 72 · a long-term, high-risk turnaround story","கேப்பெக்ஸ் பி3 விரிவாக்கம் · CY 69 · TG 72 · நீண்ட கால, அதிக ரிஸ்க் திருப்பக் கதை")],
+  [A("Market mood has steadied (Nifty holding, FPI selling easing).","மார்க்கெட் மனநிலை நிலையாச்சு (நிஃப்டி நிக்குது, எஃப்பிஐ விற்பனை குறையுது)."),null]]}};
+function selfCheck(el,cfg){
+ var saved={},custom=[];
+ try{saved=JSON.parse(store(cfg.key)||"{}")||{}}catch(e){}
+ try{custom=JSON.parse(store(cfg.key+"_my")||"[]")||[]}catch(e){}
+ var h='<div class="sc"><h3>'+T("Self-check for ","சுய சோதனை: ")+esc(L(cfg.name))+'</h3><div class="small" style="margin:-6px 0 10px">'+T("Tick what is true for you. Five groups, in the order you'd think it through.","உங்களுக்கு உண்மையானதை டிக் பண்ணுங்க. யோசிக்கிற வரிசையில 5 பிரிவுகள்.")+'</div><div class="scsum" data-sum></div>';
+ SC_CATS.forEach(function(c,ci){
+  h+='<div class="sccat"><div class="scch"><span class="scn">'+(ci+1)+'</span><div><b>'+L(c.t)+'</b><span class="small">'+L(c.s)+'</span></div><span class="scc" data-cc="'+c.k+'"></span></div>';
+  if(c.k!=="mine"){
+   (cfg.cats[c.k]||[]).forEach(function(it,i){var id=c.k+i;h+='<label><input type="checkbox" data-id="'+id+'" data-c="'+c.k+'"'+(saved[id]?" checked":"")+'><span><span class="scq">'+L(it[0])+'</span>'+(it[1]?'<span class="f">'+T("Data: ","தரவு: ")+L(it[1])+'</span>':'')+'</span></label>'});
+  }else{
+   custom.forEach(function(t,i){var id="m"+i;h+='<label><input type="checkbox" data-id="'+id+'" data-c="mine"'+(saved[id]?" checked":"")+'><span><span class="scq">'+esc(t)+'</span></span><button type="button" class="scx" data-del="'+i+'" aria-label="Remove">✕</button></label>'});
+   h+='<div class="ctrl" style="margin:8px 0 4px"><input type="text" data-new maxlength="120" placeholder="'+esc(T("Add your own condition","உங்க கண்டிஷனை சேருங்க"))+'" style="flex:1;min-width:180px" aria-label="New condition"><button class="btn pri" type="button" data-add>'+T("Add","சேர்")+'</button></div><div class="sugg" style="padding:0">'+SC_SUGG.map(function(s,i){return '<button type="button" data-sg="'+i+'">+ '+L(s)+'</button>'}).join("")+'</div>';
+  }
+  h+='</div>'});
+ h+='<div class="meter"><i></i></div><div class="res"></div><div class="fine">'+T("This only counts how many of your own conditions line up. It is not a recommendation.","உங்க சொந்த கண்டிஷன்கள் எத்தனை ஒத்துப்போகுதுன்னு மட்டும் எண்ணுது. இது பரிந்துரை இல்ல.")+'</div><div class="ctrl" style="margin-top:8px"><button class="btn ghost" type="button" data-reset>'+T("Clear ticks","டிக்குகளை அழி")+'</button></div></div>';
+ el.innerHTML=h;
+ function saveCustom(){store(cfg.key+"_my",JSON.stringify(custom));selfCheck(el,cfg)}
+ function addC(t){t=String(t||"").trim();if(!t||custom.indexOf(t)>=0||custom.length>=8)return;custom.push(t);saveCustom()}
+ el.querySelector("[data-add]").onclick=function(){addC(el.querySelector("[data-new]").value)};
+ el.querySelector("[data-new]").onkeydown=function(e){if(e.key==="Enter")addC(this.value)};
+ [].forEach.call(el.querySelectorAll("[data-sg]"),function(b){b.onclick=function(){addC(L(SC_SUGG[+b.dataset.sg]))}});
+ [].forEach.call(el.querySelectorAll("[data-del]"),function(b){b.onclick=function(e){e.preventDefault();var i=+b.dataset.del;custom.splice(i,1);var ns={};Object.keys(saved).forEach(function(k){if(k[0]!=="m")ns[k]=saved[k]});store(cfg.key,JSON.stringify(ns));saveCustom()}});
+ el.querySelector("[data-reset]").onclick=function(){store(cfg.key,"{}");selfCheck(el,cfg)};
+ function upd(){
+  var boxes=el.querySelectorAll("input[type=checkbox]"),n=0,st={},per={};
+  [].forEach.call(boxes,function(b){var c=b.dataset.c;per[c]=per[c]||[0,0];per[c][1]++;if(b.checked){n++;per[c][0]++;st[b.dataset.id]=1}});
+  saved=st;store(cfg.key,JSON.stringify(st));
+  SC_CATS.forEach(function(c){var p=per[c.k]||[0,0];var x=el.querySelector('[data-cc="'+c.k+'"]');x.textContent=p[1]?p[0]+" / "+p[1]:T("none yet","இன்னும் இல்ல");x.className="scc"+(p[1]&&p[0]===p[1]?" full":"")});
+  el.querySelector("[data-sum]").innerHTML=SC_CATS.map(function(c,ci){var p=per[c.k]||[0,0];var w=p[1]?p[0]/p[1]*100:0;return '<div><span>'+(ci+1)+". "+L(c.t).split(" — ")[0]+'</span><span class="mb"><i style="width:'+w+'%"></i></span></div>'}).join("");
+  var t=boxes.length,f=t?n/t:0;
+  el.querySelector(".meter i").style.width=(f*100)+"%";
+  var msg=f<0.4?T("Most of your own conditions don't line up yet.","உங்க கண்டிஷன்கள் பெரும்பாலும் இன்னும் ஒத்துப்போகல."):f<0.7?T("Some of your conditions line up; some don't.","சில கண்டிஷன்கள் ஒத்துப்போகுது; சில இல்ல."):f<1?T("Most of your own conditions line up.","உங்க கண்டிஷன்கள் பெரும்பாலும் ஒத்துப்போகுது."):T("All of your own conditions line up.","உங்க எல்லா கண்டிஷன்களும் ஒத்துப்போகுது.");
+  var weak=SC_CATS.filter(function(c){var p=per[c.k];return p&&p[1]&&p[0]/p[1]<0.5}).map(function(c){return L(c.t).split(" — ")[0]});
+  el.querySelector(".res").innerHTML=n+" / "+t+" — "+msg+(weak.length&&f<1?'<span class="small" style="display:block;margin-top:3px">'+T("Fewest ticks in: ","குறைவான டிக்: ")+esc(weak.join(", "))+'</span>':'');
+ }
+ [].forEach.call(el.querySelectorAll("input[type=checkbox]"),function(b){b.onchange=upd});
+ upd();
+}
+function buildSC(){var e=document.getElementById('scBox');if(e)selfCheck(e,SCCFG)}
+
+/* ---------- init ---------- */
+navBuild();buildTemple();buildPillars();buildBM();buildLoop();buildIPO();buildWC();buildClock();buildAna();buildQuiz();buildSugg();buildSC();initCharts('t-ov');
+</script>
+</body>
+</html>
