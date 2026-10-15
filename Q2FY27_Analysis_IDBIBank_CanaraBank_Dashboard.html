@@ -1,0 +1,929 @@
+<title>IDBI &amp; Canara Bank Results</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;600&family=Noto+Sans+Tamil:wght@400;600&display=swap">
+<style>
+/* Layout: sticky ledger-style tab rail over a single reading column; data in mono, banking-green ink, CB orange only for the badge and roof */
+:root{
+  --bg:#FAFBF8; --paper:#FFFFFF; --ink:#14231C; --muted:#5B6B62; --line:#DDE5DF;
+  --green:#0F6B4B; --green-2:#E5F2EC; --teal:#1E7C8C; --amber:#B7791F; --amber-2:#FDF3E1;
+  --red:#B23A3A; --red-2:#FBEAEA; --orange:#E8711C; --orange-2:#FFF1E6; --blue:#2F5E9E;
+  --f-display:"Bricolage Grotesque","Segoe UI",system-ui,sans-serif;
+  --f-body:"IBM Plex Sans","Noto Sans Tamil","Segoe UI",system-ui,sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
+  color-scheme:light;
+}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:15px;line-height:1.55}
+[hidden],#assist[hidden],#disc[hidden],section.panel[hidden],.bk[hidden]{display:none!important}
+.wrap{max-width:1120px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:0 150px}
+header.top{padding-block:22px 10px;display:flex;flex-wrap:wrap;gap:12px 24px;align-items:flex-end;justify-content:space-between}
+.eyebrow{font-family:var(--f-mono);font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+h1{font-family:var(--f-display);font-weight:800;font-size:clamp(26px,4.6vw,40px);line-height:1.08;margin:4px 0 2px;text-wrap:balance}
+h2{font-family:var(--f-display);font-weight:700;font-size:22px;margin:28px 0 10px;text-wrap:balance}
+h3{font-family:var(--f-display);font-weight:600;font-size:17px;margin:18px 0 8px}
+.sub{color:var(--muted);max-width:68ch}
+.langbtn{font-family:var(--f-mono);font-size:12px;border:1px solid var(--line);background:var(--paper);color:var(--ink);padding:7px 12px;border-radius:999px;cursor:pointer}
+.langbtn:focus-visible,.tab:focus-visible,button:focus-visible{outline:2px solid var(--green);outline-offset:2px}
+nav.tabs{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:var(--bg);border-bottom:1px solid var(--line);display:flex;gap:2px;overflow-x:auto;scrollbar-width:thin;padding-block:6px}
+.tab{flex:0 0 auto;font:600 13px var(--f-body);color:var(--muted);background:none;border:0;padding:8px 12px;border-radius:8px;cursor:pointer;white-space:nowrap}
+.tab[aria-selected="true"]{color:var(--paper);background:var(--green)}
+section.panel{padding-top:8px}
+.scen{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0 10px}
+.scen button{font:600 12.5px var(--f-body);padding:7px 12px;border-radius:8px;border:1px solid var(--line);background:var(--paper);color:var(--ink);cursor:pointer}
+.scen button[aria-pressed="true"]{background:var(--orange);border-color:var(--orange);color:#fff}
+.lk-node{cursor:pointer}
+.lk-dim{opacity:.12}
+.lk-edge{transition:opacity .3s}
+.subtabs{display:flex;gap:6px;margin:12px 0 2px;flex-wrap:wrap}
+.subtabs button{font:600 13px var(--f-body);padding:7px 14px;border-radius:999px;border:1px solid var(--line);background:var(--paper);color:var(--ink);cursor:pointer}
+.subtabs button[aria-pressed="true"]{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.subtabs button .dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:6px;vertical-align:1px}
+.grid{display:grid;gap:12px}
+.g4{grid-template-columns:repeat(auto-fit,minmax(200px,1fr))}
+.g3{grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
+.g2{grid-template-columns:repeat(auto-fit,minmax(320px,1fr))}
+.g2>*,.g3>*,.g4>*{min-width:0}
+.kpi{background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:12px 14px}
+.kpi .l{font-size:12px;color:var(--muted)}
+.kpi .v{font-family:var(--f-mono);font-size:22px;font-weight:600;font-variant-numeric:tabular-nums}
+.kpi .d{font-size:12.5px}
+.up{color:var(--green)} .dn{color:var(--red)} .fl{color:var(--amber)}
+.note{background:var(--green-2);border-left:3px solid var(--green);padding:10px 14px;border-radius:0 8px 8px 0;margin:12px 0}
+.warn{background:var(--amber-2);border-left:3px solid var(--amber);padding:10px 14px;border-radius:0 8px 8px 0;margin:12px 0}
+.card{background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:14px 16px}
+.tablewrap{overflow-x:auto;border:1px solid var(--line);border-radius:10px;background:var(--paper)}
+table{border-collapse:collapse;width:100%;font-size:13.5px}
+th,td{padding:8px 10px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+th{font-size:11.5px;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);background:#F3F6F2;position:sticky;top:0}
+td.n{font-family:var(--f-mono);text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+tr.cat td{background:#EEF5F0;font-weight:600;color:var(--green);font-size:12.5px;letter-spacing:.04em;text-transform:uppercase}
+.src{font-size:11.5px;color:var(--muted)}
+.pill{display:inline-block;font:600 11px var(--f-mono);padding:2px 8px;border-radius:999px}
+.p-g{background:var(--green-2);color:var(--green)} .p-a{background:var(--amber-2);color:var(--amber)} .p-r{background:var(--red-2);color:var(--red)}
+.chartbox{overflow-x:auto;border:1px solid var(--line);border-radius:10px;background:var(--paper);padding:10px}
+.chartbox .in{min-width:900px;height:340px;position:relative}
+svg text{font-family:var(--f-body)}
+.bm-box{cursor:pointer}
+.bm-box:hover rect,.bm-box:focus rect{stroke-width:2.5}
+#bmCard{min-height:64px}
+.temple-wrap{overflow-x:auto}
+.col-g{cursor:pointer}
+.pcard{scroll-margin-top:70px;transition:box-shadow .3s}
+.pcard.hl{box-shadow:0 0 0 3px var(--orange)}
+.ta{display:none;font-family:"Noto Sans Tamil",var(--f-body)}
+body.tamil .ta{display:block} body.tamil span.ta{display:inline}
+body.tamil .en-only{display:none}
+.quiz button{display:block;width:100%;text-align:left;margin:6px 0;padding:9px 12px;border:1px solid var(--line);border-radius:8px;background:var(--paper);cursor:pointer;font:14px var(--f-body);color:var(--ink)}
+.quiz button.ok{background:var(--green-2);border-color:var(--green)}
+.quiz button.no{background:var(--red-2);border-color:var(--red)}
+/* CB badge + assist */
+#cbBadge{position:fixed;right:calc(14px + env(safe-area-inset-right,0px));bottom:calc(14px + env(safe-area-inset-bottom,0px));width:52px;height:52px;border-radius:50%;background:var(--orange);color:#fff;font:800 18px var(--f-display);border:3px solid #fff;box-shadow:0 2px 10px rgba(0,0,0,.18);cursor:pointer;z-index:40;animation:blink 2.4s ease-in-out infinite}
+@keyframes blink{50%{box-shadow:0 0 0 8px rgba(232,113,28,.18)}}
+#disc{position:fixed;right:calc(14px + env(safe-area-inset-right,0px));bottom:calc(128px + env(safe-area-inset-bottom,0px));max-width:min(360px,calc(100vw - 32px));background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:14px;z-index:41;box-shadow:0 8px 28px rgba(0,0,0,.14);font-size:13px}
+#assistBtn{position:fixed;right:calc(18px + env(safe-area-inset-right,0px));bottom:calc(74px + env(safe-area-inset-bottom,0px));z-index:40;width:44px;height:44px;background:var(--green);color:#fff;border:2px solid #fff;border-radius:50%;padding:0;font:600 18px var(--f-body);cursor:pointer;box-shadow:0 2px 10px rgba(0,0,0,.15)}
+#assistBtn,#cbBadge{transition:opacity .25s,transform .25s}
+body.scrolling #assistBtn,body.scrolling #cbBadge{opacity:0;transform:scale(.6);pointer-events:none}
+#assist{position:fixed;right:calc(14px + env(safe-area-inset-right,0px));bottom:calc(128px + env(safe-area-inset-bottom,0px));width:min(380px,calc(100vw - 28px));max-height:55vh;display:flex;flex-direction:column;background:var(--paper);border:1px solid var(--line);border-radius:14px;z-index:42;box-shadow:0 10px 32px rgba(0,0,0,.16)}
+#assist .log{overflow-y:auto;padding:12px;flex:1;font-size:13.5px}
+#assist .msg{margin:6px 0;padding:8px 10px;border-radius:10px}
+#assist .q{background:#F1F4F0;margin-left:30px}
+#assist .a{background:var(--green-2);margin-right:20px}
+#assist form{display:flex;gap:6px;padding:10px;border-top:1px solid var(--line)}
+#assist input{flex:1;min-width:0;padding:8px 10px;border:1px solid var(--line);border-radius:8px;font:14px var(--f-body)}
+#assist button{border:0;border-radius:8px;padding:8px 10px;font:600 13px var(--f-body);cursor:pointer}
+.mic{background:var(--orange-2);color:var(--orange)} .send{background:var(--green);color:#fff}
+.chips{display:flex;flex-wrap:wrap;gap:6px;padding:0 12px 10px}
+.chips button{background:#F1F4F0;color:var(--ink);font-weight:500;font-size:12px}
+@media (prefers-reduced-motion:reduce){#cbBadge{animation:none}.colfill{transition:none!important}}
+</style>
+
+<div class="wrap">
+<header class="top">
+  <div>
+    <div class="eyebrow">CB Research · Bank Analysis · IDBI Q1 FY27 · Canara Q2 FY27 · Prepared 15 Oct 2026, IST</div>
+    <h1>IDBI Bank &amp; Canara Bank — Results &amp; the Fairfax Takeover</h1>
+    <p class="sub en-only">Q2 FY27 results are not yet out (board meets 17 Oct 2026), so IDBI uses Q1 FY27 numbers (quarter ended 30 June 2026), set against the Cabinet's 14 Oct 2026 approval of the 60.72% stake sale to Fairfax. Canara Bank uses its Q2 FY27 results (quarter ended 30 Sep 2026, released 14 Oct). Each tab has a sub-tab for each bank.</p>
+    <p class="sub ta">Q2 FY27 முடிவுகள் இன்னும் வரலை (17 அக்டோபர் போர்டு மீட்டிங்). அதனால Q1 FY27 (ஜூன் 2026) எண்களை வெச்சு, Fairfax-க்கு 60.72% பங்கு விற்பனையை சேர்த்து பாக்குறோம்.</p>
+  </div>
+  <button class="langbtn" id="langBtn" type="button">தமிழ் / English</button>
+</header>
+
+<nav class="tabs" role="tablist" id="tabs"></nav>
+
+<!-- OVERVIEW -->
+<section class="panel" id="p-overview">
+  <div class="subtabs" data-panel="overview"></div>
+  <div class="bk" data-bank="idbi">
+  <h2>Quarter at a glance <span class="ta">காலாண்டு சுருக்கம்</span></h2>
+  <div class="grid g4" id="kpis"></div>
+  <div class="note"><b>Read-out.</b> Loans grew 22% YoY to ₹2,58,968 crore while deposits grew only 10%, pushing the CD ratio to 79.50%. NIM slipped to 3.61% (−54 bps QoQ) and other income fell 28%, so operating profit fell 8%. PAT still rose 5% to ₹2,115 crore because of a ₹637 crore provision write-back. Asset quality and capital remain best-in-class: GNPA 2.30%, NNPA 0.16%, PCR 99.31%, CRAR 26.92%.
+  <span class="ta">கடன் 22% வளர்ந்தது, டெபாசிட் 10% தான். NIM 3.61%-க்கு குறைஞ்சது, மற்ற வருமானம் 28% குறைஞ்சது. ஆனா ₹637 கோடி provision write-back-ஆல PAT 5% உயர்ந்து ₹2,115 கோடி. சொத்து தரம், மூலதனம் ரொம்ப வலுவா இருக்கு.</span></div>
+
+  <h3>The Fairfax deal in one table</h3>
+  <div class="tablewrap"><table>
+    <thead><tr><th>Item</th><th>Detail</th></tr></thead>
+    <tbody>
+      <tr><td>Approval</td><td>Cabinet Committee on Economic Affairs, 14 Oct 2026</td></tr>
+      <tr><td>Buyer</td><td>10955230 Canada Inc. (Fairfax Financial Holdings, led by Prem Watsa)</td></tr>
+      <tr><td>Stake sold</td><td>60.72% — Government 30.48% + LIC 30.24%</td></tr>
+      <tr><td>Price / consideration</td><td class="n">₹81 per share · ₹52,878 crore</td></tr>
+      <tr><td>Independent fair value</td><td class="n">₹75.99 per share (deal is 6.6% above)</td></tr>
+      <tr><td>Residual holding</td><td>Government 15% + LIC 19% = 34%</td></tr>
+      <tr><td>Open offer</td><td>Mandatory; priced at the higher of ₹81 or the 60-day average market price</td></tr>
+      <tr><td>CSB Bank</td><td>Fairfax holds ~40%; must merge CSB into IDBI or exit within 2 years</td></tr>
+      <tr><td>Still pending</td><td>RBI and SEBI approvals; completion of share purchase</td></tr>
+      <tr><td>Market reaction</td><td class="n">Close ₹90.39 on 14 Oct (+8.98%), intraday high ₹93.62</td></tr>
+    </tbody></table></div>
+  <div class="warn">At ₹90.39 the market price is ~12% above Fairfax's ₹81. Open-offer pricing (₹81 or 60-day average, whichever is higher) is a floor reference, not a guarantee of exit at the current price. In 2018, when LIC made an open offer at ₹61.73, only about one-fifth of minority holders tendered.</div>
+</div>
+  <div class="bk" data-bank="can" hidden>
+  <h2>Quarter at a glance — Canara Bank Q2 FY27 <span class="ta">கனரா வங்கி — Q2 FY27 சுருக்கம்</span></h2>
+  <p class="sub">Quarter ended 30 Sep 2026, results 14 Oct 2026. Note: IDBI Bank figures are Q1 FY27 until its Q2 results on 17 Oct.</p>
+  <div class="grid g4" id="kpis-can"></div>
+  <div class="note"><b>Read-out.</b> Record quarterly profit of ₹5,175 crore (+8.4% YoY) and record NII of ₹11,005 crore (+20.4%). Global advances grew 19.46% against deposits at 13.13%, and the bank crossed ₹30 lakh crore of business. Treasury income fell 68.5% to ₹499 crore as bond yields rose, which held operating profit to +2%. Asset quality improved sharply: GNPA 1.33%, NNPA 0.30%, PCR 95.34%. CASA at 29% missed the 30–32% guidance.
+  <span class="ta">சாதனை லாபம் ₹5,175 கோடி (+8.4%), NII ₹11,005 கோடி (+20.4%). கடன் 19.46% வளர்ந்தது. பாண்ட் விளைச்சல் உயர்ந்ததால Treasury வருமானம் 68.5% குறைஞ்சது. GNPA 1.33%, NNPA 0.30% — சொத்து தரம் நல்லா மேம்பட்டிருக்கு. CASA 29% — இலக்கை விட கம்மி.</span></div>
+  <h3>Guidance scorecard (H1 FY27)</h3>
+  <div class="tablewrap"><table>
+    <thead><tr><th>Metric</th><th>FY27 guidance</th><th>H1 actual</th><th>Status</th></tr></thead>
+    <tbody>
+    <tr><td>Advances growth</td><td class="n">11–12%</td><td class="n">19.46%</td><td><span class="pill p-g">Ahead</span></td></tr>
+    <tr><td>Deposit growth</td><td class="n">9–10%</td><td class="n">13.13%</td><td><span class="pill p-g">Ahead</span></td></tr>
+    <tr><td>NIM</td><td class="n">2.50–2.60%</td><td class="n">2.55% (Q) · 2.53% (H1)</td><td><span class="pill p-g">In range</span></td></tr>
+    <tr><td>Gross NPA</td><td class="n">~1.50%</td><td class="n">1.33%</td><td><span class="pill p-g">Better</span></td></tr>
+    <tr><td>Net NPA</td><td class="n">~0.40%</td><td class="n">0.30%</td><td><span class="pill p-g">Better</span></td></tr>
+    <tr><td>Credit cost</td><td class="n">0.75%</td><td class="n">0.47%</td><td><span class="pill p-g">Better</span></td></tr>
+    <tr><td>ROA</td><td class="n">1.01–1.05%</td><td class="n">1.04%</td><td><span class="pill p-g">In range</span></td></tr>
+    <tr><td>ROE</td><td class="n">16.50%</td><td class="n">18.49%</td><td><span class="pill p-g">Better</span></td></tr>
+    <tr><td>CASA ratio</td><td class="n">30–32%</td><td class="n">29.00%</td><td><span class="pill p-r">Missed</span></td></tr>
+    </tbody></table></div>
+  <div class="warn"><b>The big item ahead: ECL.</b> Under the move to expected-credit-loss provisioning, management now estimates a one-time provision of ₹12,000–15,000 crore (raised from ₹10,000–12,000 crore, including ₹2,000–3,000 crore of mark-to-market on held-to-maturity bonds), to be absorbed over about two years. That is roughly 1.2–1.5 quarters of operating profit.</div>
+</div>
+</section>
+
+<!-- BUSINESS MODEL -->
+<section class="panel" id="p-deal" hidden>
+  <h2>Fairfax deal: conditions &amp; how the rules are reconciled <span class="ta">Fairfax ஒப்பந்தம்: நிபந்தனைகள்</span></h2>
+  <p class="sub">The Cabinet approved the deal on 14 Oct 2026; RBI clearance is still pending, and the share purchase agreement (SPA) is expected before end-2026. Conditions below are as reported on 14 Oct 2026.</p>
+  <p class="sub">Tap any box: red = the rule that blocks the deal, green = how the deal gets around it.</p>
+  <div class="tablewrap" style="padding:8px"><svg id="dealSvg" viewBox="0 0 1060 560" style="min-width:860px;width:100%;display:block" role="img" aria-label="Fairfax IDBI deal conditions map"></svg></div>
+  <div class="card" id="dealCard" style="margin-top:10px"><b>Tap a box.</b> Each box shows one rule and how the deal satisfies it.</div>
+  <h3>Timeline of obligations</h3>
+  <div class="tablewrap" style="padding:8px"><svg id="dealTl" viewBox="0 0 1060 190" style="min-width:860px;width:100%;display:block" role="img" aria-label="Deal obligations timeline"></svg></div>
+  <div class="warn"><b>Open question to watch (CB inference, not reported):</b> India's FDI limit for private banks is 74%, and listed companies must keep 25% public shareholding. With Fairfax at 60.72%, the open-offer size will have to fit within these limits, so it may be smaller than the usual 26%. Check the open-offer letter when filed.</div>
+
+  <h3>The record wave of foreign money into Indian finance</h3>
+  <p>At about ₹52,878 crore (roughly $5.6 billion), Fairfax–IDBI is the largest foreign direct investment in India's financial sector. It follows a run of large deals:</p>
+  <div class="tablewrap"><table>
+    <thead><tr><th>Acquirer (country)</th><th>Target</th><th>Stake</th><th>₹ crore</th><th>Status</th></tr></thead>
+    <tbody>
+    <tr><td>Fairfax Financial (Canada)</td><td>IDBI Bank</td><td class="n">60.72%</td><td class="n"><b>52,878</b></td><td>Cabinet approved 14 Oct 2026; RBI pending</td></tr>
+    <tr><td>MUFG (Japan)</td><td>Shriram Finance</td><td class="n">20%</td><td class="n">39,618</td><td>Announced 2025 (~$4.4 bn)</td></tr>
+    <tr><td>Emirates NBD (UAE)</td><td>RBL Bank</td><td class="n">60%</td><td class="n">26,853</td><td>Announced Oct 2025</td></tr>
+    <tr><td>SMBC (Japan)</td><td>Yes Bank</td><td class="n">20%</td><td class="n">13,483</td><td>Completed Sep 2025</td></tr>
+    <tr><td>IHC via Avenir (UAE)</td><td>Sammaan Capital</td><td class="n">43.46%</td><td class="n">≈8,850–9,000 †</td><td>Agreed Oct 2025 (~$1 bn)</td></tr>
+    <tr><td>Warburg Pincus + ADIA</td><td>IDFC First Bank</td><td class="n">15%</td><td class="n">7,500</td><td>Allotted</td></tr>
+    <tr><td>Blackstone (US)</td><td>Federal Bank</td><td class="n">9.99%</td><td class="n">6,196+</td><td>Approved by board Oct 2025</td></tr>
+    <tr><td>Bain Capital (US)</td><td>Manappuram Finance</td><td class="n">18%</td><td class="n">4,390</td><td>Announced Mar 2025</td></tr>
+    </tbody></table></div>
+  <div class="chartbox" style="margin-top:12px"><div class="in"><canvas id="fdi"></canvas></div></div>
+  <div class="note"><b>Why this matters.</b> Foreign lenders and investors are paying for India's credit growth and clean bank balance sheets. Together these eight deals add up to about ₹1,59,800 crore c. For IDBI shareholders, the inflow brings a well-capitalised foreign promoter; for the sector, it raises the value markets place on lenders with clean books and spare capital, the main reason IDBI trades at 1.65x book while Canara trades near 1x.</div>
+
+  <h2 style="margin-top:40px">Fairfax in India — the group IDBI is joining <span class="ta">இந்தியாவில் Fairfax</span></h2>
+  <p class="sub">Holdings as at 31 Dec 2025 from Fairfax's 2025 shareholder letter, values in US$ million. Tap any box. Colour shows sector: green finance, blue infrastructure, amber industrial, teal services.</p>
+  <div class="grid g4" id="ffKpis"></div>
+  <div class="tablewrap" style="padding:8px;margin-top:12px"><svg id="ffSvg" viewBox="0 0 1060 560" style="min-width:860px;width:100%;display:block" role="img" aria-label="Fairfax group holdings in India"></svg></div>
+  <div class="card" id="ffCard" style="margin-top:10px"><b>Tap a box.</b> Each box shows the stake, the money invested and today's value.</div>
+  <h3>Value of each holding (US$ million, 31 Dec 2025)</h3>
+  <div class="chartbox"><div class="in"><canvas id="ffChart"></canvas></div></div>
+  <h3>Holdings table</h3>
+  <div class="tablewrap"><table id="ffTab"></table></div>
+  <div class="note"><b>Why it matters for IDBI.</b> IDBI becomes the anchor of Fairfax's Indian financial businesses. Fairfax has said Go Digit and IIFL Capital may sit under IDBI as subsidiaries, which would add insurance and broking to a bank with 26.92% capital. In May 2026 Fairfax India agreed to lift its IIFL Capital stake from 30.5% to at least 51% at ₹350 a share (about ₹3,930 crore). The overlap to resolve is CSB Bank (40%), which must be merged into IDBI or sold within 2 years.</div>
+</section>
+
+
+<section class="panel" id="p-model" hidden>
+  <div class="subtabs" data-panel="model"></div>
+  <div class="bk" data-bank="idbi">
+  <h2>How IDBI Bank makes money <span class="ta">வங்கி எப்படி பணம் சம்பாதிக்குது</span></h2>
+  <p class="sub">Tap any box to see what it means. Figures are Q1 FY27, ₹ crore, standalone.</p>
+  <div class="tablewrap" style="padding:8px"><svg id="bmSvg" viewBox="0 0 1060 470" style="min-width:860px;width:100%;display:block" role="img" aria-label="IDBI Bank business model flow map"></svg></div>
+  <div class="card" id="bmCard" style="margin-top:10px"><b>Tap a box.</b> Each box explains one part of the money flow.</div>
+  <p class="src" style="margin-top:8px"><b>Revenue formula:</b> NII = Average earning assets × NIM; PAT = NII + Other income − Operating expenses − Provisions − Tax → ₹3,486 + ₹1,032 − ₹2,350 − (−₹637) − ₹689 ≈ ₹2,115 crore.</p>
+  <h3>Revenue engine</h3>
+  <div class="tablewrap"><table>
+    <thead><tr><th>Driver</th><th>Q1 FY27</th><th>Direction</th><th>What moves it</th></tr></thead>
+    <tbody>
+    <tr><td>Loan book (net advances)</td><td class="n">₹2,58,968 cr</td><td><span class="pill p-g">+22% YoY</span></td><td>Retail (70% of book, ₹1,80,936 cr) and corporate demand</td></tr>
+    <tr><td>Yield on advances</td><td class="n">8.46%</td><td><span class="pill p-a">down from 8.52%</span></td><td>Repo-linked loans reprice down as RBI cuts</td></tr>
+    <tr><td>Cost of deposits</td><td class="n">4.59%</td><td><span class="pill p-g">−25 bps YoY</span></td><td>CASA share (43.64%) and term-deposit repricing</td></tr>
+    <tr><td>NIM</td><td class="n">3.61%</td><td><span class="pill p-r">−54 bps QoQ</span></td><td>Q4 had a one-off ₹316 cr income-tax-refund interest; core NIM 3.34%</td></tr>
+    <tr><td>Other income</td><td class="n">₹1,032 cr</td><td><span class="pill p-r">−28% YoY</span></td><td>Treasury gains, recoveries from written-off accounts, fees</td></tr>
+    <tr><td>Operating cost</td><td class="n">₹2,350 cr</td><td><span class="pill p-a">+4% YoY</span></td><td>Employee cost ₹1,119 cr; branch additions</td></tr>
+    </tbody></table></div>
+</div>
+  <div class="bk" data-bank="can" hidden>
+  <h2>How Canara Bank makes money <span class="ta">கனரா வங்கி எப்படி பணம் சம்பாதிக்குது</span></h2>
+  <p class="sub">Tap any box. Figures are Q2 FY27, ₹ crore, global, standalone.</p>
+  <div class="tablewrap" style="padding:8px"><svg id="bmSvg-can" viewBox="0 0 1060 470" style="min-width:860px;width:100%;display:block" role="img" aria-label="Canara Bank business model flow map"></svg></div>
+  <div class="card" id="bmCard-can" style="margin-top:10px"><b>Tap a box.</b> Each box explains one part of the money flow.</div>
+  <p class="src" style="margin-top:8px"><b>Revenue formula:</b> PAT = NII + Other income − Operating expenses − (Provisions + tax) → ₹11,005 + ₹5,772 − ₹8,019 − ₹3,583 = ₹5,175 crore.</p>
+  <h3>Revenue engine</h3>
+  <div class="tablewrap"><table>
+    <thead><tr><th>Driver</th><th>Q2 FY27</th><th>Direction</th><th>What moves it</th></tr></thead>
+    <tbody>
+    <tr><td>Gross advances (global)</td><td class="n">₹13,75,060 cr</td><td><span class="pill p-g">+19.46% YoY</span></td><td>RAM +21%, retail +31.6%, overseas +58.5%</td></tr>
+    <tr><td>Yield on advances</td><td class="n">8.03%</td><td><span class="pill p-a">lower than IDBI's 8.46%</span></td><td>Large corporate and agri share; corporate yield 7.72%</td></tr>
+    <tr><td>Cost of deposits</td><td class="n">5.27%</td><td><span class="pill p-a">flat QoQ</span></td><td>Cheaper FCNR(B) deposits replacing bulk deposits</td></tr>
+    <tr><td>NIM</td><td class="n">2.55%</td><td><span class="pill p-g">+5 bps YoY</span></td><td>~53% of book repriced; MCLR revision due</td></tr>
+    <tr><td>Other income</td><td class="n">₹5,772 cr</td><td><span class="pill p-r">−18.2% YoY</span></td><td>Treasury ₹499 cr (−68.5%) as bond yields rose 44 bps</td></tr>
+    <tr><td>Operating cost</td><td class="n">₹8,019 cr</td><td><span class="pill p-a">+5.4% YoY</span></td><td>Other opex +15.3%; staff cost −0.3%</td></tr>
+    </tbody></table></div>
+</div>
+</section>
+
+<!-- SIX PILLARS -->
+<section class="panel" id="p-pillars" hidden>
+  <div class="subtabs" data-panel="pillars"></div>
+  <div class="bk" data-bank="idbi">
+  <h2>CB six-pillar score <span class="ta">ஆறு தூண் மதிப்பீடு</span></h2>
+  <p class="sub">Tap a column to jump to its explanation. Green 8–10 · Amber 6–8 · Red below 6.</p>
+  <div class="temple-wrap"><svg id="temple" viewBox="0 0 760 470" style="min-width:620px;width:100%;max-width:820px;display:block;margin:0 auto" role="img" aria-label="Six-pillar temple score"></svg></div>
+  <div class="grid g3" id="pcards" style="margin-top:12px"></div>
+</div>
+  <div class="bk" data-bank="can" hidden>
+  <h2>CB six-pillar score — Canara Bank <span class="ta">ஆறு தூண் மதிப்பீடு</span></h2>
+  <p class="sub">Tap a column to jump to its explanation. Green 8–10 · Amber 6–8 · Red below 6.</p>
+  <div class="temple-wrap"><svg id="temple-can" viewBox="0 0 760 470" style="min-width:620px;width:100%;max-width:820px;display:block;margin:0 auto" role="img" aria-label="Canara Bank six-pillar temple score"></svg></div>
+  <div class="grid g3" id="pcards-can" style="margin-top:12px"></div>
+</div>
+</section>
+
+<!-- 21 METRICS -->
+<section class="panel" id="p-metrics" hidden>
+  <div class="subtabs" data-panel="metrics"></div>
+  <div class="bk" data-bank="idbi">
+  <h2>All 21 bank metrics, by category <span class="ta">21 வங்கி அளவீடுகள் — வகை வாரியாக</span></h2>
+  <p class="sub">Standalone, ₹ crore unless stated. c = computed from reported figures; † = rounded or cumulative figure; n/a = not disclosed in sources found.</p>
+  <div class="tablewrap"><table id="mtab"></table></div>
+  <h3>Valuation trio (price-based)</h3>
+  <div class="tablewrap"><table>
+    <thead><tr><th>Metric</th><th>Value</th><th>Basis</th></tr></thead>
+    <tbody>
+    <tr><td>BVPS</td><td class="n">₹54.89 c</td><td>Net worth ₹59,024 cr ÷ 1,075.2 cr shares</td></tr>
+    <tr><td>Market price</td><td class="n">₹90.39</td><td>NSE close, 14 Oct 2026</td></tr>
+    <tr><td>P/BV</td><td class="n">1.65x c</td><td>At Fairfax price ₹81: 1.48x</td></tr>
+    <tr><td>P/E (TTM)</td><td class="n">10.1x c</td><td>TTM PAT ≈ ₹9,621 cr → EPS ≈ ₹8.95</td></tr>
+    <tr><td>Market cap</td><td class="n">₹97,191 cr c</td><td>₹90.39 × 1,075.2 cr shares</td></tr>
+    </tbody></table></div>
+  <h3>Funding &amp; liquidity (the bank's version of working capital)</h3>
+  <p>Banks do not carry inventory or receivable days. The equivalent question is whether loans are funded by stable, cheap deposits. The CD ratio jumped from 71.4% to 79.5% in a year because loans grew more than twice as fast as deposits. That uses up idle liquidity and is one reason NIM is under pressure: new deposits have to be raised at market rates. LCR was not disclosed in the sources reviewed.</p>
+</div>
+  <div class="bk" data-bank="can" hidden>
+  <h2>All 21 bank metrics — Canara Bank <span class="ta">21 அளவீடுகள் — கனரா</span></h2>
+  <p class="sub">Global, standalone, ₹ crore unless stated. c = computed; † = cumulative or as-quoted; n/a = not disclosed in sources found.</p>
+  <div class="tablewrap"><table id="mtab-can"></table></div>
+  <h3>Valuation trio (price-based)</h3>
+  <div class="tablewrap"><table>
+    <thead><tr><th>Metric</th><th>Value</th><th>Basis</th></tr></thead>
+    <tbody>
+    <tr><td>BVPS</td><td class="n">≈₹124 †</td><td>As cited by an analyst on the Q2 call; not confirmed by management</td></tr>
+    <tr><td>Market price</td><td class="n">₹124.45</td><td>14 Oct 2026, +3.33% on results day</td></tr>
+    <tr><td>P/BV</td><td class="n">≈1.00x c</td><td>IDBI trades at 1.65x</td></tr>
+    <tr><td>P/E (annualised)</td><td class="n">5.6x c</td><td>Annualised EPS ₹22.06</td></tr>
+    </tbody></table></div>
+  <h3>Funding &amp; liquidity (the bank's version of working capital)</h3>
+  <p>CD ratio rose to about 81% from about 77% a year ago as advances outgrew deposits. CASA slipped to 29% because FCNR(B) inflows, which are term deposits, grew fast. LCR was 115% on 30 Sep 2026, above the 100% regulatory floor but leaving less spare liquidity than a year ago.</p>
+</div>
+</section>
+
+<!-- CHARTS -->
+<section class="panel" id="p-charts" hidden>
+  <div class="subtabs" data-panel="charts"></div>
+  <div class="bk" data-bank="idbi">
+  <h2>Charts <span class="ta">வரைபடங்கள்</span></h2>
+  <h3>Deposits vs net advances (₹ crore)</h3>
+  <div class="chartbox"><div class="in"><canvas id="c1"></canvas></div></div>
+  <h3>NII, other income, operating profit and PAT (₹ crore)</h3>
+  <div class="chartbox"><div class="in"><canvas id="c2"></canvas></div></div>
+  <h3>Asset quality (%)</h3>
+  <div class="chartbox"><div class="in"><canvas id="c3"></canvas></div></div>
+  <h3>Shareholding: before and after the deal (%)</h3>
+  <div class="chartbox"><div class="in"><canvas id="c4"></canvas></div></div>
+</div>
+  <div class="bk" data-bank="can" hidden>
+  <h2>Charts — Canara Bank <span class="ta">வரைபடங்கள்</span></h2>
+  <h3>Global deposits vs gross advances (₹ crore)</h3>
+  <div class="chartbox"><div class="in"><canvas id="k1"></canvas></div></div>
+  <h3>NII, other income, operating profit and PAT (₹ crore)</h3>
+  <div class="chartbox"><div class="in"><canvas id="k2"></canvas></div></div>
+  <h3>Asset quality (%)</h3>
+  <div class="chartbox"><div class="in"><canvas id="k3"></canvas></div></div>
+  <h3>Loan segment growth, YoY (%)</h3>
+  <div class="chartbox"><div class="in"><canvas id="k4"></canvas></div></div>
+</div>
+</section>
+
+<!-- TRIGGERS & CYCLE -->
+<section class="panel" id="p-triggers" hidden>
+  <div class="subtabs" data-panel="triggers"></div>
+  <div class="bk" data-bank="idbi">
+  <h2>Triggers &amp; cycle <span class="ta">தூண்டுதல்கள் &amp; சுழற்சி</span></h2>
+  <div class="grid g2">
+    <div class="card"><svg id="clock" viewBox="0 0 300 300" style="width:100%;max-width:300px;display:block;margin:0 auto" role="img" aria-label="Credit cycle clock"></svg></div>
+    <div class="card">
+      <p><b>Cycle type:</b> Credit. <b>Sector phase:</b> P3 Expansion (score 70) — system credit growing, GNPA at multi-year lows, but the rate-cut cycle is squeezing NIMs.</p>
+      <p><b>Stock cycle:</b> Re-inventing (ownership change) 75 · Earnings: ROE falling 40 · Valuation in band 55 · Price stage: Stage 3/1 (off ₹115 Jan high, recovering from ₹81 Sep low) 50 → <b>55</b>.</p>
+      <p style="font-size:20px;font-family:var(--f-mono)"><span class="pill p-a">CY 63</span> <span class="pill p-g">TG 75</span></p>
+      <p class="src">CY = 50% × 70 + 50% × 55. TG = 50 + 8 × (top 3 positive points) − 8 × negative points = 50 + 8 × 4.10 − 8 × 0.98.</p>
+    </div>
+  </div>
+  <h3>Trigger table</h3>
+  <div class="tablewrap"><table>
+    <thead><tr><th>Trigger</th><th>+/−</th><th>I</th><th>C</th><th>W</th><th>P</th><th>Points</th><th>What to watch</th></tr></thead>
+    <tbody>
+    <tr><td>Fairfax takes control (60.72%)</td><td class="up">+</td><td class="n">5</td><td class="n">0.7</td><td class="n">0.7</td><td class="n">0.7</td><td class="n">1.72</td><td>RBI/SEBI approvals, SPA closing</td></tr>
+    <tr><td>Mandatory open offer floor</td><td class="up">+</td><td class="n">2</td><td class="n">0.7</td><td class="n">1.0</td><td class="n">0.7</td><td class="n">0.98</td><td>Offer price vs 60-day average</td></tr>
+    <tr><td>Digit Insurance / IIFL Capital folded in as subsidiaries</td><td class="up">+</td><td class="n">3</td><td class="n">0.4</td><td class="n">0.4</td><td class="n">1.0</td><td class="n">0.48</td><td>Post-closing structure</td></tr>
+    <tr><td>RBI repo hike to 5.50% (7 Oct 2026) lifts loan yields faster than CASA-heavy deposit costs</td><td class="up">+</td><td class="n">2</td><td class="n">0.7</td><td class="n">1.0</td><td class="n">1.0</td><td class="n">1.40</td><td>Q2/Q3 NIM vs 3.25% floor guidance</td></tr>
+    <tr><td>CSB merger / integration within 24 months</td><td class="dn">−</td><td class="n">2</td><td class="n">0.7</td><td class="n">0.4</td><td class="n">1.0</td><td class="n">0.56</td><td>Merge-or-sell decision</td></tr>
+    <tr><td>Regulatory or employee pushback delays closing</td><td class="dn">−</td><td class="n">3</td><td class="n">0.2</td><td class="n">0.7</td><td class="n">1.0</td><td class="n">0.42</td><td>Employee forum's valuation objection</td></tr>
+    </tbody></table></div>
+  <h3>Timeline</h3>
+  <div class="tablewrap"><table><tbody>
+    <tr><td class="n">17 Oct 2026</td><td>Q2 FY27 results (board meeting)</td></tr>
+    <tr><td class="n">Q3 FY27</td><td>RBI fit-and-proper and SEBI clearances; open-offer letter</td></tr>
+    <tr><td class="n">FY27 end</td><td>Government targets completion within FY27 disinvestment year</td></tr>
+    <tr><td class="n">+24 months from SPA</td><td>CSB Bank merge-or-exit deadline</td></tr>
+  </tbody></table></div>
+  <div class="note"><b>What would change this view:</b> a Q2 NIM below 3.25%; any RBI condition that limits Fairfax's voting rights; an open-offer price set well below the market.</div>
+</div>
+  <div class="bk" data-bank="can" hidden>
+  <h2>Triggers &amp; cycle — Canara Bank <span class="ta">தூண்டுதல்கள் &amp; சுழற்சி</span></h2>
+  <div class="grid g2">
+    <div class="card"><svg id="clock-can" viewBox="0 0 300 300" style="width:100%;max-width:300px;display:block;margin:0 auto" role="img" aria-label="Credit cycle clock"></svg></div>
+    <div class="card">
+      <p><b>Cycle type:</b> Credit. <b>Sector phase:</b> P3 Expansion (70) — advances +19.5%, GNPA at a decade low, but bond yields rising and ECL transition ahead.</p>
+      <p><b>Stock cycle:</b> Mature PSU 55 · Earnings rising mid-range 70 · Valuation in band (~1x book) 55 · Price stage: Stage 1 late 70 → <b>62.5</b>.</p>
+      <p style="font-size:20px;font-family:var(--f-mono)"><span class="pill p-a">CY 66</span> <span class="pill p-r">TG 35</span></p>
+      <p class="src">CY = 50% × 70 + 50% × 62.5. TG = 50 + 8 × positive − 8 × negative. The ECL trigger (I4, C0.7) caps CB Conviction at 50 under the gate rule.</p>
+    </div>
+  </div>
+  <h3>Trigger table</h3>
+  <div class="tablewrap"><table>
+    <thead><tr><th>Trigger</th><th>+/−</th><th>I</th><th>C</th><th>W</th><th>P</th><th>Points</th><th>What to watch</th></tr></thead>
+    <tbody>
+    <tr><td>Listed subsidiaries (Canara HSBC Life, Canara Robeco) — value unlock</td><td class="up">+</td><td class="n">2</td><td class="n">1.0</td><td class="n">1.0</td><td class="n">0.7</td><td class="n">1.40</td><td>Subsidiary market values vs bank market cap</td></tr>
+    <tr><td>MCLR repricing sustains ~2.55% NIM</td><td class="up">+</td><td class="n">2</td><td class="n">0.4</td><td class="n">1.0</td><td class="n">1.0</td><td class="n">0.80</td><td>Q3 NIM; MCLR revision</td></tr>
+    <tr><td>ECL one-time provision ₹12,000–15,000 cr</td><td class="dn">−</td><td class="n">4</td><td class="n">0.7</td><td class="n">0.7</td><td class="n">1.0</td><td class="n">1.96</td><td>RBI final ECL norms; phasing</td></tr>
+    <tr><td>RBI repo hike to 5.50% and "calibrated tightening": more bond MTM losses</td><td class="dn">−</td><td class="n">2</td><td class="n">0.7</td><td class="n">1.0</td><td class="n">1.0</td><td class="n">1.40</td><td>Treasury income; 10-year G-sec yield</td></tr>
+    <tr><td>Gold-loan yield pressure from NBFCs</td><td class="dn">−</td><td class="n">1</td><td class="n">0.7</td><td class="n">1.0</td><td class="n">1.0</td><td class="n">0.70</td><td>Gold-loan yield (9.10% now)</td></tr>
+    </tbody></table></div>
+  <p class="src">Delivered and dropped from TG (already in the numbers): loan growth, treasury loss, CASA miss.</p>
+  <div class="note"><b>What would change this view:</b> RBI phasing ECL over a longer period; CASA recovering above 30%; another sharp rise in bond yields hitting treasury income.</div>
+</div>
+</section>
+
+<!-- ANALYSTS -->
+<section class="panel" id="p-analysts" hidden>
+  <div class="subtabs" data-panel="analysts"></div>
+  <div class="bk" data-bank="idbi">
+  <h2>Analysts' rating <span class="ta">ஆய்வாளர் மதிப்பீடு</span></h2>
+  <div class="warn">No current Buy/Hold/Sell call with a target price from a SEBI-registered broker was found for IDBI Bank. The stock has thin sell-side coverage; TipRanks lists 0 Buy / 0 Hold / 0 Sell. CB Research does not issue its own recommendation.</div>
+  <div class="tablewrap"><table>
+    <thead><tr><th>Reference price</th><th>₹ per share</th><th>vs ₹90.39</th></tr></thead>
+    <tbody>
+    <tr><td>Independent fair value (two valuers)</td><td class="n">75.99</td><td class="n dn">−15.9%</td></tr>
+    <tr><td>Fairfax strategic price</td><td class="n">81.00</td><td class="n dn">−10.4%</td></tr>
+    <tr><td>Earlier reserve price (rejected round)</td><td class="n">94.42</td><td class="n up">+4.5%</td></tr>
+    <tr><td>52-week high (2 Jan 2026 close)</td><td class="n">114.85</td><td class="n up">+27.1%</td></tr>
+    </tbody></table></div>
+  <p>Lemonn's head of research described ₹81 as a fair price for the government, with the main win being closure of a sale first approved in 2021.</p>
+</div>
+  <div class="bk" data-bank="can" hidden>
+  <h2>Analysts' rating — Canara Bank <span class="ta">ஆய்வாளர் மதிப்பீடு</span></h2>
+  <div class="tablewrap"><table>
+    <thead><tr><th>Broker</th><th>Rating</th><th>Target (₹)</th><th>Upside vs ₹124.45</th><th>Date</th></tr></thead>
+    <tbody>
+    <tr><td>Motilal Oswal</td><td><span class="pill p-g">Buy</span></td><td class="n">160</td><td class="n up">+28.6% c</td><td>5 Oct 2026 (after Q2 business update)</td></tr>
+    </tbody></table></div>
+  <div class="warn">Only one broker target dated October 2026 was found; post-results target revisions may follow. CB Research does not issue its own recommendation.</div>
+</div>
+</section>
+
+<!-- MANAGEMENT -->
+<section class="panel" id="p-invest" hidden>
+  <div class="subtabs" data-panel="invest"></div>
+  <div class="bk" data-bank="idbi">
+  <h2>Should I invest in IDBI Bank now? A thesis check <span class="ta">IDBI-ல இப்போ முதலீடு செய்யலாமா?</span></h2>
+  <div class="warn">CB Research does not give buy, sell or hold advice and is not a SEBI-registered adviser. This tab tests each of your reasons against the numbers so you can decide for yourself, ideally with a registered adviser.</div>
+  <h3>The balance</h3>
+  <div class="tablewrap" style="padding:8px"><svg id="scale-idbi" viewBox="0 0 900 340" style="min-width:640px;width:100%;max-width:900px;display:block;margin:0 auto" role="img" aria-label="Balance of positives and risks for IDBI Bank"></svg></div>
+  <h3>Your reasons, tested</h3>
+  <div class="tablewrap"><table><thead><tr><th>Your point</th><th>Check</th><th>What the numbers say</th></tr></thead><tbody><tr><td>CSB will most likely be merged; the two banks complement each other</td><td><span class="pill p-a">Partly</span></td><td>Merger is one of two allowed routes; Fairfax earlier offered to sell CSB fully instead. If merged, CSB adds a Kerala/South franchise and a gold-loan book (₹22,301 cr of ₹42,373 cr advances, +36% YoY) to IDBI's retail-heavy book. CSB is small: about ₹89,000 cr of business against IDBI's ₹5,84,725 cr, so it adds roughly 15%.</td></tr><tr><td>A well-networked bank is rarely available; this is a once-only opportunity</td><td><span class="pill p-g">Supported</span></td><td>RBI rarely issues new universal bank licences and control of an established bank seldom changes hands. Fairfax bid in a process that began in 2022 and beat Emirates NBD. That scarcity is why the buyer paid a premium of 6.6% over fair value.</td></tr><tr><td>Look at RBL Bank after Emirates NBD</td><td><span class="pill p-a">Partly</span></td><td>RBL Q2 FY27: profit up 2.7-fold to ₹482 cr, NII +37%, NIM 4.61%, advances +42%. But RBL received fresh capital and promoter-backed FCNR deposits; IDBI will not. And RBL shares still fell 7.55% on 13 Oct on higher provisions, so a strong promoter does not remove quarterly risk.</td></tr><tr><td>The money goes to sellers, not into the bank (like Yes Bank)</td><td><span class="pill p-g">Supported</span></td><td>Correct. The ₹52,878 cr goes to the government and LIC. SMBC's Yes Bank stake was also bought from SBI and other banks. For IDBI this matters less: with CRAR at 26.92%, it does not need new capital. The value Fairfax adds is management, cross-selling (Go Digit, IIFL Capital) and use of surplus capital.</td></tr><tr><td>India needs this sector to perform to grow</td><td><span class="pill p-g">Supported</span></td><td>RBI projects 7.1% GDP growth for 2026-27, and credit is growing in the high teens. This lifts the whole sector, so it supports banks in general rather than IDBI specifically.</td></tr><tr><td>IDBI has overcome its earlier problems</td><td><span class="pill p-g">Supported</span></td><td>GNPA fell from 16.51% (Sep 2022) to 2.30%; NNPA 0.16%; PCR 99.31%; out of RBI's PCA since 2021. What is not yet fixed: ROE 14.80% (too much idle capital), cost-to-income 52%, and deposits growing only 10%.</td></tr><tr><td>Fairfax's existing Indian investments produced no miracle</td><td><span class="pill p-a">Partly</span></td><td>Mixed record, by Fairfax's own numbers (value ÷ cost): IIFL Capital 6.7x, IIFL Finance 4.3x, CSB Bank 2.6x, Go Digit 20x, Bangalore Airport 1.9x — but Sanmar Chemicals 0.47x, Quess 0.67x, NCML 0.22x. Financial-sector holdings have done well; industrial ones less so. CSB under Fairfax since 2018 grew steadily but did not transform.</td></tr><tr><td>India gains forex from this deal</td><td><span class="pill p-g">Supported</span></td><td>About $5.6 bn of FDI comes in, helping the government's ₹80,000 cr disinvestment target and the rupee. This helps the economy, not IDBI's balance sheet directly.</td></tr></tbody></table></div>
+  <div class="note"><b>New since the dashboard was built: RBI raised the repo rate to 5.50% on 7 Oct 2026.</b> For IDBI this is mostly good news: 70% retail, largely repo-linked loans reprice up quickly, while 43.64% of deposits are cheap CASA. So the "NIM compression" risk shown earlier has turned into a tailwind. Bond holdings lose some value, but IDBI's treasury is small relative to Canara's.</div>
+  <h3>What you would be paying for</h3>
+  <div class="grid g3">
+    <div class="kpi"><div class="l">Market price (14 Oct)</div><div class="v">₹90.39</div><div class="d dn">11.6% above Fairfax's ₹81</div></div>
+    <div class="kpi"><div class="l">Fairfax's price / book</div><div class="v">1.48x</div><div class="d">vs market 1.65x</div></div>
+    <div class="kpi"><div class="l">Open-offer floor</div><div class="v">≥ ₹81</div><div class="d fl">or 60-day average, if higher</div></div>
+  </div>
+  <p style="margin-top:10px">A buyer today pays more than the controlling buyer did. That premium is a bet that Fairfax will lift returns (deploying 26.92% capital, cutting costs, cross-selling insurance and broking). On 8 Sep 2026, when the ₹81 offer first leaked, the stock fell 10.6% to ₹81.12 in a day — a reminder of the downside if the deal slips.</p>
+  <h3>Price scenarios</h3>
+  <p class="sub">Book value grown at about 13% a year from ₹54.89. These are illustrations of how price depends on the multiple the market pays, not forecasts.</p>
+  <div class="tablewrap"><table><thead><tr><th>Scenario (illustrative, ~2 years)</th><th>Book value / share</th><th>P/BV</th><th>Implied price</th><th>vs today</th></tr></thead><tbody><tr><td>Deal delayed or diluted; stays a state-style bank</td><td class="n">₹70</td><td class="n">1.2x</td><td class="n">₹84</td><td class="n dn">−7%</td></tr><tr><td>Deal closes; returns improve gradually</td><td class="n">₹70</td><td class="n">1.6x</td><td class="n">₹112</td><td class="n up">+24%</td></tr><tr><td>Fairfax deploys capital; private-bank multiple</td><td class="n">₹70</td><td class="n">2.0x</td><td class="n">₹140</td><td class="n up">+55%</td></tr></tbody></table></div>
+  <h3>Before deciding, watch</h3>
+  <ul><li>Q2 FY27 results on 17 Oct: NIM direction after the repo hike, deposit growth, cost-to-income.</li><li>RBI final approval and the SPA signing date.</li><li>The open-offer price and size (it must fit the 74% foreign limit and 25% public float).</li><li>Fairfax's decision on CSB: merge or sell.</li><li>Lock-in: Fairfax cannot sell for 5 years, so there is no promoter selling overhang in that period.</li></ul>
+  <div class="note"><b>Who this suits.</b> Your reasons hold up best for a patient investor with a 3–5 year view who accepts deal-timing risk. They hold up least for someone hoping to profit from the open offer: it is likely to be priced below today's market price.</div>
+  </div>
+  <div class="bk" data-bank="can" hidden>
+  <h2>Is it the right time for Canara Bank? A thesis check <span class="ta">கனரா வங்கியில முதலீடு செய்ய இது சரியான நேரமா?</span></h2>
+  <div class="warn">CB Research does not give buy, sell or hold advice and is not a SEBI-registered adviser. This tab sets the case for and against side by side.</div>
+  <h3>The balance</h3>
+  <div class="tablewrap" style="padding:8px"><svg id="scale-can" viewBox="0 0 900 340" style="min-width:640px;width:100%;max-width:900px;display:block;margin:0 auto" role="img" aria-label="Balance of positives and risks for Canara Bank"></svg></div>
+  <h3>The case, tested</h3>
+  <div class="tablewrap"><table><thead><tr><th>Point</th><th>Check</th><th>What the numbers say</th></tr></thead><tbody><tr><td>Valuation is low</td><td><span class="pill p-g">Supported</span></td><td>About 1.0x book and 5.6x annualised earnings at ₹124.45, against IDBI at 1.65x book. Motilal Oswal's target is ₹160.</td></tr><tr><td>Earnings are strong</td><td><span class="pill p-g">Supported</span></td><td>Record PAT ₹5,175 cr (+8.4%), record NII ₹11,005 cr (+20.4%), ROE 18.49% above guidance, GNPA 1.33%.</td></tr><tr><td>The rate cycle helps</td><td><span class="pill p-r">Challenged</span></td><td>RBI raised repo to 5.50% on 7 Oct 2026 and shifted to "calibrated tightening". Higher bond yields already cut Canara's treasury income 68.5%. With CASA only 29%, deposit costs reprice up too, so the NIM benefit is smaller than for IDBI.</td></tr><tr><td>Book value is safe</td><td><span class="pill p-a">Partly</span></td><td>The ECL transition needs a one-time ₹12,000–15,000 cr provision, about ₹13–17 per share, or 11–13% of book value, spread over two years. Book value still grows, but more slowly.</td></tr><tr><td>There is a re-rating trigger</td><td><span class="pill p-a">Partly</span></td><td>No ownership change, unlike IDBI. Re-rating would need steady 1%+ ROA through the ECL period, CASA back above 30%, and value from listed subsidiaries (Canara HSBC Life, Canara Robeco).</td></tr></tbody></table></div>
+  <h3>What you would be paying for</h3>
+  <div class="grid g3">
+    <div class="kpi"><div class="l">Market price (14 Oct)</div><div class="v">₹124.45</div><div class="d up">+3.33% on results day</div></div>
+    <div class="kpi"><div class="l">Price / book</div><div class="v">≈1.0x</div><div class="d">book ≈₹124</div></div>
+    <div class="kpi"><div class="l">Broker target</div><div class="v">₹160</div><div class="d up">Motilal Oswal, Buy</div></div>
+  </div>
+  <h3>Price scenarios</h3>
+  <p class="sub">Book value grown at about 14% a year, less about ₹16 per share for ECL. Illustrations only, not forecasts.</p>
+  <div class="tablewrap"><table><thead><tr><th>Scenario (illustrative, ~2 years)</th><th>Book value / share</th><th>P/BV</th><th>Implied price</th><th>vs today</th></tr></thead><tbody><tr><td>ECL bites, yields keep rising</td><td class="n">₹145</td><td class="n">0.8x</td><td class="n">₹116</td><td class="n dn">−7%</td></tr><tr><td>Steady delivery through ECL</td><td class="n">₹145</td><td class="n">1.0x</td><td class="n">₹145</td><td class="n up">+17%</td></tr><tr><td>ROE holds above 17%, re-rating</td><td class="n">₹145</td><td class="n">1.2x</td><td class="n">₹174</td><td class="n up">+40%</td></tr></tbody></table></div>
+  <h3>Timing: what has changed this month</h3>
+  <ul><li>RBI hiked repo to 5.50% and turned to "calibrated tightening": more mark-to-market pressure on Canara's large bond book.</li><li>RBI's final ECL rules and phasing decide how quickly the ₹12,000–15,000 cr provision hits book value.</li><li>CASA recovery above 30% would ease deposit-cost pressure.</li></ul>
+  <div class="note"><b>Who this suits.</b> Canara is a valuation and dividend-style holding: cheap on book and earnings, with growth ahead of guidance. The ECL charge and a rising-rate bond market are the near-term headwinds, so the timing case is weaker than the valuation case.</div>
+  </div>
+</section>
+<section class="panel" id="p-mgmt" hidden>
+  <div class="subtabs" data-panel="mgmt"></div>
+  <div class="bk" data-bank="idbi">
+  <h2>Management &amp; Board <span class="ta">நிர்வாகம் &amp; இயக்குநர் குழு</span></h2>
+  <div class="tablewrap"><table>
+    <thead><tr><th>Name</th><th>Role</th><th>Notes</th></tr></thead>
+    <tbody>
+    <tr><td>T N Manoharan</td><td>Chairman</td><td>Chartered accountant; non-executive chair</td></tr>
+    <tr><td>Rakesh Sharma</td><td>MD &amp; CEO</td><td>At the helm since Oct 2018; reappointed for 3 years from 19 Mar 2025; led exit from RBI's PCA in 2021; ex-MD &amp; CEO Canara Bank</td></tr>
+    <tr><td>Sumit Phakka</td><td>Deputy MD</td><td>Executive director</td></tr>
+    <tr><td>Jayakumar S Pillai</td><td>Deputy MD</td><td>Ex-Canara Bank; leads corporate banking; term extended one year from 12 Jun 2026</td></tr>
+    <tr><td>Ajay Prakash Sawhney · P V Bharathi · Deepak Singhal · Sanjay Kallapur · Bhuwanchandra Joshi · Samaresh Parida</td><td>Independent directors</td><td>—</td></tr>
+    </tbody></table></div>
+  <div class="note">After closing, Fairfax will reconstitute the board as the promoter. Management continuity through the transition, and how the CSB Bank question is resolved, are the key governance items to track.</div>
+</div>
+  <div class="bk" data-bank="can" hidden>
+  <h2>Management &amp; Board — Canara Bank <span class="ta">நிர்வாகம்</span></h2>
+  <div class="tablewrap"><table>
+    <thead><tr><th>Name</th><th>Role</th><th>Notes</th></tr></thead>
+    <tbody>
+    <tr><td>Brajesh Singh</td><td>MD &amp; CEO</td><td>Led the Q2 FY27 call; kept FY27 guidance unchanged despite beating most items</td></tr>
+    <tr><td>Hardeep Ahluwalia</td><td>Executive Director</td><td>Explained deposit-cost management via FCNR(B) and treasury MTM</td></tr>
+    <tr><td>Other directors</td><td>—</td><td>n/a in sources reviewed</td></tr>
+    </tbody></table></div>
+  <div class="note">Canara Bank is government-owned (public sector), so board appointments come through the Department of Financial Services. Ownership is not changing, in contrast to IDBI Bank.</div>
+</div>
+</section>
+
+<!-- RISKS / SWOT -->
+<section class="panel" id="p-swot" hidden>
+  <div class="subtabs" data-panel="swot"></div>
+  <div class="bk" data-bank="idbi">
+  <h2>SWOT &amp; risks <span class="ta">பலம், பலவீனம், வாய்ப்பு, அச்சுறுத்தல்</span></h2>
+  <div class="grid g2">
+    <div class="card"><h3 class="up">Strengths</h3><ul><li>CRAR 26.92%, Tier-1 26.38% — among the highest in Indian banking</li><li>PCR 99.31%; NNPA 0.16%</li><li>Retail-heavy book (70%) growing 22%</li><li>ROA 1.89%</li></ul></div>
+    <div class="card"><h3 class="dn">Weaknesses</h3><ul><li>Cost-to-income 52.0% vs ≤50% target</li><li>ROE down to 14.80% from 17.91% (excess capital drags returns)</li><li>Other income volatile; depends on recoveries</li></ul></div>
+    <div class="card"><h3 style="color:var(--blue)">Opportunities</h3><ul><li>Fairfax as promoter: capital deployment, insurance and broking cross-sell</li><li>Use of surplus capital to grow faster</li><li>Private-bank style incentives after government exit</li></ul></div>
+    <div class="card"><h3 style="color:var(--amber)">Threats</h3><ul><li>NIM compression as RBI cuts rates</li><li>Deposit growth (10%) lagging loans (22%)</li><li>Closing delays; CSB integration risk</li><li>Price above deal value</li></ul></div>
+  </div>
+</div>
+  <div class="bk" data-bank="can" hidden>
+  <h2>SWOT &amp; risks — Canara Bank</h2>
+  <div class="grid g2">
+    <div class="card"><h3 class="up">Strengths</h3><ul><li>₹30 lakh crore business; 10,131 branches</li><li>GNPA 1.33%, NNPA 0.30%, slippage 0.58%</li><li>ROE 18.49%, above guidance</li><li>Retail credit +31.6%</li></ul></div>
+    <div class="card"><h3 class="dn">Weaknesses</h3><ul><li>Low NIM (2.55%) vs private peers</li><li>CASA 29%, below guidance</li><li>CET1 12.80% — thinner than IDBI's buffer</li></ul></div>
+    <div class="card"><h3 style="color:var(--blue)">Opportunities</h3><ul><li>₹47,000–50,000 crore corporate pipeline (green energy, power, data centres)</li><li>Listed subsidiaries add value</li><li>~1x book valuation leaves room for re-rating</li></ul></div>
+    <div class="card"><h3 style="color:var(--amber)">Threats</h3><ul><li>ECL provision ₹12,000–15,000 cr</li><li>Rising bond yields hit treasury</li><li>Drought exposure ₹10,000–13,000 cr in Karnataka/Maharashtra</li><li>Shrinking written-off recovery pool</li></ul></div>
+  </div>
+</div>
+</section>
+
+<!-- CB SCHOOL -->
+<section class="panel" id="p-school" hidden>
+  <div class="subtabs" data-panel="school"></div>
+  
+  <h2>How bank metrics move each other <span class="ta">ஒரு அளவீடு மாறினா மற்றது எப்படி மாறும்</span></h2>
+  <p class="sub">Tap any metric to see what it pushes and what pushes it. Or pick a scenario to watch one change ripple through the bank. Green arrow = moves the same way (▲ makes ▲). Red arrow = moves the opposite way (▲ makes ▼).</p>
+  <div class="scen" id="scenBtns"></div>
+  <div class="tablewrap" style="padding:8px"><svg id="linkSvg" viewBox="0 0 1070 495" style="min-width:880px;width:100%;display:block" role="img" aria-label="Bank metric linkage map"></svg></div>
+  <div class="card" id="linkCard" style="margin-top:10px"><b>Tap a metric or pick a scenario.</b> The map shows how one number in a bank changes the others.</div>
+<div class="bk" data-bank="idbi">
+  <h2>CB School — how the metrics connect <span class="ta">CB பள்ளி</span></h2>
+  <div class="grid g2">
+    <div class="card"><b>High CRAR lowers ROE.</b> IDBI's 26.92% CRAR means lots of equity per rupee of loans. Profit is spread over a bigger equity base, so ROE (14.80%) trails ROA (1.89%) by less leverage than peers. Fairfax will likely try to deploy this capital.</div>
+    <div class="card"><b>Rate cuts squeeze NIM first.</b> Loans linked to repo reprice down immediately; fixed deposits reprice only at renewal. Yield fell to 8.46% while deposit cost fell to 4.59% — the gap narrows for a few quarters.</div>
+    <div class="card"><b>Write-backs lift PAT, not operating strength.</b> Operating profit fell 8%, yet PAT rose 5% because provisions turned into a ₹637 crore release. Look at operating profit to judge core earnings.</div>
+    <div class="card"><b>CD ratio is a liquidity gauge.</b> At 79.5%, ₹79.50 of every ₹100 deposited is lent. Rising CD ratio means growth must now be funded by new, costlier deposits.</div>
+    <div class="card"><b>PCR near 100%.</b> Almost every bad loan is already provided for, so future recoveries can flow back as write-backs — the reason provisions were negative this quarter.</div>
+    <div class="card"><b>P/BV is the bank valuation.</b> At ₹90.39 the market pays 1.65x book. Fairfax pays 1.48x book for control — a reminder that market price and deal value can differ.</div>
+  </div>
+</div>
+  <div class="bk" data-bank="can" hidden>
+  <h2>CB School — Canara Bank lessons</h2>
+  <div class="grid g2">
+    <div class="card"><b>Rising bond yields hurt treasury.</b> Banks hold government bonds. When yields rise 44 bps, bond prices fall, creating a mark-to-market loss. Canara's treasury income fell from ₹1,583 crore to ₹499 crore.</div>
+    <div class="card"><b>FCNR deposits: cheap but not CASA.</b> Foreign-currency deposits cost about 1% less than bulk deposits, cutting cost of funds, but they are term deposits, so the CASA ratio fell to 29%.</div>
+    <div class="card"><b>What is ECL?</b> Expected Credit Loss provisioning makes banks provide for losses they expect, not only losses already incurred. The switch front-loads provisions — ₹12,000–15,000 crore for Canara.</div>
+    <div class="card"><b>Same ROA, different ROE.</b> Canara ROA 1.04% gives ROE 18.49%; IDBI ROA 1.89% gives ROE 14.80%. Canara runs with far more leverage (CRAR 17.19% vs 26.92%).</div>
+    <div class="card"><b>Why 1x book vs 1.65x?</b> IDBI carries a takeover premium and higher NIM; Canara has low NIM and the ECL overhang, so the market pays about book value.</div>
+    <div class="card"><b>Operating profit vs PAT.</b> Canara's operating profit grew only 2% but PAT grew 8.4% because provisions fell 6.1%.</div>
+  </div>
+</div>
+</section>
+
+<!-- SOCRATES -->
+<section class="panel" id="p-socrates" hidden>
+  <div class="subtabs" data-panel="socrates"></div>
+  <div class="bk" data-bank="idbi">
+  <h2>Cauvery Socrates <span class="ta">கேள்வி பதில்</span></h2>
+  <div class="quiz" id="quiz"></div>
+</div>
+  <div class="bk" data-bank="can" hidden>
+  <h2>Cauvery Socrates — Canara Bank</h2>
+  <div class="quiz" id="quiz-can"></div>
+</div>
+</section>
+
+
+</div>
+
+<button id="assistBtn" type="button" aria-expanded="false" aria-label="Open CB Assist" title="CB Assist">🎙</button>
+<div id="assist" hidden>
+  <div class="log" id="log"><div class="msg a">Ask me about IDBI Bank or Canara Bank. Say "Canara" or "IDBI" in your question, otherwise I answer for the bank shown on screen. Tap the mic to speak, or type. Answers are read aloud.</div></div>
+  <div class="chips" id="chips"></div>
+  <form id="askForm"><button class="mic" type="button" id="micBtn" aria-label="Ask by voice">🎤</button><input id="askIn" placeholder="e.g. Canara NIM? IDBI Fairfax deal?" autocomplete="off"><button class="send" type="submit">Ask</button></form>
+</div>
+<button id="cbBadge" type="button" aria-label="CB Research disclaimer">CB</button>
+<div id="disc" hidden><b>Prepared by CB Research (Cauvery Business).</b> For education only. CB Research is not a SEBI-registered research analyst and does not give buy, sell or hold advice. Figures are taken from company filings and public reports; items marked c are computed and † are rounded or cumulative. Verify with the original filings before acting.</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<script>
+var CO={
+ idbi:{name:"IDBI Bank Ltd",nse:"IDBI",qtr:"Q1FY27",price:90.39,priceDate:"2026-10-14",dep:325757,adv:258968,casa:43.64,cd:79.50,nii:3486,nim:3.61,oi:1032,yoa:8.46,cod:4.59,cti:52.01,op:2168,gnpa:2.30,nnpa:0.16,pcr:99.31,prov:-637,pat:2115,roa:1.89,roe:14.80,crar:26.92,tier1:26.38,lcr:null,bvps:54.89,pbv:1.65,pe:10.1,deal:{price:81,stake:60.72,value:52878,fairValue:75.99},cycle:{sectorPhase:"P3",stockStage:"Stage 3/1",cy:63},tg:75},
+ can:{name:"Canara Bank",nse:"CANBK",qtr:"Q2FY27",price:124.45,priceDate:"2026-10-14",dep:1697305,adv:1375060,casa:29.00,cd:81.01,nii:11005,nim:2.55,oi:5772,yoa:8.03,cod:5.27,cti:47.80,op:8758,gnpa:1.33,nnpa:0.30,pcr:95.34,provTax:3583,pat:5175,roa:1.04,roe:18.49,crar:17.19,cet1:12.80,lcr:115,bvps:124,pbv:1.0,pe:5.6,brokers:[{name:"Motilal Oswal",rating:"Buy",target:160,date:"2026-10-05"}],cycle:{sectorPhase:"P3",stockStage:"Stage 1 late",cy:66},tg:35}};
+var fmt=function(n){return n.toLocaleString("en-IN")};
+var NS="http://www.w3.org/2000/svg";
+var BANK="idbi";
+
+/* ---------- tabs and bank sub-tabs ---------- */
+var TABS=[["overview","Overview","கண்ணோட்டம்"],["deal","Deal & Fairfax","ஒப்பந்தம் & Fairfax"],["model","Business Model","வணிக மாதிரி"],["pillars","6 Pillars","6 தூண்கள்"],["metrics","21 Metrics","21 அளவீடுகள்"],["charts","Charts","வரைபடங்கள்"],["triggers","Triggers & Cycle","தூண்டுதல்கள்"],["analysts","Analysts' Rating","ஆய்வாளர்"],["invest","Invest? Thesis Check","முதலீடு?"],["mgmt","Management & Board","நிர்வாகம்"],["swot","SWOT & Risks","SWOT"],["school","CB School","CB பள்ளி"],["socrates","Socrates","சாக்ரடீஸ்"]];
+var tabsEl=document.getElementById("tabs"),current="overview",drawn={};
+TABS.forEach(function(t,i){var b=document.createElement("button");b.className="tab";b.type="button";b.setAttribute("role","tab");b.dataset.id=t[0];b.dataset.en=t[1];b.dataset.ta=t[2];b.textContent=t[1];b.setAttribute("aria-selected",i===0);b.onclick=function(){show(t[0])};tabsEl.appendChild(b)});
+[].forEach.call(document.querySelectorAll(".subtabs"),function(st){
+ [["idbi","IDBI Bank · Q1 FY27","#0F6B4B"],["can","Canara Bank · Q2 FY27","#2F5E9E"]].forEach(function(b){var x=document.createElement("button");x.type="button";x.dataset.bank=b[0];x.innerHTML='<span class="dot" style="background:'+b[2]+'"></span>'+b[1];x.onclick=function(){setBank(b[0])};st.appendChild(x)})});
+function setBank(b){BANK=b;
+ [].forEach.call(document.querySelectorAll(".bk"),function(d){d.hidden=d.dataset.bank!==b});
+ [].forEach.call(document.querySelectorAll(".subtabs button"),function(x){x.setAttribute("aria-pressed",x.dataset.bank===b)});
+ afterShow();try{localStorage.setItem("cbBank",b)}catch(e){}}
+function show(id){current=id;TABS.forEach(function(t){document.getElementById("p-"+t[0]).hidden=t[0]!==id});
+ [].forEach.call(tabsEl.children,function(b){b.setAttribute("aria-selected",b.dataset.id===id)});
+ afterShow();try{localStorage.setItem("cbTab",id)}catch(e){}}
+function afterShow(){if(current==="deal"&&!drawn.ff){drawFF();drawn.ff=true}
+ if(current==="deal"&&!drawn.fdi){drawFdi();drawn.fdi=true}
+ if(current==="charts"&&!drawn[BANK]){(BANK==="idbi"?drawIdbi:drawCan)();drawn[BANK]=true}
+ if(current==="pillars")animateTemple(BANK==="idbi"?"temple":"temple-can")}
+document.getElementById("langBtn").onclick=function(){document.body.classList.toggle("tamil");var ta=document.body.classList.contains("tamil");[].forEach.call(tabsEl.children,function(b){b.textContent=ta?b.dataset.ta:b.dataset.en})};
+
+/* ---------- KPIs ---------- */
+function kpis(id,K){document.getElementById(id).innerHTML=K.map(function(k){return '<div class="kpi"><div class="l">'+k[0]+'</div><div class="v">'+k[1]+'</div><div class="d '+k[3]+'">'+k[2]+'</div></div>'}).join("")}
+kpis("kpis",[["Net profit","₹2,115 cr","+5.4% YoY · +8.9% QoQ","up"],["Net interest income","₹3,486 cr","+10% YoY · −9% QoQ","fl"],["NIM","3.61%","−7 bps YoY · −54 bps QoQ","dn"],["Operating profit","₹2,168 cr","−8% YoY","dn"],["Net advances","₹2,58,968 cr","+22% YoY","up"],["Deposits","₹3,25,757 cr","+10% YoY","fl"],["GNPA / NNPA","2.30% / 0.16%","−63 / −5 bps YoY","up"],["CRAR","26.92%","+153 bps YoY","up"]]);
+kpis("kpis-can",[["Net profit","₹5,175 cr","+8.4% YoY · +6.6% QoQ","up"],["Net interest income","₹11,005 cr","+20.4% YoY · +7.7% QoQ","up"],["NIM","2.55%","+5 bps YoY","up"],["Operating profit","₹8,758 cr","+2.0% YoY · +1.4% QoQ","fl"],["Gross advances","₹13,75,060 cr","+19.46% YoY","up"],["Deposits","₹16,97,305 cr","+13.13% YoY","up"],["GNPA / NNPA","1.33% / 0.30%","−102 / −24 bps YoY","up"],["CRAR / CET1","17.19% / 12.80%","+99 / +59 bps YoY","up"]]);
+
+/* ---------- 21 metrics ---------- */
+function mtab(id,M,cols){var h='<thead><tr><th>#</th><th>Metric</th><th>'+cols[0]+'</th><th>'+cols[1]+'</th><th>'+cols[2]+'</th><th>YoY</th><th>QoQ</th></tr></thead><tbody>';
+ M.forEach(function(g){h+='<tr class="cat"><td colspan="7">'+g[0]+' ('+g[1].length+')</td></tr>';g[1].forEach(function(r){h+='<tr><td>'+r[0]+'</td><td>'+r[1]+'</td><td class="n">'+r[2]+'</td><td class="n">'+r[3]+'</td><td class="n"><b>'+r[4]+'</b></td><td class="n">'+r[5]+'</td><td class="n">'+r[6]+'</td></tr>'})});
+ document.getElementById(id).innerHTML=h+'</tbody>'}
+mtab("mtab",[
+["Balance sheet & growth",[["1","Deposits","2,96,782","3,47,000 †","3,25,757","+9.8%","−6.1%","Business Today; PSU Connect (Q4 rounded ₹3.47 lakh cr)"],["2","Net advances","2,11,907","2,53,626","2,58,968","+22.2%","+2.1%","Business Today"],["3","CD ratio","71.40% c","73.09% c†","79.50%","+810 bps","+641 bps","ScanX"],["4","CASA ratio","44.63% c","n/a","43.64%","−99 bps","—","Business Today (CASA ₹1,42,162 cr)"]]],
+["Earnings & spread",[["5","Net interest income","3,166","3,851","3,486","+10.1%","−9.5%","Sahi; Business Standard"],["6","NIM","3.68%","4.15%","3.61%","−7 bps","−54 bps","ICICI Direct"],["7","Other income","1,433 c","1,611","1,032","−28.0%","−35.9%","Kotak Neo; IDBI Q4 release"],["8","Yield on advances","n/a","8.52%","8.46%","—","−6 bps","IDBI presentations"],["9","Cost of deposits","4.84%","4.69% †","4.59%","−25 bps","−10 bps","EquityBulls; IDBI presentation (cumulative)"]]],
+["Efficiency",[["10","Cost-to-income","48.86%","44.29% c","52.01% c","+315 bps","+772 bps","Opex ÷ (NII + other income)"],["11","Operating profit","2,350 c","3,043","2,168","−7.7%","−28.8%","ScanX; IDBI Q4 release"]]],
+["Asset quality",[["12","Gross NPA","2.93%","2.32%","2.30%","−63 bps","−2 bps","ScanX"],["13","Net NPA","0.21%","0.15%","0.16%","−5 bps","+1 bp","ScanX"],["14","PCR (incl. write-offs)","99.31%","99.39%","99.31%","flat","−8 bps","ScanX"],["15","Provisions excl. tax","−179","285","−637","write-back","write-back","IDBI Q1 presentation"]]],
+["Profitability",[["16","Net profit (PAT)","2,007","1,943","2,115","+5.4%","+8.9%","ICICI Direct"],["17","ROA","n/a","n/a","1.89%","—","—","Business Standard"],["18","ROE","17.91%","n/a","14.80%","−311 bps","—","IDBI presentation"]]],
+["Capital & liquidity",[["19","CRAR","25.39%","n/a","26.92%","+153 bps","—","IDBI Q1 FY26 release; EquityBulls"],["20","Tier-1 (CET1 proxy) †","23.71%","n/a","26.38%","+267 bps","—","multibagg.ai; Kotak Neo"],["21","LCR","n/a","n/a","n/a","—","—","Not disclosed in sources found"]]]],["Q1 FY26","Q4 FY26","Q1 FY27"]);
+mtab("mtab-can",[
+["Balance sheet & growth",[["1","Global deposits","15,00,314 c","16,11,685","16,97,305","+13.13%","+5.3%","Investing.com slides; Business Today"],["2","Gross advances (global)","11,51,063 c","12,93,381","13,75,060","+19.46%","+6.3%","Investing.com slides; Business Today"],["3","CD ratio","76.72% c","80.25% c","81.01% c","+429 bps","+76 bps","Computed; Motilal cites 80.9%"],["4","CASA ratio","n/a","n/a","29.00%","—","—","GuruFocus call notes"]]],
+["Earnings & spread",[["5","Net interest income","9,141","10,215","11,005","+20.4%","+7.7%","Business Standard; Business Today"],["6","NIM","2.50%","n/a","2.55%","+5 bps","—","Business Standard"],["7","Other income","7,056 c","n/a","5,772","−18.2%","—","Business Standard"],["8","Yield on advances","n/a","n/a","8.03%","—","—","Investing.com slides"],["9","Cost of deposits","n/a","5.27%","5.27%","—","flat","Investing.com slides"]]],
+["Efficiency",[["10","Cost-to-income","46.97%","n/a","47.80%","+83 bps","—","Investing.com slides"],["11","Operating profit","8,588","8,636","8,758","+2.0%","+1.4%","Business Standard; multibagg.ai"]]],
+["Asset quality",[["12","Gross NPA","2.35%","1.57%","1.33%","−102 bps","−24 bps","multibagg.ai"],["13","Net NPA","0.54%","0.36%","0.30%","−24 bps","−6 bps","multibagg.ai"],["14","PCR (incl. write-offs)","93.59%","94.76%","95.34%","+175 bps","+58 bps","Business Standard; multibagg.ai"],["15","Provisions incl. tax","3,814","2,080","3,583","−6.1%","+72.3%","Business Standard; multibagg.ai"]]],
+["Profitability",[["16","Net profit (PAT)","4,774","4,856","5,175","+8.4%","+6.6%","Business Standard; Business Today"],["17","ROA (H1 cumulative) †","n/a","n/a","1.04%","—","—","GuruFocus call notes"],["18","ROE","n/a","n/a","18.49%","—","—","GuruFocus call notes"]]],
+["Capital & liquidity",[["19","CRAR","16.20%","n/a","17.19%","+99 bps","—","Business Standard"],["20","CET1","12.21%","n/a","12.80%","+59 bps","—","Business Standard"],["21","LCR","n/a","n/a","115%","—","—","Investing.com transcript"]]]],["Q2 FY26","Q1 FY27","Q2 FY27"]);
+
+/* ---------- business model ---------- */
+function bmodel(svgId,cardId,B,arrows){var bm=document.getElementById(svgId);
+ function el(t,a,p){var e=document.createElementNS(NS,t);for(var k in a)e.setAttribute(k,a[k]);(p||bm).appendChild(e);return e}
+ el("defs",{}).innerHTML='<marker id="ar-'+svgId+'" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0L10,5L0,10z" fill="#5B6B62"/></marker>';
+ arrows.forEach(function(a){el("line",{x1:a[0],y1:a[1],x2:a[2],y2:a[3],stroke:"#5B6B62","stroke-width":1.5,"marker-end":"url(#ar-"+svgId+")"})});
+ B.forEach(function(b){var g=el("g",{class:"bm-box",tabindex:0,role:"button","aria-label":b.t[0]});
+  el("rect",{x:b.x,y:b.y,width:b.w,height:b.h,rx:10,fill:"#FFFFFF",stroke:b.c,"stroke-width":1.5},g);
+  el("rect",{x:b.x,y:b.y,width:b.w,height:24,rx:10,fill:b.c},g);el("rect",{x:b.x,y:b.y+14,width:b.w,height:10,fill:b.c},g);
+  b.t.forEach(function(s,i){var tx=el("text",{x:b.x+b.w/2,y:b.y+17+i*22,"text-anchor":"middle","font-size":i?12.5:13,"font-weight":i?400:700,fill:i?"#14231C":"#FFFFFF"},g);tx.textContent=s});
+  var f=function(){document.getElementById(cardId).innerHTML="<b>"+b.t[0]+".</b> "+b.e};g.addEventListener("click",f);g.addEventListener("keydown",function(e){if(e.key==="Enter"||e.key===" "){e.preventDefault();f()}})})}
+var ARW=[[180,95,220,160],[180,255,220,195],[370,175,410,175],[600,150,640,60],[600,170,640,155],[600,190,640,250],[820,60,860,80],[820,155,860,100],[820,250,860,110],[955,130,955,150],[955,260,955,285],[860,340,820,380]];
+bmodel("bmSvg","bmCard",[
+ {x:10,y:40,w:170,h:110,c:"#2F5E9E",t:["Depositors","₹3,25,757 cr","CASA 43.64%"],e:"Households and companies park money as savings, current and term deposits. CASA (₹1,42,162 cr) is the cheapest money. Deposits grew 10% YoY."},
+ {x:10,y:200,w:170,h:110,c:"#2F5E9E",t:["Shareholders' equity","Net worth ₹59,024 cr","CRAR 26.92%"],e:"Equity capital absorbs losses and lets the bank lend. IDBI holds far more than the 11.5% regulatory minimum."},
+ {x:220,y:120,w:150,h:110,c:"#1E7C8C",t:["Channels","Branches + digital","BC outlets"],e:"Branches, mobile banking and business-correspondent outlets collect deposits and source loans. The bank planned 195 new outlets in FY26."},
+ {x:410,y:90,w:190,h:170,c:"#0F6B4B",t:["IDBI BANK","Q1 FY27","Balance sheet engine","CD ratio 79.50%"],e:"The bank borrows at an average 4.59% (cost of deposits) and lends at 8.46% (yield on advances). The spread, after costs and provisions, is profit."},
+ {x:640,y:20,w:180,h:80,c:"#0F6B4B",t:["Retail loans","₹1,80,936 cr · 70%","+22% YoY"],e:"Home, vehicle, personal, MSME and agri loans. The main growth engine and 70% of the loan book."},
+ {x:640,y:115,w:180,h:80,c:"#1E7C8C",t:["Corporate loans","≈₹78,032 cr c · 30%","Term & working capital"],e:"Lending to companies. Mix is 30:70 corporate to retail. Corporate figure derived from net advances minus retail."},
+ {x:640,y:210,w:180,h:80,c:"#B7791F",t:["Treasury & fees","Other income ₹1,032 cr","−28% YoY"],e:"Investment gains, fees, and recoveries from written-off loans. Volatile from quarter to quarter."},
+ {x:860,y:40,w:190,h:90,c:"#0F6B4B",t:["Revenue","Interest ₹7,541 cr","+ Other ₹1,032 cr"],e:"Total income ₹8,573 cr. Interest earned rose from ₹7,021 cr a year ago."},
+ {x:860,y:150,w:190,h:110,c:"#B23A3A",t:["Costs","Interest paid ≈₹4,055 cr c","Opex ₹2,350 cr","Provisions −₹637 cr"],e:"Interest paid on deposits (derived as interest earned minus NII), operating costs, and a net provision write-back this quarter."},
+ {x:860,y:285,w:190,h:90,c:"#E8711C",t:["Profit","PAT ₹2,115 cr","ROA 1.89% · ROE 14.80%"],e:"After tax of ₹689 cr. Profit belongs to shareholders: today GoI 45.48% and LIC 49.24%; after the deal Fairfax 60.72%, LIC 19%, GoI 15%."},
+ {x:410,y:330,w:410,h:110,c:"#5B6B62",t:["Ownership (after deal)","Fairfax 60.72% · LIC 19% · GoI 15% · Public ≈5.28%","Price ₹81/share · ₹52,878 cr"],e:"The Cabinet approved the sale on 14 Oct 2026. Fairfax becomes promoter subject to RBI and SEBI approval, then must make an open offer."}],ARW);
+bmodel("bmSvg-can","bmCard-can",[
+ {x:10,y:40,w:170,h:110,c:"#2F5E9E",t:["Depositors","₹16,97,305 cr","CASA 29.00%"],e:"Global deposits grew 13.13%. CASA slipped below guidance as cheaper FCNR(B) foreign-currency term deposits replaced bulk deposits."},
+ {x:10,y:200,w:170,h:110,c:"#2F5E9E",t:["Capital","CRAR 17.19%","CET1 12.80%"],e:"Tier I capital about ₹1,32,848 cr. Comfortable today, but the ₹12,000–15,000 cr ECL provision will draw on it over two years."},
+ {x:220,y:120,w:150,h:110,c:"#1E7C8C",t:["Channels","10,131 branches","+ digital, overseas"],e:"One of India's largest branch networks (count as of 30 Jun 2026), plus overseas branches whose loans grew 58.5%."},
+ {x:410,y:90,w:190,h:170,c:"#2F5E9E",t:["CANARA BANK","Q2 FY27","₹30.72 lakh cr business","CD ratio ≈81%"],e:"Borrows at 5.27% (cost of deposits) and lends at 8.03% (yield on advances). A thinner spread than IDBI, offset by sheer scale."},
+ {x:640,y:20,w:180,h:80,c:"#0F6B4B",t:["RAM loans","₹8,12,310 cr · 59%","+21% YoY"],e:"Retail, agriculture and MSME. Retail alone ₹3,30,587 cr (+31.6%); housing +17.4%, vehicle +25.5%, MSME +15.5%."},
+ {x:640,y:115,w:180,h:80,c:"#1E7C8C",t:["Corporate & overseas","≈₹4,52,443 cr c domestic","Overseas ₹1,10,307 cr"],e:"Domestic corporate derived as domestic advances minus RAM. Pipeline of ₹47,000–50,000 cr in green energy, power and data centres."},
+ {x:640,y:210,w:180,h:80,c:"#B7791F",t:["Treasury & fees","Other income ₹5,772 cr","−18.2% YoY"],e:"Treasury ₹499 cr (−68.5%) as yields rose; recoveries from written-off accounts ₹1,260 cr (−25%)."},
+ {x:860,y:40,w:190,h:90,c:"#0F6B4B",t:["Revenue","NII ₹11,005 cr","+ Other ₹5,772 cr"],e:"Net total income ₹16,777 cr. NII is a record, up 20.4% YoY."},
+ {x:860,y:150,w:190,h:110,c:"#B23A3A",t:["Costs","Opex ₹8,019 cr","Provisions + tax","₹3,583 cr"],e:"Operating expenses +5.4% (other opex +15.3%, staff −0.3%). Provisions and tax fell 6.1%."},
+ {x:860,y:285,w:190,h:90,c:"#E8711C",t:["Profit","PAT ₹5,175 cr","ROE 18.49%"],e:"Record quarter. Annualised EPS ₹22.06. Paid largely to the government as majority owner, and to public shareholders."},
+ {x:410,y:330,w:410,h:110,c:"#5B6B62",t:["Subsidiaries","Canara HSBC Life · Canara Robeco (both listed)","Canara Bank Factor sold"],e:"Listed subsidiaries carry market value on top of the bank's book. Management expects at least 4x its ₹14 cr investment from the Factor sale."}],ARW);
+
+/* ---------- temple ---------- */
+function col(v){return v>=8?"#0F6B4B":v>=6?"#B7791F":"#B23A3A"}
+function temple(svgId,cardsId,label,P,note){var T=document.getElementById(svgId),avg=P.reduce(function(s,p){return s+p[1]},0)/P.length,score=Math.round(avg*10);
+ function te(t,a,p){var e=document.createElementNS(NS,t);for(var k in a)e.setAttribute(k,a[k]);(p||T).appendChild(e);return e}
+ te("polygon",{points:"60,120 380,20 700,120",fill:"#E8711C"});
+ te("text",{x:380,y:85,"text-anchor":"middle","font-size":34,"font-weight":800,fill:"#FFFFFF"}).textContent=score;
+ te("text",{x:380,y:108,"text-anchor":"middle","font-size":12,fill:"#FFFFFF"}).textContent="CB SCORE / 100";
+ te("rect",{x:60,y:122,width:640,height:34,fill:"#14231C"});
+ te("text",{x:380,y:145,"text-anchor":"middle","font-size":15,"font-weight":600,fill:"#FFFFFF"}).textContent=label;
+ P.forEach(function(p,i){var x=90+i*102,top=170,h=210,fh=h*p[1]/10;
+  var g=te("g",{class:"col-g",tabindex:0,role:"button","aria-label":p[0]+" "+p[1]+" of 10"});
+  te("rect",{x:x,y:top,width:70,height:h,fill:"#EEF2EE",stroke:"#C9D3CB"},g);
+  for(var f=1;f<4;f++)te("line",{x1:x+f*17.5,y1:top,x2:x+f*17.5,y2:top+h,stroke:"#D6DED7"},g);
+  te("rect",{class:"colfill",x:x,y:top+h-fh,width:70,height:fh,fill:col(p[1]),opacity:.85,"data-h":fh,style:"transition:all 1.1s ease-out"},g);
+  te("circle",{cx:x+35,cy:top+h-fh-2,r:20,fill:"#FFFFFF",stroke:col(p[1]),"stroke-width":3},g);
+  te("text",{x:x+35,y:top+h-fh+3,"text-anchor":"middle","font-size":14,"font-weight":700,fill:"#14231C"},g).textContent=p[1].toFixed(1);
+  te("text",{x:x+35,y:448,"text-anchor":"middle","font-size":12.5,"font-weight":600,fill:"#14231C"},g).textContent=p[0];
+  var go=function(){var c=document.getElementById(cardsId+"-"+i);c.scrollIntoView({behavior:"smooth",block:"center"});c.classList.add("hl");setTimeout(function(){c.classList.remove("hl")},1600)};
+  g.addEventListener("click",go);g.addEventListener("keydown",function(e){if(e.key==="Enter")go()})});
+ te("rect",{x:50,y:382,width:660,height:12,fill:"#C9D3CB"});te("rect",{x:40,y:394,width:680,height:12,fill:"#B5C1B7"});te("rect",{x:30,y:406,width:700,height:12,fill:"#A3B0A5"});
+ document.getElementById(cardsId).innerHTML=P.map(function(p,i){var cls=p[1]>=8?"p-g":p[1]>=6?"p-a":"p-r";return '<div class="card pcard" id="'+cardsId+'-'+i+'" style="border-top:4px solid '+col(p[1])+'"><b>'+p[0]+'</b> <span class="pill '+cls+'">'+p[1].toFixed(1)+' / 10</span><p style="margin:6px 0 0">'+p[2]+'</p></div>'}).join("")+'<div class="card"><b>Composite</b> <span class="pill p-a">'+score+' / 100</span><p style="margin:6px 0 0">'+note+'</p></div>';
+ return score}
+function animateTemple(id){[].forEach.call(document.querySelectorAll("#"+id+" .colfill"),function(r){var fh=+r.dataset.h;r.setAttribute("height",0);r.setAttribute("y",380);requestAnimationFrame(function(){requestAnimationFrame(function(){r.setAttribute("height",fh);r.setAttribute("y",380-fh)})})})}
+var SCORE={};
+SCORE.idbi=temple("temple","pcards","IDBI BANK · Q1 FY27",[["Growth",8.0,"Advances +22% YoY; retail +22%; total business ₹5,84,725 cr (+15%). Deposits lag at +10%."],["Margins",6.0,"NIM 3.61%, down 54 bps QoQ; core NIM 3.34%. Yield 8.46% vs cost of deposits 4.59%. Rate cuts compress the spread."],["Asset quality",9.0,"GNPA 2.30%, NNPA 0.16%, PCR 99.31%; SMA book 1.74% of standard advances (2.24% a year ago)."],["Capital",9.5,"CRAR 26.92%, Tier-1 26.38%, RWA ₹2,30,728 cr. Large buffer for growth under new owner."],["Efficiency",6.0,"Cost-to-income 52.0% c vs target below 50%; operating profit −8% YoY; ROE down to 14.80%."],["Valuation",6.5,"P/BV 1.65x and P/E ~10x at ₹90.39; the stock trades ~12% above Fairfax's ₹81 control price."]],"Simple average of the six pillars × 10. Strong balance sheet, softer earnings quality this quarter.");
+SCORE.can=temple("temple-can","pcards-can","CANARA BANK · Q2 FY27",[["Growth",8.5,"Advances +19.46%, deposits +13.13%, business ₹30.72 lakh cr; all ahead of guidance."],["Margins",5.5,"NIM 2.55% — thin; yield 8.03% vs cost of deposits 5.27%; CASA 29% below guidance."],["Asset quality",8.5,"GNPA 1.33%, NNPA 0.30%, PCR 95.34%, slippage 0.58%, credit cost 0.47%."],["Capital",7.0,"CRAR 17.19%, CET1 12.80%, LCR 115%; ECL provision of ₹12,000–15,000 cr ahead."],["Efficiency",7.5,"Cost-to-income 47.80%; ROE 18.49%, ROA 1.04%; operating profit only +2%."],["Valuation",8.5,"About 1.0x book and 5.6x annualised earnings at ₹124.45; Motilal Oswal target ₹160."]],"Simple average × 10. Strong growth and cheap valuation; thin margins and the ECL overhang hold it back.");
+
+/* ---------- cycle clocks ---------- */
+function clock(id){var c=document.getElementById(id),ph=["P1 Trough","P2 Early","P3 Expansion","P4 Peak","P5 Downturn"],cols=["#2F5E9E","#0F6B4B","#1E7C8C","#B7791F","#B23A3A"];
+ function ce(t,a){var e=document.createElementNS(NS,t);for(var k in a)e.setAttribute(k,a[k]);c.appendChild(e);return e}
+ for(var i=0;i<5;i++){var a0=(i*72-90)*Math.PI/180,a1=((i+1)*72-90)*Math.PI/180,r=120;
+  ce("path",{d:"M150,150 L"+(150+r*Math.cos(a0))+","+(150+r*Math.sin(a0))+" A"+r+","+r+" 0 0 1 "+(150+r*Math.cos(a1))+","+(150+r*Math.sin(a1))+" Z",fill:cols[i],opacity:i===2?.95:.35,stroke:"#FFFFFF","stroke-width":2});
+  var am=((i+.5)*72-90)*Math.PI/180;ce("text",{x:150+82*Math.cos(am),y:150+82*Math.sin(am)+4,"text-anchor":"middle","font-size":11,"font-weight":600,fill:"#14231C"}).textContent=ph[i]}
+ var ap=(2.5*72-90)*Math.PI/180;ce("line",{x1:150,y1:150,x2:150+60*Math.cos(ap),y2:150+60*Math.sin(ap),stroke:"#14231C","stroke-width":4,"stroke-linecap":"round"});
+ ce("circle",{cx:150,cy:150,r:26,fill:"#FFFFFF",stroke:"#14231C"});ce("text",{x:150,y:148,"text-anchor":"middle","font-size":10,fill:"#14231C"}).textContent="Credit";ce("text",{x:150,y:161,"text-anchor":"middle","font-size":10,fill:"#14231C"}).textContent="cycle"}
+clock("clock");clock("clock-can");
+
+/* ---------- charts ---------- */
+var topLabels={id:"topLabels",afterDatasetsDraw:function(ch){var ctx=ch.ctx;ctx.save();ctx.font="600 11px IBM Plex Mono, monospace";ctx.fillStyle="#14231C";ctx.textAlign="center";
+ ch.data.datasets.forEach(function(ds,i){var m=ch.getDatasetMeta(i);if(m.hidden)return;m.data.forEach(function(el,j){var v=ds.data[j];if(v==null)return;ctx.fillText(ds.pct?v.toFixed(2)+"%":fmt(v),el.x,el.y-6)})});ctx.restore()}};
+function base(){return {responsive:true,maintainAspectRatio:false,layout:{padding:{top:22}},plugins:{legend:{position:"bottom"},tooltip:{callbacks:{label:function(c){return c.dataset.label+": "+(c.dataset.pct?c.raw+"%":"₹"+fmt(c.raw)+" crore")}}}},scales:{y:{ticks:{callback:function(v){return fmt(v)}},grid:{color:"#EDF1EE"}},x:{grid:{display:false}}}}}
+function pctOpt(max){var o=base();o.scales.y.ticks={callback:function(v){return v+"%"}};if(max)o.scales.y.max=max;return o}
+function mk(id,cfg){cfg.plugins=[topLabels];new Chart(document.getElementById(id),cfg)}
+function setFonts(){Chart.defaults.font.family="IBM Plex Sans, sans-serif";Chart.defaults.color="#5B6B62"}
+function drawIdbi(){setFonts();var Q=["Q1 FY26","Q4 FY26","Q1 FY27"];
+ mk("c1",{type:"bar",data:{labels:Q,datasets:[{label:"Deposits",data:[296782,347000,325757],backgroundColor:"#2F5E9E"},{label:"Net advances",data:[211907,253626,258968],backgroundColor:"#0F6B4B"}]},options:base()});
+ mk("c2",{type:"bar",data:{labels:Q,datasets:[{label:"NII",data:[3166,3851,3486],backgroundColor:"#0F6B4B"},{label:"Other income",data:[1433,1611,1032],backgroundColor:"#B7791F"},{label:"Operating profit",data:[2350,3043,2168],backgroundColor:"#1E7C8C"},{label:"PAT",data:[2007,1943,2115],backgroundColor:"#E8711C"}]},options:base()});
+ mk("c3",{type:"line",data:{labels:Q,datasets:[{label:"Gross NPA",pct:true,data:[2.93,2.32,2.30],borderColor:"#B23A3A",backgroundColor:"#B23A3A",tension:.2},{label:"Net NPA",pct:true,data:[0.21,0.15,0.16],borderColor:"#0F6B4B",backgroundColor:"#0F6B4B",tension:.2}]},options:pctOpt()});
+ mk("c4",{type:"bar",data:{labels:["Government of India","LIC","Fairfax","Public"],datasets:[{label:"Before deal",pct:true,data:[45.48,49.24,0,5.28],backgroundColor:"#9AA9A0"},{label:"After deal",pct:true,data:[15,19,60.72,5.28],backgroundColor:"#E8711C"}]},options:pctOpt(70)})}
+function drawCan(){setFonts();var Q=["Q2 FY26","Q1 FY27","Q2 FY27"];
+ mk("k1",{type:"bar",data:{labels:Q,datasets:[{label:"Global deposits",data:[1500314,1611685,1697305],backgroundColor:"#2F5E9E"},{label:"Gross advances",data:[1151063,1293381,1375060],backgroundColor:"#0F6B4B"}]},options:base()});
+ mk("k2",{type:"bar",data:{labels:Q,datasets:[{label:"NII",data:[9141,10215,11005],backgroundColor:"#0F6B4B"},{label:"Other income",data:[7056,null,5772],backgroundColor:"#B7791F"},{label:"Operating profit",data:[8588,8636,8758],backgroundColor:"#1E7C8C"},{label:"PAT",data:[4774,4856,5175],backgroundColor:"#E8711C"}]},options:base()});
+ mk("k3",{type:"line",data:{labels:Q,datasets:[{label:"Gross NPA",pct:true,data:[2.35,1.57,1.33],borderColor:"#B23A3A",backgroundColor:"#B23A3A",tension:.2},{label:"Net NPA",pct:true,data:[0.54,0.36,0.30],borderColor:"#0F6B4B",backgroundColor:"#0F6B4B",tension:.2}]},options:pctOpt()});
+ mk("k4",{type:"bar",data:{labels:["Retail","Vehicle","RAM","Housing","MSME","Overseas"],datasets:[{label:"YoY growth",pct:true,data:[31.61,25.50,21.33,17.35,15.49,58.46],backgroundColor:"#2F5E9E"}]},options:pctOpt(70)})}
+
+function drawFdi(){setFonts();var o=base();o.plugins.legend={display:false};mk("fdi",{type:"bar",data:{labels:["Fairfax→IDBI","MUFG→Shriram","ENBD→RBL","SMBC→Yes","IHC→Sammaan","Warburg/ADIA→IDFC First","Blackstone→Federal","Bain→Manappuram"],datasets:[{label:"Deal value",data:[52878,39618,26853,13483,8850,7500,6196,4390],backgroundColor:["#E8711C","#2F5E9E","#2F5E9E","#2F5E9E","#2F5E9E","#2F5E9E","#2F5E9E","#2F5E9E"]}]},options:o})}
+/* ---------- quizzes ---------- */
+function quiz(id,QZ){var box=document.getElementById(id);
+ box.innerHTML=QZ.map(function(q,i){return '<div class="card" style="margin-bottom:10px"><b>'+(i+1)+'. '+q[0]+'</b>'+q[1].map(function(o,j){return '<button type="button" data-q="'+i+'" data-o="'+j+'">'+o+'</button>'}).join("")+'<p class="src" id="'+id+'-a'+i+'"></p></div>'}).join("");
+ box.addEventListener("click",function(e){var b=e.target.closest("button");if(!b)return;var q=QZ[b.dataset.q],ok=+b.dataset.o===q[2];b.classList.add(ok?"ok":"no");document.getElementById(id+"-a"+b.dataset.q).textContent=(ok?"Correct. ":"Not quite. ")+q[3]})}
+quiz("quiz",[["Why did PAT rise 5% while operating profit fell 8%?",["Higher NII","A ₹637 crore provision write-back","Lower tax rate"],1,"Provisions turned negative (a release), which lifted profit before tax."],["What price per share is Fairfax paying?",["₹75.99","₹81","₹90.39"],1,"₹81 per share for 60.72%, i.e. ₹52,878 crore."],["Which metric shows IDBI's loans are growing faster than deposits?",["PCR","CD ratio","GNPA"],1,"CD ratio rose to 79.50% from about 71.4% a year ago."],["Why does a 26.92% CRAR hold down ROE?",["More equity spreads the same profit thinner","It raises NPAs","It increases tax"],0,"Higher capital = bigger denominator for ROE."],["Which credit-cycle phase is the sector in, per this analysis?",["P2 Early recovery","P3 Expansion","P5 Downturn"],1,"P3: credit growing, NPAs low, margins under pressure from rate cuts."]]);
+quiz("quiz-can",[["Why did Canara's treasury income fall 68.5%?",["Lower loan growth","Bond yields rose, cutting bond values","Higher tax"],1,"A 44 bps rise in yields caused mark-to-market losses on the bond book."],["Why did the CASA ratio fall to 29%?",["Savings accounts closed","FCNR(B) term deposits grew fast","RBI rule change"],1,"FCNR(B) deposits are cheap but are term deposits, so they lower the CASA share."],["How big is the expected one-time ECL provision?",["₹2,000–3,000 crore","₹12,000–15,000 crore","₹50,000 crore"],1,"Estimated ₹12,000–15,000 crore, absorbed over about two years."],["Canara has ROA 1.04% but ROE 18.49%. Why so much higher than IDBI's ROE?",["More leverage (lower capital ratio)","Higher NIM","Lower NPAs"],0,"CRAR 17.19% vs IDBI's 26.92%: less equity per rupee of assets lifts ROE."],["At about ₹124 the stock trades near what P/BV?",["0.5x","1.0x","2.0x"],1,"Book value is about ₹124 per share, so P/BV is about 1x."]]);
+
+/* ---------- CB Assist (both banks) ---------- */
+var KB={idbi:[[["nim","margin"],"IDBI's NIM was 3.61% in Q1 FY27, down 54 basis points from 4.15% in Q4. Core NIM was 3.34%."],[["profit","pat","net profit"],"IDBI's net profit was ₹2,115 crore, up 5.4% year on year, helped by a ₹637 crore provision write-back."],[["fairfax","deal","prem","watsa","stake","sale"],"The Cabinet approved selling 60.72% of IDBI Bank to Fairfax at ₹81 per share, ₹52,878 crore. Government keeps 15% and LIC 19%."],[["open offer"],"Fairfax must make an open offer at the higher of ₹81 or the 60-day average market price."],[["npa","asset quality","gnpa"],"IDBI's gross NPA was 2.30% and net NPA 0.16%. Provision coverage was 99.31%."],[["crar","capital","tier"],"IDBI's CRAR was 26.92% and Tier-1 26.38%."],[["deposit","casa"],"IDBI's deposits were ₹3,25,757 crore, up 10%. CASA ratio was 43.64%."],[["advance","loan"],"IDBI's net advances were ₹2,58,968 crore, up 22%."],[["roe","roa","return"],"IDBI's ROA was 1.89% and ROE 14.80%."],[["cost to income","efficiency","opex"],"IDBI's cost-to-income was about 52%."],[["valuation","p/bv","book","pe","price"],"IDBI at ₹90.39 trades at about 1.65 times book value and 10 times trailing earnings."],[["csb","catholic","two banks","one bank"],"Fairfax owns about 40% of CSB Bank, formerly Catholic Syrian Bank. Since one promoter cannot control two banks, it must merge CSB into IDBI or exit within two years of the share purchase agreement."],[["condition","voting","26","lock"],"Conditions: voting rights capped at 26 percent; five-year lock-in, then cut holding to 26 percent within 15 years; CSB merge or exit within two years; LIC to reduce to 15 percent within two years; open offer required."],[["fairfax india","portfolio","quess","thomas cook","digit","5paisa","iifl capital","airport","holdings"],"Fairfax holds Digit Insurance 49%, Thomas Cook India 64.5%, Quess 34.7% and 42.9% of Fairfax India. Fairfax India owns Bangalore Airport 74%, IIFL Finance 15.2%, CSB Bank 40%, IIFL Capital 27.2% rising to at least 51%, Sanmar Chemicals 39.3% and 5paisa 24.6%, among others."],[["fdi","foreign","mufg","smbc","emirates","inflow"],"Fairfax-IDBI at ₹52,878 crore is India's largest financial-sector FDI. Others: MUFG-Shriram ₹39,618 crore, Emirates NBD-RBL ₹26,853 crore, SMBC-Yes Bank ₹13,483 crore, IHC-Sammaan about ₹8,850 to 9,000 crore."],[["score","pillar"],"IDBI's CB six-pillar score is "+SCORE.idbi+" out of 100."],[["q2","result date"],"IDBI's Q2 FY27 results are due on 17 October 2026."],[["ceo","md","management"],"Rakesh Sharma is IDBI's MD and CEO; T N Manoharan is chairman."],[["target","analyst","rating"],"No broker target price was found for IDBI Bank."],[["buy","invest","should i"],"CB Research does not give buy or sell advice. The Invest tab tests each reason: the buyer's ₹81 price is below today's ₹90.39, so you would pay a premium betting that Fairfax lifts returns; the RBI repo hike is a tailwind for IDBI's margins."]],
+ can:[[["nim","margin"],"Canara's NIM was 2.55% in Q2 FY27, up from 2.50% a year ago, within its 2.50 to 2.60% guidance."],[["profit","pat","net profit"],"Canara's net profit was a record ₹5,175 crore, up 8.4% year on year."],[["npa","asset quality","gnpa"],"Canara's gross NPA was 1.33% and net NPA 0.30%. Provision coverage was 95.34%."],[["crar","capital","cet1","tier"],"Canara's CRAR was 17.19% and CET1 12.80%."],[["deposit","casa"],"Canara's global deposits were ₹16,97,305 crore, up 13.13%. CASA ratio was 29%, below guidance."],[["advance","loan"],"Canara's gross advances were ₹13,75,060 crore, up 19.46%. RAM loans were 59% of the book."],[["roe","roa","return"],"Canara's ROE was 18.49% and ROA 1.04%."],[["cost to income","efficiency","opex"],"Canara's cost-to-income was 47.80%."],[["ecl","expected credit"],"Canara expects a one-time ECL provision of ₹12,000 to 15,000 crore, spread over about two years."],[["treasury","bond","yield"],"Canara's treasury income fell 68.5% to ₹499 crore as bond yields rose. Yield on advances was 8.03%."],[["valuation","p/bv","book","pe","price"],"Canara at ₹124.45 trades near 1 times book value and about 5.6 times annualised earnings."],[["target","analyst","rating","motilal"],"Motilal Oswal rates Canara Bank Buy with a target of ₹160."],[["score","pillar"],"Canara's CB six-pillar score is "+SCORE.can+" out of 100."],[["ceo","md","management"],"Brajesh Singh is Canara Bank's MD and CEO."],[["lcr","liquidity"],"Canara's LCR was 115% on 30 September 2026."],[["guidance"],"Canara beat most FY27 guidance in H1 except CASA, and did not raise guidance."],[["buy","invest","should i","right time"],"CB Research does not give buy or sell advice. Canara is cheap at about 1 times book with 18.5% ROE, but the ECL provision of ₹12,000 to 15,000 crore and rising bond yields after the repo hike are near-term headwinds."]]};
+function answer(q){var lq=q.toLowerCase(),b=/canara/.test(lq)?"can":/idbi/.test(lq)?"idbi":BANK;
+ if(/compare|vs|versus|better|which bank/.test(lq))return "IDBI: NIM 3.61%, GNPA 2.30%, CRAR 26.92%, ROE 14.80%, P/BV 1.65x, CB score "+SCORE.idbi+". Canara: NIM 2.55%, GNPA 1.33%, CRAR 17.19%, ROE 18.49%, P/BV about 1x, CB score "+SCORE.can+".";
+ var best=null,bs=0;KB[b].forEach(function(k){var s=0;k[0].forEach(function(w){if(lq.indexOf(w)>-1)s+=w.length});if(s>bs){bs=s;best=k[1]}});
+ return best||"I can answer on profit, NIM, NPAs, capital, deposits, loans, returns, valuation, targets and management for IDBI Bank or Canara Bank, or compare them."}
+var log=document.getElementById("log");
+function speak(t){try{speechSynthesis.cancel();var u=new SpeechSynthesisUtterance(t);u.lang="en-IN";speechSynthesis.speak(u)}catch(e){}}
+function say(cls,t){var d=document.createElement("div");d.className="msg "+cls;d.textContent=t;log.appendChild(d);log.scrollTop=log.scrollHeight}
+function ask(q){if(!q.trim())return;say("q",q);var a=answer(q);say("a",a);speak(a)}
+["Canara NIM?","IDBI Fairfax deal","Compare both banks","Canara ECL"].forEach(function(c){var b=document.createElement("button");b.type="button";b.textContent=c;b.onclick=function(){ask(c)};document.getElementById("chips").appendChild(b)});
+document.getElementById("askForm").addEventListener("submit",function(e){e.preventDefault();var i=document.getElementById("askIn");ask(i.value);i.value=""});
+document.getElementById("micBtn").onclick=function(){var SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+ if(!SR){say("a","Voice input is not available in this browser or viewer. Please type your question; answers are still read aloud.");return}
+ try{var r=new SR();r.lang="en-IN";r.onresult=function(e){ask(e.results[0][0].transcript)};r.onerror=function(){say("a","The microphone is blocked here. Open the file from GitHub Pages for voice input, or type your question.")};r.start()}catch(e){}};
+var assist=document.getElementById("assist"),ab=document.getElementById("assistBtn"),disc=document.getElementById("disc");
+ab.onclick=function(){assist.hidden=!assist.hidden;disc.hidden=true;ab.setAttribute("aria-expanded",!assist.hidden)};
+document.getElementById("cbBadge").onclick=function(){disc.hidden=!disc.hidden;assist.hidden=true};
+var scT;window.addEventListener("scroll",function(){if(!assist.hidden||!disc.hidden)return;document.body.classList.add("scrolling");clearTimeout(scT);scT=setTimeout(function(){document.body.classList.remove("scrolling")},900)},{passive:true});
+document.addEventListener("click",function(e){if(e.target.closest("#assist,#assistBtn,#disc,#cbBadge"))return;assist.hidden=true;disc.hidden=true;ab.setAttribute("aria-expanded",false)});
+tabsEl.addEventListener("click",function(){assist.hidden=true;disc.hidden=true});
+
+
+/* ---------- deal conditions graphic ---------- */
+(function(){var sv=document.getElementById("dealSvg");
+ function e(t,a,p){var x=document.createElementNS(NS,t);for(var k in a)x.setAttribute(k,a[k]);(p||sv).appendChild(x);return x}
+ e("defs",{}).innerHTML='<marker id="ar-deal" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0L10,5L0,10z" fill="#5B6B62"/></marker>';
+ var C={x:400,y:215,w:260,h:130};
+ var N=[
+ {x:20,y:20,rule:"One promoter, one bank",fix:"Merge CSB into IDBI or sell CSB stake",tag:"within 2 years",e:"RBI does not let one promoter group control two banks. Fairfax already owns about 40% of CSB Bank (formerly Catholic Syrian Bank). It must merge CSB into IDBI or exit CSB within 2 years of the share purchase agreement. Fairfax had earlier offered to make IDBI its only bank."},
+ {x:400,y:20,rule:"Voting cap 26%",fix:"Owns 60.72%, votes only 26%",tag:"permanent",e:"The Banking Regulation Act caps any shareholder's voting rights at 26%. Fairfax holds 60.72% of the shares but votes 26%. Control comes through appointing the board and management."},
+ {x:780,y:20,rule:"Promoter limit 26%",fix:"5-yr lock-in, then dilute to 26%",tag:"within 15 years",e:"RBI ownership norms require bank promoters to come down to 26% over time. Fairfax cannot sell for 5 years, then must reduce its stake to 26% within 15 years, following a roadmap filed with RBI."},
+ {x:780,y:215,rule:"SEBI takeover code",fix:"Open offer to public shareholders",tag:"after SPA",e:"Buying more than 25% of a listed company triggers an open offer. Price: the higher of ₹81 or the 60-day average market price. Size must still fit India's 74% foreign-holding cap for private banks and 25% minimum public float."},
+ {x:780,y:410,rule:"Fit and proper",fix:"RBI final clearance of Fairfax",tag:"pending",e:"Fairfax passed RBI's fit-and-proper test at the bidding stage. Final RBI approval of the transaction is still needed before the deal can close."},
+ {x:400,y:410,rule:"Insurer stake limit",fix:"LIC cuts 19% → 15%",tag:"within 2 years",e:"LIC must bring its holding down to 15% within 2 years, after which it is an ordinary public shareholder. This also lets LIC Housing Finance keep its home-loan portfolio."},
+ {x:20,y:410,rule:"Government exit",fix:"Keeps 15%; may sell in market",tag:"no board seat",e:"The deal is called 'strategic restructuring', not disinvestment. The government keeps 15% and may sell it on the market. Government and LIC withdraw their board nominees. DIPAM says no contingent liability stays with the government."},
+ {x:20,y:215,rule:"Brand & identity",fix:"Uses IDBI name and logo",tag:"3 years",e:"Fairfax may use the IDBI Bank name and logo for 3 years from signing. It has also told the government that IDBI's identity will be retained and that Go Digit and IIFL Capital may sit under IDBI as subsidiaries."}];
+ N.forEach(function(n){var cx=n.x+130,cy=n.y+65,tx=C.x+C.w/2+(cx<C.x?-C.w/2:cx>C.x+C.w?C.w/2:0)*1,ty=C.y+C.h/2+(cy<C.y?-C.h/2:cy>C.y+C.h?C.h/2:0);
+  var sx=cx+(cx<C.x?130:cx>C.x+C.w?-130:0),sy=cy+(cy<C.y?65:cy>C.y+C.h?-65:0);
+  e("line",{x1:sx,y1:sy,x2:tx,y2:ty,stroke:"#9AA9A0","stroke-width":1.5,"stroke-dasharray":"4 3"})});
+ var g=e("g",{});e("rect",{x:C.x,y:C.y,width:C.w,height:C.h,rx:14,fill:"#14231C"},g);
+ [["FAIRFAX → IDBI BANK",16,700,"#FFFFFF"],["60.72% · ₹81/share",14,600,"#F6C79D"],["₹52,878 crore (~$5.6 bn)",13,400,"#FFFFFF"],["Cabinet approved 14 Oct 2026",12,400,"#C9D3CB"]].forEach(function(r,i){var t=e("text",{x:C.x+C.w/2,y:C.y+32+i*26,"text-anchor":"middle","font-size":r[1],"font-weight":r[2],fill:r[3]},g);t.textContent=r[0]});
+ N.forEach(function(n){var g=e("g",{class:"bm-box",tabindex:0,role:"button","aria-label":n.rule});
+  e("rect",{x:n.x,y:n.y,width:260,height:130,rx:12,fill:"#FFFFFF",stroke:"#C9D3CB","stroke-width":1.5},g);
+  e("rect",{x:n.x,y:n.y,width:260,height:40,rx:12,fill:"#FBEAEA"},g);e("rect",{x:n.x,y:n.y+28,width:260,height:12,fill:"#FBEAEA"},g);
+  e("text",{x:n.x+14,y:n.y+26,"font-size":13.5,"font-weight":700,fill:"#B23A3A"},g).textContent="RULE · "+n.rule;
+  e("text",{x:n.x+130,y:n.y+60,"text-anchor":"middle","font-size":15,fill:"#5B6B62"},g).textContent="↓";
+  e("rect",{x:n.x+10,y:n.y+70,width:240,height:30,rx:8,fill:"#E5F2EC"},g);
+  e("text",{x:n.x+130,y:n.y+90,"text-anchor":"middle","font-size":13,"font-weight":600,fill:"#0F6B4B"},g).textContent=n.fix;
+  e("text",{x:n.x+130,y:n.y+120,"text-anchor":"middle","font-size":12,"font-weight":600,fill:"#B7791F","font-family":"IBM Plex Mono, monospace"},g).textContent="⏱ "+n.tag;
+  var f=function(){document.getElementById("dealCard").innerHTML="<b>"+n.rule+" → "+n.fix+".</b> "+n.e};g.addEventListener("click",f);g.addEventListener("keydown",function(ev){if(ev.key==="Enter"||ev.key===" "){ev.preventDefault();f()}})});
+ /* timeline */
+ var tl=document.getElementById("dealTl");function t(tg,a){var x=document.createElementNS(NS,tg);for(var k in a)x.setAttribute(k,a[k]);tl.appendChild(x);return x}
+ var X=function(y){return 60+y*(940/15)};t("line",{x1:60,y1:95,x2:1000,y2:95,stroke:"#14231C","stroke-width":3});
+ [0,2,3,5,15].forEach(function(y){t("text",{x:X(y),y:118,"text-anchor":"middle","font-size":12,"font-family":"IBM Plex Mono, monospace",fill:"#5B6B62"}).textContent=y===0?"SPA":"Year "+y});
+ [[0,"SPA (by end-2026)","Open offer · RBI final nod","#14231C",-1],[2,"CSB merged or sold","LIC down to 15%","#B23A3A",1],[3,"IDBI brand","licence ends","#1E7C8C",-1],[5,"Lock-in ends","Fairfax may start selling","#B7791F",1],[15,"Fairfax at 26%","promoter limit met","#0F6B4B",-1]].forEach(function(m){var x=X(m[0]);t("circle",{cx:x,cy:95,r:9,fill:m[3],stroke:"#FFFFFF","stroke-width":2});
+  var y0=m[4]<0?30:150,anc=m[0]===0?"start":m[0]===15?"end":m[0]===3?"start":"middle",xx=m[0]===0?x-8:m[0]===15?x+8:m[0]===3?x+4:x;
+  t("text",{x:xx,y:y0,"text-anchor":anc,"font-size":13,"font-weight":700,fill:m[3]}).textContent=m[1];
+  t("text",{x:xx,y:y0+18,"text-anchor":anc,"font-size":12,fill:"#14231C"}).textContent=m[2]});
+})();
+
+
+/* ---------- Fairfax in India ---------- */
+var FF=[
+ ["Digit Insurance","direct","fin",49.0,101,2039,"General insurer, listed. 2025 premium about $1.3 bn, earnings $113 mn. Stake rises to 58% on conversion of securities, pending approval. Fairfax also holds 34% of Digit Life and 65% of Valueattics Re. May move under IDBI."],
+ ["Thomas Cook India","direct","svc",64.5,278,497,"Travel and foreign-exchange group; owns Sterling Holiday Resorts (75 resorts, 3,700+ rooms). 2025 net revenue $259 mn, pre-tax profit $46 mn."],
+ ["Quess / Digitide / Bluspring","direct","svc",34.7,348,232,"Staffing and workforce management, spun out of Thomas Cook in 2019. Digitide and Bluspring were demerged and listed in June 2025."],
+ ["Other direct","direct","oth",null,468,518,"Smaller holdings not itemised in the letter."],
+ ["Bangalore Airport","fih","inf",74.0,1158,2187,"Kempegowda International Airport, Bengaluru — Fairfax India's largest asset by far, more than half its portfolio value."],
+ ["IIFL Finance","fih","fin",15.2,101,438,"Gold-loan and retail NBFC. Fairfax has trimmed this stake in open-market sales."],
+ ["CSB Bank","fih","fin",40.0,136,354,"Kerala-based private bank (formerly Catholic Syrian Bank). Must be merged into IDBI or sold within 2 years of the IDBI deal."],
+ ["IIFL Capital","fih","fin",27.2,51,342,"Broking and investment banking (formerly IIFL Securities). Agreed in May 2026 to rise to at least 51% at ₹350 a share; may become an IDBI subsidiary."],
+ ["Seven Islands","fih","inf",48.5,84,162,"Indian shipping company (tankers)."],
+ ["Sanmar Chemicals","fih","ind",39.3,217,102,"PVC and chemicals group, Chennai. Value below cost; down 13.4% a year."],
+ ["Maxop","fih","ind",67.0,51,95,"Aluminium die-casting and machined components."],
+ ["Global Aluminium","fih","ind",65.0,83,91,"Aluminium business, invested October 2024."],
+ ["Jaynix","fih","ind",70.0,33,66,"Electrical connectors and components maker."],
+ ["Fairchem Organics","fih","ind",55.3,34,58,"Oleochemicals and speciality chemicals."],
+ ["NCML","fih","svc",91.0,188,42,"Agri warehousing and collateral management. Value well below cost."],
+ ["5paisa","fih","fin",24.6,17,29,"Discount stockbroker; sister company of IIFL group."]];
+var FCOL={fin:"#0F6B4B",inf:"#2F5E9E",ind:"#B7791F",svc:"#1E7C8C",oth:"#5B6B62"};
+kpis("ffKpis",[["Fairfax direct India holdings","$4,259 mn","cost $1,729 mn · 13.2% a year","up"],["Fairfax India portfolio","$3,995 mn","cost $2,187 mn · 10.4% a year","up"],["Fairfax stake in Fairfax India","42.9%","listed holding company","fl"],["IDBI Bank (new)","₹52,878 cr","≈$5.6 bn for 60.72%","up"]]);
+(function(){var sv=document.getElementById("ffSvg");function e(t,a,p){var x=document.createElementNS(NS,t);for(var k in a)x.setAttribute(k,a[k]);(p||sv).appendChild(x);return x}
+ function box(x,y,w,h,c,lines,txt,bold){var g=e("g",{class:"bm-box",tabindex:0,role:"button","aria-label":lines[0]});
+  e("rect",{x:x,y:y,width:w,height:h,rx:10,fill:bold?c:"#FFFFFF",stroke:c,"stroke-width":bold?0:1.6},g);
+  if(!bold){e("rect",{x:x,y:y,width:6,height:h,rx:3,fill:c},g)}
+  lines.forEach(function(l,i){e("text",{x:x+w/2,y:y+22+i*19,"text-anchor":"middle","font-size":i?12:13,"font-weight":i?400:700,fill:bold?"#FFFFFF":(i?"#14231C":c)},g).textContent=l});
+  var f=function(){document.getElementById("ffCard").innerHTML=txt};g.addEventListener("click",f);g.addEventListener("keydown",function(ev){if(ev.key==="Enter"||ev.key===" "){ev.preventDefault();f()}})}
+ function ln(x1,y1,x2,y2){e("line",{x1:x1,y1:y1,x2:x2,y2:y2,stroke:"#9AA9A0","stroke-width":1.5})}
+ box(380,8,300,62,"#14231C",["FAIRFAX FINANCIAL (Canada)","Prem Watsa · Indian holdings ≈$7.3 bn"],"<b>Fairfax Financial Holdings.</b> Toronto-listed insurance and investment group founded by Prem Watsa. It has invested about $1.7 bn directly in India (now about $4.3 bn) and owns 42.9% of Fairfax India, which manages about $4 bn more.",true);
+ ln(530,70,530,95);ln(110,95,950,95);
+ var D=FF.filter(function(r){return r[1]==="direct"}),xs=[10,222,434,646,858];
+ D.slice(0,3).forEach(function(r,i){ln(xs[i]+96,95,xs[i]+96,110);box(xs[i],110,192,82,FCOL[r[2]],[r[0],(r[3]?r[3]+"% stake":"")+" · value $"+fmt(r[5])+" mn","cost $"+fmt(r[4])+" mn"],"<b>"+r[0]+" — "+r[3]+"%.</b> "+r[6]+" Cost $"+fmt(r[4])+" mn, value $"+fmt(r[5])+" mn.")});
+ ln(xs[3]+96,95,xs[3]+96,110);box(xs[3],110,192,82,"#E8711C",["IDBI BANK (new)","60.72% · ₹52,878 cr","Cabinet nod 14 Oct 2026"],"<b>IDBI Bank — 60.72%.</b> Bought from the government and LIC at ₹81 a share, subject to RBI approval. Planned anchor for Fairfax's Indian financial services.",true);
+ ln(xs[4]+96,95,xs[4]+96,110);box(xs[4],110,192,82,"#5B6B62",["FAIRFAX INDIA (42.9%)","portfolio $3,995 mn","cost $2,187 mn"],"<b>Fairfax India Holdings — 42.9% owned.</b> Toronto-listed holding company that invests only in India. Portfolio value $3,995 mn against cost $2,187 mn, about 10.4% a year.",true);
+ ln(954,192,954,220);ln(70,220,954,220);
+ var C=FF.filter(function(r){return r[1]==="fih"});
+ C.forEach(function(r,i){var col=i%4,row=Math.floor(i/4),x=10+col*262,y=240+row*104;ln(x+128,220,x+128,240);
+  box(x,y,256,86,FCOL[r[2]],[r[0],r[3]+"% · value $"+fmt(r[5])+" mn","cost $"+fmt(r[4])+" mn"+(r[5]<r[4]?"  ▼ below cost":"")],"<b>"+r[0]+" — "+r[3]+"%.</b> "+r[6]+" Cost $"+fmt(r[4])+" mn, value $"+fmt(r[5])+" mn.")});
+ var t=document.getElementById("ffTab"),h='<thead><tr><th>Holding</th><th>Held by</th><th>Stake</th><th>Cost $ mn</th><th>Value $ mn</th><th>Value ÷ cost</th></tr></thead><tbody>';
+ FF.forEach(function(r){h+='<tr><td>'+r[0]+'</td><td>'+(r[1]==="direct"?"Fairfax Financial":"Fairfax India")+'</td><td class="n">'+(r[3]?r[3]+"%":"—")+'</td><td class="n">'+fmt(r[4])+'</td><td class="n">'+fmt(r[5])+'</td><td class="n '+(r[5]>=r[4]?"up":"dn")+'">'+(r[5]/r[4]).toFixed(2)+'x</td></tr>'});
+ t.innerHTML=h+'</tbody>'})();
+function drawFF(){setFonts();var R=FF.filter(function(r){return r[0]!=="Other direct"}).sort(function(a,b){return b[5]-a[5]}),o=base();o.plugins.legend={position:"bottom"};o.plugins.tooltip={callbacks:{label:function(c){return c.dataset.label+": $"+fmt(c.raw)+" mn"}}};
+ mk("ffChart",{type:"bar",data:{labels:R.map(function(r){return r[0]}),datasets:[{label:"Cost",data:R.map(function(r){return r[4]}),backgroundColor:"#C9D3CB"},{label:"Value",data:R.map(function(r){return r[5]}),backgroundColor:R.map(function(r){return FCOL[r[2]]})}]},options:o})}
+
+
+/* ---------- CB School linkage map ---------- */
+(function(){
+ var W=184,H=58,cx=[14,226,438,650,862],ry=[30,160,290,420];
+ var N={
+  repo:[0,0,"RBI repo rate","policy rate","policy rate","The rate RBI lends to banks. Loans linked to repo reprice almost at once; deposits reprice only when they renew."],
+  casa:[0,1,"CASA ratio","43.64%","29.00%","Share of cheap current and savings deposits. More CASA means a lower average cost of deposits."],
+  depg:[0,2,"Deposit growth","+10% YoY","+13.1% YoY","How fast the bank gathers funds. Slower deposits than loans pushes up the CD ratio."],
+  advg:[0,3,"Loan growth","+22% YoY","+19.5% YoY","How fast the loan book grows. Lifts NII but uses capital and liquidity."],
+  yoa:[1,0,"Yield on advances","8.46%","8.03%","Average interest earned on loans."],
+  cod:[1,1,"Cost of deposits","4.59%","5.27%","Average interest paid to depositors."],
+  cd:[1,2,"CD ratio","79.50%","≈81%","Loans ÷ deposits. When high, the bank must chase new, costlier deposits."],
+  gnpa:[1,3,"Bad loans (GNPA)","2.30%","1.33%","Loans not being repaid. More bad loans need more provisions."],
+  nim:[2,0,"NIM","3.61%","2.55%","Net interest margin: yield minus cost of funds, on earning assets."],
+  nii:[2,1,"NII","₹3,486 cr","₹11,005 cr","Net interest income = interest earned − interest paid."],
+  oi:[2,2,"Other income","₹1,032 cr","₹5,772 cr","Fees, treasury gains and recoveries. Falls when bond yields rise."],
+  prov:[2,3,"Provisions","−₹637 cr","₹3,583 cr*","Money set aside for bad loans. A write-back (negative) adds to profit. *Canara figure includes tax."],
+  cti:[3,0,"Cost-to-income","52.0%","47.8%","Operating cost ÷ income. Lower is more efficient."],
+  op:[3,1,"Operating profit","₹2,168 cr","₹8,758 cr","Income minus operating cost, before provisions and tax."],
+  pat:[3,2,"Net profit (PAT)","₹2,115 cr","₹5,175 cr","Profit after provisions and tax."],
+  crar:[3,3,"Capital (CRAR)","26.92%","17.19%","Capital ÷ risk-weighted assets. A cushion against losses."],
+  roa:[4,0,"ROA","1.89%","1.04%","Profit ÷ assets: how productive the balance sheet is."],
+  roe:[4,1,"ROE","14.80%","18.49%","Profit ÷ equity. Roughly ROA × leverage, so more capital means lower ROE."],
+  bvps:[4,2,"Book value / share","₹54.89","≈₹124","Net worth ÷ shares. Grows with retained profit."],
+  pbv:[4,3,"P/BV (valuation)","1.65x","≈1.0x","Price ÷ book. Markets pay more for high ROE and clean books."]};
+ var E=[["repo","yoa",1],["repo","cod",1],["casa","cod",-1],["depg","cd",-1],["advg","cd",1],["cd","cod",1],["advg","nii",1],["advg","crar",-1],["yoa","nim",1],["cod","nim",-1],["nim","nii",1],["nii","op",1],["oi","op",1],["nii","cti",-1],["cti","op",-1],["gnpa","prov",1],["gnpa","pbv",-1],["prov","pat",-1],["op","pat",1],["pat","roa",1],["pat","roe",1],["pat","crar",1],["pat","bvps",1],["crar","roe",-1],["roe","pbv",1]];
+ var SC=[
+  {id:"cut",label:"RBI cuts repo rate",fx:{repo:-1,yoa:-1,cod:-1,nim:-1,nii:-1,op:-1,pat:-1,roa:-1,roe:-1},path:[["repo","yoa"],["repo","cod"],["yoa","nim"],["cod","nim"],["nim","nii"],["nii","op"],["op","pat"],["pat","roa"],["pat","roe"]],
+   txt:"Loan yields fall at once, but deposit costs fall only as deposits renew, so NIM shrinks for a few quarters. This is what hit IDBI in Q1 FY27: NIM fell 54 bps to 3.61% and yield dropped to 8.46%. Margins recover later as deposits reprice."},
+  {id:"npa",label:"Bad loans rise",fx:{gnpa:1,prov:1,pat:-1,roa:-1,roe:-1,crar:-1,bvps:-1,pbv:-1},path:[["gnpa","prov"],["prov","pat"],["pat","roa"],["pat","roe"],["pat","crar"],["pat","bvps"],["gnpa","pbv"]],
+   txt:"More bad loans mean more provisions, which cut profit, returns, capital and book value, and the market pays a lower P/BV. The reverse is helping both banks now: IDBI's write-back of ₹637 cr lifted PAT; Canara's GNPA fell to 1.33%."},
+  {id:"cap",label:"Fresh equity capital",fx:{crar:1,roe:-1,pbv:-1,advg:1},path:[["crar","roe"],["roe","pbv"]],
+   txt:"New equity lifts CRAR and room to lend, but the same profit is now spread over more equity, so ROE falls. IDBI shows this: CRAR 26.92% but ROE only 14.80%, against Canara's 18.49% ROE on 17.19% CRAR."},
+  {id:"casa",label:"CASA share falls",fx:{casa:-1,cod:1,nim:-1,nii:-1,op:-1,pat:-1},path:[["casa","cod"],["cod","nim"],["nim","nii"],["nii","op"],["op","pat"]],
+   txt:"Fewer cheap savings and current accounts raise the average cost of deposits and squeeze NIM. Canara's CASA slipped to 29% (guidance 30–32%); its cost of deposits is 5.27% against IDBI's 4.59% with 43.64% CASA."},
+  {id:"gap",label:"Loans outrun deposits",fx:{advg:1,depg:-1,cd:1,cod:1,nim:-1,nii:1,crar:-1},path:[["advg","cd"],["depg","cd"],["cd","cod"],["cod","nim"],["advg","nii"],["advg","crar"]],
+   txt:"Fast loan growth lifts NII, but when deposits lag the CD ratio rises and the bank must raise costlier money, trimming NIM, while extra loans use up capital. IDBI: loans +22%, deposits +10%, CD ratio 79.5%. Canara: CD ratio about 81%."},
+  {id:"bond",label:"Bond yields rise",fx:{oi:-1,op:-1,pat:-1,roe:-1},path:[["oi","op"],["op","pat"],["pat","roe"]],
+   txt:"When bond yields rise, the bonds banks hold lose value and treasury income falls. Canara's treasury income dropped 68.5% to ₹499 cr after a 44 bps yield rise, holding operating profit growth to 2%."}];
+ var sv=document.getElementById("linkSvg");function e(t,a,p){var x=document.createElementNS(NS,t);for(var k in a)x.setAttribute(k,a[k]);(p||sv).appendChild(x);return x}
+ var defs=e("defs",{});defs.innerHTML='<marker id="lkp" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0L10,5L0,10z" fill="#0F6B4B"/></marker><marker id="lkn" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0L10,5L0,10z" fill="#B23A3A"/></marker>';
+ function pos(k){return {x:cx[N[k][0]],y:ry[N[k][1]]}}
+ function anchor(a,b){var A=pos(a),B=pos(b),ax=A.x+W/2,ay=A.y+H/2,bx=B.x+W/2,by=B.y+H/2,sx,sy,tx,ty;
+  if(A.x===B.x){sx=ax;tx=bx;if(by>ay){sy=A.y+H;ty=B.y}else{sy=A.y;ty=B.y+H}}
+  else if(B.x>A.x){sx=A.x+W;tx=B.x;sy=ay;ty=by}else{sx=A.x;tx=B.x+W;sy=ay;ty=by}
+  return [sx,sy,tx,ty]}
+ var gE=e("g",{}),gN=e("g",{}),edgeEls=[],nodeEls={};
+ E.forEach(function(ed){var p=anchor(ed[0],ed[1]),mx=(p[0]+p[2])/2,my=(p[1]+p[3])/2,same=pos(ed[0]).x===pos(ed[1]).x,cxp=same?mx+60:mx,cyp=same?my:my-(p[3]-p[1])*0.15;
+  var c=ed[2]>0?"#0F6B4B":"#B23A3A",path=e("path",{class:"lk-edge",d:"M"+p[0]+","+p[1]+" Q"+cxp+","+cyp+" "+p[2]+","+p[3],fill:"none",stroke:c,"stroke-width":1.8,"stroke-dasharray":ed[2]>0?"":"5 3","marker-end":"url(#"+(ed[2]>0?"lkp":"lkn")+")",opacity:.55},gE);
+  edgeEls.push({ed:ed,el:path})});
+ Object.keys(N).forEach(function(k){var P=pos(k),g=e("g",{class:"lk-node",tabindex:0,role:"button","aria-label":N[k][2]},gN);
+  var r=e("rect",{x:P.x,y:P.y,width:W,height:H,rx:10,fill:"#FFFFFF",stroke:"#C9D3CB","stroke-width":1.5},g);
+  e("text",{x:P.x+W/2,y:P.y+22,"text-anchor":"middle","font-size":13.5,"font-weight":700,fill:"#14231C"},g).textContent=N[k][2];
+  e("text",{x:P.x+W/2,y:P.y+43,"text-anchor":"middle","font-size":11,fill:"#5B6B62","font-family":"IBM Plex Mono, monospace"},g).textContent=k==="repo"?"set by RBI":"IDBI "+N[k][3]+" · CAN "+N[k][4];
+  var badge=e("text",{x:P.x+W-14,y:P.y+22,"text-anchor":"middle","font-size":16,"font-weight":800,fill:"#14231C"},g);
+  nodeEls[k]={g:g,r:r,b:badge};
+  var f=function(){focusNode(k)};g.addEventListener("click",f);g.addEventListener("keydown",function(ev){if(ev.key==="Enter"||ev.key===" "){ev.preventDefault();f()}})});
+ [["Funding & growth",0],["Prices of money",1],["Income & risk",2],["Profit & capital",3],["Returns & value",4]].forEach(function(h){e("text",{x:cx[h[1]]+W/2,y:18,"text-anchor":"middle","font-size":11.5,"font-weight":600,fill:"#5B6B62","letter-spacing":".06em"}).textContent=h[0].toUpperCase()});
+ function reset(){edgeEls.forEach(function(x){x.el.setAttribute("opacity",.55);x.el.setAttribute("stroke-width",1.8)});Object.keys(nodeEls).forEach(function(k){var n=nodeEls[k];n.g.classList.remove("lk-dim");n.r.setAttribute("stroke","#C9D3CB");n.r.setAttribute("fill","#FFFFFF");n.b.textContent=""})}
+ function focusNode(k){reset();setScen(null);var out=[],inn=[];
+  edgeEls.forEach(function(x){var hit=x.ed[0]===k||x.ed[1]===k;x.el.setAttribute("opacity",hit?1:.06);x.el.setAttribute("stroke-width",hit?3:1.8);if(x.ed[0]===k)out.push(x.ed);if(x.ed[1]===k)inn.push(x.ed)});
+  var rel={};rel[k]=1;out.concat(inn).forEach(function(x){rel[x[0]]=1;rel[x[1]]=1});
+  Object.keys(nodeEls).forEach(function(n){if(!rel[n])nodeEls[n].g.classList.add("lk-dim")});
+  nodeEls[k].r.setAttribute("stroke","#E8711C");nodeEls[k].r.setAttribute("stroke-width",3);
+  function lst(a,dir){return a.map(function(x){var o=dir?x[1]:x[0];return "<li>"+(dir?"If <b>"+N[k][2]+"</b> rises, <b>"+N[o][2]+"</b> "+(x[2]>0?"rises ▲":"falls ▼"):"If <b>"+N[o][2]+"</b> rises, <b>"+N[k][2]+"</b> "+(x[2]>0?"rises ▲":"falls ▼"))+"</li>"}).join("")}
+  document.getElementById("linkCard").innerHTML="<b>"+N[k][2]+"</b> — IDBI "+N[k][3]+" · Canara "+N[k][4]+"<p style='margin:6px 0'>"+N[k][5]+"</p>"+(out.length?"<b>It pushes:</b><ul style='margin:4px 0 8px'>"+lst(out,1)+"</ul>":"")+(inn.length?"<b>It is pushed by:</b><ul style='margin:4px 0'>"+lst(inn,0)+"</ul>":"")}
+ var sb=document.getElementById("scenBtns");
+ SC.forEach(function(sc){var b=document.createElement("button");b.type="button";b.textContent=sc.label;b.dataset.id=sc.id;b.onclick=function(){runScen(sc)};sb.appendChild(b)});
+ var rb=document.createElement("button");rb.type="button";rb.textContent="Reset";rb.onclick=function(){reset();setScen(null);document.getElementById("linkCard").innerHTML="<b>Tap a metric or pick a scenario.</b>"};sb.appendChild(rb);
+ function setScen(id){[].forEach.call(sb.children,function(b){b.setAttribute("aria-pressed",b.dataset.id===id)})}
+ var timers=[];
+ function runScen(sc){timers.forEach(clearTimeout);timers=[];reset();setScen(sc.id);
+  edgeEls.forEach(function(x){x.el.setAttribute("opacity",.06)});
+  Object.keys(nodeEls).forEach(function(n){if(!(n in sc.fx))nodeEls[n].g.classList.add("lk-dim")});
+  var order=[sc.path[0][0]].concat(sc.path.map(function(p){return p[1]}));
+  var steps=sc.path.map(function(p){return N[p[0]][2]+(sc.fx[p[0]]>0?" ▲":" ▼")+" → "+N[p[1]][2]+(sc.fx[p[1]]>0?" ▲":" ▼")});
+  function mark(n){var v=sc.fx[n];if(v==null)return;var nd=nodeEls[n];nd.b.textContent=v>0?"▲":"▼";nd.b.setAttribute("fill",v>0?"#0F6B4B":"#B23A3A");nd.r.setAttribute("fill",v>0?"#E5F2EC":"#FBEAEA");nd.r.setAttribute("stroke",v>0?"#0F6B4B":"#B23A3A")}
+  Object.keys(sc.fx).forEach(function(n){if(order.indexOf(n)<0)mark(n)});
+  mark(order[0]);
+  var reduce=window.matchMedia&&matchMedia("(prefers-reduced-motion: reduce)").matches;
+  sc.path.forEach(function(p,i){timers.push(setTimeout(function(){edgeEls.forEach(function(x){if(x.ed[0]===p[0]&&x.ed[1]===p[1]){x.el.setAttribute("opacity",1);x.el.setAttribute("stroke-width",3.2)}});mark(p[1])},reduce?0:350*(i+1)))});
+  document.getElementById("linkCard").innerHTML="<b>Scenario: "+sc.label+"</b><p style='margin:6px 0'>"+sc.txt+"</p><b>Chain reaction:</b><ol style='margin:4px 0'>"+steps.map(function(t){return "<li>"+t+"</li>"}).join("")+"</ol>"}
+})();
+
+
+/* ---------- invest balance scales ---------- */
+function scale(id,pos,neg){var sv=document.getElementById(id);function e(t,a){var x=document.createElementNS(NS,t);for(var k in a)x.setAttribute(k,a[k]);sv.appendChild(x);return x}
+ var P=pos.reduce(function(s,x){return s+x[1]},0),Q=neg.reduce(function(s,x){return s+x[1]},0),tilt=Math.max(-8,Math.min(8,(Q-P)*2.5)),rad=tilt*Math.PI/180,L=300,cx=450,cy=60;
+ var lx=cx-L*Math.cos(rad),ly=cy-L*Math.sin(rad),rx=cx+L*Math.cos(rad),ry=cy+L*Math.sin(rad);
+ e("polygon",{points:(cx-40)+",300 "+(cx+40)+",300 "+cx+","+(cy+10),fill:"#C9D3CB"});
+ e("line",{x1:lx,y1:ly,x2:rx,y2:ry,stroke:"#14231C","stroke-width":6,"stroke-linecap":"round"});e("circle",{cx:cx,cy:cy,r:9,fill:"#E8711C"});
+ function pan(x,y,items,col,title,tot){e("line",{x1:x,y1:y,x2:x-90,y2:y+40,stroke:"#5B6B62"});e("line",{x1:x,y1:y,x2:x+90,y2:y+40,stroke:"#5B6B62"});
+  e("rect",{x:x-135,y:y+40,width:270,height:44+items.length*26,rx:10,fill:col==="#0F6B4B"?"#E5F2EC":"#FBEAEA",stroke:col});
+  e("text",{x:x,y:y+62,"text-anchor":"middle","font-size":14,"font-weight":700,fill:col}).textContent=title+" · weight "+tot;
+  items.forEach(function(it,i){e("text",{x:x-122,y:y+88+i*26,"font-size":12.5,fill:"#14231C"}).textContent=it[0];e("text",{x:x+122,y:y+88+i*26,"text-anchor":"end","font-size":12.5,"font-weight":700,fill:col}).textContent="●".repeat(it[1])})}
+ pan(lx,ly,pos,"#0F6B4B","Supports",P);pan(rx,ry,neg,"#B23A3A","Risks",Q)}
+scale("scale-idbi",[["Fairfax control & cross-sell",3],["Clean book, 26.9% capital",3],["Repo hike: NIM tailwind",2],["Scarce bank franchise",2],["CSB merger option",1]],[["Price 11.6% above deal",3],["Approval & timing risk",2],["Low ROE until capital used",2],["Mixed Fairfax record",2],["No new capital to bank",1]]);
+scale("scale-can",[["~1x book, 5.6x earnings",3],["ROE 18.5%, growth > guidance",2],["GNPA 1.33%, PCR 95%",2],["Listed subsidiaries",1]],[["ECL ₹12–15k cr",3],["Rising yields hit treasury",2],["CASA 29%, thin NIM",2],["No ownership trigger",1]]);
+
+/* restore */
+var startBank="idbi",startTab="overview";
+try{var lb=localStorage.getItem("cbBank");if(lb==="can")startBank="can";var lt=localStorage.getItem("cbTab");if(lt&&document.getElementById("p-"+lt))startTab=lt}catch(e){}
+BANK=startBank;show(startTab);setBank(startBank);
+
+</script>
