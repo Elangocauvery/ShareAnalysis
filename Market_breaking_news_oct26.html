@@ -351,7 +351,7 @@ footer span{color:#ffe0c0}
         </div>
       </div>
       <div class="edition-bar">
-        <span class="ebl">Breaking:</span><span class="ebs">The Diesel Double Standard — US Buys Russian Diesel &nbsp;·&nbsp; Sanctions Eased Till Apr 2027 &nbsp;·&nbsp; 100% Tariff Threat on Others</span>
+        <span class="ebl">Breaking:</span><span class="ebs">WPI 11.39% · CPI 5.54% in Sep 2026 &nbsp;·&nbsp; The Diesel Double Standard — US Buys Russian Diesel &nbsp;·&nbsp; Sanctions Eased Till Apr 2027 &nbsp;·&nbsp; 100% Tariff Threat on Others</span>
         &nbsp;&nbsp;
         <span class="ebl">Sectors:</span><span class="ebs">Geopolitics / Oil &nbsp;·&nbsp; Chemicals / Soda Ash &nbsp;·&nbsp; Anti-Dumping Duty Watch</span>
       </div>
@@ -380,6 +380,8 @@ footer span{color:#ffe0c0}
         <div class="assist-label">Topic</div>
         <select class="assist-select" id="assist-topic" onchange="assistTopicChange()">
           <option value="">— Select Topic —</option>
+          <option value="cpi_sep26">CPI Retail Inflation — Sep 2026</option>
+          <option value="wpi_sep26">WPI Wholesale Inflation — Sep 2026</option>
           <option value="trump_diesel">US–Russia Diesel Deal (Double Standard)</option>
           <option value="tatachem_kenya">Tata Chemicals — Kenya Magadi Dispute</option>
           <option value="soda_ash_glut">Soda Ash Glut &amp; Anti-Dumping Duty</option>
@@ -418,6 +420,7 @@ footer span{color:#ffe0c0}
         </div>
         <div class="sector-sub" id="sub-macro">
           <button class="sector-btn" data-s="markets" onclick="setSector('markets');event.stopPropagation()">Markets / Valuations <span class="scount" id="sc-markets">0</span></button>
+          <button class="sector-btn" data-s="inflation" onclick="setSector('inflation');event.stopPropagation()">Inflation (CPI / WPI) <span class="scount" id="sc-inflation">0</span></button>
           <button class="sector-btn" data-s="geopolitics" onclick="setSector('geopolitics');event.stopPropagation()">Geopolitics / Oil <span class="scount" id="sc-geopolitics">0</span></button>
         </div>
       </div>
@@ -468,10 +471,636 @@ footer span{color:#ffe0c0}
 <footer>SectorWire &nbsp;·&nbsp; October 2026 Sector Intelligence Digest &nbsp;·&nbsp; <span id="footer-time"></span></footer>
 
 <script>
-const MACRO_SECTORS = ['rbi','nps','ecomm','disinvest','markets','fpi','geopolitics','trade','macro','ipo'];
+const MACRO_SECTORS = ['inflation','rbi','nps','ecomm','disinvest','markets','fpi','geopolitics','trade','macro','ipo'];
 
 // ── NEWS DATA ── each story has en{} and ta{} blocks
 const NEWS = [
+{
+ "id": 5,
+ "date": "2026-10-14",
+ "sector": "inflation",
+ "cat": "macro",
+ "sectorLabel": "Inflation / WPI",
+ "pillCls": "pill-geo",
+ "time": "14 Oct 2026",
+ "impact": "negative",
+ "breaking": true,
+ "badges": [
+  "WPI Inflation 11.39% in Sep vs 9.92% in Aug",
+  "Fuel & Power 25.85%; Crude & Gas 57.32%",
+  "Manufactured Products 9.76% — Highest Weight Group",
+  "Apr–Sep Average 9.85% vs −0.20% a Year Ago"
+ ],
+ "image": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMjAwIDg0MCIgZm9udC1mYW1pbHk9IkFyaWFsLCBIZWx2ZXRpY2EsIHNhbnMtc2VyaWYiPjxyZWN0IHdpZHRoPSIxMjAwIiBoZWlnaHQ9Ijg0MCIgZmlsbD0iI2ZmZmZmZiIvPjxyZWN0IHdpZHRoPSIxMjAwIiBoZWlnaHQ9IjkyIiBmaWxsPSIjYjk0YTAwIi8+PHRleHQgeD0iNDAiIHk9IjQ0IiBmb250LXNpemU9IjMwIiBmb250LXdlaWdodD0iNzAwIiBmaWxsPSIjZmZmIj5XSE9MRVNBTEUgKFdQSSkgSU5GTEFUSU9OIOKAlCBTRVBURU1CRVIgMjAyNjwvdGV4dD48dGV4dCB4PSI0MCIgeT0iNzQiIGZvbnQtc2l6ZT0iMTciIGZpbGw9IiNmZmU0Y2MiPkhpZ2hlc3QgaW4gZm91ciB5ZWFycyDCtyBmdWVsIGxlYWRzIMK3IGZhY3RvcnkgY29zdHMgbm93IHNwcmVhZGluZzwvdGV4dD48dGV4dCB4PSIxMTYwIiB5PSI1NiIgZm9udC1zaXplPSIxNSIgZmlsbD0iI2ZmZTRjYyIgdGV4dC1hbmNob3I9ImVuZCI+U2VjdG9yV2lyZSDCtyBDQiBSZXNlYXJjaDwvdGV4dD48cmVjdCB4PSI0MCIgeT0iMTEyIiB3aWR0aD0iMjcwIiBoZWlnaHQ9IjkyIiByeD0iMTAiIGZpbGw9IiNmZGYwZWYiIHN0cm9rZT0iI2U4YjRhZSIvPjx0ZXh0IHg9IjE3NS4wIiB5PSIxNjAiIGZvbnQtc2l6ZT0iMzQiIGZvbnQtd2VpZ2h0PSI3MDAiIGZpbGw9IiNhOTMyMjYiIHRleHQtYW5jaG9yPSJtaWRkbGUiPjExLjM5JTwvdGV4dD48dGV4dCB4PSIxNzUuMCIgeT0iMTg4IiBmb250LXNpemU9IjE1IiBmaWxsPSIjM2EyYTFhIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIj5IZWFkbGluZSBXUEkgKEF1ZyA5LjkyJSk8L3RleHQ+PHJlY3QgeD0iMzMwIiB5PSIxMTIiIHdpZHRoPSIyNzAiIGhlaWdodD0iOTIiIHJ4PSIxMCIgZmlsbD0iI2ZkZjBlZiIgc3Ryb2tlPSIjZThiNGFlIi8+PHRleHQgeD0iNDY1LjAiIHk9IjE2MCIgZm9udC1zaXplPSIzNCIgZm9udC13ZWlnaHQ9IjcwMCIgZmlsbD0iI2E5MzIyNiIgdGV4dC1hbmNob3I9Im1pZGRsZSI+MjUuODUlPC90ZXh0Pjx0ZXh0IHg9IjQ2NS4wIiB5PSIxODgiIGZvbnQtc2l6ZT0iMTUiIGZpbGw9IiMzYTJhMWEiIHRleHQtYW5jaG9yPSJtaWRkbGUiPkZ1ZWwgJmFtcDsgUG93ZXIgKEF1ZyAyMi45MyUpPC90ZXh0PjxyZWN0IHg9IjYyMCIgeT0iMTEyIiB3aWR0aD0iMjcwIiBoZWlnaHQ9IjkyIiByeD0iMTAiIGZpbGw9IiNmZmYzZTAiIHN0cm9rZT0iI2U4YzQ5YSIvPjx0ZXh0IHg9Ijc1NS4wIiB5PSIxNjAiIGZvbnQtc2l6ZT0iMzQiIGZvbnQtd2VpZ2h0PSI3MDAiIGZpbGw9IiNiOTRhMDAiIHRleHQtYW5jaG9yPSJtaWRkbGUiPjkuNzYlPC90ZXh0Pjx0ZXh0IHg9Ijc1NS4wIiB5PSIxODgiIGZvbnQtc2l6ZT0iMTUiIGZpbGw9IiMzYTJhMWEiIHRleHQtYW5jaG9yPSJtaWRkbGUiPk1hbnVmYWN0dXJlZCAoQXVnIDguMzclKTwvdGV4dD48cmVjdCB4PSI5MTAiIHk9IjExMiIgd2lkdGg9IjI1MCIgaGVpZ2h0PSI5MiIgcng9IjEwIiBmaWxsPSIjZmZmM2UwIiBzdHJva2U9IiNlOGM0OWEiLz48dGV4dCB4PSIxMDM1LjAiIHk9IjE2MCIgZm9udC1zaXplPSIzNCIgZm9udC13ZWlnaHQ9IjcwMCIgZmlsbD0iI2I5NGEwMCIgdGV4dC1hbmNob3I9Im1pZGRsZSI+OC42NiU8L3RleHQ+PHRleHQgeD0iMTAzNS4wIiB5PSIxODgiIGZvbnQtc2l6ZT0iMTUiIGZpbGw9IiMzYTJhMWEiIHRleHQtYW5jaG9yPSJtaWRkbGUiPldQSSBGb29kIChBdWcgNy4wNSUpPC90ZXh0Pjx0ZXh0IHg9IjQwIiB5PSIyNTAiIGZvbnQtc2l6ZT0iMTkiIGZvbnQtd2VpZ2h0PSI3MDAiIGZpbGw9IiMxYzE0MTAiPlBJQ1RVUkUgSVQ6IFdQSSBKVU1QUyBQQVNUIDExJSAoJSk8L3RleHQ+PGxpbmUgeDE9IjcwIiB4Mj0iNTcwIiB5MT0iNDM0LjYiIHkyPSI0MzQuNiIgc3Ryb2tlPSIjYTkzMjI2IiBzdHJva2Utd2lkdGg9IjIiIHN0cm9rZS1kYXNoYXJyYXk9IjcgNSIvPjx0ZXh0IHg9IjU2NCIgeT0iNDUyLjYiIGZvbnQtc2l6ZT0iMTMiIGZvbnQtd2VpZ2h0PSI3MDAiIGZpbGw9IiNhOTMyMjYiIHRleHQtYW5jaG9yPSJlbmQiPjEwJSBsaW5lPC90ZXh0PjxsaW5lIHgxPSI3MCIgeDI9IjU3MCIgeTE9IjU0MCIgeTI9IjU0MCIgc3Ryb2tlPSIjYzhiZmE4Ii8+PHBvbHlsaW5lIGZpbGw9Im5vbmUiIHN0cm9rZT0iI2I5NGEwMCIgc3Ryb2tlLXdpZHRoPSI0IiBwb2ludHM9IjcwLjAsNDM2LjcgMjM2LjcsNDUwLjEgNDAzLjMsNDQwLjIgNTcwLjAsMzM2LjkiLz48Y2lyY2xlIGN4PSI3MC4wIiBjeT0iNDM2LjciIHI9IjYiIGZpbGw9IiNmZmYiIHN0cm9rZT0iI2I5NGEwMCIgc3Ryb2tlLXdpZHRoPSIzIi8+PHRleHQgeD0iNzAuMCIgeT0iNDIwLjciIGZvbnQtc2l6ZT0iMTUiIGZvbnQtd2VpZ2h0PSI3MDAiIGZpbGw9IiMxYzE0MTAiIHRleHQtYW5jaG9yPSJtaWRkbGUiPjkuOTclPC90ZXh0Pjx0ZXh0IHg9IjcwLjAiIHk9IjU2NCIgZm9udC1zaXplPSIxNSIgZmlsbD0iIzRhM2EyYSIgdGV4dC1hbmNob3I9Im1pZGRsZSI+SnVuPC90ZXh0PjxjaXJjbGUgY3g9IjIzNi43IiBjeT0iNDUwLjEiIHI9IjYiIGZpbGw9IiNmZmYiIHN0cm9rZT0iI2I5NGEwMCIgc3Ryb2tlLXdpZHRoPSIzIi8+PHRleHQgeD0iMjM2LjciIHk9IjQzNC4xIiBmb250LXNpemU9IjE1IiBmb250LXdlaWdodD0iNzAwIiBmaWxsPSIjMWMxNDEwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIj45Ljc4JTwvdGV4dD48dGV4dCB4PSIyMzYuNyIgeT0iNTY0IiBmb250LXNpemU9IjE1IiBmaWxsPSIjNGEzYTJhIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIj5KdWw8L3RleHQ+PGNpcmNsZSBjeD0iNDAzLjMiIGN5PSI0NDAuMiIgcj0iNiIgZmlsbD0iI2ZmZiIgc3Ryb2tlPSIjYjk0YTAwIiBzdHJva2Utd2lkdGg9IjMiLz48dGV4dCB4PSI0MDMuMyIgeT0iNDI0LjIiIGZvbnQtc2l6ZT0iMTUiIGZvbnQtd2VpZ2h0PSI3MDAiIGZpbGw9IiMxYzE0MTAiIHRleHQtYW5jaG9yPSJtaWRkbGUiPjkuOTIlPC90ZXh0Pjx0ZXh0IHg9IjQwMy4zIiB5PSI1NjQiIGZvbnQtc2l6ZT0iMTUiIGZpbGw9IiM0YTNhMmEiIHRleHQtYW5jaG9yPSJtaWRkbGUiPkF1ZzwvdGV4dD48Y2lyY2xlIGN4PSI1NzAuMCIgY3k9IjMzNi45IiByPSI4IiBmaWxsPSIjYjk0YTAwIiBzdHJva2U9IiNiOTRhMDAiIHN0cm9rZS13aWR0aD0iMyIvPjx0ZXh0IHg9IjU3MC4wIiB5PSIzMjAuOSIgZm9udC1zaXplPSIxOSIgZm9udC13ZWlnaHQ9IjcwMCIgZmlsbD0iIzFjMTQxMCIgdGV4dC1hbmNob3I9Im1pZGRsZSI+MTEuMzklPC90ZXh0Pjx0ZXh0IHg9IjU3MC4wIiB5PSI1NjQiIGZvbnQtc2l6ZT0iMTUiIGZpbGw9IiM0YTNhMmEiIHRleHQtYW5jaG9yPSJtaWRkbGUiPlNlcDwvdGV4dD48dGV4dCB4PSI2NDAiIHk9IjI1MCIgZm9udC1zaXplPSIxOSIgZm9udC13ZWlnaHQ9IjcwMCIgZmlsbD0iIzFjMTQxMCI+VEhFIFRIUkVFIEdST1VQUyDigJQgQVVHIHZzIFNFUCAoJSk8L3RleHQ+PHRleHQgeD0iNjQwIiB5PSIyOTQiIGZvbnQtc2l6ZT0iMTYiIGZvbnQtd2VpZ2h0PSI3MDAiIGZpbGw9IiMxYzE0MTAiPkZ1ZWwgJmFtcDsgUG93ZXIgPHRzcGFuIGZvbnQtc2l6ZT0iMTMiIGZvbnQtd2VpZ2h0PSI0MDAiIGZpbGw9IiM3YTZhNWEiPigxMyUgd3Qgb2YgYmFza2V0KTwvdHNwYW4+PC90ZXh0PjxyZWN0IHg9IjY0MCIgeT0iMzA0IiB3aWR0aD0iMzY3IiBoZWlnaHQ9IjE4IiByeD0iMyIgZmlsbD0iI2YwYzlhMCIvPjx0ZXh0IHg9IjEwMTUiIHk9IjMxOCIgZm9udC1zaXplPSIxNCIgZmlsbD0iIzRhM2EyYSI+QXVnIDIyLjkzJTwvdGV4dD48cmVjdCB4PSI2NDAiIHk9IjMyNiIgd2lkdGg9IjQxNCIgaGVpZ2h0PSIxOCIgcng9IjMiIGZpbGw9IiNiOTRhMDAiLz48dGV4dCB4PSIxMDYyIiB5PSIzNDAiIGZvbnQtc2l6ZT0iMTQiIGZvbnQtd2VpZ2h0PSI3MDAiIGZpbGw9IiMxYzE0MTAiPlNlcCAyNS44NSU8L3RleHQ+PHRleHQgeD0iNjQwIiB5PSIzNzIiIGZvbnQtc2l6ZT0iMTYiIGZvbnQtd2VpZ2h0PSI3MDAiIGZpbGw9IiMxYzE0MTAiPk1hbnVmYWN0dXJlZCA8dHNwYW4gZm9udC1zaXplPSIxMyIgZm9udC13ZWlnaHQ9IjQwMCIgZmlsbD0iIzdhNmE1YSI+KDYzJSB3dCBvZiBiYXNrZXQpPC90c3Bhbj48L3RleHQ+PHJlY3QgeD0iNjQwIiB5PSIzODIiIHdpZHRoPSIxMzQiIGhlaWdodD0iMTgiIHJ4PSIzIiBmaWxsPSIjZjBjOWEwIi8+PHRleHQgeD0iNzgyIiB5PSIzOTYiIGZvbnQtc2l6ZT0iMTQiIGZpbGw9IiM0YTNhMmEiPkF1ZyA4LjM3JTwvdGV4dD48cmVjdCB4PSI2NDAiIHk9IjQwNCIgd2lkdGg9IjE1NiIgaGVpZ2h0PSIxOCIgcng9IjMiIGZpbGw9IiNiOTRhMDAiLz48dGV4dCB4PSI4MDQiIHk9IjQxOCIgZm9udC1zaXplPSIxNCIgZm9udC13ZWlnaHQ9IjcwMCIgZmlsbD0iIzFjMTQxMCI+U2VwIDkuNzYlPC90ZXh0Pjx0ZXh0IHg9IjY0MCIgeT0iNDUwIiBmb250LXNpemU9IjE2IiBmb250LXdlaWdodD0iNzAwIiBmaWxsPSIjMWMxNDEwIj5QcmltYXJ5IEFydGljbGVzIDx0c3BhbiBmb250LXNpemU9IjEzIiBmb250LXdlaWdodD0iNDAwIiBmaWxsPSIjN2E2YTVhIj4oMjQlIHd0IG9mIGJhc2tldCk8L3RzcGFuPjwvdGV4dD48cmVjdCB4PSI2NDAiIHk9IjQ2MCIgd2lkdGg9IjEyNCIgaGVpZ2h0PSIxOCIgcng9IjMiIGZpbGw9IiNmMGM5YTAiLz48dGV4dCB4PSI3NzIiIHk9IjQ3NCIgZm9udC1zaXplPSIxNCIgZmlsbD0iIzRhM2EyYSI+QXVnIDcuNzYlPC90ZXh0PjxyZWN0IHg9IjY0MCIgeT0iNDgyIiB3aWR0aD0iMTM5IiBoZWlnaHQ9IjE4IiByeD0iMyIgZmlsbD0iI2I5NGEwMCIvPjx0ZXh0IHg9Ijc4NyIgeT0iNDk2IiBmb250LXNpemU9IjE0IiBmb250LXdlaWdodD0iNzAwIiBmaWxsPSIjMWMxNDEwIj5TZXAgOC42NyU8L3RleHQ+PHRleHQgeD0iNjQwIiB5PSI1MzAiIGZvbnQtc2l6ZT0iMTQiIGZpbGw9IiM3YTZhNWEiPk1hbnVmYWN0dXJlZCBnb29kcyBjYXJyeSBtb3N0IHdlaWdodCDigJQgdGhlaXIgcmlzZSBtYXR0ZXJzIG1vc3Q8L3RleHQ+PHRleHQgeD0iNDAiIHk9IjYxMCIgZm9udC1zaXplPSIxOSIgZm9udC13ZWlnaHQ9IjcwMCIgZmlsbD0iIzFjMTQxMCI+QklHR0VTVCBQVVNIIChTZXAgMjAyNiwgWW9ZKTwvdGV4dD48dGV4dCB4PSI0MCIgeT0iNjQ0IiBmb250LXNpemU9IjE1IiBmaWxsPSIjMWMxNDEwIj5DcnVkZSBvaWwgJmFtcDsgbmF0dXJhbCBnYXM8L3RleHQ+PHJlY3QgeD0iMzAwIiB5PSI2MjkiIHdpZHRoPSIzNzIuNiIgaGVpZ2h0PSIyMiIgcng9IjMiIGZpbGw9IiNjMDM5MmIiLz48dGV4dCB4PSI2ODAuNiIgeT0iNjQ1IiBmb250LXNpemU9IjE1IiBmb250LXdlaWdodD0iNzAwIiBmaWxsPSIjMWMxNDEwIj41Ny4zMiU8L3RleHQ+PHRleHQgeD0iNDAiIHk9IjY3OCIgZm9udC1zaXplPSIxNSIgZmlsbD0iIzFjMTQxMCI+UGV0cm9sLCBkaWVzZWwgKG1pbmVyYWwgb2lscyk8L3RleHQ+PHJlY3QgeD0iMzAwIiB5PSI2NjMiIHdpZHRoPSIyNjAuMSIgaGVpZ2h0PSIyMiIgcng9IjMiIGZpbGw9IiNjMDM5MmIiLz48dGV4dCB4PSI1NjguMSIgeT0iNjc5IiBmb250LXNpemU9IjE1IiBmb250LXdlaWdodD0iNzAwIiBmaWxsPSIjMWMxNDEwIj40MC4wMiU8L3RleHQ+PHRleHQgeD0iNDAiIHk9IjcxMiIgZm9udC1zaXplPSIxNSIgZmlsbD0iIzFjMTQxMCI+QmFzaWMgbWV0YWxzPC90ZXh0PjxyZWN0IHg9IjMwMCIgeT0iNjk3IiB3aWR0aD0iMTEwLjIiIGhlaWdodD0iMjIiIHJ4PSIzIiBmaWxsPSIjZTA1YTAwIi8+PHRleHQgeD0iNDE4LjIiIHk9IjcxMyIgZm9udC1zaXplPSIxNSIgZm9udC13ZWlnaHQ9IjcwMCIgZmlsbD0iIzFjMTQxMCI+MTYuOTYlPC90ZXh0Pjx0ZXh0IHg9IjQwIiB5PSI3NDYiIGZvbnQtc2l6ZT0iMTUiIGZpbGw9IiMxYzE0MTAiPkNoZW1pY2FsczwvdGV4dD48cmVjdCB4PSIzMDAiIHk9IjczMSIgd2lkdGg9IjEwOC44IiBoZWlnaHQ9IjIyIiByeD0iMyIgZmlsbD0iI2UwNWEwMCIvPjx0ZXh0IHg9IjQxNi44IiB5PSI3NDciIGZvbnQtc2l6ZT0iMTUiIGZvbnQtd2VpZ2h0PSI3MDAiIGZpbGw9IiMxYzE0MTAiPjE2Ljc0JTwvdGV4dD48dGV4dCB4PSI0MCIgeT0iNzgwIiBmb250LXNpemU9IjE1IiBmaWxsPSIjMWMxNDEwIj5Gb29kIGFydGljbGVzPC90ZXh0PjxyZWN0IHg9IjMwMCIgeT0iNzY1IiB3aWR0aD0iNTIuOSIgaGVpZ2h0PSIyMiIgcng9IjMiIGZpbGw9IiNmMGEwNTAiLz48dGV4dCB4PSIzNjAuOSIgeT0iNzgxIiBmb250LXNpemU9IjE1IiBmb250LXdlaWdodD0iNzAwIiBmaWxsPSIjMWMxNDEwIj44LjE0JTwvdGV4dD48cmVjdCB4PSI3NjAiIHk9IjYxMCIgd2lkdGg9IjQwMCIgaGVpZ2h0PSIxOTAiIHJ4PSIxMCIgZmlsbD0iI2ZmZjNlMCIgc3Ryb2tlPSIjZThjNDlhIi8+PHRleHQgeD0iNzgwIiB5PSI2NDIiIGZvbnQtc2l6ZT0iMTgiIGZvbnQtd2VpZ2h0PSI3MDAiIGZpbGw9IiM4YTMyMDAiPkNQSSB2cyBXUEkg4oCUIFRIRSBHQVA8L3RleHQ+PHRleHQgeD0iNzgwIiB5PSI2NzIiIGZvbnQtc2l6ZT0iMTUiIGZpbGw9IiMzYTJhMWEiPuKAoiBGYWN0b3J5LWdhdGUgMTEuMzklIHZzIHNob3AgNS41NCU8L3RleHQ+PHRleHQgeD0iNzgwIiB5PSI3MDAiIGZvbnQtc2l6ZT0iMTUiIGZpbGw9IiMzYTJhMWEiPuKAoiB+NS45LXB0IGdhcCA9IGNvc3RzIG5vdCB5ZXQgcGFzc2VkIG9uPC90ZXh0Pjx0ZXh0IHg9Ijc4MCIgeT0iNzI4IiBmb250LXNpemU9IjE1IiBmaWxsPSIjM2EyYTFhIj7igKIgTWFyZ2luIHNxdWVlemUgZm9yIGZpcm1zIHRoYXQgY2FuJ3Q8L3RleHQ+PHRleHQgeD0iNzgwIiB5PSI3NTYiIGZvbnQtc2l6ZT0iMTUiIGZpbGw9IiMzYTJhMWEiPiAgcmFpc2UgcHJpY2VzOyBDUEkgcmlzayBhaGVhZDwvdGV4dD48dGV4dCB4PSI3ODAiIHk9Ijc4NCIgZm9udC1zaXplPSIxNSIgZmlsbD0iIzNhMmExYSI+4oCiIEFwcuKAk1NlcCBXUEkgYXZnIDkuODUlIMK3IE9jdCBkYXRhIDE2IE5vdjwvdGV4dD48dGV4dCB4PSI0MCIgeT0iODI1IiBmb250LXNpemU9IjEzIiBmaWxsPSIjN2E2YTVhIj5PZmZpY2Ugb2YgdGhlIEVjb25vbWljIEFkdmlzZXIgcHJvdmlzaW9uYWwgZGF0YSwgV1BJIGJhc2UgMjAyMi0yMy4gRWR1Y2F0aW9uIG9ubHkg4oCUIG5vdCBpbnZlc3RtZW50IGFkdmljZS48L3RleHQ+PC9zdmc+",
+ "en": {
+  "imageCap": "WPI September 2026: fuel leads, factory costs spread, and the CPI–WPI gap (Infographic)",
+  "headline": "Wholesale Inflation Jumps to 11.39% in September, Highest in Four Years, as Fuel, Metals and Chemicals Costs Surge",
+  "bullets": [
+   "WPI inflation rose to 11.39% in September 2026 from 9.92% in August; the index rose 1.5% in one month to 112.5",
+   "Fuel & Power hit 25.85%, led by crude petroleum & natural gas (57.32%) and mineral oils such as petrol and diesel (40.02%)",
+   "Manufactured products, 63% of the basket, rose to 9.76% from 8.37% — basic metals 16.96%, chemicals 16.74%, textiles 13.85%",
+   "WPI food index rose to 8.66% from 7.05%; Apr–Sep FY27 WPI averaged 9.85% against −0.20% a year earlier"
+  ],
+  "compareTable": [
+   {
+    "title": "WPI Major Groups — Aug vs Sep 2026",
+    "headers": [
+     "Group",
+     "Weight",
+     "Aug 2026",
+     "Sep 2026"
+    ],
+    "rows": [
+     [
+      "All Commodities",
+      "100%",
+      "9.92%",
+      "11.39%"
+     ],
+     [
+      "Primary Articles",
+      "~24%",
+      "7.76%",
+      "8.67%"
+     ],
+     [
+      "Fuel & Power",
+      "~13%",
+      "22.93%",
+      "25.85%"
+     ],
+     [
+      "Manufactured Products",
+      "63.13%",
+      "8.37%",
+      "9.76%"
+     ],
+     [
+      "WPI Food Index",
+      "~25%",
+      "7.05%",
+      "8.66%"
+     ]
+    ]
+   },
+   {
+    "title": "Top Drivers (Sep 2026, YoY)",
+    "headers": [
+     "Item",
+     "Aug 2026",
+     "Sep 2026"
+    ],
+    "rows": [
+     [
+      "Crude Petroleum & Natural Gas",
+      "34.41%",
+      "57.32%"
+     ],
+     [
+      "Mineral Oils",
+      "38.48%",
+      "40.02%"
+     ],
+     [
+      "Basic Metals",
+      "10.88%",
+      "16.96%"
+     ],
+     [
+      "Chemicals",
+      "14.30%",
+      "16.74%"
+     ],
+     [
+      "Coal & Lignite",
+      "1.57%",
+      "9.31%"
+     ],
+     [
+      "Food Articles",
+      "5.67%",
+      "8.14%"
+     ],
+     [
+      "Electricity",
+      "—",
+      "−0.43%"
+     ]
+    ]
+   },
+   {
+    "title": "CPI vs WPI — Why Both Matter",
+    "headers": [
+     "Point",
+     "CPI (retail)",
+     "WPI (wholesale)"
+    ],
+    "rows": [
+     [
+      "Sep 2026 reading",
+      "5.54%",
+      "11.39%"
+     ],
+     [
+      "What it tracks",
+      "Prices households pay",
+      "Prices producers/traders get"
+     ],
+     [
+      "Heaviest part",
+      "Food & services",
+      "Manufactured goods"
+     ],
+     [
+      "Who uses it",
+      "RBI rate decisions",
+      "Company input costs, GDP deflator"
+     ]
+    ]
+   }
+  ],
+  "posPoints": [
+   "Upstream producers — oil & gas (ONGC, Oil India), metals and some chemical makers — earn more per unit when wholesale prices rise",
+   "Higher nominal prices lift nominal GDP and tax collections, helping the fiscal arithmetic in the short run",
+   "Electricity prices are still falling (−0.43%), giving power-heavy industries some relief",
+   "A strong WPI print supports the RBI's tightening stance, which can help anchor the rupee and inflation expectations"
+  ],
+  "negPoints": [
+   "A ~5.9-point gap between WPI (11.39%) and CPI (5.54%) means many companies are absorbing costs — a margin squeeze for FMCG, paints, tyres, auto parts and other downstream users",
+   "If firms pass these costs on, retail CPI could rise further in coming months, raising the odds of another RBI hike in December",
+   "Fuel inflation of 25.85% feeds into freight, farm and power costs across the economy",
+   "September data is provisional (83% response rate) and may be revised; Oct WPI is due on 16 Nov 2026"
+  ]
+ },
+ "ta": {
+  "imageCap": "WPI September 2026: fuel முன்னிலை, factory cost பரவுது, CPI–WPI இடைவெளி (Infographic)",
+  "headline": "September-ல wholesale inflation 11.39%-க்கு ஏறுச்சு — நாலு வருஷத்துல அதிகம்; fuel, metals, chemicals விலை ஏற்றம்",
+  "bullets": [
+   "WPI inflation August-ல 9.92%-ல இருந்து September 2026-ல 11.39%-க்கு ஏறுச்சு; ஒரே மாசத்துல index 1.5% ஏறி 112.5 ஆச்சு",
+   "Fuel & Power 25.85%; இதுல crude petroleum & natural gas 57.32%, petrol, diesel மாதிரி mineral oils 40.02%",
+   "Basket-ல 63% இருக்கற manufactured products 8.37%-ல இருந்து 9.76% — basic metals 16.96%, chemicals 16.74%, textiles 13.85%",
+   "WPI food index 7.05%-ல இருந்து 8.66%; Apr–Sep FY27 சராசரி 9.85%, போன வருஷம் இதே காலத்துல −0.20%"
+  ],
+  "compareTable": [
+   {
+    "title": "WPI முக்கிய groups — Aug vs Sep 2026",
+    "headers": [
+     "Group",
+     "Weight",
+     "Aug 2026",
+     "Sep 2026"
+    ],
+    "rows": [
+     [
+      "All Commodities",
+      "100%",
+      "9.92%",
+      "11.39%"
+     ],
+     [
+      "Primary Articles",
+      "~24%",
+      "7.76%",
+      "8.67%"
+     ],
+     [
+      "Fuel & Power",
+      "~13%",
+      "22.93%",
+      "25.85%"
+     ],
+     [
+      "Manufactured Products",
+      "63.13%",
+      "8.37%",
+      "9.76%"
+     ],
+     [
+      "WPI Food Index",
+      "~25%",
+      "7.05%",
+      "8.66%"
+     ]
+    ]
+   },
+   {
+    "title": "முக்கிய காரணிகள் (Sep 2026, YoY)",
+    "headers": [
+     "பொருள்",
+     "Aug 2026",
+     "Sep 2026"
+    ],
+    "rows": [
+     [
+      "Crude Petroleum & Natural Gas",
+      "34.41%",
+      "57.32%"
+     ],
+     [
+      "Mineral Oils",
+      "38.48%",
+      "40.02%"
+     ],
+     [
+      "Basic Metals",
+      "10.88%",
+      "16.96%"
+     ],
+     [
+      "Chemicals",
+      "14.30%",
+      "16.74%"
+     ],
+     [
+      "Coal & Lignite",
+      "1.57%",
+      "9.31%"
+     ],
+     [
+      "Food Articles",
+      "5.67%",
+      "8.14%"
+     ],
+     [
+      "Electricity",
+      "—",
+      "−0.43%"
+     ]
+    ]
+   },
+   {
+    "title": "CPI vs WPI — ரெண்டும் ஏன் முக்கியம்",
+    "headers": [
+     "விஷயம்",
+     "CPI (retail)",
+     "WPI (wholesale)"
+    ],
+    "rows": [
+     [
+      "Sep 2026",
+      "5.54%",
+      "11.39%"
+     ],
+     [
+      "என்ன அளக்குது",
+      "வீட்டுல நாம கொடுக்கற விலை",
+      "Producers/traders வாங்கற விலை"
+     ],
+     [
+      "அதிக பங்கு",
+      "Food & services",
+      "Manufactured goods"
+     ],
+     [
+      "யார் பயன்படுத்துறாங்க",
+      "RBI rate முடிவு",
+      "Company input cost, GDP deflator"
+     ]
+    ]
+   }
+  ],
+  "posPoints": [
+   "Upstream producers — oil & gas (ONGC, Oil India), metals, சில chemical companies — wholesale விலை ஏறும்போது ஒரு unit-க்கு அதிகம் சம்பாதிக்கும்",
+   "Nominal விலை ஏற்றம் nominal GDP, tax வசூல் ரெண்டையும் ஏத்தும்; குறுகிய காலத்துல fiscal கணக்குக்கு உதவும்",
+   "Electricity விலை இன்னும் இறங்குது (−0.43%); power அதிகம் பயன்படுத்தற industries-க்கு கொஞ்சம் நிம்மதி",
+   "WPI அதிகமா இருக்கறது RBI tightening stance-ஐ ஆதரிக்குது; rupee, inflation expectations-ஐ கட்டுப்படுத்த உதவும்"
+  ],
+  "negPoints": [
+   "WPI (11.39%), CPI (5.54%) இடையில ~5.9 point இடைவெளி — நிறைய companies cost-ஐ தாங்கிக்கிட்டு இருக்காங்க; FMCG, paints, tyres, auto parts-க்கு margin அழுத்தம்",
+   "Companies இந்த cost-ஐ வாடிக்கையாளர் மேல போட்டா, அடுத்த மாசங்கள்ல CPI இன்னும் ஏறலாம்; December-ல RBI மறுபடி rate ஏத்த வாய்ப்பு கூடும்",
+   "25.85% fuel inflation freight, விவசாயம், power cost எல்லாத்துக்கும் பரவும்",
+   "September data provisional (83% response); மாறலாம். Oct WPI 16 Nov 2026-ல வரும்"
+  ]
+ },
+ "companies": [
+  {
+   "name": "ONGC / Oil India (upstream)",
+   "status": "Higher realisation",
+   "cls": "cb-pos"
+  },
+  {
+   "name": "Steel & metal producers",
+   "status": "Price tailwind",
+   "cls": "cb-pos"
+  },
+  {
+   "name": "FMCG, paints, tyres (downstream)",
+   "status": "Margin squeeze",
+   "cls": "cb-neg"
+  },
+  {
+   "name": "RBI / rate-sensitive sectors",
+   "status": "Hike risk in Dec",
+   "cls": "cb-neg"
+  }
+ ]
+},
+{
+ "id": 4,
+ "date": "2026-10-12",
+ "sector": "inflation",
+ "cat": "macro",
+ "sectorLabel": "Inflation / CPI",
+ "pillCls": "pill-geo",
+ "time": "12 Oct 2026",
+ "impact": "negative",
+ "breaking": true,
+ "badges": [
+  "CPI Inflation 5.54% in Sep vs 4.83% in Aug",
+  "Food Inflation 7.74%; Onion +108%",
+  "Rural CPI 6.08% — Above RBI's 6% Upper Limit",
+  "RBI Hiked Repo to 5.50% on 7 Oct"
+ ],
+ "image": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMjAwIDg0MCIgZm9udC1mYW1pbHk9IkFyaWFsLCBIZWx2ZXRpY2EsIHNhbnMtc2VyaWYiPjxyZWN0IHdpZHRoPSIxMjAwIiBoZWlnaHQ9Ijg0MCIgZmlsbD0iI2ZmZmZmZiIvPjxyZWN0IHdpZHRoPSIxMjAwIiBoZWlnaHQ9IjkyIiBmaWxsPSIjYjk0YTAwIi8+PHRleHQgeD0iNDAiIHk9IjQ0IiBmb250LXNpemU9IjMwIiBmb250LXdlaWdodD0iNzAwIiBmaWxsPSIjZmZmIj5SRVRBSUwgKENQSSkgSU5GTEFUSU9OIOKAlCBTRVBURU1CRVIgMjAyNjwvdGV4dD48dGV4dCB4PSI0MCIgeT0iNzQiIGZvbnQtc2l6ZT0iMTciIGZpbGw9IiNmZmU0Y2MiPlNpeCBzdHJhaWdodCBtb250aHMgdXAgwrcgZm9vZCBpcyB0aGUgZmlyZSDCtyBydXJhbCBodXJ0cyBtb3JlIHRoYW4gdXJiYW48L3RleHQ+PHRleHQgeD0iMTE2MCIgeT0iNTYiIGZvbnQtc2l6ZT0iMTUiIGZpbGw9IiNmZmU0Y2MiIHRleHQtYW5jaG9yPSJlbmQiPlNlY3RvcldpcmUgwrcgQ0IgUmVzZWFyY2g8L3RleHQ+PHJlY3QgeD0iNDAiIHk9IjExMiIgd2lkdGg9IjI3MCIgaGVpZ2h0PSI5MiIgcng9IjEwIiBmaWxsPSIjZmRmMGVmIiBzdHJva2U9IiNlOGI0YWUiLz48dGV4dCB4PSIxNzUuMCIgeT0iMTYwIiBmb250LXNpemU9IjM0IiBmb250LXdlaWdodD0iNzAwIiBmaWxsPSIjYTkzMjI2IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIj41LjU0JTwvdGV4dD48dGV4dCB4PSIxNzUuMCIgeT0iMTg4IiBmb250LXNpemU9IjE1IiBmaWxsPSIjM2EyYTFhIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIj5IZWFkbGluZSBDUEkgKEF1ZyA0LjgzJSk8L3RleHQ+PHJlY3QgeD0iMzMwIiB5PSIxMTIiIHdpZHRoPSIyNzAiIGhlaWdodD0iOTIiIHJ4PSIxMCIgZmlsbD0iI2ZkZjBlZiIgc3Ryb2tlPSIjZThiNGFlIi8+PHRleHQgeD0iNDY1LjAiIHk9IjE2MCIgZm9udC1zaXplPSIzNCIgZm9udC13ZWlnaHQ9IjcwMCIgZmlsbD0iI2E5MzIyNiIgdGV4dC1hbmNob3I9Im1pZGRsZSI+Ny43NCU8L3RleHQ+PHRleHQgeD0iNDY1LjAiIHk9IjE4OCIgZm9udC1zaXplPSIxNSIgZmlsbD0iIzNhMmExYSIgdGV4dC1hbmNob3I9Im1pZGRsZSI+Rm9vZCBDUEkgKEF1ZyA1Ljk3JSk8L3RleHQ+PHJlY3QgeD0iNjIwIiB5PSIxMTIiIHdpZHRoPSIyNzAiIGhlaWdodD0iOTIiIHJ4PSIxMCIgZmlsbD0iI2ZmZjNlMCIgc3Ryb2tlPSIjZThjNDlhIi8+PHRleHQgeD0iNzU1LjAiIHk9IjE2MCIgZm9udC1zaXplPSIzNCIgZm9udC13ZWlnaHQ9IjcwMCIgZmlsbD0iI2I5NGEwMCIgdGV4dC1hbmNob3I9Im1pZGRsZSI+Ni4wOCU8L3RleHQ+PHRleHQgeD0iNzU1LjAiIHk9IjE4OCIgZm9udC1zaXplPSIxNSIgZmlsbD0iIzNhMmExYSIgdGV4dC1hbmNob3I9Im1pZGRsZSI+UnVyYWwgQ1BJIOKAlCBhYm92ZSA2JSBiYW5kPC90ZXh0PjxyZWN0IHg9IjkxMCIgeT0iMTEyIiB3aWR0aD0iMjUwIiBoZWlnaHQ9IjkyIiByeD0iMTAiIGZpbGw9IiNlYWY1ZWUiIHN0cm9rZT0iI2E4ZDViNSIvPjx0ZXh0IHg9IjEwMzUuMCIgeT0iMTYwIiBmb250LXNpemU9IjM0IiBmb250LXdlaWdodD0iNzAwIiBmaWxsPSIjMWU2YjNlIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIj40Ljg4JTwvdGV4dD48dGV4dCB4PSIxMDM1LjAiIHk9IjE4OCIgZm9udC1zaXplPSIxNSIgZmlsbD0iIzNhMmExYSIgdGV4dC1hbmNob3I9Im1pZGRsZSI+VXJiYW4gQ1BJIChBdWcgNC4zMSUpPC90ZXh0Pjx0ZXh0IHg9IjQwIiB5PSIyNTAiIGZvbnQtc2l6ZT0iMTkiIGZvbnQtd2VpZ2h0PSI3MDAiIGZpbGw9IiMxYzE0MTAiPlBJQ1RVUkUgSVQ6IENQSSBDTElNQiwgQVBSIOKGkiBTRVAgMjAyNiAoJSk8L3RleHQ+PHJlY3QgeD0iNzAiIHk9IjMxOC4wIiB3aWR0aD0iNTAwIiBoZWlnaHQ9IjIyMi4wIiBmaWxsPSIjZjNmOGVmIi8+PHRleHQgeD0iNTY0IiB5PSI1MzIuMCIgZm9udC1zaXplPSIxMyIgZmlsbD0iIzdhNmE1YSIgdGV4dC1hbmNob3I9ImVuZCI+UkJJIGJhbmQgMuKAkzYlPC90ZXh0PjxsaW5lIHgxPSI3MCIgeDI9IjU3MCIgeTE9IjQ0NC45IiB5Mj0iNDQ0LjkiIHN0cm9rZT0iIzFlNmIzZSIgc3Ryb2tlLXdpZHRoPSIyIiBzdHJva2UtZGFzaGFycmF5PSI3IDUiLz48dGV4dCB4PSI1NjQiIHk9IjQ2Mi45IiBmb250LXNpemU9IjEzIiBmb250LXdlaWdodD0iNzAwIiBmaWxsPSIjMWU2YjNlIiB0ZXh0LWFuY2hvcj0iZW5kIj5SQkkgdGFyZ2V0IDQlPC90ZXh0PjxsaW5lIHgxPSI3MCIgeDI9IjU3MCIgeTE9IjMxOC4wIiB5Mj0iMzE4LjAiIHN0cm9rZT0iI2E5MzIyNiIgc3Ryb2tlLXdpZHRoPSIyIiBzdHJva2UtZGFzaGFycmF5PSI3IDUiLz48dGV4dCB4PSI3NiIgeT0iMzExLjAiIGZvbnQtc2l6ZT0iMTMiIGZvbnQtd2VpZ2h0PSI3MDAiIGZpbGw9IiNhOTMyMjYiPlVwcGVyIGxpbWl0IDYlPC90ZXh0PjxsaW5lIHgxPSI3MCIgeDI9IjU3MCIgeTE9IjU0MCIgeTI9IjU0MCIgc3Ryb2tlPSIjYzhiZmE4Ii8+PHBvbHlsaW5lIGZpbGw9Im5vbmUiIHN0cm9rZT0iI2MwMzkyYiIgc3Ryb2tlLXdpZHRoPSI0IiBwb2ludHM9IjcwLjAsNDc3LjkgMTcwLjAsNDQ5LjMgMjcwLjAsNDIwLjggMzcwLjAsNDE2LjMgNDcwLjAsMzkyLjIgNTcwLjAsMzQ3LjIiLz48Y2lyY2xlIGN4PSI3MC4wIiBjeT0iNDc3LjkiIHI9IjYiIGZpbGw9IiNmZmYiIHN0cm9rZT0iI2MwMzkyYiIgc3Ryb2tlLXdpZHRoPSIzIi8+PHRleHQgeD0iNzAuMCIgeT0iNDYxLjkiIGZvbnQtc2l6ZT0iMTUiIGZvbnQtd2VpZ2h0PSI3MDAiIGZpbGw9IiMxYzE0MTAiIHRleHQtYW5jaG9yPSJtaWRkbGUiPjMuNDglPC90ZXh0Pjx0ZXh0IHg9IjcwLjAiIHk9IjU2NCIgZm9udC1zaXplPSIxNSIgZmlsbD0iIzRhM2EyYSIgdGV4dC1hbmNob3I9Im1pZGRsZSI+QXByPC90ZXh0PjxjaXJjbGUgY3g9IjE3MC4wIiBjeT0iNDQ5LjMiIHI9IjYiIGZpbGw9IiNmZmYiIHN0cm9rZT0iI2MwMzkyYiIgc3Ryb2tlLXdpZHRoPSIzIi8+PHRleHQgeD0iMTcwLjAiIHk9IjQzMy4zIiBmb250LXNpemU9IjE1IiBmb250LXdlaWdodD0iNzAwIiBmaWxsPSIjMWMxNDEwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIj4zLjkzJTwvdGV4dD48dGV4dCB4PSIxNzAuMCIgeT0iNTY0IiBmb250LXNpemU9IjE1IiBmaWxsPSIjNGEzYTJhIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIj5NYXk8L3RleHQ+PGNpcmNsZSBjeD0iMjcwLjAiIGN5PSI0MjAuOCIgcj0iNiIgZmlsbD0iI2ZmZiIgc3Ryb2tlPSIjYzAzOTJiIiBzdHJva2Utd2lkdGg9IjMiLz48dGV4dCB4PSIyNzAuMCIgeT0iNDA0LjgiIGZvbnQtc2l6ZT0iMTUiIGZvbnQtd2VpZ2h0PSI3MDAiIGZpbGw9IiMxYzE0MTAiIHRleHQtYW5jaG9yPSJtaWRkbGUiPjQuMzglPC90ZXh0Pjx0ZXh0IHg9IjI3MC4wIiB5PSI1NjQiIGZvbnQtc2l6ZT0iMTUiIGZpbGw9IiM0YTNhMmEiIHRleHQtYW5jaG9yPSJtaWRkbGUiPkp1bjwvdGV4dD48Y2lyY2xlIGN4PSIzNzAuMCIgY3k9IjQxNi4zIiByPSI2IiBmaWxsPSIjZmZmIiBzdHJva2U9IiNjMDM5MmIiIHN0cm9rZS13aWR0aD0iMyIvPjx0ZXh0IHg9IjM3MC4wIiB5PSI0MDAuMyIgZm9udC1zaXplPSIxNSIgZm9udC13ZWlnaHQ9IjcwMCIgZmlsbD0iIzFjMTQxMCIgdGV4dC1hbmNob3I9Im1pZGRsZSI+NC40NSU8L3RleHQ+PHRleHQgeD0iMzcwLjAiIHk9IjU2NCIgZm9udC1zaXplPSIxNSIgZmlsbD0iIzRhM2EyYSIgdGV4dC1hbmNob3I9Im1pZGRsZSI+SnVsPC90ZXh0PjxjaXJjbGUgY3g9IjQ3MC4wIiBjeT0iMzkyLjIiIHI9IjYiIGZpbGw9IiNmZmYiIHN0cm9rZT0iI2MwMzkyYiIgc3Ryb2tlLXdpZHRoPSIzIi8+PHRleHQgeD0iNDcwLjAiIHk9IjM3Ni4yIiBmb250LXNpemU9IjE1IiBmb250LXdlaWdodD0iNzAwIiBmaWxsPSIjMWMxNDEwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIj40LjgzJTwvdGV4dD48dGV4dCB4PSI0NzAuMCIgeT0iNTY0IiBmb250LXNpemU9IjE1IiBmaWxsPSIjNGEzYTJhIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIj5BdWc8L3RleHQ+PGNpcmNsZSBjeD0iNTcwLjAiIGN5PSIzNDcuMiIgcj0iOCIgZmlsbD0iI2MwMzkyYiIgc3Ryb2tlPSIjYzAzOTJiIiBzdHJva2Utd2lkdGg9IjMiLz48dGV4dCB4PSI1NzAuMCIgeT0iMzMxLjIiIGZvbnQtc2l6ZT0iMTkiIGZvbnQtd2VpZ2h0PSI3MDAiIGZpbGw9IiMxYzE0MTAiIHRleHQtYW5jaG9yPSJtaWRkbGUiPjUuNTQlPC90ZXh0Pjx0ZXh0IHg9IjU3MC4wIiB5PSI1NjQiIGZvbnQtc2l6ZT0iMTUiIGZpbGw9IiM0YTNhMmEiIHRleHQtYW5jaG9yPSJtaWRkbGUiPlNlcDwvdGV4dD48dGV4dCB4PSI2NDAiIHk9IjI1MCIgZm9udC1zaXplPSIxOSIgZm9udC13ZWlnaHQ9IjcwMCIgZmlsbD0iIzFjMTQxMCI+S0lUQ0hFTiBJVEVNUyDigJQgUFJJQ0UgdnMgU0VQIDIwMjU8L3RleHQ+PHRleHQgeD0iNjQwIiB5PSIyODkiIGZvbnQtc2l6ZT0iMTUiIGZpbGw9IiMxYzE0MTAiPk9uaW9uPC90ZXh0PjxyZWN0IHg9IjczMCIgeT0iMjc0IiB3aWR0aD0iMjE2LjIiIGhlaWdodD0iMjIiIHJ4PSIzIiBmaWxsPSIjYzAzOTJiIi8+PHRleHQgeD0iOTU0LjIiIHk9IjI5MCIgZm9udC1zaXplPSIxNSIgZm9udC13ZWlnaHQ9IjcwMCIgZmlsbD0iIzFjMTQxMCI+MTA4LjA5JTwvdGV4dD48dGV4dCB4PSI2NDAiIHk9IjMyMyIgZm9udC1zaXplPSIxNSIgZmlsbD0iIzFjMTQxMCI+R2luZ2VyPC90ZXh0PjxyZWN0IHg9IjczMCIgeT0iMzA4IiB3aWR0aD0iMTI1LjciIGhlaWdodD0iMjIiIHJ4PSIzIiBmaWxsPSIjZTA1YTAwIi8+PHRleHQgeD0iODYzLjciIHk9IjMyNCIgZm9udC1zaXplPSIxNSIgZm9udC13ZWlnaHQ9IjcwMCIgZmlsbD0iIzFjMTQxMCI+NjIuODUlPC90ZXh0Pjx0ZXh0IHg9IjY0MCIgeT0iMzU3IiBmb250LXNpemU9IjE1IiBmaWxsPSIjMWMxNDEwIj5HYXJsaWM8L3RleHQ+PHJlY3QgeD0iNzMwIiB5PSIzNDIiIHdpZHRoPSIxMDkuMiIgaGVpZ2h0PSIyMiIgcng9IjMiIGZpbGw9IiNlMDVhMDAiLz48dGV4dCB4PSI4NDcuMiIgeT0iMzU4IiBmb250LXNpemU9IjE1IiBmb250LXdlaWdodD0iNzAwIiBmaWxsPSIjMWMxNDEwIj41NC42MiU8L3RleHQ+PHRleHQgeD0iNjQwIiB5PSIzOTEiIGZvbnQtc2l6ZT0iMTUiIGZpbGw9IiMxYzE0MTAiPkxlbW9uPC90ZXh0PjxyZWN0IHg9IjczMCIgeT0iMzc2IiB3aWR0aD0iNzIuOCIgaGVpZ2h0PSIyMiIgcng9IjMiIGZpbGw9IiNmMGEwNTAiLz48dGV4dCB4PSI4MTAuOCIgeT0iMzkyIiBmb250LXNpemU9IjE1IiBmb250LXdlaWdodD0iNzAwIiBmaWxsPSIjMWMxNDEwIj4zNi40MSU8L3RleHQ+PHRleHQgeD0iNjQwIiB5PSI0MjUiIGZvbnQtc2l6ZT0iMTUiIGZpbGw9IiMxYzE0MTAiPlRvbWF0bzwvdGV4dD48cmVjdCB4PSI3MzAiIHk9IjQxMCIgd2lkdGg9IjE3LjIiIGhlaWdodD0iMjIiIHJ4PSIzIiBmaWxsPSIjN2ZjNzlhIi8+PHRleHQgeD0iNzU1LjIiIHk9IjQyNiIgZm9udC1zaXplPSIxNSIgZm9udC13ZWlnaHQ9IjcwMCIgZmlsbD0iIzFlNmIzZSI+LTguNjIlIChjaGVhcGVyKTwvdGV4dD48dGV4dCB4PSI2NDAiIHk9IjQ1OSIgZm9udC1zaXplPSIxNSIgZmlsbD0iIzFjMTQxMCI+UG90YXRvPC90ZXh0PjxyZWN0IHg9IjczMCIgeT0iNDQ0IiB3aWR0aD0iMjMuMCIgaGVpZ2h0PSIyMiIgcng9IjMiIGZpbGw9IiM3ZmM3OWEiLz48dGV4dCB4PSI3NjEuMCIgeT0iNDYwIiBmb250LXNpemU9IjE1IiBmb250LXdlaWdodD0iNzAwIiBmaWxsPSIjMWU2YjNlIj4tMTEuNTAlIChjaGVhcGVyKTwvdGV4dD48dGV4dCB4PSI2NDAiIHk9IjQ5MCIgZm9udC1zaXplPSIxNCIgZmlsbD0iIzdhNmE1YSI+T25pb24gbW9yZSB0aGFuIGRvdWJsZWQ7IHRvbWF0byAmYW1wOyBwb3RhdG8gc3RpbGwgY2hlYXBlciB0aGFuIGEgeWVhciBhZ288L3RleHQ+PHRleHQgeD0iNDAiIHk9IjYxMCIgZm9udC1zaXplPSIxOSIgZm9udC13ZWlnaHQ9IjcwMCIgZmlsbD0iIzFjMTQxMCI+V0hFUkUgRUxTRSBQUklDRVMgUk9TRSAoU2VwIDIwMjYsIFlvWSk8L3RleHQ+PHRleHQgeD0iNDAiIHk9IjY0NCIgZm9udC1zaXplPSIxNSIgZmlsbD0iIzFjMTQxMCI+UGVyc29uYWwgY2FyZSAmYW1wOyBtaXNjIChzaWx2ZXIpPC90ZXh0PjxyZWN0IHg9IjMwMCIgeT0iNjI5IiB3aWR0aD0iMzAyLjUiIGhlaWdodD0iMjIiIHJ4PSIzIiBmaWxsPSIjYzAzOTJiIi8+PHRleHQgeD0iNjEwLjUiIHk9IjY0NSIgZm9udC1zaXplPSIxNSIgZm9udC13ZWlnaHQ9IjcwMCIgZmlsbD0iIzFjMTQxMCI+MTMuNzUlPC90ZXh0Pjx0ZXh0IHg9IjQwIiB5PSI2NzgiIGZvbnQtc2l6ZT0iMTUiIGZpbGw9IiMxYzE0MTAiPlJlc3RhdXJhbnRzICZhbXA7IGhvdGVsczwvdGV4dD48cmVjdCB4PSIzMDAiIHk9IjY2MyIgd2lkdGg9IjIwNS45IiBoZWlnaHQ9IjIyIiByeD0iMyIgZmlsbD0iI2UwNWEwMCIvPjx0ZXh0IHg9IjUxMy45IiB5PSI2NzkiIGZvbnQtc2l6ZT0iMTUiIGZvbnQtd2VpZ2h0PSI3MDAiIGZpbGw9IiMxYzE0MTAiPjkuMzYlPC90ZXh0Pjx0ZXh0IHg9IjQwIiB5PSI3MTIiIGZvbnQtc2l6ZT0iMTUiIGZpbGw9IiMxYzE0MTAiPkZvb2QgJmFtcDsgYmV2ZXJhZ2VzPC90ZXh0PjxyZWN0IHg9IjMwMCIgeT0iNjk3IiB3aWR0aD0iMTYxLjkiIGhlaWdodD0iMjIiIHJ4PSIzIiBmaWxsPSIjZTA1YTAwIi8+PHRleHQgeD0iNDY5LjkiIHk9IjcxMyIgZm9udC1zaXplPSIxNSIgZm9udC13ZWlnaHQ9IjcwMCIgZmlsbD0iIzFjMTQxMCI+Ny4zNiU8L3RleHQ+PHRleHQgeD0iNDAiIHk9Ijc0NiIgZm9udC1zaXplPSIxNSIgZmlsbD0iIzFjMTQxMCI+VHJhbnNwb3J0PC90ZXh0PjxyZWN0IHg9IjMwMCIgeT0iNzMxIiB3aWR0aD0iMTEwLjIiIGhlaWdodD0iMjIiIHJ4PSIzIiBmaWxsPSIjZjBhMDUwIi8+PHRleHQgeD0iNDE4LjIiIHk9Ijc0NyIgZm9udC1zaXplPSIxNSIgZm9udC13ZWlnaHQ9IjcwMCIgZmlsbD0iIzFjMTQxMCI+NS4wMSU8L3RleHQ+PHRleHQgeD0iNDAiIHk9Ijc4MCIgZm9udC1zaXplPSIxNSIgZmlsbD0iIzFjMTQxMCI+SGVhbHRoPC90ZXh0PjxyZWN0IHg9IjMwMCIgeT0iNzY1IiB3aWR0aD0iMzAuOCIgaGVpZ2h0PSIyMiIgcng9IjMiIGZpbGw9IiM3ZmM3OWEiLz48dGV4dCB4PSIzMzguOCIgeT0iNzgxIiBmb250LXNpemU9IjE1IiBmb250LXdlaWdodD0iNzAwIiBmaWxsPSIjMWMxNDEwIj4xLjQwJTwvdGV4dD48cmVjdCB4PSI3NjAiIHk9IjYxMCIgd2lkdGg9IjQwMCIgaGVpZ2h0PSIxOTAiIHJ4PSIxMCIgZmlsbD0iI2ZmZjNlMCIgc3Ryb2tlPSIjZThjNDlhIi8+PHRleHQgeD0iNzgwIiB5PSI2NDIiIGZvbnQtc2l6ZT0iMTgiIGZvbnQtd2VpZ2h0PSI3MDAiIGZpbGw9IiM4YTMyMDAiPldIQVQgSVQgTUVBTlM8L3RleHQ+PHRleHQgeD0iNzgwIiB5PSI2NzIiIGZvbnQtc2l6ZT0iMTUiIGZpbGw9IiMzYTJhMWEiPuKAoiBSQkkgaGlrZWQgcmVwbyAyNSBicHMgdG8gNS41MCUgb24gNyBPY3Q8L3RleHQ+PHRleHQgeD0iNzgwIiB5PSI3MDAiIGZvbnQtc2l6ZT0iMTUiIGZpbGw9IiMzYTJhMWEiPuKAoiBGWTI3IENQSSBmb3JlY2FzdCByYWlzZWQgdG8gNS4yJTwvdGV4dD48dGV4dCB4PSI3ODAiIHk9IjcyOCIgZm9udC1zaXplPSIxNSIgZmlsbD0iIzNhMmExYSI+4oCiIENvcmUgaW5mbGF0aW9uIH40LjYlIChJQ1JBIGVzdC4pPC90ZXh0Pjx0ZXh0IHg9Ijc4MCIgeT0iNzU2IiBmb250LXNpemU9IjE1IiBmaWxsPSIjM2EyYTFhIj7igKIgTmV4dCBNUEM6IDLigJM0IERlYyDCtyBPY3QgQ1BJOiAxMiBOb3Y8L3RleHQ+PHRleHQgeD0iNzgwIiB5PSI3ODQiIGZvbnQtc2l6ZT0iMTUiIGZpbGw9IiMzYTJhMWEiPuKAoiBUYW1pbCBOYWR1IENQSSA2LjgxJSDigJQgYW1vbmcgaGlnaGVzdDwvdGV4dD48dGV4dCB4PSI0MCIgeT0iODI1IiBmb250LXNpemU9IjEzIiBmaWxsPSIjN2E2YTVhIj5Nb1NQSSBwcm92aXNpb25hbCBkYXRhLCBDUEkgYmFzZSAyMDI0LiBFZHVjYXRpb24gb25seSDigJQgbm90IGludmVzdG1lbnQgYWR2aWNlLjwvdGV4dD48L3N2Zz4=",
+ "en": {
+  "imageCap": "CPI September 2026: the six-month climb, kitchen prices and what it means (Infographic)",
+  "headline": "Retail Inflation Rises to 5.54% in September, Sixth Straight Monthly Rise, as Onion, Garlic Push Food Inflation to 7.74%",
+  "bullets": [
+   "CPI inflation rose to 5.54% in September 2026 from 4.83% in August — above the Reuters poll median of 5.40% and the highest under the new 2024-base series",
+   "Food inflation jumped to 7.74% from 5.97%; onion rose 108%, ginger 63%, garlic 55%, while tomato (−8.6%) and potato (−11.5%) stayed cheaper than a year ago",
+   "Rural CPI hit 6.08%, above the RBI's 6% upper limit, versus 4.88% in urban areas; Tamil Nadu recorded 6.81%",
+   "The RBI had already raised the repo rate 25 bps to 5.50% on 7 October and lifted its FY27 CPI forecast to 5.2%; the next MPC meets on 2–4 December"
+  ],
+  "compareTable": [
+   {
+    "title": "CPI Snapshot — Aug vs Sep 2026",
+    "headers": [
+     "Measure",
+     "Aug 2026",
+     "Sep 2026",
+     "Change"
+    ],
+    "rows": [
+     [
+      "Headline CPI",
+      "4.83%",
+      "5.54%",
+      "+0.71 pp"
+     ],
+     [
+      "Food (CFPI)",
+      "5.97%",
+      "7.74%",
+      "+1.77 pp"
+     ],
+     [
+      "Rural CPI",
+      "5.24%",
+      "6.08%",
+      "+0.84 pp"
+     ],
+     [
+      "Urban CPI",
+      "4.31%",
+      "4.88%",
+      "+0.57 pp"
+     ],
+     [
+      "Rural food",
+      "6.17%",
+      "8.06%",
+      "+1.89 pp"
+     ],
+     [
+      "Urban food",
+      "5.64%",
+      "7.18%",
+      "+1.54 pp"
+     ]
+    ]
+   },
+   {
+    "title": "Six-Month CPI Trend (2026)",
+    "headers": [
+     "Apr",
+     "May",
+     "Jun",
+     "Jul",
+     "Aug",
+     "Sep"
+    ],
+    "rows": [
+     [
+      "3.48%",
+      "3.93%",
+      "4.38%",
+      "4.45%",
+      "4.83%",
+      "5.54%"
+     ]
+    ]
+   },
+   {
+    "title": "Category-Wise CPI (Sep 2026)",
+    "headers": [
+     "Division",
+     "Inflation"
+    ],
+    "rows": [
+     [
+      "Personal care & misc (silver jewellery +88%)",
+      "13.75%"
+     ],
+     [
+      "Restaurants & accommodation",
+      "9.36%"
+     ],
+     [
+      "Food & beverages",
+      "7.36%"
+     ],
+     [
+      "Transport",
+      "5.01%"
+     ],
+     [
+      "Education",
+      "3.94%"
+     ],
+     [
+      "Clothing & footwear",
+      "3.93%"
+     ],
+     [
+      "Housing, water, power, fuel",
+      "2.74%"
+     ],
+     [
+      "Health",
+      "1.40%"
+     ]
+    ]
+   }
+  ],
+  "posPoints": [
+   "Headline CPI is still inside the RBI's 2–6% tolerance band, and core inflation (ICRA estimate ~4.6%) is well below headline",
+   "Much of the jump comes from volatile vegetables (onion, garlic); these can ease quickly once kharif arrivals reach mandis",
+   "Tomato and potato prices are still below last year's levels, limiting the damage to household food bills",
+   "Higher rates can lift fixed-deposit returns for savers and keep the rupee steadier"
+  ],
+  "negPoints": [
+   "Six straight monthly rises and rural CPI above 6% raise the risk of another RBI rate hike at the December MPC",
+   "Floating-rate home and auto loan EMIs may rise; rate-sensitive sectors such as real estate, autos and NBFCs face headwinds",
+   "Price rises are spreading to services — restaurants 9.36%, transport 5.01% — a sign inflation may stay sticky",
+   "With WPI at 11.39%, pass-through of factory costs could push CPI higher; Oct CPI is due on 12 Nov 2026"
+  ]
+ },
+ "ta": {
+  "imageCap": "CPI September 2026: ஆறு மாச ஏற்றம், சமையலறை விலை, இதன் அர்த்தம் (Infographic)",
+  "headline": "September-ல retail inflation 5.54%-க்கு ஏறுச்சு — தொடர்ந்து ஆறாவது மாசம் ஏற்றம்; வெங்காயம், பூண்டு food inflation-ஐ 7.74%-க்கு தள்ளுச்சு",
+  "bullets": [
+   "CPI inflation August-ல 4.83%-ல இருந்து September 2026-ல 5.54% — Reuters poll median 5.40%-ஐ விட அதிகம், புது 2024-base series-ல இதுவரை அதிகம்",
+   "Food inflation 5.97%-ல இருந்து 7.74%; வெங்காயம் 108%, இஞ்சி 63%, பூண்டு 55% ஏற்றம், ஆனா தக்காளி (−8.6%), உருளைக்கிழங்கு (−11.5%) போன வருஷத்தை விட மலிவு",
+   "Rural CPI 6.08% — RBI-ஓட 6% மேல் வரம்பை தாண்டிடுச்சு; urban 4.88%; Tamil Nadu 6.81%",
+   "7 October-லயே RBI repo rate-ஐ 25 bps ஏத்தி 5.50% ஆக்கிச்சு, FY27 CPI forecast 5.2%; அடுத்த MPC 2–4 December"
+  ],
+  "compareTable": [
+   {
+    "title": "CPI சுருக்கம் — Aug vs Sep 2026",
+    "headers": [
+     "அளவு",
+     "Aug 2026",
+     "Sep 2026",
+     "மாற்றம்"
+    ],
+    "rows": [
+     [
+      "Headline CPI",
+      "4.83%",
+      "5.54%",
+      "+0.71 pp"
+     ],
+     [
+      "Food (CFPI)",
+      "5.97%",
+      "7.74%",
+      "+1.77 pp"
+     ],
+     [
+      "Rural CPI",
+      "5.24%",
+      "6.08%",
+      "+0.84 pp"
+     ],
+     [
+      "Urban CPI",
+      "4.31%",
+      "4.88%",
+      "+0.57 pp"
+     ],
+     [
+      "Rural food",
+      "6.17%",
+      "8.06%",
+      "+1.89 pp"
+     ],
+     [
+      "Urban food",
+      "5.64%",
+      "7.18%",
+      "+1.54 pp"
+     ]
+    ]
+   },
+   {
+    "title": "ஆறு மாச CPI போக்கு (2026)",
+    "headers": [
+     "Apr",
+     "May",
+     "Jun",
+     "Jul",
+     "Aug",
+     "Sep"
+    ],
+    "rows": [
+     [
+      "3.48%",
+      "3.93%",
+      "4.38%",
+      "4.45%",
+      "4.83%",
+      "5.54%"
+     ]
+    ]
+   },
+   {
+    "title": "பிரிவு வாரியா CPI (Sep 2026)",
+    "headers": [
+     "பிரிவு",
+     "Inflation"
+    ],
+    "rows": [
+     [
+      "Personal care & misc (வெள்ளி நகை +88%)",
+      "13.75%"
+     ],
+     [
+      "Restaurants & hotels",
+      "9.36%"
+     ],
+     [
+      "Food & beverages",
+      "7.36%"
+     ],
+     [
+      "Transport",
+      "5.01%"
+     ],
+     [
+      "Education",
+      "3.94%"
+     ],
+     [
+      "Clothing & footwear",
+      "3.93%"
+     ],
+     [
+      "Housing, water, power, fuel",
+      "2.74%"
+     ],
+     [
+      "Health",
+      "1.40%"
+     ]
+    ]
+   }
+  ],
+  "posPoints": [
+   "Headline CPI இன்னும் RBI-ஓட 2–6% band-க்குள்ள தான்; core inflation (ICRA மதிப்பீடு ~4.6%) headline-ஐ விட கம்மி",
+   "ஏற்றத்துல பெரும்பகுதி வெங்காயம், பூண்டு மாதிரி volatile காய்கறிகள்; kharif வரத்து mandi-க்கு வந்தா சீக்கிரம் இறங்கலாம்",
+   "தக்காளி, உருளைக்கிழங்கு விலை போன வருஷத்தை விட கம்மி; வீட்டு food bill பாதிப்பு கொஞ்சம் குறைவு",
+   "Rate ஏறினா savers-க்கு FD return கூடும், rupee-யும் நிலையா இருக்கும்"
+  ],
+  "negPoints": [
+   "தொடர்ந்து ஆறு மாசம் ஏற்றம், rural CPI 6%-க்கு மேல — December MPC-ல மறுபடி rate hike வாய்ப்பு அதிகம்",
+   "Floating-rate home, auto loan EMI ஏறலாம்; real estate, auto, NBFC மாதிரி rate-sensitive sectors-க்கு அழுத்தம்",
+   "விலை ஏற்றம் services-க்கும் பரவுது — restaurants 9.36%, transport 5.01%; inflation நீடிக்கலாம்",
+   "WPI 11.39%-ல இருக்கறதால factory cost pass-through CPI-ஐ இன்னும் ஏத்தலாம்; Oct CPI 12 Nov 2026-ல வரும்"
+  ]
+ },
+ "companies": [
+  {
+   "name": "Home & auto loan borrowers",
+   "status": "EMI may rise",
+   "cls": "cb-neg"
+  },
+  {
+   "name": "Real estate, autos, NBFCs",
+   "status": "Rate headwind",
+   "cls": "cb-neg"
+  },
+  {
+   "name": "Rural consumption (FMCG volumes)",
+   "status": "Budget squeeze",
+   "cls": "cb-mix"
+  },
+  {
+   "name": "Banks / FD savers",
+   "status": "Higher deposit rates",
+   "cls": "cb-pos"
+  }
+ ]
+},
 {
   "id": 3,
   "date": "2026-10-09",
@@ -1008,7 +1637,7 @@ function updateCounts() {
   document.getElementById('cnt-macro').textContent = NEWS.filter(n=>n.cat==='macro').length;
   const sectorCntEl=document.getElementById('cnt-sector');
   if(sectorCntEl) sectorCntEl.textContent = NEWS.filter(n=>n.cat==='sector').length;
-  ['markets','geopolitics','chemicals'].forEach(s=>{
+  ['markets','geopolitics','chemicals','inflation'].forEach(s=>{
     const el=document.getElementById('sc-'+s);
     if(el) el.textContent=NEWS.filter(n=>n.sector===s).length;
   });
@@ -1150,7 +1779,7 @@ function renderFeed() {
   };
   let titleStr=titleMap[activeCat]||'All Breaking News';
   if(activeSector!=='all'){
-    const lm={rbi:'RBI / Macro',nps:'NPS / Pension',ecomm:'FDI / E-Commerce',solar:'Solar',gold:'Gold',power:'Power','2w':'2-Wheelers',pv:'PV (Cars)',spare:'Spare Parts',cement:'Cement',ems:'EMS',it:'IT / Services',coal:'Coal / PSU',disinvest:'Disinvestment',aviation:'Aviation',markets:'Markets / F&O',fpi:'FPI Flows',energy:'Energy / Grid',geopolitics:'Geopolitics / Oil',trade:'Trade / Exports',macro:'Inflation / PPI',chemicals:'Chemicals / Soda Ash'};
+    const lm={inflation:'Inflation (CPI / WPI)',rbi:'RBI / Macro',nps:'NPS / Pension',ecomm:'FDI / E-Commerce',solar:'Solar',gold:'Gold',power:'Power','2w':'2-Wheelers',pv:'PV (Cars)',spare:'Spare Parts',cement:'Cement',ems:'EMS',it:'IT / Services',coal:'Coal / PSU',disinvest:'Disinvestment',aviation:'Aviation',markets:'Markets / F&O',fpi:'FPI Flows',energy:'Energy / Grid',geopolitics:'Geopolitics / Oil',trade:'Trade / Exports',macro:'Inflation / PPI',chemicals:'Chemicals / Soda Ash'};
     titleStr=(lm[activeSector]||activeSector)+(isTA?' — செய்திகள்':' — Breaking News');
   }
   document.getElementById('feed-title').textContent=titleStr;
@@ -1830,6 +2459,7 @@ const ASSIST_QA_DIESEL = {
 };
 Object.assign(ASSIST_QA, ASSIST_QA_OCT);
 Object.assign(ASSIST_QA, ASSIST_QA_DIESEL);
+Object.assign(ASSIST_QA, {"cpi_sep26": [{"q": "What was India's CPI inflation in September 2026?", "a": "5.54%, up from 4.83% in August. Food inflation was 7.74%, rural 6.08% and urban 4.88%.", "src": "MoSPI, 12 Oct 2026 (provisional)"}, {"q": "Why did retail inflation rise in September?", "a": "Mainly food: onion +108%, ginger +63%, garlic +55%. Services also rose — restaurants 9.36%, transport 5.01%.", "src": "MoSPI, 12 Oct 2026"}, {"q": "Is 5.54% above the RBI's limit?", "a": "Above the 4% target but inside the 2–6% band. Rural CPI at 6.08% has crossed the 6% upper limit.", "src": "RBI inflation-targeting framework"}, {"q": "What has RBI done about it?", "a": "It raised the repo rate by 25 bps to 5.50% on 7 October and lifted its FY27 CPI forecast to 5.2%. Next MPC: 2–4 December.", "src": "RBI MPC, 7 Oct 2026"}, {"q": "What does it mean for my home loan EMI?", "a": "Floating-rate loans linked to repo may see a rate rise at the next reset; check the revised rate from your lender.", "src": "CB Research note"}, {"q": "Is this a buy or sell signal?", "a": "SectorWire and CB Research do not give buy, sell or hold calls and are not SEBI-registered. Consult a registered adviser.", "src": "CB Research disclaimer"}], "wpi_sep26": [{"q": "What was WPI inflation in September 2026?", "a": "11.39%, up from 9.92% in August — the highest in about four years.", "src": "Office of the Economic Adviser, 14 Oct 2026 (provisional)"}, {"q": "Which items drove WPI higher?", "a": "Fuel & Power at 25.85% — crude & gas 57.32%, mineral oils 40.02%. Basic metals 16.96% and chemicals 16.74% also rose.", "src": "Office of the Economic Adviser, 14 Oct 2026"}, {"q": "Why is WPI so much higher than CPI?", "a": "WPI tracks factory-gate and bulk prices, heavy in fuel and metals; CPI tracks shop prices, heavy in food and services. The ~5.9-point gap shows costs not yet passed to consumers.", "src": "CB Research explainer"}, {"q": "Who gains and who loses from high WPI?", "a": "Upstream oil, gas and metal producers gain on prices; downstream users like FMCG, paints and tyres face margin squeeze.", "src": "CB Research analysis"}, {"q": "When is the next WPI data?", "a": "October 2026 WPI is due on 16 November 2026.", "src": "Office of the Economic Adviser release calendar"}]});
 
 function assistTopicChange(){
   const topic = document.getElementById('assist-topic').value;
