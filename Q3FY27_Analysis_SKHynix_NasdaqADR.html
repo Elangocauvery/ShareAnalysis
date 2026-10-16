@@ -1,0 +1,860 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SK hynix Nasdaq ADR — CB Research</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Noto+Sans+Tamil:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#ffffff;--soft:#f6f8fb;--card:#ffffff;--ink:#16202e;--mute:#5b6778;--line:#e3e8ef;--or:#e8731a;--or2:#fff2e6;--bl:#1f5fbf;--bl2:#e9f1fd;--gr:#1d9a5b;--gr2:#e7f6ee;--am:#d99a0b;--am2:#fdf5e1;--rd:#d23b3b;--rd2:#fdeaea;--pu:#7a4cc2;--pu2:#f1ebfb;--te:#0f8b8d;--te2:#e4f5f5}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;background:var(--bg);color:var(--ink);font-family:Inter,"Noto Sans Tamil",system-ui,sans-serif;font-size:15px;line-height:1.55}
+body.ta{font-family:"Noto Sans Tamil",Inter,system-ui,sans-serif}
+body.ta .en{display:none!important}
+body:not(.ta) .ta{display:none!important}
+header{background:linear-gradient(135deg,#fff 0%,#fff6ee 100%);border-bottom:1px solid var(--line);padding:14px 16px 10px}
+.hrow{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;flex-wrap:wrap}
+h1{font-size:20px;margin:0;line-height:1.25}
+h1 small{display:block;font-size:12.5px;color:var(--mute);font-weight:600;margin-top:4px}
+.stamp{font-size:11.5px;color:var(--mute);margin-top:6px}
+.lang{display:flex;border:1px solid var(--line);border-radius:20px;overflow:hidden;flex-shrink:0}
+.lang button{border:0;background:#fff;padding:6px 12px;font-weight:700;font-size:13px;cursor:pointer;color:var(--mute);font-family:inherit}
+.lang button.on{background:var(--or);color:#fff}
+.chips{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}
+.chip{font-size:12px;font-weight:700;padding:4px 10px;border-radius:14px;border:1px solid var(--line);background:#fff}
+.chip.o{background:var(--or2);border-color:#f6c9a3;color:#a44c08}
+.chip.b{background:var(--bl2);border-color:#bcd3f5;color:var(--bl)}
+.chip.a{background:var(--am2);border-color:#f0d58e;color:#8a6106}
+nav{position:sticky;top:0;z-index:20;background:#fff;border-bottom:1px solid var(--line);display:flex;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+nav::-webkit-scrollbar{display:none}
+nav button{flex:0 0 auto;border:0;background:none;padding:12px 13px;font-weight:600;font-size:13.5px;color:var(--mute);border-bottom:3px solid transparent;cursor:pointer;font-family:inherit;white-space:nowrap}
+nav button.on{color:var(--or);border-bottom-color:var(--or)}
+main{max-width:1000px;margin:0 auto;padding:14px 16px 120px;position:relative}
+main::before{content:"CB RESEARCH";position:fixed;top:45%;left:50%;transform:translate(-50%,-50%) rotate(-28deg);font-size:64px;font-weight:800;color:rgba(232,115,26,.045);pointer-events:none;white-space:nowrap;z-index:0}
+.tab{display:none;position:relative;z-index:1}
+.tab.on{display:block;animation:fd .25s ease}
+@keyframes fd{from{opacity:0;transform:translateY(6px)}to{opacity:1}}
+h2{font-size:18px;margin:6px 0 10px}
+h3{font-size:15.5px;margin:18px 0 8px}
+p{margin:0 0 10px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px;margin-bottom:12px;box-shadow:0 1px 2px rgba(20,30,50,.04)}
+.note{border-left:4px solid var(--or);background:var(--or2);border-radius:8px;padding:10px 12px;margin-bottom:12px;font-size:14px}
+.note.b{border-color:var(--bl);background:var(--bl2)}
+.note.r{border-color:var(--rd);background:var(--rd2)}
+.note.g{border-color:var(--gr);background:var(--gr2)}
+.kpis{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px;margin-bottom:12px}
+.kpi{background:var(--soft);border:1px solid var(--line);border-radius:10px;padding:10px}
+.kpi .l{font-size:11.5px;color:var(--mute);font-weight:600;text-transform:uppercase;letter-spacing:.3px}
+body.ta .kpi .l{text-transform:none;letter-spacing:0}
+.kpi .v{font-size:19px;font-weight:800;margin-top:2px}
+.kpi .s{font-size:11.5px;color:var(--mute)}
+.up{color:var(--gr)}.dn{color:var(--rd)}
+.tw{overflow-x:auto;margin-bottom:12px;border:1px solid var(--line);border-radius:10px}
+table{border-collapse:collapse;width:100%;font-size:13.5px;min-width:520px}
+th,td{padding:8px 10px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+th{background:var(--soft);font-size:12px;color:var(--mute);font-weight:700;white-space:nowrap}
+td.n,th.n{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+tr:last-child td{border-bottom:0}
+.cw{position:relative;height:280px;margin-bottom:6px}
+.cs{overflow-x:auto}
+.cs .cw{min-width:560px}
+ol.r,ul.r{padding-left:20px;margin:0 0 10px}
+ol.r li,ul.r li{margin-bottom:7px}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:10px}
+.why{display:flex;gap:10px;align-items:flex-start}
+.why .no{flex:0 0 30px;height:30px;border-radius:50%;background:var(--or);color:#fff;font-weight:800;display:flex;align-items:center;justify-content:center}
+.why b{display:block;margin-bottom:2px}
+.tl{border-left:3px solid var(--or);margin-left:6px;padding-left:14px}
+.tl div{position:relative;margin-bottom:12px}
+.tl div::before{content:"";position:absolute;left:-21px;top:5px;width:11px;height:11px;border-radius:50%;background:#fff;border:3px solid var(--or)}
+.tl b{display:block;font-size:13px;color:var(--or)}
+svg text{font-family:Inter,"Noto Sans Tamil",sans-serif}
+.mapbox{cursor:pointer}
+.mapbox:hover rect,.mapbox.sel rect{stroke-width:3}
+#bmCard,#plCard{min-height:60px}
+.pill{display:inline-block;font-size:11.5px;font-weight:700;padding:2px 8px;border-radius:10px}
+.pill.g{background:var(--gr2);color:var(--gr)}.pill.a{background:var(--am2);color:#8a6106}.pill.r{background:var(--rd2);color:var(--rd)}.pill.b{background:var(--bl2);color:var(--bl)}
+.pc{border:2px solid var(--line);border-radius:10px;padding:10px 12px;margin-bottom:8px;transition:all .3s}
+.pc.hl{box-shadow:0 0 0 4px rgba(232,115,26,.25)}
+.bar{height:10px;background:var(--soft);border-radius:6px;overflow:hidden;border:1px solid var(--line)}
+.bar i{display:block;height:100%;background:var(--or);width:0;transition:width .5s}
+.sc-g{margin-bottom:14px}
+.sc-g h4{margin:0 0 6px;font-size:14px}
+.sc-i{display:flex;gap:8px;align-items:flex-start;padding:7px 0;border-bottom:1px dashed var(--line)}
+.sc-i input{margin-top:4px;width:18px;height:18px;accent-color:var(--or);flex-shrink:0}
+.sc-i .d{font-size:12px;color:var(--mute)}
+.btn{border:1px solid var(--or);background:#fff;color:var(--or);font-weight:700;padding:7px 12px;border-radius:8px;cursor:pointer;font-family:inherit;font-size:13px}
+.btn.f{background:var(--or);color:#fff}
+.sug{display:flex;flex-wrap:wrap;gap:6px;margin:6px 0}
+.sug button{border:1px dashed var(--or);background:var(--or2);color:#a44c08;border-radius:14px;padding:4px 10px;font-size:12px;cursor:pointer;font-family:inherit}
+.q{margin-bottom:14px}
+.q .opt{display:block;width:100%;text-align:left;border:1px solid var(--line);background:#fff;padding:9px 11px;border-radius:8px;margin-top:6px;cursor:pointer;font-family:inherit;font-size:14px}
+.q .opt.ok{background:var(--gr2);border-color:var(--gr)}
+.q .opt.no{background:var(--rd2);border-color:var(--rd)}
+.q .fb{font-size:13px;margin-top:6px;color:var(--mute)}
+textarea{width:100%;min-height:70px;border:1px solid var(--line);border-radius:8px;padding:8px;font-family:inherit;font-size:14px}
+#cbBadge{position:fixed;right:14px;bottom:14px;width:52px;height:52px;border-radius:50%;background:var(--or);color:#fff;font-weight:800;font-size:18px;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 14px rgba(232,115,26,.45);cursor:pointer;z-index:60;animation:blink 2.2s infinite;border:3px solid #fff}
+@keyframes blink{0%,100%{box-shadow:0 4px 14px rgba(232,115,26,.45)}50%{box-shadow:0 0 0 8px rgba(232,115,26,.18)}}
+#disc{position:fixed;right:14px;bottom:76px;width:min(330px,calc(100vw - 28px));background:#fff;border:1px solid var(--line);border-radius:12px;padding:12px;font-size:12.5px;box-shadow:0 8px 30px rgba(0,0,0,.15);display:none;z-index:61}
+#asBtn{position:fixed;right:76px;bottom:20px;height:42px;padding:0 14px;border-radius:21px;background:#fff;border:2px solid var(--or);color:var(--or);font-weight:800;font-size:13px;cursor:pointer;z-index:60;box-shadow:0 3px 10px rgba(0,0,0,.1);font-family:inherit}
+#asBox{position:fixed;right:10px;bottom:76px;width:min(360px,calc(100vw - 20px));max-height:70vh;background:#fff;border:1px solid var(--line);border-radius:14px;box-shadow:0 10px 34px rgba(0,0,0,.18);display:none;flex-direction:column;z-index:62}
+#asBox .hd{padding:10px 12px;border-bottom:1px solid var(--line);font-weight:800;display:flex;justify-content:space-between;align-items:center}
+#asLog{padding:10px;overflow-y:auto;flex:1;font-size:13.5px}
+#asLog .m{padding:8px 10px;border-radius:10px;margin-bottom:8px;max-width:90%}
+#asLog .u{background:var(--bl2);margin-left:auto}
+#asLog .b{background:var(--soft)}
+#asIn{display:flex;gap:6px;padding:8px;border-top:1px solid var(--line)}
+#asIn input{flex:1;border:1px solid var(--line);border-radius:8px;padding:8px;font-family:inherit;font-size:14px;min-width:0}
+#asIn button{border:0;border-radius:8px;padding:0 10px;font-weight:700;cursor:pointer;font-family:inherit}
+#mic{background:var(--or);color:#fff;width:40px;font-size:17px}
+#mic.live{background:var(--rd);animation:blink 1s infinite}
+.qs{display:flex;flex-wrap:wrap;gap:5px;padding:0 10px 8px}
+.qs button{font-size:11.5px;border:1px solid var(--line);background:#fff;border-radius:12px;padding:3px 8px;cursor:pointer;font-family:inherit}
+@media (max-width:520px){h1{font-size:17.5px}.kpi .v{font-size:17px}main::before{font-size:40px}}
+</style>
+</head>
+<body>
+<header>
+ <div class="hrow">
+  <div>
+   <h1><span class="en">SK hynix — Record Nasdaq ADR Listing</span><span class="ta">SK hynix — Nasdaq-ல சாதனை ADR லிஸ்டிங்</span>
+    <small><span class="en">2Q26 (Apr–Jun 2026) results ≈ Q1FY27 · Nasdaq: SKHY · KRX: 000660</span><span class="ta">2Q26 (ஏப்–ஜூன் 2026) ரிசல்ட் ≈ Q1FY27 · Nasdaq: SKHY · KRX: 000660</span></small></h1>
+   <div class="stamp"><span class="en">Prepared 16 Oct 2026, 08:45 IST · CB Research (Cauvery Business) · Education only</span><span class="ta">தயாரிச்சது 16 அக் 2026, காலை 08:45 IST · CB Research (Cauvery Business) · கல்விக்காக மட்டும்</span></div>
+  </div>
+  <div class="lang"><button id="bEN" class="on" onclick="setLang('en')">EN</button><button id="bTA" onclick="setLang('ta')">தமிழ்</button></div>
+ </div>
+ <div class="chips">
+  <span class="chip o">CB Score 76/100</span>
+  <span class="chip b">CY 50 · <span class="en">Late-cycle</span><span class="ta">சைக்கிள் உச்சம்</span></span>
+  <span class="chip a">TG 48 · <span class="en">Mixed triggers</span><span class="ta">கலவையான ட்ரிகர்கள்</span></span>
+  <span class="chip">$26.5B <span class="en">raised</span><span class="ta">திரட்டியது</span></span>
+ </div>
+</header>
+<nav id="nav">
+ <button data-t="ov" class="on"><span class="en">Overview</span><span class="ta">சுருக்கம்</span></button>
+ <button data-t="ipo"><span class="en">IPO Details</span><span class="ta">IPO விவரம்</span></button>
+ <button data-t="why"><span class="en">Why So Big?</span><span class="ta">இவ்ளோ பணம் எப்படி?</span></button>
+ <button data-t="bm"><span class="en">Business Model</span><span class="ta">பிசினஸ் மாடல்</span></button>
+ <button data-t="seg"><span class="en">Segments</span><span class="ta">பிரிவுகள்</span></button>
+ <button data-t="ai"><span class="en">Role in AI</span><span class="ta">AI-ல பங்கு</span></button>
+ <button data-t="fin"><span class="en">Financials</span><span class="ta">நிதி நிலை</span></button>
+ <button data-t="cf"><span class="en">Cash Flow & WC</span><span class="ta">கேஷ் ஃப்ளோ & WC</span></button>
+ <button data-t="pil"><span class="en">6 Pillars</span><span class="ta">6 தூண்கள்</span></button>
+ <button data-t="mkt"><span class="en">Market Activity</span><span class="ta">பங்கு நகர்வு</span></button>
+ <button data-t="tc"><span class="en">Triggers & Cycle</span><span class="ta">ட்ரிகர் & சைக்கிள்</span></button>
+ <button data-t="an"><span class="en">Analysts' Rating</span><span class="ta">அனலிஸ்ட் ரேட்டிங்</span></button>
+ <button data-t="sc"><span class="en">Self-check</span><span class="ta">சுய சோதனை</span></button>
+ <button data-t="mg"><span class="en">Management & Board</span><span class="ta">நிர்வாகம் & போர்டு</span></button>
+ <button data-t="sw"><span class="en">SWOT & Risks</span><span class="ta">SWOT & ரிஸ்க்</span></button>
+ <button data-t="so"><span class="en">Cauvery Socrates</span><span class="ta">காவேரி சாக்ரடீஸ்</span></button>
+</nav>
+<main>
+
+<!-- ============ OVERVIEW ============ -->
+<section class="tab on" id="t-ov">
+ <div class="note">
+  <span class="en"><b>Quick fact-check:</b> SK hynix raised <b>US$26.5 billion</b>, not $36 billion. The <b>$36.1 billion</b> figure is the total raised by <i>all</i> US IPOs in Q3 2026 — SK hynix alone was about 73% of it. It is still the <b>largest US listing ever by a non-US company</b>, beating Alibaba's 2014 deal.</span>
+  <span class="ta"><b>முதல்ல ஒரு திருத்தம்:</b> SK hynix திரட்டினது <b>US$26.5 பில்லியன்</b> தான், $36 பில்லியன் இல்ல. <b>$36.1 பில்லியன்</b>ங்கிறது 2026 Q3-ல அமெரிக்காவுல நடந்த <i>எல்லா</i> IPO-வும் சேர்ந்து திரட்டின மொத்த தொகை — அதுல சுமார் 73% SK hynix ஒண்ணு மட்டுமே. இருந்தாலும், அமெரிக்காவுல ஒரு வெளிநாட்டு கம்பெனி பண்ண <b>மிகப்பெரிய லிஸ்டிங்</b> இதுதான் — 2014 Alibaba சாதனையை முறியடிச்சிருச்சு.</span>
+ </div>
+ <div class="kpis">
+  <div class="kpi"><div class="l"><span class="en">Amount raised</span><span class="ta">திரட்டிய தொகை</span></div><div class="v">$26.5B</div><div class="s">≈ ₩40 <span class="en">trillion</span><span class="ta">டிரில்லியன்</span></div></div>
+  <div class="kpi"><div class="l"><span class="en">ADS sold × price</span><span class="ta">ADS × விலை</span></div><div class="v">177.9M × $149</div><div class="s">10 ADS = 1 <span class="en">share</span><span class="ta">பங்கு</span></div></div>
+  <div class="kpi"><div class="l"><span class="en">Demand</span><span class="ta">டிமாண்ட்</span></div><div class="v">7×+</div><div class="s">~$171.5B <span class="en">orders</span><span class="ta">ஆர்டர்</span></div></div>
+  <div class="kpi"><div class="l"><span class="en">Day-1 close (10 Jul)</span><span class="ta">முதல் நாள் க்ளோஸ் (10 ஜூலை)</span></div><div class="v up">$168.01</div><div class="s">+12.8%</div></div>
+  <div class="kpi"><div class="l"><span class="en">Latest (15 Oct)</span><span class="ta">லேட்டஸ்ட் (15 அக்)</span></div><div class="v dn">~$137–139</div><div class="s"><span class="en">Below $149 offer price</span><span class="ta">$149 ஆஃபர் விலைக்கு கீழே</span></div></div>
+  <div class="kpi"><div class="l"><span class="en">2Q26 revenue</span><span class="ta">2Q26 வருவாய்</span></div><div class="v">₩79.32T</div><div class="s">+257% YoY</div></div>
+  <div class="kpi"><div class="l"><span class="en">2Q26 operating profit</span><span class="ta">2Q26 ஆப்பரேட்டிங் லாபம்</span></div><div class="v">₩60.54T</div><div class="s">OPM 76%</div></div>
+  <div class="kpi"><div class="l"><span class="en">2Q26 EBITDA</span><span class="ta">2Q26 EBITDA</span></div><div class="v">₩64.6T</div><div class="s"><span class="en">Margin</span><span class="ta">மார்ஜின்</span> 81%</div></div>
+  <div class="kpi"><div class="l"><span class="en">Net cash (Jun 26)</span><span class="ta">நெட் கேஷ் (ஜூன் 26)</span></div><div class="v">₩69.4T</div><div class="s"><span class="en">before ADR money</span><span class="ta">ADR பணம் வர்றதுக்கு முன்</span></div></div>
+ </div>
+ <div class="card">
+  <h3 style="margin-top:0"><span class="en">The story in 60 seconds</span><span class="ta">60 விநாடியில கதை</span></h3>
+  <div class="en">
+   <p>SK hynix is a South Korean memory-chip maker, part of the SK Group. It makes <b>DRAM</b> (short-term working memory) and <b>NAND</b> (storage). Its star product is <b>HBM — High Bandwidth Memory</b>, stacked DRAM that sits right next to Nvidia's AI chips. It is the world's largest HBM supplier.</p>
+   <p>It has been listed in Seoul since 1996, so this was <b>not a first-time IPO</b>. On 10 July 2026 it sold <b>new shares</b> in the form of American Depositary Shares (ADS) on Nasdaq, raising $26.5 billion — all of it for new factories and EUV machines. No existing shareholder sold.</p>
+   <p>Since then the business has kept setting records (76% operating margin in 2Q26), but the share price has swung hard — from a near-$200 high in early October to below the $149 offer price by 15 October, on rate fears, AI-funding worries and Chinese competition news. Q3 results are due in late October.</p>
+  </div>
+  <div class="ta">
+   <p>SK hynix ஒரு தென் கொரிய மெமரி சிப் கம்பெனி, SK Group-ஓட பகுதி. இவங்க <b>DRAM</b> (கம்ப்யூட்டரோட தற்காலிக நினைவகம்), <b>NAND</b> (சேமிப்பு) ரெண்டும் தயாரிக்கிறாங்க. இவங்களோட ஸ்டார் ப்ராடக்ட் <b>HBM — High Bandwidth Memory</b>. அதாவது DRAM சிப்களை அடுக்கி வெச்சு, Nvidia AI சிப் பக்கத்துலயே உட்கார வைக்கிற மெமரி. உலகத்துலயே HBM அதிகமா சப்ளை பண்றது இவங்கதான்.</p>
+   <p>1996-ல இருந்தே சியோல் பங்குச் சந்தையில லிஸ்ட் ஆன கம்பெனி. அதனால இது <b>முதல் IPO இல்ல</b>. 2026 ஜூலை 10-ல Nasdaq-ல American Depositary Shares (ADS) வடிவத்துல <b>புது பங்குகளை</b> வித்து $26.5 பில்லியன் திரட்டினாங்க — முழு பணமும் புது ஃபேக்டரி, EUV மெஷின் வாங்கத்தான். பழைய பங்குதாரர் யாரும் விக்கல.</p>
+   <p>அதுக்கப்புறம் பிசினஸ் தொடர்ந்து சாதனை பண்ணுது (2Q26-ல 76% ஆப்பரேட்டிங் மார்ஜின்). ஆனா பங்கு விலை பயங்கரமா ஆடுது — அக்டோபர் ஆரம்பத்துல கிட்டத்தட்ட $200, அக்டோபர் 15-க்குள்ள $149 ஆஃபர் விலைக்கும் கீழே. வட்டி விகித பயம், AI ஃபண்டிங் கவலை, சீன போட்டி செய்திகள் — இதுதான் காரணம். Q3 ரிசல்ட் அக்டோபர் கடைசில வரும்.</p>
+  </div>
+ </div>
+ <div class="card">
+  <h3 style="margin-top:0"><span class="en">CB Research read-out</span><span class="ta">CB Research பார்வை</span></h3>
+  <ul class="r en">
+   <li><b>Business:</b> best-in-class — record revenue, 76% operating margin, ₩69.4T net cash, leader in HBM.</li>
+   <li><b>Cycle:</b> memory is a boom-bust industry; margins are at all-time highs and everyone is adding capacity — classic late-cycle signals (CY 50).</li>
+   <li><b>Triggers:</b> HBM4 ramp and long-term contracts on one side; capacity glut, HBM4 delay reports and China on the other (TG 48).</li>
+   <li><b>Watch:</b> Q3 2026 results (late Oct), HBM4 volume for Nvidia Rubin, 2027 capex plans across Samsung/Micron/SK hynix.</li>
+  </ul>
+  <ul class="r ta">
+   <li><b>பிசினஸ்:</b> டாப் கிளாஸ் — சாதனை வருவாய், 76% மார்ஜின், ₩69.4T நெட் கேஷ், HBM-ல லீடர்.</li>
+   <li><b>சைக்கிள்:</b> மெமரி துறை ஏறி இறங்குற துறை. இப்போ மார்ஜின் எல்லா காலத்தையும் விட உச்சத்துல, எல்லாரும் புது கெப்பாசிட்டி சேர்க்கிறாங்க — இது சைக்கிள் உச்சத்தோட அறிகுறி (CY 50).</li>
+   <li><b>ட்ரிகர்கள்:</b> ஒரு பக்கம் HBM4 ஏற்றம், நீண்டகால ஒப்பந்தங்கள்; மறுபக்கம் அதிக கெப்பாசிட்டி, HBM4 தாமத செய்தி, சீனா (TG 48).</li>
+   <li><b>கவனிக்க:</b> Q3 2026 ரிசல்ட் (அக் கடைசி), Nvidia Rubin-க்கு HBM4 வால்யூம், Samsung/Micron/SK hynix-ஓட 2027 கேபெக்ஸ் திட்டம்.</li>
+  </ul>
+ </div>
+</section>
+
+<!-- ============ IPO DETAILS ============ -->
+<section class="tab" id="t-ipo">
+ <h2><span class="en">Offer details</span><span class="ta">ஆஃபர் விவரம்</span></h2>
+ <div class="tw"><table>
+  <tr><th><span class="en">Item</span><span class="ta">விவரம்</span></th><th><span class="en">Detail</span><span class="ta">தகவல்</span></th></tr>
+  <tr><td><span class="en">Type</span><span class="ta">வகை</span></td><td><span class="en">Follow-on offering of new shares as ADS on Nasdaq Global Select (primary listing stays in Seoul)</span><span class="ta">புது பங்குகளை ADS-ஆ Nasdaq Global Select-ல வெளியிட்டது (முக்கிய லிஸ்டிங் சியோல்லயே தொடரும்)</span></td></tr>
+  <tr><td><span class="en">Pricing date</span><span class="ta">விலை நிர்ணயம்</span></td><td>9 Jul 2026</td></tr>
+  <tr><td><span class="en">First trade</span><span class="ta">முதல் டிரேட்</span></td><td><span class="en">10 Jul 2026 (when-issued, SKHYV); regular trading as SKHY the following week</span><span class="ta">10 ஜூலை 2026 (when-issued, SKHYV); அடுத்த வாரம் SKHY-ஆ வழக்கமான டிரேடிங்</span></td></tr>
+  <tr><td><span class="en">ADS sold</span><span class="ta">விற்ற ADS</span></td><td class="n">177,900,000</td></tr>
+  <tr><td><span class="en">Offer price</span><span class="ta">ஆஃபர் விலை</span></td><td class="n">$149 / ADS</td></tr>
+  <tr><td><span class="en">Gross proceeds</span><span class="ta">மொத்த வசூல்</span></td><td class="n">$26.51B (≈ ₩40T)</td></tr>
+  <tr><td><span class="en">Ratio</span><span class="ta">விகிதம்</span></td><td><span class="en">10 ADS = 1 common share → 17.79 million new shares (~2.5% of shares outstanding)</span><span class="ta">10 ADS = 1 பங்கு → 1.779 கோடி புது பங்குகள் (மொத்தத்துல ~2.5%)</span></td></tr>
+  <tr><td><span class="en">Pricing vs Seoul</span><span class="ta">சியோல் விலையோட ஒப்பீடு</span></td><td><span class="en">~2.7% premium to the 3-day Seoul average</span><span class="ta">சியோல் 3 நாள் சராசரியை விட ~2.7% பிரீமியம்</span></td></tr>
+  <tr><td><span class="en">Original ceiling</span><span class="ta">ஆரம்ப உச்ச வரம்பு</span></td><td><span class="en">Up to ₩45.45T (~$29.4B) filed on 24 Jun; final was lower as the Seoul price fell before pricing</span><span class="ta">ஜூன் 24-ல ₩45.45T (~$29.4B) வரை ஃபைல் பண்ணாங்க; விலை நிர்ணயத்துக்கு முன் சியோல் விலை இறங்கினதால இறுதித் தொகை குறைஞ்சது</span></td></tr>
+  <tr><td><span class="en">Bookrunners</span><span class="ta">புக்ரன்னர்ஸ்</span></td><td>BofA Securities, Citigroup, Goldman Sachs, J.P. Morgan</td></tr>
+  <tr><td><span class="en">Selling shareholders</span><span class="ta">விற்ற பங்குதாரர்</span></td><td><span class="en">None — 100% fresh issue for capex</span><span class="ta">யாருமில்ல — 100% புது பங்கு, கேபெக்ஸுக்காக</span></td></tr>
+  <tr><td><span class="en">Market cap at listing</span><span class="ta">லிஸ்டிங் போது மதிப்பு</span></td><td class="n">~$1.1 <span class="en">trillion</span><span class="ta">டிரில்லியன்</span></td></tr>
+ </table></div>
+
+ <h3><span class="en">Where the money goes</span><span class="ta">பணம் எங்க போகுது</span></h3>
+ <div class="card">
+  <div class="cw" style="height:240px"><canvas id="cUse"></canvas></div>
+  <p class="en" style="font-size:13px;color:var(--mute)">Planned project spend (₩ trillion). Plans total ~₩62T, more than the ~₩40T raised — the balance comes from operating cash flow and debt.</p>
+  <p class="ta" style="font-size:13px;color:var(--mute)">திட்டச் செலவு (₩ டிரில்லியன்). மொத்தம் ~₩62T, திரட்டினது ~₩40T தான் — மீதியை கம்பெனியோட சொந்த கேஷ் ஃப்ளோ, கடன் மூலமா போடுவாங்க.</p>
+  <ul class="r en"><li><b>Yongin Y1 fab (₩31T)</b> — first fab of the giant Yongin cluster; clean room due early 2027.</li><li><b>Cheongju P&T7 (₩19T)</b> — advanced packaging plant dedicated to HBM stacking.</li><li><b>EUV scanners (₩12T, through Dec 2027)</b> — ASML lithography tools for next-gen DRAM.</li></ul>
+  <ul class="r ta"><li><b>யோங்இன் Y1 ஃபேப் (₩31T)</b> — பெரிய யோங்இன் கிளஸ்டரோட முதல் ஃபேக்டரி; கிளீன் ரூம் 2027 ஆரம்பத்துல.</li><li><b>சியோங்ஜு P&T7 (₩19T)</b> — HBM அடுக்குறதுக்கான அட்வான்ஸ்டு பேக்கேஜிங் ஆலை.</li><li><b>EUV ஸ்கேனர்கள் (₩12T, டிச 2027 வரை)</b> — அடுத்த தலைமுறை DRAM-க்கு ASML மெஷின்கள்.</li></ul>
+ </div>
+
+ <h3><span class="en">Timeline</span><span class="ta">காலவரிசை</span></h3>
+ <div class="card"><div class="tl">
+  <div><b>Dec 2025</b><span class="en">Idea of a US ADR floated by Korean brokers as a way to raise capital and narrow the "Korea discount".</span><span class="ta">மூலதனம் திரட்டவும் "கொரியா டிஸ்கவுண்ட்" குறைக்கவும் US ADR ஐடியாவை கொரிய ப்ரோக்கர்கள் முன்வெச்சாங்க.</span></div>
+  <div><b>24 Mar 2026</b><span class="en">Confidential F-1 filed with the US SEC; early talk was of ~$10–14B.</span><span class="ta">US SEC-ல ரகசிய F-1 ஃபைல்; ஆரம்பத்துல ~$10–14B தான் பேச்சு.</span></div>
+  <div><b>24 Jun 2026</b><span class="en">Board approves 17.79M new shares; ceiling ₩45.45T (~$29.4B).</span><span class="ta">1.779 கோடி புது பங்குக்கு போர்டு ஒப்புதல்; உச்ச வரம்பு ₩45.45T (~$29.4B).</span></div>
+  <div><b>9 Jul 2026</b><span class="en">Priced at $149/ADS; book over 7× covered.</span><span class="ta">$149/ADS-ல விலை நிர்ணயம்; 7 மடங்குக்கு மேல டிமாண்ட்.</span></div>
+  <div><b>10 Jul 2026</b><span class="en">Nasdaq debut; closes $168.01 (+12.8%).</span><span class="ta">Nasdaq அறிமுகம்; $168.01-ல க்ளோஸ் (+12.8%).</span></div>
+  <div><b>29 Jul 2026</b><span class="en">New underlying shares also listed on KOSPI; 2Q26 results same week.</span><span class="ta">புது பங்குகள் KOSPI-லயும் லிஸ்ட்; அதே வாரம் 2Q26 ரிசல்ட்.</span></div>
+ </div></div>
+
+ <h3><span class="en">Biggest foreign listings in the US</span><span class="ta">அமெரிக்காவுல பெரிய வெளிநாட்டு லிஸ்டிங்குகள்</span></h3>
+ <div class="card"><div class="cw" style="height:220px"><canvas id="cRec"></canvas></div>
+ <p class="en" style="font-size:13px;color:var(--mute)">US$ billion. SK hynix ranks second among all US IPOs ever, behind SpaceX (June 2026).</p>
+ <p class="ta" style="font-size:13px;color:var(--mute)">US$ பில்லியன். அமெரிக்க IPO வரலாற்றுல SK hynix ரெண்டாவது இடம்; முதலிடம் SpaceX (ஜூன் 2026).</p></div>
+
+ <h3><span class="en">How an ADS works</span><span class="ta">ADS எப்படி வேலை செய்யுது</span></h3>
+ <div class="card">
+  <p class="en">A US bank holds SK hynix shares in Korea and issues receipts in New York. Here <b>10 ADS = 1 Korean share</b>, so one ADS costs about a tenth of a Seoul share. The two prices stay linked: <b>ADS price × 10 ÷ (won per dollar) ≈ Seoul price</b>. Example: $149 × 10 = $1,490 ≈ ₩2.3 million at ~₩1,544/$.</p>
+  <p class="ta">ஒரு அமெரிக்க வங்கி கொரியாவுல SK hynix பங்குகளை வெச்சுக்கிட்டு, நியூயார்க்ல அதுக்கான ரசீதுகளை வெளியிடும். இங்க <b>10 ADS = 1 கொரியப் பங்கு</b>. அதனால ஒரு ADS விலை சியோல் பங்கு விலையில பத்துல ஒரு பங்கு. ரெண்டு விலையும் இணைஞ்சே இருக்கும்: <b>ADS விலை × 10 ÷ (ஒரு டாலருக்கு வான்) ≈ சியோல் விலை</b>. உதாரணம்: $149 × 10 = $1,490 ≈ ₩23 லட்சம் (~₩1,544/$).</p>
+ </div>
+</section>
+
+<!-- ============ WHY SO BIG ============ -->
+<section class="tab" id="t-why">
+ <h2><span class="en">How could they raise so much money?</span><span class="ta">இவ்ளோ பெரிய தொகையை எப்படி திரட்ட முடிஞ்சது?</span></h2>
+ <div class="note b">
+  <span class="en"><b>The simple maths:</b> SK hynix was already worth about <b>$1.06 trillion</b>. Selling just <b>2.5%</b> of the company in new shares = <b>$26.5 billion</b>. A record headline, but a small slice of a giant.</span>
+  <span class="ta"><b>சிம்பிள் கணக்கு:</b> SK hynix-ஓட மதிப்பு ஏற்கனவே சுமார் <b>$1.06 டிரில்லியன்</b>. அதுல வெறும் <b>2.5%</b> புது பங்குகளா வித்தாலே = <b>$26.5 பில்லியன்</b>. தலைப்புச் செய்தி சாதனை, ஆனா ஒரு ராட்சசனோட சின்ன துண்டுதான்.</span>
+ </div>
+ <div class="card">
+  <svg viewBox="0 0 340 120" width="100%" style="max-width:520px;display:block;margin:auto">
+   <rect x="10" y="30" width="320" height="44" rx="8" fill="#e9f1fd" stroke="#1f5fbf"/>
+   <rect x="10" y="30" width="8" height="44" rx="3" fill="#e8731a"/>
+   <text x="170" y="57" text-anchor="middle" font-size="13" font-weight="700" fill="#1f5fbf">≈ $1.06T market value</text>
+   <text x="22" y="20" font-size="11.5" font-weight="700" fill="#e8731a">2.5% new shares = $26.5B</text>
+   <line x1="14" y1="24" x2="14" y2="30" stroke="#e8731a" stroke-width="2"/>
+   <text x="170" y="100" text-anchor="middle" font-size="11" fill="#5b6778">Orders ≈ $171.5B → only 1 in 6.5 dollars got shares</text>
+  </svg>
+ </div>
+ <div class="grid2">
+  <div class="card why"><div class="no">1</div><div><b class="en">Not a start-up — a $1-trillion profit machine</b><b class="ta">ஸ்டார்ட்அப் இல்ல — $1 டிரில்லியன் லாப இயந்திரம்</b><span class="en">FY2025 operating profit ₩47.2T; first-half 2026 alone ₩98.2T. Investors were buying proven cash flow, not a story.</span><span class="ta">FY2025 ஆப்பரேட்டிங் லாபம் ₩47.2T; 2026 முதல் அரையாண்டுல மட்டும் ₩98.2T. கதைக்கு இல்ல, நிரூபிச்ச கேஷ் ஃப்ளோவுக்குதான் முதலீடு.</span></div></div>
+  <div class="card why"><div class="no">2</div><div><b class="en">Pent-up US demand</b><b class="ta">அமெரிக்க முதலீட்டாளர்களோட காத்திருந்த ஆசை</b><span class="en">Many US funds can't easily buy Korean shares. The ADR opened the door to the main pure-play AI-memory leader — Micron was the only US-listed option before.</span><span class="ta">நிறைய அமெரிக்க ஃபண்டுகளால கொரியப் பங்குகளை நேரடியா வாங்க முடியாது. AI மெமரி லீடரை வாங்க ADR கதவைத் திறந்துச்சு — இதுக்கு முன்னாடி US-ல Micron மட்டும்தான் ஆப்ஷன்.</span></div></div>
+  <div class="card why"><div class="no">3</div><div><b class="en">AI scarcity story</b><b class="ta">AI மெமரி பற்றாக்குறை</b><span class="en">2026 HBM capacity sold out; long-term agreements with ~10 key customers; memory shortages expected to last into 2028.</span><span class="ta">2026 HBM கெப்பாசிட்டி முழுசா விற்றுத் தீர்ந்துடுச்சு; ~10 முக்கிய வாடிக்கையாளர்களோட நீண்டகால ஒப்பந்தம்; மெமரி பற்றாக்குறை 2028 வரை நீடிக்கும்னு எதிர்பார்ப்பு.</span></div></div>
+  <div class="card why"><div class="no">4</div><div><b class="en">"Korea discount" arbitrage</b><b class="ta">"கொரியா டிஸ்கவுண்ட்" வாய்ப்பு</b><span class="en">SK hynix traded at a lower multiple than smaller rival Micron. Funds bet a US listing narrows the gap — a re-rating play on top of earnings.</span><span class="ta">தன்னை விட சின்ன Micron-ஐ விட SK hynix குறைஞ்ச மல்டிபிள்ல டிரேட் ஆச்சு. US லிஸ்டிங் அந்த இடைவெளியை குறைக்கும்னு ஃபண்டுகள் பந்தயம் கட்டினாங்க.</span></div></div>
+  <div class="card why"><div class="no">5</div><div><b class="en">Clean use of money</b><b class="ta">பணத்துக்கு தெளிவான பயன்</b><span class="en">100% for named fabs, packaging and EUV tools — no promoter exit, no debt repayment. Growth capital sells easily.</span><span class="ta">100% பணமும் குறிப்பிட்ட ஃபேப், பேக்கேஜிங், EUV-க்கு — ப்ரமோட்டர் வெளியேற்றம் இல்ல, கடன் அடைப்பு இல்ல.</span></div></div>
+  <div class="card why"><div class="no">6</div><div><b class="en">Fair pricing</b><b class="ta">நியாயமான விலை</b><span class="en">Priced only ~2.7% above the Seoul average and below the earlier ₩45.45T ceiling — leaving something on the table for buyers.</span><span class="ta">சியோல் சராசரியை விட ~2.7% மட்டும் அதிகம், ஆரம்ப ₩45.45T வரம்புக்கும் கீழே — வாங்குறவங்களுக்கு லாபம் கொஞ்சம் மிச்சம் வெச்சாங்க.</span></div></div>
+  <div class="card why"><div class="no">7</div><div><b class="en">Deep-pocket buyers</b><b class="ta">பெரிய பணக்கார முதலீட்டாளர்கள்</b><span class="en">Global long-only funds, tech funds, sovereign wealth funds and Asia funds; four top US banks ran the book; SK Chairman Chey met investors in New York.</span><span class="ta">உலக லாங்-ஒன்லி ஃபண்டுகள், டெக் ஃபண்டுகள், அரசு செல்வ நிதிகள்; நாலு பெரிய US வங்கிகள் புக் நடத்தினாங்க; SK தலைவர் Chey நியூயார்க்ல நேரடியா முதலீட்டாளர்களை சந்திச்சார்.</span></div></div>
+  <div class="card why"><div class="no">8</div><div><b class="en">Size set by a legal ceiling</b><b class="ta">சட்ட வரம்புதான் அளவை தீர்மானிச்சது</b><span class="en">Korea's Fair Trade Act needs SK Square to hold ≥20%. The issue was pushed to the maximum that keeps SK Square near that line — it slipped just below 20% afterwards, so buybacks may follow.</span><span class="ta">கொரிய Fair Trade சட்டப்படி SK Square குறைஞ்சது 20% வெச்சிருக்கணும். அந்த வரம்பை தாண்டாத அதிகபட்ச அளவுக்கு இஷ்யூ பண்ணாங்க — அப்புறம் 20%-க்கு கொஞ்சம் கீழே போயிடுச்சு, அதனால பைபேக் வரலாம்.</span></div></div>
+ </div>
+</section>
+
+<!-- ============ BUSINESS MODEL ============ -->
+<section class="tab" id="t-bm">
+ <h2><span class="en">Business model map</span><span class="ta">பிசினஸ் மாடல் வரைபடம்</span></h2>
+ <p class="en" style="font-size:13px;color:var(--mute)">Tap any box for an explanation.</p>
+ <p class="ta" style="font-size:13px;color:var(--mute)">விளக்கம் பார்க்க எந்த பெட்டியையும் தொடுங்க.</p>
+ <div class="card" style="padding:8px">
+ <svg id="bmSvg" viewBox="0 0 360 640" width="100%" style="max-width:560px;display:block;margin:auto">
+  <defs><marker id="ar" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#8a94a6"/></marker></defs>
+  <g stroke="#8a94a6" stroke-width="1.6" marker-end="url(#ar)">
+   <line x1="180" y1="78" x2="180" y2="100"/><line x1="180" y1="150" x2="180" y2="172"/>
+   <line x1="180" y1="240" x2="52" y2="270"/><line x1="180" y1="240" x2="137" y2="270"/><line x1="180" y1="240" x2="223" y2="270"/><line x1="180" y1="240" x2="308" y2="270"/>
+   <line x1="52" y1="352" x2="170" y2="384"/><line x1="137" y1="352" x2="175" y2="384"/><line x1="223" y1="352" x2="185" y2="384"/><line x1="308" y1="352" x2="190" y2="384"/>
+   <line x1="180" y1="430" x2="180" y2="452"/><line x1="180" y1="498" x2="180" y2="520"/><line x1="180" y1="566" x2="180" y2="588"/>
+  </g>
+  <g class="mapbox" data-k="cust"><rect x="20" y="14" width="320" height="64" rx="10" fill="#e9f1fd" stroke="#1f5fbf"/><text x="180" y="36" text-anchor="middle" font-size="13" font-weight="800" fill="#1f5fbf">CUSTOMERS</text><text x="180" y="54" text-anchor="middle" font-size="11">Nvidia · AMD · Google/ASICs · Hyperscalers</text><text x="180" y="69" text-anchor="middle" font-size="11">Phone & PC makers · Data-centre storage</text></g>
+  <g class="mapbox" data-k="chan"><rect x="40" y="100" width="280" height="50" rx="10" fill="#f1ebfb" stroke="#7a4cc2"/><text x="180" y="121" text-anchor="middle" font-size="12.5" font-weight="800" fill="#7a4cc2">CHANNEL</text><text x="180" y="139" text-anchor="middle" font-size="11">Direct sales + multi-year LTAs (~10 key clients)</text></g>
+  <g class="mapbox" data-k="core"><rect x="30" y="172" width="300" height="68" rx="12" fill="#fff2e6" stroke="#e8731a" stroke-width="2"/><text x="180" y="196" text-anchor="middle" font-size="15" font-weight="800" fill="#e8731a">SK hynix</text><text x="180" y="214" text-anchor="middle" font-size="11">Fabs: Icheon · Cheongju · Wuxi/Dalian (China)</text><text x="180" y="230" text-anchor="middle" font-size="11">Packaging: Cheongju P&T · Indiana (US, planned)</text></g>
+  <g class="mapbox" data-k="hbm"><rect x="10" y="270" width="84" height="82" rx="9" fill="#e7f6ee" stroke="#1d9a5b"/><text x="52" y="290" text-anchor="middle" font-size="12" font-weight="800" fill="#1d9a5b">HBM</text><text x="52" y="306" text-anchor="middle" font-size="10">AI GPU memory</text><text x="52" y="322" text-anchor="middle" font-size="10">~50% world</text><text x="52" y="337" text-anchor="middle" font-size="10">share (2026e)</text></g>
+  <g class="mapbox" data-k="srv"><rect x="96" y="270" width="82" height="82" rx="9" fill="#e4f5f5" stroke="#0f8b8d"/><text x="137" y="290" text-anchor="middle" font-size="11.5" font-weight="800" fill="#0f8b8d">Server DRAM</text><text x="137" y="306" text-anchor="middle" font-size="10">DDR5 RDIMM</text><text x="137" y="322" text-anchor="middle" font-size="10">SOCAMM2</text><text x="137" y="337" text-anchor="middle" font-size="10">ASP +~30% QoQ</text></g>
+  <g class="mapbox" data-k="mob"><rect x="182" y="270" width="82" height="82" rx="9" fill="#fdf5e1" stroke="#d99a0b"/><text x="223" y="290" text-anchor="middle" font-size="11.5" font-weight="800" fill="#8a6106">Mobile/PC</text><text x="223" y="306" text-anchor="middle" font-size="10">LPDDR5 · DDR5</text><text x="223" y="322" text-anchor="middle" font-size="10">GDDR7</text><text x="223" y="337" text-anchor="middle" font-size="10">Demand softer</text></g>
+  <g class="mapbox" data-k="nand"><rect x="268" y="270" width="84" height="82" rx="9" fill="#fdeaea" stroke="#d23b3b"/><text x="310" y="290" text-anchor="middle" font-size="11.5" font-weight="800" fill="#d23b3b">NAND/eSSD</text><text x="310" y="306" text-anchor="middle" font-size="10">27% of revenue</text><text x="310" y="322" text-anchor="middle" font-size="10">Solidigm (US)</text><text x="310" y="337" text-anchor="middle" font-size="10">eSSD 2× QoQ</text></g>
+  <text x="137" y="366" text-anchor="middle" font-size="10" fill="#5b6778">◄ DRAM 73% (₩57.9T) ►</text>
+  <g class="mapbox" data-k="rev"><rect x="60" y="384" width="240" height="46" rx="10" fill="#fff2e6" stroke="#e8731a"/><text x="180" y="404" text-anchor="middle" font-size="12.5" font-weight="800" fill="#e8731a">REVENUE 2Q26: ₩79.32T</text><text x="180" y="421" text-anchor="middle" font-size="11">+51% QoQ · +257% YoY</text></g>
+  <g class="mapbox" data-k="cost"><rect x="60" y="452" width="240" height="46" rx="10" fill="#f6f8fb" stroke="#8a94a6"/><text x="180" y="472" text-anchor="middle" font-size="12.5" font-weight="800" fill="#5b6778">COSTS</text><text x="180" y="489" text-anchor="middle" font-size="11">Gross margin 83% · fabs, wafers, R&D</text></g>
+  <g class="mapbox" data-k="prof"><rect x="60" y="520" width="240" height="46" rx="10" fill="#e7f6ee" stroke="#1d9a5b"/><text x="180" y="540" text-anchor="middle" font-size="12.5" font-weight="800" fill="#1d9a5b">OPERATING PROFIT ₩60.54T</text><text x="180" y="557" text-anchor="middle" font-size="11">OPM 76% · EBITDA ₩64.6T (81%)</text></g>
+  <g class="mapbox" data-k="sh"><rect x="30" y="588" width="300" height="46" rx="10" fill="#e9f1fd" stroke="#1f5fbf"/><text x="180" y="608" text-anchor="middle" font-size="12.5" font-weight="800" fill="#1f5fbf">REINVEST + SHAREHOLDERS</text><text x="180" y="625" text-anchor="middle" font-size="11">2026 capex: high-₩40T · FY25 dividend ₩3,000/sh</text></g>
+ </svg>
+ </div>
+ <div class="card" id="bmCard"><span class="en">Tap a box above.</span><span class="ta">மேல ஒரு பெட்டியை தொடுங்க.</span></div>
+ <div class="note b"><span class="en"><b>Revenue formula:</b> Revenue = Bits shipped × Average selling price (ASP). In 2Q26 prices did the heavy lifting: DRAM ASP +~30%, NAND ASP +mid-50% QoQ.</span><span class="ta"><b>வருவாய் ஃபார்முலா:</b> வருவாய் = அனுப்பின பிட்கள் × சராசரி விற்பனை விலை (ASP). 2Q26-ல விலைதான் பெரிய வேலை செஞ்சது: DRAM ASP +~30%, NAND ASP +50-களின் நடுவில் (QoQ).</span></div>
+ <h3><span class="en">Revenue engine — drivers</span><span class="ta">வருவாய் இன்ஜின் — காரணிகள்</span></h3>
+ <div class="tw"><table>
+  <tr><th><span class="en">Driver</span><span class="ta">காரணி</span></th><th><span class="en">2Q26 move</span><span class="ta">2Q26 மாற்றம்</span></th><th><span class="en">3Q26 guide</span><span class="ta">3Q26 வழிகாட்டல்</span></th><th><span class="en">Effect</span><span class="ta">விளைவு</span></th></tr>
+  <tr><td><span class="en">DRAM bits</span><span class="ta">DRAM பிட்கள்</span></td><td><span class="en">+high single digit %</span><span class="ta">+ஒற்றை இலக்கத்தின் மேல் பகுதி %</span></td><td>~+10%</td><td><span class="en">Volume led by HBM, server DRAM, SOCAMM</span><span class="ta">HBM, சர்வர் DRAM, SOCAMM வால்யூம்</span></td></tr>
+  <tr><td>DRAM ASP</td><td>~+30%</td><td>n/a</td><td><span class="en">Shortage pricing</span><span class="ta">பற்றாக்குறை விலை</span></td></tr>
+  <tr><td><span class="en">NAND bits</span><span class="ta">NAND பிட்கள்</span></td><td><span class="en">+mid-teens %</span><span class="ta">+10-களின் நடுவில் %</span></td><td><span class="en">low single digit</span><span class="ta">குறைஞ்ச ஒற்றை இலக்கம்</span></td><td><span class="en">eSSD for AI data centres</span><span class="ta">AI டேட்டா சென்டர் eSSD</span></td></tr>
+  <tr><td>NAND ASP</td><td><span class="en">+mid-50%</span><span class="ta">+50-களின் நடுவில் %</span></td><td>n/a</td><td><span class="en">NAND share rose to 27%</span><span class="ta">NAND பங்கு 27% ஆச்சு</span></td></tr>
+  <tr><td><span class="en">Product mix</span><span class="ta">ப்ராடக்ட் கலவை</span></td><td><span class="en">HBM4 shipments began; 1c-nm DRAM ramp</span><span class="ta">HBM4 அனுப்புதல் ஆரம்பம்; 1c-nm DRAM ஏற்றம்</span></td><td><span class="en">HBM4 broader ramp in 2H</span><span class="ta">2H-ல HBM4 பெரிய ஏற்றம்</span></td><td><span class="en">Higher value per bit</span><span class="ta">ஒவ்வொரு பிட்டுக்கும் அதிக மதிப்பு</span></td></tr>
+ </table></div>
+</section>
+
+<!-- ============ SEGMENTS ============ -->
+<section class="tab" id="t-seg">
+ <h2><span class="en">Segments</span><span class="ta">பிரிவுகள்</span></h2>
+ <div class="card"><div class="cw" style="height:250px"><canvas id="cMix"></canvas></div>
+ <p class="en" style="font-size:13px;color:var(--mute)">Revenue share by memory type (%). 2Q26 DRAM ₩57.9T / NAND ₩21.4T (calculated from the share split).</p>
+ <p class="ta" style="font-size:13px;color:var(--mute)">மெமரி வகை வாரியா வருவாய் பங்கு (%). 2Q26 DRAM ₩57.9T / NAND ₩21.4T (பங்கு விகிதத்துல இருந்து கணக்கிட்டது).</p></div>
+ <div class="tw"><table>
+  <tr><th><span class="en">Segment</span><span class="ta">பிரிவு</span></th><th><span class="en">Products</span><span class="ta">ப்ராடக்ட்ஸ்</span></th><th><span class="en">Used in</span><span class="ta">எங்க பயன்</span></th><th><span class="en">2026 status</span><span class="ta">2026 நிலை</span></th></tr>
+  <tr><td><b>HBM</b></td><td>HBM3E 12-Hi, HBM4, HBM4E <span class="en">(samples)</span><span class="ta">(சாம்பிள்)</span></td><td><span class="en">Nvidia/AMD GPUs, custom AI chips</span><span class="ta">Nvidia/AMD GPU, கஸ்டம் AI சிப்</span></td><td><span class="en">2026 capacity sold out; HBM4 mass shipments from 2Q26</span><span class="ta">2026 கெப்பாசிட்டி விற்றுத் தீர்ந்தது; 2Q26-ல இருந்து HBM4</span></td></tr>
+  <tr><td><b><span class="en">Server DRAM</span><span class="ta">சர்வர் DRAM</span></b></td><td>DDR5 RDIMM, SOCAMM2, 1c-nm DRAM</td><td><span class="en">AI & cloud servers</span><span class="ta">AI, கிளவுட் சர்வர்கள்</span></td><td><span class="en">SOCAMM2 sales grew sharply in 2Q26</span><span class="ta">2Q26-ல SOCAMM2 விற்பனை வேகமா உயர்ந்தது</span></td></tr>
+  <tr><td><b><span class="en">Mobile & PC DRAM</span><span class="ta">மொபைல் & PC DRAM</span></b></td><td>LPDDR5, DDR5, GDDR7</td><td><span class="en">Phones, laptops, graphics cards</span><span class="ta">போன், லேப்டாப், கிராஃபிக்ஸ் கார்டு</span></td><td><span class="en">Some softening in PC/phone demand</span><span class="ta">PC/போன் டிமாண்ட் கொஞ்சம் மந்தம்</span></td></tr>
+  <tr><td><b>NAND / eSSD</b></td><td><span class="en">Enterprise SSD (30TB+ via Solidigm), mobile NAND</span><span class="ta">என்டர்பிரைஸ் SSD (Solidigm மூலமா 30TB+), மொபைல் NAND</span></td><td><span class="en">AI data-centre storage, devices</span><span class="ta">AI டேட்டா சென்டர் சேமிப்பு</span></td><td><span class="en">eSSD revenue 2× QoQ; Solidigm high-capacity 3×; ~18.5% world NAND share (1Q26)</span><span class="ta">eSSD வருவாய் 2 மடங்கு; Solidigm 3 மடங்கு; உலக NAND பங்கு ~18.5% (1Q26)</span></td></tr>
+ </table></div>
+ <div class="note"><span class="en">SK hynix does not report HBM revenue as a separate number each quarter — it sits inside DRAM. What is disclosed: HBM revenue more than doubled in 2025, and Nvidia sales were ₩17.6T in 1H26 (+61.7% YoY), about 13% of 1H revenue.</span><span class="ta">SK hynix HBM வருவாயை தனியா ஒவ்வொரு காலாண்டும் சொல்றதில்ல — DRAM-க்குள்ளயே இருக்கும். தெரிஞ்சது: 2025-ல HBM வருவாய் ரெண்டு மடங்குக்கு மேல; 1H26-ல Nvidia விற்பனை ₩17.6T (+61.7%), 1H வருவாயில சுமார் 13%.</span></div>
+</section>
+
+<!-- ============ ROLE IN AI ============ -->
+<section class="tab" id="t-ai">
+ <h2><span class="en">Why AI needs SK hynix</span><span class="ta">AI-க்கு SK hynix ஏன் தேவை</span></h2>
+ <div class="card">
+  <svg viewBox="0 0 340 200" width="100%" style="max-width:520px;display:block;margin:auto">
+   <rect x="10" y="150" width="320" height="22" rx="4" fill="#f6f8fb" stroke="#8a94a6"/><text x="170" y="165" text-anchor="middle" font-size="10.5" fill="#5b6778">Silicon interposer (connects GPU and memory)</text>
+   <rect x="120" y="78" width="100" height="70" rx="6" fill="#e9f1fd" stroke="#1f5fbf" stroke-width="2"/><text x="170" y="110" text-anchor="middle" font-size="13" font-weight="800" fill="#1f5fbf">AI GPU</text><text x="170" y="127" text-anchor="middle" font-size="10">(e.g. Nvidia Rubin)</text>
+   <g fill="#e7f6ee" stroke="#1d9a5b">
+    <rect x="30" y="128" width="70" height="10"/><rect x="30" y="116" width="70" height="10"/><rect x="30" y="104" width="70" height="10"/><rect x="30" y="92" width="70" height="10"/><rect x="30" y="80" width="70" height="10"/><rect x="30" y="68" width="70" height="10"/><rect x="30" y="138" width="70" height="10" fill="#c9ecd8"/>
+    <rect x="240" y="128" width="70" height="10"/><rect x="240" y="116" width="70" height="10"/><rect x="240" y="104" width="70" height="10"/><rect x="240" y="92" width="70" height="10"/><rect x="240" y="80" width="70" height="10"/><rect x="240" y="68" width="70" height="10"/><rect x="240" y="138" width="70" height="10" fill="#c9ecd8"/>
+   </g>
+   <text x="65" y="60" text-anchor="middle" font-size="11" font-weight="800" fill="#1d9a5b">HBM stack</text><text x="275" y="60" text-anchor="middle" font-size="11" font-weight="800" fill="#1d9a5b">HBM stack</text>
+   <line x1="100" y1="113" x2="120" y2="113" stroke="#e8731a" stroke-width="3"/><line x1="220" y1="113" x2="240" y2="113" stroke="#e8731a" stroke-width="3"/>
+   <text x="170" y="30" text-anchor="middle" font-size="11.5" font-weight="700" fill="#e8731a">Thousands of short wires = huge bandwidth</text>
+   <text x="170" y="192" text-anchor="middle" font-size="10.5" fill="#5b6778">DRAM dies stacked & linked by TSVs (through-silicon vias)</text>
+  </svg>
+  <p class="en">An AI chip is only as fast as the data it can be fed. HBM stacks 8–16 DRAM dies vertically and sits millimetres from the GPU, giving far more bandwidth than normal memory. Each Nvidia Rubin unit carries <b>288GB of HBM4 across 8 stacks</b>. No HBM, no AI accelerator.</p>
+  <p class="ta">AI சிப்புக்கு எவ்ளோ வேகமா டேட்டா ஊட்ட முடியுதோ, அவ்ளோ வேகம்தான். HBM-ல 8–16 DRAM சிப்களை செங்குத்தா அடுக்கி, GPU பக்கத்துலயே மில்லிமீட்டர் தூரத்துல வெப்பாங்க — சாதாரண மெமரியை விட பல மடங்கு வேகம். ஒவ்வொரு Nvidia Rubin யூனிட்டுலயும் <b>8 ஸ்டாக்ல 288GB HBM4</b> இருக்கு. HBM இல்லைனா AI சிப் இல்ல.</p>
+ </div>
+ <h3><span class="en">HBM market share (bit output)</span><span class="ta">HBM சந்தைப் பங்கு (பிட் உற்பத்தி)</span></h3>
+ <div class="card"><div class="cw" style="height:240px"><canvas id="cHbm"></canvas></div>
+ <p class="en" style="font-size:13px;color:var(--mute)">2025 actual vs 2026 industry projection (%). Leadership stays, but Samsung is catching up.</p>
+ <p class="ta" style="font-size:13px;color:var(--mute)">2025 உண்மை vs 2026 கணிப்பு (%). லீடர்ஷிப் தொடருது, ஆனா Samsung நெருங்கி வருது.</p></div>
+ <div class="grid2">
+  <div class="card"><b class="en">Strengths in AI</b><b class="ta">AI-ல பலம்</b>
+   <ul class="r en"><li>First to market with each HBM generation since HBM2E; deep co-development with Nvidia.</li><li>A UBS estimate puts SK hynix at ~70% of HBM4 for Nvidia's Rubin platform.</li><li>Long-term agreements with ~10 key customers; ~70% of 2Q sales estimated to come from big tech / AI data centres.</li><li>Beyond HBM: SOCAMM2, high-capacity eSSD — AI needs storage too.</li></ul>
+   <ul class="r ta"><li>HBM2E-ல இருந்து ஒவ்வொரு தலைமுறையிலும் முதல்ல வந்தவங்க; Nvidia-வோட சேர்ந்து டெவலப் பண்றாங்க.</li><li>UBS கணிப்புப்படி Nvidia Rubin-க்கான HBM4-ல ~70% SK hynix.</li><li>~10 முக்கிய வாடிக்கையாளர்களோட நீண்டகால ஒப்பந்தம்; 2Q விற்பனையில ~70% பெரிய டெக் / AI டேட்டா சென்டர்ல இருந்துன்னு கணிப்பு.</li><li>HBM தவிர SOCAMM2, பெரிய eSSD — AI-க்கு சேமிப்பும் தேவை.</li></ul></div>
+  <div class="card"><b class="en">Watch-outs</b><b class="ta">கவனிக்க வேண்டியவை</b>
+   <ul class="r en"><li>Samsung was first to complete HBM4 validation and is targeting double HBM shipments in 2027.</li><li>Industry tracker TrendForce reported HBM4 interface-sync delays at SK hynix (June 2026); a mid-October report said HBM4 equipment orders were delayed.</li><li>Micron is gaining share (~21%) and sells to US hyperscalers.</li><li>The AI spending cycle itself: rate rises or funding stress at AI customers hit memory first.</li></ul>
+   <ul class="r ta"><li>HBM4 வேலிடேஷனை முதல்ல முடிச்சது Samsung; 2027-ல HBM ஷிப்மென்டை இரட்டிப்பாக்க இலக்கு.</li><li>SK hynix-ல HBM4 இன்டர்ஃபேஸ் தாமதம்னு TrendForce சொன்னது (ஜூன் 2026); அக்டோபர் நடுவில HBM4 எக்யூப்மென்ட் ஆர்டர் தாமதம்னு ஒரு செய்தி.</li><li>Micron பங்கை (~21%) அதிகரிக்குது.</li><li>AI செலவு சைக்கிளே: வட்டி உயர்வு, AI கம்பெனிகளோட ஃபண்டிங் சிக்கல் — முதல்ல அடி மெமரிக்குதான்.</li></ul></div>
+ </div>
+</section>
+
+<!-- ============ FINANCIALS ============ -->
+<section class="tab" id="t-fin">
+ <h2><span class="en">Quarterly performance (₩ trillion)</span><span class="ta">காலாண்டு செயல்பாடு (₩ டிரில்லியன்)</span></h2>
+ <div class="card cs"><div class="cw" style="height:300px"><canvas id="cQ"></canvas></div></div>
+ <div class="tw"><table>
+  <tr><th>₩ T</th><th class="n">2Q25</th><th class="n">3Q25</th><th class="n">4Q25</th><th class="n">1Q26</th><th class="n">2Q26</th></tr>
+  <tr><td><span class="en">Revenue</span><span class="ta">வருவாய்</span></td><td class="n">22.23</td><td class="n">24.45</td><td class="n">32.83</td><td class="n">52.58</td><td class="n"><b>79.32</b></td></tr>
+  <tr><td><span class="en">Operating profit</span><span class="ta">ஆப்பரேட்டிங் லாபம்</span></td><td class="n">9.21</td><td class="n">11.38</td><td class="n">19.17</td><td class="n">37.61</td><td class="n"><b>60.54</b></td></tr>
+  <tr><td><span class="en">Operating margin</span><span class="ta">ஆப்பரேட்டிங் மார்ஜின்</span></td><td class="n">41%</td><td class="n">47%</td><td class="n">58%</td><td class="n">72%</td><td class="n"><b>76%</b></td></tr>
+  <tr><td>EBITDA</td><td class="n">n/a</td><td class="n">n/a</td><td class="n">n/a</td><td class="n">n/a</td><td class="n"><b>64.6</b></td></tr>
+  <tr><td><span class="en">Net profit</span><span class="ta">நிகர லாபம்</span></td><td class="n">7.00</td><td class="n">12.60</td><td class="n">15.25</td><td class="n">40.35</td><td class="n"><b>93.92</b>†</td></tr>
+  <tr><td><span class="en">Gross margin</span><span class="ta">கிராஸ் மார்ஜின்</span></td><td class="n">54%</td><td class="n">n/a</td><td class="n">n/a</td><td class="n">79%</td><td class="n"><b>83%</b></td></tr>
+ </table></div>
+ <p class="en" style="font-size:12.5px;color:var(--mute)">† 2Q26 net profit includes ₩63.3T of investment gains (incl. the Kioxia stake) — a one-off; it is larger than operating profit for that reason. EBITDA is shown only where the company disclosed it.</p>
+ <p class="ta" style="font-size:12.5px;color:var(--mute)">† 2Q26 நிகர லாபத்துல ₩63.3T முதலீட்டு லாபம் (Kioxia பங்கு உட்பட) இருக்கு — இது ஒருமுறை மட்டும்; அதனாலதான் ஆப்பரேட்டிங் லாபத்தை விட அதிகம். கம்பெனி சொன்ன இடத்துல மட்டும் EBITDA காட்டியிருக்கோம்.</p>
+ <h3><span class="en">Annual view</span><span class="ta">வருடாந்திர பார்வை</span></h3>
+ <div class="tw"><table>
+  <tr><th>₩ T</th><th class="n">FY2024</th><th class="n">FY2025</th><th class="n">1H2026</th></tr>
+  <tr><td><span class="en">Revenue</span><span class="ta">வருவாய்</span></td><td class="n">66.19</td><td class="n">97.15</td><td class="n">131.90</td></tr>
+  <tr><td><span class="en">Operating profit</span><span class="ta">ஆப்பரேட்டிங் லாபம்</span></td><td class="n">23.47</td><td class="n">47.21</td><td class="n">98.15</td></tr>
+  <tr><td><span class="en">Operating margin</span><span class="ta">ஆப்பரேட்டிங் மார்ஜின்</span></td><td class="n">35%</td><td class="n">49%</td><td class="n">74%</td></tr>
+  <tr><td><span class="en">Net profit</span><span class="ta">நிகர லாபம்</span></td><td class="n">19.80</td><td class="n">42.95</td><td class="n">134.27†</td></tr>
+ </table></div>
+ <h3><span class="en">Balance sheet & ratios (30 Jun 2026)</span><span class="ta">பேலன்ஸ் ஷீட் & விகிதங்கள் (30 ஜூன் 2026)</span></h3>
+ <div class="kpis">
+  <div class="kpi"><div class="l"><span class="en">Cash & ST inv.</span><span class="ta">கேஷ் & குறுகிய முதலீடு</span></div><div class="v">₩88.0T</div></div>
+  <div class="kpi"><div class="l"><span class="en">Interest-bearing debt</span><span class="ta">வட்டி கடன்</span></div><div class="v">₩18.6T</div></div>
+  <div class="kpi"><div class="l"><span class="en">Net cash</span><span class="ta">நெட் கேஷ்</span></div><div class="v up">₩69.4T</div></div>
+  <div class="kpi"><div class="l"><span class="en">Debt / equity</span><span class="ta">கடன் / ஈக்விட்டி</span></div><div class="v">0.06</div></div>
+  <div class="kpi"><div class="l"><span class="en">P/E (trailing)</span><span class="ta">P/E (கடந்த 12 மாதம்)</span></div><div class="v">~9.6×</div><div class="s"><span class="en">5-yr median ~8.5×</span><span class="ta">5 வருட சராசரி ~8.5×</span></div></div>
+  <div class="kpi"><div class="l"><span class="en">P/E (forward)</span><span class="ta">P/E (எதிர்கால)</span></div><div class="v">~5×</div><div class="s">Micron ~7×</div></div>
+ </div>
+ <div class="note b"><span class="en">Ratio reading: zero financial stress — net cash is larger than a full quarter of revenue, and the ~₩40T from the ADR (received in July, i.e. 3Q26) is not yet in these numbers.</span><span class="ta">விகிதங்கள் சொல்றது: நிதி அழுத்தம் பூஜ்ஜியம் — நெட் கேஷ் ஒரு காலாண்டு வருவாயை விட அதிகம். ADR-ல வந்த ~₩40T (ஜூலை, அதாவது 3Q26) இன்னும் இந்த எண்களுக்குள்ள வரல.</span></div>
+</section>
+
+<!-- ============ CASH FLOW & WC ============ -->
+<section class="tab" id="t-cf">
+ <h2><span class="en">Cash flow (₩ trillion)</span><span class="ta">கேஷ் ஃப்ளோ (₩ டிரில்லியன்)</span></h2>
+ <div class="card cs"><div class="cw"><canvas id="cCf"></canvas></div></div>
+ <div class="tw"><table>
+  <tr><th>₩ T</th><th class="n">FY2025</th><th class="n">3Q25</th><th class="n">4Q25</th><th class="n">1Q26</th><th class="n">2Q26</th><th class="n">TTM Jun-26</th></tr>
+  <tr><td><span class="en">Cash from operations (CFO)</span><span class="ta">ஆப்பரேஷன் கேஷ் (CFO)</span></td><td class="n">53.37</td><td class="n">14.3</td><td class="n">20.9</td><td class="n">26.3</td><td class="n">65.7</td><td class="n">126.93</td></tr>
+  <tr><td><span class="en">Capex</span><span class="ta">கேபெக்ஸ்</span></td><td class="n">27.52</td><td class="n">n/a</td><td class="n">n/a</td><td class="n">n/a</td><td class="n">10.67</td><td class="n">35.23</td></tr>
+  <tr><td><span class="en">Free cash flow</span><span class="ta">ஃப்ரீ கேஷ் ஃப்ளோ</span></td><td class="n">25.85</td><td class="n">9.1</td><td class="n">8.6</td><td class="n">18.5</td><td class="n">54.3</td><td class="n">91.69</td></tr>
+  <tr><td><span class="en">CFO ÷ operating profit</span><span class="ta">CFO ÷ ஆப்பரேட்டிங் லாபம்</span></td><td class="n">1.13</td><td class="n">1.26</td><td class="n">1.09</td><td class="n">0.70</td><td class="n">1.09</td><td class="n">—</td></tr>
+ </table></div>
+ <p class="en" style="font-size:12.5px;color:var(--mute)">FY2025 and TTM capex derived as CFO − FCF. Investing CF is dominated by capex (2026 guide: high-₩40T range; capex-to-sales kept in the mid-30% range on a 3-year rolling basis). Financing CF: debt fell ₩0.7T in 2Q26; the ADR inflow (~₩40T) lands in 3Q26.</p>
+ <p class="ta" style="font-size:12.5px;color:var(--mute)">FY2025, TTM கேபெக்ஸ் = CFO − FCF. இன்வெஸ்டிங் CF-ல பெரும்பகுதி கேபெக்ஸ் (2026: ₩40T-களின் மேல் பகுதி; 3 வருட சராசரியில கேபெக்ஸ் விற்பனையில 30-களின் நடுவில்). ஃபைனான்சிங் CF: 2Q26-ல கடன் ₩0.7T குறைஞ்சது; ADR பணம் (~₩40T) 3Q26-ல வரும்.</p>
+
+ <h3><span class="en">Working capital</span><span class="ta">வொர்க்கிங் கேப்பிடல்</span></h3>
+ <div class="tw"><table>
+  <tr><th><span class="en">Days</span><span class="ta">நாட்கள்</span></th><th class="n">FY2024</th><th class="n">FY2025</th><th class="n">1Q26</th></tr>
+  <tr><td><span class="en">Receivable days (DSO)</span><span class="ta">வரவேண்டிய நாட்கள் (DSO)</span></td><td class="n">71.8</td><td class="n">68.4</td><td class="n">66.2</td></tr>
+  <tr><td><span class="en">Inventory days (DIO)</span><span class="ta">சரக்கு நாட்கள் (DIO)</span></td><td class="n">141.4</td><td class="n">135.6</td><td class="n">135.5</td></tr>
+  <tr><td><span class="en">Payable days (DPO)</span><span class="ta">கொடுக்க வேண்டிய நாட்கள் (DPO)</span></td><td class="n">n/a</td><td class="n">n/a</td><td class="n">n/a</td></tr>
+  <tr><td><span class="en">Gross operating cycle (DSO + DIO)</span><span class="ta">ஆப்பரேட்டிங் சைக்கிள் (DSO + DIO)</span></td><td class="n">213.2</td><td class="n">204.0</td><td class="n">201.7</td></tr>
+  <tr><td><span class="en">Cash conversion cycle</span><span class="ta">கேஷ் கன்வர்ஷன் சைக்கிள்</span></td><td class="n">n/a</td><td class="n">n/a</td><td class="n">n/a</td></tr>
+ </table></div>
+ <p class="en" style="font-size:12.5px;color:var(--mute)">Payable days were not available in the filings reviewed, so the full cash conversion cycle (DSO + DIO − DPO) is marked n/a; the gross operating cycle is shown instead.</p>
+ <p class="ta" style="font-size:12.5px;color:var(--mute)">பார்த்த ஃபைலிங்குகள்ல DPO கிடைக்கல. அதனால முழு கேஷ் கன்வர்ஷன் சைக்கிள் n/a; பதிலா ஆப்பரேட்டிங் சைக்கிள் காட்டியிருக்கோம்.</p>
+ <div class="card">
+  <b class="en">What working capital tells us about cash conversion</b><b class="ta">வொர்க்கிங் கேப்பிடல் கேஷ் கன்வர்ஷன் பத்தி என்ன சொல்லுது</b>
+  <ul class="r en">
+   <li><b>Receivables exploded:</b> ₩18.2T (Dec 25) → ₩33.8T (Mar 26) in one quarter as sales jumped. That's why CFO/OP dipped to 0.70 in 1Q26.</li>
+   <li><b>2Q26:</b> working capital absorbed ₩32.24T of cash, yet CFO still hit ₩65.7T — profits are big enough to fund the build-up.</li>
+   <li><b>Days are improving:</b> DSO 71.8 → 66.2, DIO 141 → 135 — the build-up is from higher sales value, not slower collection. Debtors are mostly Nvidia and hyperscalers (strong credit).</li>
+   <li><b>Inventory is lean for memory:</b> ₩16.0T (Mar 26). In a downturn, the warning sign would be inventory days rising while prices fall — watch this every quarter.</li>
+  </ul>
+  <ul class="r ta">
+   <li><b>வரவேண்டிய பணம் வெடிச்சது:</b> விற்பனை தாவினதால ஒரே காலாண்டுல ₩18.2T (டிச 25) → ₩33.8T (மார் 26). அதனாலதான் 1Q26-ல CFO/OP 0.70-க்கு இறங்கியது.</li>
+   <li><b>2Q26:</b> வொர்க்கிங் கேப்பிடல் ₩32.24T கேஷை உறிஞ்சியும், CFO ₩65.7T — லாபம் அவ்ளோ பெருசு.</li>
+   <li><b>நாட்கள் மேம்படுது:</b> DSO 71.8 → 66.2, DIO 141 → 135 — வசூல் மெதுவாகல, விற்பனை மதிப்பு கூடினதால வந்த உயர்வு. கடனாளிகள் பெரும்பாலும் Nvidia, ஹைப்பர்ஸ்கேலர்கள் (நம்பகமானவங்க).</li>
+   <li><b>சரக்கு கட்டுக்குள்ள:</b> ₩16.0T (மார் 26). சரிவு காலத்துல விலை இறங்கும்போது சரக்கு நாட்கள் ஏறுதான்னு ஒவ்வொரு காலாண்டும் பாருங்க — அதுதான் எச்சரிக்கை.</li>
+  </ul>
+ </div>
+</section>
+
+<!-- ============ 6 PILLARS ============ -->
+<section class="tab" id="t-pil">
+ <h2><span class="en">CB 6-Pillar score (CBF26)</span><span class="ta">CB 6-தூண் மதிப்பெண் (CBF26)</span></h2>
+ <p class="en" style="font-size:13px;color:var(--mute)">Tap a column to jump to its explanation.</p>
+ <p class="ta" style="font-size:13px;color:var(--mute)">விளக்கத்துக்கு ஒரு தூணை தொடுங்க.</p>
+ <div class="card" style="padding:8px">
+  <svg id="temple" viewBox="0 0 360 330" width="100%" style="max-width:560px;display:block;margin:auto">
+   <polygon points="180,10 20,78 340,78" fill="#e8731a"/>
+   <text x="180" y="50" text-anchor="middle" font-size="12" fill="#fff" font-weight="700">CB SCORE</text>
+   <text x="180" y="72" text-anchor="middle" font-size="20" fill="#fff" font-weight="800">76 / 100</text>
+   <rect x="16" y="80" width="328" height="26" fill="#fff2e6" stroke="#e8731a"/>
+   <text x="180" y="98" text-anchor="middle" font-size="12" font-weight="800" fill="#a44c08">SK hynix · 2Q26 (≈ Q1FY27)</text>
+   <g id="cols"></g>
+   <rect x="16" y="272" width="328" height="10" fill="#d9dee6"/><rect x="8" y="282" width="344" height="10" fill="#c9d0db"/>
+   <g id="clab"></g>
+  </svg>
+ </div>
+ <div id="plCards"></div>
+</section>
+
+<!-- ============ MARKET ACTIVITY ============ -->
+<section class="tab" id="t-mkt">
+ <h2><span class="en">ADR price since listing (US$)</span><span class="ta">லிஸ்டிங்குக்கு பின் ADR விலை (US$)</span></h2>
+ <div class="card cs"><div class="cw"><canvas id="cPx"></canvas></div>
+ <p class="en" style="font-size:12.5px;color:var(--mute)">Key closing/trading prints, not a daily series. Dashed line = $149 offer price. 52-week range $124.80–$199.87.</p>
+ <p class="ta" style="font-size:12.5px;color:var(--mute)">முக்கிய நாட்களோட விலை மட்டும், தினசரி தொடர் இல்ல. கோடு = $149 ஆஃபர் விலை. 52 வார வரம்பு $124.80–$199.87.</p></div>
+ <h3><span class="en">Reasons for the moves</span><span class="ta">விலை நகர்வுக்கு காரணங்கள்</span></h3>
+ <div class="card"><div class="tl">
+  <div><b>10 Jul · +12.8%</b><span class="en">Strong debut on 7× demand; first chance for many US funds to own SK hynix.</span><span class="ta">7 மடங்கு டிமாண்ட்; நிறைய US ஃபண்டுகளுக்கு SK hynix வாங்க முதல் வாய்ப்பு.</span></div>
+  <div><b>29 Jul · −9%</b><span class="en">2Q26 was a record but ~5% below forecasts (OP ₩60.5T vs ₩64.1T expected); ADR closed $130.17.</span><span class="ta">2Q26 சாதனைதான், ஆனா எதிர்பார்ப்பை விட ~5% குறைவு (OP ₩60.5T vs எதிர்பார்ப்பு ₩64.1T); ADR $130.17-ல க்ளோஸ்.</span></div>
+  <div><b>Aug–early Oct · rally to ~$195</b><span class="en">Tight memory supply, Micron's strong results, analyst initiations with $200–$300 targets; near the $199.87 high.</span><span class="ta">மெமரி பற்றாக்குறை, Micron-ஓட நல்ல ரிசல்ட், $200–$300 டார்கெட்டோட அனலிஸ்ட் கவரேஜ்; $199.87 உச்சத்துக்கு அருகே.</span></div>
+  <div><b>6 Oct · −4%</b><span class="en">Caution before Korean Q3 results (currency, bonus costs).</span><span class="ta">கொரிய Q3 ரிசல்ட்டுக்கு முன் எச்சரிக்கை (கரன்சி, போனஸ் செலவு).</span></div>
+  <div><b>12–13 Oct · −5%</b><span class="en">China's CXMT reported progress on 4F² DRAM cells — fear of more Chinese supply later.</span><span class="ta">சீனாவோட CXMT 4F² DRAM-ல முன்னேற்றம்னு அறிவிப்பு — பின்னாடி சீன சப்ளை அதிகரிக்குமோன்னு பயம்.</span></div>
+  <div><b>14 Oct · −6.1% → $147.55</b><span class="en">Report of delayed HBM4 equipment orders; 7th straight fall in New York.</span><span class="ta">HBM4 எக்யூப்மென்ட் ஆர்டர் தாமதம்னு செய்தி; நியூயார்க்ல தொடர்ந்து 7-வது சரிவு.</span></div>
+  <div><b>15 Oct · ~$137–139</b><span class="en">Hot US inflation revived Fed rate-hike bets and AI-funding doubts; Seoul shares −11.4% to ₩1,257,000, KOSPI −7.8%. ADR now below the $149 offer price.</span><span class="ta">அமெரிக்க பணவீக்கம் அதிகம் → Fed வட்டி உயர்வு பயம், AI ஃபண்டிங் சந்தேகம்; சியோல் பங்கு −11.4% → ₩12,57,000, KOSPI −7.8%. ADR இப்போ $149 ஆஃபர் விலைக்கு கீழே.</span></div>
+ </div></div>
+</section>
+
+<!-- ============ TRIGGERS & CYCLE ============ -->
+<section class="tab" id="t-tc">
+ <h2><span class="en">Cycle clock</span><span class="ta">சைக்கிள் கடிகாரம்</span></h2>
+ <div class="card" style="padding:8px">
+  <svg viewBox="0 0 340 260" width="100%" style="max-width:460px;display:block;margin:auto">
+   <g transform="translate(170,125)">
+    <path d="M0,0 L0,-100 A100,100 0 0,1 95.1,-30.9 Z" fill="#fdf5e1" stroke="#fff" stroke-width="2"/>
+    <path d="M0,0 L95.1,-30.9 A100,100 0 0,1 58.8,80.9 Z" fill="#e7f6ee" stroke="#fff" stroke-width="2"/>
+    <path d="M0,0 L58.8,80.9 A100,100 0 0,1 -58.8,80.9 Z" fill="#e4f5f5" stroke="#fff" stroke-width="2"/>
+    <path d="M0,0 L-58.8,80.9 A100,100 0 0,1 -95.1,-30.9 Z" fill="#fff2e6" stroke="#fff" stroke-width="2"/>
+    <path d="M0,0 L-95.1,-30.9 A100,100 0 0,1 0,-100 Z" fill="#fdeaea" stroke="#fff" stroke-width="2"/>
+    <text x="40" y="-52" font-size="10.5" font-weight="700" text-anchor="middle">P1 Trough</text>
+    <text x="62" y="18" font-size="10.5" font-weight="700" text-anchor="middle">P2 Early</text>
+    <text x="0" y="72" font-size="10.5" font-weight="700" text-anchor="middle">P3 Expansion</text>
+    <text x="-62" y="18" font-size="10.5" font-weight="800" text-anchor="middle" fill="#a44c08">P4 Peak</text>
+    <text x="-40" y="-52" font-size="10.5" font-weight="700" text-anchor="middle">P5 Down</text>
+    <line x1="0" y1="0" x2="-78" y2="24" stroke="#16202e" stroke-width="4" stroke-linecap="round"/>
+    <circle r="7" fill="#16202e"/>
+    <circle cx="-88" cy="-48" r="8" fill="#1f5fbf" stroke="#fff" stroke-width="2"/>
+   </g>
+   <text x="170" y="246" text-anchor="middle" font-size="11" fill="#5b6778">Pointer = memory sector (P4) · Blue dot = stock (Weinstein Stage 3)</text>
+  </svg>
+ </div>
+ <div class="kpis">
+  <div class="kpi"><div class="l">CY</div><div class="v">50</div><div class="s"><span class="en">Sector 53 · Stock 46</span><span class="ta">துறை 53 · பங்கு 46</span></div></div>
+  <div class="kpi"><div class="l">TG</div><div class="v">48</div><div class="s"><span class="en">+3.05 vs −3.25 points</span><span class="ta">+3.05 vs −3.25 புள்ளி</span></div></div>
+ </div>
+ <div class="card">
+  <b class="en">How the cycle score was built</b><b class="ta">சைக்கிள் மதிப்பெண் எப்படி</b>
+  <ul class="r en">
+   <li><b>Cycle type:</b> commodity/spread (memory pricing) 60% + structural S-curve (HBM, "rapid adoption") 40%.</li>
+   <li><b>Sector P4 (35):</b> record margins (76% OPM, 83% gross), new capacity announced across all three makers (Yongin, P&T7, Samsung targeting 2× HBM in 2027), and the P/E looks cheap (~5× forward). Some trackers see memory revenue peaking in 2027. Blended with HBM rapid adoption (80) → <b>53</b>.</li>
+   <li><b>Stock (46):</b> lifecycle scaling 80 · margins at all-time high 40 · valuation capped at 30 by the cyclical P/E trap · price Stage 3 (top area, below offer price, whipsawing) 35.</li>
+   <li class="dn"><b>⚠ Cyclical P/E trap flagged:</b> peak margins + low P/E is the classic late-cycle pattern in memory.</li>
+  </ul>
+  <ul class="r ta">
+   <li><b>சைக்கிள் வகை:</b> கமாடிட்டி/விலை (மெமரி விலை) 60% + கட்டமைப்பு வளர்ச்சி (HBM வேகமான ஏற்பு) 40%.</li>
+   <li><b>துறை P4 (35):</b> சாதனை மார்ஜின் (76% OPM, 83% கிராஸ்), மூணு கம்பெனிகளும் புது கெப்பாசிட்டி அறிவிப்பு (யோங்இன், P&T7, Samsung 2027-ல HBM 2 மடங்கு), P/E மலிவா தெரியுது (~5×). மெமரி வருவாய் 2027-ல உச்சம்னு சிலர் கணிப்பு. HBM ஏற்பு (80)-ஓட சேர்த்து → <b>53</b>.</li>
+   <li><b>பங்கு (46):</b> வளர்ச்சி நிலை 80 · மார்ஜின் உச்சத்துல 40 · P/E பொறியால மதிப்பீடு 30 · விலை Stage 3 (உச்சப் பகுதி, ஆஃபருக்கு கீழே, ஆட்டம்) 35.</li>
+   <li class="dn"><b>⚠ சைக்கிள் P/E பொறி:</b> உச்ச மார்ஜின் + குறைஞ்ச P/E — மெமரியில இது சைக்கிள் உச்சத்தோட பழைய அடையாளம்.</li>
+  </ul>
+ </div>
+ <h3><span class="en">Trigger table</span><span class="ta">ட்ரிகர் அட்டவணை</span></h3>
+ <div class="tw"><table style="min-width:760px">
+  <tr><th><span class="en">Trigger</span><span class="ta">ட்ரிகர்</span></th><th>+/−</th><th class="n">I</th><th class="n">C</th><th class="n">W</th><th class="n">P</th><th class="n"><span class="en">Pts</span><span class="ta">புள்ளி</span></th><th><span class="en">What to watch</span><span class="ta">என்ன பார்க்கணும்</span></th><th><span class="en">Date</span><span class="ta">தேதி</span></th></tr>
+  <tr><td><span class="en">Long-term agreements with ~10 key customers</span><span class="ta">~10 வாடிக்கையாளர்களோட நீண்டகால ஒப்பந்தம்</span></td><td class="up">+</td><td class="n">4</td><td class="n">0.7</td><td class="n">0.7</td><td class="n">0.7</td><td class="n"><b>1.37</b></td><td><span class="en">Contract length, price-floor terms</span><span class="ta">ஒப்பந்த காலம், குறைந்தபட்ச விலை</span></td><td>Jul 2026</td></tr>
+  <tr><td><span class="en">HBM4 volume ramp for Nvidia Rubin (2H26)</span><span class="ta">Nvidia Rubin-க்கு HBM4 ஏற்றம் (2H26)</span></td><td class="up">+</td><td class="n">4</td><td class="n">0.7</td><td class="n">1.0</td><td class="n">0.4</td><td class="n"><b>1.12</b></td><td><span class="en">HBM4 share in Q3/Q4 calls</span><span class="ta">Q3/Q4 கால்ல HBM4 பங்கு</span></td><td>Jul 2026</td></tr>
+  <tr><td><span class="en">Buyback / higher payouts (to restore SK Square's 20%)</span><span class="ta">பைபேக் / அதிக டிவிடெண்ட் (SK Square 20% மீட்க)</span></td><td class="up">+</td><td class="n">2</td><td class="n">0.4</td><td class="n">0.7</td><td class="n">1.0</td><td class="n"><b>0.56</b></td><td><span class="en">Board announcement</span><span class="ta">போர்டு அறிவிப்பு</span></td><td>Aug 2026</td></tr>
+  <tr><td><span class="en">Index/fund rebalancing inflows (not in top 3)</span><span class="ta">இண்டெக்ஸ்/ஃபண்ட் வரவு (டாப் 3-ல இல்ல)</span></td><td class="up">+</td><td class="n">2</td><td class="n">0.4</td><td class="n">1.0</td><td class="n">0.7</td><td class="n">0.56</td><td><span class="en">Rebalance dates</span><span class="ta">ரீபேலன்ஸ் தேதி</span></td><td>Oct 2026</td></tr>
+  <tr><td><span class="en">New fab wave → capacity glut (Yongin, new fab approvals, Samsung 2× HBM 2027)</span><span class="ta">புது ஃபேப் அலை → அதிக கெப்பாசிட்டி</span></td><td class="dn">−</td><td class="n">4</td><td class="n">0.7</td><td class="n">0.4</td><td class="n">1.0</td><td class="n"><b>1.12</b></td><td><span class="en">2027 capex guides, DRAM contract prices</span><span class="ta">2027 கேபெக்ஸ், DRAM ஒப்பந்த விலை</span></td><td>Oct 2026</td></tr>
+  <tr><td><span class="en">HBM4 qualification / equipment-order delay reports</span><span class="ta">HBM4 வேலிடேஷன் / எக்யூப்மென்ட் தாமத செய்தி</span></td><td class="dn">−</td><td class="n">3</td><td class="n">0.4</td><td class="n">1.0</td><td class="n">1.0</td><td class="n"><b>1.20</b></td><td><span class="en">Company clarification at Q3 call</span><span class="ta">Q3 கால்ல கம்பெனி விளக்கம்</span></td><td>Jun & Oct 2026</td></tr>
+  <tr><td><span class="en">AI funding stress / US rate-hike fears</span><span class="ta">AI ஃபண்டிங் அழுத்தம் / US வட்டி உயர்வு பயம்</span></td><td class="dn">−</td><td class="n">3</td><td class="n">0.4</td><td class="n">0.7</td><td class="n">0.7</td><td class="n"><b>0.59</b></td><td><span class="en">Hyperscaler capex guides, Fed</span><span class="ta">ஹைப்பர்ஸ்கேலர் கேபெக்ஸ், Fed</span></td><td>15 Oct 2026</td></tr>
+  <tr><td><span class="en">China CXMT 4F² DRAM progress</span><span class="ta">சீன CXMT 4F² DRAM முன்னேற்றம்</span></td><td class="dn">−</td><td class="n">3</td><td class="n">0.4</td><td class="n">0.4</td><td class="n">0.7</td><td class="n"><b>0.34</b></td><td><span class="en">DDR5 RDIMM launch by end-2026</span><span class="ta">2026 கடைசிக்குள் DDR5 RDIMM வெளியீடு</span></td><td>12 Oct 2026</td></tr>
+ </table></div>
+ <p class="en" style="font-size:12.5px;color:var(--mute)">TG = 50 + 8 × (1.37 + 1.12 + 0.56) − 8 × (1.12 + 1.20 + 0.59 + 0.34) = 48. Gate: the capacity-glut trigger (I 4, C 0.7) caps CB Conviction at 50.</p>
+ <p class="ta" style="font-size:12.5px;color:var(--mute)">TG = 50 + 8 × (1.37 + 1.12 + 0.56) − 8 × (1.12 + 1.20 + 0.59 + 0.34) = 48. கேட்: அதிக கெப்பாசிட்டி ட்ரிகர் (I 4, C 0.7) காரணமா CB Conviction 50-க்கு மேல போகாது.</p>
+ <div class="note b"><b class="en">What would change this view</b><b class="ta">இந்த பார்வையை மாத்துறது எது</b>
+  <ul class="r en" style="margin-top:6px"><li>LTAs proven to carry price floors → memory becomes less cyclical (CY up).</li><li>Q3 call confirms HBM4 on schedule with a large Rubin share (TG up).</li><li>DRAM contract prices roll over while inventory days rise (CY down to P5).</li></ul>
+  <ul class="r ta" style="margin-top:6px"><li>நீண்டகால ஒப்பந்தங்கள்ல குறைந்தபட்ச விலை இருக்குன்னு உறுதியானா → மெமரி சைக்கிள் குறையும் (CY உயரும்).</li><li>Q3 கால்ல HBM4 சரியான நேரத்துல, பெரிய Rubin பங்குன்னு உறுதியானா (TG உயரும்).</li><li>DRAM விலை இறங்கி, சரக்கு நாட்கள் ஏறினா (CY P5-க்கு இறங்கும்).</li></ul></div>
+ <h3><span class="en">Upcoming</span><span class="ta">வரவிருக்கும் நிகழ்வுகள்</span></h3>
+ <div class="card"><div class="tl">
+  <div><b><span class="en">Late Oct 2026</span><span class="ta">அக் 2026 கடைசி</span></b><span class="en">Q3 2026 results — first quarter including ADR cash.</span><span class="ta">Q3 2026 ரிசல்ட் — ADR பணம் சேர்ந்த முதல் காலாண்டு.</span></div>
+  <div><b>2H 2026</b><span class="en">Nvidia Rubin ramp; HBM4 broader shipments.</span><span class="ta">Nvidia Rubin ஏற்றம்; HBM4 பெரிய ஷிப்மென்ட்.</span></div>
+  <div><b><span class="en">Early 2027</span><span class="ta">2027 ஆரம்பம்</span></b><span class="en">Yongin Y1 clean room starts; P&T7 and Y1 reach volume during 2027.</span><span class="ta">யோங்இன் Y1 கிளீன் ரூம் ஆரம்பம்; 2027-ல P&T7, Y1 முழு உற்பத்தி.</span></div>
+ </div></div>
+</section>
+
+<!-- ============ ANALYSTS ============ -->
+<section class="tab" id="t-an">
+ <h2><span class="en">Analysts' rating (third-party views)</span><span class="ta">அனலிஸ்ட் ரேட்டிங் (மூன்றாம் தரப்பு கருத்து)</span></h2>
+ <div class="kpis">
+  <div class="kpi"><div class="l"><span class="en">Consensus</span><span class="ta">பொது கருத்து</span></div><div class="v">Strong Buy / Buy</div><div class="s"><span class="en">~15 analysts</span><span class="ta">~15 அனலிஸ்ட்கள்</span></div></div>
+  <div class="kpi"><div class="l"><span class="en">Avg target</span><span class="ta">சராசரி டார்கெட்</span></div><div class="v">~$252–253</div><div class="s"><span class="en">vs ~$139 (15 Oct)</span><span class="ta">vs ~$139 (15 அக்)</span></div></div>
+  <div class="kpi"><div class="l"><span class="en">Range</span><span class="ta">வரம்பு</span></div><div class="v">$152–$355</div><div class="s"><span class="en">varies by data provider</span><span class="ta">டேட்டா தருபவர் பொறுத்து</span></div></div>
+  <div class="kpi"><div class="l"><span class="en">Split</span><span class="ta">பிரிவு</span></div><div class="v">4 / 9 / 2</div><div class="s">Strong Buy / Buy / Hold</div></div>
+ </div>
+ <div class="card cs"><div class="cw" style="height:260px"><canvas id="cAn"></canvas></div></div>
+ <div class="tw"><table>
+  <tr><th><span class="en">Firm</span><span class="ta">நிறுவனம்</span></th><th><span class="en">Rating</span><span class="ta">ரேட்டிங்</span></th><th class="n"><span class="en">Target</span><span class="ta">டார்கெட்</span></th><th><span class="en">Date</span><span class="ta">தேதி</span></th></tr>
+  <tr><td>Barclays</td><td>Overweight (Buy)</td><td class="n">$300</td><td>6 Oct 2026</td></tr>
+  <tr><td>Weiss Ratings</td><td>Hold (C)</td><td class="n">—</td><td>2 Oct 2026</td></tr>
+  <tr><td>Wolfe Research</td><td>Outperform</td><td class="n">$200 → $250</td><td>23 Sep 2026</td></tr>
+  <tr><td>Bank of America</td><td>Buy</td><td class="n">$250 → $268</td><td>14 Sep 2026</td></tr>
+  <tr><td>J.P. Morgan</td><td>Buy (initiation)</td><td class="n">$245</td><td>9 Sep 2026</td></tr>
+  <tr><td>Needham</td><td>Buy</td><td class="n">$200 → $220</td><td>24 Aug 2026</td></tr>
+  <tr><td>Cantor Fitzgerald</td><td>Overweight</td><td class="n">$300</td><td>Jul 2026</td></tr>
+  <tr><td>RBC Capital</td><td>Outperform</td><td class="n">$200</td><td>Jul 2026</td></tr>
+ </table></div>
+ <div class="note r"><span class="en">These are brokers' views, not CB Research's. Targets were mostly set when the ADR traded at $180–$195; several may be revised after Q3 results. Note the gap: average target ~80% above the current price usually means either analysts lag the selloff or the market is pricing a cycle peak.</span><span class="ta">இவை ப்ரோக்கர்களோட கருத்து, CB Research-ஓடது இல்ல. ADR $180–$195-ல இருந்தப்போ பெரும்பாலான டார்கெட் போட்டது; Q3-க்கு பின் மாறலாம். கவனிங்க: சராசரி டார்கெட் தற்போதைய விலையை விட ~80% அதிகம்னா, ஒண்ணு அனலிஸ்ட்கள் சரிவை பின்தொடரல, இல்லைனா சந்தை சைக்கிள் உச்சத்தை விலையில போடுது.</span></div>
+</section>
+
+<!-- ============ SELF-CHECK ============ -->
+<section class="tab" id="t-sc">
+ <h2><span class="en">CB Investor Self-check</span><span class="ta">CB முதலீட்டாளர் சுய சோதனை</span></h2>
+ <div class="card"><div style="display:flex;justify-content:space-between;align-items:center;gap:8px"><b class="en">Overall</b><b class="ta">மொத்தம்</b><span id="scAll" style="font-weight:800"></span></div><div class="bar" style="margin-top:6px"><i id="scAllBar"></i></div>
+ <p style="font-size:12.5px;color:var(--mute);margin:8px 0 0"><span class="en">This only counts how many of your own conditions line up. It is not a recommendation.</span><span class="ta">உங்க சொந்த நிபந்தனைகள்ல எத்தனை பொருந்துதுன்னு எண்ணிக்கை மட்டும். இது பரிந்துரை இல்ல.</span></p></div>
+ <div id="scBody"></div>
+ <div class="card"><b class="en">5 · My own conditions (up to 8)</b><b class="ta">5 · என் சொந்த நிபந்தனைகள் (8 வரை)</b>
+  <div class="sug" id="scSug"></div>
+  <div style="display:flex;gap:6px;margin-top:6px"><input id="scNew" style="flex:1;min-width:0;border:1px solid var(--line);border-radius:8px;padding:8px;font-family:inherit"><button class="btn f" onclick="scAdd()">+</button></div>
+  <div id="scOwn" style="margin-top:6px"></div>
+  <div class="bar" style="margin-top:8px"><i id="scOwnBar"></i></div><div id="scOwnTxt" style="font-size:12.5px;color:var(--mute);margin-top:4px"></div>
+ </div>
+ <button class="btn" onclick="scClear()"><span class="en">Clear all ticks</span><span class="ta">எல்லா டிக்கையும் அழி</span></button>
+</section>
+
+<!-- ============ MANAGEMENT ============ -->
+<section class="tab" id="t-mg">
+ <h2><span class="en">Management & Board</span><span class="ta">நிர்வாகம் & போர்டு</span></h2>
+ <div class="tw"><table>
+  <tr><th><span class="en">Name</span><span class="ta">பெயர்</span></th><th><span class="en">Role</span><span class="ta">பொறுப்பு</span></th><th><span class="en">Notes</span><span class="ta">குறிப்பு</span></th></tr>
+  <tr><td><b>Chey Tae-won</b></td><td><span class="en">Chairman, SK Group (Chairman & CEO, SK Inc.)</span><span class="ta">தலைவர், SK Group (SK Inc. தலைவர் & CEO)</span></td><td><span class="en">Led the New York listing and investor meetings; key relationship with Nvidia's Jensen Huang.</span><span class="ta">நியூயார்க் லிஸ்டிங், முதலீட்டாளர் சந்திப்பை வழிநடத்தினார்; Nvidia Jensen Huang-ஓட நெருங்கிய உறவு.</span></td></tr>
+  <tr><td><b>Kwak Noh-jung</b></td><td><span class="en">President & CEO, SK hynix</span><span class="ta">தலைவர் & CEO, SK hynix</span></td><td><span class="en">CEO since 2022 (co-CEO first); earlier acting CEO of Solidigm. Steered HBM leadership and the ADR.</span><span class="ta">2022 முதல் CEO (முதல்ல கோ-CEO); முன்பு Solidigm-ஓட இடைக்கால CEO. HBM லீடர்ஷிப், ADR இரண்டையும் வழிநடத்தினார்.</span></td></tr>
+  <tr><td>CFO</td><td><span class="en">Chief Financial Officer</span><span class="ta">தலைமை நிதி அதிகாரி</span></td><td>n/a</td></tr>
+  <tr><td>Jeong-Won Kim</td><td><span class="en">Independent director</span><span class="ta">சுயாதீன இயக்குநர்</span></td><td><span class="en">Audit & Nominating Committees (Mar 2026)</span><span class="ta">ஆடிட் & நாமினேட்டிங் கமிட்டி (மார் 2026)</span></td></tr>
+  <tr><td>Jung-Kyu Kim</td><td><span class="en">Director</span><span class="ta">இயக்குநர்</span></td><td><span class="en">Appointed Mar 2026</span><span class="ta">மார் 2026-ல நியமனம்</span></td></tr>
+  <tr><td>Hyun-Chul Sohn</td><td><span class="en">Independent director</span><span class="ta">சுயாதீன இயக்குநர்</span></td><td>—</td></tr>
+ </table></div>
+ <div class="card"><b class="en">Ownership & governance</b><b class="ta">உரிமை & நிர்வாகம்</b>
+  <ul class="r en"><li><b>SK Square</b> (SK Group's investment arm) is the largest holder at ~20%; after the ADR it slipped just below 20%. Korea's Fair Trade Act requires ≥20%, so a buyback-and-cancel is the likely fix.</li><li>The owner family holds virtually no direct stake — control runs through SK Inc. → SK Square → SK hynix.</li><li>Foreign investors already held a large share before the ADR; the US listing widens that base.</li><li>March 2026 AGM: target of ₩100T+ net cash to fund long-term investment; board approved the ADR on 24 Jun 2026.</li><li>FY2025 dividend ₩3,000/share (~₩2.1T total).</li></ul>
+  <ul class="r ta"><li><b>SK Square</b> (SK Group முதலீட்டு நிறுவனம்) ~20% உடன் பெரிய பங்குதாரர்; ADR-க்கு பின் 20%-க்கு கொஞ்சம் கீழே. சட்டப்படி ≥20% வேணும், அதனால பைபேக் பண்ணி பங்கை ரத்து பண்றதுதான் வழி.</li><li>உரிமையாளர் குடும்பத்துக்கு நேரடி பங்கு கிட்டத்தட்ட இல்ல — கட்டுப்பாடு SK Inc. → SK Square → SK hynix வழியா.</li><li>ADR-க்கு முன்னாடியே வெளிநாட்டு முதலீட்டாளர்கள் பெரிய பங்கு வெச்சிருந்தாங்க; US லிஸ்டிங் அதை விரிவாக்குது.</li><li>மார்ச் 2026 AGM: நீண்டகால முதலீட்டுக்கு ₩100T+ நெட் கேஷ் இலக்கு; ஜூன் 24, 2026-ல ADR-க்கு போர்டு ஒப்புதல்.</li><li>FY2025 டிவிடெண்ட் ஒரு பங்குக்கு ₩3,000 (மொத்தம் ~₩2.1T).</li></ul>
+ </div>
+</section>
+
+<!-- ============ SWOT ============ -->
+<section class="tab" id="t-sw">
+ <h2>SWOT</h2>
+ <div class="grid2">
+  <div class="card" style="border-top:4px solid var(--gr)"><b class="en">Strengths</b><b class="ta">பலங்கள்</b>
+   <ul class="r en"><li>World #1 in HBM; first with each generation</li><li>76% operating margin, ₩69.4T net cash</li><li>Multi-year contracts with ~10 key customers</li></ul>
+   <ul class="r ta"><li>HBM-ல உலக நம்பர் 1</li><li>76% மார்ஜின், ₩69.4T நெட் கேஷ்</li><li>~10 வாடிக்கையாளர்களோட பல வருட ஒப்பந்தம்</li></ul></div>
+  <div class="card" style="border-top:4px solid var(--am)"><b class="en">Weaknesses</b><b class="ta">பலவீனங்கள்</b>
+   <ul class="r en"><li>Single industry (memory) — highly cyclical</li><li>Heavy customer concentration in AI</li><li>China fabs (Wuxi, Dalian) need US export licences for tools</li></ul>
+   <ul class="r ta"><li>ஒரே துறை (மெமரி) — அதிக சைக்கிள்</li><li>AI வாடிக்கையாளர்கள்கிட்ட அதிக சார்பு</li><li>சீன ஃபேப்களுக்கு US ஏற்றுமதி லைசென்ஸ் தேவை</li></ul></div>
+  <div class="card" style="border-top:4px solid var(--bl)"><b class="en">Opportunities</b><b class="ta">வாய்ப்புகள்</b>
+   <ul class="r en"><li>HBM4/HBM4E, custom HBM for ASICs</li><li>AI inference driving eSSD & SOCAMM demand</li><li>US re-rating vs Micron; possible Solidigm US IPO</li></ul>
+   <ul class="r ta"><li>HBM4/HBM4E, ASIC-க்கு கஸ்டம் HBM</li><li>AI இன்ஃபரன்ஸால eSSD, SOCAMM டிமாண்ட்</li><li>Micron-ஓட ஒப்பிட்டு US மறுமதிப்பீடு; Solidigm US IPO வாய்ப்பு</li></ul></div>
+  <div class="card" style="border-top:4px solid var(--rd)"><b class="en">Threats</b><b class="ta">அச்சுறுத்தல்கள்</b>
+   <ul class="r en"><li>Industry-wide capacity wave → price fall in 2027–28</li><li>Samsung's HBM4 comeback; Micron gains</li><li>Chinese DRAM (CXMT); AI capex slowdown; US rates</li></ul>
+   <ul class="r ta"><li>துறை முழுக்க கெப்பாசிட்டி அலை → 2027–28-ல விலை சரிவு</li><li>Samsung HBM4 மீள்வரவு; Micron வளர்ச்சி</li><li>சீன DRAM (CXMT); AI கேபெக்ஸ் மந்தம்; US வட்டி</li></ul></div>
+ </div>
+ <h3><span class="en">Key risks for an ADR holder</span><span class="ta">ADR வெச்சிருக்கவங்களுக்கு முக்கிய ரிஸ்க்</span></h3>
+ <div class="card"><ul class="r en"><li><b>Cycle risk:</b> memory had an operating loss as recently as FY2023; booms end when new supply arrives.</li><li><b>Currency:</b> results in won, ADR in dollars — KRW moves change returns.</li><li><b>Volatility:</b> beta ~2.4; a 30% drop from the high in about two weeks (Oct 2026).</li><li><b>Profit quality:</b> 2Q26 net profit was inflated by ₩63.3T one-off investment gains — use operating profit for trend.</li><li><b>Overnight gaps:</b> the ADR opens after Seoul has traded; news hits at the US open.</li></ul>
+ <ul class="r ta"><li><b>சைக்கிள் ரிஸ்க்:</b> FY2023-லயே மெமரிக்கு ஆப்பரேட்டிங் நஷ்டம்; புது சப்ளை வந்ததும் பூம் முடியும்.</li><li><b>கரன்சி:</b> ரிசல்ட் வான்-ல, ADR டாலர்ல — KRW மாற்றம் ரிட்டர்னை மாத்தும்.</li><li><b>ஆட்டம்:</b> பீட்டா ~2.4; அக் 2026-ல ரெண்டு வாரத்துல உச்சத்துல இருந்து 30% சரிவு.</li><li><b>லாபத் தரம்:</b> 2Q26 நிகர லாபத்துல ₩63.3T ஒருமுறை முதலீட்டு லாபம் — டிரெண்டுக்கு ஆப்பரேட்டிங் லாபத்தை பாருங்க.</li><li><b>இரவு இடைவெளி:</b> சியோல் டிரேட் ஆன பிறகு ADR திறக்கும்; செய்தி US திறப்புல தாக்கும்.</li></ul></div>
+</section>
+
+<!-- ============ SOCRATES ============ -->
+<section class="tab" id="t-so">
+ <h2><span class="en">Cauvery Socrates — test your understanding</span><span class="ta">காவேரி சாக்ரடீஸ் — உங்க புரிதலை சோதிங்க</span></h2>
+ <div id="soBody"></div>
+ <div class="card"><b class="en">Think deeper (free answer)</b><b class="ta">ஆழமா யோசிங்க (சுதந்திர பதில்)</b>
+  <p class="en" style="margin-top:6px">If HBM prices fell 30% in 2027 just as Yongin Y1 and Samsung's new lines come online, what happens to SK hynix's margins, cash flow and share price — and which number in this dashboard would warn you first?</p>
+  <p class="ta" style="margin-top:6px">2027-ல யோங்இன் Y1, Samsung புது லைன்கள் வர்ற நேரத்துல HBM விலை 30% குறைஞ்சா, SK hynix மார்ஜின், கேஷ் ஃப்ளோ, பங்கு விலைக்கு என்ன ஆகும்? இந்த டேஷ்போர்டுல எந்த எண் முதல்ல எச்சரிக்கும்?</p>
+  <textarea id="soTxt"></textarea>
+  <button class="btn f" style="margin-top:8px" onclick="document.getElementById('soAns').style.display='block'"><span class="en">Show a model answer</span><span class="ta">மாதிரி பதில் காட்டு</span></button>
+  <div id="soAns" class="note g" style="display:none;margin-top:10px"><span class="en">Fixed costs (depreciation on new fabs) rise while price per bit falls → operating margin compresses fast (operating leverage works in reverse). CFO falls while capex stays committed → FCF shrinks. Share prices in memory usually fall <i>before</i> earnings do. Early warnings here: DRAM/NAND ASP change in the revenue-engine table, inventory days rising in the working-capital table, and the capacity-glut trigger moving from "approved" to "executing".</span><span class="ta">புது ஃபேப் தேய்மானம் மாதிரி நிலையான செலவு ஏறும், ஒரு பிட் விலை இறங்கும் → மார்ஜின் வேகமா சுருங்கும் (ஆப்பரேட்டிங் லெவரேஜ் தலைகீழ்). கேபெக்ஸ் ஏற்கனவே கமிட், CFO குறையும் → FCF சுருங்கும். மெமரியில பங்கு விலை லாபம் இறங்குறதுக்கு <i>முன்னாடியே</i> இறங்கும். முதல் எச்சரிக்கை: வருவாய் இன்ஜின் அட்டவணையில DRAM/NAND ASP, வொர்க்கிங் கேப்பிடல்ல சரக்கு நாட்கள் ஏறுறது, கெப்பாசிட்டி ட்ரிகர் "ஒப்புதல்" → "செயல்பாடு" ஆகுறது.</span></div>
+ </div>
+</section>
+</main>
+
+<div id="cbBadge" onclick="togDisc()" onmouseenter="showDisc(true)">CB</div>
+<div id="disc"><b>CB Research · Cauvery Business</b><br><span class="en">Prepared by CB Research for education only. Not investment advice; CB Research is not a SEBI-registered research analyst and makes no buy, sell or hold recommendation. Broker ratings shown are third-party views. Figures are from company releases and market data as of 15–16 Oct 2026 and may change. Please consult a registered adviser before investing.</span><span class="ta">CB Research கல்விக்காக மட்டும் தயாரிச்சது. இது முதலீட்டு ஆலோசனை இல்ல; CB Research SEBI-யில பதிவு செய்த ஆய்வாளர் இல்ல, வாங்கு/விற்று/வெச்சுக்கோன்னு எந்த பரிந்துரையும் இல்ல. ப்ரோக்கர் ரேட்டிங்குகள் மூன்றாம் தரப்பு கருத்து. எண்கள் 15–16 அக் 2026 நிலவரப்படி, மாறலாம். முதலீட்டுக்கு முன் பதிவு பெற்ற ஆலோசகரை அணுகுங்க.</span></div>
+<button id="asBtn" onclick="togAs()">🎙 CB Assist</button>
+<div id="asBox">
+ <div class="hd"><span>CB Assist <span style="font-weight:600;font-size:12px;color:var(--mute)" class="en">· ask by voice or text</span><span style="font-weight:600;font-size:12px;color:var(--mute)" class="ta">· குரல் அல்லது டைப் பண்ணி கேளுங்க</span></span><button onclick="togAs()" style="border:0;background:none;font-size:18px;cursor:pointer">✕</button></div>
+ <div id="asLog"></div>
+ <div class="qs" id="asQs"></div>
+ <div id="asIn"><input id="asQ" placeholder="Ask…" onkeydown="if(event.key==='Enter')asAsk()"><button id="mic" onclick="asMic()">🎙</button><button onclick="asAsk()" style="background:var(--soft)">➤</button></div>
+</div>
+
+<script>
+var CO = {
+ name:"SK hynix Inc.", tickers:{nasdaq:"SKHY",krx:"000660"}, asOf:"2026-10-16 08:45 IST", period:"2Q26 (Apr-Jun 2026) ~ Q1FY27",
+ adr:{priced:"2026-07-09",listed:"2026-07-10",ads:177900000,price:149,proceedsUSDbn:26.5,ratio:"10 ADS = 1 share",newShares:17790000,dilutionPct:2.5,oversub:7,ordersUSDbn:171.5,day1Close:168.01,bookrunners:["BofA","Citi","Goldman Sachs","J.P. Morgan"],useKRWtn:{yonginY1:31,pt7:19,euv:12}},
+ q:{labels:["2Q25","3Q25","4Q25","1Q26","2Q26"],rev:[22.23,24.45,32.83,52.58,79.32],op:[9.21,11.38,19.17,37.61,60.54],opm:[41,47,58,72,76],ebitda:[null,null,null,null,64.6],np:[7.00,12.60,15.25,40.35,93.92]},
+ bs:{cash:88.0,debt:18.6,netCash:69.4,de:0.06}, cf:{fy25cfo:53.37,fy25fcf:25.85,ttmCfo:126.93,ttmFcf:91.69,q2capex:10.67},
+ wc:{dso:[71.8,68.4,66.2],dio:[141.4,135.6,135.5],dpo:null},
+ cbf26:{g:9.5,m:9.5,d:9.0,v:7.5,t:4.5,r:5.5,score:76},
+ cycle:{sectorPhase:"P4",stockStage:3,cy:50}, tg:48,
+ triggers:[{name:"LTAs ~10 customers",sign:"+",I:4,C:0.7,W:0.7,P:0.7,pts:1.37,status:"Executing"},{name:"HBM4 Rubin ramp",sign:"+",I:4,C:0.7,W:1,P:0.4,pts:1.12,status:"Executing"},{name:"Buyback to restore SK Square 20%",sign:"+",I:2,C:0.4,W:0.7,P:1,pts:0.56,status:"Watch"},{name:"Capacity glut",sign:"-",I:4,C:0.7,W:0.4,P:1,pts:1.12,status:"Approved"},{name:"HBM4 delay reports",sign:"-",I:3,C:0.4,W:1,P:1,pts:1.2,status:"Watch"},{name:"AI funding / rates",sign:"-",I:3,C:0.4,W:0.7,P:0.7,pts:0.59,status:"Watch"},{name:"CXMT 4F2",sign:"-",I:3,C:0.4,W:0.4,P:0.7,pts:0.34,status:"Announced"}]
+};
+var L='en'; try{L=localStorage.getItem('cbLang')||'en'}catch(e){}
+function T(o){return o[L]||o.en}
+var done={};
+function show(id){
+ document.querySelectorAll('.tab').forEach(function(s){s.classList.toggle('on',s.id==='t-'+id)});
+ document.querySelectorAll('#nav button').forEach(function(b){b.classList.toggle('on',b.dataset.t===id)});
+ if(!done[id]&&INIT[id]){INIT[id]();done[id]=1}
+ if(id==='pil')animTemple();
+ window.scrollTo({top:0,behavior:'smooth'});
+}
+document.querySelectorAll('#nav button').forEach(function(b){b.onclick=function(){show(b.dataset.t);b.scrollIntoView({inline:'center',block:'nearest'})}});
+function setLang(l){L=l;try{localStorage.setItem('cbLang',l)}catch(e){}
+ document.body.classList.toggle('ta',l==='ta');document.getElementById('bEN').classList.toggle('on',l==='en');document.getElementById('bTA').classList.toggle('on',l==='ta');
+ document.getElementById('asQ').placeholder=l==='ta'?'கேளுங்க…':'Ask…';
+ renderPillCards();renderSC();renderSO();renderQs();if(bmKey)bmShow(bmKey);}
+/* ---------- charts ---------- */
+var fmt=function(v){return v==null?'':Number(v).toLocaleString('en-IN',{maximumFractionDigits:2})};
+var valPlug={id:'vals',afterDatasetsDraw:function(c){var x=c.ctx;x.save();x.font='600 10.5px Inter,sans-serif';x.fillStyle='#16202e';x.textAlign='center';
+ c.data.datasets.forEach(function(d,i){var m=c.getDatasetMeta(i);if(m.type!=='bar'||m.hidden)return;var hz=c.options.indexAxis==='y';
+ m.data.forEach(function(el,j){var v=d.data[j];if(v==null)return;var t=(d.pre||'')+fmt(v)+(d.suf||'');if(hz){x.textAlign='left';x.fillText(t,el.x+4,el.y+4)}else{x.fillText(t,el.x,el.y-4)}})});x.restore()}};
+if(window.Chart){Chart.defaults.font.family='Inter,"Noto Sans Tamil",sans-serif';Chart.defaults.color='#5b6778';}
+var base={responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom',labels:{boxWidth:12}}},layout:{padding:{top:18}}};
+function mk(id,cfg){if(!window.Chart){var c=document.getElementById(id);if(c)c.parentNode.innerHTML='<p style="color:#5b6778;font-size:13px">Chart needs an internet connection to load.</p>';return null}return new Chart(document.getElementById(id),cfg)}
+var INIT={
+ ipo:function(){
+  mk('cUse',{type:'doughnut',data:{labels:['Yongin Y1 fab','Cheongju P&T7 packaging','EUV scanners'],datasets:[{data:[31,19,12],backgroundColor:['#e8731a','#1f5fbf','#1d9a5b']}]},options:Object.assign({},base,{plugins:{legend:{position:'bottom'},tooltip:{callbacks:{label:function(c){return c.label+': ₩'+c.raw+'T'}}}}})});
+  mk('cRec',{type:'bar',data:{labels:['All US IPOs, Q3 2026','SK hynix ADR, Jul 2026','Alibaba, 2014'],datasets:[{data:[36.1,26.5,21.8],backgroundColor:['#c9d0db','#e8731a','#1f5fbf'],pre:'$',suf:'B'}]},options:Object.assign({},base,{indexAxis:'y',plugins:{legend:{display:false}},scales:{x:{max:44,grid:{display:false}},y:{grid:{display:false}}}}),plugins:[valPlug]});
+ },
+ seg:function(){
+  mk('cMix',{type:'bar',data:{labels:['1Q26','2Q26'],datasets:[{label:'DRAM %',data:[78,73],backgroundColor:'#1f5fbf',suf:'%'},{label:'NAND %',data:[21,27],backgroundColor:'#d23b3b',suf:'%'}]},options:Object.assign({},base,{scales:{y:{max:100,beginAtZero:true}}}),plugins:[valPlug]});
+ },
+ ai:function(){
+  mk('cHbm',{type:'bar',data:{labels:['SK hynix','Samsung','Micron'],datasets:[{label:'2025',data:[59,20,21],backgroundColor:'#1f5fbf',suf:'%'},{label:'2026e',data:[50,28,22],backgroundColor:'#e8731a',suf:'%'}]},options:Object.assign({},base,{scales:{y:{max:70,beginAtZero:true}}}),plugins:[valPlug]});
+ },
+ fin:function(){
+  mk('cQ',{data:{labels:CO.q.labels,datasets:[
+   {type:'bar',label:'Revenue ₩T',data:CO.q.rev,backgroundColor:'#1f5fbf',order:2},
+   {type:'bar',label:'EBITDA ₩T',data:CO.q.ebitda,backgroundColor:'#7a4cc2',order:2},
+   {type:'bar',label:'Operating profit ₩T',data:CO.q.op,backgroundColor:'#1d9a5b',order:2},
+   {type:'line',label:'OPM %',data:CO.q.opm,borderColor:'#e8731a',backgroundColor:'#e8731a',yAxisID:'y2',tension:.3,order:1}]},
+   options:Object.assign({},base,{scales:{y:{beginAtZero:true,title:{display:true,text:'₩ trillion'}},y2:{position:'right',min:0,max:100,grid:{display:false},ticks:{callback:function(v){return v+'%'}}}}}),plugins:[valPlug]});
+ },
+ cf:function(){
+  mk('cCf',{type:'bar',data:{labels:['3Q25','4Q25','1Q26','2Q26'],datasets:[{label:'CFO',data:[14.3,20.9,26.3,65.7],backgroundColor:'#1f5fbf'},{label:'Operating profit',data:[11.38,19.17,37.61,60.54],backgroundColor:'#1d9a5b'},{label:'Free cash flow',data:[9.1,8.6,18.5,54.3],backgroundColor:'#e8731a'}]},options:Object.assign({},base,{scales:{y:{beginAtZero:true,title:{display:true,text:'₩ trillion'}}}}),plugins:[valPlug]});
+ },
+ mkt:function(){
+  var lab=['9 Jul offer','10 Jul','29 Jul','1 Oct','Early Oct','6 Oct','13 Oct','14 Oct','15 Oct'];
+  mk('cPx',{type:'line',data:{labels:lab,datasets:[{label:'SKHY $',data:[149,168.01,130.17,193.5,195.13,187.25,153.6,147.55,139.44],borderColor:'#1f5fbf',backgroundColor:'#1f5fbf',tension:.25,pointRadius:4},{label:'Offer $149',data:lab.map(function(){return 149}),borderColor:'#e8731a',borderDash:[6,4],pointRadius:0}]},options:Object.assign({},base,{scales:{y:{min:110,max:210}}})});
+ },
+ an:function(){
+  mk('cAn',{type:'bar',data:{labels:['Barclays','Cantor','BofA','Wolfe','J.P. Morgan','Needham','RBC','Consensus avg'],datasets:[{label:'Target $',data:[300,300,268,250,245,220,200,252],backgroundColor:['#1f5fbf','#1f5fbf','#1f5fbf','#1f5fbf','#1f5fbf','#1f5fbf','#1f5fbf','#e8731a'],pre:'$'}]},options:Object.assign({},base,{indexAxis:'y',plugins:{legend:{display:false}},scales:{x:{min:0,max:340}}}),plugins:[valPlug,{id:'cur',afterDraw:function(c){var s=c.scales.x,x=s.getPixelForValue(139),a=c.chartArea,g=c.ctx;g.save();g.strokeStyle='#d23b3b';g.setLineDash([5,4]);g.beginPath();g.moveTo(x,a.top);g.lineTo(x,a.bottom);g.stroke();g.fillStyle='#d23b3b';g.font='700 10.5px Inter';g.fillText('Price ~$139',x+3,a.top+10);g.restore()}}]});
+ }
+};
+/* ---------- business model cards ---------- */
+var BM={
+ cust:{en:"<b>Customers.</b> AI chip designers (Nvidia, AMD, Google and other custom-ASIC makers) buy HBM; hyperscalers buy server DRAM and enterprise SSDs; phone and PC makers buy mobile DRAM and NAND. An estimated ~70% of 2Q26 sales came from big tech and AI data-centre players. Nvidia alone was ₩17.6T in 1H26.",ta:"<b>வாடிக்கையாளர்கள்.</b> AI சிப் டிசைனர்கள் (Nvidia, AMD, Google, மற்ற ASIC கம்பெனிகள்) HBM வாங்குறாங்க; ஹைப்பர்ஸ்கேலர்கள் சர்வர் DRAM, eSSD; போன்/PC கம்பெனிகள் மொபைல் DRAM, NAND. 2Q26 விற்பனையில ~70% பெரிய டெக், AI டேட்டா சென்டர்ல இருந்துன்னு கணிப்பு. 1H26-ல Nvidia மட்டுமே ₩17.6T."},
+ chan:{en:"<b>Channel.</b> Mostly direct business-to-business sales. The big shift in 2026: multi-year long-term agreements (LTAs) with about 10 key customers, giving volume visibility — a new feature for a historically spot-priced industry.",ta:"<b>விற்பனை வழி.</b> பெரும்பாலும் நேரடி B2B விற்பனை. 2026-ல பெரிய மாற்றம்: ~10 முக்கிய வாடிக்கையாளர்களோட பல வருட நீண்டகால ஒப்பந்தம் (LTA) — வால்யூம் தெளிவா தெரியுது. ஸ்பாட் விலையில ஓடின துறைக்கு இது புதுசு."},
+ core:{en:"<b>SK hynix.</b> Designs and manufactures memory in its own fabs (Icheon, Cheongju in Korea; Wuxi and Dalian in China) and stacks HBM in its own packaging plants. Building next: Yongin cluster, P&T7 packaging, an Indiana (US) packaging plant. Pure-play memory — no logic chips, no foundry.",ta:"<b>SK hynix.</b> சொந்த ஃபேப்கள்ல (கொரியாவுல இச்சியான், சியோங்ஜு; சீனாவுல வூசி, டாலியன்) மெமரி தயாரிச்சு, சொந்த பேக்கேஜிங் ஆலைகள்ல HBM அடுக்குறாங்க. அடுத்து கட்டுறது: யோங்இன் கிளஸ்டர், P&T7, அமெரிக்க இண்டியானா பேக்கேஜிங் ஆலை. முழுக்க மெமரி மட்டும்."},
+ hbm:{en:"<b>HBM.</b> The profit engine. Stacked DRAM placed beside AI GPUs. SK hynix had ~59% share in 2025; projected ~50% in 2026 as Samsung catches up. 2026 capacity is sold out; HBM4 mass shipments began in 2Q26. HBM revenue is not disclosed separately (it sits inside DRAM, 73% of revenue).",ta:"<b>HBM.</b> லாப இன்ஜின். AI GPU பக்கத்துல வைக்கிற அடுக்கு DRAM. 2025-ல ~59% பங்கு; Samsung நெருங்கி வர்றதால 2026-ல ~50% கணிப்பு. 2026 கெப்பாசிட்டி விற்றுத் தீர்ந்தது; 2Q26-ல HBM4 பெருமளவு ஷிப்மென்ட் ஆரம்பம். HBM வருவாய் தனியா சொல்றதில்ல (DRAM 73%-க்குள்ள)."},
+ srv:{en:"<b>Server DRAM.</b> DDR5 RDIMM and SOCAMM2 modules for AI and cloud servers. Shortage-driven pricing: DRAM ASP rose ~30% QoQ in 2Q26. 1c-nm (6th-gen 10nm-class) DRAM shipments began in earnest.",ta:"<b>சர்வர் DRAM.</b> AI, கிளவுட் சர்வருக்கு DDR5 RDIMM, SOCAMM2. பற்றாக்குறையால 2Q26-ல DRAM விலை ~30% உயர்வு. 1c-nm DRAM ஷிப்மென்ட் தீவிரமா ஆரம்பம்."},
+ mob:{en:"<b>Mobile & PC DRAM.</b> LPDDR5 for phones, DDR5 for PCs, GDDR7 for graphics. The company flagged some softening in PC and smartphone demand — the non-AI part of the business is the weaker link.",ta:"<b>மொபைல் & PC DRAM.</b> போனுக்கு LPDDR5, PC-க்கு DDR5, கிராஃபிக்ஸுக்கு GDDR7. PC, ஸ்மார்ட்போன் டிமாண்ட் கொஞ்சம் மந்தம்னு கம்பெனியே சொல்லிச்சு — AI இல்லாத பகுதிதான் பலவீனம்."},
+ nand:{en:"<b>NAND / eSSD.</b> 27% of 2Q26 revenue (≈₩21.4T), up from 21%. NAND prices jumped by mid-50% QoQ. Enterprise SSD revenue doubled; Solidigm (the US arm bought from Intel) tripled high-capacity (30TB+) SSD sales. A Solidigm US IPO has been discussed.",ta:"<b>NAND / eSSD.</b> 2Q26 வருவாயில 27% (≈₩21.4T), 21%-ல இருந்து உயர்வு. NAND விலை 50%-க்கு மேல ஏறியது. eSSD வருவாய் 2 மடங்கு; Solidigm (Intel-கிட்ட வாங்கின US பிரிவு) 30TB+ SSD விற்பனை 3 மடங்கு. Solidigm US IPO பேச்சும் இருக்கு."},
+ rev:{en:"<b>Revenue ₩79.32T (2Q26).</b> Revenue = bits shipped × ASP. Up 51% QoQ and 257% YoY. First half 2026 crossed ₩100T for the first time (₩131.9T).",ta:"<b>வருவாய் ₩79.32T (2Q26).</b> வருவாய் = பிட்கள் × ASP. QoQ 51%, YoY 257% உயர்வு. 2026 முதல் அரையாண்டு முதல் முறையா ₩100T தாண்டியது (₩131.9T)."},
+ cost:{en:"<b>Costs.</b> Memory is a high-fixed-cost business (fabs, equipment depreciation, R&D). When prices rise, almost all extra revenue drops to profit — gross margin went from 54% (2Q25) to 83% (2Q26). The same leverage works in reverse in a downturn.",ta:"<b>செலவுகள்.</b> மெமரி அதிக நிலையான செலவு துறை (ஃபேப், தேய்மானம், R&D). விலை ஏறினா கூடுதல் வருவாய் கிட்டத்தட்ட முழுசா லாபம் — கிராஸ் மார்ஜின் 54% (2Q25) → 83% (2Q26). சரிவு காலத்துல இதே லெவரேஜ் தலைகீழா வேலை செய்யும்."},
+ prof:{en:"<b>Profit.</b> Operating profit ₩60.54T (76% margin), EBITDA ₩64.6T (81%). Net profit ₩93.9T was boosted by ₩63.3T of one-off investment gains — use operating profit to judge the trend.",ta:"<b>லாபம்.</b> ஆப்பரேட்டிங் லாபம் ₩60.54T (76%), EBITDA ₩64.6T (81%). நிகர லாபம் ₩93.9T-ல ₩63.3T ஒருமுறை முதலீட்டு லாபம் — டிரெண்டுக்கு ஆப்பரேட்டிங் லாபத்தை பாருங்க."},
+ sh:{en:"<b>Reinvest + shareholders.</b> Most cash goes back into capacity: 2026 capex guided to the high-₩40T range, plus ~₩40T raised via the ADR. Shareholders got ₩3,000/share for FY2025; a buyback is likely to restore SK Square's 20% holding.",ta:"<b>மறுமுதலீடு + பங்குதாரர்கள்.</b> பெரும்பாலான கேஷ் கெப்பாசிட்டிக்கே: 2026 கேபெக்ஸ் ₩40T-களின் மேல் பகுதி, கூடவே ADR மூலமா ~₩40T. FY2025-க்கு ஒரு பங்குக்கு ₩3,000; SK Square 20% மீட்க பைபேக் வர வாய்ப்பு."}
+};
+var bmKey=null;
+function bmShow(k){bmKey=k;document.getElementById('bmCard').innerHTML=T(BM[k]);document.querySelectorAll('.mapbox').forEach(function(g){g.classList.toggle('sel',g.dataset.k===k)})}
+document.querySelectorAll('.mapbox').forEach(function(g){g.onclick=function(){bmShow(g.dataset.k);document.getElementById('bmCard').scrollIntoView({behavior:'smooth',block:'nearest'})}});
+/* ---------- temple ---------- */
+var PIL=[
+ {k:'g',s:9.5,n:{en:'Growth',ta:'வளர்ச்சி'},d:{en:'Revenue +257% YoY and +51% QoQ in 2Q26; FY2025 revenue +47%, operating profit +101%. One of the fastest-growing large companies in the world right now.',ta:'2Q26-ல வருவாய் YoY +257%, QoQ +51%; FY2025 வருவாய் +47%, ஆப்பரேட்டிங் லாபம் +101%. இப்போ உலகத்துல வேகமா வளர்ற பெரிய கம்பெனிகள்ல ஒண்ணு.'}},
+ {k:'m',s:9.5,n:{en:'Margins',ta:'மார்ஜின்'},d:{en:'Operating margin 76%, gross 83%, EBITDA 81% — above TSMC. Score kept below 10 because these are peak-cycle margins.',ta:'ஆப்பரேட்டிங் மார்ஜின் 76%, கிராஸ் 83%, EBITDA 81% — TSMC-யை விட அதிகம். இவை சைக்கிள் உச்ச மார்ஜின்னு 10 கொடுக்கல.'}},
+ {k:'d',s:9.0,n:{en:'Debt & Cash',ta:'கடன் & கேஷ்'},d:{en:'Net cash ₩69.4T, debt/equity 0.06, plus ~₩40T from the ADR in 3Q26. Can fund capex through a downturn.',ta:'நெட் கேஷ் ₩69.4T, கடன்/ஈக்விட்டி 0.06, 3Q26-ல ADR மூலமா ~₩40T. சரிவு காலத்துலயும் கேபெக்ஸ் செய்ய முடியும்.'}},
+ {k:'v',s:7.5,n:{en:'Valuation',ta:'மதிப்பீடு'},d:{en:'~9.6× trailing and ~5× forward P/E look cheap, but low P/E on peak earnings is the classic memory trap. Moderately attractive, not a screaming bargain.',ta:'~9.6× கடந்த, ~5× எதிர்கால P/E மலிவா தெரியுது; ஆனா உச்ச லாபத்துல குறைஞ்ச P/E மெமரியோட பழைய பொறி. ஓரளவு கவர்ச்சி, பெரிய தள்ளுபடி இல்ல.'}},
+ {k:'t',s:4.5,n:{en:'Trend',ta:'டிரெண்ட்'},d:{en:'ADR fell ~30% from ~$195 to ~$138 in two weeks and is below the $149 offer price; price is whipsawing around a flattening average (Stage 3).',ta:'ரெண்டு வாரத்துல ADR ~$195-ல இருந்து ~$138-க்கு ~30% சரிவு, $149 ஆஃபர் விலைக்கு கீழே; சராசரி தட்டையாகி விலை ஆடுது (Stage 3).'}},
+ {k:'r',s:5.5,n:{en:'Risk',ta:'ரிஸ்க்'},d:{en:'Industry-wide capacity wave, Samsung HBM4 comeback, China DRAM, AI-capex sensitivity, KRW currency and high volatility (beta ~2.4).',ta:'துறை முழுக்க கெப்பாசிட்டி அலை, Samsung HBM4 மீள்வரவு, சீன DRAM, AI கேபெக்ஸ் சார்பு, KRW கரன்சி, அதிக ஆட்டம் (பீட்டா ~2.4).'}}
+];
+function pc(s){return s>=8?'#1d9a5b':s>=6?'#d99a0b':'#d23b3b'}
+(function(){var g=document.getElementById('cols'),lb=document.getElementById('clab'),ns='http://www.w3.org/2000/svg',h='';
+ PIL.forEach(function(p,i){var x=30+i*52;
+  h+='<g style="cursor:pointer" onclick="plJump(\''+p.k+'\')"><rect x="'+x+'" y="112" width="40" height="160" fill="#f6f8fb" stroke="#c9d0db"/>';
+  for(var f=1;f<4;f++)h+='<line x1="'+(x+f*10)+'" y1="112" x2="'+(x+f*10)+'" y2="272" stroke="#e3e8ef"/>';
+  h+='<rect id="cf'+p.k+'" x="'+x+'" y="272" width="40" height="0" fill="'+pc(p.s)+'" opacity=".85"/>';
+  h+='<circle cx="'+(x+20)+'" cy="130" r="14" fill="#fff" stroke="'+pc(p.s)+'" stroke-width="2.5"/><text x="'+(x+20)+'" y="134.5" text-anchor="middle" font-size="11" font-weight="800" fill="'+pc(p.s)+'">'+p.s+'</text></g>';
+ });g.innerHTML=h;})();
+function renderLabels(){var lb=document.getElementById('clab'),h='';PIL.forEach(function(p,i){var x=30+i*52;h+='<text x="'+(x+20)+'" y="308" text-anchor="middle" font-size="10" font-weight="700" fill="#16202e">'+T(p.n)+'</text>'});lb.innerHTML=h}
+function animTemple(){PIL.forEach(function(p){var r=document.getElementById('cf'+p.k);r.setAttribute('height',0);r.setAttribute('y',272)});
+ setTimeout(function(){PIL.forEach(function(p,i){var r=document.getElementById('cf'+p.k),H=p.s/10*160,st=null;
+  function step(ts){if(!st)st=ts;var k=Math.min(1,(ts-st)/900);var hh=H*k;r.setAttribute('height',hh);r.setAttribute('y',272-hh);if(k<1)requestAnimationFrame(step)}
+  setTimeout(function(){requestAnimationFrame(step)},i*120)})},60)}
+function renderPillCards(){renderLabels();var h='';PIL.forEach(function(p){var c=p.s>=8?'g':p.s>=6?'a':'r';h+='<div class="pc" id="pc'+p.k+'" style="border-color:'+pc(p.s)+'"><b>'+T(p.n)+'</b> <span class="pill '+c+'">'+p.s+'/10</span><p style="margin:6px 0 0;font-size:14px">'+T(p.d)+'</p></div>'});
+ h+='<div class="note">'+T({en:'CB Score = average of six pillars = 7.6/10 → <b>76/100</b>. Strong business, weak price trend and high cyclical risk.',ta:'CB Score = ஆறு தூண்களோட சராசரி = 7.6/10 → <b>76/100</b>. பிசினஸ் வலுவானது, விலை டிரெண்ட் பலவீனம், சைக்கிள் ரிஸ்க் அதிகம்.'})+'</div>';
+ document.getElementById('plCards').innerHTML=h}
+function plJump(k){var e=document.getElementById('pc'+k);e.scrollIntoView({behavior:'smooth',block:'center'});document.querySelectorAll('.pc').forEach(function(x){x.classList.remove('hl')});e.classList.add('hl');setTimeout(function(){e.classList.remove('hl')},2200)}
+/* ---------- self-check ---------- */
+var SC=[
+ {t:{en:'1 · Questions about the issue / stock',ta:'1 · இஷ்யூ / பங்கு பத்தின கேள்விகள்'},i:[
+  {en:'Money goes into the business, not to sellers',ta:'பணம் பிசினஸுக்குள்ள போகுது, விக்கிறவங்களுக்கு இல்ல',d:{en:'17.79M new shares; 100% for Yongin fab, P&T7 packaging, EUV tools',ta:'1.779 கோடி புது பங்கு; 100% யோங்இன் ஃபேப், P&T7, EUV-க்கு'}},
+  {en:'Priced fairly versus the home market',ta:'சொந்த சந்தையோட ஒப்பிட்டா நியாயமான விலை',d:{en:'~2.7% premium to 3-day Seoul average',ta:'சியோல் 3 நாள் சராசரியை விட ~2.7% பிரீமியம்'}},
+  {en:'I know where the price stands versus the offer',ta:'ஆஃபர் விலையோட ஒப்பிட்டு இப்போ விலை எங்கன்னு தெரியும்',d:{en:'$149 offer; $147.55 close 14 Oct; ~$137–139 on 15 Oct',ta:'$149 ஆஃபர்; 14 அக் $147.55; 15 அக் ~$137–139'}},
+  {en:'Dilution is small',ta:'பங்கு நீர்த்தல் சின்னது',d:{en:'~2.5% of shares outstanding',ta:'மொத்த பங்குல ~2.5%'}}]},
+ {t:{en:'2 · Problems investors face',ta:'2 · முதலீட்டாளர் சந்திக்கும் பிரச்சனைகள்'},i:[
+  {en:'I understand memory is cyclical',ta:'மெமரி சைக்கிள் துறைன்னு புரியுது',d:{en:'Operating loss in FY2023; OPM 49% in FY2025; 76% in 2Q26',ta:'FY2023-ல ஆப்பரேட்டிங் நஷ்டம்; FY2025 OPM 49%; 2Q26 76%'}},
+  {en:'I accept won (KRW) currency risk',ta:'வான் (KRW) கரன்சி ரிஸ்க் ஏத்துக்குறேன்',d:{en:'Results in won; 10 ADS = 1 Korean share',ta:'ரிசல்ட் வான்-ல; 10 ADS = 1 கொரியப் பங்கு'}},
+  {en:'I can sit through 30%+ swings',ta:'30%+ ஆட்டத்தை தாங்க முடியும்',d:{en:'Beta ~2.4; ~$195 → ~$138 within October 2026',ta:'பீட்டா ~2.4; அக் 2026-க்குள்ள ~$195 → ~$138'}},
+  {en:'I know 2Q26 profit had one-offs',ta:'2Q26 லாபத்துல ஒருமுறை லாபம் இருக்குன்னு தெரியும்',d:{en:'₩63.3T investment gains inside ₩93.9T net profit',ta:'₩93.9T நிகர லாபத்துல ₩63.3T முதலீட்டு லாபம்'}}]},
+ {t:{en:'3 · Solutions (what I did)',ta:'3 · தீர்வுகள் (நான் என்ன செஞ்சேன்)'},i:[
+  {en:'I will read the Q3 2026 results first',ta:'Q3 2026 ரிசல்ட்டை முதல்ல படிப்பேன்',d:{en:'Due late October 2026',ta:'அக் 2026 கடைசியில வரும்'}},
+  {en:'I compared valuation with Micron',ta:'Micron-ஓட மதிப்பீட்டை ஒப்பிட்டேன்',d:{en:'Forward P/E ~5× vs Micron ~7×',ta:'எதிர்கால P/E ~5× vs Micron ~7×'}},
+  {en:'I fixed a position size I can hold in a downturn',ta:'சரிவுலயும் வெச்சுக்க முடிஞ்ச அளவு மட்டும் முடிவு பண்ணேன்',d:{en:'',ta:''}},
+  {en:'I checked HBM4 progress news',ta:'HBM4 முன்னேற்ற செய்திகளை பார்த்தேன்',d:{en:'HBM4 mass shipments from 2Q26; delay reports Jun & Oct 2026',ta:'2Q26-ல இருந்து HBM4; ஜூன், அக் 2026-ல தாமத செய்தி'}}]},
+ {t:{en:"4 · Anchors' and analysts' view",ta:'4 · பெரிய முதலீட்டாளர் & அனலிஸ்ட் பார்வை'},i:[
+  {en:'Big institutions backed the deal',ta:'பெரிய நிறுவனங்கள் ஆதரிச்சாங்க',d:{en:'7×+ covered; ~$171.5B orders incl. sovereign funds',ta:'7 மடங்குக்கு மேல; அரசு நிதிகள் உட்பட ~$171.5B ஆர்டர்'}},
+  {en:'Most analysts are positive',ta:'பெரும்பாலான அனலிஸ்ட்கள் பாசிட்டிவ்',d:{en:'4 Strong Buy / 9 Buy / 2 Hold; avg target ~$252–253',ta:'4 Strong Buy / 9 Buy / 2 Hold; சராசரி டார்கெட் ~$252–253'}},
+  {en:'No lock-up expiry worries me',ta:'லாக்-அப் முடிவு பத்தி கவலை இல்ல',d:{en:'',ta:''}}]}
+];
+var SUG=[{en:'ADR below $140',ta:'ADR $140-க்கு கீழே'},{en:'Q3 operating margin above 70%',ta:'Q3 மார்ஜின் 70%-க்கு மேல'},{en:'HBM4 on schedule at Q3 call',ta:'Q3 கால்ல HBM4 சரியான நேரத்துல'},{en:'Net cash above ₩100T',ta:'நெட் கேஷ் ₩100T-க்கு மேல'},{en:'DRAM prices still rising',ta:'DRAM விலை இன்னும் ஏறுது'},{en:'Inventory days below 140',ta:'சரக்கு நாட்கள் 140-க்கு கீழே'}];
+var ST={t:{},own:[]};try{ST=JSON.parse(localStorage.getItem('cbSC_SKHY'))||ST}catch(e){}
+function scSave(){try{localStorage.setItem('cbSC_SKHY',JSON.stringify(ST))}catch(e){}}
+function msg(n,t){return T({en:n+' of '+t+' ticked',ta:t+'-ல '+n+' டிக் ஆச்சு'})}
+function renderSC(){var h='',all=0,tot=0;SC.forEach(function(g,gi){var n=0;h+='<div class="card sc-g"><h4>'+T(g.t)+'</h4>';
+  g.i.forEach(function(it,ii){var id=gi+'_'+ii,on=!!ST.t[id];if(on)n++;var dd=T(it.d);h+='<label class="sc-i"><input type="checkbox" '+(on?'checked':'')+' onchange="ST.t[\''+id+'\']=this.checked;scSave();renderSC()"><span>'+T(it)+'<div class="d">'+T({en:'Data: ',ta:'தகவல்: '})+dd+'</div></span></label>'});
+  all+=n;tot+=g.i.length;h+='<div class="bar" style="margin-top:8px"><i style="width:'+(n/g.i.length*100)+'%"></i></div><div style="font-size:12.5px;color:var(--mute);margin-top:4px">'+msg(n,g.i.length)+'</div></div>'});
+ document.getElementById('scBody').innerHTML=h;
+ var on=ST.own.filter(function(o){return o.c}).length;all+=on;tot+=ST.own.length;
+ document.getElementById('scAll').textContent=all+' / '+tot;document.getElementById('scAllBar').style.width=(tot?all/tot*100:0)+'%';
+ document.getElementById('scSug').innerHTML=SUG.map(function(s,i){return '<button onclick="scAdd(\''+i+'\')">+ '+T(s)+'</button>'}).join('');
+ document.getElementById('scOwn').innerHTML=ST.own.map(function(o,i){return '<label class="sc-i"><input type="checkbox" '+(o.c?'checked':'')+' onchange="ST.own['+i+'].c=this.checked;scSave();renderSC()"><span style="flex:1">'+o.x.replace(/</g,'&lt;')+'</span><button onclick="ST.own.splice('+i+',1);scSave();renderSC()" style="border:0;background:none;color:var(--rd);cursor:pointer">✕</button></label>'}).join('');
+ document.getElementById('scOwnBar').style.width=(ST.own.length?on/ST.own.length*100:0)+'%';document.getElementById('scOwnTxt').textContent=ST.own.length?msg(on,ST.own.length):'';
+ document.getElementById('scNew').placeholder=T({en:'Add your own condition…',ta:'உங்க நிபந்தனையை சேருங்க…'})}
+function scAdd(si){if(ST.own.length>=8){alert(T({en:'Up to 8 conditions',ta:'8 நிபந்தனை வரை மட்டும்'}));return}var x=si!==undefined?T(SUG[+si]):document.getElementById('scNew').value.trim();if(!x)return;ST.own.push({x:x,c:false});document.getElementById('scNew').value='';scSave();renderSC()}
+function scClear(){ST.t={};ST.own.forEach(function(o){o.c=false});scSave();renderSC()}
+/* ---------- Socrates ---------- */
+var SO=[
+ {q:{en:'How much did SK hynix actually raise in its Nasdaq ADR offering?',ta:'Nasdaq ADR-ல SK hynix உண்மையில எவ்ளோ திரட்டினாங்க?'},o:[{en:'$36.1 billion',ta:'$36.1 பில்லியன்'},{en:'$26.5 billion',ta:'$26.5 பில்லியன்'},{en:'$29.4 billion',ta:'$29.4 பில்லியன்'}],a:1,f:{en:'$26.5B. $36.1B was the whole Q3 US IPO market; $29.4B was only the filed ceiling.',ta:'$26.5B. $36.1B Q3-ல மொத்த US IPO சந்தை; $29.4B ஃபைல் பண்ண உச்ச வரம்பு மட்டும்.'}},
+ {q:{en:'Why is this not a classic IPO?',ta:'இது ஏன் வழக்கமான IPO இல்ல?'},o:[{en:'It was listed in Seoul since 1996; it sold new shares as ADS',ta:'1996-ல இருந்தே சியோல்ல லிஸ்ட்; புது பங்குகளை ADS-ஆ வித்தாங்க'},{en:'Only existing shareholders sold',ta:'பழைய பங்குதாரர்கள் மட்டும் வித்தாங்க'},{en:'It moved its listing from Seoul to Nasdaq',ta:'சியோல்ல இருந்து Nasdaq-க்கு மாறிட்டாங்க'}],a:0,f:{en:'Right — Seoul stays the primary listing; the ADS is a dollar wrapper on new shares.',ta:'சரி — சியோல்தான் முக்கிய லிஸ்டிங்; ADS புது பங்குக்கு டாலர் உறை.'}},
+ {q:{en:'Memory revenue is best explained as…',ta:'மெமரி வருவாயை சரியா விளக்குறது…'},o:[{en:'Number of customers × contract length',ta:'வாடிக்கையாளர் எண்ணிக்கை × ஒப்பந்த காலம்'},{en:'Bits shipped × average selling price',ta:'அனுப்பின பிட்கள் × சராசரி விற்பனை விலை'},{en:'Fabs × employees',ta:'ஃபேப்கள் × ஊழியர்கள்'}],a:1,f:{en:'In 2Q26, price (ASP) did most of the work: DRAM +~30%, NAND +mid-50%.',ta:'2Q26-ல விலைதான் பெரிய வேலை: DRAM +~30%, NAND +50-களின் நடுவில்.'}},
+ {q:{en:'Record margins + new capacity everywhere + a low P/E usually signal which cycle phase?',ta:'சாதனை மார்ஜின் + எல்லா இடத்துலயும் புது கெப்பாசிட்டி + குறைஞ்ச P/E — எந்த சைக்கிள் கட்டம்?'},o:[{en:'P2 Early recovery',ta:'P2 ஆரம்ப மீட்சி'},{en:'P4 Late cycle / peak',ta:'P4 சைக்கிள் உச்சம்'},{en:'P1 Trough',ta:'P1 அடிமட்டம்'}],a:1,f:{en:'P4 — and a low P/E on peak earnings is the cyclical P/E trap.',ta:'P4 — உச்ச லாபத்துல குறைஞ்ச P/E தான் சைக்கிள் P/E பொறி.'}},
+ {q:{en:'Which trigger caps CB Conviction at 50 here?',ta:'இங்க CB Conviction-ஐ 50-க்கு கட்டுப்படுத்துற ட்ரிகர் எது?'},o:[{en:'China CXMT progress',ta:'சீன CXMT முன்னேற்றம்'},{en:'Industry capacity glut (I 4, C 0.7)',ta:'துறை அதிக கெப்பாசிட்டி (I 4, C 0.7)'},{en:'Buyback plans',ta:'பைபேக் திட்டம்'}],a:1,f:{en:'Any negative trigger with impact ≥4 and certainty ≥0.7 caps conviction.',ta:'தாக்கம் ≥4, உறுதி ≥0.7 உள்ள எந்த நெகட்டிவ் ட்ரிகரும் conviction-ஐ கட்டுப்படுத்தும்.'}},
+ {q:{en:'Why did CFO ÷ operating profit dip to 0.70 in 1Q26?',ta:'1Q26-ல CFO ÷ ஆப்பரேட்டிங் லாபம் ஏன் 0.70-க்கு இறங்கியது?'},o:[{en:'Receivables nearly doubled as sales jumped',ta:'விற்பனை தாவினதால வரவேண்டிய பணம் கிட்டத்தட்ட இரட்டிப்பு'},{en:'A big debt repayment',ta:'பெரிய கடன் அடைப்பு'},{en:'The ADR money',ta:'ADR பணம்'}],a:0,f:{en:'₩18.2T → ₩33.8T receivables in one quarter. Debt repayment is financing cash flow, not CFO.',ta:'ஒரே காலாண்டுல ₩18.2T → ₩33.8T. கடன் அடைப்பு ஃபைனான்சிங் CF, CFO இல்ல.'}}
+];
+var SOA={};
+function renderSO(){var h='';SO.forEach(function(q,i){h+='<div class="card q"><b>'+(i+1)+'. '+T(q.q)+'</b>';q.o.forEach(function(o,j){var c='';if(SOA[i]!==undefined){if(j===q.a)c='ok';else if(j===SOA[i])c='no'}h+='<button class="opt '+c+'" onclick="SOA['+i+']='+j+';renderSO()">'+T(o)+'</button>'});
+ if(SOA[i]!==undefined)h+='<div class="fb">'+(SOA[i]===q.a?'✅ ':'❌ ')+T(q.f)+'</div>';h+='</div>'});
+ var sc=Object.keys(SOA).filter(function(k){return SOA[k]===SO[k].a}).length;h+='<div class="note g">'+T({en:'Score: ',ta:'மதிப்பெண்: '})+sc+' / '+SO.length+'</div>';document.getElementById('soBody').innerHTML=h}
+/* ---------- CB Assist (voice Q&A) ---------- */
+var KB=[
+ {k:['36','how much','raise','raised','amount','size','எவ்ளோ','திரட்ட','தொகை'],en:'SK hynix raised 26.5 billion dollars — 177.9 million ADS at 149 dollars each. The 36.1 billion figure is the total of all US IPOs in the third quarter of 2026.',ta:'SK hynix 26.5 பில்லியன் டாலர் திரட்டினாங்க — 17.79 கோடி ADS, ஒவ்வொன்னும் 149 டாலர். 36.1 பில்லியன்ங்கிறது 2026 மூணாவது காலாண்டுல எல்லா US IPO-வும் சேர்ந்த தொகை.'},
+ {k:['why','so much','record','how could','big','ஏன் இவ்ளோ','எப்படி முடிஞ்ச','சாதனை'],en:'Because SK hynix was already worth about 1.06 trillion dollars, so selling just 2.5 percent raised 26.5 billion. Add pent-up US demand, the AI memory shortage, a Korea-discount re-rating bet, clean use of money, fair pricing and over 7 times demand.',ta:'SK hynix மதிப்பு ஏற்கனவே சுமார் 1.06 டிரில்லியன் டாலர், அதுல 2.5% வித்தாலே 26.5 பில்லியன். கூடவே US முதலீட்டாளர் ஆசை, AI மெமரி பற்றாக்குறை, கொரியா டிஸ்கவுண்ட் குறையும்ங்கிற நம்பிக்கை, தெளிவான பயன், நியாயமான விலை, 7 மடங்கு டிமாண்ட்.'},
+ {k:['date','when','listed','listing','debut','ticker','எப்போ','லிஸ்ட்'],en:'Priced on 9 July 2026, started trading on Nasdaq on 10 July under SKHYV, then regular trading as SKHY. It closed day one at 168.01 dollars, up 12.8 percent.',ta:'2026 ஜூலை 9-ல விலை நிர்ணயம், ஜூலை 10-ல Nasdaq-ல SKHYV-ஆ டிரேடிங் ஆரம்பம், அப்புறம் SKHY. முதல் நாள் 168.01 டாலர், 12.8% ஏற்றம்.'},
+ {k:['price','now','current','offer','below','fall','down','drop','crash','விலை','இறங்க','சரிவு','ஏன் விழு'],en:'The ADR was near 195 dollars in early October but fell to about 137 to 139 dollars on 15 October, below the 149 dollar offer price. Reasons: hot US inflation and Fed rate fears, AI funding worries, China CXMT DRAM progress, and a report of delayed HBM4 equipment orders.',ta:'அக்டோபர் ஆரம்பத்துல ADR சுமார் 195 டாலர், அக்டோபர் 15-ல 137–139 டாலருக்கு இறங்கிச்சு, 149 ஆஃபர் விலைக்கு கீழே. காரணம்: US பணவீக்கம், Fed வட்டி பயம், AI ஃபண்டிங் கவலை, சீன CXMT, HBM4 எக்யூப்மென்ட் தாமத செய்தி.'},
+ {k:['hbm','ai','nvidia','rubin','gpu','high bandwidth'],en:'HBM is stacked DRAM placed beside AI GPUs. SK hynix is the leader — about 59 percent share in 2025, projected about 50 percent in 2026. UBS estimates around 70 percent of HBM4 for Nvidia Rubin. Nvidia sales were 17.6 trillion won in the first half of 2026.',ta:'HBM-ங்கிறது AI GPU பக்கத்துல வைக்கிற அடுக்கு DRAM. SK hynix தான் லீடர் — 2025-ல சுமார் 59% பங்கு, 2026-ல சுமார் 50% கணிப்பு. Nvidia Rubin HBM4-ல சுமார் 70%-ன்னு UBS கணிப்பு. 2026 முதல் அரையாண்டுல Nvidia விற்பனை 17.6 டிரில்லியன் வான்.'},
+ {k:['segment','dram','nand','ssd','solidigm','product','பிரிவு','ப்ராடக்ட்'],en:'In 2Q26, DRAM was 73 percent of revenue, about 57.9 trillion won, and NAND 27 percent, about 21.4 trillion won. DRAM covers HBM, server DRAM and mobile or PC DRAM. NAND includes enterprise SSDs through Solidigm.',ta:'2Q26-ல DRAM வருவாயில 73%, சுமார் 57.9 டிரில்லியன் வான்; NAND 27%, சுமார் 21.4 டிரில்லியன். DRAM-ல HBM, சர்வர், மொபைல்/PC. NAND-ல Solidigm மூலமா eSSD.'},
+ {k:['revenue','profit','result','quarter','q2','earnings','வருவாய்','லாபம்','ரிசல்ட்'],en:'2Q26 revenue was 79.32 trillion won, up 257 percent year on year. Operating profit 60.54 trillion won, a 76 percent margin. EBITDA 64.6 trillion won. Net profit 93.9 trillion won, but that includes 63.3 trillion won of one-off investment gains.',ta:'2Q26 வருவாய் 79.32 டிரில்லியன் வான், YoY 257% உயர்வு. ஆப்பரேட்டிங் லாபம் 60.54 டிரில்லியன், 76% மார்ஜின். EBITDA 64.6 டிரில்லியன். நிகர லாபம் 93.9 டிரில்லியன், ஆனா அதுல 63.3 டிரில்லியன் ஒருமுறை முதலீட்டு லாபம்.'},
+ {k:['ebitda','margin','மார்ஜின்'],en:'2Q26 EBITDA was 64.6 trillion won with an 81 percent EBITDA margin; operating margin 76 percent; gross margin 83 percent.',ta:'2Q26 EBITDA 64.6 டிரில்லியன் வான், 81% மார்ஜின்; ஆப்பரேட்டிங் மார்ஜின் 76%; கிராஸ் மார்ஜின் 83%.'},
+ {k:['cash','debt','balance','net cash','கேஷ்','கடன்'],en:'At end-June 2026: cash 88 trillion won, debt 18.6 trillion, net cash 69.4 trillion won, debt to equity 0.06 — before the roughly 40 trillion won from the ADR.',ta:'ஜூன் 2026 கடைசியில: கேஷ் 88 டிரில்லியன், கடன் 18.6 டிரில்லியன், நெட் கேஷ் 69.4 டிரில்லியன் வான், கடன்/ஈக்விட்டி 0.06 — ADR மூலமா வந்த சுமார் 40 டிரில்லியன் சேர்க்காம.'},
+ {k:['working capital','receivable','inventory','days','cfo','cash flow','conversion','வொர்க்கிங்','சரக்கு'],en:'Receivable days improved from 71.8 to 66.2 and inventory days from 141 to 135. Receivables jumped from 18.2 to 33.8 trillion won in 1Q26, so CFO to operating profit dipped to 0.70, then recovered to 1.09 in 2Q26 with CFO of 65.7 trillion won. Payable days were not available.',ta:'DSO 71.8-ல இருந்து 66.2, DIO 141-ல இருந்து 135 — மேம்பட்டிருக்கு. 1Q26-ல வரவேண்டிய பணம் 18.2-ல இருந்து 33.8 டிரில்லியன், அதனால CFO/OP 0.70; 2Q26-ல CFO 65.7 டிரில்லியனோட 1.09-க்கு திரும்பியது. DPO கிடைக்கல.'},
+ {k:['use','proceeds','fab','yongin','capex','euv','money go','பணம் எங்க','கேபெக்ஸ்'],en:'All proceeds go to capex: about 31 trillion won for the first Yongin fab, 19 trillion for the Cheongju P and T 7 HBM packaging plant, and 12 trillion for EUV scanners. 2026 capex is guided in the high 40 trillion won range.',ta:'முழு பணமும் கேபெக்ஸுக்கு: யோங்இன் முதல் ஃபேப்புக்கு சுமார் 31 டிரில்லியன், சியோங்ஜு P&T7 HBM பேக்கேஜிங்குக்கு 19 டிரில்லியன், EUV-க்கு 12 டிரில்லியன் வான். 2026 கேபெக்ஸ் 40-களின் மேல் பகுதி டிரில்லியன்.'},
+ {k:['analyst','target','rating','broker','அனலிஸ்ட்','டார்கெட்'],en:'About 15 analysts: 4 Strong Buy, 9 Buy, 2 Hold. Average target about 252 to 253 dollars. Barclays and Cantor at 300, Bank of America 268, Wolfe 250, J P Morgan 245. These are broker views, not CB Research views.',ta:'சுமார் 15 அனலிஸ்ட்கள்: 4 Strong Buy, 9 Buy, 2 Hold. சராசரி டார்கெட் 252–253 டாலர். Barclays, Cantor 300, BofA 268, Wolfe 250, JPMorgan 245. இவை ப்ரோக்கர் கருத்து, CB Research-ஓடது இல்ல.'},
+ {k:['cycle','phase','peak','சைக்கிள்','உச்சம்'],en:'CY score 50. The memory sector looks late-cycle, phase P4: record margins, new capacity everywhere and a low P/E. HBM is still in rapid adoption. The stock is in Weinstein Stage 3, a topping area.',ta:'CY மதிப்பெண் 50. மெமரி துறை சைக்கிள் உச்சம் P4-ல இருக்கு: சாதனை மார்ஜின், எல்லா இடத்துலயும் புது கெப்பாசிட்டி, குறைஞ்ச P/E. HBM இன்னும் வேகமான ஏற்பு கட்டத்துல. பங்கு Stage 3.'},
+ {k:['trigger','catalyst','ட்ரிகர்'],en:'TG score 48. Positives: long-term agreements with about 10 customers, the HBM4 ramp for Nvidia Rubin, and possible buybacks. Negatives: an industry capacity glut, HBM4 delay reports, AI funding and rate fears, and China CXMT.',ta:'TG மதிப்பெண் 48. பாசிட்டிவ்: ~10 வாடிக்கையாளர் நீண்டகால ஒப்பந்தம், Rubin-க்கு HBM4, பைபேக் வாய்ப்பு. நெகட்டிவ்: அதிக கெப்பாசிட்டி, HBM4 தாமத செய்தி, AI ஃபண்டிங்/வட்டி பயம், சீன CXMT.'},
+ {k:['risk','danger','ரிஸ்க்','ஆபத்து'],en:'Main risks: the memory cycle turning as new fabs arrive in 2027, Samsung HBM4 competition, Chinese DRAM, AI capex slowdown, won currency moves and high volatility with beta near 2.4.',ta:'முக்கிய ரிஸ்க்: 2027-ல புது ஃபேப் வந்ததும் மெமரி சைக்கிள் திரும்புறது, Samsung HBM4 போட்டி, சீன DRAM, AI கேபெக்ஸ் மந்தம், வான் கரன்சி, பீட்டா 2.4 அளவு ஆட்டம்.'},
+ {k:['ceo','management','chairman','board','chey','kwak','நிர்வாகம்','தலைவர்'],en:'Kwak Noh-jung is President and CEO of SK hynix. SK Group Chairman Chey Tae-won led the New York listing. SK Square holds about 20 percent; the owner family has almost no direct stake.',ta:'Kwak Noh-jung SK hynix-ஓட தலைவர் & CEO. SK Group தலைவர் Chey Tae-won நியூயார்க் லிஸ்டிங்கை வழிநடத்தினார். SK Square-கிட்ட சுமார் 20%; உரிமையாளர் குடும்பத்துக்கு நேரடி பங்கு கிட்டத்தட்ட இல்ல.'},
+ {k:['adr','ads','depositary','how it works','ratio','எப்படி வேலை'],en:'Ten ADS equal one Korean share. A US bank holds the shares and issues receipts. ADS price times 10, divided by won per dollar, roughly equals the Seoul price.',ta:'பத்து ADS ஒரு கொரியப் பங்குக்கு சமம். ஒரு US வங்கி பங்குகளை வெச்சு ரசீது வெளியிடும். ADS விலை × 10 ÷ டாலருக்கு வான் ≈ சியோல் விலை.'},
+ {k:['samsung','micron','compet','china','cxmt','போட்டி','சீனா'],en:'Samsung was first to complete HBM4 validation and targets double HBM shipments in 2027. Micron holds about 21 percent of HBM. China CXMT reported progress on 4F squared DRAM cells. SK hynix still leads HBM.',ta:'HBM4 வேலிடேஷனை முதல்ல முடிச்சது Samsung, 2027-ல HBM இரட்டிப்பு இலக்கு. Micron-கிட்ட HBM-ல சுமார் 21%. சீன CXMT 4F² DRAM-ல முன்னேற்றம். இன்னும் HBM லீடர் SK hynix தான்.'},
+ {k:['q3','next result','results date','அடுத்த ரிசல்ட்'],en:'Q3 2026 results are due in late October 2026 — the first quarter that includes the ADR cash.',ta:'Q3 2026 ரிசல்ட் அக்டோபர் 2026 கடைசியில வரும் — ADR பணம் சேர்ந்த முதல் காலாண்டு.'},
+ {k:['score','pillar','cb score','தூண்','மதிப்பெண்'],en:'CB Score is 76 out of 100. Growth 9.5, Margins 9.5, Debt and Cash 9, Valuation 7.5, Trend 4.5, Risk 5.5.',ta:'CB Score 100-க்கு 76. வளர்ச்சி 9.5, மார்ஜின் 9.5, கடன் & கேஷ் 9, மதிப்பீடு 7.5, டிரெண்ட் 4.5, ரிஸ்க் 5.5.'},
+ {k:['dividend','buyback','டிவிடெண்ட்','பைபேக்'],en:'FY2025 dividend was 3,000 won per share, about 2.1 trillion won in total. A buyback is likely because SK Square slipped just below the legally required 20 percent after the ADR.',ta:'FY2025 டிவிடெண்ட் ஒரு பங்குக்கு 3,000 வான், மொத்தம் சுமார் 2.1 டிரில்லியன். ADR-க்கு பின் SK Square சட்டப்படி தேவையான 20%-க்கு கொஞ்சம் கீழே போனதால பைபேக் வர வாய்ப்பு.'}
+];
+var NOADV={en:'CB Research does not give buy, sell or apply advice. Use the Self-check tab to see how many of your own conditions line up.',ta:'CB Research வாங்கு, விற்று, அப்ளை பண்ணுன்னு ஆலோசனை தர்றதில்ல. உங்க நிபந்தனைகள்ல எத்தனை பொருந்துதுன்னு சுய சோதனை டேப்ல பாருங்க.'};
+function asAnswer(q){var s=q.toLowerCase();
+ if(/should i|\bbuy\b|\bsell\b|invest in|apply|good time|வாங்கலாமா|விக்கலாமா|முதலீடு பண்ணலாமா/.test(s))return{t:T(NOADV),sc:1};
+ var best=null,bs=0;KB.forEach(function(e){var sc=0;e.k.forEach(function(k){if(s.indexOf(k)>-1)sc+=k.length>3?2:1});if(sc>bs){bs=sc;best=e}});
+ if(best)return{t:T(best)};return{t:T({en:'I can answer about the amount raised, why it was so big, listing dates, price moves, HBM and AI, segments, results, EBITDA, cash, working capital, use of proceeds, analysts, cycle, triggers, risks and management.',ta:'திரட்டின தொகை, ஏன் இவ்ளோ பெருசு, லிஸ்டிங் தேதி, விலை நகர்வு, HBM & AI, பிரிவுகள், ரிசல்ட், EBITDA, கேஷ், வொர்க்கிங் கேப்பிடல், பணம் பயன்பாடு, அனலிஸ்ட், சைக்கிள், ட்ரிகர், ரிஸ்க், நிர்வாகம் — இதெல்லாம் கேளுங்க.'})}}
+function speak(t){try{if(!window.speechSynthesis)return;speechSynthesis.cancel();var u=new SpeechSynthesisUtterance(t);u.lang=L==='ta'?'ta-IN':'en-IN';var v=speechSynthesis.getVoices().filter(function(x){return x.lang&&x.lang.indexOf(L==='ta'?'ta':'en-IN')===0})[0];if(v)u.voice=v;u.rate=1;speechSynthesis.speak(u)}catch(e){}}
+function addMsg(t,who,sc){var d=document.createElement('div');d.className='m '+who;d.textContent=t;if(sc){var b=document.createElement('button');b.className='btn';b.style.marginTop='6px';b.style.display='block';b.textContent=T({en:'Open Self-check',ta:'சுய சோதனை திற'});b.onclick=function(){togAs();show('sc')};d.appendChild(b)}var lg=document.getElementById('asLog');lg.appendChild(d);lg.scrollTop=lg.scrollHeight}
+function asAsk(qq){var i=document.getElementById('asQ'),q=(qq||i.value).trim();if(!q)return;i.value='';addMsg(q,'u');var a=asAnswer(q);addMsg(a.t,'b',a.sc);speak(a.t)}
+var REC=null;
+function asMic(){var SR=window.SpeechRecognition||window.webkitSpeechRecognition;if(!SR){addMsg(T({en:'Voice input is not supported in this browser — please type your question.',ta:'இந்த பிரவுசர்ல குரல் உள்ளீடு இல்ல — டைப் பண்ணுங்க.'}),'b');return}
+ var m=document.getElementById('mic');if(REC){REC.stop();return}REC=new SR();REC.lang=L==='ta'?'ta-IN':'en-IN';REC.interimResults=false;m.classList.add('live');
+ REC.onresult=function(e){asAsk(e.results[0][0].transcript)};REC.onend=function(){m.classList.remove('live');REC=null};REC.onerror=function(){m.classList.remove('live');REC=null};REC.start()}
+var QS=[{en:'How much was raised?',ta:'எவ்ளோ திரட்டினாங்க?'},{en:'Why so big?',ta:'ஏன் இவ்ளோ பெருசு?'},{en:'Why is the price down?',ta:'விலை ஏன் இறங்குச்சு?'},{en:'Role in AI / HBM',ta:'AI / HBM-ல பங்கு'},{en:'Working capital',ta:'வொர்க்கிங் கேப்பிடல்'}];
+function renderQs(){document.getElementById('asQs').innerHTML=QS.map(function(q,i){return '<button onclick="asAsk(T(QS['+i+']))">'+T(q)+'</button>'}).join('')}
+var asGreeted=false;
+function togAs(){var b=document.getElementById('asBox'),o=b.style.display==='flex';b.style.display=o?'none':'flex';document.getElementById('disc').style.display='none';
+ if(!o&&!asGreeted){asGreeted=true;addMsg(T({en:'Hello! Ask me anything about the SK hynix listing — tap 🎙 to speak.',ta:'வணக்கம்! SK hynix லிஸ்டிங் பத்தி எதுவும் கேளுங்க — பேச 🎙 தொடுங்க.'}),'b')}}
+function togDisc(){var d=document.getElementById('disc');d.style.display=d.style.display==='block'?'none':'block'}
+function showDisc(v){document.getElementById('disc').style.display=v?'block':'none'}
+document.getElementById('cbBadge').addEventListener('mouseleave',function(){setTimeout(function(){showDisc(false)},1800)});
+setLang(L);
+</script>
+</body>
+</html>
