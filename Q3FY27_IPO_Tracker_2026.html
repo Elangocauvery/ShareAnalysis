@@ -29,7 +29,7 @@ button,select,input{font:inherit}
 .mast{position:sticky;top:env(safe-area-inset-top,0px);z-index:30;background:var(--bg);border-bottom:2px solid var(--ink)}
 .mast .row{display:flex;flex-wrap:wrap;align-items:center;gap:10px 18px;padding-block:10px}
 .brand{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;min-width:0}
-.brand b{font-family:var(--fd);font-weight:800;font-size:22px;letter-spacing:.2px}
+.brand b{user-select:none;-webkit-user-select:none;-webkit-tap-highlight-color:transparent;font-family:var(--fd);font-weight:800;font-size:22px;letter-spacing:.2px}
 .brand .tag{font-family:var(--fd);font-weight:700;color:var(--accInk);font-size:15px}
 .mast .sp{flex:1}
 .pxchip{display:inline-flex;align-items:center;gap:6px;border:1.5px solid var(--line);border-radius:999px;padding:4px 10px;font-size:12.5px;font-weight:700;color:var(--ink2);background:var(--wash);cursor:pointer}
@@ -144,6 +144,13 @@ td .sm{display:block;font-size:11.5px;color:var(--muted);font-weight:600}
 .scsum{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,170px),1fr));gap:6px 14px;margin-bottom:6px}
 .scsum div{display:flex;flex-direction:column;gap:3px;font-size:12px;font-weight:700;color:var(--ink2)}
 .scsum .mb{height:7px;border-radius:4px;background:#F1E6D7;overflow:hidden}.scsum .mb i{display:block;height:100%;background:var(--acc)}
+.admdot{position:fixed;right:env(safe-area-inset-right,0px);bottom:env(safe-area-inset-bottom,0px);width:14px;height:14px;border:0;padding:0;margin:0;background:transparent;opacity:0;z-index:45;cursor:default}
+.admdot:focus-visible{opacity:1;outline:2px solid var(--acc)}
+.admbox{position:fixed;inset:0;z-index:80;background:rgba(22,19,15,.35);display:grid;place-items:center;padding:16px}
+.admbox[hidden]{display:none!important}
+.admcard{background:var(--bg);border:2px solid var(--ink);border-radius:12px;padding:16px;width:min(320px,100%);box-shadow:0 12px 30px rgba(0,0,0,.2)}
+.admh{display:block;font-family:var(--fd);font-size:18px;margin-bottom:8px}
+.admcard input{width:100%;border:1.5px solid var(--line);border-radius:8px;padding:9px 10px;font-weight:600}
 /* timeline */
 .tl{position:relative;padding-left:22px;border-left:3px solid var(--line);display:grid;gap:10px}
 .tl .ev{position:relative}
@@ -395,6 +402,15 @@ td .sm{display:block;font-size:11.5px;color:var(--muted);font-weight:600}
   <div class="b" tabindex="0" role="button" aria-label="Disclaimer">CB</div>
   <div class="tipd"><b>CB Research · Disclaimer</b><br><span class="en">Education only. CB Research (Cauvery Business Research) is not SEBI-registered and does not give buy, sell, hold or apply advice. Reference prices may be stale; read the RHP and verify on NSE/BSE. Do your own research or consult a registered adviser.</span><span class="ta">கல்விக்காக மட்டும். CB Research (Cauvery Business Research) SEBI-registered இல்ல; buy, sell, hold, apply advice தர்றதில்ல. Reference விலைகள் பழையதா இருக்கலாம்; RHP படிங்க, NSE/BSE-ல சரிபாருங்க. சொந்தமா research பண்ணுங்க அல்லது registered adviser-ஐ கேளுங்க.</span><br><b style="color:var(--accInk)"><span class="en">Know before you own</span><span class="ta">புரிஞ்சு வாங்குங்க!</span></b></div>
 </div>
+<button class="admdot" id="admDot" type="button" aria-label="."></button>
+<div class="admbox" id="admBox" hidden><div class="admcard" role="dialog" aria-modal="true" aria-label="Admin">
+  <div id="admAsk"><b class="admh">Admin</b>
+    <input type="password" id="admPass" autocomplete="off" aria-label="Passphrase" placeholder="Passphrase">
+    <div class="small" id="admMsg" style="color:var(--bad);min-height:18px"></div>
+    <div class="ctrl" style="margin:4px 0 0"><button class="btn pri" type="button" id="admGo">Unlock</button><button class="btn ghost" type="button" id="admCancel">Cancel</button></div></div>
+  <div id="admOn" hidden><b class="admh">Admin</b><div class="small" style="margin-bottom:8px">Live Prices tab is shown in this browser.</div>
+    <div class="ctrl" style="margin:0"><button class="btn" type="button" id="admLock">Lock</button><button class="btn ghost" type="button" id="admClose">Close</button></div></div>
+</div></div>
 <div class="tip" id="tip"></div>
 <div class="toast" id="toast"></div>
 <script>
@@ -840,10 +856,14 @@ function srcChip(p) {
 
 /* ---------------- Tabs ---------------- */
 var tabs = [].slice.call(document.querySelectorAll("section.tab"));
+var OWNER_TABS = ["t-live"], IS_OWNER = false;
+function isAdmin() { return IS_OWNER || store("cbipo_admin") === "1"; }
+function tabAllowed(id) { return OWNER_TABS.indexOf(id) < 0 || isAdmin(); }
 var nav = $("tabs"), CUR = "t-dash";
 function buildTabs() {
   nav.innerHTML = "";
   tabs.forEach(function (s) {
+    if (!tabAllowed(s.id)) return;
     var b = document.createElement("button"); b.type = "button"; b.textContent = s.dataset[LANG] || s.dataset.en; b.dataset.t = s.id;
     if (s.id === CUR) b.className = "on";
     b.onclick = function () { showTab(s.id); };
@@ -851,7 +871,7 @@ function buildTabs() {
   });
 }
 function showTab(id) {
-  if (!$(id)) id = "t-dash";
+  if (!$(id) || !tabAllowed(id)) id = "t-dash";
   CUR = id;
   tabs.forEach(function (s) { s.hidden = s.id !== id; });
   [].forEach.call(nav.children, function (b) { b.className = b.dataset.t === id ? "on" : ""; if (b.dataset.t === id) b.scrollIntoView({ block: "nearest", inline: "center" }); });
@@ -1066,7 +1086,7 @@ function renderStock() {
     '</tbody></table></div><div class="small mt">' + T("Points = Impact × Certainty × Timing × Priced-in. TG = 50 + 8 × top-3 positives − 8 × negatives. CB education estimates.", "Points = Impact × Certainty × Timing × Priced-in. TG = 50 + 8 × top-3 positives − 8 × negatives. CB கல்வி மதிப்பீடு.") + "</div></div>";
   var ul = unlocks(s);
   h += '<div class="grid g2 mt"><div class="card"><h3>' + T("Lock-in dates (estimated)", "Lock-in தேதிகள் (மதிப்பீடு)") + '</h3><div class="tl">' + ul.map(function (u) { return '<div class="ev' + (u.d < TODAY ? " past" : "") + '"><b>' + fd(u.d, 1) + "</b> · " + L(u.l) + (u.d < TODAY ? ' <span class="small">(' + T("passed", "முடிஞ்சுது") + ")</span>" : ' <span class="small">(' + T("in ", "") + days(TODAY, u.d) + T(" days", " நாள்ல") + ")</span>") + "</div>"; }).join("") + "</div></div>";
-  h += '<div class="card"><h3>' + T("Your price for this stock", "இந்த stock-க்கு உங்க விலை") + '</h3><ul class="b"><li>' + T("Saw a newer price on NSE/BSE? Enter it — it stays in this browser.", "NSE/BSE-ல புது விலை பார்த்தீங்களா? Type பண்ணுங்க — இந்த browser-ல மட்டும்.") + '</li></ul><div class="ctrl mt"><input type="number" step="0.05" id="myPx" placeholder="₹" value="' + (MINE[keyOf(s)] != null ? MINE[keyOf(s)] : "") + '" style="width:140px" aria-label="My price"><button class="btn pri" id="myPxGo" type="button">' + T("Use", "Use") + '</button><button class="btn ghost" id="myPxClr" type="button">' + T("Reset", "Reset") + "</button></div></div></div>";
+  h += '<div class="card" id="myPxCard"' + (isAdmin() ? "" : " hidden") + '><h3>' + T("Your price for this stock", "இந்த stock-க்கு உங்க விலை") + '</h3><ul class="b"><li>' + T("Saw a newer price on NSE/BSE? Enter it — it stays in this browser.", "NSE/BSE-ல புது விலை பார்த்தீங்களா? Type பண்ணுங்க — இந்த browser-ல மட்டும்.") + '</li></ul><div class="ctrl mt"><input type="number" step="0.05" id="myPx" placeholder="₹" value="' + (MINE[keyOf(s)] != null ? MINE[keyOf(s)] : "") + '" style="width:140px" aria-label="My price"><button class="btn pri" id="myPxGo" type="button">' + T("Use", "Use") + '</button><button class="btn ghost" id="myPxClr" type="button">' + T("Reset", "Reset") + "</button></div></div></div>";
   h += '<div class="mt" id="stSc"></div>';
   $("stBody").innerHTML = h;
   $("myPxGo").onclick = function () { var v = parseFloat($("myPx").value); if (!(v > 0)) { toast(T("Enter a price above zero.", "பூஜ்யத்துக்கு மேல விலை கொடுங்க.")); return; } MINE[keyOf(s)] = v; store("cbipo_px_mine", JSON.stringify(MINE)); renderAll(); toast(T("Price updated for you.", "உங்களுக்கு விலை update ஆச்சு.")); };
@@ -1489,14 +1509,44 @@ function wireLive() {
     try { await DB.doc("prices/latest").set({ px: merged, asOf: d.toLocaleString("en-IN", { day: "numeric", month: "short", year: "numeric", hour: "2-digit", minute: "2-digit" }), src: "manual" }); $("pasteMsg").textContent = T("Saved for all viewers.", "எல்லோருக்கும் save ஆச்சு."); }
     catch (e) { $("pasteMsg").textContent = T("Could not save for everyone: ", "எல்லோருக்கும் save ஆகல: ") + (e && e.code || "error"); }
   };
-  $("pxChip").onclick = function () { showTab("t-live"); };
+  $("pxChip").onclick = function () { if (isAdmin()) showTab("t-live"); };
 }
+function applyAdmin() {
+  var on = isAdmin();
+  $("pxChip").style.cursor = on ? "pointer" : "default";
+  $("pxChip").title = on ? "Price source" : "";
+  var my = document.getElementById("myPxCard"); if (my) my.hidden = !on;
+  buildTabs();
+  if (!tabAllowed(CUR)) showTab("t-dash"); else showTab(CUR);
+}
+function phash(t) { var x = 0x811c9dc5, s = "cbipo|" + t; for (var i = 0; i < s.length; i++) { x ^= s.charCodeAt(i); x = Math.imul(x, 0x01000193) >>> 0; } return x.toString(16); }
+var ADMIN_HASH = "646c1ced";
+(function adminDot() {
+  var dot = $("admDot"), box = $("admBox"), inp = $("admPass"), msg = $("admMsg");
+  function open() {
+    var on = isAdmin();
+    $("admAsk").hidden = on; $("admOn").hidden = !on; msg.textContent = ""; inp.value = "";
+    box.hidden = false; if (!on) setTimeout(function () { inp.focus(); }, 30);
+  }
+  function close() { box.hidden = true; inp.value = ""; }
+  function unlock() {
+    if (phash(inp.value) === ADMIN_HASH) { store("cbipo_admin", "1"); close(); applyAdmin(); toast("✓"); }
+    else { msg.textContent = T("Wrong passphrase.", "தவறான passphrase."); inp.select(); }
+  }
+  dot.onclick = open;
+  $("admGo").onclick = unlock;
+  inp.onkeydown = function (e) { if (e.key === "Enter") unlock(); if (e.key === "Escape") close(); };
+  $("admCancel").onclick = close; $("admClose").onclick = close;
+  $("admLock").onclick = function () { store("cbipo_admin", null); close(); applyAdmin(); toast("✓"); };
+  box.onclick = function (e) { if (e.target === box) close(); };
+})();
 async function connectDB() {
   try {
     if (!window.claude || !window.claude.use) return;
     var db = await window.claude.use("db"); if (!db) return; DB = db; renderFeed();
     db.doc("prices/latest").onSnapshot(function (snap) { if (snap.exists) { var d = snap.data(); DBPX = { px: d.px || {}, asOf: d.asOf || "", src: d.src || "" }; renderAll(); } }, function () {});
     var u = await window.claude.use("user");
+    if (u) { try { if (await u.isOwner()) { IS_OWNER = true; applyAdmin(); } } catch (e) {} }
     if (u) { var c = null; try { c = await u.can("data.write"); } catch (e) {} if (c === null) { try { c = await u.canEdit(); } catch (e) { c = false; } } CANWRITE = !!c; renderFeed(); }
   } catch (e) {}
 }
@@ -1570,7 +1620,7 @@ function buildConfig() {
       { k: ["lock-in", "lock in", "unlock", "anchor", "லாக்", "அன்லாக்", "ஆங்கர்"], a: A("Anchor shares unlock 50% after 30 days and the rest after 90; pre-IPO holders after 6 months.", "Anchor shares 30 நாள்ல 50%, 90 நாள்ல மீதி unlock; pre-IPO holders 6 மாசம்."), tab: "t-unlock" },
       { k: ["how much raised", "total raised", "money raised", "மொத்தம்", "திரட்டி"], a: A("About ₹1.23 lakh crore was raised through ~100 IPOs in 2026 up to 13 Oct.", "2026-ல 13 Oct வரை ~100 IPOs மூலமா சுமார் ₹1.23 lakh crore."), tab: "t-dash" },
       { k: ["gmp", "grey market", "ஜிஎம்பி"], a: A("Grey-market premium is unofficial and often wrong; 43 of 2026's mainboard IPOs listed below their GMP estimate.", "GMP official இல்ல, அடிக்கடி தப்பு; 2026-ல 43 mainboard IPOs GMP-க்கு கீழ list ஆச்சு."), tab: "t-promise" },
-      { k: ["live price", "price update", "nse price", "bse price", "லைவ்"], a: A("On claude.ai, prices update every Friday with the week's close. The GitHub copy can link a Google Sheet for near-live prices, or you can type your own.", "claude.ai-ல ஒவ்வொரு வெள்ளியும் வார closing விலை update ஆகும். GitHub copy-ல Google Sheet link பண்ணா near-live விலை; இல்ல நீங்களே type பண்ணலாம்."), tab: "t-live" },
+      { k: ["live price", "price update", "nse price", "bse price", "லைவ்"], a: A("Prices shown are the latest saved prices; their date is on the chip at the top of the page.", "இங்க காட்டுற விலைகள் கடைசியா save ஆனவை; தேதி page மேல chip-ல இருக்கு.") },
       { k: ["self check", "self-check", "should i apply", "செல்ஃப்"], a: A("Open the self-check: tick the conditions that are true for you. It counts them; it is not advice.", "Self-check திறங்க: உங்களுக்கு உண்மையானதை tick பண்ணுங்க. எண்ணும் — advice இல்ல."), tab: "t-sc" }
     ],
     suggestions: [["Which IPO gave the best return?", "எந்த IPO best return?"], ["Which IPO had the biggest listing gain?", "எந்த IPO-க்கு listing gain அதிகம்?"], ["ESDS vs Fractal", "ESDS vs Fractal"], ["What is OFS?", "OFS-னா என்ன?"], ["When does Jio open?", "Jio எப்போ திறக்குது?"], ["Should I buy Indo-MIM?", "Indo-MIM வாங்கலாமா?"]]
@@ -1727,6 +1777,7 @@ CUR = $(startTab) ? startTab : "t-dash";
 setLang(store("cbipo_lang") === "ta" ? "ta" : "en");
 showTab(CUR);
 addReadButtons();
+applyAdmin();
 connectDB();
 pullSheet(); setInterval(pullSheet, 60000);
 })();
