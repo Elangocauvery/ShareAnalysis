@@ -1,0 +1,762 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>YES Bank Q1FY27 &amp; AT1 Verdict</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<style>
+:root{--bg:#ffffff;--soft:#f6f8fb;--ink:#14213d;--mute:#5b6577;--line:#e2e7ef;--blue:#0b4ea2;--sky:#e8f1fc;--orange:#e8730c;--org2:#fff3e6;--green:#17803d;--gsoft:#e7f6ec;--amber:#b7791f;--asoft:#fdf5e3;--red:#c0392b;--rsoft:#fdecea;--violet:#6b46c1}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--ink);font-family:"Segoe UI",Roboto,"Noto Sans Tamil",Arial,sans-serif;font-size:15px;line-height:1.5}
+body.ta .en{display:none!important}body:not(.ta) .ta{display:none!important}
+header{background:linear-gradient(135deg,#0b4ea2,#123a7a);color:#fff;padding:14px 16px 10px}
+header h1{margin:0;font-size:1.25rem}header .sub{opacity:.9;font-size:.85rem}
+.topbar{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:8px}
+.chip{display:inline-block;padding:3px 10px;border-radius:999px;font-size:.78rem;font-weight:600;background:#fff;color:var(--blue);border:1px solid var(--line)}
+.chip.red{background:var(--rsoft);color:var(--red);border-color:#f3c3bd}.chip.amb{background:var(--asoft);color:var(--amber)}.chip.grn{background:var(--gsoft);color:var(--green)}
+.langbtn{margin-left:auto;background:#fff;color:var(--blue);border:0;border-radius:8px;padding:6px 12px;font-weight:700;cursor:pointer}
+nav{position:sticky;top:0;z-index:20;background:#fff;border-bottom:1px solid var(--line);overflow-x:auto;white-space:nowrap;-webkit-overflow-scrolling:touch}
+nav button{background:none;border:0;padding:11px 12px;font-size:.86rem;color:var(--mute);cursor:pointer;border-bottom:3px solid transparent;font-weight:600}
+nav button.on{color:var(--blue);border-bottom-color:var(--orange)}
+main{max-width:1180px;margin:0 auto;padding:14px 16px 120px}
+section.tab{display:none}section.tab.on{display:block;animation:f .25s}
+@keyframes f{from{opacity:0;transform:translateY(4px)}to{opacity:1}}
+h2{font-size:1.15rem;margin:6px 0 10px;color:var(--blue)}h3{font-size:1rem;margin:16px 0 8px}
+.grid{display:grid;gap:12px}.g2{grid-template-columns:repeat(auto-fit,minmax(280px,1fr))}.g4{grid-template-columns:repeat(auto-fit,minmax(150px,1fr))}
+.card{background:#fff;border:1px solid var(--line);border-radius:12px;padding:12px 14px}
+.card.soft{background:var(--soft)}.card.alert{background:var(--rsoft);border-color:#f3c3bd}.card.note{background:var(--org2);border-color:#f6d2ad}.card.ok{background:var(--gsoft);border-color:#bfe6cb}
+.kpi .l{font-size:.75rem;color:var(--mute);text-transform:uppercase;letter-spacing:.03em}.kpi .v{font-size:1.35rem;font-weight:800}.kpi .d{font-size:.78rem}
+.up{color:var(--green)}.dn{color:var(--red)}.mu{color:var(--mute)}
+.tw{overflow-x:auto;-webkit-overflow-scrolling:touch;border:1px solid var(--line);border-radius:10px}
+table{border-collapse:collapse;width:100%;font-size:.85rem;min-width:560px}
+th,td{padding:7px 9px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+th{background:var(--sky);color:var(--blue);font-weight:700;position:sticky;top:0}
+td.n,th.n{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+tr:hover td{background:#fafcff}
+.cw{overflow-x:auto;border:1px solid var(--line);border-radius:10px;padding:8px;background:#fff}
+.cw .ci{min-width:900px;height:340px;position:relative}
+.small{font-size:.8rem;color:var(--mute)}
+.pill{display:inline-block;padding:2px 8px;border-radius:6px;font-size:.75rem;font-weight:700}
+.p-buy{background:var(--gsoft);color:var(--green)}.p-hold{background:var(--asoft);color:var(--amber)}.p-sell{background:var(--rsoft);color:var(--red)}
+.tl{position:relative;margin-left:10px;border-left:3px solid var(--line);padding-left:16px}
+.tl .ev{position:relative;margin:0 0 14px}.tl .ev:before{content:"";position:absolute;left:-24px;top:4px;width:13px;height:13px;border-radius:50%;background:var(--blue);border:2px solid #fff;box-shadow:0 0 0 2px var(--blue)}
+.tl .ev.hot:before{background:var(--orange);box-shadow:0 0 0 2px var(--orange)}.tl .ev.red:before{background:var(--red);box-shadow:0 0 0 2px var(--red)}
+.tl .dt{font-weight:800;color:var(--blue);font-size:.85rem}
+.btnrow{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0}
+.b{border:1px solid var(--line);background:#fff;border-radius:8px;padding:7px 11px;font-size:.83rem;cursor:pointer;font-weight:600;color:var(--ink)}
+.b.on{background:var(--blue);color:#fff;border-color:var(--blue)}
+.reason{border-left:4px solid var(--blue);padding:8px 12px;margin:8px 0;background:var(--soft);border-radius:0 8px 8px 0}
+.reason b{color:var(--blue)}
+svg text{font-family:inherit}
+.mapbox{cursor:pointer}.mapbox:hover rect{stroke-width:3}
+#bmCard,#schCard{margin-top:10px}
+.bar{height:10px;background:var(--line);border-radius:6px;overflow:hidden}.bar i{display:block;height:100%;background:var(--green);transition:width .4s}
+.sc-q{margin:10px 0;padding:10px;border:1px solid var(--line);border-radius:10px}
+.sc-q label{display:block;margin:4px 0;cursor:pointer}
+.scg h3{margin-top:4px}
+.ck{display:flex;gap:8px;align-items:flex-start;padding:6px 0;border-bottom:1px dashed var(--line)}.ck input{margin-top:4px}
+.ck .data{font-size:.78rem;color:var(--mute)}
+/* CB badge + assist */
+#cbBadge{position:fixed;right:14px;bottom:14px;z-index:60;width:54px;height:54px;border-radius:50%;background:var(--orange);color:#fff;font-weight:900;font-size:1.1rem;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 14px rgba(232,115,12,.45);cursor:pointer;animation:blink 2.2s infinite;border:3px solid #fff}
+@keyframes blink{0%,100%{box-shadow:0 0 0 0 rgba(232,115,12,.55)}50%{box-shadow:0 0 0 10px rgba(232,115,12,0)}}
+#disc{position:fixed;right:14px;bottom:78px;z-index:61;max-width:330px;background:#fff;border:1px solid var(--line);border-radius:12px;padding:12px;font-size:.8rem;box-shadow:0 10px 30px rgba(0,0,0,.15);display:none}
+#asBtn{position:fixed;right:78px;bottom:18px;z-index:60;background:var(--blue);color:#fff;border:0;border-radius:999px;padding:11px 15px;font-weight:700;box-shadow:0 4px 14px rgba(11,78,162,.35);cursor:pointer}
+#asBox{position:fixed;right:14px;bottom:82px;z-index:62;width:min(380px,calc(100vw - 28px));max-height:70vh;background:#fff;border:1px solid var(--line);border-radius:14px;box-shadow:0 12px 34px rgba(0,0,0,.18);display:none;flex-direction:column}
+#asBox .hd{background:var(--blue);color:#fff;padding:10px 12px;border-radius:14px 14px 0 0;font-weight:700;display:flex;justify-content:space-between}
+#asLog{padding:10px;overflow-y:auto;flex:1;font-size:.85rem}
+#asLog .q{background:var(--sky);padding:6px 9px;border-radius:9px;margin:6px 0 4px auto;max-width:85%;width:fit-content}
+#asLog .a{background:var(--soft);padding:7px 9px;border-radius:9px;margin:4px 0}
+#asIn{display:flex;gap:6px;padding:8px;border-top:1px solid var(--line)}
+#asIn input{flex:1;padding:8px;border:1px solid var(--line);border-radius:8px;font-size:.88rem}
+#asIn button{border:0;border-radius:8px;padding:8px 10px;cursor:pointer;font-weight:700}
+.mic{background:var(--org2);color:var(--orange)}.mic.live{background:var(--red);color:#fff}
+.go{background:var(--blue);color:#fff}
+.sugg{display:flex;flex-wrap:wrap;gap:5px;padding:0 10px 8px}.sugg span{font-size:.72rem;background:var(--soft);border:1px solid var(--line);border-radius:999px;padding:3px 8px;cursor:pointer}
+.wm{position:fixed;left:50%;top:55%;transform:translate(-50%,-50%) rotate(-24deg);font-size:64px;font-weight:900;color:rgba(11,78,162,.035);pointer-events:none;z-index:0;white-space:nowrap}
+.calc label{font-size:.82rem;font-weight:600;display:block;margin:8px 0 3px}
+.calc select,.calc input{width:100%;padding:7px;border:1px solid var(--line);border-radius:8px;font-size:.88rem}
+.res td.n{font-weight:700}
+.big{font-size:1.6rem;font-weight:900}
+@media(max-width:560px){header h1{font-size:1.05rem}.kpi .v{font-size:1.15rem}main{padding:12px 12px 120px}}
+
+.stk{position:relative;height:300px;display:flex;gap:46px;justify-content:center;align-items:flex-end;border-bottom:2px solid #9aa6b8;margin:10px 0 0}
+.colbar{width:110px;height:300px;display:flex;flex-direction:column-reverse;position:relative;z-index:1}
+.seg{transition:height .9s ease;color:#fff;font-size:.72rem;font-weight:700;display:flex;align-items:center;justify-content:center;overflow:hidden;text-align:center;line-height:1.1}
+.req{position:absolute;left:0;right:0;border-top:1.5px dashed #c0392b;font-size:.66rem;color:#c0392b;text-align:left;padding-left:2px;z-index:2;pointer-events:none}
+.stkl{display:flex;gap:46px;justify-content:center;font-size:.8rem;font-weight:700;margin-top:4px}.stkl div{width:110px;text-align:center}
+.legend{display:flex;gap:12px;flex-wrap:wrap;font-size:.75rem;margin-top:8px}.legend i{display:inline-block;width:11px;height:11px;border-radius:3px;margin-right:4px;vertical-align:-1px}
+.ledger td{font-size:.82rem}.ledger{min-width:0}
+.step-dt{font-size:.78rem;font-weight:800;color:var(--orange);text-transform:uppercase;letter-spacing:.03em}
+.thing{border-top:4px solid var(--orange)}.thing .nm{font-size:1.6rem;font-weight:900;color:var(--orange);line-height:1}
+</style>
+</head>
+<body>
+<div class="wm">CB Research</div>
+<header>
+ <h1><span class="en">YES BANK — Q1 FY27 Analysis &amp; the ₹8,415 crore AT1 Bond Verdict</span><span class="ta">எஸ் பேங்க் — முதல் காலாண்டு 2026-27 அலசல் &amp; ₹8,415 கோடி ஏடி1 பாண்டு தீர்ப்பு</span></h1>
+ <div class="sub" id="stamp"></div>
+ <div class="topbar">
+  <span class="chip">NSE: YESBANK · BSE: 532648</span>
+  <span class="chip red">SC verdict: 15 Oct 2026</span>
+  <span class="chip">CB Score <b id="chipScore">6.2</b>/10</span>
+  <span class="chip amb">CY 63</span><span class="chip red">TG 21</span>
+  <button class="langbtn" onclick="toggleLang()" id="langB">தமிழ்</button>
+ </div>
+</header>
+<nav id="nav"></nav>
+<main>
+
+<!-- OVERVIEW -->
+<section class="tab" id="t-ov">
+ <div class="card alert">
+  <div class="en"><b>What happened today (15 Oct 2026):</b> A Supreme Court bench of Justices Dipankar Datta and Augustine George Masih dismissed the appeals of YES Bank, the RBI and the Centre, upholding the Bombay High Court's January 2023 judgment that quashed the March 2020 write-down of ₹8,415 crore of Additional Tier-1 (AT1) bonds. The bonds are back in the picture. The share closed at ₹18.15, down 14.43% — its steepest single-day fall since July 2020. The bank says it is examining the order and will disclose implications. Q2 FY27 results are due on 17 Oct 2026.</div>
+  <div class="ta"><b>இன்னிக்கு (15 அக்டோபர் 2026) என்ன நடந்துச்சு:</b> 2020-ல எஸ் பேங்க் நெருக்கடி நேரத்துல ₹8,415 கோடி ஏடி1 பாண்டுகளை பூஜ்ஜியமா எழுதிட்டாங்க. அது சட்டப்படி செல்லாதுன்னு பம்பாய் ஹைகோர்ட் 2023-ல சொல்லுச்சு. இன்னிக்கு உச்ச நீதிமன்றமும் பேங்க், ஆர்பிஐ, மத்திய அரசு போட்ட மேல்முறையீடுகளை தள்ளுபடி பண்ணிடுச்சு. அதனால அந்த பாண்டுகள் திரும்ப உயிர் பெறுது. பங்கு விலை 14.43% சரிஞ்சு ₹18.15-ல முடிஞ்சுது. இரண்டாம் காலாண்டு ரிசல்ட் 17 அக்டோபர் வருது.</div>
+ </div>
+ <h3><span class="en">Q1 FY27 at a glance (quarter ended 30 June 2026)</span><span class="ta">முதல் காலாண்டு ஒரே பார்வையில் (ஜூன் 30, 2026 வரை)</span></h3>
+ <div class="grid g4" id="kpis"></div>
+ <h3><span class="en">The one-line answer on capital</span><span class="ta">மூலதனம் பத்தி ஒரே வரி பதில்</span></h3>
+ <div class="grid g2">
+  <div class="card note"><div class="en"><b>CB base case</b> — bonds restored as AT1, interest arrears since 2020 paid, both tax-deductible: <b>CET1 14.0% → ≈11.0%</b>, Tier-1 ≈13.5%, <b>CRAR 15.1% → ≈14.6%</b>. Neither ratio goes up: the ₹8,415 cr is already inside capital and only moves from CET1 to AT1, while the arrears (≈₹5,090 cr pre-tax) are a real payout booked as interest expense. Without tax relief: CET1 ≈10.0%, CRAR ≈13.6%. See the AT1 Explained tab for the step-by-step picture. If the bonds are treated as a plain liability rather than capital, CRAR also falls — to ≈12.7% (principal) or ≈11.2% (with arrears), the last one below the 11.5% requirement including the conservation buffer.</div>
+  <div class="ta">சிபி அடிப்படை கணக்கு — பாண்டுகள் ஏடி1-ஆ திரும்ப வந்து, 2020-ல இருந்து வட்டி நிலுவையும் கொடுத்தா (வரி சலுகையோட): சிஇடி1 14.0%-ல இருந்து சுமார் 11.0%, சிஆர்ஏஆர் 15.1%-ல இருந்து சுமார் 14.6%. ரெண்டுமே ஏறாது — ₹8,415 கோடி ஏற்கனவே மூலதனத்துக்குள்ள இருக்கு; சிஇடி1-ல இருந்து ஏடி1-க்கு மாறுது அவ்வளவு தான். வரி சலுகை இல்லைன்னா சிஇடி1 சுமார் 10.0%, சிஆர்ஏஆர் சுமார் 13.6%. பாண்டை மூலதனமா இல்லாம கடனா பார்த்தா சிஆர்ஏஆரும் 12.7% அல்லது 11.2% வரை இறங்கலாம்.</div></div>
+  <div class="card soft"><div class="en"><b>Correcting three common assumptions:</b><br>① The investor is <b>Sumitomo Mitsui Banking Corporation (SMBC)</b>, part of Sumitomo Mitsui Financial Group — not Mitsubishi, and not Mitsui &amp; Co.<br>② SMBC paid ≈₹16,333 cr (₹13,483 cr for 20% + ₹2,850 cr for 4.2%) — and <b>all of it was a secondary purchase</b> from SBI, seven banks and Carlyle. That money went to the sellers, not into YES Bank's capital, so it does not cushion CET1.<br>③ The liability is ₹8,415 cr of principal, rising to ≈₹13,500 cr if simple-interest coupon arrears since March 2020 are payable.</div>
+  <div class="ta"><b>மூணு விஷயங்களை சரி பண்ணிக்கணும்:</b><br>① முதலீட்டாளர் சுமிடோமோ மிட்சுய் பேங்கிங் கார்ப்பரேஷன் (எஸ்எம்பிசி) — மிட்சுபிஷி இல்லை.<br>② எஸ்எம்பிசி சுமார் ₹16,333 கோடி கொடுத்தது — எல்லாமே எஸ்பிஐ, மத்த வங்கிகள், கார்லைல் கிட்ட இருந்து ஏற்கனவே இருந்த பங்குகளை வாங்கினது. அந்த பணம் விற்றவங்களுக்கு போச்சு; பேங்க் மூலதனத்துக்கு வரலை.<br>③ கடன் தொகை அசல் ₹8,415 கோடி; வட்டி நிலுவையும் சேர்த்தா சுமார் ₹13,500 கோடி.</div></div>
+ </div>
+ <h3><span class="en">CB Score — six pillars</span><span class="ta">சிபி ஸ்கோர் — ஆறு தூண்கள்</span></h3>
+ <div class="card"><svg id="temple" viewBox="0 0 720 430" style="width:100%;max-width:760px;display:block;margin:auto"></svg></div>
+ <div id="pillarCards" class="grid g2" style="margin-top:10px"></div>
+</section>
+
+<!-- BUSINESS MODEL -->
+<section class="tab" id="t-bm">
+ <h2><span class="en">How YES Bank makes money</span><span class="ta">எஸ் பேங்க் எப்படி சம்பாதிக்குது</span></h2>
+ <p class="small"><span class="en">Tap any box for an explanation. Figures: Q1 FY27, ₹ crore.</span><span class="ta">எந்த பெட்டியையும் தொட்டா விளக்கம் வரும். தொகை: ₹ கோடி.</span></p>
+ <div class="cw"><div style="min-width:900px"><svg id="bmap" viewBox="0 0 1000 600" style="width:100%"></svg></div></div>
+ <div id="bmCard" class="card soft"><span class="en">Tap a box above.</span><span class="ta">மேலே ஒரு பெட்டியை தொடுங்க.</span></div>
+ <p class="small"><b>Revenue formula:</b> NII ≈ Average interest-earning assets × NIM (2.7%) → plus fees &amp; treasury (₹1,798 cr) − operating cost (₹2,880 cr) − provisions (₹394 cr) − tax = PAT (₹1,071 cr).</p>
+ <h3><span class="en">Revenue engine — the drivers</span><span class="ta">வருமான இயந்திரம் — முக்கிய காரணிகள்</span></h3>
+ <div class="tw"><table id="engine"></table></div>
+</section>
+
+<!-- FINANCIALS -->
+<section class="tab" id="t-fin">
+ <h2><span class="en">Q1 FY27 financials — four matrices: A · E · P · V</span><span class="ta">முதல் காலாண்டு கணக்கு — நாலு அட்டவணை: சொத்து · திறன் · லாபம் · மதிப்பு</span></h2>
+ <p class="small"><span class="en">Remember it as a chain: a bank first <b>gathers and lends</b> money safely (Assets), does it <b>cheaply</b> (Efficiency), turns it into <b>profit</b> (Profit), and the market puts a <b>price</b> on the result (Value). Tap a box to jump.</span><span class="ta">ஒரு சங்கிலியா நினைவு வெச்சுக்கோங்க: பேங்க் பணம் சேர்த்து பாதுகாப்பா கடன் கொடுக்குது (சொத்து), குறைஞ்ச செலவுல செய்யுது (திறன்), லாபமா மாத்துது (லாபம்), சந்தை அதுக்கு விலை வைக்குது (மதிப்பு). பெட்டியை தொட்டா அந்த பகுதிக்கு போகும்.</span></p>
+ <div class="cw"><div style="min-width:860px"><svg id="aepv" viewBox="0 0 900 150" style="width:100%"></svg></div></div>
+
+ <h3 id="mxA" style="color:#0b4ea2">A · <span class="en">Asset matrix — how big, how clean, how safe</span><span class="ta">சொத்து அட்டவணை — எவ்வளவு பெரிசு, எவ்வளவு சுத்தம், எவ்வளவு பாதுகாப்பு</span></h3>
+ <div class="tw"><table id="mA"></table></div>
+ <div class="grid" style="margin-top:10px">
+  <div class="cw"><div class="ci" style="height:300px"><canvas id="cAsz"></canvas></div></div>
+  <div class="cw"><div class="ci" style="height:300px"><canvas id="cAq"></canvas></div></div>
+ </div>
+ <div class="card soft small" style="margin-top:8px"><b>Asset read-out:</b> loans grew faster than deposits (18.3% vs 14.3%), pushing the CD ratio to 90.4%. Quality is the best in the bank's history — GNPA 1.3%, slippages down from ₹1,458 cr to ₹964 cr in a year. Capital looks comfortable at CET1 14.0%, but that is before the AT1 verdict (CB base ≈11.0%).</div>
+
+ <h3 id="mxE" style="color:#6b46c1">E · <span class="en">Efficiency matrix — how cheaply the money is raised and run</span><span class="ta">திறன் அட்டவணை — எவ்வளவு குறைஞ்ச செலவுல பணம் சேர்க்குது, ஓட்டுது</span></h3>
+ <div class="tw"><table id="mE"></table></div>
+ <div class="grid" style="margin-top:10px">
+  <div class="cw"><div class="ci" style="height:300px"><canvas id="cE1"></canvas></div></div>
+  <div class="cw"><div class="ci" style="height:300px"><canvas id="cE2"></canvas></div></div>
+ </div>
+ <div class="card soft small" style="margin-top:8px"><b>Efficiency read-out:</b> the spread widened — cost of deposits fell 50 bps to 5.4% and NIM rose to 2.7% — and cost-to-income dropped 430 bps to 62.8% because costs grew only 4.1% while income grew 11.2%. The weak spot is funding mix: CASA slipped to 32.7%. The restored AT1 coupon (≈₹772 cr a year) will shave ≈0.2 point off NIM.</div>
+
+ <h3 id="mxP" style="color:#17803d">P · <span class="en">Profit matrix — what the bank earns</span><span class="ta">லாப அட்டவணை — பேங்க் எவ்வளவு சம்பாதிக்குது</span></h3>
+ <div class="tw"><table id="mP"></table></div>
+ <h3 style="font-size:.92rem">Profit &amp; loss — Q1 FY26 vs Q4 FY26 vs Q1 FY27 (₹ crore)</h3>
+ <div class="cw"><div class="ci"><canvas id="cPL"></canvas></div></div>
+ <div class="card soft small" style="margin-top:8px"><b>Profit read-out:</b> operating profit (the bank's EBITDA equivalent) rose 25.5% to ₹1,704 cr on core income; PAT was flat QoQ only because provisions doubled to ₹394 cr after Q4 write-backs. ROA 0.9% and ROE 8.3% are improving but still about half of large private peers. The AT1 arrears (≈₹5,090 cr pre-tax) would turn one quarter into a reported loss.</div>
+
+ <h3 id="mxV" style="color:#e8730c">V · <span class="en">Value matrix — book value, market value and price-to-book</span><span class="ta">மதிப்பு அட்டவணை — புத்தக மதிப்பு, சந்தை மதிப்பு, விலை/புத்தக விகிதம்</span></h3>
+ <div class="grid g4" id="vEq"></div>
+ <div class="tw" style="margin-top:10px"><table id="mV"></table></div>
+ <div class="grid" style="margin-top:10px">
+  <div class="cw"><div class="ci" style="height:300px"><canvas id="cV1"></canvas></div></div>
+  <div class="cw"><div class="ci" style="height:300px"><canvas id="cV2"></canvas></div></div>
+ </div>
+ <div class="card note small" style="margin-top:8px"><div class="en"><b>Value read-out:</b> <b>Book value</b> is what shareholders own on paper (net worth ÷ shares). <b>Market value</b> is what the market pays (price × shares). <b>P/BV</b> = market value ÷ book value. In July the market paid ₹1.41 for every ₹1 of book; after the verdict it pays only ₹1.09 on reported book — but on the restated book (CB base ₹13.48) it is still paying ₹1.35. The fall in price is the market marking down the book, not the stock becoming cheaper.</div><div class="ta"><b>மதிப்பு விளக்கம்:</b> புத்தக மதிப்பு = பங்குதாரர் சொத்து ÷ பங்குகள். சந்தை மதிப்பு = விலை × பங்குகள். பி/பிவி = சந்தை மதிப்பு ÷ புத்தக மதிப்பு. ஜூலையில ₹1 புத்தக மதிப்புக்கு ₹1.41 கொடுத்தாங்க; தீர்ப்புக்கு பிறகு ₹1.09 — ஆனா திருத்திய புத்தக மதிப்பு (₹13.48) கணக்குல பார்த்தா இன்னும் ₹1.35. விலை இறங்கினது புத்தக மதிப்பு குறைஞ்சதால தான்; பங்கு மலிவாகலை.</div></div>
+ <p class="small">₹ crore unless stated. † derived by CB Research (opex = total net income − operating profit; shares = net worth ÷ BVPS; market cap = price × shares). n/a = not disclosed or not verified. Market prices are on the stated reference dates, not quarter-end.</p>
+ <h3>Five-year turnaround (₹ crore)</h3>
+ <div class="cw"><div class="ci"><canvas id="cFY"></canvas></div></div>
+ <h3>Ratios through the turnaround (%)</h3>
+ <div class="cw"><div class="ci"><canvas id="cRat"></canvas></div></div>
+ <div class="card soft" style="margin-top:10px"><b>Reading the quarter.</b> Core earnings carried Q1: NII +17.5% YoY, operating profit +25.5% YoY, cost-to-income down 430 bps to 62.8%. Profit was flat QoQ because provisions doubled to ₹394 cr (Q4 had large write-backs) and security-receipt gains fell. Asset quality is the cleanest in the bank's history: GNPA 1.3%, NNPA 0.2%, slippages ₹964 cr (1.4%). Two soft spots: CASA slipped to 32.7% from 35.1% and the CD ratio jumped to 90.4% — loans are outrunning deposits.</div>
+</section>
+
+<!-- LIQUIDITY / WC -->
+<section class="tab" id="t-liq">
+ <h2><span class="en">Liquidity, funding &amp; cash flow — a bank's "working capital"</span><span class="ta">பணப்புழக்கம் &amp; நிதி ஆதாரம்</span></h2>
+ <div class="card note small">Inventory, receivable and payable days do not apply to a bank. The bank equivalent of working capital is the funding gap (CD ratio), the stickiness of deposits (CASA), the liquidity buffer (LCR) and the reliance on borrowings. Banks publish a cash-flow statement only half-yearly, so a Q1 cash-flow statement is not available (n/a); the H1 statement will come with Q2 on 17 Oct.</div>
+ <div class="tw" style="margin-top:10px"><table id="liqT"></table></div>
+ <div class="grid g2" style="margin-top:10px">
+  <div class="card"><b>Cash conversion, bank-style.</b> Of every ₹100 of net income in Q1, ₹62.8 went to operating cost, ₹8.6 to provisions, ₹5.2 to tax and ₹23.4 stayed as profit. Profit is "cash-like" for a bank only to the extent it is retained as CET1 — that is why the AT1 reversal, which hits retained earnings, matters more to capital than to liquidity.</div>
+  <div class="card alert"><b>Liquidity effect of the verdict.</b> AT1 bonds are perpetual. Reinstatement does not force an immediate ₹8,415 cr cash outflow unless the bank calls them (needs RBI approval) or a settlement is reached. Coupon payments (≈₹772 cr a year) and any arrears are the near-term cash items. With LCR at 138.2%, the liquidity buffer can absorb a settlement; the constraint is capital, not cash.</div>
+ </div>
+</section>
+
+<!-- AT1 EXPLAINED -->
+<section class="tab" id="t-at1x">
+ <h2><span class="en">The AT1 bond, explained in pictures</span><span class="ta">ஏடி1 பாண்டு — படங்களோட விளக்கம்</span></h2>
+ <div class="card note"><div class="en"><b>The whole story in one line:</b> the ₹8,415 crore came in as cash in 2016–17, was moved into shareholders' reserves in 2020, and now moves back to bondholders. No new money enters the bank. Interest arrears since 2020 go out as a real expense. So CET1 and CRAR both come down: CB base CET1 14.0% → ≈11.0%, CRAR 15.1% → ≈14.6%.</div><div class="ta"><b>ஒரே வரியில:</b> ₹8,415 கோடி 2016–17-ல பணமா வந்துச்சு; 2020-ல பங்குதாரர் ரிசர்வ்க்கு மாத்தினாங்க; இப்போ திரும்ப பாண்டுதாரர்களுக்கு போகுது. புது பணம் எதுவும் வரலை. 2020-ல இருந்து வட்டி நிலுவை நிஜ செலவா வெளியே போகும். அதனால சிஇடி1 14.0%-ல இருந்து சுமார் 11.0%, சிஆர்ஏஆர் 15.1%-ல இருந்து சுமார் 14.6% ஆகும்.</div></div>
+
+ <h3>① <span class="en">Where AT1 sits — who takes a loss first</span><span class="ta">ஏடி1 எங்க இருக்கு — நஷ்டத்தை முதல்ல யார் தாங்கணும்</span></h3>
+ <div class="btnrow"><button class="b on" id="lh0" onclick="drawLH(0)"><span class="en">Rule book (Basel III)</span><span class="ta">விதிப்படி</span></button><button class="b" id="lh1" onclick="drawLH(1)"><span class="en">What happened in March 2020</span><span class="ta">மார்ச் 2020-ல நடந்தது</span></button></div>
+ <div class="cw"><div style="min-width:760px"><svg id="lhSvg" viewBox="0 0 900 420" style="width:100%"></svg></div></div>
+ <div id="lhCard" class="card soft" style="margin-top:8px"></div>
+
+ <h3>② <span class="en">Follow the ₹8,415 crore — step by step</span><span class="ta">₹8,415 கோடி எங்க போச்சு — படிப்படியா</span></h3>
+ <p class="small"><span class="en">Tap each step. The two columns show the bank's capital before and after that step, as a % of risk-weighted assets (≈₹3,38,231 cr). Dashed red lines are RBI minimums incl. buffer.</span><span class="ta">ஒவ்வொரு படியையும் தொடுங்க. ரெண்டு தூண்களும் அந்த படிக்கு முன்னும் பின்னும் மூலதனத்தை காட்டுது. சிவப்பு கோடு ஆர்பிஐ குறைந்தபட்ச அளவு.</span></p>
+ <div class="btnrow" id="stBtns"></div>
+ <div class="btnrow"><span class="small" style="align-self:center"><span class="en">Tax relief on the reversal and arrears:</span><span class="ta">வரி சலுகை:</span></span><button class="b on" id="txY" onclick="stTax(1)"><span class="en">Yes — CB base</span><span class="ta">உண்டு</span></button><button class="b" id="txN" onclick="stTax(0)"><span class="en">No — worst case</span><span class="ta">இல்லை</span></button></div>
+ <div class="grid g2">
+  <div class="card"><div class="cw" style="border:0;padding:0"><div style="min-width:330px">
+   <div class="stk" id="stk"><div class="colbar" id="stB"></div><div class="colbar" id="stA"></div></div>
+   <div class="stkl"><div><span class="en">Before</span><span class="ta">முன்</span></div><div><span class="en">After</span><span class="ta">பின்</span></div></div></div></div>
+   <div class="legend"><span><i style="background:#0b4ea2"></i>CET1 (equity + reserves)</span><span><i style="background:#e8730c"></i>AT1 bonds</span><span><i style="background:#6b46c1"></i>Tier-2</span></div>
+  </div>
+  <div class="card soft" id="stCard"></div>
+ </div>
+
+ <h3>③ <span class="en">Perpetual — but tradable</span><span class="ta">முடிவில்லா பாண்டு — ஆனா விற்கலாம்</span></h3>
+ <div class="cw"><div style="min-width:760px"><svg id="trSvg" viewBox="0 0 800 330" style="width:100%"></svg></div></div>
+ <div id="trCard" class="card soft" style="margin-top:8px"><span class="en">Tap any box or arrow.</span><span class="ta">எந்த பெட்டியையும் தொடுங்க.</span></div>
+
+ <h3>④ <span class="en">The coupon clock — interest is an expense</span><span class="ta">வட்டி கடிகாரம் — வட்டி ஒரு செலவு</span></h3>
+ <div class="grid">
+  <div><div class="small"><b><span class="en">Interest arrears building up since 14 Mar 2020 (₹ crore, simple interest, pre-tax)</span><span class="ta">14 மார்ச் 2020-ல இருந்து சேர்ந்த வட்டி நிலுவை (₹ கோடி)</span></b></div><div class="cw"><div class="ci" style="height:300px"><canvas id="cArr"></canvas></div></div></div>
+  <div><div class="small"><b><span class="en">What the ongoing coupon does to yearly profit (₹ crore, Q1 FY27 annualised)</span><span class="ta">வருஷா வருஷம் வட்டி லாபத்தை எவ்வளவு குறைக்கும் (₹ கோடி)</span></b></div><div class="cw"><div class="ci" style="height:300px"><canvas id="cCpn"></canvas></div></div></div>
+ </div>
+ <div class="card soft" style="margin-top:10px"><div class="en">In Indian bank accounts AT1 bonds sit under <b>Borrowings</b>, and the coupon (9.5% on ₹3,000 cr + 9% on ₹5,415 cr = ₹772 cr a year) is booked as <b>interest expense</b>. RBI also allows it to be paid only out of distributable profits. So it lowers NII, NIM (≈0.2 percentage point on today's assets) and PAT. After tax at 25.17% the yearly PAT cost is ≈₹578 cr.</div><div class="ta">இந்திய வங்கி கணக்குல ஏடி1 பாண்டு "கடன்" பிரிவுல இருக்கும்; அதோட வட்டி (வருஷத்துக்கு ₹772 கோடி) வட்டி செலவா தான் போகும். அதனால என்ஐஐ, என்ஐஎம், லாபம் மூணும் குறையும். வரி போக லாபத்துல வருஷத்துக்கு சுமார் ₹578 கோடி குறையும்.</div></div>
+
+ <h3>⑤ <span class="en">Five things to remember</span><span class="ta">ஞாபகம் வெச்சுக்க வேண்டிய அஞ்சு விஷயம்</span></h3>
+ <div class="grid g2" id="things"></div>
+</section>
+
+<!-- AT1 HISTORY -->
+<section class="tab" id="t-at1">
+ <h2><span class="en">The AT1 bond saga, 2016 → 2026</span><span class="ta">ஏடி1 பாண்டு கதை, 2016 → 2026</span></h2>
+ <div class="card soft small"><b>What is an AT1 bond?</b> A perpetual bond that counts as Tier-1 capital under Basel III. It pays a high coupon because it can absorb losses — by write-down or conversion to equity — when the RBI declares a bank at the "point of non-viability" (PONV). It ranks above equity and below all other debt.</div>
+ <div class="tw" style="margin:10px 0"><table>
+  <tr><th>Tranche</th><th class="n">Amount (₹ cr)</th><th class="n">Coupon</th><th class="n">Annual coupon (₹ cr)</th><th>Status</th></tr>
+  <tr><td>December 2016 issue</td><td class="n">3,000</td><td class="n">9.50%</td><td class="n">285.00</td><td>Written down 14 Mar 2020; write-down quashed</td></tr>
+  <tr><td>October 2017 issue</td><td class="n">5,415</td><td class="n">9.00%</td><td class="n">487.35</td><td>Written down 14 Mar 2020; write-down quashed</td></tr>
+  <tr><td><b>Total</b></td><td class="n"><b>8,415</b></td><td class="n">—</td><td class="n"><b>772.35</b></td><td>2013 tranche was not written down</td></tr>
+ </table></div>
+ <div class="tl" id="timeline"></div>
+</section>
+
+<!-- SC VERDICT -->
+<section class="tab" id="t-sc">
+ <h2><span class="en">Why the Supreme Court upheld the High Court</span><span class="ta">உச்ச நீதிமன்றம் ஏன் ஹைகோர்ட் தீர்ப்பை உறுதி செஞ்சது</span></h2>
+ <div class="card soft small">Case: YES Bank Ltd &amp; Anr. vs Axis Trustee Services Ltd &amp; Ors. (with connected appeals by the RBI and the Union of India) · Bench: Justice Dipankar Datta (author) and Justice Augustine George Masih · Judgment: 15 Oct 2026 · Impugned: Bombay High Court, 20 Jan 2023.</div>
+ <h3><span class="en">The 10 days that decided the case</span><span class="ta">வழக்கை முடிவு செஞ்ச 10 நாட்கள்</span></h3>
+ <div class="cw"><div style="min-width:860px"><svg id="scSvg" viewBox="0 0 900 270" style="width:100%"></svg></div></div>
+ <p class="small"><span class="en">Green = window in which a point-of-non-viability write-down could have been done under the RBI Master Circular (before the scheme took effect). Red = scheme in force; the Administrator no longer had that power.</span><span class="ta">பச்சை = ஆர்பிஐ விதிப்படி பாண்டை எழுதி தள்ள அனுமதி இருந்த காலம். சிவப்பு = திட்டம் அமலுக்கு வந்த பிறகு — நிர்வாகிக்கு அந்த அதிகாரம் இல்லை.</span></p>
+ <h3><span class="en">The three questions the Court framed — and its answers</span><span class="ta">நீதிமன்றம் கேட்ட மூணு கேள்விகள் — பதில்கள்</span></h3>
+ <div class="tw"><table>
+  <tr><th>#</th><th>Question</th><th>Answer</th></tr>
+  <tr><td>1</td><td>Do developments after the write-down (rescue, recapitalisation, new investors) make a decision on merits unnecessary?</td><td><span class="pill p-sell">No</span> The Court decided on merits.</td></tr>
+  <tr><td>2</td><td>Could the Administrator write down AT1 bonds when the final reconstruction scheme had no specific provision for it?</td><td><span class="pill p-sell">No</span></td></tr>
+  <tr><td>3</td><td>Was the write-down in line with the RBI Basel III Master Circular and the bonds' information memoranda?</td><td><span class="pill p-sell">No</span></td></tr>
+ </table></div>
+ <h3><span class="en">The reasons, in plain language</span><span class="ta">காரணங்கள், எளிய மொழியில்</span></h3>
+ <div id="reasons"></div>
+ <h3>High Court (Jan 2023) vs Supreme Court (Oct 2026)</h3>
+ <div class="tw"><table>
+  <tr><th>Point</th><th>Bombay High Court</th><th>Supreme Court</th></tr>
+  <tr><td>Authority of Administrator</td><td>Final scheme did not authorise the write-off; Administrator exceeded his powers after reconstruction</td><td>Agreed; an Administrator under the BR Act is a substitute for the board, cannot use RBI's regulatory power; acts outside the statute are void</td></tr>
+  <tr><td>Role of the RBI</td><td>Neither the scheme nor the RBI empowered the write-off</td><td>Went further: RBI was a "mere bystander" while CET1 fell to 0.6%</td></tr>
+  <tr><td>Timing under Master Circular</td><td>—</td><td>PONV write-down/conversion had to occur before the scheme took effect, not a day after</td></tr>
+  <tr><td>Mis-selling</td><td>—</td><td>Flagged sale of high-risk AT1 to individual investors, contrary to the Master Circular</td></tr>
+  <tr><td>Outcome</td><td>Write-off quashed</td><td>Appeals dismissed; HC judgment stands</td></tr>
+ </table></div>
+ <div class="card note" style="margin-top:10px"><b>What the judgment, as reported, does not settle:</b> the mechanics of restoration (reinstate as AT1, repay, or convert), whether coupons since March 2020 are payable, and how the RBI will treat the reinstated bonds for capital. The bank said it is obtaining and examining the final order and will disclose further. Watch the 17 Oct Q2 release.</div>
+</section>
+
+<!-- CAPITAL IMPACT -->
+<section class="tab" id="t-cap">
+ <h2><span class="en">Impact on CET1, Tier-1 and CRAR</span><span class="ta">சிஇடி1, டியர்-1, சிஆர்ஏஆர் மீதான பாதிப்பு</span></h2>
+ <div class="card soft small"><b>Starting point (30 Jun 2026):</b> Total assets ₹4,62,064 cr × RWA/assets 73.2% = RWA ≈ ₹3,38,231 cr†. CET1 14.0% → CET1 capital ≈ ₹47,352 cr†. Total capital funds ₹51,228 cr (CRAR 15.1%) → Tier-2 ≈ ₹3,876 cr†. AT1 today: nil. Requirements incl. 2.5% conservation buffer: CET1 8.0%, Tier-1 9.5%, CRAR 11.5%. † derived by CB Research from disclosed ratios.</div>
+ <div class="grid g2" style="margin-top:10px">
+  <div class="card calc">
+   <b>Scenario calculator</b>
+   <label>How the bonds come back</label>
+   <select id="cTreat"><option value="at1">Reinstated as eligible AT1 capital</option><option value="liab">Treated as a liability (not capital)</option><option value="conv">Converted into equity (PONV clause)</option></select>
+   <label>Coupon arrears since 14 Mar 2020</label>
+   <select id="cArr"><option value="0">Not payable</option><option value="5090">Payable — ≈₹5,090 cr (simple interest)</option></select>
+   <label>Tax shield on the hit (illustrative)</label>
+   <select id="cTax"><option value="0">None — full hit to equity</option><option value="0.2517">25.17% — hit is tax-deductible</option></select>
+   <label>Conversion price if converted (₹/share)</label>
+   <input id="cPx" type="number" value="18.15" step="0.05">
+   <div class="btnrow" style="margin-top:10px"><button class="b" onclick="preset(0)">CB base (tax-adjusted)</button><button class="b" onclick="preset(1)">Crisil base</button><button class="b" onclick="preset(2)">Anand Rathi worst</button><button class="b" onclick="preset(3)">Conversion</button></div>
+  </div>
+  <div class="card"><table class="res" id="cRes" style="min-width:0"></table><div id="cMsg" class="small" style="margin-top:6px"></div></div>
+ </div>
+ <div class="cw" style="margin-top:10px"><div class="ci"><canvas id="cCap"></canvas></div></div>
+ <h3><span class="en">CET1 bridge — CB base case (% of RWA)</span><span class="ta">சிஇடி1 பாலம் — சிபி அடிப்படை கணக்கு</span></h3>
+ <div class="cw"><div class="ci"><canvas id="cWf"></canvas></div></div>
+ <h3><span class="en">Capital stack — today vs three outcomes (% of RWA)</span><span class="ta">மூலதன அடுக்கு — இன்னிக்கும் மூணு முடிவுகளும்</span></h3>
+ <div class="cw"><div class="ci"><canvas id="cStk"></canvas></div></div>
+ <h3>All scenarios side by side</h3>
+ <div class="tw"><table id="scTable"></table></div>
+ <h3><span class="en">Testing the hypothesis: "It will not significantly affect CRAR"</span><span class="ta">"சிஆர்ஏஆர் பெரிசா பாதிக்காது" — சரியா?</span></h3>
+ <div class="grid g2">
+  <div class="card ok"><b>Right, if…</b> the RBI lets the restored bonds count as AT1. Then the ₹8,415 cr simply moves from common equity to AT1: Tier-1 stays 14.0% and CRAR stays ≈15.1%. Crisil's assessment says the same.</div>
+  <div class="card alert"><b>But three things still bite:</b> (1) CET1 — the quality layer — falls ≈250 bps to ≈11.5% under every outcome except conversion; growth capacity is set by CET1, not CRAR. (2) Book value per share falls from ₹16.7 to ≈₹14.0 (≈₹12.4 with arrears), so the stock that looked like 1.09× book is really ≈1.30–1.46×. (3) Coupons of ≈₹772 cr a year (≈₹578 cr post-tax) are booked as interest expense — ≈13.5% of Q1's annualised profit (₹4,284 cr).</div>
+ </div>
+ <h3>Impact on reported results</h3>
+ <div class="tw"><table>
+  <tr><th>Route</th><th>What the P&amp;L / balance sheet shows</th><th>Q2 FY27 (17 Oct) or later</th></tr>
+  <tr><td>Through P&amp;L as exceptional item</td><td>One-time charge of ₹8,415 cr (up to ≈₹13,500 cr with arrears), pre-tax. In Q4 FY20 the write-down had added ₹6,296.9 cr after tax as extraordinary income.</td><td>Quarter would show a reported loss (Q1 PAT was ₹1,071 cr); core profit unaffected</td></tr>
+  <tr><td>Directly through reserves (prior-period adjustment)</td><td>Net worth falls; quarterly profit unaffected; ROE optically rises on a smaller equity base</td><td>Possible if auditors treat it as restoration of an instrument</td></tr>
+  <tr><td>Ongoing</td><td>Under Indian GAAP and RBI rules, AT1 bonds sit under Borrowings and the coupon is booked as interest expense (paid only out of distributable profits). ≈₹772 cr a year pre-tax (≈₹578 cr post-tax at 25.17%) lowers NII by ≈0.2 pp of NIM and PAT by ≈13.5% of Q1 annualised profit. Arrears ≈₹5,090 cr pre-tax (≈₹3,809 cr post-tax) would be a one-time charge.</td><td>From the first coupon date after restoration</td></tr>
+ </table></div>
+ <p class="small">The bank's FY26 disclosures said no specific provision was held and no material impact was expected; any impact would be recognised in future periods. Treatment above is CB Research's illustration, not a disclosed number.</p>
+</section>
+
+<!-- SMBC -->
+<section class="tab" id="t-own">
+ <h2><span class="en">SMBC, SBI and the ownership story</span><span class="ta">எஸ்எம்பிசி, எஸ்பிஐ &amp; பங்குதாரர் கதை</span></h2>
+ <div class="tw"><table>
+  <tr><th>Date</th><th>Transaction</th><th class="n">Stake</th><th class="n">₹ crore</th><th>Fresh capital to bank?</th></tr>
+  <tr><td>Mar 2020</td><td>SBI-led rescue (SBI + private banks) under Reconstruction Scheme</td><td class="n">SBI ≈48%</td><td class="n">≈10,000+</td><td><span class="pill p-buy">Yes</span></td></tr>
+  <tr><td>Jul–Dec 2022</td><td>Carlyle (CA Basque) &amp; Advent (Verventa) invest</td><td class="n">≈10% each (max)</td><td class="n">8,896</td><td><span class="pill p-buy">Yes</span></td></tr>
+  <tr><td>9 May 2025</td><td>SMBC agrees to buy 20% at ₹21.50/share — 13.19% from SBI, 6.81% from Axis, Bandhan, Federal, HDFC, ICICI, IDFC First, Kotak</td><td class="n">20.00%</td><td class="n">13,483</td><td><span class="pill p-sell">No — secondary</span></td></tr>
+  <tr><td>22 Aug 2025</td><td>RBI allows SMBC up to 24.99%; SMBC not a promoter; 2 board nominees</td><td class="n">≤24.99%</td><td class="n">—</td><td>—</td></tr>
+  <tr><td>17 Sep 2025</td><td>SBI receives ₹8,889 cr for its 13.18%; SBI left with ≈10.8%</td><td class="n">—</td><td class="n">8,889</td><td><span class="pill p-sell">No</span></td></tr>
+  <tr><td>Sep 2025</td><td>SMBC buys Carlyle's 4.2% at the same ₹21.50 price</td><td class="n">→ 24.2%</td><td class="n">2,850</td><td><span class="pill p-sell">No — secondary</span></td></tr>
+  <tr><td>Aug 2025 (report)</td><td>Media report of a further ≈₹16,000 cr equity + debt infusion plan by SMBC</td><td class="n">—</td><td class="n">≈16,000</td><td><span class="pill p-hold">Not visible in Q1 FY27</span></td></tr>
+  <tr><td colspan="3"><b>SMBC total outlay</b></td><td class="n"><b>≈16,333</b></td><td>All paid to sellers</td></tr>
+ </table></div>
+ <div class="grid g2" style="margin-top:10px">
+  <div class="card"><b>Evidence that no fresh equity came in:</b> shareholders' funds rose from ₹48,644 cr (Jun-25) to ₹52,338 cr (Jun-26), +₹3,694 cr — almost exactly the trailing-four-quarter profit of ≈₹3,746 cr†. CET1 was 14.0% in both June quarters.</div>
+  <div class="card note"><b>Why SMBC still matters:</b> a AAA-group strategic holder with two board seats lowers the perceived risk of a capital shortfall. If the verdict forces a raise, a preferential issue to SMBC is the most obvious route — but the RBI cap is 24.99%, and SMBC holds ≈24.2–24.9%, so headroom is tiny unless the RBI approves more. Any raise below book would also dilute other holders.</div>
+ </div>
+ <h3>Known shareholders (latest available)</h3>
+ <div class="cw"><div class="ci" style="height:300px"><canvas id="cOwn"></canvas></div></div>
+ <p class="small">SMBC ≈24.2% (Sep 2025 completion; press now cites 24.9%), SBI ≈10.8%, Advent ≈9.2% (Jun 2025; later changes n/a), other domestic banks — residual after 6.81% sale (n/a). Others = remainder (public, FPIs, MFs).</p>
+</section>
+
+<!-- TRIGGERS & CYCLE -->
+<section class="tab" id="t-trg">
+ <h2><span class="en">Triggers &amp; Cycle</span><span class="ta">தூண்டுதல்கள் &amp; சுழற்சி</span></h2>
+ <div class="grid g2">
+  <div class="card"><svg id="clock" viewBox="0 0 300 300" style="width:100%;max-width:300px;display:block;margin:auto"></svg>
+   <p class="small"><b>Sector cycle (Credit): P3 Expansion — 70.</b> Evidence from the bank's own book: credit growth 18.3% YoY, credit cost 0.3% of assets, GNPA at 1.3% (lowest), NIM stable at 2.7%. <b>Stock: Weinstein Stage 3→4 (estimated)</b> after today's 14% fall to ₹18.15, near the 52-week low of ₹17.20.</p></div>
+  <div class="card"><b>CY = 63</b> (50% sector 70 + 50% stock 56)<br><span class="small">Stock: lifecycle re-inventing 75 · earnings rising mid-range 70 · P/BV in band 55 · price stage 25</span><br><br><b>TG = 21</b><br><span class="small">50 + 8 × (1.40 + 0.84 + 0.42) − 8 × (3.50 + 1.96 + 0.84)</span><br><br><span class="pill p-sell">Gate applied</span> <span class="small">Negative trigger with impact ≥4 and certainty ≥0.7 (AT1 reinstatement) → any conviction score capped at 50.</span></div>
+ </div>
+ <div class="tw" style="margin-top:10px"><table id="trgT"></table></div>
+ <h3>Dated events to watch</h3>
+ <div class="tl">
+  <div class="ev hot"><div class="dt">17 Oct 2026</div>Q2 FY27 results — first disclosure of how the judgment will be accounted for; H1 cash-flow statement.</div>
+  <div class="ev"><div class="dt">Q3 FY27</div>RBI's position on whether restored bonds count as AT1; any settlement offer to bondholders (trustee: Axis Trustee).</div>
+  <div class="ev"><div class="dt">FY27</div>Security-receipt recoveries (guidance ₹800–1,000 cr) — a partial offset to the capital hit.</div>
+  <div class="ev"><div class="dt">Open</div>Capital raise decision — Tier-2, AT1 refinance or equity (SMBC headroom under the 24.99% cap is small).</div>
+ </div>
+ <div class="card soft"><b>What would change this view:</b> (1) RBI confirms full AT1 eligibility and no arrears → CET1 ≈11.5%, TG rises to ≈45; (2) arrears plus liability treatment → CRAR near 11.2%, a raise becomes urgent; (3) conversion route → CET1 protected but ≈15% dilution at today's price.</div>
+</section>
+
+<!-- VALUATION & MARKET -->
+<section class="tab" id="t-val">
+ <h2><span class="en">Valuation &amp; reasons for the share price moves</span><span class="ta">மதிப்பீடு &amp; பங்கு விலை நகர்வு காரணங்கள்</span></h2>
+ <div class="grid g4" id="valK"></div>
+ <h3>Valuation before and after the verdict (at ₹18.15)</h3>
+ <div class="tw"><table>
+  <tr><th>Measure</th><th class="n">Reported</th><th class="n">After principal restored</th><th class="n">After principal + arrears</th></tr>
+  <tr><td>Net worth (₹ cr)</td><td class="n">52,338</td><td class="n">43,923</td><td class="n">38,833</td></tr>
+  <tr><td>Book value per share (₹)</td><td class="n">16.70</td><td class="n">14.01†</td><td class="n">12.39†</td></tr>
+  <tr><td>P/BV (×)</td><td class="n">1.09</td><td class="n">1.30</td><td class="n">1.46</td></tr>
+  <tr><td>ROE on Q1 annualised PAT (%)</td><td class="n">8.3</td><td class="n">9.8†</td><td class="n">11.0†</td></tr>
+ </table></div>
+ <p class="small">Shares ≈3,134 crore† (net worth ÷ BVPS). Market cap ≈₹56,882 cr†. TTM PAT ≈₹3,746 cr† → P/E ≈15.2×; Q1 annualised EPS ₹1.36 → P/E ≈13.3×. ROE in the restated columns ignores AT1 coupons; after ≈₹772 cr coupons it is ≈8.0% and ≈9.0%.</p>
+ <h3>Market activity</h3>
+ <div class="tw"><table>
+  <tr><th>Date</th><th>Move</th><th>Reason</th></tr>
+  <tr><td>15 Oct 2026</td><td class="dn">−14.43% to ₹18.15 (≈−16% intraday)</td><td>Supreme Court upholds quashing of AT1 write-off; steepest fall since July 2020; pre-verdict price ≈₹21.2†</td></tr>
+  <tr><td>Jul–Aug 2026</td><td>₹22.6–₹23.6 range</td><td>Post-Q1 target-price hikes (Nomura, ICICI Securities, JM) offset by Sell/Underweight calls from foreign brokers</td></tr>
+  <tr><td>20 Jul 2026</td><td class="dn">≈−4% intraday, pared later</td><td>Q1 beat on profit but CASA ratio fell to 32.7% and SR gains dropped</td></tr>
+  <tr><td>52-week</td><td>₹17.20 – ₹25.78</td><td>Range as of Aug 2026; today's close is near the low</td></tr>
+ </table></div>
+</section>
+
+<!-- SWOT -->
+<section class="tab" id="t-swot">
+ <h2>SWOT</h2>
+ <div class="grid g2">
+  <div class="card ok"><b>Strengths</b><ul><li>Cleanest asset quality ever: GNPA 1.3%, NNPA 0.2%, PCR 81.7% (93.3% incl. technical write-offs)</li><li>Operating leverage: cost-to-income 62.8%, down 430 bps YoY</li><li>SMBC as largest shareholder with two board seats</li><li>Rating upgrades: Moody's Ba1, CARE AA+, ICRA AA; S&amp;P BB+ inaugural</li><li>Strong LCR (138.2%)</li></ul></div>
+  <div class="card alert"><b>Weaknesses</b><ul><li>ROA 0.9% and ROE 8.3% — well below large private peers</li><li>CASA 32.7% and cost of deposits 5.4%; PSL shortfall deposits ₹27,449 cr (5.9% of assets) earn low yields</li><li>CD ratio 90.4% — loans outrunning deposits</li><li>Profit partly reliant on security-receipt recoveries</li></ul></div>
+  <div class="card soft"><b>Opportunities</b><ul><li>Retail disbursements +27.5% YoY; retail slippages at 10-quarter low</li><li>SMBC cross-border, Japanese-corporate and treasury flows</li><li>Falling PSL shortfall deposits lift NIM</li><li>Conversion route could settle AT1 without cash or CET1 loss</li></ul></div>
+  <div class="card note"><b>Threats</b><ul><li>AT1 restoration: CET1 −250 bps, net worth −16% to −26%</li><li>Possible equity raise and dilution</li><li>Coupon burden ≈₹772 cr a year</li><li>Stricter RBI scrutiny after the Court's criticism; mis-selling claims</li></ul></div>
+ </div>
+</section>
+
+<!-- ANALYSTS -->
+<section class="tab" id="t-an">
+ <h2><span class="en">Analysts' rating</span><span class="ta">அனலிஸ்ட் பார்வை</span></h2>
+ <div class="card note small">Third-party views reported after Q1 FY27 (July 2026) — all <b>before</b> the 15 Oct verdict and likely to be revised. CB Research does not issue ratings.</div>
+ <div class="tw" style="margin-top:8px"><table id="anT"></table></div>
+ <div class="cw" style="margin-top:10px"><div class="ci" style="height:300px"><canvas id="cAn"></canvas></div></div>
+ <div class="card soft" style="margin-top:10px"><b>Post-verdict notes (15 Oct):</b> Anand Rathi's scenario note — net worth −16% to −26%, CET1 to 10–11.5%, fresh capital likely needed (no rating stated). Crisil (rated AA+ in Aug): full write-back cuts CET1 by 230–250 bps; Tier-1 and CRAR unchanged. Consensus before the verdict (Aug 2026): average target ≈₹21, 1 Buy vs 9 Sell.</div>
+</section>
+
+<!-- SELF CHECK -->
+<section class="tab" id="t-self">
+ <h2><span class="en">CB Investor Self-check</span><span class="ta">சிபி முதலீட்டாளர் சுய சோதனை</span></h2>
+ <div class="card soft small">Tick what you have checked for yourself. This only counts how many of your own conditions line up. It is not a recommendation.</div>
+ <div style="margin:10px 0"><div class="small" id="selfAll"></div><div class="bar"><i id="selfBar" style="width:0"></i></div></div>
+ <div id="selfG"></div>
+ <button class="b" onclick="clearSelf()">Clear my ticks</button>
+</section>
+
+<!-- MANAGEMENT -->
+<section class="tab" id="t-mgmt">
+ <h2><span class="en">Management &amp; Board</span><span class="ta">நிர்வாகம் &amp; போர்டு</span></h2>
+ <div class="tw"><table>
+  <tr><th>Name</th><th>Role</th><th>Background / relevance now</th></tr>
+  <tr><td>Rama Subramaniam Gandhi</td><td>Non-Executive Chairman</td><td>Former RBI Deputy Governor</td></tr>
+  <tr><td>Vinay M. Tonse</td><td>MD &amp; CEO (from 6 Apr 2026, 3-year term)</td><td>Ex-SBI MD (Retail Business &amp; Operations) and ex-MD &amp; CEO of SBI Mutual Fund; mandate shifted from recovery to growth — now must also steer the capital response</td></tr>
+  <tr><td>Prashant Kumar</td><td>MD &amp; CEO, Mar 2020 – Apr 2026</td><td>Was the RBI-appointed Administrator who wrote down the bonds on 14 Mar 2020 — the act the Court has now held void</td></tr>
+  <tr><td>Niranjan Banodkar</td><td>Chief Financial Officer</td><td>Said on the Q4 FY26 call the bank believed its actions matched the contract and permitted processes</td></tr>
+  <tr><td>Rajeev Kannan</td><td>Non-Executive Director (SMBC nominee)</td><td>Senior SMBC executive; SMBC has two board seats</td></tr>
+  <tr><td>Nandita Gurjar</td><td>Independent Director</td><td>Chairs Nomination &amp; Remuneration and Customer Service committees</td></tr>
+  <tr><td>Second SMBC nominee; SBI nominee</td><td>Non-Executive Directors</td><td>Names n/a in this file</td></tr>
+ </table></div>
+ <div class="card note" style="margin-top:10px"><b>Governance reading:</b> the Court's sharpest words were for the "triumvirate" of the RBI, the Administrator and the bank. Today's board did not take the 2020 decision, but it inherits the liability — and must decide quickly between settlement, conversion and capital raising with SMBC's backing.</div>
+</section>
+
+<!-- CB SCHOOL -->
+<section class="tab" id="t-sch">
+ <h2><span class="en">CB School — how bank metrics push each other</span><span class="ta">சிபி ஸ்கூல் — வங்கி அளவீடுகள் ஒண்ணுக்கொண்ணு எப்படி பாதிக்குது</span></h2>
+ <p class="small">Tap a metric to see what it pushes and what pushes it. Solid green arrow = same direction; dashed red = opposite. Then try a scenario.</p>
+ <div class="btnrow" id="schBtns"></div>
+ <div class="cw"><div style="min-width:900px"><svg id="schMap" viewBox="0 0 1000 560" style="width:100%"></svg></div></div>
+ <div id="schCard" class="card soft">Tap a metric or a scenario.</div>
+ <h3>Lessons</h3>
+ <div class="grid g2" id="lessons"></div>
+</section>
+
+<!-- SOCRATES -->
+<section class="tab" id="t-soc">
+ <h2><span class="en">Cauvery Socrates</span><span class="ta">காவேரி சாக்ரடீஸ்</span></h2>
+ <p class="small">Think before you tap. Each answer explains why.</p>
+ <div id="socQ"></div>
+ <div class="sc-q"><b>Your turn (free text):</b> If you were on YES Bank's board, would you prefer conversion, settlement or reinstatement? Which number in this dashboard would you watch first, and why?<textarea style="width:100%;min-height:70px;margin-top:6px;border:1px solid var(--line);border-radius:8px;padding:8px" placeholder="Write your reasoning…"></textarea></div>
+</section>
+
+</main>
+
+<div id="cbBadge" onclick="toggleDisc()" title="CB Research">CB</div>
+<div id="disc"><b>Prepared by CB Research (Cauvery Business Research)</b> for financial education only. CB Research is not a SEBI-registered investment adviser or research analyst. Nothing here is a recommendation to buy, sell or hold any security. Figures are from company disclosures and public reports as of 15 Oct 2026; items marked † are CB Research derivations and scenario numbers are illustrative. Verify before acting.</div>
+<button id="asBtn" onclick="toggleAs()">🎙 CB Assist</button>
+<div id="asBox"><div class="hd"><span>CB Assist — ask by voice or text</span><span style="cursor:pointer" onclick="toggleAs()">✕</span></div>
+ <div id="asLog"><div class="a">Ask me about the verdict, CET1, CRAR, SMBC, Q1 numbers or coupons. Tap 🎤 to speak.</div></div>
+ <div class="sugg"><span>What did the Supreme Court decide?</span><span>Impact on CET1?</span><span>Will CRAR fall?</span><span>How much did SMBC invest?</span><span>Q1 profit?</span><span>Should I buy?</span></div>
+ <div id="asIn"><button class="mic" id="micB" onclick="mic()">🎤</button><input id="asQ" placeholder="Type a question…" onkeydown="if(event.key==='Enter')ask()"><button class="go" onclick="ask()">Ask</button></div>
+</div>
+
+<script>
+var CO={name:"YES Bank Ltd",nse:"YESBANK",bse:"532648",quarter:"Q1FY27",asOf:"2026-10-15",price:18.15,
+ q:{lbl:["Q1 FY26","Q4 FY26","Q1 FY27"],nii:[2371,2638,2786],oi:[1752,1730,1798],tni:[4124,4368,4584],opex:[2766,2750,2880],ppop:[1358,1618,1704],prov:[284,188,394],pat:[801,1068,1071]},
+ fy:{lbl:["FY22","FY23","FY24","FY25","FY26"],dep:[197192,217502,266372,284525,318969],adv:[181052,203269,227799,246188,273445],pat:[1066,717,1251,2406,3476],roa:[0.4,0.2,0.3,0.6,0.8],roe:[3.2,2,3,5.2,7],gnpa:[13.9,2.2,1.7,1.6,1.3],nnpa:[4.5,0.8,0.6,0.3,0.2],casa:[31.1,30.8,30.9,34.3,35.1],cti:[70.1,72.6,74.4,71.3,66.7],cet1:[11.6,13.3,12.2,13.5,13.8]},
+ cap:{assets:462064,rwaPct:73.2,cet1Pct:14.0,tcf:51228,nw:52338,bvps:16.7,at1:8415,arrears:5090,coupon:772.35},
+ cy:{sector:"Credit P3 Expansion",sectorScore:70,stock:56,cy:63},tg:21,cbScore:6.2};
+function f(n,d){if(n==null||isNaN(n))return"n/a";return Number(n).toLocaleString("en-IN",{minimumFractionDigits:d||0,maximumFractionDigits:d||0})}
+var $=function(id){return document.getElementById(id)};
+// tabs
+var TABS=[["ov","Overview","கண்ணோட்டம்"],["bm","Business Model","பிசினஸ் மாடல்"],["fin","Q1 Financials","காலாண்டு கணக்கு"],["liq","Liquidity & Cash Flow","பணப்புழக்கம்"],["at1x","AT1 Explained","ஏடி1 விளக்கம்"],["at1","AT1 History","ஏடி1 வரலாறு"],["sc","SC Verdict","நீதிமன்ற தீர்ப்பு"],["cap","CET1 / CRAR Impact","மூலதன பாதிப்பு"],["own","SMBC & Owners","எஸ்எம்பிசி"],["trg","Triggers & Cycle","தூண்டுதல்கள்"],["val","Valuation & Market","மதிப்பீடு"],["swot","SWOT","ஸ்வாட்"],["an","Analysts' Rating","அனலிஸ்ட் பார்வை"],["self","Self-check","சுய சோதனை"],["mgmt","Management & Board","நிர்வாகம்"],["sch","CB School","சிபி ஸ்கூல்"],["soc","Cauvery Socrates","சாக்ரடீஸ்"]];
+$("nav").innerHTML=TABS.map(function(t){return '<button data-t="'+t[0]+'"><span class="en">'+t[1]+'</span><span class="ta">'+t[2]+'</span></button>'}).join("");
+var charted={};
+function show(t){document.querySelectorAll("section.tab").forEach(function(s){s.classList.toggle("on",s.id==="t-"+t)});document.querySelectorAll("nav button").forEach(function(b){b.classList.toggle("on",b.dataset.t===t)});if(!charted[t]){charted[t]=1;drawFor(t)}window.scrollTo({top:0,behavior:"smooth"})}
+$("nav").addEventListener("click",function(e){var b=e.target.closest("button");if(b)show(b.dataset.t)});
+function toggleLang(){document.body.classList.toggle("ta");$("langB").textContent=document.body.classList.contains("ta")?"English":"தமிழ்"}
+function toggleDisc(){var d=$("disc");d.style.display=d.style.display==="block"?"none":"block"}
+// stamp
+(function(){var d=new Date();try{$("stamp").textContent="Generated "+d.toLocaleString("en-IN",{timeZone:"Asia/Kolkata",dateStyle:"medium",timeStyle:"short"})+" IST · Data: Q1 FY27 (Apr–Jun 2026) + Supreme Court judgment of 15 Oct 2026 · Price ₹18.15 (15 Oct close)"}catch(e){$("stamp").textContent="Q1 FY27 · SC judgment 15 Oct 2026"}})();
+// KPIs
+var K=[["Net profit","₹"+f(1071)+" cr","+33.7% YoY · +0.2% QoQ","up"],["NII","₹"+f(2786)+" cr","+17.5% YoY","up"],["Operating profit","₹"+f(1704)+" cr","+25.5% YoY","up"],["NIM","2.7%","+20 bps YoY","up"],["Advances","₹"+f(285118)+" cr","+18.3% YoY","up"],["Deposits","₹"+f(315373)+" cr","+14.3% YoY","up"],["GNPA / NNPA","1.3% / 0.2%","−30 / −10 bps YoY","up"],["CET1 / CRAR","14.0% / 15.1%","→ ≈11.5% CET1 after AT1","dn"],["CASA","32.7%","35.1% in Q4","dn"],["Cost-to-income","62.8%","−430 bps YoY","up"],["ROA / ROE","0.9% / 8.3%","ROE 6.6% a year ago","up"],["Share price","₹18.15","−14.43% on 15 Oct","dn"]];
+$("kpis").innerHTML=K.map(function(k){return '<div class="card kpi"><div class="l">'+k[0]+'</div><div class="v">'+k[1]+'</div><div class="d '+k[3]+'">'+k[2]+'</div></div>'}).join("");
+// Temple
+var PIL=[["Growth",8.0,"Advances +18.3% and deposits +14.3% YoY; retail disbursements +27.5%. Growth is real but deposits lag loans (CD ratio 90.4%)."],["Profitability",5.5,"ROA 0.9%, ROE 8.3% — improving fast from 0.2% ROA in FY23, yet still half of top private banks. AT1 coupons (≈₹772 cr/yr, booked as interest expense) would cut PAT ≈13.5% after tax."],["Asset quality",8.5,"GNPA 1.3%, NNPA 0.2%, slippages 1.4%, credit cost 0.3% of assets — best in the bank's history."],["Capital & liquidity",5.0,"CET1 14.0% falls to ≈11.5% (≈10.0% with arrears) after the verdict. LCR 138.2% is comfortable; capital is the binding constraint."],["Valuation",6.0,"P/BV 1.09× on reported book, ≈1.30× on restated book; P/E ≈15× TTM. Not cheap for an ROE of 8%."],["Governance & legal",4.0,"Supreme Court criticised the 2020 handling and mis-selling; liability mechanics unresolved; new CEO since April 2026; SMBC board seats are a positive."]];
+function col(s){return s>=8?"#17803d":s>=6?"#d68910":"#c0392b"}
+function drawTemple(){var sv=$("temple"),h="",avg=PIL.reduce(function(a,p){return a+p[1]},0)/6;
+ h+='<polygon points="360,10 70,110 650,110" fill="#e8730c"/><text x="360" y="70" text-anchor="middle" fill="#fff" font-size="30" font-weight="900">'+avg.toFixed(1)+'</text><text x="360" y="96" text-anchor="middle" fill="#fff" font-size="13" font-weight="700">CB SCORE / 10</text>';
+ h+='<rect x="80" y="112" width="560" height="28" fill="#0b4ea2"/><text x="360" y="131" text-anchor="middle" fill="#fff" font-size="14" font-weight="700">YES BANK · Q1 FY27 · post-verdict</text>';
+ PIL.forEach(function(p,i){var x=105+i*88,top=150,ht=200,fh=ht*p[1]/10;
+  h+='<g style="cursor:pointer" onclick="pick('+i+')"><rect x="'+x+'" y="'+top+'" width="54" height="'+ht+'" rx="4" fill="#eef2f7" stroke="#cdd6e3"/>';
+  for(var k=1;k<4;k++)h+='<line x1="'+(x+k*13.5)+'" y1="'+top+'" x2="'+(x+k*13.5)+'" y2="'+(top+ht)+'" stroke="#dde3ec"/>';
+  h+='<rect class="pf" x="'+x+'" y="'+(top+ht)+'" width="54" height="0" rx="4" fill="'+col(p[1])+'" opacity=".85" data-y="'+(top+ht-fh)+'" data-h="'+fh+'"/>';
+  h+='<circle cx="'+(x+27)+'" cy="'+(top+22)+'" r="17" fill="#fff" stroke="'+col(p[1])+'" stroke-width="3"/><text x="'+(x+27)+'" y="'+(top+27)+'" text-anchor="middle" font-size="13" font-weight="800" fill="'+col(p[1])+'">'+p[1].toFixed(1)+'</text>';
+  h+='<text x="'+(x+27)+'" y="'+(top+ht+52)+'" text-anchor="middle" font-size="11.5" font-weight="700" fill="#14213d">'+p[0].split(" ")[0]+'</text>'+(p[0].indexOf(" ")>0?'<text x="'+(x+27)+'" y="'+(top+ht+66)+'" text-anchor="middle" font-size="11" fill="#5b6577">'+p[0].split(" ").slice(1).join(" ")+'</text>':'')+'</g>'});
+ h+='<rect x="70" y="352" width="580" height="12" fill="#cdd6e3"/><rect x="55" y="364" width="610" height="12" fill="#b9c4d4"/>';
+ sv.innerHTML=h;setTimeout(function(){sv.querySelectorAll(".pf").forEach(function(r){r.style.transition="all 1.1s ease";r.setAttribute("y",r.dataset.y);r.setAttribute("height",r.dataset.h)})},150);
+ $("pillarCards").innerHTML=PIL.map(function(p,i){return '<div class="card" id="pc'+i+'" style="border-left:5px solid '+col(p[1])+'"><b>'+p[0]+' — '+p[1].toFixed(1)+'/10</b><div class="small">'+p[2]+'</div></div>'}).join("")}
+function pick(i){var c=$("pc"+i);c.scrollIntoView({behavior:"smooth",block:"center"});c.style.background="#fff7ec";setTimeout(function(){c.style.background=""},1600)}
+// Business map
+var BM=[{x:20,y:250,w:150,h:70,c:"#5b6577",t:["Depositors","₹3,15,373 cr"],e:"Savers and companies park money: CASA ₹1,03,233 cr (32.7%) + term deposits ≈₹2,12,140 cr†. Cost of deposits 5.4%, down 50 bps YoY. Retail &amp; branch-led deposits are 59.2% of the total."},
+{x:20,y:360,w:150,h:60,c:"#5b6577",t:["Borrowings","₹67,940 cr"],e:"Wholesale funding incl. infrastructure &amp; Tier-2 bonds; +2.1% YoY. Supplements deposits when loans grow faster."},
+{x:20,y:140,w:150,h:60,c:"#5b6577",t:["Equity","₹52,338 cr"],e:"Shareholders' funds. SMBC ≈24.2–24.9%, SBI ≈10.8%. This is the layer the AT1 verdict reduces by ₹8,415 cr (up to ≈₹13,500 cr)."},
+{x:210,y:250,w:150,h:70,c:"#0b4ea2",t:["1,300+ branches","Digital · BC outlets"],e:"Distribution: 1,300+ branches, 200+ business-correspondent outlets, 1,350+ ATMs in 300 districts, IBU at GIFT City, representative office in Abu Dhabi, plus strong digital/UPI rails."},
+{x:400,y:220,w:180,h:130,c:"#e8730c",t:["YES BANK","NIM 2.7% · C/I 62.8%","CET1 14.0% → ≈11.5%"],e:"The bank borrows at ≈5.4% and lends/invests at a higher rate. Its spread (NIM) is 2.7%. Every ₹100 of net income: ₹62.8 cost, ₹8.6 provisions, ₹5.2 tax, ₹23.4 profit."},
+{x:620,y:40,w:170,h:66,c:"#17803d",t:["Retail assets","Disb. +27.5% YoY"],e:"Home, auto, CV, personal, gold, cards, rural. Retail slippages fell to ₹843 cr (2.7%), a 10-quarter low. Segment balance n/a in the Q1 release."},
+{x:620,y:120,w:170,h:66,c:"#17803d",t:["MSME / Mid-corp","Working capital"],e:"Small and mid-sized businesses — higher yields than large corporates; a core growth engine. Segment balance n/a."},
+{x:620,y:200,w:170,h:66,c:"#17803d",t:["Corporate &","institutional"],e:"Large companies, transaction banking, trade finance; SMBC links can bring Japanese corporates. Segment balance n/a."},
+{x:620,y:280,w:170,h:66,c:"#6b46c1",t:["Investments","₹92,738 cr"],e:"Government securities and bonds for SLR and treasury; +14.2% YoY. Rising bond yields hurt treasury income."},
+{x:620,y:360,w:170,h:66,c:"#b7791f",t:["PSL shortfall dep.","₹27,449 cr"],e:"Money parked with NABARD/SIDBI because priority-sector targets were missed — low yield. Down 25.4% YoY, which helped lift NIM."},
+{x:620,y:440,w:170,h:66,c:"#6b46c1",t:["Fees &amp; treasury","₹1,798 cr"],e:"Non-interest income: core fees +18.7% YoY (processing, cards, distribution, transaction banking) plus treasury and recoveries."},
+{x:830,y:120,w:150,h:70,c:"#0b4ea2",t:["NII","₹2,786 cr"],e:"Interest earned ₹8,044 cr minus interest paid ≈₹5,258 cr†. +17.5% YoY."},
+{x:830,y:250,w:150,h:70,c:"#c0392b",t:["Costs","₹2,880 + ₹394 cr"],e:"Operating expenses ₹2,880 cr (+4.1% YoY) and provisions ₹394 cr (credit cost 0.3% of assets)."},
+{x:830,y:380,w:150,h:80,c:"#17803d",t:["PAT ₹1,071 cr","→ shareholders","& AT1 holders?"],e:"Profit to equity. If AT1 bonds are restored, ≈₹772 cr a year of coupons are booked as interest expense, cutting PAT."}];
+var BMA=[[0,3],[1,4],[2,4],[3,4],[4,5],[4,6],[4,7],[4,8],[4,9],[5,11],[6,11],[7,11],[8,11],[10,12],[11,12],[12,13]];
+function drawBM(){var s='<defs><marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0L10,5L0,10z" fill="#9aa6b8"/></marker></defs>';
+ BMA.forEach(function(a){var p=BM[a[0]],q=BM[a[1]];s+='<line x1="'+(p.x+p.w)+'" y1="'+(p.y+p.h/2)+'" x2="'+q.x+'" y2="'+(q.y+q.h/2)+'" stroke="#9aa6b8" stroke-width="1.6" marker-end="url(#ar)"/>'});
+ BM.forEach(function(b,i){s+='<g class="mapbox" onclick="bmPick('+i+')"><rect x="'+b.x+'" y="'+b.y+'" width="'+b.w+'" height="'+b.h+'" rx="10" fill="#fff" stroke="'+b.c+'" stroke-width="2"/><rect x="'+b.x+'" y="'+b.y+'" width="6" height="'+b.h+'" rx="3" fill="'+b.c+'"/>';
+  b.t.forEach(function(l,k){s+='<text x="'+(b.x+b.w/2+3)+'" y="'+(b.y+22+k*19)+'" text-anchor="middle" font-size="'+(k?12:13.5)+'" font-weight="'+(k?500:800)+'" fill="'+(k?"#5b6577":b.c)+'">'+l+'</text>'});s+='</g>'});
+ s+='<text x="20" y="560" font-size="12" fill="#5b6577">Funding → Distribution → YES BANK → Asset &amp; fee engines → Revenue → Costs → Profit</text>';
+ $("bmap").innerHTML=s}
+function bmPick(i){$("bmCard").innerHTML="<b>"+BM[i].t.join(" · ")+"</b><br>"+BM[i].e}
+$("engine").innerHTML='<tr><th>Driver</th><th class="n">Q1 FY27</th><th>Direction</th><th>Effect on profit</th></tr>'+[["Advances growth","18.3% YoY","▲","More interest income; also more RWA → more capital needed"],["NIM","2.7%","▲ +20 bps","Each 10 bps ≈ ₹110–120 cr a quarter of NII†"],["Cost of deposits","5.4%","▼ −50 bps","Cheaper funding; CASA fall is a risk"],["CASA ratio","32.7%","▼ from 35.1%","Lower CASA raises funding cost"],["Core fee growth","18.7% YoY","▲","Stable, capital-light income"],["Cost-to-income","62.8%","▼ −430 bps","Operating leverage"],["Credit cost","0.3% of assets","flat","Low provisions keep PAT growing"],["SR recoveries","₹86 cr in Q1","guidance ₹800–1,000 cr FY27","Lumpy, non-core"]].map(function(r){return"<tr><td>"+r[0]+'</td><td class="n">'+r[1]+"</td><td>"+r[2]+"</td><td>"+r[3]+"</td></tr>"}).join("");
+// 23 metrics
+// ===== A · E · P · V matrices =====
+var QL=["Q1 FY26","Q4 FY26","Q1 FY27"];
+// [label, q1fy26, q4fy26, q1fy27, unit, better(+1 higher/-1 lower/0), reading]
+var MXA=[["A1 · Size & funding"],["Deposits",275843,318969,315373,"cr",1,"Funding base; −1.1% QoQ after March build-up"],["Advances (loans)",241024,273445,285118,"cr",1,"Broad-based growth; retail disbursements +27.5%"],["Investments",81207.4,88154.2,92738,"cr†",0,"G-secs for SLR and treasury"],["Borrowings",66543.0,64890.3,67940,"cr†",0,"Wholesale funding, incl. infra bonds"],["Total assets",410248,469105,462064,"cr",1,"Balance-sheet size"],["CD ratio",87.4,85.7,90.4,"%",-1,"Loans outrunning deposits"],
+["A2 · Quality"],["Gross NPA",1.6,1.3,1.3,"%",-1,"Lowest in the bank's history"],["Net NPA",0.2+0.1,0.2,0.2,"%",-1,"Almost fully provided"],["PCR (excl. technical write-offs)",80.2,81.9,81.7,"%",1,"93.3% incl. write-offs"],["Gross slippages",1458,1102,964,"cr",-1,"Fresh bad loans falling"],["Slippage ratio (annualised)",2.4,1.6,1.4,"%",-1,"Retail slippages at 10-quarter low"],
+["A3 · Capital & liquidity safety"],["CRAR",16.2,15.3,15.1,"%",1,"Need 11.5%; CB base after verdict ≈14.6%"],["CET1",14.0,13.8,14.0,"%",1,"Need 8.0%; CB base after verdict ≈11.0%"],["Average LCR",135.8,119.0,138.2,"%",1,"Need 100%"],["RWA / total assets",72.7,69.7,73.2,"%",-1,"Denser book uses more capital"]];
+var MXE=[["E1 · Cost of money"],["Cost of deposits",5.9,5.5,5.4,"%†",-1,"−50 bps YoY (Q1FY26 & Q4FY26 derived from bps change)"],["CASA ratio",32.8,35.1,32.7,"%",1,"Cheap deposits slipped QoQ"],["Net interest margin (NIM)",2.5,2.7,2.7,"%",1,"Lower deposit cost, fewer PSL shortfall deposits"],["Yield on advances",null,null,null,"%",1,"Not in Q1 release"],
+["E2 · Cost of running"],["Operating expenses",2766,2750,2880,"cr†",-1,"+4.1% YoY only"],["Cost-to-income",67.1,63.0,62.8,"%",-1,"−430 bps YoY: operating leverage"],["Credit cost (% of avg assets)",0.3,null,0.3,"%",-1,"Low and stable"],
+["E3 · Income mix"],["Non-interest income / total income",42.5,39.6,39.2,"%",0,"Less reliance on fees & treasury"],["Core fee growth (YoY)",null,null,18.7,"%",1,"Capital-light income"]];
+var MXP=[["P1 · Income"],["Net interest income (NII)",2371,2638,2786,"cr",1,"+17.5% YoY"],["Other income",1752,1730,1798,"cr",1,"SR & treasury gains fell; core fees up"],["Total net income",4124,4368,4584,"cr",1,"+11.2% YoY"],
+["P2 · Earnings"],["Operating profit (PPOP = bank EBITDA)",1358,1618,1704,"cr",1,"+25.5% YoY"],["Provisions",284,188,394,"cr",-1,"Q4 had write-backs"],["Net profit (PAT)",801,1068,1071,"cr",1,"+33.7% YoY; beat ₹977 cr estimate"],["EPS (₹, quarterly)",0.26,0.34,0.34,"₹",1,"Annualised ≈₹1.36"],
+["P3 · Returns"],["Return on assets (ROA)",0.8,1.0,0.9,"%",1,"Large private peers ≈1.7–2.0%"],["Return on equity (ROE)",6.6,8.4,8.3,"%",1,"Below cost of equity"]];
+function chg(a,b,u){if(a==null||b==null)return null;return u.charAt(0)==="%"?{v:b-a,t:"pp"}:{v:(b-a)/Math.abs(a)*100,t:"%"}}
+function cell(v,u){if(v==null)return"n/a";if(u.charAt(0)==="%")return v.toFixed(1)+"%";if(u==="₹")return"₹"+v.toFixed(2);return f(v)+(u.indexOf("†")>0?"†":"")}
+function chCell(c,bt){if(!c)return'<td class="n mu">—</td>';var good=bt===0?"mu":(c.v*bt>0?"up":c.v*bt<0?"dn":"mu");return'<td class="n '+good+'">'+(c.v>0?"▲ +":c.v<0?"▼ ":"")+(c.t==="pp"?Math.abs(c.v).toFixed(1)+" pp":Math.abs(c.v).toFixed(1)+"%")+"</td>"}
+function mxTable(id,rows,col){$(id).innerHTML='<tr><th>Metric</th><th class="n">'+QL.join('</th><th class="n">')+'</th><th class="n">YoY</th><th class="n">QoQ</th><th>Reading</th></tr>'+rows.map(function(r){if(r.length===1)return'<tr><td colspan="7" style="background:'+col+';color:#fff;font-weight:800">'+r[0]+'</td></tr>';var u=r[4];return"<tr><td>"+r[0]+'</td><td class="n">'+cell(r[1],u)+'</td><td class="n">'+cell(r[2],u)+'</td><td class="n"><b>'+cell(r[3],u)+"</b></td>"+chCell(chg(r[1],r[3],u),r[5])+chCell(chg(r[2],r[3],u),r[5])+"<td>"+r[6]+"</td></tr>"}).join("")}
+MXA[9][1]=0.3;
+mxTable("mA",MXA,"#0b4ea2");mxTable("mE",MXE,"#6b46c1");mxTable("mP",MXP,"#17803d");
+// Value matrix
+var SHR25=48644/15.5,SHR26=52338/16.7,VB=CO.cap.nw-10106,VBV=VB/SHR26;
+var VCOL=[["30 Jun 2025","Price on 22 Aug 2025",48644,15.5,19.28,SHR25],["31 Mar 2026","Price n/a",51062,16.3,null,51062/16.3],["30 Jun 2026","Price on 17 Jul 2026 (pre-result)",52338,16.7,23.61,SHR26],["Now — reported book","Close 15 Oct 2026",52338,16.7,18.15,SHR26],["Now — restated book (CB base)","Close 15 Oct 2026",VB,VBV,18.15,SHR26]];
+(function(){var h='<tr><th>Measure</th>'+VCOL.map(function(c){return'<th class="n">'+c[0]+'<div class="small" style="font-weight:500">'+c[1]+'</div></th>'}).join("")+"</tr>";
+ function row(lbl,fn,bold){return"<tr><td>"+(bold?"<b>"+lbl+"</b>":lbl)+"</td>"+VCOL.map(function(c){var v=fn(c);return'<td class="n">'+(v==null?"n/a":(bold?"<b>"+v+"</b>":v))+"</td>"}).join("")+"</tr>"}
+ h+='<tr><td colspan="6" style="background:#0b4ea2;color:#fff;font-weight:800">V1 · Book value — what shareholders own on paper</td></tr>';
+ h+=row("Net worth (₹ cr)",function(c){return f(c[2])+(c[0].indexOf("restated")>=0?"†":"")});
+ h+=row("Shares (crore)†",function(c){return f(c[5])});
+ h+=row("Book value per share (₹)",function(c){return"₹"+c[3].toFixed(2)},1);
+ h+='<tr><td colspan="6" style="background:#e8730c;color:#fff;font-weight:800">V2 · Market value — what the market pays</td></tr>';
+ h+=row("Share price (₹)",function(c){return c[4]==null?null:"₹"+c[4].toFixed(2)},1);
+ h+=row("Market capitalisation (₹ cr)†",function(c){return c[4]==null?null:f(c[4]*c[5])});
+ h+=row("Market value above book (₹ cr)†",function(c){return c[4]==null?null:f(c[4]*c[5]-c[2])});
+ h+='<tr><td colspan="6" style="background:#17803d;color:#fff;font-weight:800">V3 · Price-to-book — ₹ paid for every ₹1 of book</td></tr>';
+ h+=row("P/BV (×)",function(c){return c[4]==null?null:(c[4]/c[3]).toFixed(2)+"×"},1);
+ h+=row("ROE (%) supporting that P/BV",function(c){return c[0].indexOf("restated")>=0?"≈8.0†":c[0]==="30 Jun 2025"?"6.6":c[0]==="31 Mar 2026"?"8.4":"8.3"});
+ $("mV").innerHTML=h;
+ $("vEq").innerHTML=[["Book value / share","₹16.70","Restated (CB base): ₹"+VBV.toFixed(2)],["Market price","₹18.15","15 Oct close; was ₹23.61 on 17 Jul"],["Market cap†","₹"+f(18.15*SHR26)+" cr","Net worth ₹52,338 cr"],["P/BV","1.09×","Restated: "+(18.15/VBV).toFixed(2)+"× · July: 1.41×"]].map(function(k){return'<div class="card kpi"><div class="l">'+k[0]+'</div><div class="v">'+k[1]+'</div><div class="d mu">'+k[2]+"</div></div>"}).join("")})();
+function drawAEPV(){var B=[["A","Asset matrix","How big, clean, safe","Loans ₹2,85,118 cr · GNPA 1.3%","#0b4ea2","mxA"],["E","Efficiency matrix","How cheaply run","NIM 2.7% · C/I 62.8%","#6b46c1","mxE"],["P","Profit matrix","What it earns","PAT ₹1,071 cr · ROE 8.3%","#17803d","mxP"],["V","Value matrix","What market pays","BVPS ₹16.7 · P/BV 1.09×","#e8730c","mxV"]],s='<defs><marker id="am" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0,0L10,5L0,10z" fill="#9aa6b8"/></marker></defs>';
+ B.forEach(function(b,i){var x=10+i*225;s+='<g style="cursor:pointer" onclick="document.getElementById(\''+b[5]+'\').scrollIntoView({behavior:\'smooth\',block:\'start\'})"><rect x="'+x+'" y="15" width="190" height="120" rx="12" fill="#fff" stroke="'+b[4]+'" stroke-width="2.5"/><circle cx="'+(x+30)+'" cy="45" r="19" fill="'+b[4]+'"/><text x="'+(x+30)+'" y="52" text-anchor="middle" font-size="20" font-weight="900" fill="#fff">'+b[0]+'</text><text x="'+(x+57)+'" y="42" font-size="14" font-weight="800" fill="'+b[4]+'">'+b[1]+'</text><text x="'+(x+57)+'" y="59" font-size="11.5" fill="#5b6577">'+b[2]+'</text><text x="'+(x+95)+'" y="100" text-anchor="middle" font-size="11.5" font-weight="700" fill="#14213d">'+b[3]+'</text><text x="'+(x+95)+'" y="122" text-anchor="middle" font-size="10.5" fill="'+b[4]+'">tap to open ▾</text></g>';
+  if(i<3)s+='<line x1="'+(x+192)+'" y1="75" x2="'+(x+223)+'" y2="75" stroke="#9aa6b8" stroke-width="2.5" marker-end="url(#am)"/>'});
+ $("aepv").innerHTML=s}
+function drawMx(){drawAEPV();
+ bar("cAsz",QL,[{label:"Deposits",data:[275843,318969,315373],backgroundColor:"#0b4ea2"},{label:"Advances",data:[241024,273445,285118],backgroundColor:"#e8730c"},{label:"Investments",data:[81207,88154,92738],backgroundColor:"#6b46c1"}]);
+ bar("cAq",QL,[{label:"GNPA %",data:[1.6,1.3,1.3],backgroundColor:"#c0392b"},{label:"NNPA %",data:[0.3,0.2,0.2],backgroundColor:"#e8a39b"},{label:"Slippage ratio %",data:[2.4,1.6,1.4],backgroundColor:"#b7791f"}],{pct:1,yt:"%"});
+ bar("cE1",QL,[{label:"NIM %",data:[2.5,2.7,2.7],backgroundColor:"#17803d"},{label:"Cost of deposits %",data:[5.9,5.5,5.4],backgroundColor:"#c0392b"}],{pct:1,yt:"%"});
+ bar("cE2",QL,[{label:"Cost-to-income %",data:[67.1,63.0,62.8],backgroundColor:"#6b46c1"},{label:"CASA %",data:[32.8,35.1,32.7],backgroundColor:"#0b4ea2"},{label:"Non-interest income share %",data:[42.5,39.6,39.2],backgroundColor:"#b7791f"}],{pct:1,yt:"%"});
+ var vl=["Jun-25 (22 Aug price)","Jun-26 (17 Jul price)","Now — reported","Now — restated"];
+ bar("cV1",vl,[{label:"Book value per share ₹",data:[15.5,16.7,16.7,+VBV.toFixed(2)],backgroundColor:"#0b4ea2"},{label:"Market price ₹",data:[19.28,23.61,18.15,18.15],backgroundColor:"#e8730c"}],{yt:"₹ per share"});
+ bar("cV2",vl,[{label:"P/BV ×",data:[+(19.28/15.5).toFixed(2),+(23.61/16.7).toFixed(2),+(18.15/16.7).toFixed(2),+(18.15/VBV).toFixed(2)],backgroundColor:["#9aa6b8","#9aa6b8","#e8730c","#c0392b"]}],{yt:"× book"})}
+// liquidity table
+$("liqT").innerHTML='<tr><th>Measure</th><th class="n">Jun-26</th><th class="n">Mar-26</th><th class="n">Jun-25</th><th>Reading</th></tr>'+[["CD ratio (%)","90.4","85.7","87.4","Funding gap widening"],["CASA deposits (₹ cr)",f(103233),"n/a",f(90318)+"†","+14.3% YoY; CA +23.2%, SA +8.2%"],["Average LCR (%)","138.2","119.0","135.8","Well above 100% minimum"],["Borrowings (₹ cr)",f(67940),f(64890)+"†",f(66543)+"†","+4.7% QoQ"],["Investments (₹ cr)",f(92738),f(88154)+"†",f(81207)+"†","+14.2% YoY"],["PSL shortfall deposits (₹ cr)",f(27449),f(27924)+"†",f(36795)+"†","−25.4% YoY; 5.9% of assets"],["Total assets (₹ cr)",f(462064),f(469105),f(410248),"−1.5% QoQ"],["RWA / total assets (%)","73.2","69.7","72.7","Denser balance sheet uses more capital"]].map(function(r){return"<tr><td>"+r[0]+'</td><td class="n">'+r[1]+'</td><td class="n">'+r[2]+'</td><td class="n">'+r[3]+"</td><td>"+r[4]+"</td></tr>"}).join("");
+// timeline
+var TL=[["2013 / Dec 2016 / Oct 2017","","AT1 bonds issued in three tranches. The Dec 2016 (₹3,000 cr, 9.5%) and Oct 2017 (₹5,415 cr, 9%) tranches total ₹8,415 cr. Many were sold to individual investors, including retirees, through relationship managers."],["2018–2019","","Governance and asset-quality problems; RBI curtails the founder-CEO's term; capital raising stalls and ratings are cut."],["Dec 2019 quarter","red","Quarterly loss ≈₹18,500 cr; CET1 collapses to 0.6% against the 7.4% requirement."],["5 Mar 2020","red","RBI supersedes the board, imposes a moratorium and appoints an Administrator. A draft reconstruction scheme proposes permanent write-down of AT1 bonds."],["13 Mar 2020","hot","Centre notifies the final YES Bank Reconstruction Scheme, 2020 — the AT1 write-down clause is dropped. SBI-led consortium injects ≈₹10,000 cr equity; 75% of existing shareholders' shares locked in for three years."],["14 Mar 2020","red","Administrator writes the ₹8,415 cr down to zero, one day after the scheme took effect. Equity holders are not wiped out — the loss hierarchy is inverted."],["Q4 FY20","","Bank books ₹6,296.9 cr after-tax extraordinary income, turning an underlying loss of ₹3,668.3 cr into a reported profit of ₹2,628.6 cr."],["Mar–May 2020","","Bondholders offer to settle for ≥20% recovery; Axis Trustee Services files a writ in the Bombay High Court."],["Apr 2021","","SEBI fines the bank ₹25 cr for mis-selling AT1 bonds in the secondary market; former officials also penalised."],["Jul–Dec 2022","","Carlyle and Advent invest ₹8,896 cr."],["20 Jan 2023","hot","Bombay High Court quashes the write-off: the final scheme did not authorise it and the Administrator exceeded his powers."],["Mar 2023","","Supreme Court stays the High Court order on appeals by the bank, RBI and Centre."],["May–Sep 2025","","SMBC buys 20% (₹13,483 cr) and then Carlyle's 4.2% (₹2,850 cr) — all secondary."],["May 2026","","Supreme Court asks the Centre for the Cabinet resolution and minutes that cleared the scheme."],["Aug 2026","","Crisil warns a write-back would cut CET1 by 230–250 bps."],["15 Oct 2026","red","Supreme Court dismisses all appeals; High Court ruling stands. Stock falls 14.43% to ₹18.15."],["17 Oct 2026","hot","Q2 FY27 results — first chance for the bank to quantify the impact."]];
+$("timeline").innerHTML=TL.map(function(e){return'<div class="ev '+e[1]+'"><div class="dt">'+e[0]+"</div>"+e[2]+"</div>"}).join("");
+// reasons
+var RS=[["Draft had it, final scheme did not","The draft scheme of 5–6 March expressly provided for permanent write-down; the final scheme notified on 13 March omitted it. The Administrator acted the next day anyway.","வரைவு திட்டத்துல பாண்டை எழுதி தள்ளுற வரி இருந்துச்சு; இறுதி திட்டத்துல அது இல்லை. ஆனாலும் மறுநாளே நிர்வாகி அதை செஞ்சுட்டார்."],["Administrator is bound by the statute","An Administrator under the Banking Regulation Act stands in for the board and must act within the powers the law gives him. Anything beyond is illegal and void. He cannot exercise the RBI's regulatory power.","நிர்வாகி போர்டுக்கு பதிலா தான் வேலை செய்யறார்; சட்டம் கொடுத்த அதிகாரத்துக்குள்ள தான் செயல்படணும். அதை தாண்டினா அது செல்லாது."],["Timing under the Master Circular","Under the RBI's Basel III Master Circular, write-down or conversion at the point of non-viability had to happen before the reconstruction scheme took effect — not after. Had the drafters meant otherwise, the clause would have been worded differently.","ஆர்பிஐ விதிப்படி, பாண்டை எழுதி தள்ளணும்னா திட்டம் அமலுக்கு வர்றதுக்கு முன்னாடியே செய்யணும். பின்னாடி செய்யக்கூடாது."],["No power left to be used later","It is unreasonable to think the RBI and the Centre would frame a detailed scheme yet leave the AT1 question for the Administrator to decide afterwards. He acted under a mistaken belief that he still had the power.","ஆர்பிஐ-யும் அரசும் இவ்வளவு விரிவான திட்டம் போட்டுட்டு, இந்த முக்கிய விஷயத்தை நிர்வாகிக்கு பின்னால விட்டுருப்பாங்கன்னு நினைக்க முடியாது."],["Manner, not the merits of loss-absorption","The Court stressed the question was not whether AT1 bonds could be written down, but the manner in which it was done — outside the Master Circular and the information memoranda.","ஏடி1 பாண்டை எழுதி தள்ளலாமான்னு இல்லை கேள்வி; எந்த முறையில செஞ்சாங்கங்கிறது தான் பிரச்சனை."],["Regulator a 'mere bystander'","The RBI let CET1 sink to 0.6% while irregularities were known; investors should not bear the cost of administrative lapses.","சிஇடி1 0.6%-க்கு விழுற வரைக்கும் ஆர்பிஐ பார்த்துக்கிட்டு மட்டும் இருந்துச்சு; அந்த தவறுக்கு முதலீட்டாளர்கள் விலை கொடுக்கக்கூடாது."],["Mis-selling to individuals","The Master Circular contemplated such high-risk instruments for institutional buyers, yet the bank actively offered them to individuals — including directly, outside SEBI's purview. The Court cited a Dec 2016 email from a Chennai-based manager.","இந்த அதிக ரிஸ்க் பாண்டுகள் நிறுவனங்களுக்கு தான்; ஆனா பேங்க் தனி நபர்களுக்கு விற்றது. சென்னை அதிகாரியோட 2016 ஈமெயிலையும் நீதிமன்றம் சுட்டிக்காட்டியது."],["The 'triumvirate' criticised","The conduct of the RBI, the Administrator and the bank in handling the bonds was called questionable; the risk to investors could have been avoided by following the Master Circular.","ஆர்பிஐ, நிர்வாகி, பேங்க் — மூணு பேரும் நடந்துக்கிட்ட விதம் கேள்விக்குரியதுன்னு நீதிமன்றம் சொல்லுச்சு."]];
+$("reasons").innerHTML=RS.map(function(r,i){return'<div class="reason"><b>'+(i+1)+". "+r[0]+'</b><div class="en">'+r[1]+'</div><div class="ta">'+r[2]+"</div></div>"}).join("");
+// capital calc
+var RWA=CO.cap.assets*CO.cap.rwaPct/100,C1=RWA*CO.cap.cet1Pct/100,T2=CO.cap.tcf-C1,SH=CO.cap.nw/CO.cap.bvps;
+function calc(treat,arr,tax,px){var hit=(CO.cap.at1+arr)*(1-tax),c1=C1,a1=0,nw=CO.cap.nw,sh=SH;
+ if(treat==="conv"){sh=SH+CO.cap.at1/px;hit=arr*(1-tax);c1=C1-hit;nw=nw-hit}else{c1=C1-hit;nw=nw-hit;if(treat==="at1")a1=CO.cap.at1}
+ var r={cet1:c1/RWA*100,at1:a1/RWA*100,t1:(c1+a1)/RWA*100,crar:(c1+a1+T2)/RWA*100,nw:nw,bv:nw/sh,dil:(sh-SH)/SH*100,hit:hit};r.pb=CO.price/r.bv;return r}
+var capChart;
+function runCalc(){var t=$("cTreat").value,a=+$("cArr").value,x=+$("cTax").value,p=+$("cPx").value||18.15,r=calc(t,a,x,p);
+ function cls(v,m){return v>=m?"up":"dn"}
+ $("cRes").innerHTML='<tr><th>Ratio</th><th class="n">Now</th><th class="n">Scenario</th><th class="n">Need</th></tr>'+
+ '<tr><td>CET1</td><td class="n">14.00%</td><td class="n '+cls(r.cet1,8)+'">'+r.cet1.toFixed(2)+'%</td><td class="n">8.0%</td></tr>'+
+ '<tr><td>AT1</td><td class="n">0.00%</td><td class="n">'+r.at1.toFixed(2)+'%</td><td class="n">—</td></tr>'+
+ '<tr><td>Tier-1</td><td class="n">14.00%</td><td class="n '+cls(r.t1,9.5)+'">'+r.t1.toFixed(2)+'%</td><td class="n">9.5%</td></tr>'+
+ '<tr><td>CRAR</td><td class="n">15.15%</td><td class="n '+cls(r.crar,11.5)+'">'+r.crar.toFixed(2)+'%</td><td class="n">11.5%</td></tr>'+
+ '<tr><td>Net worth ₹ cr</td><td class="n">'+f(CO.cap.nw)+'</td><td class="n">'+f(r.nw)+'</td><td></td></tr>'+
+ '<tr><td>BVPS ₹</td><td class="n">16.70</td><td class="n">'+r.bv.toFixed(2)+'</td><td></td></tr>'+
+ '<tr><td>P/BV at ₹18.15</td><td class="n">1.09×</td><td class="n">'+r.pb.toFixed(2)+'×</td><td></td></tr>';
+ $("cMsg").innerHTML=(t==="conv"?"Conversion adds ≈"+f(CO.cap.at1/p*100/100,0)+" crore shares (+"+r.dil.toFixed(1)+"% share count) — CET1 protected, existing holders diluted. ":"Equity hit ≈₹"+f(r.hit)+" cr. ")+(r.crar<11.5?"<b class='dn'>CRAR below 11.5% (incl. buffer) — distributions restricted; capital raise needed.</b>":r.cet1<11?"<b>CET1 buffer thin for 18% loan growth.</b>":"Above all requirements.");
+ var d=[r.cet1,r.t1,r.crar];
+ if(capChart){capChart.data.datasets[1].data=d;capChart.update()}}
+function preset(n){if(n===0){$("cTreat").value="at1";$("cArr").value="5090";$("cTax").value="0.2517"}if(n===1){$("cTreat").value="at1";$("cArr").value="0";$("cTax").value="0"}if(n===2){$("cTreat").value="liab";$("cArr").value="5090";$("cTax").value="0"}if(n===3){$("cTreat").value="conv";$("cArr").value="0";$("cTax").value="0"}runCalc()}
+["cTreat","cArr","cTax","cPx"].forEach(function(i){$(i).addEventListener("input",runCalc)});
+var SCN=[["Today (Jun-26)","none",0,0],["① Reinstated AT1, no arrears","at1",0,0],["② Reinstated AT1 + arrears","at1",5090,0],["③ Liability, principal only","liab",0,0],["④ Liability + arrears","liab",5090,0],["⑤ Reinstated AT1, tax-deductible hit","at1",0,0.2517],["⑥ Converted to equity at ₹18.15","conv",0,0],["⑦ CB base — AT1 + arrears, both tax-deductible","at1",5090,0.2517]];
+$("scTable").innerHTML='<tr><th>Scenario</th><th class="n">CET1 %</th><th class="n">Tier-1 %</th><th class="n">CRAR %</th><th class="n">Net worth ₹ cr</th><th class="n">BVPS ₹</th><th class="n">P/BV ×</th></tr>'+SCN.map(function(s){var r=s[1]==="none"?{cet1:14,t1:14,crar:CO.cap.tcf/RWA*100,nw:CO.cap.nw,bv:16.7,pb:CO.price/16.7}:calc(s[1],s[2],s[3],18.15);return"<tr><td>"+s[0]+'</td><td class="n">'+r.cet1.toFixed(2)+'</td><td class="n">'+r.t1.toFixed(2)+'</td><td class="n '+(r.crar<11.5?"dn":"")+'">'+r.crar.toFixed(2)+'</td><td class="n">'+f(r.nw)+'</td><td class="n">'+r.bv.toFixed(2)+'</td><td class="n">'+r.pb.toFixed(2)+"</td></tr>"}).join("");
+// triggers
+var TRG=[["AT1 bonds restored by Supreme Court","−",5,1.0,1.0,0.7,"Q2 accounting; RBI capital treatment"],["AT1 coupons resume (≈₹772 cr/yr) + possible arrears","−",4,0.7,0.7,1.0,"Coupon dates; settlement terms"],["Equity raise / dilution to rebuild CET1","−",3,0.4,0.7,1.0,"Board approvals; issue price vs book"],["Rating upgrades lower funding cost","+",2,1.0,1.0,0.7,"Spread on new bonds/deposits"],["SR recoveries ₹800–1,000 cr FY27 guidance","+",3,0.4,0.7,1.0,"Quarterly recovery numbers"],["SMBC capital support (reported ≈₹16,000 cr plan)","+",3,0.2,0.7,1.0,"Any preferential issue or RBI nod above 24.99%"]];
+$("trgT").innerHTML='<tr><th>Trigger</th><th>+/−</th><th class="n">I</th><th class="n">C</th><th class="n">W</th><th class="n">P</th><th class="n">Points</th><th>What to watch</th></tr>'+TRG.map(function(t){var p=(t[2]*t[3]*t[4]*t[5]).toFixed(2);return"<tr><td>"+t[0]+'</td><td class="'+(t[1]==="+"?"up":"dn")+'"><b>'+t[1]+'</b></td><td class="n">'+t[2]+'</td><td class="n">'+t[3]+'</td><td class="n">'+t[4]+'</td><td class="n">'+t[5]+'</td><td class="n"><b>'+p+"</b></td><td>"+t[6]+"</td></tr>"}).join("");
+function drawClock(){var ph=["P1 Trough","P2 Early recovery","P3 Expansion","P4 Late cycle","P5 Downturn"],s='<circle cx="150" cy="150" r="118" fill="#f6f8fb" stroke="#cdd6e3" stroke-width="2"/>';
+ ph.forEach(function(p,i){var a=(-90+i*72)*Math.PI/180,x=150+95*Math.cos(a),y=150+95*Math.sin(a);s+='<circle cx="'+x+'" cy="'+y+'" r="26" fill="'+(i===2?"#e8730c":"#fff")+'" stroke="#0b4ea2"/><text x="'+x+'" y="'+(y+4)+'" text-anchor="middle" font-size="10" font-weight="700" fill="'+(i===2?"#fff":"#0b4ea2")+'">'+p.split(" ")[0]+'</text>'});
+ var a=(-90+2*72)*Math.PI/180;s+='<line x1="150" y1="150" x2="'+(150+60*Math.cos(a))+'" y2="'+(150+60*Math.sin(a))+'" stroke="#e8730c" stroke-width="5" stroke-linecap="round"/><circle cx="150" cy="150" r="8" fill="#0b4ea2"/>';
+ var b=(-90+3.6*72)*Math.PI/180;s+='<rect x="'+(150+55*Math.cos(b)-28)+'" y="'+(150+55*Math.sin(b)-10)+'" width="56" height="20" rx="5" fill="#c0392b"/><text x="'+(150+55*Math.cos(b))+'" y="'+(150+55*Math.sin(b)+4)+'" text-anchor="middle" font-size="10" fill="#fff" font-weight="700">Stock 3→4</text>';
+ s+='<text x="150" y="290" text-anchor="middle" font-size="11" fill="#5b6577">Sector pointer: P3 · Red tag: stock stage</text>';$("clock").innerHTML=s}
+// valuation KPIs
+$("valK").innerHTML=[["Price (15 Oct)","₹18.15","−14.43%"],["Market cap†","₹"+f(56882)+" cr",""],["P/BV","1.09×","≈1.30× restated"],["P/E (TTM)†","15.2×","13.3× on Q1 annualised"]].map(function(k){return'<div class="card kpi"><div class="l">'+k[0]+'</div><div class="v">'+k[1]+'</div><div class="d mu">'+k[2]+"</div></div>"}).join("");
+// analysts
+var AN=[["Axis Capital","Buy",28,"Jul 2026"],["ICICI Securities","Hold",24,"Jul 2026 (from ₹21)"],["Nomura","Neutral",23,"22 Jul 2026 (from ₹21); 1.1× Mar-28F BVPS"],["JM Financial","Upgraded from Sell (new rating n/a)",22,"Jul 2026 (from ₹17)"],["Citi","Sell",22,"Jul 2026"],["Morgan Stanley","Underweight",15,"Jul 2026"],["JPMorgan","Underweight/Sell",null,"Jul 2026; target n/a"],["Investec","Sell",null,"Jul 2026; target n/a"]];
+$("anT").innerHTML='<tr><th>Broker</th><th>Rating</th><th class="n">Target ₹</th><th class="n">vs ₹18.15</th><th>Date / note</th></tr>'+AN.map(function(a){var c=/Buy/.test(a[1])?"p-buy":/Hold|Neutral|Upgraded/.test(a[1])?"p-hold":"p-sell";return"<tr><td>"+a[0]+'</td><td><span class="pill '+c+'">'+a[1]+'</span></td><td class="n">'+(a[2]||"n/a")+'</td><td class="n">'+(a[2]?((a[2]/18.15-1)*100).toFixed(1)+"%":"n/a")+"</td><td>"+a[3]+"</td></tr>"}).join("");
+// self-check
+var SG=[["1 · Questions about the stock",[["I know how the bank will account for the ₹8,415 cr","Bank is examining the order; Q2 on 17 Oct"],["I know whether coupon arrears are payable","Up to ≈₹5,090 cr per one broker estimate; not settled"],["I have looked at CET1 after the verdict","14.0% now; ≈11.5% (≈10.0% with arrears)"]]],["2 · Problems investors face",[["I understand restated book value","₹16.7 → ≈₹14.0 (≈₹12.4)"],["I know the risk of dilution","Raise likely needed in worst cases; SMBC near 24.99% cap"],["I am comfortable with ROE ≈8%","Q1 ROE 8.3%"]]],["3 · Solutions (what I did)",[["I read the bank's exchange filing on the order",""],["I compared with peers' CET1 and ROE",""],["I sized my position for a 20% swing","Fell 14.43% in one day"]]],["4 · Anchors' and analysts' view",[["I checked post-verdict target revisions","All listed targets pre-date the verdict"],["I know the split of views","Pre-verdict: 1 Buy vs 9 Sell (Aug 2026 consensus)"]]],["5 · My own conditions",[]]];
+function selfLoad(){try{return JSON.parse(localStorage.getItem("cb_self_yesbank")||"{}")}catch(e){return{}}}
+function selfSave(o){try{localStorage.setItem("cb_self_yesbank",JSON.stringify(o))}catch(e){}}
+function drawSelf(){var st=selfLoad(),own=st.own||[],h="",tot=0,on=0;
+ SG.forEach(function(g,gi){var items=gi===4?own.map(function(o){return[o,""]}):g[1],c=0;
+  h+='<div class="card scg" style="margin-bottom:10px"><h3>'+g[0]+'</h3>';
+  items.forEach(function(it,ii){var k=gi+"_"+ii,ch=st[k];tot++;if(ch){on++;c++}h+='<label class="ck"><input type="checkbox" '+(ch?"checked":"")+' onchange="selfTick(\''+k+'\',this.checked)"><span>'+it[0]+(it[1]?'<div class="data">Data: '+it[1]+"</div>":"")+"</span></label>"});
+  if(gi===4){h+='<div class="btnrow">'+["CET1 above 11% after restatement","Bank discloses coupon treatment","No equity issue below book"].map(function(s){return'<button class="b" onclick="addOwn(\''+s+'\')">+ '+s+"</button>"}).join("")+'</div><input id="ownIn" placeholder="Add your own condition (max 8)" style="width:100%;padding:7px;border:1px solid var(--line);border-radius:8px"><button class="b" style="margin-top:6px" onclick="addOwn($(\'ownIn\').value)">Add</button>'}
+  h+='<div class="small">'+c+" of "+items.length+" ticked</div></div>"});
+ $("selfG").innerHTML=h;$("selfAll").textContent=on+" of "+tot+" conditions ticked. This only counts how many of your own conditions line up. It is not a recommendation.";$("selfBar").style.width=(tot?on/tot*100:0)+"%"}
+function selfTick(k,v){var s=selfLoad();s[k]=v;selfSave(s);drawSelf()}
+function addOwn(t){t=(t||"").trim();if(!t)return;var s=selfLoad();s.own=s.own||[];if(s.own.length<8)s.own.push(t);selfSave(s);drawSelf()}
+function clearSelf(){selfSave({});drawSelf()}
+// CB School
+var NODES=[["dep","Deposits","₹3,15,373 cr",0],["casa","CASA","32.7%",0],["bor","Borrowings","₹67,940 cr",0],["adv","Advances","₹2,85,118 cr",0],["eq","Equity","₹52,338 cr",0],["cod","Cost of deposits","5.4%",1],["yld","Yield on advances","n/a",1],["repo","RBI repo rate","n/a",1],["gsec","Bond yields","n/a",1],["nii","NII","₹2,786 cr",2],["nim","NIM","2.7%",2],["oi","Other income","₹1,798 cr",2],["cti","Opex / C-I","62.8%",2],["prov","Provisions","₹394 cr",2],["gnpa","GNPA","1.3%",2],["pat","PAT","₹1,071 cr",3],["rwa","RWA","≈₹3,38,231 cr†",3],["cet1","CET1","14.0%",3],["crar","CRAR","15.1%",3],["roa","ROA","0.9%",4],["roe","ROE","8.3%",4],["bvps","BVPS","₹16.7",4],["pbv","P/BV","1.09×",4]];
+var EDGES=[["dep","adv",1],["bor","adv",1],["casa","cod",-1],["repo","cod",1],["repo","yld",1],["cod","nim",-1],["yld","nim",1],["gsec","oi",-1],["adv","nii",1],["nim","nii",1],["adv","rwa",1],["gnpa","prov",1],["nii","pat",1],["oi","pat",1],["cti","pat",-1],["prov","pat",-1],["pat","eq",1],["eq","cet1",1],["rwa","cet1",-1],["cet1","crar",1],["cet1","adv",1],["pat","roa",1],["pat","roe",1],["eq","roe",-1],["eq","bvps",1],["roe","pbv",1]];
+var COLS=["Funding & growth","Prices of money","Income & risk","Profit & capital","Returns & value"],POS={};
+var SCEN={"AT1 restored (verdict)":{m:{eq:-1,cet1:-1,crar:-1,nii:-1,nim:-1,bvps:-1,pbv:1,adv:-1,pat:-1,roe:1},t:"Principal moves from reserves back to AT1 and arrears (≈₹5,090 cr) are paid as interest expense. CB base (tax-deductible): CET1 14.0% → ≈11.0%, CRAR 15.1% → ≈14.6%, BVPS ₹16.7 → ≈₹13.5, P/BV at ₹18.15 ≈1.35×. The ongoing ₹772 cr coupon lowers NII and NIM. Less CET1 means less room to grow loans at 18%. Coupons ≈₹772 cr/yr are interest expense and cut PAT; ROE optically rises on the smaller base."},"RBI rate cut":{m:{repo:-1,cod:-1,yld:-1,nim:-1,gsec:-1,oi:1},t:"Loans linked to external benchmarks reprice at once; term deposits (≈67% of YES Bank's deposits, CASA only 32.7%) reprice slowly — so NIM (2.7%) can dip first. Falling bond yields lift treasury gains in other income."},"Bad loans rise":{m:{gnpa:1,prov:1,pat:-1,eq:-1,cet1:-1,roa:-1,roe:-1,bvps:-1},t:"GNPA is 1.3% today with credit cost 0.3% of assets. A rise in slippages (₹964 cr in Q1) pushes provisions up, PAT down and erodes the CET1 that the AT1 verdict already thinned."},"Fresh equity":{m:{eq:1,cet1:1,crar:1,bvps:1,roe:-1,adv:1},t:"New equity would rebuild CET1 toward 14% but dilute ROE (8.3%). Issue price matters: below book (₹16.7 reported, ≈₹14.0 restated) reduces BVPS for existing holders."},"CASA falls":{m:{casa:-1,cod:1,nim:-1,nii:-1,pat:-1,roe:-1},t:"CASA already fell from 35.1% to 32.7% in Q1. Every shift from CASA to term deposits raises the 5.4% cost of deposits and squeezes NIM."},"Loans outrun deposits":{m:{adv:1,bor:1,cod:1,rwa:1,cet1:-1},t:"CD ratio jumped to 90.4%. Funding the gap needs costlier borrowings (₹67,940 cr) and adds RWA — eating CET1 just when the verdict reduces it."},"Bond yields rise":{m:{gsec:1,oi:-1,pat:-1},t:"Investments of ₹92,738 cr face mark-to-market losses; treasury income in the ₹1,798 cr other-income line falls."}};
+function drawSch(){var s='<defs><marker id="ag" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0L10,5L0,10z" fill="#17803d"/></marker><marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0L10,5L0,10z" fill="#c0392b"/></marker></defs>';
+ var cnt=[0,0,0,0,0];COLS.forEach(function(c,i){s+='<text x="'+(20+i*200+80)+'" y="22" text-anchor="middle" font-size="12" font-weight="800" fill="#0b4ea2">'+c+'</text>'});
+ NODES.forEach(function(n){var c=n[3],k=cnt[c]++;POS[n[0]]={x:20+c*200,y:40+k*84}});
+ EDGES.forEach(function(e,i){var a=POS[e[0]],b=POS[e[1]],x1=a.x+160,y1=a.y+28,x2=b.x,y2=b.y+28;if(b.x<=a.x){x1=a.x+80;y1=a.y+(b.y>a.y?56:0);x2=b.x+80;y2=b.y+(b.y>a.y?0:56)}
+  s+='<line id="e'+i+'" x1="'+x1+'" y1="'+y1+'" x2="'+x2+'" y2="'+y2+'" stroke="'+(e[2]>0?"#17803d":"#c0392b")+'" stroke-width="1.4" '+(e[2]<0?'stroke-dasharray="5,4"':"")+' marker-end="url(#'+(e[2]>0?"ag":"arr")+')" opacity=".45"/>'});
+ NODES.forEach(function(n){var p=POS[n[0]];s+='<g style="cursor:pointer" onclick="schPick(\''+n[0]+'\')"><rect id="n_'+n[0]+'" x="'+p.x+'" y="'+p.y+'" width="160" height="56" rx="9" fill="#fff" stroke="#0b4ea2" stroke-width="1.5"/><text x="'+(p.x+80)+'" y="'+(p.y+22)+'" text-anchor="middle" font-size="12.5" font-weight="800" fill="#14213d">'+n[1]+'</text><text x="'+(p.x+80)+'" y="'+(p.y+41)+'" text-anchor="middle" font-size="11.5" fill="#5b6577">'+n[2]+'</text><text id="m_'+n[0]+'" x="'+(p.x+150)+'" y="'+(p.y+16)+'" text-anchor="end" font-size="15" font-weight="900"></text></g>'});
+ $("schMap").innerHTML=s;
+ $("schBtns").innerHTML=Object.keys(SCEN).map(function(k){return'<button class="b" onclick="schScen(\''+k+'\',this)">'+k+"</button>"}).join("")}
+function nm(id){return NODES.filter(function(n){return n[0]===id})[0][1]}
+function schReset(){NODES.forEach(function(n){$("n_"+n[0]).setAttribute("fill","#fff");$("m_"+n[0]).textContent=""});EDGES.forEach(function(e,i){$("e"+i).setAttribute("opacity",".45");$("e"+i).setAttribute("stroke-width","1.4")})}
+function schPick(id){schReset();$("n_"+id).setAttribute("fill","#fff3e6");var pu=[],pb=[];EDGES.forEach(function(e,i){if(e[0]===id||e[1]===id){$("e"+i).setAttribute("opacity","1");$("e"+i).setAttribute("stroke-width","3")}if(e[0]===id)pu.push(nm(e[1])+(e[2]>0?" (same way)":" (opposite)"));if(e[1]===id)pb.push(nm(e[0])+(e[2]>0?" (same way)":" (opposite)"))});
+ $("schCard").innerHTML="<b>"+nm(id)+"</b><br>It pushes: "+(pu.join(", ")||"—")+"<br>It is pushed by: "+(pb.join(", ")||"—")}
+function schScen(k,btn){schReset();document.querySelectorAll("#schBtns .b").forEach(function(b){b.classList.remove("on")});btn.classList.add("on");var m=SCEN[k].m,keys=Object.keys(m);
+ keys.forEach(function(id,j){setTimeout(function(){var el=$("m_"+id);el.textContent=m[id]>0?"▲":m[id]<0?"▼":"▬";el.setAttribute("fill",m[id]>0?"#17803d":m[id]<0?"#c0392b":"#b7791f");$("n_"+id).setAttribute("fill",m[id]>0?"#e7f6ec":m[id]<0?"#fdecea":"#fdf5e3")},j*220)});
+ $("schCard").innerHTML="<b>"+k+"</b><br>"+SCEN[k].t}
+$("lessons").innerHTML=[["CET1 ≠ CRAR","CRAR can stay at 15.1% while CET1 falls to 11.5% — the mix of capital matters, not just the total. Regulators and rating agencies watch CET1 most."],["AT1 sits between debt and equity","It absorbs losses before depositors but after equity — the 2020 write-down reversed that order, which is why courts were uneasy."],["Secondary vs primary money","A big investor buying existing shares (SMBC's ≈₹16,333 cr) changes ownership, not the bank's capital. Only new shares add capital."],["Book value is an accounting number","A court order can rewrite it overnight: BVPS ₹16.7 → ≈₹14.0. P/BV must be read on the restated book."]].map(function(l){return'<div class="card"><b>'+l[0]+'</b><div class="small">'+l[1]+"</div></div>"}).join("");
+// Socrates
+var SQ=[["Can an AT1 bondholder get money back before the bank calls the bond?",["No — never","Yes, by selling it to another investor on the exchange","Yes, by demanding repayment from the bank"],1,"The bond is perpetual, so the bank never has to repay on demand — but it is listed and transferable. Only the bank can retire it, through a call with RBI approval."],["After the verdict, does CRAR go up because AT1 comes back?",["Yes — AT1 adds new capital","No — the ₹8,415 cr was already in CET1, and arrears are paid out, so CRAR falls to ≈14.6% (CB base)","It stays exactly 15.1% in every case"],1,"Restoration only relabels money already inside capital. The arrears are a real expense that leaves reserves."],["If the restored bonds count as AT1, what happens to CRAR?",["It falls by 2.5 points","It stays ≈15.1%","It rises"],1,"The ₹8,415 cr moves from CET1 to AT1 — total capital unchanged. CET1 still falls ≈250 bps."],["Why did SMBC's ≈₹16,333 cr not strengthen CET1?",["It was debt","It bought existing shares from SBI, banks and Carlyle","RBI blocked it"],1,"Secondary purchases pay the sellers. Only a fresh issue adds capital."],["The Court's key legal point was…",["AT1 bonds can never be written down","The Administrator had no power after the final scheme took effect without a specific provision","SEBI rules were broken"],1,"The question was the manner, not whether AT1 can absorb losses."],["Which number tells you loans are outrunning deposits?",["CD ratio 90.4%","GNPA 1.3%","PCR 81.7%"],0,"CD ratio = advances ÷ deposits. It rose from 85.7% in Q4."],["Sector cycle phase used here is…",["P1 Trough","P3 Expansion","P5 Downturn"],1,"Credit growth 18%, credit cost 0.3%, GNPA at lows — expansion. But the stock's own stage turned weak after the verdict."],["How are AT1 coupons booked in an Indian bank's accounts?",["As interest expense (bonds sit under Borrowings)","As a dividend below PAT","Not booked at all"],0,"They are interest expense, so NII, NIM and PAT all fall — ≈₹772 cr a year pre-tax. RBI also requires them to be paid only out of distributable profits."]];
+$("socQ").innerHTML=SQ.map(function(q,i){return'<div class="sc-q"><b>'+(i+1)+". "+q[0]+"</b>"+q[1].map(function(o,j){return'<label><input type="radio" name="sq'+i+'" onchange="socA('+i+','+j+')"> '+o+"</label>"}).join("")+'<div id="sa'+i+'" class="small"></div></div>'}).join("");
+function socA(i,j){var q=SQ[i];$("sa"+i).innerHTML=(j===q[2]?"<b class='up'>Yes.</b> ":"<b class='dn'>Think again.</b> ")+q[3]}
+// charts
+function bar(id,labels,sets,opt){var c=$(id);if(!c||typeof Chart==="undefined")return null;return new Chart(c,{type:opt&&opt.type||"bar",data:{labels:labels,datasets:sets},plugins:[{id:"vl",afterDatasetsDraw:function(ch){if(opt&&opt.noLabels)return;var x=ch.ctx;x.save();x.font="600 11px sans-serif";x.fillStyle="#14213d";x.textAlign="center";ch.data.datasets.forEach(function(d,di){ch.getDatasetMeta(di).data.forEach(function(el,i){var v=d.data[i];if(v==null)return;x.fillText(opt&&opt.pct?v.toFixed(1)+"%":Number(v).toLocaleString("en-IN",{maximumFractionDigits:2}),el.x,el.y-5)})});x.restore()}}],options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:"top"},tooltip:{callbacks:{label:function(c){return c.dataset.label+": "+Number(c.raw).toLocaleString("en-IN",{maximumFractionDigits:2})+(opt&&opt.pct?"%":"")}}}},scales:{y:{beginAtZero:true,ticks:{callback:function(v){return Number(v).toLocaleString("en-IN")+(opt&&opt.pct?"%":"")}},title:{display:true,text:opt&&opt.yt||"₹ crore"}}}}})}
+function drawFor(t){
+ if(t==="ov")drawTemple();
+ if(t==="bm")drawBM();
+ if(t==="fin"){drawMx();var q=CO.q;bar("cPL",q.lbl,[{label:"NII",data:q.nii,backgroundColor:"#0b4ea2"},{label:"Other income",data:q.oi,backgroundColor:"#6b46c1"},{label:"Operating profit (EBITDA-equivalent)",data:q.ppop,backgroundColor:"#e8730c"},{label:"Provisions",data:q.prov,backgroundColor:"#c0392b"},{label:"PAT",data:q.pat,backgroundColor:"#17803d"}]);
+  var y=CO.fy;bar("cFY",y.lbl,[{label:"Deposits",data:y.dep,backgroundColor:"#0b4ea2"},{label:"Net advances",data:y.adv,backgroundColor:"#e8730c"}]);
+  bar("cRat",y.lbl,[{label:"GNPA %",data:y.gnpa,borderColor:"#c0392b",backgroundColor:"#c0392b"},{label:"CET1 %",data:y.cet1,borderColor:"#0b4ea2",backgroundColor:"#0b4ea2"},{label:"CASA %",data:y.casa,borderColor:"#6b46c1",backgroundColor:"#6b46c1"},{label:"Cost-to-income %",data:y.cti,borderColor:"#b7791f",backgroundColor:"#b7791f"},{label:"ROE %",data:y.roe,borderColor:"#17803d",backgroundColor:"#17803d"}],{type:"line",pct:1,yt:"%"})}
+ if(t==="cap"){capChart=bar("cCap",["CET1","Tier-1","CRAR"],[{label:"Now (Jun-26)",data:[14,14,15.15],backgroundColor:"#0b4ea2"},{label:"Scenario",data:[0,0,0],backgroundColor:"#e8730c"},{label:"Requirement incl. buffer",data:[8,9.5,11.5],backgroundColor:"#c9d2df"}],{pct:1,yt:"% of RWA"});preset(0);drawCapPics()}
+ if(t==="own"&&$("cOwn")&&typeof Chart!=="undefined")new Chart($("cOwn"),{type:"doughnut",data:{labels:["SMBC ≈24.2%","SBI ≈10.8%","Advent ≈9.2% (Jun-25)","Others ≈55.8%"],datasets:[{data:[24.2,10.8,9.2,55.8],backgroundColor:["#e8730c","#0b4ea2","#6b46c1","#cdd6e3"]}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:"right"}}}});
+ if(t==="trg")drawClock();
+ if(t==="at1x")drawAT1x();
+ if(t==="sc")drawSC();
+ if(t==="an"){var a=AN.filter(function(x){return x[2]});bar("cAn",a.map(function(x){return x[0]}),[{label:"Target ₹",data:a.map(function(x){return x[2]}),backgroundColor:a.map(function(x){return x[2]>=18.15*1.15?"#17803d":x[2]>=18.15?"#d68910":"#c0392b"})},{label:"Price ₹18.15",data:a.map(function(){return 18.15}),type:"line",borderColor:"#14213d",borderDash:[5,4],pointRadius:0}],{yt:"₹ per share"})}
+ if(t==="self")drawSelf();
+ if(t==="sch")drawSch();
+}
+// CB Assist (offline keyword QA + voice)
+var KB=[[["supreme","court","verdict","decide","judgment","sc"],"On 15 October 2026 the Supreme Court dismissed the appeals of YES Bank, the RBI and the Centre and upheld the Bombay High Court's 2023 ruling. The ₹8,415 crore AT1 write-down of March 2020 is void because the Administrator had no power once the final reconstruction scheme, which had dropped the write-down clause, took effect."],[["reason","why","ground"],"Main reasons: the final scheme omitted the write-down clause; an Administrator must act within statutory powers and cannot use the RBI's power; under the Master Circular the write-down had to happen before the scheme took effect; the RBI was a mere bystander; and the bonds were mis-sold to individuals."],[["cet1","common equity"],"CET1 is 14.0% now. In the CB base case — bonds restored as AT1, interest arrears paid, both tax-deductible — CET1 falls to about 11.0%. Without tax relief it is about 10.0%. CET1 never goes up, because the ₹8,415 crore only moves from reserves to AT1."],[["crar","capital adequacy","total capital"],"CRAR does not go up. In the CB base case it falls to about 14.6%, because the arrears are a real payout. Principal alone keeps CRAR near 15.1% only if the restored bonds count as AT1 capital. If they are treated as a liability, CRAR falls to about 12.7%, or about 11.2% with arrears, which is below the 11.5% requirement including the conservation buffer."],[["smbc","sumitomo","mitsui","japan","invest"],"Sumitomo Mitsui Banking Corporation paid about ₹16,333 crore: ₹13,483 crore for 20% from SBI and seven banks, and ₹2,850 crore for Carlyle's 4.2%. It owns about 24.2 to 24.9%. All of it was a secondary purchase, so none of it added to YES Bank's capital."],[["sbi","state bank"],"SBI sold 13.18% to SMBC for ₹8,889 crore at ₹21.50 a share in September 2025 and holds about 10.8% now."],[["profit","pat","q1","quarter","result"],"Q1 FY27 profit was ₹1,071 crore, up 33.7% year on year. NII ₹2,786 crore, up 17.5%. Operating profit ₹1,704 crore, up 25.5%. NIM 2.7%. GNPA 1.3%, NNPA 0.2%."],[["coupon","interest","arrear"],"The two tranches carry 9.5% on ₹3,000 crore and 9% on ₹5,415 crore — about ₹772 crore a year, booked as interest expense, roughly ₹578 crore after tax. Arrears since March 2020 could be about ₹5,090 crore on simple interest; the judgment as reported does not settle this."],[["book","bvps","net worth"],"Book value per share is ₹16.7. Restoring the principal cuts it to about ₹14.0; with arrears about ₹12.4. At ₹18.15 the P/BV moves from 1.09 to about 1.30 or 1.46 times."],[["price","share","fall","crash"],"The share fell 14.43% on 15 October to close at ₹18.15, its steepest one-day fall since July 2020."],[["history","2020","write"],"In March 2020 the RBI took over YES Bank. The draft rescue scheme proposed writing off AT1 bonds, but the final scheme of 13 March dropped it. The Administrator wrote them down on 14 March anyway. The High Court quashed it in January 2023, and the Supreme Court upheld that today."],[["casa","deposit"],"Deposits are ₹3,15,373 crore, up 14.3%. CASA ratio fell to 32.7% from 35.1% in Q4. Cost of deposits is 5.4%."],[["ceo","tonse","management","board","chairman"],"Vinay M. Tonse has been MD and CEO since 6 April 2026. The chairman is Rama Subramaniam Gandhi. SMBC has two board nominees. The former CEO Prashant Kumar was the Administrator who wrote down the bonds in 2020."],[["should i","invest in"],"CB Research does not give buy, sell or hold advice. Open the Self-check tab to test your own conditions."],[["result","q2","next","when"],"Q2 FY27 results are due on 17 October 2026, the first chance for the bank to quantify the impact."],[["trigger","cycle"],"Cycle score 63: credit sector in expansion, but the stock's price stage weakened. Trigger score 21: the AT1 restoration is a high-impact, certain negative; rating upgrades and recoveries are smaller positives."]];
+KB.push([["perpetual","trade","transfer","sell","call","redeem","tradable"],"AT1 bonds are perpetual, so bondholders cannot demand repayment. But they are listed and can be sold to other investors on NSE or BSE; that only changes the holder, not the bank's capital. Only YES Bank can retire them, by exercising a call option on a call date with the RBI's prior approval."]);KB.push([["book value","market value","p/bv","price to book","valuation","market cap"],"Book value per share is ₹16.70 on reported net worth of ₹52,338 crore, or about ₹13.48 after the CB base AT1 restatement. The price closed at ₹18.15, so market cap is about ₹56,882 crore and P/BV is 1.09 times on reported book, 1.35 times on restated book. In July, at ₹23.61, the market paid 1.41 times book."]);KB.push([["asset matrix","efficiency","profit matrix","matrix"],"The Financials tab groups the numbers in four matrices: Asset (size, quality, capital safety), Efficiency (cost of money, cost of running, income mix), Profit (income, earnings, returns) and Value (book value, market value, price-to-book). Remember it as A, E, P, V."]);KB.push([["tax","deduct"],"In 2020 the write-down was booked as an ₹8,415 crore gain, about ₹2,118 crore tax was paid and about ₹6,297 crore went into reserves. If the reversal and the arrears are tax-deductible, the post-tax hit is about ₹10,106 crore: CET1 about 11.0%, CRAR about 14.6%. Without tax relief: CET1 about 10.0%, CRAR about 13.6%."]);
+var ADV=/should i|\bbuy\b|\bhold\b|sell (the |my )?(stock|share)/i;
+function answer(q){q=q.toLowerCase();if(ADV.test(q))return KB[13][1];var best=null,sc=0;KB.forEach(function(k){var s=k[0].filter(function(w){return q.indexOf(w)>=0}).length;if(s>sc){sc=s;best=k[1]}});return best||"I could not match that. Try asking about the verdict, CET1, CRAR, SMBC, coupons, book value or Q1 profit."}
+function toggleAs(){var b=$("asBox");b.style.display=b.style.display==="flex"?"none":"flex"}
+function ask(t){var q=t||$("asQ").value.trim();if(!q)return;var a=answer(q),l=$("asLog");l.innerHTML+='<div class="q">'+q.replace(/</g,"&lt;")+'</div><div class="a">'+a+(ADV.test(q)?' <button class="b" onclick="show(\'self\');toggleAs()">Open Self-check</button>':"")+"</div>";l.scrollTop=l.scrollHeight;$("asQ").value="";speak(a)}
+function speak(t){try{if(!window.speechSynthesis)return;speechSynthesis.cancel();var u=new SpeechSynthesisUtterance(t.replace(/₹/g,"rupees "));u.lang="en-IN";u.rate=1;speechSynthesis.speak(u)}catch(e){}}
+var rec=null;function mic(){var S=window.SpeechRecognition||window.webkitSpeechRecognition;if(!S){ask("Voice input is not supported in this browser");return}if(rec){rec.stop();return}rec=new S();rec.lang=document.body.classList.contains("ta")?"ta-IN":"en-IN";rec.interimResults=false;$("micB").classList.add("live");rec.onresult=function(e){ask(e.results[0][0].transcript)};rec.onend=function(){$("micB").classList.remove("live");rec=null};rec.onerror=function(){$("micB").classList.remove("live");rec=null};rec.start()}
+document.querySelectorAll(".sugg span").forEach(function(s){s.onclick=function(){ask(s.textContent)}});
+// ===== AT1 EXPLAINED =====
+var TX=0.2517,GAIN=CO.cap.at1*(1-TX),stTaxOn=1,stI=3;
+var LH=[["Depositors","₹3,15,373 cr","Repaid ahead of every capital instrument; insured up to ₹5 lakh each by DICGC. In 2020 they lost nothing.","Rule No. 5 — last to lose","#17803d"],
+["Other borrowings","₹67,940 cr (incl. infra bonds)","Senior lenders. They rank behind depositors' protection but ahead of all capital instruments.","No. 4","#5b6577"],
+["Tier-2 bonds","≈₹3,876 cr counted as capital","Subordinated debt. Absorbs losses only at the point of non-viability, after AT1.","No. 3","#6b46c1"],
+["AT1 bonds","₹8,415 cr (restored)","Perpetual, 9–9.5% coupon. At the point of non-viability they can be written down or converted to equity — but by the rule book only after equity has taken the hit.","No. 2","#e8730c"],
+["Equity (CET1)","₹52,338 cr net worth","The owners. First to absorb any loss — that is the price of getting all the upside.","No. 1 — first to lose","#0b4ea2"]];
+function drawLH(m){$("lh0").classList.toggle("on",m===0);$("lh1").classList.toggle("on",m===1);
+ var s='<defs><marker id="lha" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0L10,5L0,10z" fill="#c0392b"/></marker></defs>';
+ s+='<text x="40" y="16" font-size="12" font-weight="700" fill="#17803d">SAFEST ▲</text><text x="40" y="412" font-size="12" font-weight="700" fill="#c0392b">FIRST LOSS ▼</text>';
+ s+='<line x1="22" y1="395" x2="22" y2="30" stroke="#c0392b" stroke-width="3" marker-end="url(#lha)"/><text x="12" y="215" font-size="11" fill="#c0392b" transform="rotate(-90 12 215)" text-anchor="middle">loss climbs from the bottom</text>';
+ LH.forEach(function(l,i){var w=280+i*55,x=400-w/2,y=24+i*76,col=l[4],fill="#fff",tc=col,tag=l[3];
+  if(m===1&&i===3){fill="#fdecea";tc="#c0392b";tag="✗ wiped to zero|on 14 Mar 2020"}
+  if(m===1&&i===4){fill="#e8f1fc";tag="✓ survived|75% of shares locked 3 yrs"}
+  s+='<g style="cursor:pointer" onclick="lhPick('+i+','+m+')"><rect x="'+x+'" y="'+y+'" width="'+w+'" height="64" rx="10" fill="'+fill+'" stroke="'+col+'" stroke-width="2.5"/>';
+  s+='<text x="400" y="'+(y+26)+'" text-anchor="middle" font-size="15" font-weight="800" fill="'+tc+'">'+l[0]+'</text><text x="400" y="'+(y+46)+'" text-anchor="middle" font-size="12" fill="#5b6577">'+l[1]+'</text>';
+  tag.split('|').forEach(function(tl,k,arr){s+='<text x="'+(x+w+10)+'" y="'+(y+(arr.length>1?30+k*16:37))+'" font-size="11.5" font-weight="700" fill="'+((m===1&&(i===3))?"#c0392b":col)+'">'+tl+'</text>'});s+='</g>'});
+ if(m===1){s+='<path d="M 148 360 C 80 345, 80 300, 170 288" fill="none" stroke="#c0392b" stroke-width="3" stroke-dasharray="6,4" marker-end="url(#lha)"/><text x="38" y="318" font-size="12" font-weight="800" fill="#c0392b">order</text><text x="38" y="333" font-size="12" font-weight="800" fill="#c0392b">inverted</text>'}
+ $("lhSvg").innerHTML=s;
+ $("lhCard").innerHTML=m===0?'<div class="en"><b>Rule book:</b> losses eat capital from the bottom up — equity first, then AT1, then Tier-2. AT1 holders get a high coupon precisely because they stand second in line. Tap a layer for details.</div><div class="ta"><b>விதிப்படி:</b> நஷ்டம் கீழே இருந்து மேலே ஏறும் — முதல்ல பங்குதாரர், அப்புறம் ஏடி1, அப்புறம் டியர்-2. ரெண்டாவது வரிசையில நிக்கறதால தான் ஏடி1-க்கு அதிக வட்டி.</div>':'<div class="en"><b>March 2020:</b> AT1 holders lost 100% while shareholders kept their shares (75% locked in for three years) and SBI-led banks put in ≈₹10,000 cr of fresh equity. Courts were uneasy about this inversion — but the case was decided on the narrower point that the Administrator had no power to do it.</div><div class="ta"><b>மார்ச் 2020:</b> ஏடி1 பாண்டுதாரர்கள் 100% இழந்தாங்க; ஆனா பங்குதாரர்கள் பங்கு அப்படியே இருந்துச்சு. இந்த தலைகீழ் வரிசை நீதிமன்றத்துக்கு சரியா படலை — ஆனா தீர்ப்பு நிர்வாகிக்கு அதிகாரம் இல்லைங்கிற காரணத்துல தான்.</div>'}
+function lhPick(i,m){$("lhCard").innerHTML='<b>'+LH[i][0]+' — '+LH[i][1]+'</b><br>'+LH[i][2]+(m===1&&i===3?'<br><span class="dn">In 2020: written down to zero by the Administrator on 14 Mar 2020; reinstated by the Supreme Court on 15 Oct 2026.</span>':'')}
+
+function stState(i,tax){var rev=tax?GAIN:CO.cap.at1,arr=CO.cap.arrears*(tax?1-TX:1);
+ if(i===-1)return{c:C1-GAIN,a:0,t:T2};if(i===0)return{c:C1-GAIN,a:CO.cap.at1,t:T2};
+ if(i===1||i===2)return{c:C1,a:0,t:T2};if(i===3)return{c:C1-rev,a:CO.cap.at1,t:T2};
+ var x={c:C1-rev-arr,a:CO.cap.at1,t:T2};if(i===5)x.c+=4284-CO.cap.coupon*(1-TX);return x}
+var STEPS=[
+ {d:"2016–17",t:"Bonds issued",en:"Investors — many of them individuals — paid ₹8,415 cr in cash. The bank booked it as AT1 capital and lent the money out. Tier-1 and CRAR go up; CET1 does not change. (Shown on today's balance sheet for comparison.)",ta:"முதலீட்டாளர்கள் ₹8,415 கோடி பணம் கொடுத்தாங்க. பேங்க் அதை ஏடி1 மூலதனமா வெச்சு கடனா கொடுத்துச்சு. டியர்-1, சிஆர்ஏஆர் ஏறும்; சிஇடி1 மாறாது.",e:function(){return[["Cash received","+8,415"],["AT1 bonds (Tier-1 capital)","+8,415"]]}},
+ {d:"14 Mar 2020",t:"Written down to zero",en:"The Administrator erased the debt. ₹8,415 cr no longer owed became a gain; after ≈₹2,118 cr tax, ≈₹6,297 cr went into reserves (the bank reported ₹6,296.9 cr extraordinary income after tax in Q4 FY20). CET1 rises, AT1 disappears, and total capital actually falls by the tax paid.",ta:"நிர்வாகி கடனை பூஜ்ஜியம் ஆக்கினார். கொடுக்க வேண்டாத ₹8,415 கோடி லாபமா மாறுச்சு; வரி சுமார் ₹2,118 கோடி போக ₹6,297 கோடி ரிசர்வ்ல (சிஇடி1) சேர்ந்துச்சு.",e:function(){return[["AT1 bonds","−8,415"],["Write-back gain (P&L)","+8,415"],["Tax on the gain (25.17%)","−2,118"],["Reserves (CET1)","+6,297"]]}},
+ {d:"30 Jun 2026",t:"Today",en:"For six years that ≈₹6,297 cr has sat inside reserves and counted as CET1. CET1 14.0%, AT1 nil, CRAR 15.1%. (Profits earned since then are already in today's figures.)",ta:"அந்த ₹6,297 கோடி ஆறு வருஷமா ரிசர்வ்ல சிஇடி1-ஆ இருக்கு. சிஇடி1 14.0%, ஏடி1 இல்லை, சிஆர்ஏஆர் 15.1%.",e:function(){return[["Reserves (CET1) still holding the 2020 gain","6,297"]]}},
+ {d:"15 Oct 2026",t:"Verdict — principal restored",en:function(t){return t?"The 2020 entry reverses: reserves give back the gain and AT1 is restored. No new cash comes in. With tax relief the net hit to reserves is ≈₹6,297 cr, because the ₹2,118 cr tax paid in 2020 comes back — that alone makes Tier-1 and CRAR tick up slightly. Caution: if the tax credit is held as a deferred tax asset, RBI rules can deduct it from CET1 and cancel that uptick.":"The 2020 entry reverses: ₹8,415 cr leaves reserves and returns as AT1. A pure relabel — no new cash. CET1 falls ≈2.5 points; Tier-1 and CRAR stay where they were."},ta:"தீர்ப்பு: 2020 கணக்கு திரும்புது — ரிசர்வ்ல இருந்து எடுத்து ஏடி1-க்கு போகுது. புது பணம் வரலை; பேர் மட்டும் மாறுது. சிஇடி1 இறங்கும்.",e:function(t){return t?[["Reserves (CET1)","−8,415"],["Tax recovered / credit","+2,118"],["Net hit to reserves","−6,297"],["AT1 bonds restored","+8,415"]]:[["Reserves (CET1)","−8,415"],["AT1 bonds restored","+8,415"]]}},
+ {d:"Mar 2020 → Oct 2026",t:"Interest arrears paid",en:function(t){return"≈6.6 years × ₹772 cr = ≈₹5,090 cr, booked as interest expense — a real cash payout to bondholders. "+(t?"After tax ≈₹3,809 cr leaves reserves.":"With no tax relief the full ₹5,090 cr leaves reserves.")+" Nothing replaces it, so CET1, Tier-1 and CRAR all fall. (Whether arrears are payable is not yet settled.)"},ta:"வட்டி நிலுவை சுமார் ₹5,090 கோடி வட்டி செலவா கணக்குல வரும் — இது நிஜமா வெளியே போற பணம். சிஇடி1, டியர்-1, சிஆர்ஏஆர் மூணும் இறங்கும்.",e:function(t){return t?[["Interest expense (arrears)","−5,090"],["Tax saving","+1,281"],["Net hit to reserves","−3,809"]]:[["Interest expense (arrears)","−5,090"],["Net hit to reserves","−5,090"]]}},
+ {d:"Every year after",t:"Coupon ₹772 cr a year",en:"The coupon is interest expense: NII −₹772 cr, PAT −≈₹578 cr after tax. On Q1's annualised profit (₹4,284 cr), retained profit added to CET1 drops to ≈₹3,706 cr a year — ≈1.10 points of RWA instead of 1.27. 'After' shows one year of retained profit with RWA held flat; in reality 18% loan growth also eats CET1, which is why a capital raise is likely.",ta:"ஒவ்வொரு வருஷமும் ₹772 கோடி வட்டி செலவு; வரி போக லாபம் சுமார் ₹578 கோடி குறையும். சிஇடி1 மெதுவா தான் வளரும்; கடன் 18% வளர்றதால புது மூலதனம் தேவைப்படலாம்.",e:function(){return[["Interest expense (coupon)","−772 / yr"],["Tax saving","+194 / yr"],["PAT reduction","−578 / yr"],["Retained profit to CET1","3,706 / yr (was 4,284)"]]}}];
+function pc(v){return v/RWA*100}
+function fillBar(id,st){var el=$(id),g=[[pc(st.c),"#0b4ea2","CET1"],[pc(st.a),"#e8730c","AT1"],[pc(st.t),"#6b46c1","T2"]];
+ if(el.children.length!==3){el.innerHTML='<div class="seg"></div><div class="seg"></div><div class="seg"></div>'}
+ g.forEach(function(x,k){var d=el.children[k];d.style.background=x[1];d.style.height=(x[0]/18*100)+"%";d.textContent=x[0]>0.9?x[2]+" "+x[0].toFixed(2)+"%":(x[0]>0.5?x[0].toFixed(1):"")})}
+function stTax(t){stTaxOn=t;$("txY").classList.toggle("on",t===1);$("txN").classList.toggle("on",t===0);stPick(stI)}
+function stPick(i){stI=i;var t=stTaxOn,b=stState(i===0?-1:(i===5?4:i-1),t),a=stState(i,t),S=STEPS[i];
+ document.querySelectorAll("#stBtns .b").forEach(function(x,k){x.classList.toggle("on",k===i)});
+ fillBar("stB",b);fillBar("stA",a);
+ function r(st){var c=pc(st.c),t1=pc(st.c+st.a),cr=pc(st.c+st.a+st.t);return[c,t1,cr]}
+ var rb=r(b),ra=r(a),nm=["CET1","Tier-1","CRAR"],rq=[8,9.5,11.5];
+ var rows=nm.map(function(n,k){var d=ra[k]-rb[k];return'<tr><td>'+n+'</td><td class="n">'+rb[k].toFixed(2)+'%</td><td class="n"><b>'+ra[k].toFixed(2)+'%</b></td><td class="n '+(d>0.005?"up":d<-0.005?"dn":"mu")+'">'+(d>0.005?"▲ +":d<-0.005?"▼ ":"")+(Math.abs(d)<0.005?"—":Math.abs(d).toFixed(2))+'</td><td class="n">'+rq[k]+'%</td></tr>'}).join("");
+ var en=typeof S.en==="function"?S.en(t):S.en;
+ $("stCard").innerHTML='<div class="step-dt">'+S.d+'</div><b style="font-size:1.05rem">'+S.t+'</b><p class="en" style="margin:6px 0">'+en+'</p><p class="ta" style="margin:6px 0">'+S.ta+'</p><table class="ledger"><tr><th>Book entry (₹ crore)</th><th class="n">Amount</th></tr>'+S.e(t).map(function(x){return'<tr><td>'+x[0]+'</td><td class="n">'+x[1]+'</td></tr>'}).join("")+'</table><table class="ledger" style="margin-top:8px"><tr><th>Ratio</th><th class="n">Before</th><th class="n">After</th><th class="n">Change</th><th class="n">Need</th></tr>'+rows+'</table>'}
+function drawTrade(){var s='<defs><marker id="tg" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0L10,5L0,10z" fill="#0b4ea2"/></marker><marker id="tgg" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0L10,5L0,10z" fill="#17803d"/></marker><marker id="tgr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0L10,5L0,10z" fill="#c0392b"/></marker></defs>';
+ function box(i,x,y,w,h,c,t1,t2){return'<g style="cursor:pointer" onclick="trPick('+i+')"><rect x="'+x+'" y="'+y+'" width="'+w+'" height="'+h+'" rx="10" fill="#fff" stroke="'+c+'" stroke-width="2.5"/><text x="'+(x+w/2)+'" y="'+(y+h/2-3)+'" text-anchor="middle" font-size="14" font-weight="800" fill="'+c+'">'+t1+'</text><text x="'+(x+w/2)+'" y="'+(y+h/2+15)+'" text-anchor="middle" font-size="11" fill="#5b6577">'+t2+'</text></g>'}
+ s+=box(0,30,30,170,70,"#0b4ea2","Bondholder A","sells")+box(1,315,30,170,70,"#6b46c1","NSE / BSE","listed bond market")+box(2,600,30,170,70,"#0b4ea2","Bondholder B","buys");
+ s+=box(3,315,235,170,70,"#e8730c","YES BANK","issuer")+box(4,600,235,170,70,"#5b6577","RBI","must approve any call");
+ s+='<g style="cursor:pointer" onclick="trPick(5)"><line x1="200" y1="58" x2="312" y2="58" stroke="#0b4ea2" stroke-width="2.5" marker-end="url(#tg)"/><line x1="485" y1="58" x2="597" y2="58" stroke="#0b4ea2" stroke-width="2.5" marker-end="url(#tg)"/><line x1="597" y1="80" x2="488" y2="80" stroke="#0b4ea2" stroke-width="1.5" stroke-dasharray="4,3" marker-end="url(#tg)"/><line x1="312" y1="80" x2="203" y2="80" stroke="#0b4ea2" stroke-width="1.5" stroke-dasharray="4,3" marker-end="url(#tg)"/><text x="400" y="125" text-anchor="middle" font-size="12" font-weight="700" fill="#0b4ea2">✓ Trade any day — bond moves A → B, cash moves B → A</text><text x="400" y="141" text-anchor="middle" font-size="11" fill="#5b6577">Bank not involved · bank capital unchanged</text></g>';
+ s+='<g style="cursor:pointer" onclick="trPick(6)"><path d="M 330 235 C 230 210, 140 170, 110 104" fill="none" stroke="#17803d" stroke-width="3" marker-end="url(#tgg)"/><text x="150" y="200" font-size="12" font-weight="800" fill="#17803d">✓ Call option</text><text x="150" y="215" font-size="11" fill="#17803d">bank&#39;s choice, on call date</text></g>';
+ s+='<g style="cursor:pointer" onclick="trPick(7)"><path d="M 90 104 C 80 190, 180 270, 312 275" fill="none" stroke="#c0392b" stroke-width="2.5" stroke-dasharray="6,4" marker-end="url(#tgr)"/><text x="40" y="290" font-size="12" font-weight="800" fill="#c0392b">✗ "Repay me" — not allowed</text><text x="40" y="305" font-size="11" fill="#c0392b">perpetual: no maturity, no put</text></g>';
+ s+='<line x1="597" y1="270" x2="488" y2="270" stroke="#5b6577" stroke-width="2" stroke-dasharray="4,3" marker-end="url(#tg)"/><text x="542" y="262" text-anchor="middle" font-size="11" fill="#5b6577">prior approval</text>';
+ $("trSvg").innerHTML=s}
+var TR=["<b>Bondholder A</b> — owns the bond and earns the coupon. Cannot ask the bank for the money back, but can sell to someone else.","<b>NSE / BSE</b> — YES Bank's AT1 bonds are listed. Trading stopped after the 2020 write-down; once the bonds are formally restored in the depositories, trading can resume. SEBI fined the bank ₹25 cr in 2021 for mis-selling them in this market.","<b>Bondholder B</b> — steps into A's shoes: same rights, same coupon, same risk. Buyers will price in whether arrears get paid.","<b>YES Bank</b> — the only party that can retire the bonds, by calling them. Original call dates (≈Dec 2021 and ≈Oct 2022) passed while the bonds stood written off.","<b>RBI</b> — a call needs its prior approval, usually only if the bank replaces the bonds with equal or better capital or stays well above minimum capital.","<b>Secondary trade</b> — changes who holds the bond, not how much the bank owes. No effect on CET1, AT1 or CRAR.","<b>Call option</b> — bank pays back face value and the bond is extinguished. AT1 capital falls by ₹8,415 cr unless replaced — which is why RBI approval is needed.","<b>No put</b> — 'perpetual' means bondholders can never force repayment. Their only exit is selling to another investor."];
+function trPick(i){$("trCard").innerHTML=TR[i]}
+function drawThings(){$("things").innerHTML=[["1","Perpetual, loss-absorbing, high coupon","நிரந்தர பாண்டு, நஷ்டத்தை தாங்கும், அதிக வட்டி","AT1 has no maturity and can be written down or converted at the point of non-viability. That risk is why it paid 9–9.5%.","முடிவு தேதி இல்லை; வங்கி தோல்வியடையும் நிலையில எழுதி தள்ளலாம். அந்த ரிஸ்க்குக்கு தான் 9–9.5% வட்டி."],["2","The write-down was allowed in theory, wrong in manner","கொள்கைப்படி சரி, முறைப்படி தவறு","It had to happen before the scheme took effect, and the final scheme had dropped the clause. The Administrator acted a day later with no power.","திட்டம் வர்றதுக்கு முன்னாடியே செய்யணும்; இறுதி திட்டத்துல அந்த வரி இல்லை. நிர்வாகிக்கு அதிகாரம் இல்லை."],["3","No new money — only a relabel","புது பணம் இல்லை — பேர் மாற்றம் தான்","₹8,415 cr moves from CET1 back to AT1. CET1 falls; Tier-1 stays about the same.","₹8,415 கோடி சிஇடி1-ல இருந்து ஏடி1-க்கு போகுது. சிஇடி1 இறங்கும்."],["4","Interest is an expense — CRAR falls","வட்டி ஒரு செலவு — சிஆர்ஏஆர் இறங்கும்","Arrears ≈₹5,090 cr and ₹772 cr a year are booked as interest expense. CB base: CET1 ≈11.0%, CRAR ≈14.6% — still above 8% and 11.5%.","நிலுவை சுமார் ₹5,090 கோடி, வருஷத்துக்கு ₹772 கோடி — வட்டி செலவு. சிஇடி1 சுமார் 11.0%, சிஆர்ஏஆர் சுமார் 14.6%."],["5","Tradable, but only the bank can retire it","விற்கலாம், ஆனா வங்கி மட்டும் தான் திருப்பி வாங்க முடியும்","Holders can sell on NSE/BSE; only YES Bank can call the bonds, with RBI approval.","என்எஸ்இ/பிஎஸ்இ-ல விற்கலாம்; ஆர்பிஐ அனுமதியோட வங்கி மட்டும் தான் திருப்பி வாங்க முடியும்."]].map(function(x){return'<div class="card thing"><div class="nm">'+x[0]+'</div><b class="en">'+x[1]+'</b><b class="ta">'+x[2]+'</b><div class="small en">'+x[3]+'</div><div class="small ta">'+x[4]+'</div></div>'}).join("")}
+function drawAT1x(){drawLH(0);$("stBtns").innerHTML=STEPS.map(function(x,i){return'<button class="b" onclick="stPick('+i+')">'+(i+1)+'. '+x.t+'</button>'}).join("");stPick(3);drawTrade();drawThings();
+ bar("cArr",["Mar-21","Mar-22","Mar-23","Mar-24","Mar-25","Mar-26","Oct-26"],[{label:"Cumulative unpaid coupon (₹ cr)",data:[772,1545,2317,3089,3862,4634,5090],backgroundColor:["#f6c08f","#f3ad6e","#f09a4e","#ec872e","#e8730c","#d0650a","#c0392b"]}]);
+ bar("cCpn",["PAT before coupon","Coupon after tax","PAT after coupon"],[{label:"₹ crore a year",data:[4284,578,3706],backgroundColor:["#0b4ea2","#c0392b","#17803d"]}])}
+// ===== SC graphic =====
+function drawSC(){var s='<rect x="40" y="150" width="390" height="16" fill="#bfe6cb"/><rect x="430" y="150" width="430" height="16" fill="#f3c3bd"/>';
+ s+='<text x="235" y="190" text-anchor="middle" font-size="11.5" font-weight="700" fill="#17803d">Write-down window (before the scheme took effect)</text><text x="645" y="190" text-anchor="middle" font-size="11.5" font-weight="700" fill="#c0392b">Scheme in force — no write-down power</text>';
+ var E=[[120,"5 Mar 2020","Draft scheme","AT1 write-down clause ✓","#0b4ea2"],[430,"13 Mar 2020","Final scheme notified","clause removed ✗","#e8730c"],[580,"14 Mar 2020","Administrator writes","₹8,415 cr down to zero","#c0392b"],[800,"15 Oct 2026","Supreme Court","write-down VOID","#c0392b"]];
+ var BX=[120,395,605,800];E.forEach(function(e,i){var bx=BX[i];s+='<line x1="'+bx+'" y1="96" x2="'+e[0]+'" y2="150" stroke="'+e[4]+'" stroke-width="2"/><circle cx="'+e[0]+'" cy="158" r="9" fill="'+e[4]+'" stroke="#fff" stroke-width="2"/>';
+  s+='<rect x="'+(bx-95)+'" y="18" width="190" height="78" rx="9" fill="#fff" stroke="'+e[4]+'" stroke-width="2"/><text x="'+bx+'" y="40" text-anchor="middle" font-size="12" font-weight="800" fill="'+e[4]+'">'+e[1]+'</text><text x="'+bx+'" y="60" text-anchor="middle" font-size="12" font-weight="700" fill="#14213d">'+e[2]+'</text><text x="'+bx+'" y="80" text-anchor="middle" font-size="11.5" fill="#5b6577">'+e[3]+'</text>'});
+ s+='<text x="690" y="162" text-anchor="middle" font-size="16" fill="#9aa6b8">//</text>';
+ s+='<rect x="430" y="210" width="430" height="44" rx="8" fill="#fdecea" stroke="#c0392b"/><text x="645" y="228" text-anchor="middle" font-size="12" font-weight="800" fill="#c0392b">"Had the intention been otherwise, the clause ought to</text><text x="645" y="245" text-anchor="middle" font-size="12" font-weight="800" fill="#c0392b">have read \'before reconstitution is complete\'" — SC</text>';
+ s+='<rect x="40" y="210" width="380" height="44" rx="8" fill="#e7f6ec" stroke="#17803d"/><text x="230" y="228" text-anchor="middle" font-size="12" font-weight="700" fill="#17803d">Master Circular: PONV write-down or conversion</text><text x="230" y="245" text-anchor="middle" font-size="12" font-weight="700" fill="#17803d">must happen before the scheme takes effect</text>';
+ $("scSvg").innerHTML=s}
+// ===== CAP pictures =====
+function drawCapPics(){if(typeof Chart==="undefined")return;
+ var p1=GAIN/RWA*100,p2=CO.cap.arrears*(1-TX)/RWA*100,a=14-p1,b=a-p2;
+ var vals=[14,-p1,-p2,b];
+ new Chart($("cWf"),{type:"bar",data:{labels:["CET1 today","Principal reversed (post-tax ₹6,297 cr)","Arrears paid (post-tax ₹3,809 cr)","CET1 after (CB base)"],datasets:[{label:"CET1 % of RWA",data:[[0,14],[a,14],[b,a],[0,b]],backgroundColor:["#0b4ea2","#c0392b","#c0392b","#e8730c"]},{label:"CET1 minimum incl. buffer 8.0%",data:[8,8,8,8],type:"line",borderColor:"#c0392b",borderDash:[6,4],pointRadius:0,fill:false}]},
+  plugins:[{id:"wl",afterDatasetsDraw:function(ch){var x=ch.ctx;x.save();x.font="700 12px sans-serif";x.fillStyle="#14213d";x.textAlign="center";ch.getDatasetMeta(0).data.forEach(function(el,i){var v=vals[i];x.fillText((v<0?"−":"")+Math.abs(v).toFixed(2)+"%",el.x,Math.min(el.y,el.base)-6)});x.restore()}}],
+  options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:"top"}},scales:{y:{min:0,max:16,ticks:{callback:function(v){return v+"%"}}}}}});
+ var L=["Today","CB base: AT1 + arrears, tax relief","Same, no tax relief","Liability + arrears (danger)"],cs=[calc("at1",5090,0.2517,18.15),calc("at1",5090,0,18.15),calc("liab",5090,0,18.15)];
+ var c1=[14].concat(cs.map(function(r){return r.cet1})),a1=[0].concat(cs.map(function(r){return r.at1})),t2=[T2/RWA*100,T2/RWA*100,T2/RWA*100,T2/RWA*100],tot=c1.map(function(v,i){return v+a1[i]+t2[i]});
+ new Chart($("cStk"),{type:"bar",data:{labels:L,datasets:[{label:"CET1",data:c1,backgroundColor:"#0b4ea2",stack:"s"},{label:"AT1",data:a1,backgroundColor:"#e8730c",stack:"s"},{label:"Tier-2",data:t2,backgroundColor:"#6b46c1",stack:"s"},{label:"CRAR minimum 11.5%",data:[11.5,11.5,11.5,11.5],type:"line",borderColor:"#c0392b",borderDash:[6,4],pointRadius:0}]},
+  plugins:[{id:"sl",afterDatasetsDraw:function(ch){var x=ch.ctx;x.save();x.textAlign="center";[0,1,2].forEach(function(di){ch.getDatasetMeta(di).data.forEach(function(el,i){var v=ch.data.datasets[di].data[i];if(v<0.9)return;x.font="700 11px sans-serif";x.fillStyle="#fff";x.fillText(v.toFixed(2)+"%",el.x,(el.y+el.base)/2+4)})});x.font="800 12px sans-serif";x.fillStyle="#14213d";ch.getDatasetMeta(2).data.forEach(function(el,i){x.fillText("CRAR "+tot[i].toFixed(2)+"%",el.x,el.y-6)});x.restore()}}],
+  options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:"top"}},scales:{x:{stacked:true},y:{stacked:true,min:0,max:18,ticks:{callback:function(v){return v+"%"}}}}}})}
+show("ov");
+</script>
+</body>
+</html>
