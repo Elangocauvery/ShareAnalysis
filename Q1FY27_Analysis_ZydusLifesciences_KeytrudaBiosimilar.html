@@ -1,0 +1,788 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Zydus Q1 FY27 Analysis</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Noto+Sans+Tamil:wght@400;600;700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<style>
+:root{--bg:#ffffff;--bg2:#f7f8fb;--ink:#1d2433;--mute:#5d6678;--line:#e3e7ef;--or:#e8710a;--or2:#fff3e8;--nv:#16325c;--gr:#1e8e3e;--gr2:#e8f5ec;--am:#d98e04;--am2:#fff7e0;--rd:#c62828;--rd2:#fdecec;--bl:#1565c0;--bl2:#e8f1fc;--pu:#6a1b9a;--pu2:#f3e8fa;--te:#00838f;--te2:#e0f5f6}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,"Noto Sans Tamil",system-ui,sans-serif;font-size:15px;line-height:1.55}
+body.ta{font-family:"Noto Sans Tamil",Inter,sans-serif}
+body:not(.ta) .ta{display:none!important}
+body.ta .en{display:none!important}
+body::before{content:"CB Research";position:fixed;top:45%;left:50%;transform:translate(-50%,-50%) rotate(-28deg);font-size:110px;font-weight:800;color:rgba(232,113,10,.045);pointer-events:none;z-index:0;white-space:nowrap}
+header{position:sticky;top:0;z-index:20;background:#fff;border-bottom:1px solid var(--line);box-shadow:0 2px 6px rgba(0,0,0,.04)}
+.hd{display:flex;align-items:center;gap:12px;padding:10px 16px;flex-wrap:wrap}
+.hd h1{font-size:18px;margin:0;color:var(--nv)}
+.hd .sub{font-size:12px;color:var(--mute)}
+.hd .sp{flex:1}
+.lang{border:1px solid var(--or);background:#fff;color:var(--or);border-radius:20px;padding:6px 14px;font-weight:700;cursor:pointer}
+nav{display:flex;overflow-x:auto;gap:4px;padding:0 10px 8px;scrollbar-width:thin}
+nav button{flex:0 0 auto;border:1px solid var(--line);background:var(--bg2);color:var(--ink);border-radius:18px;padding:6px 12px;font-size:13px;cursor:pointer;font-family:inherit}
+nav button.on{background:var(--or);border-color:var(--or);color:#fff;font-weight:700}
+main{position:relative;z-index:1;max-width:1180px;margin:0 auto;padding:16px}
+section.tab{display:none}section.tab.on{display:block}
+h2{color:var(--nv);font-size:21px;margin:6px 0 12px}
+h3{color:var(--nv);font-size:16px;margin:18px 0 8px}
+.card{background:#fff;border:1px solid var(--line);border-radius:12px;padding:14px 16px;margin:10px 0;box-shadow:0 1px 3px rgba(0,0,0,.03)}
+.grid{display:grid;gap:10px}
+.g4{grid-template-columns:repeat(auto-fit,minmax(170px,1fr))}
+.g3{grid-template-columns:repeat(auto-fit,minmax(240px,1fr))}
+.g2{grid-template-columns:repeat(auto-fit,minmax(320px,1fr))}
+.kpi{background:var(--bg2);border:1px solid var(--line);border-radius:12px;padding:12px}
+.kpi .l{font-size:12px;color:var(--mute)}.kpi .v{font-size:22px;font-weight:800;color:var(--nv)}.kpi .d{font-size:12px;font-weight:700}
+.up{color:var(--gr)}.dn{color:var(--rd)}.fl{color:var(--am)}
+.tw{overflow-x:auto;-webkit-overflow-scrolling:touch}
+table{border-collapse:collapse;width:100%;font-size:13.5px;min-width:560px}
+th,td{border-bottom:1px solid var(--line);padding:7px 8px;text-align:left;vertical-align:top}
+th{background:var(--bg2);color:var(--nv);font-weight:700;white-space:nowrap}
+td.n,th.n{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+.chip{display:inline-block;padding:3px 10px;border-radius:14px;font-size:12px;font-weight:700;margin:2px}
+.c-gr{background:var(--gr2);color:var(--gr)}.c-am{background:var(--am2);color:#9a6400}.c-rd{background:var(--rd2);color:var(--rd)}.c-bl{background:var(--bl2);color:var(--bl)}.c-or{background:var(--or2);color:var(--or)}.c-pu{background:var(--pu2);color:var(--pu)}
+.note{font-size:12px;color:var(--mute)}
+.chartbox{overflow-x:auto}.chartbox .in{min-width:900px;height:340px;position:relative}
+ul.b{margin:6px 0;padding-left:20px}ul.b li{margin:4px 0}
+.svgwrap{overflow-x:auto;-webkit-overflow-scrolling:touch;border:1px solid var(--line);border-radius:12px;background:#fff}
+.svgwrap svg{display:block;min-width:960px}
+.bm-box{cursor:pointer;transition:opacity .2s}.bm-box:hover{opacity:.85}
+.bm-box.sel rect{stroke:#111;stroke-width:2.5}
+#bmCard{border-left:5px solid var(--or)}
+.col{cursor:pointer}
+.pcard{border-left:5px solid var(--line);transition:box-shadow .3s,background .3s}
+.pcard.hl{box-shadow:0 0 0 3px rgba(232,113,10,.35);background:#fffaf4}
+.tl{display:flex;overflow-x:auto;gap:0;padding:10px 0}
+.tl .ev{flex:0 0 190px;border-top:4px solid var(--or);padding:8px 10px;position:relative}
+.tl .ev::before{content:"";position:absolute;top:-10px;left:10px;width:14px;height:14px;border-radius:50%;background:#fff;border:3px solid var(--or)}
+.tl .ev.done{border-color:var(--gr)}.tl .ev.done::before{border-color:var(--gr);background:var(--gr2)}
+.tl .ev .dt{font-size:12px;font-weight:800;color:var(--nv);margin-top:6px}
+.tl .ev .tx{font-size:12.5px}
+.ok{color:var(--gr);font-weight:800}.wait{color:var(--am);font-weight:800}
+input[type=range]{width:100%}
+.calc label{font-size:13px;font-weight:600;display:block;margin-top:8px}
+.calc .out{font-size:24px;font-weight:800;color:var(--or)}
+.sw{border-radius:12px;padding:12px}
+.sw h4{margin:0 0 6px}
+.sc-g{border:1px solid var(--line);border-radius:12px;padding:12px;margin:10px 0}
+.sc-g h4{margin:0 0 6px;color:var(--nv)}
+.sc-i{display:flex;gap:8px;padding:6px 0;border-bottom:1px dashed var(--line)}
+.sc-i input{margin-top:4px;width:18px;height:18px;accent-color:var(--or)}
+.sc-i .dl{font-size:12px;color:var(--mute)}
+.bar{height:10px;background:var(--bg2);border-radius:6px;overflow:hidden;border:1px solid var(--line)}
+.bar>i{display:block;height:100%;background:var(--or);width:0;transition:width .4s}
+.btn{border:1px solid var(--or);background:var(--or);color:#fff;border-radius:8px;padding:7px 12px;cursor:pointer;font-weight:700;font-family:inherit}
+.btn.o{background:#fff;color:var(--or)}
+.sugg{display:inline-block;border:1px dashed var(--or);color:var(--or);border-radius:14px;padding:3px 10px;margin:3px;font-size:12px;cursor:pointer}
+.q{border:1px solid var(--line);border-radius:12px;padding:12px;margin:10px 0}
+.q .opt{display:block;width:100%;text-align:left;border:1px solid var(--line);background:#fff;border-radius:8px;padding:8px;margin:5px 0;cursor:pointer;font-family:inherit;font-size:14px}
+.q .opt.r{background:var(--gr2);border-color:var(--gr)}.q .opt.w{background:var(--rd2);border-color:var(--rd)}
+.q .fb{font-size:13px;margin-top:6px}
+textarea{width:100%;min-height:70px;border:1px solid var(--line);border-radius:8px;padding:8px;font-family:inherit}
+/* CB badge */
+#cbBadge{position:fixed;right:16px;bottom:16px;z-index:60;width:54px;height:54px;border-radius:50%;background:var(--or);color:#fff;font-weight:800;font-size:19px;display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 4px 14px rgba(232,113,10,.45);animation:blink 2.2s infinite}
+@keyframes blink{0%,100%{box-shadow:0 0 0 0 rgba(232,113,10,.55)}50%{box-shadow:0 0 0 12px rgba(232,113,10,0)}}
+#cbDisc{position:fixed;right:16px;bottom:80px;z-index:61;max-width:340px;background:#fff;border:1px solid var(--or);border-radius:12px;padding:12px 14px;font-size:12.5px;box-shadow:0 8px 24px rgba(0,0,0,.12);display:none}
+#cbDisc.on{display:block}
+/* CB Assist */
+#asBtn{position:fixed;right:80px;bottom:22px;z-index:60;border:none;background:var(--nv);color:#fff;border-radius:22px;padding:10px 14px;font-weight:700;cursor:pointer;box-shadow:0 4px 12px rgba(0,0,0,.2);font-family:inherit}
+#asBox{position:fixed;right:16px;bottom:84px;z-index:62;width:min(380px,calc(100vw - 32px));max-height:70vh;background:#fff;border:1px solid var(--line);border-radius:14px;box-shadow:0 10px 30px rgba(0,0,0,.18);display:none;flex-direction:column}
+#asBox.on{display:flex}
+#asBox .h{padding:10px 12px;background:var(--nv);color:#fff;border-radius:14px 14px 0 0;font-weight:700;display:flex;align-items:center}
+#asBox .h span{flex:1}
+#asBox .h button{background:none;border:none;color:#fff;font-size:18px;cursor:pointer}
+#asLog{padding:10px;overflow-y:auto;flex:1;font-size:13.5px}
+.m-u{background:var(--bl2);border-radius:10px;padding:7px 10px;margin:6px 0 6px 40px}
+.m-b{background:var(--bg2);border-radius:10px;padding:7px 10px;margin:6px 40px 6px 0}
+#asIn{display:flex;gap:6px;padding:8px;border-top:1px solid var(--line)}
+#asIn input{flex:1;border:1px solid var(--line);border-radius:8px;padding:8px;font-family:inherit}
+#asMic.rec{background:var(--rd);border-color:var(--rd)}
+.asq{display:flex;flex-wrap:wrap;gap:4px;padding:0 8px 8px}
+.asq span{font-size:11.5px;border:1px solid var(--line);border-radius:12px;padding:3px 8px;cursor:pointer;background:#fff}
+@media(max-width:600px){.hd h1{font-size:15px}h2{font-size:18px}.kpi .v{font-size:18px}}
+</style>
+</head>
+<body>
+<header>
+ <div class="hd">
+  <div>
+   <h1><span class="en">Zydus Lifesciences · Q1 FY27 Business &amp; Investment Analysis</span><span class="ta">சைடஸ் லைஃப்சயின்சஸ் · Q1 FY27 வணிக &amp; முதலீட்டு ஆய்வு</span></h1>
+   <div class="sub"><span class="en">Quarter ended 30 June 2026 · Results 11 Aug 2026 · Data as of 16 Oct 2026 · NSE: ZYDUSLIFE · BSE: 532321</span><span class="ta">30 ஜூன் 2026 முடிஞ்ச காலாண்டு · முடிவுகள் 11 ஆக 2026 · தரவு 16 அக் 2026 வரை · NSE: ZYDUSLIFE · BSE: 532321</span></div>
+  </div>
+  <div class="sp"></div>
+  <button class="lang" id="langBtn">தமிழ்</button>
+ </div>
+ <nav id="nav"></nav>
+</header>
+<main>
+
+<!-- ============ OVERVIEW ============ -->
+<section class="tab on" id="t-ov" data-en="Overview" data-ta="மேலோட்டம்">
+<h2><span class="en">Q1 FY27 at a glance</span><span class="ta">Q1 FY27 – ஒரே பார்வையில்</span></h2>
+<div class="grid g4">
+ <div class="kpi"><div class="l"><span class="en">Revenue from operations</span><span class="ta">செயல்பாட்டு வருமானம்</span></div><div class="v">₹8,017 Cr</div><div class="d up">▲ 22.0% YoY · ▲ 5.7% QoQ</div></div>
+ <div class="kpi"><div class="l">EBITDA</div><div class="v">₹1,929.4 Cr</div><div class="d dn">▼ 7.6% YoY · ▼ 24.5% QoQ</div></div>
+ <div class="kpi"><div class="l"><span class="en">EBITDA margin</span><span class="ta">EBITDA லாப விகிதம்</span></div><div class="v">24.1%</div><div class="d dn">▼ 770 bps YoY (31.8%)</div></div>
+ <div class="kpi"><div class="l"><span class="en">Net profit</span><span class="ta">நிகர லாபம்</span></div><div class="v">₹939.8 Cr</div><div class="d dn">▼ 35.9% YoY · ▼ 26.1% QoQ</div></div>
+ <div class="kpi"><div class="l"><span class="en">R&amp;D spend</span><span class="ta">ஆராய்ச்சி செலவு</span></div><div class="v">₹642.4 Cr</div><div class="d fl">8.0% <span class="en">of revenue</span><span class="ta">வருமானத்துல</span></div></div>
+ <div class="kpi"><div class="l"><span class="en">Net debt (30 Jun 2026)</span><span class="ta">நிகர கடன் (30 ஜூன் 2026)</span></div><div class="v">₹5,904.1 Cr</div><div class="d fl">0.22x <span class="en">equity</span><span class="ta">ஈக்விட்டி</span> · 0.70x EBITDA</div></div>
+ <div class="kpi"><div class="l"><span class="en">Share price (13 Oct 2026)</span><span class="ta">பங்கு விலை (13 அக் 2026)</span></div><div class="v">₹1,133</div><div class="d fl">52W ₹835.85 – ₹1,205.65</div></div>
+ <div class="kpi"><div class="l"><span class="en">Keytruda biosimilar</span><span class="ta">கீட்ருடா பயோசிமிலர்</span></div><div class="v" style="font-size:17px">BLA <span class="en">accepted</span><span class="ta">ஏற்பு</span></div><div class="d up"><span class="en">USFDA review · 13 Oct 2026</span><span class="ta">USFDA ஆய்வு · 13 அக் 2026</span></div></div>
+</div>
+
+<div class="card">
+ <h3 style="margin-top:0"><span class="en">The quarter in plain words</span><span class="ta">இந்த காலாண்டு – எளிமையா சொன்னா</span></h3>
+ <ul class="b en">
+  <li>Sales grew fast: +22% to ₹8,017 Cr, led by Consumer Wellness (+67.2%, helped by the UK Comfort Click buy), International Markets (+34%) and India Formulations (+19.5%).</li>
+  <li>Profit fell hard: net profit –35.9% to ₹939.8 Cr. EBITDA margin dropped from 31.8% to 24.1% as opex, integration costs and higher R&amp;D rose faster than sales; depreciation, interest and a higher tax rate (including a UK tax disallowance) hit the bottom line further.</li>
+  <li>The US business (40% of sales) slipped 2.6% YoY to ₹3,097.9 Cr as the high-margin generic Revlimid faded, though it grew 4.9% over Q4 thanks to 11 new launches.</li>
+  <li>Management kept its FY27 EBITDA-margin guidance of about 24% and a medium-term aim of 28–30%. FY27 capex guidance: ₹1,500–1,600 Cr.</li>
+  <li>Big pipeline news after the quarter: on 13 Oct 2026 the USFDA accepted for review the BLA for FYB206, the Keytruda (pembrolizumab) biosimilar Zydus will sell in the US and Canada — the first publicly announced acceptance for any Keytruda biosimilar.</li>
+ </ul>
+ <ul class="b ta">
+  <li>விற்பனை வேகமா ஏறிச்சு: 22% கூடி ₹8,017 கோடி. கன்ஸ்யூமர் வெல்னஸ் (+67.2%, UK-ல வாங்கின Comfort Click உதவியோட), வெளிநாட்டு சந்தைகள் (+34%), இந்திய மருந்துகள் (+19.5%) தான் முன்னாடி நின்னுச்சு.</li>
+  <li>லாபம் பெருசா குறைஞ்சிருச்சு: நிகர லாபம் 35.9% குறைஞ்சு ₹939.8 கோடி. செலவுகள், புது நிறுவனங்களை இணைக்கிற செலவு, ஆராய்ச்சி செலவு எல்லாம் விற்பனையை விட வேகமா ஏறினதால EBITDA லாப விகிதம் 31.8%-லிருந்து 24.1%-க்கு இறங்கிச்சு. தேய்மானம், வட்டி, அதிக வரி (UK வரி அனுமதி மறுப்பு உட்பட) இன்னும் அடிச்சுச்சு.</li>
+  <li>அமெரிக்க வணிகம் (விற்பனையில 40%) 2.6% குறைஞ்சு ₹3,097.9 கோடி. அதிக லாபம் தந்த ஜெனரிக் Revlimid மெல்ல மங்கிட்டு வருது. ஆனா 11 புது மருந்து அறிமுகத்தால Q4-ஐ விட 4.9% கூடிச்சு.</li>
+  <li>FY27-க்கு சுமார் 24% EBITDA லாப விகித வழிகாட்டலை நிர்வாகம் மாத்தல. நடுத்தர காலத்துல 28–30% இலக்கு. FY27 மூலதனச் செலவு ₹1,500–1,600 கோடி.</li>
+  <li>காலாண்டுக்கு அப்புறம் பெரிய செய்தி: 13 அக் 2026-ல, அமெரிக்கா, கனடாவுல சைடஸ் விற்கப்போற கீட்ருடா (பெம்ப்ரோலிசுமாப்) பயோசிமிலர் FYB206-க்கான BLA-வை USFDA ஆய்வுக்கு ஏத்துக்கிச்சு. எந்த கீட்ருடா பயோசிமிலருக்கும் பொதுவா அறிவிக்கப்பட்ட முதல் ஏற்பு இது தான்.</li>
+ </ul>
+</div>
+
+<h3><span class="en">CB Score temple — six pillars</span><span class="ta">CB மதிப்பெண் கோவில் — ஆறு தூண்கள்</span></h3>
+<div class="svgwrap" style="border:none"><svg id="temple" viewBox="0 0 960 470" xmlns="http://www.w3.org/2000/svg" style="min-width:640px"></svg></div>
+<div style="margin:6px 0"><span class="chip c-bl">CY <span class="en">Cycle</span><span class="ta">சுழற்சி</span> 59/100</span><span class="chip c-am">TG <span class="en">Trigger</span><span class="ta">தூண்டல்</span> 49/100</span><span class="chip c-or">CB Score 6.5/10</span></div>
+<div class="note"><span class="en">Tap a column to jump to its explanation. Green 8–10 · Amber 6–8 · Red below 6. Scores are CB Research's educational assessment, not a recommendation.</span><span class="ta">ஒரு தூணை தொட்டா அதோட விளக்கத்துக்கு போகும். பச்சை 8–10 · மஞ்சள் 6–8 · சிவப்பு 6-க்கு கீழ. இது CB Research-ன் கல்வி நோக்கு மதிப்பீடு மட்டும், பரிந்துரை இல்லை.</span></div>
+<div class="grid g3" id="pillarCards"></div>
+</section>
+
+<!-- ============ BUSINESS PROFILE ============ -->
+<section class="tab" id="t-bp" data-en="Business Profile" data-ta="வணிக விவரம்">
+<h2><span class="en">How Zydus makes money</span><span class="ta">சைடஸ் எப்படி சம்பாதிக்குது</span></h2>
+<p class="note"><span class="en">Tap any box in the map to see what it means. Figures are Q1 FY27 (₹ Cr, YoY growth, share of consolidated sales).</span><span class="ta">வரைபடத்துல எந்த பெட்டியை தொட்டாலும் அதோட அர்த்தம் கீழ வரும். எண்கள் Q1 FY27 (₹ கோடி, ஆண்டு வளர்ச்சி, மொத்த விற்பனையில பங்கு).</span></p>
+<div class="svgwrap"><svg id="bmap" viewBox="0 0 1000 600" xmlns="http://www.w3.org/2000/svg"></svg></div>
+<div class="card" id="bmCard"><b id="bmT"></b><div id="bmD" style="margin-top:4px"></div></div>
+<p class="note"><span class="en"><b>Revenue formula:</b> Revenue = Σ (units sold × net price) across US generics &amp; specialty, India brands, emerging markets, API, wellness brands and MedTech implants — where US net price falls each year (price erosion) and is refreshed by new launches.</span><span class="ta"><b>வருமான சூத்திரம்:</b> வருமானம் = Σ (விற்ற அளவு × நிகர விலை) — அமெரிக்க ஜெனரிக் &amp; சிறப்பு மருந்து, இந்திய பிராண்டுகள், வளரும் நாடுகள், API, வெல்னஸ் பிராண்டுகள், மெட்டெக் கருவிகள் எல்லாத்துலயும். அமெரிக்காவுல விலை ஒவ்வொரு வருஷமும் குறையும்; புது மருந்துகள் தான் அதை ஈடுகட்டும்.</span></p>
+
+<h3><span class="en">Revenue engine — what drives each segment</span><span class="ta">வருமான இயந்திரம் — ஒவ்வொரு பிரிவையும் எது ஓட்டுது</span></h3>
+<div class="tw"><table>
+<thead><tr><th><span class="en">Segment</span><span class="ta">பிரிவு</span></th><th class="n">Q1 FY27 ₹ Cr</th><th class="n">YoY</th><th class="n"><span class="en">Share</span><span class="ta">பங்கு</span></th><th><span class="en">Key driver</span><span class="ta">முக்கிய இயக்கி</span></th><th><span class="en">What to watch</span><span class="ta">கவனிக்க வேண்டியது</span></th></tr></thead>
+<tbody>
+<tr><td>North America <span class="ta">(வட அமெரிக்கா)</span></td><td class="n">3,097.9</td><td class="n dn">–2.6%</td><td class="n">40%</td><td><span class="en">New launches (11 in Q1) vs price erosion; specialty &amp; 505(b)(2) products</span><span class="ta">புது அறிமுகங்கள் (Q1-ல 11) vs விலை சரிவு; சிறப்பு மருந்துகள்</span></td><td><span class="en">gRevlimid fade, FYB206 approval, Saroglitazar PBC</span><span class="ta">gRevlimid மங்குதல், FYB206 ஒப்புதல், சரோக்ளிடசார் PBC</span></td></tr>
+<tr><td>India Formulations <span class="ta">(இந்திய மருந்துகள்)</span></td><td class="n">1,815.8</td><td class="n up">+19.5%</td><td class="n">23%</td><td><span class="en">Field force, chronic/acute/super-specialty brands, biosimilars</span><span class="ta">விற்பனைக் குழு, நீண்டகால/உடனடி/சிறப்பு பிராண்டுகள், பயோசிமிலர்கள்</span></td><td><span class="en">Mid-teens FY27 growth guidance</span><span class="ta">FY27-க்கு 14–16% வளர்ச்சி வழிகாட்டல்</span></td></tr>
+<tr><td>Consumer Wellness <span class="ta">(கன்ஸ்யூமர் வெல்னஸ்)</span></td><td class="n">1,429.2</td><td class="n up">+67.2%</td><td class="n">18%</td><td><span class="en">Dominant India brands + Comfort Click (UK) international</span><span class="ta">இந்தியாவுல முன்னணி பிராண்டுகள் + Comfort Click (UK)</span></td><td><span class="en">Like-for-like: international +25%, domestic +5%</span><span class="ta">ஒப்பிடக்கூடிய அளவில்: வெளிநாடு +25%, உள்நாடு +5%</span></td></tr>
+<tr><td>International Markets <span class="ta">(வெளிநாட்டு சந்தைகள்)</span></td><td class="n">973.5</td><td class="n up">+34.0%</td><td class="n">12%</td><td><span class="en">Emerging markets, Europe (France, Spain, UK)</span><span class="ta">வளரும் நாடுகள், ஐரோப்பா (பிரான்ஸ், ஸ்பெயின், UK)</span></td><td><span class="en">Guided to single-digit growth in FY27</span><span class="ta">FY27-ல ஒற்றை இலக்க வளர்ச்சி வழிகாட்டல்</span></td></tr>
+<tr><td>MedTech <span class="ta">(மெட்டெக்)</span></td><td class="n">282.8</td><td class="n">n/m</td><td class="n">4%</td><td><span class="en">Amplitude Surgical (France) orthopaedic implants</span><span class="ta">Amplitude Surgical (பிரான்ஸ்) எலும்பு மாற்று கருவிகள்</span></td><td><span class="en">Integration; no extra margin drag guided</span><span class="ta">இணைப்பு; கூடுதல் லாப இழப்பு இல்லைன்னு வழிகாட்டல்</span></td></tr>
+<tr><td>API</td><td class="n">180.4</td><td class="n up">+15%</td><td class="n">2%</td><td><span class="en">Bulk drug sales to third parties</span><span class="ta">மற்ற நிறுவனங்களுக்கு மூலப்பொருள் விற்பனை</span></td><td><span class="en">Small, steady</span><span class="ta">சின்னது, நிலையானது</span></td></tr>
+</tbody></table></div>
+<p class="note"><span class="en">Consolidated business-wise sales ₹7,802 Cr (+21%); revenue from operations ₹8,017 Cr includes other operating income. MedTech YoY not meaningful (₹2 Cr base before the Amplitude acquisition).</span><span class="ta">பிரிவு வாரி மொத்த விற்பனை ₹7,802 கோடி (+21%); செயல்பாட்டு வருமானம் ₹8,017 கோடியில மற்ற இயக்க வருமானமும் இருக்கு. மெட்டெக் ஆண்டு வளர்ச்சி ஒப்பிட முடியாது (Amplitude வாங்குறதுக்கு முன்னாடி ₹2 கோடி தான்).</span></p>
+
+<div class="grid g2">
+ <div class="card"><h3 style="margin-top:0"><span class="en">Sales mix Q1 FY27</span><span class="ta">விற்பனை கலவை Q1 FY27</span></h3><div style="height:280px;position:relative"><canvas id="cMix"></canvas></div></div>
+ <div class="card"><h3 style="margin-top:0"><span class="en">Business snapshot</span><span class="ta">வணிகச் சுருக்கம்</span></h3>
+ <ul class="b en"><li>Ahmedabad-based; formerly Cadila Healthcare (renamed Feb 2022). Promoters hold 75%.</li><li>Branded businesses now exceed 55% of revenue; management wants this above two-thirds over the medium term.</li><li>Q1: 5 ANDAs filed, 9 approvals, 11 US launches. Injectable plant at Zydus Biotech Park cleared with VAI after an Apr–May 2026 USFDA inspection.</li><li>Biologics: launched the world's first nivolumab (Opdivo) biosimilar, Tishtha, in India (Jan 2026); second biosimilar ADC entered Phase III in India in Q1.</li><li>Innovation: Saroglitazar Mg for PBC under USFDA priority review; Desidustat Phase III for sickle cell cleared in India.</li></ul>
+ <ul class="b ta"><li>அகமதாபாத் தலைமையகம்; முன்னாடி Cadila Healthcare (பிப் 2022-ல பெயர் மாற்றம்). ப்ரோமோட்டர்கள் கையில 75%.</li><li>பிராண்ட் வணிகங்கள் இப்போ வருமானத்துல 55%-க்கு மேல; நடுத்தர காலத்துல மூணுல ரெண்டு பங்கு தாண்டணும்னு நிர்வாக இலக்கு.</li><li>Q1: 5 ANDA தாக்கல், 9 ஒப்புதல், அமெரிக்காவுல 11 அறிமுகம். Zydus Biotech Park ஊசி மருந்து ஆலை ஏப்–மே 2026 USFDA ஆய்வுக்கு அப்புறம் VAI நிலையோட தேறிச்சு.</li><li>உயிரியல் மருந்துகள்: உலகின் முதல் நிவோலுமாப் (Opdivo) பயோசிமிலர் Tishtha-வை இந்தியாவுல அறிமுகம் (ஜன 2026); ரெண்டாவது பயோசிமிலர் ADC இந்தியாவுல Phase III-க்கு போச்சு.</li><li>புதுமை: PBC நோய்க்கான சரோக்ளிடசார் Mg USFDA முன்னுரிமை ஆய்வுல இருக்கு; சிக்கில் செல் நோய்க்கு Desidustat Phase III இந்தியாவுல அனுமதி.</li></ul>
+ </div>
+</div>
+</section>
+
+<!-- ============ FINANCIALS ============ -->
+<section class="tab" id="t-fin" data-en="Financials" data-ta="நிதி நிலை">
+<h2><span class="en">Quarterly trend (consolidated, ₹ Cr)</span><span class="ta">காலாண்டு போக்கு (ஒருங்கிணைந்த, ₹ கோடி)</span></h2>
+<div class="tw"><table>
+<thead><tr><th><span class="en">Metric</span><span class="ta">அளவீடு</span></th><th class="n">Q1 FY26</th><th class="n">Q2 FY26</th><th class="n">Q3 FY26</th><th class="n">Q4 FY26</th><th class="n">Q1 FY27</th><th class="n">YoY</th><th class="n">QoQ</th></tr></thead>
+<tbody id="qTbl"></tbody></table></div>
+<p class="note"><span class="en">† Q3 FY26 reported net profit (₹296.5 Cr) carried one-off charges; adjusted net profit was ₹1,110.9 Cr. Gross profit Q1 FY27 ₹5,777.2 Cr (+20.8% YoY).</span><span class="ta">† Q3 FY26 அறிவிக்கப்பட்ட நிகர லாபம் (₹296.5 கோடி) ஒருமுறை செலவுகளோட வந்தது; சரிசெய்த நிகர லாபம் ₹1,110.9 கோடி. Q1 FY27 மொத்த லாபம் ₹5,777.2 கோடி (+20.8%).</span></p>
+<div class="card"><h3 style="margin-top:0"><span class="en">Revenue, EBITDA and net profit — last five quarters (₹ Cr)</span><span class="ta">வருமானம், EBITDA, நிகர லாபம் — கடைசி ஐந்து காலாண்டுகள் (₹ கோடி)</span></h3><div class="chartbox"><div class="in"><canvas id="cQ"></canvas></div></div></div>
+<div class="card"><h3 style="margin-top:0"><span class="en">EBITDA margin trend (%)</span><span class="ta">EBITDA லாப விகிதப் போக்கு (%)</span></h3><div class="chartbox"><div class="in" style="height:280px"><canvas id="cM"></canvas></div></div></div>
+
+<h3><span class="en">Annual view (₹ Cr)</span><span class="ta">ஆண்டுப் பார்வை (₹ கோடி)</span></h3>
+<div class="tw"><table>
+<thead><tr><th><span class="en">Metric</span><span class="ta">அளவீடு</span></th><th class="n">FY25</th><th class="n">FY26</th><th class="n"><span class="en">Change</span><span class="ta">மாற்றம்</span></th></tr></thead>
+<tbody>
+<tr><td><span class="en">Revenue from operations</span><span class="ta">செயல்பாட்டு வருமானம்</span></td><td class="n">23,242</td><td class="n">27,148</td><td class="n up">+16.8%</td></tr>
+<tr><td>EBITDA <span class="en">(company)</span><span class="ta">(நிறுவனம்)</span></td><td class="n">7,059</td><td class="n">8,475</td><td class="n up">+20.1%</td></tr>
+<tr><td><span class="en">EBITDA margin</span><span class="ta">EBITDA விகிதம்</span></td><td class="n">30.4%</td><td class="n">31.2%</td><td class="n up">+80 bps</td></tr>
+<tr><td><span class="en">Net profit (reported)</span><span class="ta">நிகர லாபம் (அறிவித்தது)</span></td><td class="n">4,526</td><td class="n">5,040</td><td class="n up">+11.4%</td></tr>
+<tr><td><span class="en">Adjusted net profit</span><span class="ta">சரிசெய்த நிகர லாபம்</span></td><td class="n">n/a</td><td class="n">5,460</td><td class="n">+15%</td></tr>
+<tr><td>EPS (₹)</td><td class="n">44.97</td><td class="n">50.09</td><td class="n up">+11.4%</td></tr>
+<tr><td><span class="en">R&amp;D spend</span><span class="ta">ஆராய்ச்சி செலவு</span></td><td class="n">n/a</td><td class="n">2,270 (8.4%)</td><td class="n">—</td></tr>
+<tr><td><span class="en">Dividend per share (₹)</span><span class="ta">பங்குக்கு டிவிடெண்ட் (₹)</span></td><td class="n">11.00</td><td class="n">1.00</td><td class="n"><span class="en">+ buyback</span><span class="ta">+ திரும்ப வாங்குதல்</span></td></tr>
+</tbody></table></div>
+<p class="note"><span class="en">FY26 profit included a non-operating currency gain of about ₹1,280 Cr and legal settlement charges of about ₹398 Cr. FY26 cash return to shareholders was mainly the buyback of 87.30 lakh shares at ₹1,260 (completed June 2026).</span><span class="ta">FY26 லாபத்துல சுமார் ₹1,280 கோடி அந்நியச் செலாவணி லாபமும், சுமார் ₹398 கோடி சட்ட தீர்வு செலவும் இருக்கு. FY26-ல பங்குதாரர்களுக்கு பணம் திருப்பினது முக்கியமா ₹1,260 விலையில 87.30 லட்சம் பங்கு திரும்ப வாங்குதல் மூலம் (ஜூன் 2026-ல முடிஞ்சது).</span></p>
+
+<h3><span class="en">Key financial ratios</span><span class="ta">முக்கிய நிதி விகிதங்கள்</span></h3>
+<div class="tw"><table>
+<thead><tr><th><span class="en">Ratio</span><span class="ta">விகிதம்</span></th><th class="n">FY25</th><th class="n">FY26</th><th class="n">Q1 FY27</th><th><span class="en">What it tells you</span><span class="ta">இது என்ன சொல்லுது</span></th></tr></thead>
+<tbody>
+<tr><td><span class="en">Gross margin</span><span class="ta">மொத்த லாப விகிதம்</span></td><td class="n">71.9%</td><td class="n">72.3%</td><td class="n">72.1%</td><td><span class="en">Product pricing power is intact — the squeeze is below gross profit</span><span class="ta">விலை நிர்ணய பலம் அப்படியே இருக்கு — அழுத்தம் மொத்த லாபத்துக்கு கீழ தான்</span></td></tr>
+<tr><td><span class="en">EBITDA margin</span><span class="ta">EBITDA விகிதம்</span></td><td class="n">30.4%</td><td class="n">31.2%</td><td class="n">24.1%</td><td><span class="en">Opex, R&amp;D and acquired lower-margin businesses pull it down</span><span class="ta">செலவுகள், ஆராய்ச்சி, குறைந்த லாபமுள்ள புது வணிகங்கள் இழுக்குது</span></td></tr>
+<tr><td><span class="en">Net margin</span><span class="ta">நிகர லாப விகிதம்</span></td><td class="n">19.5%</td><td class="n">18.6%</td><td class="n">11.7%</td><td><span class="en">Depreciation, interest and tax widen the gap</span><span class="ta">தேய்மானம், வட்டி, வரி இடைவெளியை கூட்டுது</span></td></tr>
+<tr><td>ROE</td><td class="n">20.7%</td><td class="n">19.7%</td><td class="n">n/a</td><td><span class="en">Still healthy, but bigger equity and lower profit will test it</span><span class="ta">இன்னும் நல்லா இருக்கு, ஆனா லாபம் குறைஞ்சா சோதனை</span></td></tr>
+<tr><td>ROCE <span class="en">(EBIT / equity+debt)</span><span class="ta">(EBIT / ஈக்விட்டி+கடன்)</span></td><td class="n">20.2%</td><td class="n">13.8%</td><td class="n">n/a</td><td><span class="en">Fell as acquisitions added capital before profits</span><span class="ta">லாபம் வர்றதுக்கு முன்னாடியே வாங்குதல்கள் மூலதனத்தை கூட்டினதால குறைஞ்சது</span></td></tr>
+<tr><td><span class="en">Debt / equity</span><span class="ta">கடன் / ஈக்விட்டி</span></td><td class="n">0.12x</td><td class="n">0.42x</td><td class="n">0.22x <span class="en">(net)</span><span class="ta">(நிகர)</span></td><td><span class="en">From net cash to modest net debt after Amplitude, Comfort Click, Agenus plants</span><span class="ta">Amplitude, Comfort Click, Agenus ஆலைகள் வாங்கினதால நிகர பணத்துலிருந்து மிதமான கடனுக்கு</span></td></tr>
+<tr><td><span class="en">Interest cover (EBIT / interest)</span><span class="ta">வட்டி கவரேஜ்</span></td><td class="n">63.7x</td><td class="n">16.0x</td><td class="n">n/a</td><td><span class="en">Comfortable, though much lower than before</span><span class="ta">வசதியா இருக்கு, ஆனா முன்னாடியை விட ரொம்ப குறைவு</span></td></tr>
+<tr><td><span class="en">Current ratio</span><span class="ta">நடப்பு விகிதம்</span></td><td class="n">1.89x</td><td class="n">1.27x</td><td class="n">n/a</td><td><span class="en">Short-term borrowings rose to fund deals</span><span class="ta">ஒப்பந்தங்களுக்கு குறுகிய கால கடன் ஏறிச்சு</span></td></tr>
+</tbody></table></div>
+<p class="note"><span class="en">Ratios computed by CB Research from reported year-end balances. Q1 FY27 net debt/equity and net debt/EBITDA are company-reported.</span><span class="ta">விகிதங்கள் ஆண்டு இறுதி இருப்புகளிலிருந்து CB Research கணக்கிட்டது. Q1 FY27 நிகர கடன் விகிதங்கள் நிறுவனம் அறிவித்தது.</span></p>
+</section>
+
+<!-- ============ CASH FLOW & WORKING CAPITAL ============ -->
+<section class="tab" id="t-cf" data-en="Cash Flow & Working Capital" data-ta="பணப்புழக்கம் & நடைமுறை மூலதனம்">
+<h2><span class="en">Cash flow — where the money actually went (₹ Cr)</span><span class="ta">பணப்புழக்கம் — பணம் உண்மையில எங்க போச்சு (₹ கோடி)</span></h2>
+<div class="tw"><table>
+<thead><tr><th><span class="en">Item</span><span class="ta">உருப்படி</span></th><th class="n">FY25</th><th class="n">FY26</th><th><span class="en">Reading</span><span class="ta">புரிதல்</span></th></tr></thead>
+<tbody>
+<tr><td><span class="en">Cash from operations (CFO)</span><span class="ta">இயக்கப் பணப்புழக்கம் (CFO)</span></td><td class="n">6,777</td><td class="n dn">2,117</td><td><span class="en">Fell 69% even as profit rose — working capital soaked up cash</span><span class="ta">லாபம் ஏறியும் 69% குறைஞ்சது — நடைமுறை மூலதனம் பணத்தை உறிஞ்சிருச்சு</span></td></tr>
+<tr><td><span class="en">Cash from investing (CFI)</span><span class="ta">முதலீட்டுப் பணப்புழக்கம் (CFI)</span></td><td class="n">–8,372</td><td class="n">–8,296</td><td><span class="en">Acquisitions (Amplitude, Comfort Click, Agenus biologics plants) plus capex</span><span class="ta">வாங்குதல்கள் (Amplitude, Comfort Click, Agenus ஆலைகள்) + மூலதனச் செலவு</span></td></tr>
+<tr><td><span class="en">Cash from financing (CFF)</span><span class="ta">நிதிப் பணப்புழக்கம் (CFF)</span></td><td class="n">2,031</td><td class="n">5,997</td><td><span class="en">Borrowings funded the deals</span><span class="ta">கடன் வாங்கி தான் ஒப்பந்தங்களுக்கு பணம்</span></td></tr>
+<tr><td><span class="en">Net change in cash</span><span class="ta">பணத்தில் நிகர மாற்றம்</span></td><td class="n">436</td><td class="n">–182</td><td></td></tr>
+<tr><td><span class="en">Free cash flow (CFO – capex)</span><span class="ta">இலவசப் பணப்புழக்கம் (CFO – மூலதனச் செலவு)</span></td><td class="n">5,087</td><td class="n dn">–1,277</td><td><span class="en">Negative for the first time in this period</span><span class="ta">இந்த காலத்துல முதல் முறையா எதிர்மறை</span></td></tr>
+<tr><td><span class="en">CFO / net profit (cash conversion)</span><span class="ta">CFO / நிகர லாபம் (பண மாற்றம்)</span></td><td class="n">1.50x</td><td class="n dn">0.42x</td><td><span class="en">Only 42 paise of cash per rupee of profit</span><span class="ta">ஒரு ரூபாய் லாபத்துக்கு 42 பைசா தான் பணமா வந்தது</span></td></tr>
+<tr><td>CFO / EBITDA</td><td class="n">0.96x</td><td class="n dn">0.25x</td><td><span class="en">Normal pharma level is around 0.7–0.9x</span><span class="ta">பொதுவா மருந்து நிறுவனங்களுக்கு 0.7–0.9x இருக்கும்</span></td></tr>
+</tbody></table></div>
+<div class="card"><h3 style="margin-top:0"><span class="en">Operating, investing and financing cash flows (₹ Cr)</span><span class="ta">இயக்க, முதலீட்டு, நிதி பணப்புழக்கங்கள் (₹ கோடி)</span></h3><div class="chartbox"><div class="in" style="height:300px"><canvas id="cCF"></canvas></div></div></div>
+
+<h3><span class="en">Working capital cycle</span><span class="ta">நடைமுறை மூலதன சுழற்சி</span></h3>
+<div class="tw"><table>
+<thead><tr><th><span class="en">Days</span><span class="ta">நாட்கள்</span></th><th class="n">FY25</th><th class="n">FY26</th><th class="n"><span class="en">Change</span><span class="ta">மாற்றம்</span></th><th><span class="en">Basis</span><span class="ta">அடிப்படை</span></th></tr></thead>
+<tbody>
+<tr><td><span class="en">Receivable days</span><span class="ta">வரவேண்டிய நாட்கள்</span></td><td class="n">64</td><td class="n">73</td><td class="n dn">+9</td><td><span class="en">Trade receivables ÷ revenue × 365</span><span class="ta">வரவேண்டிய தொகை ÷ வருமானம் × 365</span></td></tr>
+<tr><td><span class="en">Inventory days</span><span class="ta">சரக்கு நாட்கள்</span></td><td class="n">220</td><td class="n">273</td><td class="n dn">+53</td><td><span class="en">Inventory ÷ cost of goods × 365</span><span class="ta">சரக்கு ÷ பொருள் செலவு × 365</span></td></tr>
+<tr><td><span class="en">Payable days</span><span class="ta">கொடுக்கவேண்டிய நாட்கள்</span></td><td class="n">127</td><td class="n">138</td><td class="n up">+11</td><td><span class="en">Trade payables ÷ cost of goods × 365</span><span class="ta">கொடுக்கவேண்டியது ÷ பொருள் செலவு × 365</span></td></tr>
+<tr><td><b><span class="en">Cash conversion cycle</span><span class="ta">பண மாற்றச் சுழற்சி</span></b></td><td class="n"><b>157</b></td><td class="n"><b>208</b></td><td class="n dn"><b>+51</b></td><td><span class="en">Receivable + inventory – payable days</span><span class="ta">வரவேண்டியது + சரக்கு – கொடுக்கவேண்டியது</span></td></tr>
+</tbody></table></div>
+<div class="card" style="border-left:5px solid var(--bl)">
+<b><span class="en">How working capital links to CFO</span><span class="ta">நடைமுறை மூலதனம் CFO-வோட எப்படி தொடர்புடையது</span></b>
+<ul class="b en"><li>Inventory rose from ₹3,944 Cr to ₹5,628 Cr and receivables from ₹4,085 Cr to ₹5,416 Cr during FY26 — about ₹3,000 Cr of extra cash locked in the business.</li><li>Part of this is <b>acquired</b> balances (Amplitude, Comfort Click, the US biologics plants) added at year-end, so the organic squeeze is smaller than the headline. But the cash conversion cycle still lengthened by about 51 days.</li><li>FY26 profit also carried about ₹1,280 Cr of currency gains, which are accounting gains and do not arrive as operating cash.</li><li>Pharma inventory days look high (220–270 on cost basis) because Zydus stocks many molecules for the US and India and carries high-margin products at cost.</li><li>Watch: if Q2 FY27 shows CFO recovering towards net profit, the FY26 dip was mostly deal-timing; if not, it is a structural cash-quality issue.</li></ul>
+<ul class="b ta"><li>FY26-ல சரக்கு ₹3,944 கோடியிலிருந்து ₹5,628 கோடி, வரவேண்டியது ₹4,085 கோடியிலிருந்து ₹5,416 கோடி — சுமார் ₹3,000 கோடி பணம் வணிகத்துக்குள்ளேயே மாட்டிக்கிச்சு.</li><li>இதுல ஒரு பகுதி <b>வாங்கின</b> நிறுவனங்களோட இருப்பு (Amplitude, Comfort Click, அமெரிக்க உயிரியல் ஆலைகள்) ஆண்டு இறுதியில சேர்ந்தது. அதனால உண்மையான அழுத்தம் தலைப்பு எண்ணை விட குறைவு. இருந்தாலும் பண மாற்றச் சுழற்சி சுமார் 51 நாள் நீண்டிருச்சு.</li><li>FY26 லாபத்துல சுமார் ₹1,280 கோடி அந்நியச் செலாவணி லாபம் இருக்கு — அது கணக்கு லாபம், கையில பணமா வராது.</li><li>மருந்து நிறுவனங்களுக்கு சரக்கு நாட்கள் அதிகமா தெரியும் (பொருள் செலவு அடிப்படையில 220–270) — அமெரிக்கா, இந்தியாவுக்காக நிறைய மருந்துகளை கையிருப்பு வெச்சுக்கணும்.</li><li>கவனிக்க: Q2 FY27-ல CFO நிகர லாபத்தை நோக்கி திரும்பி வந்தா, FY26 சரிவு ஒப்பந்த நேரத்தால வந்தது; வரலைன்னா அது பணத் தரம் பிரச்சனை.</li></ul>
+</div>
+<p class="note"><span class="en">Computed from reported year-end balances (receivables on revenue; inventory and payables on cost of goods). Quarterly cash flow is not published for Q1 FY27; organic capex in Q1 was ₹585.2 Cr.</span><span class="ta">ஆண்டு இறுதி இருப்புகளிலிருந்து கணக்கிட்டது. Q1 FY27-க்கு காலாண்டு பணப்புழக்கம் வெளியிடப்படல; Q1 மூலதனச் செலவு ₹585.2 கோடி.</span></p>
+</section>
+
+<!-- ============ VALUATIONS ============ -->
+<section class="tab" id="t-val" data-en="Valuations" data-ta="மதிப்பீடு">
+<h2><span class="en">What the market is paying</span><span class="ta">சந்தை எவ்வளவு கொடுக்குது</span></h2>
+<div class="grid g4">
+ <div class="kpi"><div class="l"><span class="en">Market cap (₹1,133)</span><span class="ta">சந்தை மதிப்பு (₹1,133)</span></div><div class="v">≈ ₹1,13,900 Cr</div></div>
+ <div class="kpi"><div class="l">P/E (TTM EPS ₹44.86)</div><div class="v">25.3x</div></div>
+ <div class="kpi"><div class="l">P/E (FY26 EPS ₹50.09)</div><div class="v">22.6x</div></div>
+ <div class="kpi"><div class="l">P/B (BVPS ₹269.43)</div><div class="v">4.2x</div></div>
+ <div class="kpi"><div class="l">EV / EBITDA (TTM)</div><div class="v">≈ 17.6x</div></div>
+ <div class="kpi"><div class="l">EV / Sales (TTM)</div><div class="v">≈ 4.2x</div></div>
+ <div class="kpi"><div class="l"><span class="en">Earnings yield</span><span class="ta">வருமான ஈவு</span></div><div class="v">4.0%</div></div>
+ <div class="kpi"><div class="l"><span class="en">Dividend yield</span><span class="ta">டிவிடெண்ட் ஈவு</span></div><div class="v">0.09%</div></div>
+</div>
+<p class="note"><span class="en">TTM = July 2025–June 2026. EV uses company net debt of ₹5,904 Cr (30 Jun 2026) and TTM EBITDA of ₹6,806.5 Cr; minority interest excluded.</span><span class="ta">TTM = ஜூலை 2025–ஜூன் 2026. EV-க்கு நிறுவன நிகர கடன் ₹5,904 கோடி, TTM EBITDA ₹6,806.5 கோடி.</span></p>
+<div class="card">
+<h3 style="margin-top:0"><span class="en">What brokers' targets imply</span><span class="ta">தரகர்கள் இலக்கு விலை என்ன சொல்லுது</span></h3>
+<ul class="b en"><li>Prabhudas Lilladher's ₹1,200 at 25x FY28E implies FY28 EPS of about ₹48 — below FY26's ₹50.09.</li><li>Motilal Oswal's ₹1,125 at 23x forward implies about ₹49 forward EPS and only a 5% earnings CAGR over FY26–28.</li><li>So the Street is not paying for fast earnings growth; any upside case rests on margin recovery and pipeline triggers (Keytruda biosimilar, Saroglitazar).</li></ul>
+<ul class="b ta"><li>Prabhudas Lilladher ₹1,200 இலக்கு, FY28 மதிப்பீட்டுக்கு 25 மடங்கு — அப்படின்னா FY28 EPS சுமார் ₹48; FY26-ன் ₹50.09-ஐ விட குறைவு.</li><li>Motilal Oswal ₹1,125, 23 மடங்கு — முன்னோக்கு EPS சுமார் ₹49; FY26–28-ல ஆண்டுக்கு 5% லாப வளர்ச்சி தான்.</li><li>அதாவது சந்தை வேகமான லாப வளர்ச்சிக்கு பணம் கொடுக்கல; கூடுதல் மதிப்பு வரணும்னா லாப விகிதம் திரும்ப வரணும், புது மருந்து தூண்டல்கள் (கீட்ருடா பயோசிமிலர், சரோக்ளிடசார்) வெற்றி பெறணும்.</li></ul>
+</div>
+<h3><span class="en">Price sensitivity grid (EPS × P/E) — teaching tool</span><span class="ta">விலை உணர்திறன் அட்டவணை (EPS × P/E) — கற்றல் கருவி</span></h3>
+<div class="tw"><table id="sensT"></table></div>
+<p class="note"><span class="en">Each cell = EPS × P/E. Green cells sit above ₹1,133, red below. This is arithmetic, not a forecast.</span><span class="ta">ஒவ்வொரு கட்டமும் = EPS × P/E. பச்சை ₹1,133-க்கு மேல, சிவப்பு கீழ. இது கணக்கு மட்டும், கணிப்பு இல்லை.</span></p>
+</section>
+
+<!-- ============ MARKET ACTIVITY ============ -->
+<section class="tab" id="t-mkt" data-en="Market Activity" data-ta="சந்தை நகர்வு">
+<h2><span class="en">Why the share price moved</span><span class="ta">பங்கு விலை ஏன் நகர்ந்தது</span></h2>
+<div class="card"><div class="chartbox"><div class="in" style="height:300px"><canvas id="cPx"></canvas></div></div><p class="note"><span class="en">Closing/indicative prices on selected dates (₹).</span><span class="ta">தேர்ந்தெடுத்த நாட்களின் விலை (₹).</span></p></div>
+<div class="tw"><table>
+<thead><tr><th><span class="en">Date</span><span class="ta">தேதி</span></th><th><span class="en">Event</span><span class="ta">நிகழ்வு</span></th><th class="n"><span class="en">Price</span><span class="ta">விலை</span></th><th><span class="en">Reaction &amp; reason</span><span class="ta">எதிர்வினை &amp; காரணம்</span></th></tr></thead>
+<tbody>
+<tr><td>14 Jan 2026</td><td><span class="en">Before nivolumab biosimilar launch</span><span class="ta">நிவோலுமாப் பயோசிமிலர் அறிமுகத்துக்கு முன்</span></td><td class="n">884.00</td><td><span class="en">Stock near the bottom of its range; US Revlimid fade worries</span><span class="ta">பங்கு கீழ் நிலையில; அமெரிக்க Revlimid கவலை</span></td></tr>
+<tr><td>27 Feb 2026</td><td><span class="en">FYB206 pivotal PK study succeeds</span><span class="ta">FYB206 முக்கிய PK ஆய்வு வெற்றி</span></td><td class="n">n/a</td><td><span class="en">Pipeline milestone; single-day price data not available here</span><span class="ta">பைப்லைன் மைல்கல்; அன்றைய விலை தரவு இங்க இல்லை</span></td></tr>
+<tr><td>19–20 May 2026</td><td><span class="en">Q4 FY26 results + ₹1,100 Cr buyback</span><span class="ta">Q4 FY26 முடிவுகள் + ₹1,100 கோடி பங்கு திரும்ப வாங்குதல்</span></td><td class="n">n/a</td><td class="up"><span class="en">Jumped about 7% — record EBITDA, 33.7% Q4 margin, buyback signal</span><span class="ta">சுமார் 7% ஏற்றம் — சாதனை EBITDA, Q4 33.7% விகிதம், buyback சமிக்ஞை</span></td></tr>
+<tr><td>25 May 2026</td><td><span class="en">Buyback price raised to ₹1,260</span><span class="ta">Buyback விலை ₹1,260-ஆ உயர்வு</span></td><td class="n">1,073.05</td><td><span class="en">Buyback at a premium sets a reference price</span><span class="ta">அதிக விலையில buyback ஒரு குறிப்பு விலையை அமைச்சது</span></td></tr>
+<tr><td>14 Jul 2026</td><td><span class="en">Delhi HC temporarily restricts Ikra supply (AbbVie patent case)</span><span class="ta">Ikra விநியோகத்துக்கு டெல்லி HC தற்காலிக தடை (AbbVie காப்புரிமை வழக்கு)</span></td><td class="n">n/a</td><td><span class="en">Company said no material impact</span><span class="ta">பெரிய பாதிப்பு இல்லைன்னு நிறுவனம் சொல்லுச்சு</span></td></tr>
+<tr><td>11 Aug 2026</td><td><span class="en">Q1 FY27 results</span><span class="ta">Q1 FY27 முடிவுகள்</span></td><td class="n">1,191.00</td><td class="up"><span class="en">+6% — revenue 7% above estimates, India and EM strong</span><span class="ta">+6% — வருமானம் கணிப்பை விட 7% அதிகம், இந்தியா &amp; வளரும் நாடுகள் வலுவா</span></td></tr>
+<tr><td>12 Aug 2026</td><td><span class="en">Profit miss digested</span><span class="ta">லாப இழப்பை சந்தை உள்வாங்கிச்சு</span></td><td class="n">1,163.30</td><td class="dn"><span class="en">–2.3% — PAT missed on depreciation, interest, tax; Nuvama upgraded to Buy</span><span class="ta">–2.3% — தேய்மானம், வட்டி, வரியால லாபம் தவறிச்சு; Nuvama 'Buy'-க்கு உயர்த்திச்சு</span></td></tr>
+<tr><td>27 Aug 2026</td><td><span class="en">Near 52-week high</span><span class="ta">52 வார உச்சத்துக்கு அருகே</span></td><td class="n">1,189.00</td><td><span class="en">52-week high ₹1,205.65</span><span class="ta">52 வார உச்சம் ₹1,205.65</span></td></tr>
+<tr><td>17 Sep 2026</td><td><span class="en">Pull-back from August high</span><span class="ta">ஆகஸ்ட் உச்சத்திலிருந்து இறக்கம்</span></td><td class="n">1,111.30</td><td><span class="en">No company-specific news found for the dip</span><span class="ta">இந்த இறக்கத்துக்கு நிறுவனச் செய்தி எதுவும் கிடைக்கல</span></td></tr>
+<tr><td>30 Sep 2026</td><td>—</td><td class="n">1,162.00</td><td><span class="en">Range-bound ₹1,110–1,190</span><span class="ta">₹1,110–1,190 வரம்புக்குள்ள</span></td></tr>
+<tr><td>13 Oct 2026</td><td><span class="en">USFDA accepts FYB206 BLA</span><span class="ta">FYB206 BLA-வை USFDA ஏற்பு</span></td><td class="n">1,133.00</td><td><span class="en">Flat (–0.1%) — market sees approval in 2027 and launch tied to 2028 patent expiry, so little near-term earnings change</span><span class="ta">மாற்றமில்லை (–0.1%) — ஒப்புதல் 2027, அறிமுகம் 2028 காப்புரிமை முடிவோட இணைஞ்சிருக்குன்னு சந்தை பார்க்குது</span></td></tr>
+</tbody></table></div>
+</section>
+
+<!-- ============ TRIGGERS & CYCLE ============ -->
+<section class="tab" id="t-tc" data-en="Triggers & Cycle" data-ta="தூண்டல்கள் & சுழற்சி">
+<h2><span class="en">Where is the cycle — and what can move the stock</span><span class="ta">சுழற்சி எங்க இருக்கு — பங்கை எது நகர்த்தும்</span></h2>
+<div class="grid g2">
+ <div class="card"><h3 style="margin-top:0"><span class="en">Cycle clock</span><span class="ta">சுழற்சி கடிகாரம்</span></h3><svg id="clock" viewBox="0 0 360 360" style="width:100%;max-width:360px;display:block;margin:auto"></svg>
+ <p class="note"><span class="en">Orange pointer = sector phase (Indian pharma, P3 Expansion). Blue dot = stock's own price stage (Stage 3-like: flattening after a rise).</span><span class="ta">ஆரஞ்சு முள் = துறை நிலை (இந்திய மருந்துத் துறை, P3 விரிவாக்கம்). நீல புள்ளி = பங்கோட விலை நிலை (ஏற்றத்துக்கு அப்புறம் சமநிலை, Stage 3 போல).</span></p></div>
+ <div class="card"><h3 style="margin-top:0"><span class="en">Cycle score (CY) = 59</span><span class="ta">சுழற்சி மதிப்பெண் (CY) = 59</span></h3>
+ <div class="tw"><table style="min-width:300px"><tbody>
+ <tr><td><span class="en">Sector: pharma (global-linked generics + India branded)</span><span class="ta">துறை: மருந்து (உலக ஜெனரிக் + இந்திய பிராண்டு)</span></td><td class="n">P3 · 70</td></tr>
+ <tr><td><span class="en">Business lifecycle: re-inventing (biosimilars, specialty, wellness, MedTech)</span><span class="ta">வணிக நிலை: மறு உருவாக்கம்</span></td><td class="n">75</td></tr>
+ <tr><td><span class="en">Earnings cycle: margin falling from a 5-year high (33.7% → 24.1%)</span><span class="ta">லாபச் சுழற்சி: 5 வருட உச்சத்திலிருந்து விகிதம் சரிவு</span></td><td class="n">25</td></tr>
+ <tr><td><span class="en">Valuation cycle: P/E ~25x, inside its 5-year band</span><span class="ta">மதிப்புச் சுழற்சி: P/E ~25x, 5 வருட வரம்புக்குள்ள</span></td><td class="n">55</td></tr>
+ <tr><td><span class="en">Price stage: Stage 3-like (estimated from price points)</span><span class="ta">விலை நிலை: Stage 3 போல (விலை புள்ளிகளிலிருந்து மதிப்பீடு)</span></td><td class="n">35</td></tr>
+ <tr><td><b><span class="en">Stock cycle average</span><span class="ta">பங்கு சுழற்சி சராசரி</span></b></td><td class="n"><b>47.5</b></td></tr>
+ <tr><td><b>CY = 50% × 70 + 50% × 47.5</b></td><td class="n"><b>59</b></td></tr>
+ </tbody></table></div>
+ <p class="note"><span class="en">Sector evidence: Zydus India +19.5% vs market; peers posting record FY26 revenues; US generic pricing still eroding. 30-week moving-average data not available here, so the price stage is an estimate.</span><span class="ta">துறை ஆதாரம்: சைடஸ் இந்தியா +19.5%; போட்டி நிறுவனங்கள் FY26-ல சாதனை வருமானம்; அமெரிக்க ஜெனரிக் விலை இன்னும் சரியுது. 30 வார சராசரி தரவு இங்க இல்லை, அதனால விலை நிலை மதிப்பீடு தான்.</span></p></div>
+</div>
+
+<h3><span class="en">Trigger table (TG = 49)</span><span class="ta">தூண்டல் அட்டவணை (TG = 49)</span></h3>
+<div class="tw"><table>
+<thead><tr><th><span class="en">Trigger</span><span class="ta">தூண்டல்</span></th><th>+/−</th><th class="n">I</th><th class="n">C</th><th class="n">W</th><th class="n">P</th><th class="n"><span class="en">Points</span><span class="ta">புள்ளி</span></th><th><span class="en">Status</span><span class="ta">நிலை</span></th><th><span class="en">What to watch</span><span class="ta">கவனிக்க</span></th></tr></thead>
+<tbody>
+<tr><td><span class="en">Saroglitazar Mg (PBC) — USFDA priority review</span><span class="ta">சரோக்ளிடசார் Mg (PBC) — USFDA முன்னுரிமை ஆய்வு</span></td><td class="up">+</td><td class="n">3</td><td class="n">0.4</td><td class="n">0.7</td><td class="n">1.0</td><td class="n">0.84</td><td><span class="en">Announced</span><span class="ta">அறிவிப்பு</span></td><td><span class="en">FDA action date; first own NCE in the US</span><span class="ta">FDA முடிவு தேதி; அமெரிக்காவுல சொந்த புது மருந்து</span></td></tr>
+<tr><td><span class="en">FYB206 Keytruda biosimilar — BLA accepted</span><span class="ta">FYB206 கீட்ருடா பயோசிமிலர் — BLA ஏற்பு</span></td><td class="up">+</td><td class="n">4</td><td class="n">0.4</td><td class="n">0.4</td><td class="n">1.0</td><td class="n">0.64</td><td><span class="en">Announced (under review)</span><span class="ta">அறிவிப்பு (ஆய்வில்)</span></td><td><span class="en">FDA decision ~Q3 2027; Merck patent settlements</span><span class="ta">FDA முடிவு ~Q3 2027; Merck காப்புரிமை தீர்வுகள்</span></td></tr>
+<tr><td><span class="en">Margin recovery to 28–30% (medium-term aim)</span><span class="ta">லாப விகிதம் 28–30%-க்கு திரும்புதல்</span></td><td class="up">+</td><td class="n">3</td><td class="n">0.4</td><td class="n">0.4</td><td class="n">1.0</td><td class="n">0.48</td><td><span class="en">Guidance</span><span class="ta">வழிகாட்டல்</span></td><td><span class="en">Quarterly EBITDA margin vs 24% floor</span><span class="ta">ஒவ்வொரு காலாண்டும் 24% அடிப்படையோட ஒப்பிடு</span></td></tr>
+<tr><td><span class="en">Further US gRevlimid / generic price erosion</span><span class="ta">அமெரிக்காவுல gRevlimid / ஜெனரிக் விலை சரிவு தொடர்ச்சி</span></td><td class="dn">−</td><td class="n">2</td><td class="n">0.7</td><td class="n">1.0</td><td class="n">1.0</td><td class="n">1.40</td><td><span class="en">Executing</span><span class="ta">நடந்துகொண்டிருக்கு</span></td><td><span class="en">North America sales in US$</span><span class="ta">வட அமெரிக்க விற்பனை (US$)</span></td></tr>
+<tr><td><span class="en">Ikra supply restriction (AbbVie patent case)</span><span class="ta">Ikra விநியோக தடை (AbbVie வழக்கு)</span></td><td class="dn">−</td><td class="n">1</td><td class="n">0.7</td><td class="n">1.0</td><td class="n">1.0</td><td class="n">0.70</td><td><span class="en">Court order (interim)</span><span class="ta">நீதிமன்ற இடைக்கால உத்தரவு</span></td><td><span class="en">Final ruling</span><span class="ta">இறுதி தீர்ப்பு</span></td></tr>
+</tbody></table></div>
+<p class="note">TG = 50 + 8 × (0.84 + 0.64 + 0.48) − 8 × (1.40 + 0.70) = <b>49</b>. <span class="en">I = impact (1–5), C = certainty, W = timing, P = priced-in. India, wellness and EM growth are already in reported numbers, so they sit in the earnings lens, not here.</span><span class="ta">I = தாக்கம், C = உறுதி, W = நேரம், P = விலையில் ஏற்கனவே சேர்ந்தது. இந்தியா, வெல்னஸ், வளரும் நாடு வளர்ச்சி ஏற்கனவே எண்களில இருக்கு.</span></p>
+<h3><span class="en">Trigger timeline</span><span class="ta">தூண்டல் காலவரிசை</span></h3>
+<div class="tl">
+ <div class="ev done"><div class="dt">11 Aug 2026</div><div class="tx"><span class="en">Q1 FY27 results</span><span class="ta">Q1 FY27 முடிவுகள்</span></div></div>
+ <div class="ev done"><div class="dt">13 Oct 2026</div><div class="tx"><span class="en">FYB206 BLA accepted</span><span class="ta">FYB206 BLA ஏற்பு</span></div></div>
+ <div class="ev"><div class="dt">Nov 2026 (est.)</div><div class="tx"><span class="en">Q2 FY27 results — margin &amp; CFO check</span><span class="ta">Q2 FY27 முடிவுகள் — விகிதம் &amp; CFO சோதனை</span></div></div>
+ <div class="ev"><div class="dt">Late 2026 – early 2027 (est.)</div><div class="tx"><span class="en">Saroglitazar PBC FDA decision</span><span class="ta">சரோக்ளிடசார் PBC FDA முடிவு</span></div></div>
+ <div class="ev"><div class="dt">~Q3 CY2027</div><div class="tx"><span class="en">FYB206 BsUFA goal date</span><span class="ta">FYB206 BsUFA இலக்கு தேதி</span></div></div>
+ <div class="ev"><div class="dt">2028</div><div class="tx"><span class="en">Keytruda core US patent expiry</span><span class="ta">கீட்ருடா முக்கிய அமெரிக்க காப்புரிமை முடிவு</span></div></div>
+</div>
+<div class="card" style="border-left:5px solid var(--pu)"><b><span class="en">What would change this view</span><span class="ta">இந்த பார்வையை எது மாத்தும்</span></b>
+<ul class="b en"><li>Q2 FY27 EBITDA margin back above 26% with CFO closer to profit → CY and TG both rise.</li><li>A US launch date for FYB206 agreed with Merck (settlement) → certainty jumps from 0.4 to 0.7.</li><li>An OAI/warning letter at a key plant or a sharp US sales drop → negative trigger with high impact.</li></ul>
+<ul class="b ta"><li>Q2 FY27-ல EBITDA விகிதம் 26%-க்கு மேல, CFO லாபத்துக்கு நெருக்கமா → CY, TG ரெண்டும் ஏறும்.</li><li>FYB206-க்கு Merck-ஓட ஒப்பந்தம் மூலம் அமெரிக்க அறிமுக தேதி கிடைச்சா → உறுதி 0.4-லிருந்து 0.7.</li><li>முக்கிய ஆலைக்கு OAI/எச்சரிக்கை கடிதம் அல்லது அமெரிக்க விற்பனை கூர்மையா சரிஞ்சா → அதிக தாக்க எதிர்மறை தூண்டல்.</li></ul></div>
+</section>
+
+<!-- ============ KEYTRUDA BIOSIMILAR ============ -->
+<section class="tab" id="t-key" data-en="Keytruda Biosimilar" data-ta="கீட்ருடா பயோசிமிலர்">
+<h2><span class="en">FYB206 — Zydus's Keytruda (pembrolizumab) biosimilar</span><span class="ta">FYB206 — சைடஸின் கீட்ருடா (பெம்ப்ரோலிசுமாப்) பயோசிமிலர்</span></h2>
+<div class="grid g4">
+ <div class="kpi"><div class="l"><span class="en">Keytruda sales 2025 (incl. Qlex)</span><span class="ta">கீட்ருடா விற்பனை 2025 (Qlex உட்பட)</span></div><div class="v">US$31.7 bn</div></div>
+ <div class="kpi"><div class="l"><span class="en">Keytruda + Qlex H1 2026</span><span class="ta">கீட்ருடா + Qlex H1 2026</span></div><div class="v">US$16.4 bn</div></div>
+ <div class="kpi"><div class="l"><span class="en">Core US patent expiry</span><span class="ta">முக்கிய அமெரிக்க காப்புரிமை முடிவு</span></div><div class="v">2028</div></div>
+ <div class="kpi"><div class="l"><span class="en">FDA review goal (BsUFA)</span><span class="ta">FDA ஆய்வு இலக்கு (BsUFA)</span></div><div class="v">~Q3 2027</div></div>
+</div>
+
+<div class="card" style="border-left:5px solid var(--or)">
+<h3 style="margin-top:0"><span class="en">Who produces it? — an important clarification</span><span class="ta">யார் தயாரிக்கிறாங்க? — முக்கியமான தெளிவு</span></h3>
+<ul class="b en">
+<li><b>Zydus does not make FYB206.</b> It was developed by Formycon AG (Germany). Under the December 2025 exclusive licensing and supply agreement, Formycon handles development, regulatory filings, manufacturing and supply; Zydus (through Zydus Lifesciences Global FZE, UAE) commercialises it in the <b>US and Canada</b>.</li>
+<li>So Zydus's role is the US/Canada sales, market access and distribution engine — the same one that sells its US generics and specialty products.</li>
+<li>Formycon has separate partners elsewhere: MS Pharma (MENA) and Lotus (Asia-Pacific).</li>
+<li>Financial terms (milestones, supply price, profit split) have not been disclosed. BLA acceptance triggered a milestone payment to Formycon. So FYB206 revenue for Zydus will not equal FYB206 profit.</li>
+<li>Zydus's own biologics capability (Zydus Biotech Park, Ahmedabad) produces other biosimilars — including Tishtha (nivolumab) launched in India in Jan 2026 at about a quarter of the reference price. As of Aug 2026, pembrolizumab still had no biosimilar on the Indian market.</li>
+</ul>
+<ul class="b ta">
+<li><b>FYB206-ஐ சைடஸ் தயாரிக்கல.</b> அதை உருவாக்கினது ஜெர்மனியோட Formycon AG. டிசம்பர் 2025 பிரத்யேக உரிம &amp; விநியோக ஒப்பந்தப்படி, உருவாக்கம், ஒழுங்குமுறை தாக்கல், தயாரிப்பு, விநியோகம் எல்லாம் Formycon பாத்துக்கும்; <b>அமெரிக்கா, கனடாவுல</b> விற்பனையை சைடஸ் (UAE-ல உள்ள Zydus Lifesciences Global FZE மூலம்) செய்யும்.</li>
+<li>அதாவது சைடஸோட வேலை — அமெரிக்க/கனடா விற்பனை, சந்தை அணுகல், விநியோகம். அதே இயந்திரம் தான் அதோட அமெரிக்க ஜெனரிக் மருந்துகளையும் விக்குது.</li>
+<li>மற்ற இடங்களுக்கு Formycon-க்கு வேற கூட்டாளிகள்: MS Pharma (மத்திய கிழக்கு/வட ஆப்பிரிக்கா), Lotus (ஆசிய-பசிபிக்).</li>
+<li>நிதி விவரங்கள் (மைல்கல் தொகை, விநியோக விலை, லாபப் பகிர்வு) வெளியிடப்படல. BLA ஏற்பு Formycon-க்கு ஒரு மைல்கல் தொகையை தூண்டிச்சு. அதனால சைடஸுக்கு FYB206 வருமானம் = லாபம் இல்லை.</li>
+<li>சைடஸோட சொந்த உயிரியல் உற்பத்தி (Zydus Biotech Park, அகமதாபாத்) மற்ற பயோசிமிலர்களை தயாரிக்குது — ஜன 2026-ல இந்தியாவுல அசல் விலையில கால் பங்குக்கு அறிமுகமான Tishtha (நிவோலுமாப்) உட்பட. ஆக 2026 வரை இந்திய சந்தையில பெம்ப்ரோலிசுமாப்புக்கு பயோசிமிலர் இல்லை.</li>
+</ul>
+</div>
+
+<h3><span class="en">Road to approval — timeline</span><span class="ta">ஒப்புதலுக்கான பாதை — காலவரிசை</span></h3>
+<div class="tl">
+ <div class="ev done"><div class="dt">Feb 2025</div><div class="tx"><span class="en">FDA agrees no comparative Phase III efficacy trial needed</span><span class="ta">ஒப்பீட்டு Phase III தேவையில்லைன்னு FDA ஒப்புதல்</span></div></div>
+ <div class="ev done"><div class="dt">Dec 2025</div><div class="tx"><span class="en">Zydus–Formycon US/Canada licence deal</span><span class="ta">சைடஸ்–Formycon அமெரிக்க/கனடா ஒப்பந்தம்</span></div></div>
+ <div class="ev done"><div class="dt">27 Feb 2026</div><div class="tx"><span class="en">Dahlia PK study meets primary endpoint (bioequivalence)</span><span class="ta">Dahlia PK ஆய்வு முதன்மை இலக்கை எட்டிச்சு (உயிர்ச்சமநிலை)</span></div></div>
+ <div class="ev done"><div class="dt">Q3 CY2026</div><div class="tx"><span class="en">BLA submitted to USFDA</span><span class="ta">USFDA-க்கு BLA தாக்கல்</span></div></div>
+ <div class="ev done"><div class="dt">13 Oct 2026</div><div class="tx"><span class="en">BLA accepted for review — first publicly announced</span><span class="ta">BLA ஆய்வுக்கு ஏற்பு — பொதுவா அறிவிக்கப்பட்ட முதல்</span></div></div>
+ <div class="ev"><div class="dt">~Q3 CY2027</div><div class="tx"><span class="en">FDA action (12 months from submission)</span><span class="ta">FDA முடிவு (தாக்கலிலிருந்து 12 மாதம்)</span></div></div>
+ <div class="ev"><div class="dt">2028+</div><div class="tx"><span class="en">US launch — subject to patents / settlement</span><span class="ta">அமெரிக்க அறிமுகம் — காப்புரிமை / தீர்வுக்கு உட்பட்டு</span></div></div>
+</div>
+
+<h3><span class="en">Approval-readiness checklist</span><span class="ta">ஒப்புதல் தயார்நிலை பட்டியல்</span></h3>
+<div class="tw"><table>
+<thead><tr><th><span class="en">Step</span><span class="ta">படி</span></th><th><span class="en">Status</span><span class="ta">நிலை</span></th><th><span class="en">Why it matters</span><span class="ta">ஏன் முக்கியம்</span></th></tr></thead>
+<tbody>
+<tr><td><span class="en">Development pathway agreed with FDA</span><span class="ta">FDA-வோட உருவாக்கப் பாதை ஒப்பந்தம்</span></td><td class="ok">✔ <span class="en">Done</span><span class="ta">முடிஞ்சது</span></td><td><span class="en">Removes the costliest, slowest step (comparative efficacy trial)</span><span class="ta">அதிக செலவு, அதிக நேரம் எடுக்கிற படி (ஒப்பீட்டு செயல்திறன் சோதனை) தேவையில்லை</span></td></tr>
+<tr><td><span class="en">Analytical similarity + PK equivalence</span><span class="ta">பகுப்பாய்வு ஒற்றுமை + PK சமநிலை</span></td><td class="ok">✔ <span class="en">Met</span><span class="ta">எட்டிச்சு</span></td><td><span class="en">The core scientific evidence for a biosimilar</span><span class="ta">பயோசிமிலருக்கான அடிப்படை அறிவியல் ஆதாரம்</span></td></tr>
+<tr><td><span class="en">BLA filed and accepted</span><span class="ta">BLA தாக்கல் &amp; ஏற்பு</span></td><td class="ok">✔ <span class="en">Done</span><span class="ta">முடிஞ்சது</span></td><td><span class="en">FDA found the file complete enough for a full review</span><span class="ta">முழு ஆய்வுக்கு கோப்பு போதுமானதுன்னு FDA கண்டது</span></td></tr>
+<tr><td><span class="en">Pre-licence manufacturing inspection (Formycon's supply chain)</span><span class="ta">உரிமத்துக்கு முன் தயாரிப்பு ஆய்வு (Formycon விநியோகச் சங்கிலி)</span></td><td class="wait">⏳ <span class="en">Pending</span><span class="ta">நிலுவையில்</span></td><td><span class="en">A common cause of delays for biologics</span><span class="ta">உயிரியல் மருந்துகளுக்கு தாமதத்துக்கு பொதுவான காரணம்</span></td></tr>
+<tr><td><span class="en">FDA approval</span><span class="ta">FDA ஒப்புதல்</span></td><td class="wait">⏳ ~Q3 2027</td><td><span class="en">Could come with a request for more data (complete response)</span><span class="ta">கூடுதல் தரவு கேட்டு (complete response) வரவும் வாய்ப்பு</span></td></tr>
+<tr><td><span class="en">Patent clearance / settlement with Merck</span><span class="ta">Merck-ஓட காப்புரிமை தீர்வு</span></td><td class="wait">⏳ <span class="en">Open</span><span class="ta">திறந்திருக்கு</span></td><td><span class="en">Core patent 2028, plus method-of-use, formulation and dosing patents</span><span class="ta">முக்கிய காப்புரிமை 2028; கூடவே பயன்பாட்டு, கலவை, அளவு காப்புரிமைகள்</span></td></tr>
+</tbody></table></div>
+
+<div class="grid g2">
+<div class="card sw" style="background:var(--gr2)"><h4 class="up"><span class="en">What supports approval &amp; success</span><span class="ta">ஒப்புதல் &amp; வெற்றிக்கு ஆதரவு</span></h4>
+<ul class="b en"><li>First publicly announced BLA acceptance — a head start in the queue.</li><li>Streamlined pathway agreed in advance; PK equivalence shown.</li><li>Formycon already has US biosimilar approvals in ophthalmology, so it knows FDA's process.</li><li>Zydus has a working US commercial engine and an oncology injectables presence.</li></ul>
+<ul class="b ta"><li>பொதுவா அறிவிக்கப்பட்ட முதல் BLA ஏற்பு — வரிசையில முன்னணி.</li><li>முன்கூட்டியே ஒப்புக்கொண்ட எளிய பாதை; PK சமநிலை நிரூபணம்.</li><li>Formycon-க்கு கண் மருந்துத் துறையில ஏற்கனவே அமெரிக்க பயோசிமிலர் ஒப்புதல்கள் இருக்கு.</li><li>சைடஸுக்கு இயங்கும் அமெரிக்க விற்பனை இயந்திரம், புற்றுநோய் ஊசி மருந்து அனுபவம் இருக்கு.</li></ul></div>
+<div class="card sw" style="background:var(--rd2)"><h4 class="dn"><span class="en">What could slow it or shrink the prize</span><span class="ta">எது தாமதப்படுத்தும் அல்லது பரிசை சுருக்கும்</span></h4>
+<ul class="b en"><li>Merck's layered patents and likely BPCIA litigation can push launch beyond approval.</li><li>Keytruda Qlex (subcutaneous, priced at parity) — Merck expects 30–40% of patients to switch, shrinking the IV pool a biosimilar can copy.</li><li>A crowded field: Samsung Bioepis, Celltrion, Amgen and others are close behind; price erosion follows each new entrant.</li><li>Zydus shares economics with Formycon; terms undisclosed.</li></ul>
+<ul class="b ta"><li>Merck-ன் அடுக்கடுக்கான காப்புரிமைகள், BPCIA வழக்குகள் ஒப்புதலுக்கு அப்புறமும் அறிமுகத்தை தள்ளிப்போடலாம்.</li><li>கீட்ருடா Qlex (தோலடி ஊசி, அதே விலை) — 30–40% நோயாளிகள் மாறுவாங்கன்னு Merck எதிர்பார்க்குது; பயோசிமிலர் நகலெடுக்கக்கூடிய IV சந்தை சுருங்கும்.</li><li>நெரிசலான போட்டி: Samsung Bioepis, Celltrion, Amgen பின்னாடியே வர்றாங்க; ஒவ்வொரு புது நுழைவும் விலையை குறைக்கும்.</li><li>லாபத்தை Formycon-ஓட பகிரணும்; விவரம் வெளியிடப்படல.</li></ul></div>
+</div>
+
+<h3><span class="en">The race — who else is developing a Keytruda biosimilar</span><span class="ta">போட்டி — வேற யாரெல்லாம் கீட்ருடா பயோசிமிலர் உருவாக்குறாங்க</span></h3>
+<div class="tw"><table>
+<thead><tr><th>#</th><th><span class="en">Developer</span><span class="ta">உருவாக்குபவர்</span></th><th><span class="en">Candidate</span><span class="ta">மருந்து</span></th><th><span class="en">US / regional partner</span><span class="ta">கூட்டாளி</span></th><th><span class="en">Latest stage</span><span class="ta">சமீபத்திய நிலை</span></th><th><span class="en">Note</span><span class="ta">குறிப்பு</span></th></tr></thead>
+<tbody>
+<tr style="background:var(--or2)"><td>1</td><td>Formycon (Germany)</td><td>FYB206</td><td>Zydus (US, Canada); MS Pharma (MENA); Lotus (APAC)</td><td><span class="en">USFDA BLA accepted — Oct 2026</span><span class="ta">USFDA BLA ஏற்பு — அக் 2026</span></td><td><span class="en">No comparative Phase III; first publicly announced acceptance</span><span class="ta">ஒப்பீட்டு Phase III இல்லை; முதல் அறிவிக்கப்பட்ட ஏற்பு</span></td></tr>
+<tr><td>2</td><td>Samsung Bioepis (Korea)</td><td>SB27</td><td>n/a</td><td><span class="en">Phase I + III positive (Jun 2026); Korea filing (Aug 2026)</span><span class="ta">Phase I + III வெற்றி (ஜூன் 2026); கொரியா தாக்கல் (ஆக 2026)</span></td><td><span class="en">First to report global Phase III results</span><span class="ta">உலகளாவிய Phase III முடிவுகளை முதல்ல அறிவிச்சது</span></td></tr>
+<tr><td>3</td><td>Celltrion (Korea)</td><td>CT-P51</td><td>n/a</td><td><span class="en">Korea filing (Aug 2026)</span><span class="ta">கொரியா தாக்கல் (ஆக 2026)</span></td><td><span class="en">Ended its European Phase III in Jul 2026</span><span class="ta">ஜூலை 2026-ல ஐரோப்பிய Phase III-ஐ நிறுத்திச்சு</span></td></tr>
+<tr><td>4</td><td>Amgen (US)</td><td>ABP 234</td><td><span class="en">Own</span><span class="ta">சொந்தம்</span></td><td><span class="en">Clinical trials completed (Sep 2026); FDA filing likely later 2026</span><span class="ta">மருத்துவ சோதனை முடிஞ்சது (செப் 2026); FDA தாக்கல் இந்த வருஷ இறுதியில</span></td><td><span class="en">Two Phase III studies; strong US biosimilar franchise</span><span class="ta">ரெண்டு Phase III; வலுவான அமெரிக்க பயோசிமிலர் வணிகம்</span></td></tr>
+<tr><td>5</td><td>Qilu Pharmaceutical (China)</td><td>QL2107</td><td>Cipla / InvaGen (US); Orion (EU, Oct 2026)</td><td>n/a</td><td><span class="en">An Indian rival (Cipla) in the US through this deal</span><span class="ta">இந்த ஒப்பந்தம் மூலம் இந்திய போட்டியாளர் (Cipla) அமெரிக்காவுல</span></td></tr>
+<tr><td>6</td><td>Dr Reddy's + Alvotech</td><td>—</td><td><span class="en">Global co-development</span><span class="ta">உலகளாவிய கூட்டு உருவாக்கம்</span></td><td>n/a</td><td><span class="en">Indian rival</span><span class="ta">இந்திய போட்டியாளர்</span></td></tr>
+<tr><td>7</td><td>Biocon Biologics</td><td>—</td><td>—</td><td><span class="en">Added to pipeline (Jan 2026); stage not disclosed</span><span class="ta">பைப்லைனில் சேர்ப்பு (ஜன 2026); நிலை தெரியல</span></td><td><span class="en">Indian rival</span><span class="ta">இந்திய போட்டியாளர்</span></td></tr>
+<tr><td>8</td><td>Sandoz, mAbxience, Bio-Thera, Shanghai Henlius, BioNTech, Enzene</td><td>—</td><td>—</td><td><span class="en">In clinical trials</span><span class="ta">மருத்துவ சோதனையில</span></td><td><span class="en">Filings likely to follow the leaders (completions mid-2026 to 2028)</span><span class="ta">முன்னணியினருக்கு அப்புறம் தாக்கல் (2026 நடுவிலிருந்து 2028)</span></td></tr>
+<tr><td>9</td><td>Bioéticos · Biocad · Sana Pharma</td><td>—</td><td>—</td><td><span class="en">Launched Paraguay (Aug 2025) · approved Vietnam (Nov 2025) · approved Jordan (Feb 2026)</span><span class="ta">பராகுவே அறிமுகம் (ஆக 2025) · வியட்நாம் ஒப்புதல் (நவ 2025) · ஜோர்டான் ஒப்புதல் (பிப் 2026)</span></td><td><span class="en">Smaller, less-regulated markets</span><span class="ta">சின்ன, குறைவான ஒழுங்குமுறை சந்தைகள்</span></td></tr>
+</tbody></table></div>
+<p class="note"><span class="en">No pembrolizumab biosimilar was FDA-licensed as of September 2026. At least 13 companies have run clinical trials.</span><span class="ta">செப்டம்பர் 2026 வரை எந்த பெம்ப்ரோலிசுமாப் பயோசிமிலருக்கும் FDA உரிமம் இல்லை. குறைஞ்சது 13 நிறுவனங்கள் மருத்துவ சோதனை நடத்தியிருக்காங்க.</span></p>
+
+<h3><span class="en">Teaching calculator — what could FYB206 mean in rupees?</span><span class="ta">கற்றல் கணிப்பான் — FYB206 ரூபாயில என்ன அர்த்தம்?</span></h3>
+<div class="card calc">
+<p class="note"><span class="en">All four inputs are yours to change. Defaults are round placeholders, not estimates or forecasts. Output is revenue, not profit (Formycon's share is undisclosed).</span><span class="ta">நாலு உள்ளீடுகளையும் நீங்க மாத்தலாம். இயல்பு எண்கள் சுற்று எண்கள் மட்டும், கணிப்பு இல்லை. வெளியீடு வருமானம், லாபம் இல்லை (Formycon பங்கு தெரியாது).</span></p>
+<label><span class="en">US pembrolizumab IV spend moving to biosimilars (US$ bn)</span><span class="ta">பயோசிமிலருக்கு மாறும் அமெரிக்க IV செலவு (US$ பில்லியன்)</span>: <b id="vA">5</b></label><input type="range" id="iA" min="1" max="15" step="0.5" value="5">
+<label><span class="en">Zydus share of biosimilar volume (%)</span><span class="ta">பயோசிமிலர் அளவில் சைடஸ் பங்கு (%)</span>: <b id="vB">15</b></label><input type="range" id="iB" min="1" max="50" step="1" value="15">
+<label><span class="en">Biosimilar net price vs brand (%)</span><span class="ta">பிராண்டோட ஒப்பிடும்போது பயோசிமிலர் நிகர விலை (%)</span>: <b id="vC">50</b></label><input type="range" id="iC" min="15" max="90" step="5" value="50">
+<label><span class="en">USD–INR</span><span class="ta">டாலர்–ரூபாய்</span>: <b id="vD">88</b></label><input type="range" id="iD" min="80" max="95" step="0.5" value="88">
+<div style="margin-top:10px"><span class="en">Illustrative annual Zydus revenue</span><span class="ta">உதாரண ஆண்டு சைடஸ் வருமானம்</span>: <span class="out" id="oR"></span></div>
+<div class="note" id="oP"></div>
+</div>
+</section>
+
+<!-- ============ SWOT ============ -->
+<section class="tab" id="t-swot" data-en="SWOT" data-ta="SWOT">
+<h2>SWOT</h2>
+<div class="grid g2">
+<div class="card sw" style="background:var(--gr2)"><h4 class="up"><span class="en">Strengths</span><span class="ta">பலங்கள்</span></h4>
+<ul class="b en"><li>Diversified: pharma 78%, wellness 18%, MedTech 4% of sales.</li><li>India Formulations +19.5% — well ahead of market; branded share above 55%.</li><li>Proven biologics skill: world's first nivolumab biosimilar (India), denosumab biosimilar, ADC biosimilars in trials.</li><li>Steady US pipeline: Q1 had 5 ANDA filings, 9 approvals, 11 launches; injectable plant cleared with VAI.</li><li>Gross margin stable at ~72%.</li></ul>
+<ul class="b ta"><li>பல்வகை: மருந்து 78%, வெல்னஸ் 18%, மெட்டெக் 4%.</li><li>இந்திய மருந்துகள் +19.5% — சந்தையை விட முன்னாடி; பிராண்ட் பங்கு 55%-க்கு மேல.</li><li>நிரூபிக்கப்பட்ட உயிரியல் திறன்: உலகின் முதல் நிவோலுமாப் பயோசிமிலர், டெனோசுமாப் பயோசிமிலர், ADC பயோசிமிலர்கள் சோதனையில.</li><li>நிலையான அமெரிக்க பைப்லைன்: Q1-ல 5 ANDA, 9 ஒப்புதல், 11 அறிமுகம்; ஊசி ஆலைக்கு VAI.</li><li>மொத்த லாப விகிதம் ~72%-ல நிலையா.</li></ul></div>
+<div class="card sw" style="background:var(--rd2)"><h4 class="dn"><span class="en">Weaknesses</span><span class="ta">பலவீனங்கள்</span></h4>
+<ul class="b en"><li>EBITDA margin down 770 bps YoY to 24.1%; net profit –35.9%.</li><li>Weak FY26 cash conversion (CFO/PAT 0.42x) and negative free cash flow.</li><li>Debt and goodwill/intangibles rose sharply after acquisitions (intangibles + goodwill ≈ ₹17,400 Cr at Mar-26).</li><li>US sales falling YoY as gRevlimid fades.</li></ul>
+<ul class="b ta"><li>EBITDA விகிதம் 770 bps குறைஞ்சு 24.1%; நிகர லாபம் –35.9%.</li><li>FY26 பண மாற்றம் பலவீனம் (CFO/PAT 0.42x), இலவசப் பணப்புழக்கம் எதிர்மறை.</li><li>வாங்குதல்களுக்கு அப்புறம் கடனும் நல்லெண்ணம்/அருவச் சொத்துகளும் கூர்மையா ஏறிச்சு (மார்ச்-26-ல ≈ ₹17,400 கோடி).</li><li>gRevlimid மங்குவதால அமெரிக்க விற்பனை குறையுது.</li></ul></div>
+<div class="card sw" style="background:var(--bl2)"><h4 style="color:var(--bl)"><span class="en">Opportunities</span><span class="ta">வாய்ப்புகள்</span></h4>
+<ul class="b en"><li>FYB206 Keytruda biosimilar in the US and Canada from 2028 onward.</li><li>Saroglitazar Mg for PBC under USFDA priority review — a first US innovative drug.</li><li>Generic semaglutide in India; Comfort Click building an international wellness platform.</li><li>Management's medium-term EBITDA margin aim of 28–30% as acquisitions integrate.</li></ul>
+<ul class="b ta"><li>2028 முதல் அமெரிக்கா, கனடாவுல FYB206 கீட்ருடா பயோசிமிலர்.</li><li>PBC-க்கு சரோக்ளிடசார் Mg — USFDA முன்னுரிமை ஆய்வு; அமெரிக்காவுல முதல் சொந்த புதுமை மருந்து.</li><li>இந்தியாவுல ஜெனரிக் செமாக்ளூடைட்; Comfort Click மூலம் உலகளாவிய வெல்னஸ் தளம்.</li><li>வாங்குதல்கள் இணைஞ்சதும் 28–30% EBITDA விகித நடுத்தர கால இலக்கு.</li></ul></div>
+<div class="card sw" style="background:var(--am2)"><h4 style="color:#9a6400"><span class="en">Threats</span><span class="ta">அச்சுறுத்தல்கள்</span></h4>
+<ul class="b en"><li>Crowded pembrolizumab race and Merck's Qlex switch strategy.</li><li>US generic price erosion, drug-pricing and tariff policy.</li><li>Patent litigation (e.g. AbbVie case on Ikra in India).</li><li>Integration risk across France (Amplitude), UK (Comfort Click) and US biologics plants.</li></ul>
+<ul class="b ta"><li>நெரிசலான பெம்ப்ரோலிசுமாப் போட்டி, Merck-ன் Qlex மாற்ற உத்தி.</li><li>அமெரிக்க ஜெனரிக் விலை சரிவு, மருந்து விலை &amp; வரிக் கொள்கை.</li><li>காப்புரிமை வழக்குகள் (உதா: இந்தியாவுல Ikra-வுக்கு AbbVie வழக்கு).</li><li>பிரான்ஸ் (Amplitude), UK (Comfort Click), அமெரிக்க உயிரியல் ஆலைகள் — இணைப்பு அபாயம்.</li></ul></div>
+</div>
+</section>
+
+<!-- ============ ANALYSTS ============ -->
+<section class="tab" id="t-an" data-en="Analysts' Rating" data-ta="ஆய்வாளர் மதிப்பீடு">
+<h2><span class="en">Analysts' rating (third-party brokers only)</span><span class="ta">ஆய்வாளர் மதிப்பீடு (மூன்றாம் தரப்பு தரகர்கள் மட்டும்)</span></h2>
+<div class="tw"><table>
+<thead><tr><th><span class="en">Broker</span><span class="ta">தரகர்</span></th><th><span class="en">Rating</span><span class="ta">மதிப்பீடு</span></th><th class="n"><span class="en">Target (₹)</span><span class="ta">இலக்கு (₹)</span></th><th class="n"><span class="en">vs ₹1,133</span><span class="ta">₹1,133-ஓட</span></th><th><span class="en">Date</span><span class="ta">தேதி</span></th><th><span class="en">Basis / view</span><span class="ta">அடிப்படை / பார்வை</span></th></tr></thead>
+<tbody>
+<tr><td>Nuvama</td><td><span class="chip c-gr">Buy</span></td><td class="n">n/a</td><td class="n">—</td><td>Aug 2026</td><td><span class="en">Upgraded to Buy after Q1 FY27 with a higher target (figure not available)</span><span class="ta">Q1 FY27-க்கு அப்புறம் Buy-க்கு உயர்த்தல், இலக்கு எண் கிடைக்கல</span></td></tr>
+<tr><td>Prabhudas Lilladher</td><td><span class="chip c-gr">Accumulate</span></td><td class="n">1,200</td><td class="n up">+5.9%</td><td>12 Aug 2026</td><td><span class="en">25x FY28E EPS; raised from ₹1,080; Revlimid decline handled well via niche launches</span><span class="ta">FY28E EPS-க்கு 25 மடங்கு; ₹1,080-லிருந்து உயர்வு</span></td></tr>
+<tr><td>Deven Choksey</td><td><span class="chip c-gr">Accumulate</span></td><td class="n">1,201</td><td class="n up">+6.0%</td><td>15 Jul 2026</td><td><span class="en">Q1 FY27 preview; specialty-led growth drivers</span><span class="ta">Q1 FY27 முன்னோட்டம்; சிறப்பு மருந்து வளர்ச்சி</span></td></tr>
+<tr><td>Motilal Oswal</td><td><span class="chip c-am">Neutral</span></td><td class="n">1,125</td><td class="n dn">–0.7%</td><td>Aug 2026</td><td><span class="en">23x 12-month forward; earnings CAGR only ~5% FY26–28, limited upside</span><span class="ta">12 மாத முன்னோக்கு 23 மடங்கு; FY26–28 லாப வளர்ச்சி ~5% தான்</span></td></tr>
+<tr><td><span class="en">Consensus (median)</span><span class="ta">ஒருமித்த கருத்து (நடு)</span></td><td>—</td><td class="n">1,121 †</td><td class="n dn">–1.1%</td><td>n/a</td><td><span class="en">Aggregator median; date of snapshot not confirmed</span><span class="ta">தொகுப்பு நடு மதிப்பு; தேதி உறுதியில்லை</span></td></tr>
+</tbody></table></div>
+<div class="card"><div class="chartbox"><div class="in" style="height:260px"><canvas id="cTP"></canvas></div></div></div>
+<p class="note"><span class="en">Ratings are the brokers' own views, shown for education. CB Research does not give buy, sell or hold calls. Only Buy/Accumulate/Neutral were found; no Sell rating was found after Q1 FY27.</span><span class="ta">மதிப்பீடுகள் தரகர்களோட சொந்த கருத்து, கல்விக்காக மட்டும். CB Research வாங்க/விற்க/வைத்திருக்க பரிந்துரை தராது. Q1 FY27-க்கு அப்புறம் Sell மதிப்பீடு எதுவும் கிடைக்கல.</span></p>
+</section>
+
+<!-- ============ SELF-CHECK ============ -->
+<section class="tab" id="t-sc" data-en="Self-check" data-ta="சுய சோதனை">
+<h2><span class="en">CB Investor Self-check</span><span class="ta">CB முதலீட்டாளர் சுய சோதனை</span></h2>
+<p class="note"><span class="en">Tick what is true for you. This only counts how many of your own conditions line up. It is not a recommendation.</span><span class="ta">உங்களுக்கு உண்மையானதை டிக் பண்ணுங்க. இது உங்க சொந்த நிபந்தனைகள் எத்தனை ஒத்துப்போகுதுன்னு மட்டும் எண்ணுது. இது பரிந்துரை இல்லை.</span></p>
+<div class="card"><b><span class="en">Overall</span><span class="ta">மொத்தம்</span></b> <span id="scAll"></span><div class="bar"><i id="scAllB"></i></div><div class="note" id="scMsg"></div><button class="btn o" id="scClear" style="margin-top:8px"><span class="en">Clear ticks</span><span class="ta">டிக்குகளை அழி</span></button></div>
+<div id="scGroups"></div>
+</section>
+
+<!-- ============ MANAGEMENT & BOARD ============ -->
+<section class="tab" id="t-mg" data-en="Management & Board" data-ta="நிர்வாகம் & குழு">
+<h2><span class="en">Management &amp; Board</span><span class="ta">நிர்வாகம் &amp; இயக்குநர் குழு</span></h2>
+<div class="tw"><table>
+<thead><tr><th><span class="en">Name</span><span class="ta">பெயர்</span></th><th><span class="en">Role</span><span class="ta">பொறுப்பு</span></th><th><span class="en">Notes</span><span class="ta">குறிப்பு</span></th></tr></thead>
+<tbody>
+<tr><td>Pankaj R. Patel</td><td><span class="en">Non-Executive Chairman (Promoter)</span><span class="ta">நிர்வாகமற்ற தலைவர் (ப்ரோமோட்டர்)</span></td><td><span class="en">Padma Bhushan; part-time director on RBI Central Board; chairs IIM Ahmedabad board</span><span class="ta">பத்ம பூஷண்; RBI மத்திய குழுவில பகுதி நேர இயக்குநர்; IIM அகமதாபாத் குழுத் தலைவர்</span></td></tr>
+<tr><td>Dr Sharvil P. Patel</td><td><span class="en">Managing Director (Promoter)</span><span class="ta">நிர்வாக இயக்குநர் (ப்ரோமோட்டர்)</span></td><td><span class="en">Leads strategy; hosted Q1 FY27 call</span><span class="ta">உத்தி தலைமை; Q1 FY27 அழைப்பை நடத்தினார்</span></td></tr>
+<tr><td>Ganesh N. Nayak</td><td><span class="en">Whole-time Director</span><span class="ta">முழுநேர இயக்குநர்</span></td><td><span class="en">Presented segment performance on Q1 call</span><span class="ta">Q1 அழைப்பில பிரிவு செயல்பாட்டை விளக்கினார்</span></td></tr>
+<tr><td>Mukesh M. Patel</td><td><span class="en">Non-Executive Director</span><span class="ta">நிர்வாகமற்ற இயக்குநர்</span></td><td><span class="en">Chairs Stakeholders' Relationship Committee</span><span class="ta">பங்குதாரர் உறவுக் குழுத் தலைவர்</span></td></tr>
+<tr><td>Akhil A. Monappa</td><td><span class="en">Independent Director</span><span class="ta">சுயாதீன இயக்குநர்</span></td><td><span class="en">Chairs Audit Committee</span><span class="ta">தணிக்கைக் குழுத் தலைவர்</span></td></tr>
+<tr><td>Bhadresh K. Shah</td><td><span class="en">Independent Director</span><span class="ta">சுயாதீன இயக்குநர்</span></td><td><span class="en">Chairs Nomination &amp; Remuneration Committee</span><span class="ta">நியமன &amp; ஊதியக் குழுத் தலைவர்</span></td></tr>
+<tr><td>Shelina P. Parikh</td><td><span class="en">Independent Woman Director</span><span class="ta">சுயாதீன பெண் இயக்குநர்</span></td><td>—</td></tr>
+<tr><td>Kulin Lalbhai</td><td><span class="en">Independent Director</span><span class="ta">சுயாதீன இயக்குநர்</span></td><td><span class="en">Attended 31st AGM (Aug 2026)</span><span class="ta">31-வது AGM-ல கலந்துகொண்டார் (ஆக 2026)</span></td></tr>
+<tr><td>Apurva S. Diwanji · Upasana Konidela</td><td><span class="en">Independent Directors †</span><span class="ta">சுயாதீன இயக்குநர்கள் †</span></td><td><span class="en">Listed in 2025–26 board listings; current status not re-confirmed</span><span class="ta">2025–26 பட்டியல்களில இருக்காங்க; தற்போதைய நிலை மறுஉறுதி செய்யல</span></td></tr>
+<tr><td>Tushar Shroff</td><td><span class="en">Chief Financial Officer</span><span class="ta">தலைமை நிதி அதிகாரி</span></td><td>—</td></tr>
+<tr><td>Dhaval N. Soni</td><td><span class="en">Company Secretary</span><span class="ta">நிறுவனச் செயலர்</span></td><td>—</td></tr>
+<tr><td>Arvind Bothra</td><td><span class="en">Head, Investor Relations</span><span class="ta">முதலீட்டாளர் உறவுத் தலைவர்</span></td><td>—</td></tr>
+</tbody></table></div>
+<div class="grid g2">
+<div class="card"><b><span class="en">Ownership &amp; governance</span><span class="ta">உரிமை &amp; நிர்வாக ஒழுங்கு</span></b>
+<ul class="b en"><li>Promoters hold 75.00%; FIIs 7.0%, DIIs 4.4% (Oct 2026 snapshot).</li><li>Board approved one more additional independent director on 19 May 2026, subject to shareholder approval at the AGM.</li><li>FY26 BRSR disclosed a ₹10,000 exchange penalty — minor.</li></ul>
+<ul class="b ta"><li>ப்ரோமோட்டர்கள் 75.00%; FII 7.0%, DII 4.4% (அக் 2026).</li><li>19 மே 2026-ல இன்னொரு கூடுதல் சுயாதீன இயக்குநரை குழு நியமிச்சது, AGM ஒப்புதலுக்கு உட்பட்டு.</li><li>FY26 BRSR-ல ₹10,000 பங்குச்சந்தை அபராதம் — சிறியது.</li></ul></div>
+<div class="card"><b><span class="en">Management guidance (Q1 FY27 call)</span><span class="ta">நிர்வாக வழிகாட்டல் (Q1 FY27 அழைப்பு)</span></b>
+<ul class="b en"><li>FY27 EBITDA margin ~24%; medium-term 28–30%.</li><li>India business mid-teens growth, 300–500 bps ahead of market.</li><li>Double-digit growth in Comfort Click and consumer health; International Markets single-digit.</li><li>FY27 capex ₹1,500–1,600 Cr. Branded share to exceed two-thirds of revenue over the medium term.</li></ul>
+<ul class="b ta"><li>FY27 EBITDA விகிதம் ~24%; நடுத்தர காலம் 28–30%.</li><li>இந்திய வணிகம் 14–16% வளர்ச்சி, சந்தையை விட 3–5% அதிகம்.</li><li>Comfort Click, நுகர்வோர் ஆரோக்கியம் இரட்டை இலக்க வளர்ச்சி; வெளிநாட்டு சந்தைகள் ஒற்றை இலக்கம்.</li><li>FY27 மூலதனச் செலவு ₹1,500–1,600 கோடி. பிராண்ட் பங்கு மூணுல ரெண்டை தாண்டணும்.</li></ul></div>
+</div>
+</section>
+
+<!-- ============ SOCRATES ============ -->
+<section class="tab" id="t-soc" data-en="Cauvery Socrates" data-ta="காவேரி சாக்ரடீஸ்">
+<h2><span class="en">Cauvery Socrates — think it through</span><span class="ta">காவேரி சாக்ரடீஸ் — யோசிச்சு பாருங்க</span></h2>
+<div id="quiz"></div>
+<div class="q"><b><span class="en">Free thinking 1: Revenue rose 22% but profit fell 36%. Which three lines of the P&amp;L would you check first, and why?</span><span class="ta">சுதந்திர சிந்தனை 1: வருமானம் 22% ஏறிச்சு, லாபம் 36% குறைஞ்சது. P&amp;L-ல எந்த மூணு வரிகளை முதல்ல பார்ப்பீங்க, ஏன்?</span></b><textarea id="ft1"></textarea><button class="btn o" onclick="socHint(1)"><span class="en">Socratic hint</span><span class="ta">சாக்ரடீஸ் குறிப்பு</span></button><div class="fb" id="fh1"></div></div>
+<div class="q"><b><span class="en">Free thinking 2: If FYB206 is approved in 2027 but Merck's Qlex takes 35% of patients, how does that change the prize for every biosimilar maker?</span><span class="ta">சுதந்திர சிந்தனை 2: FYB206 2027-ல ஒப்புதல் பெற்றாலும், Qlex 35% நோயாளிகளை எடுத்துட்டா, எல்லா பயோசிமிலர் நிறுவனங்களுக்கும் பரிசு எப்படி மாறும்?</span></b><textarea id="ft2"></textarea><button class="btn o" onclick="socHint(2)"><span class="en">Socratic hint</span><span class="ta">சாக்ரடீஸ் குறிப்பு</span></button><div class="fb" id="fh2"></div></div>
+</section>
+
+</main>
+
+<!-- CB badge + disclaimer -->
+<div id="cbBadge" title="CB Research">CB</div>
+<div id="cbDisc"><b>Prepared by CB Research (Cauvery Business Research)</b><br><span class="en">For education only. Not investment advice. CB Research is not a SEBI-registered research analyst. Figures are from company filings, exchange disclosures and published reports; cells marked n/a or † could not be verified. Broker ratings are third-party views. Please consult a SEBI-registered adviser before investing.</span><span class="ta">கல்விக்காக மட்டும். முதலீட்டு ஆலோசனை இல்லை. CB Research SEBI பதிவு பெற்ற ஆய்வாளர் இல்லை. எண்கள் நிறுவன அறிக்கைகள், பங்குச்சந்தை வெளியீடுகள், வெளியிடப்பட்ட அறிக்கைகளிலிருந்து; n/a அல்லது † குறிச்ச கட்டங்கள் உறுதி செய்ய முடியல. தரகர் மதிப்பீடுகள் மூன்றாம் தரப்பு கருத்து. முதலீடு செய்யும் முன் SEBI பதிவு பெற்ற ஆலோசகரை அணுகுங்க.</span></div>
+
+<!-- CB Assist -->
+<button id="asBtn">🎙️ CB Assist</button>
+<div id="asBox">
+ <div class="h"><span>CB Assist</span><button id="asX" aria-label="close">×</button></div>
+ <div id="asLog"></div>
+ <div class="asq" id="asQs"></div>
+ <div id="asIn"><input id="asTxt" placeholder="Ask about Zydus…"><button class="btn" id="asMic" title="Voice">🎤</button><button class="btn" id="asGo">➤</button></div>
+</div>
+
+<script>
+/* ===== Machine-readable data object ===== */
+var CO = {
+ name:"Zydus Lifesciences Ltd", nse:"ZYDUSLIFE", bse:"532321", quarter:"Q1 FY27", resultDate:"2026-08-11", asOf:"2026-10-16",
+ price:{cmp:1133, date:"2026-10-13", hi52:1205.65, lo52:835.85, mcapCr:113900, shares_mn:1005},
+ q:{labels:["Q1 FY26","Q2 FY26","Q3 FY26","Q4 FY26","Q1 FY27"], rev:[6573.7,6123.2,6864.5,7587.0,8017.0], ebitda:[2088.5,2015.8,1816.4,2554.4,1929.4], margin:[31.8,32.9,26.5,33.7,24.1], pat:[1466.8,1258.6,null,1272.5,939.8]},
+ fy:{FY25:{rev:23242,ebitda:7059,pat:4526,eps:44.97,cfo:6777,cfi:-8372,cff:2031,fcf:5087,recvDays:64,invDays:220,payDays:127,ccc:157},
+     FY26:{rev:27148,ebitda:8475,pat:5040,adjPat:5460,eps:50.09,cfo:2117,cfi:-8296,cff:5997,fcf:-1277,recvDays:73,invDays:273,payDays:138,ccc:208,bvps:269.43,netWorthCr:27111,debtCr:12515}},
+ segments:[{k:"na",n:"North America",ta:"வட அமெரிக்கா",v:3097.9,g:-2.6,s:40,c:"#1565c0"},{k:"in",n:"India Formulations",ta:"இந்திய மருந்துகள்",v:1815.8,g:19.5,s:23,c:"#e8710a"},{k:"cw",n:"Consumer Wellness",ta:"கன்ஸ்யூமர் வெல்னஸ்",v:1429.2,g:67.2,s:18,c:"#1e8e3e"},{k:"im",n:"International Markets",ta:"வெளிநாட்டு சந்தைகள்",v:973.5,g:34.0,s:12,c:"#00838f"},{k:"mt",n:"MedTech",ta:"மெட்டெக்",v:282.8,g:null,s:4,c:"#6a1b9a"},{k:"api",n:"API",ta:"API",v:180.4,g:15,s:2,c:"#607d8b"}],
+ q1:{rd:642.4,capex:585.2,netDebt:5904.1,ndE:0.22,ndEbitda:0.70,gp:5777.2},
+ valuation:{pe_ttm:25.3,pe_fy26:22.6,pb:4.2,ev_ebitda:17.6,ttmEps:44.86},
+ pillars:{g:8.5,m:5.5,d:6.0,v:6.0,t:7.5,r:5.5,composite:6.5},
+ cycle:{sectorPhase:"P3 Expansion",stockStage:"Stage 3-like (estimated)",cy:59},
+ triggers:[
+  {name:"Saroglitazar Mg PBC — USFDA priority review",sign:"+",I:3,C:0.4,W:0.7,P:1.0,pts:0.84,status:"Announced"},
+  {name:"FYB206 Keytruda biosimilar BLA accepted",sign:"+",I:4,C:0.4,W:0.4,P:1.0,pts:0.64,status:"Announced",date:"2026-10-13"},
+  {name:"Margin recovery to 28-30%",sign:"+",I:3,C:0.4,W:0.4,P:1.0,pts:0.48,status:"Guidance"},
+  {name:"US gRevlimid / generic price erosion",sign:"-",I:2,C:0.7,W:1.0,P:1.0,pts:1.40,status:"Executing"},
+  {name:"Ikra supply restriction (AbbVie case)",sign:"-",I:1,C:0.7,W:1.0,P:1.0,pts:0.70,status:"Interim order"}],
+ tg:49,
+ brokers:[{b:"Nuvama",r:"Buy",tp:null,d:"Aug 2026"},{b:"Prabhudas Lilladher",r:"Accumulate",tp:1200,d:"12 Aug 2026"},{b:"Deven Choksey",r:"Accumulate",tp:1201,d:"15 Jul 2026"},{b:"Motilal Oswal",r:"Neutral",tp:1125,d:"Aug 2026"},{b:"Consensus median",r:"—",tp:1121,d:"n/a"}],
+ keytruda:{candidate:"FYB206",developer:"Formycon AG",rights:"US & Canada",blaAccepted:"2026-10-13",bsufaGoal:"~Q3 CY2027",patent:"2028",sales2025_bn:31.7,h1_2026_bn:16.4}
+};
+
+/* ===== helpers ===== */
+var isTa=false;
+function L(en,ta){return isTa?ta:en}
+function f(n,d){if(n===null||n===undefined)return "n/a";return Number(n).toLocaleString('en-IN',{minimumFractionDigits:d||0,maximumFractionDigits:d||0})}
+function el(id){return document.getElementById(id)}
+var NS="http://www.w3.org/2000/svg";
+
+/* ===== tabs ===== */
+var tabs=[].slice.call(document.querySelectorAll('section.tab'));
+function buildNav(){var nv=el('nav');nv.innerHTML='';tabs.forEach(function(s){var b=document.createElement('button');b.textContent=isTa?s.dataset.ta:s.dataset.en;b.dataset.t=s.id;if(s.classList.contains('on'))b.classList.add('on');b.onclick=function(){showTab(s.id)};nv.appendChild(b)})}
+function showTab(id){tabs.forEach(function(s){s.classList.toggle('on',s.id===id)});[].forEach.call(el('nav').children,function(b){b.classList.toggle('on',b.dataset.t===id)});window.scrollTo({top:0,behavior:'smooth'});if(id==='t-ov')animTemple()}
+
+/* ===== temple ===== */
+var PIL=[
+ {k:'g',en:'Growth',ta:'வளர்ச்சி',s:CO.pillars.g,den:'Revenue +22% YoY with India +19.5%, International +34% and Wellness +67%. Part of the jump is acquisitions (Comfort Click, Amplitude), so organic growth is lower but still double-digit outside the US.',dta:'வருமானம் 22% ஏற்றம் — இந்தியா +19.5%, வெளிநாடு +34%, வெல்னஸ் +67%. இதுல ஒரு பகுதி வாங்குதல்களால (Comfort Click, Amplitude); சொந்த வளர்ச்சி குறைவு, ஆனா அமெரிக்கா தவிர இரட்டை இலக்கம்.'},
+ {k:'m',en:'Margins',ta:'லாப விகிதம்',s:CO.pillars.m,den:'EBITDA margin fell 770 bps to 24.1% — right at the FY27 guidance floor. Gross margin is steady (~72%), so the pressure is costs, not pricing.',dta:'EBITDA விகிதம் 770 bps குறைஞ்சு 24.1% — FY27 வழிகாட்டலோட அடி எல்லையில. மொத்த லாப விகிதம் ~72% நிலையா இருக்கு; அழுத்தம் செலவுல தான், விலையில இல்லை.'},
+ {k:'d',en:'Balance sheet & cash',ta:'இருப்புநிலை & பணம்',s:CO.pillars.d,den:'Net debt ₹5,904 Cr (0.22x equity, 0.70x EBITDA) is manageable, but FY26 CFO was only 0.42x profit and free cash flow turned negative after acquisitions.',dta:'நிகர கடன் ₹5,904 கோடி (ஈக்விட்டிக்கு 0.22x, EBITDA-க்கு 0.70x) சமாளிக்கக்கூடியது. ஆனா FY26 CFO லாபத்துல 0.42x தான், வாங்குதல்களுக்கு அப்புறம் இலவசப் பணப்புழக்கம் எதிர்மறை.'},
+ {k:'v',en:'Valuation',ta:'மதிப்பீடு',s:CO.pillars.v,den:'P/E ~25x trailing and ~22.6x FY26; P/B 4.2x; EV/EBITDA ~17.6x. Broker targets cluster at ₹1,120–1,200 — close to the current price.',dta:'P/E ~25x (TTM), FY26-க்கு ~22.6x; P/B 4.2x; EV/EBITDA ~17.6x. தரகர் இலக்குகள் ₹1,120–1,200 — தற்போதைய விலைக்கு அருகே.'},
+ {k:'t',en:'Triggers & pipeline',ta:'தூண்டல் & பைப்லைன்',s:CO.pillars.t,den:'Rich pipeline: FYB206 BLA accepted, Saroglitazar PBC priority review, biosimilar ADCs, semaglutide India. But most pay-offs are 2027–2028.',dta:'வளமான பைப்லைன்: FYB206 BLA ஏற்பு, சரோக்ளிடசார் PBC முன்னுரிமை ஆய்வு, பயோசிமிலர் ADC-கள், இந்தியாவுல செமாக்ளூடைட். ஆனா பெரும்பாலான பலன் 2027–2028-ல தான்.'},
+ {k:'r',en:'Risk',ta:'அபாயம்',s:CO.pillars.r,den:'US price erosion, a crowded Keytruda race, Merck patents and Qlex, patent litigation in India, and integration of three acquisitions. Plant compliance is currently clean (VAI).',dta:'அமெரிக்க விலை சரிவு, நெரிசலான கீட்ருடா போட்டி, Merck காப்புரிமை &amp; Qlex, இந்தியாவுல காப்புரிமை வழக்கு, மூணு வாங்குதல்களோட இணைப்பு. ஆலை இணக்கம் இப்போ சுத்தமா இருக்கு (VAI).'}];
+function pcol(s){return s>=8?'#1e8e3e':(s>=6?'#d98e04':'#c62828')}
+function drawTemple(){var sv=el('temple');sv.innerHTML='';
+ var h='<polygon points="70,125 480,18 890,125" fill="#e8710a"/><text x="480" y="78" text-anchor="middle" font-size="15" fill="#fff" font-weight="700">'+L('CB Score','CB மதிப்பெண்')+'</text><text x="480" y="112" text-anchor="middle" font-size="30" fill="#fff" font-weight="800">'+CO.pillars.composite.toFixed(1)+' / 10</text>';
+ h+='<rect x="85" y="125" width="790" height="40" fill="#16325c"/><text x="480" y="151" text-anchor="middle" font-size="16" fill="#fff" font-weight="700">'+L('Zydus Lifesciences · Q1 FY27','சைடஸ் லைஃப்சயின்சஸ் · Q1 FY27')+'</text>';
+ PIL.forEach(function(p,i){var x=118+i*124,w=76,top=172,hgt=220,c=pcol(p.s);
+  h+='<g class="col" data-k="'+p.k+'"><rect x="'+x+'" y="'+top+'" width="'+w+'" height="'+hgt+'" fill="#f3f4f7" stroke="#cfd5df"/>';
+  for(var j=1;j<4;j++)h+='<line x1="'+(x+j*w/4)+'" y1="'+top+'" x2="'+(x+j*w/4)+'" y2="'+(top+hgt)+'" stroke="#dde2ea"/>';
+  h+='<rect class="fillc" data-h="'+(hgt*p.s/10)+'" x="'+x+'" y="'+(top+hgt)+'" width="'+w+'" height="0" fill="'+c+'" opacity=".85"/>';
+  h+='<circle cx="'+(x+w/2)+'" cy="'+(top+28)+'" r="22" fill="#fff" stroke="'+c+'" stroke-width="3"/><text x="'+(x+w/2)+'" y="'+(top+34)+'" text-anchor="middle" font-size="16" font-weight="800" fill="'+c+'">'+p.s.toFixed(1)+'</text>';
+  h+='<text x="'+(x+w/2)+'" y="452" text-anchor="middle" font-size="13" font-weight="700" fill="#16325c">'+L(p.en,p.ta)+'</text></g>'});
+ h+='<rect x="95" y="392" width="770" height="16" fill="#cfd5df"/><rect x="75" y="408" width="810" height="18" fill="#b9c1ce"/>';
+ sv.innerHTML=h;
+ [].forEach.call(sv.querySelectorAll('.col'),function(g){g.onclick=function(){var c=el('pc-'+g.dataset.k);c.scrollIntoView({behavior:'smooth',block:'center'});[].forEach.call(document.querySelectorAll('.pcard'),function(x){x.classList.remove('hl')});c.classList.add('hl')}});
+ var pc=el('pillarCards');pc.innerHTML='';PIL.forEach(function(p){var d=document.createElement('div');d.className='card pcard';d.id='pc-'+p.k;d.style.borderLeftColor=pcol(p.s);d.innerHTML='<b style="color:'+pcol(p.s)+'">'+L(p.en,p.ta)+' — '+p.s.toFixed(1)+'/10</b><div style="margin-top:4px;font-size:14px">'+L(p.den,p.dta)+'</div>';pc.appendChild(d)});
+ animTemple()}
+function animTemple(){var rs=document.querySelectorAll('#temple .fillc');[].forEach.call(rs,function(r){r.setAttribute('height',0);r.setAttribute('y',392)});var t0=null;function st(ts){if(!t0)t0=ts;var k=Math.min(1,(ts-t0)/1100);[].forEach.call(rs,function(r){var hh=+r.dataset.h*k;r.setAttribute('height',hh);r.setAttribute('y',392-hh)});if(k<1)requestAnimationFrame(st)}requestAnimationFrame(st)}
+
+/* ===== business model map ===== */
+var BM={
+ c1:['US patients, insurers & PBMs','அமெரிக்க நோயாளிகள், காப்பீடு & PBM','Generic and specialty medicines are bought in the US through insurers and pharmacy benefit managers. Price is negotiated hard, so prices fall every year.','அமெரிக்காவுல ஜெனரிக் &amp; சிறப்பு மருந்துகள் காப்பீட்டு நிறுவனங்கள், PBM-கள் மூலம் வாங்கப்படுது. கடுமையான பேரம், அதனால வருஷா வருஷம் விலை குறையும்.'],
+ c2:['Indian doctors & patients','இந்திய மருத்துவர்கள் & நோயாளிகள்','Doctors prescribe Zydus brands; patients buy them at chemists. Brand trust and doctor reach drive volume.','மருத்துவர்கள் சைடஸ் பிராண்டுகளை எழுதுவாங்க; நோயாளிகள் மருந்துக் கடையில வாங்குவாங்க. பிராண்ட் நம்பிக்கையும் மருத்துவர் தொடர்பும் தான் அளவை ஓட்டுது.'],
+ c3:['Emerging-market & European patients','வளரும் நாடு & ஐரோப்பிய நோயாளிகள்','Africa, Asia, Latin America and Europe (France, Spain, UK) — mostly branded generics through local subsidiaries and partners.','ஆப்பிரிக்கா, ஆசியா, லத்தீன் அமெரிக்கா, ஐரோப்பா — பெரும்பாலும் உள்ளூர் கிளைகள், கூட்டாளிகள் மூலம் பிராண்டட் ஜெனரிக்.'],
+ c4:['Consumers','நுகர்வோர்','Households buying wellness brands (skin, hair, food & nutrition) in India, and supplements internationally via Comfort Click.','வீடுகள் வாங்கும் வெல்னஸ் பிராண்டுகள் (தோல், முடி, உணவு &amp; ஊட்டச்சத்து) இந்தியாவுல; Comfort Click மூலம் வெளிநாட்டுல சப்ளிமென்ட்கள்.'],
+ c5:['Surgeons & hospitals','அறுவை மருத்துவர்கள் & மருத்துவமனைகள்','Orthopaedic implants (hips, knees) from Amplitude Surgical, chosen by surgeons and bought by hospitals.','Amplitude Surgical-ன் எலும்பு மாற்று கருவிகள் (இடுப்பு, முழங்கால்) — அறுவை மருத்துவர் தேர்வு, மருத்துவமனை வாங்கும்.'],
+ h1:['US wholesalers & PBM contracts','அமெரிக்க மொத்த விற்பனையாளர் & PBM ஒப்பந்தம்','A few big wholesalers and PBMs (e.g. a CVS Caremark contract) control access. Zydus wins share with fast, early launches.','சில பெரிய மொத்த விற்பனையாளர்களும் PBM-களும் தான் அணுகலை கட்டுப்படுத்துறாங்க. சீக்கிரமா அறிமுகம் செஞ்சு சைடஸ் பங்கு பிடிக்குது.'],
+ h2:['India field force & chemists','இந்திய விற்பனைக் குழு & மருந்துக் கடைகள்','Medical representatives visit doctors; stockists supply chemists across India.','மருத்துவ பிரதிநிதிகள் மருத்துவர்களை சந்திப்பாங்க; விநியோகஸ்தர்கள் நாடு முழுக்க மருந்துக் கடைகளுக்கு தருவாங்க.'],
+ h3:['Subsidiaries & partners abroad','வெளிநாட்டு கிளைகள் & கூட்டாளிகள்','Own subsidiaries in key markets and licensing partners elsewhere.','முக்கிய சந்தைகளில சொந்தக் கிளைகள், மற்ற இடங்களில உரிமக் கூட்டாளிகள்.'],
+ h4:['Retail, modern trade & e-commerce','சில்லறை, நவீன வர்த்தகம் & இணைய விற்பனை','Kirana stores, supermarkets and online channels for wellness brands.','வெல்னஸ் பிராண்டுகளுக்கு கிராணா கடைகள், சூப்பர்மார்க்கெட்டுகள், இணைய வழிகள்.'],
+ h5:['MedTech distributors','மெட்டெக் விநியோகஸ்தர்கள்','Direct sales and distributors serving hospitals in France and export markets.','பிரான்ஸ் &amp; ஏற்றுமதி சந்தைகளில மருத்துவமனைகளுக்கு நேரடி விற்பனை &amp; விநியோகஸ்தர்கள்.'],
+ z:['Zydus Lifesciences','சைடஸ் லைஃப்சயின்சஸ்','The engine: R&D (₹642.4 Cr in Q1, 8% of revenue), USFDA-inspected plants in India and new biologics plants in the US, 75% promoter-owned. It turns molecules into products for six businesses.','இயந்திரம்: ஆராய்ச்சி (Q1-ல ₹642.4 கோடி, வருமானத்துல 8%), இந்தியாவுல USFDA ஆய்வு செய்யப்பட்ட ஆலைகள், அமெரிக்காவுல புது உயிரியல் ஆலைகள், 75% ப்ரோமோட்டர் உரிமை. மூலக்கூறுகளை ஆறு வணிகங்களுக்கான பொருட்களா மாத்துது.'],
+ na:['North America','வட அமெரிக்கா','₹3,097.9 Cr, 40% of sales, –2.6% YoY (+4.9% QoQ). Generics, 505(b)(2) and specialty products. Future: FYB206 Keytruda biosimilar and Saroglitazar.','₹3,097.9 கோடி, விற்பனையில 40%, –2.6% (காலாண்டுக்கு +4.9%). ஜெனரிக், 505(b)(2), சிறப்பு மருந்துகள். எதிர்காலம்: FYB206 கீட்ருடா பயோசிமிலர், சரோக்ளிடசார்.'],
+ in:['India Formulations','இந்திய மருந்துகள்','₹1,815.8 Cr, 23% of sales, +19.5% YoY — broad-based across chronic, acute and super-specialty, plus biosimilars like Tishtha.','₹1,815.8 கோடி, 23%, +19.5% — நீண்டகால, உடனடி, சிறப்பு சிகிச்சை எல்லாத்துலயும் வளர்ச்சி, Tishtha போன்ற பயோசிமிலர்களும்.'],
+ cw:['Consumer Wellness','கன்ஸ்யூமர் வெல்னஸ்','₹1,429.2 Cr, 18% of sales, +67.2% YoY (Comfort Click added). Like-for-like: international +25%, domestic +5%.','₹1,429.2 கோடி, 18%, +67.2% (Comfort Click சேர்ப்பு). ஒப்பிடக்கூடிய அளவில்: வெளிநாடு +25%, உள்நாடு +5%.'],
+ im:['International Markets','வெளிநாட்டு சந்தைகள்','₹973.5 Cr, 12% of sales, +34% YoY — emerging markets and Europe.','₹973.5 கோடி, 12%, +34% — வளரும் நாடுகள் &amp; ஐரோப்பா.'],
+ mt:['MedTech','மெட்டெக்','₹282.8 Cr, 4% of sales — Amplitude Surgical (France), fully owned since Oct 2025.','₹282.8 கோடி, 4% — Amplitude Surgical (பிரான்ஸ்), அக் 2025 முதல் முழு உரிமை.'],
+ api:['API','API','₹180.4 Cr, 2% of sales, +15% YoY — active ingredients sold to other drug makers.','₹180.4 கோடி, 2%, +15% — மற்ற மருந்து நிறுவனங்களுக்கு மூலப்பொருள் விற்பனை.'],
+ rev:['Revenue ₹8,017 Cr','வருமானம் ₹8,017 கோடி','Revenue from operations +22% YoY. Business-wise sales ₹7,802 Cr plus other operating income.','செயல்பாட்டு வருமானம் +22%. பிரிவு வாரி விற்பனை ₹7,802 கோடி + மற்ற இயக்க வருமானம்.'],
+ cost:['Costs','செலவுகள்','≈ ₹2,240 Cr cost of goods (28%), ₹642 Cr R&D (8%), ≈ ₹3,205 Cr staff, marketing and other opex (40%). Opex is what grew fastest.','≈ ₹2,240 கோடி பொருள் செலவு (28%), ₹642 கோடி ஆராய்ச்சி (8%), ≈ ₹3,205 கோடி ஊழியர், விளம்பரம், மற்ற செலவு (40%). வேகமா ஏறினது இந்த செலவு தான்.'],
+ prof:['Profit','லாபம்','EBITDA ₹1,929.4 Cr (24.1%). After ≈ ₹990 Cr of depreciation, interest, tax and minority share, net profit is ₹939.8 Cr.','EBITDA ₹1,929.4 கோடி (24.1%). தேய்மானம், வட்டி, வரி, சிறுபான்மை பங்கு ≈ ₹990 கோடி போக, நிகர லாபம் ₹939.8 கோடி.'],
+ sh:['Shareholders','பங்குதாரர்கள்','Buyback of 87.30 lakh shares at ₹1,260 (June 2026), FY26 dividend ₹1. Promoters own 75%.','₹1,260 விலையில 87.30 லட்சம் பங்கு திரும்ப வாங்குதல் (ஜூன் 2026), FY26 டிவிடெண்ட் ₹1. ப்ரோமோட்டர்கள் 75%.']};
+function bmBox(k,x,y,w,h,fill,stroke,line2){var t=BM[k];var tt=L(t[0],t[1]);var s='<g class="bm-box" data-k="'+k+'"><rect x="'+x+'" y="'+y+'" width="'+w+'" height="'+h+'" rx="10" fill="'+fill+'" stroke="'+stroke+'" stroke-width="1.5"/>';
+ var words=tt.split(' '),lines=[],cur='';words.forEach(function(wd){if((cur+' '+wd).trim().length>(w/7.6)){lines.push(cur.trim());cur=wd}else cur+=' '+wd});lines.push(cur.trim());
+ var ty=y+(line2?18:h/2-(lines.length-1)*8+5);lines.forEach(function(ln,i){s+='<text x="'+(x+w/2)+'" y="'+(ty+i*16)+'" text-anchor="middle" font-size="12.5" font-weight="700" fill="#16325c">'+ln+'</text>'});
+ if(line2)s+='<text x="'+(x+w/2)+'" y="'+(y+h-12)+'" text-anchor="middle" font-size="12" fill="#333">'+line2+'</text>';return s+'</g>'}
+function arrow(x1,y1,x2,y2,c){return '<line x1="'+x1+'" y1="'+y1+'" x2="'+x2+'" y2="'+y2+'" stroke="'+(c||'#9aa5b5')+'" stroke-width="1.6" marker-end="url(#ah)"/>'}
+function drawBM(){var s='<defs><marker id="ah" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#9aa5b5"/></marker></defs>';
+ s+='<text x="85" y="22" text-anchor="middle" font-size="13" font-weight="800" fill="#e8710a">'+L('Customers','வாடிக்கையாளர்கள்')+'</text><text x="270" y="22" text-anchor="middle" font-size="13" font-weight="800" fill="#e8710a">'+L('Channels','வழிகள்')+'</text><text x="660" y="14" text-anchor="middle" font-size="13" font-weight="800" fill="#e8710a">'+L('Segments (Q1 FY27)','பிரிவுகள் (Q1 FY27)')+'</text>';
+ var ys=[40,145,250,355,460];['c1','c2','c3','c4','c5'].forEach(function(k,i){s+=bmBox(k,10,ys[i],150,76,'#fff7ef','#f2b27a')});
+ ['h1','h2','h3','h4','h5'].forEach(function(k,i){s+=bmBox(k,190,ys[i],160,76,'#f3f6fb','#b7c4d8');s+=arrow(160,ys[i]+38,188,ys[i]+38);s+=arrow(350,ys[i]+38,378,300)});
+ s+=bmBox('z',380,190,150,220,'#16325c','#16325c');
+ var segs=CO.segments,sy=[22,113,204,295,386,477];
+ segs.forEach(function(g,i){var l2='₹'+f(g.v,1)+L(' Cr · ',' கோடி · ')+(g.g===null?L('new','புதுசு'):(g.g>0?'+':'')+g.g+'%')+' · '+g.s+'%';s+=bmBox(g.k,560,sy[i],200,80,g.c+'1a',g.c,l2);s+=arrow(530,300,558,sy[i]+40);s+=arrow(760,sy[i]+40,788,80)});
+ s+=bmBox('rev',790,40,200,80,'#fff3e8','#e8710a',L('+22% YoY','+22% ஆண்டு'));
+ s+=bmBox('cost',790,160,200,100,'#fdecec','#c62828',L('COGS 28% · R&D 8% · opex 40%','பொருள் 28% · ஆய்வு 8% · இதர 40%'));
+ s+=bmBox('prof',790,300,200,100,'#e8f5ec','#1e8e3e',L('EBITDA ₹1,929 · PAT ₹940','EBITDA ₹1,929 · நிகர ₹940'));
+ s+=bmBox('sh',790,440,200,90,'#f3e8fa','#6a1b9a',L('Buyback ₹1,260 · promoter 75%','திரும்ப வாங்கல் ₹1,260 · 75%'));
+ s+=arrow(890,120,890,158)+arrow(890,260,890,298)+arrow(890,400,890,438);
+ s+='<text x="455" y="585" text-anchor="middle" font-size="11.5" fill="#5d6678">'+L('Tap any box · Segment figures: ₹ Cr · YoY growth · share of sales','எந்த பெட்டியையும் தொடுங்க · ₹ கோடி · ஆண்டு வளர்ச்சி · விற்பனை பங்கு')+'</text>';
+ var sv=el('bmap');sv.innerHTML=s;
+ [].forEach.call(sv.querySelectorAll('.bm-box'),function(g){g.onclick=function(){bmSel(g.dataset.k)}});
+ var z=sv.querySelector('[data-k="z"]');[].forEach.call(z.querySelectorAll('text'),function(t){t.setAttribute('fill','#fff')});
+ bmSel(window._bmk||'z')}
+function bmSel(k){window._bmk=k;[].forEach.call(document.querySelectorAll('#bmap .bm-box'),function(g){g.classList.toggle('sel',g.dataset.k===k)});var t=BM[k];el('bmT').textContent=L(t[0],t[1]);el('bmD').innerHTML=L(t[2],t[3])}
+
+/* ===== tables ===== */
+function qTable(){var r=[[L('Revenue from operations','செயல்பாட்டு வருமானம்'),CO.q.rev,1],['EBITDA',CO.q.ebitda,1],[L('EBITDA margin %','EBITDA விகிதம் %'),CO.q.margin,0],[L('Net profit','நிகர லாபம்'),CO.q.pat,1]];var h='';
+ r.forEach(function(x){var a=x[1];h+='<tr><td>'+x[0]+'</td>';a.forEach(function(v,i){h+='<td class="n">'+(v===null?'n/a †':(x[2]?f(v,1):v.toFixed(1)+'%'))+'</td>'});
+  var yo=x[2]?((a[4]/a[0]-1)*100):(a[4]-a[0])*100,qo=x[2]?((a[4]/a[3]-1)*100):(a[4]-a[3])*100;var fm=function(v){return x[2]?(v>0?'+':'')+v.toFixed(1)+'%':(v>0?'+':'')+f(v)+' bps'};
+  h+='<td class="n '+(yo>=0?'up':'dn')+'">'+fm(yo)+'</td><td class="n '+(qo>=0?'up':'dn')+'">'+fm(qo)+'</td></tr>'});
+ h+='<tr><td>'+L('R&D spend','ஆராய்ச்சி செலவு')+'</td><td class="n">n/a</td><td class="n">482.0</td><td class="n">n/a</td><td class="n">n/a</td><td class="n">642.4</td><td class="n">—</td><td class="n">—</td></tr>';
+ el('qTbl').innerHTML=h}
+function sensTable(){var eps=[44,46,48,50,52,55],pe=[18,20,22,24,26,28];var h='<thead><tr><th>EPS ₹ \\ P/E</th>'+pe.map(function(p){return '<th class="n">'+p+'x</th>'}).join('')+'</tr></thead><tbody>';
+ eps.forEach(function(e){h+='<tr><th>₹'+e+'</th>';pe.forEach(function(p){var v=e*p;h+='<td class="n" style="background:'+(v>=CO.price.cmp?'#e8f5ec':'#fdecec')+'">'+f(v)+'</td>'});h+='</tr>'});el('sensT').innerHTML=h+'</tbody>'}
+
+/* ===== charts ===== */
+var barLbl={id:'barLbl',afterDatasetsDraw:function(ch){var c=ch.ctx;ch.data.datasets.forEach(function(ds,i){var m=ch.getDatasetMeta(i);if(m.hidden||m.type!=='bar')return;m.data.forEach(function(b,j){var v=ds.data[j];if(v===null||v===undefined)return;c.save();c.font='600 11px Inter,sans-serif';c.fillStyle='#16325c';c.textAlign='center';var y=v>=0?b.y-5:b.y+13;c.fillText((ds._pre||'')+f(v,ds._dec||0)+(ds._suf||''),b.x,y);c.restore()})})}};
+if(window.Chart){Chart.register(barLbl);Chart.defaults.font.family='Inter, "Noto Sans Tamil", sans-serif';}
+var CH={};
+function mk(id,cfg){if(CH[id])CH[id].destroy();CH[id]=new Chart(el(id),cfg)}
+function drawCharts(){
+ if(!window.Chart)return;
+ var yT=function(v){return f(v)};
+ mk('cQ',{type:'bar',data:{labels:CO.q.labels,datasets:[{label:L('Revenue','வருமானம்'),data:CO.q.rev,backgroundColor:'#16325c',_dec:1},{label:'EBITDA',data:CO.q.ebitda,backgroundColor:'#e8710a',_dec:1},{label:L('Net profit','நிகர லாபம்'),data:CO.q.pat,backgroundColor:'#1e8e3e',_dec:1}]},options:{responsive:true,maintainAspectRatio:false,layout:{padding:{top:20}},scales:{y:{beginAtZero:true,ticks:{callback:yT}}},plugins:{tooltip:{callbacks:{label:function(c){return c.dataset.label+': ₹'+f(c.raw,1)+' Cr'}}}}}});
+ mk('cM',{type:'line',data:{labels:CO.q.labels,datasets:[{label:L('EBITDA margin %','EBITDA விகிதம் %'),data:CO.q.margin,borderColor:'#e8710a',backgroundColor:'#e8710a',tension:.25,pointRadius:5},{label:L('FY27 guidance ~24%','FY27 வழிகாட்டல் ~24%'),data:[24,24,24,24,24],borderColor:'#c62828',borderDash:[6,4],pointRadius:0}]},options:{responsive:true,maintainAspectRatio:false,scales:{y:{min:20,max:36}}}});
+ mk('cMix',{type:'doughnut',data:{labels:CO.segments.map(function(s){return L(s.n,s.ta)}),datasets:[{data:CO.segments.map(function(s){return s.v}),backgroundColor:CO.segments.map(function(s){return s.c})}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'right'},tooltip:{callbacks:{label:function(c){return c.label+': ₹'+f(c.raw,1)+' Cr'}}}}}});
+ mk('cCF',{type:'bar',data:{labels:[L('Operating','இயக்க'),L('Investing','முதலீடு'),L('Financing','நிதி'),L('Free cash flow','இலவசப் பணம்')],datasets:[{label:'FY25',data:[6777,-8372,2031,5087],backgroundColor:'#9fb3d1'},{label:'FY26',data:[2117,-8296,5997,-1277],backgroundColor:'#e8710a'}]},options:{responsive:true,maintainAspectRatio:false,layout:{padding:{top:20}},scales:{y:{ticks:{callback:yT}}}}});
+ mk('cPx',{type:'line',data:{labels:['14 Jan','25 May','11 Aug','12 Aug','27 Aug','17 Sep','30 Sep','9 Oct','13 Oct'],datasets:[{label:L('Price ₹','விலை ₹'),data:[884,1073.05,1191,1163.3,1189,1111.3,1162,1121.3,1133],borderColor:'#16325c',backgroundColor:'#16325c',tension:.2,pointRadius:5},{label:L('Buyback price ₹1,260','Buyback விலை ₹1,260'),data:[1260,1260,1260,1260,1260,1260,1260,1260,1260],borderColor:'#6a1b9a',borderDash:[6,4],pointRadius:0}]},options:{responsive:true,maintainAspectRatio:false,scales:{y:{min:800,max:1300,ticks:{callback:yT}}}}});
+ var bk=CO.brokers.filter(function(b){return b.tp});
+ mk('cTP',{type:'bar',data:{labels:bk.map(function(b){return b.b}),datasets:[{label:L('Target price ₹','இலக்கு விலை ₹'),data:bk.map(function(b){return b.tp}),backgroundColor:bk.map(function(b){return b.tp>=CO.price.cmp?'#1e8e3e':'#c62828'})}]},options:{responsive:true,maintainAspectRatio:false,layout:{padding:{top:20}},scales:{y:{min:900,ticks:{callback:yT}}},plugins:{legend:{display:false}}}});
+}
+
+/* ===== cycle clock ===== */
+function drawClock(){var ph=[['P1 Trough','P1 அடி'],['P2 Early recovery','P2 ஆரம்ப மீட்சி'],['P3 Expansion','P3 விரிவாக்கம்'],['P4 Late cycle','P4 பிற்பகுதி'],['P5 Downturn','P5 சரிவு']],cols=['#90a4ae','#1e8e3e','#7cb342','#d98e04','#c62828'];var cx=180,cy=180,R=150,r=80,s='';
+ for(var i=0;i<5;i++){var a0=(-90+i*72)*Math.PI/180,a1=(-90+(i+1)*72)*Math.PI/180;var p=[cx+R*Math.cos(a0),cy+R*Math.sin(a0),cx+R*Math.cos(a1),cy+R*Math.sin(a1),cx+r*Math.cos(a1),cy+r*Math.sin(a1),cx+r*Math.cos(a0),cy+r*Math.sin(a0)];
+  s+='<path d="M'+p[0]+','+p[1]+' A'+R+','+R+' 0 0 1 '+p[2]+','+p[3]+' L'+p[4]+','+p[5]+' A'+r+','+r+' 0 0 0 '+p[6]+','+p[7]+' Z" fill="'+cols[i]+'" opacity="'+(i===2?1:.55)+'" stroke="#fff" stroke-width="3"/>';
+  var am=(-90+i*72+36)*Math.PI/180,tx=cx+115*Math.cos(am),ty=cy+115*Math.sin(am);var w=L(ph[i][0],ph[i][1]).split(' ');s+='<text x="'+tx+'" y="'+(ty-4)+'" text-anchor="middle" font-size="11" font-weight="700" fill="#fff">'+w[0]+'</text><text x="'+tx+'" y="'+(ty+10)+'" text-anchor="middle" font-size="10" fill="#fff">'+w.slice(1).join(' ')+'</text>'}
+ var ap=(-90+2*72+30)*Math.PI/180;s+='<line x1="'+cx+'" y1="'+cy+'" x2="'+(cx+72*Math.cos(ap))+'" y2="'+(cy+72*Math.sin(ap))+'" stroke="#e8710a" stroke-width="5" stroke-linecap="round"/><circle cx="'+cx+'" cy="'+cy+'" r="10" fill="#e8710a"/>';
+ var as=(-90+3*72+12)*Math.PI/180;s+='<circle cx="'+(cx+R*Math.cos(as))+'" cy="'+(cy+R*Math.sin(as))+'" r="11" fill="#1565c0" stroke="#fff" stroke-width="3"/>';
+ s+='<text x="'+cx+'" y="'+(cy-24)+'" text-anchor="middle" font-size="13" font-weight="800" fill="#16325c">CY 59</text>';el('clock').innerHTML=s}
+
+/* ===== calculator ===== */
+function calc(){var A=+el('iA').value,B=+el('iB').value,C=+el('iC').value,D=+el('iD').value;el('vA').textContent=A;el('vB').textContent=B;el('vC').textContent=C;el('vD').textContent=D;
+ var cr=A*1e9*(B/100)*(C/100)*D/1e7;el('oR').textContent='₹'+f(cr)+' Cr';
+ el('oP').innerHTML=L('= '+(cr/CO.fy.FY26.rev*100).toFixed(1)+'% of FY26 revenue (₹27,148 Cr). Formula: spend × share × price ratio × USD-INR. Revenue to Zydus before Formycon\'s undisclosed share and costs.','= FY26 வருமானத்துல (₹27,148 கோடி) '+(cr/CO.fy.FY26.rev*100).toFixed(1)+'%. சூத்திரம்: செலவு × பங்கு × விலை விகிதம் × டாலர்-ரூபாய். Formycon பங்கு, செலவுகளுக்கு முந்தைய வருமானம்.')}
+['iA','iB','iC','iD'].forEach(function(i){el(i).addEventListener('input',calc)});
+
+/* ===== self-check ===== */
+var SC=[
+ {en:'1 · Questions about the stock',ta:'1 · பங்கு பற்றிய கேள்விகள்',it:[
+  ['I know where Zydus earns its money','சைடஸ் எங்க சம்பாதிக்குதுன்னு எனக்கு தெரியும்','North America 40%, India 23%, Wellness 18%, International 12%, MedTech 4%, API 2%','வட அமெரிக்கா 40%, இந்தியா 23%, வெல்னஸ் 18%, வெளிநாடு 12%, மெட்டெக் 4%, API 2%'],
+  ['I understand why profit fell while sales rose','விற்பனை ஏறியும் லாபம் ஏன் குறைஞ்சதுன்னு புரியுது','EBITDA margin 24.1% vs 31.8%; net profit –35.9% to ₹939.8 Cr','EBITDA விகிதம் 24.1% vs 31.8%; நிகர லாபம் –35.9%, ₹939.8 கோடி'],
+  ['I know FYB206 is under review, not approved','FYB206 ஆய்வுல இருக்கு, ஒப்புதல் இல்லைன்னு தெரியும்','BLA accepted 13 Oct 2026; FDA goal ~Q3 2027; core patent 2028','BLA ஏற்பு 13 அக் 2026; FDA இலக்கு ~Q3 2027; காப்புரிமை 2028'],
+  ['I know who makes FYB206','FYB206-ஐ யார் தயாரிக்கிறாங்கன்னு தெரியும்','Formycon develops, manufactures and supplies; Zydus sells in US & Canada','Formycon உருவாக்கி, தயாரிச்சு தருது; சைடஸ் அமெரிக்கா &amp; கனடாவுல விக்குது']]},
+ {en:'2 · Problems investors face',ta:'2 · முதலீட்டாளர்கள் சந்திக்கும் பிரச்சனைகள்',it:[
+  ['I have considered US price erosion','அமெரிக்க விலை சரிவை யோசிச்சிருக்கேன்','North America –2.6% YoY to ₹3,097.9 Cr','வட அமெரிக்கா –2.6%, ₹3,097.9 கோடி'],
+  ['I have looked at cash conversion','பண மாற்றத்தை பார்த்திருக்கேன்','FY26 CFO ₹2,117 Cr vs net profit ₹5,040 Cr (0.42x)','FY26 CFO ₹2,117 கோடி vs நிகர லாபம் ₹5,040 கோடி (0.42x)'],
+  ['I have checked the rise in debt','கடன் ஏற்றத்தை சரிபார்த்திருக்கேன்','Net debt ₹5,904 Cr (0.70x EBITDA) at 30 Jun 2026','நிகர கடன் ₹5,904 கோடி (EBITDA-க்கு 0.70x), 30 ஜூன் 2026'],
+  ['I know how crowded the Keytruda race is','கீட்ருடா போட்டி எவ்வளவு நெரிசல்னு தெரியும','Samsung Bioepis, Celltrion, Amgen, Qilu/Cipla, Sandoz and others; 13+ in trials','Samsung Bioepis, Celltrion, Amgen, Qilu/Cipla, Sandoz மற்றும் பலர்; 13+ சோதனையில']]},
+ {en:'3 · Solutions (what I did)',ta:'3 · தீர்வுகள் (நான் செய்தது)',it:[
+  ['I read the Q1 FY27 results release myself','Q1 FY27 முடிவு அறிக்கையை நானே படிச்சேன','',''],
+  ['I noted management\'s margin guidance','நிர்வாக லாப விகித வழிகாட்டலை குறிச்சுக்கிட்டேன்','FY27 ~24%; medium term 28–30%','FY27 ~24%; நடுத்தர காலம் 28–30%'],
+  ['I decided how much of my portfolio this could be','என் போர்ட்ஃபோலியோவுல எவ்வளவுன்னு முடிவு செஞ்சேன்','',''],
+  ['I set a date to review the FDA outcome','FDA முடிவை மறுபார்வை செய்ய தேதி வெச்சேன்','FDA goal ~Q3 CY2027','FDA இலக்கு ~Q3 CY2027']]},
+ {en:'4 · Anchors\' and analysts\' view',ta:'4 · ஆங்கர் &amp; ஆய்வாளர் பார்வை',it:[
+  ['I know the range of broker targets','தரகர் இலக்கு வரம்பு தெரியும்','₹1,125 (Motilal Oswal, Neutral) to ₹1,201 (Deven Choksey, Accumulate); Nuvama Buy','₹1,125 (Motilal Oswal, Neutral) முதல் ₹1,201 (Deven Choksey, Accumulate) வரை; Nuvama Buy'],
+  ['I know the promoter stake','ப்ரோமோட்டர் பங்கு தெரியும்','Promoters 75.00%','ப்ரோமோட்டர்கள் 75.00%'],
+  ['I know the recent buyback price','சமீபத்திய buyback விலை தெரியும்','87.30 lakh shares bought back at ₹1,260 (June 2026)','₹1,260-க்கு 87.30 லட்சம் பங்குகள் (ஜூன் 2026)']]}];
+var SUG=[['Price below my own fair value','என் நியாய மதிப்புக்கு கீழ விலை'],['Q2 margin back above 24%','Q2 விகிதம் 24%-க்கு மேல'],['FDA approval of FYB206 received','FYB206-க்கு FDA ஒப்புதல்'],['Net debt / EBITDA below 1x','நிகர கடன் / EBITDA 1x-க்கு கீழ'],['CFO above net profit','CFO நிகர லாபத்துக்கு மேல'],['US sales growing again in US$','அமெரிக்க விற்பனை மீண்டும் வளர்ச்சி']];
+var LS='cb_sc_zydus_q1fy27';
+function scLoad(){try{return JSON.parse(localStorage.getItem(LS))||{t:{},own:[]}}catch(e){return {t:{},own:[]}}}
+function scSave(o){try{localStorage.setItem(LS,JSON.stringify(o))}catch(e){}}
+var scS=scLoad();
+function drawSC(){var w=el('scGroups');w.innerHTML='';var tot=0,on=0;
+ SC.forEach(function(g,gi){var d=document.createElement('div');d.className='sc-g';var gt=0,go=0,h='<h4>'+L(g.en,g.ta)+' <span class="note" id="scg'+gi+'"></span></h4><div class="bar"><i id="scb'+gi+'"></i></div>';
+  g.it.forEach(function(it,ii){var key=gi+'-'+ii,c=!!scS.t[key];gt++;if(c)go++;h+='<label class="sc-i"><input type="checkbox" data-k="'+key+'" '+(c?'checked':'')+'><div><div>'+L(it[0],it[1])+'</div><div class="dl">Data: '+(L(it[2],it[3])||'—')+'</div></div></label>'});
+  d.innerHTML=h;w.appendChild(d);tot+=gt;on+=go;setTimeout(function(){el('scg'+gi).textContent=go+'/'+gt;el('scb'+gi).style.width=(go/gt*100)+'%'},0)});
+ var d5=document.createElement('div');d5.className='sc-g';var h5='<h4>'+L('5 · My own conditions','5 · என் சொந்த நிபந்தனைகள்')+'</h4>';
+ scS.own.forEach(function(o,i){var c=!!scS.t['o-'+i];tot++;if(c)on++;h5+='<label class="sc-i"><input type="checkbox" data-k="o-'+i+'" '+(c?'checked':'')+'><div>'+o.replace(/</g,'&lt;')+'</div></label>'});
+ if(scS.own.length<8){h5+='<div style="display:flex;gap:6px;margin-top:6px"><input id="scNew" style="flex:1;border:1px solid var(--line);border-radius:8px;padding:7px" placeholder="'+L('Add a condition (max 8)','நிபந்தனை சேர்க்க (அதிகபட்சம் 8)')+'"><button class="btn" id="scAdd">+</button></div><div>'+SUG.map(function(s,i){return '<span class="sugg" data-i="'+i+'">'+L(s[0],s[1])+'</span>'}).join('')+'</div>'}
+ d5.innerHTML=h5;w.appendChild(d5);
+ el('scAll').textContent=on+'/'+tot;el('scAllB').style.width=(tot?on/tot*100:0)+'%';
+ el('scMsg').textContent=L(on+' of '+tot+' of your conditions line up. This only counts how many of your own conditions line up. It is not a recommendation.',tot+'-ல '+on+' நிபந்தனைகள் ஒத்துப்போகுது. இது உங்க சொந்த நிபந்தனைகள் எத்தனை ஒத்துப்போகுதுன்னு மட்டும் எண்ணுது. இது பரிந்துரை இல்லை.');
+ [].forEach.call(w.querySelectorAll('input[type=checkbox]'),function(cb){cb.onchange=function(){scS.t[cb.dataset.k]=cb.checked;scSave(scS);drawSC()}});
+ var ad=el('scAdd');if(ad)ad.onclick=function(){var v=el('scNew').value.trim();if(v&&scS.own.length<8){scS.own.push(v);scSave(scS);drawSC()}};
+ [].forEach.call(w.querySelectorAll('.sugg'),function(sp){sp.onclick=function(){if(scS.own.length<8){scS.own.push(L(SUG[sp.dataset.i][0],SUG[sp.dataset.i][1]));scSave(scS);drawSC()}}})}
+el('scClear').onclick=function(){scS={t:{},own:[]};scSave(scS);drawSC()};
+
+/* ===== Socrates quiz ===== */
+var QZ=[
+ {q:['Which segment is the largest share of Q1 FY27 sales?','Q1 FY27 விற்பனையில எந்த பிரிவு பெரியது?'],o:[['India Formulations','இந்திய மருந்துகள்'],['North America','வட அமெரிக்கா'],['Consumer Wellness','கன்ஸ்யூமர் வெல்னஸ்']],a:1,e:['North America is 40% (₹3,097.9 Cr). So US price erosion matters a lot even when India grows fast.','வட அமெரிக்கா 40% (₹3,097.9 கோடி). அதனால இந்தியா வேகமா வளர்ந்தாலும் அமெரிக்க விலை சரிவு ரொம்ப முக்கியம்.']},
+ {q:['Gross margin stayed ~72% but EBITDA margin fell to 24.1%. What does that point to?','மொத்த விகிதம் ~72%, ஆனா EBITDA 24.1%-க்கு குறைஞ்சது. இது எதை காட்டுது?'],o:[['Falling selling prices','விற்பனை விலை குறைவு'],['Operating costs growing faster than sales','விற்பனையை விட இயக்கச் செலவு வேகமா ஏற்றம்'],['Higher raw material cost','மூலப்பொருள் விலை ஏற்றம்']],a:1,e:['If price or raw materials were the problem, gross margin would fall too. The gap opened below gross profit — opex, integration costs, R&D.','விலை அல்லது மூலப்பொருள் பிரச்சனைன்னா மொத்த விகிதமும் குறைஞ்சிருக்கும். இடைவெளி மொத்த லாபத்துக்கு கீழ — இயக்கச் செலவு, இணைப்பு செலவு, ஆராய்ச்சி.']},
+ {q:['Who manufactures FYB206, the Keytruda biosimilar Zydus will sell?','சைடஸ் விற்கப்போற FYB206-ஐ யார் தயாரிக்கிறாங்க?'],o:[['Zydus at Zydus Biotech Park','Zydus Biotech Park-ல சைடஸ்'],['Merck','Merck'],['Formycon AG','Formycon AG']],a:2,e:['Formycon develops, manufactures and supplies; Zydus commercialises in the US and Canada.','Formycon உருவாக்கி, தயாரிச்சு, விநியோகிக்குது; சைடஸ் அமெரிக்கா, கனடாவுல விக்குது.']},
+ {q:['BLA accepted in Oct 2026. Under BsUFA, when could the FDA act?','அக் 2026-ல BLA ஏற்பு. BsUFA-படி FDA எப்போ முடிவு சொல்லலாம்?'],o:[['Within 3 months','3 மாசத்துக்குள்ள'],['Around Q3 2027','சுமார் Q3 2027'],['After 2030','2030-க்கு அப்புறம்']],a:1,e:['The goal is 12 months from submission (Q3 2026), so about Q3 2027. Launch also depends on patents (core 2028).','இலக்கு தாக்கலிலிருந்து 12 மாதம் (Q3 2026), அதனால சுமார் Q3 2027. அறிமுகம் காப்புரிமையையும் பொறுத்தது (2028).']},
+ {q:['How is Merck defending Keytruda against biosimilars?','பயோசிமிலர்களிடமிருந்து கீட்ருடாவை Merck எப்படி காக்குது?'],o:[['Cutting the price by 80%','விலையை 80% குறைச்சு'],['Moving patients to subcutaneous Keytruda Qlex','நோயாளிகளை தோலடி கீட்ருடா Qlex-க்கு மாத்தி'],['Stopping US sales','அமெரிக்க விற்பனையை நிறுத்தி']],a:1,e:['Qlex is priced at parity and has its own patents; Merck expects 30–40% of patients to switch, shrinking the IV pool biosimilars can copy.','Qlex அதே விலையில, தனி காப்புரிமையோட; 30–40% நோயாளிகள் மாறுவாங்கன்னு Merck எதிர்பார்க்குது.']},
+ {q:['The stock rose from ₹884 to about ₹1,190 and then moved sideways for weeks. In Weinstein terms that looks like…','பங்கு ₹884-லிருந்து ~₹1,190 ஏறி, அப்புறம் வாரக்கணக்கா பக்கவாட்டா நகருது. Weinstein-படி இது…'],o:[['Stage 1 base','Stage 1 அடித்தளம்'],['Stage 3 top-like flattening','Stage 3 உச்ச சமநிலை போல'],['Stage 4 decline','Stage 4 சரிவு']],a:1,e:['A flattening after a strong rise is Stage 3-like. It is a caution signal, not a sell signal — a new trigger can restart Stage 2.','வலுவான ஏற்றத்துக்கு அப்புறம் சமநிலை Stage 3 போல. இது எச்சரிக்கை, விற்க சமிக்ஞை இல்லை — புது தூண்டல் Stage 2-ஐ மீண்டும் தொடங்கலாம்.']},
+ {q:['FY26 CFO/PAT was 0.42x. What is the best first question to ask?','FY26 CFO/PAT 0.42x. முதல்ல கேட்க வேண்டிய சிறந்த கேள்வி?'],o:[['Is the company cheating?','நிறுவனம் ஏமாத்துதா?'],['How much of the working-capital jump came from acquisitions?','நடைமுறை மூலதன ஏற்றத்துல எவ்வளவு வாங்குதல்களால?'],['Will the dividend rise?','டிவிடெண்ட் ஏறுமா?']],a:1,e:['Acquired inventory and receivables inflate year-end balances. Separate organic from acquired before judging cash quality.','வாங்கின நிறுவனங்களோட சரக்கும் வரவேண்டியதும் ஆண்டு இறுதி இருப்பை கூட்டும். பணத் தரத்தை தீர்மானிக்கும் முன் சொந்த vs வாங்கினதை பிரிங்க.']}];
+function drawQuiz(){var w=el('quiz');w.innerHTML='';var sc=0,done=0;
+ QZ.forEach(function(q,qi){var d=document.createElement('div');d.className='q';d.innerHTML='<b>'+(qi+1)+'. '+L(q.q[0],q.q[1])+'</b>'+q.o.map(function(o,oi){return '<button class="opt" data-o="'+oi+'">'+L(o[0],o[1])+'</button>'}).join('')+'<div class="fb"></div>';
+  [].forEach.call(d.querySelectorAll('.opt'),function(b){b.onclick=function(){if(d.dataset.done)return;d.dataset.done=1;var ok=+b.dataset.o===q.a;b.classList.add(ok?'r':'w');d.querySelectorAll('.opt')[q.a].classList.add('r');d.querySelector('.fb').innerHTML=(ok?'✔ ':'✘ ')+L(q.e[0],q.e[1])}});w.appendChild(d)})}
+function socHint(n){var H={1:['Start with gross profit (did pricing hold?), then operating expenses and R&D (what grew faster than sales?), then depreciation, interest and tax (what changed below EBITDA after the acquisitions?).','முதல்ல மொத்த லாபம் (விலை நிலைச்சதா?), அப்புறம் இயக்கச் செலவு &amp; ஆராய்ச்சி (விற்பனையை விட எது வேகமா ஏறிச்சு?), அப்புறம் தேய்மானம், வட்டி, வரி (வாங்குதல்களுக்கு அப்புறம் EBITDA-க்கு கீழ என்ன மாறிச்சு?).'],2:['If the IV pool shrinks by a third, and five makers share what is left, what happens to price? Who has the advantage — the first approved, or the one with the cheapest manufacturing?','IV சந்தை மூணுல ஒரு பங்கு சுருங்கி, மீதியை அஞ்சு நிறுவனங்கள் பகிர்ந்தா விலைக்கு என்ன ஆகும்? யாருக்கு சாதகம் — முதல்ல ஒப்புதல் பெற்றவருக்கா, மலிவா தயாரிக்கிறவருக்கா?']};el('fh'+n).innerHTML=L(H[n][0],H[n][1])}
+
+/* ===== CB Assist ===== */
+var KB=[
+ {k:['revenue','sales','grow','வருமான','விற்பனை'],en:'Q1 FY27 revenue from operations was ₹8,017 Cr, up 22% YoY and 5.7% QoQ. Fastest: Consumer Wellness +67.2%, International Markets +34%, India +19.5%. North America fell 2.6%.',ta:'Q1 FY27 செயல்பாட்டு வருமானம் ₹8,017 கோடி, 22% ஏற்றம். வேகமா வளர்ந்தது: வெல்னஸ் +67.2%, வெளிநாடு +34%, இந்தியா +19.5%. வட அமெரிக்கா 2.6% குறைஞ்சது.'},
+ {k:['profit','pat','fell','why','லாப','குறை','ஏன்'],en:'Net profit fell 35.9% to ₹939.8 Cr. EBITDA margin dropped 770 bps to 24.1% because opex, integration and R&D grew faster than sales; higher depreciation, interest and a higher tax rate (including a UK tax disallowance) hit further.',ta:'நிகர லாபம் 35.9% குறைஞ்சு ₹939.8 கோடி. செலவு, இணைப்பு, ஆராய்ச்சி விற்பனையை விட வேகமா ஏறினதால EBITDA விகிதம் 24.1%-க்கு இறங்கிச்சு; தேய்மானம், வட்டி, அதிக வரி இன்னும் அடிச்சுச்சு.'},
+ {k:['margin','ebitda','விகித'],en:'EBITDA was ₹1,929.4 Cr at a 24.1% margin (31.8% a year ago, 33.7% in Q4). Guidance: about 24% for FY27, 28–30% medium term.',ta:'EBITDA ₹1,929.4 கோடி, விகிதம் 24.1% (போன வருஷம் 31.8%, Q4-ல 33.7%). வழிகாட்டல்: FY27 ~24%, நடுத்தர காலம் 28–30%.'},
+ {k:['keytruda','fyb206','pembrolizumab','biosimilar','கீட்ருடா','பயோசிமிலர்'],en:'FYB206 is a Keytruda biosimilar developed by Formycon; Zydus has exclusive US and Canada rights. The USFDA accepted its BLA on 13 Oct 2026 — the first publicly announced acceptance for a Keytruda biosimilar. FDA goal ~Q3 2027; launch tied to the 2028 core patent expiry.',ta:'FYB206 — Formycon உருவாக்கின கீட்ருடா பயோசிமிலர்; அமெரிக்கா, கனடா உரிமை சைடஸுக்கு. 13 அக் 2026-ல USFDA BLA-வை ஏத்துக்கிச்சு — முதல் அறிவிக்கப்பட்ட ஏற்பு. FDA இலக்கு ~Q3 2027; அறிமுகம் 2028 காப்புரிமை முடிவோட.'},
+ {k:['approval','approve','when','fda','ஒப்புதல்','எப்போ'],en:'Under BsUFA the FDA aims to finish review within 12 months of submission (submitted Q3 2026), so a decision around Q3 2027. Pending: pre-licence manufacturing inspection and patent clearance with Merck.',ta:'BsUFA-படி தாக்கலிலிருந்து 12 மாதத்துக்குள்ள ஆய்வு முடிக்க FDA இலக்கு (Q3 2026 தாக்கல்) — அதனால ~Q3 2027. நிலுவையில: உற்பத்தி ஆய்வு, Merck-ஓட காப்புரிமை தீர்வு.'},
+ {k:['who make','manufactur','produc','formycon','தயாரி'],en:'Zydus does not manufacture FYB206. Formycon AG handles development, regulatory filings, manufacturing and supply; Zydus sells it in the US and Canada.',ta:'FYB206-ஐ சைடஸ் தயாரிக்கல. உருவாக்கம், தாக்கல், தயாரிப்பு, விநியோகம் எல்லாம் Formycon AG; அமெரிக்கா, கனடாவுல சைடஸ் விக்கும்.'},
+ {k:['competitor','race','rival','others','samsung','amgen','celltrion','போட்டி'],en:'Rivals: Samsung Bioepis (SB27, Phase III positive, Korea filing), Celltrion (CT-P51, Korea filing), Amgen (ABP 234, trials done, FDA filing likely late 2026), Qilu with Cipla in the US, Dr Reddy\'s + Alvotech, Biocon, Sandoz, mAbxience, Bio-Thera, Henlius, BioNTech, Enzene.',ta:'போட்டியாளர்கள்: Samsung Bioepis (SB27), Celltrion (CT-P51), Amgen (ABP 234), அமெரிக்காவுல Cipla-வோட Qilu, Dr Reddy\'s + Alvotech, Biocon, Sandoz, mAbxience, Bio-Thera, Henlius, BioNTech, Enzene.'},
+ {k:['debt','borrow','leverage','கடன்'],en:'Net debt was ₹5,904.1 Cr on 30 Jun 2026: 0.22x equity and 0.70x EBITDA. Total debt rose to ₹12,515 Cr at Mar-26 from ₹3,218 Cr after acquisitions.',ta:'30 ஜூன் 2026-ல நிகர கடன் ₹5,904.1 கோடி: ஈக்விட்டிக்கு 0.22x, EBITDA-க்கு 0.70x. வாங்குதல்களுக்கு அப்புறம் மொத்த கடன் ₹3,218 கோடியிலிருந்து ₹12,515 கோடி.'},
+ {k:['cash','cfo','free cash','பண'],en:'FY26 CFO was ₹2,117 Cr vs ₹6,777 Cr in FY25; CFO/PAT 0.42x; free cash flow –₹1,277 Cr. Working capital (inventory and receivables) absorbed about ₹3,000 Cr, partly from acquired balances.',ta:'FY26 CFO ₹2,117 கோடி (FY25 ₹6,777 கோடி); CFO/PAT 0.42x; இலவசப் பணம் –₹1,277 கோடி. சரக்கு, வரவேண்டியது சுமார் ₹3,000 கோடி உறிஞ்சிச்சு.'},
+ {k:['working capital','inventory','receivable','days','ccc','நடைமுறை','சரக்கு'],en:'Cash conversion cycle rose from 157 to 208 days in FY26: receivable days 64→73, inventory days 220→273, payable days 127→138.',ta:'FY26-ல பண மாற்றச் சுழற்சி 157-லிருந்து 208 நாள்: வரவேண்டியது 64→73, சரக்கு 220→273, கொடுக்கவேண்டியது 127→138.'},
+ {k:['valuation','p/e',' pe ','expensive','cheap','மதிப்பீ'],en:'At ₹1,133: P/E ~25.3x trailing, 22.6x FY26; P/B 4.2x; EV/EBITDA ~17.6x. Broker targets ₹1,121–1,201.',ta:'₹1,133-ல: P/E ~25.3x (TTM), FY26-க்கு 22.6x; P/B 4.2x; EV/EBITDA ~17.6x. தரகர் இலக்குகள் ₹1,121–1,201.'},
+ {k:['analyst','target','broker','rating','இலக்கு','தரகர்'],en:'Nuvama: Buy (upgraded Aug 2026). Prabhudas Lilladher: Accumulate ₹1,200. Deven Choksey: Accumulate ₹1,201. Motilal Oswal: Neutral ₹1,125. These are third-party views.',ta:'Nuvama: Buy. Prabhudas Lilladher: Accumulate ₹1,200. Deven Choksey: Accumulate ₹1,201. Motilal Oswal: Neutral ₹1,125. இவை மூன்றாம் தரப்பு கருத்துகள்.'},
+ {k:['management','board','md','chairman','ceo','நிர்வாக','தலைவர்'],en:'Chairman Pankaj R. Patel (non-executive, promoter); MD Dr Sharvil P. Patel; Whole-time Director Ganesh N. Nayak; CFO Tushar Shroff. Promoters own 75%.',ta:'தலைவர் பங்கஜ் R. படேல்; நிர்வாக இயக்குநர் டாக்டர் ஷர்வில் P. படேல்; முழுநேர இயக்குநர் கணேஷ் N. நாயக்; CFO துஷார் ஷ்ராஃப். ப்ரோமோட்டர்கள் 75%.'},
+ {k:['risk','threat','danger','அபாய'],en:'Key risks: further US generic price erosion, a crowded Keytruda race and Merck\'s Qlex strategy, patent litigation (Ikra case), weak cash conversion, and integrating three acquisitions.',ta:'முக்கிய அபாயங்கள்: அமெரிக்க விலை சரிவு, நெரிசலான கீட்ருடா போட்டி &amp; Qlex, காப்புரிமை வழக்கு (Ikra), பலவீன பண மாற்றம், மூணு வாங்குதல்களோட இணைப்பு.'},
+ {k:['trigger','catalyst','cycle','தூண்டல்','சுழற்சி'],en:'Cycle score 59 (sector in P3 Expansion; stock Stage 3-like). Trigger score 49: positives are Saroglitazar PBC priority review, FYB206 BLA acceptance and margin recovery; negatives are US price erosion and the Ikra case.',ta:'சுழற்சி மதிப்பெண் 59 (துறை P3; பங்கு Stage 3 போல). தூண்டல் மதிப்பெண் 49: நேர்மறை — சரோக்ளிடசார், FYB206, லாப விகித மீட்சி; எதிர்மறை — அமெரிக்க விலை சரிவு, Ikra வழக்கு.'},
+ {k:['saroglitazar','pbc','சரோக்ளி'],en:'The USFDA granted priority review to Saroglitazar Magnesium for primary biliary cholangitis — potentially Zydus\'s first innovative drug in the US.',ta:'PBC நோய்க்கான சரோக்ளிடசார் மெக்னீசியத்துக்கு USFDA முன்னுரிமை ஆய்வு — அமெரிக்காவுல சைடஸோட முதல் புதுமை மருந்தா இருக்கலாம்.'},
+ {k:['wellness','comfort click','consumer','வெல்னஸ்'],en:'Consumer Wellness revenue was ₹1,429.2 Cr (+67.2%), helped by Comfort Click (UK). Like-for-like: international +25%, domestic +5%.',ta:'வெல்னஸ் வருமானம் ₹1,429.2 கோடி (+67.2%), Comfort Click (UK) உதவியோட. ஒப்பிடக்கூடிய அளவில்: வெளிநாடு +25%, உள்நாடு +5%.'},
+ {k:['medtech','amplitude','மெட்டெக்'],en:'MedTech revenue was ₹282.8 Cr (4% of sales), from Amplitude Surgical in France, fully owned since Oct 2025.',ta:'மெட்டெக் வருமானம் ₹282.8 கோடி (4%), பிரான்ஸ் Amplitude Surgical-லிருந்து.'},
+ {k:['buyback','dividend','டிவிடெண்ட்'],en:'87.30 lakh shares were bought back at ₹1,260 (completed June 2026). FY26 final dividend was ₹1 per share.',ta:'₹1,260-க்கு 87.30 லட்சம் பங்குகள் திரும்ப வாங்கப்பட்டது (ஜூன் 2026). FY26 இறுதி டிவிடெண்ட் பங்குக்கு ₹1.'}];
+var NOADV={en:'CB Research does not tell anyone to buy, sell or hold. The Self-check tab lets you test the stock against your own conditions.',ta:'CB Research யாருக்கும் வாங்க, விற்க, வைத்திருக்க சொல்லாது. சுய சோதனை பகுதியில உங்க சொந்த நிபந்தனைகளோட பங்கை சோதிக்கலாம்.'};
+function answer(q){var s=q.toLowerCase();
+ if(/\b(buy|sell|hold|invest|should i)\b/.test(s)||/வாங்கலாமா|விற்கலாமா/.test(q))return {t:L(NOADV.en,NOADV.ta),sc:true};
+ if(/rank|fastest|compare|best segment|ஒப்பி|வரிசை/.test(s)){var r=CO.segments.filter(function(x){return x.g!==null}).slice().sort(function(a,b){return b.g-a.g});return {t:L('Segments ranked by YoY growth: ','ஆண்டு வளர்ச்சிப்படி பிரிவுகள்: ')+r.map(function(x,i){return (i+1)+'. '+L(x.n,x.ta)+' '+(x.g>0?'+':'')+x.g+'%'}).join(' · ')}}
+ var best=null,bs=0;KB.forEach(function(e){var sc=0;e.k.forEach(function(k){if(s.indexOf(k)>=0||q.indexOf(k)>=0)sc+=k.length});if(sc>bs){bs=sc;best=e}});
+ if(best)return {t:L(best.en,best.ta)};return {t:L('I can answer on revenue, profit, margins, segments, Keytruda biosimilar, approval timing, rivals, debt, cash flow, working capital, valuation, analysts, management, risks and triggers.','வருமானம், லாபம், விகிதம், பிரிவுகள், கீட்ருடா பயோசிமிலர், ஒப்புதல் நேரம், போட்டியாளர்கள், கடன், பணப்புழக்கம், நடைமுறை மூலதனம், மதிப்பீடு, ஆய்வாளர்கள், நிர்வாகம், அபாயம், தூண்டல்கள் பற்றி கேளுங்க.')}}
+function say(t){try{if(!window.speechSynthesis)return;speechSynthesis.cancel();var u=new SpeechSynthesisUtterance(t.replace(/<[^>]+>/g,''));u.lang=isTa?'ta-IN':'en-IN';var vs=speechSynthesis.getVoices().filter(function(v){return v.lang&&v.lang.indexOf(isTa?'ta':'en')===0});if(vs.length)u.voice=vs.filter(function(v){return /IN/.test(v.lang)})[0]||vs[0];speechSynthesis.speak(u)}catch(e){}}
+function ask(q,voice){if(!q)return;var lg=el('asLog');lg.insertAdjacentHTML('beforeend','<div class="m-u">'+q.replace(/</g,'&lt;')+'</div>');var a=answer(q);var h='<div class="m-b">'+a.t+(a.sc?'<br><button class="btn o" style="margin-top:6px" onclick="showTab(\'t-sc\')">'+L('Open Self-check','சுய சோதனையை திற')+'</button>':'')+'</div>';lg.insertAdjacentHTML('beforeend',h);lg.scrollTop=lg.scrollHeight;if(voice)say(a.t)}
+function asQs(){var qs=isTa?['லாபம் ஏன் குறைஞ்சது?','கீட்ருடா ஒப்புதல் எப்போ?','யார் தயாரிக்கிறாங்க?','போட்டியாளர்கள் யார்?','பிரிவுகளை ஒப்பிடு']:['Why did profit fall?','When is Keytruda approval?','Who makes FYB206?','Who are the rivals?','Rank segments by growth'];el('asQs').innerHTML=qs.map(function(q){return '<span>'+q+'</span>'}).join('');[].forEach.call(el('asQs').children,function(sp){sp.onclick=function(){ask(sp.textContent,true)}});el('asTxt').placeholder=L('Ask about Zydus…','சைடஸ் பற்றி கேளுங்க…')}
+el('asBtn').onclick=function(){el('asBox').classList.toggle('on');if(!el('asLog').innerHTML)el('asLog').innerHTML='<div class="m-b">'+L('Ask me by typing or tap 🎤 and speak. I will answer aloud.','டைப் பண்ணுங்க அல்லது 🎤 தொட்டு பேசுங்க. நான் குரலிலேயே பதில் சொல்வேன்.')+'</div>'};
+el('asX').onclick=function(){el('asBox').classList.remove('on');try{speechSynthesis.cancel()}catch(e){}};
+el('asGo').onclick=function(){ask(el('asTxt').value.trim(),false);el('asTxt').value=''};
+el('asTxt').onkeydown=function(e){if(e.key==='Enter')el('asGo').onclick()};
+el('asMic').onclick=function(){var SR=window.SpeechRecognition||window.webkitSpeechRecognition;if(!SR){el('asLog').insertAdjacentHTML('beforeend','<div class="m-b">'+L('Voice input is not supported in this browser — please type.','இந்த உலாவியில குரல் உள்ளீடு இல்லை — டைப் பண்ணுங்க.')+'</div>');return}
+ var r=new SR();r.lang=isTa?'ta-IN':'en-IN';r.interimResults=false;var b=el('asMic');b.classList.add('rec');r.onresult=function(e){ask(e.results[0][0].transcript,true)};r.onend=function(){b.classList.remove('rec')};r.onerror=function(){b.classList.remove('rec')};r.start()};
+
+/* ===== badge ===== */
+el('cbBadge').onclick=function(e){e.stopPropagation();el('cbDisc').classList.toggle('on')};
+el('cbBadge').onmouseenter=function(){el('cbDisc').classList.add('on')};
+document.addEventListener('click',function(e){if(!el('cbDisc').contains(e.target)&&e.target!==el('cbBadge'))el('cbDisc').classList.remove('on')});
+
+/* ===== render ===== */
+function renderAll(){buildNav();drawTemple();drawBM();qTable();sensTable();drawCharts();drawClock();calc();drawSC();drawQuiz();asQs()}
+el('langBtn').onclick=function(){isTa=!isTa;document.body.classList.toggle('ta',isTa);document.documentElement.lang=isTa?'ta':'en';el('langBtn').textContent=isTa?'English':'தமிழ்';renderAll()};
+renderAll();
+</script>
+</body>
+</html>
