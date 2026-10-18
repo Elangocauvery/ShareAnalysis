@@ -1,0 +1,729 @@
+<title>Big Three Private Banks Q2FY27</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Familjen+Grotesk:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&family=Noto+Sans+Tamil:wght@400;600;700&display=swap">
+<style>
+/* Layout: sticky ledger header (main tabs + bank sub-tabs), single reading column up to 1180px, wide diagrams scroll inside their own frame */
+:root{
+  --paper:#ffffff; --paper2:#f6f7f9; --line:#dfe3e8; --ink:#16202e; --muted:#5b6676;
+  --cb:#e2701b; --cbsoft:#fdf0e5;
+  --hdfc:#1d4f9e; --icici:#b13a1f; --axis:#8f1648;
+  --good:#1f8a4c; --warn:#c48a0a; --bad:#c23b2a;
+  --f-display:"Familjen Grotesk","Segoe UI",Arial,sans-serif;
+  --f-body:"IBM Plex Sans","Segoe UI",Arial,sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,Consolas,monospace;
+  --f-ta:"Noto Sans Tamil","Latha",sans-serif;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+svg text{font-family:var(--f-body)}
+body{background:var(--paper);color:var(--ink);font-family:var(--f-body);font-size:15px;line-height:1.55;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:0 90px}
+body.ta{font-family:var(--f-ta),var(--f-body)}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--paper)}
+.wrap{max-width:1180px;margin:0 auto}
+header.top{padding-block:18px 8px;display:flex;gap:16px;align-items:flex-end;justify-content:space-between;flex-wrap:wrap}
+.brand small{font-family:var(--f-mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--cb)}
+h1{font-family:var(--f-display);font-size:clamp(24px,4vw,36px);line-height:1.1;margin:4px 0 4px;text-wrap:balance}
+.sub{color:var(--muted);font-size:13.5px;margin:0}
+.ctrls{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+button{font-family:inherit;cursor:pointer}
+.pill{border:1px solid var(--line);background:var(--paper);color:var(--ink);border-radius:999px;padding:6px 12px;font-size:13px}
+.pill.on{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.pill:focus-visible,.tab:focus-visible,.btab:focus-visible{outline:2px solid var(--cb);outline-offset:2px}
+nav.bar{position:sticky;top:env(safe-area-inset-top,0px);z-index:9;background:var(--paper);border-bottom:1px solid var(--line);padding-block:6px}
+.tabs{display:flex;gap:2px;overflow-x:auto;scrollbar-width:thin}
+.tab{border:0;background:none;padding:9px 11px;font-size:13.5px;color:var(--muted);white-space:nowrap;border-bottom:2px solid transparent;font-weight:500}
+.tab.on{color:var(--ink);border-bottom-color:var(--cb)}
+.btabs{display:flex;gap:6px;padding-top:6px;overflow-x:auto}
+.btab{border:1px solid var(--line);background:var(--paper2);border-radius:6px;padding:5px 12px;font-size:13px;white-space:nowrap;color:var(--ink)}
+.btab.on[data-b="hdfc"]{background:var(--hdfc);color:#fff;border-color:var(--hdfc)}
+.btab.on[data-b="icici"]{background:var(--icici);color:#fff;border-color:var(--icici)}
+.btab.on[data-b="axis"]{background:var(--axis);color:#fff;border-color:var(--axis)}
+.btab.on[data-b="all"]{background:var(--ink);color:#fff;border-color:var(--ink)}
+main{padding-block:18px}
+h2{font-family:var(--f-display);font-size:24px;margin:6px 0 10px;text-wrap:balance}
+h3{font-family:var(--f-display);font-size:18px;margin:22px 0 8px}
+h4{margin:0 0 4px;font-size:15px}
+p{margin:0 0 10px;max-width:72ch}
+.muted{color:var(--muted)}
+.grid{display:grid;gap:12px}
+.g2{grid-template-columns:repeat(auto-fit,minmax(280px,1fr))}
+.g3{grid-template-columns:repeat(auto-fit,minmax(240px,1fr))}
+.g4{grid-template-columns:repeat(auto-fit,minmax(170px,1fr))}
+.g2>*,.g3>*,.g4>*{min-width:0}
+.card{border:1px solid var(--line);border-radius:10px;padding:14px;background:var(--paper)}
+.card.soft{background:var(--paper2);border-color:transparent}
+.kpi .l{font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.kpi .v{font-family:var(--f-mono);font-size:22px;font-weight:500;font-variant-numeric:tabular-nums}
+.kpi .d{font-size:12.5px}
+.up{color:var(--good)} .dn{color:var(--bad)} .fl{color:var(--warn)}
+.chip{display:inline-block;padding:2px 8px;border-radius:999px;font-size:12px;font-weight:600;border:1px solid currentColor}
+.c-good{color:var(--good)} .c-warn{color:var(--warn)} .c-bad{color:var(--bad)}
+.tw{overflow-x:auto;border:1px solid var(--line);border-radius:10px}
+table{border-collapse:collapse;width:100%;font-size:13.5px}
+th,td{padding:8px 10px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+th{background:var(--paper2);font-weight:600;font-size:12.5px;white-space:nowrap}
+td.n,th.n{text-align:right;font-family:var(--f-mono);font-variant-numeric:tabular-nums;white-space:nowrap}
+tr:last-child td{border-bottom:0}
+.bdot{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:6px;vertical-align:middle}
+.svgf{overflow-x:auto;border:1px solid var(--line);border-radius:10px;background:var(--paper)}
+.svgf svg{display:block}
+.chartf{overflow-x:auto;border:1px solid var(--line);border-radius:10px;padding:10px}
+.chartf .cv{min-width:900px;height:320px;position:relative}
+.note{font-size:12.5px;color:var(--muted)}
+.ex{margin-top:10px;border-left:3px solid var(--cb);background:var(--cbsoft);padding:10px 12px;border-radius:0 8px 8px 0;min-height:48px}
+.lesson{border-top:3px solid var(--ink)}
+.box{cursor:pointer}
+.box rect{transition:stroke-width .2s,opacity .2s}
+.box:hover rect,.box.sel rect{stroke-width:3}
+.dim{opacity:.18}
+.lnk{transition:opacity .2s}
+.scn{display:flex;gap:6px;flex-wrap:wrap;margin:8px 0}
+.flag{font-size:11px;color:var(--warn)}
+.bar-h{height:10px;border-radius:5px;background:var(--paper2);overflow:hidden}
+.bar-h i{display:block;height:100%}
+.rank{font-family:var(--f-display);font-size:40px;line-height:1;color:var(--cb)}
+.pc{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media (max-width:640px){.pc{grid-template-columns:1fr}}
+.pc ul{margin:0;padding-left:18px}
+.sc-item{display:flex;gap:10px;padding:8px 0;border-bottom:1px dashed var(--line)}
+.sc-item input{margin-top:4px;width:18px;height:18px;accent-color:var(--cb)}
+.sc-data{font-size:12px;color:var(--muted)}
+.prog{height:8px;background:var(--paper2);border-radius:4px;overflow:hidden;margin:4px 0}
+.prog i{display:block;height:100%;background:var(--cb);transition:width .3s}
+.tl{display:flex;gap:10px;overflow-x:auto;padding-bottom:6px}
+.tl .ev{min-width:170px;border-top:3px solid var(--cb);padding:8px;background:var(--paper2);border-radius:0 0 8px 8px}
+.tl .ev b{font-family:var(--f-mono);font-size:12px}
+.hl{animation:hl 1.6s ease}
+@keyframes hl{0%{box-shadow:0 0 0 3px var(--cb)}100%{box-shadow:0 0 0 0 transparent}}
+/* CB badge */
+#cbBadge{position:fixed;right:calc(14px + env(safe-area-inset-right,0px));bottom:calc(14px + env(safe-area-inset-bottom,0px));width:52px;height:52px;border-radius:50%;background:var(--cb);color:#fff;font-family:var(--f-display);font-weight:700;font-size:19px;border:3px solid #fff;box-shadow:0 2px 10px rgba(0,0,0,.25);z-index:20;animation:blink 2.4s infinite}
+@keyframes blink{50%{box-shadow:0 0 0 7px rgba(226,112,27,.25)}}
+#disc{position:fixed;right:calc(14px + env(safe-area-inset-right,0px));bottom:calc(76px + env(safe-area-inset-bottom,0px));max-width:min(360px,calc(100vw - 32px));background:#fff;border:1px solid var(--line);border-radius:10px;padding:14px;font-size:13px;z-index:21;box-shadow:0 6px 24px rgba(0,0,0,.15)}
+#assistBtn{position:fixed;right:calc(76px + env(safe-area-inset-right,0px));bottom:calc(18px + env(safe-area-inset-bottom,0px));z-index:20;background:var(--ink);color:#fff;border:0;border-radius:999px;padding:12px 16px;font-size:13.5px;box-shadow:0 2px 10px rgba(0,0,0,.2)}
+#assist{position:fixed;right:calc(14px + env(safe-area-inset-right,0px));bottom:calc(76px + env(safe-area-inset-bottom,0px));width:min(380px,calc(100vw - 32px));max-height:70vh;display:flex;flex-direction:column;background:#fff;border:1px solid var(--line);border-radius:12px;z-index:22;box-shadow:0 8px 30px rgba(0,0,0,.18)}
+#assist .hd{padding:10px 14px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center}
+#alog{padding:10px 14px;overflow-y:auto;flex:1;font-size:13.5px}
+#alog .q{background:var(--paper2);padding:6px 10px;border-radius:8px;margin:6px 0 4px;margin-left:30px}
+#alog .a{padding:6px 0}
+#assist form{display:flex;gap:6px;padding:10px;border-top:1px solid var(--line)}
+#assist input{flex:1;min-width:0;padding:8px 10px;border:1px solid var(--line);border-radius:8px;font:inherit}
+.mic.rec{background:var(--bad);color:#fff;border-color:var(--bad)}
+.qz{border:1px solid var(--line);border-radius:10px;padding:12px;margin-bottom:10px}
+.qz button{display:block;width:100%;text-align:left;margin:5px 0;padding:8px 10px;border:1px solid var(--line);background:var(--paper);border-radius:8px}
+.qz button.ok{border-color:var(--good);background:#eaf6ef}
+.qz button.no{border-color:var(--bad);background:#fbecea}
+.wm{position:fixed;left:50%;top:55%;transform:translate(-50%,-50%) rotate(-24deg);font-family:var(--f-display);font-size:min(9vw,90px);color:rgba(226,112,27,.05);pointer-events:none;white-space:nowrap;z-index:0}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+
+<div class="wm" aria-hidden="true">CB Research</div>
+<div class="wrap">
+<header class="top">
+  <div class="brand">
+    <small>CB Research · Bank Results · Q2FY27 (Jul–Sep 2026)</small>
+    <h1 id="ttl">HDFC Bank · ICICI Bank · Axis Bank</h1>
+    <p class="sub" id="subt">Results declared Saturday 17 Oct 2026 · standalone, unaudited (limited review) · ₹ crore unless stated</p>
+  </div>
+  <div class="ctrls">
+    <button class="pill on" id="lenBtn" type="button">English</button>
+    <button class="pill" id="ltaBtn" type="button">தமிழ்</button>
+  </div>
+</header>
+<nav class="bar" aria-label="Sections">
+  <div class="tabs" id="tabs" role="tablist"></div>
+  <div class="btabs" id="btabs"></div>
+</nav>
+<main id="main"></main>
+</div>
+
+<button id="assistBtn" type="button">🎙 CB Assist</button>
+<div id="assist" hidden>
+  <div class="hd"><b>CB Assist</b><button class="pill" id="aClose" type="button">Close</button></div>
+  <div id="alog"></div>
+  <form id="aForm"><button class="pill mic" id="mic" type="button" title="Ask by voice">🎙</button><input id="aIn" placeholder="Ask: which bank had the best quarter?" autocomplete="off"><button class="pill" type="submit">Ask</button></form>
+</div>
+<button id="cbBadge" type="button" aria-label="Disclaimer">CB</button>
+<div id="disc" hidden></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<script>
+/* ============ DATA (machine-readable) ============ */
+var CO = {
+ hdfc:{name:"HDFC Bank",short:"HDFC",col:"#1d4f9e",code:"NSE: HDFCBANK · BSE: 500180",
+  cmp:728.85,cmpDate:"16 Oct 2026",mcap:1120970,mcapE:true,shares:1538,
+  m:{dep:[2801800,3327400],adv:[2769200,3219500],cd:[98.8,96.8],nii:[31550,34619],nim:[3.30,3.32],oi:[14350,13830],ppop:[27924,29483],prov:[3501,3574],pat:[18641,19510],casa:[33.9,31.6],gnpa:[1.24,1.11],nnpa:[0.42,0.37],pcr:[null,67],cti:[39.2,39.1],crar:[20.0,18.9],cet1:[17.5,17.1],roe:[null,13.3],roa:[1.94,1.8],yld:[null,7.6],cod:[null,4.4],lcr:[null,113],bvps:[null,385],pbv:[null,1.89]},
+  est:{roe:1,bvps:1,pbv:1,mcap:1},
+  cons:{pat:19606,nii:34992,prov:3342},
+  fcnr:{usd:11.5,inr:110000,note:"$11.5 billion mobilised under RBI swap window (about ₹1,10,000 crore); FCNR leverage added about 1.9 percentage points to AUM growth"},
+  seg:[["Retail loans","53% of book · +11.7%","Retail is 53% of HDFC's ₹33.1 lakh crore loan book (AUM). Mortgages alone are about ₹9.2 lakh crore; other retail assets (auto, personal, cards, gold, agri) about ₹8.2 lakh crore. Growth +11.7% YoY, slower than SME."],["SME / mid-market","21% of book · +23.5%","Small and mid-market loans of about ₹7.1 lakh crore, roughly 21% of the book; the fastest-growing segment at +23.5%. Business banking within it (₹5.3 lakh crore) grew 28.1%."],["Corporate & wholesale","26% of book · +16.4%","Corporate and other wholesale loans are 26% of the book (30% in Sep 2023), growing 16.4%, partly funded by FCNR dollars."],["Treasury","₹780 cr gain","Trading gains fell from ₹2,390 crore a year ago. This is why PAT grew only 4.7%."],["Subsidiaries","Cons. PAT ₹20,700 cr","HDB Financial (PAT ₹780 cr, +34%), HDFC Life, HDFC AMC, HDFC Ergo, HDFC Securities."]],
+  fees:9690,opex:18970,
+  mgmt:[["Rajiv Kumar","Part-time Chairman (RBI approval 15 Jul 2026, 3 years)","Former Finance Secretary and 25th Chief Election Commissioner"],["Sashidhar Jagdishan","MD & CEO until 26 Oct 2026","Chose not to seek re-appointment (told board in August)"],["Anup Bagchi","MD & CEO from 27 Oct 2026 to 26 Oct 2029 (RBI approved 1 Oct)","Ex-MD & CEO ICICI Prudential Life; ICICI Bank ED 2017–23 (retail, rural, business banking); IIT Kanpur, IIM Bangalore"],["Kaizad Bharucha","Deputy MD","Was the other name sent to RBI for the CEO post"],["Srinivasan Vaidyanathan","CFO until 30 Nov 2026",""],["Puneet Sharma","CFO-designate from 1 Sep, CFO from 1 Dec 2026",""],["Keki Mistry","Non-Executive Non-Independent Director","Interim chairman Mar–Jul 2026"]],
+  gov:"Former chairman Atanu Chakraborty resigned in March 2026 citing 'practices' at odds with his values; an external legal review in June found no evidence for the allegations. The stock is down about 25% in 2026.",
+  brokers:[["Emkay","Buy",1225,"5 Oct 2026"],["Morgan Stanley","Overweight",1025,"5 Oct 2026"],["Nirmal Bang","Buy",1020,"Sep 2026"],["Nomura","Buy",950,"5 Oct 2026"],["PL Capital","Buy",950,"5 Oct 2026"],["Motilal Oswal","Buy",925,"5 Oct 2026"],["ICICI Securities","Buy",920,"5 Oct 2026"],["Jefferies","Buy",880,"7 Oct 2026"],["IIFL Securities","Buy",880,"5 Oct 2026"],["Systematix","Buy",870,"6 Oct 2026"]],
+  consTP:981.65,
+  pillars:[7.0,7.0,8.5,9.0,8.0,6.5],
+  pillarWhy:["Loans +16.3%, deposits +18.8%, but PAT only +4.7% (+12.6% excluding treasury).","NIM 3.32% is the lowest of the three; ROA 1.8%; cost-to-income 39.1% is efficient.","GNPA 1.11%, NNPA 0.37%, credit cost 0.44%. PCR 67% is the lowest of the three, but the provision stock is ₹73,500 crore.","CRAR 18.9%, CET1 17.1%: the thickest capital cushion. Floating provisions of ₹9,000 crore built in FY26.","About 1.9x book (CB estimate), near its lowest in a decade, versus ~2.8x for ICICI.","CEO and chairman changes in one year. Succession is now settled, but a new leadership team needs time."],
+  quarter:"Steady balance-sheet growth, weak profit growth because treasury gains collapsed; core earnings grew about 12.6%.",
+  cycle:{life:55,earn:50,val:75,price:70,stage:"Late Stage 1 base (CB estimate)"},
+  trig:[["CEO succession settled (Anup Bagchi from 27 Oct)","+",3,1.0,0.7,0.7,"First 100-day plan, team changes"],["NIM bottom in Q2; 70% floating book reprices after Oct hike","+",3,0.4,1.0,1.0,"Q3 NIM vs 3.32%"],["FII return to the most foreign-held bank","+",3,0.2,0.7,1.0,"Shareholding pattern, FPI flows"],["CD ratio 96.8% caps how fast loans can grow","−",2,1.0,1.0,1.0,"Deposit vs loan growth gap"],["Leadership transition execution risk","−",2,0.4,0.7,1.0,"Senior exits, strategy changes"]],
+  E:55,M:55,T:40
+ },
+ icici:{name:"ICICI Bank",short:"ICICI",col:"#b13a1f",code:"NSE: ICICIBANK · BSE: 532174",
+  cmp:1397,cmpDate:"16 Oct 2026",mcap:997000,mcapE:true,shares:714,
+  m:{dep:[1612800,2049874],adv:[1409200,1832000],cd:[87.4,89.4],nii:[21529,25339],nim:[4.30,4.18],oi:[7356,8277],ppop:[17298,20575],prov:[914,851],pat:[12359,14843],casa:[40.9,35.8],gnpa:[1.58,1.20],nnpa:[0.39,0.30],pcr:[75.0,75.0],cti:[null,38.1],crar:[15.76,16.68],cet1:[null,16.01],roe:[null,16.5],roa:[2.36,2.26],yld:[null,null],cod:[4.64,4.50],lcr:[null,126],bvps:[null,505],pbv:[null,2.77]},
+  est:{adv:1,cti:1,roe:1,bvps:1,pbv:1,mcap:1},
+  cons:{pat:14366,nii:25166,prov:1716},
+  fcnr:{usd:17.88,inr:171000,note:"$17.88 billion gross FCNR(B) (largest of the three) plus $3.55 billion of dollar bonds. Excluding FCNR, deposits grew 17% instead of 27.1%"},
+  seg:[["Retail & rural","51.6% of book · +14.8%","Retail and rural loans are 51.6% of the book (₹9,45,687 crore), growing 14.8%. Mortgages are 29.0% of all loans (+15.3%); personal loans +16.6%; gold (jewel) loans +79.4%; credit cards −9.7%. These customers also bring ~75% of fees."],["Business banking","+33.8% (in rest 48.4%)","Business banking grew 33.8%, the fastest at ICICI. Its exact share is not split out; together with corporate and overseas loans it makes up the other 48.4% of the book."],["Domestic corporate","+30.6% (in rest 48.4%)","Domestic corporate loans grew 30.6%. Overseas loans against FCNR deposits are extra: excluding them, the core book grew 24.1% instead of 30%."],["Treasury","Small","Core operating profit excludes treasury and still grew 21.8%."],["Subsidiaries","Cons. PAT ₹16,333 cr","ICICI Pru Life (bank bought 2% more for ₹1,470 cr), ICICI Lombard, ICICI Pru AMC, ICICI Securities."]],
+  fees:8277,opex:12811,
+  mgmt:[["Pradeep Kumar Sinha","Non-executive Chairman",""],["Sandeep Bakhshi","MD & CEO, re-appointed 4 Oct 2026 to 3 Oct 2028 (RBI approved)","MD & CEO since Oct 2018; ICICI Group since 1986"],["Ajay Kumar Gupta","Executive Director, re-appointed to 26 Nov 2028","Credit underwriting, operations, technology, data science"],["Sandeep Batra","Executive Director",""]],
+  gov:"Leadership is stable: CEO extended to 2028, no board disputes. Watch who succeeds Bakhshi after 2028.",
+  brokers:[["Nirmal Bang","Buy",1820,"Sep 2026"],["Jefferies","Buy",1750,"7 Oct 2026"],["Systematix","Buy",1700,"6 Oct 2026"]],
+  consTP:1758,
+  pillars:[9.0,9.0,9.0,8.5,6.5,8.5],
+  pillarWhy:["PAT +20.1%, NII +17.7%, core operating profit +21.8%, loans +30% (deposits +17% excluding FCNR).","NIM 4.18% is the best of the three even after an 18 bps fall; ROA ~2.3%; ROE ~16.5%.","GNPA 1.20% (from 1.58%), NNPA 0.30%, PCR 75%, provisions only 4.1% of core operating profit.","CET1 16.01%; contingency and standard provisions ₹23,815 crore (1.3% of advances). Strong ECL buffer.","About 2.8x book (CB estimate). Quality is fully priced; the least room for re-rating.","Stable CEO to 2028; consistent execution across cycles."],
+  quarter:"The cleanest quarter of the three: profit beat estimates on core income, not on one-offs.",
+  cycle:{life:80,earn:40,val:55,price:70,stage:"Stage 1 range (CB estimate)"},
+  trig:[["FCNR dollars deployed into loans at good spreads","+",2,0.7,1.0,1.0,"Loan growth ex-FCNR, NIM"],["Lower risk weights under new standardised approach (Apr 2027)","+",2,0.7,0.7,1.0,"Capital released"],["Subsidiary value (Pru Life stake raised)","+",1,1.0,1.0,1.0,"SOTP"],["NIM fell 18 bps QoQ (FCNR cost)","−",2,1.0,1.0,1.0,"Q3 NIM vs 4.18%"]],
+  E:88,M:50,T:55
+ },
+ axis:{name:"Axis Bank",short:"Axis",col:"#8f1648",code:"NSE: AXISBANK · BSE: 532215",
+  cmp:1290,cmpDate:"16 Oct 2026",mcap:401689,mcapE:false,shares:311.37,
+  m:{dep:[1200100,1452066],adv:[1116800,1373727],cd:[92.8,94.6],nii:[13740,15371],nim:[3.55,3.36],oi:[6630,6531],ppop:[10410,11083],prov:[3547,1694],pat:[5090,7003],casa:[40,36],gnpa:[1.46,1.16],nnpa:[0.44,0.35],pcr:[70.5,70],cti:[48.9,49.4],crar:[null,16.27],cet1:[null,14.61],roe:[null,13.96],roa:[null,1.38],yld:[null,null],cod:[null,null],lcr:[null,119],bvps:[null,676],pbv:[null,1.91]},
+  est:{dep:1,adv:1,cti:1,bvps:1,pbv:1},
+  cons:{pat:7157,nii:15259,prov:null},
+  fcnr:{usd:10.62,inr:101800,note:"$10.62 billion (₹1,01,800 crore). Citi notes an 8% share of system FCNR(B) inflows versus Axis's 5.3% deposit share. NIM is 3.47% without FCNR, 3.36% with it"},
+  seg:[["Retail loans","54% of book · +16%","Retail is 54% of advances (₹7,39,905 crore), growing 16%. It also caused ₹4,286 crore of the ₹4,762 crore gross slippages."],["Small business banking","+21% (in non-retail 46%)","SBB grew 21% YoY and 7% QoQ. Its exact share is not split out; it sits within the 46% non-retail book with SME and corporate."],["SME & corporate","Non-retail 46% · ₹6,33,822 cr","Non-retail loans are about 46% of advances (₹6,33,822 crore, CB calculation from total minus retail). Wholesale slippages were only ₹189 crore; FCNR funds part of this lending."],["Treasury","—","Total non-interest income ₹6,531 crore (fees, trading, other)."],["Subsidiaries","Cons. PAT ₹7,705 cr","Axis Finance (CRAR 22.15%), Axis AMC, Axis Securities, Axis Capital: add 11 bps to ROA."]],
+  fees:6531,opex:10819,
+  mgmt:[["Amitabh Chaudhry","MD & CEO","Leads the bank since 2019; strategy: digital, payments, partnerships"],["Subrat Mohanty","Executive Director","Presented fee and corporate commentary on the call"],["N S Vishwanathan","Non-executive Chairman (as last disclosed)",""]],
+  gov:"A 'change in directorate' was filed on 16 Oct 2026; details should be checked on the exchange filing. No governance disputes reported.",
+  brokers:[["Jefferies","Buy",1700,"7 Oct 2026"],["Systematix","Buy",1500,"6 Oct 2026"],["Goldman Sachs","Buy",1477,"Oct 2026"]],
+  consTP:1580,
+  pillars:[8.5,6.5,7.5,7.0,8.0,7.0],
+  pillarWhy:["Loans +23%, deposits +21%, PAT +37.6%, but core operating profit only +11%.","NIM 3.36%, cost-to-income ~49% (highest), ROA 1.38%, ROE ~14%.","GNPA 1.16% (from 1.46%), credit cost 0.45%, total provision coverage 164%. Retail slippages still dominate.","CET1 14.61% is the thinnest of the three; extra provisions ₹8,006 crore (~49 bps of capital).","About 1.9x book (CB estimate); cheapest relative to its growth.","Stable CEO; execution has been uneven in past cycles."],
+  quarter:"Big headline growth from a low base: provisions halved. Core profit grew 11% and PAT slightly missed estimates.",
+  cycle:{life:55,earn:85,val:70,price:70,stage:"Stage 1 range (₹1,150–1,418, 52 weeks)"},
+  trig:[["8% share of system FCNR inflows funds 23% loan growth","+",2,1.0,1.0,0.7,"Loan growth sustainability"],["Lower risk weights for retail under new rules","+",2,0.7,0.7,1.0,"CET1 relief"],["Valuation gap to ICICI narrows if ROA improves","+",2,0.4,0.7,1.0,"ROA toward 1.6%"],["Retail unsecured slippages (₹4,286 cr of ₹4,762 cr)","−",2,1.0,1.0,1.0,"Retail slippage ratio"],["ECL hit larger than HDFC/ICICI (more unsecured retail)","−",2,0.7,0.4,1.0,"Bank's Day-1 estimate"]],
+  E:70,M:50,T:55
+ }
+};
+var MACRO={repo:5.50,fiiYTD:304000,fiiOct:44166,inr:96,nifty:-14,bankex:-8};
+var BANKS=["hdfc","icici","axis"];
+var PILL_EN=["Growth","Profitability","Asset quality","Capital & ECL","Valuation","Management"];
+var PILL_TA=["வளர்ச்சி","லாபத்திறன்","கடன் தரம்","மூலதனம் & ECL","மதிப்பீடு","நிர்வாகம்"];
+
+/* ============ HELPERS ============ */
+var LANG="en",TAB="overview",BANK="all";
+function T(en,ta){return LANG==="ta"&&ta?ta:en}
+function fmt(n,d){if(n===null||n===undefined||isNaN(n))return "n/a";return Number(n).toLocaleString("en-IN",{minimumFractionDigits:d||0,maximumFractionDigits:d||0})}
+function full(cr){return Math.round(cr)/100}
+function pct(a,b){if(a==null||b==null)return null;return (b/a-1)*100}
+function chg(a,b,isRatio){if(a==null||b==null)return '<span class="muted">n/a</span>';var v=isRatio?(b-a):pct(a,b);var c=v>0.0001?"up":(v<-0.0001?"dn":"fl");return '<span class="'+c+'">'+(v>0?"+":"")+fmt(v,isRatio?2:1)+(isRatio?" pts":"%")+'</span>'}
+function esc(s){return String(s).replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
+function dag(b,k){return CO[b].est&&CO[b].est[k]?'<sup class="flag" title="CB estimate">†</sup>':''}
+function cbScore(b){var p=CO[b].pillars;return p.reduce(function(a,c){return a+c},0)/p.length}
+function scoreCol(s){return s>=8?"var(--good)":(s>=6?"var(--warn)":"var(--bad)")}
+function trigPts(t){return t[2]*t[3]*t[4]*t[5]}
+function TG(b){var pos=CO[b].trig.filter(function(t){return t[1]==="+"}).map(trigPts).sort(function(a,c){return c-a}).slice(0,3);var neg=CO[b].trig.filter(function(t){return t[1]!=="+"}).map(trigPts);var s=50+8*pos.reduce(function(a,c){return a+c},0)-8*neg.reduce(function(a,c){return a+c},0);return Math.max(0,Math.min(100,s))}
+var SECTOR_CY=70;
+function CY(b){var c=CO[b].cycle;return 0.5*SECTOR_CY+0.5*((c.life+c.earn+c.val+c.price)/4)}
+function conviction(b){var o=CO[b];return 0.25*o.E+0.20*cbScore(b)*10+0.15*o.M+0.15*o.T+0.10*CY(b)+0.15*TG(b)}
+function bankList(){return BANK==="all"?BANKS:[BANK]}
+function dot(b){return '<span class="bdot" style="background:'+CO[b].col+'"></span>'}
+
+/* ============ TABS ============ */
+var TABS=[
+ ["overview","Overview","கண்ணோட்டம்"],["results","Results & Charts","முடிவுகள்"],["model","Business Model","வணிக மாதிரி"],["subs","Subsidiaries","துணை நிறுவனங்கள்"],["school","CB School","CB பள்ளி"],["pillars","CB Score","CB மதிப்பெண்"],["asset","Asset Quality & ECL","கடன் தரம் & ECL"],["fcnr","FCNR Impact","FCNR தாக்கம்"],["market","Banks vs Market & FII","வங்கி vs சந்தை & FII"],["triggers","Triggers & Cycle","தூண்டுதல் & சுழற்சி"],["analysts","Analysts' Rating","ஆய்வாளர் மதிப்பீடு"],["mgmt","Management & Board","நிர்வாகம் & வாரியம்"],["pros","Can I Buy? Pros & Cons","வாங்கலாமா?"],["selfcheck","Self-check","சுய சோதனை"],["verdict","Earnings Verdict","வருவாய் தீர்ப்பு"],["socrates","Cauvery Socrates","காவேரி சாக்ரடீஸ்"]
+];
+function drawNav(){
+ document.getElementById("tabs").innerHTML=TABS.map(function(t){return '<button class="tab'+(t[0]===TAB?" on":"")+'" role="tab" data-t="'+t[0]+'">'+T(t[1],t[2])+'</button>'}).join("");
+ var bt=[["all",T("All 3 · Compare","மூன்றும் · ஒப்பீடு")]].concat(BANKS.map(function(b){return [b,CO[b].name]}));
+ document.getElementById("btabs").innerHTML=bt.map(function(x){return '<button class="btab'+(x[0]===BANK?" on":"")+'" data-b="'+x[0]+'">'+x[1]+'</button>'}).join("");
+}
+document.getElementById("tabs").addEventListener("click",function(e){var t=e.target.closest(".tab");if(!t)return;TAB=t.dataset.t;save();render()});
+document.getElementById("btabs").addEventListener("click",function(e){var t=e.target.closest(".btab");if(!t)return;BANK=t.dataset.b;save();render()});
+function save(){try{localStorage.setItem("cb3b",JSON.stringify({t:TAB,b:BANK,l:LANG}))}catch(e){}}
+try{var s0=JSON.parse(localStorage.getItem("cb3b")||"null");if(s0){TAB=s0.t||TAB;BANK=s0.b||BANK;LANG=s0.l||LANG}}catch(e){}
+(function(){var h=(location.hash||"").replace("#","");if(TABS.some(function(t){return t[0]===h}))TAB=h})();
+
+var charts=[];
+function killCharts(){charts.forEach(function(c){try{c.destroy()}catch(e){}});charts=[]}
+function render(){
+ killCharts();
+ document.body.classList.toggle("ta",LANG==="ta");
+ document.getElementById("lenBtn").classList.toggle("on",LANG==="en");
+ document.getElementById("ltaBtn").classList.toggle("on",LANG==="ta");
+ document.getElementById("subt").textContent=T("Results declared Saturday 17 Oct 2026 · standalone, unaudited (limited review) · ₹ crore unless stated","முடிவுகள் 17 அக்டோபர் 2026 சனிக்கிழமை வெளியானது · standalone, தணிக்கை செய்யப்படாதது · தொகை ₹ கோடியில்");
+ drawNav();
+ var f=VIEWS[TAB]||VIEWS.overview;
+ document.getElementById("main").innerHTML=f();
+ if(AFTER[TAB])AFTER[TAB]();
+}
+
+/* ============ VIEWS ============ */
+var VIEWS={},AFTER={};
+
+VIEWS.overview=function(){
+ var h='<h2>'+T("Quarter at a glance","இந்த காலாண்டு ஒரே பார்வையில்")+'</h2>';
+ h+='<div class="card soft" style="margin-bottom:14px"><p style="margin:0">'+T("All three banks reported on Saturday 17 October 2026, ten days after the RBI raised the repo rate by 25 bps to 5.50% (first hike since February 2023). Every bank's quarter was shaped by the RBI's FCNR(B) swap window: deposit growth jumped, but margins fell because those dollar deposits cost more. Foreign investors have pulled a record ₹3.04 lakh crore out of Indian shares in 2026, and banks were sold hardest.","மூன்று வங்கிகளும் 17 அக்டோபர் சனிக்கிழமை முடிவுகளை வெளியிட்டன. பத்து நாட்களுக்கு முன்பு RBI repo rate-ஐ 25 bps உயர்த்தி 5.50% ஆக்கியது (பிப்ரவரி 2023-க்கு பிறகு முதல் உயர்வு). இந்த காலாண்டு முழுக்க FCNR(B) டெபாசிட் தான் கதை: டெபாசிட் வளர்ச்சி அதிகமானது, ஆனா அந்த டாலர் டெபாசிட்டுக்கு செலவு அதிகம் என்பதால் margin குறைஞ்சது. 2026-ல் வெளிநாட்டு முதலீட்டாளர்கள் ₹3.04 லட்சம் கோடி எடுத்துட்டு போயிருக்காங்க; அதுல அதிகம் அடி வாங்கியது வங்கி பங்குகள் தான்.")+'</p></div>';
+ bankList().forEach(function(b){var o=CO[b],m=o.m;
+  h+='<h3>'+dot(b)+o.name+' <span class="note">'+o.code+'</span></h3>';
+  h+='<p>'+o.quarter+'</p><div class="grid g4">';
+  [["Net profit","pat",0,0],["NII","nii",0,0],["Operating profit (PPOP)","ppop",0,0],["Provisions","prov",0,0],["NIM %","nim",2,1],["GNPA %","gnpa",2,1],["Deposits","dep",0,0],["Advances","adv",0,0]].forEach(function(k){
+   h+='<div class="card kpi"><div class="l">'+k[0]+'</div><div class="v">'+fmt(m[k[1]][1],k[2])+dag(b,k[1])+'</div><div class="d">'+T("YoY ","ஆண்டுக்கு ")+chg(m[k[1]][0],m[k[1]][1],k[3])+'</div></div>'});
+  h+='</div>';
+  var c=o.cons;var beat=(o.m.pat[1]/c.pat-1)*100;
+  h+='<p class="note" style="margin-top:8px">'+T("Versus Bloomberg consensus: PAT ","Bloomberg கணிப்புடன் ஒப்பீடு: PAT ")+'<b class="'+(beat>=0?"up":"dn")+'">'+(beat>0?"+":"")+fmt(beat,1)+'%</b>, NII <b class="'+((o.m.nii[1]/c.nii-1)>=0?"up":"dn")+'">'+(o.m.nii[1]>c.nii?"+":"")+fmt((o.m.nii[1]/c.nii-1)*100,1)+'%</b>'+(c.prov?' · '+T("provisions ","provisions ")+fmt(o.m.prov[1])+' vs '+fmt(c.prov)+' est.':'')+'</p>';
+ });
+ if(BANK==="all"){
+  h+='<h3>'+T("Macro backdrop this quarter","இந்த காலாண்டின் பொருளாதார சூழல்")+'</h3><div class="grid g4">';
+  [["Repo rate","5.50%","+25 bps on 7 Oct · 'calibrated tightening'"],["FII net selling 2026","₹3,04,000 cr","Record; ₹44,166 cr in Oct to 9 Oct"],["Rupee","~₹96 / $","Weakest on record"],["Nifty 2026","−14%","BSE Bankex −8%"],["CPI inflation","4.8% (Aug)","RBI FY27 forecast 5.2%"],["GDP FY27 (RBI)","7.1%","Raised from 6.7%"]].forEach(function(k){h+='<div class="card kpi"><div class="l">'+k[0]+'</div><div class="v" style="font-size:19px">'+k[1]+'</div><div class="d muted">'+k[2]+'</div></div>'});
+  h+='</div>';
+ }
+ return h;
+};
+
+var METRICS=[["Deposits","dep",0,0],["Advances","adv",0,0],["CD ratio %","cd",1,1],["NII","nii",0,0],["NIM %","nim",2,1],["Other income","oi",0,0],["Operating profit (PPOP)","ppop",0,0],["Provisions","prov",0,0],["PAT","pat",0,0],["CASA %","casa",1,1],["GNPA %","gnpa",2,1],["NNPA %","nnpa",2,1],["PCR %","pcr",1,1],["Cost-to-income %","cti",1,1],["CRAR %","crar",2,1],["CET1 %","cet1",2,1],["ROE % (annualised)","roe",2,1],["ROA % (annualised)","roa",2,1],["Yield on assets %","yld",1,1],["Cost of deposits / funds %","cod",2,1],["LCR %","lcr",0,1],["BVPS ₹","bvps",0,1],["Market price ₹","cmp",2,1],["P/BV (x)","pbv",2,1]];
+VIEWS.results=function(){
+ var h='<h2>'+T("Results: 23-metric bank framework","முடிவுகள்: 23 அளவீடு கட்டமைப்பு")+'</h2>';
+ h+='<p class="note">'+T("Q2FY26 vs Q2FY27, standalone. Amounts in ₹ crore in tables; charts in ₹ billion (₹100 crore = ₹1 billion). † = CB estimate (derived, not reported). n/a = not disclosed in the material reviewed.","Q2FY26 vs Q2FY27. அட்டவணையில் ₹ கோடி; chart-ல் ₹ billion (₹100 கோடி = ₹1 billion). † = CB மதிப்பீடு. n/a = வெளியிடப்படவில்லை.")+'</p>';
+ if(BANK==="all"){
+  h+='<div class="tw"><table><thead><tr><th>Metric</th>'+BANKS.map(function(b){return '<th class="n">'+dot(b)+CO[b].short+' Q2FY27</th><th class="n">YoY</th>'}).join("")+'</tr></thead><tbody>';
+  METRICS.forEach(function(k){h+='<tr><td>'+k[0]+'</td>'+BANKS.map(function(b){var m=CO[b].m;if(k[1]==="cmp")return '<td class="n">'+fmt(CO[b].cmp,2)+'</td><td class="n muted">'+CO[b].cmpDate+'</td>';var v=m[k[1]];return '<td class="n">'+fmt(v[1],k[2])+dag(b,k[1])+'</td><td class="n">'+chg(v[0],v[1],k[3])+'</td>'}).join("")+'</tr>'});
+  h+='</tbody></table></div>';
+  h+='<h3>'+T("Charts (₹ billion)","வரைபடங்கள் (₹ billion)")+'</h3>';
+  ["pat","nii","ppop","prov"].forEach(function(k){h+='<div class="chartf" style="margin-bottom:12px"><div class="cv"><canvas id="ch_'+k+'"></canvas></div></div>'});
+  h+='<div class="chartf" style="margin-bottom:12px"><div class="cv"><canvas id="ch_bal"></canvas></div></div><div class="chartf"><div class="cv"><canvas id="ch_ratio"></canvas></div></div>';
+ } else {
+  var b=BANK,o=CO[b];
+  h+='<h3>'+dot(b)+o.name+'</h3><div class="tw"><table><thead><tr><th>Metric</th><th class="n">Q2FY26</th><th class="n">Q2FY27</th><th class="n">YoY</th></tr></thead><tbody>';
+  METRICS.forEach(function(k){if(k[1]==="cmp"){h+='<tr><td>'+k[0]+'</td><td class="n">—</td><td class="n">'+fmt(o.cmp,2)+'</td><td class="n muted">'+o.cmpDate+'</td></tr>';return}var v=o.m[k[1]];h+='<tr><td>'+k[0]+'</td><td class="n">'+fmt(v[0],k[2])+'</td><td class="n">'+fmt(v[1],k[2])+dag(b,k[1])+'</td><td class="n">'+chg(v[0],v[1],k[3])+'</td></tr>'});
+  h+='</tbody></table></div><h3>'+T("Charts (₹ billion)","வரைபடங்கள் (₹ billion)")+'</h3><div class="chartf"><div class="cv"><canvas id="ch_one"></canvas></div></div>';
+ }
+ h+='<h3>'+T("Liquidity & funding: the bank version of working capital","பணப்புழக்கம் & நிதி: வங்கிக்கான working capital")+'</h3>';
+ h+='<p>'+T("Inventory, receivable and payable days do not apply to a bank; its 'working capital' is the gap between money it owes depositors and money it has lent. We track it through the CD ratio (loans per ₹100 of deposits), LCR (liquid assets against 30-day outflows) and NSFR. Bank cash-flow statements swing with deposits and investments, so operating cash flow is not a useful earnings check here; PPOP is the closer cash-earnings measure.","வங்கிக்கு inventory, receivable days பொருந்தாது. வங்கியோட working capital = டெபாசிட்டுக்கும் கடனுக்கும் உள்ள இடைவெளி. அதை CD ratio, LCR, NSFR மூலம் பார்க்கிறோம். வங்கி cash flow டெபாசிட் ஏற்ற இறக்கத்தால் ஆடும்; அதனால் PPOP தான் நல்ல அளவுகோல்.")+'</p>';
+ h+='<div class="tw"><table><thead><tr><th>Bank</th><th class="n">CD ratio %</th><th class="n">LCR %</th><th>Other</th><th>Read</th></tr></thead><tbody>';
+ h+='<tr><td>'+dot("hdfc")+'HDFC</td><td class="n">96.8</td><td class="n">113</td><td>NSFR 118%</td><td>Tightest. Loans and deposits grew by the same ₹1.57–1.58 lakh crore this quarter; growth depends on deposits.</td></tr>';
+ h+='<tr><td>'+dot("icici")+'ICICI</td><td class="n">89.4†</td><td class="n">126</td><td>Deposits +17% ex-FCNR</td><td>Most room to lend; FCNR built a liquidity cushion.</td></tr>';
+ h+='<tr><td>'+dot("axis")+'Axis</td><td class="n">94.6</td><td class="n">119</td><td>Excess SLR ₹1,04,306 cr</td><td>CD ratio rose as loans (+23%) outran deposits (+21%).</td></tr></tbody></table></div>';
+ return h;
+};
+var VALPLUG={id:"vals",afterDatasetsDraw:function(c){var ctx=c.ctx;ctx.save();ctx.font="10px IBM Plex Mono, monospace";ctx.fillStyle="#16202e";ctx.textAlign="center";c.data.datasets.forEach(function(ds,i){var meta=c.getDatasetMeta(i);if(meta.hidden)return;meta.data.forEach(function(el,j){var v=ds.data[j];if(v==null)return;var lab=ds.isPct?fmt(v,2)+"%":"₹"+fmt(v,1)+" bn";ctx.fillText(lab,el.x,el.y-5)})});ctx.restore()}};
+function barChart(id,labels,sets,title,isPct){
+ if(!window.Chart)return;var el=document.getElementById(id);if(!el)return;
+ var c=new Chart(el,{type:"bar",data:{labels:labels,datasets:sets.map(function(s){s.isPct=isPct;s.borderRadius=3;return s})},plugins:[VALPLUG],
+  options:{responsive:true,maintainAspectRatio:false,layout:{padding:{top:22}},plugins:{title:{display:true,text:title,color:"#16202e",font:{family:"Familjen Grotesk, Arial, sans-serif",size:15}},legend:{labels:{color:"#16202e"}},tooltip:{callbacks:{label:function(x){return x.dataset.label+": "+(isPct?fmt(x.raw,2)+"%":"₹"+fmt(x.raw,1)+" billion")}}}},
+  scales:{x:{ticks:{color:"#5b6676"},grid:{display:false}},y:{ticks:{color:"#5b6676",callback:function(v){return isPct?v+"%":"₹"+Number(v).toLocaleString("en-IN")+" bn"}},grid:{color:"#eef0f3"}}}}});
+ charts.push(c);
+}
+AFTER.results=function(){
+ if(BANK==="all"){
+  var L=BANKS.map(function(b){return CO[b].name});
+  [["pat","Net profit (PAT)"],["nii","Net interest income (NII)"],["ppop","Operating profit / PPOP — the bank's EBITDA equivalent"],["prov","Provisions & contingencies"]].forEach(function(k){
+   barChart("ch_"+k[0],L,[{label:"Q2FY26",data:BANKS.map(function(b){return full(CO[b].m[k[0]][0])}),backgroundColor:"#c7cdd6"},{label:"Q2FY27",data:BANKS.map(function(b){return full(CO[b].m[k[0]][1])}),backgroundColor:BANKS.map(function(b){return CO[b].col})}],k[1]+" — ₹ billion")});
+  barChart("ch_bal",L,[{label:"Deposits Q2FY27",data:BANKS.map(function(b){return full(CO[b].m.dep[1])}),backgroundColor:"#8aa4c8"},{label:"Advances Q2FY27",data:BANKS.map(function(b){return full(CO[b].m.adv[1])}),backgroundColor:BANKS.map(function(b){return CO[b].col})}],"Deposits and advances, 30 Sep 2026 — ₹ billion");
+  barChart("ch_ratio",["NIM","GNPA","CET1 ÷ 10","ROA"],BANKS.map(function(b){var m=CO[b].m;return {label:CO[b].name,data:[m.nim[1],m.gnpa[1],m.cet1[1]/10,m.roa[1]],backgroundColor:CO[b].col}}),"Key ratios, Q2FY27 (%; CET1 shown divided by 10 to share the scale)",true);
+ } else {
+  var o=CO[BANK];
+  barChart("ch_one",["PAT","NII","PPOP (EBITDA equiv.)","Other income","Provisions"],[{label:"Q2FY26",data:["pat","nii","ppop","oi","prov"].map(function(k){return full(o.m[k][0])}),backgroundColor:"#c7cdd6"},{label:"Q2FY27",data:["pat","nii","ppop","oi","prov"].map(function(k){return full(o.m[k][1])}),backgroundColor:o.col}],o.name+" — Q2FY26 vs Q2FY27, ₹ billion");
+ }
+};
+
+/* ---------- Business model SVG ---------- */
+var BMEX={};
+function bmSVG(b){
+ var o=CO[b],m=o.m,c=o.col,id="bm_"+b;BMEX[b]={};
+ function box(k,x,y,w,hh,fill,stroke,t1,t2,ex){BMEX[b][k]=ex;return '<g class="box" data-bm="'+b+'" data-k="'+k+'"><rect x="'+x+'" y="'+y+'" width="'+w+'" height="'+hh+'" rx="8" fill="'+fill+'" stroke="'+stroke+'" stroke-width="1.5"/><text x="'+(x+w/2)+'" y="'+(y+hh/2-4)+'" text-anchor="middle" font-size="13" font-weight="600" fill="#16202e">'+esc(t1)+'</text><text x="'+(x+w/2)+'" y="'+(y+hh/2+14)+'" text-anchor="middle" font-size="11.5" font-family="IBM Plex Mono, monospace" fill="#5b6676">'+esc(t2)+'</text></g>'}
+ function ar(x1,y1,x2,y2){return '<path d="M'+x1+','+y1+' C'+(x1+40)+','+y1+' '+(x2-40)+','+y2+' '+x2+','+y2+'" fill="none" stroke="#9aa5b4" stroke-width="1.5" marker-end="url(#ah)"/>'}
+ var s='<svg viewBox="0 0 1000 560" width="1000" height="560" role="img" aria-label="'+o.name+' business model"><defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#9aa5b4"/></marker></defs>';
+ s+=box("cust",15,60,150,90,"#ffffff","#9aa5b4","Depositors","₹"+fmt(m.dep[1])+" cr","Savers and companies who lend to the bank. CASA (current + savings) is "+m.casa[1]+"% of deposits; the rest are term deposits, now including FCNR dollars. Deposits grew "+fmt(pct(m.dep[0],m.dep[1]),1)+"% YoY.");
+ s+=box("borr",15,400,150,90,"#ffffff","#9aa5b4","Borrowers","₹"+fmt(m.adv[1])+" cr","Households, small firms and companies who borrow. Advances grew "+fmt(pct(m.adv[0],m.adv[1]),1)+"% YoY.");
+ s+=box("chan",195,230,150,90,"#ffffff","#9aa5b4","Branches + digital","CASA "+m.casa[1]+"%","Branches, relationship managers and apps gather deposits and sell loans, cards and third-party products (insurance, mutual funds) that earn fees.");
+ s+=box("bank",375,150,160,250,o.col,o.col,o.short,"NIM "+m.nim[1]+"%","The bank borrows at its cost of funds and lends at a higher yield; the gap is the net interest margin ("+m.nim[1]+"%). Capital (CET1 "+m.cet1[1]+"%) absorbs losses and limits how fast it can grow.");
+ s=s.replace('fill="#16202e">'+esc(o.short),'fill="#ffffff">'+esc(o.short)).replace('fill="#5b6676">NIM','fill="#ffffff">NIM');
+ var segY=[20,125,230,335,440];
+ o.seg.forEach(function(g,i){s+=box("seg"+i,565,segY[i],190,90,["#eef3fb","#fdf3e6","#f3eef8","#eef7f1","#f6f7f9"][i],c,g[0],g[1],g[2])});
+ s+=box("rev",785,40,200,110,"#eaf6ef","#1f8a4c","Revenue","NII ₹"+fmt(m.nii[1])+" cr","Net interest income ₹"+fmt(m.nii[1])+" crore (+"+fmt(pct(m.nii[0],m.nii[1]),1)+"%) plus other income ₹"+fmt(m.oi[1])+" crore (fees, trading, recoveries).");
+ s+=box("cost",785,220,200,110,"#fbecea","#c23b2a","Costs","Opex ₹"+fmt(o.opex)+" cr","Operating expenses ₹"+fmt(o.opex)+" crore (cost-to-income "+m.cti[1]+"%) and provisions ₹"+fmt(m.prov[1])+" crore for expected bad loans.");
+ s+=box("prof",785,400,200,110,"#fff7e8","#e2701b","Profit → shareholders","PAT ₹"+fmt(m.pat[1])+" cr","Net profit ₹"+fmt(m.pat[1])+" crore, annualised ROA "+m.roa[1]+"% and ROE "+m.roe[1]+"%. Retained profit raises book value and capital for future loans.");
+ s+=ar(165,105,375,200)+ar(165,445,375,350)+ar(345,275,375,275);
+ segY.forEach(function(y){s+=ar(535,275,565,y+45)});
+ s+=ar(755,65,785,95)+ar(755,170,785,110)+ar(755,275,785,120)+ar(755,380,785,130)+ar(755,485,785,140);
+ s+='<path d="M885,150 L885,218" stroke="#9aa5b4" stroke-width="1.5" marker-end="url(#ah)"/><path d="M885,330 L885,398" stroke="#9aa5b4" stroke-width="1.5" marker-end="url(#ah)"/>';
+ s+='</svg>';
+ return s;
+}
+VIEWS.model=function(){
+ var h='<h2>'+T("How each bank makes money","ஒவ்வொரு வங்கியும் எப்படி சம்பாதிக்கிறது")+'</h2><p class="note">'+T("Tap any box to see what it means for this bank.","எந்த பெட்டியையும் தட்டினால் விளக்கம் வரும்.")+'</p>';
+ bankList().forEach(function(b){var o=CO[b],m=o.m;
+  h+='<h3>'+dot(b)+o.name+'</h3><div class="svgf">'+bmSVG(b)+'</div><div class="ex" id="bmex_'+b+'">'+T("Tap a box above.","மேலே ஒரு பெட்டியைத் தட்டுங்கள்.")+'</div>';
+  h+='<p class="note" style="margin-top:8px"><b>'+T("Revenue formula:","வருவாய் சூத்திரம்:")+'</b> NII ≈ '+T("average loans × NIM","சராசரி கடன் × NIM")+' ; PAT = (NII + '+T("other income","மற்ற வருமானம்")+' − opex − provisions) × (1 − tax).</p>';
+  h+='<div class="tw"><table><thead><tr><th>Revenue engine driver</th><th class="n">Q2FY27</th><th class="n">YoY</th><th>What moves it next</th></tr></thead><tbody>';
+  h+='<tr><td>Loan book (advances)</td><td class="n">₹'+fmt(m.adv[1])+dag(b,"adv")+'</td><td class="n">'+chg(m.adv[0],m.adv[1])+'</td><td>Deposit growth, capital, FCNR deployment</td></tr>';
+  h+='<tr><td>Net interest margin</td><td class="n">'+m.nim[1]+'%</td><td class="n">'+chg(m.nim[0],m.nim[1],1)+'</td><td>Repo hike (floating loans reprice up), FCNR cost</td></tr>';
+  h+='<tr><td>Other income</td><td class="n">₹'+fmt(m.oi[1])+'</td><td class="n">'+chg(m.oi[0],m.oi[1])+'</td><td>Fees from cards, insurance, wealth; treasury gains</td></tr>';
+  h+='<tr><td>Cost-to-income</td><td class="n">'+fmt(m.cti[1],1)+'%'+dag(b,"cti")+'</td><td class="n">'+chg(m.cti[0],m.cti[1],1)+'</td><td>Branch additions, technology spend, AI-led productivity</td></tr>';
+  h+='<tr><td>Provisions</td><td class="n">₹'+fmt(m.prov[1])+'</td><td class="n">'+chg(m.prov[0],m.prov[1])+'</td><td>Slippages, ECL from April 2027</td></tr></tbody></table></div>';
+ });
+ return h;
+};
+AFTER.model=function(){document.querySelectorAll('.box[data-bm]').forEach(function(g){g.addEventListener("click",function(){var b=g.dataset.bm;document.querySelectorAll('.box[data-bm="'+b+'"]').forEach(function(x){x.classList.remove("sel")});g.classList.add("sel");var t=g.querySelector("text").textContent;document.getElementById("bmex_"+b).innerHTML="<b>"+esc(t)+":</b> "+esc(BMEX[b][g.dataset.k])})})};
+
+
+/* ---------- Subsidiaries ---------- */
+var SUBS={
+ hdfc:{cons:20700,period:"Q2FY27",rows:[["HDB Financial Services","NBFC: loans to small borrowers","~74%†",780,581,"PAT +34.2%; CRAR 21.37%; Stage 3 at 2.43%"],["HDFC Life Insurance","Life insurance","~50%†",508,448,"PAT +13.3%; down 16.9% from Q1"],["HDFC AMC","Mutual funds","~52%†",749,718,"PAT +4.3%"],["HDFC Ergo General Insurance","General insurance","~50%†",null,null,"Q2 figure not available in the material reviewed"],["HDFC Securities","Broking","~95%†",null,null,"Q2 figure not available in the material reviewed"]],
+  note:"HDFC Bank's own book is so large (₹19,510 crore a quarter) that its subsidiaries add only about 6% to group profit. Their bigger role is distribution: life and general insurance, mutual funds and NBFC loans sold to the bank's customers, which also lifts the bank's fee income (₹9,690 crore)."},
+ icici:{cons:16333,period:"Q2FY27",rows:[["ICICI Prudential Life","Life insurance","~53%† (bank bought 2% more for ₹1,470 cr)",374,299,"PAT +25%; H1 VNB ₹1,283 cr at 26% margin"],["ICICI Lombard General","General insurance","~51%†",946,820,"PAT +15.4%; GDPI ₹6,792 cr; combined ratio 107%"],["ICICI Prudential AMC","Mutual funds","~51%†",889,838,"PAT +6.1%; moved to half-yearly dividends"],["ICICI Securities","Broking & investment banking","100%†",439,425,"PAT +3.3%"],["ICICI Home Finance","Housing finance","100%†",220,203,"PAT +8.4%"],["ICICI Bank UK / Canada","Overseas banking","100%",null,null,"PAT $6.5 million (UK) and CAD 5 million (Canada)"]],
+  note:"ICICI has the largest and most profitable set of subsidiaries of the three: about ₹2,868 crore of combined quarterly profit across the five listed above. Even so, the bank alone earns ₹14,843 crore, about five times more. Dividends from subsidiaries in the standalone bank fell to ₹463 crore from ₹810 crore because ICICI Pru AMC moved to half-yearly payouts."},
+ axis:{cons:7705,period:"H1FY27 (six months)",rows:[["Axis Finance","NBFC","~100%†",546,385,"H1 PAT +42%; AUM ₹54,590 cr (+23%); 71% retail + MSME"],["Axis AMC","Mutual funds","~75%†",370,272,"H1 PAT +36% (adjusted); QAAUM ₹3,82,966 cr (+9%)"],["Axis Securities","Broking","100%†",191,175,"H1 PAT +9% (adjusted); H1 revenue ₹842 cr"],["Axis Capital","Investment banking","100%†",149,93,"PAT +61% (period not stated, likely H1); about 20 equity capital-market deals in H1"]],
+  total:[1210,"All domestic subsidiaries, H1FY27: ₹1,210 crore, +29%; return on the bank's investment 45%"],
+  note:"Axis discloses subsidiary profits only for the half-year. Together they earned ₹1,210 crore in H1 (+29%) and added 11 bps to consolidated ROA and 57 bps to consolidated ROE this quarter. In the quarter, consolidated profit (₹7,705 crore) was about ₹702 crore above standalone (₹7,003 crore)."}
+};
+function subGap(b){var st=CO[b].m.pat[1],c=SUBS[b].cons;return {st:st,c:c,g:c-st,pc:(c-st)/c*100}}
+VIEWS.subs=function(){
+ var h='<h2>'+T("Subsidiaries: how much do they add?","துணை நிறுவனங்கள்: எவ்வளவு சேர்க்கின்றன?")+'</h2>';
+ h+='<div class="card soft"><p style="margin:0">'+T("The simplest test is consolidated profit minus standalone profit: it shows the bank's share of what its subsidiaries earn after removing the dividends they already paid the bank. This quarter that gap is 6–9% of group profit for all three banks, so the core banks earn most of the money. The subsidiaries matter more for value than for profit: insurers and AMCs trade at high multiples, and they sell products to the bank's customers.","எளிய சோதனை: consolidated லாபம் − standalone லாபம். இந்த காலாண்டில் மூன்று வங்கிகளுக்கும் இது குழு லாபத்தில் 6–9% மட்டுமே; அதாவது பெரும்பாலான லாபம் வங்கியிடமிருந்து தான். துணை நிறுவனங்களின் முக்கியத்துவம் லாபத்தை விட மதிப்பில் அதிகம்: காப்பீடு, AMC நிறுவனங்களுக்கு சந்தையில் அதிக மதிப்பு; அவை வங்கி வாடிக்கையாளர்களுக்கே பொருட்களை விற்கின்றன.")+'</p></div>';
+ h+='<div class="tw" style="margin-top:12px"><table><thead><tr><th>Bank</th><th class="n">Standalone PAT</th><th class="n">Consolidated PAT</th><th class="n">Gap (subsidiaries, net)</th><th class="n">Gap as % of group</th></tr></thead><tbody>';
+ BANKS.forEach(function(b){var g=subGap(b);h+='<tr><td>'+dot(b)+CO[b].short+'</td><td class="n">'+fmt(g.st)+'</td><td class="n">'+fmt(g.c)+'</td><td class="n">'+fmt(g.g)+'</td><td class="n"><b>'+fmt(g.pc,1)+'%</b></td></tr>'});
+ h+='</tbody></table></div><p class="note">₹ crore, Q2FY27. The gap understates subsidiary earnings slightly because dividends already received by the bank are removed on consolidation.</p>';
+ h+='<div class="chartf" style="margin-top:10px"><div class="cv"><canvas id="ch_subs"></canvas></div></div>';
+ bankList().forEach(function(b){var S=SUBS[b];
+  h+='<h3>'+dot(b)+CO[b].name+' · '+S.period+'</h3><div class="tw"><table><thead><tr><th>Subsidiary</th><th>Business</th><th>Bank stake</th><th class="n">PAT now</th><th class="n">PAT year ago</th><th class="n">YoY</th><th>Notes</th></tr></thead><tbody>';
+  S.rows.forEach(function(r){h+='<tr><td><b>'+r[0]+'</b></td><td>'+r[1]+'</td><td>'+r[2]+'</td><td class="n">'+fmt(r[3])+'</td><td class="n">'+fmt(r[4])+'</td><td class="n">'+chg(r[4],r[3])+'</td><td>'+r[5]+'</td></tr>'});
+  if(S.total)h+='<tr><td colspan="3"><b>Total domestic subsidiaries</b></td><td class="n"><b>'+fmt(S.total[0])+'</b></td><td class="n">—</td><td class="n up">+29%</td><td>'+S.total[1]+'</td></tr>';
+  h+='</tbody></table></div><p style="margin-top:8px">'+S.note+'</p>'});
+ h+='<p class="note">PAT shown is each subsidiary\'s own full profit (100%), not the bank\'s share. † Stake percentages are approximate, as last disclosed; check the latest shareholding filings. Axis year-ago figures are back-calculated from the reported growth rates.</p>';
+ h+='<h3>'+T("CB read","CB பார்வை")+'</h3><ul><li>'+T("These banks are not 'ordinary banks plus subsidiaries'. On standalone numbers alone they earn ROA of 1.4% (Axis) to about 2.3% (ICICI) with GNPA near 1.1–1.2%.","தனியாக பார்த்தாலும் இவை வலுவான வங்கிகள்: ROA 1.4% (Axis) முதல் ~2.3% (ICICI).")+'</li><li>'+T("ICICI's subsidiaries are the strongest and fastest-growing (Pru Life +25%, Lombard +15%), which supports its valuation premium.","ICICI துணை நிறுவனங்கள் வலுவானவை (Pru Life +25%, Lombard +15%); அதன் மதிப்பீட்டு premium-க்கு இதுவும் காரணம்.")+'</li><li>'+T("Axis's subsidiaries are small but growing fastest as a group (+29% in H1).","Axis துணை நிறுவனங்கள் சிறியவை, ஆனா வேகமாக வளர்கின்றன (+29%).")+'</li><li>'+T("HDFC's subsidiaries grew slowest this quarter apart from HDB Financial (+34%).","HDB Financial (+34%) தவிர HDFC துணை நிறுவனங்கள் மெதுவாக வளர்ந்தன.")+'</li></ul>';
+ return h;
+};
+AFTER.subs=function(){if(!window.Chart)return;var el=document.getElementById("ch_subs");if(!el)return;
+ var L=BANKS.map(function(b){return CO[b].name});
+ var c=new Chart(el,{type:"bar",data:{labels:L,datasets:[{label:"Standalone bank PAT",data:BANKS.map(function(b){return full(subGap(b).st)}),backgroundColor:BANKS.map(function(b){return CO[b].col})},{label:"Added by subsidiaries (consolidated − standalone)",data:BANKS.map(function(b){return full(subGap(b).g)}),backgroundColor:"#e2701b"}]},plugins:[VALPLUG],
+  options:{responsive:true,maintainAspectRatio:false,layout:{padding:{top:22}},plugins:{title:{display:true,text:"Group profit split, Q2FY27 — ₹ billion",color:"#16202e",font:{family:"Familjen Grotesk, Arial, sans-serif",size:15}},legend:{labels:{color:"#16202e"}},tooltip:{callbacks:{label:function(x){return x.dataset.label+": ₹"+fmt(x.raw,1)+" billion"}}}},
+  scales:{x:{ticks:{color:"#5b6676"},grid:{display:false}},y:{ticks:{color:"#5b6676",callback:function(v){return "₹"+v+" bn"}},grid:{color:"#eef0f3"}}}}});
+ charts.push(c)};
+
+/* ---------- CB School (metric linkage map) ---------- */
+var SM=[ // id, label, col, row, values H/I/A
+ ["fcnr","FCNR(B) deposits",0,0,["$11.5bn","$17.9bn","$10.6bn"]],
+ ["dep","Deposits growth",0,1,["18.8%","27.1%","21%"]],
+ ["casa","CASA ratio",0,2,["31.6%","35.8%","36%"]],
+ ["adv","Loan growth",0,3,["16.3%","30%","23%"]],
+ ["cd","CD ratio",0,4,["96.8%","89.4%","94.6%"]],
+ ["repo","Repo rate",1,0,["5.50%","5.50%","5.50%"]],
+ ["cod","Cost of deposits/funds",1,1,["4.4%","4.50%","n/a"]],
+ ["yld","Yield on loans",1,2,["7.6%","n/a","n/a"]],
+ ["nim","NIM",1,3,["3.32%","4.18%","3.36%"]],
+ ["nii","NII growth",2,0,["9.7%","17.7%","12%"]],
+ ["fee","Fee income",2,1,["9,690","8,277","6,531"]],
+ ["cti","Cost-to-income",2,2,["39.1%","38.1%","49.4%"]],
+ ["slip","Slippages / GNPA",2,3,["1.11%","1.20%","1.16%"]],
+ ["prov","Provisions",2,4,["3,574","851","1,694"]],
+ ["ppop","PPOP (op. profit)",3,0,["29,483","20,575","11,083"]],
+ ["pat","Net profit",3,1,["19,510","14,843","7,003"]],
+ ["cet1","CET1 capital",3,2,["17.1%","16.01%","14.61%"]],
+ ["pcr","PCR / buffers",3,3,["67%","75%","70%"]],
+ ["roa","ROA",4,0,["1.8%","2.26%","1.38%"]],
+ ["roe","ROE",4,1,["13.3%","16.5%","14%"]],
+ ["bvps","Book value / share",4,2,["385","505","676"]],
+ ["pbv","P/BV",4,3,["1.89x","2.77x","1.91x"]]
+];
+var SL=[["fcnr","dep",1],["fcnr","casa",-1],["fcnr","cod",1],["dep","adv",1],["dep","cd",-1],["adv","cd",1],["casa","cod",-1],["repo","yld",1],["repo","cod",1],["cod","nim",-1],["yld","nim",1],["nim","nii",1],["adv","nii",1],["nii","ppop",1],["fee","ppop",1],["cti","ppop",-1],["slip","prov",1],["pcr","prov",1],["prov","pat",-1],["ppop","pat",1],["pat","cet1",1],["adv","cet1",-1],["pat","roa",1],["pat","roe",1],["cet1","roe",-1],["pat","bvps",1],["roe","pbv",1],["slip","pbv",-1]];
+var SCN={
+ hike:{n:"RBI rate hike (7 Oct)",ta:"RBI வட்டி உயர்வு",steps:[["repo",1],["yld",1],["cod",1],["nim",1],["nii",1],["ppop",1],["pat",1],["roe",1]],card:"Repo rose 25 bps to 5.50%. Loans linked to repo reprice within weeks; deposits reprice only when they mature. HDFC said ~70% of its book is floating and the hike should be reflected by December, so NIM tends to rise first. Risk: if deposit rates follow fast, the gain fades.",cardTa:"Repo 25 bps உயர்ந்து 5.50%. Repo-வுடன் இணைந்த கடன்கள் உடனே விலை மாறும்; டெபாசிட் முதிர்ந்தால் தான் மாறும். HDFC-யின் 70% கடன் floating; டிசம்பருக்குள் பலன் தெரியும் என்கிறது. அதனால் முதலில் NIM ஏறும்."},
+ fcnr:{n:"FCNR inflow",ta:"FCNR வரவு",steps:[["fcnr",1],["dep",1],["casa",-1],["cod",1],["nim",-1],["cd",-1]],card:"Dollar deposits at about 6% (swapped to rupees) raised deposits but diluted CASA and NIM. Axis: NIM 3.47% without FCNR vs 3.36% reported. ICICI: deposits +27.1% reported, +17% without FCNR; cost of deposits rose from 4.41% to 4.50%.",cardTa:"சுமார் 6% வட்டியில் வந்த டாலர் டெபாசிட் டெபாசிட்டை கூட்டியது, ஆனா CASA, NIM-ஐ குறைத்தது. Axis NIM: FCNR இல்லாம 3.47%, உடன் 3.36%. ICICI டெபாசிட் 27.1%, FCNR இல்லாம 17%."},
+ npa:{n:"Bad loans rise",ta:"வாராக்கடன் உயர்வு",steps:[["slip",1],["prov",1],["pat",-1],["roa",-1],["roe",-1],["bvps",-1],["pbv",-1]],card:"If slippages rise, provisions eat profit first. Axis is most exposed: retail made up ₹4,286 crore of its ₹4,762 crore gross slippages. ICICI's provisions were only 4.1% of core operating profit, so it has the most room to absorb a rise.",cardTa:"வாராக்கடன் ஏறினால் provisions லாபத்தை தின்னும். Axis-க்கு அதிக அபாயம்: மொத்த slippage ₹4,762 கோடியில் ₹4,286 கோடி retail. ICICI-க்கு provisions core லாபத்தில் வெறும் 4.1%."},
+ equity:{n:"Fresh equity (QIP)",ta:"புதிய பங்கு மூலதனம்",steps:[["cet1",1],["adv",1],["roe",-1],["bvps",1]],card:"New equity raises CET1 and growth capacity but dilutes ROE until the money is lent. None of the three needs capital now: CET1 is 17.1% (HDFC), 16.01% (ICICI), 14.61% (Axis).",cardTa:"புதிய மூலதனம் CET1-ஐ கூட்டும், ஆனா பணம் கடனாக போகும்வரை ROE குறையும். மூவருக்கும் இப்போ தேவையில்லை."},
+ casa:{n:"CASA falls",ta:"CASA குறைவு",steps:[["casa",-1],["cod",1],["nim",-1],["nii",-1],["pat",-1]],card:"Cheaper current and savings money is being replaced by term deposits. CASA ratio: HDFC 31.6% (from 33.9%), Axis 36% (from 40%). Each point of CASA lost raises the cost of funds.",cardTa:"மலிவான CASA பணம் குறைந்து term deposit கூடுகிறது. HDFC 33.9%→31.6%, Axis 40%→36%."},
+ loans:{n:"Loans outrun deposits",ta:"கடன் டெபாசிட்டை முந்துகிறது",steps:[["adv",1],["cd",1],["cod",1],["cet1",-1]],card:"Axis loans +23% vs deposits +21% pushed its CD ratio to 94.6%. HDFC's 96.8% CD ratio means it must raise deposits before it can lend faster.",cardTa:"Axis கடன் 23%, டெபாசிட் 21% → CD ratio 94.6%. HDFC 96.8% என்பதால் டெபாசிட் கூடினால் தான் கடன் வேகமாக வளர முடியும்."},
+ ecl:{n:"ECL Day-1 (Apr 2027)",ta:"ECL முதல் நாள்",steps:[["pcr",1],["prov",1],["cet1",-1],["roe",-1]],card:"From 1 April 2027 banks provide for expected losses up front. The one-time gap is phased into CET1 over FY28–FY31. Estimated hit for large private banks: 5–20 bps of CET1; their buffers equal 2–4% of net worth.",cardTa:"ஏப்ரல் 2027 முதல் எதிர்பார்க்கும் இழப்புக்கு முன்பே provision. ஒருமுறை தாக்கம் FY28–FY31-ல் பிரித்து CET1-ல். பெரிய தனியார் வங்கிகளுக்கு 5–20 bps மட்டுமே."}
+};
+var SLESS=[
+ ["Margins move with the rate cycle","When RBI hikes, banks with floating-rate loans earn more first. When it cuts, they earn less first. HDFC (70% floating) gains most in Q3–Q4.","வட்டி உயர்ந்தால் floating கடன் வங்கிக்கு முதலில் லாபம்."],
+ ["Deposit growth is not always good news","FCNR lifted deposits 27% at ICICI, but cost more. Check deposits excluding special money.","டெபாசிட் அதிகம் = எப்போதும் நல்லது இல்லை; அதன் விலையையும் பாருங்கள்."],
+ ["Low base flatters growth","Axis PAT +38% came mostly from provisions halving versus a bad year-ago quarter. Core profit grew 11%.","Axis 38% வளர்ச்சி பெரும்பாலும் provision குறைவால்; core லாபம் 11% தான்."],
+ ["Capital and ROE pull opposite ways","HDFC's high CET1 (17.1%) is safety but lowers ROE (13.3%). ICICI earns 16.5% with less spare capital.","அதிக மூலதனம் = பாதுகாப்பு, ஆனா ROE குறையும்."],
+ ["P/BV follows ROE","Investors pay ~2.8x book for ICICI's 16.5% ROE and ~1.9x for HDFC/Axis at 13–14%. A re-rating needs ROE to rise.","அதிக ROE-க்கு அதிக P/BV கிடைக்கும்."]
+];
+function schoolSVG(){
+ var W=180,H=64,X=[20,240,460,680,900],RY5=[30,145,260,375,490],RY4=[60,185,310,435];
+ var colN=[5,4,5,4,4];var pos={};
+ SM.forEach(function(s){var ys=colN[s[2]]===5?RY5:RY4;pos[s[0]]={x:X[s[2]],y:ys[s[3]]}});
+ var heads=["Funding & growth","Prices of money","Income & risk","Profit & capital","Returns & value"];
+ var sv='<svg viewBox="0 0 1100 580" width="1100" height="580" id="schoolSvg"><defs><marker id="ag" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0L10,5L0,10z" fill="#1f8a4c"/></marker><marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0L10,5L0,10z" fill="#c23b2a"/></marker></defs>';
+ heads.forEach(function(t,i){sv+='<text x="'+(X[i]+W/2)+'" y="18" text-anchor="middle" font-size="12" font-weight="600" fill="#5b6676" letter-spacing="1">'+t.toUpperCase()+'</text>'});
+ SL.forEach(function(l,i){var a=pos[l[0]],b=pos[l[1]],d;
+  if(b.x>a.x){d='M'+(a.x+W)+','+(a.y+H/2)+' C'+(a.x+W+45)+','+(a.y+H/2)+' '+(b.x-45)+','+(b.y+H/2)+' '+b.x+','+(b.y+H/2)}
+  else if(b.x===a.x){d='M'+(a.x+W)+','+(a.y+H/2)+' C'+(a.x+W+35)+','+(a.y+H/2)+' '+(b.x+W+35)+','+(b.y+H/2)+' '+(b.x+W)+','+(b.y+H/2)}
+  else{d='M'+a.x+','+(a.y+H/2)+' C'+(a.x-50)+','+(a.y+H/2)+' '+(b.x+W+50)+','+(b.y+H/2)+' '+(b.x+W)+','+(b.y+H/2)}
+  var g=l[2]>0;sv+='<path class="lnk" data-f="'+l[0]+'" data-t="'+l[1]+'" d="'+d+'" fill="none" stroke="'+(g?"#1f8a4c":"#c23b2a")+'" stroke-width="1.4" '+(g?'':'stroke-dasharray="5 4" ')+'marker-end="url(#'+(g?"ag":"arr")+')" opacity=".55"/>'});
+ SM.forEach(function(s){var p=pos[s[0]];sv+='<g class="box sbox" data-s="'+s[0]+'"><rect x="'+p.x+'" y="'+p.y+'" width="'+W+'" height="'+H+'" rx="8" fill="#ffffff" stroke="#16202e" stroke-width="1.3"/><text x="'+(p.x+10)+'" y="'+(p.y+20)+'" font-size="13" font-weight="600" fill="#16202e">'+esc(s[1])+'</text><text class="arrw" x="'+(p.x+W-10)+'" y="'+(p.y+20)+'" text-anchor="end" font-size="15" font-weight="700" fill="#16202e"></text>'+
+  '<text x="'+(p.x+10)+'" y="'+(p.y+40)+'" font-size="10.5" font-family="IBM Plex Mono, monospace" fill="#1d4f9e">H '+esc(s[4][0])+'</text><text x="'+(p.x+10)+'" y="'+(p.y+55)+'" font-size="10.5" font-family="IBM Plex Mono, monospace" fill="#b13a1f">I '+esc(s[4][1])+'</text><text x="'+(p.x+100)+'" y="'+(p.y+55)+'" font-size="10.5" font-family="IBM Plex Mono, monospace" fill="#8f1648">A '+esc(s[4][2])+'</text></g>'});
+ return sv+'</svg>';
+}
+VIEWS.school=function(){
+ var h='<h2>'+T("CB School: how bank numbers push each other","CB பள்ளி: வங்கி எண்கள் ஒன்றையொன்று எப்படி தள்ளுகின்றன")+'</h2>';
+ h+='<p>'+T("Each box shows HDFC (H), ICICI (I) and Axis (A). Solid green arrows mean both move the same way; dashed red arrows mean they move opposite ways. Tap a metric to see what it pushes and what pushes it, or play a scenario.","ஒவ்வொரு பெட்டியிலும் HDFC (H), ICICI (I), Axis (A) எண்கள். பச்சை கோடு = ஒரே திசை; சிவப்பு புள்ளிக்கோடு = எதிர் திசை. ஒரு அளவீட்டைத் தட்டுங்கள் அல்லது ஒரு சூழ்நிலையை இயக்குங்கள்.")+'</p>';
+ h+='<div class="scn">'+Object.keys(SCN).map(function(k){return '<button class="pill" data-scn="'+k+'" type="button">▶ '+T(SCN[k].n,SCN[k].ta)+'</button>'}).join("")+'<button class="pill" data-scn="reset" type="button">'+T("Reset","மீட்டமை")+'</button></div>';
+ h+='<div class="svgf">'+schoolSVG()+'</div><div class="ex" id="schEx">'+T("Tap a metric or a scenario.","ஒரு அளவீடு அல்லது சூழ்நிலையைத் தட்டுங்கள்.")+'</div>';
+ h+='<h3>'+T("Lessons from this quarter","இந்த காலாண்டின் பாடங்கள்")+'</h3><div class="grid g3">'+SLESS.map(function(l){return '<div class="card lesson"><h4>'+l[0]+'</h4><p style="margin:0">'+T(l[1],l[2])+'</p></div>'}).join("")+'</div>';
+ return h;
+};
+var scnTimers=[];
+function schReset(){scnTimers.forEach(clearTimeout);scnTimers=[];document.querySelectorAll("#schoolSvg .sbox").forEach(function(g){g.classList.remove("dim","sel");g.querySelector(".arrw").textContent="";g.querySelector("rect").setAttribute("fill","#ffffff")});document.querySelectorAll("#schoolSvg .lnk").forEach(function(p){p.classList.remove("dim");p.setAttribute("opacity",".55")})}
+AFTER.school=function(){
+ var lab={};SM.forEach(function(s){lab[s[0]]=s[1]});
+ document.querySelectorAll("#schoolSvg .sbox").forEach(function(g){g.addEventListener("click",function(){schReset();var id=g.dataset.s;var rel={};rel[id]=1;var push=[],by=[];
+  document.querySelectorAll("#schoolSvg .lnk").forEach(function(p){if(p.dataset.f===id||p.dataset.t===id){p.setAttribute("opacity","1");rel[p.dataset.f]=1;rel[p.dataset.t]=1;var sign=p.getAttribute("stroke")==="#1f8a4c"?"(same way)":"(opposite)";if(p.dataset.f===id)push.push(lab[p.dataset.t]+" "+sign);else by.push(lab[p.dataset.f]+" "+sign)}else p.classList.add("dim")});
+  document.querySelectorAll("#schoolSvg .sbox").forEach(function(x){if(!rel[x.dataset.s])x.classList.add("dim")});g.classList.add("sel");
+  document.getElementById("schEx").innerHTML="<b>"+esc(lab[id])+"</b><br>"+T("It pushes: ","இது தள்ளுவது: ")+(push.join(", ")||"—")+"<br>"+T("It is pushed by: ","இதைத் தள்ளுவது: ")+(by.join(", ")||"—")})});
+ document.querySelectorAll("[data-scn]").forEach(function(btn){btn.addEventListener("click",function(){schReset();var k=btn.dataset.scn;if(k==="reset"){document.getElementById("schEx").textContent=T("Tap a metric or a scenario.","ஒரு அளவீடு அல்லது சூழ்நிலையைத் தட்டுங்கள்.");return}
+  var sc=SCN[k];var ids={};sc.steps.forEach(function(s){ids[s[0]]=1});
+  document.querySelectorAll("#schoolSvg .sbox").forEach(function(x){if(!ids[x.dataset.s])x.classList.add("dim")});
+  document.querySelectorAll("#schoolSvg .lnk").forEach(function(p){if(!(ids[p.dataset.f]&&ids[p.dataset.t]))p.classList.add("dim");else p.setAttribute("opacity","1")});
+  sc.steps.forEach(function(s,i){scnTimers.push(setTimeout(function(){var g=document.querySelector('#schoolSvg .sbox[data-s="'+s[0]+'"]');if(!g)return;g.querySelector(".arrw").textContent=s[1]>0?"▲":"▼";g.querySelector(".arrw").setAttribute("fill",s[1]>0?"#1f8a4c":"#c23b2a");g.querySelector("rect").setAttribute("fill",s[1]>0?"#eaf6ef":"#fbecea")},i*450))});
+  document.getElementById("schEx").innerHTML="<b>"+esc(T(sc.n,sc.ta))+"</b><br>"+esc(T(sc.card,sc.cardTa))})});
+};
+
+/* ---------- CB Score temple ---------- */
+function temple(b){
+ var p=CO[b].pillars,sc=cbScore(b),o=CO[b];
+ var s='<svg viewBox="0 0 640 430" width="640" height="430" class="temple" data-b="'+b+'">';
+ s+='<polygon points="320,10 30,110 610,110" fill="#e2701b"/><text x="320" y="72" text-anchor="middle" font-family="Familjen Grotesk, Arial, sans-serif" font-size="30" font-weight="700" fill="#ffffff">'+fmt(sc,2)+' / 10</text><text x="320" y="96" text-anchor="middle" font-size="12" fill="#ffffff">CB SCORE</text>';
+ s+='<rect x="40" y="112" width="560" height="34" fill="#16202e"/><text x="320" y="134" text-anchor="middle" font-size="14" font-weight="600" fill="#ffffff">'+esc(o.name)+' · Q2FY27</text>';
+ for(var i=0;i<6;i++){var x=62+i*92,hh=200,fillH=hh*p[i]/10,col=scoreCol(p[i]);
+  s+='<g class="col" data-i="'+i+'" style="cursor:pointer"><rect x="'+x+'" y="152" width="56" height="'+hh+'" fill="#f6f7f9" stroke="#c7cdd6"/>';
+  for(var f=1;f<4;f++)s+='<line x1="'+(x+f*14)+'" y1="152" x2="'+(x+f*14)+'" y2="352" stroke="#e1e5ea"/>';
+  s+='<rect class="cfill" x="'+x+'" y="352" width="56" height="0" fill="'+col+'" opacity=".85" data-h="'+fillH+'"/><circle cx="'+(x+28)+'" cy="190" r="19" fill="#ffffff" stroke="'+col+'" stroke-width="3"/><text x="'+(x+28)+'" y="195" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="13" font-weight="600" fill="#16202e">'+fmt(p[i],1)+'</text></g>'}
+ s+='<rect x="40" y="354" width="560" height="10" fill="#c7cdd6"/><rect x="25" y="364" width="590" height="10" fill="#aab3bf"/>';
+ for(var j=0;j<6;j++)s+='<text x="'+(90+j*92)+'" y="398" text-anchor="middle" font-size="11.5" font-weight="600" fill="#16202e">'+esc(T(PILL_EN[j],PILL_TA[j]))+'</text>';
+ return s+'</svg>';
+}
+VIEWS.pillars=function(){
+ var h='<h2>'+T("CB Score: six pillars","CB மதிப்பெண்: ஆறு தூண்கள்")+'</h2><p class="note">'+T("Green 8–10, amber 6–8, red below 6. Tap a column to read why.","பச்சை 8–10, மஞ்சள் 6–8, சிவப்பு 6-க்கு கீழ். காரணம் அறிய தூணைத் தட்டுங்கள்.")+'</p>';
+ bankList().forEach(function(b){var o=CO[b];
+  h+='<h3>'+dot(b)+o.name+' · CY '+fmt(CY(b),0)+' · TG '+fmt(TG(b),0)+'</h3><div class="svgf" style="display:flex;justify-content:center">'+temple(b)+'</div><div class="grid g3" style="margin-top:10px">';
+  o.pillars.forEach(function(v,i){h+='<div class="card" id="pc_'+b+'_'+i+'" style="border-top:4px solid '+scoreCol(v)+'"><h4>'+T(PILL_EN[i],PILL_TA[i])+' · '+fmt(v,1)+'</h4><p style="margin:0">'+o.pillarWhy[i]+'</p></div>'});
+  h+='</div>'});
+ return h;
+};
+AFTER.pillars=function(){
+ setTimeout(function(){document.querySelectorAll(".cfill").forEach(function(r){var hh=+r.dataset.h;r.style.transition="all 1s ease";r.setAttribute("y",352-hh);r.setAttribute("height",hh)})},80);
+ document.querySelectorAll(".temple .col").forEach(function(c){c.addEventListener("click",function(){var b=c.closest(".temple").dataset.b;var el=document.getElementById("pc_"+b+"_"+c.dataset.i);el.scrollIntoView({behavior:"smooth",block:"center"});el.classList.remove("hl");void el.offsetWidth;el.classList.add("hl")})});
+};
+
+/* ---------- Asset quality & ECL ---------- */
+var ECL={hdfc:{buf:"Provision stock ₹73,500 crore; floating provisions ₹9,000 crore created in FY26; specific PCR 67% (70% ex-agri)",cet:17.1,read:"Strongest capital, large general buffers, secured-heavy book. Its low specific PCR is the one gap. Management had said earlier that RBI's prescribed floors may cancel some ECL benefit.",rank:1},icici:{buf:"Standard, contingency and other provisions ₹23,815 crore (1.3% of advances); PCR 75%",cet:16.01,read:"Highest PCR and a large contingency buffer; earns enough (provisions only 4.1% of core profit) to absorb ECL from income.",rank:1},axis:{buf:"Extra provisions ₹8,006 crore (~49 bps of capital) not counted in CRAR; total coverage 164% of GNPA",cet:14.61,read:"Adequately prepared, but the thinnest CET1 and the most unsecured retail stress, so the ECL Day-1 hit is likely the largest of the three.",rank:3}};
+VIEWS.asset=function(){
+ var h='<h2>'+T("Asset quality and readiness for ECL","கடன் தரம் & ECL தயார்நிலை")+'</h2>';
+ h+='<div class="card soft"><h4>'+T("What is ECL and when does it start?","ECL என்றால் என்ன? எப்போது?")+'</h4><p>'+T("RBI issued final Expected Credit Loss directions on 27 April 2026, effective 1 April 2027. Today banks provide after a loan defaults (incurred loss). Under ECL they classify every loan into Stage 1 (12-month expected loss), Stage 2 (significant rise in risk: lifetime loss) or Stage 3 (default), using probability of default, loss given default and exposure at default, with RBI floors. The extra Day-1 provision can be phased into CET1 over FY28 to FY31. On the same day RBI also issued the new standardised approach for credit risk, which lowers risk weights on some retail and MSME loans and releases capital.","RBI 27 ஏப்ரல் 2026-ல் ECL இறுதி விதிகளை வெளியிட்டது; 1 ஏப்ரல் 2027 முதல் அமல். இப்போ கடன் வாராக்கடன் ஆன பிறகு தான் provision. ECL-ல் ஒவ்வொரு கடனையும் Stage 1, 2, 3 என பிரித்து முன்கூட்டியே provision. கூடுதல் தொகையை FY28–FY31 நான்கு ஆண்டுகளில் CET1-ல் பிரிக்கலாம். அதே நாளில் வந்த புதிய risk weight விதிகள் retail, MSME கடன்களுக்கு மூலதனத்தை விடுவிக்கும்.")+'</p><p style="margin:0">'+T("Estimated impact: CRISIL sees up to 120 bps net CET1 impact for banks in general; analysts put large private banks (HDFC, ICICI, Axis) at only 5–20 bps, since their buffers equal 2–4% of net worth. PSU and mid-tier banks with unsecured or microfinance loans face more.","மதிப்பீடு: பொதுவாக 120 bps வரை CET1 தாக்கம் (CRISIL); பெரிய தனியார் வங்கிகளுக்கு வெறும் 5–20 bps.")+'</p></div>';
+ h+='<h3>'+T("How prepared is each bank?","ஒவ்வொரு வங்கியும் எவ்வளவு தயார்?")+'</h3><div class="tw"><table><thead><tr><th>Bank</th><th class="n">GNPA %</th><th class="n">NNPA %</th><th class="n">PCR %</th><th class="n">Credit cost</th><th class="n">CET1 %</th><th>Buffers beyond specific provisions</th><th>CB read</th></tr></thead><tbody>';
+ bankList().forEach(function(b){var m=CO[b].m,e=ECL[b];h+='<tr><td>'+dot(b)+CO[b].short+'</td><td class="n">'+m.gnpa[1]+'</td><td class="n">'+m.nnpa[1]+'</td><td class="n">'+m.pcr[1]+'</td><td class="n">'+({hdfc:"0.44%",icici:"~0.2%",axis:"0.45%"})[b]+'</td><td class="n">'+e.cet+'</td><td>'+e.buf+'</td><td>'+e.read+'</td></tr>'});
+ h+='</tbody></table></div>';
+ h+='<div class="chartf" style="margin-top:12px"><div class="cv"><canvas id="ch_aq"></canvas></div></div>';
+ h+='<h3>'+T("ECL readiness ranking","ECL தயார்நிலை வரிசை")+'</h3><p>'+T("1. HDFC Bank and ICICI Bank (joint): HDFC has the most capital; ICICI has the best coverage and earnings power. 3. Axis Bank: ready, but with the least spare capital and the most unsecured-retail stress. None of the three is expected to need fresh equity for ECL.","1. HDFC, ICICI (சமம்): HDFC-க்கு அதிக மூலதனம்; ICICI-க்கு அதிக coverage. 3. Axis: தயார், ஆனா குறைந்த மூலதன இடைவெளி. மூவருக்கும் ECL-க்காக புதிய மூலதனம் தேவைப்படாது.")+'</p>';
+ h+='<h3>'+T("Slippage detail","வாராக்கடன் விவரம்")+'</h3><div class="grid g3"><div class="card"><h4>'+dot("hdfc")+'HDFC</h4><p style="margin:0">GNPA 1.11% (from 1.17% in June); excluding agriculture 0.87%. Provisions rose 18.7% QoQ to ₹3,574 crore, still within its normal range.</p></div><div class="card"><h4>'+dot("icici")+'ICICI</h4><p style="margin:0">Gross NPA additions ₹4,833 crore; net additions ₹1,213 crore; write-offs ₹1,592 crore. Provisions fell 32.5% QoQ to ₹851 crore.</p></div><div class="card"><h4>'+dot("axis")+'Axis</h4><p style="margin:0">Gross slippages ₹4,762 crore (retail ₹4,286 crore); net slippages ₹2,383 crore; recoveries ₹2,380 crore; write-offs ₹2,729 crore. Net slippage ratio 0.75%.</p></div></div>';
+ return h;
+};
+AFTER.asset=function(){barChart("ch_aq",["GNPA","NNPA","Credit cost"],bankList().map(function(b){var m=CO[b].m;return{label:CO[b].name,data:[m.gnpa[1],m.nnpa[1],({hdfc:0.44,icici:0.2,axis:0.45})[b]],backgroundColor:CO[b].col}}),"Asset quality, Q2FY27 (%)",true)};
+
+/* ---------- FCNR ---------- */
+VIEWS.fcnr=function(){
+ var h='<h2>'+T("FCNR(B) impact","FCNR(B) தாக்கம்")+'</h2>';
+ h+='<div class="card soft"><h4>'+T("What happened","என்ன நடந்தது")+'</h4><p style="margin:0">'+T("With the rupee under pressure, RBI opened a concessional dollar-rupee swap window on 8 June 2026 for fresh 3–5 year FCNR(B) deposits from NRIs. Banks paid about 6% on these dollar deposits and swapped the dollars to RBI at a fixed, concessional rate, so the bank carries no currency risk. RBI closed the window early, on 31 August, because inflows were so large. It worked like the 2013 scheme, which drew $34 billion.","ரூபாய் அழுத்தத்தில் இருந்ததால், RBI 8 ஜூன் 2026-ல் NRI-களின் 3–5 ஆண்டு FCNR(B) டெபாசிட்டுக்கு சலுகை swap சாளரம் திறந்தது. வங்கிகள் சுமார் 6% வட்டி கொடுத்து, டாலரை RBI-யிடம் நிலையான விலையில் swap செய்தன; நாணய அபாயம் இல்லை. பணம் அதிகம் வந்ததால் 31 ஆகஸ்ட் அன்றே RBI மூடியது. 2013-ல் இதே மாதிரி திட்டத்தில் $34 பில்லியன் வந்தது.")+'</p></div>';
+ h+='<div class="tw" style="margin-top:12px"><table><thead><tr><th>Bank</th><th class="n">FCNR raised ($ bn)</th><th class="n">≈ ₹ crore</th><th class="n">Share of deposits</th><th>Visible impact</th></tr></thead><tbody>';
+ bankList().forEach(function(b){var o=CO[b];h+='<tr><td>'+dot(b)+o.short+'</td><td class="n">'+fmt(o.fcnr.usd,2)+'</td><td class="n">'+fmt(o.fcnr.inr)+'</td><td class="n">'+fmt(o.fcnr.inr/o.m.dep[1]*100,1)+'%</td><td>'+o.fcnr.note+'</td></tr>'});
+ h+='</tbody></table></div>';
+ h+='<h3>'+T("Good side and cost side","நல்லதும் செலவும்")+'</h3><div class="pc"><div class="card"><h4 class="up">'+T("Helps","உதவுகிறது")+'</h4><ul><li>Large, locked-in 3–5 year funding at a time deposits are scarce.</li><li>LCR improved; banks used part of it to repay costlier funding (Jefferies).</li><li>No currency risk for the bank because of the RBI swap.</li><li>Lifts loan growth: HDFC said FCNR added ~1.9 points to AUM growth.</li></ul></div><div class="card"><h4 class="dn">'+T("Costs","செலவு")+'</h4><ul><li>NIM dilution: Axis −11 bps (3.47% → 3.36%); ICICI NIM fell 18 bps QoQ to 4.18%.</li><li>CASA ratio falls mechanically (more term money in the base).</li><li>ICICI cost of deposits rose from 4.41% to 4.50%.</li><li>If the money is not lent at good yields, margins can fall further than the ~7 bps brokers expected.</li><li>Maturity bunching in 2029–2031 when these deposits must be repaid or rolled.</li></ul></div></div>';
+ h+='<h3>'+T("CB read","CB பார்வை")+'</h3><p>'+T("FCNR made Q2 look bigger on deposits and smaller on margins. It is a one-time funding window, so Q3 and Q4 numbers should be compared excluding FCNR. Biggest beneficiary of volume: ICICI ($17.9 billion). Least margin damage relative to size: HDFC (it already had the tightest CD ratio, so the cheaper-than-borrowing funding is useful). Axis gained the most share relative to its size (8% of system inflows vs 5.3% deposit share).","FCNR டெபாசிட்டை பெரிதாகவும் margin-ஐ சிறிதாகவும் காட்டியது. இது ஒருமுறை சாளரம்; அடுத்த காலாண்டுகளில் FCNR இல்லாத எண்களைப் பாருங்கள். அதிக தொகை: ICICI. அளவுக்கு மேல் பங்கு: Axis.")+'</p>';
+ return h;
+};
+
+/* ---------- Market & FII ---------- */
+VIEWS.market=function(){
+ var h='<h2>'+T("Will banks behave differently from other stocks? Will FIIs come back?","வங்கி பங்குகள் வேறு மாதிரி நடக்குமா? FII திரும்ப வருவார்களா?")+'</h2>';
+ h+='<div class="grid g2"><div class="card"><h4>'+T("Why banks move differently now","இப்போது வங்கிகள் ஏன் வித்தியாசமாக நகரும்")+'</h4><ul style="margin:0;padding-left:18px">';
+ [["Rate hikes help banks first, hurt most other sectors.","வட்டி உயர்வு மற்ற துறைகளை பாதிக்கும்; வங்கிகளுக்கு முதலில் உதவும்."],["Floating-rate loans reprice within weeks; HDFC (~70% floating) expects the benefit by December.","Floating கடன் சில வாரங்களில் மாறும்; HDFC டிசம்பருக்குள் பலன் என்கிறது."],["Banks are the most foreign-owned and most liquid large caps, so they fall hardest when FIIs sell (financials were ~51% of FII outflows) and usually rise first when they buy.","வங்கிகளில் தான் FII அதிகம்; விற்கும்போது முதலில் விழும், வாங்கும்போது முதலில் ஏறும்."],["Valuations are near multi-year lows for HDFC (~1.9x book) while earnings still grow, unlike richly valued sectors.","HDFC மதிப்பீடு பல ஆண்டுகளின் குறைந்த நிலையில்."],["Risk: oil near $110 and a weak rupee can push RBI to hike again, which raises deposit costs and slows loan demand.","அபாயம்: கச்சா எண்ணெய் $110, பலவீன ரூபாய் → மேலும் வட்டி உயர்வு."]].forEach(function(x){h+='<li>'+T(x[0],x[1])+'</li>'});
+ h+='</ul></div><div class="card"><h4>'+T("FII picture in numbers","FII எண்களில்")+'</h4><div class="tw"><table><tbody><tr><td>FII net selling, 2026 to 9 Oct</td><td class="n">₹3,04,000 cr</td></tr><tr><td>FII selling in October (to 9 Oct)</td><td class="n">₹44,166 cr</td></tr><tr><td>FII selling, 2025 full year</td><td class="n">₹1,66,000 cr</td></tr><tr><td>DII net buying, 2026</td><td class="n">₹6,83,000 cr</td></tr><tr><td>Foreign strategic money into Indian lenders (Mar 2025–Oct 2026)</td><td class="n">₹1,81,000 cr</td></tr><tr><td>Fairfax for 60.72% of IDBI Bank (cabinet cleared 14 Oct)</td><td class="n">₹52,878 cr</td></tr><tr><td>Rupee</td><td class="n">~₹96/$</td></tr><tr><td>FX reserves (2 Oct)</td><td class="n">$734.6 bn</td></tr></tbody></table></div></div></div>';
+ h+='<h3>'+T("Will FIIs come back?","FII திரும்ப வருவார்களா?")+'</h3><p>'+T("Nobody can time it, but the conditions that usually bring them back can be watched. Two kinds of foreign money are behaving differently: portfolio investors (FPIs) are selling banks, while strategic buyers (Fairfax–IDBI and eight other deals) are paying to own Indian lenders. That gap says long-term foreign money sees value at these prices.","எப்போது என்று யாராலும் சொல்ல முடியாது. ஆனா திரும்பி வர வைக்கும் நிபந்தனைகளை கவனிக்கலாம். பங்குச்சந்தை FPI-கள் விற்கிறார்கள்; ஆனா Fairfax–IDBI போன்ற நீண்டகால வெளிநாட்டு முதலீட்டாளர்கள் வங்கிகளையே வாங்குகிறார்கள். இந்த விலையில் மதிப்பு இருக்கிறது என்பதற்கான அறிகுறி.")+'</p>';
+ h+='<div class="tw"><table><thead><tr><th>Signal to watch</th><th>Now</th><th>What would turn it positive</th></tr></thead><tbody><tr><td>Rupee</td><td>~₹96/$, weakest on record</td><td>Rupee stable or firmer for a few weeks</td></tr><tr><td>US bond yields / dollar index</td><td>Elevated, dollar strong</td><td>US yields falling</td></tr><tr><td>Crude oil</td><td>~$110 (Hormuz tension)</td><td>Oil back below ~$90</td></tr><tr><td>India–US rate gap</td><td>Narrowed; RBI hiked to defend it</td><td>Gap stable after RBI action</td></tr><tr><td>Bank earnings</td><td>ICICI strong, HDFC steady, Axis improving</td><td>Q3 NIM recovery as hike flows through</td></tr><tr><td>Valuations</td><td>HDFC ~1.9x, Axis ~1.9x, ICICI ~2.8x book</td><td>Already supportive</td></tr></tbody></table></div>';
+ h+='<p class="note" style="margin-top:8px">'+T("If FIIs return, the first buying usually goes to the largest and most liquid names where they are underweight. HDFC Bank, the most sold and most foreign-held, has the most to gain from that flow; ICICI is already priced richly.","FII திரும்பினால் முதலில் பெரிய, அதிகம் வர்த்தகமாகும் பங்குகள். அதிகம் விற்கப்பட்ட HDFC-க்கு அதிக பலன் கிடைக்கலாம்.")+'</p>';
+ return h;
+};
+
+/* ---------- Triggers & Cycle ---------- */
+function cycleClock(b){
+ var ph=["P1 Trough","P2 Early recovery","P3 Expansion","P4 Late cycle","P5 Downturn"];var cx=150,cy=150,r=110;
+ var s='<svg viewBox="0 0 300 300" width="300" height="300">';
+ ph.forEach(function(p,i){var a0=(-90+i*72)*Math.PI/180,a1=(-90+(i+1)*72)*Math.PI/180;var x0=cx+r*Math.cos(a0),y0=cy+r*Math.sin(a0),x1=cx+r*Math.cos(a1),y1=cy+r*Math.sin(a1);
+  s+='<path d="M'+cx+','+cy+' L'+x0+','+y0+' A'+r+','+r+' 0 0 1 '+x1+','+y1+' Z" fill="'+(i===2?"#fdf0e5":"#f6f7f9")+'" stroke="#ffffff" stroke-width="3"/>';
+  var am=(-90+i*72+36)*Math.PI/180;s+='<text x="'+(cx+(r-34)*Math.cos(am))+'" y="'+(cy+(r-34)*Math.sin(am))+'" text-anchor="middle" font-size="10.5" font-weight="600" fill="#16202e">'+p.split(" ")[0]+'</text><text x="'+(cx+(r-34)*Math.cos(am))+'" y="'+(cy+(r-34)*Math.sin(am)+13)+'" text-anchor="middle" font-size="9" fill="#5b6676">'+p.split(" ").slice(1).join(" ")+'</text>'});
+ var ap=(-90+2*72+30)*Math.PI/180;s+='<line x1="'+cx+'" y1="'+cy+'" x2="'+(cx+(r-8)*Math.cos(ap))+'" y2="'+(cy+(r-8)*Math.sin(ap))+'" stroke="#e2701b" stroke-width="4" stroke-linecap="round"/><circle cx="'+cx+'" cy="'+cy+'" r="7" fill="#e2701b"/>';
+ var as=(-90+0*72+60)*Math.PI/180;s+='<circle cx="'+(cx+(r+14)*Math.cos(as))+'" cy="'+(cy+(r+14)*Math.sin(as))+'" r="8" fill="'+CO[b].col+'"/><text x="'+(cx+(r+14)*Math.cos(as))+'" y="'+(cy+(r+14)*Math.sin(as)+4)+'" text-anchor="middle" font-size="9" fill="#ffffff" font-weight="700">S</text>';
+ return s+'</svg>';
+}
+VIEWS.triggers=function(){
+ var h='<h2>'+T("Triggers & cycle","தூண்டுதல்கள் & சுழற்சி")+'</h2>';
+ h+='<div class="card soft"><p style="margin:0">'+T("Credit cycle phase: P3 Expansion (score 70). Evidence: loan growth 16–30% (inflated by FCNR), credit costs at multi-year lows (0.2–0.45%), GNPA falling at all three; RBI turned to tightening on 7 Oct (repo 5.50%). For floating-rate lenders an early hike lifts NIM before it slows demand. Orange pointer = sector phase; coloured S = stock's price stage.","கடன் சுழற்சி: P3 விரிவாக்கம் (70). ஆதாரம்: கடன் வளர்ச்சி 16–30%, credit cost பல ஆண்டு குறைவு, GNPA மூவருக்கும் குறைகிறது; RBI 7 அக்டோபர் வட்டி உயர்த்தியது.")+'</p></div>';
+ bankList().forEach(function(b){var o=CO[b],c=o.cycle;
+  h+='<h3>'+dot(b)+o.name+' · CY '+fmt(CY(b),0)+' · TG '+fmt(TG(b),0)+'</h3><div class="grid g2"><div class="card" style="display:flex;justify-content:center">'+cycleClock(b)+'</div><div class="card"><div class="tw"><table><tbody><tr><td>Business lifecycle</td><td class="n">'+c.life+'</td></tr><tr><td>Earnings cycle</td><td class="n">'+c.earn+'</td></tr><tr><td>Valuation cycle (P/BV vs own band)</td><td class="n">'+c.val+'</td></tr><tr><td>Price stage: '+c.stage+'</td><td class="n">'+c.price+'</td></tr><tr><td><b>Stock cycle average</b></td><td class="n"><b>'+fmt((c.life+c.earn+c.val+c.price)/4,1)+'</b></td></tr></tbody></table></div><p class="note" style="margin-top:6px">Price stage is a CB estimate from reported price moves; a 30-week moving average series was not available.</p></div></div>';
+  h+='<div class="tw" style="margin-top:10px"><table><thead><tr><th>Trigger</th><th>+/−</th><th class="n">Impact</th><th class="n">Certainty</th><th class="n">Timing</th><th class="n">Priced-in</th><th class="n">Points</th><th>What to watch</th></tr></thead><tbody>';
+  o.trig.forEach(function(t){h+='<tr><td>'+t[0]+'</td><td class="'+(t[1]==="+"?"up":"dn")+'"><b>'+t[1]+'</b></td><td class="n">'+t[2]+'</td><td class="n">'+t[3]+'</td><td class="n">'+t[4]+'</td><td class="n">'+t[5]+'</td><td class="n">'+fmt(trigPts(t),2)+'</td><td>'+t[6]+'</td></tr>'});
+  h+='</tbody></table></div>'});
+ h+='<h3>'+T("Dated events ahead","வரவிருக்கும் தேதிகள்")+'</h3><div class="tl">'+[["21 Oct 2026","MPC minutes"],["27 Oct 2026","Anup Bagchi takes over at HDFC Bank"],["1 Dec 2026","Puneet Sharma becomes HDFC CFO"],["2–4 Dec 2026","Next RBI MPC: hike or pause"],["Jan 2027","Q3FY27 results: first quarter with the hike in NIM"],["1 Apr 2027","ECL + new standardised risk weights start"],["FY28–FY31","ECL Day-1 impact phased into CET1"],["Jun 2029–Aug 2031","FCNR(B) deposits from the swap window mature"]].map(function(e){return '<div class="ev"><b>'+e[0]+'</b><br>'+e[1]+'</div>'}).join("")+'</div>';
+ h+='<h3>'+T("What would change this view","எது இந்த பார்வையை மாற்றும்")+'</h3><ul><li>Q3 NIM fails to rise despite the hike (deposit costs reprice faster than expected).</li><li>Retail unsecured slippages rise again, especially at Axis.</li><li>A second RBI hike in December combined with weaker loan demand.</li></ul>';
+ return h;
+};
+
+/* ---------- Analysts ---------- */
+VIEWS.analysts=function(){
+ var h='<h2>'+T("Analysts' rating","ஆய்வாளர் மதிப்பீடு")+'</h2><p class="note">'+T("Third-party brokerage views, mostly set before the 17 Oct results; post-result revisions will follow. Upside is against the 16 Oct 2026 close. CB Research does not issue ratings.","இவை வெளி brokerage கருத்துகள்; பெரும்பாலும் முடிவுக்கு முன். CB Research மதிப்பீடு வழங்குவதில்லை.")+'</p>';
+ bankList().forEach(function(b){var o=CO[b];
+  h+='<h3>'+dot(b)+o.name+' · CMP ₹'+fmt(o.cmp,2)+' · Bloomberg consensus target ₹'+fmt(o.consTP,2)+' ('+fmt((o.consTP/o.cmp-1)*100,1)+'% upside)</h3>';
+  h+='<div class="tw"><table><thead><tr><th>Brokerage</th><th>Rating</th><th class="n">Target ₹</th><th class="n">Upside</th><th>Date</th><th>Source</th></tr></thead><tbody>';
+  o.brokers.forEach(function(r){h+='<tr><td>'+r[0]+'</td><td><span class="chip c-good">'+r[1]+'</span></td><td class="n">'+fmt(r[2])+'</td><td class="n up">+'+fmt((r[2]/o.cmp-1)*100,1)+'%</td><td>'+r[3]+'</td><td class="muted">'+({hdfc:"Business Today / ETBFSI",icici:"Univest summary of broker notes",axis:"Groww / Univest / Business Today"})[b]+'</td></tr>'});
+  h+='</tbody></table></div>';
+  var lo=Math.min.apply(null,o.brokers.map(function(r){return r[2]})),hi=Math.max.apply(null,o.brokers.map(function(r){return r[2]}));
+  h+='<p class="note">Target range ₹'+fmt(lo)+'–₹'+fmt(hi)+'. All listed brokers rate it Buy/Overweight. Cycle: credit P3 expansion; top positive trigger: '+o.trig[0][0]+'; top risk: '+o.trig.filter(function(t){return t[1]!=="+"})[0][0]+'.</p>'});
+ return h;
+};
+
+/* ---------- Management ---------- */
+VIEWS.mgmt=function(){
+ var h='<h2>'+T("Management & board","நிர்வாகம் & வாரியம்")+'</h2>';
+ bankList().forEach(function(b){var o=CO[b];
+  h+='<h3>'+dot(b)+o.name+'</h3><div class="tw"><table><thead><tr><th>Name</th><th>Role</th><th>Note</th></tr></thead><tbody>'+o.mgmt.map(function(r){return '<tr><td><b>'+r[0]+'</b></td><td>'+r[1]+'</td><td>'+r[2]+'</td></tr>'}).join("")+'</tbody></table></div><p class="note" style="margin-top:6px">'+o.gov+'</p>'});
+ if(BANK==="all"||BANK==="hdfc")h+='<div class="card soft" style="margin-top:12px"><h4>'+T("Why the HDFC change matters","HDFC மாற்றம் ஏன் முக்கியம்")+'</h4><p style="margin:0">'+T("HDFC Bank's new CEO comes from the ICICI group, where he ran retail, rural and business banking, the very segments where ICICI has out-grown HDFC. Brokerages called the appointment the removal of a key overhang; the bank fell 2% on the day after an initial rise. Watch for team reorganisation and a plan to bring the CD ratio and margins back up.","HDFC-யின் புதிய CEO ICICI குழுமத்தில் retail, rural, business banking-ஐ நடத்தியவர். ICICI முந்திய அதே பிரிவுகள். Brokerage-கள் இதை பெரிய சுமை நீங்கியதாக பார்க்கின்றன.")+'</p></div>';
+ return h;
+};
+
+/* ---------- Pros & cons ---------- */
+var PROS={
+ hdfc:{p:["Cheapest in a decade on P/BV (~1.9x†) while still growing loans 16% and deposits 19%","Strongest capital (CET1 17.1%) and well-placed for ECL","Benefits most from the rate hike (~70% floating book)","CEO and chairman questions now settled","Biggest potential gainer if FIIs return"],c:["Weakest profit growth (+4.7%); NIM lowest at 3.32%","CD ratio 96.8% limits growth until deposits catch up","New CEO from a rival group: transition risk","CASA ratio down to 31.6%","Stock −25% in 2026; FII selling may continue"]},
+ icici:{p:["Best quarter: PAT +20%, core profit +22%, beat estimates","Highest NIM (4.18%), ROA (~2.3%) and ROE (~16.5%)","Best asset quality and PCR 75%; provisions just 4% of core profit","Stable CEO to 2028","Most room to lend (CD ~89%)"],c:["Richest valuation (~2.8x book†): good news is priced in","NIM fell 18 bps QoQ as FCNR cost hit","Deposit growth flattered by FCNR (17% without it)","ROA near peak, so earnings growth may slow from here","High FII ownership: falls with FII selling"]},
+ axis:{p:["Fast growth: loans +23%, deposits +21%","Asset quality improving: GNPA 1.16% from 1.46%","Valuation ~1.9x book† despite higher growth","Big FCNR share (8% of system) funds growth","Lower retail risk weights from Apr 2027"],c:["Profit jump came from low base; core profit +11%; PAT missed estimates","Highest cost-to-income (~49%) and lowest ROA (1.38%)","Thinnest CET1 (14.61%) and largest likely ECL hit","Retail slippages remain the main risk","CASA ratio fell to 36% from 40%"]}
+};
+VIEWS.pros=function(){
+ var h='<h2>'+T("Can I buy? The pros and cons","வாங்கலாமா? நன்மை & தீமை")+'</h2><div class="card soft"><p style="margin:0">'+T("CB Research does not tell anyone to buy or sell. Below are the facts for and against each bank; use the Self-check tab to test them against your own conditions (time horizon, how much of your money is already in banks, and how much fall you can sit through).","CB Research வாங்கு / விற்று என்று சொல்லாது. ஒவ்வொரு வங்கிக்கும் ஆதரவு, எதிர் உண்மைகள் கீழே. உங்கள் நிபந்தனைகளுடன் ஒப்பிட Self-check பகுதியைப் பயன்படுத்துங்கள்.")+'</p></div>';
+ bankList().forEach(function(b){h+='<h3>'+dot(b)+CO[b].name+'</h3><div class="pc"><div class="card"><h4 class="up">'+T("For","ஆதரவு")+'</h4><ul>'+PROS[b].p.map(function(x){return '<li>'+x+'</li>'}).join("")+'</ul></div><div class="card"><h4 class="dn">'+T("Against","எதிர்")+'</h4><ul>'+PROS[b].c.map(function(x){return '<li>'+x+'</li>'}).join("")+'</ul></div></div>'});
+ h+='<p style="margin-top:12px"><button class="pill" type="button" onclick="TAB=\'selfcheck\';render();scrollTo(0,0)">'+T("Open Self-check →","Self-check திற →")+'</button></p>';
+ return h;
+};
+
+/* ---------- Self-check ---------- */
+var SCG=[
+ ["1. Questions about the stock","பங்கு பற்றிய கேள்விகள்",[["Is profit growth coming from core income, not one-offs?",{hdfc:"PAT +4.7%; ex-treasury +12.6%",icici:"Core operating profit +21.8%",axis:"PAT +37.6% but core op. profit +11%"}],["Is NIM stable or improving?",{hdfc:"3.32%; management says Q2 was the bottom",icici:"4.18%, down 18 bps QoQ",axis:"3.36% (3.47% ex-FCNR), down from 3.55%"}],["Is asset quality improving?",{hdfc:"GNPA 1.24% → 1.11%",icici:"GNPA 1.58% → 1.20%",axis:"GNPA 1.46% → 1.16%"}],["Is capital comfortable for ECL?",{hdfc:"CET1 17.1%",icici:"CET1 16.01%",axis:"CET1 14.61%"}]]],
+ ["2. Problems investors face","முதலீட்டாளர் சந்திக்கும் பிரச்சனைகள்",[["Can I hold through further FII selling?",{hdfc:"Stock −25% in 2026",icici:"High FII ownership",axis:"52-week range ₹1,150–1,418"}],["Am I comfortable that margins may stay under pressure for a quarter?",{hdfc:"FCNR and CASA mix",icici:"FCNR cost lifted CoD to 4.50%",axis:"FCNR cut NIM by 11 bps"}]]],
+ ["3. Solutions (what I did)","தீர்வுகள் (நான் செய்தது)",[["I read the Q2 numbers excluding FCNR",{hdfc:"FCNR $11.5 bn",icici:"Deposits +17% ex-FCNR",axis:"NIM 3.47% ex-FCNR"}],["I compared P/BV with ROE",{hdfc:"~1.9x† for ROE ~13.3%†",icici:"~2.8x† for ROE ~16.5%",axis:"~1.9x† for ROE ~14%"}]]],
+ ["4. Anchors' and analysts' view","ஆய்வாளர் பார்வை",[["I checked the spread of brokerage targets",{hdfc:"₹870–1,225; consensus ₹981.65",icici:"₹1,700–1,820; consensus ₹1,758",axis:"₹1,477–1,700; consensus ₹1,580"}],["I noted these targets were set before results",{hdfc:"Dated 5–7 Oct",icici:"Dated Sep–Oct",axis:"Dated Oct"}]]]
+];
+var SUGG=["Time horizon of at least 3 years","Banks are less than 25% of my portfolio","I can sit through a 20% fall","I will buy in parts over months","I have an emergency fund outside shares","I understand ECL from April 2027"];
+function scKey(b){return "cbsc_"+b}
+function scLoad(b){try{return JSON.parse(localStorage.getItem(scKey(b))||"{}")}catch(e){return {}}}
+function scSave(b,o){try{localStorage.setItem(scKey(b),JSON.stringify(o))}catch(e){}}
+VIEWS.selfcheck=function(){
+ var b=BANK==="all"?"hdfc":BANK;var st=scLoad(b);st.own=st.own||[];
+ var h='<h2>'+T("CB Investor Self-check","CB முதலீட்டாளர் சுய சோதனை")+'</h2>';
+ if(BANK==="all")h+='<p class="note">'+T("Pick a bank in the bar above; showing HDFC Bank.","மேலே வங்கியைத் தேர்ந்தெடுங்கள்; இப்போது HDFC.")+'</p>';
+ h+='<h3>'+dot(b)+CO[b].name+'</h3>';
+ var tot=0,done=0;
+ SCG.forEach(function(g,gi){var gd=0;var items=g[2].map(function(it,ii){var k="g"+gi+"_"+ii;var on=!!st[k];if(on)gd++;return '<label class="sc-item"><input type="checkbox" data-k="'+k+'" id="sc_'+b+'_'+k+'" '+(on?"checked":"")+'><span>'+it[0]+'<div class="sc-data">Data: '+(it[1][b]||"")+'</div></span></label>'}).join("");
+  tot+=g[2].length;done+=gd;
+  h+='<div class="card" style="margin-bottom:10px"><h4>'+T(g[0],g[1])+'</h4><div class="prog"><i style="width:'+(gd/g[2].length*100)+'%"></i></div><p class="note">'+gd+' of '+g[2].length+'</p>'+items+'</div>'});
+ var od=0;var own=st.own.map(function(o,i){if(o.on)od++;return '<label class="sc-item"><input type="checkbox" data-own="'+i+'" id="sco_'+b+'_'+i+'" '+(o.on?"checked":"")+'><span>'+esc(o.t)+'<div class="sc-data">Data:</div></span></label>'}).join("");
+ tot+=st.own.length;done+=od;
+ h+='<div class="card" style="margin-bottom:10px"><h4>'+T("5. My own conditions","5. என் சொந்த நிபந்தனைகள்")+'</h4><div class="prog"><i style="width:'+(st.own.length?od/st.own.length*100:0)+'%"></i></div>'+own+(st.own.length<8?'<div class="scn">'+SUGG.filter(function(s){return !st.own.some(function(o){return o.t===s})}).map(function(s){return '<button class="pill" type="button" data-sug="'+esc(s)+'">+ '+esc(s)+'</button>'}).join("")+'</div><form id="ownF" style="display:flex;gap:6px"><input id="ownIn" placeholder="Add your own condition" style="flex:1;min-width:0;padding:8px;border:1px solid var(--line);border-radius:8px;font:inherit"><button class="pill" type="submit">Add</button></form>':'')+'</div>';
+ h+='<div class="card soft"><b>'+done+' of '+tot+'</b> '+T("conditions line up.","நிபந்தனைகள் பொருந்துகின்றன.")+'<div class="prog"><i style="width:'+(tot?done/tot*100:0)+'%"></i></div><p class="note" style="margin:0">'+T("This only counts how many of your own conditions line up. It is not a recommendation.","இது உங்கள் நிபந்தனைகள் எத்தனை பொருந்துகின்றன என்று மட்டும் எண்ணுகிறது. இது பரிந்துரை அல்ல.")+'</p><p style="margin:8px 0 0"><button class="pill" type="button" id="scClear">'+T("Clear","அழி")+'</button></p></div>';
+ return h;
+};
+AFTER.selfcheck=function(){var b=BANK==="all"?"hdfc":BANK;
+ document.querySelectorAll('[data-k]').forEach(function(c){c.addEventListener("change",function(){var st=scLoad(b);st[c.dataset.k]=c.checked;scSave(b,st);render()})});
+ document.querySelectorAll('[data-own]').forEach(function(c){c.addEventListener("change",function(){var st=scLoad(b);st.own[+c.dataset.own].on=c.checked;scSave(b,st);render()})});
+ function add(t){if(!t)return;var st=scLoad(b);st.own=st.own||[];if(st.own.length>=8)return;st.own.push({t:t,on:false});scSave(b,st);render()}
+ document.querySelectorAll('[data-sug]').forEach(function(x){x.addEventListener("click",function(){add(x.dataset.sug)})});
+ var f=document.getElementById("ownF");if(f)f.addEventListener("submit",function(e){e.preventDefault();add(document.getElementById("ownIn").value.trim())});
+ document.getElementById("scClear").addEventListener("click",function(){scSave(b,{});render()});
+};
+
+/* ---------- Verdict ---------- */
+VIEWS.verdict=function(){
+ var order=["icici","axis","hdfc"];
+ var why={icici:"Best on every core measure: PAT +20.1% beat estimates, core operating profit +21.8%, NIM 4.18%, ROE ~16.5%, GNPA down to 1.20%, provisions just ₹851 crore.",axis:"Strong headline (PAT +37.6%) and better asset quality, but most of the jump came from provisions halving against a weak year-ago base; core profit +11% and PAT slightly missed.",hdfc:"Balance sheet grew well, but PAT +4.7% was the weakest as treasury gains fell from ₹2,390 crore to ₹780 crore; NIM lowest at 3.32%. Ex-treasury profit grew ~12.6%."};
+ var whyTa={icici:"எல்லா core அளவீடுகளிலும் முதல்: PAT 20.1% (கணிப்பை மீறியது), core லாபம் 21.8%, NIM 4.18%, ROE ~16.5%, GNPA 1.20%.",axis:"PAT 37.6% பெரியதாக தெரிந்தாலும் பெரும்பகுதி provision குறைவால்; core லாபம் 11%, கணிப்பை சற்று தவறவிட்டது.",hdfc:"Balance sheet நன்றாக வளர்ந்தது; ஆனா treasury லாபம் குறைந்ததால் PAT 4.7% மட்டும். Treasury இல்லாமல் ~12.6%."};
+ var h='<h2>'+T("Earnings verdict: which bank had the best quarter?","வருவாய் தீர்ப்பு: எந்த வங்கியின் காலாண்டு சிறந்தது?")+'</h2>';
+ h+='<div class="card" style="border:2px solid var(--icici);margin-bottom:14px"><p style="margin:0;font-size:16px">'+T("<b>ICICI Bank delivered the best Q2FY27 earnings</b>, followed by Axis Bank, then HDFC Bank. This ranks the quarter's earnings quality, not the stocks. On valuation the order reverses: HDFC and Axis trade near 1.9x book, ICICI near 2.8x.","<b>Q2FY27-ல் சிறந்த வருவாய் ICICI Bank-க்கு</b>, அடுத்து Axis, பிறகு HDFC. இது காலாண்டு வருவாய் தரத்தின் வரிசை, பங்கு பரிந்துரை அல்ல. மதிப்பீட்டில் வரிசை மாறும்: HDFC, Axis ~1.9x book; ICICI ~2.8x.")+'</p></div>';
+ h+='<div class="grid g3">';
+ order.forEach(function(b,i){h+='<div class="card" style="border-top:5px solid '+CO[b].col+'"><div class="rank">#'+(i+1)+'</div><h4>'+CO[b].name+'</h4><p>'+T(why[b],whyTa[b])+'</p><p class="note" style="margin:0">CB Score '+fmt(cbScore(b),2)+' · Conviction '+fmt(conviction(b),1)+'</p></div>'});
+ h+='</div>';
+ h+='<h3>'+T("Scorecard","மதிப்பெண் அட்டை")+'</h3><div class="tw"><table><thead><tr><th>Question</th><th>'+dot("hdfc")+'HDFC</th><th>'+dot("icici")+'ICICI</th><th>'+dot("axis")+'Axis</th><th>Best</th></tr></thead><tbody>';
+ [["Profit growth (core)","+4.7% (+12.6% ex-treasury)","+20.1% (core +21.8%)","+37.6% (core +11%)","ICICI"],["Beat / miss vs consensus PAT","−0.5%","+3.3%","−2.2%","ICICI"],["NIM","3.32%","4.18%","3.36%","ICICI"],["ROA","1.8%","~2.3%","1.38%","ICICI"],["Asset quality trend","Improving","Improving most","Improving","ICICI"],["Capital (CET1)","17.1%","16.01%","14.61%","HDFC"],["ECL readiness","Strong","Strong","Adequate","HDFC / ICICI"],["FCNR handled best","Small, useful","Largest, NIM cost","Largest share for size","—"],["Valuation (P/BV)","~1.9x†","~2.8x†","~1.9x†","HDFC / Axis"],["Leadership stability","Changing","Stable","Stable","ICICI"]].forEach(function(r){h+='<tr><td>'+r[0]+'</td><td>'+r[1]+'</td><td>'+r[2]+'</td><td>'+r[3]+'</td><td><b>'+r[4]+'</b></td></tr>'});
+ h+='</tbody></table></div>';
+ h+='<h3>'+T("CB Conviction (lens blend)","CB நம்பிக்கை மதிப்பெண்")+'</h3><div class="tw"><table><thead><tr><th>Bank</th><th class="n">Earnings 25%</th><th class="n">CB Score 20%</th><th class="n">Macro 15%</th><th class="n">Market 15%</th><th class="n">Cycle 10%</th><th class="n">Trigger 15%</th><th class="n">Conviction</th></tr></thead><tbody>';
+ BANKS.forEach(function(b){var o=CO[b];h+='<tr><td>'+dot(b)+o.short+'</td><td class="n">'+o.E+'</td><td class="n">'+fmt(cbScore(b)*10,1)+'</td><td class="n">'+o.M+'</td><td class="n">'+o.T+'</td><td class="n">'+fmt(CY(b),1)+'</td><td class="n">'+fmt(TG(b),1)+'</td><td class="n"><b>'+fmt(conviction(b),1)+'</b></td></tr>'});
+ h+='</tbody></table></div><p class="note">'+T("No gate triggered: no stock is confirmed in Stage 4, and no negative trigger has impact ≥4 with certainty ≥0.7. Conviction measures how many lenses line up; it is not a buy or sell signal.","எந்த gate-உம் பொருந்தவில்லை. இது வாங்க / விற்க சிக்னல் அல்ல.")+'</p>';
+ h+='<h3>'+T("Short answers to your questions","உங்கள் கேள்விகளுக்கு சுருக்கமான பதில்")+'</h3><div class="grid g2">';
+ [["FCNR impact","Boosted deposits (ICICI +27% vs 17% without), cut NIM (Axis −11 bps, ICICI −18 bps QoQ). One-time window, closed 31 Aug.","டெபாசிட் கூடியது, NIM குறைந்தது. ஒருமுறை சாளரம்."],["ECL readiness","HDFC and ICICI best placed; Axis adequate. Large private banks: 5–20 bps CET1 hit, phased to FY31.","HDFC, ICICI சிறப்பாக தயார்; Axis போதுமானது."],["Will banks behave differently?","Yes: the rate hike lifts floating-rate bank margins first, while it hurts most other sectors. But banks also swing hardest with FII flows.","ஆம்: வட்டி உயர்வு முதலில் வங்கிக்கு உதவும்; ஆனா FII ஓட்டத்தில் அதிகம் ஆடும்."],["Will FIIs come back?","Conditions to watch: rupee stability, oil below ~$90, falling US yields. Strategic foreign buyers (Fairfax–IDBI) already see value; HDFC gains most if FPIs return.","ரூபாய் நிலைத்தன்மை, எண்ணெய் விலை, US yield-ஐ கவனியுங்கள்."]].forEach(function(x){h+='<div class="card"><h4>'+x[0]+'</h4><p style="margin:0">'+T(x[1],x[2])+'</p></div>'});
+ h+='</div>';
+ return h;
+};
+
+/* ---------- Socrates ---------- */
+var QZ=[
+ ["Axis Bank's PAT grew 37.6%. What drove most of it?",["NIM expansion","Provisions halving versus a weak base","Treasury gains"],1,"Provisions fell 52% to ₹1,694 crore; core operating profit grew only 11%."],
+ ["Why did HDFC Bank's profit grow only 4.7%?",["Bad loans rose sharply","Treasury trading gains fell from ₹2,390 crore to ₹780 crore","It lost deposits"],1,"Excluding trading gains, profit grew about 12.6%."],
+ ["What does FCNR money do to NIM?",["Raises it","Lowers it because the deposits cost about 6%","No effect"],1,"Axis: 3.47% without FCNR vs 3.36% reported."],
+ ["Which credit-cycle phase are the banks in, per CB?",["P1 Trough","P3 Expansion","P5 Downturn"],1,"Fast loan growth, falling credit costs, RBI just started tightening."],
+ ["After a repo hike, which bank's NIM usually benefits first?",["One with mostly fixed-rate loans","One with mostly floating-rate loans","Neither"],1,"Floating loans reprice in weeks; deposits reprice only at maturity. HDFC is ~70% floating."],
+ ["ECL starts on 1 April 2027. Who is likely hit hardest?",["Large private banks","PSU and mid-tier banks with unsecured or MFI loans","Nobody"],1,"Large private banks face only 5–20 bps CET1 impact."],
+ ["Why does ICICI trade near 2.8x book and HDFC near 1.9x?",["ICICI's higher ROE (~16.5% vs ~13.3%)","ICICI is bigger","HDFC pays no dividend"],0,"Investors pay more book value for higher returns on equity."]
+];
+VIEWS.socrates=function(){
+ var h='<h2>'+T("Cauvery Socrates","காவேரி சாக்ரடீஸ்")+'</h2><p class="note">'+T("Pick an answer; the explanation appears below.","ஒரு பதிலைத் தேர்ந்தெடுங்கள்; விளக்கம் கீழே வரும்.")+'</p>';
+ QZ.forEach(function(q,i){h+='<div class="qz"><b>'+(i+1)+'. '+q[0]+'</b>'+q[1].map(function(o,j){return '<button type="button" data-q="'+i+'" data-o="'+j+'">'+o+'</button>'}).join("")+'<p class="note" id="qx'+i+'" hidden></p></div>'});
+ h+='<div class="qz"><b>'+T("Think about it","யோசியுங்கள்")+'</b><p>'+T("If ICICI's NIM falls another 20 bps next quarter but HDFC's rises 10 bps, does the earnings ranking still hold? Which number in the CB School map would you watch first?","அடுத்த காலாண்டில் ICICI NIM 20 bps குறைந்து HDFC 10 bps ஏறினால், இந்த வரிசை மாறுமா? CB School வரைபடத்தில் எந்த எண்ணை முதலில் பார்ப்பீர்கள்?")+'</p><textarea id="sqT" rows="3" style="width:100%;font:inherit;padding:8px;border:1px solid var(--line);border-radius:8px"></textarea><button class="pill" type="button" id="sqB">'+T("Check my thinking","என் யோசனையைச் சரிபார்")+'</button><p class="note" id="sqA"></p></div>';
+ return h;
+};
+AFTER.socrates=function(){document.querySelectorAll(".qz [data-q]").forEach(function(btn){btn.addEventListener("click",function(){var q=QZ[+btn.dataset.q];var ok=+btn.dataset.o===q[2];btn.closest(".qz").querySelectorAll("button").forEach(function(x,j){if(j===q[2])x.classList.add("ok")});if(!ok)btn.classList.add("no");var x=document.getElementById("qx"+btn.dataset.q);x.hidden=false;x.textContent=(ok?"Correct. ":"Not quite. ")+q[3]})});
+ document.getElementById("sqB").addEventListener("click",function(){var t=document.getElementById("sqT").value.toLowerCase();var hit=["nim","nii","cost of deposit","repo","floating","ppop"].filter(function(k){return t.indexOf(k)>=0});document.getElementById("sqA").textContent=hit.length?"Good: you looked at "+hit.join(", ")+". Now ask: would ICICI's higher ROE still keep it ahead after a 20 bps fall? (4.18% vs 3.42% is still a wide gap.)":"Hint: start from NIM in the 'Prices of money' column, then follow the arrows to NII and profit."})};
+
+/* ============ CB Assist (offline, voice) ============ */
+var KB=[
+ [["subsidiar","group","consolidated","துணை"],function(b){if(b){var g=subGap(b);return CO[b].name+": consolidated profit "+fmt(g.c)+" crore against standalone "+fmt(g.st)+" crore, so subsidiaries add about "+fmt(g.pc,1)+" percent of group profit."}return "Subsidiaries add 6 to 9 percent of group profit this quarter: HDFC about 6 percent, ICICI and Axis about 9 percent each. ICICI has the strongest set, led by ICICI Lombard and ICICI Pru Life."}],
+ [["best","which bank","verdict","top","winner","சிறந்த"],function(){return "On earnings quality ICICI Bank had the best Q2FY27: profit up 20.1%, core operating profit up 21.8%, NIM 4.18%. Axis came second (profit up 37.6% but mostly from lower provisions), HDFC Bank third (profit up 4.7% because treasury gains fell). On valuation the order reverses."}],
+ [["fcnr","dollar deposit","nri"],function(b){if(b)return CO[b].name+": "+CO[b].fcnr.note+".";return "FCNR deposits raised: ICICI $17.88 billion, HDFC $11.5 billion, Axis $10.62 billion. They lifted deposits but cut margins, for example Axis NIM 3.47% without FCNR and 3.36% with it."}],
+ [["ecl","expected credit","provisioning"],function(){return "ECL starts on 1 April 2027; the Day-1 hit can be spread over FY28 to FY31. Large private banks face only about 5 to 20 bps of CET1. HDFC and ICICI are best placed; Axis is adequate but has the thinnest CET1 at 14.61%."}],
+ [["fii","foreign","fpi"],function(){return "FIIs sold a record 3.04 lakh crore rupees of Indian shares in 2026, and banks were hit hardest. Watch the rupee, crude oil and US yields. If they return, the most foreign-held names such as HDFC Bank usually gain first."}],
+ [["buy","invest","should i","வாங்க"],function(){return "CB Research does not give buy or sell advice. I can open the Self-check tab so you can test the facts against your own conditions.";},"selfcheck"],
+ [["nim","margin"],function(b){if(b)return CO[b].name+" NIM is "+CO[b].m.nim[1]+" percent, against "+CO[b].m.nim[0]+" a year ago.";return "NIM: ICICI 4.18%, Axis 3.36%, HDFC 3.32%."}],
+ [["npa","bad loan","asset quality","gnpa"],function(b){if(b)return CO[b].name+" gross NPA "+CO[b].m.gnpa[1]+"%, net NPA "+CO[b].m.nnpa[1]+"%, PCR "+CO[b].m.pcr[1]+"%.";return "Gross NPA: HDFC 1.11%, Axis 1.16%, ICICI 1.20%. All three improved from a year ago."}],
+ [["profit","pat","earn"],function(b){if(b)return CO[b].name+" net profit was "+fmt(CO[b].m.pat[1])+" crore rupees, up "+fmt(pct(CO[b].m.pat[0],CO[b].m.pat[1]),1)+" percent.";return "Net profit: HDFC 19,510 crore (+4.7%), ICICI 14,843 crore (+20.1%), Axis 7,003 crore (+37.6%)."}],
+ [["ceo","bagchi","management","chairman"],function(b){if(b==="icici")return "Sandeep Bakhshi continues as MD and CEO until October 2028.";if(b==="axis")return "Amitabh Chaudhry is MD and CEO of Axis Bank.";return "Anup Bagchi becomes HDFC Bank MD and CEO on 27 October 2026 for three years, succeeding Sashidhar Jagdishan. Rajiv Kumar is part-time chairman since July."}],
+ [["valuation","p/bv","book","cheap","expensive"],function(){return "Approximate price to book, CB estimates: HDFC 1.9 times, Axis 1.9 times, ICICI 2.8 times. ICICI's premium reflects its higher ROE of about 16.5%."}],
+ [["target","analyst","broker"],function(b){if(b)return CO[b].name+" consensus target is "+fmt(CO[b].consTP)+" rupees against a price of "+fmt(CO[b].cmp)+".";return "Consensus targets: HDFC 982, ICICI 1,758, Axis 1,580 rupees. These are third-party views set before the results."}],
+ [["repo","rate hike","rbi"],function(){return "RBI raised the repo rate by 25 bps to 5.50% on 7 October 2026, the first hike since February 2023. Floating-rate lenders such as HDFC should see margins rise from the third quarter."}],
+ [["cycle","trigger"],function(b){if(b)return CO[b].name+": cycle score "+fmt(CY(b),0)+", trigger score "+fmt(TG(b),0)+". Top trigger: "+CO[b].trig[0][0]+".";return "Credit cycle is in P3 Expansion. Trigger scores: HDFC "+fmt(TG("hdfc"),0)+", ICICI "+fmt(TG("icici"),0)+", Axis "+fmt(TG("axis"),0)+"."}],
+ [["behave","differ","other stocks","sector"],function(){return "Banks can behave differently now because a rate hike lifts margins on floating-rate loans first, while it hurts most other sectors. But banks also swing hardest with foreign flows."}]
+];
+function whichBank(q){if(/hdfc/.test(q))return "hdfc";if(/icici/.test(q))return "icici";if(/axis/.test(q))return "axis";return null}
+function answer(q){q=q.toLowerCase();var b=whichBank(q);for(var i=0;i<KB.length;i++){if(KB[i][0].some(function(k){return q.indexOf(k)>=0})){return {t:KB[i][1](b),go:KB[i][2]}}}
+ if(b){var o=CO[b];return {t:o.name+": "+o.quarter+" Profit "+fmt(o.m.pat[1])+" crore, NIM "+o.m.nim[1]+"%, gross NPA "+o.m.gnpa[1]+"%."}}
+ return {t:"Try asking about profit, NIM, NPA, FCNR, ECL, FIIs, valuation, the CEO change, or which bank was best."}}
+function speak(t){try{if(!window.speechSynthesis)return;speechSynthesis.cancel();var u=new SpeechSynthesisUtterance(t);u.lang="en-IN";u.rate=1;speechSynthesis.speak(u)}catch(e){}}
+function ask(q){if(!q)return;var log=document.getElementById("alog");var a=answer(q);log.insertAdjacentHTML("beforeend",'<div class="q">'+esc(q)+'</div><div class="a">'+esc(a.t)+(a.go?' <button class="pill" type="button" data-go="'+a.go+'">Open Self-check</button>':'')+'</div>');log.scrollTop=log.scrollHeight;speak(a.t)}
+document.getElementById("assistBtn").addEventListener("click",function(){var p=document.getElementById("assist");p.hidden=!p.hidden;document.getElementById("disc").hidden=true;if(!p.hidden&&!document.getElementById("alog").innerHTML)document.getElementById("alog").innerHTML='<div class="a">Ask by voice (🎙) or type. I answer from this dashboard\'s figures and speak the reply.</div>'});
+document.getElementById("aClose").addEventListener("click",function(){document.getElementById("assist").hidden=true;try{speechSynthesis.cancel()}catch(e){}});
+document.getElementById("aForm").addEventListener("submit",function(e){e.preventDefault();var i=document.getElementById("aIn");ask(i.value.trim());i.value=""});
+document.getElementById("alog").addEventListener("click",function(e){var g=e.target.closest("[data-go]");if(g){TAB=g.dataset.go;render();document.getElementById("assist").hidden=true}});
+(function(){var SR=window.SpeechRecognition||window.webkitSpeechRecognition;var mic=document.getElementById("mic");
+ mic.addEventListener("click",function(){if(!SR){ask("");document.getElementById("alog").insertAdjacentHTML("beforeend",'<div class="a muted">Voice input is not available here; please type your question.</div>');return}
+  try{var r=new SR();r.lang=LANG==="ta"?"ta-IN":"en-IN";r.interimResults=false;mic.classList.add("rec");r.onresult=function(ev){ask(ev.results[0][0].transcript)};r.onerror=function(){document.getElementById("alog").insertAdjacentHTML("beforeend",'<div class="a muted">Microphone was not allowed; please type your question.</div>')};r.onend=function(){mic.classList.remove("rec")};r.start()}catch(err){mic.classList.remove("rec")}})})();
+
+/* ============ Badge / lang ============ */
+document.getElementById("cbBadge").addEventListener("click",function(){var d=document.getElementById("disc");d.innerHTML='<b>Prepared by CB Research (Cauvery Business Research)</b><br>'+T("For education only. CB Research is not a SEBI-registered research analyst and gives no buy, sell or hold advice. Figures are from the banks' unaudited (limited-review) results and investor material of 17 October 2026 and brokerage notes as reported. † marks CB estimates (book value, P/BV, ROE, market cap where not reported). Check filings before acting.","கல்வி நோக்கத்திற்கு மட்டும். CB Research SEBI பதிவு பெற்ற ஆய்வாளர் அல்ல; வாங்கு / விற்க ஆலோசனை இல்லை. எண்கள் 17 அக்டோபர் 2026 வங்கி முடிவுகளிலிருந்து. † = CB மதிப்பீடு.");d.hidden=!d.hidden;document.getElementById("assist").hidden=true});
+document.getElementById("lenBtn").addEventListener("click",function(){LANG="en";save();render()});
+document.getElementById("ltaBtn").addEventListener("click",function(){LANG="ta";save();render()});
+render();
+</script>
