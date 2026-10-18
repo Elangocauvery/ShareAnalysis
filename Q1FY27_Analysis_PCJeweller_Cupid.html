@@ -1,0 +1,870 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>PC Jeweller Cupid Dashboard</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Noto+Sans+Tamil:wght@400;600;700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<style>
+:root{--bg:#ffffff;--bg2:#f7f8fb;--card:#ffffff;--ink:#1b2333;--mut:#5b6476;--line:#e3e7ef;--or:#f97316;--or2:#fff4ea;--gr:#16a34a;--am:#d97706;--rd:#dc2626;--bl:#2563eb;--pu:#7c3aed;--te:#0d9488;--gold:#b7791f}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,"Noto Sans Tamil",system-ui,sans-serif;font-size:15px;line-height:1.55}
+body.ta{font-family:"Noto Sans Tamil",Inter,system-ui,sans-serif}
+body.ta .en,body:not(.ta) .ta{display:none!important}
+header{position:sticky;top:0;z-index:20;background:#fff;border-bottom:1px solid var(--line)}
+.hrow{display:flex;align-items:center;gap:10px;padding:10px 16px}
+.hrow h1{font-size:16px;margin:0;line-height:1.25;flex:1}
+.hrow h1 small{display:block;color:var(--mut);font-weight:400;font-size:12px}
+.lang{border:1px solid var(--or);background:var(--or2);color:#9a3412;border-radius:20px;padding:6px 12px;font-weight:700;cursor:pointer;font-size:13px}
+nav{display:flex;overflow-x:auto;gap:6px;padding:0 12px 10px;scrollbar-width:thin}
+nav button{flex:0 0 auto;border:1px solid var(--line);background:var(--bg2);border-radius:18px;padding:6px 12px;font-size:13px;cursor:pointer;color:var(--ink);font-family:inherit}
+nav button.on{background:var(--or);border-color:var(--or);color:#fff;font-weight:700}
+main{max-width:1100px;margin:0 auto;padding:14px 16px 110px;position:relative}
+main::before{content:"CB Research";position:fixed;top:45%;left:50%;transform:translate(-50%,-50%) rotate(-24deg);font-size:72px;font-weight:800;color:rgba(249,115,22,.045);pointer-events:none;white-space:nowrap;z-index:0}
+.tab{display:none;position:relative;z-index:1}
+.tab.on{display:block;animation:fade .25s}
+@keyframes fade{from{opacity:0;transform:translateY(4px)}to{opacity:1}}
+h2{font-size:20px;margin:6px 0 10px}
+h3{font-size:16px;margin:18px 0 8px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px;margin:10px 0;box-shadow:0 1px 2px rgba(20,30,50,.04)}
+.grid{display:grid;gap:10px;grid-template-columns:repeat(auto-fit,minmax(150px,1fr))}
+.kpi{background:var(--bg2);border:1px solid var(--line);border-radius:12px;padding:10px}
+.kpi .l{font-size:12px;color:var(--mut)}
+.kpi .v{font-size:20px;font-weight:800}
+.kpi .d{font-size:12px}
+.up{color:var(--gr)}.dn{color:var(--rd)}.am{color:var(--am)}
+.pill{display:inline-block;border-radius:12px;padding:2px 9px;font-size:12px;font-weight:700}
+.pg{background:#dcfce7;color:#166534}.pa{background:#fef3c7;color:#92400e}.pr{background:#fee2e2;color:#991b1b}.pb{background:#dbeafe;color:#1e40af}
+.note{font-size:12.5px;color:var(--mut)}
+.flag{border-left:4px solid var(--rd);background:#fff5f5;padding:10px 12px;border-radius:8px;margin:10px 0}
+.good{border-left:4px solid var(--gr);background:#f3fdf6;padding:10px 12px;border-radius:8px;margin:10px 0}
+.info{border-left:4px solid var(--bl);background:#f4f8ff;padding:10px 12px;border-radius:8px;margin:10px 0}
+.tw{overflow-x:auto;-webkit-overflow-scrolling:touch}
+table{border-collapse:collapse;width:100%;font-size:13.5px;min-width:520px}
+th,td{border-bottom:1px solid var(--line);padding:7px 8px;text-align:right;vertical-align:top}
+th:first-child,td:first-child{text-align:left}
+th{background:var(--bg2);font-weight:700;font-size:12.5px}
+td.t,th.t{text-align:left}
+.cw{overflow-x:auto}
+.cw>div{min-width:620px;height:300px;position:relative}
+.tl{position:relative;margin-left:8px;border-left:3px solid var(--line);padding-left:16px}
+.tl .ev{position:relative;margin:0 0 14px}
+.tl .ev::before{content:"";position:absolute;left:-24px;top:4px;width:13px;height:13px;border-radius:50%;background:#fff;border:3px solid var(--or)}
+.tl .ev.r::before{border-color:var(--rd)}.tl .ev.g::before{border-color:var(--gr)}.tl .ev.b::before{border-color:var(--bl)}
+.tl .dt{font-weight:800;font-size:13px;color:#9a3412}
+.prog{height:12px;background:var(--bg2);border-radius:8px;overflow:hidden;border:1px solid var(--line)}
+.prog>i{display:block;height:100%;background:linear-gradient(90deg,var(--or),var(--gr));width:0;transition:width 1.2s}
+svg text{font-family:Inter,"Noto Sans Tamil",sans-serif}
+.bm-box{cursor:pointer;transition:opacity .2s}
+.bm-box:hover{opacity:.85}
+.bm-sel{stroke:#111!important;stroke-width:2.5!important}
+.expl{min-height:70px}
+.sub{display:flex;gap:6px;flex-wrap:wrap;margin:6px 0 10px}
+.sub button{border:1px solid var(--line);background:#fff;border-radius:16px;padding:5px 12px;cursor:pointer;font-size:13px;font-family:inherit}
+.sub button.on{background:#1b2333;color:#fff;border-color:#1b2333}
+.pcard{border:1px solid var(--line);border-radius:12px;padding:12px;margin:8px 0;transition:box-shadow .3s,border-color .3s}
+.pcard.hl{box-shadow:0 0 0 3px rgba(249,115,22,.35);border-color:var(--or)}
+.swot{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:10px}
+.swot>div{border-radius:12px;padding:12px;border:1px solid var(--line)}
+.swot .s{background:#f0fdf4}.swot .w{background:#fff7ed}.swot .o{background:#eff6ff}.swot .t2{background:#fef2f2}
+.swot h4{margin:0 0 6px}
+ul{padding-left:20px;margin:6px 0}
+li{margin:3px 0}
+.chk label{display:flex;gap:8px;align-items:flex-start;padding:7px 0;border-bottom:1px dashed var(--line)}
+.chk input{margin-top:4px;accent-color:var(--or);width:18px;height:18px;flex:0 0 18px}
+.chk .dl{display:block;font-size:12px;color:var(--mut)}
+.btn{border:1px solid var(--or);background:var(--or);color:#fff;border-radius:10px;padding:8px 14px;font-weight:700;cursor:pointer;font-family:inherit}
+.btn.o{background:#fff;color:#9a3412}
+#cb{position:fixed;right:14px;bottom:14px;z-index:40;width:56px;height:56px;border-radius:50%;background:var(--or);color:#fff;font-weight:800;font-size:19px;display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 4px 14px rgba(249,115,22,.45);animation:blink 2.4s infinite;border:3px solid #fff}
+@keyframes blink{0%,100%{box-shadow:0 0 0 0 rgba(249,115,22,.55)}50%{box-shadow:0 0 0 10px rgba(249,115,22,0)}}
+#disc{position:fixed;right:14px;bottom:80px;z-index:41;max-width:330px;background:#fff;border:1px solid var(--line);border-radius:12px;padding:12px;font-size:12.5px;box-shadow:0 10px 30px rgba(0,0,0,.15);display:none}
+#asB{position:fixed;right:80px;bottom:20px;z-index:40;background:#1b2333;color:#fff;border-radius:22px;padding:10px 14px;font-weight:700;font-size:13px;cursor:pointer;border:0;box-shadow:0 4px 12px rgba(0,0,0,.2);font-family:inherit}
+#asP{position:fixed;right:12px;bottom:84px;z-index:42;width:min(360px,calc(100vw - 24px));max-height:70vh;background:#fff;border:1px solid var(--line);border-radius:14px;box-shadow:0 12px 34px rgba(0,0,0,.18);display:none;flex-direction:column}
+#asP .hd{padding:10px 12px;border-bottom:1px solid var(--line);font-weight:800;display:flex;justify-content:space-between;align-items:center}
+#asLog{padding:10px 12px;overflow-y:auto;flex:1;font-size:13.5px}
+#asLog .q{background:var(--or2);border-radius:10px;padding:7px 10px;margin:6px 0 6px 30px}
+#asLog .a{background:var(--bg2);border-radius:10px;padding:7px 10px;margin:6px 30px 6px 0}
+#asP .ft{display:flex;gap:6px;padding:8px;border-top:1px solid var(--line)}
+#asIn{flex:1;border:1px solid var(--line);border-radius:10px;padding:8px;font-family:inherit;font-size:14px}
+#mic{width:40px;border-radius:10px;border:1px solid var(--line);background:#fff;cursor:pointer;font-size:18px}
+#mic.rec{background:#fee2e2;border-color:var(--rd)}
+.chips{display:flex;flex-wrap:wrap;gap:5px;padding:0 12px 8px}
+.chips button{font-size:12px;border:1px solid var(--line);background:#fff;border-radius:14px;padding:4px 9px;cursor:pointer;font-family:inherit}
+.qz .opt{display:block;width:100%;text-align:left;margin:5px 0;padding:9px 11px;border:1px solid var(--line);border-radius:10px;background:#fff;cursor:pointer;font-family:inherit;font-size:14px}
+.qz .opt.ok{background:#dcfce7;border-color:var(--gr)}.qz .opt.no{background:#fee2e2;border-color:var(--rd)}
+.legend{display:flex;gap:12px;flex-wrap:wrap;font-size:12px;color:var(--mut)}
+.legend i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:4px;vertical-align:middle}
+.formula{font-family:ui-monospace,Menlo,monospace;font-size:12.5px;background:var(--bg2);border-radius:8px;padding:8px 10px;margin-top:8px}
+@media (max-width:520px){h2{font-size:18px}.kpi .v{font-size:18px}main::before{font-size:44px}}
+</style>
+</head>
+<body>
+<header>
+<div class="hrow">
+<h1><span class="en">PC Jeweller · Cupid</span><span class="ta">பிசி ஜுவல்லர் · க்யூபிட்</span>
+<small><span class="en">Q1 FY27 Analysis · Turnaround, debt-free journey &amp; the Halwasiya connection · Data as of 17 Oct 2026</span><span class="ta">Q1 FY27 அனாலிசிஸ் · கடன் இல்லாத நிறுவனமா மாறின கதை &amp; ஹல்வாசியா தொடர்பு · 17 அக் 2026 வரை டேட்டா</span></small></h1>
+<button class="lang" id="langBtn" onclick="toggleLang()">தமிழ்</button>
+</div>
+<nav id="nav"></nav>
+</header>
+<main>
+
+<!-- ================= OVERVIEW ================= -->
+<section class="tab on" id="t-ov" data-en="Overview" data-ta="கண்ணோட்டம்">
+<h2><span class="en">PC Jeweller in one screen</span><span class="ta">ஒரே திரையில் பிசி ஜுவல்லர்</span></h2>
+<div class="grid">
+<div class="kpi"><div class="l"><span class="en">Q1 FY27 revenue</span><span class="ta">Q1 FY27 வருமானம்</span></div><div class="v">₹877.04 cr</div><div class="d up">▲ 20.99% YoY</div></div>
+<div class="kpi"><div class="l"><span class="en">Q1 FY27 EBITDA (operating)</span><span class="ta">Q1 FY27 EBITDA (ஆபரேட்டிங்)</span></div><div class="v">₹241.56 cr</div><div class="d up">▲ 89.8% YoY · 27.5%</div></div>
+<div class="kpi"><div class="l"><span class="en">Q1 FY27 net profit</span><span class="ta">Q1 FY27 நிகர லாபம்</span></div><div class="v">₹221.88 cr</div><div class="d up">▲ 37.0% YoY</div></div>
+<div class="kpi"><div class="l"><span class="en">Bank debt</span><span class="ta">வங்கிக் கடன்</span></div><div class="v">₹0</div><div class="d up"><span class="en">Debt-free 25 Sep 2026</span><span class="ta">25 செப் 2026 முதல் கடன் இல்லை</span></div></div>
+<div class="kpi"><div class="l"><span class="en">Share price (16 Oct close)</span><span class="ta">பங்கு விலை (16 அக்)</span></div><div class="v">₹16.00</div><div class="d up">▲ ~11% <span class="en">on Halwasiya deal</span><span class="ta">ஹல்வாசியா டீல் அன்று</span></div></div>
+<div class="kpi"><div class="l"><span class="en">Market cap (approx.)</span><span class="ta">மார்க்கெட் கேப் (சுமார்)</span></div><div class="v">₹15,692 cr</div><div class="d"><span class="en">980.78 cr shares</span><span class="ta">980.78 கோடி பங்குகள்</span></div></div>
+</div>
+
+<div class="info"><b><span class="en">Two facts set straight</span><span class="ta">ரெண்டு விஷயத்தை சரி பண்ணிக்கலாம்</span></b>
+<ul>
+<li><span class="en"><b>Halwasiya's PC Jeweller stake is about 0.52%, not 5%.</b> He bought 5.10 crore shares at ₹14.43 (₹73.59 crore) in a bulk deal on 15–16 Oct 2026. A 5% stake would need roughly 49 crore shares (~₹785 crore at ₹16). His ~6% (5.91%) stake is in Baazar Style Retail.</span><span class="ta"><b>ஹல்வாசியா பிசி ஜுவல்லர்ல வாங்கினது சுமார் 0.52% தான், 5% இல்ல.</b> 5.10 கோடி பங்குகளை ₹14.43 விலைல (₹73.59 கோடி) பல்க் டீல்ல வாங்கினார். 5% வேணும்னா சுமார் 49 கோடி பங்கு (₹16ல ~₹785 கோடி) வாங்கணும். அவரோட ~6% (5.91%) பங்கு பஜார் ஸ்டைல் ரீடெய்ல்ல இருக்கு.</span></li>
+<li><span class="en"><b>PC Jeweller was never admitted into insolvency (CIRP).</b> SBI's Section 7 petition (filed July 2023) stayed at the admission stage and was dismissed as withdrawn on 30 Apr 2024 after settlement terms were agreed.</span><span class="ta"><b>பிசி ஜுவல்லர் இன்சால்வென்சிக்குள்ள (CIRP) அட்மிட் ஆகவே இல்ல.</b> SBI ஜூலை 2023ல போட்ட Section 7 பெட்டிஷன் அட்மிஷன் ஸ்டேஜ்லயே நின்னுச்சு; செட்டில்மென்ட் ஒத்துக்கிட்ட பிறகு 30 ஏப் 2024ல வித்ட்ரா ஆகி டிஸ்மிஸ் ஆச்சு.</span></li>
+</ul></div>
+
+<h3><span class="en">The story in four lines</span><span class="ta">நாலு வரில கதை</span></h3>
+<div class="card"><ul>
+<li><span class="en"><b>Rise (2005–2018):</b> one Karol Bagh showroom grew into a ~90-store chain; stock peaked at ₹586.75 (17 Jan 2018).</span><span class="ta"><b>வளர்ச்சி (2005–2018):</b> கரோல் பாக்ல ஒரு ஷோரூம் → சுமார் 90 ஸ்டோர்; பங்கு ₹586.75 உச்சம் (17 ஜன 2018).</span></li>
+<li><span class="en"><b>Fall (2018–2024):</b> a share-price crash, stuck Dubai/Gulf export receivables, NPA tag (June 2021), loan recall and an SBI insolvency petition; FY24 revenue fell to ₹605 crore with a ₹629 crore loss.</span><span class="ta"><b>வீழ்ச்சி (2018–2024):</b> பங்கு விலை சரிவு, துபாய்/கல்ஃப் எக்ஸ்போர்ட் பணம் சிக்கல், NPA (ஜூன் 2021), லோன் ரீகால், SBI இன்சால்வென்சி பெட்டிஷன்; FY24ல வருமானம் ₹605 கோடி, நஷ்டம் ₹629 கோடி.</span></li>
+<li><span class="en"><b>Repair (2024–2026):</b> one-time settlement with 14 banks (30 Sep 2024), about ₹2,700 crore raised through warrants, all banks repaid by 25 Sep 2026; ₹142 crore of export dues recovered in Q2 FY27.</span><span class="ta"><b>சரிசெய்தல் (2024–2026):</b> 14 வங்கிகளோட OTS (30 செப் 2024), வாரண்ட் மூலமா சுமார் ₹2,700 கோடி, 25 செப் 2026க்குள்ள எல்லா வங்கிக்கும் பணம் கட்டி முடிச்சாங்க; Q2 FY27ல எக்ஸ்போர்ட் பாக்கில ₹142 கோடி வந்துச்சு.</span></li>
+<li><span class="en"><b>Now:</b> profitable and debt-free, but with ~985 days of inventory, ₹1,689 crore of trade receivables and a qualified audit opinion still on the books.</span><span class="ta"><b>இப்போ:</b> லாபம், கடன் இல்ல; ஆனா சுமார் 985 நாள் இன்வென்டரி, ₹1,689 கோடி ரிசீவபிள்ஸ், ஆடிட்டர் qualified opinion இன்னும் இருக்கு.</span></li>
+</ul></div>
+
+<h3><span class="en">How the three companies connect</span><span class="ta">மூணு கம்பெனியும் எப்படி இணையுது</span></h3>
+<div class="card">
+<svg id="linkMap" viewBox="0 0 360 330" width="100%" style="max-width:560px;display:block;margin:auto">
+<defs><marker id="ar" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#5b6476"/></marker></defs>
+<rect x="105" y="10" width="150" height="58" rx="12" fill="#1b2333"/>
+<text x="180" y="34" fill="#fff" font-size="13" font-weight="800" text-anchor="middle">Aditya Kumar Halwasiya</text>
+<text x="180" y="52" fill="#fdba74" font-size="10.5" text-anchor="middle" class="lk-l">Universal-Halwasiya Group</text>
+<line x1="135" y1="68" x2="62" y2="132" stroke="#5b6476" stroke-width="1.6" marker-end="url(#ar)"/>
+<line x1="180" y1="68" x2="180" y2="132" stroke="#5b6476" stroke-width="1.6" marker-end="url(#ar)"/>
+<line x1="225" y1="68" x2="298" y2="132" stroke="#5b6476" stroke-width="1.6" marker-end="url(#ar)"/>
+<text x="70" y="98" font-size="10.5" fill="#1b2333" font-weight="700">34.23%</text>
+<text x="186" y="104" font-size="10.5" fill="#1b2333" font-weight="700">5.91%</text>
+<text x="262" y="98" font-size="10.5" fill="#1b2333" font-weight="700">0.52%</text>
+<rect x="8" y="134" width="108" height="70" rx="10" fill="#ede9fe" stroke="#7c3aed"/>
+<text x="62" y="156" font-size="12.5" font-weight="800" text-anchor="middle" fill="#4c1d95">Cupid Ltd</text>
+<text x="62" y="173" font-size="10" text-anchor="middle" fill="#4c1d95">Group 47.18%</text>
+<text x="62" y="189" font-size="10" text-anchor="middle" fill="#4c1d95">CMD since 2023</text>
+<rect x="126" y="134" width="108" height="70" rx="10" fill="#ccfbf1" stroke="#0d9488"/>
+<text x="180" y="156" font-size="12.5" font-weight="800" text-anchor="middle" fill="#134e4a">Style Baazar</text>
+<text x="180" y="173" font-size="10" text-anchor="middle" fill="#134e4a">₹163 cr block</text>
+<text x="180" y="189" font-size="10" text-anchor="middle" fill="#134e4a">Aug 2026</text>
+<rect x="244" y="134" width="108" height="70" rx="10" fill="#fef3c7" stroke="#b7791f"/>
+<text x="298" y="156" font-size="12.5" font-weight="800" text-anchor="middle" fill="#78350f">PC Jeweller</text>
+<text x="298" y="173" font-size="10" text-anchor="middle" fill="#78350f">₹73.59 cr bulk</text>
+<text x="298" y="189" font-size="10" text-anchor="middle" fill="#78350f">Oct 2026</text>
+<path d="M62,204 C62,250 150,250 170,208" fill="none" stroke="#7c3aed" stroke-width="1.6" stroke-dasharray="5 4" marker-end="url(#ar)"/>
+<text x="40" y="262" font-size="10" fill="#4c1d95">Cupid warrants → 11.92% of Style Baazar (₹331.53 cr)</text>
+<rect x="8" y="276" width="344" height="46" rx="10" fill="#f7f8fb" stroke="#e3e7ef"/>
+<text x="180" y="296" font-size="10.5" text-anchor="middle" fill="#1b2333">Cupid also invested in GII Healthcare (GCC) — US$5m + US$5m</text>
+<text x="180" y="312" font-size="10" text-anchor="middle" fill="#5b6476">No business link between PC Jeweller and Cupid has been announced</text>
+</svg>
+<p class="note"><span class="en">Value check: his PC Jeweller holding (~₹82 crore at ₹16) is under 1% of his visible listed wealth — his Cupid shares alone are worth about ₹16,478 crore at ₹358. Read it as a financial bet, not control.</span><span class="ta">மதிப்பு பார்த்தா: அவரோட பிசி ஜுவல்லர் பங்கு (₹16ல ~₹82 கோடி) அவரோட லிஸ்டட் சொத்துல 1%க்கும் கீழ — க்யூபிட் பங்கு மட்டுமே ₹358ல சுமார் ₹16,478 கோடி. இது ஒரு முதலீடு, கன்ட்ரோல் இல்ல.</span></p>
+</div>
+
+<h3><span class="en">Score chips</span><span class="ta">ஸ்கோர் சிப்ஸ்</span></h3>
+<div class="grid">
+<div class="kpi"><div class="l">PC Jeweller · CB Score</div><div class="v am">60</div><div class="d">CY 68 · TG 54</div></div>
+<div class="kpi"><div class="l">Cupid · CB Score</div><div class="v am">67</div><div class="d">CY 56 · TG 44</div></div>
+</div>
+<p class="note"><span class="en">CB Score = 6-pillar average × 10 (see Temple tab). CY = cycle lens, TG = trigger lens (see Triggers &amp; Cycle). Education only — not a recommendation.</span><span class="ta">CB ஸ்கோர் = 6 தூண் சராசரி × 10 (Temple டேப் பாருங்க). CY = சைக்கிள், TG = ட்ரிகர். கல்விக்காக மட்டும் — பரிந்துரை இல்ல.</span></p>
+</section>
+
+<!-- ================= HISTORY & DEBT ================= -->
+<section class="tab" id="t-hist" data-en="History &amp; Debt" data-ta="வரலாறு &amp; கடன்">
+<h2><span class="en">From ₹586 to ₹1 to debt-free</span><span class="ta">₹586 → ₹1 → கடன் இல்லாத நிலை</span></h2>
+<div class="card tl" id="timeline"></div>
+
+<h3><span class="en">Bank borrowings — the deleveraging path (₹ crore)</span><span class="ta">வங்கிக் கடன் — குறைஞ்ச பாதை (₹ கோடி)</span></h3>
+<div class="card"><div class="cw"><div><canvas id="chDebt"></canvas></div></div>
+<p class="note"><span class="en">Year-end standalone short-term borrowings; zero after the final repayment on 25 Sep 2026.</span><span class="ta">ஆண்டு இறுதி ஸ்டாண்டலோன் கடன்; 25 செப் 2026க்கு அப்புறம் பூஜ்யம்.</span></p></div>
+
+<h3><span class="en">14 banks — repaid one by one in 2026</span><span class="ta">14 வங்கிகள் — 2026ல ஒண்ணொண்ணா கட்டி முடிச்சது</span></h3>
+<div class="card"><div class="cw"><div><canvas id="chBanks"></canvas></div></div>
+<div class="prog" style="margin-top:10px"><i id="bankBar"></i></div><p class="note"><b>14 / 14</b> <span class="en">banks cleared, all ahead of schedule</span><span class="ta">வங்கிகள் — எல்லாமே டியூ டேட்டுக்கு முன்னாடியே</span></p></div>
+
+<h3><span class="en">The settlement arithmetic</span><span class="ta">செட்டில்மென்ட் கணக்கு</span></h3>
+<div class="card tw"><table>
+<tr><th class="t"><span class="en">Item</span><span class="ta">விவரம்</span></th><th>₹ crore</th><th class="t"><span class="en">Comment</span><span class="ta">குறிப்பு</span></th></tr>
+<tr><td><span class="en">Stressed bank debt (Mar 2024)</span><span class="ta">மார்ச் 2024 கடன்</span></td><td>~4,100</td><td class="t"><span class="en">Balance-sheet borrowings ₹4,086.85 cr</span><span class="ta">பேலன்ஸ் ஷீட்ல ₹4,086.85 கோடி</span></td></tr>
+<tr><td><span class="en">Settled amount under OTS (reported)</span><span class="ta">OTS செட்டில்மென்ட் தொகை (செய்தி)</span></td><td>~3,000</td><td class="t"><span class="en">Cash + equity to the 14 lenders</span><span class="ta">கேஷ் + பங்குகள் 14 வங்கிக்கு</span></td></tr>
+<tr><td><span class="en">Implied relief (approx.)</span><span class="ta">கிடைச்ச தள்ளுபடி (சுமார்)</span></td><td>~1,100</td><td class="t"><span class="en">Derived; exact sacrifice not disclosed</span><span class="ta">கணக்கிட்டது; சரியான தொகை வெளியிடல</span></td></tr>
+<tr><td><span class="en">Equity to lenders</span><span class="ta">வங்கிகளுக்கு பங்குகள்</span></td><td>—</td><td class="t"><span class="en">5,17,11,462 shares (pre-split, ₹10 FV) approved</span><span class="ta">5,17,11,462 பங்குகள் (ஸ்ப்ளிட்டுக்கு முன், ₹10 FV)</span></td></tr>
+<tr><td><span class="en">Warrant money used for bank repayment</span><span class="ta">வங்கிக்கு போன வாரண்ட் பணம்</span></td><td>1,310.47+</td><td class="t"><span class="en">Utilised till 31 Mar 2026 from the 2024 issue (plus ₹303.52 cr from the 2025 issue)</span><span class="ta">31 மார் 2026 வரை 2024 இஷ்யூல இருந்து (2025 இஷ்யூல ₹303.52 கோடி தனி)</span></td></tr>
+</table></div>
+<div class="flag"><span class="en"><b>Dilution was the price of survival.</b> Shares (₹1 FV equivalent) went from 465.40 crore (Mar 2024) to 980.78 crore (Sep 2026). That is why Q1 FY27 EPS fell to ₹0.23 from ₹0.25 even as profit rose 37%.</span><span class="ta"><b>பிழைக்க கொடுத்த விலை — டைல்யூஷன்.</b> பங்குகள் 465.40 கோடில (மார் 2024) இருந்து 980.78 கோடி (செப் 2026). அதனால தான் லாபம் 37% ஏறினாலும் Q1 FY27 EPS ₹0.25ல இருந்து ₹0.23க்கு குறைஞ்சது.</span></div>
+<div class="card"><div class="cw"><div><canvas id="chShares"></canvas></div></div></div>
+
+<h3><span class="en">The Dubai / Gulf export receivables</span><span class="ta">துபாய் / கல்ஃப் எக்ஸ்போர்ட் பாக்கி</span></h3>
+<div class="card">
+<ul>
+<li><span class="en">Exports were B2B sales of gold jewellery to Gulf dealers through Dubai-based firms, on credit of up to 180–270 days. Subsidiary: PC Jeweller Global DMCC (Dubai).</span><span class="ta">எக்ஸ்போர்ட்ன்னா — துபாய் ஃபர்ம்கள் மூலமா கல்ஃப் டீலர்களுக்கு B2B தங்க நகை விற்பனை, 180–270 நாள் கிரெடிட். சப்சிடியரி: PC Jeweller Global DMCC (துபாய்).</span></li>
+<li><span class="en">In March 2019 the company gave export buyers a one-time 25% discount (₹513.65 crore). Approvals for ₹183.16 crore of it are still pending — this is a repeating audit qualification.</span><span class="ta">மார்ச் 2019ல எக்ஸ்போர்ட் வாங்குபவர்களுக்கு ஒரே தடவை 25% டிஸ்கவுன்ட் (₹513.65 கோடி). அதுல ₹183.16 கோடிக்கு இன்னும் அப்ரூவல் இல்ல — ஆடிட்டர் ஒவ்வொரு வருஷமும் qualify பண்றாங்க.</span></li>
+<li><span class="en">At 31 Mar 2026: non-current trade receivables ₹1,053.34 crore, current ₹636.02 crore; cumulative expected-credit-loss provision ₹281.40 crore on export dues.</span><span class="ta">31 மார் 2026: நான்-கரன்ட் ரிசீவபிள்ஸ் ₹1,053.34 கோடி, கரன்ட் ₹636.02 கோடி; எக்ஸ்போர்ட் பாக்கிக்கு ECL ப்ரொவிஷன் ₹281.40 கோடி.</span></li>
+<li><span class="en"><b>Q2 FY27 breakthrough:</b> about ₹142 crore received from export debtors; the company says the dispute is resolved and realisation has started.</span><span class="ta"><b>Q2 FY27 முன்னேற்றம்:</b> எக்ஸ்போர்ட் கடனாளிகள்கிட்ட இருந்து சுமார் ₹142 கோடி வந்துச்சு; பிரச்சினை தீர்ந்து பணம் வர ஆரம்பிச்சிருக்குன்னு கம்பெனி சொல்லுது.</span></li>
+</ul>
+<div class="good"><span class="en">Why it matters: every rupee recovered is cash with no new revenue needed, and part of the ₹281.40 crore provision could be written back as profit if recoveries continue.</span><span class="ta">ஏன் முக்கியம்: வசூலாகும் ஒவ்வொரு ரூபாயும் புது விற்பனை இல்லாமலே கேஷ்; வசூல் தொடர்ந்தா ₹281.40 கோடி ப்ரொவிஷன்ல ஒரு பகுதி லாபமா திரும்ப வரலாம்.</span></div>
+</div>
+</section>
+
+<!-- ================= BUSINESS MODEL ================= -->
+<section class="tab" id="t-bm" data-en="Business Model" data-ta="பிசினஸ் மாடல்">
+<h2><span class="en">How PC Jeweller makes money</span><span class="ta">பிசி ஜுவல்லர் எப்படி சம்பாதிக்குது</span></h2>
+<p class="note"><span class="en">Tap any box to see what it means.</span><span class="ta">எந்த பாக்ஸையும் தட்டினா விளக்கம் வரும்.</span></p>
+<div class="card">
+<svg id="bmPCJ" viewBox="0 0 360 600" width="100%" style="max-width:560px;display:block;margin:auto"></svg>
+<div class="pcard expl" id="bmPCJx"><span class="en">Tap a box above.</span><span class="ta">மேல ஒரு பாக்ஸை தட்டுங்க.</span></div>
+<div class="formula"><span class="en">Revenue ≈ showrooms × footfall × conversion × (grams × gold rate + making charges + stones)</span><span class="ta">வருமானம் ≈ ஷோரூம்கள் × வர்றவங்க × வாங்குறவங்க × (கிராம் × தங்க விலை + செய்கூலி + கற்கள்)</span></div>
+</div>
+<h3><span class="en">Revenue engine — the drivers</span><span class="ta">வருமான இன்ஜின் — முக்கிய காரணிகள்</span></h3>
+<div class="card tw"><table>
+<tr><th class="t"><span class="en">Driver</span><span class="ta">காரணி</span></th><th class="t"><span class="en">Latest reading</span><span class="ta">லேட்டஸ்ட் நிலை</span></th><th class="t"><span class="en">Direction</span><span class="ta">போக்கு</span></th></tr>
+<tr><td><span class="en">Showroom network</span><span class="ta">ஷோரூம் நெட்வொர்க்</span></td><td class="t">~50 <span class="en">stores, 12–13 states</span><span class="ta">ஸ்டோர், 12–13 மாநிலம்</span></td><td class="t"><span class="pill pa">→</span> <span class="en">100 new showrooms targeted</span><span class="ta">100 புது ஷோரூம் இலக்கு</span></td></tr>
+<tr><td><span class="en">Sales growth</span><span class="ta">விற்பனை வளர்ச்சி</span></td><td class="t">Q1 +21% · Q2 ~+28%</td><td class="t"><span class="pill pg">▲</span></td></tr>
+<tr><td><span class="en">Gold price</span><span class="ta">தங்க விலை</span></td><td class="t"><span class="en">High and volatile</span><span class="ta">அதிகம், ஏற்ற இறக்கம்</span></td><td class="t"><span class="pill pa">±</span> <span class="en">lifts value, can hurt grams sold</span><span class="ta">மதிப்பு ஏறும், கிராம் விற்பனை குறையலாம்</span></td></tr>
+<tr><td><span class="en">Gross margin</span><span class="ta">கிராஸ் மார்ஜின்</span></td><td class="t">29.6% (Q1 FY27) vs 19.9%</td><td class="t"><span class="pill pg">▲</span> <span class="en">partly inventory gains</span><span class="ta">இன்வென்டரி லாபமும் சேர்ந்தது</span></td></tr>
+<tr><td><span class="en">Exports</span><span class="ta">எக்ஸ்போர்ட்</span></td><td class="t"><span class="en">Nil fresh sales; ₹142 cr recovered</span><span class="ta">புது விற்பனை இல்ல; ₹142 கோடி வசூல்</span></td><td class="t"><span class="pill pb">cash</span></td></tr>
+<tr><td><span class="en">Interest cost</span><span class="ta">வட்டி செலவு</span></td><td class="t">₹132.87 cr (FY26) → ~0</td><td class="t"><span class="pill pg">▼</span></td></tr>
+</table></div>
+<div class="info"><span class="en"><b>Segments:</b> the company reports a single segment, "Jewellery". Product split (gold, diamond-studded, silver) is not disclosed, so the boxes show what is reported: domestic retail is now essentially all revenue, while exports survive only as old receivables.</span><span class="ta"><b>செக்மென்ட்:</b> கம்பெனி "ஜுவல்லரி"ன்னு ஒரே செக்மென்ட் தான் காட்டுது. தங்கம்/வைரம்/வெள்ளி பிரிப்பு வெளியிடல. இப்போ வருமானம் முழுக்க உள்நாட்டு ரீடெய்ல்; எக்ஸ்போர்ட் பழைய பாக்கியா மட்டும் இருக்கு.</span></div>
+<div class="flag"><span class="en"><b>Read the margin carefully.</b> With ~985 days of inventory bought at older gold prices, a rising gold price inflates gross margin when that stock is sold. A gold-price fall would work the other way.</span><span class="ta"><b>மார்ஜினை கவனமா பாருங்க.</b> சுமார் 985 நாள் இன்வென்டரி பழைய தங்க விலைல வாங்கினது; தங்க விலை ஏறும்போது வித்தா மார்ஜின் உப்பும். விலை இறங்கினா உல்டா ஆகும்.</span></div>
+</section>
+
+<!-- ================= Q1 FINANCIALS ================= -->
+<section class="tab" id="t-fin" data-en="Q1 FY27 Financials" data-ta="Q1 FY27 நிதி">
+<h2><span class="en">Q1 FY27 — consolidated results</span><span class="ta">Q1 FY27 — கன்சாலிடேட்டட் ரிசல்ட்</span></h2>
+<div class="card tw"><table>
+<tr><th class="t">₹ crore</th><th>Q1 FY27</th><th>Q1 FY26</th><th>YoY</th><th>Q4 FY26</th><th>QoQ</th></tr>
+<tr><td><span class="en">Revenue from operations</span><span class="ta">வருமானம்</span></td><td>877.04</td><td>724.91</td><td class="up">+20.99%</td><td>927.34</td><td class="dn">−5.42%</td></tr>
+<tr><td><span class="en">Gross profit</span><span class="ta">கிராஸ் லாபம்</span></td><td>260</td><td>144</td><td class="up">+80.6%</td><td>n/a</td><td>—</td></tr>
+<tr><td><span class="en">Gross margin</span><span class="ta">கிராஸ் மார்ஜின்</span></td><td>29.6%</td><td>19.9%</td><td class="up">+975 bps</td><td>n/a</td><td>—</td></tr>
+<tr><td><b>EBITDA (ex other income)</b></td><td><b>241.56</b></td><td><b>127.30</b></td><td class="up">+89.8%</td><td>164.52†</td><td class="up">+46.8%</td></tr>
+<tr><td><span class="en">EBITDA margin</span><span class="ta">EBITDA மார்ஜின்</span></td><td>27.5%</td><td>17.6%</td><td class="up">+999 bps</td><td>17.7%</td><td class="up">+980 bps</td></tr>
+<tr><td><span class="en">Operating PBT (ex other income)</span><span class="ta">ஆபரேட்டிங் PBT</span></td><td>223</td><td>81</td><td class="up">+175%</td><td>n/a</td><td>—</td></tr>
+<tr><td><span class="en">Operating PAT (ex other income)</span><span class="ta">ஆபரேட்டிங் PAT</span></td><td>213</td><td>79</td><td class="up">+170%</td><td>n/a</td><td>—</td></tr>
+<tr><td><b><span class="en">Reported net profit</span><span class="ta">நிகர லாபம்</span></b></td><td><b>221.88</b></td><td><b>161.93</b></td><td class="up">+37.0%</td><td>152.89</td><td class="up">+45.1%</td></tr>
+<tr><td><span class="en">PAT margin</span><span class="ta">PAT மார்ஜின்</span></td><td>25.3%</td><td>22.3%</td><td class="up">+296 bps</td><td>16.5%</td><td class="up">+881 bps</td></tr>
+<tr><td>EPS (₹)</td><td>0.23</td><td>0.25</td><td class="dn">−8%</td><td>0.19‡</td><td>—</td></tr>
+</table>
+<p class="note">† <span class="en">Q4 FY26 EBITDA from reported 17.74% operating margin.</span><span class="ta">Q4 FY26 EBITDA — 17.74% ஆபரேட்டிங் மார்ஜின்ல இருந்து.</span> ‡ <span class="en">Standalone basic EPS.</span><span class="ta">ஸ்டாண்டலோன் EPS.</span></p></div>
+<div class="good"><span class="en"><b>Quality of the beat:</b> last year's Q1 profit (₹161.93 cr) leaned on other income — operating PAT was only ₹79 cr. This year operating PAT is ₹213 cr of the ₹221.88 cr. Profit now comes from selling jewellery, not one-offs.</span><span class="ta"><b>லாபத்தோட தரம்:</b> போன வருஷ Q1 லாபம் (₹161.93 கோடி) பெரும்பாலும் இதர வருமானம் — ஆபரேட்டிங் PAT ₹79 கோடி தான். இந்த வருஷம் ₹221.88 கோடில ₹213 கோடி ஆபரேட்டிங். இப்போ லாபம் நகை விற்பனையில இருந்து வருது.</span></div>
+
+<h3><span class="en">Five-quarter trend (₹ crore)</span><span class="ta">ஐந்து காலாண்டு போக்கு (₹ கோடி)</span></h3>
+<div class="card"><div class="cw"><div><canvas id="chPQ"></canvas></div></div><p class="note"><span class="en">Q2 FY26 PAT is standalone; others consolidated.</span><span class="ta">Q2 FY26 PAT ஸ்டாண்டலோன்; மற்றவை கன்சாலிடேட்டட்.</span></p></div>
+<h3><span class="en">EBITDA — absolute (₹ crore)</span><span class="ta">EBITDA — முழு தொகை (₹ கோடி)</span></h3>
+<div class="card"><div class="cw"><div><canvas id="chPE"></canvas></div></div></div>
+<h3><span class="en">Annual picture (₹ crore)</span><span class="ta">ஆண்டு நிலை (₹ கோடி)</span></h3>
+<div class="card"><div class="cw"><div><canvas id="chPA"></canvas></div></div><p class="note"><span class="en">FY25–FY26 EBITDA includes other income as reported; FY24 EBITDA approximate.</span><span class="ta">FY25–FY26 EBITDAல இதர வருமானம் சேர்த்து; FY24 சுமார்.</span></p></div>
+
+<h3><span class="en">FY26 standalone P&amp;L (audited, ₹ crore)</span><span class="ta">FY26 ஸ்டாண்டலோன் P&amp;L (ஆடிட், ₹ கோடி)</span></h3>
+<div class="card tw"><table>
+<tr><th class="t"><span class="en">Line</span><span class="ta">விவரம்</span></th><th>FY26</th><th>% <span class="en">of revenue</span><span class="ta">வருமானத்தில்</span></th></tr>
+<tr><td><span class="en">Revenue from operations</span><span class="ta">வருமானம்</span></td><td>3,352.88</td><td>100.0%</td></tr>
+<tr><td><span class="en">Cost of goods (materials + purchases + inventory change)</span><span class="ta">பொருள் செலவு</span></td><td>2,601.81</td><td>77.6%</td></tr>
+<tr><td><span class="en">Employee cost</span><span class="ta">ஊழியர் செலவு</span></td><td>29.23</td><td>0.9%</td></tr>
+<tr><td><span class="en">Other expenses</span><span class="ta">இதர செலவு</span></td><td>58.10</td><td>1.7%</td></tr>
+<tr><td><b>EBITDA (ex other income)</b></td><td><b>663.74</b></td><td><b>19.8%</b></td></tr>
+<tr><td><span class="en">Other income</span><span class="ta">இதர வருமானம்</span></td><td>197.29</td><td>5.9%</td></tr>
+<tr><td><span class="en">Finance cost</span><span class="ta">வட்டி</span></td><td>132.87</td><td>4.0%</td></tr>
+<tr><td><span class="en">Depreciation</span><span class="ta">தேய்மானம்</span></td><td>20.22</td><td>0.6%</td></tr>
+<tr><td>PBT</td><td>707.27</td><td>21.1%</td></tr>
+<tr><td><span class="en">Tax</span><span class="ta">வரி</span></td><td>−3.35</td><td>—</td></tr>
+<tr><td><b>PAT</b></td><td><b>710.62</b></td><td><b>21.2%</b></td></tr>
+</table><p class="note"><span class="en">Near-zero tax: brought-forward losses from FY24 are being used. Normal tax will return once they run out.</span><span class="ta">வரி கிட்டத்தட்ட பூஜ்யம்: FY24 நஷ்டத்தை கழிச்சுக்குறாங்க. அது முடிஞ்சதும் சாதாரண வரி வரும்.</span></p></div>
+
+<h3><span class="en">Key ratios</span><span class="ta">முக்கிய விகிதங்கள்</span></h3>
+<div class="card tw"><table>
+<tr><th class="t"><span class="en">Ratio</span><span class="ta">விகிதம்</span></th><th>FY26</th><th class="t"><span class="en">Read</span><span class="ta">அர்த்தம்</span></th></tr>
+<tr><td>ROE</td><td>9.9%</td><td class="t"><span class="en">Low — huge equity base from warrants and stuck receivables</span><span class="ta">குறைவு — வாரண்ட் equity, சிக்கின பாக்கி</span></td></tr>
+<tr><td>ROCE</td><td>9.1%</td><td class="t"><span class="en">Capital tied up in inventory</span><span class="ta">இன்வென்டரில பணம் முடங்கியிருக்கு</span></td></tr>
+<tr><td><span class="en">Interest cover</span><span class="ta">வட்டி கவர்</span></td><td>6.3×</td><td class="t"><span class="en">Now irrelevant — no debt</span><span class="ta">இப்போ தேவையில்ல — கடன் இல்ல</span></td></tr>
+<tr><td><span class="en">Debt / equity</span><span class="ta">கடன் / ஈக்விட்டி</span></td><td>0.13 → 0</td><td class="t"><span class="en">Debt-free since 25 Sep 2026</span><span class="ta">25 செப் 2026 முதல் கடன் இல்ல</span></td></tr>
+<tr><td><span class="en">Current ratio</span><span class="ta">கரன்ட் ரேஷியோ</span></td><td>6.9×</td><td class="t"><span class="en">Liquid on paper; inventory-heavy</span><span class="ta">பேப்பர்ல நல்லது; பெரும்பாலும் இன்வென்டரி</span></td></tr>
+<tr><td><span class="en">Book value / share (Mar-26)</span><span class="ta">புக் வேல்யூ / பங்கு</span></td><td>₹9.40</td><td class="t"><span class="en">Equity ₹8,127.10 cr ÷ 864.86 cr shares</span><span class="ta">ஈக்விட்டி ₹8,127.10 கோடி ÷ 864.86 கோடி பங்கு</span></td></tr>
+</table></div>
+</section>
+
+<!-- ================= CASH FLOW & WORKING CAPITAL ================= -->
+<section class="tab" id="t-cf" data-en="Cash Flow &amp; WC" data-ta="கேஷ் ஃப்ளோ &amp; WC">
+<h2><span class="en">Profit is not yet cash</span><span class="ta">லாபம் இன்னும் கேஷா மாறல</span></h2>
+<div class="sub" id="cfSub"><button class="on" data-k="pcj">PC Jeweller</button><button data-k="cup">Cupid</button></div>
+<div id="cf-pcj">
+<div class="card tw"><table>
+<tr><th class="t">FY26 <span class="en">standalone</span><span class="ta">ஸ்டாண்டலோன்</span> (₹ crore)</th><th>FY26</th></tr>
+<tr><td><b><span class="en">Cash from operations (CFO)</span><span class="ta">ஆபரேஷன் கேஷ் (CFO)</span></b></td><td class="dn"><b>−77.54</b></td></tr>
+<tr><td>&nbsp;&nbsp;<span class="en">of which inventory build-up</span><span class="ta">இதுல இன்வென்டரி ஏற்றம்</span></td><td class="dn">−548.65</td></tr>
+<tr><td>&nbsp;&nbsp;<span class="en">current receivables up / non-current down</span><span class="ta">கரன்ட் பாக்கி ஏற்றம் / நான்-கரன்ட் இறக்கம்</span></td><td>−285.14 / +283.17</td></tr>
+<tr><td><span class="en">Cash from investing</span><span class="ta">முதலீட்டு கேஷ்</span></td><td>+3.42</td></tr>
+<tr><td><span class="en">Cash from financing</span><span class="ta">நிதி கேஷ்</span></td><td class="up">+146.63</td></tr>
+<tr><td>&nbsp;&nbsp;<span class="en">equity raised (warrants)</span><span class="ta">வாரண்ட் மூலம் ஈக்விட்டி</span></td><td class="up">+1,259.28</td></tr>
+<tr><td>&nbsp;&nbsp;<span class="en">bank debt repaid</span><span class="ta">கட்டின வங்கிக் கடன்</span></td><td class="dn">−992.29</td></tr>
+<tr><td>&nbsp;&nbsp;<span class="en">interest paid</span><span class="ta">கட்டின வட்டி</span></td><td class="dn">−121.89</td></tr>
+<tr><td><span class="en">Net change in cash</span><span class="ta">கேஷ் மாற்றம்</span></td><td>+72.51</td></tr>
+<tr><td><span class="en">CFO ÷ PAT (cash conversion)</span><span class="ta">CFO ÷ PAT</span></td><td class="dn">−0.11×</td></tr>
+</table></div>
+<div class="flag"><span class="en"><b>The debt was repaid with shareholders' money, not with operating cash.</b> FY26 profit of ₹710.62 crore went into more gold stock; the bank repayment came from ₹1,259.28 crore of fresh equity.</span><span class="ta"><b>கடனை கட்டினது ஷேர்ஹோல்டர் பணத்துல, ஆபரேஷன் கேஷ்ல இல்ல.</b> FY26 லாபம் ₹710.62 கோடி தங்க ஸ்டாக்குக்கு போச்சு; வங்கிக் கடன் ₹1,259.28 கோடி புது ஈக்விட்டியால கட்டப்பட்டது.</span></div>
+<h3><span class="en">Working capital days (FY26)</span><span class="ta">வொர்க்கிங் கேபிடல் நாட்கள் (FY26)</span></h3>
+<div class="card tw"><table>
+<tr><th class="t"><span class="en">Item</span><span class="ta">விவரம்</span></th><th>₹ crore</th><th><span class="en">Days</span><span class="ta">நாள்</span></th><th class="t"><span class="en">Basis</span><span class="ta">அடிப்படை</span></th></tr>
+<tr><td><span class="en">Inventory</span><span class="ta">இன்வென்டரி</span></td><td>7,024.06</td><td class="dn"><b>985</b></td><td class="t"><span class="en">on cost of goods ₹2,601.81 cr</span><span class="ta">பொருள் செலவு ₹2,601.81 கோடி</span></td></tr>
+<tr><td><span class="en">Trade receivables (current + non-current)</span><span class="ta">ரிசீவபிள்ஸ்</span></td><td>1,689.36</td><td class="dn"><b>184</b></td><td class="t"><span class="en">on revenue ₹3,352.88 cr</span><span class="ta">வருமானம் ₹3,352.88 கோடி</span></td></tr>
+<tr><td><span class="en">Trade payables</span><span class="ta">பேயபிள்ஸ்</span></td><td>15.85</td><td><b>2</b></td><td class="t"><span class="en">suppliers paid almost upfront</span><span class="ta">சப்ளையர்களுக்கு உடனே பணம்</span></td></tr>
+<tr><td><b><span class="en">Cash conversion cycle</span><span class="ta">கேஷ் கன்வர்ஷன் சைக்கிள்</span></b></td><td>—</td><td class="dn"><b>1,167</b></td><td class="t"><span class="en">≈ 3.2 years</span><span class="ta">≈ 3.2 வருஷம்</span></td></tr>
+</table></div>
+<div class="card"><div class="cw"><div><canvas id="chWC"></canvas></div></div></div>
+<div class="info"><span class="en"><b>WC ↔ CFO link:</b> a 1,167-day cycle means each extra rupee of sales locks up roughly three rupees of working capital, so fast growth drains cash. CFO turns positive only if inventory days fall (selling down old stock) or export receivables keep coming in — the ₹142 crore Q2 recovery is the first real sign.</span><span class="ta"><b>WC ↔ CFO தொடர்பு:</b> 1,167 நாள் சைக்கிள்ன்னா ஒவ்வொரு கூடுதல் ரூபாய் விற்பனைக்கும் சுமார் மூணு ரூபாய் முடங்கும்; வேகமா வளர்ந்தா கேஷ் குறையும். இன்வென்டரி நாள் குறைஞ்சா அல்லது எக்ஸ்போர்ட் பாக்கி வந்தா தான் CFO பாசிட்டிவ் ஆகும் — Q2ல வந்த ₹142 கோடி முதல் நல்ல அறிகுறி.</span></div>
+</div>
+<div id="cf-cup" style="display:none">
+<div class="card tw"><table>
+<tr><th class="t">FY26 <span class="en">consolidated</span><span class="ta">கன்சாலிடேட்டட்</span> (₹ crore)</th><th>FY26</th></tr>
+<tr><td><b>CFO</b></td><td class="up"><b>+46.12</b></td></tr>
+<tr><td>&nbsp;&nbsp;<span class="en">inventory up</span><span class="ta">இன்வென்டரி ஏற்றம்</span></td><td class="dn">−28.37</td></tr>
+<tr><td>&nbsp;&nbsp;<span class="en">receivables up</span><span class="ta">பாக்கி ஏற்றம்</span></td><td class="dn">−44.54</td></tr>
+<tr><td>&nbsp;&nbsp;<span class="en">payables up</span><span class="ta">பேயபிள்ஸ் ஏற்றம்</span></td><td class="up">+27.88</td></tr>
+<tr><td>&nbsp;&nbsp;<span class="en">tax paid</span><span class="ta">கட்டின வரி</span></td><td class="dn">−32.41</td></tr>
+<tr><td><span class="en">Cash from investing</span><span class="ta">முதலீட்டு கேஷ்</span></td><td>+28.09</td></tr>
+<tr><td>&nbsp;&nbsp;<span class="en">capex (Palava plant etc.)</span><span class="ta">கேபெக்ஸ் (பலாவா ஆலை)</span></td><td class="dn">−24.69</td></tr>
+<tr><td><span class="en">Cash from financing</span><span class="ta">நிதி கேஷ்</span></td><td>+35.30</td></tr>
+<tr><td><span class="en">Free cash flow (CFO − capex)</span><span class="ta">ஃப்ரீ கேஷ் ஃப்ளோ</span></td><td>+21.43</td></tr>
+<tr><td><span class="en">CFO ÷ PAT</span><span class="ta">CFO ÷ PAT</span></td><td class="am">0.43×</td></tr>
+<tr><td><span class="en">Cash + bank (Mar-26)</span><span class="ta">கேஷ் + வங்கி</span></td><td>186.45</td></tr>
+<tr><td><span class="en">Borrowings (Mar-26)</span><span class="ta">கடன்</span></td><td>50.98</td></tr>
+<tr><td><b><span class="en">Net cash</span><span class="ta">நிகர கேஷ்</span></b></td><td class="up"><b>135.47</b></td></tr>
+</table></div>
+<div class="card tw"><table>
+<tr><th class="t"><span class="en">WC item (FY26)</span><span class="ta">WC (FY26)</span></th><th>₹ crore</th><th><span class="en">Days</span><span class="ta">நாள்</span></th></tr>
+<tr><td><span class="en">Inventory (on COGS ₹148.14 cr)</span><span class="ta">இன்வென்டரி</span></td><td>70.04</td><td>173</td></tr>
+<tr><td><span class="en">Receivables (on revenue ₹357.71 cr)</span><span class="ta">ரிசீவபிள்ஸ்</span></td><td>100.79</td><td>103</td></tr>
+<tr><td><span class="en">Payables (on COGS)</span><span class="ta">பேயபிள்ஸ்</span></td><td>30.53</td><td>75</td></tr>
+<tr><td><b><span class="en">Cash conversion cycle</span><span class="ta">கேஷ் கன்வர்ஷன் சைக்கிள்</span></b></td><td>—</td><td class="am"><b>200</b></td></tr>
+</table></div>
+<div class="info"><span class="en">Institutional buyers (WHO/UNFPA/PFSCM tenders) pay slowly, so only 43% of profit became operating cash in FY26. ~₹33.69 crore of FY26 income was "other income", including ₹15.27 crore fair-value gain on the GII investment — not cash.</span><span class="ta">WHO/UNFPA/PFSCM மாதிரி நிறுவனங்கள் மெதுவா பணம் தருவாங்க; அதனால FY26 லாபத்துல 43% தான் கேஷா ஆச்சு. FY26ல ₹33.69 கோடி "இதர வருமானம்" — அதுல GII முதலீட்டு மதிப்பு ஏற்றம் ₹15.27 கோடி, கேஷ் இல்ல.</span></div>
+</div>
+</section>
+
+<!-- ================= VALUATION & MARKET ================= -->
+<section class="tab" id="t-val" data-en="Valuation &amp; Market" data-ta="மதிப்பீடு &amp; மார்க்கெட்">
+<h2><span class="en">What the market is paying</span><span class="ta">மார்க்கெட் எவ்வளவு கொடுக்குது</span></h2>
+<div class="card tw"><table>
+<tr><th class="t"><span class="en">Metric</span><span class="ta">அளவு</span></th><th>PC Jeweller</th><th>Cupid</th></tr>
+<tr><td><span class="en">Price used</span><span class="ta">விலை</span></td><td>₹16.00 (16 Oct)</td><td>₹357.90 (12 Oct)</td></tr>
+<tr><td><span class="en">Shares (crore)</span><span class="ta">பங்குகள் (கோடி)</span></td><td>980.78</td><td>134.47</td></tr>
+<tr><td><span class="en">Market cap (₹ crore)</span><span class="ta">மார்க்கெட் கேப்</span></td><td>~15,692</td><td>~48,127</td></tr>
+<tr><td><span class="en">TTM PAT (₹ crore)</span><span class="ta">TTM லாபம்</span></td><td>~774.41</td><td>137.36</td></tr>
+<tr><td>P/E (TTM)</td><td>~20.3×</td><td class="dn">~350×</td></tr>
+<tr><td><span class="en">P/E on FY27 guidance</span><span class="ta">FY27 வழிகாட்டல் P/E</span></td><td>n/a</td><td class="dn">~193× (₹250 cr)</td></tr>
+<tr><td>P/B (Mar-26 book)</td><td>~1.70×</td><td class="dn">~106.8×</td></tr>
+<tr><td><span class="en">Mcap ÷ TTM sales</span><span class="ta">மார்க்கெட் கேப் ÷ விற்பனை</span></td><td>~4.5×</td><td class="dn">~106×</td></tr>
+<tr><td><span class="en">Net debt</span><span class="ta">நிகர கடன்</span></td><td>0</td><td><span class="en">net cash</span><span class="ta">நிகர கேஷ்</span> 135.47</td></tr>
+</table><p class="note"><span class="en">PC Jeweller TTM PAT mixes one standalone quarter; P/B uses March 2026 book value before later conversions.</span><span class="ta">பிசி ஜுவல்லர் TTM-ல ஒரு காலாண்டு ஸ்டாண்டலோன்; P/B மார்ச் 2026 புக் வேல்யூ.</span></p></div>
+
+<h3><span class="en">Why the PC Jeweller share moved</span><span class="ta">பிசி ஜுவல்லர் பங்கு ஏன் நகர்ந்தது</span></h3>
+<div class="card tw"><table>
+<tr><th class="t"><span class="en">Date</span><span class="ta">தேதி</span></th><th class="t"><span class="en">Move</span><span class="ta">நகர்வு</span></th><th class="t"><span class="en">Reason</span><span class="ta">காரணம்</span></th></tr>
+<tr><td>17 Jan 2018</td><td class="t">₹586.75 <span class="en">all-time high (₹10 FV)</span><span class="ta">உச்சம் (₹10 FV)</span></td><td class="t"><span class="en">Peak of expansion story</span><span class="ta">விரிவாக்க உச்சம்</span></td></tr>
+<tr><td>Feb–May 2018</td><td class="t dn">−75% YTD</td><td class="t"><span class="en">Vakrangee stake and probe fears; promoter gifting; FMR exit</span><span class="ta">வக்ராங்கி பங்கு, விசாரணை பயம்; ப்ரமோட்டர் கிஃப்ட்; FMR வெளியேற்றம்</span></td></tr>
+<tr><td>2019–2023</td><td class="t dn">₹27 → ~₹20s</td><td class="t"><span class="en">Export receivables stuck, rating to D, NPA, SBI petition</span><span class="ta">எக்ஸ்போர்ட் பாக்கி, ரேட்டிங் D, NPA, SBI பெட்டிஷன்</span></td></tr>
+<tr><td>Apr–Sep 2024</td><td class="t up">5× rally</td><td class="t"><span class="en">NCLT withdrawal, bank-by-bank OTS approvals</span><span class="ta">NCLT வித்ட்ரா, OTS அப்ரூவல்கள்</span></td></tr>
+<tr><td>Apr 2026</td><td class="t">~₹9</td><td class="t"><span class="en">Dilution overhang from warrant conversions</span><span class="ta">வாரண்ட் கன்வர்ஷன் டைல்யூஷன் அழுத்தம்</span></td></tr>
+<tr><td>11 Aug 2026</td><td class="t up">+6.2% → ₹10.43</td><td class="t"><span class="en">Q1 FY27: EBITDA +90%</span><span class="ta">Q1 FY27: EBITDA +90%</span></td></tr>
+<tr><td>3–25 Sep 2026</td><td class="t up">₹10.67 → ~₹14.4</td><td class="t"><span class="en">Bank-by-bank clearances; debt-free 25 Sep</span><span class="ta">ஒவ்வொரு வங்கியா கடன் முடிவு; 25 செப் கடன் இல்லை</span></td></tr>
+<tr><td>8 Oct 2026</td><td class="t up">+4.2% → ₹13.70</td><td class="t"><span class="en">Q2 update: sales +28%, ₹142 cr export recovery</span><span class="ta">Q2: விற்பனை +28%, ₹142 கோடி வசூல்</span></td></tr>
+<tr><td>16 Oct 2026</td><td class="t up">+~11% → ₹16.00</td><td class="t"><span class="en">Halwasiya bulk buy 5.10 cr shares; next day Sanyasi Ayurveda sold 0.53%</span><span class="ta">ஹல்வாசியா 5.10 கோடி பங்கு; மறுநாள் சன்யாசி ஆயுர்வேதா 0.53% விற்பனை</span></td></tr>
+</table></div>
+
+<h3><span class="en">PC Jeweller shareholding</span><span class="ta">பிசி ஜுவல்லர் பங்குதாரர்கள்</span></h3>
+<div class="card"><div class="cw"><div style="min-width:320px;height:260px"><canvas id="chSH"></canvas></div></div>
+<div class="tw"><table>
+<tr><th class="t"><span class="en">Holder</span><span class="ta">பங்குதாரர்</span></th><th>%</th><th class="t"><span class="en">As of</span><span class="ta">தேதி</span></th></tr>
+<tr><td><span class="en">Promoter group (Balram Garg family)</span><span class="ta">ப்ரமோட்டர் (பல்ராம் கார்க் குடும்பம்)</span></td><td>39.10</td><td class="t">24 Sep 2026</td></tr>
+<tr><td>Unico Global Opportunities Fund</td><td>5.61</td><td class="t">Jun 2026</td></tr>
+<tr><td>Ebisu Global Opportunities Fund</td><td>5.20</td><td class="t">Jun 2026</td></tr>
+<tr><td>Capital Ventures Pvt Ltd</td><td>1.86</td><td class="t">Jun 2026</td></tr>
+<tr><td>Sanyasi Ayurveda Pvt Ltd</td><td>1.76 → <span class="en">sold 0.53%</span><span class="ta">0.53% விற்பனை</span></td><td class="t">Oct 2026</td></tr>
+<tr><td>State Bank of India (OTS shares)</td><td>1.09</td><td class="t">Jun 2026</td></tr>
+<tr><td>Aditya Kumar Halwasiya</td><td>0.52</td><td class="t">Oct 2026</td></tr>
+</table></div>
+<p class="note"><span class="en">Percentages from different dates and a growing share count; treat the non-promoter rows as indicative.</span><span class="ta">வெவ்வேறு தேதிகள், பங்கு எண்ணிக்கை வளருது; ப்ரமோட்டர் இல்லாத வரிகள் தோராயம்.</span></p></div>
+</section>
+
+<!-- ================= GOLD DRIVER MAP ================= -->
+<section class="tab" id="t-gold" data-en="Gold Driver Map" data-ta="தங்க டிரைவர் மேப்">
+<h2><span class="en">What moves gold — and how it reaches PC Jeweller</span><span class="ta">தங்க விலையை எது நகர்த்துது — அது பிசி ஜுவல்லரை எப்படி தொடுது</span></h2>
+<p class="note"><span class="en">Tap a box to highlight its links. Tap a scenario to watch the chain move. Green solid arrow = same direction; red dashed = opposite direction.</span><span class="ta">பாக்ஸை தட்டினா தொடர்புகள் தெரியும். சினாரியோ தட்டினா சங்கிலி நகரும். பச்சை கோடு = அதே திசை; சிவப்பு புள்ளிக் கோடு = எதிர் திசை.</span></p>
+<div class="sub" id="goldSc"></div>
+<p class="note"><span class="en">Swipe sideways to see the full map →</span><span class="ta">முழு மேப் பார்க்க பக்கவாட்டில் தள்ளுங்க →</span></p>
+<div class="card" style="overflow-x:auto">
+<svg id="goldMap" viewBox="0 0 760 560" style="min-width:700px;width:100%"></svg>
+</div>
+<div class="legend"><span><i style="background:#16a34a"></i><span class="en">same direction</span><span class="ta">அதே திசை</span></span><span><i style="background:#dc2626"></i><span class="en">opposite direction</span><span class="ta">எதிர் திசை</span></span><span><i style="background:#fef3c7;border:1px solid #b7791f"></i><span class="en">gold drivers</span><span class="ta">தங்க காரணிகள்</span></span><span><i style="background:#ede9fe;border:1px solid #7c3aed"></i><span class="en">PC Jeweller metrics</span><span class="ta">பிசி ஜுவல்லர் அளவுகள்</span></span></div>
+<div class="pcard expl" id="goldX"><span class="en">Tap a box or a scenario.</span><span class="ta">ஒரு பாக்ஸ் அல்லது சினாரியோ தட்டுங்க.</span></div>
+<h3><span class="en">Sensitivity — PC Jeweller's gold exposure in rupees</span><span class="ta">உணர்திறன் — பிசி ஜுவல்லர் தங்க வெளிப்பாடு ரூபாயில்</span></h3>
+<div class="card tw"><table>
+<tr><th class="t"><span class="en">Gold price move</span><span class="ta">தங்க விலை மாற்றம்</span></th><th><span class="en">Value change on ₹7,024 cr inventory</span><span class="ta">₹7,024 கோடி இன்வென்டரி மதிப்பு மாற்றம்</span></th><th><span class="en">As % of FY26 PAT (₹710.62 cr)</span><span class="ta">FY26 லாபத்தில் %</span></th></tr>
+<tr><td>+10%</td><td class="up">+₹702 cr</td><td class="up">~99%</td></tr>
+<tr><td>+5%</td><td class="up">+₹351 cr</td><td class="up">~49%</td></tr>
+<tr><td>−5%</td><td class="dn">−₹351 cr</td><td class="dn">~49%</td></tr>
+<tr><td>−10%</td><td class="dn">−₹702 cr</td><td class="dn">~99%</td></tr>
+</table>
+<p class="note"><span class="en">Upper bound, assuming the whole inventory is gold-linked and unhedged (hedging is not disclosed). The gain or loss shows up gradually as old stock is sold, not in one quarter.</span><span class="ta">முழு இன்வென்டரியும் தங்கம், ஹெட்ஜ் இல்லைன்னு எடுத்த மேல் வரம்பு (ஹெட்ஜிங் வெளியிடல). பழைய ஸ்டாக் விக்கும்போது தான் படிப்படியா லாபம்/நஷ்டம் தெரியும்.</span></p></div>
+<div class="info"><span class="en"><b>Why PC Jeweller is more gold-sensitive than peers:</b> ~985 inventory days versus a few months for large chains, and no gold-metal-loan cover now that bank lines are closed. It is effectively a long-gold position with a jewellery shop attached. Cupid and Style Baazar have no meaningful gold link.</span><span class="ta"><b>மத்த கம்பெனிகளை விட ஏன் அதிக உணர்திறன்:</b> பெரிய செயின்களுக்கு சில மாத இன்வென்டரி தான்; இங்க ~985 நாள். வங்கி லைன் மூடிட்டதால கோல்ட் மெட்டல் லோன் கவரும் இல்ல. நடைமுறையில இது ஒரு "தங்கம் வாங்கி வைச்ச பொசிஷன்" + நகைக்கடை. க்யூபிட், ஸ்டைல் பஜாருக்கு தங்க தொடர்பு இல்ல.</span></div>
+</section>
+
+<!-- ================= TRIGGERS & CYCLE ================= -->
+<section class="tab" id="t-tg" data-en="Triggers &amp; Cycle" data-ta="ட்ரிகர் &amp; சைக்கிள்">
+<h2><span class="en">Cycle clock and catalysts</span><span class="ta">சைக்கிள் கடிகாரம் &amp; காரணிகள்</span></h2>
+<div class="sub" id="tgSub"><button class="on" data-k="pcj">PC Jeweller</button><button data-k="cup">Cupid</button></div>
+<div class="card"><svg id="clock" viewBox="0 0 300 300" width="100%" style="max-width:320px;display:block;margin:auto"></svg>
+<div class="grid" style="margin-top:8px"><div class="kpi"><div class="l">CY</div><div class="v" id="cyV">—</div><div class="d" id="cyD"></div></div><div class="kpi"><div class="l">TG</div><div class="v" id="tgV">—</div><div class="d" id="tgD"></div></div></div></div>
+<div class="card tw"><table id="tgTable"></table></div>
+<div class="card" id="tgWhat"></div>
+<p class="note"><span class="en">Points = Impact × Certainty × Timing × Priced-in. TG = 50 + 8 × (top-3 positives) − 8 × (all negatives). Education only; not buy/sell signals.</span><span class="ta">புள்ளி = தாக்கம் × உறுதி × நேரம் × விலையில் சேர்ந்தது. TG = 50 + 8 × (டாப் 3 பாசிட்டிவ்) − 8 × (எல்லா நெகட்டிவ்). கல்விக்காக மட்டும்.</span></p>
+</section>
+
+<!-- ================= CUPID ================= -->
+<section class="tab" id="t-cup" data-en="Cupid" data-ta="க்யூபிட்">
+<h2><span class="en">Cupid Ltd — Halwasiya's flagship</span><span class="ta">க்யூபிட் — ஹல்வாசியாவோட முக்கிய கம்பெனி</span></h2>
+<div class="grid">
+<div class="kpi"><div class="l"><span class="en">Q1 FY27 revenue</span><span class="ta">Q1 FY27 வருமானம்</span></div><div class="v">₹154.72 cr</div><div class="d up">▲ 158.7% YoY</div></div>
+<div class="kpi"><div class="l">Q1 FY27 EBITDA</div><div class="v">₹60.06 cr</div><div class="d up">▲ 265% · 38.8%</div></div>
+<div class="kpi"><div class="l"><span class="en">Q1 FY27 net profit</span><span class="ta">Q1 FY27 லாபம்</span></div><div class="v">₹44.15 cr</div><div class="d up">▲ 194% YoY</div></div>
+<div class="kpi"><div class="l"><span class="en">FY27 guidance</span><span class="ta">FY27 வழிகாட்டல்</span></div><div class="v">₹800+ cr</div><div class="d"><span class="en">PAT ₹250+ cr · Q2 &gt; ₹200 cr</span><span class="ta">லாபம் ₹250+ கோடி · Q2 &gt; ₹200 கோடி</span></div></div>
+</div>
+<h3><span class="en">History</span><span class="ta">வரலாறு</span></h3>
+<div class="card tl">
+<div class="ev"><div class="dt">1993</div><span class="en">Founded in Nashik by Omprakash Garg as Cupid Condom Ltd (renamed Cupid Ltd in 2006).</span><span class="ta">நாசிக்ல ஓம்பிரகாஷ் கார்க் தொடங்கினார் — Cupid Condom Ltd (2006ல Cupid Ltd).</span></div>
+<div class="ev"><div class="dt">—</div><span class="en">First company globally with WHO/UNFPA pre-qualification for both male and female condoms; long-term supply agreements with WHO/UNFPA and PFSCM.</span><span class="ta">ஆண் & பெண் காண்டம் ரெண்டுக்கும் WHO/UNFPA ப்ரீ-குவாலிஃபிகேஷன் வாங்கின உலகின் முதல் கம்பெனி; WHO/UNFPA, PFSCM கூட நீண்டகால ஒப்பந்தம்.</span></div>
+<div class="ev b"><div class="dt">Sep 2023</div><span class="en">Universal-Halwasiya Group (Columbia Petro Chem + Aditya Halwasiya) agreed to buy 41.84% from the Garg family at ₹285/share (₹159.06 cr).</span><span class="ta">யுனிவர்சல்-ஹல்வாசியா குழுமம் கார்க் குடும்பத்திடம் 41.84% பங்கு ₹285க்கு (₹159.06 கோடி) வாங்க ஒப்பந்தம்.</span></div>
+<div class="ev b"><div class="dt">Oct–Dec 2023</div><span class="en">Board rejig: Aditya Halwasiya MD. ₹113 cr open offer at ₹325 — only 367 shares tendered.</span><span class="ta">போர்டு மாற்றம்: ஆதித்யா ஹல்வாசியா MD. ₹325ல ₹113 கோடி ஓப்பன் ஆஃபர் — 367 பங்கு தான் வந்தது.</span></div>
+<div class="ev"><div class="dt">Jan 2026</div><span class="en">₹331.53 cr strategic investment in Style Baazar via warrants (11.92% on conversion).</span><span class="ta">ஸ்டைல் பஜார்ல வாரண்ட் மூலம் ₹331.53 கோடி முதலீடு (கன்வர்ஷன்ல 11.92%).</span></div>
+<div class="ev"><div class="dt">Mar 2026</div><span class="en">4:1 bonus issue — 107.57 cr bonus shares; total 134.47 cr shares. 4.40 cr unexercised warrants forfeited (₹96.30 cr upfront kept).</span><span class="ta">4:1 போனஸ் — 107.57 கோடி போனஸ் பங்கு; மொத்தம் 134.47 கோடி. எக்ஸர்சைஸ் ஆகாத 4.40 கோடி வாரண்ட் பறிமுதல் (₹96.30 கோடி).</span></div>
+<div class="ev g"><div class="dt">FY26</div><span class="en">Revenue ₹357.71 cr (+94.9%), PAT ₹108.23 cr (+164.7%) — beat ₹335 cr / ₹100 cr guidance.</span><span class="ta">வருமானம் ₹357.71 கோடி (+94.9%), லாபம் ₹108.23 கோடி (+164.7%) — வழிகாட்டலை தாண்டியது.</span></div>
+<div class="ev g"><div class="dt">Aug–Oct 2026</div><span class="en">Q1 FY27 record; guidance raised twice to ₹800+ cr / ₹250+ cr; Nifty Smallcap 250, BSE Group A and FTSE inclusion; Halwasiya keeps buying (34.23%).</span><span class="ta">Q1 FY27 சாதனை; வழிகாட்டல் ரெண்டு தடவை ஏற்றம்; Nifty Smallcap 250, BSE Group A, FTSE சேர்க்கை; ஹல்வாசியா தொடர்ந்து வாங்குறார் (34.23%).</span></div>
+</div>
+<h3><span class="en">Business model</span><span class="ta">பிசினஸ் மாடல்</span></h3>
+<div class="card">
+<svg id="bmCUP" viewBox="0 0 360 600" width="100%" style="max-width:560px;display:block;margin:auto"></svg>
+<div class="pcard expl" id="bmCUPx"><span class="en">Tap a box above.</span><span class="ta">மேல ஒரு பாக்ஸை தட்டுங்க.</span></div>
+<div class="formula"><span class="en">Revenue ≈ tender volumes × unit price (+10% export hike) + domestic FMCG outlets × throughput + IVD kit orders</span><span class="ta">வருமானம் ≈ டெண்டர் அளவு × யூனிட் விலை (+10% எக்ஸ்போர்ட் ஏற்றம்) + உள்நாட்டு FMCG கடைகள் × விற்பனை + IVD கிட் ஆர்டர்</span></div>
+</div>
+<div class="card tw"><table>
+<tr><th class="t"><span class="en">Revenue engine (FY26)</span><span class="ta">வருமான இன்ஜின் (FY26)</span></th><th>₹ crore</th><th>%</th><th class="t"><span class="en">Driver</span><span class="ta">காரணி</span></th></tr>
+<tr><td><span class="en">Male condoms</span><span class="ta">ஆண் காண்டம்</span></td><td>181.11</td><td>50.6%</td><td class="t"><span class="en">Tenders, capacity → 1.25 bn/yr at Palava</span><span class="ta">டெண்டர், பலாவால 1.25 பில்லியன் திறன்</span></td></tr>
+<tr><td><span class="en">Female condoms</span><span class="ta">பெண் காண்டம்</span></td><td>60.72</td><td>17.0%</td><td class="t"><span class="en">Few global suppliers; 125 mn/yr capacity; nitrile version in development</span><span class="ta">உலகளவுல சிலர் தான்; 125 மில்லியன் திறன்; நைட்ரைல் வகை வளர்ச்சியில</span></td></tr>
+<tr><td><span class="en">FMCG / personal care</span><span class="ta">FMCG / பர்சனல் கேர்</span></td><td>84.26</td><td>23.6%</td><td class="t"><span class="en">Style Baazar shelves (~₹150 cr FY27 target)</span><span class="ta">ஸ்டைல் பஜார் கடைகள் (FY27ல ~₹150 கோடி இலக்கு)</span></td></tr>
+<tr><td><span class="en">IVD kits, lubricants &amp; others (derived)</span><span class="ta">IVD கிட், லூப் & மற்றவை (கணக்கிட்டது)</span></td><td>31.62</td><td>8.8%</td><td class="t"><span class="en">State-government kit orders expected</span><span class="ta">மாநில அரசு ஆர்டர் எதிர்பார்ப்பு</span></td></tr>
+<tr><td><b><span class="en">Exports share</span><span class="ta">எக்ஸ்போர்ட் பங்கு</span></b></td><td>208.13</td><td>59.3%</td><td class="t"><span class="en">125+ countries</span><span class="ta">125+ நாடுகள்</span></td></tr>
+</table></div>
+<h3><span class="en">Quarterly trend (₹ crore)</span><span class="ta">காலாண்டு போக்கு (₹ கோடி)</span></h3>
+<div class="card"><div class="cw"><div><canvas id="chCQ"></canvas></div></div><p class="note"><span class="en">EBITDA shown where disclosed; Q2–Q3 FY26 EBITDA n/a.</span><span class="ta">EBITDA வெளியிட்ட காலாண்டுகள் மட்டும்.</span></p></div>
+<h3><span class="en">FY26 audited P&amp;L (consolidated, ₹ crore)</span><span class="ta">FY26 P&amp;L (₹ கோடி)</span></h3>
+<div class="card tw"><table>
+<tr><th class="t"><span class="en">Line</span><span class="ta">விவரம்</span></th><th>FY26</th><th>%</th></tr>
+<tr><td><span class="en">Revenue</span><span class="ta">வருமானம்</span></td><td>357.71</td><td>100%</td></tr>
+<tr><td><span class="en">Cost of goods</span><span class="ta">பொருள் செலவு</span></td><td>148.14</td><td>41.4%</td></tr>
+<tr><td><span class="en">Gross profit</span><span class="ta">கிராஸ் லாபம்</span></td><td>209.57</td><td>58.6%</td></tr>
+<tr><td><span class="en">Employee</span><span class="ta">ஊழியர்</span></td><td>31.82</td><td>8.9%</td></tr>
+<tr><td><span class="en">Other expenses</span><span class="ta">இதர செலவு</span></td><td>61.04</td><td>17.1%</td></tr>
+<tr><td><b>EBITDA (ex other income)</b></td><td><b>116.71</b></td><td><b>32.6%</b></td></tr>
+<tr><td><span class="en">Other income</span><span class="ta">இதர வருமானம்</span></td><td>33.69</td><td>9.4%</td></tr>
+<tr><td>PBT</td><td>142.47</td><td>39.8%</td></tr>
+<tr><td><b>PAT</b></td><td><b>108.23</b></td><td><b>30.3%</b></td></tr>
+<tr><td>ROE / ROCE</td><td colspan="2">27.3% / 29.0%</td></tr>
+</table></div>
+<div class="flag"><span class="en"><b>Valuation is the risk, not the business.</b> At ~350× trailing and ~193× FY27 guided profit, the price assumes guidance is met and then sustained for years. Revenue is concentrated in donor-funded institutional tenders; any cut in global aid budgets hits orders directly.</span><span class="ta"><b>ரிஸ்க் மதிப்பீட்டுல, பிசினஸ்ல இல்ல.</b> ~350× TTM, ~193× FY27 வழிகாட்டல் P/E — வழிகாட்டல் நிறைவேறி பல வருஷம் தொடரும்னு விலை எடுத்துக்குது. வருமானம் டோனர் நிதி டெண்டர்களை சார்ந்திருக்கு; உலக உதவி நிதி குறைஞ்சா ஆர்டர் நேரடியா பாதிக்கும்.</span></div>
+</section>
+
+<!-- ================= TEMPLE ================= -->
+<section class="tab" id="t-tmp" data-en="6-Pillar Temple" data-ta="6 தூண் கோவில்">
+<h2><span class="en">CB 6-Pillar Score</span><span class="ta">CB 6 தூண் ஸ்கோர்</span></h2>
+<div class="sub" id="tmSub"><button class="on" data-k="pcj">PC Jeweller</button><button data-k="cup">Cupid</button></div>
+<div class="card"><svg id="temple" viewBox="0 0 360 330" width="100%" style="max-width:520px;display:block;margin:auto"></svg></div>
+<div id="pillarCards"></div>
+</section>
+
+<!-- ================= SWOT ================= -->
+<section class="tab" id="t-swot" data-en="SWOT" data-ta="SWOT">
+<h2>SWOT</h2>
+<div class="sub" id="swSub"><button class="on" data-k="pcj">PC Jeweller</button><button data-k="cup">Cupid</button></div>
+<div class="swot" id="swotBox"></div>
+</section>
+
+<!-- ================= ANALYSTS ================= -->
+<section class="tab" id="t-an" data-en="Analysts' Rating" data-ta="அனலிஸ்ட் ரேட்டிங்">
+<h2><span class="en">Analysts' rating</span><span class="ta">அனலிஸ்ட் ரேட்டிங்</span></h2>
+<div class="card tw"><table>
+<tr><th class="t"><span class="en">Company</span><span class="ta">கம்பெனி</span></th><th class="t"><span class="en">Source</span><span class="ta">மூலம்</span></th><th class="t"><span class="en">Rating</span><span class="ta">ரேட்டிங்</span></th><th><span class="en">Target</span><span class="ta">இலக்கு</span></th><th class="t"><span class="en">Date</span><span class="ta">தேதி</span></th></tr>
+<tr><td>PC Jeweller</td><td class="t"><span class="en">Major domestic brokerages</span><span class="ta">முக்கிய ப்ரோக்கரேஜ்கள்</span></td><td class="t">n/a</td><td>n/a</td><td class="t"><span class="en">No verified coverage found</span><span class="ta">சரிபார்த்த கவரேஜ் இல்ல</span></td></tr>
+<tr><td>PC Jeweller</td><td class="t">MarketsMojo (quant model)</td><td class="t"><span class="pill pa">Hold</span></td><td>n/a</td><td class="t"><span class="en">Upgraded from Sell, 26 Aug 2026</span><span class="ta">Sell-ல இருந்து உயர்வு, 26 ஆக 2026</span></td></tr>
+<tr><td>Cupid</td><td class="t">TipRanks (1 analyst)</td><td class="t"><span class="pill pg">Buy</span></td><td>₹207</td><td class="t"><span class="en">Stale — below the ₹358 price</span><span class="ta">பழையது — ₹358 விலைக்கு கீழ</span></td></tr>
+<tr><td>Cupid</td><td class="t"><span class="en">Major domestic brokerages</span><span class="ta">முக்கிய ப்ரோக்கரேஜ்கள்</span></td><td class="t">n/a</td><td>n/a</td><td class="t"><span class="en">No verified coverage found</span><span class="ta">சரிபார்த்த கவரேஜ் இல்ல</span></td></tr>
+</table></div>
+<div class="info"><span class="en">Thin institutional coverage is itself information: both PC Jeweller (~60% public, mostly retail) and Cupid are momentum-driven, retail-heavy stocks. CB Research does not issue buy/sell/hold calls.</span><span class="ta">இன்ஸ்டிடியூஷனல் கவரேஜ் குறைவுங்கறதே ஒரு தகவல்: ரெண்டும் ரீடெய்ல் முதலீட்டாளர்கள் நிறைஞ்ச, மொமென்டம் பங்குகள். CB Research வாங்கு/விக்கு பரிந்துரை தராது.</span></div>
+</section>
+
+<!-- ================= SELF-CHECK ================= -->
+<section class="tab" id="t-sc" data-en="Self-check" data-ta="சுய பரிசோதனை">
+<h2><span class="en">CB Investor Self-check</span><span class="ta">CB முதலீட்டாளர் சுய பரிசோதனை</span></h2>
+<div class="sub" id="scSub"><button class="on" data-k="pcj">PC Jeweller</button><button data-k="cup">Cupid</button></div>
+<div class="card"><div class="prog"><i id="scBar"></i></div><p id="scMsg" class="note"></p></div>
+<div id="scBox"></div>
+<div class="card"><h3 style="margin-top:0"><span class="en">5 · My own conditions</span><span class="ta">5 · என் சொந்த நிபந்தனைகள்</span></h3>
+<div class="chips" id="scSug" style="padding:0 0 8px"></div>
+<div style="display:flex;gap:6px"><input id="scIn" style="flex:1;border:1px solid var(--line);border-radius:10px;padding:8px;font-family:inherit"><button class="btn" onclick="addCond()">+</button></div>
+<div class="chk" id="scOwn"></div></div>
+<button class="btn o" onclick="clearSC()"><span class="en">Clear</span><span class="ta">அழி</span></button>
+<p class="note"><span class="en">This only counts how many of your own conditions line up. It is not a recommendation.</span><span class="ta">உங்க நிபந்தனைகள் எத்தனை பொருந்துதுன்னு மட்டும் எண்ணுது. இது பரிந்துரை இல்ல.</span></p>
+</section>
+
+<!-- ================= MANAGEMENT ================= -->
+<section class="tab" id="t-mg" data-en="Management &amp; Board" data-ta="நிர்வாகம் &amp; போர்டு">
+<h2><span class="en">Management &amp; Board</span><span class="ta">நிர்வாகம் &amp; போர்டு</span></h2>
+<h3>PC Jeweller</h3>
+<div class="card tw"><table>
+<tr><th class="t"><span class="en">Name</span><span class="ta">பெயர்</span></th><th class="t"><span class="en">Role</span><span class="ta">பதவி</span></th><th class="t"><span class="en">Note</span><span class="ta">குறிப்பு</span></th></tr>
+<tr><td>Balram Garg</td><td class="t">Managing Director, Promoter</td><td class="t"><span class="en">Co-founder (2005); converted all 9.72 cr warrants at ₹18, Sep 2026</span><span class="ta">இணை நிறுவனர் (2005); 9.72 கோடி வாரண்டை ₹18ல கன்வர்ட், செப் 2026</span></td></tr>
+<tr><td>Padam Chand Gupta</td><td class="t">Co-founder</td><td class="t"><span class="en">Founded the business with Balram Garg</span><span class="ta">பல்ராம் கார்க்குடன் நிறுவியவர்</span></td></tr>
+<tr><td>Vishan Deo</td><td class="t">CFO</td><td class="t">—</td></tr>
+<tr><td>Sannovanda Machaiah Swathi</td><td class="t">Audit Committee Chair</td><td class="t">—</td></tr>
+<tr><td>A H P N &amp; Associates</td><td class="t">Statutory Auditor</td><td class="t"><span class="en">Qualified opinion (repetitive) on export discounts &amp; ECL</span><span class="ta">எக்ஸ்போர்ட் டிஸ்கவுன்ட் & ECL மீது qualified opinion</span></td></tr>
+</table></div>
+<h3>Cupid</h3>
+<div class="card tw"><table>
+<tr><th class="t"><span class="en">Name</span><span class="ta">பெயர்</span></th><th class="t"><span class="en">Role</span><span class="ta">பதவி</span></th><th class="t"><span class="en">Note</span><span class="ta">குறிப்பு</span></th></tr>
+<tr><td>Aditya Kumar Halwasiya</td><td class="t">Chairman &amp; Managing Director</td><td class="t"><span class="en">Promoter, 34.23%; Universal-Halwasiya Group (Kolkata)</span><span class="ta">ப்ரமோட்டர், 34.23%; யுனிவர்சல்-ஹல்வாசியா குழுமம் (கொல்கத்தா)</span></td></tr>
+<tr><td>Ajay Kumar Halwasiya</td><td class="t">Executive Director</td><td class="t">—</td></tr>
+<tr><td>Durgesh Garg</td><td class="t">Chief Operating Officer</td><td class="t"><span class="en">Continuity from the founder era</span><span class="ta">நிறுவனர் காலத்து தொடர்ச்சி</span></td></tr>
+<tr><td>T V Rao · Rajni Mishra · R S Loona</td><td class="t">Independent Directors (from 2023)</td><td class="t">—</td></tr>
+<tr><td>Hardik Chandra</td><td class="t">Company Secretary (from 16 May 2026)</td><td class="t">—</td></tr>
+<tr><td>Chaturvedi Sohan &amp; Co.</td><td class="t">Statutory Auditor</td><td class="t"><span class="en">Unmodified opinion, FY26</span><span class="ta">FY26 — சுத்தமான கருத்து</span></td></tr>
+</table></div>
+</section>
+
+<!-- ================= SOCRATES ================= -->
+<section class="tab" id="t-soc" data-en="Cauvery Socrates" data-ta="காவேரி சாக்ரடீஸ்">
+<h2><span class="en">Cauvery Socrates — test your understanding</span><span class="ta">காவேரி சாக்ரடீஸ் — உங்க புரிதலை சோதிங்க</span></h2>
+<div id="quiz" class="qz"></div>
+<div class="card"><b><span class="en">Think aloud:</b> PC Jeweller is debt-free but its cash flow from operations was negative in FY26. What must happen for the debt-free status to stay that way while the company opens 100 new stores?</span><span class="ta">யோசிங்க:</b> பிசி ஜுவல்லர் கடன் இல்லாம இருக்கு, ஆனா FY26ல CFO நெகட்டிவ். 100 புது ஸ்டோர் திறக்கும்போதும் கடன் இல்லாம இருக்க என்ன நடக்கணும்?</span>
+<textarea id="socTxt" style="width:100%;min-height:80px;margin-top:8px;border:1px solid var(--line);border-radius:10px;padding:8px;font-family:inherit"></textarea>
+<button class="btn" onclick="socCheck()" style="margin-top:6px"><span class="en">Check my thinking</span><span class="ta">என் யோசனையை சரிபார்</span></button>
+<div id="socFb" class="note" style="margin-top:8px"></div></div>
+</section>
+
+</main>
+
+<div id="cb" onclick="toggleDisc()" title="CB Research">CB</div>
+<div id="disc"><b>CB Research</b><br><span class="en">Prepared by CB Research (Cauvery Business Research) for education only. Not a SEBI-registered research analyst; not investment advice or a recommendation to buy, sell or hold. Figures are from company filings and public disclosures as of 17 Oct 2026; derived and estimated values are marked. Verify independently before acting.</span><span class="ta">CB Research (காவேரி பிசினஸ் ரிசர்ச்) கல்விக்காக தயாரித்தது. SEBI பதிவு பெற்ற அனலிஸ்ட் இல்ல; இது முதலீட்டு ஆலோசனையோ வாங்கு/விக்கு பரிந்துரையோ இல்ல. 17 அக் 2026 வரையிலான கம்பெனி தாக்கல்கள், பொது தகவல்கள்; கணக்கிட்ட/மதிப்பிட்ட எண்கள் குறிக்கப்பட்டுள்ளன. செயல்படும் முன் சரிபார்க்கவும்.</span></div>
+<button id="asB" onclick="toggleAssist()">🎙 CB Assist</button>
+<div id="asP"><div class="hd"><span>CB Assist</span><button onclick="toggleAssist()" style="border:0;background:none;font-size:18px;cursor:pointer">✕</button></div>
+<div id="asLog"></div>
+<div class="chips" id="asChips"></div>
+<div class="ft"><button id="mic" onclick="micToggle()" title="Voice">🎙</button><input id="asIn" placeholder="Ask… / கேளுங்க…" onkeydown="if(event.key==='Enter')ask()"><button class="btn" onclick="ask()">➤</button></div></div>
+
+<script>
+var LANG='en';
+function L(en,ta){return LANG==='ta'?ta:en;}
+function fmt(n,d){if(n===null||n===undefined)return 'n/a';return Number(n).toLocaleString('en-IN',{minimumFractionDigits:d||0,maximumFractionDigits:d===undefined?2:d});}
+function lsGet(k){try{return localStorage.getItem(k);}catch(e){return null;}}
+function lsSet(k,v){try{localStorage.setItem(k,v);}catch(e){}}
+
+/* ---------- machine-readable data ---------- */
+var CO={
+ pcj:{name:'PC Jeweller Ltd',nse:'PCJEWELLER',bse:'534809',quarter:'Q1FY27',price:16.00,priceDate:'2026-10-16',shares_cr:980.78,mcap_cr:15692,
+  q1fy27:{rev:877.04,gp:260,ebitda:241.56,opPBT:223,opPAT:213,pat:221.88,eps:0.23},q1fy26:{rev:724.91,gp:144,ebitda:127.30,opPBT:81,opPAT:79,pat:161.93,eps:0.25},
+  fy26sa:{rev:3352.88,cogs:2601.81,ebitda:663.74,oi:197.29,fin:132.87,pbt:707.27,pat:710.62,inv:7024.06,recv:1689.36,pay:15.85,equity:8127.10,debt:1072.12,cfo:-77.54,cfi:3.42,cff:146.63},
+  wcDays:{inv:985,recv:184,pay:2,ccc:1167},debtNow:0,debtFreeDate:'2026-09-25',promoter:39.10,
+  cycle:{sectorPhase:'P3',stockStage:'Stage 2 (extended)',cy:68},
+  triggers:[{n:'Debt-free: interest cost to ~0',s:'+',I:3,C:1.0,W:1.0,P:0.7},{n:'Strategic investor entry (Halwasiya)',s:'+',I:2,C:1.0,W:1.0,P:0.7},{n:'Export receivable recovery / ECL write-back',s:'+',I:4,C:0.7,W:0.7,P:0.7},{n:'100-showroom expansion, QIP',s:'+',I:3,C:0.4,W:0.4,P:1.0},{n:'Repetitive audit qualification',s:'-',I:4,C:0.7,W:0.7,P:1.0},{n:'Gold price volatility on 985-day inventory',s:'-',I:2,C:0.7,W:1.0,P:1.0},{n:'Further equity dilution (QIP)',s:'-',I:2,C:0.7,W:0.7,P:1.0}],tg:54,cbScore:60},
+ cup:{name:'Cupid Ltd',nse:'CUPID',bse:'530843',quarter:'Q1FY27',price:357.90,priceDate:'2026-10-12',shares_cr:134.47,mcap_cr:48127,
+  q1fy27:{rev:154.72,ebitda:60.06,pat:44.15,eps:0.32},q1fy26:{rev:59.80,ebitda:16.45,pat:15.01},
+  fy26:{rev:357.71,cogs:148.14,ebitda:116.71,oi:33.69,pbt:142.47,pat:108.23,inv:70.04,recv:100.79,pay:30.53,equity:450.81,debt:50.98,cash:186.45,cfo:46.12,cfi:28.09,cff:35.30,capex:24.69},
+  wcDays:{inv:173,recv:103,pay:75,ccc:200},guidanceFY27:{rev:800,pat:250},promoter:47.18,halwasiya:34.23,
+  cycle:{sectorPhase:'P3 / Maturing',stockStage:'Stage 2 (extended)',cy:56},
+  triggers:[{n:'Palava plant commissioning (1.25 bn capacity)',s:'+',I:4,C:0.7,W:0.7,P:0.4},{n:'Style Baazar FMCG distribution',s:'+',I:3,C:0.7,W:0.7,P:0.4},{n:'Index inclusion (Smallcap 250, FTSE)',s:'+',I:1,C:1.0,W:1.0,P:0.4},{n:'FY27 guidance ₹800 cr / ₹250 cr',s:'+',I:5,C:0.4,W:1.0,P:0.2},{n:'Donor-funded tender concentration',s:'-',I:4,C:0.4,W:0.7,P:1.0},{n:'Related-interest web with Baazar Style',s:'-',I:2,C:0.7,W:1.0,P:1.0}],tg:44,cbScore:67},
+ bsr:{name:'Baazar Style Retail Ltd',nse:'STYLEBAAZA',quarter:'Q1FY27',q1fy27:{rev:486.38,ebitda:71.9,pat:2.23},q1fy26:{rev:377.47,pat:2.06},stores:276,halwasiya:5.91,cupidWarrantsPct:11.92}
+};
+
+/* ---------- nav & tabs ---------- */
+var chartsDone={};
+function buildNav(){var nav=document.getElementById('nav');nav.innerHTML='';document.querySelectorAll('section.tab').forEach(function(s){var b=document.createElement('button');b.innerHTML=LANG==='ta'?s.dataset.ta:s.dataset.en;b.dataset.id=s.id;if(s.classList.contains('on'))b.classList.add('on');b.onclick=function(){showTab(s.id);};nav.appendChild(b);});}
+function showTab(id){document.querySelectorAll('section.tab').forEach(function(s){s.classList.toggle('on',s.id===id);});document.querySelectorAll('#nav button').forEach(function(b){b.classList.toggle('on',b.dataset.id===id);if(b.dataset.id===id)b.scrollIntoView({inline:'center',block:'nearest'});});window.scrollTo(0,0);initCharts(id);}
+function toggleLang(){LANG=LANG==='en'?'ta':'en';document.body.classList.toggle('ta',LANG==='ta');document.getElementById('langBtn').textContent=LANG==='en'?'தமிழ்':'English';buildNav();renderDynamic();}
+
+/* ---------- timeline ---------- */
+var TL=[
+['2005','g','First showroom at Karol Bagh, New Delhi — founded by brothers Padam Chand Gupta and Balram Garg.','கரோல் பாக், டெல்லில முதல் ஷோரூம் — சகோதரர்கள் பதம் சந்த் குப்தா, பல்ராம் கார்க் தொடங்கினாங்க.'],
+['Dec 2012','g','IPO; listed on BSE and NSE.','IPO; BSE, NSEல லிஸ்ட் ஆச்சு.'],
+['2014–2017','g','Rapid growth to ~90 showrooms; Dubai-route export business scales up; stock rises from ~₹50 to ₹500+.','~90 ஷோரூம் வரை வேகமா வளர்ச்சி; துபாய் வழி எக்ஸ்போர்ட் பெருசாச்சு; பங்கு ~₹50ல இருந்து ₹500+.'],
+['17 Jan 2018','b','All-time high ₹586.75; market cap ₹23,138 crore.','உச்சம் ₹586.75; மார்க்கெட் கேப் ₹23,138 கோடி.'],
+['Feb–May 2018','r','Vakrangee buys 0.51% (25 Jan); probe fears trigger a crash; ₹424 crore buyback at ₹350 fails to stop the fall; stock ~₹95–130.','வக்ராங்கி 0.51% வாங்கியது; விசாரணை பயத்தில் சரிவு; ₹350ல ₹424 கோடி பைபேக் கூட நிறுத்தல; பங்கு ~₹95–130.'],
+['Mar 2019','r','One-time 25% discount (₹513.65 crore) to Dubai/Gulf export buyers; export receivables get stuck.','துபாய்/கல்ஃப் வாங்குபவர்களுக்கு 25% டிஸ்கவுன்ட் (₹513.65 கோடி); எக்ஸ்போர்ட் பாக்கி சிக்கியது.'],
+['2019–2020','r','CRISIL cuts rating from BB+/Negative to D after interest delays.','வட்டி தாமதத்தால CRISIL ரேட்டிங் BB+ல இருந்து D.'],
+['Jun 2021','r','SBI classifies the loan account as NPA. 14-bank consortium; SBI largest at ~₹1,060 crore.','SBI லோனை NPA ஆக்கியது. 14 வங்கி கூட்டமைப்பு; SBI பெரியது ~₹1,060 கோடி.'],
+['Oct 2022–Feb 2023','r','Default on ~₹3,400–3,466 crore; banks recall loans.','~₹3,400–3,466 கோடி டிஃபால்ட்; வங்கிகள் லோனை ரீகால் பண்ணின.'],
+['Jul 2023','r','SBI files Section 7 IBC petition at NCLT Delhi (₹1,180.20 crore claimed). Company denies default and counter-claims ₹10,034 crore. Petition never admitted.','SBI NCLT டெல்லில Section 7 பெட்டிஷன் (₹1,180.20 கோடி). கம்பெனி மறுத்து ₹10,034 கோடி கவுன்டர் க்ளெய்ம். அட்மிட் ஆகவே இல்ல.'],
+['FY24','r','Revenue collapses to ₹605 crore; loss ₹629 crore.','வருமானம் ₹605 கோடிக்கு சரிவு; நஷ்டம் ₹629 கோடி.'],
+['30 Apr 2024','g','NCLT dismisses SBI petition as withdrawn after settlement terms.','செட்டில்மென்ட் ஒப்பந்தத்தால NCLT SBI பெட்டிஷனை வித்ட்ரா ஆக டிஸ்மிஸ்.'],
+['Jul–Sep 2024','g','Individual banks sanction OTS (Canara, IOB, Bank of India and others).','ஒவ்வொரு வங்கியும் OTS அனுமதி (கனரா, IOB, பேங்க் ஆஃப் இந்தியா...).'],
+['30 Sep 2024','g','Settlement agreement with all 14 banks led by SBI (debt ~₹4,100 crore; settled ~₹3,000 crore in cash + equity). ~₹2,705 crore warrant issue launched; ₹10 shares split to ₹1.','SBI தலைமையில 14 வங்கிகளோட செட்டில்மென்ட் (கடன் ~₹4,100 கோடி; ~₹3,000 கோடிக்கு கேஷ் + பங்கு). ~₹2,705 கோடி வாரண்ட்; ₹10 பங்கு ₹1ஆ ஸ்ப்ளிட்.'],
+['FY25','g','Revenue ₹2,244.60 crore, PAT ₹577.70 crore; borrowings halved to ₹2,064 crore.','வருமானம் ₹2,244.60 கோடி, லாபம் ₹577.70 கோடி; கடன் பாதியா ₹2,064 கோடி.'],
+['FY26','g','Revenue ₹3,352.88 crore, PAT ₹714.46 crore; borrowings ₹1,072 crore.','வருமானம் ₹3,352.88 கோடி, லாபம் ₹714.46 கோடி; கடன் ₹1,072 கோடி.'],
+['Aug 2026','g','Q1 FY27: revenue ₹877 crore (+21%), EBITDA +90%, PAT ₹222 crore.','Q1 FY27: வருமானம் ₹877 கோடி (+21%), EBITDA +90%, லாபம் ₹222 கோடி.'],
+['Jul–Sep 2026','g','Banks cleared one by one: 3 → 8 → 9 → 10 → 11 → 12 → 14.','வங்கிகள் ஒண்ணொண்ணா: 3 → 8 → 9 → 10 → 11 → 12 → 14.'],
+['25 Sep 2026','b','DEBT-FREE — all 14 banks repaid ahead of schedule.','கடன் இல்லை — 14 வங்கிக்கும் முன்கூட்டியே பணம் கட்டி முடிச்சாங்க.'],
+['7 Oct 2026','b','Q2 FY27 update: revenue ~+28%; ~₹142 crore received from export debtors.','Q2 FY27: வருமானம் ~+28%; எக்ஸ்போர்ட் பாக்கில ~₹142 கோடி வசூல்.'],
+['15–16 Oct 2026','b','Aditya Kumar Halwasiya (Cupid CMD) buys 5.10 crore shares (0.52%) for ₹73.59 crore; stock closes ~₹16.','ஆதித்யா குமார் ஹல்வாசியா (க்யூபிட் CMD) 5.10 கோடி பங்கு (0.52%) ₹73.59 கோடிக்கு; பங்கு ~₹16.']
+];
+function renderTL(){var h='';TL.forEach(function(e){h+='<div class="ev '+e[1]+'"><div class="dt">'+e[0]+'</div>'+L(e[2],e[3])+'</div>';});document.getElementById('timeline').innerHTML=h;}
+
+/* ---------- charts ---------- */
+if(typeof Chart!=='undefined'){Chart.defaults.font.family='Inter, "Noto Sans Tamil", sans-serif';Chart.defaults.color='#5b6476';}
+var valPlug={id:'val',afterDatasetsDraw:function(c){var ctx=c.ctx;c.data.datasets.forEach(function(ds,i){if(ds.noLabel)return;var m=c.getDatasetMeta(i);if(m.hidden)return;m.data.forEach(function(el,j){var v=ds.data[j];if(v===null||v===undefined)return;ctx.save();ctx.font='600 11px Inter';ctx.fillStyle='#1b2333';ctx.textAlign='center';var y=el.y+(v<0?14:-6);ctx.fillText(fmt(v),el.x,y);ctx.restore();});});}};
+function mk(id,cfg){var el=document.getElementById(id);if(!el||typeof Chart==='undefined')return;cfg.plugins=(cfg.plugins||[]).concat([valPlug]);cfg.options=cfg.options||{};cfg.options.maintainAspectRatio=false;cfg.options.responsive=true;return new Chart(el,cfg);}
+function yTick(){return {ticks:{callback:function(v){return fmt(v,0);}}};}
+function initCharts(id){if(chartsDone[id])return;chartsDone[id]=1;
+ if(id==='t-hist'){
+  mk('chDebt',{type:'bar',data:{labels:['Mar-24','Mar-25','Mar-26','25 Sep-26'],datasets:[{label:'Borrowings ₹ cr',data:[4086.85,2064.42,1072.12,0],backgroundColor:['#dc2626','#f97316','#d97706','#16a34a']}]},options:{plugins:{legend:{display:false}},scales:{y:yTick()}}});
+  mk('chBanks',{type:'line',data:{labels:['30 Sep 24','9 Jul 26','15 Jul','18 Aug','3 Sep','8 Sep','10 Sep','22 Sep','25 Sep'],datasets:[{label:'Banks fully repaid',data:[0,3,4,8,9,10,11,12,14],stepped:true,borderColor:'#16a34a',backgroundColor:'rgba(22,163,74,.12)',fill:true}]},options:{plugins:{legend:{display:false}},scales:{y:{min:0,max:15}}}});
+  mk('chShares',{type:'bar',data:{labels:['Mar-24','Mar-25','Mar-26','Sep-26'],datasets:[{label:'Shares outstanding (crore, ₹1 FV)',data:[465.40,635.53,864.86,980.78],backgroundColor:'#7c3aed'}]},options:{plugins:{title:{display:true,text:'Shares outstanding (crore, ₹1 FV equivalent)'},legend:{display:false}},scales:{y:yTick()}}});
+  setTimeout(function(){document.getElementById('bankBar').style.width='100%';},200);
+ }
+ if(id==='t-fin'){
+  mk('chPQ',{type:'bar',data:{labels:['Q1 FY26','Q2 FY26','Q3 FY26','Q4 FY26','Q1 FY27'],datasets:[{label:'Revenue',data:[724.91,825.25,875.38,927.34,877.04],backgroundColor:'#f97316'},{label:'PAT',data:[161.93,209.54,190.10,152.89,221.88],backgroundColor:'#16a34a'}]},options:{scales:{y:yTick()}}});
+  mk('chPE',{type:'bar',data:{labels:['Q1 FY26','Q4 FY26','Q1 FY27'],datasets:[{label:'EBITDA ₹ cr (ex other income)',data:[127.30,164.52,241.56],backgroundColor:['#94a3b8','#d97706','#16a34a']}]},options:{plugins:{legend:{display:false}},scales:{y:yTick()}}});
+  mk('chPA',{type:'bar',data:{labels:['FY24','FY25','FY26'],datasets:[{label:'Revenue',data:[605.40,2244.60,3352.88],backgroundColor:'#f97316'},{label:'EBITDA',data:[-106.83,517,861],backgroundColor:'#2563eb'},{label:'PAT',data:[-629.36,577.70,714.46],backgroundColor:'#16a34a'}]},options:{scales:{y:yTick()}}});
+ }
+ if(id==='t-cf'){
+  mk('chWC',{type:'bar',data:{labels:['Inventory days','Receivable days','Payable days','Cash conversion cycle'],datasets:[{label:'PC Jeweller',data:[985,184,2,1167],backgroundColor:'#b7791f'},{label:'Cupid',data:[173,103,75,200],backgroundColor:'#7c3aed'}]},options:{scales:{y:yTick()}}});
+ }
+ if(id==='t-val'){
+  mk('chSH',{type:'doughnut',data:{labels:['Promoters 39.10%','Unico 5.61%','Ebisu 5.20%','Other public 50.09%'],datasets:[{data:[39.10,5.61,5.20,50.09],backgroundColor:['#f97316','#2563eb','#0d9488','#cbd5e1'],noLabel:true}]},options:{plugins:{legend:{position:'right'}}}});
+ }
+ if(id==='t-cup'){
+  mk('chCQ',{type:'bar',data:{labels:['Q1 FY26','Q2 FY26','Q3 FY26','Q4 FY26','Q1 FY27'],datasets:[{label:'Revenue',data:[59.80,84.44,93.50,119.96,154.72],backgroundColor:'#7c3aed'},{label:'EBITDA',data:[16.45,null,null,46.30,60.06],backgroundColor:'#2563eb'},{label:'PAT',data:[15.01,24.12,32.83,36.26,44.15],backgroundColor:'#16a34a'}]},options:{scales:{y:yTick()}}});
+ }
+}
+
+/* ---------- business model SVGs ---------- */
+var NS='http://www.w3.org/2000/svg';
+function el(t,a,p){var e=document.createElementNS(NS,t);for(var k in a)e.setAttribute(k,a[k]);if(p)p.appendChild(e);return e;}
+function txt(p,x,y,s,o){o=o||{};var t=el('text',{x:x,y:y,'font-size':o.fs||11,'text-anchor':o.anchor||'middle','font-weight':o.fw||400,fill:o.fill||'#1b2333'},p);t.textContent=s;return t;}
+var BM={
+ pcj:{svg:'bmPCJ',out:'bmPCJx',nodes:[
+  {id:'c',x:20,y:8,w:320,h:46,fill:'#eff6ff',st:'#2563eb',t:['Customers','வாடிக்கையாளர்கள்'],s:['Bridal, festive & daily-wear buyers, mostly North India','திருமணம், பண்டிகை, தினசரி — பெரும்பாலும் வட இந்தியா'],x2:['Families buying gold and diamond jewellery for weddings and festivals; trust in hallmarking and buy-back matters more than brand ads.','திருமணம், பண்டிகைக்கு தங்கம், வைர நகை வாங்கும் குடும்பங்கள்; விளம்பரத்தை விட ஹால்மார்க், திரும்ப வாங்கும் நம்பிக்கை முக்கியம்.']},
+  {id:'ch',x:20,y:78,w:320,h:46,fill:'#f0fdfa',st:'#0d9488',t:['Channels','விற்பனை வழிகள்'],s:['~50 showrooms (mostly company-owned) + franchise + online','~50 ஷோரூம் (பெரும்பாலும் சொந்தம்) + ஃப்ரான்சைஸ் + ஆன்லைன்'],x2:['Large-format company-owned showrooms carry the inventory on PC Jeweller\'s balance sheet — the reason inventory is so high. 100 new showrooms are targeted after debt-free status.','பெரிய சொந்த ஷோரூம்கள் — இன்வென்டரி கம்பெனி கணக்குல; அதனால தான் இன்வென்டரி அதிகம். கடன் முடிஞ்ச பிறகு 100 புது ஷோரூம் இலக்கு.']},
+  {id:'co',x:70,y:150,w:220,h:56,fill:'#f97316',st:'#c2410c',t:['PC JEWELLER','பிசி ஜுவல்லர்'],s:['Design · manufacture · retail','டிசைன் · உற்பத்தி · விற்பனை'],tc:'#fff',x2:['Vertically integrated: in-house designers and manufacturing units feed its own showrooms. Single reported segment: Jewellery. Debt-free since 25 Sep 2026.','டிசைன், உற்பத்தி, விற்பனை எல்லாம் உள்ளுக்குள்ள. ஒரே செக்மென்ட்: ஜுவல்லரி. 25 செப் 2026 முதல் கடன் இல்லை.']},
+  {id:'s1',x:8,y:232,w:168,h:62,fill:'#fef3c7',st:'#b7791f',t:['Gold jewellery','தங்க நகை'],s:['Core of sales','விற்பனையின் மையம்'],x2:['The bulk of sales. Price = gold weight × rate + making charges. Split versus diamond is not disclosed.','பெரும்பாலான விற்பனை. விலை = எடை × தங்க விலை + செய்கூலி. வைரத்துடன் பிரிப்பு வெளியிடல.']},
+  {id:'s2',x:184,y:232,w:168,h:62,fill:'#e0e7ff',st:'#4f46e5',t:['Diamond-studded','வைர நகை'],s:['Higher margin','அதிக மார்ஜின்'],x2:['Diamond pieces carry higher making margins and lift average ticket size; share not disclosed.','வைர நகைல மார்ஜின் அதிகம், சராசரி பில் ஏறும்; பங்கு வெளியிடல.']},
+  {id:'s3',x:8,y:304,w:168,h:62,fill:'#f1f5f9',st:'#64748b',t:['Silver, platinum, others','வெள்ளி, பிளாட்டினம்'],s:['Small add-on','சின்ன பகுதி'],x2:['Smaller categories that widen the price ladder for younger and gifting buyers.','இளைஞர்கள், பரிசுக்காக — விலை வரம்பை விரிவாக்கும் சின்ன பிரிவு.']},
+  {id:'s4',x:184,y:304,w:168,h:62,fill:'#fee2e2',st:'#dc2626',t:['Exports (Dubai)','எக்ஸ்போர்ட் (துபாய்)'],s:['₹1,689 cr receivables · ₹142 cr in','₹1,689 கோடி பாக்கி · ₹142 கோடி வசூல்'],x2:['No fresh export sales now. Legacy Gulf receivables (₹1,689.36 crore gross trade receivables at Mar-26, ECL ₹281.40 crore). ₹142 crore received in Q2 FY27.','இப்போ புது எக்ஸ்போர்ட் இல்ல. பழைய கல்ஃப் பாக்கி (மார்-26ல ₹1,689.36 கோடி, ECL ₹281.40 கோடி). Q2 FY27ல ₹142 கோடி வந்தது.']},
+  {id:'r',x:40,y:392,w:280,h:46,fill:'#dcfce7',st:'#16a34a',t:['Revenue ₹877.04 cr (Q1 FY27)','வருமானம் ₹877.04 கோடி (Q1 FY27)'],s:['+21% YoY · FY26 ₹3,352.88 cr','+21% · FY26 ₹3,352.88 கோடி'],x2:['Q1 FY27 consolidated revenue; Q2 FY27 grew about 28% per the business update.','Q1 FY27 கன்சாலிடேட்டட் வருமானம்; Q2ல சுமார் 28% வளர்ச்சி.']},
+  {id:'k',x:40,y:462,w:280,h:46,fill:'#fff7ed',st:'#ea580c',t:['Costs','செலவுகள்'],s:['Gold & making 70% · staff, rent, other ~2–3%','தங்கம் & செய்கூலி 70% · ஊழியர், வாடகை ~2–3%'],x2:['Q1 FY27 cost of goods ≈ ₹617 cr (70.4% of sales). Very low payables: suppliers are paid almost immediately. Interest is now ~zero.','Q1 FY27 பொருள் செலவு ≈ ₹617 கோடி (70.4%). சப்ளையருக்கு உடனே பணம். வட்டி இப்போ கிட்டத்தட்ட பூஜ்யம்.']},
+  {id:'p',x:40,y:532,w:280,h:56,fill:'#1b2333',st:'#1b2333',tc:'#fff',t:['Profit ₹221.88 cr → shareholders','லாபம் ₹221.88 கோடி → பங்குதாரர்கள்'],s:['EBITDA ₹241.56 cr · no dividend yet','EBITDA ₹241.56 கோடி · டிவிடெண்ட் இன்னும் இல்ல'],x2:['Profit is retained — mostly as more gold stock. Cash reaches shareholders only when inventory and receivables turn into cash.','லாபம் உள்ளேயே — பெரும்பாலும் தங்க ஸ்டாக்கா. இன்வென்டரி, பாக்கி கேஷா மாறினா தான் பங்குதாரருக்கு கேஷ்.']}
+ ],edges:[['c','ch'],['ch','co'],['co','s1'],['co','s2'],['co','s3'],['co','s4'],['s3','r'],['s4','r'],['r','k'],['k','p']]},
+ cup:{svg:'bmCUP',out:'bmCUPx',nodes:[
+  {id:'c',x:20,y:8,w:320,h:46,fill:'#eff6ff',st:'#2563eb',t:['Customers','வாடிக்கையாளர்கள்'],s:['WHO/UNFPA/PFSCM, governments, 125+ countries, Indian consumers','WHO/UNFPA/PFSCM, அரசுகள், 125+ நாடுகள், இந்திய நுகர்வோர்'],x2:['Institutional buyers fund family-planning programmes; domestic shoppers buy branded condoms and personal-care FMCG.','குடும்பநல திட்டங்களுக்கு நிறுவனங்கள் வாங்குது; உள்நாட்டு நுகர்வோர் பிராண்ட் காண்டம், FMCG வாங்குறாங்க.']},
+  {id:'ch',x:20,y:78,w:320,h:46,fill:'#f0fdfa',st:'#0d9488',t:['Channels','விற்பனை வழிகள்'],s:['Global tenders & export distributors · Indian retail, e-com, Style Baazar','உலக டெண்டர் & எக்ஸ்போர்ட் · இந்திய ரீடெய்ல், ஈ-காமர்ஸ், ஸ்டைல் பஜார்'],x2:['Tenders give large lumpy orders; Style Baazar\'s 276 stores give instant domestic shelf space (~₹150 crore FY27 target).','டெண்டர் பெரிய, சீரற்ற ஆர்டர்; ஸ்டைல் பஜார் 276 கடைகள் உடனடி இடம் (FY27ல ~₹150 கோடி இலக்கு).']},
+  {id:'co',x:70,y:150,w:220,h:56,fill:'#7c3aed',st:'#5b21b6',tc:'#fff',t:['CUPID LTD','க்யூபிட்'],s:['Nashik plant · Palava expansion','நாசிக் ஆலை · பலாவா விரிவாக்கம்'],x2:['First company globally with WHO/UNFPA pre-qualification for both male and female condoms. Palava facility lifts capacity to ~1.25 bn male and ~125 mn female condoms.','ஆண், பெண் காண்டம் ரெண்டுக்கும் WHO/UNFPA ப்ரீ-குவாலிஃபிகேஷன் பெற்ற உலகின் முதல் கம்பெனி. பலாவா ஆலையால ~1.25 பில்லியன் ஆண், ~125 மில்லியன் பெண் காண்டம் திறன்.']},
+  {id:'s1',x:8,y:232,w:168,h:62,fill:'#ede9fe',st:'#7c3aed',t:['Male condoms','ஆண் காண்டம்'],s:['₹181.11 cr · 50.6%','₹181.11 கோடி · 50.6%'],x2:['Largest line in FY26; 10% export price increase lifted Q1 FY27 margins.','FY26ல பெரிய பிரிவு; 10% எக்ஸ்போர்ட் விலை ஏற்றத்தால Q1 FY27 மார்ஜின் உயர்வு.']},
+  {id:'s2',x:184,y:232,w:168,h:62,fill:'#fce7f3',st:'#db2777',t:['Female condoms','பெண் காண்டம்'],s:['₹60.72 cr · 17.0%','₹60.72 கோடி · 17.0%'],x2:['Niche with very few qualified global makers — a pricing moat. Nitrile version in development.','உலகளவுல மிகச் சில தயாரிப்பாளர்கள் — விலை பாதுகாப்பு. நைட்ரைல் வகை வளர்ச்சியில.']},
+  {id:'s3',x:8,y:304,w:168,h:62,fill:'#ecfccb',st:'#65a30d',t:['FMCG / personal care','FMCG / பர்சனல் கேர்'],s:['₹84.26 cr · 23.6%','₹84.26 கோடி · 23.6%'],x2:['Domestic consumer brand push — the main new growth engine alongside Style Baazar shelves.','உள்நாட்டு பிராண்ட் விரிவாக்கம் — ஸ்டைல் பஜாருடன் முக்கிய புது வளர்ச்சி இன்ஜின்.']},
+  {id:'s4',x:184,y:304,w:168,h:62,fill:'#f1f5f9',st:'#64748b',t:['IVD kits & lubricants','IVD கிட் & லூப்'],s:['~₹31.62 cr (derived)','~₹31.62 கோடி (கணக்கிட்டது)'],x2:['Diagnostic kits; sizeable state-government orders expected in FY27.','பரிசோதனை கிட்கள்; FY27ல மாநில அரசு ஆர்டர்கள் எதிர்பார்ப்பு.']},
+  {id:'r',x:40,y:392,w:280,h:46,fill:'#dcfce7',st:'#16a34a',t:['Revenue ₹154.72 cr (Q1 FY27)','வருமானம் ₹154.72 கோடி (Q1 FY27)'],s:['+159% · exports 59.3% (FY26)','+159% · எக்ஸ்போர்ட் 59.3% (FY26)'],x2:['Q2 FY27 revenue guided above ₹200 crore; FY27 ₹800+ crore.','Q2 FY27 ₹200 கோடிக்கு மேல்; FY27 ₹800+ கோடி வழிகாட்டல்.']},
+  {id:'k',x:40,y:462,w:280,h:46,fill:'#fff7ed',st:'#ea580c',t:['Costs','செலவுகள்'],s:['Materials 41% · staff 9% · other 17% (FY26)','பொருள் 41% · ஊழியர் 9% · இதர 17% (FY26)'],x2:['Latex and materials are the main cost; gross margin 58.6% in FY26 — far richer than jewellery.','லேடெக்ஸ், பொருட்கள் முக்கிய செலவு; FY26 கிராஸ் மார்ஜின் 58.6% — நகையை விட பல மடங்கு.']},
+  {id:'p',x:40,y:532,w:280,h:56,fill:'#1b2333',st:'#1b2333',tc:'#fff',t:['Profit ₹44.15 cr → shareholders','லாபம் ₹44.15 கோடி → பங்குதாரர்கள்'],s:['EBITDA ₹60.06 cr · 38.8% margin','EBITDA ₹60.06 கோடி · 38.8%'],x2:['Profit funds Palava capex, Style Baazar warrants and the GII investment; no dividend.','லாபம் பலாவா கேபெக்ஸ், ஸ்டைல் பஜார் வாரண்ட், GII முதலீட்டுக்கு; டிவிடெண்ட் இல்ல.']}
+ ],edges:[['c','ch'],['ch','co'],['co','s1'],['co','s2'],['co','s3'],['co','s4'],['s3','r'],['s4','r'],['r','k'],['k','p']]}
+};
+function drawBM(k){var cfg=BM[k],svg=document.getElementById(cfg.svg);svg.innerHTML='';
+ var d=el('defs',{},svg),m=el('marker',{id:'am'+k,markerWidth:8,markerHeight:8,refX:7,refY:4,orient:'auto'},d);el('path',{d:'M0,0 L8,4 L0,8 z',fill:'#94a3b8'},m);
+ var map={};cfg.nodes.forEach(function(n){map[n.id]=n;});
+ cfg.edges.forEach(function(e){var a=map[e[0]],b=map[e[1]];if(e[1]==='r'&&(e[0]==='s3'||e[0]==='s4')){el('line',{x1:a.x+a.w/2,y1:a.y+a.h,x2:b.x+b.w/2,y2:b.y,stroke:'#94a3b8','stroke-width':1.5,'marker-end':'url(#am'+k+')'},svg);return;}
+  el('line',{x1:a.x+a.w/2,y1:a.y+a.h,x2:b.x+b.w/2,y2:b.y,stroke:'#94a3b8','stroke-width':1.5,'marker-end':'url(#am'+k+')'},svg);});
+ cfg.nodes.forEach(function(n){var g=el('g',{class:'bm-box'},svg);var r=el('rect',{x:n.x,y:n.y,width:n.w,height:n.h,rx:10,fill:n.fill,stroke:n.st,'stroke-width':1.3},g);
+  txt(g,n.x+n.w/2,n.y+(n.h>50?24:19),L(n.t[0],n.t[1]),{fw:800,fs:12.5,fill:n.tc||'#1b2333'});txt(g,n.x+n.w/2,n.y+(n.h>50?42:36),L(n.s[0],n.s[1]),{fs:10,fill:n.tc?'#e2e8f0':'#475569'});
+  g.addEventListener('click',function(){svg.querySelectorAll('rect').forEach(function(x){x.classList.remove('bm-sel');});r.classList.add('bm-sel');document.getElementById(cfg.out).innerHTML='<b>'+L(n.t[0],n.t[1])+'</b><br>'+L(n.x2[0],n.x2[1]);});});
+}
+
+/* ---------- gold driver map ---------- */
+var GN=[
+ {id:'rr',c:0,y:20,t:['US real interest rates','US ரியல் வட்டி'],v:['Opportunity cost of gold','தங்கத்தின் வாய்ப்பு செலவு'],x:['Gold pays no interest. When inflation-adjusted US yields fall, holding gold costs less, so prices tend to rise — and the reverse.','தங்கம் வட்டி தராது. US ரியல் வட்டி குறைஞ்சா தங்கம் வைச்சுக்க செலவு குறைவு, விலை ஏறும் — எதிரா உல்டா.']},
+ {id:'dx',c:0,y:95,t:['US dollar strength','US டாலர் வலிமை'],v:['Gold is priced in USD','தங்கம் டாலர்ல விலை'],x:['A stronger dollar makes gold dearer for non-US buyers, usually pulling the dollar price down.','டாலர் வலுவானா மற்ற நாட்டு வாங்குபவருக்கு விலை அதிகம்; பொதுவா டாலர் விலை குறையும்.']},
+ {id:'cb',c:0,y:170,t:['Central-bank buying','மத்திய வங்கி வாங்குதல்'],v:['Reserve diversification','கையிருப்பு பன்முகம்'],x:['Central banks adding gold to reserves is steady, price-insensitive demand that supports the price.','மத்திய வங்கிகள் கையிருப்புக்கு தங்கம் வாங்குவது நிலையான தேவை — விலைக்கு ஆதரவு.']},
+ {id:'etf',c:0,y:245,t:['ETF & investor flows','ETF & முதலீட்டு ஓட்டம்'],v:['Financial demand','நிதி தேவை'],x:['Inflows into gold ETFs and bars add demand; outflows can drive sharp corrections.','கோல்ட் ETF-க்குள்ள பணம் வந்தா தேவை ஏறும்; வெளியே போனா கூர்மையான சரிவு.']},
+ {id:'geo',c:0,y:320,t:['Geopolitical risk','புவிசார் அரசியல் அபாயம்'],v:['Safe-haven buying','பாதுகாப்பு முதலீடு'],x:['Wars, sanctions and financial stress push investors toward gold as a safe haven.','போர், தடைகள், நிதி நெருக்கடி — பாதுகாப்புக்காக தங்கம் வாங்குவாங்க.']},
+ {id:'inr',c:0,y:395,t:['Rupee weakness','ரூபாய் வீழ்ச்சி'],v:['USD/INR ↑ = costlier import','USD/INR ↑ = இறக்குமதி செலவு ↑'],x:['India imports almost all its gold. A weaker rupee raises the ₹ price even if the dollar price is flat.','இந்தியா பெரும்பாலும் தங்கம் இறக்குமதி. ரூபாய் வீழ்ந்தா டாலர் விலை மாறாமலே ₹ விலை ஏறும்.']},
+ {id:'duty',c:0,y:470,t:['Import duty & GST','இறக்குமதி வரி & GST'],v:['Policy layer','கொள்கை அடுக்கு'],x:['Customs duty and GST sit on top of the landed price; a duty cut lowers the domestic price overnight and revalues inventory.','இறக்குமதி வரி, GST விலைக்கு மேல சேரும்; வரி குறைஞ்சா உடனே உள்நாட்டு விலை இறங்கும், இன்வென்டரி மதிப்பும் குறையும்.']},
+ {id:'gg',c:1,y:170,t:['Global gold ($/oz)','உலக தங்கம் ($/oz)'],v:['International benchmark','சர்வதேச அளவுகோல்'],x:['The dollar price set by global supply, investor and central-bank demand.','உலக சப்ளை, முதலீட்டாளர், மத்திய வங்கி தேவையால வர்ற டாலர் விலை.']},
+ {id:'ig',c:1,y:320,t:['Indian gold (₹/10g)','இந்திய தங்கம் (₹/10g)'],v:['What the customer pays','வாடிக்கையாளர் கொடுப்பது'],x:['= global price × USD/INR + duty + GST. This is the number that hits PC Jeweller\'s showroom and its stock value.','= உலக விலை × USD/INR + வரி + GST. இது தான் ஷோரூம் விலையும் ஸ்டாக் மதிப்பும்.']},
+ {id:'wed',c:2,y:95,t:['Wedding & festive season','திருமண & பண்டிகை காலம்'],v:['Need-based demand','தேவை அடிப்படை'],x:['Weddings, Akshaya Tritiya, Dhanteras and Diwali drive purchases that are only partly price-sensitive.','திருமணம், அட்சய திருதியை, தந்தேராஸ், தீபாவளி — விலைக்கு அவ்வளவா பார்க்காத வாங்குதல்.']},
+ {id:'gr',c:2,y:245,t:['Grams sold (volume)','விற்ற கிராம் (அளவு)'],v:['Falls when gold spikes','விலை ஏறினா குறையும்'],x:['High prices make buyers cut weight — lighter pieces, exchange of old gold.','விலை அதிகமானா எடையை குறைப்பாங்க — லைட் நகை, பழைய தங்க மாற்று.']},
+ {id:'tk',c:2,y:395,t:['Ticket size (₹ per bill)','பில் தொகை (₹)'],v:['Rises with gold price','விலையோட ஏறும்'],x:['Even with fewer grams, each bill is larger in rupees when gold is dearer.','கிராம் குறைஞ்சாலும் விலை ஏறினா ஒவ்வொரு பில்லும் பெருசு.']},
+ {id:'inv',c:3,y:20,t:['Inventory value','இன்வென்டரி மதிப்பு'],v:['₹7,024 cr · 985 days','₹7,024 கோடி · 985 நாள்'],x:['PC Jeweller holds about 2.7 years of cost of goods in stock. Every 10% gold move changes its value by up to ~₹702 crore.','சுமார் 2.7 வருஷ பொருள் செலவு ஸ்டாக்ல. தங்கம் 10% நகர்ந்தா மதிப்பு ~₹702 கோடி வரை மாறும்.']},
+ {id:'gm',c:3,y:95,t:['Gross margin','கிராஸ் மார்ஜின்'],v:['29.6% Q1 FY27 (19.9%)','29.6% Q1 FY27 (19.9%)'],x:['Old, cheaper stock sold at today\'s higher price inflates margin — a big part of the Q1 FY27 jump.','பழைய மலிவான ஸ்டாக்கை இன்றைய அதிக விலைல வித்தா மார்ஜின் உப்பும் — Q1 FY27 ஏற்றத்தின் பெரும்பகுதி.']},
+ {id:'rev',c:3,y:170,t:['Revenue','வருமானம்'],v:['₹877.04 cr Q1 FY27','₹877.04 கோடி Q1 FY27'],x:['Revenue = grams × price. A gold rally usually lifts rupee revenue even if grams dip.','வருமானம் = கிராம் × விலை. தங்கம் ஏறினா கிராம் குறைஞ்சாலும் ₹ வருமானம் ஏறும்.']},
+ {id:'wc',c:3,y:245,t:['Working capital need','வொர்க்கிங் கேபிடல்'],v:['CCC 1,167 days','CCC 1,167 நாள்'],x:['Replacing sold stock at a higher gold price needs more cash; growth plus rising gold means more money locked in inventory.','அதிக விலைல ஸ்டாக்கை மறுபடி வாங்க அதிக கேஷ் வேணும்; வளர்ச்சி + விலை ஏற்றம் = அதிக பணம் முடக்கம்.']},
+ {id:'cfo',c:3,y:320,t:['Operating cash flow','ஆபரேஷன் கேஷ்'],v:['−₹77.54 cr FY26','−₹77.54 கோடி FY26'],x:['Profit minus extra working capital. With no bank lines, this now decides whether expansion needs fresh equity.','லாபம் கழிச்சு கூடுதல் WC. வங்கி லைன் இல்லாததால, விரிவாக்கத்துக்கு புது ஈக்விட்டி வேணுமான்னு இது தான் தீர்மானிக்கும்.']},
+ {id:'pf',c:3,y:395,t:['Profit','லாபம்'],v:['₹221.88 cr Q1 FY27','₹221.88 கோடி Q1 FY27'],x:['Driven by revenue and margin; inventory gains make profit swing with gold.','வருமானம், மார்ஜினால; இன்வென்டரி லாபத்தால தங்கத்தோட சேர்ந்து லாபம் ஆடும்.']},
+ {id:'ss',c:3,y:470,t:['Share-price sentiment','பங்கு விலை மனநிலை'],v:['₹16.00 (16 Oct)','₹16.00 (16 அக்)'],x:['The market rewards profit growth but will punish if margins prove to be inventory gains that reverse.','லாப வளர்ச்சிக்கு மார்க்கெட் பரிசு தரும்; ஆனா மார்ஜின் தற்காலிக இன்வென்டரி லாபம்னு தெரிஞ்சா தண்டிக்கும்.']}
+];
+var GE=[['rr','gg',-1],['dx','gg',-1],['cb','gg',1],['etf','gg',1],['geo','gg',1],['gg','ig',1],['inr','ig',1],['duty','ig',1],['ig','gr',-1],['ig','tk',1],['wed','gr',1],['gr','rev',1],['tk','rev',1],['ig','inv',1],['inv','gm',1],['gm','pf',1],['rev','pf',1],['rev','wc',1],['ig','wc',1],['wc','cfo',-1],['pf','cfo',1],['pf','ss',1],['cfo','ss',1]];
+var GX=[10,205,385,565],GW=[160,150,150,175],GH=56;
+var GS=[
+ {k:'up',t:['Gold rallies 10%','தங்கம் 10% ஏற்றம்'],eff:{gg:1,ig:1,inv:1,gm:1,tk:1,gr:-1,rev:1,wc:1,cfo:-1,pf:1,ss:1},c:['Inventory gains up to ~₹702 cr flow into margin as old stock is sold; rupee revenue rises even if grams dip. But replacing stock costs more, so operating cash flow (already −₹77.54 cr in FY26) is squeezed — the classic PC Jeweller pattern: profit up, cash tight.','~₹702 கோடி வரை இன்வென்டரி லாபம் — பழைய ஸ்டாக் விக்கும்போது மார்ஜினுக்கு வரும்; கிராம் குறைஞ்சாலும் ₹ வருமானம் ஏறும். ஆனா மறுபடி ஸ்டாக் வாங்க அதிக செலவு; FY26லயே −₹77.54 கோடியா இருந்த CFO இன்னும் அழுத்தம் — லாபம் ஏறும், கேஷ் இறுக்கம்.']},
+ {k:'dn',t:['Gold falls 10%','தங்கம் 10% சரிவு'],eff:{gg:-1,ig:-1,inv:-1,gm:-1,tk:-1,gr:1,rev:-1,wc:-1,cfo:1,pf:-1,ss:-1},c:['The ~29.6% gross margin would compress as high-cost stock meets lower selling prices — up to ~₹702 cr of value at risk. Cash improves because less money is needed to restock. Hedging policy is not disclosed, so this is the key risk to watch.','அதிக விலை ஸ்டாக் குறைஞ்ச விலைல விக்கணும் — ~29.6% மார்ஜின் சுருங்கும்; ~₹702 கோடி மதிப்பு அபாயம். ஸ்டாக் வாங்க குறைஞ்ச பணம் போதும்னு கேஷ் மேம்படும். ஹெட்ஜிங் வெளியிடல — இது தான் முக்கிய அபாயம்.']},
+ {k:'inr',t:['Rupee weakens','ரூபாய் வீழ்ச்சி'],eff:{inr:1,ig:1,inv:1,gm:1,tk:1,gr:-1,rev:1,wc:1,cfo:-1,pf:1,ss:1},c:['Same chain as a gold rally but only in rupees. Also raises the rupee value of the remaining dollar export receivables (part of ₹1,689 cr).','தங்க ஏற்றம் மாதிரியே, ஆனா ரூபாயில மட்டும். மீதமுள்ள டாலர் எக்ஸ்போர்ட் பாக்கியின் (₹1,689 கோடியின் பகுதி) ₹ மதிப்பும் ஏறும்.']},
+ {k:'duty',t:['Import duty cut','இறக்குமதி வரி குறைப்பு'],eff:{duty:-1,ig:-1,inv:-1,gm:-1,tk:-1,gr:1,rev:-1,wc:-1,cfo:1,pf:-1,ss:-1},c:['An overnight drop in the domestic price revalues the ₹7,024 cr stock downward; volumes may rise as jewellery gets cheaper, but the near-term margin hit is large for a 985-day-inventory jeweller.','உள்நாட்டு விலை உடனே இறங்கும்; ₹7,024 கோடி ஸ்டாக் மதிப்பு குறையும்; நகை மலிவானா விற்பனை அளவு ஏறலாம், ஆனா 985 நாள் இன்வென்டரி உள்ள கம்பெனிக்கு குறுகிய கால மார்ஜின் அடி பெருசு.']},
+ {k:'wed',t:['Strong wedding season','நல்ல திருமண சீசன்'],eff:{wed:1,gr:1,rev:1,pf:1,cfo:1,ss:1},c:['Volume-led growth: grams sold rise, stock converts to cash, and operating cash flow improves — the healthiest kind of growth for PC Jeweller. Q2 FY27 sales were up ~28%.','அளவு அடிப்படை வளர்ச்சி: கிராம் விற்பனை ஏறும், ஸ்டாக் கேஷா மாறும், CFO மேம்படும் — பிசி ஜுவல்லருக்கு மிக ஆரோக்கியமான வளர்ச்சி. Q2 FY27 விற்பனை ~28% ஏற்றம்.']},
+ {k:'fed',t:['US rate cuts','US வட்டி குறைப்பு'],eff:{rr:-1,gg:1,ig:1,inv:1,gm:1,tk:1,gr:-1,rev:1,wc:1,cfo:-1,pf:1,ss:1},c:['Lower real yields reduce the cost of holding gold, lifting the global price — which then flows through the same rally chain.','ரியல் வட்டி குறைஞ்சா தங்கம் வைச்சுக்க செலவு குறைவு; உலக விலை ஏறும் — அப்புறம் அதே ஏற்ற சங்கிலி.']}
+];
+var goldState={sel:null,sc:null};
+function gPos(id){var n=GN.filter(function(x){return x.id===id;})[0];return {x:GX[n.c],y:n.y,w:GW[n.c],h:GH,c:n.c};}
+function drawGold(){var svg=document.getElementById('goldMap');svg.innerHTML='';
+ var d=el('defs',{},svg);[['mg','#16a34a'],['mr','#dc2626'],['mx','#cbd5e1']].forEach(function(m){var mm=el('marker',{id:m[0],markerWidth:8,markerHeight:8,refX:7,refY:4,orient:'auto'},d);el('path',{d:'M0,0 L8,4 L0,8 z',fill:m[1]},mm);});
+ var eff=goldState.sc?GS.filter(function(s){return s.k===goldState.sc;})[0].eff:null;
+ GE.forEach(function(e){var a=gPos(e[0]),b=gPos(e[1]);var path;
+  if(a.c===b.c){var x=a.x+a.w,y1=a.y+GH/2,y2=b.y+GH/2;path='M'+x+','+y1+' C'+(x+28)+','+y1+' '+(x+28)+','+y2+' '+x+','+y2;}
+  else{var x1=a.x+a.w,y1=a.y+GH/2,x2=b.x,y2=b.y+GH/2;var mx=(x1+x2)/2;path='M'+x1+','+y1+' C'+mx+','+y1+' '+mx+','+y2+' '+x2+','+y2;}
+  var active=true;if(goldState.sel)active=(e[0]===goldState.sel||e[1]===goldState.sel);if(eff)active=!!(eff[e[0]]&&eff[e[1]]);
+  var col=e[2]>0?'#16a34a':'#dc2626';
+  el('path',{d:path,fill:'none',stroke:active?col:'#e2e8f0','stroke-width':active?2:1.2,'stroke-dasharray':e[2]>0?'':'6 4','marker-end':'url(#'+(active?(e[2]>0?'mg':'mr'):'mx')+')',opacity:active?1:.7},svg);});
+ GN.forEach(function(n){var p=gPos(n.id);var g=el('g',{class:'bm-box'},svg);var isP=n.c===3;
+  var r=el('rect',{x:p.x,y:p.y,width:p.w,height:GH,rx:9,fill:isP?'#ede9fe':(n.c===0?'#fef3c7':(n.c===1?'#fde68a':'#fff7ed')),stroke:isP?'#7c3aed':'#b7791f','stroke-width':goldState.sel===n.id?2.6:1.2},g);
+  txt(g,p.x+8,p.y+20,L(n.t[0],n.t[1]),{anchor:'start',fw:700,fs:11});txt(g,p.x+8,p.y+38,L(n.v[0],n.v[1]),{anchor:'start',fs:9.5,fill:'#475569'});
+  if(eff&&eff[n.id]){var up=eff[n.id]>0;el('circle',{cx:p.x+p.w-14,cy:p.y+14,r:10,fill:up?'#16a34a':'#dc2626'},g);var tt=txt(g,p.x+p.w-14,p.y+18,up?'▲':'▼',{fs:10,fill:'#fff',fw:800});}
+  g.addEventListener('click',function(){goldState.sel=(goldState.sel===n.id?null:n.id);goldState.sc=null;renderGoldSc();drawGold();
+   var pushes=GE.filter(function(e){return e[0]===n.id;}).map(function(e){var t=GN.filter(function(x){return x.id===e[1];})[0];return (e[2]>0?'↑ ':'↓ ')+L(t.t[0],t.t[1]);});
+   var by=GE.filter(function(e){return e[1]===n.id;}).map(function(e){var t=GN.filter(function(x){return x.id===e[0];})[0];return (e[2]>0?'↑ ':'↓ ')+L(t.t[0],t.t[1]);});
+   document.getElementById('goldX').innerHTML='<b>'+L(n.t[0],n.t[1])+'</b><br>'+L(n.x[0],n.x[1])+'<br><br><b>'+L('It pushes:','இது தள்ளுவது:')+'</b> '+(pushes.join(', ')||'—')+'<br><b>'+L('It is pushed by:','இதை தள்ளுவது:')+'</b> '+(by.join(', ')||'—');});});
+}
+function renderGoldSc(){var b=document.getElementById('goldSc');b.innerHTML='';GS.forEach(function(s){var x=document.createElement('button');x.textContent=L(s.t[0],s.t[1]);if(goldState.sc===s.k)x.className='on';x.onclick=function(){goldState.sc=(goldState.sc===s.k?null:s.k);goldState.sel=null;renderGoldSc();drawGold();document.getElementById('goldX').innerHTML=goldState.sc?'<b>'+L(s.t[0],s.t[1])+'</b><br>'+L(s.c[0],s.c[1]):L('Tap a box or a scenario.','ஒரு பாக்ஸ் அல்லது சினாரியோ தட்டுங்க.');};b.appendChild(x);});}
+
+/* ---------- triggers & cycle ---------- */
+var TGC='pcj';
+var TGX={pcj:{phase:2,sector:['Jewellery = consumption cycle, P3 Expansion (score 70): organised-retail share gain, strong wedding demand; very high gold prices are the late-cycle warning.','நகை = நுகர்வு சைக்கிள், P3 விரிவாக்கம் (70): ஒழுங்கமைந்த ரீடெய்ல் பங்கு ஏற்றம், திருமண தேவை; அதிக தங்க விலை — தாமத சைக்கிள் எச்சரிக்கை.'],stock:['Stock 66: re-inventing turnaround 75 · margin rising from bottom 85 · P/B ~1.7× in band 55 · Weinstein Stage 2, extended ~35–40% above 30-week average (est.) 50.','பங்கு 66: மறுசீரமைப்பு 75 · மார்ஜின் அடியில இருந்து ஏற்றம் 85 · P/B ~1.7× 55 · Weinstein Stage 2, 30 வார சராசரிக்கு ~35–40% மேல (மதிப்பீடு) 50.'],what:[['Gross margin holds near 25%+ even if gold stalls','தங்கம் நின்னாலும் மார்ஜின் 25%+ நீடிச்சா'],['Operating cash flow turns positive in H1 FY27','H1 FY27ல CFO பாசிட்டிவ் ஆனா'],['Audit qualification is lifted or export recoveries continue each quarter','ஆடிட் qualification நீங்கினா / ஒவ்வொரு காலாண்டும் எக்ஸ்போர்ட் வசூல் தொடர்ந்தா']],gate:['Gate: a negative trigger with Impact ≥4 and Certainty ≥0.7 (audit qualification) caps Conviction at 50.','கேட்: தாக்கம் ≥4, உறுதி ≥0.7 உள்ள நெகட்டிவ் (ஆடிட் qualification) — Conviction 50க்கு மேல போகாது.']},
+ cup:{phase:2,sector:['Blend of institutional contraceptives (maturing, 55) and domestic FMCG (consumption P3, 70) → 62.','நிறுவன கருத்தடை (முதிர்ச்சி, 55) + உள்நாட்டு FMCG (P3, 70) → 62.'],stock:['Stock 50: scaling 80 · margin at multi-year high 40 · valuation far above band 30 · Stage 2 extended (stock ~4× in six months) 50.','பங்கு 50: வளர்ச்சி 80 · மார்ஜின் உச்சத்தில 40 · மதிப்பீடு மிக அதிகம் 30 · Stage 2 நீட்டிப்பு (6 மாதத்தில் ~4×) 50.'],what:[['Q2 FY27 revenue confirms > ₹200 cr with ~39% margin','Q2 FY27 வருமானம் ₹200 கோடி+ & ~39% மார்ஜின் உறுதியானா'],['Palava plant commissioned on time','பலாவா ஆலை நேரத்துக்கு தொடங்கினா'],['Any slowdown in donor-funded tenders','டோனர் நிதி டெண்டர் குறைஞ்சா']],gate:['No hard gate hit, but valuation leaves little room for a guidance miss.','கேட் இல்லை, ஆனா வழிகாட்டல் தவறினா இடம் கம்மி.']}};
+function drawClock(){var svg=document.getElementById('clock');svg.innerHTML='';var cx=150,cy=150,R=110;el('circle',{cx:cx,cy:cy,r:R,fill:'#f7f8fb',stroke:'#e3e7ef','stroke-width':2},svg);
+ var ph=[['P1 Trough','P1 அடி','#94a3b8'],['P2 Early recovery','P2 ஆரம்ப மீட்பு','#16a34a'],['P3 Expansion','P3 விரிவாக்கம்','#2563eb'],['P4 Late / peak','P4 உச்சம்','#d97706'],['P5 Downturn','P5 சரிவு','#dc2626']];
+ ph.forEach(function(p,i){var a=(-90+i*72)*Math.PI/180;var x=cx+Math.cos(a)*(R-40),y=cy+Math.sin(a)*(R-40);el('circle',{cx:cx+Math.cos(a)*R,cy:cy+Math.sin(a)*R,r:9,fill:p[2]},svg);txt(svg,x,y+4,L(p[0],p[1]),{fs:9.5,fw:700,fill:p[2]});});
+ var X=TGX[TGC];var a=(-90+X.phase*72)*Math.PI/180;el('line',{x1:cx,y1:cy,x2:cx+Math.cos(a)*(R-45),y2:cy+Math.sin(a)*(R-45),stroke:'#f97316','stroke-width':5,'stroke-linecap':'round'},svg);el('circle',{cx:cx,cy:cy,r:8,fill:'#f97316'},svg);
+ txt(svg,cx,cy+34,L('Sector phase','துறை நிலை'),{fs:10,fill:'#5b6476'});txt(svg,cx,cy+48,'● '+CO[TGC].cycle.stockStage,{fs:10,fw:700,fill:'#7c3aed'});}
+function renderTG(){drawClock();var c=CO[TGC],X=TGX[TGC];document.getElementById('cyV').textContent=c.cycle.cy;document.getElementById('cyD').innerHTML=L(X.sector[0],X.sector[1])+'<br>'+L(X.stock[0],X.stock[1]);document.getElementById('tgV').textContent=c.tg;
+ var h='<tr><th class="t">'+L('Trigger','ட்ரிகர்')+'</th><th>+/−</th><th>I</th><th>C</th><th>W</th><th>P</th><th>'+L('Points','புள்ளி')+'</th></tr>';var pos=[],neg=0;
+ c.triggers.forEach(function(t){var pts=t.I*t.C*t.W*t.P;if(t.s==='+')pos.push(pts);else neg+=pts;h+='<tr><td class="t">'+t.n+'</td><td class="'+(t.s==='+'?'up':'dn')+'">'+t.s+'</td><td>'+t.I+'</td><td>'+t.C+'</td><td>'+t.W+'</td><td>'+t.P+'</td><td><b>'+pts.toFixed(2)+'</b></td></tr>';});
+ pos.sort(function(a,b){return b-a;});var top=pos.slice(0,3).reduce(function(a,b){return a+b;},0);
+ h+='<tr><td class="t" colspan="6"><b>TG = 50 + 8×'+top.toFixed(2)+' − 8×'+neg.toFixed(2)+'</b></td><td><b>'+Math.round(50+8*top-8*neg)+'</b></td></tr>';document.getElementById('tgTable').innerHTML=h;
+ document.getElementById('tgD').textContent=L('Top-3 positives ','டாப்-3 பாசிட்டிவ் ')+top.toFixed(2)+' · '+L('negatives ','நெகட்டிவ் ')+neg.toFixed(2);
+ document.getElementById('tgWhat').innerHTML='<b>'+L('What would change this view','இந்த பார்வையை மாற்றக்கூடியவை')+'</b><ul>'+X.what.map(function(w){return '<li>'+L(w[0],w[1])+'</li>';}).join('')+'</ul><div class="flag">'+L(X.gate[0],X.gate[1])+'</div>';}
+
+/* ---------- temple ---------- */
+var TMC='pcj';
+var PIL={pcj:[['Growth','வளர்ச்சி',8,'Revenue +21% in Q1 and ~+28% in Q2; FY26 +49%. Base is still below the FY18 peak.','Q1 +21%, Q2 ~+28%; FY26 +49%. இன்னும் FY18 உச்சத்துக்கு கீழ.'],['Profitability','லாபத்திறன்',6.5,'EBITDA margin 27.5% in Q1, but ROE only 9.9% and margins partly lifted by gold-inventory gains.','Q1 EBITDA மார்ஜின் 27.5%; ஆனா ROE 9.9% தான், மார்ஜின்ல தங்க இன்வென்டரி லாபம் சேர்ந்திருக்கு.'],['Balance sheet','பேலன்ஸ் ஷீட்',8,'Zero bank debt since 25 Sep 2026; equity ₹8,127 cr. Deducted for ₹1,689 cr receivables of uncertain quality.','25 செப் 2026 முதல் வங்கிக் கடன் பூஜ்யம்; ஈக்விட்டி ₹8,127 கோடி. ₹1,689 கோடி சந்தேக பாக்கிக்கு கழிவு.'],['Cash & working capital','கேஷ் & WC',3,'CFO −₹77.54 cr in FY26; cash conversion cycle 1,167 days.','FY26 CFO −₹77.54 கோடி; கேஷ் சைக்கிள் 1,167 நாள்.'],['Valuation','மதிப்பீடு',6.5,'~20× trailing earnings and ~1.7× book — reasonable if profits are durable.','~20× P/E, ~1.7× P/B — லாபம் நீடிச்சா நியாயம்.'],['Governance','நிர்வாகம்',4,'Repetitive qualified audit opinion on export discounts and ECL; 2018–2023 history; heavy dilution. Promoter conversions at ₹18 are a positive.','எக்ஸ்போர்ட் டிஸ்கவுன்ட், ECL மீது தொடர் qualified opinion; 2018–2023 வரலாறு; அதிக டைல்யூஷன். ப்ரமோட்டர் ₹18ல கன்வர்ஷன் நல்லது.']],
+ cup:[['Growth','வளர்ச்சி',9.5,'Revenue +159% in Q1; FY27 guided above ₹800 cr (2.2× FY26).','Q1 +159%; FY27 ₹800 கோடி+ (FY26ன் 2.2×).'],['Profitability','லாபத்திறன்',9,'EBITDA margin ~39%; ROE 27.3%, ROCE 29.0%.','EBITDA ~39%; ROE 27.3%, ROCE 29.0%.'],['Balance sheet','பேலன்ஸ் ஷீட்',8.5,'Net cash ₹135.47 cr; small debt ₹50.98 cr.','நிகர கேஷ் ₹135.47 கோடி; கடன் ₹50.98 கோடி.'],['Cash & working capital','கேஷ் & WC',5,'CFO/PAT 0.43; cash cycle 200 days due to institutional receivables.','CFO/PAT 0.43; நிறுவன பாக்கியால கேஷ் சைக்கிள் 200 நாள்.'],['Valuation','மதிப்பீடு',2,'~350× trailing, ~193× FY27 guidance, ~107× book.','~350× TTM, ~193× FY27 வழிகாட்டல், ~107× புக்.'],['Governance','நிர்வாகம்',6,'Clean audit; steady promoter buying. Watch: personal and company stakes in the same retailer; forfeited warrants.','சுத்தமான ஆடிட்; ப்ரமோட்டர் தொடர்ந்து வாங்குதல். கவனம்: ஒரே ரீடெய்லர்ல தனிப்பட்ட & கம்பெனி பங்கு; பறிமுதல் வாரண்ட்.']]};
+function colr(s){return s>=8?'#16a34a':(s>=6?'#d97706':'#dc2626');}
+function drawTemple(){var svg=document.getElementById('temple');svg.innerHTML='';var P=PIL[TMC];var comp=Math.round(P.reduce(function(a,p){return a+p[2];},0)/6*10);
+ el('polygon',{points:'180,8 20,78 340,78',fill:'#f97316'},svg);txt(svg,180,52,'CB Score',{fs:11,fill:'#fff7ed',fw:700});txt(svg,180,72,comp+'/100',{fs:17,fill:'#fff',fw:800});
+ el('rect',{x:24,y:80,width:312,height:24,fill:'#fed7aa',stroke:'#ea580c'},svg);txt(svg,180,96,CO[TMC].name+' · Q1 FY27',{fs:11.5,fw:800,fill:'#7c2d12'});
+ var top=110,H=150;
+ P.forEach(function(p,i){var x=34+i*50,w=36;el('rect',{x:x,y:top,width:w,height:H,fill:'#f8fafc',stroke:'#cbd5e1'},svg);
+  var f=el('rect',{x:x,y:top+H,width:w,height:0,fill:colr(p[2]),opacity:.85},svg);
+  for(var j=1;j<4;j++)el('line',{x1:x+j*9,y1:top,x2:x+j*9,y2:top+H,stroke:'#fff','stroke-width':1.2,opacity:.8},svg);
+  el('circle',{cx:x+w/2,cy:top+18,r:13,fill:'#fff',stroke:colr(p[2]),'stroke-width':2},svg);txt(svg,x+w/2,top+22,p[2],{fs:11,fw:800,fill:colr(p[2])});
+  var hit=el('rect',{x:x,y:top,width:w,height:H,fill:'transparent',style:'cursor:pointer'},svg);hit.addEventListener('click',function(){var c=document.getElementById('pc'+i);c.scrollIntoView({behavior:'smooth',block:'center'});document.querySelectorAll('.pcard').forEach(function(z){z.classList.remove('hl');});c.classList.add('hl');});
+  var target=H*p[2]/10,t0=null;function an(ts){if(!t0)t0=ts;var k=Math.min(1,(ts-t0)/900);f.setAttribute('y',top+H-target*k);f.setAttribute('height',target*k);if(k<1)requestAnimationFrame(an);}requestAnimationFrame(an);
+  var SH=[['Growth','வளர்ச்சி'],['Profit','லாபம்'],['Balance','பேலன்ஸ்'],['Cash/WC','கேஷ்/WC'],['Value','மதிப்பு'],['Govern','நிர்வாகம்']];txt(svg,x+w/2,top+H+40,L(SH[i][0],SH[i][1]),{fs:9.5,fw:700});});
+ el('rect',{x:18,y:top+H,width:324,height:10,fill:'#e2e8f0'},svg);el('rect',{x:10,y:top+H+10,width:340,height:10,fill:'#cbd5e1'},svg);
+ document.getElementById('pillarCards').innerHTML=P.map(function(p,i){return '<div class="pcard" id="pc'+i+'" style="border-left:5px solid '+colr(p[2])+'"><b>'+L(p[0],p[1])+' — '+p[2]+'/10</b><br>'+L(p[3],p[4])+'</div>';}).join('')+'<div class="legend"><span><i style="background:#16a34a"></i>8–10</span><span><i style="background:#d97706"></i>6–8</span><span><i style="background:#dc2626"></i>&lt;6</span></div>';}
+
+/* ---------- SWOT ---------- */
+var SW={pcj:{s:[['Debt-free; no interest drag','கடன் இல்லை; வட்டி சுமை இல்லை'],['Recognised North-India brand and integrated manufacturing','வட இந்திய பிராண்ட், சொந்த உற்பத்தி'],['Large owned gold inventory in a rising gold market','தங்க விலை ஏறும்போது பெரிய சொந்த ஸ்டாக்']],w:[['985 inventory days; negative CFO','985 நாள் இன்வென்டரி; நெகட்டிவ் CFO'],['Repetitive qualified audit opinion','தொடர் qualified ஆடிட் கருத்து'],['Small network (~50 stores) versus national leaders','தேசிய தலைவர்களை விட சின்ன நெட்வொர்க் (~50)']],o:[['Recovery of remaining Gulf receivables and ECL write-back','மீதமுள்ள கல்ஃப் பாக்கி வசூல், ECL திரும்ப வருதல்'],['100-showroom expansion with a clean balance sheet','சுத்தமான பேலன்ஸ் ஷீட்டுடன் 100 ஷோரூம்'],['Credit lines/gold metal loans could return now that the account is regular','கணக்கு சரியானதால கோல்ட் மெட்டல் லோன் திரும்ப கிடைக்கலாம்']],t:[['Gold-price fall or duty cut on ₹7,024 cr stock','₹7,024 கோடி ஸ்டாக் மேல தங்க விலை சரிவு / வரி குறைப்பு'],['More dilution (QIP)','மேலும் டைல்யூஷன் (QIP)'],['Competition from Tanishq, Kalyan, Senco, Indriya','தனிஷ்க், கல்யாண், சென்கோ, இந்திரியா போட்டி']]},
+ cup:{s:[['Global WHO/UNFPA pre-qualification for male and female condoms','ஆண், பெண் காண்டம் WHO/UNFPA தகுதி'],['~39% EBITDA margin, net cash','~39% EBITDA, நிகர கேஷ்'],['Promoter keeps buying from the market','ப்ரமோட்டர் தொடர்ந்து வாங்குதல்']],w:[['Dependence on donor-funded tenders','டோனர் நிதி டெண்டர் சார்பு'],['CFO only 43% of profit','CFO லாபத்தின் 43% தான்'],['Small domestic brand versus Mankind/HLL/Reckitt','உள்நாட்டு பிராண்ட் சின்னது']],o:[['Palava capacity, female-condom niche, nitrile','பலாவா திறன், பெண் காண்டம், நைட்ரைல்'],['Style Baazar shelf access; GCC via GII','ஸ்டைல் பஜார் இடம்; GII மூலம் GCC'],['IVD kit state orders','IVD கிட் மாநில ஆர்டர்கள்']],t:[['Valuation (~350× P/E) leaves no room for misses','மதிப்பீடு (~350×) — தவறுக்கு இடம் இல்ல'],['Global aid budget cuts','உலக உதவி நிதி குறைப்பு'],['Related-interest perception around Style Baazar','ஸ்டைல் பஜார் தொடர்பு சந்தேகம்']]}};
+var SWC='pcj';
+function renderSW(){var s=SW[SWC];function li(a){return '<ul>'+a.map(function(x){return '<li>'+L(x[0],x[1])+'</li>';}).join('')+'</ul>';}
+ document.getElementById('swotBox').innerHTML='<div class="s"><h4>'+L('Strengths','பலம்')+'</h4>'+li(s.s)+'</div><div class="w"><h4>'+L('Weaknesses','பலவீனம்')+'</h4>'+li(s.w)+'</div><div class="o"><h4>'+L('Opportunities','வாய்ப்புகள்')+'</h4>'+li(s.o)+'</div><div class="t2"><h4>'+L('Threats','அச்சுறுத்தல்கள்')+'</h4>'+li(s.t)+'</div>';}
+
+/* ---------- self-check ---------- */
+var SCC='pcj';
+var SCG={pcj:[[['1 · Questions about the stock','1 · பங்கு பற்றிய கேள்விகள்'],[['I understand how the company earns money','கம்பெனி எப்படி சம்பாதிக்குதுன்னு புரியுது','Single segment: jewellery retail; ~50 showrooms','ஒரே செக்மென்ட்: நகை ரீடெய்ல்; ~50 ஷோரூம்'],['I know the latest quarter\'s numbers','லேட்டஸ்ட் காலாண்டு எண்கள் தெரியும்','Q1 FY27 revenue ₹877.04 cr, PAT ₹221.88 cr','Q1 FY27 வருமானம் ₹877.04 கோடி, லாபம் ₹221.88 கோடி'],['I checked the debt position','கடன் நிலையை சரிபார்த்தேன்','Bank debt ₹0 since 25 Sep 2026','25 செப் 2026 முதல் வங்கிக் கடன் ₹0']]],
+ [['2 · Problems investors face','2 · முதலீட்டாளர் சந்திக்கும் பிரச்சினைகள்'],[['I read the auditor\'s qualification','ஆடிட்டர் qualification படிச்சேன்','₹183.16 cr export discounts; ECL ₹281.40 cr adequacy','₹183.16 கோடி டிஸ்கவுன்ட்; ECL ₹281.40 கோடி'],['I accept cash flow is negative','கேஷ் ஃப்ளோ நெகட்டிவ்னு ஏத்துக்கிறேன்','CFO −₹77.54 cr FY26; CCC 1,167 days','FY26 CFO −₹77.54 கோடி; CCC 1,167 நாள்'],['I know my exposure to gold prices','தங்க விலை அபாயம் தெரியும்','Inventory ₹7,024 cr; 10% move ≈ ₹702 cr','இன்வென்டரி ₹7,024 கோடி; 10% ≈ ₹702 கோடி']]],
+ [['3 · Solutions (what I did)','3 · தீர்வுகள் (நான் செய்தது)'],[['I sized the position for a high-volatility stock','அதிக ஏற்ற இறக்க பங்குக்கு ஏற்ற அளவு','52-week range ₹7.47 to ~₹16','52 வார வரம்பு ₹7.47 – ~₹16'],['I set a review point after Q2 results','Q2 ரிசல்ட்டுக்கு பிறகு மறுபரிசீலனை','Q2 FY27 sales ~+28% (update)','Q2 FY27 விற்பனை ~+28%']]],
+ [['4 · Anchors\' and analysts\' view','4 · ஆங்கர் & அனலிஸ்ட் பார்வை'],[['I checked who is buying and selling','யார் வாங்குறாங்க/விக்குறாங்கன்னு பார்த்தேன்','Halwasiya +0.52%; Sanyasi Ayurveda −0.53%','ஹல்வாசியா +0.52%; சன்யாசி ஆயுர்வேதா −0.53%'],['I know broker coverage is thin','ப்ரோக்கர் கவரேஜ் குறைவுன்னு தெரியும','No verified broker target; quant "Hold"','சரிபார்த்த இலக்கு இல்ல; quant "Hold"']]]],
+ cup:[[['1 · Questions about the stock','1 · பங்கு பற்றிய கேள்விகள்'],[['I understand how the company earns money','கம்பெனி எப்படி சம்பாதிக்குதுன்னு புரியுது','Exports 59.3%; male condoms ₹181.11 cr FY26','எக்ஸ்போர்ட் 59.3%; ஆண் காண்டம் ₹181.11 கோடி'],['I know the latest quarter\'s numbers','லேட்டஸ்ட் காலாண்டு எண்கள் தெரியும்','Q1 FY27 revenue ₹154.72 cr, PAT ₹44.15 cr','Q1 FY27 வருமானம் ₹154.72 கோடி, லாபம் ₹44.15 கோடி'],['I checked guidance credibility','வழிகாட்டல் நம்பகத்தன்மை','FY26 beat guidance (₹358 cr vs ₹335 cr)','FY26 வழிகாட்டலை தாண்டியது (₹358 vs ₹335)']]],
+ [['2 · Problems investors face','2 · முதலீட்டாளர் சந்திக்கும் பிரச்சினைகள்'],[['I accept the valuation risk','மதிப்பீட்டு அபாயத்தை ஏத்துக்கிறேன்','~350× trailing P/E, ~107× book','~350× P/E, ~107× புக்'],['I know tender concentration','டெண்டர் சார்பு தெரியும்','WHO/UNFPA/PFSCM orders','WHO/UNFPA/PFSCM ஆர்டர்கள்']]],
+ [['3 · Solutions (what I did)','3 · தீர்வுகள் (நான் செய்தது)'],[['I will verify Q2 > ₹200 cr when filed','Q2 > ₹200 கோடி சரிபார்ப்பேன்','Guided in 30 Sep 2026 update','30 செப் 2026 அப்டேட்']]],
+ [['4 · Anchors\' and analysts\' view','4 · ஆங்கர் & அனலிஸ்ட் பார்வை'],[['I noted the promoter\'s buying','ப்ரமோட்டர் வாங்குதலை கவனிச்சேன்','Halwasiya 34.23%; group 47.18%','ஹல்வாசியா 34.23%; குழுமம் 47.18%'],['I know analyst targets are stale','அனலிஸ்ட் இலக்கு பழையது','Single target ₹207 vs price ₹358','ஒரே இலக்கு ₹207 vs விலை ₹358']]]]};
+var SCS=[['Debt stays at zero for 2 quarters','2 காலாண்டு கடன் பூஜ்யமா இருக்கணும்'],['CFO turns positive','CFO பாசிட்டிவ் ஆகணும்'],['Margin holds after gold stalls','தங்கம் நின்னாலும் மார்ஜின் நிக்கணும்'],['Guidance met in Q2','Q2ல வழிகாட்டல் நிறைவேறணும்'],['Promoter keeps holding','ப்ரமோட்டர் பங்கு குறையக்கூடாது']];
+function scState(){try{return JSON.parse(lsGet('cbsc_'+SCC)||'{}');}catch(e){return {};}}
+function scSave(s){lsSet('cbsc_'+SCC,JSON.stringify(s));}
+function renderSC(){var s=scState();var h='',tot=0,ok=0;
+ SCG[SCC].forEach(function(g,gi){var gt=0,go=0;var items=g[1].map(function(it,ii){var k=gi+'_'+ii;tot++;gt++;if(s[k]){ok++;go++;}return '<label><input type="checkbox" '+(s[k]?'checked':'')+' onchange="scTick(\''+k+'\',this.checked)"><span>'+L(it[0],it[1])+'<span class="dl">Data: '+L(it[2],it[3])+'</span></span></label>';}).join('');
+  h+='<div class="card chk"><h3 style="margin-top:0">'+L(g[0][0],g[0][1])+' <span class="pill pb">'+go+'/'+gt+'</span></h3>'+items+'</div>';});
+ var own=s.own||[];document.getElementById('scOwn').innerHTML=own.map(function(o,i){tot++;if(o.c)ok++;return '<label><input type="checkbox" '+(o.c?'checked':'')+' onchange="ownTick('+i+',this.checked)"><span>'+o.t+'</span></label>';}).join('');
+ document.getElementById('scBox').innerHTML=h;document.getElementById('scBar').style.width=(tot?ok/tot*100:0)+'%';
+ document.getElementById('scMsg').textContent=L(ok+' of '+tot+' of your conditions line up.',tot+'ல '+ok+' நிபந்தனைகள் பொருந்துது.');
+ document.getElementById('scSug').innerHTML=SCS.map(function(x,i){return '<button onclick="addCond(\''+i+'\')">+ '+L(x[0],x[1])+'</button>';}).join('');}
+function scTick(k,v){var s=scState();s[k]=v;scSave(s);renderSC();}
+function ownTick(i,v){var s=scState();s.own[i].c=v;scSave(s);renderSC();}
+function addCond(i){var s=scState();s.own=s.own||[];if(s.own.length>=8)return;var t=(i!==undefined)?L(SCS[+i][0],SCS[+i][1]):document.getElementById('scIn').value.trim();if(!t)return;s.own.push({t:t.replace(/[<>]/g,''),c:false});scSave(s);document.getElementById('scIn').value='';renderSC();}
+function clearSC(){scSave({});renderSC();}
+
+/* ---------- quiz ---------- */
+var QZ=[
+ [['Was PC Jeweller admitted into insolvency (CIRP)?','பிசி ஜுவல்லர் CIRP-க்குள் அட்மிட் ஆனதா?'],[['Yes, in 2023','ஆமாம், 2023ல'],['No — SBI\'s petition was withdrawn before admission','இல்லை — அட்மிஷனுக்கு முன்னே SBI வித்ட்ரா'],['Yes, and it exited in 2026','ஆமாம், 2026ல வெளியே வந்தது']],1,['The Section 7 petition was dismissed as withdrawn on 30 Apr 2024.','30 ஏப் 2024ல வித்ட்ரா ஆக டிஸ்மிஸ்.']],
+ [['What stake did Halwasiya buy in PC Jeweller?','ஹல்வாசியா பிசி ஜுவல்லர்ல எவ்வளவு வாங்கினார்?'],[['~5%','~5%'],['~0.52%','~0.52%'],['~11.92%','~11.92%']],1,['5.10 crore of ~980.78 crore shares.','~980.78 கோடில 5.10 கோடி பங்கு.']],
+ [['Why did EPS fall while PAT rose 37%?','லாபம் 37% ஏறியும் EPS ஏன் குறைஞ்சது?'],[['Higher tax','அதிக வரி'],['More shares from warrant conversions','வாரண்ட் கன்வர்ஷனால அதிக பங்குகள்'],['Lower revenue','குறைந்த வருமானம்']],1,['Shares rose from 465 cr (Mar-24) to 981 cr.','பங்குகள் 465 கோடில இருந்து 981 கோடி.']],
+ [['If gold falls 10%, PC Jeweller\'s gross margin most likely…','தங்கம் 10% குறைஞ்சா கிராஸ் மார்ஜின்…'],[['Rises','ஏறும்'],['Falls — costly old stock is sold at lower prices','குறையும் — அதிக விலை ஸ்டாக் குறைஞ்ச விலைல'],['Stays the same','மாறாது']],1,['985 inventory days amplify gold moves.','985 நாள் இன்வென்டரி தங்க நகர்வை பெரிதாக்கும்.']],
+ [['Where did the money to repay banks mainly come from?','வங்கிக் கடன் கட்ட பணம் பெரும்பாலும் எங்க இருந்து?'],[['Operating cash flow','ஆபரேஷன் கேஷ்'],['Equity raised through warrants','வாரண்ட் மூலம் ஈக்விட்டி'],['Sale of showrooms','ஷோரூம் விற்பனை']],1,['FY26: equity +₹1,259 cr, CFO −₹77.54 cr.','FY26: ஈக்விட்டி +₹1,259 கோடி, CFO −₹77.54 கோடி.']],
+ [['Cupid\'s biggest valuation risk is…','க்யூபிட்டின் பெரிய மதிப்பீட்டு அபாயம்…'],[['High debt','அதிக கடன்'],['~350× trailing P/E needing years of flawless growth','~350× P/E — பல வருஷ குறையில்லா வளர்ச்சி தேவை'],['Low margins','குறைந்த மார்ஜின்']],1,['Cupid is net cash with 39% margins; the price is the risk.','க்யூபிட் நிகர கேஷ், 39% மார்ஜின்; விலை தான் அபாயம்.']],
+ [['Which cycle phase fits jewellery retail now?','இப்போ நகை ரீடெய்ல் எந்த சைக்கிள்?'],[['P1 Trough','P1 அடி'],['P3 Expansion, with late-cycle gold warning','P3 விரிவாக்கம், தங்க விலை எச்சரிக்கையுடன்'],['P5 Downturn','P5 சரிவு']],1,['Organised shift and wedding demand; gold at highs is the caution.','ஒழுங்கமைந்த மாற்றம், திருமண தேவை; அதிக தங்க விலை எச்சரிக்கை.']]
+];
+function renderQuiz(){document.getElementById('quiz').innerHTML=QZ.map(function(q,i){return '<div class="card"><b>Q'+(i+1)+'. '+L(q[0][0],q[0][1])+'</b>'+q[1].map(function(o,j){return '<button class="opt" onclick="qAns('+i+','+j+',this)">'+L(o[0],o[1])+'</button>';}).join('')+'<div class="note" id="qf'+i+'"></div></div>';}).join('');}
+function qAns(i,j,b){var q=QZ[i];var bs=b.parentNode.querySelectorAll('.opt');bs.forEach(function(x,k){x.classList.remove('ok','no');if(k===q[2])x.classList.add('ok');});if(j!==q[2])b.classList.add('no');document.getElementById('qf'+i).textContent=(j===q[2]?'✓ ':'✗ ')+L(q[3][0],q[3][1]);}
+function socCheck(){var t=document.getElementById('socTxt').value.toLowerCase();var keys=[['inventory','இன்வென்டரி'],['cash','கேஷ்'],['receivable','பாக்கி'],['equity','ஈக்விட்டி'],['margin','மார்ஜின்']];var hit=keys.filter(function(k){return t.indexOf(k[0])>=0||t.indexOf(k[1])>=0;});
+ document.getElementById('socFb').innerHTML=L('You touched '+hit.length+' of 5 ideas. ','5ல '+hit.length+' யோசனைகளை தொட்டீங்க. ')+L('Ask yourself: if each new store needs ~₹70–140 cr of stock and CFO is negative, who funds it — inventory turns, export recoveries, or more shareholders\' money?','கேட்டுக்கோங்க: ஒவ்வொரு புது ஸ்டோருக்கும் ~₹70–140 கோடி ஸ்டாக் வேணும், CFO நெகட்டிவ்னா — யார் நிதி தருவாங்க? இன்வென்டரி சுழற்சியா, எக்ஸ்போர்ட் வசூலா, இல்ல மறுபடியும் ஷேர்ஹோல்டர் பணமா?');}
+
+/* ---------- CB Assist (voice Q&A) ---------- */
+var KB=[
+ [['debt','loan','bank','கடன்','வங்கி'],['PC Jeweller has zero bank debt. It settled with 14 banks led by SBI under a 30 Sep 2024 agreement and repaid the last bank on 25 Sep 2026. Debt was about ₹4,100 crore in March 2024; the settlement was about ₹3,000 crore in cash and equity.','பிசி ஜுவல்லருக்கு வங்கிக் கடன் பூஜ்யம். SBI தலைமையில 14 வங்கிகளோட 30 செப் 2024 ஒப்பந்தம்; கடைசி வங்கிக்கு 25 செப் 2026ல கட்டி முடிச்சாங்க. மார்ச் 2024ல கடன் சுமார் ₹4,100 கோடி; செட்டில்மென்ட் சுமார் ₹3,000 கோடி.']],
+ [['nclt','insolvency','ibc','petition','இன்சால்வென்சி'],['SBI filed a Section 7 petition at NCLT Delhi in July 2023. It was never admitted, and NCLT dismissed it as withdrawn on 30 April 2024 after settlement terms were agreed.','SBI ஜூலை 2023ல NCLT டெல்லில Section 7 பெட்டிஷன் போட்டது. அட்மிட் ஆகல; 30 ஏப் 2024ல வித்ட்ரா ஆக டிஸ்மிஸ் ஆச்சு.']],
+ [['halwasiya','stake','bulk','ஹல்வாசியா'],['Aditya Kumar Halwasiya bought 5.10 crore PC Jeweller shares at ₹14.43, about ₹73.59 crore, which is roughly 0.52% — not 5%. He is CMD of Cupid with 34.23%, and holds 5.91% of Baazar Style Retail.','ஆதித்யா குமார் ஹல்வாசியா ₹14.43ல 5.10 கோடி பங்கு வாங்கினார், சுமார் ₹73.59 கோடி, அதாவது ~0.52% — 5% இல்ல. க்யூபிட் CMD, 34.23%; பஜார் ஸ்டைல்ல 5.91%.']],
+ [['dubai','export','receivable','gulf','துபாய்','எக்ஸ்போர்ட்'],['Old export receivables from Gulf dealers via Dubai firms total ₹1,689 crore of trade receivables at March 2026, with a ₹281.40 crore credit-loss provision. About ₹142 crore was received in Q2 FY27.','துபாய் வழி கல்ஃப் டீலர்களிடம் பழைய பாக்கி — மார்ச் 2026ல ₹1,689 கோடி ரிசீவபிள்ஸ், ₹281.40 கோடி ப்ரொவிஷன். Q2 FY27ல சுமார் ₹142 கோடி வந்தது.']],
+ [['q1','result','profit','revenue','quarter','ரிசல்ட்','லாபம்','வருமானம்'],['Q1 FY27: revenue ₹877.04 crore, up 21%; EBITDA ₹241.56 crore, up 90%; net profit ₹221.88 crore, up 37%. EPS fell to ₹0.23 because of dilution.','Q1 FY27: வருமானம் ₹877.04 கோடி (+21%); EBITDA ₹241.56 கோடி (+90%); லாபம் ₹221.88 கோடி (+37%). டைல்யூஷனால EPS ₹0.23.']],
+ [['gold','தங்கம்'],['With about ₹7,024 crore of inventory and 985 inventory days, a 10% gold move changes stock value by up to about ₹702 crore. A rally lifts margins but squeezes cash; a fall does the opposite. See the Gold Driver Map tab.','₹7,024 கோடி இன்வென்டரி, 985 நாள் — தங்கம் 10% நகர்ந்தா ~₹702 கோடி வரை மதிப்பு மாறும். ஏற்றம் மார்ஜினை ஏற்றும், கேஷை இறுக்கும்; சரிவு உல்டா. Gold Driver Map டேப் பாருங்க.']],
+ [['cash','working','cfo','கேஷ்'],['PC Jeweller\'s FY26 operating cash flow was minus ₹77.54 crore and its cash conversion cycle is about 1,167 days. Cupid\'s CFO was plus ₹46.12 crore with a 200-day cycle.','பிசி ஜுவல்லர் FY26 CFO −₹77.54 கோடி, கேஷ் சைக்கிள் ~1,167 நாள். க்யூபிட் CFO +₹46.12 கோடி, 200 நாள்.']],
+ [['cupid','condom','க்யூபிட்'],['Cupid Q1 FY27: revenue ₹154.72 crore, up 159%; EBITDA ₹60.06 crore at about 39%; profit ₹44.15 crore. FY27 guidance is ₹800 crore plus revenue and ₹250 crore plus profit. The stock trades near 350 times trailing earnings.','க்யூபிட் Q1 FY27: வருமானம் ₹154.72 கோடி (+159%); EBITDA ₹60.06 கோடி (~39%); லாபம் ₹44.15 கோடி. FY27 வழிகாட்டல் ₹800 கோடி+, லாபம் ₹250 கோடி+. P/E ~350×.']],
+ [['baazar','style','பஜார்'],['Baazar Style Retail runs 276 Style Baazar value-fashion stores. Q1 FY27 revenue ₹486.38 crore, up 29%, but profit only ₹2.23 crore. Halwasiya owns 5.91%; Cupid holds warrants for 11.92%.','பஜார் ஸ்டைல் ரீடெய்ல் — 276 ஸ்டைல் பஜார் கடைகள். Q1 FY27 வருமானம் ₹486.38 கோடி (+29%), லாபம் ₹2.23 கோடி தான். ஹல்வாசியா 5.91%; க்யூபிட் வாரண்ட் 11.92%.']],
+ [['valuation','pe','price','மதிப்பீடு','விலை'],['PC Jeweller at ₹16 is about 20 times trailing earnings and 1.7 times March book value. Cupid at about ₹358 is about 350 times trailing earnings.','₹16ல பிசி ஜுவல்லர் ~20× P/E, ~1.7× புக். ~₹358ல க்யூபிட் ~350× P/E.']],
+ [['audit','qualif','ஆடிட்'],['The auditor has a repeating qualified opinion: ₹183.16 crore of 2019 export discounts lack approvals, and the adequacy of the ₹281.40 crore credit-loss provision cannot be confirmed.','ஆடிட்டர் தொடர் qualified opinion: 2019 எக்ஸ்போர்ட் டிஸ்கவுன்ட்ல ₹183.16 கோடிக்கு அனுமதி இல்ல; ₹281.40 கோடி ப்ரொவிஷன் போதுமான்னு உறுதிபடுத்த முடியல.']],
+ [['trigger','cycle','ட்ரிகர்','சைக்கிள்'],['PC Jeweller: cycle score 68, trigger score 54 — positives are debt-free status and export recoveries; the audit qualification is the main negative. Cupid: cycle 56, trigger 44.','பிசி ஜுவல்லர்: சைக்கிள் 68, ட்ரிகர் 54 — கடன் இல்லாதது, எக்ஸ்போர்ட் வசூல் பாசிட்டிவ்; ஆடிட் qualification முக்கிய நெகட்டிவ். க்யூபிட்: 56, 44.']],
+ [['history','founded','வரலாறு'],['Founded in 2005 in Karol Bagh by Padam Chand Gupta and Balram Garg; IPO December 2012; peaked at ₹586.75 in January 2018; crashed in 2018; NPA in 2021; settled with banks in 2024; debt-free in September 2026.','2005ல கரோல் பாக்ல பதம் சந்த் குப்தா, பல்ராம் கார்க் தொடங்கினாங்க; IPO டிசம்பர் 2012; ஜன 2018ல ₹586.75 உச்சம்; 2018 சரிவு; 2021 NPA; 2024 செட்டில்மென்ட்; செப் 2026 கடன் இல்லை.']]
+];
+function bestAns(q){q=q.toLowerCase();if(/(should i|buy|sell|invest now|வாங்கலாமா|விக்கலாமா|வாங்கவா)/.test(q))return {a:L('CB Research does not give buy, sell or hold advice. The Self-check tab helps you test your own conditions against the facts.','CB Research வாங்கு/விக்கு ஆலோசனை தராது. Self-check டேப்ல உங்க நிபந்தனைகளை உண்மைகளோட சோதிச்சுப் பாருங்க.'),sc:true};
+ var best=null,bs=0;KB.forEach(function(k){var s=0;k[0].forEach(function(w){if(q.indexOf(w)>=0)s++;});if(s>bs){bs=s;best=k;}});
+ return {a:best?L(best[1][0],best[1][1]):L('Try asking about debt, NCLT, Halwasiya, Dubai receivables, Q1 results, gold, cash flow, Cupid, Style Baazar, valuation or the audit.','கடன், NCLT, ஹல்வாசியா, துபாய் பாக்கி, Q1 ரிசல்ட், தங்கம், கேஷ், க்யூபிட், ஸ்டைல் பஜார், மதிப்பீடு, ஆடிட் பற்றி கேளுங்க.')};}
+function addMsg(c,h){var d=document.createElement('div');d.className=c;d.innerHTML=h;var lg=document.getElementById('asLog');lg.appendChild(d);lg.scrollTop=lg.scrollHeight;}
+function speak(t){try{if(!window.speechSynthesis)return;speechSynthesis.cancel();var u=new SpeechSynthesisUtterance(t.replace(/₹/g,'rupees '));u.lang=LANG==='ta'?'ta-IN':'en-IN';u.rate=1;speechSynthesis.speak(u);}catch(e){}}
+function ask(q){var inp=document.getElementById('asIn');q=q||inp.value.trim();if(!q)return;inp.value='';addMsg('q',q.replace(/[<>]/g,''));var r=bestAns(q);addMsg('a',r.a+(r.sc?'<br><button class="btn o" style="margin-top:6px" onclick="showTab(\'t-sc\');toggleAssist()">'+L('Open Self-check','Self-check திற')+'</button>':''));speak(r.a);}
+function toggleAssist(){var p=document.getElementById('asP');var open=p.style.display!=='flex';p.style.display=open?'flex':'none';if(open&&!document.getElementById('asLog').children.length){addMsg('a',L('Ask me by voice (🎙) or text — I answer aloud.','குரல் (🎙) அல்லது எழுத்துல கேளுங்க — சத்தமா பதில் சொல்றேன்.'));}renderChips();}
+function renderChips(){var c=[['Is it debt-free?','கடன் இல்லையா?'],['Halwasiya stake?','ஹல்வாசியா பங்கு?'],['Dubai receivables?','துபாய் பாக்கி?'],['Gold impact?','தங்க தாக்கம்?'],['Cupid results?','க்யூபிட் ரிசல்ட்?']];document.getElementById('asChips').innerHTML=c.map(function(x){return '<button onclick="ask(this.textContent)">'+L(x[0],x[1])+'</button>';}).join('');}
+var rec=null,recOn=false;
+function micToggle(){var SR=window.SpeechRecognition||window.webkitSpeechRecognition;var m=document.getElementById('mic');if(!SR){addMsg('a',L('Voice input is not supported in this browser; please type.','இந்த பிரவுசர்ல குரல் உள்ளீடு இல்ல; டைப் பண்ணுங்க.'));return;}
+ if(recOn&&rec){rec.stop();return;}rec=new SR();rec.lang=LANG==='ta'?'ta-IN':'en-IN';rec.interimResults=false;rec.onresult=function(e){ask(e.results[0][0].transcript);};rec.onend=function(){recOn=false;m.classList.remove('rec');};rec.onerror=function(){recOn=false;m.classList.remove('rec');};recOn=true;m.classList.add('rec');try{rec.start();}catch(e){recOn=false;m.classList.remove('rec');}}
+function toggleDisc(){var d=document.getElementById('disc');d.style.display=d.style.display==='block'?'none':'block';}
+
+/* ---------- sub-tab wiring ---------- */
+function wireSub(id,fn){document.querySelectorAll('#'+id+' button').forEach(function(b){b.onclick=function(){document.querySelectorAll('#'+id+' button').forEach(function(x){x.classList.toggle('on',x===b);});fn(b.dataset.k);};});}
+function renderDynamic(){renderTL();drawBM('pcj');drawBM('cup');renderGoldSc();drawGold();renderTG();drawTemple();renderSW();renderSC();renderQuiz();renderChips();}
+document.addEventListener('DOMContentLoaded',function(){buildNav();
+ wireSub('cfSub',function(k){document.getElementById('cf-pcj').style.display=k==='pcj'?'':'none';document.getElementById('cf-cup').style.display=k==='cup'?'':'none';});
+ wireSub('tgSub',function(k){TGC=k;renderTG();});wireSub('tmSub',function(k){TMC=k;drawTemple();});wireSub('swSub',function(k){SWC=k;renderSW();});wireSub('scSub',function(k){SCC=k;renderSC();});
+ renderDynamic();initCharts('t-ov');});
+</script>
+</body>
+</html>
