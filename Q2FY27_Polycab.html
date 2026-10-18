@@ -1,0 +1,910 @@
+<title>Polycab Q2 FY27</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&family=Noto+Sans+Tamil:wght@400;600;700&display=swap">
+<style>
+/* Layout: cable-spec sheet — header strip, scrolling tab rail, one panel at a time; white paper, orange UI accent, metal colours for commodities */
+:root{
+  --bg:#ffffff; --ink:#14110f; --ink2:#3d3833; --mute:#6b635b; --line:#e7e1da; --soft:#fbf7f3;
+  --accent:#F28C28; --accent-soft:#fff1e3; --accent-ink:#9a4d06;
+  --poly:#c8102e; --copper:#b4642d; --alu:#5f7389; --pvc:#2f8a57;
+  --good:#1f7a3f; --warn:#b26a00; --bad:#b3261e;
+  --display:"Barlow Condensed","Arial Narrow",system-ui,sans-serif;
+  --body:"IBM Plex Sans","Noto Sans Tamil",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --ta:"Noto Sans Tamil","IBM Plex Sans",system-ui,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+  color-scheme:light;
+}
+html,body{background:var(--bg);color:var(--ink)}
+body{font-family:var(--body);font-size:15px;line-height:1.55;font-weight:500}
+html[lang=ta] body{font-family:var(--ta)}
+html[lang=ta] en{display:none} html:not([lang=ta]) ta{display:none}
+*{box-sizing:border-box}
+.wrap{max-width:1180px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+header.top{border-bottom:3px solid var(--ink);padding-block:18px 12px}
+.toprow{display:flex;flex-wrap:wrap;gap:12px 20px;align-items:flex-end;justify-content:space-between}
+.brand{display:flex;flex-direction:column;gap:2px;min-width:0}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--accent-ink);font-weight:600}
+h1{font-family:var(--display);font-size:clamp(32px,6vw,52px);line-height:.95;margin:0;font-weight:800;letter-spacing:.01em;text-wrap:balance}
+h1 b{color:var(--poly)}
+.slogan{font-weight:700;color:var(--ink2);font-size:14px}
+.slogan span{background:var(--accent-soft);color:var(--accent-ink);padding:1px 8px;border-radius:3px}
+.ctrls{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.btn{font:inherit;font-weight:700;font-size:13px;border:2px solid var(--ink);background:var(--bg);color:var(--ink);padding:6px 12px;border-radius:4px;cursor:pointer}
+.btn:hover{background:var(--accent-soft)}
+.btn:focus-visible,button:focus-visible,input:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.btn.on{background:var(--ink);color:#fff}
+.seg{display:inline-flex;border:2px solid var(--ink);border-radius:4px;overflow:hidden}
+.seg button{font:inherit;font-weight:700;font-size:13px;border:0;background:var(--bg);color:var(--ink);padding:6px 12px;cursor:pointer}
+.seg button.on{background:var(--accent);color:#1a0d00}
+nav.tabs{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);border-bottom:1px solid var(--line)}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bg)}
+.tabrail{display:flex;gap:4px;overflow-x:auto;padding-block:8px;scrollbar-width:thin}
+.tabrail button{flex:0 0 auto;font:inherit;font-size:13px;font-weight:700;border:1.5px solid var(--line);background:var(--bg);color:var(--ink2);padding:6px 11px;border-radius:999px;cursor:pointer;white-space:nowrap}
+.tabrail button.on{background:var(--accent);border-color:var(--accent);color:#1a0d00}
+.tabrail button.hot{border-color:var(--poly);color:var(--poly)}
+.tabrail button.hot.on{color:#1a0d00}
+main{padding-block:20px 120px}
+section.panel{display:none}
+section.panel.on{display:block}
+h2{font-family:var(--display);font-size:clamp(26px,4vw,36px);font-weight:800;margin:0 0 4px;line-height:1;text-wrap:balance}
+h3{font-size:16px;margin:0 0 8px;font-weight:700;text-wrap:balance}
+.lede{color:var(--ink2);margin:0 0 16px;font-weight:600;max-width:72ch}
+.grid{display:grid;gap:14px}
+.g2{grid-template-columns:repeat(auto-fit,minmax(min(100%,340px),1fr))}
+.g3{grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr))}
+.g4{grid-template-columns:repeat(auto-fit,minmax(min(100%,190px),1fr))}
+.card{border:1.5px solid var(--line);border-radius:6px;padding:14px;background:var(--bg);min-width:0}
+.card.k{border-top:4px solid var(--accent)}
+.card.c-copper{border-top:4px solid var(--copper)} .card.c-alu{border-top:4px solid var(--alu)} .card.c-pvc{border-top:4px solid var(--pvc)}
+.kpi .v{font-family:var(--display);font-size:34px;font-weight:800;line-height:1;font-variant-numeric:tabular-nums}
+.kpi .l{font-size:12px;font-family:var(--mono);text-transform:uppercase;letter-spacing:.06em;color:var(--mute);font-weight:600}
+.kpi .d{font-size:13px;font-weight:700;margin-top:4px}
+.up{color:var(--good)} .dn{color:var(--bad)} .wn{color:var(--warn)}
+ul.b{margin:0;padding-left:18px} ul.b li{margin:3px 0}
+.chip{display:inline-block;font-size:12px;font-weight:700;padding:2px 9px;border-radius:999px;border:1.5px solid currentColor;margin:2px 4px 2px 0;white-space:nowrap}
+.chip.g{color:var(--good)} .chip.w{color:var(--warn)} .chip.r{color:var(--bad)} .chip.o{color:var(--accent-ink);background:var(--accent-soft);border-color:var(--accent)}
+.tbl{overflow-x:auto;border:1.5px solid var(--line);border-radius:6px}
+table{border-collapse:collapse;width:100%;font-size:14px;font-variant-numeric:tabular-nums}
+th,td{padding:8px 10px;border-bottom:1px solid var(--line);text-align:right;white-space:nowrap}
+th:first-child,td:first-child{text-align:left;white-space:normal}
+thead th{background:var(--soft);font-size:12px;text-transform:uppercase;letter-spacing:.04em;color:var(--ink2)}
+tr:last-child td{border-bottom:0}
+.note{font-size:12.5px;color:var(--mute);font-weight:500;margin-top:6px}
+.chart{width:100%;overflow-x:auto}
+.chart svg{display:block;width:100%;height:auto;min-width:300px}
+.chart text{font-family:var(--body);font-weight:600}
+.callout{background:var(--accent-soft);border-left:5px solid var(--accent);padding:10px 14px;border-radius:0 6px 6px 0;font-weight:600}
+.pic{border:1.5px dashed var(--accent);border-radius:6px;padding:12px;background:var(--bg)}
+.pic .eyebrow{display:block;margin-bottom:6px}
+.flow{display:flex;flex-wrap:wrap;gap:6px;align-items:stretch}
+.flow .st{flex:1 1 130px;border:1.5px solid var(--line);border-radius:6px;padding:8px;font-size:13px;font-weight:600;min-width:0}
+.flow .st b{display:block;font-size:14px}
+.flow .st.me{border-color:var(--poly);background:#fff5f6}
+.flow .ar{align-self:center;font-weight:800;color:var(--accent)}
+.sp{height:16px}
+.bar{height:10px;background:var(--line);border-radius:5px;overflow:hidden}
+.bar i{display:block;height:100%;background:var(--accent)}
+.row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+input[type=range]{width:100%;accent-color:var(--accent)}
+.calc output{font-family:var(--display);font-size:26px;font-weight:800}
+.tl{position:relative;padding-left:22px}
+.tl:before{content:"";position:absolute;left:7px;top:4px;bottom:4px;width:3px;background:var(--line)}
+.tl .ev{position:relative;margin:0 0 12px}
+.tl .ev:before{content:"";position:absolute;left:-20px;top:5px;width:12px;height:12px;border-radius:50%;background:var(--bg);border:3px solid var(--mute)}
+.tl .ev.done:before{background:var(--good);border-color:var(--good)}
+.tl .ev.guide:before{border-color:var(--accent)}
+.tl .ev.late:before{border-color:var(--bad)}
+.tl .ev small{font-family:var(--mono);font-weight:600;color:var(--mute)}
+.swot{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr));gap:12px}
+.swot .card h3{font-family:var(--display);font-size:24px}
+.q{border:1.5px solid var(--line);border-radius:6px;padding:12px;margin-bottom:10px}
+.q .opts{display:grid;gap:6px;margin-top:8px}
+.q .opts button{text-align:left;font:inherit;font-weight:600;padding:8px 10px;border:1.5px solid var(--line);border-radius:5px;background:var(--bg);color:var(--ink);cursor:pointer}
+.q .opts button.right{border-color:var(--good);background:#eef8f1}
+.q .opts button.wrong{border-color:var(--bad);background:#fdf0ef}
+.q .ex{margin-top:8px;font-size:14px}
+.chk{display:flex;gap:10px;align-items:flex-start;padding:8px 0;border-bottom:1px dashed var(--line)}
+.chk input{margin-top:4px;width:18px;height:18px;accent-color:var(--accent);flex:0 0 auto}
+.chk .data{font-size:13px;color:var(--ink2);font-weight:500}
+.chk .data b{color:var(--accent-ink)}
+.gp{font-family:var(--mono);font-size:12px;font-weight:600;color:var(--accent-ink)}
+/* assist */
+#assist{border:2px solid var(--ink);border-radius:8px;overflow:hidden}
+.ah{display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:space-between;background:var(--accent-soft);padding:10px 12px;border-bottom:1.5px solid var(--line)}
+.ah b{font-family:var(--display);font-size:22px}
+.alog{max-height:420px;overflow-y:auto;padding:12px;display:flex;flex-direction:column;gap:10px;background:var(--bg)}
+.msg{max-width:88%;padding:9px 12px;border-radius:8px;font-weight:600;min-width:0}
+.msg.u{align-self:flex-end;background:var(--ink);color:#fff}
+.msg.a{align-self:flex-start;background:var(--soft);border:1.5px solid var(--line)}
+.msg details{margin-top:6px;font-weight:500;font-size:14px}
+.msg summary{cursor:pointer;color:var(--accent-ink);font-weight:700}
+.ain{display:flex;gap:8px;padding:10px;border-top:1.5px solid var(--line);flex-wrap:wrap}
+.ain input[type=text]{flex:1 1 200px;font:inherit;font-weight:600;padding:9px 10px;border:2px solid var(--ink);border-radius:5px;min-width:0}
+.sug{display:flex;flex-wrap:wrap;gap:6px;padding:0 12px 12px}
+.sug button{font:inherit;font-size:13px;font-weight:600;border:1.5px solid var(--accent);background:var(--bg);color:var(--accent-ink);border-radius:999px;padding:4px 10px;cursor:pointer}
+.vbar{height:4px;background:var(--line)} .vbar i{display:block;height:100%;width:0;background:var(--accent);transition:width .1s linear}
+.spd{display:flex;gap:6px;align-items:center;flex-wrap:wrap;font-size:13px;font-weight:700}
+.spd button{font:inherit;font-size:12px;font-weight:700;border:1.5px solid var(--ink);background:var(--bg);color:var(--ink);border-radius:4px;padding:3px 8px;cursor:pointer}
+.spd button.on{background:var(--ink);color:#fff}
+/* floating */
+.cb-badge{position:fixed;right:calc(14px + env(safe-area-inset-right,0px));bottom:calc(14px + env(safe-area-inset-bottom,0px));z-index:20}
+.cb-badge .logo{width:46px;height:46px;border-radius:50%;background:var(--accent);color:#1a0d00;font-family:var(--display);font-weight:800;font-size:20px;display:grid;place-items:center;border:2px solid var(--ink);cursor:pointer;animation:blink 2.2s ease-in-out infinite}
+@keyframes blink{50%{opacity:.45}}
+.cb-badge .disc{position:absolute;right:0;bottom:56px;width:min(300px,80vw);background:var(--bg);border:2px solid var(--ink);border-radius:6px;padding:10px;font-size:12.5px;font-weight:600;display:none}
+.cb-badge:hover .disc,.cb-badge.open .disc{display:block}
+.vbub{position:fixed;right:calc(14px + env(safe-area-inset-right,0px));bottom:calc(72px + env(safe-area-inset-bottom,0px));z-index:20;font:inherit;font-weight:700;font-size:13px;background:var(--ink);color:#fff;border:0;border-radius:999px;padding:9px 14px;cursor:pointer;box-shadow:0 3px 10px rgba(0,0,0,.18)}
+@media (prefers-reduced-motion:reduce){.cb-badge .logo{animation:none}}
+.mono{font-family:var(--mono);font-weight:600}
+.big{font-family:var(--display);font-weight:800;font-size:44px;line-height:1}
+</style>
+
+<header class="top"><div class="wrap">
+  <div class="toprow">
+    <div class="brand">
+      <span class="eyebrow">CB Research · Q2 FY27 · <en>Results 15 Oct 2026</en><ta>Results 15 Oct 2026</ta></span>
+      <h1><b>Polycab</b> India <en>— Q2 FY27</en><ta>— Q2 FY27</ta></h1>
+      <div class="slogan">NSE: POLYCAB · <en>Wires, cables, FMEG, EPC</en><ta>Wires, cables, FMEG, EPC</ta> · <span><en>Know before you own</en><ta>புரிஞ்சு வாங்குங்க!</ta></span></div>
+    </div>
+    <div class="ctrls">
+      <div class="seg" role="group" aria-label="Language"><button id="lEN" class="on">English</button><button id="lTA">தமிழ்</button></div>
+      <button class="btn" id="readTab">🔊 <en>Read this tab</en><ta>இந்த tab-ஐ படிங்க</ta></button>
+    </div>
+  </div>
+</div></header>
+
+<nav class="tabs"><div class="wrap"><div class="tabrail" id="rail"></div></div></nav>
+
+<main class="wrap" id="main">
+
+<!-- 1 DASHBOARD -->
+<section class="panel" id="dash" data-en="Dashboard" data-ta="Dashboard">
+  <h2><en>Record quarter, even with new rivals at the door</en><ta>புது போட்டி வந்தாலும் record quarter</ta></h2>
+  <p class="lede"><en>Revenue crossed ₹9,899 cr for the first time. Copper prices did part of the lifting; volume did the rest.</en><ta>Revenue முதல் தடவையா ₹9,899 cr தாண்டிச்சு. ஒரு பங்கு copper விலை, மீதி volume.</ta></p>
+  <div class="grid g4">
+    <div class="card k kpi"><div class="l">Revenue</div><div class="v">₹9,899 cr</div><div class="d up">+53% YoY · +21% QoQ</div></div>
+    <div class="card k kpi"><div class="l">EBITDA</div><div class="v">₹1,423 cr</div><div class="d up">+39% YoY · <en>margin</en><ta>margin</ta> 14.4%</div></div>
+    <div class="card k kpi"><div class="l">PAT</div><div class="v">₹990 cr</div><div class="d up">+43% YoY · 10.0%</div></div>
+    <div class="card k kpi"><div class="l"><en>Net cash</en><ta>Net cash</ta></div><div class="v">₹4,520 cr</div><div class="d up"><en>vs ₹2,940 cr a year ago</en><ta>போன வருஷம் ₹2,940 cr</ta></div></div>
+  </div>
+  <div class="sp"></div>
+  <div class="grid g2">
+    <div class="card"><h3><en>Quarterly revenue (₹ cr) and EBITDA margin</en><ta>Quarterly revenue (₹ cr) & EBITDA margin</ta></h3><div class="chart" id="chRev"></div></div>
+    <div class="card"><h3><en>At a glance</en><ta>ஒரே பார்வையில</ta></h3>
+      <ul class="b">
+        <li><en>W&C revenue +47%; domestic +50%; volume only +6–8%.</en><ta>W&C revenue +47%; domestic +50%; ஆனா volume +6–8% தான்.</ta></li>
+        <li><en>Wires (the market UltraTech targets) grew volume in early double digits.</en><ta>UltraTech குறி வெச்ச wires-ல தான் volume double digit வளர்ந்திருக்கு.</ta></li>
+        <li><en>FMEG revenue more than doubled (+124%); EBIT margin 10.1%, a first.</en><ta>FMEG revenue இரண்டு மடங்குக்கு மேல (+124%); EBIT margin முதல் தடவையா 10.1%.</ta></li>
+        <li><en>EPC grew 53% but its margin fell to 7.2% from 18.1%.</en><ta>EPC 53% வளர்ந்தது, ஆனா margin 18.1%-லிருந்து 7.2%-க்கு இறங்கிருச்சு.</ta></li>
+        <li><en>Stock: ₹8,207 (15 Oct), down 1.5% on result day, ~19% below 52-week high.</en><ta>Share: ₹8,207 (15 Oct), result அன்னைக்கு 1.5% இறக்கம்; 52-week high-லிருந்து ~19% கீழ.</ta></li>
+      </ul>
+      <div class="sp"></div>
+      <div class="row"><span class="chip o">6 Pillars 45/60</span><span class="chip w">CY 44 · <en>late cycle</en><ta>late cycle</ta></span><span class="chip w">TG 53 · <en>balanced</en><ta>balanced</ta></span></div>
+    </div>
+  </div>
+</section>
+
+<!-- 2 BUSINESS MODEL -->
+<section class="panel" id="biz" data-en="Business Model" data-ta="Business Model">
+  <h2><en>How Polycab makes money</en><ta>Polycab எப்படி சம்பாதிக்குது</ta></h2>
+  <p class="lede"><en>A metal converter with a brand: buys copper and aluminium, adds insulation, sells through dealers and electricians at cost-plus prices.</en><ta>Brand இருக்கற metal converter: copper, aluminium வாங்கி, insulation போட்டு, dealers & electricians மூலமா cost-plus விலைல விக்குது.</ta></p>
+  <div class="pic"><span class="eyebrow"><en>Picture it · the money path</en><ta>Picture it · பணம் வர்ற வழி</ta></span>
+    <div class="flow">
+      <div class="st"><b><en>Buy metal</en><ta>Metal வாங்குறது</ta></b><en>Copper 100% imported; aluminium; PVC compound</en><ta>Copper 100% import; aluminium; PVC</ta></div><div class="ar">→</div>
+      <div class="st me"><b><en>Make</en><ta>தயாரிப்பு</ta></b><en>Draw, insulate, sheath in own plants</en><ta>சொந்த plant-ல draw, insulate, sheath</ta></div><div class="ar">→</div>
+      <div class="st me"><b><en>Price</en><ta>விலை</ta></b><en>Cost-plus; wires revised fortnightly, cables monthly</en><ta>Cost-plus; wires 15 நாளுக்கு ஒருமுறை, cables மாசம் ஒருமுறை</ta></div><div class="ar">→</div>
+      <div class="st"><b><en>Sell</en><ta>விற்பனை</ta></b><en>Channel (dealers) &gt; institutional; exports to 94 countries</en><ta>Channel (dealers) &gt; institutional; 94 நாட்டுக்கு export</ta></div>
+    </div>
+  </div>
+  <div class="sp"></div>
+  <div class="grid g3">
+    <div class="card k"><h3>Wires & Cables (84%)</h3><ul class="b"><li><en>House wires, LV/MV/HV power cables, data cables</en><ta>House wires, LV/MV/HV cables, data cables</ta></li><li><en>~30–31% share of the organised market</en><ta>Organised market-ல ~30–31% share</ta></li><li><en>Gained 3–4 share points last year</en><ta>போன வருஷம் 3–4 points share கூடுச்சு</ta></li></ul></div>
+    <div class="card k"><h3>FMEG (10%)</h3><ul class="b"><li><en>Fans, lights, switches, switchgear, conduits & pipes, solar</en><ta>Fans, lights, switches, switchgear, pipes, solar</ta></li><li><en>Solar = traded inverters only, not own manufacturing</en><ta>Solar = வாங்கி விக்கற inverters தான், சொந்த தயாரிப்பு இல்ல</ta></li><li><en>Profitable since Q4 FY25</en><ta>Q4 FY25 முதல் லாபம்</ta></li></ul></div>
+    <div class="card k"><h3>EPC (6%)</h3><ul class="b"><li><en>BharatNet and RDSS power distribution projects</en><ta>BharatNet, RDSS power projects</ta></li><li><en>Order book ~₹9,000–10,000 cr</en><ta>Order book ~₹9,000–10,000 cr</ta></li><li><en>Milestone-based, lumpy margins</en><ta>Milestone-படி, margin ஏறி இறங்கும்</ta></li></ul></div>
+  </div>
+  <p class="note"><en>Shares are of Q2 FY27 revenue before eliminations.</en><ta>Q2 FY27 revenue பங்கு (eliminations-க்கு முன்).</ta></p>
+</section>
+
+<!-- 3 SEGMENTS -->
+<section class="panel" id="seg" data-en="Segments" data-ta="Segments">
+  <h2><en>Segment performance</en><ta>Segment performance</ta></h2>
+  <p class="lede"><en>All three segments grew; FMEG's margin jump is the new story, EPC's margin drop the soft spot.</en><ta>மூணு segment-உம் வளர்ந்தது; FMEG margin ஜம்ப் தான் புது கதை, EPC margin இறக்கம் தான் weak spot.</ta></p>
+  <div class="grid g2">
+    <div class="card"><h3><en>Revenue: Q2 FY26 vs Q2 FY27 (₹ cr)</en><ta>Revenue: Q2 FY26 vs Q2 FY27 (₹ cr)</ta></h3><div class="chart" id="chSeg"></div></div>
+    <div class="card"><h3><en>EBIT margin over three quarters (%)</en><ta>EBIT margin – 3 quarters (%)</ta></h3><div class="chart" id="chSegM"></div></div>
+  </div>
+  <div class="sp"></div>
+  <div class="tbl"><table>
+    <thead><tr><th><en>Segment</en><ta>Segment</ta></th><th>Q2 FY26</th><th>Q1 FY27</th><th>Q2 FY27</th><th>YoY</th><th>EBIT % (Q2 FY27)</th></tr></thead>
+    <tbody>
+      <tr><td>Wires & Cables</td><td>5,647</td><td>7,155</td><td>8,301</td><td class="up">+47%</td><td>14.2% <span class="dn">(15.1%)</span></td></tr>
+      <tr><td><en>– of which exports</en><ta>– இதுல export</ta></td><td>421</td><td>266</td><td>493</td><td class="up">+17%</td><td>—</td></tr>
+      <tr><td>FMEG</td><td>444</td><td>764</td><td>993</td><td class="up">+124%</td><td>10.1% <span class="up">(0.5%)</span></td></tr>
+      <tr><td>EPC</td><td>403</td><td>307</td><td>617</td><td class="up">+53%</td><td>7.2% <span class="dn">(18.1%)</span></td></tr>
+    </tbody></table></div>
+  <p class="note"><en>₹ cr. Brackets = year-ago EBIT margin. Export share fell to 5.0% from 6.5% because domestic grew faster.</en><ta>₹ cr. Bracket = போன வருஷ EBIT margin. Domestic வேகமா வளர்ந்ததால export share 6.5%-லிருந்து 5.0%.</ta></p>
+</section>
+
+<!-- 4 COMPETITION -->
+<section class="panel" id="comp" data-en="Beating Competition" data-ta="போட்டியை வெல்வது" data-hot="1">
+  <h2><en>Doing well despite new competition</en><ta>போட்டி இருந்தும் Polycab எப்படி ஜெயிக்குது</ta></h2>
+  <p class="lede"><en>UltraTech's UltraVolt launched on 4 Sep 2026; Adani has a JV. Polycab's next quarter showed no damage yet.</en><ta>UltraTech-ன் UltraVolt 4 Sep 2026 launch ஆச்சு; Adani-க்கும் JV இருக்கு. ஆனா அடுத்த quarter-ல Polycab-க்கு இன்னும் பாதிப்பு தெரியல.</ta></p>
+  <div class="grid g2">
+    <div class="card"><h3><en>Where the rivals aim vs where Polycab grew</en><ta>போட்டியாளர் குறி vs Polycab வளர்ச்சி</ta></h3><div class="chart" id="chComp"></div>
+      <p class="note"><en>Volume growth, Q2 FY27, from management comments (ranges shown as mid-points).</en><ta>Q2 FY27 volume growth, management சொன்னது (range-ன் நடு மதிப்பு).</ta></p></div>
+    <div class="card"><h3><en>The new entrant in numbers</en><ta>புது entrant – எண்களில்</ta></h3>
+      <div class="tbl"><table><tbody>
+        <tr><td>UltraVolt (UltraTech)</td><td><en>launched 4 Sep 2026</en><ta>4 Sep 2026 launch</ta></td></tr>
+        <tr><td><en>Investment</en><ta>முதலீடு</ta></td><td>₹1,800 cr</td></tr>
+        <tr><td><en>Plant</en><ta>Plant</ta></td><td><en>Gujarat, commercial production started Sep 2026</en><ta>Gujarat, Sep 2026 commercial production</ta></td></tr>
+        <tr><td><en>Reach plan</en><ta>Reach திட்டம்</ta></td><td><en>1 lakh+ retailers, 5,000 UBS outlets</en><ta>1 லட்சம்+ retailers, 5,000 UBS</ta></td></tr>
+        <tr><td><en>Brokerage share estimate</en><ta>Brokerage share கணிப்பு</ta></td><td>5–7% <en>by FY31</en><ta>FY31-க்குள்</ta></td></tr>
+        <tr><td><en>Polycab's response</en><ta>Polycab பதில்</ta></td><td><en>No price cuts; keeps premium</en><ta>விலை குறைப்பு இல்ல; premium தொடரும்</ta></td></tr>
+      </tbody></table></div></div>
+  </div>
+  <div class="sp"></div>
+  <h3><en>Six reasons Polycab held its ground</en><ta>Polycab நிலைச்சு நின்னதுக்கு 6 காரணம்</ta></h3>
+  <div class="grid g3">
+    <div class="card k"><h3>1 · <en>Channel muscle</en><ta>Channel பலம்</ta></h3><en>Dealer sales grew faster than institutional sales; the Polyratna electrician network keeps the brand on the job site.</en><ta>Dealer sales, institutional-ஐ விட வேகமா வளர்ந்தது; Polyratna electrician network brand-ஐ site-ல வெச்சிருக்கு.</ta></div>
+    <div class="card k"><h3>2 · <en>Won in wires itself</en><ta>Wires-லயே ஜெயிச்சது</ta></h3><en>Wires volume grew early double digits, in the very segment UltraVolt targets.</en><ta>UltraVolt குறி வெச்ச wires-லயே volume double digit வளர்ந்தது.</ta></div>
+    <div class="card k"><h3>3 · <en>Price discipline</en><ta>விலை கட்டுப்பாடு</ta></h3><en>Raised select wire prices ~3% on 2 Sep, two days before the launch; held a premium over peers.</en><ta>Launch-க்கு 2 நாள் முன்னாடி (2 Sep) சில wires விலையை ~3% ஏத்துச்சு; premium-ஐ விடல.</ta></div>
+    <div class="card k"><h3>4 · <en>Scale and leverage</en><ta>Scale & leverage</ta></h3><en>W&C EBIT margin up 90 bps QoQ to 14.2% from operating leverage and mix.</en><ta>Operating leverage, mix-ஆல W&C EBIT margin QoQ 90 bps ஏறி 14.2%.</ta></div>
+    <div class="card k"><h3>5 · <en>Second engine (FMEG)</en><ta>இரண்டாவது engine (FMEG)</ta></h3><en>FMEG +124% with 10.1% margin cuts dependence on house wires.</en><ta>FMEG +124%, 10.1% margin; house wires-ஐ மட்டும் நம்பற நிலை குறையுது.</ta></div>
+    <div class="card k"><h3>6 · <en>Balance-sheet firepower</en><ta>Balance sheet பலம்</ta></h3><en>₹4,520 cr net cash and LC-backed copper buying fund growth without borrowing.</en><ta>₹4,520 cr net cash, LC மூலம் copper வாங்குவது – கடன் இல்லாம வளர்ச்சி.</ta></div>
+  </div>
+  <div class="sp"></div>
+  <div class="grid g2">
+    <div class="pic"><span class="eyebrow"><en>Picture it · the market slices</en><ta>Picture it · market பங்கு</ta></span><div class="chart" id="chMkt"></div>
+      <p class="note"><en>Industry ~₹1.1 lakh cr; wires ~30% of it; 30–35% of wires still unorganised (management).</en><ta>Industry ~₹1.1 லட்சம் cr; இதுல wires ~30%; wires-ல 30–35% இன்னும் unorganised (management).</ta></p></div>
+    <div class="card"><h3><en>What to watch next</en><ta>அடுத்து கவனிக்க வேண்டியது</ta></h3>
+      <ul class="b">
+        <li><en>Channel checks say rival wires are priced 10–15% lower; Polycab disputes this for comparable grades.</en><ta>Channel check: போட்டி wires 10–15% குறைவு விலை; same grade-க்கு அப்படி இல்லனு Polycab சொல்லுது.</ta></li>
+        <li><en>Q3 FY27 has a high base (~45% growth last year).</en><ta>Q3 FY27-க்கு base அதிகம் (போன வருஷம் ~45% growth).</ta></li>
+        <li><en>Any dealer incentive increase would show first in other expenses.</en><ta>Dealer incentive கூடினா, முதல்ல other expenses-ல தெரியும்.</ta></li>
+        <li><en>Wires-heavy peers (RR Kabel, KEI retail) feel the heat first, per management.</en><ta>Wires அதிகம் இருக்கற peers-க்கு (RR Kabel, KEI retail) தான் முதல்ல சூடு, management சொல்லுது.</ta></li>
+      </ul></div>
+  </div>
+</section>
+
+<!-- 5 RAW MATERIALS -->
+<section class="panel" id="rm" data-en="Raw Materials" data-ta="Raw Materials" data-hot="1">
+  <h2><en>Copper, aluminium and PVC: who pays?</en><ta>Copper, aluminium, PVC: யாரு கட்டுறாங்க?</ta></h2>
+  <p class="lede"><en>Polycab runs a cost-plus model. Metal spikes raise revenue and absolute profit, squeeze margin % only when pass-through lags, and tie up working capital.</en><ta>Polycab cost-plus model. Metal விலை ஏறினா revenue, absolute profit ஏறும்; pass-through தாமதமானா தான் margin % அழுத்தம்; working capital அதிகம் தேவைப்படும்.</ta></p>
+  <div class="grid g3">
+    <div class="card c-copper"><h3 style="color:var(--copper)">Copper</h3><div class="big" style="color:var(--copper)">~+45%</div><en>YoY, LME quarter average (approx.)</en><ta>YoY, LME quarter average (தோராயம்)</ta>
+      <ul class="b"><li><en>LME record ~$14,875/t on 10 Sep 2026</en><ta>10 Sep 2026 LME record ~$14,875/t</ta></li><li><en>+6% QoQ in Q2 (management)</en><ta>Q2-ல QoQ +6% (management)</ta></li><li><en>Largest input; 100% imported</en><ta>பெரிய input; 100% import</ta></li></ul></div>
+    <div class="card c-alu"><h3 style="color:var(--alu)">Aluminium</h3><div class="big" style="color:var(--alu)">~+25%</div><en>YoY, but falling in October</en><ta>YoY, ஆனா October-ல இறக்கம்</ta>
+      <ul class="b"><li><en>LME ~$3,325/t on 8 Sep → $3,107 on 5 Oct</en><ta>8 Sep ~$3,325/t → 5 Oct $3,107</ta></li><li><en>Used in power cables (conductors, armour)</en><ta>Power cables-ல (conductor, armour)</ta></li><li><en>Falling price = restocking relief</en><ta>விலை இறக்கம் = restocking நிம்மதி</ta></li></ul></div>
+    <div class="card c-pvc"><h3 style="color:var(--pvc)">PVC resin</h3><div class="big" style="color:var(--pvc)">+17%</div><en>YoY, domestic (Q2 FY27 to date)</en><ta>YoY, domestic (Q2 FY27)</ta>
+      <ul class="b"><li><en>₹94/kg from 1 Sep 2026 (+₹2)</en><ta>1 Sep 2026 முதல் ₹94/kg (+₹2)</ta></li><li><en>Minimum import price $766/t CIF since Jul 2026</en><ta>Jul 2026 முதல் minimum import price $766/t</ta></li><li><en>Insulation for wires; raw material for FMEG pipes & conduits</en><ta>Wires insulation; FMEG pipes, conduits</ta></li></ul></div>
+  </div>
+  <div class="sp"></div>
+  <div class="card"><h3><en>Input price index (Q2 FY26 = 100), approx. quarter averages</en><ta>Input விலை index (Q2 FY26 = 100), தோராய quarter average</ta></h3><div class="chart" id="chRM"></div>
+    <p class="note"><en>CB estimate from LME prints and domestic PVC quotes; for direction, not exact levels.</en><ta>LME, domestic PVC விலைகள் வெச்சு CB கணிப்பு; திசையை காட்ட மட்டும்.</ta></p></div>
+  <div class="sp"></div>
+  <div class="grid g2">
+    <div class="card"><h3><en>W&C growth split: price did most of the work</en><ta>W&C growth பிரிவு: விலை தான் அதிகம்</ta></h3><div class="chart" id="chSplit"></div>
+      <p class="note"><en>Value +47%; volume ~+7% (6–8%); so price/mix ≈ +37% (1.47 ÷ 1.07).</en><ta>Value +47%; volume ~+7%; அதனால price/mix ≈ +37% (1.47 ÷ 1.07).</ta></p></div>
+    <div class="pic"><span class="eyebrow"><en>Picture it · copper goes up ₹100</en><ta>Picture it · copper ₹100 ஏறினா</ta></span>
+      <div class="flow">
+        <div class="st"><b>1</b><en>Copper cost +₹100</en><ta>Copper cost +₹100</ta></div><div class="ar">→</div>
+        <div class="st me"><b>2</b><en>Polycab revises list price within 15–30 days</en><ta>15–30 நாளுக்குள் Polycab list price மாத்துது</ta></div><div class="ar">→</div>
+        <div class="st"><b>3</b><en>Revenue +₹100+, margin ₹ grows, margin % can dip</en><ta>Revenue +₹100+, margin ₹ ஏறும், margin % கொஞ்சம் குறையலாம்</ta></div><div class="ar">→</div>
+        <div class="st"><b>4</b><en>More cash stuck in stock; LCs bridge it</en><ta>Stock-ல அதிக பணம்; LC சமாளிக்குது</ta></div>
+      </div>
+      <p class="note"><en>Risk: a sharp copper fall can force inventory-loss pricing and channel destocking.</en><ta>Risk: copper திடீர்னு இறங்கினா inventory loss, channel destocking.</ta></p></div>
+  </div>
+  <div class="sp"></div>
+  <div class="card calc"><h3><en>Try it: copper move vs pass-through</en><ta>முயற்சி பண்ணுங்க: copper மாற்றம் vs pass-through</ta></h3>
+    <div class="grid g3">
+      <label><en>Copper price change</en><ta>Copper விலை மாற்றம்</ta>: <b id="cuV">+20%</b><input type="range" id="cu" min="-30" max="40" value="20"></label>
+      <label><en>Copper share of W&C sales value (assumption)</en><ta>W&C விற்பனை மதிப்புல copper பங்கு (assumption)</ta>: <b id="shV">45%</b><input type="range" id="sh" min="25" max="65" value="45"></label>
+      <label><en>Passed on to buyers</en><ta>வாங்குபவர்களுக்கு கடத்தியது</ta>: <b id="ptV">100%</b><input type="range" id="pt" min="0" max="100" value="100"></label>
+    </div>
+    <div class="grid g3" style="margin-top:10px">
+      <div><div class="kpi"><div class="l"><en>Price change needed</en><ta>தேவையான விலை மாற்றம்</ta></div></div><output id="oP">—</output></div>
+      <div><div class="kpi"><div class="l"><en>W&C revenue (Q2 base ₹8,301 cr)</en><ta>W&C revenue (Q2 base ₹8,301 cr)</ta></div></div><output id="oR">—</output></div>
+      <div><div class="kpi"><div class="l"><en>W&C EBIT margin (from 14.2%)</en><ta>W&C EBIT margin (14.2%-லிருந்து)</ta></div></div><output id="oM">—</output></div>
+    </div>
+    <p class="note"><en>Illustration only. Copper's share is an adjustable assumption, not a company figure; volumes held constant.</en><ta>விளக்கத்துக்கு மட்டும். Copper பங்கு ஒரு assumption, company figure இல்ல; volume மாறல.</ta></p>
+  </div>
+</section>
+
+<!-- 6 FINANCIALS -->
+<section class="panel" id="fin" data-en="Financials" data-ta="Financials">
+  <h2><en>Financials</en><ta>Financials</ta></h2>
+  <p class="lede"><en>Five-quarter run: revenue up 53%, profit up 43%; margin back above 14% after a dip in Q3–Q4 FY26.</en><ta>5 quarter: revenue +53%, profit +43%; Q3–Q4 FY26 இறக்கத்துக்கு அப்புறம் margin மறுபடி 14%-க்கு மேல.</ta></p>
+  <div class="tbl"><table>
+    <thead><tr><th>₹ cr</th><th>Q2 FY26</th><th>Q3 FY26</th><th>Q4 FY26</th><th>Q1 FY27</th><th>Q2 FY27</th><th>YoY</th></tr></thead>
+    <tbody>
+      <tr><td>Revenue</td><td>6,477</td><td>7,636</td><td>8,865</td><td>8,210</td><td><b>9,899</b></td><td class="up">+53%</td></tr>
+      <tr><td>EBITDA</td><td>1,021</td><td>966</td><td>1,161</td><td>1,133</td><td><b>1,423</b></td><td class="up">+39%</td></tr>
+      <tr><td>EBITDA %</td><td>15.8%</td><td>12.7%</td><td>13.1%</td><td>13.8%</td><td><b>14.4%</b></td><td class="dn">−140 bps</td></tr>
+      <tr><td>PAT</td><td>693</td><td>630</td><td>786</td><td>797</td><td><b>990</b></td><td class="up">+43%</td></tr>
+      <tr><td>PAT %</td><td>10.7%</td><td>8.3%</td><td>8.9%</td><td>9.7%</td><td><b>10.0%</b></td><td class="dn">−70 bps</td></tr>
+    </tbody></table></div>
+  <div class="sp"></div>
+  <div class="grid g2">
+    <div class="card"><h3><en>PAT by quarter (₹ cr)</en><ta>Quarter-வாரி PAT (₹ cr)</ta></h3><div class="chart" id="chPat"></div></div>
+    <div class="card"><h3><en>Half-year and full-year</en><ta>Half-year & full-year</ta></h3>
+      <div class="tbl"><table><thead><tr><th>₹ cr</th><th>FY25</th><th>FY26</th><th>H1 FY27</th></tr></thead><tbody>
+        <tr><td>Revenue</td><td>22,408</td><td>28,884</td><td>18,109 <span class="up">+46%</span></td></tr>
+        <tr><td>EBITDA %</td><td>13.2%</td><td>13.9%</td><td>14.1%</td></tr>
+        <tr><td>PAT</td><td>2,046</td><td>2,708</td><td>1,787 <span class="up">+38%</span></td></tr>
+        <tr><td><en>Dividend/share</en><ta>Dividend/share</ta></td><td>₹35</td><td>₹47</td><td>—</td></tr>
+      </tbody></table></div>
+      <ul class="b" style="margin-top:8px"><li><en>YoY margin dip is mostly mix: copper inflates revenue more than profit.</en><ta>YoY margin இறக்கம் பெரும்பாலும் mix: copper revenue-ஐ profit-ஐ விட அதிகமா ஏத்துது.</ta></li><li><en>Other income ₹88 cr in Q2 FY27.</en><ta>Q2 FY27 other income ₹88 cr.</ta></li></ul></div>
+  </div>
+</section>
+
+<!-- 7 CASH FLOW -->
+<section class="panel" id="cf" data-en="Cash Flow & Ratios" data-ta="Cash Flow & Ratios">
+  <h2><en>Cash flow, ratios and working capital</en><ta>Cash flow, ratios, working capital</ta></h2>
+  <p class="lede"><en>Cash keeps piling up; the unusually low working-capital cycle is helped by letters of credit and will normalise.</en><ta>Cash சேர்ந்துகிட்டே இருக்கு; working capital cycle ரொம்ப குறைவா இருக்கறது LC உதவியால — இது normal-க்கு திரும்பும்.</ta></p>
+  <div class="grid g2">
+    <div class="card"><h3><en>Net cash (₹ cr)</en><ta>Net cash (₹ cr)</ta></h3><div class="chart" id="chCash"></div></div>
+    <div class="card"><h3><en>Working capital days</en><ta>Working capital days</ta></h3><div class="chart" id="chWC"></div>
+      <p class="note"><en>Q2 average cycle ~11 days; closing −2 days. Management expects a return to 45–50 days.</en><ta>Q2 average ~11 நாள்; closing −2 நாள். 45–50 நாளுக்கு திரும்பும்னு management.</ta></p></div>
+  </div>
+  <div class="sp"></div>
+  <div class="tbl"><table>
+    <thead><tr><th><en>Ratio</en><ta>Ratio</ta></th><th><en>Value</en><ta>மதிப்பு</ta></th><th><en>Read</en><ta>அர்த்தம்</ta></th></tr></thead>
+    <tbody>
+      <tr><td><en>Operating cash flow, Q2 / H1 FY27</en><ta>Operating cash flow, Q2 / H1 FY27</ta></td><td>₹852 / ₹1,671 cr</td><td><en>Strong</en><ta>வலுவானது</ta></td></tr>
+      <tr><td><en>CFO ÷ PAT, H1 FY27</en><ta>CFO ÷ PAT, H1 FY27</ta></td><td>0.94x</td><td><en>Profit is mostly turning into cash</en><ta>Profit பெரும்பாலும் cash ஆகுது</ta></td></tr>
+      <tr><td><en>CFO ÷ PAT, FY26</en><ta>CFO ÷ PAT, FY26</ta></td><td>1.41x</td><td><en>Very good</en><ta>ரொம்ப நல்லது</ta></td></tr>
+      <tr><td><en>Capex, H1 FY27</en><ta>Capex, H1 FY27</ta></td><td>₹610 cr</td><td><en>Capacity, EHV plant, supply chain</en><ta>Capacity, EHV plant, supply chain</ta></td></tr>
+      <tr><td><en>Free cash flow, H1 FY27</en><ta>Free cash flow, H1 FY27</ta></td><td>≈ ₹1,061 cr</td><td><en>Self-funded growth</en><ta>சொந்த பணத்துல வளர்ச்சி</ta></td></tr>
+      <tr><td><en>Advance paid for inventory</en><ta>Inventory-க்கு advance</ta></td><td>~₹1,200 cr</td><td><en>Not one-off, per management</en><ta>One-off இல்லனு management</ta></td></tr>
+      <tr><td><en>Dividend payout, FY26</en><ta>Dividend payout, FY26</ta></td><td>~26%</td><td><en>₹47/share</en><ta>₹47/share</ta></td></tr>
+      <tr><td><en>Debt</en><ta>கடன்</ta></td><td><en>Net cash</en><ta>Net cash</ta></td><td><en>No leverage risk</en><ta>கடன் risk இல்ல</ta></td></tr>
+    </tbody></table></div>
+  <p class="note"><en>FCF = CFO − capex (CB calculation). Payout = ₹47 × 15.06 cr shares ÷ FY26 PAT.</en><ta>FCF = CFO − capex (CB கணக்கு). Payout = ₹47 × 15.06 cr shares ÷ FY26 PAT.</ta></p>
+</section>
+
+<!-- 8 VALUATIONS -->
+<section class="panel" id="val" data-en="Valuations" data-ta="Valuations">
+  <h2><en>Valuation</en><ta>Valuation</ta></h2>
+  <p class="lede"><en>At ₹8,207 the stock trades near its own five-year average P/E on trailing profit, and cheaper on forward estimates.</en><ta>₹8,207-ல, trailing profit-படி P/E அதோட 5 வருஷ average பக்கத்துல; forward estimates-படி மலிவு.</ta></p>
+  <div class="grid g4">
+    <div class="card k kpi"><div class="l">Market cap</div><div class="v">₹1.24 L cr</div><div class="d">15.06 cr <en>shares</en><ta>shares</ta></div></div>
+    <div class="card k kpi"><div class="l">TTM P/E</div><div class="v">38.6x</div><div class="d"><en>TTM EPS ≈ ₹213</en><ta>TTM EPS ≈ ₹213</ta></div></div>
+    <div class="card k kpi"><div class="l">EV/EBITDA (TTM)</div><div class="v">25.4x</div><div class="d"><en>after ₹4,520 cr cash</en><ta>₹4,520 cr cash கழிச்சு</ta></div></div>
+    <div class="card k kpi"><div class="l">Price/Sales (TTM)</div><div class="v">3.6x</div><div class="d"><en>Div. yield 0.6%</en><ta>Div. yield 0.6%</ta></div></div>
+  </div>
+  <div class="sp"></div>
+  <div class="grid g2">
+    <div class="card"><h3><en>P/E on different yardsticks</en><ta>வேற வேற அளவுகோல்ல P/E</ta></h3><div class="chart" id="chPE"></div>
+      <p class="note"><en>Sep-28E EPS ≈ ₹263 backed out from one brokerage's 35x target. 5-yr average P/E ~37x.</en><ta>Sep-28E EPS ≈ ₹263, ஒரு brokerage-ன் 35x target-லிருந்து. 5 வருஷ average P/E ~37x.</ta></p></div>
+    <div class="card"><h3><en>Price vs brokerage target range</en><ta>விலை vs brokerage target range</ta></h3><div class="chart" id="chTgt"></div>
+      <p class="note"><en>Targets after Q2: ₹9,200 to ₹11,083 from five brokerages. Shown for context; CB does not set targets.</en><ta>Q2-க்கு அப்புறம் 5 brokerage targets ₹9,200–₹11,083. Context-க்கு மட்டும்; CB target கொடுக்காது.</ta></p></div>
+  </div>
+  <div class="sp"></div>
+  <div class="callout"><en>Margin of safety depends on the 11–13% guided W&C margin. Today's ~15% is above guide; valuing on peak margin is the main trap to avoid.</en><ta>Safety margin, guide பண்ண 11–13% W&C margin-ஐ பொறுத்தது. இப்போ ~15% guide-க்கு மேல; peak margin வெச்சு value பண்றது தான் பெரிய trap.</ta></div>
+</section>
+
+<!-- 9 TAKEAWAYS -->
+<section class="panel" id="take" data-en="5 Key Takeaways" data-ta="5 Key Takeaways">
+  <h2><en>5 key takeaways</en><ta>5 முக்கிய பாடங்கள்</ta></h2>
+  <div class="grid g2">
+    <div class="card k"><h3>1 · <en>Competition has not dented numbers yet</en><ta>போட்டி இன்னும் numbers-ஐ பாதிக்கல</ta></h3><en>Wires volume grew double digits in the first UltraVolt quarter; no price cuts.</en><ta>UltraVolt வந்த முதல் quarter-லயே wires volume double digit; விலை குறைப்பு இல்ல.</ta></div>
+    <div class="card k"><h3>2 · <en>Copper inflated the headline</en><ta>Copper headline-ஐ பெருசாக்குச்சு</ta></h3><en>53% revenue growth on ~7% volume. Read volume, not value.</en><ta>~7% volume-க்கு 53% revenue growth. Value இல்ல, volume பாருங்க.</ta></div>
+    <div class="card k"><h3>3 · <en>FMEG is a real second engine</en><ta>FMEG உண்மையான 2nd engine</ta></h3><en>₹993 cr revenue at 10.1% EBIT; ahead of the FY30 8–10% target.</en><ta>₹993 cr revenue, 10.1% EBIT; FY30 target 8–10%-க்கு முன்னாடியே.</ta></div>
+    <div class="card k"><h3>4 · <en>Margins are above guidance</en><ta>Margin guide-க்கு மேல</ta></h3><en>W&C ~15% in H1 vs 11–13% guided; expect some mean reversion.</en><ta>H1-ல W&C ~15%, guide 11–13%; கொஞ்சம் கீழ இறங்கலாம்.</ta></div>
+    <div class="card k"><h3>5 · <en>Cash is strong, cycle will normalise</en><ta>Cash வலுவு, cycle normal ஆகும்</ta></h3><en>₹4,520 cr net cash; working capital may rise from 11 to 45–50 days.</en><ta>₹4,520 cr net cash; working capital 11-லிருந்து 45–50 நாளுக்கு ஏறலாம்.</ta></div>
+  </div>
+</section>
+
+<!-- 10 MARKET ACTIVITY -->
+<section class="panel" id="mkt" data-en="Reasons for Share Market Activity" data-ta="Share விலை நகர்வு காரணம்">
+  <h2><en>Why the stock fell on a beat</en><ta>Beat பண்ணியும் share ஏன் இறங்குச்சு</ta></h2>
+  <p class="lede"><en>Profit beat street estimates (₹990 cr vs ~₹804–821 cr polls), yet the stock slipped 1.5% to ₹8,207 on 15 Oct.</en><ta>Profit street estimate-ஐ விட அதிகம் (₹990 cr vs ~₹804–821 cr), இருந்தும் 15 Oct அன்னைக்கு share 1.5% இறங்கி ₹8,207.</ta></p>
+  <div class="card"><h3><en>Price path, key dates (₹)</en><ta>விலை பாதை, முக்கிய தேதிகள் (₹)</ta></h3><div class="chart" id="chPx"></div></div>
+  <div class="sp"></div>
+  <div class="grid g2">
+    <div class="card"><h3 class="dn"><en>Pulling down</en><ta>கீழ இழுத்தது</ta></h3><ul class="b">
+      <li><en>Volume only 6–8%; growth seen as copper-driven</en><ta>Volume 6–8% தான்; growth copper-ஆல னு பார்வை</ta></li>
+      <li><en>UltraVolt overhang: stock fell 6.4% on 4 Sep</en><ta>UltraVolt பயம்: 4 Sep அன்னைக்கு 6.4% இறக்கம்</ta></li>
+      <li><en>Margins above guide look hard to sustain</en><ta>Guide-க்கு மேல margin தொடருமா சந்தேகம்</ta></li>
+      <li><en>EHV plant pushed to FY28; EPC margin fell</en><ta>EHV plant FY28-க்கு தள்ளிப்போச்சு; EPC margin இறக்கம்</ta></li>
+      <li><en>RBI raised repo 25 bps to 5.5%; rate-cut hopes gone</en><ta>RBI repo 25 bps ஏத்தி 5.5%; rate cut நம்பிக்கை போச்சு</ta></li>
+      <li><en>NCLAT matter (₹2.79 cr dispute): order reserved</en><ta>NCLAT விஷயம் (₹2.79 cr dispute): order reserved</ta></li>
+    </ul></div>
+    <div class="card"><h3 class="up"><en>Holding up</en><ta>தாங்கி பிடிச்சது</ta></h3><ul class="b">
+      <li><en>Beat on revenue, EBITDA and PAT</en><ta>Revenue, EBITDA, PAT மூணுலயும் beat</ta></li>
+      <li><en>Brokerages lifted earnings estimates (e.g. +9% FY27)</en><ta>Brokerages earnings estimate ஏத்தினாங்க (FY27 +9%)</ta></li>
+      <li><en>Targets ₹9,200–₹11,083, all above price</en><ta>Targets ₹9,200–₹11,083, எல்லாம் விலைக்கு மேல</ta></li>
+      <li><en>Govt capex +18% Apr–Aug 2026; GDP 7.8%</en><ta>Govt capex Apr–Aug 2026 +18%; GDP 7.8%</ta></li>
+    </ul></div>
+  </div>
+</section>
+
+<!-- 11 TRIGGERS & CYCLE -->
+<section class="panel" id="trig" data-en="Triggers & Cycle" data-ta="Triggers & Cycle">
+  <h2><en>Triggers and cycle</en><ta>Triggers & cycle</ta></h2>
+  <p class="lede"><en>Sector looks late-cycle (record margins plus new capacity); the stock's catalysts and risks roughly balance.</en><ta>Sector late-cycle மாதிரி (record margin + புது capacity); stock-ன் catalysts, risks கிட்டத்தட்ட சமம்.</ta></p>
+  <div class="grid g2">
+    <div class="card"><h3><en>Cycle clock</en><ta>Cycle கடிகாரம்</ta></h3><div class="chart" id="chClock"></div>
+      <ul class="b"><li><en>Sector P4 late cycle (35): margins at record, UltraTech/Adani/KEI adding capacity; volumes still growing, so on the P3/P4 edge.</en><ta>Sector P4 late cycle (35): record margin, UltraTech/Adani/KEI capacity சேர்க்குறாங்க; volume இன்னும் வளருது, அதனால P3/P4 எல்லை.</ta></li>
+      <li><en>Stock 52.5: scaling 80, margin near high 40, P/E in band 55, Weinstein Stage 3 35.</en><ta>Stock 52.5: scaling 80, margin உச்சம் 40, P/E band-க்குள் 55, Weinstein Stage 3 35.</ta></li>
+      <li><b>CY = 44</b>. <en>No cyclical P/E trap (P/E is not at a low).</en><ta>Cyclical P/E trap இல்ல (P/E குறைந்தபட்சத்துல இல்ல).</ta></li></ul></div>
+    <div class="card"><h3><en>Upcoming dates</en><ta>வரப்போகும் தேதிகள்</ta></h3>
+      <div class="tl">
+        <div class="ev guide"><small>Oct–Nov 2026</small><br><en>NCLAT order on the CIRP admission</en><ta>CIRP பற்றி NCLAT order</ta></div>
+        <div class="ev guide"><small>Jan 2027</small><br><en>Q3 FY27 results vs a ~45% growth base</en><ta>Q3 FY27 results, ~45% base</ta></div>
+        <div class="ev guide"><small>Q3 FY27</small><br><en>UltraVolt's first full quarter in market</en><ta>UltraVolt முதல் முழு quarter</ta></div>
+        <div class="ev guide"><small>Feb 2027</small><br><en>Union Budget: power T&D, housing capex</en><ta>Union Budget: power T&D, housing</ta></div>
+        <div class="ev late"><small>FY28 (Apr–May 2027)</small><br><en>EHV plant commissioning, delayed</en><ta>EHV plant தொடக்கம், தாமதம்</ta></div>
+      </div></div>
+  </div>
+  <div class="sp"></div>
+  <div class="tbl"><table id="trigTbl">
+    <thead><tr><th><en>Trigger</en><ta>Trigger</ta></th><th>+/−</th><th>I</th><th>C</th><th>W</th><th>P</th><th><en>Points</en><ta>Points</ta></th><th><en>Watch</en><ta>கவனிக்க</ta></th></tr></thead><tbody></tbody></table></div>
+  <p class="note"><b>TG = 50 + 8×3.85 − 8×3.43 ≈ 53.</b> <en>Top three positives counted; all negatives counted. FMEG margin already delivered moves to earnings; only further scale counts.</en><ta>Top 3 positives, எல்லா negatives-உம். ஏற்கனவே வந்த FMEG margin earnings-க்கு போச்சு; இனி வரப்போற scale மட்டும்.</ta></p>
+  <div class="sp"></div>
+  <div class="card"><h3><en>What would change this view</en><ta>இந்த பார்வை மாற என்ன நடக்கணும்</ta></h3><ul class="b">
+    <li><en>Polycab cutting prices or raising dealer schemes → competition is biting.</en><ta>Polycab விலை குறைச்சா / dealer scheme கூட்டினா → போட்டி கடிக்குது.</ta></li>
+    <li><en>Volume growth holding above 10% in H2 → sector still in expansion.</en><ta>H2-ல volume 10%-க்கு மேல → sector இன்னும் expansion-ல.</ta></li>
+    <li><en>Copper falling 15%+ quickly → inventory losses and destocking.</en><ta>Copper சீக்கிரம் 15%+ இறங்கினா → inventory loss, destocking.</ta></li>
+  </ul></div>
+</section>
+
+<!-- 12 SIX PILLARS -->
+<section class="panel" id="pil" data-en="6 Pillars" data-ta="6 தூண்கள்">
+  <h2><en>The 6 Pillars score: 45 / 60</en><ta>6 தூண் score: 45 / 60</ta></h2>
+  <p class="lede"><en>Each pillar is scored 1–10. Taller pillar = stronger. The roof is only as level as the shortest pillar.</en><ta>ஒவ்வொரு தூணுக்கும் 1–10. உயரமான தூண் = வலுவானது. கூரை சின்ன தூணை பொறுத்து தான் சமமா இருக்கும்.</ta></p>
+  <div class="card"><div class="chart" id="chTemple"></div></div>
+  <div class="sp"></div>
+  <div class="tbl"><table id="pilTbl"><thead><tr><th><en>Pillar</en><ta>தூண்</ta></th><th><en>Score</en><ta>Score</ta></th><th><en>Evidence</en><ta>ஆதாரம்</ta></th></tr></thead><tbody></tbody></table></div>
+  <p class="note"><en>Grading: 9–10 best-in-class with numbers to prove it; 7–8 strong with one open question; 5–6 fair or fully priced; below 5 a clear weakness.</en><ta>Grading: 9–10 = எண்களோட best-in-class; 7–8 = வலுவு, ஒரு கேள்வி இருக்கு; 5–6 = சரி / விலைல ஏற்கனவே இருக்கு; 5-க்கு கீழ = பலவீனம்.</ta></p>
+</section>
+
+<!-- 13 BIG BET -->
+<section class="panel" id="bet" data-en="Big Bet: FMEG & EHV" data-ta="பெரிய பந்தயம்: FMEG & EHV">
+  <h2><en>The big bets: FMEG turnaround and high-voltage cables</en><ta>பெரிய பந்தயம்: FMEG turnaround & high-voltage cables</ta></h2>
+  <p class="lede"><en>Project Spring (to FY30) wants growth beyond house wires. FMEG is delivering early; EHV is running late.</en><ta>Project Spring (FY30 வரை) house wires-ஐ தாண்டி வளர்ச்சி வேணும். FMEG சீக்கிரமே வருது; EHV தாமதம்.</ta></p>
+  <div class="grid g2">
+    <div class="card"><h3><en>FMEG EBIT margin by quarter (%)</en><ta>FMEG EBIT margin (%)</ta></h3><div class="chart" id="chFm"></div></div>
+    <div class="card"><h3><en>Done vs guided</en><ta>முடிஞ்சது vs சொன்னது</ta></h3>
+      <div class="tl">
+        <div class="ev done"><small>Q4 FY25 · <en>done</en><ta>முடிஞ்சது</ta></small><br><en>FMEG turns profitable</en><ta>FMEG லாபத்துக்கு வந்தது</ta></div>
+        <div class="ev done"><small>FY26 · <en>done</en><ta>முடிஞ்சது</ta></small><br><en>~10 new export countries; now 94</en><ta>~10 புது export நாடுகள்; இப்போ 94</ta></div>
+        <div class="ev done"><small>Q2 FY27 · <en>done</en><ta>முடிஞ்சது</ta></small><br><en>FMEG EBIT 10.1%, 7th profitable quarter</en><ta>FMEG EBIT 10.1%, 7வது லாப quarter</ta></div>
+        <div class="ev guide"><small>FY27 · <en>guided</en><ta>சொன்னது</ta></small><br><en>BharatNet & RDSS execution ₹800–1,000 cr each</en><ta>BharatNet, RDSS ஒவ்வொன்னும் ₹800–1,000 cr</ta></div>
+        <div class="ev late"><small>FY28 · <en>delayed</en><ta>தாமதம்</ta></small><br><en>EHV cable plant commissioning (under construction)</en><ta>EHV cable plant (கட்டுமானத்துல)</ta></div>
+        <div class="ev guide"><small>FY30 · <en>guided</en><ta>சொன்னது</ta></small><br><en>FMEG EBITDA 8–10%; W&C 11–13%; grow 1.5x market</en><ta>FMEG EBITDA 8–10%; W&C 11–13%; market-ஐ விட 1.5x</ta></div>
+      </div></div>
+  </div>
+  <div class="sp"></div>
+  <div class="grid g2">
+    <div class="card"><h3><en>Who is ahead?</en><ta>யார் முன்னாடி?</ta></h3><ul class="b">
+      <li><en>FMEG: Havells is still the larger consumer-electricals brand; Polycab is growing faster from a smaller base.</en><ta>FMEG: Havells இன்னும் பெரிய brand; Polycab சின்ன base-லிருந்து வேகமா வளருது.</ta></li>
+      <li><en>EHV: KEI already sells cables up to 400 kV; Polycab's plant is not commercial yet.</en><ta>EHV: KEI ஏற்கனவே 400 kV வரை விக்குது; Polycab plant இன்னும் commercial இல்ல.</ta></li>
+      <li><en>Solar: Polycab trades inverters; it does not make panels or inverters.</en><ta>Solar: Polycab inverters-ஐ trading பண்ணுது; panel, inverter தயாரிக்கல.</ta></li>
+    </ul></div>
+    <div class="card k"><h3><en>How Polycab got there</en><ta>Polycab இங்க எப்படி வந்தது</ta></h3><ul class="b">
+      <li><en>Moved from a pan-India plan to regional P&Ls</en><ta>Pan-India plan-லிருந்து region-வாரி P&L</ta></li>
+      <li><en>Premium mix up: fans 33%, lights 38% premium</en><ta>Premium mix: fans 33%, lights 38%</ta></li>
+      <li><en>Sold a bundle (wires + switches + fans) to builders</en><ta>Builders-க்கு bundle (wires + switches + fans)</ta></li>
+      <li><en>Rode PM Surya Ghar demand with solar inverters</en><ta>PM Surya Ghar demand-ல solar inverters</ta></li>
+    </ul></div>
+  </div>
+</section>
+
+<!-- 14 VALUE CHAIN -->
+<section class="panel" id="vc" data-en="Sector Need & Value Chain" data-ta="Sector தேவை & Value Chain">
+  <h2><en>Why India needs more cable, and where Polycab sits</en><ta>India-க்கு ஏன் அதிக cable தேவை, Polycab எங்க இருக்கு</ta></h2>
+  <p class="lede"><en>Every new home, factory, data centre and solar park needs wire. Polycab plays from metal conversion to the electrician.</en><ta>ஒவ்வொரு புது வீடு, factory, data centre, solar park-க்கும் wire தேவை. Metal conversion முதல் electrician வரை Polycab இருக்கு.</ta></p>
+  <div class="pic"><span class="eyebrow"><en>Value chain · red = Polycab plays</en><ta>Value chain · சிவப்பு = Polycab இருக்கு</ta></span>
+    <div class="flow">
+      <div class="st"><b><en>Mining & smelting</en><ta>Mining & smelting</ta></b><en>Chile, Zambia; imported</en><ta>Chile, Zambia; import</ta></div><div class="ar">→</div>
+      <div class="st"><b>PVC / XLPE</b><en>Resin makers; 64% of India's S-PVC imported</en><ta>Resin; India S-PVC 64% import</ta></div><div class="ar">→</div>
+      <div class="st me"><b><en>Wire & cable making</en><ta>Wire & cable தயாரிப்பு</ta></b><en>Drawing, insulation, armouring</en><ta>Drawing, insulation, armouring</ta></div><div class="ar">→</div>
+      <div class="st me"><b><en>Brand & channel</en><ta>Brand & channel</ta></b><en>Dealers, Polyratna electricians</en><ta>Dealers, Polyratna electricians</ta></div><div class="ar">→</div>
+      <div class="st me"><b><en>Projects (EPC)</en><ta>Projects (EPC)</ta></b>BharatNet, RDSS</div>
+    </div>
+  </div>
+  <div class="sp"></div>
+  <div class="grid g3">
+    <div class="card"><h3><en>Demand drivers</en><ta>Demand காரணங்கள்</ta></h3><ul class="b">
+      <li><en>Govt capex ₹5.10 lakh cr, Apr–Aug 2026 (+18%)</en><ta>Govt capex ₹5.10 லட்சம் cr (+18%)</ta></li>
+      <li><en>Green Corridor Phase 3: ₹1.9 lakh cr, 135 GW evacuation</en><ta>Green Corridor 3: ₹1.9 லட்சம் cr, 135 GW</ta></li>
+      <li><en>Data centres 1.6–1.7 GW today; 8–15 GW projected</en><ta>Data centres இப்போ 1.6–1.7 GW; 8–15 GW ஆகலாம்</ta></li>
+      <li><en>Housing launches still up ~4% YoY</en><ta>Housing launches ~4% ஏற்றம்</ta></li></ul></div>
+    <div class="card"><h3><en>Organised shift</en><ta>Organised பக்கம் நகர்வு</ta></h3><div class="chart" id="chOrg"></div><p class="note"><en>Branded share of the market, %.</en><ta>Market-ல branded பங்கு, %.</ta></p></div>
+    <div class="card"><h3><en>Exports</en><ta>Exports</ta></h3><ul class="b">
+      <li><en>₹493 cr in Q2; +17% YoY, +85% QoQ</en><ta>Q2 ₹493 cr; +17% YoY, +85% QoQ</ta></li>
+      <li><en>US, Europe, LATAM, Middle East</en><ta>US, Europe, LATAM, Middle East</ta></li>
+      <li><en>Shipping delays of 10–12 days hit bookings</en><ta>10–12 நாள் shipping தாமதம்</ta></li>
+      <li><en>US data-centre and grid demand pulls LV/MV/HV cables</en><ta>US data centre, grid demand</ta></li></ul></div>
+  </div>
+</section>
+
+<!-- 15 SWOT -->
+<section class="panel" id="swot" data-en="SWOT" data-ta="SWOT">
+  <h2>SWOT</h2>
+  <div class="swot">
+    <div class="card" style="border-top:4px solid var(--good)"><h3 class="up"><en>Strengths</en><ta>பலம்</ta></h3><ul class="b"><li><en>~30% organised share, #1</en><ta>~30% organised share, #1</ta></li><li><en>₹4,520 cr net cash</en><ta>₹4,520 cr net cash</ta></li><li><en>Cost-plus pricing power</en><ta>Cost-plus விலை சக்தி</ta></li><li><en>Deep dealer & electrician reach</en><ta>ஆழமான dealer, electrician reach</ta></li></ul></div>
+    <div class="card" style="border-top:4px solid var(--warn)"><h3 class="wn"><en>Weaknesses</en><ta>பலவீனம்</ta></h3><ul class="b"><li><en>100% imported copper</en><ta>Copper 100% import</ta></li><li><en>EPC margin volatile (7.2%)</en><ta>EPC margin நிலையில்ல (7.2%)</ta></li><li><en>EHV plant delayed</en><ta>EHV plant தாமதம்</ta></li><li><en>Solar is trading, not making</en><ta>Solar = trading, தயாரிப்பு இல்ல</ta></li></ul></div>
+    <div class="card" style="border-top:4px solid var(--accent)"><h3 style="color:var(--accent-ink)"><en>Opportunities</en><ta>வாய்ப்புகள்</ta></h3><ul class="b"><li><en>Data-centre and grid cables</en><ta>Data centre, grid cables</ta></li><li><en>Exports to 94+ countries</en><ta>94+ நாடுகளுக்கு export</ta></li><li><en>Unorganised wires (30–35%) to capture</en><ta>Unorganised wires (30–35%)</ta></li><li><en>FMEG premiumisation</en><ta>FMEG premium</ta></li></ul></div>
+    <div class="card" style="border-top:4px solid var(--bad)"><h3 class="dn"><en>Threats</en><ta>அச்சுறுத்தல்</ta></h3><ul class="b"><li><en>UltraVolt, Adani price pressure</en><ta>UltraVolt, Adani விலை அழுத்தம்</ta></li><li><en>Copper reversal / destocking</en><ta>Copper இறக்கம் / destocking</ta></li><li><en>Rate hikes slowing housing</en><ta>Rate hike-ஆல housing மெதுவாகும்</ta></li><li><en>NCLAT outcome (small)</en><ta>NCLAT முடிவு (சின்னது)</ta></li></ul></div>
+  </div>
+</section>
+
+<!-- 16 SELF CHECK -->
+<section class="panel" id="self" data-en="Investor Self-Check" data-ta="Investor Self-Check">
+  <h2><en>CB investor self-check</en><ta>CB investor self-check</ta></h2>
+  <p class="lede"><en>Tick what you have checked yourself. This counts only your own conditions; it is not a recommendation.</en><ta>நீங்களே check பண்ணதை tick பண்ணுங்க. இது உங்க conditions-ஐ மட்டும் எண்ணுது; recommendation இல்ல.</ta></p>
+  <div class="card k"><div class="row" style="justify-content:space-between"><b><en>Overall</en><ta>மொத்தம்</ta>: <span id="scAll">0 / 0</span></b><button class="btn" id="scReset"><en>Clear ticks</en><ta>Tick-ஐ அழி</ta></button></div><div class="bar" style="margin-top:8px"><i id="scBar" style="width:0"></i></div></div>
+  <div class="sp"></div>
+  <div class="grid g2" id="scGroups"></div>
+</section>
+
+<!-- 17 ASSIST -->
+<section class="panel" id="ast" data-en="Cauvery Assist" data-ta="Cauvery Assist">
+  <h2>Cauvery Assist</h2>
+  <p class="lede"><en>Ask by typing or voice. Answers come first in one line; tap "More details" for the rest.</en><ta>Type பண்ணியோ பேசியோ கேளுங்க. பதில் ஒரு வரில முதல்ல; மீதி "More details"-ல.</ta></p>
+  <div id="assist"></div>
+</section>
+
+<!-- 18 SOCRATES -->
+<section class="panel" id="quiz" data-en="Cauvery Socrates" data-ta="Cauvery Socrates">
+  <h2>Cauvery Socrates</h2>
+  <p class="lede"><en>Eight questions from this dashboard. Score:</en><ta>இந்த dashboard-லிருந்து 8 கேள்வி. Score:</ta> <b id="qScore">0 / 8</b></p>
+  <div id="qList"></div>
+</section>
+
+<!-- 19 ANALYST VIEW -->
+<section class="panel" id="av" data-en="Analyst View" data-ta="Analyst View">
+  <h2><en>CB analyst view</en><ta>CB analyst பார்வை</ta></h2>
+  <p class="lede"><en>Education only. Not a buy, sell or hold call.</en><ta>கல்விக்காக மட்டும். Buy/sell/hold சொல்லல.</ta></p>
+  <div class="grid g2">
+    <div class="card k"><h3><en>The quarter</en><ta>இந்த quarter</ta></h3><ul class="b">
+      <li><en>Best quarter ever; a clean beat on every line.</en><ta>இதுவரை best quarter; எல்லா line-லயும் beat.</ta></li>
+      <li><en>The competitive scare did not show in numbers: wires volume grew double digits.</en><ta>போட்டி பயம் numbers-ல தெரியல: wires volume double digit.</ta></li>
+      <li><en>About four-fifths of W&C growth was price, so H2 growth depends on copper staying high.</en><ta>W&C growth-ல சுமார் 4/5 விலை; H2 growth copper உயரத்துல இருக்கறதை பொறுத்தது.</ta></li></ul></div>
+    <div class="card k"><h3><en>Cycle and triggers</en><ta>Cycle & triggers</ta></h3><ul class="b">
+      <li><en>Cycle: sector on the P3/P4 edge; stock in Weinstein Stage 3 (CY 44).</en><ta>Cycle: sector P3/P4 எல்லை; stock Stage 3 (CY 44).</ta></li>
+      <li><en>Top positives: FMEG scale-up, export recovery.</en><ta>Top positives: FMEG scale-up, export மீட்சி.</ta></li>
+      <li><en>Top risk: UltraVolt and Adani pricing in wires.</en><ta>Top risk: wires-ல UltraVolt, Adani விலை.</ta></li></ul></div>
+    <div class="card"><h3><en>Raw materials</en><ta>Raw materials</ta></h3><ul class="b">
+      <li><en>Copper (+~45% YoY) is the swing factor: helps revenue, hurts only if it reverses fast.</en><ta>Copper (+~45% YoY) தான் முக்கியம்: revenue-க்கு உதவி; சீக்கிரம் இறங்கினா தான் பாதிப்பு.</ta></li>
+      <li><en>Aluminium easing in October helps cable costs.</en><ta>October-ல aluminium இறக்கம் cable cost-க்கு உதவி.</ta></li>
+      <li><en>PVC +17% matters more for FMEG pipes than wires.</en><ta>PVC +17% wires-ஐ விட FMEG pipes-க்கு முக்கியம்.</ta></li></ul></div>
+    <div class="card"><h3><en>Bottom line</en><ta>சுருக்கமா</ta></h3><ul class="b">
+      <li><en>Business quality and balance sheet are top-tier (6 Pillars 45/60).</en><ta>Business quality, balance sheet top-tier (6 தூண் 45/60).</ta></li>
+      <li><en>Valuation is fair, not cheap, if margins revert to 11–13%.</en><ta>Margin 11–13%-க்கு திரும்பினா valuation நியாயம், மலிவு இல்ல.</ta></li>
+      <li><en>Watch Q3: volume, dealer schemes, copper.</en><ta>Q3-ல பாருங்க: volume, dealer schemes, copper.</ta></li></ul></div>
+  </div>
+</section>
+</main>
+
+<button class="vbub" id="vbub">🎙 Voice Assist</button>
+<div class="cb-badge" id="badge"><div class="logo" tabindex="0" aria-label="Disclaimer">CB</div>
+  <div class="disc"><en>CB Research (Cauvery Business Research) is not SEBI-registered. This dashboard is for education only and is not investment advice or a buy/sell/hold recommendation. Figures are from company disclosures and public data as of 16 Oct 2026; commodity indices are approximate.</en><ta>CB Research SEBI-ல register ஆகல. இது கல்விக்காக மட்டும்; investment advice இல்ல, buy/sell/hold சொல்லல. 16 Oct 2026 வரை company, public data; commodity index தோராயம்.</ta></div></div>
+
+<script>
+(function(){
+"use strict";
+var LANG="en";
+function L(en,ta){return LANG==="ta"?ta:en;}
+var store={get:function(k){try{return JSON.parse(localStorage.getItem("cb_polycab_q2fy27_"+k));}catch(e){return null;}},set:function(k,v){try{localStorage.setItem("cb_polycab_q2fy27_"+k,JSON.stringify(v));}catch(e){}}};
+
+/* ---------- tabs ---------- */
+var panels=[].slice.call(document.querySelectorAll("section.panel"));
+var rail=document.getElementById("rail");
+function buildRail(){
+  rail.innerHTML="";
+  panels.forEach(function(p){
+    var b=document.createElement("button");b.textContent=L(p.dataset.en,p.dataset.ta);b.dataset.id=p.id;
+    if(p.dataset.hot)b.classList.add("hot");
+    if(p.classList.contains("on"))b.classList.add("on");
+    b.onclick=function(){showTab(p.id);};rail.appendChild(b);
+  });
+}
+function showTab(id){
+  panels.forEach(function(p){p.classList.toggle("on",p.id===id);});
+  [].forEach.call(rail.children,function(b){b.classList.toggle("on",b.dataset.id===id);if(b.dataset.id===id)b.scrollIntoView({block:"nearest",inline:"center"});});
+  store.set("tab",id);
+}
+var start=(location.hash||"").slice(1);
+var saved=store.get("tab");
+var first=panels.some(function(p){return p.id===start;})?start:(panels.some(function(p){return p.id===saved;})?saved:"dash");
+panels.forEach(function(p){p.classList.toggle("on",p.id===first);});
+buildRail();
+
+/* ---------- SVG helpers ---------- */
+var C={ink:"#14110f",ink2:"#3d3833",mute:"#6b635b",line:"#e7e1da",acc:"#F28C28",poly:"#c8102e",cu:"#b4642d",al:"#5f7389",pvc:"#2f8a57",good:"#1f7a3f",bad:"#b3261e",warn:"#b26a00"};
+function svg(w,h,inner){return '<svg viewBox="0 0 '+w+' '+h+'" role="img" xmlns="http://www.w3.org/2000/svg">'+inner+'</svg>';}
+function tx(x,y,s,o){o=o||{};return '<text x="'+x+'" y="'+y+'" font-size="'+(o.fs||12)+'" fill="'+(o.c||C.ink2)+'" text-anchor="'+(o.a||"middle")+'"'+(o.w?' font-weight="'+o.w+'"':'')+'>'+s+'</text>';}
+function fmt(n){return n.toLocaleString("en-IN");}
+function bars(id,o){ // o:{labels,series:[{name,vals,color}],max,fmt,h,line:{vals,color,max,fmt}}
+  var el=document.getElementById(id);if(!el)return;
+  var W=560,H=o.h||250,pl=40,pr=o.line?44:12,pt=24,pb=o.series.length>1?52:34;
+  var cw=W-pl-pr,ch=H-pt-pb,n=o.labels.length,gw=cw/n,ns=o.series.length,bw=Math.min(46,(gw*0.7)/ns);
+  var mx=o.max||Math.max.apply(null,o.series.map(function(s){return Math.max.apply(null,s.vals);}))*1.15;
+  var s="";
+  for(var g=0;g<=4;g++){var y=pt+ch-ch*g/4;s+='<line x1="'+pl+'" x2="'+(W-pr)+'" y1="'+y+'" y2="'+y+'" stroke="'+C.line+'"/>'+tx(pl-6,y+4,(o.axf||fmt)(Math.round(mx*g/4)),{a:"end",fs:10,c:C.mute});}
+  o.labels.forEach(function(lb,i){
+    var cx=pl+gw*i+gw/2;
+    o.series.forEach(function(se,j){
+      var v=se.vals[i];if(v==null)return;var bh=ch*Math.max(v,0)/mx;var x=cx-(ns*bw)/2+j*bw;
+      s+='<rect x="'+(x+1)+'" y="'+(pt+ch-bh)+'" width="'+(bw-2)+'" height="'+bh+'" fill="'+se.color+'" rx="2"/>';
+      s+=tx(x+bw/2,pt+ch-bh-5,(o.fmt||fmt)(v),{fs:11,c:C.ink,w:700});
+    });
+    s+=tx(cx,pt+ch+16,lb,{fs:11,c:C.ink2,w:600});
+  });
+  if(o.line){var lm=o.line.max,pts=o.line.vals.map(function(v,i){return [pl+gw*i+gw/2,pt+ch-ch*(v-o.line.min)/(lm-o.line.min)];});
+    s+='<polyline points="'+pts.map(function(p){return p.join(",");}).join(" ")+'" fill="none" stroke="'+o.line.color+'" stroke-width="2.5"/>';
+    pts.forEach(function(p,i){s+='<circle cx="'+p[0]+'" cy="'+p[1]+'" r="4" fill="#fff" stroke="'+o.line.color+'" stroke-width="2.5"/>'+tx(p[0]+0,p[1]-9,o.line.fmt(o.line.vals[i]),{fs:11,c:o.line.color,w:700});});
+    s+=tx(W-pr+6,pt+10,o.line.name,{a:"start",fs:10,c:o.line.color,w:700});}
+  if(ns>1){var lx=pl;o.series.forEach(function(se){s+='<rect x="'+lx+'" y="'+(H-16)+'" width="12" height="12" fill="'+se.color+'" rx="2"/>'+tx(lx+16,H-6,se.name,{a:"start",fs:11,c:C.ink2,w:600});lx+=16+se.name.length*7+18;});}
+  el.innerHTML=svg(W,H,s);
+}
+function lines(id,o){ // o:{labels,series:[{name,vals,color}],min,max,fmt}
+  var el=document.getElementById(id);if(!el)return;
+  var W=560,H=o.h||250,pl=42,pr=70,pt=20,pb=30,cw=W-pl-pr,ch=H-pt-pb,n=o.labels.length;
+  var mn=o.min,mx=o.max,s="";
+  function X(i){return pl+cw*i/(n-1);} function Y(v){return pt+ch-ch*(v-mn)/(mx-mn);}
+  for(var g=0;g<=4;g++){var v=mn+(mx-mn)*g/4;s+='<line x1="'+pl+'" x2="'+(W-pr)+'" y1="'+Y(v)+'" y2="'+Y(v)+'" stroke="'+C.line+'"/>'+tx(pl-6,Y(v)+4,Math.round(v),{a:"end",fs:10,c:C.mute});}
+  o.labels.forEach(function(lb,i){s+=tx(X(i),H-8,lb,{fs:11,w:600});});
+  o.series.forEach(function(se){
+    s+='<polyline points="'+se.vals.map(function(v,i){return X(i)+","+Y(v);}).join(" ")+'" fill="none" stroke="'+se.color+'" stroke-width="3"/>';
+    se.vals.forEach(function(v,i){s+='<circle cx="'+X(i)+'" cy="'+Y(v)+'" r="'+(i===n-1?5:3)+'" fill="'+se.color+'"/>';});
+    var lv=se.vals[n-1];s+=tx(X(n-1)+9,Y(lv)+4,se.name+" "+(o.fmt?o.fmt(lv):lv),{a:"start",fs:11,c:se.color,w:700});
+  });
+  if(o.ref){s+='<line x1="'+pl+'" x2="'+(W-pr)+'" y1="'+Y(o.ref.v)+'" y2="'+Y(o.ref.v)+'" stroke="'+C.mute+'" stroke-dasharray="4 4"/>'+tx(W-pr-4,Y(o.ref.v)+14,o.ref.label,{a:"end",fs:10,c:C.mute});}
+  el.innerHTML=svg(W,H,s);
+}
+function hbars(id,rows,o){ // rows:[[label,val,color,txt]]
+  var el=document.getElementById(id);if(!el)return;o=o||{};
+  var W=560,rh=34,pl=o.pl||170,H=rows.length*rh+16,mx=o.max||Math.max.apply(null,rows.map(function(r){return r[1];}))*1.15,s="";
+  rows.forEach(function(r,i){var y=8+i*rh,w=(W-pl-70)*Math.max(r[1],0)/mx;
+    s+=tx(pl-8,y+19,r[0],{a:"end",fs:12,c:C.ink,w:600})+'<rect x="'+pl+'" y="'+(y+5)+'" width="'+w+'" height="'+(rh-12)+'" rx="3" fill="'+r[2]+'"/>'+tx(pl+w+6,y+19,r[3]||r[1],{a:"start",fs:12,c:C.ink,w:700});});
+  if(o.mark!=null){var mx2=pl+(W-pl-70)*o.mark/mx;s+='<line x1="'+mx2+'" x2="'+mx2+'" y1="2" y2="'+(H-2)+'" stroke="'+C.ink+'" stroke-width="2" stroke-dasharray="5 3"/>'+tx(mx2,H-2,o.markLabel,{fs:10,c:C.ink,w:700});}
+  el.innerHTML=svg(W,H+(o.mark!=null?8:0),s);
+}
+
+function drawCharts(){
+  var Q=["Q2FY26","Q3FY26","Q4FY26","Q1FY27","Q2FY27"];
+  bars("chRev",{labels:Q,series:[{name:"Revenue",vals:[6477,7636,8865,8210,9899],color:C.acc}],max:12500,line:{name:"EBITDA %",vals:[15.8,12.7,13.1,13.8,14.4],color:C.poly,min:6,max:17,fmt:function(v){return v+"%";}}});
+  bars("chSeg",{labels:["W&C","FMEG","EPC"],series:[{name:"Q2 FY26",vals:[5647,444,403],color:"#c9c1b8"},{name:"Q2 FY27",vals:[8301,993,617],color:C.acc}]});
+  bars("chSegM",{labels:["W&C","FMEG","EPC"],series:[{name:"Q2 FY26",vals:[15.1,0.5,18.1],color:"#c9c1b8"},{name:"Q1 FY27",vals:[13.3,8.0,11.0],color:"#f6b878"},{name:"Q2 FY27",vals:[14.2,10.1,7.2],color:C.acc}],max:22,fmt:function(v){return v+"%";},axf:function(v){return v+"%";}});
+  hbars("chComp",[[L("Wires volume","Wires volume"),11,C.poly,"~10–12%"],[L("Overall W&C volume","மொத்த W&C volume"),7,C.acc,"6–8%"],[L("Cables volume","Cables volume"),5,"#c9c1b8","~mid-single"],[L("Domestic W&C value","Domestic W&C value"),50,C.cu,"+50%"]],{max:58,pl:180});
+  hbars("chMkt",[[L("Total C&W market","மொத்த C&W market"),110000,"#c9c1b8","₹1.1 L cr"],[L("Wires (~30%)","Wires (~30%)"),33000,C.acc,"~₹33,000 cr"],[L("Unorganised wires","Unorganised wires"),10700,C.warn,"~₹10,700 cr"],[L("Polycab W&C (TTM, est.)","Polycab W&C (TTM, தோராயம்)"),29840,C.poly,"~₹29,800 cr"]],{pl:180});
+  lines("chRM",{labels:Q,series:[{name:"Cu",vals:[100,113,133,137,145],color:C.cu},{name:"Al",vals:[100,108,117,123,125],color:C.al},{name:"PVC",vals:[100,90,95,107,117],color:C.pvc}],min:80,max:150,h:220,ref:{v:100,label:"Q2 FY26 = 100"}});
+  hbars("chSplit",[[L("Value growth","Value growth"),47,C.acc,"+47%"],[L("Price / mix","Price / mix"),37,C.cu,"≈ +37%"],[L("Volume","Volume"),7,C.poly,"≈ +7%"]],{max:55,pl:140});
+  bars("chPat",{labels:Q,series:[{name:"PAT",vals:[693,630,786,797,990],color:C.poly}],max:1200});
+  bars("chCash",{labels:["Mar-25","Sep-25","Mar-26","Sep-26"],series:[{name:"Net cash",vals:[2460,2940,4190,4520],color:C.good}],max:5400});
+  hbars("chWC",[[L("Long-term range","நீண்டகால range"),47.5,"#c9c1b8","45–50"],[L("Q2 FY27 average","Q2 FY27 average"),11,C.acc,"~11"],[L("Q1 FY27 closing","Q1 FY27 closing"),3,C.warn,"3"],[L("Q2 FY27 closing","Q2 FY27 closing"),0.6,C.good,"−2"]],{max:55,pl:150});
+  hbars("chPE",[[L("5-yr average","5 வருஷ average"),37,"#c9c1b8","~37x"],[L("TTM (₹213)","TTM (₹213)"),38.6,C.acc,"38.6x"],[L("Sep-28E (₹263)","Sep-28E (₹263)"),31.2,C.good,"31.2x"]],{max:46,pl:150});
+  hbars("chTgt",[["JM Fin",9200,"#c9c1b8","₹9,200"],["CLSA",10240,"#c9c1b8","₹10,240"],["HSBC",10550,"#c9c1b8","₹10,550"],["Jefferies",11040,"#c9c1b8","₹11,040"],["PL",11083,"#c9c1b8","₹11,083"]],{max:12500,pl:90,mark:8207,markLabel:"₹8,207"});
+  hbars("chPx",[[L("52-wk low","52-wk low"),6663,"#c9c1b8","₹6,663"],["25 Jun 2026",9531,C.acc,"₹9,531"],[L("17 Jul (post Q1)","17 Jul (Q1-க்கு பின்)"),8888,C.acc,"₹8,888"],[L("15 Oct (Q2 day)","15 Oct (Q2 அன்று)"),8207,C.poly,"₹8,207"],[L("52-wk high","52-wk high"),10126,"#c9c1b8","₹10,126"]],{max:11500,pl:170});
+  bars("chFm",{labels:["Q2FY26","Q1FY27","Q2FY27"],series:[{name:"FMEG EBIT %",vals:[0.5,8.0,10.1],color:C.good}],max:14,fmt:function(v){return v+"%";},axf:function(v){return v+"%";}});
+  bars("chOrg",{labels:["FY14","FY19","FY24","FY25"],series:[{name:"Organised %",vals:[61,68,73,76],color:C.acc}],max:100,fmt:function(v){return v+"%";},h:200});
+  clock();temple();
+}
+function clock(){
+  var el=document.getElementById("chClock");if(!el)return;
+  var cx=150,cy=140,r=105,ph=[["P1",L("Trough","அடி")],["P2",L("Early recovery","ஆரம்ப மீட்சி")],["P3",L("Expansion","விரிவாக்கம்")],["P4",L("Late cycle","Late cycle")],["P5",L("Downturn","இறக்கம்")]];
+  var cols=["#c9c1b8","#9fd3a9","#5fb070","#f2a65a","#d9786f"],s="";
+  ph.forEach(function(p,i){var a0=(-90+i*72)*Math.PI/180,a1=(-90+(i+1)*72)*Math.PI/180;
+    var x0=cx+r*Math.cos(a0),y0=cy+r*Math.sin(a0),x1=cx+r*Math.cos(a1),y1=cy+r*Math.sin(a1);
+    s+='<path d="M'+cx+','+cy+' L'+x0+','+y0+' A'+r+','+r+' 0 0 1 '+x1+','+y1+' Z" fill="'+cols[i]+'" stroke="#fff" stroke-width="3"/>';
+    var am=(-90+i*72+36)*Math.PI/180;s+=tx(cx+(r*0.66)*Math.cos(am),cy+(r*0.66)*Math.sin(am)-2,p[0],{fs:14,c:C.ink,w:800})+tx(cx+(r*0.66)*Math.cos(am),cy+(r*0.66)*Math.sin(am)+13,p[1],{fs:10,c:C.ink,w:600});});
+  var ap=(-90+3*72+6)*Math.PI/180;s+='<line x1="'+cx+'" y1="'+cy+'" x2="'+(cx+(r+12)*Math.cos(ap))+'" y2="'+(cy+(r+12)*Math.sin(ap))+'" stroke="'+C.ink+'" stroke-width="4" stroke-linecap="round"/><circle cx="'+cx+'" cy="'+cy+'" r="7" fill="'+C.ink+'"/>';
+  s+=tx(300,40,L("Sector: P3/P4 edge","Sector: P3/P4 எல்லை"),{a:"start",fs:13,c:C.ink,w:700});
+  var st=[["1",L("Base","Base")],["2",L("Advance","ஏற்றம்")],["3",L("Top","உச்சம்")],["4",L("Decline","இறக்கம்")]];
+  st.forEach(function(q,i){var y=80+i*34,on=i===2;s+='<rect x="300" y="'+y+'" width="190" height="26" rx="4" fill="'+(on?C.acc:"#fff")+'" stroke="'+(on?C.acc:C.line)+'" stroke-width="2"/>'+tx(310,y+18,"Stage "+q[0]+" · "+q[1],{a:"start",fs:12,c:C.ink,w:on?800:600});});
+  s+=tx(300,232,L("Stock: Weinstein Stage 3","Stock: Weinstein Stage 3"),{a:"start",fs:13,c:C.poly,w:700});
+  el.innerHTML=svg(520,260,s);
+}
+var PIL=[
+ [L("Business quality","Business quality"),9,L("#1 in cables & wires, ~30% organised share; cost-plus model; record ₹9,899 cr quarter.","C&W-ல #1, ~30% share; cost-plus; record ₹9,899 cr quarter.")],
+ [L("Competitive advantage","போட்டி நன்மை"),8,L("Channel + electrician network, brand premium held; but UltraVolt/Adani are well funded.","Channel, electrician network, premium; ஆனா UltraVolt/Adani பணபலம் உள்ளவங்க.")],
+ [L("Growth opportunity","வளர்ச்சி வாய்ப்பு"),8,L("Grid, data centres, exports, FMEG; but volume only 6–8% this quarter.","Grid, data centres, exports, FMEG; ஆனா இந்த quarter volume 6–8%.")],
+ [L("Financial strength","நிதி பலம்"),9,L("₹4,520 cr net cash; CFO/PAT 0.94x (H1); self-funded capex.","₹4,520 cr net cash; CFO/PAT 0.94x; சொந்த பணத்துல capex.")],
+ [L("Valuation","Valuation"),5,L("TTM P/E 38.6x vs ~37x 5-yr average; fair, priced for quality.","TTM P/E 38.6x vs ~37x; நியாயம், quality-க்கு விலை.")],
+ [L("Risk & reward","Risk & reward"),6,L("Above-guide margins may revert; copper reversal; small NCLAT matter.","Guide-க்கு மேல margin இறங்கலாம்; copper இறக்கம்; சின்ன NCLAT விஷயம்.")]];
+function temple(){
+  var el=document.getElementById("chTemple");if(!el)return;
+  var W=620,H=330,base=280,s="";var pw=58,gap=36,x0=(W-(6*pw+5*gap))/2,top=base-10*20;
+  s+='<polygon points="'+(x0-30)+','+(top-6)+' '+(W/2)+','+(top-62)+' '+(W-x0+30)+','+(top-6)+'" fill="'+C.acc+'"/>';
+  s+=tx(W/2,top-22,"Polycab · 45 / 60",{fs:18,c:"#1a0d00",w:800});
+  s+='<rect x="'+(x0-30)+'" y="'+(top-6)+'" width="'+(W-2*x0+60)+'" height="8" fill="'+C.ink+'"/>';
+  PIL.forEach(function(p,i){var x=x0+i*(pw+gap),h=p[1]*20;var col=p[1]>=8?C.good:(p[1]>=6?C.acc:C.warn);
+    s+='<rect x="'+x+'" y="'+(base-h)+'" width="'+pw+'" height="'+h+'" fill="'+col+'" opacity=".9" rx="2"/>';
+    s+='<rect x="'+(x-4)+'" y="'+(base-h-6)+'" width="'+(pw+8)+'" height="6" fill="'+C.ink2+'"/>';
+    s+=tx(x+pw/2,base-h+24,p[1],{fs:20,c:"#fff",w:800});
+    var words=p[0].split(" ");s+=tx(x+pw/2,base+20,words[0],{fs:11,c:C.ink,w:700});if(words[1])s+=tx(x+pw/2,base+34,words.slice(1).join(" "),{fs:11,c:C.ink,w:700});});
+  s+='<rect x="'+(x0-40)+'" y="'+base+'" width="'+(W-2*x0+80)+'" height="6" fill="'+C.ink+'"/>';
+  el.innerHTML=svg(W,H+10,s);
+  var tb=document.querySelector("#pilTbl tbody");tb.innerHTML=PIL.map(function(p){return "<tr><td><b>"+p[0]+"</b></td><td><b>"+p[1]+" / 10</b></td><td style='white-space:normal;text-align:left'>"+p[2]+"</td></tr>";}).join("")+"<tr><td><b>"+L("Total","மொத்தம்")+"</b></td><td><b>45 / 60</b></td><td></td></tr>";
+}
+var TRIG=[
+ ["+",L("FMEG further scale-up (solar, premium fans/lights)","FMEG மேலும் scale-up"),3,0.7,0.7,1.0,L("FMEG growth & margin in Q3","Q3-ல FMEG growth, margin")],
+ ["+",L("Export recovery (94 countries, US data centres)","Export மீட்சி (94 நாடுகள்)"),2,0.7,1.0,1.0,L("Export share back above 6%","Export share 6%-க்கு மேல")],
+ ["+",L("Grid / RDSS / BharatNet / Green Corridor 3 orders","Grid, RDSS, BharatNet, Green Corridor 3"),2,0.7,0.7,1.0,L("EPC execution ₹800–1,000 cr each","EPC execution")],
+ ["+",L("EHV cable plant (FY28)","EHV cable plant (FY28)"),3,0.7,0.4,1.0,L("Commissioning date","தொடக்க தேதி")],
+ ["+",L("Data-centre cables (domestic)","Data centre cables"),3,0.4,0.7,1.0,L("Named DC orders","DC orders")],
+ ["−",L("UltraVolt / Adani price pressure in wires","Wires-ல UltraVolt / Adani விலை அழுத்தம்"),3,0.7,0.7,0.7,L("Polycab price cuts, dealer schemes","Polycab விலை குறைப்பு")],
+ ["−",L("Copper reversal → inventory loss, destocking","Copper இறக்கம் → inventory loss"),2,0.4,1.0,1.0,L("LME copper below $12,000/t","LME copper $12,000/t-க்கு கீழ")],
+ ["−",L("Working capital back to 45–50 days","Working capital 45–50 நாளுக்கு"),1,1.0,0.7,1.0,L("Closing NWC days","Closing NWC days")],
+ ["−",L("EHV plant delay to FY28","EHV plant FY28 தாமதம்"),1,1.0,0.7,1.0,L("Further slippage","மேலும் தாமதம்")],
+ ["−",L("NCLAT CIRP matter (₹2.79 cr dispute)","NCLAT CIRP (₹2.79 cr)"),1,0.2,1.0,1.0,L("NCLAT order","NCLAT order")]];
+function trigTable(){
+  var tb=document.querySelector("#trigTbl tbody");
+  tb.innerHTML=TRIG.map(function(t){var pts=(t[2]*t[3]*t[4]*t[5]).toFixed(2);return "<tr><td>"+t[1]+"</td><td class='"+(t[0]==="+"?"up":"dn")+"'><b>"+t[0]+"</b></td><td>"+t[2]+"</td><td>"+t[3]+"</td><td>"+t[4]+"</td><td>"+t[5]+"</td><td><b>"+pts+"</b></td><td style='white-space:normal;text-align:left'>"+t[6]+"</td></tr>";}).join("");
+}
+
+/* ---------- calculator ---------- */
+function calc(){
+  var cu=+document.getElementById("cu").value,sh=+document.getElementById("sh").value,pt=+document.getElementById("pt").value;
+  document.getElementById("cuV").textContent=(cu>0?"+":"")+cu+"%";document.getElementById("shV").textContent=sh+"%";document.getElementById("ptV").textContent=pt+"%";
+  var costMove=sh/100*cu/100, price=costMove*pt/100, rev=8301*(1+price), cost=8301*(1-0.142)+8301*costMove, ebit=rev-cost, m=ebit/rev*100;
+  document.getElementById("oP").textContent=(price>=0?"+":"")+(price*100).toFixed(1)+"%";
+  document.getElementById("oR").textContent="₹"+fmt(Math.round(rev))+" cr";
+  var o=document.getElementById("oM");o.textContent=m.toFixed(1)+"%";o.style.color=m<12.5?C.bad:(m<14.2-0.05?C.warn:C.good);
+}
+["cu","sh","pt"].forEach(function(i){document.getElementById(i).addEventListener("input",calc);});
+
+/* ---------- self-check ---------- */
+var SC=[
+ {t:["1 · Questions about the stock","1 · Stock பற்றிய கேள்விகள்"],items:[
+  ["Do I know the size and where the price sits vs its range?","Size, range-ல விலை எங்க இருக்குனு தெரியுமா?","Mcap ₹1.24 L cr; ₹8,207 vs 52-wk ₹6,663–₹10,126"],
+  ["Do I know how much growth was price vs volume?","Growth-ல விலை எவ்வளவு, volume எவ்வளவு தெரியுமா?","W&C +47% value, ~+7% volume"],
+  ["Have I checked who is selling or buying in size?","யார் பெருசா வாங்குறாங்க/விக்குறாங்க பார்த்தேனா?","Promoter block sales in Sep 2025 (₹1,740 cr incl. others); check latest shareholding"],
+  ["Do I know the use of cash?","Cash எதுக்கு போகுது தெரியுமா?","H1 capex ₹610 cr; ₹1,200 cr inventory advance; ₹47 dividend"]]},
+ {t:["2 · Problems investors face","2 · Investors சந்திக்கும் சிக்கல்கள்"],items:[
+  ["Do I understand the cost-plus copper model?","Cost-plus copper model புரியுதா?","Wires repriced fortnightly, cables monthly"],
+  ["Can I connect with the business (wires, fans, switches)?","Business-ஓட connect ஆக முடியுதா?","84% W&C, 10% FMEG, 6% EPC"],
+  ["Do I know normal vs peak margins?","Normal vs peak margin தெரியுமா?","W&C 14.2% now vs 11–13% guided"],
+  ["Do I know the main risks?","முக்கிய risks தெரியுமா?","UltraVolt, copper reversal, NCLAT (₹2.79 cr)"]]},
+ {t:["3 · Solutions: what I did","3 · தீர்வு: நான் என்ன செஞ்சேன்"],items:[
+  ["Read the Q2 FY27 presentation and concall","Q2 FY27 presentation, concall படிச்சேன்","Concall 15 Oct 2026"],
+  ["Compared a listed peer (KEI, Havells, RR Kabel)","Listed peer-ஓட compare பண்ணேன்","KEI Q1 FY27 domestic W&C +29% vs Polycab +39%"],
+  ["Kept the amount small for my portfolio","என் portfolio-க்கு தொகையை சின்னதா வெச்சேன்","Your own rule"],
+  ["Fixed a horizon and a review date","Horizon, review தேதி வெச்சேன்","Next review: Q3 FY27 results, Jan 2027"],
+  ["Prepared for a results-day dip","Result அன்னைக்கு இறக்கத்துக்கு தயார்","Fell 1.5% on a beat (15 Oct)"]]},
+ {t:["4 · Anchors' and analysts' view","4 · Anchors, analysts பார்வை"],items:[
+  ["Checked FII / MF holding trend","FII / MF holding trend பார்த்தேன்","FII stake moved 11.5% → 14% in Q2 FY26; check latest"],
+  ["Read at least two independent analyst reviews","2 analyst reviews படிச்சேன்","Targets ₹9,200–₹11,083 (5 brokerages)"],
+  ["Know the CB cycle & trigger view","CB cycle & trigger பார்வை தெரியும்","CY 44 (late cycle), TG 53"],
+  ["Checked market mood for the sector","Sector market mood பார்த்தேன்","C&W stocks fell up to 9% on UltraVolt launch, 4 Sep"]]},
+ {t:["5 · My own conditions","5 · என் சொந்த நிபந்தனைகள்"],items:[],custom:true}];
+var ticks=store.get("ticks")||{},custom=store.get("custom")||[];
+function renderSC(){
+  var host=document.getElementById("scGroups");host.innerHTML="";var tot=0,done=0;
+  SC.forEach(function(g,gi){
+    var items=g.custom?custom.map(function(c){return [c,c,L("Your condition","உங்க condition")];}):g.items;
+    var d=0;items.forEach(function(it,ii){if(ticks[gi+"_"+ii])d++;});tot+=items.length;done+=d;
+    var card=document.createElement("div");card.className="card";
+    card.innerHTML="<div class='row' style='justify-content:space-between'><h3 style='margin:0'>"+L(g.t[0],g.t[1])+"</h3><span class='gp'>"+d+" / "+items.length+"</span></div>";
+    items.forEach(function(it,ii){var k=gi+"_"+ii,row=document.createElement("label");row.className="chk";
+      row.innerHTML="<input type='checkbox' id='sc_"+k+"'"+(ticks[k]?" checked":"")+"><div><div>"+L(it[0],it[1])+"</div><div class='data'><b>Data:</b> "+it[2]+"</div></div>";
+      if(g.custom){var x=document.createElement("button");x.className="btn";x.style.marginLeft="auto";x.textContent="✕";x.setAttribute("aria-label","Remove");x.onclick=function(e){e.preventDefault();custom.splice(ii,1);delete ticks[k];store.set("custom",custom);store.set("ticks",ticks);renderSC();};row.appendChild(x);}
+      row.querySelector("input").onchange=function(e){ticks[k]=e.target.checked;store.set("ticks",ticks);renderSC();};card.appendChild(row);});
+    if(g.custom){var f=document.createElement("form");f.className="row";f.style.marginTop="8px";
+      f.innerHTML="<input type='text' id='scNew' style='flex:1 1 180px;font:inherit;padding:7px;border:2px solid #14110f;border-radius:4px;min-width:0' placeholder='"+L("Add a check, e.g. Volume above 8% in Q3","Check சேருங்க, உ.தா. Q3-ல volume 8%-க்கு மேல")+"'><button class='btn'>"+L("Add","சேர்")+"</button>";
+      f.onsubmit=function(e){e.preventDefault();var v=f.querySelector("input").value.trim();if(v){custom.push(v);store.set("custom",custom);renderSC();}};card.appendChild(f);}
+    host.appendChild(card);});
+  document.getElementById("scAll").textContent=done+" / "+tot;document.getElementById("scBar").style.width=(tot?done/tot*100:0)+"%";
+}
+document.getElementById("scReset").onclick=function(){ticks={};store.set("ticks",ticks);renderSC();};
+
+/* ---------- quiz ---------- */
+var QZ=[
+ [["Polycab's W&C revenue rose 47%. Roughly how much was volume?","W&C revenue 47% ஏறுச்சு. இதுல volume எவ்வளவு?"],[["~7%","~7%"],["~25%","~25%"],["~47%","~47%"]],0,["Volume grew 6–8%; copper price did most of the rest.","Volume 6–8% தான்; மீதி பெரும்பாலும் copper விலை."]],
+ [["Which segment did UltraVolt mainly target, and how did Polycab do there?","UltraVolt எந்த segment-ஐ குறி வெச்சது, அங்க Polycab எப்படி?"],[["Wires; Polycab's wires volume grew early double digits","Wires; Polycab wires volume double digit"],["EHV cables; Polycab lost share","EHV; Polycab share இழந்தது"],["Fans; flat","Fans; flat"]],0,["Wires, and Polycab's wires volume still grew double digits.","Wires தான்; Polycab wires volume double digit வளர்ந்தது."]],
+ [["When copper rises, what happens first under cost-plus pricing?","Copper ஏறினா cost-plus-ல முதல்ல என்ன நடக்கும்?"],[["Revenue rises; margin % may dip slightly","Revenue ஏறும்; margin % கொஞ்சம் குறையலாம்"],["Profit falls sharply","Profit பெருசா இறங்கும்"],["Nothing changes","எதுவும் மாறாது"]],0,["Prices are revised within 15–30 days, so revenue and ₹ profit rise.","15–30 நாள்ல விலை மாறும்; revenue, ₹ profit ஏறும்."]],
+ [["What does Polycab do in solar?","Solar-ல Polycab என்ன பண்ணுது?"],[["Trades inverters","Inverters trading"],["Makes solar panels","Solar panel தயாரிப்பு"],["Runs solar parks","Solar parks நடத்துது"]],0,["Only traded inverters; no own manufacturing yet.","Trading inverters மட்டும்; சொந்த தயாரிப்பு இல்ல."]],
+ [["FMEG EBIT margin in Q2 FY27?","Q2 FY27 FMEG EBIT margin?"],[["10.1%","10.1%"],["0.5%","0.5%"],["14.2%","14.2%"]],0,["10.1%, up from 0.5% a year ago.","10.1%, போன வருஷம் 0.5%."]],
+ [["Why is the 11-day working-capital cycle expected to rise?","11 நாள் working capital ஏன் ஏறும்?"],[["LC-funded payables will normalise","LC payables normal ஆகும்"],["Sales will fall","Sales குறையும்"],["Debt will rise","கடன் ஏறும்"]],0,["Higher letters of credit lifted payable days; target range is 45–50 days.","LC-ஆல payable days கூடுச்சு; range 45–50 நாள்."]],
+ [["Where does the CB cycle view place the sector?","CB cycle பார்வைல sector எங்க?"],[["P3/P4 edge, late cycle","P3/P4 எல்லை, late cycle"],["P2 early recovery","P2 ஆரம்ப மீட்சி"],["P5 downturn","P5 இறக்கம்"]],0,["Record margins and new capacity point to late cycle, though volumes still grow.","Record margin, புது capacity = late cycle; volume இன்னும் வளருது."]],
+ [["Which input fell in early October 2026?","October 2026 ஆரம்பத்துல எந்த input இறங்குச்சு?"],[["Aluminium","Aluminium"],["PVC","PVC"],["Neither","எதுவுமில்ல"]],0,["LME aluminium fell from ~$3,248 to $3,107/t by 5 Oct.","LME aluminium ~$3,248-லிருந்து 5 Oct-க்குள் $3,107/t."]]];
+var qState=store.get("quiz")||{};
+function renderQuiz(){
+  var host=document.getElementById("qList");host.innerHTML="";var score=0;
+  QZ.forEach(function(q,qi){var div=document.createElement("div");div.className="q";
+    div.innerHTML="<b>"+(qi+1)+". "+L(q[0][0],q[0][1])+"</b>";var op=document.createElement("div");op.className="opts";
+    var ans=qState[qi];
+    q[1].forEach(function(o,oi){var b=document.createElement("button");b.textContent=L(o[0],o[1]);
+      if(ans!=null){if(oi===q[2])b.classList.add("right");else if(oi===ans)b.classList.add("wrong");}
+      b.onclick=function(){qState[qi]=oi;store.set("quiz",qState);renderQuiz();};op.appendChild(b);});
+    div.appendChild(op);
+    if(ans!=null){if(ans===q[2])score++;var ex=document.createElement("div");ex.className="ex";ex.innerHTML="<b class='"+(ans===q[2]?"up":"dn")+"'>"+(ans===q[2]?L("Right.","சரி!"):L("Not quite.","கொஞ்சம் தவறு."))+"</b> "+L(q[3][0],q[3][1]);div.appendChild(ex);}
+    host.appendChild(div);});
+  document.getElementById("qScore").textContent=score+" / "+QZ.length;
+}
+
+/* ---------- speech ---------- */
+var synth=window.speechSynthesis,rate=+(store.get("rate")||0.8),speakQ=[],paused=false;
+function pickVoice(){if(!synth)return null;var vs=synth.getVoices(),want=LANG==="ta"?"ta":"en-IN";
+  return vs.filter(function(v){return v.lang&&v.lang.replace("_","-").indexOf(want)===0;})[0]||(LANG==="ta"?null:vs.filter(function(v){return /^en/.test(v.lang);})[0])||null;}
+function speak(text){
+  if(!synth)return;synth.cancel();paused=false;
+  speakQ=text.replace(/\s+/g," ").split(/(?<=[.!?।])\s+/).filter(function(s){return s.trim().length>1;});
+  next();
+}
+function next(){if(!speakQ.length)return;var u=new SpeechSynthesisUtterance(speakQ.shift());u.rate=rate;u.lang=LANG==="ta"?"ta-IN":"en-IN";var v=pickVoice();if(v)u.voice=v;u.onend=function(){setTimeout(next,250);};synth.speak(u);}
+function stop(){speakQ=[];if(synth)synth.cancel();}
+function plain(el){var c=el.cloneNode(true);[].forEach.call(c.querySelectorAll(LANG==="ta"?"en":"ta"),function(n){n.remove();});[].forEach.call(c.querySelectorAll("svg,script,style,input,.opts,#assist"),function(n){n.remove();});return c.textContent.replace(/\s+/g," ").trim();}
+document.getElementById("readTab").onclick=function(){var p=document.querySelector("section.panel.on");speak(plain(p));};
+
+/* ---------- Cauvery Assist ---------- */
+function A(en,ta){return {en:en,ta:ta};}
+var KB=[
+ {k:["buy","sell","hold","invest","target","should i","வாங்க","விக்க","வாங்கலாமா","டார்கெட்"],a:A("CB Research is not SEBI-registered, so I can't say buy, sell or hold. I can explain the numbers.","CB Research SEBI-ல register ஆகல, அதனால buy/sell/hold சொல்ல முடியாது. Numbers-ஐ விளக்க முடியும்."),d:A("Brokerage targets range ₹9,200–₹11,083; see the Valuations tab.","Brokerage targets ₹9,200–₹11,083; Valuations tab பாருங்க."),tab:"val"},
+ {k:["revenue","sales","topline","ரெவின்யூ","வருமானம்","விற்பனை"],a:A("Q2 FY27 revenue was ₹9,899 cr, up 53% YoY.","Q2 FY27 revenue ₹9,899 cr, 53% ஏற்றம்."),d:A("<ul><li>QoQ +21%</li><li>H1 FY27 ₹18,109 cr, +46%</li></ul>","<ul><li>QoQ +21%</li><li>H1 ₹18,109 cr, +46%</li></ul>"),tab:"fin"},
+ {k:["profit","pat","net profit","லாபம்","ப்ராஃபிட்"],a:A("PAT was ₹990 cr, up 43% YoY, a record.","PAT ₹990 cr, 43% ஏற்றம், record."),d:A("PAT margin 10.0%. H1 PAT ₹1,787 cr (+38%).","PAT margin 10.0%. H1 PAT ₹1,787 cr (+38%)."),tab:"fin"},
+ {k:["margin","ebitda","ebit","மார்ஜின்"],a:A("EBITDA margin was 14.4%; W&C EBIT 14.2%, FMEG 10.1%, EPC 7.2%.","EBITDA margin 14.4%; W&C EBIT 14.2%, FMEG 10.1%, EPC 7.2%."),d:A("W&C margin is above the 11–13% long-term guide.","W&C margin, 11–13% guide-க்கு மேல."),tab:"seg"},
+ {k:["copper","காப்பர்","செம்பு","தாமிரம்"],a:A("Copper is up roughly 45% YoY; Polycab passes it on, so revenue rose faster than volume.","Copper சுமார் 45% ஏறியிருக்கு; Polycab அதை கடத்துது, அதனால revenue volume-ஐ விட வேகமா ஏறுச்சு."),d:A("<ul><li>Wires repriced fortnightly, cables monthly</li><li>LME record ~$14,875/t on 10 Sep</li><li>100% imported</li></ul>","<ul><li>Wires 15 நாள், cables மாசம் ஒருமுறை விலை மாற்றம்</li><li>10 Sep LME record ~$14,875/t</li><li>100% import</li></ul>"),tab:"rm"},
+ {k:["aluminium","aluminum","அலுமினியம்"],a:A("Aluminium is up about 25% YoY but fell to $3,107/t by 5 Oct, which eases cable costs.","Aluminium ~25% ஏற்றம், ஆனா 5 Oct-க்குள் $3,107/t-க்கு இறங்குச்சு; cable cost-க்கு நிம்மதி."),tab:"rm"},
+ {k:["pvc","resin","பிவிசி","ரெசின்"],a:A("Domestic PVC resin is up 17% YoY at ₹94/kg; it hits FMEG pipes more than wires.","Domestic PVC 17% ஏறி ₹94/kg; wires-ஐ விட FMEG pipes-க்கு அதிக பாதிப்பு."),d:A("A $766/t minimum import price since Jul 2026 props up resin prices.","Jul 2026 முதல் $766/t minimum import price."),tab:"rm"},
+ {k:["raw material","input cost","commodity","மூலப்பொருள்","ரா மெட்டீரியல்"],a:A("Copper +45%, aluminium +25%, PVC +17% YoY; cost-plus pricing protects ₹ profit.","Copper +45%, aluminium +25%, PVC +17%; cost-plus விலை ₹ profit-ஐ காப்பாத்துது."),tab:"rm"},
+ {k:["ultratech","ultravolt","adani","competition","competitor","rival","போட்டி","அல்ட்ராடெக்","அதானி"],a:A("No damage yet: Polycab's wires volume grew early double digits in the quarter UltraVolt launched, without price cuts.","இன்னும் பாதிப்பு இல்ல: UltraVolt launch ஆன quarter-லயே Polycab wires volume double digit, விலை குறைப்பு இல்லாம."),d:A("<ul><li>UltraVolt: ₹1,800 cr, launched 4 Sep 2026</li><li>Brokerage view: 5–7% share by FY31</li><li>Polycab ~30–31% organised share</li></ul>","<ul><li>UltraVolt: ₹1,800 cr, 4 Sep 2026</li><li>FY31-க்குள் 5–7% share</li><li>Polycab ~30–31%</li></ul>"),tab:"comp"},
+ {k:["volume","வால்யூம்"],a:A("Overall W&C volume grew 6–8%; wires early double digits, cables mid-single digits.","மொத்த W&C volume 6–8%; wires double digit, cables single digit."),tab:"comp"},
+ {k:["fmeg","fan","fans","light","switch","ஃபேன்","எஃப்எம்இஜி"],a:A("FMEG revenue rose 124% to ₹993 cr with a first-ever 10.1% EBIT margin.","FMEG revenue 124% ஏறி ₹993 cr, முதல் தடவையா 10.1% EBIT margin."),tab:"seg"},
+ {k:["solar","inverter","சோலார்"],a:A("Polycab only trades solar inverters; it does not manufacture panels or inverters.","Polycab solar inverters-ஐ trading மட்டும் பண்ணுது; தயாரிக்கல."),tab:"bet"},
+ {k:["epc","bharatnet","rdss","order book","ஆர்டர்"],a:A("EPC revenue rose 53% to ₹617 cr but margin fell to 7.2% from 18.1%.","EPC revenue 53% ஏறி ₹617 cr, ஆனா margin 18.1%-லிருந்து 7.2%."),d:A("Order book ~₹9,000–10,000 cr.","Order book ~₹9,000–10,000 cr."),tab:"seg"},
+ {k:["ehv","high voltage","plant"],a:A("The EHV cable plant is now expected to start in FY28, likely April–May 2027.","EHV plant இப்போ FY28-ல, April–May 2027-ல தொடங்கும்."),tab:"bet"},
+ {k:["export","international","ஏற்றுமதி","எக்ஸ்போர்ட்"],a:A("Exports were ₹493 cr, up 17% YoY and 85% QoQ.","Export ₹493 cr, 17% YoY, 85% QoQ ஏற்றம்."),tab:"vc"},
+ {k:["cash","net cash","debt","கடன்","கேஷ்"],a:A("Net cash is ₹4,520 cr, up from ₹2,940 cr a year ago.","Net cash ₹4,520 cr, போன வருஷம் ₹2,940 cr."),tab:"cf"},
+ {k:["working capital","wc days","வொர்க்கிங்"],a:A("Working capital averaged about 11 days in Q2; management expects 45–50 days over time.","Q2-ல working capital ~11 நாள்; காலப்போக்குல 45–50 நாள்."),tab:"cf"},
+ {k:["pe","p/e","valuation","expensive","cheap","வேல்யுவேஷன்","விலை அதிகமா"],a:A("Trailing P/E is about 38.6x versus a five-year average near 37x.","Trailing P/E ~38.6x, 5 வருஷ average ~37x."),d:A("EV/EBITDA 25.4x; Sep-28E P/E ~31x.","EV/EBITDA 25.4x; Sep-28E P/E ~31x."),tab:"val"},
+ {k:["why","fall","fell","drop","down","stock","share price","ஏன்","இறங்க","இறக்கம்"],a:A("The stock slipped 1.5% because growth was mostly copper-driven and competition worries linger.","Growth பெரும்பாலும் copper-ஆல, போட்டி பயம் இருக்கு; அதனால 1.5% இறங்குச்சு."),tab:"mkt"},
+ {k:["trigger","catalyst","ட்ரிகர்"],a:A("Top triggers: FMEG scale-up and export recovery; top risk: UltraVolt pricing in wires. TG score 53.","Top triggers: FMEG scale-up, export மீட்சி; top risk: UltraVolt விலை. TG 53."),tab:"trig"},
+ {k:["cycle","சைக்கிள்"],a:A("The sector is on the P3/P4 edge (late cycle) and the stock is in Weinstein Stage 3; CY 44.","Sector P3/P4 எல்லை (late cycle), stock Stage 3; CY 44."),tab:"trig"},
+ {k:["pillar","score","தூண்"],a:A("Polycab scores 45 out of 60 on the 6 Pillars; valuation is the weakest pillar at 5.","6 தூண்ல Polycab 45/60; valuation தான் குறைவு, 5."),tab:"pil"},
+ {k:["nclat","nclt","insolvency","cirp","case","வழக்கு"],a:A("NCLAT has stayed the CIRP order over a ₹2.79 cr dispute; the order is reserved and management sees no material impact.","₹2.79 cr dispute-க்கு CIRP order-ஐ NCLAT stay பண்ணியிருக்கு; order reserved, பெரிய பாதிப்பு இல்லனு management."),tab:"mkt"},
+ {k:["data centre","data center","டேட்டா சென்டர்"],a:A("India's data centres are 1.6–1.7 GW today and may reach 8–15 GW; Polycab already supplies conventional cables to them.","India data centres இப்போ 1.6–1.7 GW, 8–15 GW ஆகலாம்; Polycab ஏற்கனவே cables சப்ளை பண்ணுது."),tab:"vc"},
+ {k:["dividend","டிவிடெண்ட்"],a:A("FY26 dividend was ₹47 per share, a ~26% payout.","FY26 dividend ₹47/share, ~26% payout."),tab:"cf"}];
+var SUG=[["Did UltraTech hurt Polycab?","UltraTech Polycab-ஐ பாதிச்சதா?"],["How does copper affect Polycab?","Copper Polycab-ஐ எப்படி பாதிக்குது?"],["What is the FMEG margin?","FMEG margin என்ன?"],["Why did the stock fall?","Share ஏன் இறங்குச்சு?"],["Is it expensive?","விலை அதிகமா?"],["Should I buy?","வாங்கலாமா?"]];
+var ast=document.getElementById("assist");
+ast.innerHTML='<div class="ah"><b>Cauvery Assist</b><div class="spd"><span id="spdL"></span><button data-r="0.6">Slow</button><button data-r="0.8">Relaxed</button><button data-r="1">Normal</button><button data-r="1.2">Fast</button><button id="aPause">⏯</button><button id="aStop">⏹</button></div></div><div class="vbar"><i id="vbarI"></i></div><div class="alog" id="alog"></div><div class="ain"><input type="text" id="aq"><button class="btn" id="aMic">🎙</button><button class="btn on" id="aSend"></button></div><div class="sug" id="asug"></div>';
+var alog=document.getElementById("alog");
+function setRateUI(){[].forEach.call(ast.querySelectorAll("[data-r]"),function(b){b.classList.toggle("on",+b.dataset.r===rate);});document.getElementById("spdL").textContent=L("Speed ","வேகம் ")+rate+"×";}
+[].forEach.call(ast.querySelectorAll("[data-r]"),function(b){b.onclick=function(){rate=+b.dataset.r;store.set("rate",rate);setRateUI();};});
+document.getElementById("aStop").onclick=stop;
+document.getElementById("aPause").onclick=function(){if(!synth)return;if(paused){synth.resume();paused=false;}else{synth.pause();paused=true;}};
+function addMsg(cls,html){var m=document.createElement("div");m.className="msg "+cls;m.innerHTML=html;alog.appendChild(m);alog.scrollTop=alog.scrollHeight;return m;}
+function norm(s){return (" "+s.toLowerCase().replace(/[?.,!]/g," ")+" ");}
+function answer(q){
+  var n=norm(q),best=null,bs=0;
+  KB.forEach(function(e,i){var sc=0;e.k.forEach(function(k){if(n.indexOf(k.length<4?" "+k+" ":k)>-1)sc+=k.length>5?2:1;});if(i===0&&sc>0)sc+=5;if(sc>bs){bs=sc;best=e;}});
+  if(!best)return {a:L("I don't have that in this dashboard. Try copper, competition, FMEG, margin or valuation.","இந்த dashboard-ல அது இல்ல. Copper, போட்டி, FMEG, margin, valuation பற்றி கேளுங்க.")};
+  return {a:best.a[LANG],d:best.d?best.d[LANG]:null,tab:best.tab};
+}
+function ask(q){q=(q||"").trim();if(!q)return;addMsg("u",q.replace(/</g,"&lt;"));var r=answer(q);
+  var h="<div>"+r.a+"</div>";if(r.d)h+="<details><summary>"+L("More details","மேலும் விவரம்")+"</summary>"+r.d+"</details>";
+  var m=addMsg("a",h);if(r.tab){var b=document.createElement("button");b.className="btn";b.style.marginTop="6px";b.textContent=L("Open related tab","தொடர்புடைய tab");b.onclick=function(){showTab(r.tab);window.scrollTo(0,0);};m.appendChild(b);}
+  speak(r.a);
+}
+document.getElementById("aSend").onclick=function(){var i=document.getElementById("aq");ask(i.value);i.value="";};
+document.getElementById("aq").addEventListener("keydown",function(e){if(e.key==="Enter"){ask(this.value);this.value="";}});
+function assistLang(){document.getElementById("aq").placeholder=L("Ask: How does copper affect Polycab?","கேளுங்க: Copper Polycab-ஐ எப்படி பாதிக்குது?");document.getElementById("aSend").textContent=L("Ask","கேள்");
+  var sg=document.getElementById("asug");sg.innerHTML="";SUG.forEach(function(s){var b=document.createElement("button");b.textContent=L(s[0],s[1]);b.onclick=function(){ask(b.textContent);};sg.appendChild(b);});setRateUI();
+  if(!alog.children.length||alog.dataset.greet){alog.innerHTML="";alog.dataset.greet="1";addMsg("a",L("Vanakam! Ask me about Polycab's Q2 FY27: competition, copper, FMEG, margins or valuation.","வணக்கம்! Polycab Q2 FY27 பற்றி கேளுங்க: போட்டி, copper, FMEG, margin, valuation."));}}
+/* voice input: waits 3 s of silence */
+var SR=window.SpeechRecognition||window.webkitSpeechRecognition,rec=null,heard="",silT=null,barT=null;
+document.getElementById("aMic").onclick=function(){
+  if(!SR){addMsg("a",L("Voice input works in Chrome or Edge on the GitHub Pages copy. Read-aloud works here.","Voice input GitHub Pages-ல Chrome/Edge-ல வேலை செய்யும். Read-aloud இங்க வேலை செய்யும்."));return;}
+  stop();heard="";rec=new SR();rec.lang=LANG==="ta"?"ta-IN":"en-IN";rec.continuous=true;rec.interimResults=true;
+  var bar=document.getElementById("vbarI"),t0;
+  function arm(){clearTimeout(silT);clearInterval(barT);t0=Date.now();barT=setInterval(function(){bar.style.width=Math.min(100,(Date.now()-t0)/30)+"%";},100);silT=setTimeout(function(){done();},3000);}
+  function done(){clearTimeout(silT);clearInterval(barT);bar.style.width="0";try{rec.onend=null;rec.stop();}catch(e){}if(heard.trim())ask(heard);}
+  rec.onresult=function(e){heard="";for(var i=0;i<e.results.length;i++)heard+=e.results[i][0].transcript+" ";document.getElementById("aq").value=heard;arm();};
+  rec.onend=function(){try{rec.start();}catch(e){}};
+  rec.onerror=function(e){if(e.error==="not-allowed"||e.error==="service-not-allowed"){rec.onend=null;addMsg("a",L("The microphone is blocked here. Open the GitHub Pages copy in Chrome to talk.","இங்க mic block. பேச GitHub Pages copy-ஐ Chrome-ல திறங்க."));}};
+  try{rec.start();arm();}catch(e){}
+};
+document.getElementById("vbub").onclick=function(){showTab("ast");window.scrollTo(0,0);setTimeout(function(){document.getElementById("aq").focus();},50);};
+var badge=document.getElementById("badge");badge.querySelector(".logo").onclick=function(){badge.classList.toggle("open");};
+
+/* ---------- language ---------- */
+function setLang(l){LANG=l;document.documentElement.lang=l==="ta"?"ta":"en";document.getElementById("lEN").classList.toggle("on",l==="en");document.getElementById("lTA").classList.toggle("on",l==="ta");store.set("lang",l);stop();buildRail();drawCharts();trigTable();renderSC();renderQuiz();assistLang();calc();}
+document.getElementById("lEN").onclick=function(){setLang("en");};
+document.getElementById("lTA").onclick=function(){setLang("ta");};
+setLang(store.get("lang")==="ta"?"ta":"en");
+})();
+</script>
