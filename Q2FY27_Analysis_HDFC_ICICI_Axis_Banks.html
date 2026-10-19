@@ -66,6 +66,7 @@ th,td{padding:8px 10px;border-bottom:1px solid var(--line);text-align:left;verti
 th{background:var(--paper2);font-weight:600;font-size:12.5px;white-space:nowrap}
 td.n,th.n{text-align:right;font-family:var(--f-mono);font-variant-numeric:tabular-nums;white-space:nowrap}
 tr:last-child td{border-bottom:0}
+tr.cat td{background:var(--cbsoft);font-weight:600;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--cb)}
 .bdot{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:6px;vertical-align:middle}
 .svgf{overflow-x:auto;border:1px solid var(--line);border-radius:10px;background:var(--paper)}
 .svgf svg{display:block}
@@ -172,7 +173,7 @@ var CO = {
  },
  icici:{name:"ICICI Bank",short:"ICICI",col:"#b13a1f",code:"NSE: ICICIBANK · BSE: 532174",
   cmp:1397,cmpDate:"16 Oct 2026",mcap:997000,mcapE:true,shares:714,
-  m:{dep:[1612800,2049874],adv:[1409200,1832000],cd:[87.4,89.4],nii:[21529,25339],nim:[4.30,4.18],oi:[7356,8277],ppop:[17298,20575],prov:[914,851],pat:[12359,14843],casa:[40.9,35.8],gnpa:[1.58,1.20],nnpa:[0.39,0.30],pcr:[75.0,75.0],cti:[null,38.1],crar:[15.76,16.68],cet1:[null,16.01],roe:[null,16.5],roa:[2.36,2.26],yld:[null,null],cod:[4.64,4.50],lcr:[null,126],bvps:[null,505],pbv:[null,2.77]},
+  m:{dep:[1612800,2049874],adv:[1409200,1832000],cd:[87.4,89.4],nii:[21529,25339],nim:[4.30,4.18],oi:[7356,8277],ppop:[17298,20575],prov:[914,851],pat:[12359,14843],casa:[40.9,36.1],gnpa:[1.58,1.20],nnpa:[0.39,0.30],pcr:[75.0,75.0],cti:[null,38.1],crar:[15.76,16.68],cet1:[null,16.01],roe:[null,16.5],roa:[2.36,2.26],yld:[null,null],cod:[4.64,4.50],lcr:[null,126],bvps:[null,505],pbv:[null,2.77]},
   est:{adv:1,cti:1,roe:1,bvps:1,pbv:1,mcap:1},
   cons:{pat:14366,nii:25166,prov:1716},
   fcnr:{usd:17.88,inr:171000,note:"$17.88 billion gross FCNR(B) (largest of the three) plus $3.55 billion of dollar bonds. Excluding FCNR, deposits grew 17% instead of 27.1%"},
@@ -235,7 +236,7 @@ function dot(b){return '<span class="bdot" style="background:'+CO[b].col+'"></sp
 
 /* ============ TABS ============ */
 var TABS=[
- ["overview","Overview","கண்ணோட்டம்"],["results","Results & Charts","முடிவுகள்"],["model","Business Model","வணிக மாதிரி"],["subs","Subsidiaries","துணை நிறுவனங்கள்"],["school","CB School","CB பள்ளி"],["pillars","CB Score","CB மதிப்பெண்"],["asset","Asset Quality & ECL","கடன் தரம் & ECL"],["fcnr","FCNR Impact","FCNR தாக்கம்"],["market","Banks vs Market & FII","வங்கி vs சந்தை & FII"],["triggers","Triggers & Cycle","தூண்டுதல் & சுழற்சி"],["analysts","Analysts' Rating","ஆய்வாளர் மதிப்பீடு"],["mgmt","Management & Board","நிர்வாகம் & வாரியம்"],["pros","Can I Buy? Pros & Cons","வாங்கலாமா?"],["selfcheck","Self-check","சுய சோதனை"],["verdict","Earnings Verdict","வருவாய் தீர்ப்பு"],["socrates","Cauvery Socrates","காவேரி சாக்ரடீஸ்"]
+ ["overview","Overview","கண்ணோட்டம்"],["results","Results & Charts","முடிவுகள்"],["model","Business Model","வணிக மாதிரி"],["subs","Subsidiaries","துணை நிறுவனங்கள்"],["school","CB School","CB பள்ளி"],["pillars","CB Score","CB மதிப்பெண்"],["asset","Asset Quality & ECL","கடன் தரம் & ECL"],["fcnr","FCNR, VRRR & NIM","FCNR, VRRR & NIM"],["market","Banks vs Market & FII","வங்கி vs சந்தை & FII"],["triggers","Triggers & Cycle","தூண்டுதல் & சுழற்சி"],["analysts","Analysts' Rating","ஆய்வாளர் மதிப்பீடு"],["mgmt","Management & Board","நிர்வாகம் & வாரியம்"],["pros","Can I Buy? Pros & Cons","வாங்கலாமா?"],["selfcheck","Self-check","சுய சோதனை"],["verdict","Earnings Verdict","வருவாய் தீர்ப்பு"],["socrates","Cauvery Socrates","காவேரி சாக்ரடீஸ்"]
 ];
 function drawNav(){
  document.getElementById("tabs").innerHTML=TABS.map(function(t){return '<button class="tab'+(t[0]===TAB?" on":"")+'" role="tab" data-t="'+t[0]+'">'+T(t[1],t[2])+'</button>'}).join("");
@@ -285,13 +286,19 @@ VIEWS.overview=function(){
  return h;
 };
 
-var METRICS=[["Deposits","dep",0,0],["Advances","adv",0,0],["CD ratio %","cd",1,1],["NII","nii",0,0],["NIM %","nim",2,1],["Other income","oi",0,0],["Operating profit (PPOP)","ppop",0,0],["Provisions","prov",0,0],["PAT","pat",0,0],["CASA %","casa",1,1],["GNPA %","gnpa",2,1],["NNPA %","nnpa",2,1],["PCR %","pcr",1,1],["Cost-to-income %","cti",1,1],["CRAR %","crar",2,1],["CET1 %","cet1",2,1],["ROE % (annualised)","roe",2,1],["ROA % (annualised)","roa",2,1],["Yield on assets %","yld",1,1],["Cost of deposits / funds %","cod",2,1],["LCR %","lcr",0,1],["BVPS ₹","bvps",0,1],["Market price ₹","cmp",2,1],["P/BV (x)","pbv",2,1]];
+var METRICS=["Growth & balance sheet",["Deposits","dep",0,0],["Advances","adv",0,0],["CASA %","casa",1,1],["CD ratio %","cd",1,1],
+"Earnings",["NII","nii",0,0],["Other income","oi",0,0],["Operating profit (PPOP)","ppop",0,0],["Provisions","prov",0,0],["PAT","pat",0,0],
+"Profitability",["NIM %","nim",2,1],["ROE % (annualised)","roe",2,1],["ROA % (annualised)","roa",2,1],["Yield on assets %","yld",1,1],["Cost of deposits / funds %","cod",2,1],
+"Efficiency",["Cost-to-income %","cti",1,1],
+"Asset quality",["GNPA %","gnpa",2,1],["NNPA %","nnpa",2,1],["PCR %","pcr",1,1],
+"Capital & liquidity",["CRAR %","crar",2,1],["CET1 %","cet1",2,1],["LCR %","lcr",0,1],
+"Valuation",["BVPS ₹","bvps",0,1],["Market price ₹","cmp",2,1],["P/BV (x)","pbv",2,1]];
 VIEWS.results=function(){
- var h='<h2>'+T("Results: 23-metric bank framework","முடிவுகள்: 23 அளவீடு கட்டமைப்பு")+'</h2>';
- h+='<p class="note">'+T("Q2FY26 vs Q2FY27, standalone. Amounts in ₹ crore in tables; charts in ₹ billion (₹100 crore = ₹1 billion). † = CB estimate (derived, not reported). n/a = not disclosed in the material reviewed.","Q2FY26 vs Q2FY27. அட்டவணையில் ₹ கோடி; chart-ல் ₹ billion (₹100 கோடி = ₹1 billion). † = CB மதிப்பீடு. n/a = வெளியிடப்படவில்லை.")+'</p>';
+ var h='<h2>'+T("Results by category: 23-metric bank framework","முடிவுகள்: 23 அளவீடு கட்டமைப்பு")+'</h2>';
+ h+='<p class="note">'+T("Q2FY26 vs Q2FY27, standalone. Basis: deposits, advances, CASA %, CD ratio, NPA ratios, PCR, capital ratios and BVPS are balances as on the balance-sheet date (30 Sep 2026 vs 30 Sep 2025). Flows (NII, PPOP, PAT) are for the quarter. NIM, ROA, ROE, yield and cost of deposits use quarterly average balances (annualised). Amounts in ₹ crore in tables; charts in ₹ billion (₹100 crore = ₹1 billion). † = CB estimate (derived, not reported). n/a = not disclosed in the material reviewed.","Q2FY26 vs Q2FY27. அட்டவணையில் ₹ கோடி; chart-ல் ₹ billion (₹100 கோடி = ₹1 billion). † = CB மதிப்பீடு. n/a = வெளியிடப்படவில்லை.")+'</p>';
  if(BANK==="all"){
   h+='<div class="tw"><table><thead><tr><th>Metric</th>'+BANKS.map(function(b){return '<th class="n">'+dot(b)+CO[b].short+' Q2FY27</th><th class="n">YoY</th>'}).join("")+'</tr></thead><tbody>';
-  METRICS.forEach(function(k){h+='<tr><td>'+k[0]+'</td>'+BANKS.map(function(b){var m=CO[b].m;if(k[1]==="cmp")return '<td class="n">'+fmt(CO[b].cmp,2)+'</td><td class="n muted">'+CO[b].cmpDate+'</td>';var v=m[k[1]];return '<td class="n">'+fmt(v[1],k[2])+dag(b,k[1])+'</td><td class="n">'+chg(v[0],v[1],k[3])+'</td>'}).join("")+'</tr>'});
+  METRICS.forEach(function(k){if(typeof k==='string'){h+='<tr class="cat"><td colspan="7">'+k+'</td></tr>';return}h+='<tr><td>'+k[0]+'</td>'+BANKS.map(function(b){var m=CO[b].m;if(k[1]==="cmp")return '<td class="n">'+fmt(CO[b].cmp,2)+'</td><td class="n muted">'+CO[b].cmpDate+'</td>';var v=m[k[1]];return '<td class="n">'+fmt(v[1],k[2])+dag(b,k[1])+'</td><td class="n">'+chg(v[0],v[1],k[3])+'</td>'}).join("")+'</tr>'});
   h+='</tbody></table></div>';
   h+='<h3>'+T("Charts (₹ billion)","வரைபடங்கள் (₹ billion)")+'</h3>';
   ["pat","nii","ppop","prov"].forEach(function(k){h+='<div class="chartf" style="margin-bottom:12px"><div class="cv"><canvas id="ch_'+k+'"></canvas></div></div>'});
@@ -299,7 +306,7 @@ VIEWS.results=function(){
  } else {
   var b=BANK,o=CO[b];
   h+='<h3>'+dot(b)+o.name+'</h3><div class="tw"><table><thead><tr><th>Metric</th><th class="n">Q2FY26</th><th class="n">Q2FY27</th><th class="n">YoY</th></tr></thead><tbody>';
-  METRICS.forEach(function(k){if(k[1]==="cmp"){h+='<tr><td>'+k[0]+'</td><td class="n">—</td><td class="n">'+fmt(o.cmp,2)+'</td><td class="n muted">'+o.cmpDate+'</td></tr>';return}var v=o.m[k[1]];h+='<tr><td>'+k[0]+'</td><td class="n">'+fmt(v[0],k[2])+'</td><td class="n">'+fmt(v[1],k[2])+dag(b,k[1])+'</td><td class="n">'+chg(v[0],v[1],k[3])+'</td></tr>'});
+  METRICS.forEach(function(k){if(typeof k==='string'){h+='<tr class="cat"><td colspan="4">'+k+'</td></tr>';return}if(k[1]==="cmp"){h+='<tr><td>'+k[0]+'</td><td class="n">—</td><td class="n">'+fmt(o.cmp,2)+'</td><td class="n muted">'+o.cmpDate+'</td></tr>';return}var v=o.m[k[1]];h+='<tr><td>'+k[0]+'</td><td class="n">'+fmt(v[0],k[2])+'</td><td class="n">'+fmt(v[1],k[2])+dag(b,k[1])+'</td><td class="n">'+chg(v[0],v[1],k[3])+'</td></tr>'});
   h+='</tbody></table></div><h3>'+T("Charts (₹ billion)","வரைபடங்கள் (₹ billion)")+'</h3><div class="chartf"><div class="cv"><canvas id="ch_one"></canvas></div></div>';
  }
  h+='<h3>'+T("Liquidity & funding: the bank version of working capital","பணப்புழக்கம் & நிதி: வங்கிக்கான working capital")+'</h3>';
@@ -410,7 +417,7 @@ AFTER.subs=function(){if(!window.Chart)return;var el=document.getElementById("ch
 var SM=[ // id, label, col, row, values H/I/A
  ["fcnr","FCNR(B) deposits",0,0,["$11.5bn","$17.9bn","$10.6bn"]],
  ["dep","Deposits growth",0,1,["18.8%","27.1%","21%"]],
- ["casa","CASA ratio",0,2,["31.6%","35.8%","36%"]],
+ ["casa","CASA ratio",0,2,["31.6%","36.1%","36%"]],
  ["adv","Loan growth",0,3,["16.3%","30%","23%"]],
  ["cd","CD ratio",0,4,["96.8%","89.4%","94.6%"]],
  ["repo","Repo rate",1,0,["5.50%","5.50%","5.50%"]],
@@ -530,17 +537,74 @@ VIEWS.asset=function(){
 };
 AFTER.asset=function(){barChart("ch_aq",["GNPA","NNPA","Credit cost"],bankList().map(function(b){var m=CO[b].m;return{label:CO[b].name,data:[m.gnpa[1],m.nnpa[1],({hdfc:0.44,icici:0.2,axis:0.45})[b]],backgroundColor:CO[b].col}}),"Asset quality, Q2FY27 (%)",true)};
 
-/* ---------- FCNR ---------- */
+/* ---------- FCNR, VRRR & NIM ---------- */
+var FX={
+ bank:{
+  hdfc:{nimQ1:null,nimQ2:3.32,nimEx:null,cod:"Cost of funds steady at 4.4%",lev:"FCNR leverage added ~1.9 points to AUM growth (15.3% reported)",lcr:"113% (down QoQ as funds were lent out)",use:"Matched loan growth (₹1.58 lakh crore) with deposit growth (₹1.57 lakh crore) in the quarter. With a CD ratio of 96.8%, cheaper locked-in funding is most useful here.",verdict:["Mildly positive","c-good"]},
+  icici:{nimQ1:4.36,nimQ2:4.18,nimEx:null,cod:"Cost of deposits 4.41% → 4.50%: 'full impact of FCNR pricing'",lev:"Loans +30% reported, +24.1% without international-branch loans against FCNR deposits",lcr:"~126% average",use:"Largest mobiliser ($17.88 bn). Part was lent abroad against the same deposits, part held as liquidity; deposits +27.1% reported vs +17% without FCNR.",verdict:["Negative for NIM, positive for growth","c-warn"]},
+  axis:{nimQ1:null,nimQ2:3.36,nimEx:3.47,cod:"Not disclosed",lev:"FCNR of ₹1.018 lakh crore includes deposits backed by advances from international branches and SBLCs",lcr:"~119% average; excess SLR ₹1,04,306 crore",use:"Used FCNR funds to cut costlier term deposits (as reported). 8% share of system FCNR inflows against a 5.3% deposit share.",verdict:["Negative for NIM (−11 bps), positive for funding","c-warn"]}
+ }
+};
+function carryCalc(){
+ var g=function(id){return +document.getElementById(id).value};
+ var cost=g("fxCost"),loanY=g("fxLoan"),vr=g("fxVrrr"),old=g("fxOld"),pl=g("fxPl"),pr=g("fxPr");
+ var pv=Math.max(0,100-pl-pr);
+ document.getElementById("fxPv").textContent=pv;
+ var earn=pl/100*loanY+pv/100*vr+pr/100*old;
+ var spread=earn-cost;
+ document.getElementById("fxOut").innerHTML='Blended return on the FCNR money: <b>'+fmt(earn,2)+'%</b> · cost: <b>'+fmt(cost,2)+'%</b> · net spread: <b class="'+(spread>=0?"up":"dn")+'">'+(spread>0?"+":"")+fmt(spread,2)+'%</b><br><span class="note">On ₹1 lakh crore of FCNR money that is about ₹'+fmt(spread*1000,0)+' crore a year. Even a positive spread is far below the bank\'s average NIM, so the NIM percentage still falls (the denominator grows faster than NII).</span>';
+ var w=document.getElementById("fxBar");w.innerHTML='<i style="width:'+pl+'%;background:var(--good)"></i><i style="width:'+pr+'%;background:var(--warn)"></i><i style="width:'+pv+'%;background:var(--bad)"></i>';
+}
 VIEWS.fcnr=function(){
- var h='<h2>'+T("FCNR(B) impact","FCNR(B) தாக்கம்")+'</h2>';
- h+='<div class="card soft"><h4>'+T("What happened","என்ன நடந்தது")+'</h4><p style="margin:0">'+T("With the rupee under pressure, RBI opened a concessional dollar-rupee swap window on 8 June 2026 for fresh 3–5 year FCNR(B) deposits from NRIs. Banks paid about 6% on these dollar deposits and swapped the dollars to RBI at a fixed, concessional rate, so the bank carries no currency risk. RBI closed the window early, on 31 August, because inflows were so large. It worked like the 2013 scheme, which drew $34 billion.","ரூபாய் அழுத்தத்தில் இருந்ததால், RBI 8 ஜூன் 2026-ல் NRI-களின் 3–5 ஆண்டு FCNR(B) டெபாசிட்டுக்கு சலுகை swap சாளரம் திறந்தது. வங்கிகள் சுமார் 6% வட்டி கொடுத்து, டாலரை RBI-யிடம் நிலையான விலையில் swap செய்தன; நாணய அபாயம் இல்லை. பணம் அதிகம் வந்ததால் 31 ஆகஸ்ட் அன்றே RBI மூடியது. 2013-ல் இதே மாதிரி திட்டத்தில் $34 பில்லியன் வந்தது.")+'</p></div>';
- h+='<div class="tw" style="margin-top:12px"><table><thead><tr><th>Bank</th><th class="n">FCNR raised ($ bn)</th><th class="n">≈ ₹ crore</th><th class="n">Share of deposits</th><th>Visible impact</th></tr></thead><tbody>';
- bankList().forEach(function(b){var o=CO[b];h+='<tr><td>'+dot(b)+o.short+'</td><td class="n">'+fmt(o.fcnr.usd,2)+'</td><td class="n">'+fmt(o.fcnr.inr)+'</td><td class="n">'+fmt(o.fcnr.inr/o.m.dep[1]*100,1)+'%</td><td>'+o.fcnr.note+'</td></tr>'});
- h+='</tbody></table></div>';
- h+='<h3>'+T("Good side and cost side","நல்லதும் செலவும்")+'</h3><div class="pc"><div class="card"><h4 class="up">'+T("Helps","உதவுகிறது")+'</h4><ul><li>Large, locked-in 3–5 year funding at a time deposits are scarce.</li><li>LCR improved; banks used part of it to repay costlier funding (Jefferies).</li><li>No currency risk for the bank because of the RBI swap.</li><li>Lifts loan growth: HDFC said FCNR added ~1.9 points to AUM growth.</li></ul></div><div class="card"><h4 class="dn">'+T("Costs","செலவு")+'</h4><ul><li>NIM dilution: Axis −11 bps (3.47% → 3.36%); ICICI NIM fell 18 bps QoQ to 4.18%.</li><li>CASA ratio falls mechanically (more term money in the base).</li><li>ICICI cost of deposits rose from 4.41% to 4.50%.</li><li>If the money is not lent at good yields, margins can fall further than the ~7 bps brokers expected.</li><li>Maturity bunching in 2029–2031 when these deposits must be repaid or rolled.</li></ul></div></div>';
- h+='<h3>'+T("CB read","CB பார்வை")+'</h3><p>'+T("FCNR made Q2 look bigger on deposits and smaller on margins. It is a one-time funding window, so Q3 and Q4 numbers should be compared excluding FCNR. Biggest beneficiary of volume: ICICI ($17.9 billion). Least margin damage relative to size: HDFC (it already had the tightest CD ratio, so the cheaper-than-borrowing funding is useful). Axis gained the most share relative to its size (8% of system inflows vs 5.3% deposit share).","FCNR டெபாசிட்டை பெரிதாகவும் margin-ஐ சிறிதாகவும் காட்டியது. இது ஒருமுறை சாளரம்; அடுத்த காலாண்டுகளில் FCNR இல்லாத எண்களைப் பாருங்கள். அதிக தொகை: ICICI. அளவுக்கு மேல் பங்கு: Axis.")+'</p>';
+ var h='<h2>'+T("FCNR, VRRR & NIM: did the dollar windfall help or hurt?","FCNR, VRRR & NIM: டாலர் வரவு உதவியதா, பாதித்ததா?")+'</h2>';
+ h+='<div class="card soft"><p style="margin:0">'+T("Short answer: FCNR money lowered NIM in Q2 at ICICI and Axis, and kept HDFC's NIM flat at a low 3.32%. It lifted deposits and loan growth, improved liquidity ratios, and gave banks long, locked-in funding. Much of the rupee liquidity it created sat idle at first, and RBI drained it through VRRR auctions at about 5.24%, below what banks pay depositors. That idle money is the 'negative carry'. The damage is temporary: it shrinks as banks lend the money out, and the 7 Oct repo hike lifts loan yields.","சுருக்கமான பதில்: FCNR பணம் Q2-ல் ICICI, Axis-ன் NIM-ஐ குறைத்தது; HDFC NIM 3.32%-ல் நின்றது. டெபாசிட், கடன் வளர்ச்சி, liquidity எல்லாம் கூடியது. ஆனா உருவான ரூபாய் liquidity-யில் பெரும்பகுதி முதலில் சும்மா இருந்தது; RBI அதை VRRR மூலம் ~5.24%-க்கு எடுத்துக்கொண்டது. இது டெபாசிட் செலவை விட குறைவு; அதுதான் 'negative carry'. பணம் கடனாக போகும்போதும், அக்டோபர் வட்டி உயர்வாலும் இந்த பாதிப்பு குறையும்.")+'</p></div>';
+
+ // flow SVG
+ h+='<h3>'+T("Where the money went","பணம் எங்கே போனது")+'</h3><div class="svgf"><svg viewBox="0 0 1060 360" width="1060" height="360" role="img" aria-label="FCNR money flow">';
+ h+='<defs><marker id="fa" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0L10,5L0,10z" fill="#9aa5b4"/></marker></defs>';
+ function bx(x,y,w,hh,f,s,t1,t2,t3){return '<rect x="'+x+'" y="'+y+'" width="'+w+'" height="'+hh+'" rx="8" fill="'+f+'" stroke="'+s+'" stroke-width="1.5"/><text x="'+(x+w/2)+'" y="'+(y+24)+'" text-anchor="middle" font-size="13.5" font-weight="600" fill="#16202e">'+t1+'</text><text x="'+(x+w/2)+'" y="'+(y+44)+'" text-anchor="middle" font-size="11.5" fill="#5b6676">'+t2+'</text>'+(t3?'<text x="'+(x+w/2)+'" y="'+(y+62)+'" text-anchor="middle" font-size="11.5" fill="#5b6676">'+t3+'</text>':'')}
+ function ar(d){return '<path d="'+d+'" fill="none" stroke="#9aa5b4" stroke-width="1.6" marker-end="url(#fa)"/>'}
+ h+=bx(10,140,150,80,"#ffffff","#9aa5b4","NRI depositors","3–5 year dollar FDs","~6% offered");
+ h+=bx(200,140,170,80,"#eef3fb","#1d4f9e","Bank: FCNR(B)","System $127 bn","CRR/SLR exempt");
+ h+=bx(410,20,190,80,"#fff7e8","#e2701b","RBI swap window","takes $ · gives ₹","hedge cost borne by RBI");
+ h+=bx(410,140,190,80,"#f6f7f9","#16202e","Rupee liquidity","System surplus peaked","₹11.6 lakh cr (7 Sep)");
+ h+=bx(650,10,190,80,"#eaf6ef","#1f8a4c","① Lend it","loan yield ~8–9%","best use, takes time");
+ h+=bx(650,130,190,80,"#fdf3e6","#c48a0a","② Repay costly money","bulk deposits, CDs","saves interest");
+ h+=bx(650,250,190,80,"#fbecea","#c23b2a","③ Park it","VRRR ~5.24% / SDF","below deposit cost");
+ h+=bx(880,250,170,80,"#fff7e8","#e2701b","RBI drains surplus","VRRR + ₹1 lakh cr OMO","surplus ₹4.7 lakh cr (30 Sep)");
+ h+=bx(880,10,170,80,"#eaf6ef","#1f8a4c","Profit & growth","NII ₹ up, loans up","NIM % down");
+ h+=ar("M160,180 L200,180")+ar("M370,170 C390,170 390,60 410,60")+ar("M505,100 L505,140")+ar("M600,170 C625,170 625,50 650,50")+ar("M600,180 L650,170")+ar("M600,190 C625,190 625,290 650,290")+ar("M840,290 L880,290")+ar("M840,50 L880,50")+ar("M840,170 C860,170 860,70 880,60");
+ h+='</svg></div><div class="tl" style="margin-top:8px">'+[["8 Jun 2026","RBI swap window opens"],["31 Aug","Window closed early (planned 30 Sep)"],["4 Sep","₹7 lakh cr 30-day VRRR announced"],["7 Sep","Surplus record ₹11.6 lakh cr; ₹6 lakh cr+ absorbed in a day"],["17 Sep","₹2.4 lakh cr VRRR at 5.24%; ₹1 lakh cr OMO sales"],["30 Sep","Surplus down to ₹4.7 lakh cr"],["7 Oct","Repo 5.25% → 5.50%"]].map(function(e){return '<div class="ev"><b>'+e[0]+'</b><br>'+e[1]+'</div>'}).join("")+'</div>';
+
+ // NIM question
+ h+='<h3>'+T("1. Did FCNR hurt NIM? Yes, in two ways","1. FCNR NIM-ஐ பாதித்ததா? ஆம், இரண்டு வழிகளில்")+'</h3>';
+ h+='<div class="grid g2"><div class="card"><h4>'+T("a) Rate effect: costly money parked cheaply","அ) விகித விளைவு")+'</h4><p style="margin:0">'+T("FCNR deposits were priced at about 6%, while rupees parked with RBI earned about 5.24% (VRRR) or less. Every rupee not yet lent loses money for a while.","FCNR ~6% வட்டி; RBI-யிடம் வைத்த ரூபாய்க்கு ~5.24% மட்டுமே. கடனாக போகாத ஒவ்வொரு ரூபாயும் சிறிது காலம் நஷ்டம்.")+'</p></div><div class="card"><h4>'+T("b) Size effect: the denominator grows","ஆ) அளவு விளைவு")+'</h4><p style="margin:0">'+T("NIM = NII ÷ average earning assets. Back-to-back structures (ICICI and Axis lent abroad against the same FCNR deposits) earn a thin spread, so assets jump far more than NII. NII in rupees can rise while NIM in % falls.","NIM = NII ÷ சராசரி வருவாய் சொத்து. அதே FCNR டெபாசிட்டுக்கு எதிராக வெளிநாட்டில் கடன் (ICICI, Axis) மெல்லிய spread; சொத்து அதிகம் கூடும், NII குறைவாக. ரூபாயில் NII ஏறும், % NIM குறையும்.")+'</p></div></div>';
+ h+='<div class="tw" style="margin-top:10px"><table><thead><tr><th>Bank</th><th class="n">FCNR $ bn</th><th class="n">NIM Q2</th><th>NIM evidence</th><th>Funding cost</th><th>Leverage effect</th><th>Liquidity</th><th>Net read</th></tr></thead><tbody>';
+ bankList().forEach(function(b){var f=FX.bank[b],o=CO[b];h+='<tr><td>'+dot(b)+o.short+'</td><td class="n">'+fmt(o.fcnr.usd,2)+'</td><td class="n">'+f.nimQ2+'%</td><td>'+(b==="axis"?"3.47% without FCNR vs 3.36% reported: −11 bps":b==="icici"?"4.36% (Q1) → 4.18%: −18 bps QoQ":"3.32%; management calls Q2 the bottom")+'</td><td>'+f.cod+'</td><td>'+f.lev+'</td><td>'+f.lcr+'</td><td><span class="chip '+f.verdict[1]+'">'+f.verdict[0]+'</span></td></tr>'});
+ h+='</tbody></table></div><p class="note">Sector estimate before results: Motilal Oswal expected private-bank NIMs to fall 8–20 bps in Q2; PSU banks less, since FCNR is a smaller share of their deposits.</p>';
+
+ // VRRR
+ h+='<h3>'+T("2. VRRR: did RBI take away money banks could have lent?","2. VRRR: வங்கிகள் கடன் கொடுக்கக்கூடிய பணத்தை RBI எடுத்துக்கொண்டதா?")+'</h3>';
+ h+='<div class="grid g2"><div class="card"><h4>'+T("What VRRR is","VRRR என்றால்")+'</h4><p style="margin:0">'+T("Variable Rate Reverse Repo: an auction where banks lend their spare rupees to RBI for a fixed period (overnight to 30 days here) at a rate set by bidding, close to the repo rate. It is voluntary, as you said: a bank bids only the money it has no better use for. RBI used it because the swaps flooded the system with rupees and pushed overnight rates below the repo rate, which weakens monetary policy.","Variable Rate Reverse Repo: வங்கிகள் கூடுதல் ரூபாயை RBI-யிடம் சில நாட்களுக்கு (ஒரு நாள் முதல் 30 நாள்) ஏலத்தில் வைப்பது; வட்டி repo-வுக்கு அருகில். நீங்கள் சொன்னது போல விருப்பம் சார்ந்தது. Swap-ல் ரூபாய் வெள்ளமாக வந்து ஒரு நாள் வட்டி repo-வுக்கு கீழே போனதால் RBI இதைப் பயன்படுத்தியது.")+'</p></div><div class="card"><h4>'+T("Does it stop lending? Mostly no","கடனைத் தடுக்குமா? பெரும்பாலும் இல்லை")+'</h4><p style="margin:0">'+T("Loans can't be created overnight; a bank needs borrowers, credit checks and capital. VRRR only takes money that would otherwise sit idle, and the 30-day VRRR had an early-redemption option, so banks could pull money back to lend. System credit growth was above 18% in mid-September. The real cost is the earnings gap: VRRR pays ~5.24% on money that costs ~6%.","கடனை ஒரே இரவில் கொடுக்க முடியாது; கடன் வாங்குபவர், சோதனை, மூலதனம் தேவை. VRRR சும்மா இருக்கும் பணத்தை மட்டுமே எடுக்கிறது; 30 நாள் VRRR-ல் முன்கூட்டியே திரும்பப் பெறலாம். செப்டம்பர் நடுவில் கடன் வளர்ச்சி 18%-க்கு மேல். உண்மையான செலவு: ~6% பணத்துக்கு ~5.24% வருமானம்.")+'</p></div></div>';
+ h+='<div class="pc" style="margin-top:12px"><div class="card"><h4 class="up">'+T("Where VRRR helps banks","VRRR வங்கிக்கு உதவுவது")+'</h4><ul><li>Earns ~5.24% instead of 0% on idle cash (better than holding it as excess reserves).</li><li>Short and redeemable: the money stays available for lending.</li><li>Keeps overnight rates near repo, so loan pricing tied to repo stays meaningful.</li><li>Helps RBI defend the rupee and contain inflation, which supports bank stocks.</li></ul></div><div class="card"><h4 class="dn">'+T("Where it hurts","பாதிப்பு")+'</h4><ul><li>Negative carry: VRRR rate below FCNR cost (~6%) and below most deposit costs.</li><li>Lower NIM% while the money stays parked.</li><li>RBI also sold ₹1 lakh crore of bonds (OMO): higher bond yields hurt the market value of banks\' bond holdings.</li><li>Lending in a hurry to escape negative carry could mean weaker loans later.</li></ul></div></div>';
+
+ // calculator
+ h+='<h3>'+T("3. Try it: what does FCNR money earn?","3. நீங்களே பாருங்கள்: FCNR பணம் எவ்வளவு சம்பாதிக்கிறது?")+'</h3><div class="card"><p class="note" style="margin-top:0">'+T("Illustrative calculator. Banks do not disclose their exact all-in rupee cost after the swap or how they split the money; move the sliders to test.","விளக்க கணிப்பான். உண்மை செலவு, பிரிவு வெளியிடப்படவில்லை; slider-ஐ நகர்த்தி பாருங்கள்.")+'</p><div class="grid g3">'+
+  [["fxCost","Cost of FCNR money (rupee terms) %",4,8,0.05,6],["fxLoan","Yield on new loans %",7,11,0.05,8.5],["fxVrrr","VRRR / SDF return %",5,6,0.01,5.24],["fxOld","Cost of costly funds repaid %",5,8,0.05,6.6],["fxPl","% of FCNR money lent out",0,100,5,50],["fxPr","% used to repay costly funds",0,100,5,20]].map(function(x){return '<label style="display:block"><span class="note">'+x[1]+': <b id="'+x[0]+'V">'+x[5]+'</b></span><input type="range" id="'+x[0]+'" min="'+x[2]+'" max="'+x[3]+'" step="'+x[4]+'" value="'+x[5]+'" style="width:100%;accent-color:var(--cb)"></label>'}).join("")+
+  '</div><p class="note">'+T("Parked in VRRR/SDF: ","VRRR/SDF-ல் வைத்தது: ")+'<b id="fxPv">30</b>%</p><div class="bar-h" id="fxBar" style="display:flex;height:14px"></div><p class="note" style="margin:4px 0 8px"><span style="color:var(--good)">■</span> lent · <span style="color:var(--warn)">■</span> repaid costly funds · <span style="color:var(--bad)">■</span> parked</p><div class="ex" id="fxOut"></div></div>';
+
+ // positive / negative matrix
+ h+='<h3>'+T("4. Who gains, who loses","4. யாருக்கு லாபம், யாருக்கு நஷ்டம்")+'</h3><div class="tw"><table><thead><tr><th>Area</th><th>Positive</th><th>Negative</th><th>When</th></tr></thead><tbody>'+
+ [["Bank NIM","Rises again as money is lent and the 7 Oct hike reprices loans","Falls in Q2–Q3 while money is parked or lent back-to-back","Pain now; relief from Q3–Q4"],["Loan & deposit growth","Funds 16–30% loan growth without a deposit price war","Headline growth is inflated; compare ex-FCNR numbers","Now"],["Liquidity & ratios","Higher LCR; CRR/SLR exemption frees cash","LCR falls back as the money is deployed (HDFC 113%)","Now"],["Profit (₹)","NII in rupees still rises on bigger balance sheets","Thin spread on each extra rupee","FY27"],["Asset quality","Lower funding stress","Pressure to lend fast can loosen standards","FY28+"],["Bond portfolio","—","RBI OMO sales push yields up; MTM losses","Sep–Dec 2026"],["Rupee & reserves","Reserves record $740.8 bn; rupee defended","RBI carries the hedge cost","Ongoing"],["Maturity wall","Locked-in 3–5 year funding","$127 bn falls due 2029–2031: rollover or repay risk","2029–31"]].map(function(r){return '<tr><td><b>'+r[0]+'</b></td><td class="up">'+r[1]+'</td><td class="dn">'+r[2]+'</td><td>'+r[3]+'</td></tr>'}).join("")+'</tbody></table></div>';
+
+ h+='<h3>'+T("CB verdict","CB தீர்ப்பு")+'</h3><div class="grid g3">';
+ [["hdfc","Least hurt, most helped. Smallest NIM damage and the tightest CD ratio, so locked-in funding eases its main constraint."],["icici","Biggest volume, biggest NIM hit. NIM −18 bps QoQ, but it still has the highest NIM (4.18%) and the most room to lend the money at good yields."],["axis","Clear NIM cost (−11 bps) but it used FCNR to replace costlier term deposits; benefit shows only if loan growth holds."]].forEach(function(x){h+='<div class="card" style="border-top:4px solid '+CO[x[0]].col+'"><h4>'+CO[x[0]].name+'</h4><p style="margin:0">'+x[1]+'</p></div>'});
+ h+='</div><p class="note" style="margin-top:8px">'+T("What to check in Q3: NIM excluding FCNR, loan growth excluding back-to-back FCNR loans, and how much of the money is still parked.","Q3-ல் பார்க்க வேண்டியது: FCNR இல்லாத NIM, back-to-back இல்லாத கடன் வளர்ச்சி, இன்னும் எவ்வளவு பணம் சும்மா இருக்கிறது.")+'</p>';
  return h;
 };
+AFTER.fcnr=function(){["fxCost","fxLoan","fxVrrr","fxOld","fxPl","fxPr"].forEach(function(id){var el=document.getElementById(id);el.addEventListener("input",function(){
+  if(id==="fxPl"||id==="fxPr"){var pl=+document.getElementById("fxPl").value,pr=+document.getElementById("fxPr").value;if(pl+pr>100){if(id==="fxPl")document.getElementById("fxPr").value=100-pl;else document.getElementById("fxPl").value=100-pr}["fxPl","fxPr"].forEach(function(k){document.getElementById(k+"V").textContent=document.getElementById(k).value})}
+  document.getElementById(id+"V").textContent=el.value;carryCalc()})});carryCalc()};
 
 /* ---------- Market & FII ---------- */
 VIEWS.market=function(){
@@ -693,6 +757,7 @@ AFTER.socrates=function(){document.querySelectorAll(".qz [data-q]").forEach(func
 var KB=[
  [["subsidiar","group","consolidated","துணை"],function(b){if(b){var g=subGap(b);return CO[b].name+": consolidated profit "+fmt(g.c)+" crore against standalone "+fmt(g.st)+" crore, so subsidiaries add about "+fmt(g.pc,1)+" percent of group profit."}return "Subsidiaries add 6 to 9 percent of group profit this quarter: HDFC about 6 percent, ICICI and Axis about 9 percent each. ICICI has the strongest set, led by ICICI Lombard and ICICI Pru Life."}],
  [["best","which bank","verdict","top","winner","சிறந்த"],function(){return "On earnings quality ICICI Bank had the best Q2FY27: profit up 20.1%, core operating profit up 21.8%, NIM 4.18%. Axis came second (profit up 37.6% but mostly from lower provisions), HDFC Bank third (profit up 4.7% because treasury gains fell). On valuation the order reverses."}],
+ [["vrrr","reverse repo","liquidity","surplus"],function(){return "VRRR is a voluntary RBI auction where banks park spare rupees. The FCNR swaps pushed the system surplus to a record 11.6 lakh crore on 7 September, so RBI drained it, for example 2.4 lakh crore at 5.24 percent on 17 September. It earns banks less than the roughly 6 percent FCNR cost, so it hurts NIM while money stays parked, but it does not stop lending because the money can be pulled back."}],
  [["fcnr","dollar deposit","nri"],function(b){if(b)return CO[b].name+": "+CO[b].fcnr.note+".";return "FCNR deposits raised: ICICI $17.88 billion, HDFC $11.5 billion, Axis $10.62 billion. They lifted deposits but cut margins, for example Axis NIM 3.47% without FCNR and 3.36% with it."}],
  [["ecl","expected credit","provisioning"],function(){return "ECL starts on 1 April 2027; the Day-1 hit can be spread over FY28 to FY31. Large private banks face only about 5 to 20 bps of CET1. HDFC and ICICI are best placed; Axis is adequate but has the thinnest CET1 at 14.61%."}],
  [["fii","foreign","fpi"],function(){return "FIIs sold a record 3.04 lakh crore rupees of Indian shares in 2026, and banks were hit hardest. Watch the rupee, crude oil and US yields. If they return, the most foreign-held names such as HDFC Bank usually gain first."}],
