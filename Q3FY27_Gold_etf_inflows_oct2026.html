@@ -1,0 +1,600 @@
+<title>Gold ETF Paradox 2026</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Mukta+Malar:wght@400;600;800&family=IBM+Plex+Mono:wght@500;600&display=swap">
+<style>
+/* Layout: sticky header + tab rail, one white sheet per tab; balance-scale graphic anchors the puzzle */
+:root{
+  --bg:#ffffff; --ink:#1a1712; --muted:#5a5248; --line:#ece4d8;
+  --accent:#f4a259; --accent-soft:#fff2e3; --accent-deep:#b65f12;
+  --gold:#c8961e; --gold-soft:#fbf3dc;
+  --down:#b23a2e; --down-soft:#fdeceA; --up:#1f7a4d; --up-soft:#e6f4ec;
+  --f-display:"Bricolage Grotesque","Mukta Malar",system-ui,sans-serif;
+  --f-body:"Mukta Malar",system-ui,"Noto Sans Tamil",sans-serif;
+  --f-num:"IBM Plex Mono",ui-monospace,monospace;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.55;font-weight:600}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bg)}
+.wrap{max-width:1080px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+header.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);border-bottom:2px solid var(--line)}
+.bar{display:flex;align-items:center;gap:12px;padding-block:12px;flex-wrap:wrap}
+.brand{display:flex;flex-direction:column;flex:1;min-width:0}
+.brand h1{font-family:var(--f-display);font-weight:800;font-size:clamp(20px,3.2vw,28px);margin:0;line-height:1.15;text-wrap:balance}
+.brand small{color:var(--accent-deep);font-weight:800;letter-spacing:.02em}
+.ctrls{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+button{font:inherit;cursor:pointer}
+.pill{border:2px solid var(--ink);background:var(--bg);color:var(--ink);border-radius:999px;padding:4px 14px;font-weight:800}
+.pill[aria-pressed="true"]{background:var(--ink);color:#fff}
+.pill.acc{border-color:var(--accent-deep);color:var(--accent-deep)}
+button:focus-visible,summary:focus-visible,input:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+nav.tabs{display:flex;gap:6px;overflow-x:auto;padding-bottom:10px;scrollbar-width:thin}
+nav.tabs button{white-space:nowrap;border:2px solid var(--line);background:var(--bg);color:var(--ink);border-radius:8px;padding:6px 12px;font-weight:800;font-size:14px}
+nav.tabs button[aria-selected="true"]{background:var(--accent-soft);border-color:var(--accent);color:var(--accent-deep)}
+main{padding-block:22px 120px}
+section.tab{display:flex;flex-direction:column;gap:20px}
+h2{font-family:var(--f-display);font-weight:800;font-size:clamp(22px,3vw,30px);margin:0;text-wrap:balance}
+h3{font-family:var(--f-display);font-weight:800;font-size:18px;margin:0}
+.lead{font-size:18px;max-width:68ch;margin:0}
+ul.b{margin:0;padding-left:20px;display:flex;flex-direction:column;gap:6px;max-width:72ch}
+.grid{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(230px,1fr))}
+.grid2{display:grid;gap:18px;grid-template-columns:repeat(auto-fit,minmax(300px,1fr))}
+.grid>*,.grid2>*{min-width:0}
+.stat{border:2px solid var(--line);border-radius:10px;padding:14px;display:flex;flex-direction:column;gap:4px}
+.stat .k{font-size:13px;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;font-weight:800}
+.stat .v{font-family:var(--f-num);font-size:26px;font-weight:600;font-variant-numeric:tabular-nums}
+.stat .n{font-size:14px;color:var(--muted)}
+.stat.up{border-color:#bfe2cd;background:var(--up-soft)} .stat.up .v{color:var(--up)}
+.stat.dn{border-color:#f0c6c0;background:var(--down-soft)} .stat.dn .v{color:var(--down)}
+.stat.au{border-color:#ecd9a2;background:var(--gold-soft)} .stat.au .v{color:#8a6610}
+.panel{border:2px solid var(--line);border-radius:12px;padding:16px;display:flex;flex-direction:column;gap:12px;min-width:0}
+.callout{background:var(--accent-soft);border-left:6px solid var(--accent);border-radius:8px;padding:14px 16px;font-weight:700}
+.tscroll{overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-size:15px}
+th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+th{background:var(--accent-soft);font-weight:800}
+td.num{font-family:var(--f-num);font-variant-numeric:tabular-nums;white-space:nowrap}
+details.rsn{border:2px solid var(--line);border-radius:10px;padding:0}
+details.rsn[open]{border-color:var(--accent)}
+details.rsn summary{list-style:none;display:flex;gap:12px;align-items:center;padding:12px 14px;cursor:pointer}
+details.rsn summary::-webkit-details-marker{display:none}
+.rk{font-family:var(--f-num);font-weight:600;background:var(--ink);color:#fff;border-radius:6px;padding:2px 8px;font-size:14px}
+.rt{flex:1;font-weight:800;font-size:17px;min-width:0}
+.meter{display:flex;gap:3px}
+.meter i{width:10px;height:14px;border-radius:2px;background:var(--line)}
+.meter i.on{background:var(--gold)}
+.rb{padding:0 14px 14px 14px;display:flex;flex-direction:column;gap:8px}
+.tag{display:inline-block;font-size:12px;font-weight:800;padding:1px 8px;border-radius:999px;background:var(--gold-soft);color:#8a6610;border:1px solid #ecd9a2}
+.chip{font-size:13px;font-weight:800;padding:2px 10px;border-radius:999px;display:inline-block}
+.chip.g{background:var(--up-soft);color:var(--up)} .chip.r{background:var(--down-soft);color:var(--down)} .chip.a{background:var(--accent-soft);color:var(--accent-deep)}
+svg text{font-family:var(--f-body)}
+.svgbox{overflow-x:auto}
+.svgbox svg{display:block;max-width:100%;height:auto}
+.slogan{font-family:var(--f-display);font-weight:800;color:var(--accent-deep)}
+/* quiz */
+.q{border:2px solid var(--line);border-radius:10px;padding:14px;display:flex;flex-direction:column;gap:8px}
+.q .opts{display:flex;flex-direction:column;gap:6px}
+.q .opts button{text-align:left;border:2px solid var(--line);background:var(--bg);border-radius:8px;padding:8px 10px;font-weight:700;color:var(--ink)}
+.q .opts button.ok{border-color:var(--up);background:var(--up-soft)}
+.q .opts button.no{border-color:var(--down);background:var(--down-soft)}
+.q .ex{font-size:15px;color:var(--muted)}
+/* checklist */
+.ck label{display:flex;gap:10px;align-items:flex-start;padding:6px 0;border-bottom:1px dashed var(--line)}
+.ck input{width:20px;height:20px;margin-top:3px;accent-color:var(--accent-deep);flex:none}
+.ck .d{display:block;font-size:14px;color:var(--muted);font-weight:600}
+.prog{height:10px;background:var(--line);border-radius:999px;overflow:hidden}
+.prog span{display:block;height:100%;background:var(--accent);width:0}
+/* CB badge + voice */
+.cb{position:fixed;right:calc(16px + env(safe-area-inset-right,0px));bottom:calc(16px + env(safe-area-inset-bottom,0px));z-index:20}
+.cb-logo{width:52px;height:52px;border-radius:50%;background:var(--accent);color:#fff;font-family:var(--f-display);font-weight:800;font-size:18px;display:grid;place-items:center;border:3px solid #fff;box-shadow:0 2px 10px rgba(0,0,0,.18);animation:blink 1.6s ease-in-out infinite}
+@keyframes blink{50%{opacity:.45}}
+@media (prefers-reduced-motion:reduce){.cb-logo{animation:none}}
+.cb-tip{position:absolute;right:0;bottom:62px;width:min(300px,80vw);background:#fff;border:2px solid var(--accent);border-radius:10px;padding:10px 12px;font-size:13px;color:var(--ink);display:none}
+.cb:hover .cb-tip,.cb.open .cb-tip{display:block}
+.va-btn{position:fixed;right:calc(16px + env(safe-area-inset-right,0px));bottom:calc(80px + env(safe-area-inset-bottom,0px));z-index:20;background:var(--ink);color:#fff;border:none;border-radius:999px;padding:10px 16px;font-weight:800;box-shadow:0 2px 10px rgba(0,0,0,.2)}
+.va{position:fixed;right:calc(16px + env(safe-area-inset-right,0px));bottom:calc(132px + env(safe-area-inset-bottom,0px));z-index:21;width:min(380px,calc(100vw - 32px));max-height:min(70vh,560px);overflow:auto;background:#fff;border:2px solid var(--ink);border-radius:14px;padding:14px;display:flex;flex-direction:column;gap:10px;box-shadow:0 8px 30px rgba(0,0,0,.18)}
+.va .qs{display:flex;flex-wrap:wrap;gap:6px}
+.va .qs button{border:2px solid var(--line);background:var(--accent-soft);border-radius:999px;padding:4px 10px;font-size:13px;font-weight:700;color:var(--ink);text-align:left}
+.va .ans{background:var(--gold-soft);border-radius:8px;padding:10px;font-weight:700;min-height:44px}
+.va input[type=text]{width:100%;border:2px solid var(--line);border-radius:8px;padding:8px;font:inherit}
+.row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.foot{border-top:2px solid var(--line);padding-block:16px;color:var(--muted);font-size:14px}
+</style>
+
+<header class="top">
+  <div class="wrap">
+    <div class="bar">
+      <div class="brand">
+        <small data-i="kicker"></small>
+        <h1 data-i="title"></h1>
+      </div>
+      <div class="ctrls">
+        <button class="pill acc" id="readTab" data-i="readtab"></button>
+        <button class="pill" id="lang-en" aria-pressed="true">EN</button>
+        <button class="pill" id="lang-ta" aria-pressed="false">தமிழ்</button>
+      </div>
+    </div>
+    <nav class="tabs" id="tabs" role="tablist"></nav>
+  </div>
+</header>
+
+<main class="wrap" id="main"></main>
+
+<div class="wrap foot"><span class="slogan" data-i="slogan"></span> · <span data-i="asof"></span></div>
+
+<button class="va-btn" id="vaBtn" data-i="voice"></button>
+<div class="va" id="va" hidden>
+  <div class="row" style="justify-content:space-between"><h3 data-i="vatitle"></h3><button class="pill" id="vaClose" aria-label="Close">✕</button></div>
+  <div class="qs" id="vaQs"></div>
+  <input type="text" id="vaInput" data-ph="vaph">
+  <div class="row"><button class="pill acc" id="vaAsk" data-i="ask"></button>
+    <label for="rate" style="font-size:13px" data-i="speed"></label>
+    <input type="range" id="rate" min="0.5" max="1.3" step="0.05" value="0.8" style="flex:1;min-width:90px">
+    <span id="rateV" style="font-family:var(--f-num);font-size:13px">0.80×</span></div>
+  <div class="ans" id="vaAns" aria-live="polite"></div>
+  <div style="font-size:12px;color:var(--muted)" data-i="vanote"></div>
+</div>
+
+<div class="cb" id="cb" tabindex="0" aria-label="Disclaimer">
+  <div class="cb-tip" data-i="disc"></div>
+  <div class="cb-logo">CB</div>
+</div>
+
+<script>
+const T = {
+en:{
+ kicker:"CB Research · Macro explainer · 21 Oct 2026",
+ title:"Bad news everywhere — so why is money still flowing into gold ETFs?",
+ readtab:"🔊 Read this tab", voice:"🎙 Voice Assist", vatitle:"Cauvery Assist", ask:"Ask", speed:"Speed",
+ vaph:"Type a question… e.g. why buy when price is falling?",
+ vanote:"Education only. No buy/sell advice.",
+ slogan:"Know before you own",
+ asof:"Data as of 20–21 Oct 2026",
+ disc:"CB Research (Cauvery Business Research) is not SEBI-registered. This page is for education only and is not a recommendation to buy, sell or hold gold or any fund. Figures are from public reports and may change.",
+ tabs:["Dashboard","The Puzzle","10 Reasons","India Angle","Who's Buying","What Could Reverse","Triggers & Cycle","5 Takeaways","Self-Check","Cauvery Socrates","Analyst View"]
+},
+ta:{
+ kicker:"CB Research · Macro விளக்கம் · 21 Oct 2026",
+ title:"எல்லா பக்கமும் bad news — அப்புறம் ஏன் Gold ETF-க்கு பணம் வந்துகிட்டே இருக்கு?",
+ readtab:"🔊 இந்த tab-ஐ படிங்க", voice:"🎙 Voice Assist", vatitle:"காவேரி Assist", ask:"கேளுங்க", speed:"வேகம்",
+ vaph:"கேள்வி type பண்ணுங்க… e.g. price விழும்போது ஏன் வாங்குறாங்க?",
+ vanote:"கல்விக்காக மட்டும். Buy/sell advice இல்லை.",
+ slogan:"புரிஞ்சு வாங்குங்க!",
+ asof:"Data: 20–21 Oct 2026 வரை",
+ disc:"CB Research (காவேரி Business Research) SEBI-registered இல்லை. இது கல்விக்காக மட்டும் — gold அல்லது எந்த fund-ஐயும் வாங்க/விற்க/வைச்சுக்க சொல்லும் recommendation இல்லை. Figures public reports-ல இருந்து; மாறலாம்.",
+ tabs:["Dashboard","புதிர்","10 காரணங்கள்","இந்தியா பார்வை","யார் வாங்குறாங்க","எது திருப்பலாம்","Triggers & Cycle","5 Takeaways","Self-Check","காவேரி Socrates","Analyst View"]
+}};
+
+/* ---------- Content per tab, bilingual ---------- */
+const meter = n => `<span class="meter" aria-label="${n} of 5">${[1,2,3,4,5].map(i=>`<i class="${i<=n?'on':''}"></i>`).join('')}</span>`;
+
+const C = {};
+
+C.dash = {
+en:`<h2>At a glance</h2>
+<p class="lead">Gold price fell hard in September. Yet ETF investors bought a record amount. Price and flows went opposite ways.</p>
+<div class="grid">
+ <div class="stat up"><span class="k">Global gold ETF inflow · Q3 2026</span><span class="v">$31 bn</span><span class="n">Record quarter</span></div>
+ <div class="stat up"><span class="k">September alone</span><span class="v">$10 bn</span><span class="n">+67 t added</span></div>
+ <div class="stat au"><span class="k">Global ETF holdings</span><span class="v">4,256 t</span><span class="n">All-time high</span></div>
+ <div class="stat dn"><span class="k">Gold price · Sept move</span><span class="v">−8.5%</span><span class="n">Sharpest monthly fall of 2026</span></div>
+ <div class="stat dn"><span class="k">Gold spot · 20 Oct</span><span class="v">~$4,120</span><span class="n">−5.5% in a month</span></div>
+ <div class="stat dn"><span class="k">US 10-yr yield</span><span class="v">5.14%</span><span class="n">Near 2-decade high</span></div>
+ <div class="stat dn"><span class="k">Dec Fed hike odds</span><span class="v">~94%</span><span class="n">Market-implied</span></div>
+ <div class="stat up"><span class="k">India gold ETF · Sept</span><span class="v">₹4,451 cr</span><span class="n">+71% vs Aug</span></div>
+</div>
+<div class="callout">Simple picture: speculators (futures traders) sold and pushed the price down. Long-term savers (ETF buyers) used the fall to buy. Both happened in the same month.</div>
+<div class="tscroll"><table>
+<tr><th>Headwind you listed</th><th>Status now</th><th>Textbook effect on gold</th></tr>
+<tr><td>Interest rates going up</td><td>Fed hike priced for Dec</td><td><span class="chip r">Negative</span></td></tr>
+<tr><td>Bond yield over 5%</td><td>US 10-yr ~5.14%</td><td><span class="chip r">Negative</span></td></tr>
+<tr><td>Strong dollar</td><td>Rallied in Sept; soft patches since</td><td><span class="chip r">Negative</span></td></tr>
+<tr><td>High inflation</td><td>Oil-driven, sticky</td><td><span class="chip g">Positive</span></td></tr>
+<tr><td>Iran–US war, no clarity</td><td>At war since Feb 2026</td><td><span class="chip g">Positive</span></td></tr>
+<tr><td>Oil high</td><td>Brent ~$98–102 range</td><td><span class="chip a">Mixed</span> (inflation ↑, but yields ↑)</td></tr>
+</table></div>`,
+ta:`<h2>ஒரே பார்வையில்</h2>
+<p class="lead">September-ல gold price நல்லா விழுந்துச்சு. ஆனா ETF investors record அளவு வாங்கினாங்க. Price ஒரு பக்கம், flows இன்னொரு பக்கம்.</p>
+<div class="grid">
+ <div class="stat up"><span class="k">Global gold ETF inflow · Q3 2026</span><span class="v">$31 bn</span><span class="n">Record quarter</span></div>
+ <div class="stat up"><span class="k">September மட்டும்</span><span class="v">$10 bn</span><span class="n">+67 t சேர்ந்துச்சு</span></div>
+ <div class="stat au"><span class="k">Global ETF holdings</span><span class="v">4,256 t</span><span class="n">எப்பவும் இல்லாத உச்சம்</span></div>
+ <div class="stat dn"><span class="k">Gold price · Sept</span><span class="v">−8.5%</span><span class="n">2026-ல பெரிய monthly fall</span></div>
+ <div class="stat dn"><span class="k">Gold spot · 20 Oct</span><span class="v">~$4,120</span><span class="n">ஒரு மாசத்துல −5.5%</span></div>
+ <div class="stat dn"><span class="k">US 10-yr yield</span><span class="v">5.14%</span><span class="n">20 வருஷ உச்சம் கிட்ட</span></div>
+ <div class="stat dn"><span class="k">Dec Fed hike odds</span><span class="v">~94%</span><span class="n">Market கணிப்பு</span></div>
+ <div class="stat up"><span class="k">India gold ETF · Sept</span><span class="v">₹4,451 cr</span><span class="n">Aug-ஐ விட +71%</span></div>
+</div>
+<div class="callout">சிம்பிளா சொன்னா: futures traders விற்றாங்க, price கீழ போச்சு. Long-term savers (ETF buyers) அந்த fall-ஐ வாங்க use பண்ணாங்க. ரெண்டும் ஒரே மாசத்துல நடந்துச்சு.</div>
+<div class="tscroll"><table>
+<tr><th>நீங்க சொன்ன headwind</th><th>இப்போ நிலைமை</th><th>Textbook-படி gold-க்கு</th></tr>
+<tr><td>Interest rates ஏறுது</td><td>Dec-ல Fed hike எதிர்பார்ப்பு</td><td><span class="chip r">Negative</span></td></tr>
+<tr><td>Bond yield 5%-க்கு மேல</td><td>US 10-yr ~5.14%</td><td><span class="chip r">Negative</span></td></tr>
+<tr><td>Strong dollar</td><td>Sept-ல ஏறுச்சு; அப்புறம் கொஞ்சம் soft</td><td><span class="chip r">Negative</span></td></tr>
+<tr><td>Inflation அதிகம்</td><td>Oil காரணமா sticky</td><td><span class="chip g">Positive</span></td></tr>
+<tr><td>Iran–US war, clarity இல்லை</td><td>Feb 2026-ல இருந்து war</td><td><span class="chip g">Positive</span></td></tr>
+<tr><td>Oil விலை அதிகம்</td><td>Brent ~$98–102</td><td><span class="chip a">Mixed</span> (inflation ↑, yields ↑)</td></tr>
+</table></div>`};
+
+const scale = (lang)=>{
+ const L = lang==='en'?
+  {l:"Pushing PRICE down",r:"Pulling MONEY in",a:["Yield 5.1%","Fed hike bets","Dollar rally","Futures selling"],b:["Fear of bonds / debt","Central bank buying","Buy-the-dip","War & oil","Weak rupee / stocks"],res:"Result: price ↓ 8.5% in Sept · ETF holdings ↑ to record 4,256 t",cap:"Two different groups, two different reasons"}:
+  {l:"PRICE-ஐ கீழ தள்றது",r:"PANAM உள்ள இழுக்குறது",a:["Yield 5.1%","Fed hike எதிர்பார்ப்பு","Dollar rally","Futures விற்பனை"],b:["Bonds / debt பயம்","Central bank வாங்குதல்","Dip-ல வாங்குதல்","War & oil","Rupee / stocks weak"],res:"Result: Sept-ல price ↓ 8.5% · ETF holdings ↑ record 4,256 t",cap:"ரெண்டு வேற groups, ரெண்டு வேற காரணங்கள்"};
+ if(lang==='ta') L.r="பணத்தை உள்ள இழுக்குறது";
+ const box=(x,y,t,c)=>`<rect x="${x}" y="${y}" width="210" height="30" rx="6" fill="${c}" stroke="#d9cdbb"/><text x="${x+105}" y="${y+20}" text-anchor="middle" font-size="14" font-weight="700" fill="#1a1712">${t}</text>`;
+ return `<svg viewBox="0 0 720 400" role="img" aria-label="${L.cap}">
+ <rect width="720" height="400" fill="#ffffff"/>
+ <polygon points="360,330 330,380 390,380" fill="#1a1712"/>
+ <line x1="360" y1="110" x2="360" y2="330" stroke="#1a1712" stroke-width="6"/>
+ <g transform="rotate(-6 360 110)">
+  <line x1="110" y1="110" x2="610" y2="110" stroke="#1a1712" stroke-width="6" stroke-linecap="round"/>
+  <line x1="110" y1="110" x2="110" y2="150" stroke="#5a5248" stroke-width="2"/>
+  <line x1="610" y1="110" x2="610" y2="150" stroke="#5a5248" stroke-width="2"/>
+ </g>
+ <text x="140" y="40" text-anchor="middle" font-size="17" font-weight="800" fill="#b23a2e">${L.l}</text>
+ <text x="580" y="40" text-anchor="middle" font-size="17" font-weight="800" fill="#1f7a4d">${L.r}</text>
+ ${L.a.map((t,i)=>box(30,165+i*36,t,"#fdeceA")).join('')}
+ ${L.b.map((t,i)=>box(480,128+i*36,t,"#e6f4ec")).join('')}
+ <circle cx="360" cy="110" r="10" fill="#f4a259"/>
+ <rect x="150" y="345" width="420" height="0" fill="none"/>
+ <text x="360" y="398" text-anchor="middle" font-size="14" font-weight="800" fill="#b65f12">${L.res}</text>
+ </svg>`;
+};
+
+const flowsChart = (lang)=>{
+ const g=[["Jul",3],["Aug",18],["Sep",10]], ind=[["Jul",1559],["Aug",2597],["Sep",4451]];
+ const bars=(data,max,x0,unit,col)=>data.map((d,i)=>{const h=d[1]/max*150;const x=x0+i*70;return `<rect x="${x}" y="${200-h}" width="44" height="${h}" rx="4" fill="${col}"/><text x="${x+22}" y="${194-h}" text-anchor="middle" font-family="IBM Plex Mono" font-size="13" font-weight="600" fill="#1a1712">${unit==='$'?'$'+d[1]+'bn':'₹'+d[1].toLocaleString('en-IN')}</text><text x="${x+22}" y="220" text-anchor="middle" font-size="13" font-weight="700" fill="#5a5248">${d[0]}</text>`}).join('');
+ const t1=lang==='en'?"Global gold ETF inflows (US$ bn)":"Global gold ETF inflows (US$ bn)";
+ const t2=lang==='en'?"India gold ETF inflows (₹ crore)":"இந்தியா gold ETF inflows (₹ crore)";
+ return `<svg viewBox="0 0 640 240" role="img" aria-label="${t1}; ${t2}">
+ <rect width="640" height="240" fill="#fff"/>
+ <text x="20" y="24" font-size="14" font-weight="800" fill="#1a1712">${t1}</text>
+ <text x="340" y="24" font-size="14" font-weight="800" fill="#1a1712">${t2}</text>
+ <line x1="20" y1="200" x2="270" y2="200" stroke="#ece4d8"/><line x1="340" y1="200" x2="620" y2="200" stroke="#ece4d8"/>
+ ${bars(g,18,45,'$','#c8961e')}${bars(ind,4451,365,'₹','#f4a259')}
+ </svg>`;
+};
+
+C.puzzle = {
+en:()=>`<h2>The puzzle: why buy when everything says "sell"?</h2>
+<ul class="b">
+<li>Gold pays no interest. When bonds pay 5%+, holding gold "costs" you that 5%. That is the opportunity cost.</li>
+<li>Gold is priced in dollars. A strong dollar makes it costlier for the rest of the world.</li>
+<li>So by the textbook, high yields + strong dollar = gold falls. That part <b>did</b> happen — price fell 8.5% in Sept.</li>
+<li>But ETF buyers are not trading the textbook. They are buying <b>insurance</b>.</li>
+</ul>
+<div class="panel"><h3>Picture it: one seesaw, two different crowds</h3><div class="svgbox">${scale('en')}</div></div>
+<div class="panel"><h3>Money kept coming in, month after month</h3><div class="svgbox">${flowsChart('en')}</div>
+<ul class="b"><li>July reversed two months of outflows. August was the 2nd-largest month on record.</li><li>India: Jan–Sep ₹45,925 cr — already more than all of 2025 (₹42,961 cr).</li></ul></div>
+<div class="callout">Key idea: price is set by the fast money at the margin. Flows show what slow money is doing. In 2026 they disagree.</div>`,
+ta:()=>`<h2>புதிர்: எல்லாமே "sell"-னு சொல்லும்போது ஏன் வாங்குறாங்க?</h2>
+<ul class="b">
+<li>Gold-க்கு interest கிடையாது. Bonds 5%+ குடுக்கும்போது, gold வைச்சிருந்தா அந்த 5%-ஐ miss பண்றீங்க. இதுதான் opportunity cost.</li>
+<li>Gold dollar-ல price ஆகுது. Dollar strong-ஆ இருந்தா மத்த நாடுகளுக்கு விலை அதிகம்.</li>
+<li>Textbook-படி: high yield + strong dollar = gold விழும். அது <b>நடந்துச்சு</b> — Sept-ல 8.5% fall.</li>
+<li>ஆனா ETF buyers textbook-ஐ trade பண்ணல. அவங்க <b>insurance</b> வாங்குறாங்க.</li>
+</ul>
+<div class="panel"><h3>இப்படி யோசிங்க: ஒரே seesaw, ரெண்டு வேற கூட்டம்</h3><div class="svgbox">${scale('ta')}</div></div>
+<div class="panel"><h3>மாசா மாசம் பணம் வந்துகிட்டே இருந்துச்சு</h3><div class="svgbox">${flowsChart('ta')}</div>
+<ul class="b"><li>July-ல ரெண்டு மாச outflows திரும்புச்சு. August record-ல 2-வது பெரிய மாசம்.</li><li>இந்தியா: Jan–Sep ₹45,925 cr — 2025 முழுசையும் (₹42,961 cr) ஏற்கனவே தாண்டிடுச்சு.</li></ul></div>
+<div class="callout">Key idea: price-ஐ fast money தீர்மானிக்குது. Flows slow money என்ன பண்ணுதுன்னு காட்டுது. 2026-ல ரெண்டும் வேற வேற திசை.</div>`};
+
+const R = [
+ {s:5,en:["Fear of bonds and government debt","Bonds themselves feel risky now. Long-term Treasuries keep falling as yields rise. UK gilt stress coincided with record UK gold ETF buying. Gold is the asset with no government promise behind it.","Insurance"],
+      ta:["Bonds, அரசு கடன் மேல பயம்","இப்போ bonds-ஏ risky-ஆ தெரியுது. Yields ஏறும்போது long-term Treasuries விலை விழுது. UK gilt stress வந்த நேரத்துல UK gold ETF-க்கு record buying. Gold-க்கு எந்த அரசோட promise-உம் தேவையில்லை.","Insurance"]},
+ {s:5,en:["Central banks are the floor","Central banks bought a record 289 t in Q2 2026 — during a quarter when price fell ~16%. 89% of surveyed central banks expect global reserves to rise. Retail sees this and feels safer buying.","Structural"],
+      ta:["Central banks தான் floor","Q2 2026-ல central banks record 289 t வாங்கினாங்க — price ~16% விழுந்த quarter-லயே. Survey-ல 89% central banks reserves ஏறும்னு சொல்றாங்க. இதை பார்த்து retail-க்கு நம்பிக்கை வருது.","Structural"]},
+ {s:4,en:["Buy-the-dip after a 6-year bull run","Gold has rewarded holders for years. An 8.5% fall looks like a discount, not a warning. WGC called Indian flows 'opportunistic dip buying'.","Behaviour"],
+      ta:["பல வருஷ bull run-க்கு அப்புறம் dip-ல வாங்குதல்","பல வருஷமா gold நல்ல return குடுத்திருக்கு. 8.5% fall-ஐ warning-ஆ இல்லாம discount-ஆ பார்க்குறாங்க. WGC இந்திய flows-ஐ 'opportunistic dip buying'-னு சொல்லுச்சு.","Behaviour"]},
+ {s:4,en:["War with no end date","US–Iran war since Feb 2026. Tanker strikes in Sept. When outcomes are unknown, investors pay for protection rather than predict.","Geopolitics"],
+      ta:["முடிவு தெரியாத war","Feb 2026-ல இருந்து US–Iran war. Sept-ல tanker attacks. Result தெரியாதப்போ predict பண்றதை விட protection-க்கு pay பண்றாங்க.","Geopolitics"]},
+ {s:4,en:["Oil-led inflation that rate hikes can't fix","Brent near $100 pushes prices up from the supply side. Rate hikes cool demand, not oil supply. Investors fear inflation stays above bond yields after tax — gold hedges that.","Inflation hedge"],
+      ta:["Rate hike-ஆல சரி பண்ண முடியாத oil inflation","Brent ~$100 supply side-ல இருந்து விலையை ஏத்துது. Rate hike demand-ஐ குறைக்கும், oil supply-ஐ இல்லை. Tax-க்கு அப்புறம் inflation bond yield-ஐ தாண்டும்னு பயம் — gold அதுக்கு hedge.","Inflation hedge"]},
+ {s:3,en:["Stagflation smell","Rates rising while job growth slowed in Sept. Slow growth + high inflation is the setting where stocks and bonds can both fall. Gold is one of few assets that may not.","Diversifier"],
+      ta:["Stagflation வாசனை","Sept-ல job growth slow ஆச்சு, ஆனா rates ஏறுது. Slow growth + high inflation-ல stocks, bonds ரெண்டுமே விழலாம். அப்போ gold ஒரு diversifier.","Diversifier"]},
+ {s:3,en:["Gold is now a standard allocation","Wealth managers now keep a fixed slice in gold. That money is rebalanced in, not timed. Flows are 'allocation-led', said fund industry voices in India.","Structural"],
+      ta:["Gold இப்போ standard allocation","Wealth managers gold-க்கு fixed slice வைக்குறாங்க. அது timing இல்லை, rebalancing. இந்திய fund industry 'allocation-led' flows-னு சொல்றாங்க.","Structural"]},
+ {s:3,en:["Futures sold, ETFs bought","The Sept fall came with COMEX positions being cut and yields jumping. ETF holders are a different, slower crowd. Their buying absorbed the selling.","Market structure"],
+      ta:["Futures விற்றாங்க, ETFs வாங்கினாங்க","Sept fall-ல COMEX positions குறைஞ்சுது, yields ஏறுச்சு. ETF holders வேற, slow-ஆன கூட்டம். அவங்க buying அந்த selling-ஐ absorb பண்ணுச்சு.","Market structure"]},
+ {s:3,en:["Big forecasters still bullish","Metals Focus sees gold averaging $5,330 in 2027. Goldman's $4,900 end-2026 call stands. Today's ~$4,120 looks cheap against those targets.","Sentiment"],
+      ta:["பெரிய forecasters இன்னும் bullish","Metals Focus 2027-ல சராசரி $5,330 சொல்றாங்க. Goldman-ஓட end-2026 $4,900. அதோட compare பண்ணா இப்போ ~$4,120 cheap-ஆ தெரியுது.","Sentiment"]},
+ {s:4,en:["India special: weak rupee + weak stocks + festive season","Rupee near ₹95–97/$ lifts gold in rupees even when dollar gold falls. Nifty fell ~8% over nine weeks. Dhanteras/Diwali adds cultural demand.","India"],
+      ta:["இந்தியா special: weak rupee + weak stocks + festive season","Rupee ₹95–97/$ கிட்ட — dollar gold விழுந்தாலும் rupee gold தாங்குது. Nifty 9 வாரத்துல ~8% விழுந்துச்சு. Dhanteras/Diwali cultural demand வேற.","India"]}
+];
+C.reasons = {
+en:()=>`<h2>10 reasons, ranked by strength</h2><p class="lead">Tap each to open. Bars show how strongly the reason explains the flows (CB view, 1–5).</p>
+${R.map((r,i)=>`<details class="rsn"${i<2?' open':''}><summary><span class="rk">${String(i+1).padStart(2,'0')}</span><span class="rt">${r.en[0]}</span>${meter(r.s)}</summary><div class="rb"><span class="tag">${r.en[2]}</span><div>${r.en[1]}</div></div></details>`).join('')}`,
+ta:()=>`<h2>10 காரணங்கள், strength படி</h2><p class="lead">ஒவ்வொன்றையும் tap பண்ணி திறங்க. Bars = இந்த காரணம் flows-ஐ எவ்வளவு explain பண்ணுது (CB view, 1–5).</p>
+${R.map((r,i)=>`<details class="rsn"${i<2?' open':''}><summary><span class="rk">${String(i+1).padStart(2,'0')}</span><span class="rt">${r.ta[0]}</span>${meter(r.s)}</summary><div class="rb"><span class="tag">${r.ta[2]}</span><div>${r.ta[1]}</div></div></details>`).join('')}`};
+
+C.india = {
+en:`<h2>India angle</h2>
+<div class="tscroll"><table>
+<tr><th>Item</th><th>Figure</th></tr>
+<tr><td>Gold ETF net inflow · Jul / Aug / Sep 2026</td><td class="num">₹1,559 / ₹2,597 / ₹4,451 cr</td></tr>
+<tr><td>Jan–Sep 2026 total</td><td class="num">~₹45,925 cr</td></tr>
+<tr><td>Full year 2025</td><td class="num">₹42,961 cr</td></tr>
+<tr><td>India gold ETF holdings</td><td class="num">124.4 t (+31% since Dec)</td></tr>
+<tr><td>India rank in 2026 inflows</td><td class="num">#3 (after UK, China)</td></tr>
+<tr><td>Rupee (mid-Oct)</td><td class="num">~₹95–97 / $</td></tr>
+<tr><td>Silver ETF inflow · Sep</td><td class="num">₹1,974 cr</td></tr>
+</table></div>
+<div class="panel"><h3>New twist: SEBI nudge pauses Gold ETF FoFs (from 16 Oct)</h3>
+<ul class="b">
+<li>About 17 AMCs paused fresh lump sums, new SIPs and SIP top-ups in Gold ETF <b>Fund of Funds</b>.</li>
+<li>Existing SIP instalments and redemptions continue.</li>
+<li>Some AMCs also limited bulk subscriptions in gold ETFs. Buying listed ETF units on the exchange is still possible.</li>
+<li>Why: gold imports widen the trade deficit and press the rupee — just before Diwali demand.</li>
+<li>What it tells you: demand is so strong that the system is applying brakes.</li>
+</ul></div>
+<div class="callout">Same flows, Indian reason: when the rupee falls, gold in ₹ holds up even if gold in $ falls. Indian savers feel that directly.</div>`,
+ta:`<h2>இந்தியா பார்வை</h2>
+<div class="tscroll"><table>
+<tr><th>Item</th><th>Figure</th></tr>
+<tr><td>Gold ETF net inflow · Jul / Aug / Sep 2026</td><td class="num">₹1,559 / ₹2,597 / ₹4,451 cr</td></tr>
+<tr><td>Jan–Sep 2026 மொத்தம்</td><td class="num">~₹45,925 cr</td></tr>
+<tr><td>2025 முழு வருஷம்</td><td class="num">₹42,961 cr</td></tr>
+<tr><td>இந்திய gold ETF holdings</td><td class="num">124.4 t (Dec-ல இருந்து +31%)</td></tr>
+<tr><td>2026 inflows-ல இந்தியா rank</td><td class="num">#3 (UK, China-க்கு அப்புறம்)</td></tr>
+<tr><td>Rupee (mid-Oct)</td><td class="num">~₹95–97 / $</td></tr>
+<tr><td>Silver ETF inflow · Sep</td><td class="num">₹1,974 cr</td></tr>
+</table></div>
+<div class="panel"><h3>புது twist: SEBI nudge — Gold ETF FoFs pause (16 Oct-ல இருந்து)</h3>
+<ul class="b">
+<li>சுமார் 17 AMCs Gold ETF <b>Fund of Funds</b>-ல fresh lump sum, new SIP, SIP top-up நிறுத்திட்டாங்க.</li>
+<li>ஏற்கனவே இருக்குற SIP instalments, redemptions தொடரும்.</li>
+<li>சில AMCs gold ETF bulk subscriptions-ஐயும் limit பண்ணாங்க. Exchange-ல listed ETF units வாங்க முடியும்.</li>
+<li>ஏன்: gold imports trade deficit-ஐ அதிகமாக்குது, rupee-ஐ அழுத்துது — Diwali-க்கு முன்னாடி.</li>
+<li>இது சொல்றது: demand அவ்வளவு strong, system brake போடுது.</li>
+</ul></div>
+<div class="callout">அதே flows, இந்திய காரணம்: rupee விழும்போது, dollar gold விழுந்தாலும் ₹ gold தாங்குது. இந்திய savers அதை நேரடியா feel பண்றாங்க.</div>`};
+
+C.who = {
+en:`<h2>Who is buying, who is selling</h2>
+<div class="tscroll"><table>
+<tr><th>Group</th><th>What they did</th><th>Why</th></tr>
+<tr><td>US-listed ETFs</td><td class="num">+$11.7 bn in Q3 (after −$5.6 bn in Q2)</td><td>Diversify away from long bonds</td></tr>
+<tr><td>UK-listed ETFs</td><td class="num">~+$7.5 bn in Q3 — best ever</td><td>Gilt / fiscal worries; inflows in 12 of 13 weeks</td></tr>
+<tr><td>Europe (France, Germany)</td><td>Inflows strengthening</td><td>Fiscal concerns across economies</td></tr>
+<tr><td>Asia (China, India, Japan, Korea, Singapore)</td><td>3rd straight month of inflows</td><td>Structural demand; China leads</td></tr>
+<tr><td>Central banks</td><td class="num">289 t in Q2 (record Q2)</td><td>Reserve diversification away from dollar assets</td></tr>
+<tr><td>Futures traders (COMEX)</td><td><span class="chip r">Sold</span> — positions cut</td><td>Higher yields, dollar, Fed hike odds</td></tr>
+</table></div>
+<div class="callout">The ETF buyer is a patient holder. The futures trader is a fast mover. Price fell because of the fast movers. Holdings rose because of the patient ones.</div>`,
+ta:`<h2>யார் வாங்குறாங்க, யார் விற்கிறாங்க</h2>
+<div class="tscroll"><table>
+<tr><th>Group</th><th>என்ன பண்ணாங்க</th><th>ஏன்</th></tr>
+<tr><td>US-listed ETFs</td><td class="num">Q3-ல +$11.7 bn (Q2-ல −$5.6 bn)</td><td>Long bonds-ல இருந்து diversify</td></tr>
+<tr><td>UK-listed ETFs</td><td class="num">Q3-ல ~+$7.5 bn — எப்பவும் இல்லாத அளவு</td><td>Gilt / fiscal கவலை; 13-ல 12 வாரம் inflows</td></tr>
+<tr><td>Europe (France, Germany)</td><td>Inflows அதிகமாகுது</td><td>பல நாடுகள்ல fiscal கவலை</td></tr>
+<tr><td>Asia (China, India, Japan, Korea, Singapore)</td><td>தொடர்ந்து 3-வது மாசம் inflows</td><td>Structural demand; China lead</td></tr>
+<tr><td>Central banks</td><td class="num">Q2-ல 289 t (record)</td><td>Dollar assets-ல இருந்து reserves diversify</td></tr>
+<tr><td>Futures traders (COMEX)</td><td><span class="chip r">விற்றாங்க</span> — positions குறைப்பு</td><td>Yields, dollar, Fed hike odds</td></tr>
+</table></div>
+<div class="callout">ETF buyer பொறுமையான holder. Futures trader fast mover. Price விழுந்தது fast movers-ஆல. Holdings ஏறுனது பொறுமையானவங்களால.</div>`};
+
+C.risk = {
+en:`<h2>What could reverse the flows</h2>
+<div class="grid2">
+<div class="panel"><h3>Risks to watch</h3><ul class="b">
+<li><b>Real yields keep rising</b> — if inflation cools but yields stay 5%+, gold's cost of holding bites.</li>
+<li><b>Dollar rally extends</b> — a Dec Fed hike could lift the dollar again.</li>
+<li><b>War ends suddenly</b> — oil drops, fear premium fades. Gold could fall fast.</li>
+<li><b>Sticky or not?</b> Strategists openly ask if dip-buying flows will stay if price keeps falling.</li>
+<li><b>India-specific</b> — FoF curbs, import duty changes, rupee recovery cut ₹ returns.</li>
+<li><b>Late-cycle crowding</b> — record holdings mean many buyers are already in.</li>
+</ul></div>
+<div class="panel"><h3>What would support flows</h3><ul class="b">
+<li>Fed signals a pause after one more hike.</li>
+<li>More bond-market stress (UK, US, Japan).</li>
+<li>Central banks keep up purchases in Q3/Q4 data.</li>
+<li>War escalation or new sanctions risk.</li>
+<li>Indian equities stay weak; rupee stays soft.</li>
+</ul></div>
+</div>`,
+ta:`<h2>Flows-ஐ எது திருப்பலாம்</h2>
+<div class="grid2">
+<div class="panel"><h3>கவனிக்க வேண்டிய risks</h3><ul class="b">
+<li><b>Real yields ஏறிகிட்டே இருந்தா</b> — inflation குறைஞ்சு yields 5%+-ல நின்னா, gold வைச்சிருக்குற cost அதிகம்.</li>
+<li><b>Dollar rally தொடர்ந்தா</b> — Dec Fed hike dollar-ஐ மறுபடி ஏத்தலாம்.</li>
+<li><b>War திடீர்னு முடிஞ்சா</b> — oil விழும், fear premium போகும். Gold வேகமா விழலாம்.</li>
+<li><b>Sticky-ஆ?</b> Price இன்னும் விழுந்தா dip-buying flows நிக்குமான்னு strategists கேள்வி கேக்குறாங்க.</li>
+<li><b>இந்தியா-specific</b> — FoF curbs, import duty மாற்றம், rupee recovery ₹ returns-ஐ குறைக்கலாம்.</li>
+<li><b>Crowding</b> — record holdings-னா நிறைய பேர் ஏற்கனவே உள்ள இருக்காங்க.</li>
+</ul></div>
+<div class="panel"><h3>Flows-க்கு support</h3><ul class="b">
+<li>இன்னொரு hike-க்கு அப்புறம் Fed pause signal.</li>
+<li>Bond market-ல இன்னும் stress (UK, US, Japan).</li>
+<li>Q3/Q4 data-ல central banks தொடர்ந்து வாங்குதல்.</li>
+<li>War escalation அல்லது புது sanctions.</li>
+<li>இந்திய stocks weak, rupee soft-ஆ இருந்தா.</li>
+</ul></div>
+</div>`};
+
+const TR=[
+ ["Fed decision 27–28 Oct; Dec hike call","Fed முடிவு 27–28 Oct; Dec hike","High","−"],
+ ["US 10-yr yield path (5.1%)","US 10-yr yield (5.1%)","High","−"],
+ ["Iran–US war: escalation or ceasefire","Iran–US war: escalation அல்லது ceasefire","High","±"],
+ ["Central bank Q3 buying data (WGC, late Oct)","Central bank Q3 data (WGC, late Oct)","Medium","+"],
+ ["India FoF curbs lifted / extended","India FoF curbs நீக்கம் / நீட்டிப்பு","Medium","±"],
+ ["Rupee move vs dollar","Rupee vs dollar","Medium","±"],
+ ["Diwali / Dhanteras demand","Diwali / Dhanteras demand","Low–Med","+"]
+];
+C.trig = {
+en:()=>`<h2>Triggers & Cycle</h2>
+<div class="grid">
+<div class="stat au"><span class="k">Gold cycle phase</span><span class="v" style="font-size:20px">Late bull · correction</span><span class="n">Multi-year uptrend; price pulling back from Aug highs</span></div>
+<div class="stat up"><span class="k">ETF flow cycle</span><span class="v" style="font-size:20px">Accumulation</span><span class="n">Q3 record; holdings at peak</span></div>
+<div class="stat dn"><span class="k">Rate cycle</span><span class="v" style="font-size:20px">Tightening</span><span class="n">Headwind for price</span></div>
+</div>
+<div class="tscroll"><table><tr><th>Trigger</th><th>Impact</th><th>Direction for gold</th></tr>
+${TR.map(t=>`<tr><td>${t[0]}</td><td>${t[2]}</td><td class="num">${t[3]}</td></tr>`).join('')}</table></div>`,
+ta:()=>`<h2>Triggers & Cycle</h2>
+<div class="grid">
+<div class="stat au"><span class="k">Gold cycle phase</span><span class="v" style="font-size:20px">Late bull · correction</span><span class="n">பல வருஷ uptrend; Aug உச்சத்துல இருந்து pullback</span></div>
+<div class="stat up"><span class="k">ETF flow cycle</span><span class="v" style="font-size:20px">Accumulation</span><span class="n">Q3 record; holdings உச்சம்</span></div>
+<div class="stat dn"><span class="k">Rate cycle</span><span class="v" style="font-size:20px">Tightening</span><span class="n">Price-க்கு headwind</span></div>
+</div>
+<div class="tscroll"><table><tr><th>Trigger</th><th>Impact</th><th>Gold-க்கு திசை</th></tr>
+${TR.map(t=>`<tr><td>${t[1]}</td><td>${t[2]}</td><td class="num">${t[3]}</td></tr>`).join('')}</table></div>`};
+
+C.take = {
+en:`<h2>5 key takeaways</h2><ul class="b">
+<li><b>Price ≠ flows.</b> Fast money set the price; slow money set the flows. They split in 2026.</li>
+<li><b>Gold is being bought as insurance,</b> mainly against debt and bond-market risk — not for yield.</li>
+<li><b>Central banks are the anchor.</b> Record Q2 buying gave retail confidence to buy dips.</li>
+<li><b>India has extra reasons:</b> weak rupee, weak Nifty, festive demand. Flows are so strong SEBI nudged a pause on FoFs.</li>
+<li><b>The test is ahead:</b> Fed hikes and a possible war end are the main threats to these flows.</li></ul>`,
+ta:`<h2>5 முக்கிய takeaways</h2><ul class="b">
+<li><b>Price ≠ flows.</b> Fast money price-ஐ set பண்ணுச்சு; slow money flows-ஐ. 2026-ல ரெண்டும் பிரிஞ்சுது.</li>
+<li><b>Gold insurance-ஆ வாங்கப்படுது,</b> முக்கியமா debt, bond market risk-க்கு எதிரா — yield-க்கு இல்லை.</li>
+<li><b>Central banks தான் anchor.</b> Q2 record buying retail-க்கு dip-ல வாங்க நம்பிக்கை குடுத்துச்சு.</li>
+<li><b>இந்தியாவுக்கு extra காரணங்கள்:</b> weak rupee, weak Nifty, festive demand. Flows அவ்வளவு strong, SEBI FoFs-க்கு pause nudge பண்ணுச்சு.</li>
+<li><b>Test இனிமேதான்:</b> Fed hikes, war திடீர் முடிவு — இவை தான் இந்த flows-க்கு பெரிய threat.</li></ul>`};
+
+const CK=[
+ {g:["1 · About the product","1 · Product பத்தி"],i:[
+  ["I know if I'm buying an ETF on exchange or a Fund of Funds","Exchange-ல ETF-ஆ, Fund of Funds-ஆன்னு தெரியும்","Data: many Gold ETF FoFs paused fresh SIPs/lump sums from 16 Oct 2026","Data: 16 Oct 2026-ல இருந்து பல Gold ETF FoFs fresh SIP/lump sum pause"],
+  ["I checked expense ratio and tracking error","Expense ratio, tracking error check பண்ணேன்","Data: costs eat into returns over years","Data: வருஷக்கணக்கா costs returns-ஐ குறைக்கும்"],
+  ["I checked if the ETF trades at a premium to its NAV","ETF NAV-ஐ விட premium-ல trade ஆகுதான்னு பார்த்தேன்","Data: heavy demand can push market price above NAV","Data: அதிக demand market price-ஐ NAV-க்கு மேல தள்ளலாம்"]]},
+ {g:["2 · Problems I face","2 · எனக்கு இருக்குற problems"],i:[
+  ["I understand gold pays no interest","Gold-க்கு interest இல்லைன்னு புரியுது","Data: US 10-yr bond yield ~5.14%","Data: US 10-yr yield ~5.14%"],
+  ["I understand gold can fall sharply","Gold வேகமா விழலாம்னு புரியுது","Data: −8.5% in Sept 2026; −16% in Q2 2026","Data: Sept 2026-ல −8.5%; Q2 2026-ல −16%"]]},
+ {g:["3 · What I did about it","3 · நான் என்ன பண்ணேன்"],i:[
+  ["I fixed my gold share of total savings","Total savings-ல gold-க்கு ஒரு limit வைச்சேன்","Data: many planners use a fixed slice, rebalanced yearly","Data: பல planners fixed slice வைச்சு வருஷா rebalance பண்றாங்க"],
+  ["I chose SIP / staggered buying over one lump sum","Lump sum இல்லாம SIP / staggered-ஆ வாங்குறேன்","Data: price swung $4,100–$4,700 range in months","Data: சில மாசத்துல $4,100–$4,700 range swing"],
+  ["I set a review date","Review date fix பண்ணேன்","Data: Fed meet 27–28 Oct; Dec decision next","Data: Fed meet 27–28 Oct; அடுத்தது Dec"]]},
+ {g:["4 · Big-money and analyst view","4 · பெரிய பணம், analysts view"],i:[
+  ["I checked central bank buying trend","Central bank buying trend பார்த்தேன்","Data: 289 t in Q2 2026 (record Q2)","Data: Q2 2026-ல 289 t (record)"],
+  ["I read at least one bearish view","குறைஞ்சது ஒரு bearish view படிச்சேன்","Data: strategists question how sticky flows are","Data: flows sticky-ஆன்னு strategists கேள்வி"]]}
+];
+C.check = {
+en:()=>`<h2>CB investor self-check · Gold ETF</h2><p class="lead">Tick only what is true for you. It counts your own conditions. It is not a recommendation.</p>
+<div class="prog"><span id="pbar"></span></div><div id="pcount" style="font-weight:800"></div>
+${CK.map((g,gi)=>`<div class="panel ck"><h3>${g.g[0]}</h3>${g.i.map((it,ii)=>`<label><input type="checkbox" id="ck${gi}_${ii}"><span>${it[0]}<span class="d">${it[2]}</span></span></label>`).join('')}</div>`).join('')}
+<div class="panel ck"><h3>5 · My own conditions</h3><div class="row"><input type="text" id="ownIn" placeholder="Add your own check…" style="flex:1;border:2px solid var(--line);border-radius:8px;padding:8px;font:inherit"><button class="pill acc" id="ownAdd">Add</button></div><div id="ownList"></div></div>`,
+ta:()=>`<h2>CB investor self-check · Gold ETF</h2><p class="lead">உங்களுக்கு உண்மையானதை மட்டும் tick பண்ணுங்க. இது உங்க conditions-ஐ மட்டும் count பண்ணுது. Recommendation இல்லை.</p>
+<div class="prog"><span id="pbar"></span></div><div id="pcount" style="font-weight:800"></div>
+${CK.map((g,gi)=>`<div class="panel ck"><h3>${g.g[1]}</h3>${g.i.map((it,ii)=>`<label><input type="checkbox" id="ck${gi}_${ii}"><span>${it[1]}<span class="d">${it[3]}</span></span></label>`).join('')}</div>`).join('')}
+<div class="panel ck"><h3>5 · என் சொந்த conditions</h3><div class="row"><input type="text" id="ownIn" placeholder="உங்க check சேருங்க…" style="flex:1;border:2px solid var(--line);border-radius:8px;padding:8px;font:inherit"><button class="pill acc" id="ownAdd">சேர்</button></div><div id="ownList"></div></div>`};
+
+const QZ=[
+ {en:["Gold fell 8.5% in Sept 2026. What happened to global gold ETF holdings?",["Fell sharply","Rose to a record","Unchanged"],1,"Holdings rose 67 t to a record 4,256 t."],
+  ta:["Sept 2026-ல gold 8.5% விழுந்துச்சு. Global gold ETF holdings என்ன ஆச்சு?",["நல்லா குறைஞ்சுது","Record-க்கு ஏறுச்சு","மாறல"],1,"Holdings 67 t ஏறி record 4,256 t."]},
+ {en:["Why do high bond yields usually hurt gold?",["Gold pays no interest, so holding it has an opportunity cost","Gold mines close","Banks ban gold"],0,"When bonds pay 5%, gold's zero yield looks costly."],
+  ta:["High bond yields பொதுவா gold-ஐ ஏன் பாதிக்குது?",["Gold-க்கு interest இல்லை, அதனால opportunity cost","Gold mines மூடுறாங்க","Banks gold-ஐ ban பண்றாங்க"],0,"Bonds 5% குடுக்கும்போது gold-ஓட zero yield costly-ஆ தெரியுது."]},
+ {en:["Who mainly sold during the Sept price fall?",["Central banks","Futures traders","Indian SIP investors"],1,"COMEX positions were cut while ETFs kept buying."],
+  ta:["Sept fall-ல முக்கியமா யார் விற்றாங்க?",["Central banks","Futures traders","இந்திய SIP investors"],1,"COMEX positions குறைஞ்சுது, ETFs வாங்கிகிட்டே இருந்துச்சு."]},
+ {en:["Which country's gold ETFs had their best quarter ever in Q3 2026?",["UK","Brazil","Australia"],0,"UK funds took ~$7.5 bn amid gilt and fiscal worries."],
+  ta:["Q3 2026-ல எந்த நாட்டு gold ETFs-க்கு best quarter?",["UK","Brazil","Australia"],0,"Gilt, fiscal கவலைகள் நடுவுல UK funds ~$7.5 bn."]},
+ {en:["Why did Indian AMCs pause Gold ETF FoF fresh SIPs on 16 Oct?",["Gold ran out","SEBI nudge over heavy imports and rupee pressure","Funds closed permanently"],1,"Imports widen the trade deficit and press the rupee before Diwali."],
+  ta:["16 Oct-ல இந்திய AMCs Gold ETF FoF fresh SIP-ஐ ஏன் pause பண்ணாங்க?",["Gold தீர்ந்துடுச்சு","அதிக imports, rupee pressure-க்கு SEBI nudge","Funds நிரந்தரமா மூடிட்டாங்க"],1,"Imports trade deficit-ஐ அதிகமாக்கி Diwali-க்கு முன்னாடி rupee-ஐ அழுத்துது."]}
+];
+C.quiz = {
+en:()=>`<h2>Cauvery Socrates · test yourself</h2><div id="score" style="font-weight:800"></div>${QZ.map((q,i)=>`<div class="q"><b>${i+1}. ${q.en[0]}</b><div class="opts">${q.en[1].map((o,j)=>`<button data-q="${i}" data-o="${j}">${o}</button>`).join('')}</div><div class="ex" id="ex${i}" hidden>${q.en[3]}</div></div>`).join('')}`,
+ta:()=>`<h2>காவேரி Socrates · உங்களை test பண்ணுங்க</h2><div id="score" style="font-weight:800"></div>${QZ.map((q,i)=>`<div class="q"><b>${i+1}. ${q.ta[0]}</b><div class="opts">${q.ta[1].map((o,j)=>`<button data-q="${i}" data-o="${j}">${o}</button>`).join('')}</div><div class="ex" id="ex${i}" hidden>${q.ta[3]}</div></div>`).join('')}`};
+
+C.view = {
+en:`<h2>Analyst view (CB, education only)</h2><ul class="b">
+<li>The flows are not irrational. Investors are paying for protection against the very risks you listed.</li>
+<li>High yields explain the <b>price fall</b>. Fear of debt, war and currencies explains the <b>buying</b>.</li>
+<li>The strongest driver is distrust of bonds and governments' debt — not short-term trading.</li>
+<li>Flows look structural in Europe and Asia; US flows look more tactical.</li>
+<li>Biggest near-term risk to the story: a sudden end to the war plus a firm Fed.</li>
+<li>Watch: Fed 27–28 Oct, WGC central bank data, rupee, and when FoF curbs lift.</li></ul>
+<div class="callout"><span class="slogan">Know before you own.</span> Gold is insurance. Size it like insurance.</div>`,
+ta:`<h2>Analyst view (CB, கல்விக்காக மட்டும்)</h2><ul class="b">
+<li>இந்த flows அர்த்தமில்லாதது இல்லை. நீங்க சொன்ன அதே risks-க்கு எதிரா protection-க்கு pay பண்றாங்க.</li>
+<li>High yields <b>price fall</b>-ஐ explain பண்ணுது. Debt, war, currency பயம் <b>buying</b>-ஐ explain பண்ணுது.</li>
+<li>பெரிய driver: bonds, அரசு கடன் மேல நம்பிக்கை குறைவு — short-term trading இல்லை.</li>
+<li>Europe, Asia flows structural-ஆ தெரியுது; US flows கொஞ்சம் tactical.</li>
+<li>Near-term பெரிய risk: war திடீர் முடிவு + firm Fed.</li>
+<li>கவனிங்க: Fed 27–28 Oct, WGC central bank data, rupee, FoF curbs எப்போ நீங்குது.</li></ul>
+<div class="callout"><span class="slogan">புரிஞ்சு வாங்குங்க!</span> Gold ஒரு insurance. Insurance மாதிரியே size பண்ணுங்க.</div>`};
+
+const ORDER=['dash','puzzle','reasons','india','who','risk','trig','take','check','quiz','view'];
+
+/* ---------- Voice Assist Q&A ---------- */
+const QA=[
+ {k:["why","inflow","buy","ஏன்","வாங்கு"],en:["Why are ETF inflows rising?","Mainly fear: investors buy gold as insurance against debt, bond and war risk, even while high yields push the price down."],ta:["ETF inflows ஏன் ஏறுது?","முக்கியமா பயம்: debt, bond, war risk-க்கு எதிரா gold-ஐ insurance-ஆ வாங்குறாங்க — high yields price-ஐ கீழ தள்ளினாலும்."]},
+ {k:["fall","falling","price","விழு","price"],en:["Why is the price falling then?","Higher yields, a firmer dollar and futures selling pushed the price down about 8.5% in September."],ta:["அப்போ price ஏன் விழுது?","Yields ஏற்றம், dollar strength, futures selling — இதனால Sept-ல சுமார் 8.5% fall."]},
+ {k:["central","bank","மத்திய"],en:["How much are central banks buying?","A record 289 tonnes in Q2 2026, even as price fell about 16% that quarter."],ta:["Central banks எவ்வளவு வாங்குறாங்க?","Q2 2026-ல record 289 tonnes — அந்த quarter-ல price சுமார் 16% விழுந்தாலும்."]},
+ {k:["india","rupee","இந்தி","ரூபா"],en:["What about India?","Indian gold ETFs took ₹4,451 crore in September, up 71%, helped by a weak rupee and weak stocks."],ta:["இந்தியாவுல?","Sept-ல இந்திய gold ETFs-க்கு ₹4,451 crore, 71% அதிகம் — weak rupee, weak stocks காரணம்."]},
+ {k:["fof","sebi","pause","sip","நிறுத்"],en:["Why were Gold FoFs paused?","About 17 AMCs paused fresh FoF investments from 16 Oct after a SEBI nudge over heavy gold imports."],ta:["Gold FoFs ஏன் pause?","அதிக gold imports காரணமா SEBI nudge-க்கு அப்புறம் 16 Oct-ல இருந்து சுமார் 17 AMCs fresh FoF investments pause பண்ணாங்க."]},
+ {k:["risk","reverse","danger","risk","ஆபத்து"],en:["What could reverse the flows?","A sudden end to the war plus a firm Fed and rising real yields are the biggest risks."],ta:["Flows-ஐ எது திருப்பலாம்?","War திடீர் முடிவு, firm Fed, real yields ஏற்றம் — இவை தான் பெரிய risks."]},
+ {k:["should","buy now","வாங்கலாமா","advice"],en:["Should I buy gold now?","I can't advise buying or selling. Use the Self-Check tab to test your own conditions."],ta:["இப்போ gold வாங்கலாமா?","Buy/sell advice குடுக்க முடியாது. உங்க conditions-ஐ Self-Check tab-ல test பண்ணுங்க."]}
+];
+
+/* ---------- Engine ---------- */
+let lang='en', cur='dash';
+try{ const s=localStorage.getItem('cbgold-lang'); if(s==='ta') lang='ta'; }catch(e){}
+const checks={}; let own=[];
+const $=s=>document.querySelector(s);
+function html(id){const c=C[id][lang];return typeof c==='function'?c():c;}
+function renderStatic(){
+ document.querySelectorAll('[data-i]').forEach(e=>e.textContent=T[lang][e.dataset.i]);
+ document.querySelectorAll('[data-ph]').forEach(e=>e.placeholder=T[lang][e.dataset.ph]);
+ $('#lang-en').setAttribute('aria-pressed',lang==='en');$('#lang-ta').setAttribute('aria-pressed',lang==='ta');
+ document.documentElement.lang = lang==='en'?'en':'ta';
+ $('#tabs').innerHTML=ORDER.map((id,i)=>`<button role="tab" aria-selected="${id===cur}" data-t="${id}">${T[lang].tabs[i]}</button>`).join('');
+ $('#vaQs').innerHTML=QA.map((q,i)=>`<button data-qa="${i}">${q[lang][0]}</button>`).join('');
+}
+function renderTab(){
+ $('#main').innerHTML=`<section class="tab" role="tabpanel">${html(cur)}</section>`;
+ if(cur==='check') wireCheck();
+ if(cur==='quiz') wireQuiz();
+}
+function render(){renderStatic();renderTab();}
+$('#tabs').addEventListener('click',e=>{const b=e.target.closest('[data-t]');if(!b)return;cur=b.dataset.t;stopSpeak();renderStatic();renderTab();window.scrollTo({top:0});});
+$('#lang-en').onclick=()=>{lang='en';try{localStorage.setItem('cbgold-lang','en')}catch(e){}stopSpeak();render();};
+$('#lang-ta').onclick=()=>{lang='ta';try{localStorage.setItem('cbgold-lang','ta')}catch(e){}stopSpeak();render();};
+
+function wireCheck(){
+ const boxes=[...document.querySelectorAll('.ck input[type=checkbox]')];
+ boxes.forEach(b=>{b.checked=!!checks[b.id];b.onchange=()=>{checks[b.id]=b.checked;upd();};});
+ const list=$('#ownList');
+ const drawOwn=()=>{list.innerHTML=own.map((o,i)=>`<label><input type="checkbox" id="own${i}" ${o.c?'checked':''}><span>${o.t}</span><button class="pill" data-rm="${i}" style="margin-left:auto;padding:0 10px">✕</button></label>`).join('');
+  list.querySelectorAll('input').forEach((b,i)=>b.onchange=()=>{own[i].c=b.checked;upd();});
+  list.querySelectorAll('[data-rm]').forEach(b=>b.onclick=(e)=>{e.preventDefault();own.splice(+b.dataset.rm,1);drawOwn();upd();});};
+ $('#ownAdd').onclick=()=>{const v=$('#ownIn').value.trim();if(!v)return;own.push({t:v.replace(/</g,'&lt;'),c:false});$('#ownIn').value='';drawOwn();upd();};
+ function upd(){const tot=boxes.length+own.length;const done=boxes.filter(b=>b.checked).length+own.filter(o=>o.c).length;
+  $('#pbar').style.width=(tot?done/tot*100:0)+'%';
+  $('#pcount').textContent=(lang==='en'?`${done} of ${tot} conditions met — your own count, not a recommendation`:`${tot}-ல ${done} conditions ok — உங்க சொந்த count, recommendation இல்லை`);}
+ drawOwn();upd();
+}
+let qs={};
+function wireQuiz(){
+ const sc=()=>{const n=Object.values(qs).filter(Boolean).length,a=Object.keys(qs).length;$('#score').textContent=lang==='en'?`Score: ${n} / ${QZ.length} (answered ${a})`:`Score: ${n} / ${QZ.length} (${a} பதில்)`;};
+ document.querySelectorAll('.q .opts button').forEach(b=>b.onclick=()=>{
+  const i=+b.dataset.q,j=+b.dataset.o,ok=QZ[i].en[2]===j; if(i in qs)return; qs[i]=ok;
+  b.classList.add(ok?'ok':'no'); if(!ok) b.parentNode.children[QZ[i].en[2]].classList.add('ok');
+  $('#ex'+i).hidden=false; sc();});
+ Object.keys(qs).forEach(i=>{const o=document.querySelectorAll(`[data-q="${i}"]`)[QZ[i].en[2]];o&&o.classList.add('ok');$('#ex'+i).hidden=false;});
+ sc();
+}
+
+/* speech */
+const synth=window.speechSynthesis;
+function voiceFor(l){try{const vs=synth.getVoices();return vs.find(v=>v.lang&&v.lang.toLowerCase().startsWith(l==='ta'?'ta':'en-in'))||vs.find(v=>v.lang&&v.lang.toLowerCase().startsWith(l==='ta'?'ta':'en'));}catch(e){return null}}
+function speak(txt){ if(!synth) return; stopSpeak(); const u=new SpeechSynthesisUtterance(txt); u.lang=lang==='ta'?'ta-IN':'en-IN'; const v=voiceFor(lang); if(v)u.voice=v; u.rate=+$('#rate').value; synth.speak(u);}
+function stopSpeak(){try{synth&&synth.cancel()}catch(e){}}
+$('#rate').oninput=()=>{$('#rateV').textContent=(+$('#rate').value).toFixed(2)+'×';};
+$('#readTab').onclick=()=>{ if(synth&&synth.speaking){stopSpeak();return;} const t=$('#main').innerText.replace(/\s+/g,' ').slice(0,3500); speak(t);};
+$('#vaBtn').onclick=()=>{$('#va').hidden=!$('#va').hidden;};
+function closeVA(){$('#va').hidden=true;stopSpeak();}
+$('#vaClose').onclick=(e)=>{e.stopPropagation();closeVA();};
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeVA();});
+document.addEventListener('click',e=>{const p=$('#va');if(!p.hidden&&!p.contains(e.target)&&!e.target.closest('#vaBtn'))closeVA();});
+function answer(a){$('#vaAns').textContent=a;speak(a);}
+$('#vaQs').addEventListener('click',e=>{const b=e.target.closest('[data-qa]');if(b)answer(QA[+b.dataset.qa][lang][1]);});
+$('#vaAsk').onclick=()=>{const q=$('#vaInput').value.toLowerCase().trim();if(!q)return;
+ let best=null,bs=0;QA.forEach(x=>{const s=x.k.filter(k=>q.includes(k.toLowerCase())).length;if(s>bs){bs=s;best=x;}});
+ if(/should|வாங்கலாமா|advice|buy now/.test(q)) best=QA[6];
+ answer(best?best[lang][1]:(lang==='en'?"Try one of the suggested questions above.":"மேல இருக்குற கேள்விகள்ல ஒன்றை try பண்ணுங்க."));};
+$('#vaInput').addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();$('#vaAsk').click();}});
+$('#cb').addEventListener('click',()=>$('#cb').classList.toggle('open'));
+
+render();
+</script>
