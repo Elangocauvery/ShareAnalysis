@@ -1,0 +1,947 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ujjivan SFB Q2 FY27</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<style>
+:root{--bg:#ffffff;--bg2:#f6f8fb;--card:#ffffff;--ink:#1b2430;--mute:#5d6b7a;--line:#e3e8ef;
+--uj:#0a7c66;--uj2:#d9f2ec;--ja:#c2410c;--ja2:#fde7dc;--cb:#f07f13;--good:#16a34a;--amb:#d97706;--bad:#dc2626;--blue:#2563eb}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Segoe UI",system-ui,-apple-system,"Noto Sans Tamil",Roboto,Arial,sans-serif;font-size:15px;line-height:1.5}
+body::before{content:"CB Research";position:fixed;top:45%;left:50%;transform:translate(-50%,-50%) rotate(-28deg);font-size:110px;font-weight:800;color:rgba(240,127,19,.045);pointer-events:none;z-index:0;white-space:nowrap}
+header{position:sticky;top:0;z-index:20;background:#fff;border-bottom:1px solid var(--line);box-shadow:0 2px 8px rgba(0,0,0,.04)}
+.hwrap{max-width:1180px;margin:0 auto;padding:10px 16px;display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between}
+.brand{display:flex;gap:10px;align-items:center}
+.brand .dot{width:34px;height:34px;border-radius:50%;background:var(--cb);color:#fff;font-weight:800;display:flex;align-items:center;justify-content:center;font-size:14px}
+.brand h1{font-size:17px;margin:0}.brand small{color:var(--mute);display:block;font-size:12px}
+.langsw button{border:1px solid var(--line);background:#fff;padding:5px 12px;border-radius:16px;cursor:pointer;font-size:13px}
+.langsw button.on{background:var(--cb);color:#fff;border-color:var(--cb)}
+nav{max-width:1180px;margin:0 auto;display:flex;gap:4px;overflow-x:auto;padding:0 12px 8px;scrollbar-width:thin}
+nav button{flex:0 0 auto;border:1px solid var(--line);background:var(--bg2);padding:6px 12px;border-radius:18px;cursor:pointer;font-size:13px;color:var(--ink)}
+nav button.on{background:var(--ink);color:#fff;border-color:var(--ink)}
+main{max-width:1180px;margin:0 auto;padding:16px;position:relative;z-index:1}
+section.tab{display:none}section.tab.on{display:block}
+h2{font-size:21px;margin:6px 0 12px}h3{font-size:16px;margin:16px 0 8px}
+.banner{background:#fff7ed;border:1px solid #fed7aa;border-left:5px solid var(--ja);border-radius:10px;padding:10px 14px;margin-bottom:14px;font-size:14px}
+.grid{display:grid;gap:12px}.g2{grid-template-columns:repeat(auto-fit,minmax(300px,1fr))}.g4{grid-template-columns:repeat(auto-fit,minmax(170px,1fr))}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px;box-shadow:0 1px 3px rgba(0,0,0,.03)}
+.kpi .l{font-size:12px;color:var(--mute)}.kpi .v{font-size:22px;font-weight:700}.kpi .s{font-size:12px}
+.up{color:var(--good)}.dn{color:var(--bad)}.fl{color:var(--mute)}
+.pill{display:inline-block;padding:2px 9px;border-radius:12px;font-size:12px;font-weight:600}
+.puj{background:var(--uj2);color:var(--uj)}.pja{background:var(--ja2);color:var(--ja)}
+.bankhead{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+.bankhead .sw{width:12px;height:12px;border-radius:3px}
+.tbl{width:100%;border-collapse:collapse;font-size:13.5px}
+.tbl th,.tbl td{padding:7px 8px;border-bottom:1px solid var(--line);text-align:right;white-space:nowrap}
+.tbl th:first-child,.tbl td:first-child{text-align:left;white-space:normal}
+.tbl thead th{background:var(--bg2);font-size:12.5px;position:sticky;top:0}
+.tscroll{overflow-x:auto;border:1px solid var(--line);border-radius:10px}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:18px;overflow:hidden;margin:0 0 10px}
+.seg button{border:0;background:#fff;padding:6px 14px;cursor:pointer;font-size:13px}
+.seg button.on{background:var(--ink);color:#fff}
+.chartbox{overflow-x:auto;border:1px solid var(--line);border-radius:10px;padding:8px;background:#fff}
+.chartbox .in{min-width:900px;height:320px;position:relative}
+.note{font-size:12px;color:var(--mute)}
+.dag{color:var(--ja);font-weight:700}
+.svgwrap{overflow-x:auto;border:1px solid var(--line);border-radius:12px;background:#fff;padding:6px}
+.svgwrap svg{min-width:900px;display:block}
+.nodebox{cursor:pointer;transition:opacity .2s}.nodebox:hover rect{stroke-width:2.5}
+.expl{margin-top:10px;border-left:4px solid var(--cb);background:var(--bg2);padding:10px 14px;border-radius:8px;min-height:46px}
+.swot{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:10px}
+.swot .card h4{margin:0 0 6px}.swot ul{margin:0;padding-left:18px}
+.S{border-top:4px solid var(--good)}.W{border-top:4px solid var(--amb)}.O{border-top:4px solid var(--blue)}.T{border-top:4px solid var(--bad)}
+.temple{display:flex;flex-wrap:wrap;gap:16px;justify-content:center}
+.pcard{border:1px solid var(--line);border-radius:10px;padding:10px 12px;margin:8px 0;transition:box-shadow .3s,background .3s}
+.pcard.hl{box-shadow:0 0 0 3px rgba(240,127,19,.45);background:#fffaf3}
+.sc-group{margin-bottom:14px}.sc-item{display:flex;gap:8px;align-items:flex-start;padding:7px 0;border-bottom:1px dashed var(--line)}
+.sc-item .d{font-size:12px;color:var(--mute)}
+.bar{height:9px;background:var(--bg2);border-radius:6px;overflow:hidden}.bar i{display:block;height:100%;background:var(--cb);width:0;transition:width .4s}
+.btn{border:1px solid var(--line);background:#fff;border-radius:16px;padding:6px 12px;cursor:pointer;font-size:13px;margin:3px}
+.btn.pri{background:var(--cb);color:#fff;border-color:var(--cb)}
+.chip{display:inline-block;border:1px dashed var(--cb);color:var(--cb);border-radius:14px;padding:3px 10px;margin:3px;font-size:12px;cursor:pointer}
+.mcq button{display:block;width:100%;text-align:left;margin:5px 0;border:1px solid var(--line);background:#fff;border-radius:8px;padding:8px 10px;cursor:pointer}
+.mcq button.ok{background:#dcfce7;border-color:var(--good)}.mcq button.no{background:#fee2e2;border-color:var(--bad)}
+#cbBadge{position:fixed;right:16px;bottom:16px;width:56px;height:56px;border-radius:50%;background:var(--cb);color:#fff;font-weight:800;font-size:19px;display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:50;box-shadow:0 4px 14px rgba(240,127,19,.5);animation:blink 2.2s infinite}
+@keyframes blink{0%,100%{box-shadow:0 0 0 0 rgba(240,127,19,.55)}50%{box-shadow:0 0 0 12px rgba(240,127,19,0)}}
+#disc{position:fixed;right:16px;bottom:82px;max-width:330px;background:#fff;border:1px solid var(--line);border-radius:12px;padding:12px 14px;font-size:12.5px;box-shadow:0 8px 24px rgba(0,0,0,.12);z-index:51;display:none}
+#assistBtn{position:fixed;right:84px;bottom:22px;background:#fff;border:2px solid var(--cb);color:var(--cb);border-radius:22px;padding:8px 14px;font-weight:700;cursor:pointer;z-index:50;font-size:13px}
+#assist{position:fixed;right:16px;bottom:82px;width:min(380px,calc(100vw - 32px));height:470px;background:#fff;border:1px solid var(--line);border-radius:14px;box-shadow:0 10px 30px rgba(0,0,0,.15);z-index:52;display:none;flex-direction:column}
+#assist .hd{padding:10px 12px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;font-weight:700}
+#alog{flex:1;overflow-y:auto;padding:10px;font-size:13.5px}
+#alog .m{margin:6px 0;padding:8px 10px;border-radius:10px;max-width:90%}
+#alog .u{background:var(--bg2);margin-left:auto}#alog .b{background:#fff7ed;border:1px solid #fed7aa}
+#assist .ft{display:flex;gap:6px;padding:8px;border-top:1px solid var(--line)}
+#assist input{flex:1;border:1px solid var(--line);border-radius:18px;padding:7px 12px;font-size:13.5px}
+#micBtn.rec{background:var(--bad);color:#fff;border-color:var(--bad)}
+.legend span{display:inline-flex;align-items:center;gap:5px;margin-right:12px;font-size:12px}
+.legend i{display:inline-block;width:18px;height:0;border-top:2px solid var(--good)}
+.legend i.op{border-top:2px dashed var(--bad)}
+@media(max-width:600px){h2{font-size:18px}.kpi .v{font-size:19px}body::before{font-size:60px}}
+</style>
+</head>
+<body>
+<header>
+ <div class="hwrap">
+  <div class="brand"><div class="dot">CB</div><div><h1 data-k="title">Ujjivan Small Finance Bank — Q2 FY27</h1><small data-k="subtitle">Quarter ended 30 Sep 2026 · CB Research bank dashboard</small></div></div>
+  <div class="langsw"><button id="lEn" class="on" onclick="setLang('en')">English</button> <button id="lTa" onclick="setLang('ta')">தமிழ்</button></div>
+ </div>
+ <nav id="nav"></nav>
+</header>
+<main>
+
+ <section class="tab on" id="t-dash"></section>
+ <section class="tab" id="t-model"></section>
+ <section class="tab" id="t-fin"></section>
+ <section class="tab" id="t-aq"></section>
+ <section class="tab" id="t-liq"></section>
+ <section class="tab" id="t-subs"></section>
+ <section class="tab" id="t-val"></section>
+ <section class="tab" id="t-trig"></section>
+ <section class="tab" id="t-lic"></section>
+ <section class="tab" id="t-pillars"></section>
+ <section class="tab" id="t-swot"></section>
+ <section class="tab" id="t-analysts"></section>
+ <section class="tab" id="t-selfcheck"></section>
+ <section class="tab" id="t-mgmt"></section>
+ <section class="tab" id="t-school"></section>
+ <section class="tab" id="t-socrates"></section>
+</main>
+
+<div id="cbBadge" onclick="toggleDisc()" onmouseenter="showDisc(true)">CB</div>
+<div id="disc"></div>
+<button id="assistBtn" onclick="toggleAssist()">🎙 CB Assist</button>
+<div id="assist">
+ <div class="hd"><span data-k="assistTitle">CB Assist — ask by voice or text</span><button class="btn" onclick="toggleAssist()">✕</button></div>
+ <div id="alog"></div>
+ <div class="ft"><button class="btn" id="micBtn" onclick="startMic()">🎤</button><input id="aq" placeholder="Ask: what is the NIM?" onkeydown="if(event.key==='Enter')askTyped()"><button class="btn pri" onclick="askTyped()">➤</button></div>
+</div>
+<script>
+/* ================= MACHINE-READABLE DATA ================= */
+var CO = {
+ id:"UJJIVANSFB", bse:"542904", nse:"UJJIVANSFB", name:"Ujjivan Small Finance Bank Ltd", short:"Ujjivan SFB",
+ quarter:"Q2 FY27", qEnd:"30 Sep 2026", resultDate:"16 Oct 2026", hq:"Bengaluru",
+ price:63.25, priceDate:"16 Oct 2026", hi52:73.94, lo52:48.01, sharesCr:194.85, mcapCr:12324,
+ bvps:34.45, bvpsNote:"latest reported book value per share (Jun-26)", pbv:1.84, epsAnnH1:7.00, peAnn:9.0,
+ /* P&L, Rs crore: [Q2FY27, Q2FY26, YoY%] */
+ pl:{
+  intEarned:[2153,1682,28.0], intExp:[906,760,19.2], nii:[1244,922,35.0], otherInc:[300,256,17.0],
+  totalInc:[2449,1939,26.3], opex:[950,783,21.3], empExp:[513,null,15.0], othOpex:[437,null,29.0],
+  ppop:[594,396,50.0], prov:[103,235,-56.2], pbt:[491,160,206.0], tax:[126,38,null], pat:[365,122,199.9]
+ },
+ patQ1:317, patH1:682, patH1g:203, ppopH1:1142, ppopH1g:51, totIncH1:4732,
+ bs:{deposits:[50643,39211,48129], casa:[13182,10783,12930], casaR:[26.0,27.5,26.9], glb:[45699,34588,42903],
+  secured:[52.1,46.8,50.4], securedCr:23803, unsecuredCr:22037, disb:10495, disbYoY:32, disbQoQ:14,
+  retailTD:20631, sa:11675, ca:1501, retailCasa:33807, retailCasaPrev:27764},
+ r:{nim:[8.4,7.9], cof:[6.9,7.3], cti:[62.0,66.9,62.5], roa:[2.4,1.0,2.2], roe:[19.7,7.7], gnpa:[2.10,2.45,2.17], nnpa:[0.31,0.67],
+  pcr:[85,73,85], par:[3.57,4.45,3.58], crar:[20.69,null,20.36], tier1:19.49, tier2:1.20, lcr:131, opexATA:6.1, creditCostATA:0.7,
+  slipRatio:1.6, cd:[90.2,88.2,89.1]},
+ cap:{rwa:[35149,29076], t1:[6850,5782], t2:423, total:7273, raise:409, raiseCRAR:1.2, raiseBVPS:0.8, approvedLimit:2000, validTill:"Jul 2027"},
+ npaMove:{open:917, slip:352, rec:183, wo:131, close:955},
+ prov:{total:1047, totalPrev:787, floating:181, cgfmu:970},
+ net:{branches:880, newBranchesH1:104, urc:223, atms:619, states:26, districts:352, empAddH1:1335, customers:"~1 crore",
+  south:32, north:27, east:21, west:20, digSA:95, digTD:67, digRepay:48, upiMonthly:13000},
+ seg:[
+  {k:"gl",en:"Group Loans (micro banking)",ta:"குழு கடன் (மைக்ரோ பேங்கிங்)",v:15658,g:19.5,sec:0,c:"#f59e0b"},
+  {k:"il",en:"Individual Loans (micro banking)",ta:"தனிநபர் கடன் (மைக்ரோ பேங்கிங்)",v:6381,g:16.8,sec:0,c:"#fbbf24"},
+  {k:"ah",en:"Affordable Housing",ta:"குறைந்த விலை வீட்டுக் கடன்",v:10056,g:31.0,sec:1,c:"#0a7c66"},
+  {k:"mm",en:"Micro Mortgages",ta:"மைக்ரோ அடமானக் கடன்",v:2031,g:85.7,sec:1,c:"#14b8a6"},
+  {k:"msme",en:"MSME",ta:"MSME தொழில் கடன்",v:3871,g:51.3,sec:1,c:"#2563eb"},
+  {k:"fig",en:"FIG (lending to NBFC/MFIs)",ta:"FIG (NBFC/MFI-க்கு கடன்)",v:3615,g:45.2,sec:1,c:"#6366f1"},
+  {k:"gold",en:"Gold Loans",ta:"தங்கக் கடன்",v:1275,g:209.7,sec:1,c:"#ca8a04"},
+  {k:"veh",en:"Two-wheeler / Vehicle",ta:"டூ-வீலர் / வாகனக் கடன்",v:1081,g:64.7,sec:1,c:"#9333ea"},
+  {k:"agri",en:"Agri Banking",ta:"விவசாயக் கடன்",v:914,g:79.1,sec:1,c:"#16a34a"},
+  {k:"oth",en:"Others",ta:"மற்றவை",v:816,g:26.9,sec:1,c:"#94a3b8"}
+ ],
+ guide:{adv:"~25%",mb:"12–14%",sec:{en:"56% by Mar-27",ta:"மார்ச்-27-க்குள் 56%"},nimH2:"~8.35%",cc:{en:"0.9–1.0% of avg assets",ta:"சராசரி சொத்தில் 0.9–1.0%"},roa:{en:"1.8–2.0% (upper end likely beaten)",ta:"1.8–2.0% (மேல் எல்லையைத் தாண்ட வாய்ப்பு)"},opex:{en:"6.2% of avg assets",ta:"சராசரி சொத்தில் 6.2%"},casa:"~28%"},
+ scores:{g:9.0,m:8.5,d:8.0,v:7.5,t:8.0,r:7.5},
+ cycle:{sectorPhase:"P3 Expansion",sectorScore:70,lifecycle:75,earnings:70,valuation:55,priceStage:70,stockScore:67.5,cy:69},
+ triggers:[
+  {s:1,en:"Secured mix moving to 56% by Mar-27 (less dependence on micro-finance)",ta:"பாதுகாப்பான (secured) கடன் பங்கு மார்ச்-27-க்குள் 56% ஆக உயர்வு",I:4,C:0.7,W:0.7,P:1.0,status:"Executing",watch:{en:"Secured share each quarter (52.1% now)",ta:"ஒவ்வொரு காலாண்டும் secured பங்கு (இப்போ 52.1%)"},src:"Q2 FY27 investor presentation, 16 Oct 2026"},
+  {s:1,en:"₹409 cr preferential issue to IFC, Bajaj Life, HDFC Life, Aditya Birla Sun Life",ta:"IFC, பஜாஜ் லைஃப், HDFC லைஃப், ஆதித்ய பிர்லா சன் லைஃப்-க்கு ₹409 கோடி பங்கு ஒதுக்கீடு",I:2,C:0.7,W:1.0,P:1.0,status:"Approved (board)",watch:{en:"Shareholder approval; CRAR up ~1.2 pp",ta:"பங்குதாரர் ஒப்புதல்; CRAR சுமார் +1.2%"},src:"Board outcome, 16 Oct 2026"},
+  {s:1,en:"RoA likely to beat upper end of 1.8–2.0% guidance (opex/assets 6.2% vs 6.4%)",ta:"RoA வழிகாட்டலின் மேல் எல்லையை (2.0%) தாண்ட வாய்ப்பு",I:3,C:0.4,W:1.0,P:1.0,status:"Guidance",watch:{en:"Q3 opex and credit cost",ta:"Q3 செலவு, கடன் இழப்பு செலவு"},src:"Q2 FY27 earnings call, 16 Oct 2026"},
+  {s:1,en:"Permanent MD & CEO named and approved by RBI",ta:"நிரந்தர MD & CEO நியமனம் — RBI ஒப்புதல்",I:2,C:0.4,W:1.0,P:1.0,status:"Watch",watch:{en:"NRC process: 3–4 months from 1 Sep 2026",ta:"NRC தேர்வு: 1 செப் 2026 முதல் 3–4 மாதம்"},src:"Q2 FY27 earnings call"},
+  {s:1,en:"Reapplication for universal bank licence (returned by RBI in Apr 2026)",ta:"யுனிவர்சல் வங்கி உரிமத்துக்கு மீண்டும் விண்ணப்பம் (ஏப் 2026-ல் RBI திருப்பியது)",I:4,C:0.2,W:0.4,P:1.0,status:"Watch",watch:{en:"Secured share and RBI feedback; see Universal Bank Licence tab",ta:"Secured பங்கு, RBI கருத்து; யுனிவர்சல் வங்கி உரிமம் டேப்"},src:"Business Standard, 13 Apr 2026"},
+  {s:-1,en:"RBI repo hike of 25 bps — H2 NIM guided down ~10 bps to ~8.35%",ta:"RBI ரெப்போ 0.25% உயர்வு — H2-ல் NIM சுமார் 8.35% ஆகக் குறையும்",I:2,C:1.0,W:1.0,P:1.0,status:"Executing",watch:{en:"Cost of funds (6.9% now)",ta:"நிதிச் செலவு (இப்போ 6.9%)"},src:"Q2 FY27 earnings call"},
+  {s:-1,en:"MD Sanjeev Nautiyal's early retirement (1 Sep 2026); interim CEO in charge",ta:"MD சஞ்சீவ் நௌடியால் முன்கூட்டிய ஓய்வு (1 செப் 2026); இடைக்கால CEO",I:2,C:1.0,W:1.0,P:0.7,status:"Executing",watch:{en:"Strategy continuity under new MD",ta:"புதிய MD வந்தாலும் அதே திட்டம் தொடருமா"},src:"Exchange filing, Sep 2026"},
+  {s:-1,en:"IRDAI draft rules on insurance commission (about half of insurance income is credit-life)",ta:"IRDAI காப்பீட்டு கமிஷன் வரைவு விதிகள் (காப்பீட்டு வருமானத்தில் பாதி credit-life)",I:2,C:0.4,W:0.7,P:1.0,status:"Watch",watch:{en:"Final rules after 25 Oct 2026 submissions",ta:"25 அக் 2026 கருத்துகளுக்குப் பின் இறுதி விதிகள்"},src:"Q2 FY27 earnings call"},
+  {s:-1,en:"Drought in Karnataka & Maharashtra (eligible relief exposure ~₹33 cr)",ta:"கர்நாடகா, மகாராஷ்டிரா வறட்சி (நிவாரணத்துக்குத் தகுதியான கடன் ~₹33 கோடி)",I:1,C:0.4,W:1.0,P:1.0,status:"Watch",watch:{en:"Micro-banking collection efficiency (99.7%)",ta:"மைக்ரோ கடன் வசூல் திறன் (99.7%)"},src:"Q2 FY27 earnings call"}
+ ],
+ timeline:[
+  {d:"25 Oct 2026",en:"IRDAI consultation submissions due",ta:"IRDAI கருத்துகள் சமர்ப்பிக்க கடைசி நாள்"},
+  {d:"Q3 FY27",en:"Shareholder approval for ₹409 cr preferential issue (date not announced)",ta:"₹409 கோடி ஒதுக்கீட்டுக்கு பங்குதாரர் ஒப்புதல் (தேதி அறிவிக்கப்படவில்லை)"},
+  {d:"Dec 2026–Jan 2027",en:"New MD & CEO expected (3–4 months from 1 Sep)",ta:"புதிய MD & CEO எதிர்பார்ப்பு"},
+  {d:"Jan 2027",en:"Q3 FY27 results (date not announced)",ta:"Q3 FY27 முடிவுகள் (தேதி அறிவிக்கப்படவில்லை)"},
+  {d:"Mar 2027",en:"Secured-mix target 56%; FY27 guidance check; reapplication readiness",ta:"Secured பங்கு இலக்கு 56%; FY27 வழிகாட்டல் சரிபார்ப்பு"},
+  {d:"Jul 2027",en:"Balance of ₹2,000 cr fund-raise approval lapses",ta:"₹2,000 கோடி நிதி திரட்டும் ஒப்புதல் காலாவதி"}
+ ],
+ analysts:[
+  {b:"ICICI Securities",r:"Buy",tp:90,d:"2 Sep 2026",src:"Broker note via Trendlyne / Business Today"},
+  {b:"Axis Securities",r:"Buy",tp:86,d:"Q1 FY27 update",src:"Broker note via Trendlyne (1.8x FY28E ABV)"},
+  {b:"Trendlyne consensus (5 brokers)",r:"Buy",tp:82,d:"16 Oct 2026",src:"Trendlyne"},
+  {b:"AlphaSpread consensus (21 analysts)",r:"—",tp:85.68,d:"Oct 2026",src:"AlphaSpread (range ₹72.72–₹94.50)"},
+  {b:"Refinitiv (19 analysts)",r:"100% Buy",tp:null,d:"Oct 2026",src:"Refinitiv via ScanX"}
+ ],
+ mgmt:[
+  {n:"Carol Furtado",en:"Whole Time Director & Interim CEO (RBI-approved interim term)",ta:"முழுநேர இயக்குநர் & இடைக்கால CEO"},
+  {n:"Sanjeev Nautiyal",en:"Former MD & CEO — early retirement on health grounds, effective 1 Sep 2026",ta:"முன்னாள் MD & CEO — உடல்நலக் காரணமாக 1 செப் 2026 முதல் முன்கூட்டிய ஓய்வு"},
+  {n:"Balakrishna Kamath",en:"Chief Financial Officer",ta:"தலைமை நிதி அதிகாரி (CFO)"},
+  {n:"Ashish Goel",en:"Chief Credit Officer",ta:"தலைமைக் கடன் அதிகாரி"},
+  {n:"Brajesh Cherian",en:"Chief Risk Officer",ta:"தலைமை ரிஸ்க் அதிகாரி"},
+  {n:"Hitendra Jha",en:"Head – Retail Liabilities, TASC & Third-Party Products",ta:"தலைவர் – சில்லறை வைப்பு, TASC & மூன்றாம் தரப்பு பொருட்கள்"},
+  {n:"Vibhas",en:"Head – Micro Banking",ta:"தலைவர் – மைக்ரோ பேங்கிங்"},
+  {n:"Sanjeev Barnwal",en:"Company Secretary & Head – Regulatory Framework",ta:"நிறுவனச் செயலர் & ஒழுங்குமுறைத் தலைவர்"}
+ ]
+};
+
+/* ================= LANGUAGE ================= */
+var L='en';
+function tx(o){ if(o==null) return ''; if(typeof o==='string') return o; return o[L]!=null?o[L]:o.en; }
+function inr(n,d){ if(n==null||isNaN(n)) return 'n/a'; return Number(n).toLocaleString('en-IN',{minimumFractionDigits:d||0,maximumFractionDigits:d||0}); }
+function cr(n){ return n==null?'n/a':'₹'+inr(n)+(L==='ta'?' கோடி':' cr'); }
+function pct(n,d){ return n==null?'n/a':(Number(n).toFixed(d==null?1:d))+'%'; }
+function chg(n,unit,inv){ if(n==null) return '<span class="fl">n/a</span>'; var c=n>0?'up':(n<0?'dn':'fl'); if(inv&&n!==0) c=(c==='up'?'dn':'up'); return '<span class="'+c+'">'+(n>0?'▲ +':(n<0?'▼ ':''))+Number(n).toFixed(Math.abs(n)<1&&n!==0?2:1)+(unit||'%')+'</span>'; }
+
+var D={
+ en:{title:"Ujjivan Small Finance Bank — Q2 FY27",subtitle:"Quarter ended 30 Sep 2026 · CB Research bank dashboard",assistTitle:"CB Assist — ask by voice or text"},
+ ta:{title:"உஜ்ஜீவன் ஸ்மால் ஃபைனான்ஸ் பேங்க் — Q2 FY27",subtitle:"30 செப் 2026 காலாண்டு · CB Research வங்கி டாஷ்போர்டு",assistTitle:"CB Assist — குரல் அல்லது எழுத்தில் கேளுங்க"}
+};
+var TABS=[
+ ["dash",{en:"Dashboard",ta:"டாஷ்போர்டு"}],["model",{en:"Business Model",ta:"பிசினஸ் மாடல்"}],["fin",{en:"Financials",ta:"நிதி நிலை"}],
+ ["aq",{en:"Asset Quality",ta:"கடன் தரம்"}],["liq",{en:"Liquidity & Funding",ta:"பணப்புழக்கம் & நிதி"}],["subs",{en:"Subsidiaries",ta:"துணை நிறுவனங்கள்"}],
+ ["val",{en:"Valuation & Market",ta:"மதிப்பீடு & சந்தை"}],["trig",{en:"Triggers & Cycle",ta:"தூண்டுதல் & சுழற்சி"}],["lic",{en:"Universal Bank Licence",ta:"யுனிவர்சல் வங்கி உரிமம்"}],["pillars",{en:"6 Pillars",ta:"6 தூண்கள்"}],
+ ["swot",{en:"SWOT",ta:"SWOT"}],["analysts",{en:"Analysts' Rating",ta:"அனலிஸ்ட் ரேட்டிங்"}],["selfcheck",{en:"Self-check",ta:"சுய சோதனை"}],
+ ["mgmt",{en:"Management & Board",ta:"நிர்வாகம் & போர்டு"}],["school",{en:"CB School",ta:"CB பள்ளி"}],["socrates",{en:"Cauvery Socrates",ta:"காவேரி சாக்ரடீஸ்"}]
+];
+
+/* 23-metric bank framework: [en, ta, Q2FY27, Q2FY26, Q1FY27, YoY text] */
+function METRICS(){ var b=CO.bs,r=CO.r,p=CO.pl; return [
+ ["Deposits","வைப்புத்தொகை",cr(b.deposits[0]),cr(b.deposits[1]),cr(b.deposits[2]),chg(29.2)],
+ ["Advances (gross loan book)","கடன் புத்தகம் (மொத்தம்)",cr(b.glb[0]),cr(b.glb[1]),cr(b.glb[2]),chg(32.1)],
+ ["CD ratio (loan book ÷ deposits) calc","கடன்-வைப்பு விகிதம் (கணக்கீடு)",pct(r.cd[0]),pct(r.cd[1]),pct(r.cd[2]),chg(2.0,' pp')],
+ ["Net Interest Income (NII)","நிகர வட்டி வருமானம் (NII)",cr(p.nii[0]),cr(p.nii[1]),'n/a',chg(35.0)],
+ ["Net Interest Margin (NIM)","நிகர வட்டி மார்ஜின் (NIM)",pct(r.nim[0]),pct(r.nim[1]),'n/a',chg(0.55,' pp')],
+ ["Other Income","பிற வருமானம்",cr(p.otherInc[0]),cr(p.otherInc[1]),'n/a',chg(17.0)],
+ ["Provisions","ஒதுக்கீடுகள் (provisions)",cr(p.prov[0]),cr(p.prov[1]),'n/a',chg(-56.2,'%',1)],
+ ["Profit After Tax (PAT)","வரிக்குப் பின் லாபம் (PAT)",cr(p.pat[0]),cr(p.pat[1]),cr(CO.patQ1),chg(199.9)],
+ ["CASA deposits","CASA வைப்பு",cr(b.casa[0]),cr(b.casa[1]),cr(b.casa[2]),chg(22.2)],
+ ["CASA ratio","CASA விகிதம்",pct(b.casaR[0]),pct(b.casaR[1]),pct(b.casaR[2]),chg(-1.5,' pp')],
+ ["Gross NPA","மொத்த வாராக்கடன் (GNPA)",pct(r.gnpa[0],2),pct(r.gnpa[1],2),pct(r.gnpa[2],2),chg(-0.35,' pp',1)],
+ ["Net NPA","நிகர வாராக்கடன் (NNPA)",pct(r.nnpa[0],2),pct(r.nnpa[1],2),'n/a',chg(-0.36,' pp',1)],
+ ["Provision Coverage Ratio (PCR)","ஒதுக்கீட்டுக் காப்பு (PCR)",pct(r.pcr[0],0),pct(r.pcr[1],0),pct(r.pcr[2],0),chg(12,' pp')],
+ ["Cost-to-Income (CTI)","செலவு-வருமான விகிதம்",pct(r.cti[0]),pct(r.cti[1]),pct(r.cti[2]),chg(-4.9,' pp',1)],
+ ["CRAR (capital adequacy)","மூலதனப் போதுமை (CRAR)",pct(r.crar[0],2),'n/a',pct(r.crar[2],2),'<span class="fl">+0.33 pp QoQ</span>'],
+ ["Tier-1 / CET1","Tier-1 மூலதனம்",pct(r.tier1,2),'n/a','n/a','<span class="fl">n/a</span>'],
+ ["Return on Equity (RoE)","பங்கு மூலதன வருவாய் (RoE)",pct(r.roe[0]),pct(r.roe[1]),'n/a',chg(12.0,' pp')],
+ ["Return on Assets (RoA)","சொத்து வருவாய் (RoA)",pct(r.roa[0]),pct(r.roa[1]),pct(r.roa[2]),chg(1.4,' pp')],
+ ["Yield on Advances","கடன் வட்டி வருவாய்",'n/a','n/a','n/a','<span class="fl">n/a</span>'],
+ ["Cost of Funds","நிதிச் செலவு",pct(r.cof[0]),pct(r.cof[1]),pct(r.cof[0]),chg(-0.4,' pp',1)],
+ ["Liquidity Coverage Ratio (LCR)","பணப்புழக்கக் காப்பு (LCR)",pct(r.lcr,0),'n/a','n/a','<span class="fl">n/a</span>'],
+ ["Book Value per Share (BVPS) †","ஒரு பங்கு புத்தக மதிப்பு †",'₹'+CO.bvps.toFixed(2),'n/a','₹'+CO.bvps.toFixed(2),'<span class="fl">n/a</span>'],
+ ["Market Price (16 Oct 2026)","சந்தை விலை (16 அக் 2026)",'₹'+CO.price.toFixed(2),'n/a','n/a','<span class="fl">52w ₹48.01–₹73.94</span>'],
+ ["Price-to-Book (P/BV) calc †","விலை/புத்தக மதிப்பு (கணக்கீடு) †",CO.pbv.toFixed(2)+'x','n/a','n/a','<span class="fl">n/a</span>'],
+ ["Opex / avg total assets","செலவு / சராசரி மொத்த சொத்து",pct(r.opexATA),'n/a','n/a','<span class="fl">FY27 guide 6.2%</span>'],
+ ["Credit cost / avg total assets","கடன் இழப்புச் செலவு / சராசரி சொத்து",pct(r.creditCostATA),'n/a','n/a','<span class="fl">FY27 guide 0.9–1.0%</span>']
+];}
+var MCAT=[
+ {en:"Growth & Balance sheet",ta:"வளர்ச்சி & இருப்புநிலை",c:"#2563eb",i:[0,1,8]},
+ {en:"Profitability",ta:"லாபத்தன்மை",c:"#0a7c66",i:[3,4,5,7,17,16,18,19]},
+ {en:"Efficiency",ta:"செயல்திறன்",c:"#7c3aed",i:[13,24]},
+ {en:"Asset quality",ta:"கடன் தரம்",c:"#dc2626",i:[10,11,12,6,25]},
+ {en:"Capital & Liquidity",ta:"மூலதனம் & பணப்புழக்கம்",c:"#f07f13",i:[14,15,20,2,9]},
+ {en:"Valuation",ta:"மதிப்பீடு",c:"#475569",i:[21,22,23]}
+];
+
+/* ================= TEXT BLOCKS ================= */
+var TXT={
+ headline:{en:"Record quarter: PAT ₹365 cr (+199.9% YoY, +15.3% QoQ), NII ₹1,244 cr (+35%), deposits cross ₹50,000 cr and secured loans reach 52.1% of the book. Watch-points: margin squeeze after the 25 bps repo hike, leadership transition and draft insurance-commission rules.",
+  ta:"சாதனை காலாண்டு: லாபம் ₹365 கோடி (ஆண்டுக்கு +199.9%, காலாண்டுக்கு +15.3%), NII ₹1,244 கோடி (+35%), வைப்பு ₹50,000 கோடியைத் தாண்டியது, secured கடன் பங்கு 52.1% ஆச்சு. கவனிக்க வேண்டியது: ரெப்போ 0.25% உயர்வால் மார்ஜின் அழுத்தம், தலைமை மாற்றம், காப்பீட்டு கமிஷன் வரைவு விதிகள்."},
+ takeaways:[
+  {en:"Profit almost trebled because provisions fell 56% (₹235 cr → ₹103 cr) while NII rose 35% — the micro-finance stress of FY26 has largely passed.",ta:"Provisions 56% குறைஞ்சது (₹235 → ₹103 கோடி), NII 35% கூடியது — அதனாலதான் லாபம் கிட்டத்தட்ட மூணு மடங்கு. FY26 மைக்ரோ ஃபைனான்ஸ் நெருக்கடி பெரும்பாலும் கடந்துபோச்சு."},
+  {en:"Loan book grew 32.1% to ₹45,699 cr, faster than deposits (+29.2%); the CD ratio moved up to about 90%.",ta:"கடன் புத்தகம் 32.1% வளர்ந்து ₹45,699 கோடி; வைப்பு வளர்ச்சி (29.2%)-ஐ விட வேகம். CD விகிதம் சுமார் 90% ஆச்சு."},
+  {en:"Secured share rose from 46.8% to 52.1% in a year; target 56% by March 2027.",ta:"Secured கடன் பங்கு ஒரு வருஷத்துல 46.8%-லிருந்து 52.1%; மார்ச் 2027 இலக்கு 56%."},
+  {en:"Asset quality steady: GNPA 2.10%, NNPA 0.31%, PCR 85%, micro-banking collection efficiency 99.7%.",ta:"கடன் தரம் நிலையா இருக்கு: GNPA 2.10%, NNPA 0.31%, PCR 85%, மைக்ரோ கடன் வசூல் 99.7%."},
+  {en:"CASA ratio slipped to 26.0% (27.5% a year ago); management now sees about 28% by year-end, below the earlier 30% aim.",ta:"CASA விகிதம் 26.0%-க்கு இறங்கியது (போன வருஷம் 27.5%); வருட இறுதியில் சுமார் 28% தான்னு நிர்வாகம் சொல்லுது."},
+  {en:"Board approved a ₹409 cr preferential issue to IFC and three life insurers — adds about 1.2 pp to CRAR (now 20.69%).",ta:"IFC மற்றும் மூணு லைஃப் இன்சூரன்ஸ் நிறுவனங்களுக்கு ₹409 கோடி பங்கு ஒதுக்கீடு — CRAR (இப்போ 20.69%) சுமார் 1.2% கூடும்."}
+ ],
+ liqNote:{en:"For a bank, 'working capital' is the match between what it borrows (deposits) and what it lends. Inventory, receivable and payable days do not apply, and a bank's operating cash flow swings with deposit and loan flows, so the cash-flow test here is funding stability and liquidity buffers.",
+  ta:"வங்கிக்கு 'working capital' என்பது வாங்கும் பணம் (வைப்பு) கொடுக்கும் கடனுக்கு எவ்வளவு பொருந்துதுங்கறதுதான். Inventory, receivable, payable days இங்கே பொருந்தாது; வங்கியோட இயக்கப் பணப்புழக்கம் வைப்பு, கடன் ஓட்டத்தோட மாறும். அதனால நிதி நிலைத்தன்மை, liquidity buffer-ஐ வெச்சுதான் பார்க்கணும்."},
+ subs:{en:"Ujjivan SFB reports standalone results and has no operating subsidiaries. Its former holding company, Ujjivan Financial Services, was merged into the bank in 2024, so 100% of group profit comes from the bank itself. Contribution to group profit: Bank ₹365 cr = 100%.",
+  ta:"உஜ்ஜீவன் SFB தனி (standalone) முடிவுகளைத்தான் வெளியிடுது; இயங்கும் துணை நிறுவனம் எதுவும் இல்லை. முன்னாள் தாய் நிறுவனம் உஜ்ஜீவன் ஃபைனான்சியல் சர்வீசஸ் 2024-ல் வங்கியோட இணைஞ்சுடுச்சு. அதனால குழு லாபத்தில் 100% வங்கியிலிருந்தே: வங்கி ₹365 கோடி = 100%."},
+ market:{en:"The share closed at ₹63.25 on 16 Oct 2026, down 1.94% on results day despite record profit. Investors focused on the guided H2 margin dip (NIM ~8.35% after the repo hike), the softer CASA ratio and the open MD position. The stock is about 15% below its 52-week high of ₹73.94 and well above the low of ₹48.01. Earlier, on 1–2 Sep 2026, it fell about 3.5% when the MD's early retirement was announced.",
+  ta:"16 அக் 2026 அன்று பங்கு ₹63.25-ல் முடிஞ்சது; சாதனை லாபம் இருந்தும் 1.94% இறக்கம். காரணம்: ரெப்போ உயர்வால H2-ல் NIM சுமார் 8.35% ஆகக் குறையும்னு வழிகாட்டல், CASA விகிதம் குறைவு, MD பதவி காலியா இருக்கறது. 52 வார உச்சம் ₹73.94-ஐ விட சுமார் 15% கீழே, தாழ்வு ₹48.01-ஐ விட நல்லா மேலே. செப் 1–2-ல் MD ஓய்வு அறிவிப்பு வந்தப்போ சுமார் 3.5% இறங்கியது."}
+};
+
+var SWOT={
+ S:[{en:"Record PAT ₹365 cr; RoA 2.4%, RoE 19.7%",ta:"சாதனை லாபம் ₹365 கோடி; RoA 2.4%, RoE 19.7%"},{en:"NIM 8.4% — among the highest in banking",ta:"NIM 8.4% — வங்கித் துறையிலேயே அதிகமானதுல ஒண்ணு"},{en:"PCR 85%, NNPA 0.31%, plus ₹181 cr floating provisions",ta:"PCR 85%, NNPA 0.31%, கூடவே ₹181 கோடி floating provision"},{en:"Deep retail deposit franchise: ₹33,807 cr retail TD + CASA",ta:"வலுவான சில்லறை வைப்பு: ₹33,807 கோடி"}],
+ W:[{en:"48% of book still unsecured micro-banking",ta:"கடன் புத்தகத்தில் 48% இன்னும் பாதுகாப்பில்லாத மைக்ரோ கடன்"},{en:"CASA ratio 26%, below SFB leaders and below 30% aim",ta:"CASA 26% — 30% இலக்கை விடக் குறைவு"},{en:"Cost-to-income 62% — still high",ta:"செலவு-வருமான விகிதம் 62% — இன்னும் அதிகம்"},{en:"No permanent MD since 1 Sep 2026",ta:"1 செப் 2026 முதல் நிரந்தர MD இல்லை"}],
+ O:[{en:"Housing + micro-mortgage book crossed ₹12,000 cr, +38% YoY",ta:"வீட்டுக் கடன் + மைக்ரோ அடமானம் ₹12,000 கோடியைத் தாண்டியது, +38%"},{en:"Gold (+210%), agri (+79%), vehicle (+65%) still small bases",ta:"தங்கம் (+210%), விவசாயம் (+79%), வாகனம் (+65%) — இன்னும் சின்ன அளவுதான், வளர இடம் இருக்கு"},{en:"Marquee investors (IFC, life insurers) entering via ₹409 cr issue",ta:"IFC, லைஃப் இன்சூரர்கள் ₹409 கோடி மூலம் உள்ளே வர்றாங்க"},{en:"UPI MDR, if introduced, could add fee income",ta:"UPI MDR வந்தா கூடுதல் கட்டண வருமானம்"}],
+ T:[{en:"Repo hike pushes up deposit costs — H2 NIM ~8.35%",ta:"ரெப்போ உயர்வு வைப்புச் செலவைக் கூட்டும் — H2 NIM ~8.35%"},{en:"IRDAI draft rules could cut insurance commission",ta:"IRDAI வரைவு விதிகள் காப்பீட்டு கமிஷனைக் குறைக்கலாம்"},{en:"Drought, deficient monsoon and El Niño → rural stress",ta:"வறட்சி, மழைக் குறைவு, El Niño → கிராமப்புற நெருக்கடி"},{en:"New secured products (gold, micro-mortgage) still seasoning",ta:"புதிய secured கடன்கள் இன்னும் முதிர்ச்சி அடையல"}]
+};
+
+var PILLARS=[
+ {k:"g",en:"Growth",ta:"வளர்ச்சி",why:{en:"Loan book +32.1%, deposits +29.2%, disbursements ₹10,495 cr (+32%). Guidance ~25% for FY27 — already 12.4% YTD.",ta:"கடன் +32.1%, வைப்பு +29.2%, வழங்கல் ₹10,495 கோடி (+32%). FY27 வழிகாட்டல் ~25% — ஏற்கனவே 12.4% வந்தாச்சு."}},
+ {k:"m",en:"Margins",ta:"மார்ஜின்",why:{en:"NIM 8.4% (+55 bps YoY), CTI improved 4.9 pp to 62%. Minus: H2 NIM guided ~10 bps lower.",ta:"NIM 8.4% (+0.55%), CTI 4.9% குறைஞ்சு 62%. குறை: H2-ல் NIM சுமார் 0.10% குறையும்."}},
+ {k:"d",en:"Capital & Funding",ta:"மூலதனம் & நிதி",why:{en:"CRAR 20.69%, Tier-1 19.49%, LCR 131%; ₹409 cr raise adds ~1.2 pp. CASA 26% is the soft spot.",ta:"CRAR 20.69%, Tier-1 19.49%, LCR 131%; ₹409 கோடி மூலம் ~1.2% கூடும். CASA 26% தான் பலவீனம்."}},
+ {k:"v",en:"Valuation",ta:"மதிப்பீடு",why:{en:"P/BV ~1.84x on latest reported book, ~9x annualised H1 earnings — moderate for a ~19% RoE lender.",ta:"P/BV ~1.84x, H1 லாபத்தை வருடமா கணக்கிட்டா P/E ~9x — RoE ~19% வங்கிக்கு மிதமான மதிப்பு."}},
+ {k:"t",en:"Trend & Triggers",ta:"போக்கு & தூண்டுதல்",why:{en:"Record profit for the second straight quarter; triggers balanced (TG 52) — capital raise and secured shift vs rate hike and MD gap.",ta:"தொடர்ந்து ரெண்டாவது காலாண்டா சாதனை லாபம்; தூண்டுதல் சமநிலை (TG 52)."}},
+ {k:"r",en:"Risk / Asset quality",ta:"ரிஸ்க் / கடன் தரம்",why:{en:"GNPA 2.10%, PCR 85%, PAR 3.57%. Still 48% unsecured; drought exposure small.",ta:"GNPA 2.10%, PCR 85%, PAR 3.57%. ஆனா 48% இன்னும் பாதுகாப்பில்லாத கடன்."}}
+];
+
+var NODES_MODEL={
+ cust:{en:"Customers",ta:"வாடிக்கையாளர்கள்",v:{en:"~1 crore customers; mass-market & under-served",ta:"சுமார் 1 கோடி வாடிக்கையாளர்"},ex:{en:"Ujjivan serves low- and middle-income households, micro-entrepreneurs and small businesses across 26 states/UTs. Many borrowers are women in joint-liability groups; more than 60% of micro-banking families have two or more income sources.",ta:"குறைந்த, நடுத்தர வருமானக் குடும்பங்கள், சிறு தொழில் செய்பவர்கள்தான் வாடிக்கையாளர்கள் — 26 மாநிலங்கள்/யூனியன் பிரதேசங்களில். மைக்ரோ கடன் குடும்பங்களில் 60%-க்கு மேல ரெண்டு அல்லது அதிக வருமான வழி இருக்கு."}},
+ dep:{en:"Depositors",ta:"வைப்பாளர்கள்",v:{en:"₹50,643 cr deposits · CASA 26%",ta:"₹50,643 கோடி வைப்பு · CASA 26%"},ex:{en:"Deposits are the raw material. Retail TD ₹20,631 cr, savings ₹11,675 cr, current ₹1,501 cr; the rest is bulk deposits. Cost of funds 6.9%. 95% of savings accounts are opened digitally.",ta:"வைப்புத்தொகைதான் மூலப்பொருள். சில்லறை TD ₹20,631 கோடி, சேமிப்பு ₹11,675 கோடி, நடப்பு ₹1,501 கோடி; மீதி bulk வைப்பு. நிதிச் செலவு 6.9%. 95% சேமிப்புக் கணக்குகள் டிஜிட்டலாத் திறக்கப்படுது."}},
+ chan:{en:"Branches & Digital",ta:"கிளைகள் & டிஜிட்டல்",v:{en:"880 branches · 619 ATMs · Ujjivan EZY app",ta:"880 கிளைகள் · 619 ATM · EZY ஆப்"},ex:{en:"880 branches (104 added in H1 FY27, 223 in unbanked rural centres), 352 districts. Digital repayment share 48%; UPI flows about ₹13,000 cr a month. Regional mix: South 32%, North 27%, East 21%, West 20%.",ta:"880 கிளைகள் (H1-ல் 104 புதுசு, 223 வங்கியில்லாத கிராமங்களில்), 352 மாவட்டங்கள். டிஜிட்டல் கடன் திருப்பிச் செலுத்தல் 48%; UPI மாதம் சுமார் ₹13,000 கோடி. தெற்கு 32%, வடக்கு 27%, கிழக்கு 21%, மேற்கு 20%."}},
+ bank:{en:"Ujjivan SFB",ta:"உஜ்ஜீவன் SFB",v:{en:"Loan book ₹45,699 cr (+32.1%)",ta:"கடன் ₹45,699 கோடி (+32.1%)"},ex:{en:"The bank borrows at ~6.9% and lends at much higher rates to under-served borrowers. Secured loans are 52.1% of the book (₹23,803 cr, +47%), unsecured micro-banking 47.9% (₹22,037 cr).",ta:"வங்கி ~6.9%-க்கு வாங்கி, அதிக வட்டிக்குக் கடன் கொடுக்குது. Secured கடன் 52.1% (₹23,803 கோடி, +47%), மைக்ரோ கடன் 47.9% (₹22,037 கோடி)."}},
+ rev:{en:"Revenue",ta:"வருமானம்",v:{en:"Interest ₹2,153 cr + Other ₹300 cr",ta:"வட்டி ₹2,153 + பிற ₹300 கோடி"},ex:{en:"Total income ₹2,449 cr (+26.3%). Other income includes processing fees, insurance and third-party product commission (about half of insurance income is credit-life), and charges.",ta:"மொத்த வருமானம் ₹2,449 கோடி (+26.3%). பிற வருமானத்தில் processing fee, காப்பீட்டு கமிஷன் (அதில் பாதி credit-life), கட்டணங்கள்."}},
+ cost:{en:"Costs",ta:"செலவுகள்",v:{en:"Interest ₹906 · Opex ₹950 · Prov ₹103 cr",ta:"வட்டி ₹906 · செலவு ₹950 · Prov ₹103 கோடி"},ex:{en:"Interest paid ₹906 cr (+19%), operating costs ₹950 cr (employees ₹513 cr, other ₹437 cr incl. brand campaign and new branches), provisions ₹103 cr (−56%).",ta:"வட்டிச் செலவு ₹906 கோடி (+19%), இயக்கச் செலவு ₹950 கோடி (ஊழியர் ₹513, பிற ₹437 — விளம்பரம், புதிய கிளைகள்), provisions ₹103 கோடி (−56%)."}},
+ prof:{en:"Profit → Shareholders",ta:"லாபம் → பங்குதாரர்",v:{en:"PPOP ₹594 cr · PAT ₹365 cr",ta:"PPOP ₹594 · PAT ₹365 கோடி"},ex:{en:"PPOP (the bank's EBITDA-equivalent) ₹594 cr (+50%). PBT ₹491 cr, tax ₹126 cr, PAT ₹365 cr. RoA 2.4%, RoE 19.7%. Profit is retained to fund growth; no dividend data for the quarter.",ta:"PPOP (வங்கிக்கான EBITDA மாதிரி) ₹594 கோடி (+50%). PBT ₹491, வரி ₹126, PAT ₹365 கோடி. RoA 2.4%, RoE 19.7%. லாபம் வளர்ச்சிக்கு மறுமுதலீடு."}}
+};
+var SEG_EX={
+ gl:{en:"Joint-liability group loans to women micro-entrepreneurs; Bucket-X collection efficiency 99.7%. Growing slower by design (micro-banking 12–14% FY27).",ta:"பெண் சிறு தொழில் செய்பவர்களுக்குக் குழுக் கடன்; வசூல் 99.7%. வேண்டுமென்றே மெதுவா வளர்க்கறாங்க (12–14%)."},
+ il:{en:"Individual micro-loans for graduated group borrowers; target ticket around ₹1.5 lakh.",ta:"குழுக் கடனிலிருந்து வளர்ந்தவங்களுக்குத் தனிநபர் கடன்; சுமார் ₹1.5 லட்சம்."},
+ ah:{en:"Largest secured product, crossed ₹10,000 cr; ticket ~₹17 lakh; GNPA 1.2%, PAR 3.7%; present in 23 states.",ta:"பெரிய secured கடன், ₹10,000 கோடியைத் தாண்டியது; சராசரி ₹17 லட்சம்; GNPA 1.2%."},
+ mm:{en:"Loans against small homes; ~30 months old; ticket ₹7.8 lakh; GNPA 0.7%; PAR expected to settle 2.5–3% as it seasons.",ta:"சின்ன வீட்டு அடமானக் கடன்; சுமார் 30 மாத பழசு; ₹7.8 லட்சம்; GNPA 0.7%."},
+ msme:{en:"Working-capital-led small business lending in top 50 cities; new book ₹3,000 cr+ with GNPA 0.5%.",ta:"முதல் 50 நகரங்களில் சிறு தொழில் கடன்; புதிய புத்தகம் ₹3,000 கோடி+, GNPA 0.5%."},
+ fig:{en:"Lending to NBFCs and MFIs; disbursements ₹2,456 cr (+82%) — lower yield, low credit risk.",ta:"NBFC, MFI-க்குக் கடன்; வழங்கல் ₹2,456 கோடி (+82%) — வட்டி குறைவு, ரிஸ்க் குறைவு."},
+ gold:{en:"Fastest-growing line (+210%); 117 branches added in H1; disbursement LTV below 78%.",ta:"வேகமா வளரும் பிரிவு (+210%); H1-ல் 117 கிளைகள்; LTV 78%-க்குக் கீழே."},
+ veh:{en:"Two-wheeler loans; festive season expected to lift volumes.",ta:"டூ-வீலர் கடன்; பண்டிகைக் காலத்தில் கூடும்."},
+ agri:{en:"Select locations only; Karnataka book ₹165 cr, drought-relief-eligible just ₹1.2 cr; Maharashtra direct agri nil.",ta:"தேர்ந்தெடுத்த இடங்களில் மட்டும்; கர்நாடகா ₹165 கோடி, நிவாரணத் தகுதி ₹1.2 கோடிதான்."},
+ oth:{en:"Other retail and miscellaneous loans.",ta:"பிற சில்லறைக் கடன்கள்."}
+};
+
+/* CB School metric linkage map */
+var SN=[
+ {id:"dep",c:0,en:"Deposits",ta:"வைப்பு",v:"₹50,643 cr"},{id:"casa",c:0,en:"CASA ratio",ta:"CASA",v:"26.0%"},{id:"loan",c:0,en:"Loan growth",ta:"கடன் வளர்ச்சி",v:"+32.1%"},{id:"cd",c:0,en:"CD ratio",ta:"CD விகிதம்",v:"~90%"},
+ {id:"repo",c:1,en:"RBI repo rate",ta:"RBI ரெப்போ",v:"+25 bps"},{id:"cof",c:1,en:"Cost of funds",ta:"நிதிச் செலவு",v:"6.9%"},{id:"yld",c:1,en:"Yield on loans",ta:"கடன் வட்டி",v:"n/a"},{id:"bond",c:1,en:"Bond yields",ta:"பாண்டு வட்டி",v:"—"},
+ {id:"nii",c:2,en:"NII",ta:"NII",v:"₹1,244 cr"},{id:"nim",c:2,en:"NIM",ta:"NIM",v:"8.4%"},{id:"oi",c:2,en:"Other income",ta:"பிற வருமானம்",v:"₹300 cr"},{id:"gnpa",c:2,en:"Gross NPA",ta:"GNPA",v:"2.10%"},{id:"cc",c:2,en:"Credit cost",ta:"கடன் இழப்புச் செலவு",v:"₹103 cr"},
+ {id:"cti",c:3,en:"Cost-to-income",ta:"செலவு விகிதம்",v:"62%"},{id:"ppop",c:3,en:"PPOP",ta:"PPOP",v:"₹594 cr"},{id:"pat",c:3,en:"PAT",ta:"லாபம்",v:"₹365 cr"},{id:"crar",c:3,en:"CRAR",ta:"CRAR",v:"20.69%"},
+ {id:"roa",c:4,en:"RoA",ta:"RoA",v:"2.4%"},{id:"roe",c:4,en:"RoE",ta:"RoE",v:"19.7%"},{id:"bvps",c:4,en:"BVPS",ta:"BVPS",v:"₹34.45†"},{id:"pbv",c:4,en:"P/BV",ta:"P/BV",v:"1.84x"}
+];
+var SE=[["dep","loan",1],["dep","cd",-1],["loan","cd",1],["casa","cof",-1],["repo","cof",1],["repo","yld",1],["repo","bond",1],["cof","nim",-1],["yld","nim",1],
+ ["loan","nii",1],["nim","nii",1],["bond","oi",-1],["nii","ppop",1],["oi","ppop",1],["cti","ppop",-1],["gnpa","cc",1],["cc","pat",-1],["ppop","pat",1],
+ ["pat","crar",1],["loan","crar",-1],["pat","roa",1],["pat","roe",1],["crar","roe",-1],["pat","bvps",1],["roe","pbv",1],["gnpa","pbv",-1]];
+var SCEN=[
+ {k:"hike",en:"RBI rate hike",ta:"RBI வட்டி உயர்வு",chain:[["repo",1],["cof",1],["yld",1],["nim",-1],["nii",-1],["ppop",-1],["pat",-1],["roa",-1],["roe",-1]],
+  card:{en:"This is live: the 25 bps repo hike lifts Ujjivan's 6.9% cost of funds with a lag. Management guides H2 NIM ~8.35% vs 8.45% in Q2 — about 10 bps, partly offset by securitisation (₹500 cr added in October).",ta:"இது இப்போ நடக்குது: 0.25% ரெப்போ உயர்வு 6.9% நிதிச் செலவைக் கொஞ்சம் தாமதமாக் கூட்டும். H2 NIM ~8.35% (Q2 8.45%) — சுமார் 0.10% குறைவு."}},
+ {k:"cut",en:"RBI rate cut",ta:"RBI வட்டி குறைப்பு",chain:[["repo",-1],["cof",-1],["nim",1],["nii",1],["ppop",1],["pat",1],["roe",1]],
+  card:{en:"In FY26–Q1 FY27, downward deposit repricing cut cost of funds by 40 bps YoY to 6.9% — that is what a rate-cut tail looks like on Ujjivan's NIM (7.9% → 8.4%).",ta:"FY26–Q1 FY27-ல் வைப்பு வட்டி குறைஞ்சதால நிதிச் செலவு 0.40% குறைஞ்சு 6.9%; NIM 7.9% → 8.4%."}},
+ {k:"npa",en:"Bad loans rise",ta:"வாராக்கடன் கூடுதல்",chain:[["gnpa",1],["cc",1],["pat",-1],["roa",-1],["roe",-1],["bvps",-1],["crar",-1],["pbv",-1]],
+  card:{en:"FY26 showed this: Q2 FY26 provisions ₹235 cr pulled PAT down to ₹122 cr. Now provisions are ₹103 cr and PAT ₹365 cr — the same chain running in reverse.",ta:"FY26-ல் இது நடந்தது: Q2 FY26 provisions ₹235 கோடி, லாபம் ₹122 கோடி. இப்போ provisions ₹103, லாபம் ₹365 — அதே சங்கிலி தலைகீழா."}},
+ {k:"eq",en:"Fresh equity",ta:"புதிய மூலதனம்",chain:[["crar",1],["bvps",1],["roe",-1]],
+  card:{en:"The ₹409 cr preferential issue lifts CRAR by ~1.2 pp from 20.69% and adds ~₹0.8 to BVPS (issued above book), but spreads profit over more equity — RoE dips slightly.",ta:"₹409 கோடி ஒதுக்கீடு CRAR-ஐ ~1.2% கூட்டும், BVPS ~₹0.8 கூடும்; ஆனா லாபம் அதிக மூலதனத்தில் பகிரப்படுவதால RoE கொஞ்சம் குறையும்."}},
+ {k:"casa",en:"CASA falls",ta:"CASA குறைவு",chain:[["casa",-1],["cof",1],["nim",-1],["nii",-1],["pat",-1]],
+  card:{en:"CASA ratio eased from 27.5% to 26.0%; management now expects ~28% by March vs the earlier 30% aim. Every point of CASA lost is replaced with costlier term money.",ta:"CASA 27.5% → 26.0%; மார்ச்சில் ~28% தான்னு சொல்றாங்க. CASA குறைஞ்சா அதிக வட்டி TD-யால நிரப்பணும்."}},
+ {k:"outrun",en:"Loans outrun deposits",ta:"கடன் > வைப்பு வளர்ச்சி",chain:[["loan",1],["cd",1],["cof",1],["crar",-1]],
+  card:{en:"Loans grew 32.1% vs deposits 29.2%; the CD ratio rose to ~90%. Faster loan growth also consumes capital — one reason for the capital raise.",ta:"கடன் 32.1%, வைப்பு 29.2%; CD ~90%. வேகமான கடன் வளர்ச்சி மூலதனத்தையும் சாப்பிடும் — அதுக்குத்தான் நிதி திரட்டல்."}},
+ {k:"bond",en:"Bond yields rise",ta:"பாண்டு வட்டி உயர்வு",chain:[["bond",1],["oi",-1],["ppop",-1],["pat",-1]],
+  card:{en:"Higher G-sec yields cut the value of the bank's bond holdings, hurting treasury gains in other income (₹300 cr this quarter).",ta:"G-sec வட்டி கூடினா வங்கியோட பாண்டு மதிப்பு குறையும் — பிற வருமானம் (₹300 கோடி) பாதிக்கும்."}},
+ {k:"sec",en:"Shift to secured loans",ta:"Secured கடனுக்கு மாற்றம்",chain:[["yld",-1],["nim",-1],["gnpa",-1],["cc",-1],["pbv",1]],
+  card:{en:"Secured share 46.8% → 52.1% (target 56%). Housing/MSME/FIG yield less than micro-finance, so NIM faces 'mathematical' pressure, but credit cost and earnings volatility fall — which markets usually reward with a higher P/BV.",ta:"Secured 46.8% → 52.1% (இலக்கு 56%). வீட்டு/MSME/FIG வட்டி குறைவு — NIM-க்கு அழுத்தம்; ஆனா கடன் இழப்பு, லாப ஏற்ற இறக்கம் குறையும் — சந்தை பொதுவா அதிக P/BV கொடுக்கும்."}}
+];
+var LESSONS=[
+ {en:"NIM = (interest earned − interest paid) ÷ average earning assets. A small-finance bank's NIM is high because its borrowers pay more — and because the risk is higher.",ta:"NIM = (வட்டி வருமானம் − வட்டிச் செலவு) ÷ சராசரி வருமானச் சொத்து. SFB-க்கு NIM அதிகம் — கடன் வாங்குறவங்க அதிக வட்டி கட்டுறாங்க, ரிஸ்க்கும் அதிகம்."},
+ {en:"PPOP is a bank's 'EBITDA': profit before bad-loan provisions and tax. If PPOP grows but PAT falls, look at provisions first.",ta:"PPOP தான் வங்கியோட 'EBITDA' — provisions, வரிக்கு முன் லாபம். PPOP கூடி லாபம் குறைஞ்சா முதல்ல provisions-ஐப் பாருங்க."},
+ {en:"PCR 85% means 85 paise of every rupee of bad loans is already provided for — future shocks hit profit less.",ta:"PCR 85% = வாராக்கடனின் ஒவ்வொரு ரூபாய்க்கும் 85 பைசா ஏற்கனவே ஒதுக்கியாச்சு — எதிர்கால அதிர்ச்சி லாபத்தைக் குறைவா பாதிக்கும்."},
+ {en:"Raising equity is good for safety (CRAR up) but dilutes return (RoE down). Issuing above book value protects existing shareholders' BVPS.",ta:"புதிய மூலதனம் பாதுகாப்புக்கு நல்லது (CRAR கூடும்), ஆனா RoE குறையும். புத்தக மதிப்புக்கு மேல வெளியிட்டா பழைய பங்குதாரர்களோட BVPS பாதுகாப்பு."}
+];
+
+var QUIZ=[
+ {q:{en:"Why did RBI return Ujjivan's universal bank application in April 2026?",ta:"ஏப்ரல் 2026-ல் உஜ்ஜீவன் விண்ணப்பத்தை RBI ஏன் திருப்பி அனுப்பியது?"},o:[{en:"Gross NPA was above 3%",ta:"GNPA 3%-க்கு மேல்"},{en:"Loan book still too concentrated in unsecured micro-loans",ta:"கடன் புத்தகம் இன்னும் பாதுகாப்பில்லாத மைக்ரோ கடனில் குவிந்திருக்கு"},{en:"Net worth below ₹1,000 cr",ta:"நிகர மதிப்பு ₹1,000 கோடிக்குக் கீழ்"}],a:1,ex:{en:"Ujjivan passes the numeric tests; RBI asked it to diversify the loan book and reapply.",ta:"எண் சோதனைகளில் தேர்ச்சி; கடன் புத்தகத்தைப் பரவலாக்கி மீண்டும் விண்ணப்பிக்கச் சொன்னது RBI."}},
+ {q:{en:"Ujjivan's PAT nearly trebled YoY. What was the biggest swing factor?",ta:"உஜ்ஜீவன் லாபம் கிட்டத்தட்ட மூணு மடங்கு ஆனதுக்கு முக்கியக் காரணம் என்ன?"},o:[{en:"Lower provisions (₹235 cr → ₹103 cr) plus higher NII",ta:"குறைந்த provisions (₹235 → ₹103) + அதிக NII"},{en:"A one-time tax refund",ta:"ஒரு முறை வரி திருப்பிக் கொடுப்பு"},{en:"Sale of a subsidiary",ta:"துணை நிறுவன விற்பனை"}],a:0,ex:{en:"Provisions fell ₹132 cr and NII rose ₹322 cr. There is no subsidiary and no one-off tax item.",ta:"Provisions ₹132 கோடி குறைஞ்சது, NII ₹322 கோடி கூடியது. துணை நிறுவனமோ வரி திருப்பமோ இல்லை."}},
+ {q:{en:"After the 25 bps repo hike, which way does Ujjivan guide NIM in H2?",ta:"0.25% ரெப்போ உயர்வுக்குப் பின் H2-ல் NIM எந்தப் பக்கம்?"},o:[{en:"Up to 8.6%",ta:"8.6%-க்கு உயரும்"},{en:"Down ~10 bps to ~8.35%",ta:"~0.10% குறைஞ்சு ~8.35%"},{en:"Unchanged",ta:"மாற்றமில்லை"}],a:1,ex:{en:"Deposits reprice up faster than loans, so cost of funds rises before yields.",ta:"கடனை விட வைப்பு வட்டி வேகமா கூடும், அதனால நிதிச் செலவு முதல்ல ஏறும்."}},
+ {q:{en:"Why does a bank with 52% secured loans often get a higher P/BV than one with 30%?",ta:"52% secured கடன் உள்ள வங்கிக்கு ஏன் அதிக P/BV கிடைக்கும்?"},o:[{en:"Secured loans always earn higher yields",ta:"Secured கடனுக்கு எப்பவும் அதிக வட்டி"},{en:"Earnings are steadier because credit losses swing less",ta:"கடன் இழப்பு குறைவா மாறுவதால லாபம் நிலையா இருக்கும்"},{en:"RBI mandates it",ta:"RBI கட்டாயப்படுத்துது"}],a:1,ex:{en:"Secured loans yield less, but steadier credit cost makes profit more predictable.",ta:"Secured கடனுக்கு வட்டி குறைவு, ஆனா லாபம் கணிக்கக்கூடியதா இருக்கும்."}},
+ {q:{en:"The ₹409 cr preferential issue will most likely…",ta:"₹409 கோடி பங்கு ஒதுக்கீடு பெரும்பாலும்…"},o:[{en:"Raise CRAR and slightly lower RoE",ta:"CRAR-ஐக் கூட்டி RoE-ஐக் கொஞ்சம் குறைக்கும்"},{en:"Lower CRAR",ta:"CRAR-ஐக் குறைக்கும்"},{en:"Have no effect on capital",ta:"மூலதனத்தில் பாதிப்பு இல்லை"}],a:0,ex:{en:"About +1.2 pp CRAR; more equity spreads the same profit thinner.",ta:"CRAR ~+1.2%; அதிக மூலதனத்தில் அதே லாபம் பகிரப்படுது."}},
+ {q:{en:"Which cycle phase does CB place SFBs in this quarter?",ta:"இந்தக் காலாண்டில் SFB-களை CB எந்தச் சுழற்சி நிலையில் வைக்குது?"},o:[{en:"P1 Trough",ta:"P1 அடிமட்டம்"},{en:"P3 Expansion",ta:"P3 விரிவாக்கம்"},{en:"P5 Downturn",ta:"P5 சரிவு"}],a:1,ex:{en:"Credit costs have peaked and growth is broad-based, but RBI has started tightening — so P3, not P2.",ta:"கடன் இழப்பு உச்சம் தாண்டியாச்சு, வளர்ச்சி பரவலா இருக்கு; ஆனா RBI இறுக்க ஆரம்பிச்சிருக்கு — அதனால P3."}},
+ {q:{en:"Which is the top negative trigger by CB points?",ta:"CB புள்ளிகளில் முதல் எதிர்மறைத் தூண்டுதல் எது?"},o:[{en:"Drought exposure",ta:"வறட்சி"},{en:"Repo hike squeezing NIM",ta:"ரெப்போ உயர்வால NIM அழுத்தம்"},{en:"IRDAI draft rules",ta:"IRDAI வரைவு விதிகள்"}],a:1,ex:{en:"Impact 2 × certainty 1.0 × timing 1.0 × priced-in 1.0 = 2.0 points.",ta:"தாக்கம் 2 × உறுதி 1.0 × நேரம் 1.0 × விலை 1.0 = 2.0 புள்ளி."}}
+];
+
+/* Self-check: 5 fixed groups */
+var SC=[
+ {g:{en:"1. Questions about the stock",ta:"1. பங்கைப் பற்றிய கேள்விகள்"},items:[
+  {t:{en:"I understand how the bank makes money (spread between lending and deposit rates).",ta:"வங்கி எப்படிச் சம்பாதிக்குதுன்னு புரியுது (கடன் வட்டி − வைப்பு வட்டி)."},d:"NIM 8.4%; cost of funds 6.9%"},
+  {t:{en:"Profit growth comes from core income, not one-offs.",ta:"லாப வளர்ச்சி முக்கிய வருமானத்திலிருந்து, ஒரு முறை வருமானத்திலிருந்து அல்ல."},d:"NII +35%; provisions −56%; PPOP +50%"},
+  {t:{en:"Asset quality is stable or improving.",ta:"கடன் தரம் நிலையா அல்லது மேம்படுது."},d:"GNPA 2.45% → 2.10%; PCR 73% → 85%"}]},
+ {g:{en:"2. Problems investors face",ta:"2. முதலீட்டாளர்கள் சந்திக்கும் சிக்கல்கள்"},items:[
+  {t:{en:"I accept the micro-finance cycle risk.",ta:"மைக்ரோ ஃபைனான்ஸ் சுழற்சி ரிஸ்க்கை ஏத்துக்கிறேன்."},d:"Unsecured micro-banking ₹22,037 cr = 47.9% of book"},
+  {t:{en:"I am comfortable with the leadership transition.",ta:"தலைமை மாற்றம் எனக்குப் பரவாயில்லை."},d:"MD retired 1 Sep 2026; interim CEO Carol Furtado"},
+  {t:{en:"I have factored in margin pressure from the rate hike.",ta:"வட்டி உயர்வால மார்ஜின் அழுத்தத்தைக் கணக்கில் எடுத்தேன்."},d:"H2 NIM guided ~8.35% vs 8.45%"}]},
+ {g:{en:"3. Solutions (what I did)",ta:"3. தீர்வுகள் (நான் செய்தது)"},items:[
+  {t:{en:"I checked the secured-loan trend.",ta:"Secured கடன் போக்கைச் சரிபார்த்தேன்."},d:"46.8% → 52.1%; target 56% by Mar-27"},
+  {t:{en:"I checked the capital buffer.",ta:"மூலதனப் பாதுகாப்பைச் சரிபார்த்தேன்."},d:"CRAR 20.69%; Tier-1 19.49%; +~1.2 pp from ₹409 cr issue"},
+  {t:{en:"I compared price with book value.",ta:"விலையைப் புத்தக மதிப்போட ஒப்பிட்டேன்."},d:"P/BV ~1.84x (BVPS ₹34.45, latest reported)"}]},
+ {g:{en:"4. Anchors' and analysts' view",ta:"4. நிறுவன முதலீட்டாளர் & அனலிஸ்ட் பார்வை"},items:[
+  {t:{en:"I read the published broker targets.",ta:"வெளியான ப்ரோக்கர் இலக்குகளைப் படிச்சேன்."},d:"ICICI Securities ₹90; Axis Securities ₹86; Trendlyne consensus ₹82"},
+  {t:{en:"I noted which institutions are putting in fresh money.",ta:"எந்த நிறுவனங்கள் புதுப் பணம் போடுதுன்னு கவனிச்சேன்."},d:"IFC, Bajaj Life, HDFC Life, Aditya Birla Sun Life — ₹409 cr"}]},
+ {g:{en:"5. My own conditions",ta:"5. என் சொந்த நிபந்தனைகள்"},own:true,sug:[
+  {en:"P/BV below 1.5x",ta:"P/BV 1.5x-க்குக் கீழே"},{en:"GNPA stays below 2%",ta:"GNPA 2%-க்குக் கீழே"},{en:"CASA ratio back above 28%",ta:"CASA மீண்டும் 28%-க்கு மேல"},
+  {en:"Permanent MD approved by RBI",ta:"நிரந்தர MD-க்கு RBI ஒப்புதல்"},{en:"Q3 FY27 PAT above ₹350 cr",ta:"Q3 FY27 லாபம் ₹350 கோடிக்கு மேல"},{en:"Secured share reaches 56%",ta:"Secured பங்கு 56%"}]}
+];
+</script>
+<script>
+/* ================= CORE UI ================= */
+var CUR='dash', CH={}, CHART_FN={};
+function $(id){return document.getElementById(id);}
+function H(id,html){ $(id).innerHTML=html; }
+function card(inner,cls){ return '<div class="card '+(cls||'')+'">'+inner+'</div>'; }
+function T2(en,ta){ return L==='ta'?ta:en; }
+
+function buildNav(){
+ var h=''; TABS.forEach(function(t){ h+='<button id="nb-'+t[0]+'" class="'+(t[0]===CUR?'on':'')+'" onclick="show(\''+t[0]+'\')">'+tx(t[1])+'</button>'; });
+ H('nav',h);
+}
+function show(id){
+ CUR=id; document.querySelectorAll('section.tab').forEach(function(s){s.classList.remove('on');});
+ $('t-'+id).classList.add('on'); buildNav();
+ if(CHART_FN[id]) setTimeout(CHART_FN[id],30);
+ if(id==='pillars') setTimeout(animTemple,80);
+ window.scrollTo({top:0,behavior:'smooth'});
+}
+function setLang(l){
+ L=l; $('lEn').classList.toggle('on',l==='en'); $('lTa').classList.toggle('on',l==='ta');
+ document.documentElement.lang=(l==='ta'?'ta':'en');
+ document.querySelectorAll('[data-k]').forEach(function(e){ var k=e.getAttribute('data-k'); if(D[L][k]) e.textContent=D[L][k]; });
+ $('aq').placeholder=T2('Ask: what is the NIM?','கேளுங்க: NIM எவ்வளவு?');
+ renderAll(); show(CUR);
+}
+
+/* value labels on bar tops */
+var valPlugin={id:'vallab',afterDatasetsDraw:function(c){var ctx=c.ctx;c.data.datasets.forEach(function(ds,i){var m=c.getDatasetMeta(i);if(m.hidden||m.type!=='bar')return;
+ m.data.forEach(function(el,j){var v=ds.data[j];if(v==null)return;var s=ds.fmt?ds.fmt(v):inr(v);ctx.save();ctx.fillStyle='#1b2430';ctx.font='600 11px Segoe UI, sans-serif';
+ if(c.options.indexAxis==='y'){ctx.textAlign='left';ctx.fillText(s,el.x+5,el.y+4);}else{ctx.textAlign='center';ctx.fillText(s,el.x,(v>=0?el.y-6:el.y+14));}ctx.restore();});});}};
+function mkChart(id,cfg){ if(CH[id]) CH[id].destroy(); var el=$(id); if(!el||typeof Chart==='undefined') return;
+ cfg.options=cfg.options||{}; cfg.options.responsive=true; cfg.options.maintainAspectRatio=false; cfg.plugins=[valPlugin];
+ cfg.options.plugins=cfg.options.plugins||{}; cfg.options.plugins.legend=cfg.options.plugins.legend||{position:'bottom'};
+ CH[id]=new Chart(el,cfg); }
+function cbox(id,h){ return '<div class="chartbox"><div class="in" style="height:'+(h||320)+'px"><canvas id="'+id+'"></canvas></div></div>'; }
+function compositeScore(){ var s=CO.scores; return ((s.g+s.m+s.d+s.v+s.t+s.r)/6); }
+function tgScore(){ var pos=[],neg=0; CO.triggers.forEach(function(t){var p=t.I*t.C*t.W*t.P; if(t.s>0)pos.push(p); else neg+=p;});
+ pos.sort(function(a,b){return b-a;}); var ps=pos.slice(0,3).reduce(function(a,b){return a+b;},0);
+ return Math.max(0,Math.min(100,Math.round(50+8*ps-8*neg))); }
+
+/* ================= DASHBOARD ================= */
+function kpi(l,v,s){ return '<div class="card kpi"><div class="l">'+l+'</div><div class="v">'+v+'</div><div class="s">'+s+'</div></div>'; }
+function rDash(){
+ var p=CO.pl,r=CO.r,b=CO.bs, cs=compositeScore().toFixed(1);
+ var h='<h2>'+T2('Q2 FY27 at a glance','Q2 FY27 — ஒரே பார்வையில்')+'</h2>';
+ h+='<div style="margin-bottom:10px"><span class="pill" style="background:#fff3e6;color:#c2410c">CB Score '+cs+' / 10</span> <span class="pill puj">CY '+CO.cycle.cy+'</span> <span class="pill" style="background:#eef2ff;color:#4338ca">TG '+tgScore()+'</span> <span class="note">'+T2('Results declared 16 Oct 2026 · standalone','முடிவுகள் 16 அக் 2026 · standalone')+'</span></div>';
+ h+=card('<b>'+tx(TXT.headline)+'</b>');
+ h+='<div class="grid g4" style="margin-top:12px">';
+ h+=kpi(T2('Profit after tax','வரிக்குப் பின் லாபம்'),cr(p.pat[0]),chg(199.9)+' YoY · '+chg(15.3)+' QoQ');
+ h+=kpi(T2('Net interest income','நிகர வட்டி வருமானம்'),cr(p.nii[0]),chg(35.0)+' YoY');
+ h+=kpi(T2('PPOP (bank EBITDA)','PPOP (வங்கி EBITDA)'),cr(p.ppop[0]),chg(50.0)+' YoY');
+ h+=kpi(T2('Provisions','ஒதுக்கீடுகள்'),cr(p.prov[0]),chg(-56.2,'%',1)+' YoY');
+ h+=kpi('NIM',pct(r.nim[0]),chg(0.55,' pp')+' YoY');
+ h+=kpi('RoA / RoE',pct(r.roa[0])+' / '+pct(r.roe[0]),T2('RoA was 1.0% a year ago','போன வருஷம் RoA 1.0%'));
+ h+=kpi('GNPA / NNPA',pct(r.gnpa[0],2)+' / '+pct(r.nnpa[0],2),'PCR '+pct(r.pcr[0],0));
+ h+=kpi('CRAR',pct(r.crar[0],2),'Tier-1 '+pct(r.tier1,2));
+ h+=kpi(T2('Deposits','வைப்பு'),cr(b.deposits[0]),chg(29.2)+' YoY');
+ h+=kpi(T2('Gross loan book','கடன் புத்தகம்'),cr(b.glb[0]),chg(32.1)+' YoY');
+ h+=kpi(T2('CASA ratio','CASA விகிதம்'),pct(b.casaR[0]),chg(-1.5,' pp')+' YoY');
+ h+=kpi(T2('Secured share','Secured பங்கு'),pct(b.secured[0]),T2('from 46.8% a year ago','போன வருஷம் 46.8%'));
+ h+='</div><h3>'+T2('Key takeaways','முக்கியக் குறிப்புகள்')+'</h3>'+card('<ul style="margin:0;padding-left:18px">'+CO_takes()+'</ul>');
+ h+='<h3>'+T2('Q2 FY26 vs Q2 FY27 (₹ crore)','Q2 FY26 vs Q2 FY27 (₹ கோடி)')+'</h3>'+cbox('chDash');
+ H('t-dash',h);
+}
+function CO_takes(){ return TXT.takeaways.map(function(t){return '<li>'+tx(t)+'</li>';}).join(''); }
+CHART_FN.dash=function(){ var p=CO.pl; mkChart('chDash',{type:'bar',data:{labels:['NII',T2('Other income','பிற வருமானம்'),T2('Opex','இயக்கச் செலவு'),'PPOP',T2('Provisions','Provisions'),'PAT'],
+ datasets:[{label:'Q2 FY26',data:[p.nii[1],p.otherInc[1],p.opex[1],p.ppop[1],p.prov[1],p.pat[1]],backgroundColor:'#cbd5e1'},{label:'Q2 FY27',data:[p.nii[0],p.otherInc[0],p.opex[0],p.ppop[0],p.prov[0],p.pat[0]],backgroundColor:'#0a7c66'}]},
+ options:{scales:{y:{ticks:{callback:function(v){return inr(v);}}}}}}); };
+
+/* ================= BUSINESS MODEL ================= */
+function boxSVG(id,x,y,w,h,fill,stroke,t1,t2,t3){
+ var s='<g class="nodebox" onclick="mx(\''+id+'\')"><rect x="'+x+'" y="'+y+'" width="'+w+'" height="'+h+'" rx="9" fill="'+fill+'" stroke="'+stroke+'" stroke-width="1.5"/>';
+ s+='<text x="'+(x+w/2)+'" y="'+(y+(t3?19:h/2-3))+'" text-anchor="middle" font-size="13" font-weight="700" fill="#1b2430">'+t1+'</text>';
+ if(t2) s+='<text x="'+(x+w/2)+'" y="'+(y+(t3?36:h/2+14))+'" text-anchor="middle" font-size="11" fill="#475569">'+t2+'</text>';
+ if(t3) s+='<text x="'+(x+w/2)+'" y="'+(y+52)+'" text-anchor="middle" font-size="11" fill="#475569">'+t3+'</text>';
+ return s+'</g>'; }
+function arrow(x1,y1,x2,y2,col){ var mx_=(x1+x2)/2; return '<path d="M'+x1+','+y1+' C'+mx_+','+y1+' '+mx_+','+y2+' '+x2+','+y2+'" fill="none" stroke="'+(col||'#94a3b8')+'" stroke-width="1.6" marker-end="url(#ah)"/>'; }
+function rModel(){
+ var N=NODES_MODEL, seg=CO.seg, tot=CO.bs.glb[0], segH=46, gap=8, y0=30, H_=y0+seg.length*(segH+gap)+20, mid=H_/2;
+ var s='<svg viewBox="0 0 1100 '+H_+'" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, Noto Sans Tamil, sans-serif"><defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#94a3b8"/></marker></defs>';
+ s+='<text x="10" y="18" font-size="11" fill="#64748b">'+T2('Tap any box for an explanation','எந்தப் பெட்டியையும் தொட்டா விளக்கம் கீழே வரும்')+'</text>';
+ // column 1
+ s+=boxSVG('cust',10,mid-120,160,70,'#f1f5f9','#64748b',tx(N.cust),T2('~1 crore customers','~1 கோடி வாடிக்கையாளர்'),T2('26 states/UTs','26 மாநிலம்/UT'));
+ s+=boxSVG('dep',10,mid+50,160,70,'#eff6ff','#2563eb',tx(N.dep),cr(CO.bs.deposits[0]),'CASA 26.0% · CoF 6.9%');
+ s+=boxSVG('chan',200,mid-35,150,70,'#f5f3ff','#7c3aed',tx(N.chan),T2('880 branches · 619 ATMs','880 கிளை · 619 ATM'),T2('Digital: 95% SA opened','டிஜிட்டல் 95% SA'));
+ s+=arrow(170,mid-85,200,mid-10)+arrow(170,mid+85,200,mid+10);
+ s+=boxSVG('bank',380,mid-55,160,110,'#fff7ed','#f07f13',tx(N.bank),T2('Loan book','கடன் புத்தகம்')+' '+cr(tot),T2('Secured 52.1% · +32.1%','Secured 52.1% · +32.1%'));
+ s+=arrow(350,mid,380,mid);
+ seg.forEach(function(g,i){ var y=y0+i*(segH+gap), sh=(g.v/tot*100);
+  s+=arrow(540,mid,570,y+segH/2,'#cbd5e1');
+  s+='<g class="nodebox" onclick="mx(\'s_'+g.k+'\')"><rect x="570" y="'+y+'" width="250" height="'+segH+'" rx="8" fill="#fff" stroke="'+g.c+'" stroke-width="1.5"/><rect x="570" y="'+y+'" width="7" height="'+segH+'" rx="3" fill="'+g.c+'"/>';
+  s+='<text x="586" y="'+(y+18)+'" font-size="12" font-weight="700" fill="#1b2430">'+tx({en:g.en,ta:g.ta})+(g.sec?'':' ⚠')+'</text>';
+  s+='<text x="586" y="'+(y+35)+'" font-size="11" fill="#475569">'+cr(g.v)+' · '+sh.toFixed(1)+'% '+T2('share','பங்கு')+' · <tspan fill="#16a34a" font-weight="700">+'+g.g.toFixed(1)+'%</tspan></text></g>';
+  s+=arrow(820,y+segH/2,850,mid,'#e2e8f0'); });
+ s+=boxSVG('rev',850,mid-45,110,90,'#ecfdf5','#16a34a',tx(N.rev),cr(2449),T2('+26.3% YoY','ஆண்டுக்கு +26.3%'));
+ s+=boxSVG('cost',985,mid-150,108,90,'#fef2f2','#dc2626',tx(N.cost),cr(1959),T2('int+opex+prov','வட்டி+செலவு+prov'));
+ s+=boxSVG('prof',985,mid+60,108,90,'#f0fdf4','#0a7c66',T2('Profit','லாபம்'),'PAT '+cr(365),'RoE 19.7%');
+ s+=arrow(960,mid-10,985,mid-105)+'<path d="M1039,'+(mid-60)+' L1039,'+(mid+56)+'" stroke="#94a3b8" stroke-width="1.6" marker-end="url(#ah)"/>';
+ s+='</svg>';
+ var h='<h2>'+T2('How Ujjivan SFB makes money','உஜ்ஜீவன் SFB எப்படிச் சம்பாதிக்குது')+'</h2><div class="svgwrap">'+s+'</div>';
+ h+='<div class="expl" id="mexpl">'+T2('Tap a box above to see what it means and its key figures.','மேல உள்ள பெட்டியைத் தொட்டா அதன் விளக்கமும் எண்களும் இங்கே வரும்.')+'</div>';
+ h+='<p class="note">'+T2('⚠ = unsecured micro-banking. Revenue formula: Interest income ≈ loan book × yield; NII = interest income − interest paid on deposits/borrowings; PAT = NII + other income − opex − provisions − tax.',
+  '⚠ = பாதுகாப்பில்லாத மைக்ரோ கடன். வருமான சூத்திரம்: வட்டி வருமானம் ≈ கடன் புத்தகம் × வட்டி விகிதம்; NII = வட்டி வருமானம் − வைப்பு/கடனுக்குக் கட்டும் வட்டி; PAT = NII + பிற வருமானம் − செலவு − provisions − வரி.')+'</p>';
+ h+='<h3>'+T2('Revenue engine — drivers','வருமான இயந்திரம் — இயக்கிகள்')+'</h3><div class="tscroll"><table class="tbl"><thead><tr><th>'+T2('Driver','இயக்கி')+'</th><th>Q2 FY27</th><th>Q2 FY26</th><th>'+T2('FY27 guidance','FY27 வழிகாட்டல்')+'</th></tr></thead><tbody>';
+ [[T2('Loan book growth','கடன் வளர்ச்சி'),'+32.1%','—',CO.guide.adv],['NIM','8.4%','7.9%',CO.guide.nimH2+' (H2)'],[T2('Micro-banking growth','மைக்ரோ கடன் வளர்ச்சி'),'+18.7% calc','—',CO.guide.mb],
+  [T2('Secured share','Secured பங்கு'),'52.1%','46.8%',tx(CO.guide.sec)],[T2('Opex / avg assets','செலவு / சராசரி சொத்து'),'6.1%','—',tx(CO.guide.opex)],[T2('Credit cost / avg assets','கடன் இழப்பு / சராசரி சொத்து'),'0.7%','—',tx(CO.guide.cc)],
+  ['RoA','2.4%','1.0%',tx(CO.guide.roa)],[T2('CASA ratio','CASA விகிதம்'),'26.0%','27.5%',CO.guide.casa]].forEach(function(r){h+='<tr><td>'+r[0]+'</td><td>'+r[1]+'</td><td>'+r[2]+'</td><td>'+r[3]+'</td></tr>';});
+ h+='</tbody></table></div>';
+ h+='<h3>'+T2('Loan-book mix: share of book and YoY growth by segment','கடன் கலவை: ஒவ்வொரு பிரிவின் பங்கு & ஆண்டு வளர்ச்சி')+'</h3>'+cbox('chSeg',420);
+ H('t-model',h);
+}
+function mx(k){
+ var o, h='';
+ if(k.indexOf('s_')===0){ var g=CO.seg.filter(function(x){return 's_'+x.k===k;})[0]; o=SEG_EX[g.k];
+  h='<b>'+tx({en:g.en,ta:g.ta})+'</b> — '+cr(g.v)+' · '+(g.v/CO.bs.glb[0]*100).toFixed(1)+'% '+T2('of book','பங்கு')+' · +'+g.g.toFixed(1)+'% YoY'+(g.sec?'':' · '+T2('unsecured','பாதுகாப்பில்லாதது'))+'<br>'+tx(o); }
+ else { o=NODES_MODEL[k]; h='<b>'+tx(o)+'</b> — '+tx(o.v)+'<br>'+tx(o.ex); }
+ $('mexpl').innerHTML=h; $('mexpl').scrollIntoView({behavior:'smooth',block:'nearest'});
+}
+CHART_FN.model=function(){ var s=CO.seg,t=CO.bs.glb[0]; mkChart('chSeg',{type:'bar',data:{labels:s.map(function(g){return tx({en:g.en,ta:g.ta});}),
+ datasets:[{label:T2('Share of loan book %','கடன் புத்தகப் பங்கு %'),data:s.map(function(g){return +(g.v/t*100).toFixed(1);}),backgroundColor:s.map(function(g){return g.c;}),fmt:function(v){return v+'%';}},
+  {label:T2('YoY growth %','ஆண்டு வளர்ச்சி %'),data:s.map(function(g){return g.g;}),backgroundColor:'rgba(22,163,74,.25)',borderColor:'#16a34a',borderWidth:1,fmt:function(v){return '+'+v+'%';}}]},
+ options:{indexAxis:'y',scales:{x:{type:'logarithmic',title:{display:true,text:T2('% (log scale)','% (log அளவு)')}}}}}); };
+
+/* ================= FINANCIALS ================= */
+function rFin(){
+ var M=METRICS(), h='<h2>'+T2('Financials — bank metrics by category','நிதி நிலை — வகை வாரியான வங்கி அளவீடுகள்')+'</h2><div class="tscroll"><table class="tbl"><thead><tr><th>'+T2('Metric','அளவீடு')+'</th><th>Q2 FY27</th><th>Q2 FY26</th><th>Q1 FY27</th><th>YoY</th></tr></thead><tbody>';
+ MCAT.forEach(function(g){ h+='<tr><td colspan="5" style="text-align:left;background:'+g.c+'14;border-left:5px solid '+g.c+';color:'+g.c+';font-weight:800">'+tx(g)+'</td></tr>'; g.i.forEach(function(k){ var m=M[k]; h+='<tr><td style="padding-left:18px">'+(L==='ta'?m[1]:m[0])+'</td><td><b>'+m[2]+'</b></td><td>'+m[3]+'</td><td>'+m[4]+'</td><td>'+m[5]+'</td></tr>'; }); });
+ h+='</tbody></table></div><p class="note">'+T2('† BVPS is the latest reported figure (Jun-26); P/BV uses it. "calc" = CB computation from reported numbers. n/a = not disclosed in the sources reviewed.','† BVPS கடைசியா வெளியான எண் (ஜூன்-26); P/BV அதை வெச்சு. "calc" = வெளியான எண்களிலிருந்து CB கணக்கீடு. n/a = கிடைக்கல.')+'</p>';
+ var p=CO.pl; h+='<h3>'+T2('Profit & loss (₹ crore)','லாப நஷ்டக் கணக்கு (₹ கோடி)')+'</h3><div class="tscroll"><table class="tbl"><thead><tr><th>'+T2('Line item','விவரம்')+'</th><th>Q2 FY27</th><th>Q2 FY26</th><th>YoY</th></tr></thead><tbody>';
+ [[T2('Interest earned','வட்டி வருமானம்'),'intEarned'],[T2('Interest expended','வட்டிச் செலவு'),'intExp'],['<b>NII</b>','nii'],[T2('Other income','பிற வருமானம்'),'otherInc'],[T2('Total income','மொத்த வருமானம்'),'totalInc'],
+  [T2('Operating expenses','இயக்கச் செலவு'),'opex'],[T2('— employee cost','— ஊழியர் செலவு'),'empExp'],[T2('— other opex','— பிற செலவு'),'othOpex'],['<b>PPOP</b> '+T2('(EBITDA-equivalent)','(EBITDA மாதிரி)'),'ppop'],
+  [T2('Provisions & contingencies','ஒதுக்கீடுகள்'),'prov',1],['PBT','pbt'],[T2('Tax','வரி'),'tax'],['<b>PAT</b>','pat']].forEach(function(r){var v=p[r[1]];
+  h+='<tr><td>'+r[0]+'</td><td><b>'+inr(v[0])+'</b></td><td>'+(v[1]==null?'n/a':inr(v[1]))+'</td><td>'+chg(v[2],'%',r[2])+'</td></tr>';});
+ h+='</tbody></table></div><p class="note">'+T2('Q2 FY26 interest expended, other income and opex are derived from reported interest earned, NII, total income and total expenditure. H1 FY27: PAT ₹682 cr (+203%), PPOP ₹1,142 cr (+51%), total income ₹4,732 cr.',
+  'Q2 FY26 வட்டிச் செலவு, பிற வருமானம், இயக்கச் செலவு — வெளியான எண்களிலிருந்து கணக்கிடப்பட்டது. H1 FY27: லாபம் ₹682 கோடி (+203%), PPOP ₹1,142 கோடி (+51%).')+'</p>';
+ h+='<h3>'+T2('Quarterly PAT trend (₹ crore)','காலாண்டு லாபப் போக்கு (₹ கோடி)')+'</h3>'+cbox('chPat',280);
+ h+='<h3>'+T2('Where each ₹100 of income went (Q2 FY27)','ஒவ்வொரு ₹100 வருமானமும் எங்கே போச்சு (Q2 FY27)')+'</h3>'+cbox('chHundred',260);
+ H('t-fin',h);
+}
+CHART_FN.fin=function(){
+ mkChart('chPat',{type:'bar',data:{labels:['Q2 FY26','Q1 FY27','Q2 FY27'],datasets:[{label:'PAT',data:[122,317,365],backgroundColor:['#cbd5e1','#5eead4','#0a7c66']}]},options:{plugins:{legend:{display:false}}}});
+ var t=CO.pl.totalInc[0],p=CO.pl; var parts=[p.intExp[0],p.empExp[0],p.othOpex[0],p.prov[0],p.tax[0],p.pat[0]].map(function(v){return +(v/t*100).toFixed(1);});
+ mkChart('chHundred',{type:'bar',data:{labels:[T2('Interest paid','வட்டிச் செலவு'),T2('Employees','ஊழியர்'),T2('Other opex','பிற செலவு'),T2('Provisions','Provisions'),T2('Tax','வரி'),T2('Profit','லாபம்')],
+  datasets:[{label:'₹ per ₹100',data:parts,backgroundColor:['#f87171','#fb923c','#fbbf24','#a78bfa','#94a3b8','#0a7c66'],fmt:function(v){return '₹'+v;}}]},options:{plugins:{legend:{display:false}}}});
+};
+
+/* ================= ASSET QUALITY ================= */
+function rAq(){
+ var r=CO.r,n=CO.npaMove,h='<h2>'+T2('Asset quality','கடன் தரம்')+'</h2><div class="grid g4">';
+ h+=kpi('GNPA',pct(r.gnpa[0],2),T2('2.45% a year ago','போன வருஷம் 2.45%'))+kpi('NNPA',pct(r.nnpa[0],2),T2('0.67% a year ago','போன வருஷம் 0.67%'))+kpi('PCR',pct(r.pcr[0],0),T2('73% a year ago','போன வருஷம் 73%'));
+ h+=kpi('PAR 0',pct(r.par[0],2),T2('4.45% a year ago','போன வருஷம் 4.45%'))+kpi(T2('Slippage ratio','நழுவல் விகிதம்'),pct(r.slipRatio),T2('of avg loan book','சராசரி கடனில்'))+kpi(T2('Credit cost','கடன் இழப்புச் செலவு'),pct(r.creditCostATA),T2('of avg total assets','சராசரி சொத்தில்'));
+ h+=kpi(T2('MB collection (Bucket X)','மைக்ரோ வசூல் (Bucket X)'),'99.7%',T2('steady with Q1','Q1 மாதிரியே'))+kpi(T2('Floating provisions','கூடுதல் ஒதுக்கீடு'),cr(CO.prov.floating),T2('beyond rules','விதிக்கு மேல'))+'</div>';
+ h+='<h3>'+T2('H1 FY27 Gross NPA movement (₹ crore)','H1 FY27 வாராக்கடன் நகர்வு (₹ கோடி)')+'</h3>'+cbox('chNpa',280);
+ h+='<h3>'+T2('Trend','போக்கு')+'</h3>'+cbox('chAq',280);
+ h+='<h3>'+T2('Segment quality notes','பிரிவு வாரியான தரம்')+'</h3><div class="tscroll"><table class="tbl"><thead><tr><th>'+T2('Segment','பிரிவு')+'</th><th>GNPA</th><th>'+T2('Note','குறிப்பு')+'</th></tr></thead><tbody>';
+ [[T2('Affordable housing','வீட்டுக் கடன்'),'1.2%','PAR 3.7%'],[T2('Micro mortgages','மைக்ரோ அடமானம்'),'0.7%',T2('PAR 1.8% → seen at 2.5–3% as book seasons','PAR 1.8% → 2.5–3% வரை போகலாம்')],
+  ['MSME '+T2('(new book)','(புதுசு)'),'0.5%',T2('New book ₹3,000 cr+','புதிய புத்தகம் ₹3,000 கோடி+')],[T2('Micro banking','மைக்ரோ கடன்'),'n/a',T2('H1 slippage 1.85% annualised','H1 நழுவல் 1.85% (வருடக் கணக்கு)')],
+  [T2('CGFMU guarantee cover','CGFMU உத்தரவாதம்'),'—',cr(CO.prov.cgfmu)]].forEach(function(x){h+='<tr><td>'+x[0]+'</td><td>'+x[1]+'</td><td>'+x[2]+'</td></tr>';});
+ h+='</tbody></table></div>'; H('t-aq',h);
+}
+CHART_FN.aq=function(){ var n=CO.npaMove;
+ mkChart('chNpa',{type:'bar',data:{labels:[T2('Opening','தொடக்கம்'),T2('+ Slippages','+ நழுவல்'),T2('− Recoveries/upgrades','− மீட்பு'),T2('− Write-offs','− தள்ளுபடி'),T2('Closing','இறுதி')],
+  datasets:[{label:'₹ cr',data:[n.open,n.slip,-n.rec,-n.wo,n.close],backgroundColor:['#94a3b8','#dc2626','#16a34a','#f59e0b','#0a7c66']}]},options:{plugins:{legend:{display:false}}}});
+ mkChart('chAq',{type:'bar',data:{labels:['Q2 FY26','Q1 FY27','Q2 FY27'],datasets:[{label:'GNPA %',data:[2.45,2.17,2.10],backgroundColor:'#f87171',fmt:function(v){return v+'%';}},{label:'PAR 0 %',data:[4.45,3.58,3.57],backgroundColor:'#fbbf24',fmt:function(v){return v+'%';}}]}});
+};
+
+/* ================= LIQUIDITY ================= */
+function rLiq(){
+ var b=CO.bs,r=CO.r,bulk=b.deposits[0]-b.retailCasa, h='<h2>'+T2('Liquidity & funding (bank working capital)','பணப்புழக்கம் & நிதி (வங்கியின் working capital)')+'</h2>'+card(tx(TXT.liqNote));
+ h+='<div class="tscroll" style="margin-top:12px"><table class="tbl"><thead><tr><th>'+T2('Measure','அளவீடு')+'</th><th>Q2 FY27</th><th>Q2 FY26</th><th>'+T2('Read','பொருள்')+'</th></tr></thead><tbody>';
+ [[T2('CD ratio (calc)','CD விகிதம் (கணக்கீடு)'),pct(r.cd[0]),pct(r.cd[1]),T2('Lending more of each deposit rupee','ஒவ்வொரு வைப்பு ரூபாயிலும் அதிகக் கடன்')],
+  ['LCR',pct(r.lcr,0),'n/a',T2('30-day liquid cover above 100% minimum','100% குறைந்தபட்சத்துக்கு மேல')],
+  [T2('Retail TD + CASA','சில்லறை TD + CASA'),cr(b.retailCasa),cr(b.retailCasaPrev),chg(21.8)],
+  [T2('Share of retail in deposits (calc)','வைப்பில் சில்லறைப் பங்கு'),pct(b.retailCasa/b.deposits[0]*100),pct(b.retailCasaPrev/b.deposits[1]*100),T2('Sticky, granular money','நிலையான சின்னச் சின்ன வைப்பு')],
+  [T2('Bulk deposits (calc)','Bulk வைப்பு (கணக்கீடு)'),cr(bulk),cr(b.deposits[1]-b.retailCasaPrev),T2('Costlier, less sticky','விலை அதிகம், நிலையில்லை')],
+  [T2('Cost of funds','நிதிச் செலவு'),pct(r.cof[0]),pct(r.cof[1]),T2('Set to rise after repo hike','ரெப்போ உயர்வால கூடும்')],
+  [T2('Borrowings repaid in Q2','Q2-ல் திருப்பிச் செலுத்திய கடன்'),T2('~₹800 cr','~₹800 கோடி'),'—',T2('Funding shifted to deposits','வைப்புக்கு மாற்றம்')],
+  [T2('Securitisation added (Oct)','Securitisation (அக்)'),'₹500 cr','—',T2('NIM-accretive, P&L-neutral','NIM-க்கு நல்லது')]].forEach(function(x){h+='<tr><td>'+x[0]+'</td><td><b>'+x[1]+'</b></td><td>'+x[2]+'</td><td>'+x[3]+'</td></tr>';});
+ h+='</tbody></table></div><h3>'+T2('Deposit mix, 30 Sep 2026 (₹ crore)','வைப்புக் கலவை, 30 செப் 2026 (₹ கோடி)')+'</h3>'+cbox('chDep',300);
+ H('t-liq',h);
+}
+CHART_FN.liq=function(){ var b=CO.bs; mkChart('chDep',{type:'bar',data:{labels:[T2('Retail term deposits','சில்லறை TD'),T2('Savings','சேமிப்பு'),T2('Current','நடப்பு'),T2('Bulk (calc)','Bulk (கணக்கீடு)')],
+ datasets:[{label:'₹ cr',data:[b.retailTD,b.sa,b.ca,b.deposits[0]-b.retailCasa],backgroundColor:['#2563eb','#0a7c66','#14b8a6','#94a3b8']}]},options:{plugins:{legend:{display:false}}}}); };
+
+/* ================= SUBSIDIARIES ================= */
+function rSubs(){
+ var h='<h2>'+T2('Subsidiaries','துணை நிறுவனங்கள்')+'</h2>'+card(tx(TXT.subs));
+ h+='<div class="tscroll" style="margin-top:12px"><table class="tbl"><thead><tr><th>'+T2('Entity','நிறுவனம்')+'</th><th>'+T2('Relationship','உறவு')+'</th><th>Q2 FY27 PAT</th><th>'+T2('Share of group profit','குழு லாபப் பங்கு')+'</th></tr></thead><tbody>';
+ h+='<tr><td>Ujjivan Small Finance Bank</td><td>'+T2('Listed bank (standalone)','பட்டியலிட்ட வங்கி')+'</td><td>₹365 cr</td><td>100%</td></tr>';
+ h+='<tr><td>Ujjivan Financial Services</td><td>'+T2('Former holding company — merged into bank (2024)','முன்னாள் தாய் நிறுவனம் — 2024-ல் இணைப்பு')+'</td><td>—</td><td>—</td></tr></tbody></table></div>';
+ H('t-subs',h);
+}
+
+/* ================= VALUATION & MARKET ================= */
+function rVal(){
+ var h='<h2>'+T2('Valuation & market activity','மதிப்பீடு & சந்தை நடவடிக்கை')+'</h2><div class="grid g4">';
+ h+=kpi(T2('Price (16 Oct 2026)','விலை (16 அக் 2026)'),'₹'+CO.price.toFixed(2),chg(-1.94)+' '+T2('on results day','முடிவு நாளில்'));
+ h+=kpi(T2('Market cap (calc)','சந்தை மதிப்பு (கணக்கீடு)'),cr(CO.mcapCr),T2('~194.85 cr shares','~194.85 கோடி பங்குகள்'));
+ h+=kpi('P/BV †',CO.pbv.toFixed(2)+'x','BVPS ₹'+CO.bvps.toFixed(2)+' †');
+ h+=kpi(T2('P/E on H1 annualised (calc)','P/E (H1 வருடக் கணக்கு)'),'~'+CO.peAnn.toFixed(1)+'x','EPS ≈ ₹'+CO.epsAnnH1.toFixed(2));
+ h+='</div><h3>'+T2('52-week range','52 வார வரம்பு')+'</h3>'+card(rangeBar());
+ h+='<h3>'+T2('Reasons for the share-price moves','பங்கு விலை மாற்றத்துக்கான காரணங்கள்')+'</h3>'+card(tx(TXT.market));
+ h+='<h3>'+T2('Valuation vs return','மதிப்பீடு vs வருவாய்')+'</h3>'+card(T2('A lender earning ~19–20% RoE at ~1.8x book implies an earnings yield on book of roughly 11% (RoE ÷ P/BV). The ₹409 cr issue is priced above book value, adding about ₹0.8 per share to BVPS.',
+  '~19–20% RoE சம்பாதிக்கும் வங்கி ~1.8x புத்தக மதிப்பில் இருந்தா, புத்தகத்தின் மீதான வருவாய் சுமார் 11% (RoE ÷ P/BV). ₹409 கோடி ஒதுக்கீடு புத்தக மதிப்புக்கு மேல — BVPS-க்கு ~₹0.8 கூடும்.'));
+ H('t-val',h);
+}
+function rangeBar(){ var lo=CO.lo52,hi=CO.hi52,p=(CO.price-lo)/(hi-lo)*100;
+ return '<div style="position:relative;height:34px;margin:8px 4px"><div style="position:absolute;top:14px;left:0;right:0;height:8px;border-radius:5px;background:linear-gradient(90deg,#fecaca,#fde68a,#bbf7d0)"></div><div style="position:absolute;top:6px;left:calc('+p.toFixed(1)+'% - 8px);width:16px;height:24px;border-radius:4px;background:#0a7c66"></div></div><div style="display:flex;justify-content:space-between;font-size:12px"><span>₹'+lo+'</span><b>₹'+CO.price+' ('+p.toFixed(0)+'% '+T2('of range','வரம்பில்')+')</b><span>₹'+hi+'</span></div>'; }
+
+/* ================= TRIGGERS & CYCLE ================= */
+function rTrig(){
+ var cy=CO.cycle, tg=tgScore();
+ var h='<h2>'+T2('Triggers & cycle','தூண்டுதல் & சுழற்சி')+'</h2><div class="grid g2"><div class="card">'+cycleClock()+'</div><div class="card">';
+ h+='<h3 style="margin-top:0">CY '+cy.cy+' · TG '+tg+'</h3><p><b>CY</b> = 50% '+T2('sector','துறை')+' ('+cy.sectorScore+') + 50% '+T2('stock','பங்கு')+' ('+cy.stockScore+')</p>';
+ h+='<ul style="padding-left:18px;margin:0"><li>'+T2('Sector — credit cycle, <b>P3 Expansion</b>: provisions down 56% YoY, micro-banking collection 99.7%, loan growth 32% — but RBI raised repo by 25 bps, so P3 rather than P2.','துறை — கடன் சுழற்சி, <b>P3 விரிவாக்கம்</b>: provisions 56% குறைவு, வசூல் 99.7%, கடன் வளர்ச்சி 32% — ஆனா RBI 0.25% உயர்த்தியதால P2 இல்லை, P3.')+'</li>';
+ h+='<li>'+T2('Stock: lifecycle "re-inventing" (secured shift) 75 · earnings rising mid-range (RoA 2.4% vs 1.0% FY26 low, 3.5% FY24 high) 70 · valuation in band 55 · price stage 70 (est.).','பங்கு: "மறுவடிவமைப்பு" (secured மாற்றம்) 75 · லாபம் நடு வரம்பில் உயர்வு 70 · மதிப்பீடு வரம்பில் 55 · விலை நிலை 70 (மதிப்பீடு).')+'</li>';
+ h+='<li>'+T2('TG = 50 + 8 × (top-3 positive points) − 8 × (all negative points).','TG = 50 + 8 × (முதல் 3 நேர்மறை) − 8 × (எல்லா எதிர்மறை).')+'</li></ul>';
+ h+='<p class="note">'+T2('Price stage is estimated from the 52-week range and recent moves; the 30-week moving average was not computed.','விலை நிலை 52 வார வரம்பை வெச்சு மதிப்பிட்டது; 30 வார சராசரி கணக்கிடல.')+'</p></div></div>';
+ h+='<h3>'+T2('Trigger table','தூண்டுதல் அட்டவணை')+'</h3><div class="tscroll"><table class="tbl"><thead><tr><th>'+T2('Trigger','தூண்டுதல்')+'</th><th>+/−</th><th>I</th><th>C</th><th>W</th><th>P</th><th>'+T2('Points','புள்ளி')+'</th><th>'+T2('Status','நிலை')+'</th><th>'+T2('What to watch','கவனிக்க')+'</th></tr></thead><tbody>';
+ CO.triggers.forEach(function(t){ var pts=t.I*t.C*t.W*t.P; h+='<tr><td>'+tx(t)+'</td><td class="'+(t.s>0?'up':'dn')+'"><b>'+(t.s>0?'+':'−')+'</b></td><td>'+t.I+'</td><td>'+t.C+'</td><td>'+t.W+'</td><td>'+t.P+'</td><td><b>'+pts.toFixed(2)+'</b></td><td>'+t.status+'</td><td>'+tx(t.watch)+'</td></tr>'; });
+ h+='</tbody></table></div><h3>'+T2('Trigger timeline','தூண்டுதல் காலவரிசை')+'</h3>'+timeline();
+ h+='<h3>'+T2('What would change this view','இந்தப் பார்வையை எது மாற்றும்')+'</h3>'+card('<ul style="margin:0;padding-left:18px"><li>'+T2('Micro-banking collection efficiency slipping below 99% (drought, state relief schemes).','மைக்ரோ வசூல் 99%-க்குக் கீழே போனா.')+'</li><li>'+T2('CASA ratio falling below 25% while repo stays higher — deeper NIM squeeze than the 10 bps guided.','CASA 25%-க்குக் கீழே போய் வட்டி உயர்ந்தே இருந்தா — 0.10%-ஐ விட அதிக NIM அழுத்தம்.')+'</li><li>'+T2('A permanent MD with RBI approval and an unchanged roadmap would remove the main overhang.','RBI ஒப்புதலோட நிரந்தர MD, அதே திட்டம் — முக்கியச் சுமை நீங்கும்.')+'</li></ul>');
+ H('t-trig',h);
+}
+function cycleClock(){
+ var ph=[['P1',T2('Trough','அடிமட்டம்')],['P2',T2('Early recovery','ஆரம்ப மீட்சி')],['P3',T2('Expansion','விரிவாக்கம்')],['P4',T2('Late cycle','உச்சம்')],['P5',T2('Downturn','சரிவு')]];
+ var cols=['#94a3b8','#22c55e','#0a7c66','#f59e0b','#dc2626'], cx=160,cy=150,R=110,r0=62, s='<svg viewBox="0 0 320 310" style="width:100%;max-width:360px;display:block;margin:auto">';
+ function pt(a,rr){a=(a-90)*Math.PI/180;return [cx+rr*Math.cos(a),cy+rr*Math.sin(a)];}
+ ph.forEach(function(p,i){var a1=i*72,a2=a1+72,o1=pt(a1,R),o2=pt(a2,R),i1=pt(a1,r0),i2=pt(a2,r0);
+  s+='<path d="M'+o1[0]+','+o1[1]+' A'+R+','+R+' 0 0 1 '+o2[0]+','+o2[1]+' L'+i2[0]+','+i2[1]+' A'+r0+','+r0+' 0 0 0 '+i1[0]+','+i1[1]+' Z" fill="'+cols[i]+'" opacity="'+(i===2?1:.35)+'" stroke="#fff" stroke-width="2"/>';
+  var m=pt(a1+36,(R+r0)/2); s+='<text x="'+m[0]+'" y="'+(m[1]-2)+'" text-anchor="middle" font-size="12" font-weight="700" fill="#1b2430">'+p[0]+'</text><text x="'+m[0]+'" y="'+(m[1]+12)+'" text-anchor="middle" font-size="9" fill="#1b2430">'+p[1]+'</text>';});
+ var tip=pt(180,r0-2),b1=pt(172,r0-14),b2=pt(188,r0-14); s+='<line x1="'+cx+'" y1="'+cy+'" x2="'+tip[0]+'" y2="'+tip[1]+'" stroke="#f07f13" stroke-width="4" stroke-linecap="round"/><polygon points="'+tip.join(',')+' '+b1.join(',')+' '+b2.join(',')+'" fill="#f07f13"/><circle cx="'+cx+'" cy="'+cy+'" r="30" fill="#fff" stroke="#f07f13" stroke-width="2"/>';
+ s+='<text x="'+cx+'" y="'+(cy-4)+'" text-anchor="middle" font-size="11" font-weight="700">'+T2('Sector','துறை')+'</text><text x="'+cx+'" y="'+(cy+11)+'" text-anchor="middle" font-size="11">P3</text>';
+ s+='<text x="'+cx+'" y="295" text-anchor="middle" font-size="11" fill="#475569">'+T2('Stock price stage: Stage 2 (est.)','பங்கு விலை நிலை: Stage 2 (மதிப்பீடு)')+'</text></svg>'; return s; }
+function timeline(){ var t=CO.timeline,s='<div class="svgwrap"><svg viewBox="0 0 960 150" xmlns="http://www.w3.org/2000/svg"><line x1="30" y1="60" x2="930" y2="60" stroke="#cbd5e1" stroke-width="3"/>';
+ t.forEach(function(e,i){var x=60+i*168;s+='<circle cx="'+x+'" cy="60" r="8" fill="#f07f13"/><text x="'+x+'" y="40" text-anchor="middle" font-size="12" font-weight="700">'+e.d+'</text>';
+  var w=tx(e).split(' '),line='',ly=84;w.forEach(function(wd){if((line+' '+wd).length>24){s+='<text x="'+x+'" y="'+ly+'" text-anchor="middle" font-size="10.5" fill="#475569">'+line+'</text>';ly+=13;line=wd;}else line=(line?line+' ':'')+wd;});
+  s+='<text x="'+x+'" y="'+ly+'" text-anchor="middle" font-size="10.5" fill="#475569">'+line+'</text>';});
+ return s+'</svg></div>'; }
+
+/* ================= 6 PILLARS TEMPLE ================= */
+function pcol(v){return v>=8?'#16a34a':(v>=6?'#d97706':'#dc2626');}
+function rPillars(){
+ var cs=compositeScore().toFixed(1), s='<svg id="temple" viewBox="0 0 640 430" style="width:100%;max-width:680px;display:block;margin:auto" font-family="Segoe UI, Noto Sans Tamil, sans-serif">';
+ s+='<polygon points="40,112 320,18 600,112" fill="#f07f13"/><text x="320" y="72" text-anchor="middle" font-size="15" fill="#fff" font-weight="700">CB Score</text><text x="320" y="100" text-anchor="middle" font-size="26" fill="#fff" font-weight="800">'+cs+' / 10</text>';
+ s+='<rect x="50" y="112" width="540" height="34" fill="#fde7d0" stroke="#f07f13"/><text x="320" y="135" text-anchor="middle" font-size="14" font-weight="700" fill="#7c2d12">Ujjivan SFB · Q2 FY27</text>';
+ PILLARS.forEach(function(p,i){ var x=74+i*88, v=CO.scores[p.k];
+  s+='<g style="cursor:pointer" onclick="pjump(\''+p.k+'\')"><rect x="'+x+'" y="150" width="52" height="200" fill="#f8fafc" stroke="#cbd5e1"/>';
+  for(var f=1;f<4;f++) s+='<line x1="'+(x+f*13)+'" y1="152" x2="'+(x+f*13)+'" y2="348" stroke="#e2e8f0"/>';
+  s+='<rect id="pf-'+p.k+'" x="'+(x+1)+'" y="349" width="50" height="0" fill="'+pcol(v)+'" opacity=".85" data-h="'+(v/10*198)+'"/>';
+  s+='<circle cx="'+(x+26)+'" cy="170" r="17" fill="#fff" stroke="'+pcol(v)+'" stroke-width="3"/><text x="'+(x+26)+'" y="175" text-anchor="middle" font-size="13" font-weight="800">'+v.toFixed(1)+'</text></g>';
+  var lb=tx(p).split(/ (?=[&\/])/); s+='<text x="'+(x+26)+'" y="406" text-anchor="middle" font-size="11" font-weight="700">'+lb.map(function(w,wi){return '<tspan x="'+(x+26)+'" dy="'+(wi?13:0)+'">'+w+'</tspan>';}).join('')+'</text>'; });
+ s+='<rect x="44" y="350" width="552" height="14" fill="#e2e8f0"/><rect x="34" y="364" width="572" height="14" fill="#cbd5e1"/><rect x="24" y="378" width="592" height="12" fill="#94a3b8"/></svg>';
+ var h='<h2>'+T2('CB 6-pillar analysis (CBF26)','CB 6 தூண் பகுப்பாய்வு (CBF26)')+'</h2>'+card(s+'<p class="note" style="text-align:center">'+T2('Green 8–10 · Amber 6–8 · Red below 6. Tap a column. Scores are CB Research\'s educational assessment, not a recommendation.','பச்சை 8–10 · மஞ்சள் 6–8 · சிவப்பு 6-க்குக் கீழ். தூணைத் தொடுங்க. இது கல்வி நோக்க மதிப்பீடு, பரிந்துரை அல்ல.')+'</p>');
+ PILLARS.forEach(function(p){ h+='<div class="pcard" id="pc-'+p.k+'" style="border-left:5px solid '+pcol(CO.scores[p.k])+'"><b>'+tx(p)+' — '+CO.scores[p.k].toFixed(1)+'/10</b><br>'+tx(p.why)+'</div>'; });
+ H('t-pillars',h);
+}
+function animTemple(){ PILLARS.forEach(function(p,i){ var el=$('pf-'+p.k); if(!el) return; var tgt=+el.getAttribute('data-h'), st=null;
+ el.setAttribute('height',0); el.setAttribute('y',349);
+ function step(ts){ if(!st) st=ts; var k=Math.min(1,(ts-st)/(900+i*120)); var hh=tgt*(1-Math.pow(1-k,3)); el.setAttribute('height',hh); el.setAttribute('y',349-hh); if(k<1) requestAnimationFrame(step); }
+ requestAnimationFrame(step); }); }
+function pjump(k){ document.querySelectorAll('.pcard').forEach(function(c){c.classList.remove('hl');}); var c=$('pc-'+k); c.classList.add('hl'); c.scrollIntoView({behavior:'smooth',block:'center'}); }
+
+/* ================= SWOT / ANALYSTS / MGMT ================= */
+function rSwot(){ var nm={S:T2('Strengths','பலங்கள்'),W:T2('Weaknesses','பலவீனங்கள்'),O:T2('Opportunities','வாய்ப்புகள்'),T:T2('Threats','அச்சுறுத்தல்கள்')};
+ var h='<h2>SWOT</h2><div class="swot">'; ['S','W','O','T'].forEach(function(k){h+='<div class="card '+k+'"><h4>'+nm[k]+'</h4><ul>'+SWOT[k].map(function(x){return '<li>'+tx(x)+'</li>';}).join('')+'</ul></div>';}); H('t-swot',h+'</div>'); }
+function rAnalysts(){
+ var h='<h2>'+T2("Analysts' rating",'அனலிஸ்ட் ரேட்டிங்')+'</h2><div class="tscroll"><table class="tbl"><thead><tr><th>'+T2('Broker / source','ப்ரோக்கர்')+'</th><th>'+T2('Rating','ரேட்டிங்')+'</th><th>'+T2('Target ₹','இலக்கு ₹')+'</th><th>'+T2('Upside vs ₹63.25','₹63.25-லிருந்து')+'</th><th>'+T2('Date','தேதி')+'</th></tr></thead><tbody>';
+ CO.analysts.forEach(function(a){ h+='<tr><td>'+a.b+'</td><td>'+a.r+'</td><td>'+(a.tp?'₹'+a.tp:'—')+'</td><td>'+(a.tp?chg((a.tp/CO.price-1)*100):'—')+'</td><td>'+a.d+'</td></tr>'; });
+ h+='</tbody></table></div>'+cbox('chAn',260)+'<p class="note">'+T2('Third-party broker views, attributed as published; most targets pre-date the Q2 FY27 results and may be revised. CB Research gives no buy/sell/hold view.','மூன்றாம் தரப்பு ப்ரோக்கர் கருத்துகள்; பெரும்பாலானவை Q2 FY27 முடிவுக்கு முன். CB Research வாங்க/விற்க பரிந்துரை தருவதில்லை.')+'</p>';
+ H('t-analysts',h); }
+CHART_FN.analysts=function(){ var a=CO.analysts.filter(function(x){return x.tp;}); mkChart('chAn',{type:'bar',data:{labels:a.map(function(x){return x.b;}).concat([T2('CMP','தற்போதைய விலை')]),
+ datasets:[{label:'₹',data:a.map(function(x){return x.tp;}).concat([CO.price]),backgroundColor:a.map(function(){return '#0a7c66';}).concat(['#f07f13']),fmt:function(v){return '₹'+v;}}]},options:{plugins:{legend:{display:false}},scales:{y:{beginAtZero:true}}}}); };
+function rMgmt(){
+ var h='<h2>'+T2('Management & Board','நிர்வாகம் & போர்டு')+'</h2><div class="tscroll"><table class="tbl"><thead><tr><th>'+T2('Name','பெயர்')+'</th><th style="text-align:left">'+T2('Role','பொறுப்பு')+'</th></tr></thead><tbody>';
+ CO.mgmt.forEach(function(m){h+='<tr><td><b>'+m.n+'</b></td><td style="text-align:left;white-space:normal">'+tx(m)+'</td></tr>';});
+ h+='</tbody></table></div><h3>'+T2('Board actions this quarter','இந்தக் காலாண்டு போர்டு முடிவுகள்')+'</h3>'+card('<ul style="margin:0;padding-left:18px"><li>'+T2('Approved ₹409 cr preferential allotment to IFC, Bajaj Life, HDFC Life and Aditya Birla Sun Life (subject to shareholders); part of the up-to-₹2,000 cr AGM approval valid till Jul 2027.','IFC, பஜாஜ் லைஃப், HDFC லைஃப், ஆதித்ய பிர்லா சன் லைஃப்-க்கு ₹409 கோடி ஒதுக்கீடு ஒப்புதல் (பங்குதாரர் ஒப்புதலுக்கு உட்பட்டு); ₹2,000 கோடி வரம்பில் ஒரு பகுதி.')+'</li>'+
+  '<li>'+T2('Nomination & Remuneration Committee searching for a new MD & CEO; process expected to take 3–4 months from 1 Sep 2026.','புதிய MD & CEO-வை NRC தேடுது; 1 செப் 2026 முதல் 3–4 மாதம் ஆகும்.')+'</li><li>'+T2('Chairman and full independent-director list: not verified for this edition.','தலைவர், முழு சுயாதீன இயக்குநர் பட்டியல்: இந்தப் பதிப்பில் சரிபார்க்கப்படல.')+'</li></ul>');
+ H('t-mgmt',h); }
+</script>
+<script>
+/* ================= UNIVERSAL BANK LICENCE TAB ================= */
+var LIC={
+ timeline:[
+  {d:"Feb 2025",c:"#2563eb",en:"Ujjivan applies to RBI to become a universal bank",ta:"யுனிவர்சல் வங்கியாக மாற உஜ்ஜீவன் RBI-க்கு விண்ணப்பம்"},
+  {d:"Aug 2025",c:"#16a34a",en:"AU SFB gets in-principle approval (first SFB)",ta:"AU SFB-க்கு முதல் கொள்கை ஒப்புதல் (முதல் SFB)"},
+  {d:"Oct 2025",c:"#dc2626",en:"Jana SFB's application returned (criteria not met)",ta:"ஜனா SFB விண்ணப்பம் திருப்பி அனுப்பப்பட்டது"},
+  {d:"Apr 2026",c:"#dc2626",en:"Ujjivan's application returned: 'diversify the loan book, then reapply'",ta:"உஜ்ஜீவன் விண்ணப்பம் திருப்பி அனுப்பப்பட்டது: 'கடன் புத்தகத்தைப் பரவலாக்கி மீண்டும் விண்ணப்பியுங்க'"},
+  {d:"Sep 2026",c:"#f07f13",en:"Secured share reaches 52.1%; ₹409 cr raise from IFC & insurers",ta:"Secured பங்கு 52.1%; IFC, இன்சூரர்களிடமிருந்து ₹409 கோடி"},
+  {d:"Mar 2027",c:"#94a3b8",en:"Target: 56% secured",ta:"இலக்கு: 56% secured"},
+  {d:"~2030",c:"#94a3b8",en:"Target: 65–70% secured",ta:"இலக்கு: 65–70% secured"}
+ ],
+ /* RBI April 2024 voluntary-transition criteria vs Ujjivan */
+ crit:[
+  {en:"Listed on a stock exchange",ta:"பங்குச் சந்தையில் பட்டியல்",u:{en:"Yes — BSE/NSE since Dec 2019",ta:"ஆம் — டிச 2019 முதல் BSE/NSE"},ok:1},
+  {en:"Scheduled bank, ≥5 years satisfactory track record",ta:"Scheduled வங்கி, ≥5 ஆண்டு திருப்திகரமான செயல்பாடு",u:{en:"Yes — bank since Feb 2017",ta:"ஆம் — பிப் 2017 முதல் வங்கி"},ok:1},
+  {en:"Net worth ≥ ₹1,000 cr",ta:"நிகர மதிப்பு ≥ ₹1,000 கோடி",u:{en:"Yes — Tier-1 capital ₹6,850 cr",ta:"ஆம் — Tier-1 மூலதனம் ₹6,850 கோடி"},ok:1},
+  {en:"Net profit in each of the last two years",ta:"கடந்த இரண்டு ஆண்டுகளும் லாபம்",u:{en:"Yes — profitable in FY25 and FY26",ta:"ஆம் — FY25, FY26 லாபம்"},ok:1},
+  {en:"GNPA ≤ 3% and NNPA ≤ 1% for the last two years",ta:"கடந்த இரண்டு ஆண்டு GNPA ≤ 3%, NNPA ≤ 1%",u:{en:"Yes today — GNPA 2.10%, NNPA 0.31% (Sep-26)",ta:"இன்று ஆம் — GNPA 2.10%, NNPA 0.31%"},ok:1},
+  {en:"Capital adequacy as prescribed",ta:"தேவையான மூலதனப் போதுமை",u:{en:"Yes — CRAR 20.69%",ta:"ஆம் — CRAR 20.69%"},ok:1},
+  {en:"Diversified loan portfolio (no number set by RBI)",ta:"பரவலான கடன் புத்தகம் (RBI எண் நிர்ணயிக்கல)",u:{en:"Not yet — RBI's stated reason. 48% still unsecured micro-banking",ta:"இன்னும் இல்லை — RBI சொன்ன காரணம். 48% இன்னும் பாதுகாப்பில்லாத மைக்ரோ கடன்"},ok:0}
+ ],
+ secured:[{p:"Sep-24",v:35,a:1},{p:"Sep-25",v:46.8,a:1},{p:"Jun-26",v:50.4,a:1},{p:"Sep-26",v:52.1,a:1},{p:"Mar-27 (target)",v:56,a:0},{p:"~2030 (target)",v:67.5,a:0}],
+ /* SFB rules vs universal bank */
+ rules:[
+  {en:"Priority-sector lending requirement",ta:"முன்னுரிமைத் துறைக் கடன் கட்டாயம்",s:{en:"60% of ANBC",ta:"ANBC-யில் 60%"},b:{en:"40% of ANBC",ta:"ANBC-யில் 40%"},why:{en:"20 pp of lending freed to go wherever returns are best",ta:"20% கடனை அதிக வருமானம் தரும் இடத்துக்குக் கொடுக்கலாம்"}},
+  {en:"Loans of ₹25 lakh or less",ta:"₹25 லட்சம் அல்லது குறைவான கடன்",s:{en:"≥50% of book",ta:"புத்தகத்தில் ≥50%"},b:{en:"No such rule",ta:"இந்த விதி இல்லை"},why:{en:"Can grow larger-ticket MSME, housing and corporate loans",ta:"பெரிய MSME, வீட்டு, கார்ப்பரேட் கடன்கள் கொடுக்கலாம்"}},
+  {en:"SFB branch rule: 25% in unbanked rural centres",ta:"SFB கிளை விதி: 25% வங்கியில்லாத கிராமங்களில்",s:{en:"SFB-specific",ta:"SFB-க்கு மட்டும்"},b:{en:"General bank norms only",ta:"பொது வங்கி விதிகள் மட்டும்"},why:{en:"More freedom to open branches in richer urban markets",ta:"வசதியான நகரங்களில் கிளைகள் திறக்க அதிக சுதந்திரம்"}},
+  {k:1,en:"Co-lending with NBFCs / HFCs",ta:"NBFC / HFC-களோடு இணைந்து கடன் (co-lending)",s:{en:"Not allowed — SFBs excluded from RBI Co-Lending Directions 2025",ta:"அனுமதி இல்லை — RBI 2025 co-lending விதிகளில் SFB-கள் விலக்கப்பட்டுள்ளன"},b:{en:"Allowed (from 1 Jan 2026)",ta:"அனுமதி உண்டு (1 ஜன 2026 முதல்)"},why:{en:"Grow the loan book through NBFC/HFC partners' sourcing networks without building own branches; buy into high-yield retail and MSME pools",ta:"சொந்தக் கிளைகள் இல்லாமலே NBFC/HFC கூட்டாளிகள் மூலம் கடன் புத்தகத்தை வளர்க்கலாம்; சில்லறை, MSME கடன்களில் பங்கு"}},
+  {k:1,en:"Subsidiaries",ta:"துணை நிறுவனங்கள்",s:{en:"Cannot set up subsidiaries for non-banking financial services",ta:"வங்கியல்லாத நிதிச் சேவைகளுக்குத் துணை நிறுவனம் தொடங்க முடியாது"},b:{en:"Can, with RBI approval (AMC, broking, insurance broking, housing finance, etc.)",ta:"RBI ஒப்புதலுடன் முடியும் (AMC, ப்ரோக்கிங், காப்பீட்டுத் தரகு, வீட்டுக் கடன் நிறுவனம் போன்றவை)"},why:{en:"New fee-income streams and group value that can later be listed — today 100% of Ujjivan's profit comes from the bank alone",ta:"புதிய கட்டண வருமானம், பின்னர் பட்டியலிடக்கூடிய குழு மதிப்பு — இன்று உஜ்ஜீவன் லாபம் 100% வங்கியிலிருந்தே"}},
+  {k:1,en:"Exposure limits (single / group borrower)",ta:"கடன் வரம்பு (ஒரு வாடிக்கையாளர் / குழு)",s:{en:"10% / 15% of capital funds; no lending to big corporates",ta:"மூலதன நிதியில் 10% / 15%; பெரிய கார்ப்பரேட்டுகளுக்குக் கடன் இல்லை"},b:{en:"20% (up to 25%) / 25% of Tier-1 under the Large Exposures Framework",ta:"Large Exposures Framework-ல் Tier-1-ன் 20% (25% வரை) / 25%"},why:{en:"Single-borrower ceiling roughly doubles: ~₹727 cr → ~₹1,370 cr on Ujjivan's current capital — opens mid-corporate, larger MSME and NBFC lending",ta:"ஒரு வாடிக்கையாளர் வரம்பு கிட்டத்தட்ட இரட்டிப்பு: ~₹727 → ~₹1,370 கோடி — நடுத்தர கார்ப்பரேட், பெரிய MSME, NBFC கடன்கள்"}},
+  {en:"Brand perception with depositors",ta:"வைப்பாளர்களிடம் பெயர் மதிப்பு",s:{en:"'Small' finance bank",ta:"'சிறு' நிதி வங்கி"},b:{en:"Full bank",ta:"முழு வங்கி"},why:{en:"Cheaper CASA, more corporate and government deposits",ta:"குறைந்த செலவு CASA, கார்ப்பரேட்/அரசு வைப்பு"}},
+  {en:"Valuation multiple (P/BV)",ta:"மதிப்பீட்டுப் பெருக்கம் (P/BV)",s:{en:"Ujjivan ~1.84x",ta:"உஜ்ஜீவன் ~1.84x"},b:{en:"AU ~3.96x after approval",ta:"ஒப்புதலுக்குப் பின் AU ~3.96x"},why:{en:"Market pays more for a diversified, licensed franchise",ta:"பரவலான, முழு உரிமம் உள்ள வங்கிக்குச் சந்தை அதிக விலை தரும்"}}
+ ],
+ /* peers: RoA, NIM, CASA, CTI, period */
+ peers:[
+  {n:"Ujjivan SFB",t:{en:"SFB (licence returned)",ta:"SFB (விண்ணப்பம் திருப்பம்)"},roa:2.4,nim:8.4,casa:26.0,cti:62.0,sec:"52.1%",per:"Q2 FY27",c:"#0a7c66",src:"Ujjivan Q2 FY27 presentation & call"},
+  {n:"AU SFB",t:{en:"SFB → in-principle approval Aug 2025",ta:"SFB → ஆக 2025 ஒப்புதல்"},roa:1.7,nim:null,casa:29.0,cti:null,sec:"~92%",per:"Q1 FY27",c:"#2563eb",src:"Trade Brains (Sep 2026); Business Standard (Oct 2025)"},
+  {n:"Bandhan Bank",t:{en:"MFI → universal bank 2015",ta:"MFI → 2015-ல் யுனிவர்சல் வங்கி"},roa:1.3,nim:6.2,casa:26.7,cti:61.5,sec:"n/a",per:"Q1 FY27 (RoA = FY27 exit guidance 1.2–1.4%); CASA Q2 FY27",c:"#dc2626",src:"Business Standard (22 Jul 2026); Kotak Neo (Oct 2026)"},
+  {n:"IDFC First Bank",t:{en:"Universal bank 2015; merged with Capital First 2018",ta:"2015 யுனிவர்சல் வங்கி; 2018 Capital First இணைப்பு"},roa:1.0,nim:5.96,casa:50.8,cti:70.7,sec:"MFI ~2%",per:"Q1 FY27",c:"#7c3aed",src:"IDFC First Q1 FY27 call (Cofacto)"}
+ ],
+ actions:[
+  {k:"mix",ic:"🏠",en:"Shift the mix",ta:"கலவையை மாற்றுதல்",d:{en:"Secured share 35% (Sep-24) → 52.1% (Sep-26); +5 pp a year; 56% by Mar-27, 65–70% by ~2030.",ta:"Secured 35% (செப்-24) → 52.1% (செப்-26); ஆண்டுக்கு +5%; மார்ச்-27-க்குள் 56%, ~2030-க்குள் 65–70%."}},
+  {k:"cap",ic:"🎚",en:"Slow the micro-loan engine",ta:"மைக்ரோ கடன் வேகத்தைக் குறைத்தல்",d:{en:"Micro-banking growth held to 12–14% in FY27 while secured products grow ~40–200%.",ta:"FY27-ல் மைக்ரோ கடன் 12–14% மட்டும்; secured பொருட்கள் ~40–200% வளர்ச்சி."}},
+  {k:"prod",ic:"🧩",en:"New secured products",ta:"புதிய secured பொருட்கள்",d:{en:"Housing crossed ₹10,000 cr; MSME +51%; gold +210% (117 gold branches in H1); vehicle +65%; agri +79%.",ta:"வீட்டுக் கடன் ₹10,000 கோடி; MSME +51%; தங்கம் +210% (H1-ல் 117 கிளைகள்); வாகனம் +65%; விவசாயம் +79%."}},
+  {k:"risk",ic:"🛡",en:"Thicker risk cushions",ta:"கூடுதல் ரிஸ்க் பாதுகாப்பு",d:{en:"PCR 85% (73% a year ago); ₹181 cr floating provisions; ₹970 cr of loans under CGFMU guarantee; no state above 15% of the micro book.",ta:"PCR 85% (போன வருஷம் 73%); ₹181 கோடி floating provision; ₹970 கோடி CGFMU உத்தரவாதம்; எந்த மாநிலமும் 15%-க்கு மேல இல்லை."}},
+  {k:"capital",ic:"💰",en:"Quality capital",ta:"தரமான மூலதனம்",d:{en:"₹409 cr from IFC, Bajaj Life, HDFC Life, Aditya Birla Sun Life; up to ₹2,000 cr approved till Jul 2027.",ta:"IFC, பஜாஜ் லைஃப், HDFC லைஃப், ஆதித்ய பிர்லா சன் லைஃப்-லிருந்து ₹409 கோடி; ஜூலை 2027 வரை ₹2,000 கோடி அனுமதி."}},
+  {k:"dep",ic:"🏦",en:"Better deposit franchise",ta:"வலுவான வைப்பு அடித்தளம்",d:{en:"Retail TD + CASA ₹33,807 cr (67% of deposits); HNI, NRI and corporate-salary push in top cities; ASBA launched.",ta:"சில்லறை TD + CASA ₹33,807 கோடி (67%); பெரிய நகரங்களில் HNI, NRI, கார்ப்பரேட் சம்பளக் கணக்குகள்; ASBA தொடக்கம்."}},
+  {k:"gov",ic:"👔",en:"Leadership & governance",ta:"தலைமை & நிர்வாகம்",d:{en:"New MD & CEO search under way (3–4 months from 1 Sep 2026). A stable, RBI-approved leader matters for any reapplication.",ta:"புதிய MD & CEO தேர்வு நடக்குது (1 செப் 2026 முதல் 3–4 மாதம்). மீண்டும் விண்ணப்பிக்க நிலையான தலைமை முக்கியம்."}}
+ ]
+};
+
+function rLic(){
+ var h='<h2>'+T2('Universal bank licence — why it was returned, and the road back','யுனிவர்சல் வங்கி உரிமம் — ஏன் திருப்பி அனுப்பப்பட்டது, மீண்டும் பெற வழி')+'</h2>';
+ h+=card('<b>'+T2('In one line: ','ஒரே வரியில்: ')+'</b>'+T2('Ujjivan already passes RBI\'s numeric tests (net worth, profits, NPAs, capital). It failed on the one test without a number: a diversified loan book. Nearly half its loans are still unsecured micro-loans, and Bandhan\'s experience shows why RBI is wary of that.',
+  'நிகர மதிப்பு, லாபம், வாராக்கடன், மூலதனம் — RBI-யின் எண் சோதனைகள் எல்லாத்திலும் உஜ்ஜீவன் தேர்ச்சி. தோல்வியடைந்தது எண் இல்லாத ஒரே சோதனையில்: பரவலான கடன் புத்தகம். இன்னும் பாதி கடன் பாதுகாப்பில்லாத மைக்ரோ கடன் — பந்தன் அனுபவம்தான் RBI-யின் தயக்கத்துக்குக் காரணம்.'));
+
+ /* 1. timeline */
+ h+='<h3>1. '+T2('The journey so far','இதுவரை நடந்தது')+'</h3>'+licTimeline();
+
+ /* 2. eligibility scorecard */
+ h+='<h3>2. '+T2('RBI eligibility tests vs Ujjivan today','RBI தகுதிச் சோதனைகள் vs இன்றைய உஜ்ஜீவன்')+'</h3><div class="svgwrap">'+licCrit()+'</div>';
+ h+='<p class="note">'+T2('Criteria are from RBI\'s April 2024 guidelines for voluntary transition of SFBs. "Diversified portfolio" has no number attached, which gives RBI discretion.','RBI ஏப்ரல் 2024 வழிகாட்டுதலின்படி. "பரவலான கடன்"-க்கு எண் இல்லை — அதனால RBI-க்கு விருப்ப அதிகாரம்.')+'</p>';
+
+ /* 3. why returned: concentration seesaw */
+ h+='<h3>3. '+T2('Why RBI said "not yet"','RBI ஏன் "இன்னும் இல்லை" என்றது')+'</h3><div class="grid g2"><div class="card">'+licSeesaw()+'</div><div class="card"><ul style="margin:0;padding-left:18px">';
+ [[T2('Stated reason: concentration risk in unsecured lending. RBI acknowledged progress but said there is "scope for progress".','சொன்ன காரணம்: பாதுகாப்பில்லாத கடனில் குவிப்பு ரிஸ்க். முன்னேற்றம் இருக்கு, ஆனா "இன்னும் முன்னேற இடம் இருக்கு".')],
+  [T2('When it was decided, secured loans were only about 48% of the book (Dec-25). Today ₹22,037 cr, or 47.9%, is still micro-banking.','முடிவு எடுத்தப்போ secured ~48% தான் (டிச-25). இன்றும் ₹22,037 கோடி (47.9%) மைக்ரோ கடன்.')],
+  [T2('Micro-loans are hit together by shocks: demonetisation 2016, COVID 2020, the 2024–25 over-lending crisis, and drought now. When they go bad, they go bad all at once.','மைக்ரோ கடன்கள் ஒரே நேரத்தில் பாதிக்கப்படும்: 2016 பணமதிப்பிழப்பு, 2020 கோவிட், 2024–25 அதிகக் கடன் நெருக்கடி, இப்போ வறட்சி.')],
+  [T2('A universal bank takes far more public deposits, so RBI wants the asset side proven through a full credit cycle first.','யுனிவர்சல் வங்கி அதிக பொது வைப்பு வாங்கும் — அதனால முழு கடன் சுழற்சியிலும் சொத்துப் பக்கம் நிரூபிக்கப்படணும்னு RBI விரும்புது.')],
+  [T2('Context: Jana was returned even at ~73% secured (exact reason not disclosed), so a high secured share alone is not enough.','சூழல்: ~73% secured இருந்தும் ஜனா திருப்பி அனுப்பப்பட்டது (காரணம் வெளியிடப்படல) — secured பங்கு மட்டும் போதாது.')]].forEach(function(x){h+='<li style="margin-bottom:6px">'+x[0]+'</li>';});
+ h+='</ul></div></div>';
+
+ /* 4. gap chart */
+ h+='<h3>4. '+T2('Closing the gap: secured share of loan book (%)','இடைவெளியைக் குறைத்தல்: secured கடன் பங்கு (%)')+'</h3>'+cbox('chLicSec',300);
+ h+='<p class="note">'+T2('Solid = reported, light = management target. Reference lines: AU SFB ~92% secured (approved); Jana ~73% (returned).','அடர் = வெளியானது, வெளிர் = நிர்வாக இலக்கு. ஒப்பீடு: AU ~92% (ஒப்புதல்); ஜனா ~73% (திருப்பம்).')+'</p>';
+
+ /* 5. action roadmap */
+ h+='<h3>5. '+T2('How Ujjivan is addressing RBI\'s concerns','RBI கவலைகளை உஜ்ஜீவன் எப்படிச் சரிசெய்யுது')+'</h3><div class="svgwrap">'+licRoad()+'</div><div class="expl" id="licExpl">'+T2('Tap a step to see the evidence.','ஒரு படியைத் தொட்டா ஆதாரம் தெரியும்.')+'</div>';
+ h+='<p class="note">'+T2('Management says its five-year plan does not depend on the licence; the diversification would continue either way.','ஐந்தாண்டுத் திட்டம் உரிமத்தைச் சார்ந்ததில்லைன்னு நிர்வாகம் சொல்லுது.')+'</p>';
+
+ /* 6. why it wants the licence */
+ h+='<h3>6. '+T2('Why the licence matters so much to Ujjivan','உஜ்ஜீவனுக்கு உரிமம் ஏன் இவ்வளவு முக்கியம்')+'</h3><div class="tscroll"><table class="tbl"><thead><tr><th>'+T2('Rule / factor','விதி / காரணி')+'</th><th>'+T2('As an SFB','SFB-ஆக')+'</th><th>'+T2('As a universal bank','யுனிவர்சல் வங்கியாக')+'</th><th style="text-align:left">'+T2('What it unlocks','என்ன கிடைக்கும்')+'</th></tr></thead><tbody>';
+ LIC.rules.forEach(function(r){h+='<tr'+(r.k?' style="background:#fff7ed"':'')+'><td>'+(r.k?'<b>':'')+tx(r)+(r.k?'</b>':'')+'</td><td style="white-space:normal">'+tx(r.s)+'</td><td style="white-space:normal"><b>'+tx(r.b)+'</b></td><td style="text-align:left;white-space:normal">'+tx(r.why)+'</td></tr>';});
+ h+='</tbody></table></div><p class="note">'+T2('Highlighted rows: business freedoms an SFB does not have today. Exposure ceilings are CB calculations on Sep-26 capital (capital funds ₹7,273 cr; Tier-1 ₹6,850 cr).','வண்ணமிட்ட வரிகள்: இன்று SFB-க்கு இல்லாத வணிகச் சுதந்திரங்கள். வரம்புகள் செப்-26 மூலதனத்தில் CB கணக்கீடு.')+'</p>'+cbox('chLicPsl',200)+'<div style="height:10px"></div>'+cbox('chLicExp',200);
+
+ /* 7. peers: does the licence deliver? */
+ h+='<h3>7. '+T2('Does a licence alone deliver? Ujjivan vs banks that converted','உரிமம் மட்டும் போதுமா? உஜ்ஜீவன் vs மாறிய வங்கிகள்')+'</h3>';
+ h+='<div class="seg" id="licSeg"><button class="on" onclick="licMetric(\'roa\',this)">RoA %</button><button onclick="licMetric(\'nim\',this)">NIM %</button><button onclick="licMetric(\'casa\',this)">CASA %</button><button onclick="licMetric(\'cti\',this)">'+T2('Cost-to-income %','செலவு-வருமானம் %')+'</button></div>'+cbox('chLicPeer',300);
+ h+='<div class="tscroll" style="margin-top:10px"><table class="tbl"><thead><tr><th>'+T2('Bank','வங்கி')+'</th><th>'+T2('Path','பாதை')+'</th><th colspan="2" style="text-align:center;background:#e8f5f1">'+T2('Profitability','லாபத்தன்மை')+'</th><th style="background:#eef2ff">'+T2('Funding','நிதி')+'</th><th style="background:#fff7ed">'+T2('Efficiency','திறன்')+'</th><th style="background:#fef2f2">'+T2('Risk mix','ரிஸ்க் கலவை')+'</th><th>'+T2('Period','காலம்')+'</th></tr>';
+ h+='<tr><th></th><th></th><th>RoA</th><th>NIM</th><th>CASA</th><th>CTI</th><th>'+T2('Secured','Secured')+'</th><th></th></tr></thead><tbody>';
+ LIC.peers.forEach(function(p){h+='<tr><td><b style="color:'+p.c+'">'+p.n+'</b></td><td style="white-space:normal">'+tx(p.t)+'</td><td>'+(p.n==='Bandhan Bank'?'1.2–1.4% †':pct(p.roa))+'</td><td>'+(p.nim==null?'n/a':pct(p.nim,2))+'</td><td>'+pct(p.casa)+'</td><td>'+(p.cti==null?'n/a':pct(p.cti))+'</td><td>'+p.sec+'</td><td class="note" style="white-space:normal">'+p.per+'</td></tr>';});
+ h+='</tbody></table></div><p class="note">'+T2('† Bandhan RoA is its revised FY27 exit guidance (1.2–1.4%); 1.3% midpoint used in the chart. AU secured share derived from ~7.6% unsecured (Oct 2025).','† பந்தன் RoA = FY27 இறுதி வழிகாட்டல் (1.2–1.4%); வரைபடத்தில் 1.3%. AU secured = ~7.6% unsecured-லிருந்து கணக்கீடு.')+'</p>';
+
+ h+='<div class="grid g2" style="margin-top:10px">';
+ h+=card('<h4 style="margin:0 0 6px;color:#0a7c66">'+T2('Where Ujjivan is ahead','உஜ்ஜீவன் முன்னிலையில் இருக்கும் இடம்')+'</h4><ul style="margin:0;padding-left:18px"><li>'+T2('Ujjivan\'s RoA (2.4%) is nearly double Bandhan\'s guided 1.2–1.4% and IDFC First\'s ~1.0%.','உஜ்ஜீவன் RoA (2.4%) — பந்தன் (1.2–1.4%), IDFC First (~1.0%)-ஐ விட கிட்டத்தட்ட இரட்டிப்பு.')+'</li><li>'+T2('Its NIM of 8.4% beats both (6.2% and ~6.0%) because borrowers pay higher rates.','NIM 8.4% — ரெண்டையும் விட அதிகம் (6.2%, ~6.0%); கடன் வாங்குறவங்க அதிக வட்டி கட்டுறாங்க.')+'</li><li>'+T2('Its CASA of 26% is about the same as Bandhan\'s 26.7% after 11 years as a full bank, so the licence did not fix Bandhan\'s CASA.','CASA 26% — 11 வருஷம் முழு வங்கியா இருந்த பந்தனின் 26.7%-க்குச் சமம். உரிமம் பந்தனோட CASA-வைச் சரிசெய்யல.')+'</li></ul>','S');
+ h+=card('<h4 style="margin:0 0 6px;color:#dc2626">'+T2('Why RBI still hesitates','RBI ஏன் இன்னும் தயங்குது')+'</h4><ul style="margin:0;padding-left:18px"><li>'+T2('The high RoA comes from the same unsecured micro-loans RBI wants reduced. High yield is the reward for higher risk.','அதிக RoA அதே மைக்ரோ கடனிலிருந்துதான் வருது — அதிக வட்டி = அதிக ரிஸ்க்கின் பரிசு.')+'</li><li>'+T2('Bandhan is the warning: a microfinance lender turned universal bank in 2015 with very high returns, then saw repeated shocks (demonetisation, Assam, COVID, the 2024–25 MFI stress). Its RoA has not recovered.','பந்தன் தான் எச்சரிக்கை: 2015-ல் மைக்ரோ ஃபைனான்ஸிலிருந்து அதிக வருமானத்தோட யுனிவர்சல் வங்கியானது; பிறகு தொடர் அதிர்ச்சிகள் (பணமதிப்பிழப்பு, அசாம், கோவிட், 2024–25 MFI). RoA இன்னும் மீளல.')+'</li><li>'+T2('IDFC First did lift CASA above 50%, but building a full bank cost a cost-to-income ratio near 71% and RoA around 1%.','IDFC First CASA-வை 50%-க்கு மேல கொண்டுபோச்சு; ஆனா செலவு-வருமானம் ~71%, RoA ~1%.')+'</li></ul>','T');
+ h+='</div>';
+ h+=card('<b>'+T2('CB takeaway: ','CB முடிவு: ')+'</b>'+T2('The licence is a means, not the prize. Ujjivan already earns more than the banks that converted. The licence would mainly lower funding costs and raise the valuation multiple, if Ujjivan can show RBI that its returns survive with a mostly secured book. The real test is keeping RoA near 2% as micro-loans fall below half the book. (Educational view, not a recommendation.)',
+  'உரிமம் ஒரு வழி, இலக்கு அல்ல. மாறிய வங்கிகளை விட உஜ்ஜீவன் ஏற்கனவே அதிகம் சம்பாதிக்குது. பெரும்பாலும் secured கடனோடயும் இந்த வருமானம் நிலைக்கும்னு RBI-க்கு நிரூபிச்சா, உரிமம் நிதிச் செலவைக் குறைச்சு மதிப்பீட்டுப் பெருக்கத்தைக் கூட்டும். உண்மையான சோதனை: மைக்ரோ கடன் பாதிக்குக் கீழே போனாலும் RoA ~2%-ல் நிலைக்கணும். (கல்விக் கருத்து, பரிந்துரை அல்ல.)'));
+ H('t-lic',h);
+}
+
+function licTimeline(){ var t=LIC.timeline,n=t.length,W=1080,s='<div class="svgwrap"><svg viewBox="0 0 '+W+' 170" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, Noto Sans Tamil, sans-serif">';
+ s+='<line x1="30" y1="62" x2="'+(W-30)+'" y2="62" stroke="#cbd5e1" stroke-width="4"/><line x1="30" y1="62" x2="'+(80+4*((W-160)/(n-1)))+'" y2="62" stroke="#f07f13" stroke-width="4"/>';
+ t.forEach(function(e,i){var x=80+i*((W-160)/(n-1)); s+='<circle cx="'+x+'" cy="62" r="11" fill="'+e.c+'" stroke="#fff" stroke-width="3"/><text x="'+x+'" y="38" text-anchor="middle" font-size="13" font-weight="800">'+e.d+'</text>';
+  var w=tx(e).split(' '),line='',ly=92; w.forEach(function(wd){ if((line+' '+wd).length>20){ s+='<text x="'+x+'" y="'+ly+'" text-anchor="middle" font-size="11" fill="#475569">'+line+'</text>'; ly+=14; line=wd; } else line=(line?line+' ':'')+wd; });
+  s+='<text x="'+x+'" y="'+ly+'" text-anchor="middle" font-size="11" fill="#475569">'+line+'</text>'; });
+ return s+'</svg></div>'; }
+
+function licCrit(){ var c=LIC.crit,rh=46,s='<svg viewBox="0 0 1000 '+(c.length*rh+20)+'" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, Noto Sans Tamil, sans-serif">';
+ c.forEach(function(r,i){ var y=10+i*rh, col=r.ok?'#16a34a':'#dc2626', bg=r.ok?'#f0fdf4':'#fef2f2';
+  s+='<rect x="4" y="'+y+'" width="992" height="'+(rh-6)+'" rx="8" fill="'+bg+'" stroke="'+col+'" stroke-width="'+(r.ok?1:2.5)+'"/>';
+  s+='<circle cx="30" cy="'+(y+20)+'" r="13" fill="'+col+'"/><text x="30" y="'+(y+25)+'" text-anchor="middle" font-size="15" fill="#fff" font-weight="800">'+(r.ok?'✓':'✗')+'</text>';
+  s+='<text x="54" y="'+(y+25)+'" font-size="13" font-weight="700" fill="#1b2430">'+tx(r)+'</text><text x="990" y="'+(y+25)+'" text-anchor="end" font-size="12.5" fill="'+(r.ok?'#166534':'#b91c1c')+'" font-weight="'+(r.ok?400:700)+'">'+tx(r.u)+'</text>'; });
+ return s+'</svg>'; }
+
+function licSeesaw(){ var s='<svg viewBox="0 0 420 260" style="width:100%;display:block" font-family="Segoe UI, Noto Sans Tamil, sans-serif">';
+ s+='<text x="210" y="20" text-anchor="middle" font-size="13" font-weight="700">'+T2('Ujjivan loan book, Sep 2026','உஜ்ஜீவன் கடன் புத்தகம், செப் 2026')+'</text>';
+ s+='<g transform="rotate(-2 210 150)"><rect x="30" y="144" width="360" height="10" rx="5" fill="#475569"/>';
+ s+='<rect x="45" y="72" width="140" height="70" rx="8" fill="#fef3c7" stroke="#f59e0b" stroke-width="2"/><text x="115" y="98" text-anchor="middle" font-size="12.5" font-weight="700">'+T2('Unsecured micro','பாதுகாப்பில்லா மைக்ரோ')+'</text><text x="115" y="118" text-anchor="middle" font-size="12">₹22,037 cr · 47.9%</text><text x="115" y="134" text-anchor="middle" font-size="10.5" fill="#92400e">'+T2('high yield · shock-prone','அதிக வட்டி · அதிர்ச்சிக்கு ஆளாகும்')+'</text>';
+ s+='<rect x="235" y="68" width="140" height="74" rx="8" fill="#d9f2ec" stroke="#0a7c66" stroke-width="2"/><text x="305" y="96" text-anchor="middle" font-size="12.5" font-weight="700">'+T2('Secured','Secured')+'</text><text x="305" y="116" text-anchor="middle" font-size="12">₹23,803 cr · 52.1%</text><text x="305" y="132" text-anchor="middle" font-size="10.5" fill="#065f46">'+T2('lower yield · steadier','குறைந்த வட்டி · நிலையானது')+'</text></g>';
+ s+='<polygon points="210,158 190,200 230,200" fill="#94a3b8"/>';
+ s+='<rect x="60" y="214" width="300" height="34" rx="8" fill="#fff7ed" stroke="#f07f13"/><text x="210" y="236" text-anchor="middle" font-size="12" font-weight="700" fill="#7c2d12">'+T2('RBI wants the balance tilted much further →','RBI இன்னும் அதிகம் வலப்பக்கம் சாய வேண்டும்னு விரும்புது →')+'</text>';
+ return s+'</svg>'; }
+
+function licRoad(){ var a=LIC.actions,n=a.length,W=1080,bw=138,s='<svg viewBox="0 0 '+W+' 190" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, Noto Sans Tamil, sans-serif"><defs><marker id="la" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0L10,5L0,10z" fill="#f07f13"/></marker></defs>';
+ a.forEach(function(x,i){ var X=8+i*(bw+15); s+='<g style="cursor:pointer" onclick="licAct(\''+x.k+'\')"><rect x="'+X+'" y="24" width="'+bw+'" height="110" rx="10" fill="#fff" stroke="#f07f13" stroke-width="1.6"/><text x="'+(X+bw/2)+'" y="62" text-anchor="middle" font-size="26">'+x.ic+'</text>';
+  var w=tx(x).split(' '),line='',ly=94; w.forEach(function(wd){ if((line+' '+wd).length>17){ s+='<text x="'+(X+bw/2)+'" y="'+ly+'" text-anchor="middle" font-size="12" font-weight="700">'+line+'</text>'; ly+=15; line=wd;} else line=(line?line+' ':'')+wd; });
+  s+='<text x="'+(X+bw/2)+'" y="'+ly+'" text-anchor="middle" font-size="12" font-weight="700">'+line+'</text></g>';
+  if(i<n-1) s+='<line x1="'+(X+bw+1)+'" y1="79" x2="'+(X+bw+13)+'" y2="79" stroke="#f07f13" stroke-width="2" marker-end="url(#la)"/>'; });
+ s+='<rect x="8" y="148" width="'+(W-16)+'" height="32" rx="8" fill="#f0fdf4" stroke="#16a34a"/><text x="'+(W/2)+'" y="169" text-anchor="middle" font-size="13" font-weight="700" fill="#166534">'+T2('Goal: a diversified, well-capitalised bank, then reapply to RBI','இலக்கு: பரவலான, வலுவான மூலதனம் உள்ள வங்கி → மீண்டும் RBI-க்கு விண்ணப்பம்')+'</text>';
+ return s+'</svg>'; }
+function licAct(k){ var x=LIC.actions.filter(function(a){return a.k===k;})[0]; $('licExpl').innerHTML='<b>'+x.ic+' '+tx(x)+'</b><br>'+tx(x.d); }
+
+var LICM='roa';
+function licMetric(m,btn){ LICM=m; document.querySelectorAll('#licSeg button').forEach(function(b){b.classList.remove('on');}); if(btn) btn.classList.add('on'); CHART_FN.lic(); }
+CHART_FN.lic=function(){
+ var sd=LIC.secured; mkChart('chLicSec',{type:'bar',data:{labels:sd.map(function(x){return x.p;}),datasets:[
+   {type:'line',label:T2('AU SFB ~92% (approved)','AU ~92% (ஒப்புதல்)'),data:sd.map(function(){return 92;}),borderColor:'#2563eb',borderDash:[6,4],pointRadius:0,borderWidth:1.5},
+   {type:'line',label:T2('Jana ~73% (returned)','ஜனா ~73% (திருப்பம்)'),data:sd.map(function(){return 72.8;}),borderColor:'#dc2626',borderDash:[6,4],pointRadius:0,borderWidth:1.5},
+   {label:T2('Ujjivan secured %','உஜ்ஜீவன் secured %'),data:sd.map(function(x){return x.v;}),backgroundColor:sd.map(function(x){return x.a?'#0a7c66':'rgba(10,124,102,.3)';}),fmt:function(v){return v+'%';}}]},
+  options:{scales:{y:{min:0,max:100,ticks:{callback:function(v){return v+'%';}}}}}});
+ mkChart('chLicExp',{type:'bar',data:{labels:[T2('Max loan to one borrower (₹ cr)','ஒரு வாடிக்கையாளருக்கு அதிகபட்சக் கடன் (₹ கோடி)')],datasets:[{label:T2('As SFB (10% of capital funds)','SFB-ஆக (10%)'),data:[727],backgroundColor:'#f59e0b',fmt:function(v){return '₹'+inr(v)+' cr';}},{label:T2('As universal bank (20% of Tier-1)','யுனிவர்சல் வங்கியாக (20%)'),data:[1370],backgroundColor:'#0a7c66',fmt:function(v){return '₹'+inr(v)+' cr';}}]},options:{indexAxis:'y',scales:{x:{min:0,max:1700}}}});
+ mkChart('chLicPsl',{type:'bar',data:{labels:[T2('Priority-sector lending required','முன்னுரிமைக் கடன் கட்டாயம்')],datasets:[{label:'SFB',data:[60],backgroundColor:'#f59e0b',fmt:function(v){return v+'% ANBC';}},{label:T2('Universal bank','யுனிவர்சல் வங்கி'),data:[40],backgroundColor:'#0a7c66',fmt:function(v){return v+'% ANBC';}}]},
+  options:{indexAxis:'y',scales:{x:{min:0,max:70,ticks:{callback:function(v){return v+'%';}}}}}});
+ var P=LIC.peers.filter(function(p){return p[LICM]!=null;}), lab={roa:'RoA %',nim:'NIM %',casa:'CASA %',cti:T2('Cost-to-income %','செலவு-வருமானம் %')}[LICM];
+ mkChart('chLicPeer',{type:'bar',data:{labels:P.map(function(p){return p.n;}),datasets:[{label:lab,data:P.map(function(p){return p[LICM];}),backgroundColor:P.map(function(p){return p.c;}),fmt:function(v){return v+'%';}}]},
+  options:{plugins:{legend:{display:false},title:{display:true,text:lab+(LICM==='cti'?T2(' — lower is better',' — குறைவு நல்லது'):T2(' — higher is better',' — அதிகம் நல்லது'))}},scales:{y:{beginAtZero:true,ticks:{callback:function(v){return v+'%';}}}}}});
+};
+</script>
+<script>
+/* ================= CB SCHOOL ================= */
+var SPOS={}, SBW=170, SBH=58;
+function rSchool(){
+ var colN=[T2('Funding & growth','நிதி & வளர்ச்சி'),T2('Prices of money','பணத்தின் விலை'),T2('Income & risk','வருமானம் & ரிஸ்க்'),T2('Profit & capital','லாபம் & மூலதனம்'),T2('Returns & value','வருவாய் & மதிப்பு')];
+ var cnt=[0,0,0,0,0]; SN.forEach(function(n){ SPOS[n.id]={x:20+n.c*215,y:44+cnt[n.c]*82}; cnt[n.c]++; });
+ var s='<svg id="schoolSvg" viewBox="0 0 1100 470" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, Noto Sans Tamil, sans-serif"><defs>'+
+  '<marker id="mg" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0L10,5L0,10z" fill="#16a34a"/></marker>'+
+  '<marker id="mr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0L10,5L0,10z" fill="#dc2626"/></marker></defs>';
+ colN.forEach(function(c,i){ s+='<text x="'+(20+i*215+SBW/2)+'" y="24" text-anchor="middle" font-size="12.5" font-weight="700" fill="#475569">'+c+'</text>'; });
+ SE.forEach(function(e,i){ var a=SPOS[e[0]],b=SPOS[e[1]],d; var col=e[2]>0?'#16a34a':'#dc2626', dash=e[2]>0?'':' stroke-dasharray="6 4"';
+  if(a.x===b.x){ var x=a.x+SBW, y1=a.y+SBH/2, y2=b.y+SBH/2; d='M'+x+','+y1+' C'+(x+34)+','+y1+' '+(x+34)+','+y2+' '+(x+2)+','+y2; }
+  else { var x1=a.x+SBW,y1=a.y+SBH/2,x2=b.x,y2=b.y+SBH/2,m=(x1+x2)/2; d='M'+x1+','+y1+' C'+m+','+y1+' '+m+','+y2+' '+x2+','+y2; }
+  s+='<path id="se-'+i+'" d="'+d+'" fill="none" stroke="'+col+'" stroke-width="1.6"'+dash+' marker-end="url(#'+(e[2]>0?'mg':'mr')+')" opacity=".55"/>'; });
+ SN.forEach(function(n){ var p=SPOS[n.id];
+  s+='<g style="cursor:pointer" onclick="snode(\''+n.id+'\')"><rect id="sn-'+n.id+'" x="'+p.x+'" y="'+p.y+'" width="'+SBW+'" height="'+SBH+'" rx="9" fill="#fff" stroke="#94a3b8" stroke-width="1.5"/>';
+  s+='<text x="'+(p.x+10)+'" y="'+(p.y+22)+'" font-size="12.5" font-weight="700">'+tx(n)+'</text><text x="'+(p.x+10)+'" y="'+(p.y+42)+'" font-size="11.5" fill="#0a7c66">Ujjivan: '+n.v+'</text>';
+  s+='<text id="sm-'+n.id+'" x="'+(p.x+SBW-12)+'" y="'+(p.y+24)+'" text-anchor="end" font-size="16" font-weight="800"></text></g>'; });
+ s+='</svg>';
+ var h='<h2>'+T2('CB School — how bank metrics push each other','CB பள்ளி — வங்கி அளவீடுகள் ஒண்ணையொண்ணு எப்படித் தள்ளுது')+'</h2>';
+ h+='<div class="legend"><span><i></i>'+T2('same-direction effect','அதே திசை விளைவு')+'</span><span><i class="op"></i>'+T2('opposite effect','எதிர் திசை விளைவு')+'</span></div>';
+ h+='<div style="margin:8px 0">'+SCEN.map(function(c){return '<button class="btn" onclick="scen(\''+c.k+'\')">'+tx(c)+'</button>';}).join('')+'<button class="btn" onclick="sreset()">↺ '+T2('Reset','மீட்டமை')+'</button></div>';
+ h+='<div class="svgwrap">'+s+'</div><div class="expl" id="sexpl">'+T2('Tap a metric to see what it pushes and what pushes it, or press a scenario button.','ஒரு அளவீட்டைத் தொடுங்க, அல்லது ஒரு சூழல் பட்டனை அழுத்துங்க.')+'</div>';
+ h+='<h3>'+T2('Lessons','பாடங்கள்')+'</h3><div class="grid g2">'+LESSONS.map(function(l){return card(tx(l));}).join('')+'</div>';
+ H('t-school',h);
+}
+function sname(id){ return tx(SN.filter(function(n){return n.id===id;})[0]); }
+function sreset(){ SE.forEach(function(e,i){var p=$('se-'+i); if(p){p.setAttribute('opacity','.55');p.setAttribute('stroke-width','1.6');}});
+ SN.forEach(function(n){var r=$('sn-'+n.id); if(r){r.setAttribute('stroke','#94a3b8');r.setAttribute('fill','#fff');} var m=$('sm-'+n.id); if(m) m.textContent='';}); }
+function snode(id){ sreset(); var out=[],inn=[];
+ SE.forEach(function(e,i){ var p=$('se-'+i); if(e[0]===id||e[1]===id){p.setAttribute('opacity','1');p.setAttribute('stroke-width','3');} else p.setAttribute('opacity','.12');
+  if(e[0]===id) out.push(sname(e[1])+(e[2]>0?' (▲▲)':' (▲▼)')); if(e[1]===id) inn.push(sname(e[0])+(e[2]>0?' (▲▲)':' (▲▼)')); });
+ $('sn-'+id).setAttribute('stroke','#f07f13'); $('sn-'+id).setAttribute('fill','#fff7ed');
+ $('sexpl').innerHTML='<b>'+sname(id)+'</b><br>'+T2('It pushes: ','இது தள்ளுவது: ')+(out.join(', ')||'—')+'<br>'+T2('It is pushed by: ','இதைத் தள்ளுவது: ')+(inn.join(', ')||'—')+'<br><span class="note">▲▲ = '+T2('moves the same way','அதே திசை')+' · ▲▼ = '+T2('moves the opposite way','எதிர் திசை')+'</span>';
+}
+var STO=[];
+function scen(k){ STO.forEach(clearTimeout); STO=[]; sreset(); var c=SCEN.filter(function(x){return x.k===k;})[0];
+ SE.forEach(function(e,i){$('se-'+i).setAttribute('opacity','.12');});
+ c.chain.forEach(function(st,j){ STO.push(setTimeout(function(){ var m=$('sm-'+st[0]); m.textContent=st[1]>0?'▲':'▼'; m.setAttribute('fill',st[1]>0?'#16a34a':'#dc2626');
+  $('sn-'+st[0]).setAttribute('stroke',st[1]>0?'#16a34a':'#dc2626'); $('sn-'+st[0]).setAttribute('fill',st[1]>0?'#f0fdf4':'#fef2f2');
+  if(j>0){ var prev=c.chain[j-1][0]; SE.forEach(function(e,i){ c.chain.slice(0,j).forEach(function(pp){ if(e[0]===pp[0]&&e[1]===st[0]){$('se-'+i).setAttribute('opacity','1');$('se-'+i).setAttribute('stroke-width','3');} }); }); }
+ },j*450)); });
+ STO.push(setTimeout(function(){ $('sexpl').innerHTML='<b>'+tx(c)+'</b><br>'+tx(c.card); }, c.chain.length*450));
+}
+
+/* ================= SELF-CHECK ================= */
+var SCKEY='cb_selfcheck_'+CO.id, SCS={t:{},own:[]};
+function scLoad(){ try{ var v=localStorage.getItem(SCKEY); if(v) SCS=JSON.parse(v); }catch(e){} if(!SCS.t) SCS.t={}; if(!SCS.own) SCS.own=[]; }
+function scSave(){ try{ localStorage.setItem(SCKEY,JSON.stringify(SCS)); }catch(e){} }
+function rSelf(){
+ var tot=0,done=0,h='<h2>'+T2('CB Investor Self-check','CB முதலீட்டாளர் சுய சோதனை')+'</h2><p class="note">'+T2('Tick only what is true for you. Each line shows the bank\'s own data.','உங்களுக்கு உண்மையானதை மட்டும் டிக் பண்ணுங்க. ஒவ்வொரு வரியிலும் வங்கியோட தகவல்.')+'</p>';
+ SC.forEach(function(g,gi){ var gt=0,gd=0,inner='';
+  if(g.own){ SCS.own.forEach(function(o,oi){ gt++; if(o.k) gd++; inner+='<div class="sc-item"><input type="checkbox" '+(o.k?'checked':'')+' onchange="SCS.own['+oi+'].k=this.checked;scSave();rSelf()"><div style="flex:1">'+o.t.replace(/</g,'&lt;')+'</div><button class="btn" onclick="SCS.own.splice('+oi+',1);scSave();rSelf()">✕</button></div>'; });
+   inner+='<div style="margin-top:8px">'+(SCS.own.length<8?'<input id="ownIn" maxlength="80" style="border:1px solid #e3e8ef;border-radius:16px;padding:6px 10px;width:min(320px,70%)" placeholder="'+T2('Add your own condition','உங்க நிபந்தனையைச் சேருங்க')+'"> <button class="btn pri" onclick="ownAdd()">+</button><br>'+g.sug.map(function(s,si){return '<span class="chip" onclick="ownAdd('+si+')">+ '+tx(s)+'</span>';}).join(''):'<span class="note">'+T2('Maximum 8 conditions.','அதிகபட்சம் 8.')+'</span>')+'</div>'; }
+  else g.items.forEach(function(it,ii){ var key=gi+'_'+ii; gt++; if(SCS.t[key]) gd++;
+   inner+='<div class="sc-item"><input type="checkbox" '+(SCS.t[key]?'checked':'')+' onchange="SCS.t[\''+key+'\']=this.checked;scSave();rSelf()"><div>'+tx(it.t)+'<div class="d">Data: '+(it.d||'')+'</div></div></div>'; });
+  tot+=gt; done+=gd;
+  h+='<div class="card sc-group"><b>'+tx(g.g)+'</b> <span class="note">'+gd+' / '+gt+'</span><div class="bar" style="margin:6px 0"><i style="width:'+(gt?gd/gt*100:0)+'%"></i></div>'+inner+'</div>'; });
+ h+='<div class="card"><b>'+T2('Overall','மொத்தம்')+': '+done+' / '+tot+'</b><div class="bar" style="margin:6px 0"><i style="width:'+(tot?done/tot*100:0)+'%"></i></div><p>'+T2(done+' of '+tot+' of your own conditions line up.',tot+'-ல் '+done+' உங்க நிபந்தனைகள் பொருந்துது.')+' '+T2('This only counts how many of your own conditions line up. It is not a recommendation.','இது உங்க நிபந்தனைகள் எத்தனை பொருந்துதுன்னு மட்டும் எண்ணுது. இது பரிந்துரை அல்ல.')+'</p><button class="btn" onclick="SCS={t:{},own:[]};scSave();rSelf()">'+T2('Clear','அழி')+'</button></div>';
+ H('t-selfcheck',h);
+}
+function ownAdd(si){ if(SCS.own.length>=8) return; var t= si!=null ? tx(SC[4].sug[si]) : ($('ownIn')?$('ownIn').value.trim():''); if(!t) return; SCS.own.push({t:t,k:false}); scSave(); rSelf(); }
+
+/* ================= CAUVERY SOCRATES ================= */
+var QS={};
+function rSoc(){
+ var h='<h2>'+T2('Cauvery Socrates — think it through','காவேரி சாக்ரடீஸ் — யோசிச்சுப் பாருங்க')+'</h2>';
+ QUIZ.forEach(function(q,i){ h+='<div class="card mcq" style="margin-bottom:10px"><b>Q'+(i+1)+'. '+tx(q.q)+'</b>';
+  q.o.forEach(function(o,j){ var cls=''; if(QS[i]!=null){ if(j===q.a) cls='ok'; else if(j===QS[i]) cls='no'; } h+='<button class="'+cls+'" onclick="QS['+i+']='+j+';rSoc()">'+tx(o)+'</button>'; });
+  if(QS[i]!=null) h+='<div class="expl">'+(QS[i]===q.a?'✅ ':'🤔 ')+tx(q.ex)+'</div>'; h+='</div>'; });
+ var sc=Object.keys(QS).filter(function(k){return QS[k]===QUIZ[k].a;}).length;
+ h+=card('<b>'+T2('Score','மதிப்பெண்')+': '+sc+' / '+QUIZ.length+'</b>');
+ h+='<h3>'+T2('Your turn — free answer','உங்க முறை — சுதந்திரமான பதில்')+'</h3>'+card('<p>'+T2('If micro-banking is 48% of the book and grows 12–14% while secured loans grow ~40%, what happens to NIM and to credit cost two years out? Why might the market pay more for the lower-margin mix?','மைக்ரோ கடன் 48%, அது 12–14% வளர, secured ~40% வளர்ந்தா, ரெண்டு வருஷத்துல NIM, கடன் இழப்பு என்ன ஆகும்? குறைந்த மார்ஜின் கலவைக்கு சந்தை ஏன் அதிக மதிப்பு கொடுக்கும்?')+'</p><textarea id="socT" rows="3" style="width:100%;border:1px solid #e3e8ef;border-radius:8px;padding:8px"></textarea><button class="btn pri" onclick="socFb()">'+T2('Reflect','யோசி')+'</button><div class="expl" id="socF" style="display:none"></div>');
+ H('t-socrates',h);
+}
+function socFb(){ var t=($('socT').value||'').toLowerCase(), hits=0; ['nim','yield','credit','cost','stable','steady','volatil','secured','risk','வட்டி','நிலை','ரிஸ்க்'].forEach(function(w){if(t.indexOf(w)>=0)hits++;});
+ $('socF').style.display='block'; $('socF').innerHTML=(hits>=2?T2('Good — you linked mix to both margin and risk. ','நல்லது — கலவையை மார்ஜின், ரிஸ்க் ரெண்டோடயும் இணைச்சீங்க. '):T2('Try linking the mix to both yield and credit cost. ','கலவையை வட்டி, கடன் இழப்பு ரெண்டோடயும் இணைச்சுப் பாருங்க. '))+
+ T2('Ask yourself: is a 1-pp lower NIM worth it if credit cost falls 1 pp and swings less in a bad year?','கேளுங்க: NIM 1% குறைஞ்சாலும் கடன் இழப்பு 1% குறைஞ்சு, மோசமான வருஷத்திலும் குறைவா மாறினா அது மதிப்பா?'); }
+
+/* ================= DISCLAIMER BADGE ================= */
+function discHTML(){ return '<b>'+T2('Prepared by CB Research','CB Research தயாரித்தது')+'</b><br>'+T2('For education only. CB Research is not a SEBI-registered research analyst; nothing here is investment advice or a buy/sell/hold recommendation. Figures are from the bank\'s Q2 FY27 filing, investor presentation and earnings call (16 Oct 2026); "calc" marks CB computations; † marks the latest reported book value (Jun-26). Broker views are third-party and attributed. Please consult a registered adviser before investing.',
+ 'கல்வி நோக்கத்துக்கு மட்டும். CB Research SEBI பதிவு பெற்ற ஆய்வாளர் அல்ல; இது முதலீட்டு ஆலோசனையோ வாங்க/விற்க பரிந்துரையோ அல்ல. எண்கள் வங்கியின் Q2 FY27 அறிக்கை, விளக்கக்காட்சி, அழைப்பு (16 அக் 2026)-லிருந்து; "calc" = CB கணக்கீடு; † = கடைசி புத்தக மதிப்பு (ஜூன்-26). ப்ரோக்கர் கருத்துகள் மூன்றாம் தரப்பு. முதலீட்டுக்கு முன் பதிவு பெற்ற ஆலோசகரைக் கேளுங்க.'); }
+var discOpen=false;
+function showDisc(v){ discOpen=v; $('disc').innerHTML=discHTML(); $('disc').style.display=v?'block':'none'; if(v) $('assist').style.display='none'; }
+function toggleDisc(){ showDisc(!discOpen); }
+document.addEventListener('click',function(e){ if(discOpen && !e.target.closest('#disc') && e.target.id!=='cbBadge') showDisc(false); });
+
+/* ================= CB ASSIST (voice Q&A) ================= */
+function toggleAssist(){ var a=$('assist'); var on=a.style.display!=='flex'; a.style.display=on?'flex':'none'; if(on){ showDisc(false); if(!$('alog').innerHTML) bot(T2('Hi! Ask me about Ujjivan SFB\'s Q2 FY27 — profit, NIM, NPA, CASA, capital, valuation, segments, triggers or risks. Tap 🎤 to speak.','வணக்கம்! உஜ்ஜீவன் Q2 FY27 பத்தி கேளுங்க — லாபம், NIM, வாராக்கடன், CASA, மூலதனம், மதிப்பு, பிரிவுகள், ரிஸ்க். 🎤 அழுத்தி பேசுங்க.'),false);} }
+function addMsg(t,c){ var d=document.createElement('div'); d.className='m '+c; d.innerHTML=t; $('alog').appendChild(d); $('alog').scrollTop=1e6; }
+function bot(t,speakIt){ addMsg(t,'b'); if(speakIt!==false) speak(t.replace(/<[^>]+>/g,' ')); }
+function speak(t){ try{ if(!window.speechSynthesis) return; speechSynthesis.cancel(); var u=new SpeechSynthesisUtterance(t); u.lang=(L==='ta'?'ta-IN':'en-IN');
+ var vs=speechSynthesis.getVoices().filter(function(v){return v.lang&&v.lang.toLowerCase().indexOf(L==='ta'?'ta':'en-in')===0;}); if(vs.length) u.voice=vs[0]; u.rate=1; speechSynthesis.speak(u);}catch(e){} }
+var REC=null;
+function startMic(){ var SR=window.SpeechRecognition||window.webkitSpeechRecognition; if(!SR){ bot(T2('Voice input is not supported in this browser — please type your question.','இந்த பிரௌசரில் குரல் உள்ளீடு இல்லை — டைப் பண்ணுங்க.'),false); return; }
+ if(REC){ try{REC.stop();}catch(e){} REC=null; $('micBtn').classList.remove('rec'); return; }
+ REC=new SR(); REC.lang=(L==='ta'?'ta-IN':'en-IN'); REC.interimResults=false; $('micBtn').classList.add('rec');
+ REC.onresult=function(ev){ var q=ev.results[0][0].transcript; ask(q); }; REC.onend=function(){ $('micBtn').classList.remove('rec'); REC=null; }; REC.onerror=REC.onend; REC.start(); }
+function askTyped(){ var q=$('aq').value.trim(); if(!q) return; $('aq').value=''; ask(q); }
+function has(q,arr){ return arr.some(function(w){return q.indexOf(w)>=0;}); }
+function ask(q){ addMsg(q.replace(/</g,'&lt;'),'u'); var a=answer(q.toLowerCase()); bot(a.t); if(a.btn) addMsg('<button class="btn pri" onclick="show(\''+a.btn+'\');toggleAssist()">'+T2('Open Self-check','சுய சோதனையைத் திற')+'</button>','b'); }
+function answer(q){
+ var p=CO.pl,r=CO.r,b=CO.bs;
+ if(has(q,['buy','sell','invest','hold','should i','வாங்க','விற்க','முதலீடு செய்யலாமா','வாங்கலாமா'])) return {t:T2('I can\'t tell you to buy, sell or hold — CB Research is education-only and not SEBI-registered. The Self-check tab lets you test your own conditions against the bank\'s data.','வாங்க/விற்கச் சொல்ல முடியாது — CB Research கல்விக்காக மட்டும், SEBI பதிவு இல்லை. சுய சோதனை டேபில் உங்க நிபந்தனைகளைச் சரிபாருங்க.'),btn:'selfcheck'};
+ if(has(q,['licence','license','universal','bandhan','idfc','உரிமம்','யுனிவர்சல்'])) return {t:T2('RBI returned Ujjivan\'s universal bank application in April 2026 because its loan book is still concentrated in unsecured micro-loans; it can reapply after diversifying. Ujjivan already meets the numeric tests. Its RoA of 2.4% is well above Bandhan\'s guided 1.2–1.4% and IDFC First\'s ~1%, but that high return comes from the micro-loans RBI wants reduced. Secured share is 52.1%, aiming for 56% by March 2027. A licence would also let it co-lend with NBFCs, set up subsidiaries such as an AMC or broking arm, and roughly double its single-borrower limit, besides easing priority-sector and small-loan rules. See the Universal Bank Licence tab.','ஏப்ரல் 2026-ல் RBI உஜ்ஜீவன் விண்ணப்பத்தைத் திருப்பியது — கடன் புத்தகம் இன்னும் மைக்ரோ கடனில் குவிந்திருக்கு; பரவலாக்கிய பிறகு மீண்டும் விண்ணப்பிக்கலாம். RoA 2.4% — பந்தன் (1.2–1.4%), IDFC First (~1%)-ஐ விட அதிகம்; ஆனா அது அதே மைக்ரோ கடனிலிருந்துதான். Secured 52.1%, மார்ச் 2027 இலக்கு 56%.')};
+ if(has(q,['jana'])) return {t:T2('Jana SFB declares Q2 FY27 on 23 Oct 2026; it is not covered in this file.','ஜனா SFB Q2 FY27 முடிவு 23 அக் 2026; இந்தக் கோப்பில் இல்லை.')};
+ if(has(q,['fastest','quickest','வேகமா','வேகமாக'])){ var f=CO.seg.slice().sort(function(a,b){return b.g-a.g;}); return {t:T2('Fastest-growing segments: ','வேகமா வளரும் பிரிவுகள்: ')+f.slice(0,3).map(function(g){return tx({en:g.en,ta:g.ta})+' +'+g.g+'%';}).join(', ')+'.'}; }
+ if(has(q,['largest','biggest','பெரிய','segment','பிரிவு','mix','கலவை'])){ var s=CO.seg.slice().sort(function(a,b){return b.v-a.v;}); return {t:T2('Largest segments: ','பெரிய பிரிவுகள்: ')+s.slice(0,3).map(function(g){return tx({en:g.en,ta:g.ta})+' '+cr(g.v)+' ('+(g.v/b.glb[0]*100).toFixed(1)+'%)';}).join(', ')+T2('. Secured share is 52.1%.','. Secured பங்கு 52.1%.')}; }
+ if(has(q,['nim','margin','மார்ஜின்'])) return {t:T2('NIM was 8.4% in Q2 FY27, up 55 bps from 7.9% a year ago. After the 25 bps repo hike, management guides H2 NIM at about 8.35%.','Q2 FY27 NIM 8.4%, போன வருஷம் 7.9%-லிருந்து 0.55% கூடுதல். ரெப்போ உயர்வுக்குப் பின் H2-ல் சுமார் 8.35%.')};
+ if(has(q,['npa','bad loan','asset quality','pcr','வாராக்கடன்','கடன் தரம்'])) return {t:T2('GNPA 2.10% (2.45% a year ago), NNPA 0.31%, PCR 85%. Micro-banking collection efficiency is 99.7%.','GNPA 2.10% (போன வருஷம் 2.45%), NNPA 0.31%, PCR 85%. மைக்ரோ வசூல் 99.7%.')};
+ if(has(q,['nii','interest income','நிகர வட்டி'])) return {t:T2('NII was ₹1,244 crore, up 35% from ₹922 crore.','NII ₹1,244 கோடி, ₹922 கோடியிலிருந்து 35% கூடுதல்.')};
+ if(has(q,['ppop','ebitda','operating profit'])) return {t:T2('PPOP — the bank\'s EBITDA-equivalent — was ₹594 crore, up 50%.','PPOP (வங்கி EBITDA) ₹594 கோடி, 50% கூடுதல்.')};
+ if(has(q,['profit','pat','earning','லாபம்'])) return {t:T2('PAT was a record ₹365 crore, up 199.9% YoY and 15.3% QoQ. H1 FY27 PAT ₹682 crore. The jump came mainly from provisions falling to ₹103 crore from ₹235 crore while NII rose 35%.','லாபம் சாதனை ₹365 கோடி — ஆண்டுக்கு 199.9%, காலாண்டுக்கு 15.3% கூடுதல். H1 ₹682 கோடி. Provisions ₹235-லிருந்து ₹103 கோடிக்குக் குறைஞ்சதுதான் முக்கியக் காரணம்.')};
+ if(has(q,['casa','deposit','வைப்பு'])) return {t:T2('Deposits ₹50,643 crore (+29.2%); CASA ₹13,182 crore, ratio 26.0% vs 27.5% a year ago. Cost of funds 6.9%. Management sees CASA near 28% by year-end.','வைப்பு ₹50,643 கோடி (+29.2%); CASA ₹13,182 கோடி, விகிதம் 26.0% (போன வருஷம் 27.5%). நிதிச் செலவு 6.9%.')};
+ if(has(q,['loan','advance','growth','disburs','கடன்','வளர்ச்சி'])) return {t:T2('Gross loan book ₹45,699 crore, up 32.1%; disbursements a record ₹10,495 crore. FY27 guidance is about 25% growth.','கடன் புத்தகம் ₹45,699 கோடி, 32.1% கூடுதல்; வழங்கல் ₹10,495 கோடி. FY27 வழிகாட்டல் சுமார் 25%.')};
+ if(has(q,['roa','roe','return','வருவாய்'])) return {t:T2('RoA 2.4% and RoE 19.7% in Q2 FY27, vs 1.0% and 7.7% a year ago. Management says beating the 2.0% upper end of RoA guidance looks likely.','RoA 2.4%, RoE 19.7% (போன வருஷம் 1.0%, 7.7%). RoA 2.0% மேல் எல்லையைத் தாண்ட வாய்ப்புன்னு நிர்வாகம்.')};
+ if(has(q,['crar','capital','raise','409','மூலதனம்','நிதி திரட்ட'])) return {t:T2('CRAR 20.69% (Tier-1 19.49%). The board approved a ₹409 crore preferential issue to IFC, Bajaj Life, HDFC Life and Aditya Birla Sun Life, adding about 1.2 pp to CRAR.','CRAR 20.69% (Tier-1 19.49%). IFC உள்ளிட்டோருக்கு ₹409 கோடி ஒதுக்கீடு — CRAR ~1.2% கூடும்.')};
+ if(has(q,['valuation','pbv','p/b','book','p/e',' pe ','price','cheap','expensive','target','analyst','broker','விலை','மதிப்பு','இலக்கு'])) return {t:T2('Price ₹63.25 (16 Oct). P/BV about 1.84x on latest reported book of ₹34.45; about 9x annualised H1 earnings. Broker targets: ICICI Securities ₹90, Axis Securities ₹86, Trendlyne consensus ₹82.','விலை ₹63.25 (16 அக்). P/BV ~1.84x, P/E ~9x. ப்ரோக்கர் இலக்கு: ICICI Securities ₹90, Axis ₹86, Trendlyne சராசரி ₹82.')};
+ if(has(q,['ceo','md','management','leader','board','நிர்வாகம்','தலைமை'])) return {t:T2('MD Sanjeev Nautiyal took early retirement from 1 Sep 2026. Carol Furtado is Whole Time Director and interim CEO; the NRC expects to finalise a new MD in 3–4 months. CFO is Balakrishna Kamath.','MD சஞ்சீவ் நௌடியால் 1 செப் 2026 முதல் ஓய்வு. கரோல் ஃபர்டாடோ இடைக்கால CEO; 3–4 மாதத்தில் புதிய MD. CFO பாலகிருஷ்ண காமத்.')};
+ if(has(q,['trigger','cycle','catalyst','தூண்டுதல்','சுழற்சி'])) return {t:T2('Cycle: sector in P3 Expansion, CY '+CO.cycle.cy+'. Triggers TG '+tgScore()+': top positives are the secured-mix shift and the ₹409 crore raise; top negative is the repo hike squeezing NIM.','சுழற்சி: துறை P3, CY '+CO.cycle.cy+'. TG '+tgScore()+': நேர்மறை — secured மாற்றம், ₹409 கோடி; எதிர்மறை — ரெப்போ உயர்வு.')};
+ if(has(q,['risk','threat','concern','worry','ரிஸ்க்','அபாயம்'])) return {t:T2('Main risks: margin squeeze from the repo hike, leadership transition, IRDAI draft insurance-commission rules, drought in Karnataka/Maharashtra and 48% unsecured micro-banking exposure.','முக்கிய ரிஸ்க்: ரெப்போ உயர்வால மார்ஜின் அழுத்தம், தலைமை மாற்றம், IRDAI வரைவு விதிகள், வறட்சி, 48% பாதுகாப்பில்லாத கடன்.')};
+ if(has(q,['secured','micro','unsecured','மைக்ரோ'])) return {t:T2('Secured loans are 52.1% of the book (₹23,803 crore, +47%); micro-banking ₹22,037 crore. Target 56% secured by March 2027.','Secured 52.1% (₹23,803 கோடி, +47%); மைக்ரோ ₹22,037 கோடி. மார்ச் 2027 இலக்கு 56%.')};
+ if(has(q,['guidance','outlook','forecast','வழிகாட்டல்'])) return {t:T2('FY27 guidance: advances ~25%, micro-banking 12–14%, secured 56% by March, H2 NIM ~8.35%, credit cost 0.9–1.0% of assets, opex/assets 6.2%, RoA 1.8–2.0% with upside.','FY27: கடன் ~25%, மைக்ரோ 12–14%, secured 56%, H2 NIM ~8.35%, கடன் இழப்பு 0.9–1.0%, RoA 1.8–2.0%.')};
+ if(has(q,['branch','network','கிளை'])) return {t:T2('880 branches (104 added in H1), 619 ATMs, 26 states/UTs, about 1 crore customers.','880 கிளைகள் (H1-ல் 104), 619 ATM, 26 மாநிலங்கள், ~1 கோடி வாடிக்கையாளர்.')};
+ if(has(q,['subsidiar','துணை'])) return {t:tx(TXT.subs)};
+ return {t:T2('Quick summary: record PAT ₹365 crore, NII +35%, NIM 8.4%, GNPA 2.10%, CRAR 20.69%. Try asking about NIM, NPA, CASA, capital, valuation, segments, triggers or risks.','சுருக்கம்: லாபம் ₹365 கோடி, NII +35%, NIM 8.4%, GNPA 2.10%, CRAR 20.69%. NIM, வாராக்கடன், CASA, மூலதனம், மதிப்பு, ரிஸ்க் பத்தி கேளுங்க.')};
+}
+
+/* ================= INIT ================= */
+function renderAll(){ rDash(); rModel(); rFin(); rAq(); rLiq(); rSubs(); rVal(); rTrig(); rLic(); rPillars(); rSwot(); rAnalysts(); rSelf(); rMgmt(); rSchool(); rSoc(); if(discOpen) $('disc').innerHTML=discHTML(); }
+scLoad(); buildNav(); renderAll(); show('dash');
+</script>
+</body>
+</html>
