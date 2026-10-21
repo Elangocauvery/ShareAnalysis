@@ -1,0 +1,1374 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>UltraTech Q2FY27</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+Tamil:wght@400;600;700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<style>
+:root{
+  --bg:#ffffff; --bg2:#f6f8fb; --card:#ffffff; --ink:#1b2430; --mute:#5b6675; --line:#e3e8ef;
+  --brand:#e8701a; --brand2:#fff3e8; --navy:#1f3b63; --green:#1f9d55; --green2:#e7f6ee;
+  --amber:#d99a06; --amber2:#fff6dc; --red:#d64545; --red2:#fdeaea; --blue:#2f6fd6; --blue2:#e9f1fd;
+  --purple:#7a4bc4; --teal:#13958c;
+}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,"Noto Sans Tamil",system-ui,sans-serif;font-size:15px;line-height:1.5}
+body.ta{font-family:"Noto Sans Tamil",Inter,system-ui,sans-serif}
+a{color:var(--blue)}
+.wm{position:fixed;inset:0;pointer-events:none;display:flex;align-items:center;justify-content:center;z-index:0;opacity:.035;font-size:9vw;font-weight:800;color:var(--navy);transform:rotate(-24deg);white-space:nowrap}
+header{position:sticky;top:0;z-index:20;background:#fff;border-bottom:1px solid var(--line)}
+.hwrap{max-width:1240px;margin:0 auto;padding:10px 16px;display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+.logo{width:38px;height:38px;border-radius:50%;background:var(--brand);color:#fff;font-weight:800;display:flex;align-items:center;justify-content:center;flex:none}
+.htitle{flex:1;min-width:200px}
+.htitle h1{margin:0;font-size:18px;line-height:1.2}
+.htitle .sub{color:var(--mute);font-size:12.5px}
+.lang{display:flex;border:1px solid var(--line);border-radius:999px;overflow:hidden}
+.lang button{border:0;background:#fff;padding:6px 12px;font-weight:600;cursor:pointer;color:var(--mute);font-family:inherit}
+.lang button.on{background:var(--navy);color:#fff}
+nav.tabs{max-width:1240px;margin:0 auto;padding:0 10px 8px;display:flex;gap:6px;overflow-x:auto;scrollbar-width:thin}
+nav.tabs button{flex:none;border:1px solid var(--line);background:var(--bg2);color:var(--ink);padding:7px 12px;border-radius:999px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;white-space:nowrap}
+nav.tabs button.on{background:var(--brand);border-color:var(--brand);color:#fff}
+main{position:relative;z-index:1;max-width:1240px;margin:0 auto;padding:16px 16px 120px}
+section.tab{display:none}
+section.tab.on{display:block;animation:fade .25s ease}
+@keyframes fade{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+h2{font-size:20px;margin:6px 0 12px}
+h3{font-size:16px;margin:18px 0 8px;color:var(--navy)}
+.grid{display:grid;gap:12px}
+.g2{grid-template-columns:repeat(auto-fit,minmax(320px,1fr))}
+.g3{grid-template-columns:repeat(auto-fit,minmax(240px,1fr))}
+.g4{grid-template-columns:repeat(auto-fit,minmax(170px,1fr))}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px 16px;box-shadow:0 1px 2px rgba(20,30,50,.04)}
+.kpi .lbl{font-size:12px;color:var(--mute);font-weight:600;text-transform:uppercase;letter-spacing:.02em}
+body.ta .kpi .lbl{text-transform:none}
+.kpi .val{font-size:24px;font-weight:800;margin-top:2px}
+.kpi .chg{font-size:12.5px;font-weight:600}
+.up{color:var(--green)} .dn{color:var(--red)} .flat{color:var(--amber)}
+.chip{display:inline-flex;align-items:center;gap:6px;padding:4px 10px;border-radius:999px;font-size:12.5px;font-weight:700;border:1px solid var(--line);background:#fff}
+.chip.cy{background:var(--blue2);color:var(--blue);border-color:#c9dbf8}
+.chip.tg{background:var(--green2);color:var(--green);border-color:#bfe6cf}
+.chip.cb{background:var(--brand2);color:var(--brand);border-color:#f7cfae}
+.chip.warn{background:var(--amber2);color:#8a6200;border-color:#f1dca0}
+.hero{display:flex;gap:14px;flex-wrap:wrap;align-items:center;background:linear-gradient(120deg,#fff7ef,#f3f7ff);border:1px solid var(--line);border-radius:16px;padding:14px 16px;margin-bottom:12px}
+.hero .big{font-size:15px;font-weight:600;flex:1;min-width:260px}
+.kt{list-style:none;margin:0;padding:0;display:grid;gap:10px;grid-template-columns:repeat(auto-fit,minmax(290px,1fr))}
+.kt li{border-radius:12px;padding:11px 13px;border:1px solid var(--line);background:#fff;position:relative;padding-left:44px}
+.kt li .n{position:absolute;left:11px;top:11px;width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;color:#fff}
+.kt li.pos{border-left:5px solid var(--green)} .kt li.pos .n{background:var(--green)}
+.kt li.neg{border-left:5px solid var(--red)} .kt li.neg .n{background:var(--red)}
+.kt li.neu{border-left:5px solid var(--amber)} .kt li.neu .n{background:var(--amber)}
+.kt li b{display:block;margin-bottom:2px}
+.kt li span{color:var(--mute);font-size:13.5px}
+.tblwrap{overflow-x:auto;border:1px solid var(--line);border-radius:12px}
+table{border-collapse:collapse;width:100%;font-size:13.5px;background:#fff}
+th,td{padding:8px 10px;border-bottom:1px solid var(--line);text-align:right;white-space:nowrap}
+th:first-child,td:first-child{text-align:left;white-space:normal;min-width:180px}
+thead th{background:var(--bg2);font-size:12.5px;color:var(--mute);position:sticky;top:0}
+tr.cat td{background:#fdf1e6;color:#9a4a0c;font-weight:800;text-align:left;font-size:12.5px;letter-spacing:.02em}
+td.l{text-align:left;white-space:normal}
+.note{font-size:12.5px;color:var(--mute);margin-top:6px}
+.chartbox{position:relative;height:300px}
+.chartbox.tall{height:340px}
+.pill{display:inline-block;padding:2px 8px;border-radius:999px;font-size:12px;font-weight:700}
+.p-buy{background:var(--green2);color:var(--green)} .p-hold{background:var(--amber2);color:#8a6200} .p-sell{background:var(--red2);color:var(--red)} .p-na{background:var(--bg2);color:var(--mute)}
+/* business model */
+.bmwrap{overflow-x:auto;border:1px solid var(--line);border-radius:14px;background:#fcfdff}
+#bmsvg{display:block;min-width:980px;width:100%;height:auto}
+#bmsvg .node{cursor:pointer;transition:filter .15s}
+#bmsvg .node:hover rect{filter:brightness(.97)}
+#bmsvg .node.sel rect{stroke:#111;stroke-width:2.5}
+.explain{margin-top:10px;border-left:5px solid var(--brand);background:var(--brand2);border-radius:10px;padding:12px 14px}
+.explain h4{margin:0 0 4px}
+/* temple */
+.temple{max-width:760px;margin:0 auto}
+#templeSvg{width:100%;height:auto;display:block}
+#templeSvg .col{cursor:pointer}
+.pcard{border:1px solid var(--line);border-radius:12px;padding:12px 14px;border-left:6px solid var(--line);transition:box-shadow .2s, transform .2s}
+.pcard.hl{box-shadow:0 0 0 3px rgba(232,112,26,.35);transform:translateY(-2px)}
+.sc{display:inline-flex;width:34px;height:34px;border-radius:50%;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:13px;margin-right:8px;flex:none}
+/* swot */
+.swot .card h3{margin-top:0}
+.swot ul{margin:0;padding-left:18px}
+.s-s{border-top:5px solid var(--green)} .s-w{border-top:5px solid var(--red)} .s-o{border-top:5px solid var(--blue)} .s-t{border-top:5px solid var(--amber)}
+/* cycle */
+#cycleSvg{width:100%;max-width:420px;display:block;margin:0 auto}
+.tl{position:relative;overflow-x:auto;padding:8px 0}
+.tl-inner{position:relative;min-width:860px;height:150px}
+.tl-line{position:absolute;left:10px;right:10px;top:70px;height:4px;background:var(--line);border-radius:2px}
+.tl-ev{position:absolute;top:0;width:150px;transform:translateX(-50%);text-align:center;font-size:12px}
+.tl-ev .dot{width:16px;height:16px;border-radius:50%;margin:62px auto 6px;border:3px solid #fff;box-shadow:0 0 0 2px var(--brand);background:var(--brand)}
+.tl-ev .d{font-weight:800;color:var(--navy);position:absolute;top:30px;left:0;right:0}
+/* self check */
+.scg{border:1px solid var(--line);border-radius:12px;margin-bottom:12px;overflow:hidden}
+.scg h4{margin:0;padding:10px 14px;background:var(--bg2);display:flex;justify-content:space-between;gap:8px;align-items:center}
+.scg .items{padding:6px 14px 12px}
+.scg label{display:flex;gap:10px;align-items:flex-start;padding:8px 0;border-bottom:1px dashed var(--line);cursor:pointer}
+.scg label:last-child{border-bottom:0}
+.scg input[type=checkbox]{width:18px;height:18px;margin-top:2px;accent-color:var(--brand);flex:none}
+.scg .data{display:block;color:var(--mute);font-size:12.5px}
+.bar{height:9px;background:var(--bg2);border-radius:99px;overflow:hidden;min-width:120px}
+.bar i{display:block;height:100%;background:var(--brand);width:0;transition:width .3s}
+.btn{border:1px solid var(--line);background:#fff;border-radius:10px;padding:7px 12px;font-weight:600;cursor:pointer;font-family:inherit;font-size:13px}
+.btn.pri{background:var(--brand);border-color:var(--brand);color:#fff}
+.sugg button{margin:3px;font-size:12px;padding:4px 9px;border-radius:999px}
+input[type=text],textarea{font-family:inherit;font-size:14px;border:1px solid var(--line);border-radius:10px;padding:8px 10px;width:100%}
+/* management */
+.person{display:flex;gap:12px;align-items:flex-start}
+.avatar{width:46px;height:46px;border-radius:50%;background:var(--navy);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;flex:none}
+/* socrates */
+.q{border:1px solid var(--line);border-radius:12px;padding:12px 14px;margin-bottom:10px}
+.opts button{display:block;width:100%;text-align:left;margin:6px 0;padding:8px 10px;border:1px solid var(--line);border-radius:10px;background:#fff;cursor:pointer;font-family:inherit;font-size:14px}
+.opts button.ok{background:var(--green2);border-color:var(--green)}
+.opts button.bad{background:var(--red2);border-color:var(--red)}
+.fb{font-size:13.5px;margin-top:6px}
+/* CB badge + disclaimer */
+#cbBadge{position:fixed;right:16px;bottom:16px;z-index:60;width:54px;height:54px;border-radius:50%;background:var(--brand);color:#fff;font-weight:800;font-size:18px;border:3px solid #fff;box-shadow:0 4px 14px rgba(232,112,26,.45);cursor:pointer;animation:blink 2.2s ease-in-out infinite;font-family:Inter,sans-serif}
+@keyframes blink{0%,100%{box-shadow:0 0 0 0 rgba(232,112,26,.55)}50%{box-shadow:0 0 0 10px rgba(232,112,26,0)}}
+#discl{position:fixed;right:16px;bottom:82px;z-index:61;max-width:360px;width:calc(100% - 32px);background:#fff;border:1px solid var(--line);border-radius:14px;padding:14px 16px;box-shadow:0 10px 30px rgba(20,30,50,.18);display:none;font-size:13px}
+#discl.on{display:block}
+/* CB Assist */
+#asBtn{position:fixed;right:82px;bottom:22px;z-index:60;border-radius:999px;background:var(--navy);color:#fff;border:0;padding:10px 14px;font-weight:700;cursor:pointer;box-shadow:0 4px 14px rgba(31,59,99,.35);font-family:inherit;font-size:13px}
+#asPanel{position:fixed;right:16px;bottom:82px;z-index:62;width:min(380px,calc(100% - 32px));height:min(520px,70vh);background:#fff;border:1px solid var(--line);border-radius:16px;box-shadow:0 12px 34px rgba(20,30,50,.22);display:none;flex-direction:column;overflow:hidden}
+#asPanel.on{display:flex}
+#asHead{background:var(--navy);color:#fff;padding:10px 14px;display:flex;justify-content:space-between;align-items:center;font-weight:700}
+#asHead button{background:transparent;color:#fff;border:0;font-size:18px;cursor:pointer}
+#asLog{flex:1;overflow-y:auto;padding:10px 12px;background:var(--bg2)}
+.msg{max-width:88%;padding:8px 11px;border-radius:12px;margin:6px 0;font-size:13.5px;white-space:pre-line}
+.msg.u{background:var(--navy);color:#fff;margin-left:auto;border-bottom-right-radius:4px}
+.msg.b{background:#fff;border:1px solid var(--line);border-bottom-left-radius:4px}
+#asIn{display:flex;gap:6px;padding:8px;border-top:1px solid var(--line)}
+#asIn input{flex:1}
+#asMic{width:42px;border-radius:10px;border:1px solid var(--line);background:#fff;cursor:pointer;font-size:18px}
+#asMic.rec{background:var(--red2);border-color:var(--red);animation:blink 1s infinite}
+.qchips{padding:4px 8px;display:flex;gap:6px;flex-wrap:wrap;border-top:1px solid var(--line)}
+.qchips button{font-size:11.5px;border:1px solid var(--line);background:#fff;border-radius:999px;padding:3px 8px;cursor:pointer;font-family:inherit}
+@media (max-width:600px){
+  .kpi .val{font-size:20px}
+  h2{font-size:18px}
+  th:first-child,td:first-child{min-width:150px}
+  #asBtn{right:78px;bottom:22px;padding:9px 11px}
+}
+</style>
+</head>
+<body>
+<div class="wm">CB Research</div>
+<header>
+  <div class="hwrap">
+    <div class="logo">CB</div>
+    <div class="htitle">
+      <h1 id="hTitle">UltraTech Cement — Q2 FY27 Business &amp; Investment Analysis</h1>
+      <div class="sub" id="hSub">Quarter ended 30-Sep-2026 · Results 19-Oct-2026 · NSE: ULTRACEMCO · BSE: 532538 · Prepared 21-Oct-2026, 10:26 IST</div>
+    </div>
+    <div class="lang"><button id="bEN" class="on">English</button><button id="bTA">தமிழ்</button></div>
+  </div>
+  <nav class="tabs" id="tabs"></nav>
+</header>
+<main id="main"></main>
+
+<button id="asBtn">🎙 CB Assist</button>
+<div id="asPanel" role="dialog" aria-label="CB Assist">
+  <div id="asHead"><span id="asTitle">CB Assist — ask by voice or text</span><button id="asClose" aria-label="Close">×</button></div>
+  <div id="asLog"></div>
+  <div class="qchips" id="asChips"></div>
+  <div id="asIn"><input type="text" id="asText" placeholder="Ask about UltraTech Q2…"><button id="asMic" title="Speak">🎤</button><button class="btn pri" id="asSend">➤</button></div>
+</div>
+<button id="cbBadge" aria-label="Disclaimer">CB</button>
+<div id="discl"></div>
+<script>
+/* ============ MACHINE-READABLE COMPANY DATA (CB Research standard) ============ */
+var CO = {
+  name:"UltraTech Cement Ltd", nse:"ULTRACEMCO", bse:"532538", quarter:"Q2FY27", qEnd:"30-Sep-2026", resultsDate:"19-Oct-2026",
+  group:"Aditya Birla Group (promoter: Grasim Industries)", unit:"₹ crore (consolidated) unless stated",
+  refPrice:10680, refPriceNote:"approx. traded level on 19-Oct-2026 after results",
+  sharesCr:29.468, week52:{lo:10325,hi:13110}, ret1y:-10.6,
+  q:["Q2FY26","Q3FY26","Q4FY26","Q1FY27","Q2FY27"],
+  rev:[19607,21830,25799,24648,23295],
+  ebitda:[3268,4051,5688,5146,3832],
+  pat:[1238,1729,3000,2599,1501],
+  ebitdaT:[914,1051,1253,1214,974], ebitdaTflag:[0,0,1,0,0],
+  domVol:[31.58,36.37,42.41,39.20,35.94],
+  util:[66,77,null,81,71],
+  cur:{rev:23295.07, netSales:23024, pbidt:3832, opEbitda:3721, pbt:2058.58, pat:1501.38, patOwners:1493.77,
+       domVol:35.94, consVol:38.22, util:71, ebitdaT:974, capDom:204.7, capCons:210.1,
+       netDebt:23536, grossDebt:28411, treasury:4875, ndEbitda:1.26, h1Ocf:6181, h1Capex:5882, h1Fcfe:388,
+       premiumShare:37, blendedShare:67.3, greenPower:48, rmcRoce:34},
+  prevY:{rev:19606.93, netSales:19371, pbidt:3268, opEbitda:3094, pbt:1656, pat:1237.98, domVol:31.58, consVol:33.85, util:66, ebitdaT:914},
+  prevQ:{rev:24648.20, netSales:24465, pbidt:5146, opEbitda:5016, pbt:3480.43, pat:2599.28, domVol:39.20, consVol:41.31, util:81, ebitdaT:1214, netDebt:15900, ndEbitda:0.87},
+  seg:[ {k:"grey", v:18603, g:16.0}, {k:"white", v:693, g:12.2}, {k:"rmc", v:2338, g:29.1}, {k:"chem", v:421, g:48.4}, {k:"ovs", v:1302, g:27.2} ],
+  costT:{lbl:["logistics","fuel","rm","power","packing"], prev:[1136,904,677,382,166], cur:[1136,1030,718,337,216]},
+  regions:[{k:"North",g:">20%"},{k:"South",g:"15–20%"},{k:"West",g:"~10%"},{k:"Central",g:"~10%"},{k:"East",g:"~5%"}],
+  icl:{rev:1142, vol:2.83, volG:16.2, ebitda:148, ebitdaG:34.3, ebitdaT:510, ebitdaTchg:177, pat:38.85},
+  capacity:{lbl:["Mar-26","Jun-26","Sep-26","Mar-27E","Mar-28E"], v:[191.4,200.1,204.7,207,237]},
+  wc:{yrs:["FY23","FY24","FY25","FY26"], debtor:[22,22,28,25], inv:[248,255,255,206], pay:[271,260,248,217], ccc:[0,17,35,13], wcd:[-56,-52,-64,-41]},
+  cfo:{lbl:["FY25","FY26","H1FY27"], ocf:[10673,15316,6181], ebitda:[13332,17598,8978], flag:[1,0,0]},
+  fy26:{netSales:87384, pbidt:17598, pat:8166, netWorth:80712, capex:9600, de:0.28, dps:240},
+  share:{asOf:"Jun-26", promoter:59.33, dii:19.69, fii:12.86, pub:5.58, other:2.54},
+  fiiTrend:{lbl:["Jun-25","Sep-25","Dec-25","Mar-26","Jun-26"], fii:[15.72,15.82,14.93,14.11,12.86], dii:[16.85,16.65,17.45,18.42,19.69]},
+  peers:[ {n:"UltraTech", mc:319628, pe:37.4, pb:4.04, roe:11.6}, {n:"Ambuja Cements", mc:91193, pe:20.8, pb:1.52, roe:9.05},
+          {n:"Shree Cement", mc:78630, pe:48.2, pb:3.30, roe:7.13}, {n:"JK Cement", mc:37306, pe:39.5, pb:5.10, roe:14.45} ],
+  analysts:[
+    {b:"Nomura", r:"Buy", tp:13700, d:"21-Oct-26", n:{en:"Cut from ₹13,900 after Q2", ta:"Q2-க்கு அப்புறம் ₹13,900-ல இருந்து குறைச்சாங்க"}},
+    {b:"Prabhudas Lilladher", r:"n/a", tp:14623, d:"21-Oct-26", n:{en:"Assumes 12% volume & 14% EBITDA CAGR to FY29", ta:"FY29 வரை வால்யூம் 12%, EBITDA 14% வளர்ச்சின்னு கணக்கு"}},
+    {b:"Nuvama", r:"Buy", tp:15209, d:"14-Oct-26", n:{en:"Raised from ₹14,502 (pre-results)", ta:"ரிசல்ட்டுக்கு முன்னாடி ₹14,502-ல இருந்து உயர்த்தினாங்க"}},
+    {b:"HSBC", r:"Buy", tp:14200, d:"Sep-26", n:{en:"Retained Buy", ta:"Buy-யை தொடர்ந்தாங்க"}},
+    {b:"Jefferies", r:"Buy", tp:14065, d:"Sep-26", n:{en:"Post-Q2 revision reported; new figure not verified", ta:"Q2-க்கு அப்புறம் மாத்தியிருக்காங்க; புது எண் உறுதி ஆகல"}},
+    {b:"Citi", r:"Buy", tp:14750, d:"Jul-26", n:{en:"Post-Q2 revision reported; new figure not verified", ta:"Q2-க்கு அப்புறம் மாத்தியிருக்காங்க; புது எண் உறுதி ஆகல"}},
+    {b:"Motilal Oswal", r:"Buy", tp:13800, d:"03-Sep-26", n:{en:"18x FY28E EV/EBITDA", ta:"FY28E EV/EBITDA 18 மடங்கு"}},
+    {b:"ICICI Direct", r:"Buy", tp:13880, d:"21-Jul-26", n:{en:"Post-Q1 view", ta:"Q1-க்கு அப்புறம் சொன்னது"}},
+    {b:"JPMorgan", r:"Overweight", tp:13300, d:"Jul-26", n:{en:"Post-Q1 view", ta:"Q1-க்கு அப்புறம் சொன்னது"}},
+    {b:"ICICI Securities", r:"Hold", tp:12138, d:"04-Sep-26", n:{en:"Only Hold in this list", ta:"இந்த லிஸ்ட்ல இது மட்டும் Hold"}}
+  ],
+  consensusTP:13730, consensusN:32,
+  pillars:[
+    {k:"g", s:8.5}, {k:"m", s:6.5}, {k:"d", s:7.0}, {k:"v", s:5.5}, {k:"t", s:4.0}, {k:"r", s:8.0}
+  ],
+  cycle:{type:"Commodity / spread", sectorPhase:"P3", sectorScore:70, stockStage:"Stage 4 (base may be forming)",
+         sub:{life:75, earn:50, val:55, price:15}, stockScore:49, cy:60},
+  triggers:[
+    {k:"price", sign:"+", I:3, C:1.0, W:1.0, P:1.0, st:"Executing"},
+    {k:"volt", sign:"+", I:4, C:0.7, W:0.7, P:1.0, st:"Executing"},
+    {k:"cap", sign:"+", I:3, C:0.7, W:0.7, P:1.0, st:"Approved"},
+    {k:"icl", sign:"+", I:2, C:0.7, W:0.4, P:1.0, st:"Executing"},
+    {k:"fuel", sign:"−", I:3, C:1.0, W:1.0, P:0.7, st:"Executing"},
+    {k:"glut", sign:"−", I:3, C:0.4, W:0.7, P:0.7, st:"Watch"},
+    {k:"lev", sign:"−", I:1, C:1.0, W:1.0, P:0.7, st:"Executing"}
+  ],
+  tg:74
+};
+CO.mcap = Math.round(CO.refPrice*CO.sharesCr);            // ≈ ₹3,14,718 cr
+CO.ttmPat = 1725.40+2982.76+2599.28+1493.77;                 // owners' share, Q3FY26–Q2FY27
+CO.ttmEps = CO.ttmPat/CO.sharesCr;
+CO.pe = CO.refPrice/CO.ttmEps;
+CO.ttmEbitda = 4051+5688+5146+3832;
+CO.ev = CO.mcap + CO.cur.netDebt;
+CO.evEbitda = CO.ev/CO.ttmEbitda;
+CO.evT = CO.ev/CO.cur.capCons*10;                            // ₹ per tonne (cr/MT ×10 = ₹'000/t ×1000)
+CO.bvps = CO.fy26.netWorth/CO.sharesCr;
+CO.pb = CO.refPrice/CO.bvps;
+CO.dy = CO.fy26.dps/CO.refPrice*100;
+CO.upside = (CO.consensusTP/CO.refPrice-1)*100;
+CO.realT = CO.cur.netSales/CO.cur.consVol*10;                // ₹/t ≈ 6,024
+CO.realTprev = CO.prevY.netSales/CO.prevY.consVol*10;
+
+/* ============ BILINGUAL TEXT ============ */
+var TX = {
+ title:{en:"UltraTech Cement — Q2 FY27 Business & Investment Analysis", ta:"அல்ட்ராடெக் சிமெண்ட் — Q2 FY27 பிசினஸ் & முதலீட்டு அலசல்"},
+ sub:{en:"Quarter ended 30-Sep-2026 · Results 19-Oct-2026 · NSE: ULTRACEMCO · BSE: 532538 · Prepared 21-Oct-2026, 10:26 IST",
+      ta:"30-செப்-2026 முடிஞ்ச காலாண்டு · ரிசல்ட் 19-அக்-2026 · NSE: ULTRACEMCO · BSE: 532538 · தயாரிச்சது 21-அக்-2026, காலை 10:26"},
+ tabs:[
+  {id:"dash",en:"Dashboard",ta:"டாஷ்போர்டு"},
+  {id:"bm",en:"Business Model",ta:"பிசினஸ் மாடல்"},
+  {id:"fin",en:"Financials",ta:"நிதி நிலை"},
+  {id:"cf",en:"Cash Flow & Working Capital",ta:"கேஷ் ஃப்ளோ & வொர்க்கிங் கேப்பிட்டல்"},
+  {id:"val",en:"Valuations",ta:"மதிப்பீடு"},
+  {id:"mkt",en:"Market Activity",ta:"பங்கு விலை நகர்வு"},
+  {id:"tc",en:"Triggers & Cycle",ta:"ட்ரிக்கர்ஸ் & சைக்கிள்"},
+  {id:"pil",en:"CB Score – 6 Pillars",ta:"CB ஸ்கோர் – 6 தூண்கள்"},
+  {id:"swot",en:"SWOT",ta:"SWOT"},
+  {id:"an",en:"Analysts' Rating",ta:"அனலிஸ்ட் ரேட்டிங்"},
+  {id:"sc",en:"Self-check",ta:"சுய சோதனை"},
+  {id:"mg",en:"Management & Board",ta:"நிர்வாகம் & போர்டு"},
+  {id:"soc",en:"Cauvery Socrates",ta:"காவேரி சாக்ரடீஸ்"}
+ ],
+ hero:{en:"Volumes beat the industry and profit grew 21% — but fuel costs squeezed per-tonne margins in a monsoon quarter. October price hikes are now the lever to watch.",
+       ta:"இண்டஸ்ட்ரியை விட அதிகமா விற்பனை, லாபம் 21% ஏறிச்சு — ஆனா மழைக்கால காலாண்டுல எரிபொருள் செலவு டன்னுக்கான லாபத்தை கசக்கிடுச்சு. அக்டோபர் விலை ஏற்றம் தான் இப்போ கவனிக்க வேண்டியது."},
+ ktTitle:{en:"Key takeaways this quarter",ta:"இந்த காலாண்டோட முக்கிய விஷயங்கள்"},
+ kt:[
+  {c:"pos",en:["Market share gain","Domestic grey cement volume +13.8% YoY to 35.94 MT vs industry ~10%. North grew >20%, South 15–20%."],
+           ta:["மார்க்கெட் ஷேர் கூடிச்சு","உள்நாட்டு கிரே சிமெண்ட் விற்பனை 13.8% ஏறி 35.94 மில்லியன் டன்; இண்டஸ்ட்ரி சுமார் 10% தான். வடக்குல 20%-க்கு மேல, தெற்குல 15–20%."]},
+  {c:"pos",en:["Profit up 21% YoY","PAT ₹1,501 cr (+21.3%); revenue ₹23,295 cr (+18.8%); operating EBITDA ₹3,721 cr (+20.3%)."],
+           ta:["லாபம் 21% ஏறிச்சு","நிகர லாபம் ₹1,501 கோடி (+21.3%); வருமானம் ₹23,295 கோடி (+18.8%); ஆப்பரேட்டிங் EBITDA ₹3,721 கோடி (+20.3%)."]},
+  {c:"neg",en:["But below Street, and down 42% QoQ","Profit missed estimates by ~5% on higher input, staff, finance, power and freight costs. QoQ fall is mostly the monsoon season."],
+           ta:["ஆனா எதிர்பார்ப்பை விட குறைவு, முந்தைய காலாண்டை விட 42% இறக்கம்","செலவுகள் ஏறினதால அனலிஸ்ட் எதிர்பார்ப்பை விட சுமார் 5% குறைவு. காலாண்டு இறக்கம் பெரும்பாலும் மழைக்காலம் தான் காரணம்."]},
+  {c:"neu",en:["EBITDA/tonne ₹974","+₹60 YoY but −₹240 QoQ. Fuel cost/t +14% YoY, packing bags +30%; power cost/t fell 12% on green power."],
+           ta:["டன்னுக்கு EBITDA ₹974","போன வருஷத்தை விட ₹60 அதிகம், ஆனா முந்தைய காலாண்டை விட ₹240 குறைவு. எரிபொருள் செலவு டன்னுக்கு 14% ஏறிச்சு, பை செலவு 30%; கிரீன் பவரால மின் செலவு 12% குறைஞ்சுது."]},
+  {c:"pos",en:["Operating leverage working","Other fixed cost per tonne −6% YoY: absolute fixed cost rose only 4% while volume rose 13.8%."],
+           ta:["ஆப்பரேட்டிங் லெவரேஜ் வேலை செய்யுது","நிலையான செலவு டன்னுக்கு 6% குறைஞ்சுது: விற்பனை 13.8% ஏறினப்போ மொத்த நிலையான செலவு 4% தான் ஏறிச்சு."]},
+  {c:"pos",en:["Prices turned up in Sep–Oct","Trade prices +7–10% m-o-m in late Sep; spot realisation ~5% above Q2 average — the main H2 margin lever."],
+           ta:["செப்–அக்ல விலை ஏறிச்சு","செப் கடைசில மூட்டை விலை மாசத்துக்கு 7–10% ஏறிச்சு; இப்போ விலை Q2 சராசரியை விட சுமார் 5% அதிகம் — அடுத்த 6 மாச லாபத்துக்கு இது தான் முக்கியம்."]},
+  {c:"neg",en:["Net debt up to ₹23,536 cr","From ₹16,620 cr in Mar-26: ₹240/share special dividend (~₹7,072 cr) + ₹5,882 cr H1 capex. Net debt/EBITDA 1.26x; guided below 1x by Mar-27."],
+           ta:["நிகர கடன் ₹23,536 கோடி ஆச்சு","மார்ச்ல ₹16,620 கோடி; ₹240 ஸ்பெஷல் டிவிடெண்ட் (சுமார் ₹7,072 கோடி) + முதல் அரையாண்டு கேபெக்ஸ் ₹5,882 கோடி. கடன்/EBITDA 1.26 மடங்கு; மார்ச் 2027-க்குள் 1-க்கு கீழ கொண்டு வருவோம்னு சொல்றாங்க."]},
+  {c:"pos",en:["Capacity 210.1 MTPA, road to 240","4.6 MTPA commissioned in Sep (3.6 MT greenfield Petnikota, AP). Domestic 204.7 MTPA. Plans beyond 240 to be detailed by FY27-end."],
+           ta:["210.1 MTPA கொள்ளளவு, 240 நோக்கி","செப்ல 4.6 MTPA ஆரம்பிச்சாங்க (ஆந்திரா பெட்னிகோட்டா 3.6 MT புது ஆலை). உள்நாட்டு கொள்ளளவு 204.7. 240-க்கு மேல திட்டம் FY27 கடைசில சொல்வாங்க."]},
+  {c:"pos",en:["Ultravolt wires & cables launched","Launched 3-Sep-26; ₹1,100 cr of ₹1,800 cr capex spent; 80,000+ retail points. Revenue potential raised to ₹16–18k cr at maturity on current copper prices."],
+           ta:["அல்ட்ராவோல்ட் வயர் & கேபிள் ஆரம்பம்","3-செப்-26 அன்னிக்கு ஆரம்பிச்சாங்க; ₹1,800 கோடில ₹1,100 கோடி செலவு ஆச்சு; 80,000-க்கு மேல கடைகள். இப்போ இருக்கிற காப்பர் விலைல முழு அளவுல ₹16–18 ஆயிரம் கோடி வருமானம் வரலாம்னு சொல்றாங்க."]},
+  {c:"pos",en:["RMC and chemicals growing fast","Ready-mix revenue +29% to ₹2,338 cr with 34% ROCE; construction chemicals +48%."],
+           ta:["RMC, கெமிக்கல்ஸ் வேகமா வளருது","ரெடி-மிக்ஸ் வருமானம் 29% ஏறி ₹2,338 கோடி, ROCE 34%; கட்டுமான கெமிக்கல்ஸ் 48% ஏறிச்சு."]},
+  {c:"pos",en:["India Cements turnaround on track","ICL volume +16%, EBITDA/t ₹510 (+₹177 YoY), PAT ₹39 cr. Target ₹1,000/t by Q4FY28."],
+           ta:["இந்தியா சிமெண்ட்ஸ் மீண்டு வருது","ICL விற்பனை 16% ஏறிச்சு, டன்னுக்கு EBITDA ₹510 (₹177 அதிகம்), லாபம் ₹39 கோடி. Q4FY28-க்குள் டன்னுக்கு ₹1,000 இலக்கு."]},
+  {c:"neu",en:["Leadership transition","Jayant Dua becomes MD on 1-Jan-27; K C Jhanwar moves to non-executive Vice Chairman."],
+           ta:["தலைமை மாற்றம்","ஜனவரி 1, 2027 முதல் ஜெயந்த் துவா MD; கே.சி. ஜன்வார் நான்-எக்ஸிக்யூட்டிவ் வைஸ் சேர்மன் ஆகிறார்."]}
+ ],
+ kpi:{rev:{en:"Revenue from ops",ta:"செயல்பாட்டு வருமானம்"}, ebitda:{en:"EBITDA (PBIDT)",ta:"EBITDA (PBIDT)"}, pat:{en:"Net profit (PAT)",ta:"நிகர லாபம்"},
+      vol:{en:"Domestic grey volume",ta:"உள்நாட்டு கிரே விற்பனை"}, et:{en:"Op. EBITDA / tonne",ta:"டன்னுக்கு EBITDA"}, util:{en:"Capacity utilisation",ta:"கொள்ளளவு பயன்பாடு"},
+      nd:{en:"Net debt",ta:"நிகர கடன்"}, cap:{en:"Grey capacity (consol.)",ta:"மொத்த கொள்ளளவு"}},
+ yoy:{en:"YoY",ta:"வருடத்துக்கு"}, qoq:{en:"QoQ",ta:"காலாண்டுக்கு"},
+ cr:{en:"cr",ta:"கோடி"}, mt:{en:"MT",ta:"மி.டன்"},
+ dashCharts:{en:"Five-quarter trend",ta:"5 காலாண்டு போக்கு"},
+ chRevEb:{en:"Revenue & EBITDA (₹ cr) with EBITDA margin",ta:"வருமானம் & EBITDA (₹ கோடி), EBITDA மார்ஜின்"},
+ chPat:{en:"Net profit (₹ cr)",ta:"நிகர லாபம் (₹ கோடி)"},
+ chEt:{en:"Operating EBITDA per tonne (₹) & domestic volume (MT)",ta:"டன்னுக்கு EBITDA (₹) & உள்நாட்டு விற்பனை (மி.டன்)"},
+ lRev:{en:"Revenue",ta:"வருமானம்"}, lEb:{en:"EBITDA",ta:"EBITDA"}, lMar:{en:"EBITDA margin %",ta:"EBITDA மார்ஜின் %"}, lPat:{en:"PAT",ta:"நிகர லாபம்"},
+ lEt:{en:"EBITDA/t (₹)",ta:"டன்னுக்கு EBITDA (₹)"}, lVol:{en:"Domestic volume (MT)",ta:"உள்நாட்டு விற்பனை (மி.டன்)"},
+ noteQ4:{en:"Q4FY26 EBITDA/t (≈₹1,253) is derived from Q1FY27's reported 3.1% QoQ decline; marked † elsewhere.",ta:"Q4FY26 டன்னுக்கு EBITDA (சுமார் ₹1,253) Q1FY27-ல சொன்ன 3.1% இறக்கத்துல இருந்து கணக்கிட்டது (†)."}
+};
+</script>
+<script>
+/* ============ BUSINESS MODEL MAP ============ */
+var BM = {
+ title:{en:"How UltraTech makes money — tap any box",ta:"அல்ட்ராடெக் எப்படி சம்பாதிக்குது — எந்த பெட்டியையும் தொடுங்க"},
+ formula:{en:"Revenue ≈ Cement volume (MT) × Realisation (₹/tonne) + RMC + White cement & putty + Chemicals + Overseas (+ Ultravolt from Q3FY27). Q2: 38.22 MT × ≈₹6,024/t ≈ ₹23,024 cr net sales.",
+          ta:"வருமானம் ≈ சிமெண்ட் விற்பனை (மி.டன்) × டன்னுக்கு விலை (₹) + RMC + வெள்ளை சிமெண்ட் & புட்டி + கெமிக்கல்ஸ் + வெளிநாடு (+ Q3FY27 முதல் அல்ட்ராவோல்ட்). Q2: 38.22 மி.டன் × சுமார் ₹6,024 ≈ ₹23,024 கோடி."},
+ nodes:{
+  c1:{t:{en:"Home builders (trade)",ta:"வீடு கட்டுறவங்க (டிரேட்)"}, s:{en:"Bags via dealers",ta:"டீலர் வழியா மூட்டை"},
+      x:{en:"Individual house builders buy bags from dealers. This 'trade' channel carries the brand premium. Management says retail demand is intact and trade ratios are being maintained even as volumes grow.",
+         ta:"தனி வீடு கட்டுறவங்க டீலர்கிட்ட மூட்டை வாங்குவாங்க. இந்த 'டிரேட்' வழியில தான் பிராண்டுக்கு கூடுதல் விலை கிடைக்கும். விற்பனை ஏறினாலும் டிரேட் பங்கு அதே அளவுல இருக்குன்னு நிர்வாகம் சொல்லுது."}},
+  c2:{t:{en:"Infra & institutional",ta:"இன்ஃப்ரா & நிறுவனங்கள்"}, s:{en:"Roads, metros, data centres",ta:"ரோடு, மெட்ரோ, டேட்டா சென்டர்"},
+      x:{en:"Bulk 'non-trade' buyers — highways, metros, ports, data centres, semiconductors, private capex. Management called demand strong through March 2029; non-trade prices rose even faster than trade in Sep–Oct.",
+         ta:"மொத்தமா வாங்குற 'நான்-டிரேட்' வாங்குபவர்கள் — ஹைவே, மெட்ரோ, துறைமுகம், டேட்டா சென்டர், செமிகண்டக்டர். மார்ச் 2029 வரை டிமாண்ட் நல்லா இருக்கும்னு சொல்றாங்க; செப்–அக்ல இவங்க விலை டிரேடை விட வேகமா ஏறிச்சு."}},
+  c3:{t:{en:"Builders & RMC users",ta:"பில்டர்ஸ் & RMC"}, s:{en:"Urban projects",ta:"நகர திட்டங்கள்"},
+      x:{en:"Urban developers buy ready-mix concrete delivered to site. Mumbai's construction boom and urban housing are cited as drivers.",
+         ta:"நகர பில்டர்ஸ் சைட்டுக்கே ரெடி-மிக்ஸ் கான்கிரீட் வாங்குவாங்க. மும்பை கட்டுமான வேகம், நகர வீட்டு வசதி இதுக்கு காரணம்."}},
+  c4:{t:{en:"Overseas buyers",ta:"வெளிநாட்டு வாங்குபவர்கள்"}, s:{en:"UAE, Bahrain, Sri Lanka",ta:"UAE, பஹ்ரைன், இலங்கை"},
+      x:{en:"Overseas cement (UAE operations incl. RAKWCT) — ₹1,302 cr revenue, +27.2% YoY, although overseas volume dipped 1.4% to 1.75 MT.",
+         ta:"வெளிநாட்டு சிமெண்ட் (UAE உட்பட) — வருமானம் ₹1,302 கோடி, 27.2% ஏற்றம்; ஆனா விற்பனை அளவு 1.4% குறைஞ்சு 1.75 மி.டன்."}},
+  d1:{t:{en:"Dealers & retailers",ta:"டீலர்ஸ் & கடைகள்"}, s:{en:"Pan-India network",ta:"இந்தியா முழுக்க"},
+      x:{en:"The dealer network is UltraTech's moat — Kesoram and India Cements brands were fully converted to 'UltraTech', and 1,500+ channel partners also signed up for Ultravolt wires.",
+         ta:"டீலர் நெட்வொர்க் தான் அல்ட்ராடெக்கோட பலம் — கேசோராம், இந்தியா சிமெண்ட்ஸ் பிராண்டுகளை முழுசா 'அல்ட்ராடெக்'-ஆ மாத்திட்டாங்க; அல்ட்ராவோல்ட் வயருக்கும் 1,500-க்கு மேல பார்ட்னர்கள் சேர்ந்தாங்க."}},
+  d2:{t:{en:"UltraTech Building Solutions",ta:"UBS கடைகள்"}, s:{en:"One-stop stores",ta:"எல்லாம் ஒரே இடத்துல"},
+      x:{en:"Branded one-stop stores selling cement plus building products (putty, chemicals, now wires). They make cross-selling of new categories cheap.",
+         ta:"சிமெண்ட், புட்டி, கெமிக்கல்ஸ், இப்போ வயர் — எல்லாம் விக்கிற பிராண்டட் கடைகள். புது பொருளை கூடுதல் செலவில்லாம விக்க இது உதவுது."}},
+  d3:{t:{en:"Direct / project sales",ta:"நேரடி / ப்ராஜெக்ட் விற்பனை"}, s:{en:"Bulk contracts",ta:"மொத்த ஒப்பந்தம்"},
+      x:{en:"Direct supply to large projects and institutions; usually lower price per bag than trade but large, steady volumes.",
+         ta:"பெரிய ப்ராஜெக்ட்களுக்கு நேரடியா சப்ளை; மூட்டைக்கு விலை கொஞ்சம் குறைவு, ஆனா நிறைய, நிலையான விற்பனை."}},
+  d4:{t:{en:"485 RMC plants",ta:"485 RMC ஆலைகள்"}, s:{en:"179 cities",ta:"179 நகரங்கள்"},
+      x:{en:"India's largest ready-mix network: 485 plants in 179 cities; 4.65 mn m³ sold in Q2 (+23%).",
+         ta:"இந்தியாவோட பெரிய ரெடி-மிக்ஸ் நெட்வொர்க்: 179 நகரங்கள்ல 485 ஆலைகள்; Q2-ல 4.65 மில்லியன் கன மீட்டர் (23% ஏற்றம்)."}},
+  co:{t:{en:"UltraTech Cement",ta:"அல்ட்ராடெக் சிமெண்ட்"}, s:{en:"210.1 MTPA · 38.22 MT sold",ta:"210.1 MTPA · 38.22 மி.டன் விற்பனை"},
+      x:{en:"India's largest cement maker and the largest outside China: 210.1 MTPA consolidated grey capacity (204.7 MTPA domestic). Pan-India plants mean shorter lead distance (down 8 km YoY) and lower freight per tonne.",
+         ta:"இந்தியாவோட பெரிய சிமெண்ட் கம்பெனி, சீனாவுக்கு வெளியே உலகத்துலயே பெரியது: மொத்த கொள்ளளவு 210.1 MTPA (உள்நாட்டுல 204.7). இந்தியா முழுக்க ஆலைகள் இருக்கிறதால லாரி தூரம் குறைவு (8 கி.மீ குறைஞ்சுது), டன்னுக்கு போக்குவரத்து செலவும் குறைவு."}},
+  s1:{t:{en:"Grey cement (India)",ta:"கிரே சிமெண்ட் (இந்தியா)"}, seg:0,
+      x:{en:"The core: ₹18,603 cr (+16% YoY), about 80% of segment revenue. 35.94 MT sold; premium products 37% and blended cement 67.3% of mix. Includes India Cements (₹1,142 cr).",
+         ta:"முக்கிய வியாபாரம்: ₹18,603 கோடி (16% ஏற்றம்), மொத்தத்துல சுமார் 80%. 35.94 மி.டன் விற்பனை; பிரீமியம் 37%, பிளெண்டட் சிமெண்ட் 67.3%. இந்தியா சிமெண்ட்ஸ் (₹1,142 கோடி) இதுக்குள்ள தான்."}},
+  s2:{t:{en:"White cement & putty",ta:"வெள்ளை சிமெண்ட் & புட்டி"}, seg:1,
+      x:{en:"Birla White brand: ₹693 cr (+12.2%), volume 0.52 MT (+2.6%). Higher price per tonne, consumer-style brand.",
+         ta:"பிர்லா ஒயிட் பிராண்ட்: ₹693 கோடி (12.2% ஏற்றம்), விற்பனை 0.52 மி.டன். டன்னுக்கு விலை அதிகம், கன்ஸ்யூமர் பிராண்ட் மாதிரி."}},
+  s3:{t:{en:"Ready-mix concrete",ta:"ரெடி-மிக்ஸ் கான்கிரீட்"}, seg:2,
+      x:{en:"₹2,338 cr (+29.1%) with 34% ROCE — growth that does not dilute returns.",
+         ta:"₹2,338 கோடி (29.1% ஏற்றம்), ROCE 34% — வளர்ச்சியும் இருக்கு, லாப விகிதமும் குறையல."}},
+  s4:{t:{en:"Construction chemicals",ta:"கட்டுமான கெமிக்கல்ஸ்"}, seg:3,
+      x:{en:"₹421 cr (+48.4%): waterproofing, tile adhesives, admixtures sold through the same channel.",
+         ta:"₹421 கோடி (48.4% ஏற்றம்): வாட்டர்ப்ரூஃபிங், டைல் ஒட்டும் பசை போன்றவை, அதே கடைகள் வழியா."}},
+  s5:{t:{en:"Overseas cement",ta:"வெளிநாட்டு சிமெண்ட்"}, seg:4,
+      x:{en:"₹1,302 cr (+27.2%) from UAE-based operations; small share but adds geographic spread.",
+         ta:"UAE ஆலைகள்ல இருந்து ₹1,302 கோடி (27.2% ஏற்றம்); சின்ன பங்கு தான், ஆனா புவியியல் பரவல் கொடுக்குது."}},
+  s6:{t:{en:"Ultravolt wires & cables",ta:"அல்ட்ராவோல்ட் வயர் & கேபிள்"}, seg:-1,
+      x:{en:"NEW. Launched 3-Sep-26 at Jhagadia, Gujarat (10.98 lakh km/yr; 78,000 t copper, 24,000 t aluminium use). Reported inside standalone; no separate revenue yet. Management: W&C earns ~22–23% ROCE vs ~13% for cement.",
+         ta:"புதுசு. 3-செப்-26 குஜராத் ஜகாடியாவுல ஆரம்பம் (வருஷத்துக்கு 10.98 லட்சம் கி.மீ; 78,000 டன் காப்பர், 24,000 டன் அலுமினியம்). இன்னும் தனியா வருமானம் காட்டல. வயர்-கேபிள்ல ROCE சுமார் 22–23%, சிமெண்ட்ல சுமார் 13%னு நிர்வாகம் சொல்லுது."}},
+  r1:{t:{en:"Net sales ₹23,024 cr",ta:"நிகர விற்பனை ₹23,024 கோடி"}, s:{en:"+18.9% YoY",ta:"18.9% ஏற்றம்"},
+      x:{en:"Consolidated net sales ₹23,024 cr (revenue from operations ₹23,295 cr incl. other operating income).",
+         ta:"மொத்த நிகர விற்பனை ₹23,024 கோடி (மற்ற செயல்பாட்டு வருமானத்தோட சேர்த்து ₹23,295 கோடி)."}},
+  r2:{t:{en:"Costs ≈ ₹19,303 cr",ta:"செலவு ≈ ₹19,303 கோடி"}, s:{en:"Freight, fuel, RM, power",ta:"போக்குவரத்து, எரிபொருள், மூலப்பொருள், மின்"},
+      x:{en:"Per tonne (domestic grey): logistics ₹1,136, fuel ₹1,030 (+14%), raw material ₹718 (+6%), power ₹337 (−12%), packing ₹216 (+30%). Power & fuel ₹5,511 cr (+24%), materials ₹4,208 cr (+24%), freight ₹4,810 cr (+16.5%).",
+         ta:"டன்னுக்கு: போக்குவரத்து ₹1,136, எரிபொருள் ₹1,030 (+14%), மூலப்பொருள் ₹718 (+6%), மின் ₹337 (−12%), பை ₹216 (+30%). மின் & எரிபொருள் ₹5,511 கோடி (+24%), மூலப்பொருள் ₹4,208 கோடி (+24%), போக்குவரத்து ₹4,810 கோடி (+16.5%)."}},
+  r3:{t:{en:"Op. EBITDA ₹3,721 cr",ta:"ஆப். EBITDA ₹3,721 கோடி"}, s:{en:"₹974 / tonne",ta:"டன்னுக்கு ₹974"},
+      x:{en:"Operating EBITDA ₹3,721 cr (+20.3%); with other income, PBIDT ₹3,832 cr (+17.3%), 16.6% of net sales.",
+         ta:"ஆப்பரேட்டிங் EBITDA ₹3,721 கோடி (20.3% ஏற்றம்); மற்ற வருமானம் சேர்த்து ₹3,832 கோடி (17.3%), நிகர விற்பனைல 16.6%."}},
+  r4:{t:{en:"PAT ₹1,501 cr",ta:"நிகர லாபம் ₹1,501 கோடி"}, s:{en:"+21.3% YoY",ta:"21.3% ஏற்றம்"},
+      x:{en:"After depreciation, interest (higher on ₹5,000 cr NCDs at 7.25%) and tax: PBT ₹2,059 cr (+24.3%), PAT ₹1,501 cr; owners' share ₹1,494 cr.",
+         ta:"தேய்மானம், வட்டி (7.25%-ல ₹5,000 கோடி NCD வாங்கினதால கொஞ்சம் அதிகம்), வரி போக: வரிக்கு முன் லாபம் ₹2,059 கோடி (24.3%), நிகர லாபம் ₹1,501 கோடி."}},
+  r5:{t:{en:"Shareholders & capex",ta:"பங்குதாரர்கள் & கேபெக்ஸ்"}, s:{en:"₹240/sh paid · ₹10k cr capex",ta:"₹240 டிவிடெண்ட் · ₹10 ஆயிரம் கோடி கேபெக்ஸ்"},
+      x:{en:"Cash goes back as dividends (₹240/share special for FY26, ~₹7,072 cr) and into capacity (FY27 capex guide ~₹10,000 cr; H1 ₹5,882 cr).",
+         ta:"பணம் டிவிடெண்டா (FY26-க்கு ₹240 ஸ்பெஷல், சுமார் ₹7,072 கோடி) பங்குதாரர்களுக்கு போகுது, மீதி புது ஆலைகளுக்கு (FY27 கேபெக்ஸ் சுமார் ₹10,000 கோடி; முதல் பாதில ₹5,882 கோடி)."}}
+ },
+ engine:{
+  title:{en:"Revenue engine — the drivers",ta:"வருமான இன்ஜின் — எது ஓட்டுது"},
+  head:{en:["Driver","Q2FY27","Change","What moves it"],ta:["காரணி","Q2FY27","மாற்றம்","எது பாதிக்கும்"]},
+  rows:[
+   {en:["Domestic grey volume","35.94 MT","+13.8% YoY","New capacity, housing & infra demand, monsoon"],ta:["உள்நாட்டு கிரே விற்பனை","35.94 மி.டன்","+13.8%","புது ஆலை, வீடு & இன்ஃப்ரா டிமாண்ட், மழை"]},
+   {en:["Blended realisation (net sales ÷ volume)","≈ ₹6,024/t †","≈ +5% YoY †","Price per bag, premium mix, regional mix"],ta:["சராசரி விலை (விற்பனை ÷ அளவு)","≈ ₹6,024/டன் †","≈ +5% †","மூட்டை விலை, பிரீமியம், பிராந்தியம்"]},
+   {en:["Premium product share","37%","—","Brand pull with home builders"],ta:["பிரீமியம் பங்கு","37%","—","வீடு கட்டுறவங்ககிட்ட பிராண்ட் மதிப்பு"]},
+   {en:["Capacity utilisation","71%","+5 pts YoY","Seasonality; Central/East ~60% on long monsoon"],ta:["கொள்ளளவு பயன்பாடு","71%","+5 புள்ளி","பருவம்; நீண்ட மழையால மத்திய/கிழக்கு சுமார் 60%"]},
+   {en:["RMC volume","4.65 mn m³","+23% YoY","Urban construction"],ta:["RMC அளவு","4.65 மி. கன மீ","+23%","நகர கட்டுமானம்"]},
+   {en:["Spot price vs Q2 average","≈ +5%","Oct-26","Price hikes after monsoon"],ta:["இப்போதைய விலை vs Q2 சராசரி","≈ +5%","அக்-26","மழைக்கு அப்புறம் விலை ஏற்றம்"]}
+  ],
+  note:{en:"† Derived by CB Research from reported net sales and consolidated volume; not a company-reported figure.",ta:"† அறிக்கைல இருக்கிற விற்பனை, அளவு வெச்சு CB ரிசர்ச் கணக்கிட்டது; கம்பெனி நேரடியா சொன்னது இல்ல."}
+ },
+ segTitle:{en:"Segment mix Q2FY27 (₹ cr, before inter-segment eliminations)",ta:"பிரிவு வாரியா Q2FY27 (₹ கோடி)"},
+ segName:{grey:{en:"Grey cement (India)",ta:"கிரே சிமெண்ட்"},white:{en:"White cement & putty",ta:"வெள்ளை சிமெண்ட்"},rmc:{en:"Ready-mix concrete",ta:"ரெடி-மிக்ஸ்"},chem:{en:"Construction chemicals",ta:"கெமிக்கல்ஸ்"},ovs:{en:"Overseas",ta:"வெளிநாடு"}},
+ geoTitle:{en:"Regional volume growth (domestic, YoY)",ta:"பிராந்திய விற்பனை வளர்ச்சி"},
+ region:{North:{en:"North",ta:"வடக்கு"},South:{en:"South",ta:"தெற்கு"},West:{en:"West",ta:"மேற்கு"},Central:{en:"Central",ta:"மத்திய"},East:{en:"East",ta:"கிழக்கு"}},
+ capTitle:{en:"Domestic grey capacity roadmap (MTPA)",ta:"உள்நாட்டு கொள்ளளவு திட்டம் (MTPA)"}
+};
+
+/* ============ FINANCIAL TABLE ============ */
+var FIN = {
+ title:{en:"Financial metrics — grouped by category",ta:"நிதி அளவீடுகள் — வகை வாரியா"},
+ head:{en:["Metric","Q2FY27","Q2FY26","YoY","Q1FY27","QoQ"],ta:["அளவீடு","Q2FY27","Q2FY26","வருடம்","Q1FY27","காலாண்டு"]},
+ cats:[
+  {c:{en:"Growth & Balance sheet",ta:"வளர்ச்சி & பேலன்ஸ் ஷீட்"}, rows:[
+   [{en:"Revenue from operations (₹ cr)",ta:"செயல்பாட்டு வருமானம் (₹ கோடி)"},23295,19607,24648,"n"],
+   [{en:"Net sales (₹ cr)",ta:"நிகர விற்பனை (₹ கோடி)"},23024,19371,24465,"n"],
+   [{en:"Domestic grey volume (MT)",ta:"உள்நாட்டு கிரே விற்பனை (மி.டன்)"},35.94,31.58,39.20,"d2"],
+   [{en:"Consolidated sales volume (MT)",ta:"மொத்த விற்பனை அளவு (மி.டன்)"},38.22,"33.85 †",41.31,"d2"],
+   [{en:"Consolidated grey capacity (MTPA)",ta:"மொத்த கொள்ளளவு (MTPA)"},210.1,"n/a",205.5,"d1"],
+   [{en:"Net debt (₹ cr)",ta:"நிகர கடன் (₹ கோடி)"},23536,"n/a","≈15,900","n"]
+  ]},
+  {c:{en:"Profitability",ta:"லாபத்தன்மை"}, rows:[
+   [{en:"EBITDA incl. other income – PBIDT (₹ cr)",ta:"EBITDA – PBIDT (₹ கோடி)"},3832,3268,5146,"n"],
+   [{en:"Operating EBITDA (₹ cr)",ta:"ஆப்பரேட்டிங் EBITDA (₹ கோடி)"},3721,3094,5016,"n"],
+   [{en:"PBIDT margin on net sales (%)",ta:"PBIDT மார்ஜின் (%)"},16.6,16.9,21.0,"p"],
+   [{en:"Operating EBITDA / tonne (₹)",ta:"டன்னுக்கு EBITDA (₹)"},974,914,1214,"n"],
+   [{en:"Profit before tax (₹ cr)",ta:"வரிக்கு முன் லாபம் (₹ கோடி)"},2059,"1,656 †",3480,"n"],
+   [{en:"Net profit – PAT (₹ cr)",ta:"நிகர லாபம் (₹ கோடி)"},1501,1238,2599,"n"],
+   [{en:"PAT margin on revenue (%)",ta:"நிகர லாப மார்ஜின் (%)"},6.4,6.3,10.5,"p"]
+  ]},
+  {c:{en:"Efficiency (domestic grey, ₹ per tonne)",ta:"திறன் (டன்னுக்கு ₹)"}, rows:[
+   [{en:"Logistics cost / t",ta:"போக்குவரத்து செலவு"},1136,"≈1,136 †",1149,"n"],
+   [{en:"Fuel cost / t",ta:"எரிபொருள் செலவு"},1030,"≈904 †",915,"n"],
+   [{en:"Raw material cost / t",ta:"மூலப்பொருள் செலவு"},718,"≈677 †",682,"n"],
+   [{en:"Power cost / t",ta:"மின் செலவு"},337,382,322,"n"],
+   [{en:"Packing bag cost / t",ta:"பை செலவு"},216,"≈166 †","n/a","n"],
+   [{en:"Other fixed cost / t – change YoY",ta:"நிலையான செலவு – மாற்றம்"},"−6%","—","—","t"]
+  ]},
+  {c:{en:"Asset quality (plants & businesses)",ta:"சொத்து தரம் (ஆலைகள்)"}, rows:[
+   [{en:"Capacity utilisation (%)",ta:"கொள்ளளவு பயன்பாடு (%)"},71,66,81,"p"],
+   [{en:"Green power share of mix (%)",ta:"கிரீன் பவர் பங்கு (%)"},48,"n/a",47,"p"],
+   [{en:"India Cements EBITDA / t (₹)",ta:"இந்தியா சிமெண்ட்ஸ் டன்னுக்கு EBITDA (₹)"},510,333,"≈603","n"],
+   [{en:"RMC return on capital employed (%)",ta:"RMC ROCE (%)"},34,"n/a","n/a","p"]
+  ]},
+  {c:{en:"Capital & Liquidity",ta:"மூலதனம் & பணப்புழக்கம்"}, rows:[
+   [{en:"Gross debt (₹ cr)",ta:"மொத்த கடன் (₹ கோடி)"},28411,"n/a","n/a","n"],
+   [{en:"Treasury surplus (₹ cr)",ta:"கையிருப்பு (₹ கோடி)"},4875,"n/a","n/a","n"],
+   [{en:"Net debt / EBITDA (x)",ta:"நிகர கடன் / EBITDA (மடங்கு)"},1.26,"n/a",0.87,"x"],
+   [{en:"H1 operating cash flow (₹ cr)",ta:"முதல் பாதி ஆப்பரேட்டிங் கேஷ் (₹ கோடி)"},6181,"n/a","—","n"],
+   [{en:"H1 capex & investments (₹ cr)",ta:"முதல் பாதி கேபெக்ஸ் (₹ கோடி)"},5882,"n/a","—","n"]
+  ]},
+  {c:{en:"Valuation (at ≈₹10,680)",ta:"மதிப்பீடு (≈₹10,680 விலையில்)"}, rows:"VAL"}
+ ],
+ note:{en:"† Derived by CB Research from reported growth rates; n/a = not disclosed/verified. Q1FY27 India Cements EBITDA/t ≈₹603 per company commentary. Consolidated figures.",
+       ta:"† சொன்ன வளர்ச்சி விகிதத்துல இருந்து CB ரிசர்ச் கணக்கிட்டது; n/a = வெளியிடல/உறுதி ஆகல. மொத்த (கன்சாலிடேட்டட்) எண்கள்."}
+};
+
+/* ============ CASH FLOW & WORKING CAPITAL ============ */
+var CF = {
+ title:{en:"Cash flow analysis",ta:"கேஷ் ஃப்ளோ அலசல்"},
+ bridgeTitle:{en:"Why net debt rose ₹6,916 cr in six months (₹ cr)",ta:"6 மாசத்துல நிகர கடன் ஏன் ₹6,916 கோடி ஏறிச்சு (₹ கோடி)"},
+ bridge:[
+  {en:"Net debt Mar-26",ta:"மார்ச்-26 நிகர கடன்",v:16620,type:"base"},
+  {en:"+ Special dividend paid (₹240/sh)",ta:"+ ஸ்பெஷல் டிவிடெண்ட் (₹240)",v:7072,type:"up"},
+  {en:"+ H1 capex & investments",ta:"+ முதல் பாதி கேபெக்ஸ்",v:5882,type:"up"},
+  {en:"− H1 operating cash flow",ta:"− முதல் பாதி ஆப்பரேட்டிங் கேஷ்",v:-6181,type:"dn"},
+  {en:"+ Interest, other (balancing) †",ta:"+ வட்டி, மற்றவை (சமன்) †",v:143,type:"up"},
+  {en:"Net debt Sep-26",ta:"செப்-26 நிகர கடன்",v:23536,type:"base"}
+ ],
+ cfoTitle:{en:"Cash conversion: operating cash flow vs EBITDA (₹ cr)",ta:"லாபம் பணமா மாறுதா: ஆப்பரேட்டிங் கேஷ் vs EBITDA (₹ கோடி)"},
+ lOcf:{en:"Operating cash flow (CFO)",ta:"ஆப்பரேட்டிங் கேஷ் (CFO)"}, lConv:{en:"CFO / EBITDA %",ta:"CFO / EBITDA %"},
+ wcTitle:{en:"Working capital days (consolidated, annual)",ta:"வொர்க்கிங் கேப்பிட்டல் நாட்கள் (வருடாந்திரம்)"},
+ lInv:{en:"Inventory days",ta:"சரக்கு நாட்கள்"}, lDeb:{en:"Receivable days",ta:"வரவேண்டிய நாட்கள்"}, lPay:{en:"Payable days",ta:"கொடுக்க வேண்டிய நாட்கள்"}, lCcc:{en:"Cash conversion cycle",ta:"கேஷ் கன்வர்ஷன் சைக்கிள்"},
+ wcHead:{en:["Days","FY23","FY24","FY25","FY26"],ta:["நாட்கள்","FY23","FY24","FY25","FY26"]},
+ wcRows:[{en:"Inventory days",ta:"சரக்கு நாட்கள்",k:"inv"},{en:"Receivable days",ta:"வரவேண்டிய நாட்கள்",k:"debtor"},{en:"Payable days",ta:"கொடுக்க வேண்டிய நாட்கள்",k:"pay"},{en:"Cash conversion cycle",ta:"கேஷ் கன்வர்ஷன் சைக்கிள்",k:"ccc"},{en:"Working capital days (on sales)",ta:"வொர்க்கிங் கேப்பிட்டல் நாட்கள் (விற்பனை அடிப்படை)",k:"wcd"}],
+ points:[
+  {en:"Negative working capital is a structural advantage: suppliers and dealer deposits fund operations (working-capital days −41 in FY26), so growth needs little extra cash.",
+   ta:"நெகட்டிவ் வொர்க்கிங் கேப்பிட்டல் ஒரு பலம்: சப்ளையர்களும் டீலர் டெபாசிட்டும் தொழிலுக்கு பணம் கொடுக்குது (FY26-ல −41 நாட்கள்), அதனால வளர்ச்சிக்கு தனியா பணம் அதிகம் தேவையில்ல."},
+  {en:"Cash conversion cycle improved to 13 days in FY26 from 35 in FY25 — inventory days fell from 255 to 206 (raw-material basis), lifting CFO to ₹15,316 cr (87% of EBITDA).",
+   ta:"கேஷ் கன்வர்ஷன் சைக்கிள் FY25-ல 35 நாள்ல இருந்து FY26-ல 13 நாளா குறைஞ்சுது — சரக்கு நாட்கள் 255-ல இருந்து 206; அதனால CFO ₹15,316 கோடி (EBITDA-ல 87%)."},
+  {en:"H1FY27 CFO ₹6,181 cr is only 69% of H1 EBITDA (₹8,978 cr) — typical of the first half (monsoon stocking, payable timing). Watch whether H2 restores the ~85% annual conversion.",
+   ta:"முதல் பாதி CFO ₹6,181 கோடி, EBITDA (₹8,978 கோடி)-ல 69% தான் — முதல் பாதில இது வழக்கம் (மழைக்கால சரக்கு, பேமெண்ட் நேரம்). இரண்டாம் பாதில 85% அளவுக்கு திரும்புதான்னு பாக்கணும்."},
+  {en:"Free cash flow to equity in H1 was just ₹388 cr after ₹5,882 cr capex; the ₹7,072 cr dividend was therefore debt-funded — the reason leverage rose.",
+   ta:"₹5,882 கோடி கேபெக்ஸுக்கு அப்புறம் முதல் பாதி ஃப்ரீ கேஷ் வெறும் ₹388 கோடி; ₹7,072 கோடி டிவிடெண்ட் கடன் வாங்கி கொடுத்தது — அதான் கடன் ஏறினதுக்கு காரணம்."},
+  {en:"Financing: ₹5,000 cr NCDs raised at 7.25% — raises interest cost now but locks in rates for the 240 MTPA build-out.",
+   ta:"நிதி: 7.25% வட்டில ₹5,000 கோடி NCD — இப்போ வட்டி செலவு ஏறும், ஆனா 240 MTPA விரிவாக்கத்துக்கு வட்டியை நிலையா பூட்டிடுச்சு."}
+ ],
+ cfTable:{head:{en:["Cash flow (₹ cr)","FY24","FY25","FY26","H1FY27"],ta:["கேஷ் ஃப்ளோ (₹ கோடி)","FY24","FY25","FY26","H1FY27"]},
+  rows:[
+   [{en:"Operating (CFO)",ta:"ஆப்பரேட்டிங் (CFO)"},10898,10673,15316,6181],
+   [{en:"Investing (CFI)",ta:"முதலீடு (CFI)"},-8789,-15836,-9480,"n/a"],
+   [{en:"Financing (CFF)",ta:"நிதி (CFF)"},-1926,5076,-5954,"n/a"],
+   [{en:"Capex & investments",ta:"கேபெக்ஸ்"},"n/a","n/a",-9600,-5882]
+  ]},
+ wcNote:{en:"Annual days per a standard data-aggregator method (inventory and payables on raw-material cost basis, so days look large); trends matter more than levels. Quarter-end working capital days for Sep-26 are not disclosed. FY25 EBITDA ≈ ₹13,332 cr derived from FY26's reported +32%.",
+         ta:"வருடாந்திர நாட்கள் ஒரு நிலையான முறைல கணக்கிட்டது (சரக்கு மூலப்பொருள் செலவு அடிப்படை, அதனால எண் பெருசா தெரியும்); அளவை விட போக்கு தான் முக்கியம். செப்-26 நாட்கள் வெளியிடல. FY25 EBITDA ≈ ₹13,332 கோடி கணக்கிட்டது."}
+};
+</script>
+<script>
+/* ============ VALUATION ============ */
+var VAL = {
+ title:{en:"Valuation snapshot",ta:"மதிப்பீடு சுருக்கம்"},
+ refNote:{en:"Reference price ≈ ₹10,680 (traded level on 19-Oct-26 after results). Shares ≈ 29.47 cr (derived from ₹7,072.30 cr dividend ÷ ₹240). TTM = Q3FY26 to Q2FY27.",
+          ta:"குறிப்பு விலை ≈ ₹10,680 (19-அக்-26 ரிசல்ட்டுக்கு அப்புறம்). பங்குகள் ≈ 29.47 கோடி. TTM = Q3FY26 முதல் Q2FY27 வரை."},
+ lines:[
+  {k:"mcap",en:"Market cap (₹ cr)",ta:"சந்தை மதிப்பு (₹ கோடி)"},
+  {k:"pe",en:"P/E (TTM)",ta:"P/E (TTM)"},
+  {k:"evEbitda",en:"EV / EBITDA (TTM)",ta:"EV / EBITDA (TTM)"},
+  {k:"pb",en:"P/B (on Mar-26 book)",ta:"P/B (மார்ச்-26 புக் மதிப்பு)"},
+  {k:"evT",en:"EV per tonne of capacity (₹)",ta:"டன் கொள்ளளவுக்கு EV (₹)"},
+  {k:"dy",en:"Dividend yield (FY26 ₹240 special)",ta:"டிவிடெண்ட் ஈல்ட் (FY26 ₹240)"},
+  {k:"upside",en:"Gap to consensus target ₹13,730",ta:"சராசரி இலக்கு ₹13,730-க்கு இடைவெளி"}
+ ],
+ peerTitle:{en:"Peer comparison (as on 29-Sep-26, TTM)",ta:"போட்டியாளர் ஒப்பீடு (29-செப்-26)"},
+ peerHead:{en:["Company","Market cap (₹ cr)","P/E","P/B","RoE %"],ta:["கம்பெனி","சந்தை மதிப்பு (₹ கோடி)","P/E","P/B","RoE %"]},
+ read:[
+  {en:"At ~18x TTM EV/EBITDA and ~36x P/E, UltraTech trades at the lower end of the 18–20x EV/EBITDA range brokers have used for it, after a 10.6% fall over one year.",
+   ta:"TTM EV/EBITDA சுமார் 18 மடங்கு, P/E சுமார் 36 — ஒரு வருஷத்துல 10.6% இறங்கினதுக்கு அப்புறம், ப்ரோக்கர்கள் வழக்கமா வைக்கிற 18–20 மடங்கோட கீழ் பக்கத்துல இருக்கு."},
+  {en:"It still carries a premium to Ambuja (~21x P/E) for scale, cost leadership and a pan-India footprint; Shree trades higher on P/E.",
+   ta:"அம்புஜாவை (P/E சுமார் 21) விட இன்னும் கூடுதல் மதிப்பு — அளவு, குறைஞ்ச செலவு, இந்தியா முழுக்க இருப்பு காரணம்; ஷ்ரீ P/E-ல இதை விட அதிகம்."},
+  {en:"EV of ≈₹16,100 per tonne of installed capacity is the yardstick brokers use to compare cement makers of different sizes; it falls as new tonnes are added unless the price rises with them.",
+   ta:"டன் கொள்ளளவுக்கு EV சுமார் ₹16,100 — வெவ்வேறு அளவு சிமெண்ட் கம்பெனிகளை ஒப்பிட ப்ரோக்கர்கள் இதை தான் பயன்படுத்துவாங்க; விலை ஏறாம புது டன் சேர்ந்தா இது குறையும்."},
+  {en:"Earnings sensitivity: every ₹100/t change in EBITDA on ~160 MT annual volume ≈ ₹1,600 cr EBITDA — about 8–9% of TTM EBITDA. Price hikes matter more than anything else for FY28 valuations.",
+   ta:"டன்னுக்கு EBITDA ₹100 மாறினா, வருஷத்துக்கு சுமார் 160 மி.டன் விற்பனைல ≈ ₹1,600 கோடி EBITDA மாறும் — TTM EBITDA-ல 8–9%. அதனால விலை ஏற்றம் தான் முக்கியம்."}
+ ],
+ sensTitle:{en:"What-if: FY28 EBITDA per tonne → implied EV/EBITDA at today's EV",ta:"ஒருவேளை: FY28 டன்னுக்கு EBITDA → இன்றைய EV-ல மடங்கு"},
+ sensNote:{en:"Illustration only: assumes ~190 MT FY28 consolidated volume (≈11–12% CAGR from FY26's 154.25 MT) and today's EV. Not a forecast.",ta:"விளக்கத்துக்கு மட்டும்: FY28-ல சுமார் 190 மி.டன் விற்பனை, இன்றைய EV வெச்சு. இது கணிப்பு இல்ல."}
+};
+
+/* ============ MARKET ACTIVITY ============ */
+var MKT = {
+ title:{en:"Share price moves and the reasons",ta:"பங்கு விலை நகர்வும் காரணங்களும்"},
+ stats:[
+  {en:"Reference price",ta:"குறிப்பு விலை",v:"≈ ₹10,680"},
+  {en:"52-week range",ta:"52 வார வரம்பு",v:"₹10,325 – ₹13,110"},
+  {en:"1-year return",ta:"1 வருட வருமானம்",v:"−10.6%"},
+  {en:"Results-day swing (19-Oct)",ta:"ரிசல்ட் நாள் ஊசலாட்டம்",v:"₹11,219 → ₹10,626"}
+ ],
+ events:[
+  {d:"20-Jul-26",en:"Q1FY27 results: profit +17%, EBITDA/t ₹1,214 — stock +1.6% to ~₹11,913.",ta:"Q1FY27 ரிசல்ட்: லாபம் 17% ஏற்றம் — பங்கு 1.6% ஏறி சுமார் ₹11,913."},
+  {d:"03-Sep-26",en:"Ultravolt wires & cables launched; commercial production from 1-Sep at Jhagadia, ahead of the Dec-26 target.",ta:"அல்ட்ராவோல்ட் வயர் & கேபிள் ஆரம்பம்; டிசம்பர் இலக்குக்கு முன்னாடியே செப் 1 முதல் உற்பத்தி."},
+  {d:"21-Sep-26",en:"Stock +3% after HSBC (₹14,200) and Jefferies (₹14,065) retained Buy.",ta:"HSBC (₹14,200), ஜெஃப்ரீஸ் (₹14,065) Buy-யை தொடர்ந்ததால பங்கு 3% ஏறிச்சு."},
+  {d:"14-Oct-26",en:"Nuvama raised target to ₹15,209 (Buy) ahead of results.",ta:"ரிசல்ட்டுக்கு முன்னாடி நுவாமா இலக்கை ₹15,209-க்கு உயர்த்தினாங்க."},
+  {d:"19-Oct-26",en:"Results: stock hit ₹11,219, then fell 5.3% from the high to ₹10,626; closed about 2.8% lower.",ta:"ரிசல்ட் அன்னிக்கு: ₹11,219 வரை போய், அங்கிருந்து 5.3% இறங்கி ₹10,626; சுமார் 2.8% இறக்கத்தோட முடிஞ்சுது."},
+  {d:"21-Oct-26",en:"Nomura trims target to ₹13,700 (Buy); stock trading near its 52-week low.",ta:"நோமுரா இலக்கை ₹13,700-க்கு குறைச்சாங்க (Buy); பங்கு 52 வார குறைஞ்ச அளவுக்கு பக்கத்துல."}
+ ],
+ whyTitle:{en:"Why the stock fell despite +21% profit",ta:"லாபம் 21% ஏறியும் பங்கு ஏன் இறங்கிச்சு"},
+ why:[
+  {en:"Profit ~5% below Street estimates — higher fuel, power, freight, staff and finance costs.",ta:"லாபம் எதிர்பார்ப்பை விட சுமார் 5% குறைவு — எரிபொருள், மின், போக்குவரத்து, சம்பளம், வட்டி செலவுகள்."},
+  {en:"Headline QoQ drop (−42% PAT, −₹240 EBITDA/t) looks bad even though the monsoon quarter is always weakest.",ta:"காலாண்டு இறக்கம் (லாபம் −42%, டன்னுக்கு −₹240) பாக்க மோசமா தெரியுது, மழைக்கால காலாண்டு எப்பவும் பலவீனம் தான்னாலும்."},
+  {en:"Net debt jumped to ₹23,536 cr and leverage to 1.26x; investors dislike rising debt during a capex cycle.",ta:"நிகர கடன் ₹23,536 கோடி, கடன் விகிதம் 1.26 மடங்கு; கேபெக்ஸ் நேரத்துல கடன் ஏறுறது முதலீட்டாளர்களுக்கு பிடிக்காது."},
+  {en:"Cost visibility is poor: petcoke ~$180/t, industrial diesel at record highs, domestic coal tight; management declined to guide H2 cost inflation.",ta:"செலவு தெளிவில்ல: பெட்கோக் டன்னுக்கு சுமார் $180, டீசல் உச்சம், உள்நாட்டு நிலக்கரி பற்றாக்குறை; இரண்டாம் பாதி செலவை நிர்வாகம் சொல்லல."},
+  {en:"Ownership shift: FIIs cut from 15.7% (Jun-25) to 12.9% (Jun-26) while DIIs rose from 16.9% to 19.7% — steady foreign selling has capped rallies.",ta:"பங்குதாரர் மாற்றம்: வெளிநாட்டு முதலீட்டாளர்கள் 15.7%-ல இருந்து 12.9%-க்கு குறைச்சாங்க, உள்நாட்டு நிறுவனங்கள் 16.9%-ல இருந்து 19.7%-க்கு ஏத்தினாங்க."},
+  {en:"Broader market weakness on results day added to the selling.",ta:"அன்னிக்கு மொத்த சந்தையும் பலவீனமா இருந்ததும் ஒரு காரணம்."}
+ ],
+ shTitle:{en:"Shareholding (Jun-26) and FII vs DII trend",ta:"பங்குதாரர் அமைப்பு (ஜூன்-26), FII vs DII போக்கு"},
+ shL:{promoter:{en:"Promoter (Grasim group)",ta:"ப்ரமோட்டர் (கிராசிம்)"},dii:{en:"DII",ta:"உள்நாட்டு நிறுவனங்கள்"},fii:{en:"FII",ta:"வெளிநாட்டு நிறுவனங்கள்"},pub:{en:"Public",ta:"பொதுமக்கள்"},other:{en:"Others",ta:"மற்றவை"}}
+};
+
+/* ============ TRIGGERS & CYCLE ============ */
+var TC = {
+ cycTitle:{en:"Cycle clock — Cement (commodity / spread cycle)",ta:"சைக்கிள் கடிகாரம் — சிமெண்ட் (கமாடிட்டி / ஸ்ப்ரெட் சைக்கிள்)"},
+ phases:[{k:"P1",en:"Trough",ta:"அடிமட்டம்"},{k:"P2",en:"Early recovery",ta:"மீட்சி ஆரம்பம்"},{k:"P3",en:"Expansion",ta:"விரிவாக்கம்"},{k:"P4",en:"Late cycle",ta:"உச்ச கட்டம்"},{k:"P5",en:"Downturn",ta:"இறக்கம்"}],
+ sectorEv:[
+  {en:"Demand: industry volume ~+10% YoY in Q2 (Q1 ~7–8%); management sees strong demand through Mar-2029.",ta:"டிமாண்ட்: Q2-ல இண்டஸ்ட்ரி சுமார் 10% வளர்ச்சி (Q1-ல 7–8%); மார்ச் 2029 வரை நல்லா இருக்கும்னு நிர்வாகம் சொல்லுது."},
+  {en:"Spread: prices +7–10% m-o-m in late Sep/Oct after a soft August, but fuel cost (₹2.09–2.2/kcal) and diesel are high.",ta:"ஸ்ப்ரெட்: மந்தமான ஆகஸ்ட்டுக்கு அப்புறம் செப்/அக்ல விலை 7–10% ஏறிச்சு, ஆனா எரிபொருள், டீசல் விலையும் உயர்வு."},
+  {en:"Supply: large capacity additions across the industry (UltraTech alone to 240 MTPA by FY28) — the classic risk to pricing.",ta:"சப்ளை: இண்டஸ்ட்ரி முழுக்க பெரிய அளவுல புது ஆலைகள் (அல்ட்ராடெக் மட்டும் FY28-க்குள் 240) — விலைக்கு இது தான் வழக்கமான ஆபத்து."}
+ ],
+ sectorRead:{en:"Phase: P3 Expansion (score 70). Indicators straddle P2 (price turning up) and P3 (broad growth, heavy capacity additions); per CB rules the lower-scoring adjacent phase is used.",
+             ta:"கட்டம்: P3 விரிவாக்கம் (ஸ்கோர் 70). குறியீடுகள் P2 (விலை திரும்ப ஏறுது), P3 (பரவலான வளர்ச்சி, நிறைய புது ஆலைகள்) ரெண்டுக்கும் இடைல; CB விதிப்படி குறைஞ்ச ஸ்கோர் கட்டம் எடுக்கப்பட்டது."},
+ stockHead:{en:["Stock cycle item","Reading","Score"],ta:["பங்கு சைக்கிள்","நிலை","ஸ்கோர்"]},
+ stockRows:[
+  {k:"life",en:["Business lifecycle","Re-inventing — adding wires & cables to a mature cement core"],ta:["தொழில் வாழ்க்கை சுழற்சி","மறு-கண்டுபிடிப்பு — முதிர்ந்த சிமெண்ட்டோட வயர்-கேபிள் சேர்க்குது"]},
+  {k:"earn",en:["Earnings cycle","EBITDA/t ₹974 mid-range of its 5-yr band; +₹60 YoY but down two quarters in a row (seasonal) — treated as flat"],ta:["லாப சுழற்சி","டன்னுக்கு ₹974, 5 வருட வரம்போட நடுவுல; வருடத்துக்கு +₹60, ஆனா 2 காலாண்டா இறக்கம் (பருவம்) — சமநிலையா எடுக்கப்பட்டது"]},
+  {k:"val",en:["Valuation cycle","~18x EV/EBITDA — inside its usual 16–22x band"],ta:["மதிப்பீட்டு சுழற்சி","EV/EBITDA சுமார் 18 — வழக்கமான 16–22 வரம்புக்குள்"]},
+  {k:"price",en:["Price stage (30-week MA)","Stage 4 — lower highs since Jul-26, near 52-week low; a base may be forming around ₹10,300–10,900"],ta:["விலை கட்டம் (30 வார சராசரி)","கட்டம் 4 — ஜூலை முதல் இறங்குமுகம், 52 வார குறைஞ்ச அளவுக்கு பக்கத்துல; ₹10,300–10,900-ல அடித்தளம் உருவாகலாம்"]}
+ ],
+ cyLine:{en:"CY = 50% × sector 70 + 50% × stock 49 = 60",ta:"CY = 50% × துறை 70 + 50% × பங்கு 49 = 60"},
+ trigHead:{en:["Trigger","+/−","Impact","Certainty","Timing","Priced-in","Points","Status","What to watch"],ta:["ட்ரிக்கர்","+/−","தாக்கம்","உறுதி","நேரம்","விலைல சேர்ந்தது","புள்ளி","நிலை","எதை கவனிக்கணும்"]},
+ trig:{
+  price:{en:["Post-monsoon cement price hikes","Q3 realisation vs Q2's ≈₹6,024/t; spot is ~5% higher"],ta:["மழைக்கு அப்புறம் சிமெண்ட் விலை ஏற்றம்","Q3 விலை vs Q2 சுமார் ₹6,024/டன்; இப்போ சுமார் 5% அதிகம்"]},
+  volt:{en:["Ultravolt W&C ramp-up (new, higher-ROCE line)","First revenue disclosure; ₹16–18k cr potential at maturity"],ta:["அல்ட்ராவோல்ட் வயர்-கேபிள் வளர்ச்சி","முதல் வருமான வெளியீடு; முழு அளவுல ₹16–18 ஆயிரம் கோடி"]},
+  cap:{en:["Capacity to 240 MTPA by FY28","29.8 MTPA planned in FY28; commissioning pace"],ta:["FY28-க்குள் 240 MTPA","FY28-ல 29.8 MTPA திட்டம்; தொடக்க வேகம்"]},
+  icl:{en:["India Cements to ₹1,000/t EBITDA","Kiln upgrades, WHRS; Q4FY28 target"],ta:["இந்தியா சிமெண்ட்ஸ் டன்னுக்கு ₹1,000","சூளை மேம்பாடு, WHRS; Q4FY28 இலக்கு"]},
+  fuel:{en:["Fuel / diesel / packing cost spike (West Asia)","Petcoke ~$180/t; ₹/kcal; bag cost"],ta:["எரிபொருள் / டீசல் / பை செலவு (மேற்கு ஆசியா)","பெட்கோக் சுமார் $180/டன்; பை விலை"]},
+  glut:{en:["Industry capacity glut","Competitor additions vs demand; regional price discipline"],ta:["இண்டஸ்ட்ரில அதிக கொள்ளளவு","போட்டியாளர் ஆலைகள் vs டிமாண்ட்"]},
+  lev:{en:["Higher leverage during capex","Net debt/EBITDA back below 1x by Mar-27?"],ta:["கேபெக்ஸ் நேரத்துல அதிக கடன்","மார்ச்-27-க்குள் 1-க்கு கீழ வருமா?"]}
+ },
+ tgLine:{en:"TG = 50 + 8 × (3.00 + 1.96 + 1.47) − 8 × (2.10 + 0.59 + 0.70) = 74. The India Cements trigger (0.56) is outside the top three positives.",
+         ta:"TG = 50 + 8 × (3.00 + 1.96 + 1.47) − 8 × (2.10 + 0.59 + 0.70) = 74. இந்தியா சிமெண்ட்ஸ் ட்ரிக்கர் (0.56) முதல் 3-ல இல்ல."},
+ gate:{en:"Gate note: the stock is in Weinstein Stage 4, so under CB Conviction rules any composite conviction would be capped at 55 until price structure improves. No negative trigger has Impact ≥4 with Certainty ≥0.7.",
+       ta:"கேட் குறிப்பு: பங்கு வெய்ன்ஸ்டீன் கட்டம் 4-ல இருக்கு, அதனால CB கன்விக்ஷன் 55-க்கு மேல போகாது, விலை அமைப்பு சரியாகும் வரை. தாக்கம் ≥4, உறுதி ≥0.7 இருக்கிற நெகட்டிவ் ட்ரிக்கர் எதுவும் இல்ல."},
+ tlTitle:{en:"Trigger timeline — dated events to watch",ta:"ட்ரிக்கர் காலவரிசை — கவனிக்க வேண்டிய தேதிகள்"},
+ tl:[
+  {d:"Nov-26",en:"Post-monsoon demand; price hikes hold?",ta:"மழைக்கு அப்புறம் டிமாண்ட்; விலை நிக்குமா?"},
+  {d:"1-Jan-27",en:"Jayant Dua takes over as MD",ta:"ஜெயந்த் துவா MD ஆகிறார்"},
+  {d:"~Jan-27",en:"Q3FY27 results; firmer capex number",ta:"Q3FY27 ரிசல்ட்; கேபெக்ஸ் தெளிவு"},
+  {d:"Mar-27",en:"Net debt/EBITDA below 1x target",ta:"கடன்/EBITDA 1-க்கு கீழ இலக்கு"},
+  {d:"FY27-end",en:"Expansion plan beyond 240 MTPA",ta:"240-க்கு மேல விரிவாக்க திட்டம்"},
+  {d:"Mar-28",en:"₹1,400/t EBITDA exit; ICL ₹1,000/t",ta:"டன்னுக்கு ₹1,400 இலக்கு; ICL ₹1,000"}
+ ],
+ change:{t:{en:"What would change this view",ta:"எது இந்த பார்வையை மாத்தும்"},
+  l:[{en:"Q3 EBITDA/t back above ₹1,150 with prices holding → cycle reading moves toward P2/P3 strength and the earnings item improves.",ta:"Q3-ல டன்னுக்கு EBITDA ₹1,150-க்கு மேல, விலையும் நின்னா → சைக்கிள் பலப்படும்."},
+     {en:"Price rollback in Dec–Jan as new capacity lands → P4-type behaviour; TG falls.",ta:"புது ஆலைகளால டிச–ஜன-ல விலை இறங்கினா → P4 மாதிரி; TG குறையும்."},
+     {en:"Stock reclaims a rising 30-week average → Stage 1/2; the Stage-4 cap is lifted.",ta:"பங்கு ஏறுமுக 30 வார சராசரிக்கு மேல போனா → கட்டம் 1/2; கட்டுப்பாடு நீங்கும்."}]}
+};
+
+/* ============ 6 PILLARS ============ */
+var PIL = {
+ title:{en:"CB Score — six-pillar temple (tap a column)",ta:"CB ஸ்கோர் — 6 தூண் கோயில் (ஒரு தூணை தொடுங்க)"},
+ name:{g:{en:"Growth",ta:"வளர்ச்சி"},m:{en:"Margins",ta:"மார்ஜின்"},d:{en:"Debt & Cash",ta:"கடன் & கேஷ்"},v:{en:"Valuation",ta:"மதிப்பீடு"},t:{en:"Trend",ta:"போக்கு"},r:{en:"Risk & Moat",ta:"ரிஸ்க் & அரண்"}},
+ why:{
+  g:{en:"Volume +13.8% vs industry ~10%; revenue +18.8%; capacity 210 → 240 MTPA by FY28; RMC +29%, chemicals +48%, new W&C line.",ta:"விற்பனை 13.8% (இண்டஸ்ட்ரி 10%); வருமானம் 18.8%; FY28-க்குள் 240 MTPA; RMC 29%, கெமிக்கல்ஸ் 48%, புது வயர்-கேபிள்."},
+  m:{en:"EBITDA/t ₹974 (+₹60 YoY, −₹240 QoQ); PBIDT margin 16.6% vs 16.9% a year ago. Fuel +14%/t, bags +30%/t. ROE ~11–12% is modest for the premium.",ta:"டன்னுக்கு ₹974 (வருடத்துக்கு +₹60, காலாண்டுக்கு −₹240); மார்ஜின் 16.6%. எரிபொருள் +14%, பை +30%. ROE சுமார் 11–12%, மதிப்புக்கு ஏற்ற அளவு இல்ல."},
+  d:{en:"Net debt ₹23,536 cr, 1.26x EBITDA (from 0.94x) after a debt-funded special dividend; CFO strong (₹15,316 cr FY26); D/E 0.28x; guided <1x by Mar-27.",ta:"நிகர கடன் ₹23,536 கோடி, EBITDA-ல 1.26 மடங்கு (0.94-ல இருந்து); FY26 CFO ₹15,316 கோடி; D/E 0.28; மார்ச்-27-க்குள் 1-க்கு கீழ."},
+  v:{en:"~36x P/E, ~18x EV/EBITDA, ~3.9x P/B: lower end of its own history but a premium to Ambuja; EV ≈ ₹16,100 per tonne of capacity.",ta:"P/E சுமார் 36, EV/EBITDA 18, P/B 3.9: சொந்த வரலாற்றுல கீழ் பக்கம், ஆனா அம்புஜாவை விட அதிகம்; டன்னுக்கு EV சுமார் ₹16,100."},
+  t:{en:"Near 52-week low (₹10,325), −10.6% in a year, Stage 4 price structure, steady FII selling; reversed from day-high on results.",ta:"52 வார குறைஞ்ச அளவுக்கு (₹10,325) பக்கத்துல, ஒரு வருஷத்துல −10.6%, கட்டம் 4, வெளிநாட்டு விற்பனை தொடருது."},
+  r:{en:"No.1 scale (largest outside China), cost and logistics leadership, 48% green power, strong group parentage. Risks: fuel shocks, capacity glut, W&C execution.",ta:"நம்பர் 1 அளவு (சீனாவுக்கு வெளியே பெரியது), குறைஞ்ச செலவு, 48% கிரீன் பவர், வலுவான குழுமம். ரிஸ்க்: எரிபொருள், அதிக கொள்ளளவு, வயர்-கேபிள் செயல்பாடு."}
+ },
+ compNote:{en:"Composite CB Score = average of six pillars = 6.6 / 10 (amber). Scores are CB Research's educational assessment, not a recommendation.",ta:"மொத்த CB ஸ்கோர் = 6 தூண்களோட சராசரி = 6.6 / 10. இது கல்வி நோக்கத்துக்கான மதிப்பீடு, பரிந்துரை இல்ல."}
+};
+
+/* ============ SWOT ============ */
+var SW = {
+ s:{t:{en:"Strengths",ta:"பலங்கள்"},l:[
+   {en:"Largest capacity in India (210.1 MTPA) with pan-India plants → shortest lead distance",ta:"இந்தியாவுல பெரிய கொள்ளளவு (210.1 MTPA), எல்லா பகுதிலயும் ஆலை → குறைஞ்ச போக்குவரத்து தூரம்"},
+   {en:"Volume growth consistently above industry (13.8% vs ~10%)",ta:"இண்டஸ்ட்ரியை விட தொடர்ந்து அதிக வளர்ச்சி"},
+   {en:"Negative working capital and ~85% cash conversion in a normal year",ta:"நெகட்டிவ் வொர்க்கிங் கேப்பிட்டல், சாதாரண வருஷத்துல சுமார் 85% கேஷ் மாற்றம்"},
+   {en:"Green power 48% cuts power cost (₹337/t, −12% YoY)",ta:"48% கிரீன் பவர் — மின் செலவு ₹337/டன் (−12%)"},
+   {en:"Proven acquisition integration (India Cements, Kesoram)",ta:"கையகப்படுத்தின கம்பெனிகளை நல்லா சேர்க்கும் திறன்"}]},
+ w:{t:{en:"Weaknesses",ta:"பலவீனங்கள்"},l:[
+   {en:"High dependence on imported petcoke and diesel; no pricing control on fuel",ta:"இறக்குமதி பெட்கோக், டீசல் மேல அதிக சார்பு"},
+   {en:"ROE ~11–12% — low for a stock on ~36x earnings",ta:"ROE சுமார் 11–12% — 36 மடங்கு விலைக்கு குறைவு"},
+   {en:"Leverage rose to 1.26x after a debt-funded special dividend",ta:"கடன் வாங்கி டிவிடெண்ட் கொடுத்ததால கடன் விகிதம் 1.26"},
+   {en:"Central/East utilisation only ~60% this quarter",ta:"மத்திய/கிழக்குல பயன்பாடு சுமார் 60% தான்"}]},
+ o:{t:{en:"Opportunities",ta:"வாய்ப்புகள்"},l:[
+   {en:"Post-monsoon price hikes (spot ~5% above Q2 average)",ta:"மழைக்கு அப்புறம் விலை ஏற்றம் (சுமார் 5%)"},
+   {en:"Ultravolt W&C: ~22–23% ROCE business, ₹16–18k cr revenue potential",ta:"அல்ட்ராவோல்ட்: சுமார் 22–23% ROCE, ₹16–18 ஆயிரம் கோடி வாய்ப்பு"},
+   {en:"Data centres, semiconductors, metros, urban housing demand through FY29",ta:"டேட்டா சென்டர், செமிகண்டக்டர், மெட்ரோ, நகர வீடுகள் — FY29 வரை டிமாண்ட்"},
+   {en:"India Cements EBITDA/t from ₹510 toward ₹1,000",ta:"இந்தியா சிமெண்ட்ஸ் டன்னுக்கு ₹510-ல இருந்து ₹1,000 நோக்கி"},
+   {en:"₹1,400/t group EBITDA target by Mar-28",ta:"மார்ச்-28-க்குள் டன்னுக்கு ₹1,400 இலக்கு"}]},
+ t:{t:{en:"Threats",ta:"அச்சுறுத்தல்கள்"},l:[
+   {en:"West Asia-driven fuel and packing inflation; tight domestic coal",ta:"மேற்கு ஆசியா காரணமா எரிபொருள், பை விலை ஏற்றம்; நிலக்கரி பற்றாக்குறை"},
+   {en:"Industry capacity glut and price wars, especially with large rivals",ta:"அதிக கொள்ளளவு, பெரிய போட்டியாளர்களோட விலை போர்"},
+   {en:"W&C is a crowded field with entrenched brands",ta:"வயர்-கேபிள்ல ஏற்கனவே பெரிய பிராண்டுகள்"},
+   {en:"State levies (e.g. Tamil Nadu ₹160/t) and weak rural demand after a poor monsoon",ta:"மாநில வரிகள் (உ.தா. தமிழ்நாடு ₹160/டன்), மோசமான மழையால கிராம டிமாண்ட் குறைவு"}]}
+};
+
+/* ============ ANALYSTS ============ */
+var AN = {
+ title:{en:"Analysts' Rating — third-party brokerage views",ta:"அனலிஸ்ட் ரேட்டிங் — ப்ரோக்கரேஜ் கருத்துகள்"},
+ head:{en:["Brokerage","Rating","Target (₹)","Upside vs ₹10,680","Date","Note"],ta:["ப்ரோக்கரேஜ்","ரேட்டிங்","இலக்கு (₹)","₹10,680-ல இருந்து","தேதி","குறிப்பு"]},
+ sum:{en:"9 of 10 tracked brokerages are positive (Buy/Overweight); 1 Hold; no Sell in this list. Consensus target ≈ ₹13,730 across 32 recent reports.",
+      ta:"கண்காணிச்ச 10-ல 9 பாசிட்டிவ் (Buy/Overweight); 1 Hold; Sell இல்ல. 32 அறிக்கைகளோட சராசரி இலக்கு ≈ ₹13,730."},
+ caveat:{en:"These are views of the named brokerages, shown for education. CB Research does not issue buy, sell or hold recommendations. Older targets (Jul–Sep) may since have been revised.",
+         ta:"இவை அந்தந்த ப்ரோக்கரேஜ் கருத்துகள், கல்விக்காக மட்டும். CB ரிசர்ச் வாங்க/விற்க/வெச்சுக்க பரிந்துரை செய்வதில்லை. பழைய இலக்குகள் மாறியிருக்கலாம்."},
+ chart:{en:"Target prices vs reference price (₹)",ta:"இலக்கு விலை vs குறிப்பு விலை (₹)"}
+};
+
+/* ============ MANAGEMENT ============ */
+var MG = {
+ title:{en:"Management & Board",ta:"நிர்வாகம் & போர்டு"},
+ people:[
+  {i:"KMB",n:"Kumar Mangalam Birla",r:{en:"Chairman",ta:"சேர்மன்"},x:{en:"Chairman of the Aditya Birla Group; UltraTech is the group's cement flagship (promoter: Grasim Industries).",ta:"ஆதித்ய பிர்லா குழும சேர்மன்; அல்ட்ராடெக் குழுமத்தோட சிமெண்ட் முதன்மை கம்பெனி (ப்ரமோட்டர்: கிராசிம்)."}},
+  {i:"KCJ",n:"K. C. Jhanwar",r:{en:"Managing Director (till 31-Dec-26)",ta:"மேனேஜிங் டைரக்டர் (31-டிச-26 வரை)"},x:{en:"MD whose term ends 31-Dec-26; to continue as non-executive Vice Chairman from 1-Jan-27, keeping continuity on the 240 MTPA plan.",ta:"31-டிச-26 வரை MD; ஜனவரி 1, 2027 முதல் நான்-எக்ஸிக்யூட்டிவ் வைஸ் சேர்மன் — 240 MTPA திட்டத்துல தொடர்ச்சி."}},
+  {i:"JD",n:"Jayant Dua",r:{en:"MD (Designate) → MD from 1-Jan-27",ta:"MD (நியமனம்) → ஜனவரி 1, 2027 முதல் MD"},x:{en:"37 years' experience; joined the group's cement business in 1996; led Century Cement, insulators, insurance, chlor-alkali; most recently Renewables & Textiles. IIT Delhi, IMI MBA, Harvard AMP. Term 1-Jan-27 to 31-Dec-30.",ta:"37 வருட அனுபவம்; 1996-ல குழும சிமெண்ட்ல சேர்ந்தார்; செஞ்சுரி சிமெண்ட், இன்சுலேட்டர்ஸ், இன்சூரன்ஸ், குளோர்-ஆல்கலி நடத்தினார்; சமீபமா ரினியூவபிள்ஸ் & டெக்ஸ்டைல்ஸ். IIT டெல்லி, IMI MBA, ஹார்வர்ட். பதவிக்காலம் 2027–2030."}},
+  {i:"AD",n:"Atul Daga",r:{en:"Whole-time Director & CFO",ta:"முழுநேர இயக்குநர் & CFO"},x:{en:"Leads investor communication; on the Q2 call he reaffirmed ₹1,400/t EBITDA by Mar-28, <1x leverage by Mar-27 and ₹10,000 cr FY27 capex.",ta:"முதலீட்டாளர் தொடர்பு இவர் தான்; Q2 கால்ல மார்ச்-28-க்குள் டன்னுக்கு ₹1,400, மார்ச்-27-க்குள் கடன் 1-க்கு கீழ, FY27 கேபெக்ஸ் ₹10,000 கோடின்னு உறுதிப்படுத்தினார்."}},
+  {i:"VA",n:"Vivek Agrawal",r:{en:"Whole-time Director & CMO",ta:"முழுநேர இயக்குநர் & CMO"},x:{en:"Re-appointed for two years from 1-Jan-27. With the group since 1993; ran RMC, Birla White marketing and the Star Cement entity. NIT Allahabad, FMS Delhi.",ta:"ஜனவரி 1, 2027 முதல் 2 வருஷம் மறுநியமனம். 1993 முதல் குழுமத்துல; RMC, பிர்லா ஒயிட் மார்க்கெட்டிங் நடத்தினார். NIT அலகாபாத், FMS டெல்லி."}}
+ ],
+ gov:{t:{en:"Governance notes",ta:"நிர்வாக குறிப்புகள்"},l:[
+  {en:"Promoter group holds ~59.3% (stable for a year); no pledge reported.",ta:"ப்ரமோட்டர் பங்கு சுமார் 59.3% (ஒரு வருஷமா நிலையானது)."},
+  {en:"Planned MD succession announced in Mar-26, nine months ahead — orderly transition.",ta:"MD மாற்றம் 9 மாசத்துக்கு முன்னாடியே மார்ச்-26-ல அறிவிச்சாங்க — ஒழுங்கான மாற்றம்."},
+  {en:"Related-party watch: corporate guarantee for UHG Holdings (UltraTech 41%, Grasim 9%, Hindalco 50%) to buy aircraft and ships for group use.",ta:"தொடர்புடைய தரப்பு கவனம்: UHG ஹோல்டிங்ஸுக்கு கார்ப்பரேட் உத்தரவாதம் (அல்ட்ராடெக் 41%, கிராசிம் 9%, ஹிண்டால்கோ 50%) — விமானம், கப்பல் வாங்க."},
+  {en:"Limited review of Q2 results by Deloitte Haskins & Sells LLP.",ta:"Q2 ரிசல்ட்டை டெலாய்ட் ஹாஸ்கின்ஸ் & செல்ஸ் ஆய்வு செஞ்சாங்க."},
+  {en:"Capital allocation: diversification into W&C (~2% of capital employed) drew investor debate when announced.",ta:"மூலதன ஒதுக்கீடு: வயர்-கேபிள்ல நுழைஞ்சது (மூலதனத்துல சுமார் 2%) அறிவிச்சப்போ விவாதம் கிளம்பிச்சு."}]}
+};
+</script>
+<script>
+/* ============ SELF-CHECK ============ */
+var SC = {
+ title:{en:"CB Investor Self-check — UltraTech Cement",ta:"CB முதலீட்டாளர் சுய சோதனை — அல்ட்ராடெக் சிமெண்ட்"},
+ intro:{en:"Tick what you have personally checked. Each line shows the company's own facts from this quarter.",ta:"நீங்களே சரிபார்த்ததை டிக் பண்ணுங்க. ஒவ்வொரு வரிலயும் இந்த காலாண்டு கம்பெனி தகவல் இருக்கு."},
+ msg:{en:"This only counts how many of your own conditions line up. It is not a recommendation.",ta:"உங்க சொந்த நிபந்தனைகள்ல எத்தனை பொருந்துதுன்னு மட்டும் எண்ணுது. இது பரிந்துரை இல்ல."},
+ clear:{en:"Clear all ticks",ta:"எல்லா டிக்கையும் அழி"}, add:{en:"Add",ta:"சேர்"}, overall:{en:"Overall",ta:"மொத்தம்"},
+ addPh:{en:"Type your own condition…",ta:"உங்க நிபந்தனையை டைப் பண்ணுங்க…"},
+ groups:[
+  {t:{en:"1. Questions about the stock",ta:"1. பங்கு பற்றிய கேள்விகள்"}, items:[
+   {en:"I understand how UltraTech earns: volume × price per tonne",ta:"அல்ட்ராடெக் எப்படி சம்பாதிக்குதுன்னு புரியுது: அளவு × டன்னுக்கு விலை", d:{en:"Q2 net sales ₹23,024 cr on 38.22 MT ≈ ₹6,024/t",ta:"Q2 விற்பனை ₹23,024 கோடி, 38.22 மி.டன் ≈ ₹6,024/டன்"}},
+   {en:"I know how much revenue is cement vs other lines",ta:"சிமெண்ட் vs மற்ற வியாபாரம் எவ்வளவுன்னு தெரியும்", d:{en:"Grey cement ~80%, RMC ~10%, overseas ~6%, white ~3%, chemicals ~2%",ta:"கிரே சுமார் 80%, RMC 10%, வெளிநாடு 6%, வெள்ளை 3%, கெமிக்கல்ஸ் 2%"}},
+   {en:"I checked whether growth beats the industry",ta:"இண்டஸ்ட்ரியை விட வளர்ச்சி அதிகமான்னு பாத்தேன்", d:{en:"Domestic volume +13.8% vs industry ~10%",ta:"உள்நாட்டு விற்பனை +13.8%, இண்டஸ்ட்ரி சுமார் 10%"}},
+   {en:"I know what new business is being added",ta:"என்ன புது வியாபாரம் சேருதுன்னு தெரியும்", d:{en:"Ultravolt W&C: ₹1,800 cr plan, ₹1,100 cr spent, launched 3-Sep-26",ta:"அல்ட்ராவோல்ட்: ₹1,800 கோடி திட்டம், ₹1,100 கோடி செலவு, 3-செப்-26 ஆரம்பம்"}}
+  ]},
+  {t:{en:"2. Problems investors face",ta:"2. முதலீட்டாளர்கள் சந்திக்கிற பிரச்சனைகள்"}, items:[
+   {en:"I won't judge a monsoon quarter only on QoQ numbers",ta:"மழைக்கால காலாண்டை காலாண்டு எண் மட்டும் வெச்சு மதிப்பிட மாட்டேன்", d:{en:"PAT −42% QoQ but +21% YoY",ta:"லாபம் காலாண்டுக்கு −42%, வருடத்துக்கு +21%"}},
+   {en:"I accept fuel-cost swings I cannot predict",ta:"கணிக்க முடியாத எரிபொருள் செலவு மாற்றத்தை ஏத்துக்கிறேன்", d:{en:"Fuel ₹1,030/t (+14% YoY); petcoke ~$180/t",ta:"எரிபொருள் ₹1,030/டன் (+14%); பெட்கோக் சுமார் $180/டன்"}},
+   {en:"I am comfortable with debt rising during capex",ta:"கேபெக்ஸ் நேரத்துல கடன் ஏறுறது எனக்கு ஓகே", d:{en:"Net debt ₹16,620 cr → ₹23,536 cr; 1.26x EBITDA",ta:"நிகர கடன் ₹16,620 → ₹23,536 கோடி; 1.26 மடங்கு"}},
+   {en:"I know I'm paying a premium to peers",ta:"போட்டியாளர்களை விட அதிக விலை கொடுக்கிறேன்னு தெரியும்", d:{en:"P/E ~36x vs Ambuja ~21x (29-Sep-26)",ta:"P/E சுமார் 36, அம்புஜா சுமார் 21"}}
+  ]},
+  {t:{en:"3. Solutions (what I did)",ta:"3. தீர்வுகள் (நான் என்ன செஞ்சேன்)"}, items:[
+   {en:"I read management's medium-term guidance",ta:"நிர்வாகத்தோட நடுத்தர கால வழிகாட்டலை படிச்சேன்", d:{en:"₹1,400/t EBITDA exit Mar-28; leverage <1x by Mar-27",ta:"மார்ச்-28-க்குள் டன்னுக்கு ₹1,400; மார்ச்-27-க்குள் கடன் 1-க்கு கீழ"}},
+   {en:"I compared EBITDA/t over five quarters",ta:"5 காலாண்டு டன்னுக்கு EBITDA-வை ஒப்பிட்டேன்", d:{en:"914 → 1,051 → ≈1,253 → 1,214 → 974",ta:"914 → 1,051 → ≈1,253 → 1,214 → 974"}},
+   {en:"I checked cash flow, not just profit",ta:"லாபம் மட்டும் இல்ல, கேஷ் ஃப்ளோவும் பாத்தேன்", d:{en:"H1 CFO ₹6,181 cr; capex ₹5,882 cr; FCFE ₹388 cr",ta:"முதல் பாதி CFO ₹6,181 கோடி; கேபெக்ஸ் ₹5,882 கோடி; ஃப்ரீ கேஷ் ₹388 கோடி"}},
+   {en:"I checked the October price trend",ta:"அக்டோபர் விலை போக்கை பாத்தேன்", d:{en:"Spot ~5% above Q2 average; trade +7–10% m-o-m late Sep",ta:"இப்போ Q2 சராசரியை விட சுமார் 5% அதிகம்"}}
+  ]},
+  {t:{en:"4. Anchors' and analysts' view",ta:"4. நிறுவன & அனலிஸ்ட் பார்வை"}, items:[
+   {en:"I've seen the consensus target",ta:"சராசரி இலக்கு விலையை பாத்தேன்", d:{en:"≈ ₹13,730 across 32 reports",ta:"32 அறிக்கைல சராசரி ≈ ₹13,730"}},
+   {en:"I've seen target cuts as well as raises",ta:"இலக்கு குறைச்சதும், ஏத்தினதும் பாத்தேன்", d:{en:"Nomura ₹13,900 → ₹13,700; Nuvama ₹14,502 → ₹15,209",ta:"நோமுரா ₹13,900 → ₹13,700; நுவாமா ₹14,502 → ₹15,209"}},
+   {en:"I know which institutions are buying or selling",ta:"யார் வாங்குறாங்க, யார் விக்கிறாங்கன்னு தெரியும்", d:{en:"FII 15.72% → 12.86%; DII 16.85% → 19.69% (Jun-25 → Jun-26)",ta:"FII 15.72% → 12.86%; DII 16.85% → 19.69%"}}
+  ]},
+  {t:{en:"5. My own conditions",ta:"5. என் சொந்த நிபந்தனைகள்"}, own:true, sugg:[
+   {en:"Q3FY27 EBITDA/t back above ₹1,100",ta:"Q3FY27 டன்னுக்கு EBITDA ₹1,100-க்கு மேல"},
+   {en:"Net debt/EBITDA below 1x",ta:"கடன்/EBITDA 1-க்கு கீழ"},
+   {en:"Ultravolt revenue disclosed",ta:"அல்ட்ராவோல்ட் வருமானம் வெளியானது"},
+   {en:"P/E within my comfort level",ta:"P/E என் வசதி அளவுக்குள்"},
+   {en:"Cement prices hold through January",ta:"ஜனவரி வரை சிமெண்ட் விலை நிக்குது"},
+   {en:"My cement-sector exposure within my limit",ta:"சிமெண்ட் துறைல என் முதலீடு என் வரம்புக்குள்"}
+  ]}
+ ]
+};
+
+/* ============ CAUVERY SOCRATES ============ */
+var SO = {
+ title:{en:"Cauvery Socrates — learn by questioning",ta:"காவேரி சாக்ரடீஸ் — கேள்வி கேட்டு கத்துக்கலாம்"},
+ mcq:[
+  {q:{en:"UltraTech's domestic volume grew 13.8% while the industry grew ~10%. What does that most likely mean?",ta:"அல்ட்ராடெக் 13.8% வளர்ந்துச்சு, இண்டஸ்ட்ரி 10%. இதுக்கு என்ன அர்த்தம்?"},
+   o:[{en:"It gained market share",ta:"மார்க்கெட் ஷேர் கூடிச்சு"},{en:"It cut prices sharply",ta:"விலையை பெருசா குறைச்சாங்க"},{en:"Its utilisation fell",ta:"பயன்பாடு குறைஞ்சுது"},{en:"The industry shrank",ta:"இண்டஸ்ட்ரி சுருங்கிச்சு"}], a:0,
+   e:{en:"Growing faster than the market = taking share. Realisations were stable QoQ, so it was not a price cut.",ta:"சந்தையை விட வேகமா வளர்ந்தா = பங்கு கூடுது. விலை நிலையா இருந்துச்சு, அதனால விலை குறைப்பு இல்ல."}},
+  {q:{en:"PAT fell 42% QoQ but rose 21% YoY. Which comparison is fairer for a cement company?",ta:"லாபம் காலாண்டுக்கு 42% இறக்கம், வருடத்துக்கு 21% ஏற்றம். சிமெண்ட் கம்பெனிக்கு எது நியாயமான ஒப்பீடு?"},
+   o:[{en:"QoQ, because it's more recent",ta:"காலாண்டு, ஏன்னா சமீபம்"},{en:"YoY, because Q2 is always the monsoon quarter",ta:"வருடம், ஏன்னா Q2 எப்பவும் மழைக்காலம்"},{en:"Neither matters",ta:"ரெண்டும் முக்கியம் இல்ல"},{en:"Only the share price matters",ta:"பங்கு விலை மட்டும் தான்"}], a:1,
+   e:{en:"Seasonal businesses should be compared with the same quarter last year.",ta:"பருவ தொழில்களை போன வருஷ அதே காலாண்டோட ஒப்பிடணும்."}},
+  {q:{en:"Net debt rose from ₹16,620 cr to ₹23,536 cr in six months. The biggest single reason?",ta:"6 மாசத்துல நிகர கடன் ₹16,620-ல இருந்து ₹23,536 கோடி. பெரிய காரணம்?"},
+   o:[{en:"Operating losses",ta:"செயல்பாட்டு நஷ்டம்"},{en:"The ₹240/share special dividend (~₹7,072 cr)",ta:"₹240 ஸ்பெஷல் டிவிடெண்ட் (சுமார் ₹7,072 கோடி)"},{en:"An acquisition",ta:"ஒரு கையகப்படுத்தல்"},{en:"Currency loss",ta:"நாணய நஷ்டம்"}], a:1,
+   e:{en:"Operating cash (₹6,181 cr) roughly covered capex (₹5,882 cr); the dividend was effectively debt-funded.",ta:"ஆப்பரேட்டிங் கேஷ் கேபெக்ஸை கவர் பண்ணிச்சு; டிவிடெண்ட் கடன்ல தான் கொடுத்தது."}},
+  {q:{en:"Fixed cost per tonne fell 6% while volume grew 13.8%. This is called…",ta:"விற்பனை 13.8% ஏறினப்போ டன்னுக்கு நிலையான செலவு 6% குறைஞ்சுது. இதுக்கு பேரு…"},
+   o:[{en:"Financial leverage",ta:"நிதி லெவரேஜ்"},{en:"Operating leverage",ta:"ஆப்பரேட்டிங் லெவரேஜ்"},{en:"Working capital",ta:"வொர்க்கிங் கேப்பிட்டல்"},{en:"Depreciation",ta:"தேய்மானம்"}], a:1,
+   e:{en:"Spreading fixed costs over more tonnes lifts margin — operating leverage.",ta:"அதிக டன்னுக்கு நிலையான செலவு பரவுறது — ஆப்பரேட்டிங் லெவரேஜ்."}},
+  {q:{en:"In CB's cycle framework, cement belongs to which cycle type?",ta:"CB சைக்கிள் முறைல சிமெண்ட் எந்த வகை?"},
+   o:[{en:"Credit cycle",ta:"கடன் சைக்கிள்"},{en:"Commodity / spread cycle",ta:"கமாடிட்டி / ஸ்ப்ரெட் சைக்கிள்"},{en:"Structural S-curve",ta:"S-வளைவு வளர்ச்சி"},{en:"Global-linked",ta:"உலக சார்ந்தது"}], a:1,
+   e:{en:"Cement profits depend on price-minus-cost spread, utilisation and the new-capacity pipeline.",ta:"விலை-செலவு இடைவெளி, பயன்பாடு, புது ஆலை வரிசை — இது தான் சிமெண்ட் லாபத்தை தீர்மானிக்குது."}},
+  {q:{en:"Which trigger scores highest right now (executing, near-term, not priced in)?",ta:"இப்போ எந்த ட்ரிக்கருக்கு அதிக புள்ளி (நடக்குது, சீக்கிரம், விலைல சேரல)?"},
+   o:[{en:"Capacity to 240 MTPA by FY28",ta:"FY28-க்குள் 240 MTPA"},{en:"Post-monsoon price hikes",ta:"மழைக்கு அப்புறம் விலை ஏற்றம்"},{en:"India Cements ₹1,000/t",ta:"இந்தியா சிமெண்ட்ஸ் ₹1,000"},{en:"MD change",ta:"MD மாற்றம்"}], a:1,
+   e:{en:"Price hikes: Impact 3 × Certainty 1.0 × Timing 1.0 × Priced-in 1.0 = 3.0 points.",ta:"விலை ஏற்றம்: தாக்கம் 3 × உறுதி 1.0 × நேரம் 1.0 × விலைல 1.0 = 3.0 புள்ளி."}}
+ ],
+ open:[
+  {q:{en:"If petcoke rises another 20%, which cost line moves first, and what can UltraTech do about it?",ta:"பெட்கோக் இன்னும் 20% ஏறினா, முதல்ல எந்த செலவு ஏறும், அல்ட்ராடெக் என்ன செய்யலாம்?"},
+   m:{en:"Fuel cost/t (₹1,030 now) moves first, with a lag from pipeline inventory. Levers: price hikes (capacity is sold out), more domestic coal/AFR (thermal substitution ~7.2%), green power (48%) and logistics efficiency.",
+      ta:"எரிபொருள் செலவு (இப்போ ₹1,030/டன்) முதல்ல ஏறும், சரக்கு இருப்பால கொஞ்சம் தாமதமா. வழிகள்: விலை ஏற்றம், உள்நாட்டு நிலக்கரி/மாற்று எரிபொருள் (சுமார் 7.2%), கிரீன் பவர் (48%), போக்குவரத்து திறன்."}},
+  {q:{en:"Wires & cables earn ~22–23% ROCE vs ~13% in cement. Why might some investors still worry about the move?",ta:"வயர்-கேபிள்ல ROCE 22–23%, சிமெண்ட்ல 13%. இருந்தாலும் சிலர் ஏன் கவலைப்படலாம்?"},
+   m:{en:"Different business (copper price risk, brand battles with entrenched leaders, working-capital heavy), management bandwidth, and fear of 'diworsification'. Counter: same dealer channel, behind-the-wall product, only ~2% of capital employed.",
+      ta:"வேற மாதிரி தொழில் (காப்பர் விலை ரிஸ்க், பெரிய பிராண்டுகளோட போட்டி, அதிக வொர்க்கிங் கேப்பிட்டல்), நிர்வாக கவனம் பிரியலாம். மறுபக்கம்: அதே டீலர் வழி, சுவருக்குள்ள போற பொருள், மூலதனத்துல சுமார் 2% தான்."}}
+ ],
+ yourAns:{en:"Write your answer, then reveal the model answer",ta:"உங்க பதிலை எழுதுங்க, அப்புறம் மாதிரி பதிலை பாருங்க"},
+ reveal:{en:"Reveal model answer",ta:"மாதிரி பதிலை காட்டு"},
+ right:{en:"Correct. ",ta:"சரி. "}, wrong:{en:"Not quite. ",ta:"சரியில்ல. "},
+ score:{en:"Score",ta:"மதிப்பெண்"}
+};
+
+/* ============ CB ASSIST KNOWLEDGE (offline keyword matching) ============ */
+var KB = [
+ {k:["opus","paint","grasim","group","பெயிண்ட்","கிராசிம்"], en:"Birla Opus paints belongs to Grasim Industries, UltraTech's parent, not to UltraTech. Grasim's promoter group holds about 59.3% of UltraTech. UltraTech's own new business is Ultravolt wires and cables.", ta:"பிர்லா ஓபஸ் பெயிண்ட் கிராசிமோடது, அல்ட்ராடெக்கோடது இல்ல. கிராசிம் தான் அல்ட்ராடெக்கோட தாய் கம்பெனி, சுமார் 59.3%. அல்ட்ராடெக்கோட புது தொழில் அல்ட்ராவோல்ட் வயர்-கேபிள்."},
+ {k:["profit","pat","net profit","லாபம்","நிகர"], en:"Q2FY27 net profit was ₹1,501 crore, up 21.3% year on year, but about 42% lower than Q1 because Q2 is the monsoon quarter and fuel costs rose.", ta:"Q2FY27 நிகர லாபம் ₹1,501 கோடி, போன வருஷத்தை விட 21.3% அதிகம்; மழைக்காலம், எரிபொருள் செலவால Q1-ஐ விட சுமார் 42% குறைவு."},
+ {k:["revenue","sales","வருமானம்","விற்பனை"], en:"Revenue from operations was ₹23,295 crore, up 18.8%. Net sales were ₹23,024 crore, up 18.9%.", ta:"செயல்பாட்டு வருமானம் ₹23,295 கோடி, 18.8% ஏற்றம். நிகர விற்பனை ₹23,024 கோடி."},
+ {k:["ebitda per","per tonne","ebitda/t","டன்னுக்கு"], en:"Operating EBITDA per tonne was ₹974 — up ₹60 from a year ago but down ₹240 from Q1. Management still targets ₹1,400 per tonne by March 2028.", ta:"டன்னுக்கு ஆப்பரேட்டிங் EBITDA ₹974 — போன வருஷத்தை விட ₹60 அதிகம், Q1-ஐ விட ₹240 குறைவு. மார்ச் 2028-க்குள் ₹1,400 இலக்கு."},
+ {k:["ebitda","margin","மார்ஜின்"], en:"EBITDA including other income was ₹3,832 crore, up 17.3%; operating EBITDA ₹3,721 crore, up 20.3%. Margin on net sales was 16.6%.", ta:"EBITDA ₹3,832 கோடி (17.3% ஏற்றம்); ஆப்பரேட்டிங் EBITDA ₹3,721 கோடி (20.3%). மார்ஜின் 16.6%."},
+ {k:["volume","tonnes","market share","அளவு","ஷேர்"], en:"Domestic grey cement volume grew 13.8% to 35.94 million tonnes against industry growth of about 10% — a market share gain. Consolidated volume was 38.22 million tonnes.", ta:"உள்நாட்டு கிரே சிமெண்ட் 13.8% ஏறி 35.94 மில்லியன் டன்; இண்டஸ்ட்ரி சுமார் 10% — மார்க்கெட் ஷேர் கூடிச்சு."},
+ {k:["debt","leverage","கடன்"], en:"Net debt rose to ₹23,536 crore from ₹16,620 crore in March, mainly because of the ₹240 per share special dividend and capex. Net debt to EBITDA is 1.26 times; management expects it below 1 by March 2027.", ta:"நிகர கடன் மார்ச்ல ₹16,620 கோடில இருந்து ₹23,536 கோடி — ₹240 ஸ்பெஷல் டிவிடெண்ட், கேபெக்ஸ் காரணம். 1.26 மடங்கு; மார்ச் 2027-க்குள் 1-க்கு கீழ வரும்னு சொல்றாங்க."},
+ {k:["capacity","mtpa","கொள்ளளவு"], en:"Consolidated grey capacity is 210.1 MTPA, domestic 204.7 MTPA, after 4.6 MTPA was added in September. The target is about 240 MTPA by FY28.", ta:"மொத்த கொள்ளளவு 210.1 MTPA, உள்நாட்டுல 204.7. செப்டம்பர்ல 4.6 சேர்ந்துச்சு. FY28-க்குள் சுமார் 240 இலக்கு."},
+ {k:["ultravolt","wire","cable","வயர்","கேபிள்"], en:"Ultravolt, the wires and cables business, launched on 3 September 2026 at Jhagadia, Gujarat. About ₹1,100 crore of the ₹1,800 crore capex is spent; management sees ₹16,000–18,000 crore revenue potential at maturity at current copper prices.", ta:"அல்ட்ராவோல்ட் வயர்-கேபிள் 3 செப்டம்பர் 2026 குஜராத்ல ஆரம்பம். ₹1,800 கோடில ₹1,100 கோடி செலவு; முழு அளவுல ₹16–18 ஆயிரம் கோடி வருமானம் வரலாம்னு சொல்றாங்க."},
+ {k:["price","hike","realisation","விலை"], en:"Prices were soft in August but rose 7 to 10% month on month in late September; spot realisation is about 5% above the Q2 average.", ta:"ஆகஸ்ட்ல விலை மந்தம், செப் கடைசில மாசத்துக்கு 7–10% ஏறிச்சு; இப்போ Q2 சராசரியை விட சுமார் 5% அதிகம்."},
+ {k:["fuel","cost","petcoke","செலவு","எரிபொருள்"], en:"Fuel cost per tonne rose 14% to ₹1,030 and packing bags 30% to ₹216, while power cost fell 12% to ₹337 thanks to 48% green power. Petcoke is around 180 dollars a tonne.", ta:"எரிபொருள் செலவு டன்னுக்கு 14% ஏறி ₹1,030, பை 30% ஏறி ₹216; 48% கிரீன் பவரால மின் செலவு 12% குறைஞ்சு ₹337."},
+ {k:["valuation","p/e","pe ","multiple","மதிப்பீடு"], en:"At about ₹10,680 the stock trades near 36 times trailing earnings, about 18 times EV to EBITDA and about 3.9 times book.", ta:"சுமார் ₹10,680 விலைல P/E சுமார் 36, EV/EBITDA சுமார் 18, P/B சுமார் 3.9."},
+ {k:["target","analyst","broker","இலக்கு","அனலிஸ்ட்"], en:"Of ten tracked brokerages, nine are positive and one says Hold. Nomura's latest target is ₹13,700, Nuvama ₹15,209, Prabhudas Lilladher ₹14,623. The consensus target is about ₹13,730. These are third-party views, not CB Research advice.", ta:"10 ப்ரோக்கரேஜ்ல 9 பாசிட்டிவ், 1 Hold. நோமுரா ₹13,700, நுவாமா ₹15,209, பிரபுதாஸ் ₹14,623. சராசரி சுமார் ₹13,730. இவை மூன்றாம் தரப்பு கருத்து."},
+ {k:["fall","fell","drop","why stock","share price","இறங்க","விழுந்"], en:"The stock fell on results day because profit was about 5% below estimates, the quarter-on-quarter drop looked large, net debt rose and fuel costs are uncertain. Foreign investors have also been trimming their holding.", ta:"லாபம் எதிர்பார்ப்பை விட 5% குறைவு, காலாண்டு இறக்கம் பெருசா தெரிஞ்சுது, கடன் ஏறிச்சு, எரிபொருள் செலவு தெளிவில்ல — அதான் பங்கு இறங்கிச்சு. வெளிநாட்டு முதலீட்டாளர்களும் விக்கிறாங்க."},
+ {k:["cycle","phase","சைக்கிள்"], en:"Cement is a commodity spread cycle. CB rates the sector in phase P3, expansion, and the stock in Weinstein stage 4, giving a cycle score of 60.", ta:"சிமெண்ட் கமாடிட்டி ஸ்ப்ரெட் சைக்கிள். துறை P3 விரிவாக்க கட்டம், பங்கு கட்டம் 4; சைக்கிள் ஸ்கோர் 60."},
+ {k:["trigger","catalyst","ட்ரிக்கர்"], en:"Top positive triggers are post-monsoon price hikes, the Ultravolt ramp-up and capacity growth to 240 MTPA. Main negatives are fuel cost spikes, possible industry over-capacity and higher leverage. Trigger score is 74.", ta:"முக்கிய பாசிட்டிவ்: விலை ஏற்றம், அல்ட்ராவோல்ட், 240 MTPA. நெகட்டிவ்: எரிபொருள் செலவு, அதிக கொள்ளளவு, கடன். ட்ரிக்கர் ஸ்கோர் 74."},
+ {k:["score","pillar","cb score","ஸ்கோர்","தூண்"], en:"The CB Score is 6.6 out of 10: growth 8.5, margins 6.5, debt and cash 7, valuation 5.5, trend 4 and risk and moat 8.", ta:"CB ஸ்கோர் 10-க்கு 6.6: வளர்ச்சி 8.5, மார்ஜின் 6.5, கடன் 7, மதிப்பீடு 5.5, போக்கு 4, அரண் 8."},
+ {k:["india cements","icl","இந்தியா சிமெண்ட்ஸ்"], en:"India Cements volume rose 16% and EBITDA per tonne improved to ₹510, up ₹177; profit was ₹39 crore. The target is ₹1,000 per tonne by the March 2028 quarter.", ta:"இந்தியா சிமெண்ட்ஸ் விற்பனை 16% ஏறிச்சு, டன்னுக்கு EBITDA ₹510 (₹177 அதிகம்); லாபம் ₹39 கோடி. மார்ச் 2028-க்குள் ₹1,000 இலக்கு."},
+ {k:["md","management","ceo","jayant","jhanwar","நிர்வாக"], en:"Jayant Dua becomes Managing Director on 1 January 2027, succeeding K C Jhanwar, who becomes non-executive Vice Chairman. Atul Daga is the CFO.", ta:"ஜனவரி 1, 2027 முதல் ஜெயந்த் துவா MD; கே.சி. ஜன்வார் நான்-எக்ஸிக்யூட்டிவ் வைஸ் சேர்மன். அதுல் டாகா CFO."},
+ {k:["cash flow","cfo","working capital","கேஷ்","வொர்க்கிங்"], en:"First-half operating cash flow was ₹6,181 crore against ₹5,882 crore of capex. Working capital is negative, at minus 41 days in FY26, and the cash conversion cycle was 13 days.", ta:"முதல் பாதி ஆப்பரேட்டிங் கேஷ் ₹6,181 கோடி, கேபெக்ஸ் ₹5,882 கோடி. FY26-ல வொர்க்கிங் கேப்பிட்டல் −41 நாட்கள், கேஷ் சைக்கிள் 13 நாட்கள்."},
+ {k:["dividend","டிவிடெண்ட்"], en:"For FY26 UltraTech paid a special dividend of ₹240 per share, about ₹7,072 crore in total.", ta:"FY26-க்கு ₹240 ஸ்பெஷல் டிவிடெண்ட், மொத்தம் சுமார் ₹7,072 கோடி."},
+ {k:["buy","sell","hold","invest","should i","வாங்க","விக்க"], en:"CB Research does not give buy, sell or hold advice. Please use the Self-check tab to test the stock against your own conditions.", ta:"CB ரிசர்ச் வாங்க/விற்க ஆலோசனை தராது. சுய சோதனை டேப்ல உங்க நிபந்தனைகளோட சரிபாருங்க.", act:"sc"},
+ {k:["takeaway","summary","key","சுருக்கம்","முக்கிய"], en:"Key takeaways: market-share gain with 13.8% volume growth, profit up 21%, EBITDA per tonne down to ₹974 on fuel costs, prices rising since late September, net debt up to ₹23,536 crore, and the Ultravolt launch.", ta:"முக்கியம்: 13.8% விற்பனை வளர்ச்சியோட மார்க்கெட் ஷேர் கூடிச்சு, லாபம் 21% ஏற்றம், எரிபொருளால டன்னுக்கு EBITDA ₹974, செப் முதல் விலை ஏற்றம், கடன் ₹23,536 கோடி, அல்ட்ராவோல்ட் ஆரம்பம்."}
+];
+var AS = {
+ hello:{en:"Hi! Ask me about UltraTech's Q2FY27 — by voice (🎤) or text. Try: 'Why did the stock fall?'",ta:"வணக்கம்! அல்ட்ராடெக் Q2FY27 பத்தி கேளுங்க — குரல்ல (🎤) அல்லது டைப் பண்ணி. உதா: 'பங்கு ஏன் இறங்கிச்சு?'"},
+ miss:{en:"I don't have that in this file. Try asking about profit, volume, EBITDA per tonne, debt, Ultravolt, valuation, analysts, cycle or triggers.",ta:"அது இந்த ஃபைல்ல இல்ல. லாபம், விற்பனை, டன்னுக்கு EBITDA, கடன், அல்ட்ராவோல்ட், மதிப்பீடு, அனலிஸ்ட், சைக்கிள் பத்தி கேளுங்க."},
+ nomic:{en:"Voice input isn't supported in this browser — please type your question.",ta:"இந்த பிரவுசர்ல குரல் உள்ளீடு இல்ல — டைப் பண்ணுங்க."},
+ open:{en:"Open Self-check tab",ta:"சுய சோதனை டேப்பை திற"},
+ title:{en:"CB Assist — ask by voice or text",ta:"CB அசிஸ்ட் — குரல் அல்லது டைப்"},
+ ph:{en:"Ask about UltraTech Q2…",ta:"அல்ட்ராடெக் Q2 பத்தி கேளுங்க…"},
+ chips:[{en:"Why did the stock fall?",ta:"பங்கு ஏன் இறங்கிச்சு?"},{en:"EBITDA per tonne",ta:"டன்னுக்கு EBITDA"},{en:"Net debt",ta:"நிகர கடன்"},{en:"Ultravolt",ta:"அல்ட்ராவோல்ட்"},{en:"Analyst targets",ta:"அனலிஸ்ட் இலக்கு"}]
+};
+var DISC = {en:"<b>Prepared by CB Research (Cauvery Business Research)</b><br>For education only. CB Research is not a SEBI-registered research analyst and does not give buy, sell or hold recommendations. Brokerage ratings shown are third-party views attributed by name. Figures are from company filings, the Q2FY27 earnings call and published reports as of 21-Oct-2026; † marks CB Research derivations; n/a marks data not disclosed or not verified. Please consult a SEBI-registered adviser before investing.",
+            ta:"<b>CB ரிசர்ச் (காவேரி பிசினஸ் ரிசர்ச்) தயாரிச்சது</b><br>கல்விக்காக மட்டும். CB ரிசர்ச் SEBI பதிவு பெற்ற அனலிஸ்ட் இல்ல; வாங்க/விற்க/வெச்சுக்க பரிந்துரை தராது. ப்ரோக்கரேஜ் ரேட்டிங் அவங்க பேர்லயே காட்டப்பட்டிருக்கு. எண்கள் 21-அக்-2026 வரையிலான கம்பெனி அறிக்கை, Q2FY27 கான்ஃபரன்ஸ் கால், வெளியான ரிப்போர்ட்ஸ்ல இருந்து; † = CB கணக்கீடு; n/a = வெளியிடல/உறுதி ஆகல. முதலீட்டுக்கு முன் SEBI பதிவு பெற்ற ஆலோசகரை கேளுங்க."};
+var SRC = {t:{en:"Sources",ta:"ஆதாரங்கள்"}, l:[
+ "UltraTech Cement Q2FY27 results filing & investor presentation (19-Oct-2026)",
+ "UltraTech Q2FY27 earnings call (19-Oct-2026) — call highlights and transcript summaries",
+ "Business Standard: Q2FY27 results, cost-pressure analysis, share-price reaction (19–20 Oct 2026)",
+ "India Cements Q2FY27 results & investor presentation (17-Oct-2026)",
+ "UltraTech Q1FY27, Q4FY26, Q3FY26 results coverage; Board communications (Mar-26, Jul-26)",
+ "Brokerage target reports as compiled by Trendlyne, Economic Times, Whalesbook, Equentis, ScanX",
+ "Shareholding & valuation data: Dhan, Sharpely, Value Research (Jun–Oct 2026); working-capital days: Screener-method annual data"
+]};
+</script>
+<script>
+/* ============ CEMENT SCHOOL ============ */
+var CS = {
+ title:{en:"Cement School — how cement is made, and what it costs",ta:"சிமெண்ட் பள்ளி — சிமெண்ட் எப்படி தயாராகுது, அதுக்கு என்ன செலவு"},
+ flowTitle:{en:"From limestone to bag — tap each step",ta:"சுண்ணாம்புக்கல்லில் இருந்து மூட்டை வரை — ஒவ்வொரு படியையும் தொடுங்க"},
+ steps:[
+  {id:"q",ic:"⛏",t:{en:"Limestone quarry",ta:"சுண்ணாம்புக்கல் சுரங்கம்"},s:{en:"~1.5 t per t clinker",ta:"கிளிங்கர் டன்னுக்கு ~1.5 டன்"},
+   x:{en:"Limestone (calcium carbonate) is the main raw material — roughly 1.4–1.5 tonnes per tonne of clinker. Plants sit on captive mines, so limestone itself is cheap; the cost is in mining diesel, explosives, royalty and state levies (e.g. Tamil Nadu's ₹160/t levy, already absorbed in Q2).",
+      ta:"சுண்ணாம்புக்கல் (கால்சியம் கார்பனேட்) தான் முக்கிய மூலப்பொருள் — ஒரு டன் கிளிங்கருக்கு சுமார் 1.4–1.5 டன். ஆலைகள் சொந்த சுரங்கத்து மேலயே இருக்கும், அதனால கல் மலிவு; செலவு டீசல், வெடிமருந்து, ராயல்டி, மாநில வரில தான் (உதா. தமிழ்நாடு ₹160/டன், Q2-லயே சேர்த்தாச்சு)."}},
+  {id:"rm",ic:"⚙",t:{en:"Crusher & raw mill",ta:"கிரஷர் & ரா மில்"},s:{en:"+ clay, laterite, iron ore",ta:"+ களிமண், லேட்டரைட், இரும்புத்தாது"},
+   x:{en:"Limestone is crushed and ground with small 'correctives' — clay/laterite for silica and alumina, iron ore for iron — into a fine 'raw meal' with the right chemistry.",
+      ta:"சுண்ணாம்புக்கல்லை நொறுக்கி, களிமண்/லேட்டரைட் (சிலிகா, அலுமினா), இரும்புத்தாது சேர்த்து நைசா அரைச்சு 'ரா மீல்' தயாரிப்பாங்க."}},
+  {id:"k",ic:"🔥",t:{en:"Preheater & kiln",ta:"ப்ரீஹீட்டர் & சூளை"},s:{en:"~1,450°C · petcoke/coal",ta:"~1,450°C · பெட்கோக்/நிலக்கரி"},
+   x:{en:"Raw meal passes a preheater tower and a rotary kiln at about 1,450°C. This is where fuel (imported petcoke, coal, alternative fuels) is burnt — the single most energy-hungry step and why fuel is ~30% of cement cost. Waste heat recovery (WHRS, 444 MW at UltraTech) turns exhaust heat into power.",
+      ta:"ரா மீல் ப்ரீஹீட்டர் டவர், சுழலும் சூளை வழியா சுமார் 1,450°C-ல சூடாகும். இங்க தான் எரிபொருள் (பெட்கோக், நிலக்கரி, மாற்று எரிபொருள்) எரியும் — அதிக ஆற்றல் தேவைப்படுற படி, சிமெண்ட் செலவுல சுமார் 30% எரிபொருள் தான். கழிவு வெப்பத்துல இருந்து மின்சாரம் (WHRS, அல்ட்ராடெக்ல 444 MW)."}},
+  {id:"c",ic:"⚫",t:{en:"Clinker",ta:"கிளிங்கர்"},s:{en:"The 'heart' of cement",ta:"சிமெண்டோட 'இதயம்'"},
+   x:{en:"The kiln output is clinker — hard grey nodules. Clinker is the costly, carbon-heavy part. The less clinker per tonne of cement (lower 'clinker factor'), the cheaper and greener the cement. Clinker can be stored and shipped by rail to distant grinding units.",
+      ta:"சூளைல இருந்து வர்றது கிளிங்கர் — கடினமான சாம்பல் நிற உருண்டைகள். செலவும் கார்பனும் அதிகமான பகுதி இது. ஒரு டன் சிமெண்ட்ல கிளிங்கர் குறைவா இருந்தா ('கிளிங்கர் ஃபேக்டர்'), செலவும் கார்பனும் குறையும். கிளிங்கரை ரயில்ல தூர இருக்கிற அரைக்கும் யூனிட்டுக்கு அனுப்பலாம்."}},
+  {id:"g",ic:"🌀",t:{en:"Grinding unit",ta:"அரைக்கும் யூனிட்"},s:{en:"+ gypsum, fly ash, slag",ta:"+ ஜிப்சம், ஃப்ளை ஆஷ், ஸ்லாக்"},
+   x:{en:"Clinker is ground with ~4–5% gypsum (controls setting time) plus fly ash or slag for blended cements. Grinding units can sit next to markets, thermal power plants (fly ash) or steel plants (slag) — UltraTech adds slag grinding capacity at Visakhapatnam, Patratu and Nathdwara.",
+      ta:"கிளிங்கரோட சுமார் 4–5% ஜிப்சம் (கெட்டியாகுற நேரத்தை கட்டுப்படுத்தும்), பிளெண்டட் சிமெண்டுக்கு ஃப்ளை ஆஷ் அல்லது ஸ்லாக் சேர்த்து அரைப்பாங்க. அரைக்கும் யூனிட்டை சந்தை, அனல் மின் நிலையம் (ஃப்ளை ஆஷ்), எஃகு ஆலை (ஸ்லாக்) பக்கத்துல வைக்கலாம் — விசாகப்பட்டினம், பத்ராது, நாத்துவாராவுல அல்ட்ராடெக் ஸ்லாக் யூனிட் சேர்க்குது."}},
+  {id:"p",ic:"🛍",t:{en:"Packing",ta:"பேக்கிங்"},s:{en:"50 kg PP bags",ta:"50 கிலோ PP பை"},
+   x:{en:"Cement is packed in 50 kg polypropylene bags (20 bags = 1 tonne). Bag material is crude-oil linked — packing cost jumped 30% YoY to ₹216/t in Q2 (Q1: ₹9 → ₹12 per bag).",
+      ta:"50 கிலோ பாலிப்ரொப்பிலீன் பைல பேக் பண்ணுவாங்க (20 பை = 1 டன்). பை மூலப்பொருள் கச்சா எண்ணெய் சார்ந்தது — Q2-ல பை செலவு 30% ஏறி ₹216/டன் (Q1-ல பைக்கு ₹9 → ₹12)."}},
+  {id:"d",ic:"🚚",t:{en:"Dispatch",ta:"அனுப்புதல்"},s:{en:"Rail · road · sea",ta:"ரயில் · சாலை · கடல்"},
+   x:{en:"Logistics is the largest cost (~33%, ₹1,136/t). Cement is heavy and cheap per kg, so plants near markets win. UltraTech cut lead distance by 8 km YoY and is adding 600+ electric trucks by Dec-26.",
+      ta:"போக்குவரத்து தான் பெரிய செலவு (சுமார் 33%, ₹1,136/டன்). சிமெண்ட் கனமானது, கிலோவுக்கு மலிவு — அதனால சந்தை பக்கத்து ஆலை தான் ஜெயிக்கும். அல்ட்ராடெக் லாரி தூரத்தை 8 கி.மீ குறைச்சுது, டிச-26-க்குள் 600+ மின்சார லாரிகள்."}}
+ ],
+ ivg:{t:{en:"Integrated plant vs split grinding unit",ta:"ஒருங்கிணைந்த ஆலை vs தனி அரைக்கும் யூனிட்"},
+  a:{t:{en:"Integrated plant",ta:"ஒருங்கிணைந்த ஆலை"},l:[{en:"Mine + kiln + grinding at one site",ta:"சுரங்கம் + சூளை + அரைத்தல் ஒரே இடத்துல"},{en:"Needs limestone deposits — often far from cities",ta:"சுண்ணாம்புக்கல் இருக்கிற இடத்துல — பெரும்பாலும் நகரத்துக்கு தூரம்"},{en:"Higher capex; long approvals (mining, environment)",ta:"அதிக முதலீடு; நீண்ட அனுமதி"},{en:"Example: Petnikota, AP — 3.6 MTPA greenfield integrated, commissioned Sep-26",ta:"உதா: பெட்னிகோட்டா, ஆந்திரா — 3.6 MTPA புது ஒருங்கிணைந்த ஆலை, செப்-26"}]},
+  b:{t:{en:"Split grinding unit (GU)",ta:"தனி அரைக்கும் யூனிட்"},l:[{en:"Receives clinker by rail; grinds near the market",ta:"ரயில்ல கிளிங்கர் வரும்; சந்தை பக்கத்துல அரைப்பாங்க"},{en:"Sits next to fly-ash or slag sources → cheaper blended cement",ta:"ஃப்ளை ஆஷ்/ஸ்லாக் கிடைக்கிற இடம் → மலிவான பிளெண்டட் சிமெண்ட்"},{en:"Lower capex, faster to build; cuts freight on finished cement",ta:"குறைஞ்ச முதலீடு, சீக்கிரம் கட்டலாம்; போக்குவரத்து செலவு குறையும்"},{en:"Debottlenecking/brownfield GUs added 1 MTPA in Q2",ta:"Q2-ல 1 MTPA விரிவாக்கம் மூலம் சேர்ந்துச்சு"}]}},
+ cf:{t:{en:"Clinker factor — why blended cement matters",ta:"கிளிங்கர் ஃபேக்டர் — பிளெண்டட் சிமெண்ட் ஏன் முக்கியம்"},
+  x:{en:"Clinker conversion = tonnes of cement ÷ tonnes of clinker. OPC is ~1.05x; PPC ~1.4x; PSC can reach ~2x. More conversion means the same kiln makes more cement, using less fuel and emitting less CO₂ per tonne. UltraTech sold 67.3% blended cement in Q2; India Cements lifted conversion to 1.55x from 1.45x a year ago.",
+     ta:"கிளிங்கர் கன்வர்ஷன் = சிமெண்ட் டன் ÷ கிளிங்கர் டன். OPC சுமார் 1.05; PPC சுமார் 1.4; PSC சுமார் 2 வரை. அதிகமானா அதே சூளைல அதிக சிமெண்ட், குறைஞ்ச எரிபொருள், குறைஞ்ச CO₂. Q2-ல அல்ட்ராடெக் விற்பனைல 67.3% பிளெண்டட்; இந்தியா சிமெண்ட்ஸ் 1.45-ல இருந்து 1.55-க்கு ஏத்துச்சு."}},
+ typesTitle:{en:"Types of cement — composition and use (tap a bar)",ta:"சிமெண்ட் வகைகள் — கலவை & பயன் (ஒரு பட்டையை தொடுங்க)"},
+ comp:{cl:{en:"Clinker",ta:"கிளிங்கர்",c:"#5b6675"},gy:{en:"Gypsum",ta:"ஜிப்சம்",c:"#e3c16f"},fa:{en:"Fly ash",ta:"ஃப்ளை ஆஷ்",c:"#8fb3e8"},sl:{en:"Slag",ta:"ஸ்லாக்",c:"#7fc8a9"},wl:{en:"White clinker",ta:"வெள்ளை கிளிங்கர்",c:"#e6e9ee"}},
+ types:[
+  {n:"OPC 43/53",mix:{cl:95,gy:5},cf:"≈1.05x",std:"IS 269",
+   u:{en:"Ordinary Portland Cement. High early strength — RCC slabs, columns, precast, bridges, fast-track projects. Grades 43/53 = MPa strength at 28 days.",ta:"சாதாரண போர்ட்லேண்ட் சிமெண்ட். சீக்கிரம் வலுவாகும் — RCC தளம், தூண், ப்ரீகாஸ்ட், பாலம். 43/53 = 28 நாள்ல MPa வலிமை."}},
+  {n:"PPC",mix:{cl:66,gy:4,fa:30},cf:"≈1.4x",std:"IS 1489",
+   u:{en:"Portland Pozzolana Cement: clinker + 15–35% fly ash. Slower early strength but denser, more durable concrete; less heat. The everyday choice for houses, plastering, masonry. Cheaper to make.",ta:"போர்ட்லேண்ட் பொசோலானா: கிளிங்கர் + 15–35% ஃப்ளை ஆஷ். ஆரம்ப வலிமை மெதுவா, ஆனா அடர்த்தியான, நீடிக்கும் கான்கிரீட்; வெப்பம் குறைவு. வீடு, பூச்சு, கட்டுவேலைக்கு வழக்கமான தேர்வு. தயாரிக்க மலிவு."}},
+  {n:"PSC",mix:{cl:45,gy:5,sl:50},cf:"≈1.8–2x",std:"IS 455",
+   u:{en:"Portland Slag Cement: clinker + 25–70% ground granulated blast-furnace slag (from steel plants). Resists sulphates/chlorides — marine works, foundations, sewage, mass concrete. Popular in the East near steel plants.",ta:"போர்ட்லேண்ட் ஸ்லாக்: கிளிங்கர் + 25–70% ஸ்லாக் (எஃகு ஆலைல இருந்து). உப்பு, சல்ஃபேட் தாங்கும் — கடல் வேலை, அஸ்திவாரம், கழிவுநீர். எஃகு ஆலைகள் இருக்கிற கிழக்குல பிரபலம்."}},
+  {n:"Composite (CC)",mix:{cl:55,gy:5,fa:20,sl:20},cf:"≈1.7x",std:"IS 16415",
+   u:{en:"Clinker + both fly ash and slag. Combines PPC durability with PSC's chemical resistance; lowest-carbon mainstream option.",ta:"கிளிங்கர் + ஃப்ளை ஆஷ் + ஸ்லாக் ரெண்டும். PPC நீடிப்பும் PSC ரசாயன தாங்கும் தன்மையும்; கார்பன் குறைஞ்ச வழக்கமான வகை."}},
+  {n:"White cement",mix:{wl:95,gy:5},cf:"≈1.05x",std:"IS 8042",
+   u:{en:"Made from very low-iron limestone with special firing — decorative finishes, tiles grout, wall putty base (Birla White). Sells at several times grey cement's price per tonne.",ta:"இரும்பு மிகக்குறைவான சுண்ணாம்புக்கல், சிறப்பு எரிப்பு — அலங்காரம், டைல் இடைவெளி, வால் புட்டி (பிர்லா ஒயிட்). கிரே சிமெண்டை விட டன்னுக்கு பல மடங்கு விலை."}}
+ ],
+ typesNote:{en:"Shares shown are typical illustrative mixes within the Bureau of Indian Standards limits, not UltraTech's exact recipes.",ta:"காட்டிய சதவீதம் BIS வரம்புக்குள் வழக்கமான உதாரண கலவை; அல்ட்ராடெக்கோட சரியான கலவை இல்ல."},
+ rmTitle:{en:"Raw materials & cost escalation — Q2FY27",ta:"மூலப்பொருட்கள் & செலவு ஏற்றம் — Q2FY27"},
+ rmHead:{en:["Input","Used for","Where it comes from","Q2FY27 signal","Trend"],ta:["பொருள்","எதுக்கு","எங்கிருந்து","Q2FY27 நிலை","போக்கு"]},
+ rm:[
+  {tr:"up",en:["Petcoke / coal","Kiln fuel","Imported petcoke (US, Middle East), domestic & imported coal","Fuel cost ₹1,030/t (+14% YoY, +12% QoQ); ~₹2.09/kcal; petcoke ~$180/t; domestic coal tight (power sector priority)"],
+           ta:["பெட்கோக் / நிலக்கரி","சூளை எரிபொருள்","இறக்குமதி பெட்கோக், உள்நாட்டு & இறக்குமதி நிலக்கரி","எரிபொருள் ₹1,030/டன் (+14%, காலாண்டுக்கு +12%); சுமார் ₹2.09/kcal; பெட்கோக் சுமார் $180/டன்; நிலக்கரி பற்றாக்குறை"]},
+  {tr:"up",en:["Fly ash","PPC / composite","Thermal power plants","Part of raw-material cost ₹718/t (+6% YoY); costs rising as power utilities charge for ash",""],
+           ta:["ஃப்ளை ஆஷ்","PPC / காம்போசிட்","அனல் மின் நிலையங்கள்","மூலப்பொருள் செலவு ₹718/டன் (+6%)-ல ஒரு பகுதி; மின் நிலையங்கள் சாம்பலுக்கு விலை வாங்குறதால ஏற்றம்",""]},
+  {tr:"up",en:["Slag","PSC / composite","Steel plants (blast furnaces)","Within RM cost; slag-grinding units being added near steel plants",""],
+           ta:["ஸ்லாக்","PSC / காம்போசிட்","எஃகு ஆலைகள்","மூலப்பொருள் செலவுக்குள்; எஃகு ஆலை பக்கத்துல ஸ்லாக் யூனிட்டுகள்",""]},
+  {tr:"flat",en:["Limestone","Clinker (main input)","Captive mines next to kilns","Low cash cost; mining diesel at record high; state levies (TN ₹160/t)",""],
+           ta:["சுண்ணாம்புக்கல்","கிளிங்கர் (முக்கியம்)","சூளை பக்கத்து சொந்த சுரங்கம்","செலவு குறைவு; சுரங்க டீசல் உச்சம்; மாநில வரி (தமிழ்நாடு ₹160/டன்)",""]},
+  {tr:"flat",en:["Gypsum","Setting control (~4–5%)","Mineral & chemical gypsum, partly imported","Small share of cost; stable",""],
+           ta:["ஜிப்சம்","கெட்டியாகும் நேரம் (~4–5%)","கனிம & ரசாயன ஜிப்சம், சில இறக்குமதி","சின்ன பங்கு; நிலையானது",""]},
+  {tr:"up",en:["Packing bags (PP)","50 kg bags","Polypropylene — crude-oil linked","₹216/t (+30% YoY, −7% QoQ)",""],
+           ta:["பேக்கிங் பை (PP)","50 கிலோ பை","பாலிப்ரொப்பிலீன் — கச்சா எண்ணெய் சார்ந்தது","₹216/டன் (+30%, காலாண்டுக்கு −7%)",""]},
+  {tr:"up",en:["Diesel","Mining, trucks","Domestic fuel retail","Industrial diesel at all-time high — lifts RM and logistics costs",""],
+           ta:["டீசல்","சுரங்கம், லாரி","உள்நாட்டு எரிபொருள்","தொழில் டீசல் எப்பவும் இல்லாத உச்சம் — மூலப்பொருள், போக்குவரத்து செலவு ஏறுது",""]},
+  {tr:"dn",en:["Electricity","Grinding, kiln drives","Grid, captive thermal, solar/wind, WHRS","Power ₹337/t (−12% YoY); ₹4.77/kWh vs ₹5.31; 48% green power",""],
+           ta:["மின்சாரம்","அரைத்தல், சூளை மோட்டார்","கிரிட், சொந்த அனல், சோலார்/காற்று, WHRS","மின் ₹337/டன் (−12%); யூனிட்டுக்கு ₹4.77 (₹5.31-ல இருந்து); 48% கிரீன் பவர்",""]}
+ ],
+ costMixTitle:{en:"Where a tonne's cost goes — Q2FY27 vs Q2FY26 (₹/t, domestic grey)",ta:"ஒரு டன் செலவு எங்க போகுது — Q2FY27 vs Q2FY26 (₹/டன்)"},
+ costLbl:{logistics:{en:"Logistics",ta:"போக்குவரத்து"},fuel:{en:"Fuel",ta:"எரிபொருள்"},rm:{en:"Raw material",ta:"மூலப்பொருள்"},power:{en:"Power",ta:"மின்"},packing:{en:"Packing",ta:"பை"}},
+ kcalTitle:{en:"Fuel cost per 1,000 kcal (₹) — the escalation in one line",ta:"1,000 kcal-க்கு எரிபொருள் செலவு (₹) — ஏற்றம் ஒரே வரில"},
+ kcal:{lbl:["Q1FY26","Q4FY26","Q1FY27","Q2FY27","Oct-26 spot"],v:[1.78,1.77,1.90,2.09,2.20]},
+ escTitle:{en:"How UltraTech fights cost escalation",ta:"செலவு ஏற்றத்தை அல்ட்ராடெக் எப்படி சமாளிக்குது"},
+ esc:[
+  {en:"Price hikes — capacity is sold out; spot ~5% above Q2 average",ta:"விலை ஏற்றம் — உற்பத்தி முழுக்க விக்குது; இப்போ சுமார் 5% அதிகம்"},
+  {en:"Fuel mix — alternative fuels (thermal substitution ~7.2%), more domestic coal when available",ta:"எரிபொருள் கலவை — மாற்று எரிபொருள் (சுமார் 7.2%), கிடைக்கும் போது உள்நாட்டு நிலக்கரி"},
+  {en:"Green power — 1.58 GW renewables + 444 MW WHRS; power cost −12% YoY",ta:"கிரீன் பவர் — 1.58 GW + 444 MW WHRS; மின் செலவு −12%"},
+  {en:"More blended cement — lower clinker factor = less fuel per tonne",ta:"அதிக பிளெண்டட் சிமெண்ட் — குறைஞ்ச கிளிங்கர் = டன்னுக்கு குறைஞ்ச எரிபொருள்"},
+  {en:"Logistics — shorter lead distance (−8 km), rail surcharge waiver, electric trucks",ta:"போக்குவரத்து — குறைஞ்ச தூரம் (−8 கி.மீ), ரயில் கூடுதல் கட்டண தள்ளுபடி, மின்சார லாரி"},
+  {en:"Operating leverage — fixed cost/t −6% as volumes grow",ta:"ஆப்பரேட்டிங் லெவரேஜ் — விற்பனை ஏற ஏற நிலையான செலவு டன்னுக்கு −6%"}
+ ],
+ kcalNote:{en:"Q1FY26/Q4FY26/Q1FY27 as reported by brokers from company disclosures; Q2FY27 per earnings call (~₹2.09); Oct-26 is management's indicated spot (~₹2.2).",ta:"Q1FY26/Q4FY26/Q1FY27 ப்ரோக்கர் அறிக்கைல இருந்து; Q2FY27 கான்ஃபரன்ஸ் கால் (சுமார் ₹2.09); அக்-26 நிர்வாகம் சொன்னது (சுமார் ₹2.2)."}
+};
+</script>
+<script>
+/* ============ GROUP STRUCTURE ============ */
+var GS = {
+ title:{en:"Group structure — where UltraTech sits (tap any box)",ta:"குழும அமைப்பு — அல்ட்ராடெக் எங்க இருக்கு (எந்த பெட்டியையும் தொடுங்க)"},
+ note:{en:"Birla Opus paints is a division of Grasim, not UltraTech — its revenue and losses appear in Grasim's results only. UltraTech's numbers in this dashboard exclude paints.",
+       ta:"பிர்லா ஓபஸ் பெயிண்ட் கிராசிமோட பிரிவு, அல்ட்ராடெக்கோடது இல்ல — அதோட வருமானம், நஷ்டம் கிராசிம் ரிசல்ட்ல மட்டும் தான். இந்த டாஷ்போர்டுல அல்ட்ராடெக் எண்கள்ல பெயிண்ட் இல்ல."},
+ n:{
+  abg:{t:{en:"Aditya Birla Group",ta:"ஆதித்ய பிர்லா குழுமம்"},s:{en:"Chairman: Kumar Mangalam Birla",ta:"சேர்மன்: குமார் மங்கலம் பிர்லா"},
+       x:{en:"The conglomerate. Its listed flagships include Grasim, UltraTech and Hindalco; group companies share leadership pools and sometimes resources (e.g. the UHG Holdings aircraft/ship vehicle owned 41% UltraTech, 9% Grasim, 50% Hindalco).",
+          ta:"பெரிய குழுமம். கிராசிம், அல்ட்ராடெக், ஹிண்டால்கோ இதோட முக்கிய லிஸ்டட் கம்பெனிகள்; தலைவர்களையும் சில வசதிகளையும் பகிர்ந்துக்குவாங்க (உதா. UHG ஹோல்டிங்ஸ் — அல்ட்ராடெக் 41%, கிராசிம் 9%, ஹிண்டால்கோ 50%)."}},
+  gr:{t:{en:"Grasim Industries",ta:"கிராசிம் இண்டஸ்ட்ரீஸ்"},s:{en:"Holding & operating company",ta:"ஹோல்டிங் & தொழில் கம்பெனி"},
+      x:{en:"UltraTech's parent and promoter (promoter group ~59.3% of UltraTech). Grasim runs its own businesses — cellulosic fibre/yarn, chemicals, Birla Opus paints and Birla Pivot (B2B building materials) — and holds stakes in UltraTech and Aditya Birla Capital.",
+         ta:"அல்ட்ராடெக்கோட தாய் கம்பெனி, ப்ரமோட்டர் (ப்ரமோட்டர் குழுமம் சுமார் 59.3%). கிராசிமுக்கு சொந்த தொழில்கள் — ஃபைபர்/நூல், கெமிக்கல்ஸ், பிர்லா ஓபஸ் பெயிண்ட், பிர்லா பிவட் (B2B கட்டுமான பொருள்) — அல்ட்ராடெக், ஆதித்ய பிர்லா கேப்பிட்டல்ல பங்கு."}},
+  ut:{t:{en:"UltraTech Cement",ta:"அல்ட்ராடெக் சிமெண்ட்"},s:{en:"Subsidiary of Grasim · ~59.3%",ta:"கிராசிமோட துணை · சுமார் 59.3%"},
+      x:{en:"The cement flagship analysed in this dashboard: grey & white cement, RMC, construction chemicals, putty and, from Sep-26, Ultravolt wires & cables.",
+         ta:"இந்த டாஷ்போர்டுல அலசுற சிமெண்ட் கம்பெனி: கிரே & வெள்ளை சிமெண்ட், RMC, கட்டுமான கெமிக்கல்ஸ், புட்டி, செப்-26 முதல் அல்ட்ராவோல்ட் வயர்-கேபிள்."}},
+  op:{t:{en:"Birla Opus (paints)",ta:"பிர்லா ஓபஸ் (பெயிண்ட்)"},s:{en:"Grasim division · NOT UltraTech",ta:"கிராசிம் பிரிவு · அல்ட்ராடெக் இல்ல"},
+      x:{en:"Decorative paints business launched by Grasim. NOT part of UltraTech. It overlaps with UltraTech only informally — both sell to the same home-builders and dealer ecosystem.",
+         ta:"கிராசிம் ஆரம்பிச்ச அலங்கார பெயிண்ட் தொழில். அல்ட்ராடெக்கோட பகுதி இல்ல. ஒரே வீடு கட்டுறவங்க, டீலர்களுக்கு விக்கிறதால மட்டும் தொடர்பு."}},
+  pv:{t:{en:"Birla Pivot",ta:"பிர்லா பிவட்"},s:{en:"B2B building materials",ta:"B2B கட்டுமான பொருள்"},
+      x:{en:"Grasim's B2B e-commerce platform for building materials — another group play on construction, separate from UltraTech.",
+         ta:"கட்டுமான பொருட்களுக்கான கிராசிமோட B2B ஆன்லைன் தளம் — அல்ட்ராடெக்ல இருந்து தனி."}},
+  gx:{t:{en:"Fibre & Chemicals",ta:"ஃபைபர் & கெமிக்கல்ஸ்"},s:{en:"Grasim's legacy businesses",ta:"கிராசிமோட பழைய தொழில்கள்"},
+      x:{en:"Cellulosic fibre/yarn (VSF) and chlor-alkali chemicals — Grasim's original businesses.",ta:"விஸ்கோஸ் ஃபைபர்/நூல், குளோர்-ஆல்கலி கெமிக்கல்ஸ் — கிராசிமோட ஆரம்ப தொழில்கள்."}},
+  abc:{t:{en:"Aditya Birla Capital",ta:"ஆதித்ய பிர்லா கேப்பிட்டல்"},s:{en:"Financial services",ta:"நிதி சேவை"},
+      x:{en:"Listed financial-services arm (lending, AMC, insurance) in which Grasim is the largest shareholder.",ta:"லிஸ்டட் நிதி சேவை கம்பெனி (கடன், AMC, இன்சூரன்ஸ்); கிராசிம் தான் பெரிய பங்குதாரர்."}},
+  u1:{t:{en:"Cement · RMC",ta:"சிமெண்ட் · RMC"},s:{en:"+ white, chemicals",ta:"+ வெள்ளை, கெமிக்கல்ஸ்"},
+      x:{en:"Q2FY27: grey cement ₹18,603 cr, RMC ₹2,338 cr, white cement ₹693 cr, chemicals ₹421 cr, overseas ₹1,302 cr.",ta:"Q2FY27: கிரே ₹18,603 கோடி, RMC ₹2,338, வெள்ளை ₹693, கெமிக்கல்ஸ் ₹421, வெளிநாடு ₹1,302 கோடி."}},
+  u2:{t:{en:"Ultravolt W&C",ta:"அல்ட்ராவோல்ட்"},s:{en:"Wires & cables",ta:"வயர் & கேபிள்"},
+      x:{en:"Launched 3-Sep-26; reported within UltraTech standalone. This — not paints — is UltraTech's new adjacency.",ta:"3-செப்-26 ஆரம்பம்; அல்ட்ராடெக் ஸ்டாண்ட்அலோன்ல. அல்ட்ராடெக்கோட புது தொழில் இது தான், பெயிண்ட் இல்ல."}},
+  u3:{t:{en:"India Cements",ta:"இந்தியா சிமெண்ட்ஸ்"},s:{en:"Listed subsidiary",ta:"லிஸ்டட் துணை"},
+      x:{en:"Acquired Dec-24; Q2FY27 revenue ₹1,142 cr, EBITDA/t ₹510. Consolidated into UltraTech.",ta:"டிச-24-ல வாங்கினது; Q2FY27 வருமானம் ₹1,142 கோடி, டன்னுக்கு ₹510. அல்ட்ராடெக்கோட சேர்த்து கணக்கு."}},
+  u4:{t:{en:"Overseas (UAE)",ta:"வெளிநாடு (UAE)"},s:{en:"Subsidiaries",ta:"துணை கம்பெனிகள்"},
+      x:{en:"UAE-based cement operations (incl. RAKWCT) and other overseas units, consolidated into UltraTech.",ta:"UAE சிமெண்ட் ஆலைகள் (RAKWCT உட்பட), அல்ட்ராடெக்கோட சேர்த்து கணக்கு."}}
+ }
+};
+</script>
+<script>
+(function(){
+TX.tabs.splice(2,0,{id:"cs",en:"Cement School",ta:"சிமெண்ட் பள்ளி"});
+var LANG="en", CUR="dash", CH={};
+function L(o){ if(o==null) return ""; if(typeof o!=="object") return String(o); return (o[LANG]!=null?o[LANG]:o.en); }
+function T(en,ta){ return LANG==="ta"?ta:en; }
+function f(n,d){ if(typeof n!=="number") return n; d=d==null?0:d; return n.toLocaleString("en-IN",{minimumFractionDigits:d,maximumFractionDigits:d}); }
+function chg(a,b){ return (a/b-1)*100; }
+function sgn(x,d){ d=d==null?1:d; return (x>=0?"+":"−")+Math.abs(x).toFixed(d)+"%"; }
+function cls(x){ return x>0.05?"up":(x<-0.05?"dn":"flat"); }
+function col(s){ return s>=8?"#1f9d55":(s>=6?"#d99a06":"#d64545"); }
+function esc(s){ return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
+function card(inner,extra){ return '<div class="card '+(extra||"")+'">'+inner+'</div>'; }
+function table(head,rows){ var h='<div class="tblwrap"><table><thead><tr>'+head.map(function(x){return '<th>'+x+'</th>';}).join("")+'</tr></thead><tbody>';
+  rows.forEach(function(r){ h+= r.cat? '<tr class="cat"><td colspan="'+head.length+'">'+r.cat+'</td></tr>' : '<tr>'+r.map(function(c,i){return '<td'+(i>0&&r.lcols&&r.lcols.indexOf(i)>=0?' class="l"':'')+'>'+c+'</td>';}).join("")+'</tr>'; });
+  return h+'</tbody></table></div>'; }
+function chartBox(id,tall){ return '<div class="chartbox'+(tall?' tall':'')+'"><canvas id="'+id+'"></canvas></div>'; }
+function mkChart(id,cfg){ if(CH[id]){CH[id].destroy();} var el=document.getElementById(id); if(!el||typeof Chart==="undefined") return; CH[id]=new Chart(el,cfg); }
+var yIN=function(v){ return Number(v).toLocaleString("en-IN"); };
+if(typeof Chart!=="undefined"){ Chart.defaults.font.family="Inter, 'Noto Sans Tamil', sans-serif"; Chart.defaults.color="#5b6675"; Chart.defaults.maintainAspectRatio=false; }
+var BAR={ id:"barTop", afterDatasetsDraw:function(c){ var ctx=c.ctx; c.data.datasets.forEach(function(ds,i){ var m=c.getDatasetMeta(i); if(m.hidden||ds.type==="line"||ds.noTop) return; m.data.forEach(function(b,j){ var v=ds.data[j]; if(v==null||Array.isArray(v)) return; ctx.save(); ctx.fillStyle="#1b2430"; ctx.font="600 10.5px Inter, sans-serif"; ctx.textAlign="center"; ctx.fillText(ds.fmt?ds.fmt(v):Number(v).toLocaleString("en-IN"), b.x, b.y-4); ctx.restore(); }); }); } };
+
+/* ---------- TABS ---------- */
+function buildTabs(){ var n=document.getElementById("tabs"); n.innerHTML=TX.tabs.map(function(t){return '<button data-t="'+t.id+'" class="'+(t.id===CUR?"on":"")+'">'+L(t)+'</button>';}).join("");
+  n.querySelectorAll("button").forEach(function(b){ b.onclick=function(){ go(b.getAttribute("data-t")); }; }); }
+function go(id){ CUR=id; document.querySelectorAll("nav.tabs button").forEach(function(b){b.classList.toggle("on",b.getAttribute("data-t")===id);});
+  document.querySelectorAll("section.tab").forEach(function(s){s.classList.toggle("on",s.id==="t_"+id);}); window.scrollTo({top:0,behavior:"smooth"}); POST[id]&&POST[id](); }
+var POST={};
+
+/* ---------- DASHBOARD ---------- */
+function secDash(){
+  var c=CO.cur,p=CO.prevY,q=CO.prevQ;
+  var k=[
+   ["rev","₹"+f(c.rev)+" "+L(TX.cr),chg(c.rev,p.rev),chg(c.rev,q.rev)],
+   ["ebitda","₹"+f(c.pbidt)+" "+L(TX.cr),chg(c.pbidt,p.pbidt),chg(c.pbidt,q.pbidt)],
+   ["pat","₹"+f(c.pat)+" "+L(TX.cr),chg(c.pat,p.pat),chg(c.pat,q.pat)],
+   ["vol",f(c.domVol,2)+" "+L(TX.mt),chg(c.domVol,p.domVol),chg(c.domVol,q.domVol)],
+   ["et","₹"+f(c.ebitdaT),c.ebitdaT-p.ebitdaT,c.ebitdaT-q.ebitdaT,"abs"],
+   ["util",c.util+"%",c.util-p.util,c.util-q.util,"pts"],
+   ["nd","₹"+f(c.netDebt)+" "+L(TX.cr),null,chg(c.netDebt,16620),"nd"],
+   ["cap",f(c.capCons,1)+" MTPA",null,null,"cap"]
+  ];
+  var kp=k.map(function(x){ var s1="",s2="";
+    if(x[4]==="abs"){ s1=(x[2]>=0?"+₹":"−₹")+Math.abs(x[2]); s2=(x[3]>=0?"+₹":"−₹")+Math.abs(x[3]); }
+    else if(x[4]==="pts"){ s1=(x[2]>=0?"+":"−")+Math.abs(x[2])+T(" pts"," புள்ளி"); s2=(x[3]>=0?"+":"−")+Math.abs(x[3])+T(" pts"," புள்ளி"); }
+    var line;
+    if(x[4]==="nd") line='<span class="dn">'+sgn(x[3],0)+T(" vs Mar-26 · 1.26x EBITDA"," மார்ச்-26 vs · 1.26 மடங்கு")+'</span>';
+    else if(x[4]==="cap") line='<span class="up">'+T("+4.6 MTPA in Sep · 240 by FY28","செப்ல +4.6 · FY28-க்குள் 240")+'</span>';
+    else line='<span class="'+cls(x[2])+'">'+L(TX.yoy)+" "+(s1||sgn(x[2]))+'</span> · <span class="'+cls(x[3])+'">'+L(TX.qoq)+" "+(s2||sgn(x[3]))+'</span>';
+    return card('<div class="lbl">'+L(TX.kpi[x[0]])+'</div><div class="val">'+x[1]+'</div><div class="chg">'+line+'</div>','kpi'); }).join("");
+  var kt=TX.kt.map(function(x,i){ var t=L(x); return '<li class="'+x.c+'"><span class="n">'+(i+1)+'</span><b>'+t[0]+'</b><span>'+t[1]+'</span></li>'; }).join("");
+  return '<div class="hero"><div class="big">'+L(TX.hero)+'</div><div style="display:flex;gap:6px;flex-wrap:wrap">'+
+   '<span class="chip cb">CB Score 6.6/10</span><span class="chip cy">CY 60</span><span class="chip tg">TG 74</span><span class="chip warn">'+T("Price: Stage 4","விலை: கட்டம் 4")+'</span></div></div>'+
+   '<div class="grid g4">'+kp+'</div>'+
+   '<h3>⭐ '+L(TX.ktTitle)+'</h3><ul class="kt">'+kt+'</ul>'+
+   '<h3>'+L(TX.dashCharts)+'</h3><div class="grid g2">'+card('<b>'+L(TX.chRevEb)+'</b>'+chartBox("cRevEb"))+card('<b>'+L(TX.chPat)+'</b>'+chartBox("cPat"))+'</div>'+
+   '<div class="grid" style="margin-top:12px">'+card('<b>'+L(TX.chEt)+'</b>'+chartBox("cEt")+'<div class="note">'+L(TX.noteQ4)+'</div>')+'</div>';
+}
+POST.dash=function(){
+  var mar=CO.rev.map(function(r,i){return +(CO.ebitda[i]/r*100).toFixed(1);});
+  var ql=CO.q.slice(); ql[2]=ql[2];
+  mkChart("cRevEb",{type:"bar",data:{labels:CO.q,datasets:[
+    {label:L(TX.lRev),data:CO.rev,backgroundColor:"#1f3b63",yAxisID:"y",order:2},
+    {label:L(TX.lEb),data:CO.ebitda,backgroundColor:"#e8701a",yAxisID:"y",order:2},
+    {type:"line",label:L(TX.lMar),data:mar,borderColor:"#1f9d55",backgroundColor:"#1f9d55",yAxisID:"y1",tension:.3,order:1}]},
+   options:{plugins:{tooltip:{callbacks:{label:function(c){return c.dataset.label+": "+(c.dataset.yAxisID==="y1"?c.raw+"%":"₹"+yIN(c.raw)+" cr");}}}},
+    scales:{y:{beginAtZero:true,grace:"12%",ticks:{callback:yIN}},y1:{position:"right",min:10,max:26,grid:{display:false},ticks:{callback:function(v){return v+"%";}}}}},plugins:[BAR]});
+  mkChart("cPat",{type:"bar",data:{labels:CO.q,datasets:[{label:L(TX.lPat),data:CO.pat,backgroundColor:CO.pat.map(function(v,i){return i===4?"#e8701a":"#9fb6d6";})}]},
+   options:{plugins:{legend:{display:false}},scales:{y:{beginAtZero:true,grace:"12%",ticks:{callback:yIN}}}},plugins:[BAR]});
+  mkChart("cEt",{type:"bar",data:{labels:CO.q.map(function(x,i){return CO.ebitdaTflag[i]?x+" †":x;}),datasets:[
+    {type:"line",label:L(TX.lEt),data:CO.ebitdaT,borderColor:"#e8701a",backgroundColor:"#e8701a",yAxisID:"y",tension:.3,order:1},
+    {label:L(TX.lVol),data:CO.domVol,backgroundColor:"#c9d6ea",yAxisID:"y1",order:2,fmt:function(v){return v.toFixed(1);}}]},
+   options:{scales:{y:{min:600,max:1400,ticks:{callback:yIN}},y1:{position:"right",beginAtZero:true,grace:"15%",grid:{display:false}}}},plugins:[BAR]});
+};
+
+/* ---------- BUSINESS MODEL ---------- */
+function bmSvg(){
+  var N=BM.nodes, out=[], ar=[];
+  var segCol=["#1f3b63","#8a8f98","#13958c","#7a4bc4","#2f6fd6","#e8701a"];
+  var segTot=CO.seg.reduce(function(a,b){return a+b.v;},0);
+  function box(id,x,y,w,h,fill,stroke,lines){ var t='<g class="node" data-id="'+id+'"><rect x="'+x+'" y="'+y+'" width="'+w+'" height="'+h+'" rx="12" fill="'+fill+'" stroke="'+stroke+'" stroke-width="1.5"/>';
+    lines.forEach(function(l,i){ t+='<text x="'+(x+w/2)+'" y="'+(y+22+i*18)+'" text-anchor="middle" font-size="'+(i===0?13:11.5)+'" font-weight="'+(i===0?700:500)+'" fill="'+(l.c||"#1b2430")+'">'+esc(l.t)+'</text>'; });
+    return t+'</g>'; }
+  function arrow(x1,y1,x2,y2,c){ return '<path d="M'+x1+','+y1+' C'+((x1+x2)/2)+','+y1+' '+((x1+x2)/2)+','+y2+' '+x2+','+y2+'" fill="none" stroke="'+(c||"#b8c2d0")+'" stroke-width="1.6" marker-end="url(#ah)"/>'; }
+  var hdr=[[105,T("Customers","வாங்குபவர்கள்")],[312,T("Channels","விற்பனை வழி")],[530,T("Company","கம்பெனி")],[760,T("Segments (Q2 ₹ cr)","பிரிவுகள் (Q2 ₹ கோடி)")],[1025,T("Money flow","பண ஓட்டம்")]];
+  hdr.forEach(function(h){ out.push('<text x="'+h[0]+'" y="24" text-anchor="middle" font-size="12.5" font-weight="800" fill="#9a4a0c">'+esc(h[1].toUpperCase? (LANG==="en"?h[1].toUpperCase():h[1]):h[1])+'</text>'); });
+  var cy=[90,210,330,450];
+  ["c1","c2","c3","c4"].forEach(function(id,i){ out.push(box(id,20,cy[i],170,90,"#eef4ff","#c9dbf8",[{t:L(N[id].t)},{t:L(N[id].s),c:"#5b6675"}])); ar.push(arrow(190,cy[i]+45,225,cy[i]+45)); });
+  ["d1","d2","d3","d4"].forEach(function(id,i){ out.push(box(id,225,cy[i],175,90,"#f1faf5","#bfe6cf",[{t:L(N[id].t)},{t:L(N[id].s),c:"#5b6675"}])); ar.push(arrow(400,cy[i]+45,440,320)); });
+  out.push(box("co",440,230,180,180,"#fff3e8","#e8701a",[{t:L(N.co.t)},{t:"210.1 MTPA"},{t:T("38.22 MT sold","38.22 மி.டன்"),c:"#5b6675"},{t:T("Op. EBITDA/t ₹974","டன்னுக்கு ₹974"),c:"#5b6675"},{t:T("Utilisation 71%","பயன்பாடு 71%"),c:"#5b6675"}]));
+  ["s1","s2","s3","s4","s5","s6"].forEach(function(id,i){ var y=40+i*100, sg=N[id].seg, l2, l3;
+    if(sg>=0){ var s=CO.seg[sg]; l2="₹"+f(s.v)+"  ·  +"+s.g+"%"; l3=T("Share ","பங்கு ")+(s.v/segTot*100).toFixed(1)+"%"; } else { l2=T("NEW · from 3-Sep-26","புதுசு · 3-செப்-26 முதல்"); l3=T("Capex ₹1,100/1,800 cr","கேபெக்ஸ் ₹1,100/1,800 கோடி"); }
+    out.push(box(id,660,y,200,84,"#ffffff",segCol[i],[{t:L(N[id].t),c:segCol[i]},{t:l2},{t:l3,c:"#5b6675"}]));
+    out.push('<rect x="660" y="'+(y+80)+'" width="'+(sg>=0?Math.max(6,200*CO.seg[sg].v/segTot):6)+'" height="4" rx="2" fill="'+segCol[i]+'"/>');
+    ar.push(arrow(620,320,660,y+42,segCol[i])); ar.push(arrow(860,y+42,900,85,"#d7dde6")); });
+  var rc=["#eef4ff","#fdeaea","#fff6dc","#e7f6ee","#fff3e8"], rs=["#2f6fd6","#d64545","#d99a06","#1f9d55","#e8701a"];
+  ["r1","r2","r3","r4","r5"].forEach(function(id,i){ var y=40+i*122; out.push(box(id,900,y,250,90,rc[i],rs[i],[{t:L(N[id].t)},{t:L(N[id].s),c:"#5b6675"}])); if(i<4) ar.push('<line x1="1025" y1="'+(y+90)+'" x2="1025" y2="'+(y+122)+'" stroke="'+rs[i+1]+'" stroke-width="2" marker-end="url(#ah)"/>'); });
+  return '<svg id="bmsvg" viewBox="0 0 1180 660" xmlns="http://www.w3.org/2000/svg"><defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#8f9bb0"/></marker></defs>'+ar.join("")+out.join("")+'</svg>';
+}
+function gsSvg(){
+  var N=GS.n, o=[];
+  function bx(id,x,y,w,h,fill,st,dash){ o.push('<g class="node gsn" data-id="'+id+'"><rect x="'+x+'" y="'+y+'" width="'+w+'" height="'+h+'" rx="12" fill="'+fill+'" stroke="'+st+'" stroke-width="1.8"'+(dash?' stroke-dasharray="6 4"':'')+'/><text x="'+(x+w/2)+'" y="'+(y+h/2-3)+'" text-anchor="middle" font-size="13" font-weight="700" fill="#1b2430">'+esc(L(N[id].t))+'</text><text x="'+(x+w/2)+'" y="'+(y+h/2+15)+'" text-anchor="middle" font-size="11" fill="#5b6675">'+esc(L(N[id].s))+'</text></g>'); }
+  function ln(x1,y1,x2,y2,c,d){ o.push('<path d="M'+x1+','+y1+' V'+((y1+y2)/2)+' H'+x2+' V'+y2+'" fill="none" stroke="'+(c||"#8f9bb0")+'" stroke-width="2"'+(d?' stroke-dasharray="5 4"':'')+' marker-end="url(#ah3)"/>'); }
+  ln(590,74,590,118);
+  ln(590,184,190,240,"#e8701a"); ln(590,184,470,240); ln(590,184,700,240); ln(590,184,930,240); ln(590,184,1110,240);
+  ln(190,306,80,360,"#e8701a"); ln(190,306,225,360,"#e8701a"); ln(190,306,370,360,"#e8701a"); ln(190,306,515,360,"#e8701a");
+  bx("abg",470,14,240,60,"#f1f3f7","#8f9bb0");
+  bx("gr",470,120,240,64,"#eef4ff","#2f6fd6");
+  bx("ut",80,242,220,64,"#fff3e8","#e8701a");
+  bx("op",370,242,200,64,"#fdeaea","#d64545");
+  bx("pv",600,242,200,64,"#f6f8fb","#c9d3e0");
+  bx("gx",830,242,200,64,"#f6f8fb","#c9d3e0");
+  bx("abc",1050,242,130,64,"#f6f8fb","#c9d3e0");
+  bx("u1",10,362,140,62,"#fff","#e8701a"); bx("u2",155,362,140,62,"#fff","#e8701a");
+  bx("u3",300,362,140,62,"#fff","#e8701a",1); bx("u4",445,362,140,62,"#fff","#e8701a",1);
+    o.push('<text x="10" y="460" font-size="12" fill="#5b6675">'+esc(T("Solid orange = inside UltraTech's consolidated numbers","ஆரஞ்சு = அல்ட்ராடெக் கணக்குக்குள்"))+'</text>');
+  o.push('<text x="10" y="482" font-size="12" fill="#5b6675">'+esc(T("Dashed = subsidiaries consolidated by UltraTech","கோடு = அல்ட்ராடெக் சேர்த்து கணக்கிடும் துணைகள்"))+'</text>');
+  o.push('<text x="10" y="504" font-size="12" fill="#5b6675">'+esc(T("Red/grey = Grasim businesses outside UltraTech","சிவப்பு/சாம்பல் = அல்ட்ராடெக்குக்கு வெளியே கிராசிம் தொழில்கள்"))+'</text>');
+  return '<svg id="gsSvg" viewBox="0 0 1190 520" style="min-width:980px;width:100%;display:block"><defs><marker id="ah3" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#8f9bb0"/></marker></defs>'+o.join("")+'</svg>';
+}
+function secBm(){
+  var e=BM.engine;
+  return '<h2>'+L(BM.title)+'</h2><div class="bmwrap">'+bmSvg()+'</div>'+
+   '<div class="explain" id="bmEx"><h4>'+L(BM.nodes.co.t)+'</h4><div>'+L(BM.nodes.co.x)+'</div></div>'+
+   '<div class="note" style="margin-top:8px"><b>ƒ</b> '+L(BM.formula)+'</div>'+
+   '<h3>'+L(GS.title)+'</h3><div class="bmwrap">'+gsSvg()+'</div><div class="explain" id="gsEx" style="background:#fdeaea;border-color:#d64545"><h4>'+L(GS.n.op.t)+'</h4><div>'+L(GS.note)+'</div></div>'+
+   '<h3>'+L(e.title)+'</h3>'+table(L(e.head),e.rows.map(function(r){var x=L(r).slice(); x.lcols=[3]; return x;}))+'<div class="note">'+L(e.note)+'</div>'+
+   '<div class="grid g3" style="margin-top:12px">'+card('<b>'+L(BM.segTitle)+'</b>'+chartBox("cSeg"))+card('<b>'+L(BM.geoTitle)+'</b>'+chartBox("cReg"))+card('<b>'+L(BM.capTitle)+'</b>'+chartBox("cCap"))+'</div>';
+}
+POST.bm=function(){
+  document.querySelectorAll("#gsSvg .gsn").forEach(function(g){ g.style.cursor="pointer"; g.onclick=function(){ var n=GS.n[g.getAttribute("data-id")]; var ex=document.getElementById("gsEx"); ex.innerHTML='<h4>'+L(n.t)+'</h4><div>'+L(n.x)+'</div>'; }; });
+  document.querySelectorAll("#bmsvg .node").forEach(function(g){ g.onclick=function(){ document.querySelectorAll("#bmsvg .node").forEach(function(x){x.classList.remove("sel");}); g.classList.add("sel");
+    var n=BM.nodes[g.getAttribute("data-id")]; var ex=document.getElementById("bmEx"); ex.innerHTML='<h4>'+L(n.t)+'</h4><div>'+L(n.x)+'</div>'; ex.scrollIntoView({behavior:"smooth",block:"nearest"}); }; });
+  mkChart("cSeg",{type:"doughnut",data:{labels:CO.seg.map(function(s){return L(BM.segName[s.k]);}),datasets:[{data:CO.seg.map(function(s){return s.v;}),backgroundColor:["#1f3b63","#8a8f98","#13958c","#7a4bc4","#2f6fd6"]}]},
+   options:{plugins:{legend:{position:"bottom",labels:{boxWidth:12,font:{size:11}}},tooltip:{callbacks:{label:function(c){return c.label+": ₹"+yIN(c.raw)+" cr";}}}}}});
+  var rg=[20,17.5,10,10,5];
+  mkChart("cReg",{type:"bar",data:{labels:CO.regions.map(function(r){return L(BM.region[r.k]);}),datasets:[{data:rg,backgroundColor:["#1f9d55","#1f9d55","#2f6fd6","#2f6fd6","#d99a06"],fmt:function(v,i){return "";}}]},
+   options:{indexAxis:"y",plugins:{legend:{display:false},tooltip:{callbacks:{label:function(c){return CO.regions[c.dataIndex].g;}}}},scales:{x:{beginAtZero:true,max:26,ticks:{callback:function(v){return v+"%";}}}}},
+   plugins:[{id:"rl",afterDatasetsDraw:function(c){var ctx=c.ctx; c.getDatasetMeta(0).data.forEach(function(b,i){ctx.save();ctx.font="700 11px Inter";ctx.fillStyle="#1b2430";ctx.fillText(CO.regions[i].g,b.x+4,b.y+4);ctx.restore();});}}]});
+  mkChart("cCap",{type:"bar",data:{labels:CO.capacity.lbl,datasets:[{data:CO.capacity.v,backgroundColor:["#9fb6d6","#9fb6d6","#e8701a","#f3b27f","#f3b27f"],fmt:function(v){return v.toFixed(1);}}]},
+   options:{plugins:{legend:{display:false}},scales:{y:{min:150,max:260}}},plugins:[BAR]});
+};
+
+/* ---------- CEMENT SCHOOL ---------- */
+function csFlow(){
+  var s=CS.steps, w=150, gap=22, out=[];
+  s.forEach(function(st,i){ var x=10+i*(w+gap), y=40;
+    out.push('<g class="node" data-id="'+st.id+'"><rect x="'+x+'" y="'+y+'" width="'+w+'" height="120" rx="14" fill="'+(st.id==="c"?"#fff3e8":"#ffffff")+'" stroke="'+(st.id==="c"||st.id==="k"?"#e8701a":"#c9d3e0")+'" stroke-width="1.6"/>'+
+     '<text x="'+(x+w/2)+'" y="'+(y+40)+'" text-anchor="middle" font-size="26">'+st.ic+'</text>'+
+     '<text x="'+(x+w/2)+'" y="'+(y+72)+'" text-anchor="middle" font-size="12.5" font-weight="700" fill="#1b2430">'+esc(L(st.t))+'</text>'+
+     '<text x="'+(x+w/2)+'" y="'+(y+92)+'" text-anchor="middle" font-size="10.5" fill="#5b6675">'+esc(L(st.s))+'</text>'+
+     '<text x="'+(x+16)+'" y="'+(y+20)+'" font-size="11" font-weight="800" fill="#e8701a">'+(i+1)+'</text></g>');
+    if(i<s.length-1) out.push('<line x1="'+(x+w+2)+'" y1="100" x2="'+(x+w+gap-3)+'" y2="100" stroke="#8f9bb0" stroke-width="2" marker-end="url(#ah2)"/>'); });
+  out.push('<rect x="10" y="176" width="'+(4*(w+gap)-gap)+'" height="26" rx="8" fill="#fdeaea"/><text x="'+(10+(4*(w+gap)-gap)/2)+'" y="194" text-anchor="middle" font-size="11.5" font-weight="700" fill="#b23a3a">'+esc(T("Integrated plant: mine → kiln → clinker (fuel-heavy)","ஒருங்கிணைந்த ஆலை: சுரங்கம் → சூளை → கிளிங்கர் (அதிக எரிபொருள்)"))+'</text>');
+  out.push('<rect x="'+(10+4*(w+gap))+'" y="176" width="'+(3*(w+gap)-gap)+'" height="26" rx="8" fill="#e7f6ee"/><text x="'+(10+4*(w+gap)+(3*(w+gap)-gap)/2)+'" y="194" text-anchor="middle" font-size="11.5" font-weight="700" fill="#16794a">'+esc(T("Can be a split grinding unit near the market","சந்தை பக்கத்து தனி அரைக்கும் யூனிட்டா இருக்கலாம்"))+'</text>');
+  return '<svg id="csFlow" viewBox="0 0 1200 215" style="min-width:980px;width:100%;display:block"><defs><marker id="ah2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#8f9bb0"/></marker></defs>'+out.join("")+'</svg>';
+}
+function csTypes(){
+  var keys=["cl","wl","gy","fa","sl"];
+  var rows=CS.types.map(function(t,i){ var bar=keys.filter(function(k){return t.mix[k];}).map(function(k){ var c=CS.comp[k]; return '<div title="'+esc(L(c))+' '+t.mix[k]+'%" style="width:'+t.mix[k]+'%;background:'+c.c+';height:100%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:'+(k==="wl"||k==="gy"?"#1b2430":"#fff")+'">'+(t.mix[k]>=8?t.mix[k]+"%":"")+'</div>'; }).join("");
+    return '<div class="ctype" data-i="'+i+'" style="display:grid;grid-template-columns:130px 1fr 70px;gap:10px;align-items:center;padding:7px 4px;cursor:pointer;border-radius:8px"><b style="font-size:13.5px">'+t.n+'</b><div style="display:flex;height:26px;border-radius:7px;overflow:hidden;border:1px solid #e3e8ef">'+bar+'</div><span class="note" style="margin:0">'+t.cf+'</span></div>'; }).join("");
+  var leg=keys.map(function(k){var c=CS.comp[k]; return '<span style="display:inline-flex;align-items:center;gap:5px;margin-right:12px;font-size:12px"><i style="width:12px;height:12px;border-radius:3px;background:'+c.c+';border:1px solid #ccd"></i>'+L(c)+'</span>';}).join("");
+  return '<div style="overflow-x:auto"><div style="min-width:520px">'+rows+'</div></div><div style="margin-top:6px">'+leg+'<span class="note">'+T("Right column = typical clinker conversion","வலது = வழக்கமான கிளிங்கர் கன்வர்ஷன்")+'</span></div>'+
+   '<div class="explain" id="ctEx"></div><div class="note">'+L(CS.typesNote)+'</div>';
+}
+function ctShow(i){ var t=CS.types[i]; document.querySelectorAll(".ctype").forEach(function(x){x.style.background=x.getAttribute("data-i")==i?"#fff3e8":"";});
+  var ex=document.getElementById("ctEx"); if(ex) ex.innerHTML='<h4>'+t.n+' · '+t.std+'</h4><div>'+L(t.u)+'</div>'; }
+function secCs(){
+  var tr={up:'<span class="dn">▲ '+T("Rising","ஏறுது")+'</span>',dn:'<span class="up">▼ '+T("Falling","இறங்குது")+'</span>',flat:'<span class="flat">● '+T("Stable","நிலையானது")+'</span>'};
+  var rmRows=CS.rm.map(function(r){ var x=L(r).slice(0,4); x.push(tr[r.tr]); x.lcols=[1,2,3]; return x; });
+  function lst(a){ return '<ul style="margin:6px 0 0;padding-left:18px">'+a.map(function(x){return '<li>'+L(x)+'</li>';}).join("")+'</ul>'; }
+  return '<h2>🎓 '+L(CS.title)+'</h2>'+
+   '<h3>'+L(CS.flowTitle)+'</h3><div class="bmwrap">'+csFlow()+'</div><div class="explain" id="csEx"><h4>'+L(CS.steps[3].t)+'</h4><div>'+L(CS.steps[3].x)+'</div></div>'+
+   '<h3>'+L(CS.ivg.t)+'</h3><div class="grid g2">'+card('<b style="color:#b23a3a">🏭 '+L(CS.ivg.a.t)+'</b>'+lst(CS.ivg.a.l),"")+card('<b style="color:#16794a">🌀 '+L(CS.ivg.b.t)+'</b>'+lst(CS.ivg.b.l),"")+'</div>'+
+   '<h3>'+L(CS.cf.t)+'</h3>'+card('<div class="grid g2" style="align-items:center"><div>'+L(CS.cf.x)+'</div><div>'+chartBox("cClk")+'</div></div>')+
+   '<h3>'+L(CS.typesTitle)+'</h3>'+card(csTypes())+
+   '<h3>'+L(CS.rmTitle)+'</h3>'+table(L(CS.rmHead),rmRows)+
+   '<div class="grid g2" style="margin-top:12px">'+card('<b>'+L(CS.costMixTitle)+'</b>'+chartBox("cCostT",true))+card('<b>'+L(CS.kcalTitle)+'</b>'+chartBox("cKcal",true)+'<div class="note">'+L(CS.kcalNote)+'</div>')+'</div>'+
+   '<h3>'+L(CS.escTitle)+'</h3>'+card(lst(CS.esc));
+}
+POST.cs=function(){
+  document.querySelectorAll("#csFlow .node").forEach(function(g){ g.style.cursor="pointer"; g.onclick=function(){ var st=CS.steps.filter(function(s){return s.id===g.getAttribute("data-id");})[0];
+    document.querySelectorAll("#csFlow .node rect").forEach(function(r){r.setAttribute("stroke-width","1.6");}); g.querySelector("rect").setAttribute("stroke-width","3.2");
+    var ex=document.getElementById("csEx"); ex.innerHTML='<h4>'+L(st.t)+'</h4><div>'+L(st.x)+'</div>'; }; });
+  document.querySelectorAll(".ctype").forEach(function(r){ r.onclick=function(){ ctShow(+r.getAttribute("data-i")); }; }); ctShow(1);
+  mkChart("cClk",{type:"bar",data:{labels:["OPC","PPC","Composite","PSC","ICL Q2FY26","ICL Q2FY27"],datasets:[{data:[1.05,1.4,1.7,1.9,1.45,1.55],backgroundColor:["#5b6675","#8fb3e8","#13958c","#7fc8a9","#f3b27f","#e8701a"],fmt:function(v){return v.toFixed(2)+"x";}}]},
+   options:{plugins:{legend:{display:false}},scales:{y:{min:0,max:2.2,ticks:{callback:function(v){return v+"x";}}}}},plugins:[BAR]});
+  var lb=CO.costT.lbl.map(function(k){return L(CS.costLbl[k]);});
+  mkChart("cCostT",{type:"bar",data:{labels:lb,datasets:[{label:"Q2FY26 †",data:CO.costT.prev,backgroundColor:"#c9d6ea"},{label:"Q2FY27",data:CO.costT.cur,backgroundColor:["#2f6fd6","#d64545","#d99a06","#1f9d55","#d64545"]}]},
+   options:{scales:{y:{beginAtZero:true,grace:"10%",ticks:{callback:yIN}}},plugins:{tooltip:{callbacks:{afterLabel:function(c){ if(c.datasetIndex!==1) return ""; var a=CO.costT.cur[c.dataIndex],b=CO.costT.prev[c.dataIndex]; return T("YoY ","வருடம் ")+sgn(chg(a,b),0); }}}}},plugins:[BAR]});
+  mkChart("cKcal",{type:"line",data:{labels:CS.kcal.lbl.map(function(x){return x==="Oct-26 spot"?T(x,"அக்-26 தற்போது"):x;}),datasets:[{label:"₹ / 1,000 kcal",data:CS.kcal.v,borderColor:"#d64545",backgroundColor:"rgba(214,69,69,.12)",fill:true,tension:.3,pointRadius:5}]},
+   options:{plugins:{legend:{display:false}},scales:{y:{min:1.6,max:2.3}}},plugins:[{id:"kl",afterDatasetsDraw:function(c){var ctx=c.ctx;c.getDatasetMeta(0).data.forEach(function(p,i){ctx.save();ctx.font="700 11px Inter";ctx.fillStyle="#1b2430";ctx.textAlign="center";ctx.fillText("₹"+CS.kcal.v[i].toFixed(2),p.x,p.y-10);ctx.restore();});}}]});
+};
+
+/* ---------- FINANCIALS ---------- */
+function secFin(){
+  var rows=[];
+  FIN.cats.forEach(function(c){ rows.push({cat:L(c.c)});
+    if(c.rows==="VAL"){
+      rows.push([T("Market cap (₹ cr)","சந்தை மதிப்பு (₹ கோடி)"),f(CO.mcap),"—","—","—","—"]);
+      rows.push(["P/E (TTM, x)",CO.pe.toFixed(1),"—","—","—","—"]);
+      rows.push(["EV / EBITDA (TTM, x)",CO.evEbitda.toFixed(1),"—","—","—","—"]);
+      rows.push(["P/B (x)",CO.pb.toFixed(1),"—","—","—","—"]);
+      rows.push([T("Dividend yield (%)","டிவிடெண்ட் ஈல்ட் (%)"),CO.dy.toFixed(2),"—","—","—","—"]);
+      return; }
+    c.rows.forEach(function(r){ var a=r[1],b=r[2],q=r[3],t=r[4],d=t==="d2"?2:(t==="d1"||t==="p"?1:(t==="x"?2:0));
+      var yy="—",qq="—";
+      if(typeof a==="number"&&typeof b==="number") yy= t==="p"? ((a-b>=0?"+":"−")+Math.abs(a-b).toFixed(1)+T(" pts"," புள்ளி")) : sgn(chg(a,b));
+      if(typeof a==="number"&&typeof q==="number") qq= t==="p"? ((a-q>=0?"+":"−")+Math.abs(a-q).toFixed(1)+T(" pts"," புள்ளி")) : (t==="x"? (a-q>=0?"+":"−")+Math.abs(a-q).toFixed(2)+"x" : sgn(chg(a,q)));
+      function fx(v){ return typeof v==="number"? f(v,d):v; }
+      rows.push([L(r[0]),'<b>'+fx(a)+'</b>',fx(b),'<span class="'+(yy.charAt(0)==="+"?"up":(yy.charAt(0)==="−"?"dn":""))+'">'+yy+'</span>',fx(q),'<span class="'+(qq.charAt(0)==="+"?"up":(qq.charAt(0)==="−"?"dn":""))+'">'+qq+'</span>']); }); });
+  return '<h2>'+L(FIN.title)+'</h2>'+table(L(FIN.head),rows)+'<div class="note">'+L(FIN.note)+' '+T("For cost lines, a + change means higher cost.","செலவு வரிகள்ல + என்றால் செலவு அதிகம்.")+'</div>'+
+   '<h3>'+L(SRC.t)+'</h3>'+card('<ol style="margin:0;padding-left:20px;font-size:13px">'+SRC.l.map(function(s){return '<li>'+esc(s)+'</li>';}).join("")+'</ol>');
+}
+
+/* ---------- CASH FLOW ---------- */
+function secCf(){
+  var w=CO.wc, wcr=CF.wcRows.map(function(r){ return [L(r)].concat(w[r.k]); });
+  return '<h2>'+L(CF.title)+'</h2>'+card('<ul style="margin:0;padding-left:18px">'+CF.points.map(function(p){return '<li style="margin:4px 0">'+L(p)+'</li>';}).join("")+'</ul>')+
+   '<div class="grid g2" style="margin-top:12px">'+card('<b>'+L(CF.bridgeTitle)+'</b>'+chartBox("cBridge",true))+card('<b>'+L(CF.cfoTitle)+'</b>'+chartBox("cCfo",true))+'</div>'+
+   '<h3>'+T("Cash flow statement summary","கேஷ் ஃப்ளோ சுருக்கம்")+'</h3>'+table(L(CF.cfTable.head),CF.cfTable.rows.map(function(r){return [L(r[0])].concat(r.slice(1).map(function(v){return typeof v==="number"?f(v):v;}));}))+
+   '<h3>'+L(CF.wcTitle)+'</h3><div class="grid g2">'+'<div>'+table(L(CF.wcHead),wcr)+'</div>'+card(chartBox("cWc"))+'</div><div class="note">'+L(CF.wcNote)+'</div>';
+}
+POST.cf=function(){
+  var b=CF.bridge, lo=[], data=[], run=0;
+  b.forEach(function(x){ if(x.type==="base"){ data.push([0,x.v]); run=x.v; } else { var n=run+x.v; data.push([Math.min(run,n),Math.max(run,n)]); run=n; } });
+  mkChart("cBridge",{type:"bar",data:{labels:b.map(function(x){return L(x);}),datasets:[{data:data,backgroundColor:b.map(function(x){return x.type==="base"?"#1f3b63":(x.type==="up"?"#d64545":"#1f9d55");})}]},
+   options:{plugins:{legend:{display:false},tooltip:{callbacks:{label:function(c){return "₹"+yIN(b[c.dataIndex].v)+" cr";}}}},scales:{x:{ticks:{font:{size:10},maxRotation:40,minRotation:30}},y:{beginAtZero:true,ticks:{callback:yIN}}}},
+   plugins:[{id:"bl",afterDatasetsDraw:function(c){var ctx=c.ctx;c.getDatasetMeta(0).data.forEach(function(e,i){ctx.save();ctx.font="700 10.5px Inter";ctx.fillStyle="#1b2430";ctx.textAlign="center";var v=b[i].v;ctx.fillText((v>0&&b[i].type!=="base"?"+":"")+yIN(v),e.x,e.y-4);ctx.restore();});}}]});
+  var cv=CO.cfo.ocf.map(function(o,i){return +(o/CO.cfo.ebitda[i]*100).toFixed(0);});
+  mkChart("cCfo",{type:"bar",data:{labels:CO.cfo.lbl.map(function(l,i){return CO.cfo.flag[i]?l+" †":l;}),datasets:[
+    {label:"EBITDA",data:CO.cfo.ebitda,backgroundColor:"#e8701a",yAxisID:"y",order:2},{label:L(CF.lOcf),data:CO.cfo.ocf,backgroundColor:"#1f3b63",yAxisID:"y",order:2},
+    {type:"line",label:L(CF.lConv),data:cv,borderColor:"#1f9d55",backgroundColor:"#1f9d55",yAxisID:"y1",order:1}]},
+   options:{scales:{y:{beginAtZero:true,grace:"10%",ticks:{callback:yIN}},y1:{position:"right",min:0,max:100,grid:{display:false},ticks:{callback:function(v){return v+"%";}}}}},plugins:[BAR]});
+  var w=CO.wc;
+  mkChart("cWc",{type:"bar",data:{labels:w.yrs,datasets:[{label:L(CF.lInv),data:w.inv,backgroundColor:"#9fb6d6"},{label:L(CF.lDeb),data:w.debtor,backgroundColor:"#13958c"},{label:L(CF.lPay),data:w.pay,backgroundColor:"#f3b27f"},
+    {type:"line",label:L(CF.lCcc),data:w.ccc,borderColor:"#d64545",backgroundColor:"#d64545",tension:.3}]},options:{scales:{y:{beginAtZero:true}}},plugins:[BAR]});
+};
+
+/* ---------- VALUATION ---------- */
+function secVal(){
+  var v={mcap:"₹"+f(CO.mcap),pe:CO.pe.toFixed(1)+"x",evEbitda:CO.evEbitda.toFixed(1)+"x",pb:CO.pb.toFixed(1)+"x",evT:"₹"+f(Math.round(CO.evT/100)*100),dy:CO.dy.toFixed(2)+"%",upside:"+"+CO.upside.toFixed(1)+"%"};
+  var kp=VAL.lines.map(function(l){return card('<div class="lbl">'+L(l)+'</div><div class="val">'+v[l.k]+'</div>','kpi');}).join("");
+  var sens=[1100,1250,1400].map(function(t){ var e=t*190/10; return [ "₹"+f(t), "₹"+f(e), (CO.ev/e).toFixed(1)+"x" ]; });
+  return '<h2>'+L(VAL.title)+'</h2><div class="grid g4">'+kp+'</div><div class="note">'+L(VAL.refNote)+'</div>'+
+   '<h3>'+T("How to read it","எப்படி புரிஞ்சுக்கலாம்")+'</h3>'+card('<ul style="margin:0;padding-left:18px">'+VAL.read.map(function(x){return '<li style="margin:4px 0">'+L(x)+'</li>';}).join("")+'</ul>')+
+   '<div class="grid g2" style="margin-top:12px"><div><h3>'+L(VAL.peerTitle)+'</h3>'+table(L(VAL.peerHead),CO.peers.map(function(p){return [p.n,f(p.mc),p.pe.toFixed(1),p.pb.toFixed(2),p.roe.toFixed(1)];}))+'</div>'+
+   '<div><h3>'+L(VAL.sensTitle)+'</h3>'+table([T("FY28 EBITDA/t","FY28 டன்னுக்கு EBITDA"),T("EBITDA (₹ cr)","EBITDA (₹ கோடி)"),T("EV/EBITDA at today's EV","இன்றைய EV-ல மடங்கு")],sens)+'<div class="note">'+L(VAL.sensNote)+'</div></div></div>';
+}
+
+/* ---------- MARKET ---------- */
+function secMkt(){
+  return '<h2>'+L(MKT.title)+'</h2><div class="grid g4">'+MKT.stats.map(function(s){return card('<div class="lbl">'+L(s)+'</div><div class="val" style="font-size:20px">'+s.v+'</div>','kpi');}).join("")+'</div>'+
+   '<h3>'+T("Recent events","சமீபத்திய நிகழ்வுகள்")+'</h3>'+table([T("Date","தேதி"),T("What happened","என்ன நடந்துச்சு")],MKT.events.map(function(e){var r=[e.d,L(e)]; r.lcols=[1]; return r;}))+
+   '<h3>'+L(MKT.whyTitle)+'</h3>'+card('<ol style="margin:0;padding-left:20px">'+MKT.why.map(function(x){return '<li style="margin:4px 0">'+L(x)+'</li>';}).join("")+'</ol>')+
+   '<h3>'+L(MKT.shTitle)+'</h3><div class="grid g2">'+card(chartBox("cSh"))+card(chartBox("cFii"))+'</div>';
+}
+POST.mkt=function(){
+  var s=CO.share,k=["promoter","dii","fii","pub","other"];
+  mkChart("cSh",{type:"doughnut",data:{labels:k.map(function(x){return L(MKT.shL[x]);}),datasets:[{data:k.map(function(x){return s[x];}),backgroundColor:["#e8701a","#1f3b63","#2f6fd6","#13958c","#c9d3e0"]}]},
+   options:{plugins:{legend:{position:"bottom",labels:{boxWidth:12}},tooltip:{callbacks:{label:function(c){return c.label+": "+c.raw+"%";}}}}}});
+  mkChart("cFii",{type:"line",data:{labels:CO.fiiTrend.lbl,datasets:[{label:"FII %",data:CO.fiiTrend.fii,borderColor:"#2f6fd6",backgroundColor:"#2f6fd6",tension:.3},{label:"DII %",data:CO.fiiTrend.dii,borderColor:"#1f3b63",backgroundColor:"#1f3b63",tension:.3}]},
+   options:{scales:{y:{min:10,max:22,ticks:{callback:function(v){return v+"%";}}}}}});
+};
+
+/* ---------- TRIGGERS & CYCLE ---------- */
+function cycleSvg(){
+  var cx=210,cy=200,r=150, cols=["#9fb6d6","#1f9d55","#2f6fd6","#d99a06","#d64545"], out=[];
+  function p(a,rr){ var t=a*Math.PI/180; return [cx+rr*Math.sin(t), cy-rr*Math.cos(t)]; }
+  TC.phases.forEach(function(ph,i){ var a0=i*72,a1=a0+72, s=p(a0,r), e=p(a1,r), m=p(a0+36,r*0.66);
+    out.push('<path d="M'+cx+','+cy+' L'+s[0]+','+s[1]+' A'+r+','+r+' 0 0 1 '+e[0]+','+e[1]+' Z" fill="'+cols[i]+'" opacity="'+(ph.k==="P3"?1:.55)+'" stroke="#fff" stroke-width="3"/>');
+    out.push('<text x="'+m[0]+'" y="'+(m[1]-4)+'" text-anchor="middle" font-size="13" font-weight="800" fill="#fff">'+ph.k+'</text><text x="'+m[0]+'" y="'+(m[1]+12)+'" text-anchor="middle" font-size="10.5" font-weight="600" fill="#fff">'+esc(L(ph))+'</text>'); });
+  var n=p(180,r-18);
+  out.push('<line id="needle" x1="'+cx+'" y1="'+cy+'" x2="'+n[0]+'" y2="'+n[1]+'" stroke="#1b2430" stroke-width="5" stroke-linecap="round"/><circle cx="'+cx+'" cy="'+cy+'" r="10" fill="#1b2430"/>');
+  out.push('<text x="'+cx+'" y="392" text-anchor="middle" font-size="12.5" font-weight="700" fill="#1b2430">'+esc(T("Sector ▶ P3 Expansion · Stock ▶ Weinstein Stage 4","துறை ▶ P3 விரிவாக்கம் · பங்கு ▶ கட்டம் 4"))+'</text>');
+  return '<svg id="cycleSvg" viewBox="0 0 420 405">'+out.join("")+'</svg>';
+}
+function secTc(){
+  var cy=CO.cycle, sub=cy.sub;
+  var srows=TC.stockRows.map(function(r){ var x=L(r).slice(); x.push('<b>'+sub[r.k]+'</b>'); x.lcols=[1]; return x; });
+  srows.push(['<b>'+T("Stock cycle score","பங்கு சைக்கிள் ஸ்கோர்")+'</b>','','<b>'+cy.stockScore+'</b>']);
+  var trows=CO.triggers.map(function(t){ var pts=t.I*t.C*t.W*t.P, tx=L(TC.trig[t.k]);
+    var r=[tx[0],'<b class="'+(t.sign==="+"?"up":"dn")+'">'+t.sign+'</b>',t.I,t.C.toFixed(1),t.W.toFixed(1),t.P.toFixed(1),'<b>'+pts.toFixed(2)+'</b>',t.st,tx[1]]; r.lcols=[8]; return r; });
+  var tl=TC.tl.map(function(e,i){ return '<div class="tl-ev" style="left:'+(8+i*(84/(TC.tl.length-1)))+'%"><div class="d">'+e.d+'</div><div class="dot"></div><div>'+L(e)+'</div></div>'; }).join("");
+  return '<h2>'+T("Triggers & Cycle","ட்ரிக்கர்ஸ் & சைக்கிள்")+' <span class="chip cy">CY '+cy.cy+'</span> <span class="chip tg">TG '+CO.tg+'</span></h2>'+
+   '<div class="grid g2">'+card('<b>'+L(TC.cycTitle)+'</b>'+cycleSvg())+card('<b>'+T("Sector evidence","துறை ஆதாரம்")+'</b><ul style="padding-left:18px">'+TC.sectorEv.map(function(x){return '<li style="margin:4px 0">'+L(x)+'</li>';}).join("")+'</ul><div class="explain">'+L(TC.sectorRead)+'</div>')+'</div>'+
+   '<h3>'+T("Stock's own cycle","பங்கோட சொந்த சைக்கிள்")+'</h3>'+table(L(TC.stockHead),srows)+'<div class="note"><b>'+L(TC.cyLine)+'</b></div>'+
+   '<h3>'+T("Trigger table (points = I × C × W × P)","ட்ரிக்கர் அட்டவணை (புள்ளி = I × C × W × P)")+'</h3>'+table(L(TC.trigHead),trows)+'<div class="note"><b>'+L(TC.tgLine)+'</b></div><div class="explain" style="background:#fff6dc;border-color:#d99a06">'+L(TC.gate)+'</div>'+
+   '<h3>'+L(TC.tlTitle)+'</h3><div class="tl"><div class="tl-inner"><div class="tl-line"></div>'+tl+'</div></div>'+
+   '<h3>'+L(TC.change.t)+'</h3>'+card('<ul style="margin:0;padding-left:18px">'+TC.change.l.map(function(x){return '<li style="margin:4px 0">'+L(x)+'</li>';}).join("")+'</ul>');
+}
+
+/* ---------- PILLARS (temple) ---------- */
+function templeSvg(){
+  var P=CO.pillars, comp=P.reduce(function(a,b){return a+b.s;},0)/P.length, out=[];
+  out.push('<polygon points="30,135 380,22 730,135" fill="#e8701a"/><polygon points="70,128 380,38 690,128" fill="#f08a3c"/>');
+  out.push('<text x="380" y="95" text-anchor="middle" font-size="15" font-weight="700" fill="#fff">CB Score</text><text x="380" y="122" text-anchor="middle" font-size="24" font-weight="800" fill="#fff">'+comp.toFixed(1)+' / 10</text>');
+  out.push('<rect x="40" y="135" width="680" height="40" fill="#1f3b63"/><text x="380" y="161" text-anchor="middle" font-size="15" font-weight="700" fill="#fff">UltraTech Cement · Q2 FY27</text>');
+  P.forEach(function(p,i){ var x=78+i*110, w=62, top=185, h=245, c=col(p.s);
+    out.push('<g class="col" data-k="'+p.k+'"><rect x="'+x+'" y="'+top+'" width="'+w+'" height="'+h+'" fill="#f1f3f7" stroke="#d5dbe5"/>');
+    out.push('<rect class="fill" data-h="'+(h*p.s/10)+'" x="'+x+'" y="'+(top+h)+'" width="'+w+'" height="0" fill="'+c+'" opacity=".9"/>');
+    for(var j=1;j<5;j++) out.push('<line x1="'+(x+j*w/5)+'" y1="'+top+'" x2="'+(x+j*w/5)+'" y2="'+(top+h)+'" stroke="#fff" stroke-opacity=".55" stroke-width="2"/>');
+    out.push('<rect x="'+(x-6)+'" y="'+(top-8)+'" width="'+(w+12)+'" height="10" fill="#c9d3e0"/>');
+    out.push('<circle class="sc-c" cx="'+(x+w/2)+'" cy="'+(top+h-6)+'" r="19" fill="#fff" stroke="'+c+'" stroke-width="3"/><text class="sc-t" x="'+(x+w/2)+'" y="'+(top+h-1)+'" text-anchor="middle" font-size="13" font-weight="800" fill="'+c+'">'+p.s.toFixed(1)+'</text></g>'); });
+  out.push('<rect x="40" y="430" width="680" height="16" fill="#c9d3e0"/><rect x="20" y="446" width="720" height="16" fill="#b5c0cf"/>');
+  P.forEach(function(p,i){ out.push('<text x="'+(109+i*110)+'" y="484" text-anchor="middle" font-size="13" font-weight="700" fill="#1b2430">'+esc(L(PIL.name[p.k]))+'</text>'); });
+  return '<svg id="templeSvg" viewBox="0 0 760 500">'+out.join("")+'</svg>';
+}
+function secPil(){
+  var cards=CO.pillars.map(function(p){ return '<div class="pcard" id="pc_'+p.k+'" style="border-left-color:'+col(p.s)+'"><div style="display:flex;align-items:center"><span class="sc" style="background:'+col(p.s)+'">'+p.s.toFixed(1)+'</span><b>'+L(PIL.name[p.k])+'</b></div><div style="margin-top:6px;font-size:14px">'+L(PIL.why[p.k])+'</div></div>'; }).join("");
+  return '<h2>'+L(PIL.title)+'</h2><div class="temple">'+templeSvg()+'</div><div class="note" style="text-align:center">'+T("Green 8–10 · Amber 6–8 · Red below 6","பச்சை 8–10 · மஞ்சள் 6–8 · சிவப்பு 6-க்கு கீழ")+'</div>'+
+   '<div class="grid g3" style="margin-top:12px">'+cards+'</div><div class="note">'+L(PIL.compNote)+'</div>';
+}
+POST.pil=function(){
+  var fills=document.querySelectorAll("#templeSvg .fill"), t0=null;
+  fills.forEach(function(r){ r.setAttribute("height",0); r.setAttribute("y",430); });
+  function step(ts){ if(!t0) t0=ts; var k=Math.min(1,(ts-t0)/900), e=1-Math.pow(1-k,3);
+    fills.forEach(function(r){ var h=+r.getAttribute("data-h")*e; r.setAttribute("height",h); r.setAttribute("y",430-h);
+      var g=r.parentNode; var cy=430-h+ (h>30?18:-24); g.querySelector(".sc-c").setAttribute("cy",cy); g.querySelector(".sc-t").setAttribute("y",cy+5); });
+    if(k<1) requestAnimationFrame(step); }
+  requestAnimationFrame(step);
+  document.querySelectorAll("#templeSvg .col").forEach(function(g){ g.onclick=function(){ var el=document.getElementById("pc_"+g.getAttribute("data-k")); document.querySelectorAll(".pcard").forEach(function(x){x.classList.remove("hl");}); el.classList.add("hl"); el.scrollIntoView({behavior:"smooth",block:"center"}); }; });
+};
+
+/* ---------- SWOT ---------- */
+function secSwot(){
+  var m={s:"s-s",w:"s-w",o:"s-o",t:"s-t"};
+  return '<h2>SWOT</h2><div class="grid g2 swot">'+["s","w","o","t"].map(function(k){ var x=SW[k]; return '<div class="card '+m[k]+'"><h3>'+L(x.t)+'</h3><ul>'+x.l.map(function(i){return '<li style="margin:4px 0">'+L(i)+'</li>';}).join("")+'</ul></div>'; }).join("")+'</div>';
+}
+
+/* ---------- ANALYSTS ---------- */
+function secAn(){
+  var rows=CO.analysts.map(function(a){ var cl=/Buy|Overweight/.test(a.r)?"p-buy":(a.r==="Hold"?"p-hold":(a.r==="Sell"?"p-sell":"p-na")); var up=(a.tp/CO.refPrice-1)*100;
+    var r=[a.b,'<span class="pill '+cl+'">'+a.r+'</span>',f(a.tp),'<span class="'+cls(up)+'">'+sgn(up)+'</span>',a.d,L(a.n)]; r.lcols=[5]; return r; });
+  return '<h2>'+L(AN.title)+'</h2>'+card('<b>'+L(AN.sum)+'</b>')+'<div style="margin-top:12px">'+table(L(AN.head),rows)+'</div>'+
+   '<div class="grid" style="margin-top:12px">'+card('<b>'+L(AN.chart)+'</b>'+chartBox("cAn",true))+'</div><div class="explain" style="background:#eef4ff;border-color:#2f6fd6">'+L(AN.caveat)+'</div>';
+}
+POST.an=function(){
+  var a=CO.analysts.slice().sort(function(x,y){return y.tp-x.tp;});
+  mkChart("cAn",{type:"bar",data:{labels:a.map(function(x){return x.b;}),datasets:[{label:T("Target","இலக்கு"),data:a.map(function(x){return x.tp;}),backgroundColor:a.map(function(x){return x.r==="Hold"?"#d99a06":(x.r==="n/a"?"#8a8f98":"#1f9d55");})}]},
+   options:{plugins:{legend:{display:false}},scales:{y:{min:8000,max:16500,ticks:{callback:yIN}},x:{ticks:{font:{size:10.5}}}}},
+   plugins:[BAR,{id:"ref",afterDraw:function(c){ var y=c.scales.y.getPixelForValue(CO.refPrice), y2=c.scales.y.getPixelForValue(CO.consensusTP), ctx=c.ctx, a=c.chartArea; ctx.save();
+     ctx.setLineDash([6,4]); ctx.strokeStyle="#d64545"; ctx.beginPath(); ctx.moveTo(a.left,y); ctx.lineTo(a.right,y); ctx.stroke(); ctx.strokeStyle="#1f3b63"; ctx.beginPath(); ctx.moveTo(a.left,y2); ctx.lineTo(a.right,y2); ctx.stroke(); ctx.setLineDash([]);
+     ctx.font="700 11px Inter"; ctx.fillStyle="#d64545"; ctx.fillText(T("Price ≈ ₹10,680","விலை ≈ ₹10,680"),a.left+6,y-5); ctx.fillStyle="#1f3b63"; ctx.fillText(T("Consensus ≈ ₹13,730","சராசரி ≈ ₹13,730"),a.right-150,y2-5); ctx.restore(); }}]});
+};
+
+/* ---------- SELF-CHECK ---------- */
+var SKEY="cb_sc_ULTRACEMCO_Q2FY27";
+function scLoad(){ try{ var v=JSON.parse(localStorage.getItem(SKEY)||"null"); if(v&&v.t) return v; }catch(e){} return {t:{},own:[]}; }
+function scSave(v){ try{ localStorage.setItem(SKEY,JSON.stringify(v)); }catch(e){} }
+var SCV=scLoad();
+function secSc(){
+  var h='<h2>'+L(SC.title)+'</h2><div class="note" style="margin-bottom:10px">'+L(SC.intro)+'</div><div class="card" style="margin-bottom:12px"><div style="display:flex;justify-content:space-between;gap:10px;align-items:center;flex-wrap:wrap"><b>'+L(SC.overall)+': <span id="scAll">0/0</span></b><div class="bar" style="flex:1;max-width:420px"><i id="scAllBar"></i></div><button class="btn" id="scClear">'+L(SC.clear)+'</button></div><div class="note">'+L(SC.msg)+'</div></div>';
+  SC.groups.forEach(function(g,gi){
+    h+='<div class="scg"><h4><span>'+L(g.t)+'</span><span style="display:flex;gap:8px;align-items:center"><span id="scc'+gi+'" class="note" style="margin:0"></span><span class="bar" style="width:120px"><i id="scb'+gi+'"></i></span></span></h4><div class="items">';
+    if(g.own){ SCV.own.forEach(function(o,oi){ h+='<label><input type="checkbox" data-own="'+oi+'"'+(o.c?" checked":"")+'><span>'+esc(o.t)+' <a href="#" data-del="'+oi+'" style="font-size:12px">✕</a></span></label>'; });
+      h+= SCV.own.length<8? '<div style="display:flex;gap:6px;margin-top:8px"><input type="text" id="scOwn" placeholder="'+esc(L(SC.addPh))+'"><button class="btn pri" id="scAdd">'+L(SC.add)+'</button></div><div class="sugg">'+g.sugg.map(function(s){return '<button class="btn" data-sg="'+esc(L(s))+'">+ '+L(s)+'</button>';}).join("")+'</div>' : '';
+    } else g.items.forEach(function(it,ii){ var id=gi+"_"+ii; h+='<label><input type="checkbox" data-id="'+id+'"'+(SCV.t[id]?" checked":"")+'><span>'+L(it)+'<span class="data">'+T("Data: ","தகவல்: ")+L(it.d)+'</span></span></label>'; });
+    h+='</div></div>'; });
+  return h;
+}
+function scProg(){ var all=0,tot=0;
+  SC.groups.forEach(function(g,gi){ var n,c; if(g.own){ n=SCV.own.length; c=SCV.own.filter(function(o){return o.c;}).length; } else { n=g.items.length; c=g.items.filter(function(x,ii){return SCV.t[gi+"_"+ii];}).length; }
+    all+=c; tot+=n; var e=document.getElementById("scc"+gi); if(e) e.textContent=c+"/"+n; var b=document.getElementById("scb"+gi); if(b) b.style.width=(n?c/n*100:0)+"%"; });
+  var a=document.getElementById("scAll"); if(a) a.textContent=all+"/"+tot; var ab=document.getElementById("scAllBar"); if(ab) ab.style.width=(tot?all/tot*100:0)+"%"; }
+POST.sc=function(){ var s=document.getElementById("t_sc");
+  s.querySelectorAll("input[data-id]").forEach(function(i){ i.onchange=function(){ SCV.t[i.getAttribute("data-id")]=i.checked; scSave(SCV); scProg(); }; });
+  s.querySelectorAll("input[data-own]").forEach(function(i){ i.onchange=function(){ SCV.own[+i.getAttribute("data-own")].c=i.checked; scSave(SCV); scProg(); }; });
+  s.querySelectorAll("a[data-del]").forEach(function(a){ a.onclick=function(e){ e.preventDefault(); SCV.own.splice(+a.getAttribute("data-del"),1); scSave(SCV); rerender("sc"); }; });
+  function add(t){ t=(t||"").trim(); if(!t||SCV.own.length>=8) return; SCV.own.push({t:t,c:false}); scSave(SCV); rerender("sc"); }
+  var ad=document.getElementById("scAdd"); if(ad) ad.onclick=function(){ add(document.getElementById("scOwn").value); };
+  s.querySelectorAll("button[data-sg]").forEach(function(b){ b.onclick=function(){ add(b.getAttribute("data-sg")); }; });
+  document.getElementById("scClear").onclick=function(){ SCV.t={}; SCV.own.forEach(function(o){o.c=false;}); scSave(SCV); rerender("sc"); };
+  scProg(); };
+
+/* ---------- MANAGEMENT ---------- */
+function secMg(){
+  return '<h2>'+L(MG.title)+'</h2><div class="grid g2">'+MG.people.map(function(p){ return card('<div class="person"><div class="avatar">'+p.i+'</div><div><b>'+p.n+'</b><div style="color:#e8701a;font-weight:700;font-size:13px">'+L(p.r)+'</div><div style="font-size:14px;margin-top:4px">'+L(p.x)+'</div></div></div>'); }).join("")+'</div>'+
+   '<h3>'+L(MG.gov.t)+'</h3>'+card('<ul style="margin:0;padding-left:18px">'+MG.gov.l.map(function(x){return '<li style="margin:4px 0">'+L(x)+'</li>';}).join("")+'</ul>')+
+   '<h3>'+T("Shareholding (Jun-26)","பங்குதாரர் அமைப்பு (ஜூன்-26)")+'</h3>'+table([T("Holder","பங்குதாரர்"),"%"],[[L(MKT.shL.promoter),CO.share.promoter],[L(MKT.shL.dii),CO.share.dii],[L(MKT.shL.fii),CO.share.fii],[L(MKT.shL.pub),CO.share.pub],[L(MKT.shL.other),CO.share.other]]);
+}
+
+/* ---------- SOCRATES ---------- */
+var SOS={};
+function secSoc(){
+  var h='<h2>'+L(SO.title)+'</h2><div class="card" style="margin-bottom:10px"><b>'+L(SO.score)+': <span id="soScore">0</span> / '+SO.mcq.length+'</b></div>';
+  SO.mcq.forEach(function(q,qi){ h+='<div class="q"><b>Q'+(qi+1)+'. '+L(q.q)+'</b><div class="opts">'+q.o.map(function(o,oi){return '<button data-q="'+qi+'" data-o="'+oi+'">'+String.fromCharCode(65+oi)+'. '+L(o)+'</button>';}).join("")+'</div><div class="fb" id="fb'+qi+'"></div></div>'; });
+  SO.open.forEach(function(q,qi){ h+='<div class="q"><b>✍ '+L(q.q)+'</b><div class="note">'+L(SO.yourAns)+'</div><textarea rows="3" style="margin-top:6px"></textarea><button class="btn" data-rev="'+qi+'" style="margin-top:6px">'+L(SO.reveal)+'</button><div class="fb" id="ofb'+qi+'"></div></div>'; });
+  return h;
+}
+POST.soc=function(){ SOS={}; var s=document.getElementById("t_soc");
+  s.querySelectorAll("button[data-q]").forEach(function(b){ b.onclick=function(){ var qi=+b.getAttribute("data-q"), oi=+b.getAttribute("data-o"), q=SO.mcq[qi]; if(SOS[qi]!=null) return;
+    SOS[qi]=oi===q.a; b.classList.add(oi===q.a?"ok":"bad"); if(oi!==q.a) s.querySelector('button[data-q="'+qi+'"][data-o="'+q.a+'"]').classList.add("ok");
+    document.getElementById("fb"+qi).innerHTML='<b>'+(oi===q.a?L(SO.right):L(SO.wrong))+'</b>'+L(q.e);
+    document.getElementById("soScore").textContent=Object.keys(SOS).filter(function(k){return SOS[k];}).length; }; });
+  s.querySelectorAll("button[data-rev]").forEach(function(b){ b.onclick=function(){ var i=+b.getAttribute("data-rev"); document.getElementById("ofb"+i).innerHTML='<div class="explain">'+L(SO.open[i].m)+'</div>'; }; }); };
+
+/* ---------- RENDER ---------- */
+var SECS={dash:secDash,bm:secBm,cs:secCs,fin:secFin,cf:secCf,val:secVal,mkt:secMkt,tc:secTc,pil:secPil,swot:secSwot,an:secAn,sc:secSc,mg:secMg,soc:secSoc};
+function rerender(id){ var s=document.getElementById("t_"+id); s.innerHTML=SECS[id](); POST[id]&&POST[id](); }
+function render(){
+  document.body.classList.toggle("ta",LANG==="ta"); document.documentElement.lang=LANG==="ta"?"ta":"en";
+  document.getElementById("hTitle").textContent=L(TX.title); document.getElementById("hSub").textContent=L(TX.sub);
+  buildTabs();
+  document.getElementById("main").innerHTML=TX.tabs.map(function(t){ return '<section class="tab'+(t.id===CUR?" on":"")+'" id="t_'+t.id+'">'+SECS[t.id]()+'</section>'; }).join("");
+  Object.keys(CH).forEach(function(k){ try{CH[k].destroy();}catch(e){} delete CH[k]; });
+  POST.bm(); POST.cs(); POST.sc(); POST.soc(); POST[CUR]&&POST[CUR]();
+  document.getElementById("discl").innerHTML=L(DISC);
+  document.getElementById("asTitle").textContent=L(AS.title); document.getElementById("asText").placeholder=L(AS.ph);
+  document.getElementById("asChips").innerHTML=AS.chips.map(function(c){return '<button>'+L(c)+'</button>';}).join("");
+  document.querySelectorAll("#asChips button").forEach(function(b){ b.onclick=function(){ ask(b.textContent); }; });
+}
+document.getElementById("bEN").onclick=function(){ LANG="en"; this.classList.add("on"); document.getElementById("bTA").classList.remove("on"); render(); };
+document.getElementById("bTA").onclick=function(){ LANG="ta"; this.classList.add("on"); document.getElementById("bEN").classList.remove("on"); render(); };
+
+/* ---------- CB BADGE ---------- */
+document.getElementById("cbBadge").onclick=function(e){ e.stopPropagation(); document.getElementById("discl").classList.toggle("on"); document.getElementById("asPanel").classList.remove("on"); };
+document.addEventListener("click",function(e){ var d=document.getElementById("discl"); if(d.classList.contains("on")&&!d.contains(e.target)) d.classList.remove("on"); });
+
+/* ---------- CB ASSIST (voice Q&A) ---------- */
+var log=document.getElementById("asLog"), started=false;
+function say(t){ try{ if(!window.speechSynthesis) return; speechSynthesis.cancel(); var u=new SpeechSynthesisUtterance(t.replace(/₹/g, LANG==="ta"?"ரூபாய் ":"rupees ")); u.lang=LANG==="ta"?"ta-IN":"en-IN"; u.rate=1;
+  var vs=speechSynthesis.getVoices().filter(function(v){return v.lang&&v.lang.toLowerCase().indexOf(LANG==="ta"?"ta":"en-in")===0;}); if(vs[0]) u.voice=vs[0]; speechSynthesis.speak(u); }catch(e){} }
+function addMsg(t,who,html){ var m=document.createElement("div"); m.className="msg "+who; if(html) m.innerHTML=t; else m.textContent=t; log.appendChild(m); log.scrollTop=log.scrollHeight; return m; }
+function answer(q){ var s=" "+q.toLowerCase()+" ", best=null, bs=0;
+  KB.forEach(function(k){ var sc=0; k.k.forEach(function(w){ if(s.indexOf(w.toLowerCase())>=0) sc+=w.length>4?2:1; }); if(sc>bs){bs=sc;best=k;} });
+  return best; }
+function ask(q){ q=(q||"").trim(); if(!q) return; addMsg(q,"u"); var a=answer(q);
+  if(!a){ addMsg(L(AS.miss),"b"); say(L(AS.miss)); return; }
+  var t=L(a), m=addMsg(t,"b");
+  if(a.act){ var b=document.createElement("button"); b.className="btn pri"; b.style.marginTop="6px"; b.textContent=L(AS.open); b.onclick=function(){ go(a.act); document.getElementById("asPanel").classList.remove("on"); }; m.appendChild(document.createElement("br")); m.appendChild(b); }
+  say(t); }
+document.getElementById("asBtn").onclick=function(e){ e.stopPropagation(); var p=document.getElementById("asPanel"); p.classList.toggle("on"); document.getElementById("discl").classList.remove("on");
+  if(p.classList.contains("on")&&!started){ started=true; addMsg(L(AS.hello),"b"); } };
+document.getElementById("asClose").onclick=function(){ document.getElementById("asPanel").classList.remove("on"); try{speechSynthesis.cancel();}catch(e){} };
+document.getElementById("asSend").onclick=function(){ var i=document.getElementById("asText"); ask(i.value); i.value=""; };
+document.getElementById("asText").onkeydown=function(e){ if(e.key==="Enter"){ ask(this.value); this.value=""; } };
+var SR=window.SpeechRecognition||window.webkitSpeechRecognition, rec=null;
+document.getElementById("asMic").onclick=function(){ var b=this;
+  if(!SR){ addMsg(L(AS.nomic),"b"); return; }
+  if(rec){ try{rec.stop();}catch(e){} return; }
+  rec=new SR(); rec.lang=LANG==="ta"?"ta-IN":"en-IN"; rec.interimResults=false; rec.maxAlternatives=1;
+  rec.onresult=function(ev){ ask(ev.results[0][0].transcript); };
+  rec.onend=function(){ b.classList.remove("rec"); rec=null; }; rec.onerror=function(){ b.classList.remove("rec"); rec=null; };
+  b.classList.add("rec"); try{ rec.start(); }catch(e){ b.classList.remove("rec"); rec=null; } };
+
+render();
+})();
+</script>
+</body>
+</html>
