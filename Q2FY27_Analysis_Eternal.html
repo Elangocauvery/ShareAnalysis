@@ -1,0 +1,1145 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Eternal Q2FY27 Analysis</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<style>
+:root{--bg:#ffffff;--soft:#fff7ef;--soft2:#f8fafc;--ink:#1f2937;--mut:#6b7280;--line:#e5e7eb;--or:#e8730c;--or2:#fde7d2;--gr:#16a34a;--am:#d97706;--rd:#dc2626;--bl:#2563eb;--qc:#e6a800;--fd:#e23744;--go:#7c3aed;--hp:#16a34a}
+*{box-sizing:border-box}
+html,body{margin:0;background:#ffffff;color:var(--ink);font-family:"Segoe UI",Roboto,"Noto Sans Tamil","Latha",Arial,sans-serif;font-size:15px;line-height:1.55}
+body::before{content:"CB Research";position:fixed;top:45%;left:50%;transform:translate(-50%,-50%) rotate(-24deg);font-size:110px;font-weight:800;color:rgba(232,115,12,.045);pointer-events:none;z-index:0;white-space:nowrap}
+header{background:linear-gradient(135deg,#fff7ef,#ffffff);border-bottom:3px solid var(--or);padding:16px 16px 10px;position:relative;z-index:1}
+.hwrap{max-width:1200px;margin:0 auto;display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between}
+h1{font-size:22px;margin:0;color:#111827}
+.sub{color:var(--mut);font-size:13px;margin-top:2px}
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+.chip{border:1px solid var(--line);background:#fff;border-radius:999px;padding:4px 10px;font-size:12.5px;font-weight:600}
+.chip b{color:var(--or)}
+.lang{display:flex;border:1px solid var(--or);border-radius:999px;overflow:hidden}
+.lang button{border:0;background:#fff;color:var(--or);padding:7px 14px;font-weight:700;cursor:pointer;font-size:13px}
+.lang button.on{background:var(--or);color:#fff}
+nav{position:sticky;top:0;background:#ffffff;border-bottom:1px solid var(--line);z-index:20}
+.tabs{max-width:1200px;margin:0 auto;display:flex;overflow-x:auto;gap:2px;padding:0 8px;scrollbar-width:thin}
+.tabs button{flex:0 0 auto;border:0;background:none;padding:12px 12px;font-size:13.5px;font-weight:600;color:var(--mut);cursor:pointer;border-bottom:3px solid transparent;white-space:nowrap}
+.tabs button.on{color:var(--or);border-bottom-color:var(--or)}
+main{max-width:1200px;margin:0 auto;padding:16px;position:relative;z-index:1}
+section.tab{display:none}
+section.tab.on{display:block;animation:fade .35s}
+@keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1}}
+h2{font-size:19px;margin:6px 0 12px;color:#111827;border-left:4px solid var(--or);padding-left:10px}
+h3{font-size:16px;margin:18px 0 8px;color:#111827}
+.card{background:#fff;border:1px solid var(--line);border-radius:12px;padding:14px 16px;margin-bottom:14px;box-shadow:0 1px 2px rgba(0,0,0,.03)}
+.card.hl{background:var(--soft);border-color:#f6c9a0}
+.card.warn{background:#fef2f2;border-color:#fecaca}
+.card.good{background:#f0fdf4;border-color:#bbf7d0}
+.grid{display:grid;gap:12px}
+.g2{grid-template-columns:repeat(auto-fit,minmax(300px,1fr))}
+.g3{grid-template-columns:repeat(auto-fit,minmax(230px,1fr))}
+.g4{grid-template-columns:repeat(auto-fit,minmax(170px,1fr))}
+.kpi{border:1px solid var(--line);border-radius:12px;padding:12px;background:#fff}
+.kpi .l{font-size:12px;color:var(--mut);font-weight:600;text-transform:uppercase;letter-spacing:.3px}
+.kpi .v{font-size:22px;font-weight:800;margin-top:2px}
+.kpi .d{font-size:12.5px;margin-top:2px}
+.up{color:var(--gr)}.dn{color:var(--rd)}.nt{color:var(--am)}
+.big{font-size:17px;font-weight:600}
+table{width:100%;border-collapse:collapse;font-size:13.5px}
+th,td{padding:8px 9px;border-bottom:1px solid var(--line);text-align:right;vertical-align:top}
+th:first-child,td:first-child{text-align:left}
+th{background:#f9fafb;font-size:12.5px;color:#374151;position:sticky;top:0}
+tr.cat td{background:var(--or2);font-weight:800;color:#9a3412;text-align:left;font-size:12.5px;letter-spacing:.3px;text-transform:uppercase}
+td.l{text-align:left}
+.tw{overflow-x:auto;border:1px solid var(--line);border-radius:10px}
+.cw{overflow-x:auto}
+.cw .ci{min-width:700px;height:340px;position:relative}
+.cw .ci.s{height:280px}
+.note{font-size:12px;color:var(--mut);margin-top:6px}
+ul.tight{margin:6px 0;padding-left:20px}ul.tight li{margin:4px 0}
+.pill{display:inline-block;padding:2px 8px;border-radius:999px;font-size:11.5px;font-weight:700}
+.p-g{background:#dcfce7;color:#166534}.p-r{background:#fee2e2;color:#991b1b}.p-a{background:#fef3c7;color:#92400e}.p-b{background:#dbeafe;color:#1e40af}
+svg text{font-family:"Segoe UI",Roboto,"Noto Sans Tamil",Arial,sans-serif}
+.bmbox{cursor:pointer;transition:opacity .2s}
+.bmbox:hover{opacity:.85}
+.bmbox.sel rect{stroke:#111827;stroke-width:3}
+#bmCard{min-height:90px}
+.tl{position:relative;margin:6px 0 0 8px;padding-left:22px;border-left:3px solid var(--or2)}
+.tli{position:relative;margin-bottom:14px}
+.tli::before{content:"";position:absolute;left:-31px;top:4px;width:14px;height:14px;border-radius:50%;background:#fff;border:3px solid var(--or)}
+.tli.big::before{background:var(--or)}
+.tld{font-size:12px;font-weight:800;color:var(--or)}
+.tlt{font-weight:700}
+.tlx{font-size:13.5px;color:#374151}
+.tag{font-size:11px;margin-left:6px}
+.swot{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px}
+.swot>div{border-radius:12px;padding:12px 14px;border:1px solid var(--line)}
+.sS{background:#f0fdf4}.sW{background:#fef2f2}.sO{background:#eff6ff}.sT{background:#fffbeb}
+.mgr{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:12px}
+.person{border:1px solid var(--line);border-radius:12px;padding:12px;background:#fff}
+.person .n{font-weight:800}.person .r{color:var(--or);font-size:13px;font-weight:700}
+.colcard{border-left:5px solid var(--line);transition:box-shadow .3s}
+.colcard.flash{box-shadow:0 0 0 3px var(--or)}
+.sc-g{margin-bottom:14px}
+.sc-item{display:flex;gap:10px;align-items:flex-start;padding:8px 0;border-bottom:1px dashed var(--line)}
+.sc-item input{margin-top:4px;width:18px;height:18px;accent-color:var(--or)}
+.sc-data{font-size:12px;color:var(--mut)}
+.bar{height:10px;background:#f3f4f6;border-radius:999px;overflow:hidden}
+.bar i{display:block;height:100%;background:var(--or);width:0;transition:width .4s}
+.btn{border:1px solid var(--or);background:#fff;color:var(--or);padding:6px 12px;border-radius:8px;font-weight:700;cursor:pointer;font-size:13px}
+.btn.f{background:var(--or);color:#fff}
+.sugg{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0}
+.sugg button{border:1px dashed var(--or);background:#fff;color:#9a3412;border-radius:999px;padding:3px 10px;font-size:12px;cursor:pointer}
+.q{border:1px solid var(--line);border-radius:12px;padding:12px;margin-bottom:10px;background:#fff}
+.q .opt{display:block;width:100%;text-align:left;margin:6px 0;padding:8px 10px;border:1px solid var(--line);background:#fafafa;border-radius:8px;cursor:pointer;font-size:14px}
+.q .opt.ok{background:#dcfce7;border-color:#86efac}.q .opt.no{background:#fee2e2;border-color:#fca5a5}
+.q .ex{display:none;font-size:13px;margin-top:6px;color:#374151}
+textarea{width:100%;min-height:70px;border:1px solid var(--line);border-radius:8px;padding:8px;font-family:inherit;font-size:14px}
+input[type=text]{border:1px solid var(--line);border-radius:8px;padding:7px 9px;font-size:14px;font-family:inherit}
+/* badge & assist */
+#cbBadge{position:fixed;right:16px;bottom:16px;width:58px;height:58px;border-radius:50%;background:var(--or);color:#fff;font-weight:900;font-size:20px;display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:60;box-shadow:0 4px 14px rgba(232,115,12,.45);animation:blink 2.2s infinite;border:3px solid #fff}
+@keyframes blink{0%,100%{box-shadow:0 0 0 0 rgba(232,115,12,.55)}50%{box-shadow:0 0 0 12px rgba(232,115,12,0)}}
+#cbDisc{position:fixed;right:16px;bottom:84px;width:min(360px,calc(100vw - 32px));background:#fff;border:1px solid #f6c9a0;border-radius:12px;padding:14px;font-size:13px;z-index:61;display:none;box-shadow:0 10px 30px rgba(0,0,0,.12)}
+#cbDisc.on{display:block}
+#asBtn{position:fixed;right:86px;bottom:22px;height:46px;border-radius:999px;background:#fff;color:var(--or);border:2px solid var(--or);font-weight:800;padding:0 14px;cursor:pointer;z-index:60;display:flex;align-items:center;gap:6px;font-size:13.5px}
+#asPanel{position:fixed;right:16px;bottom:84px;width:min(390px,calc(100vw - 32px));height:min(520px,calc(100vh - 120px));background:#fff;border:1px solid var(--line);border-radius:14px;z-index:62;display:none;flex-direction:column;box-shadow:0 12px 34px rgba(0,0,0,.15)}
+#asPanel.on{display:flex}
+#asHead{padding:10px 12px;background:var(--or);color:#fff;border-radius:14px 14px 0 0;font-weight:800;display:flex;justify-content:space-between;align-items:center}
+#asLog{flex:1;overflow-y:auto;padding:10px;font-size:13.5px}
+.m{margin:6px 0;padding:8px 10px;border-radius:10px;max-width:92%}
+.m.u{background:#eff6ff;margin-left:auto}
+.m.b{background:#fff7ef;border:1px solid #fde1c4}
+#asIn{display:flex;gap:6px;padding:8px;border-top:1px solid var(--line)}
+#asIn input{flex:1}
+#asMic{width:42px;border-radius:8px;border:1px solid var(--or);background:#fff;cursor:pointer;font-size:18px}
+#asMic.rec{background:#fee2e2;animation:blink 1s infinite}
+.qs{display:flex;flex-wrap:wrap;gap:5px;padding:0 10px 6px}
+.qs button{font-size:11.5px;border:1px solid var(--line);background:#f9fafb;border-radius:999px;padding:3px 8px;cursor:pointer}
+@media (max-width:640px){h1{font-size:18px}.kpi .v{font-size:19px}body::before{font-size:60px}#asBtn span{display:none}}
+</style>
+</head>
+<body>
+<header><div class="hwrap">
+ <div>
+  <h1 data-i18n="title">Eternal Ltd (formerly Zomato) — Q2 FY27 Business &amp; Investment Analysis</h1>
+  <div class="sub" data-i18n="subtitle">Quarter ended 30 Sep 2026 · Results declared 21 Oct 2026 · NSE: ETERNAL · BSE: 543320 · Price ₹312.35 (21 Oct 2026 close) · ₹ crore unless stated</div>
+  <div class="chips" id="chips"></div>
+ </div>
+ <div class="lang"><button id="lgEn" class="on" onclick="setLang('en')">English</button><button id="lgTa" onclick="setLang('ta')">தமிழ்</button></div>
+</div></header>
+<nav><div class="tabs" id="tabs"></div></nav>
+<main>
+
+<!-- OVERVIEW -->
+<section class="tab on" id="t-ov">
+ <h2 data-i18n="ov_h">Overview — the quarter in one look</h2>
+ <div class="card hl"><div class="big" data-i18n="ov_one">Eternal grew like a rocket but earned like a bank this quarter: the ₹351 cr it earned on its cash pile (other income) was larger than its entire ₹323 cr pre-tax profit. Take that away and the operating business lost ₹28 cr before tax — but that core loss is the smallest in three years (it was −₹223 cr a year ago), so the operating engine is closing in on standing on its own feet.</div></div>
+ <div class="grid g4" id="kpis"></div>
+ <h3 data-i18n="ov_kt">Key takeaways</h3>
+ <div class="card"><ul class="tight" id="ovList"></ul></div>
+ <h3 data-i18n="ov_temple">CB 6-pillar score — the temple</h3>
+ <div class="card">
+  <div class="cw"><div style="min-width:640px"><svg id="temple" viewBox="0 0 760 430" width="100%"></svg></div></div>
+  <div class="note" data-i18n="ov_tnote">Tap a column to jump to its explanation. Green 8–10 · Amber 6–8 · Red below 6. CB Score is an education tool, not a rating or recommendation.</div>
+ </div>
+ <div class="grid g2" id="pillarCards"></div>
+</section>
+
+<!-- BUSINESS MODEL -->
+<section class="tab" id="t-bm">
+ <h2 data-i18n="bm_h">Business model — how Eternal makes (and keeps) money</h2>
+ <div class="card hl"><b data-i18n="bm_60t">Business model in 60 seconds:</b> <span data-i18n="bm_60">Eternal runs four consumer apps on one delivery network. Zomato takes a commission and fees on restaurant orders. Blinkit now mostly buys goods and sells them from 2,751 dark stores in about 10 minutes, so the full price of the goods shows up as revenue. District sells movie, event and dining tickets. Hyperpure supplies restaurants. A large cash pile parked in deposits and bonds earns interest, which shows up as "other income".</span></div>
+ <div class="card">
+  <div class="cw"><div style="min-width:900px"><svg id="bmMap" viewBox="0 0 1100 600" width="100%"></svg></div></div>
+  <div class="note" data-i18n="bm_tap">Tap any box to see what it means. Figures are Q2FY27. † = derived by CB Research from reported numbers.</div>
+ </div>
+ <div class="card" id="bmCard"></div>
+ <div class="note" id="bmFormula" data-i18n="bm_formula"><b>Revenue formula:</b> Revenue ≈ value of goods Blinkit sells from its own inventory + commissions, ad income and platform/delivery fees on Zomato and District orders + Hyperpure supplies. Profit = that revenue − cost of goods − delivery, store, staff, marketing, depreciation &amp; lease interest − tax + interest earned on cash.</div>
+ <h3 data-i18n="bm_eng">Revenue engine — what drives each line</h3>
+ <div class="tw"><table id="engTbl"></table></div>
+ <h3 data-i18n="bm_mix">Where the adjusted revenue comes from (Q2FY27)</h3>
+ <div class="card"><div class="cw"><div class="ci s"><canvas id="cMix"></canvas></div></div></div>
+</section>
+
+<!-- EVOLUTION -->
+<section class="tab" id="t-ev">
+ <h2 data-i18n="ev_h">Business model journey — from listing (Jul 2021) to Q2 FY27</h2>
+ <div class="card hl" data-i18n="ev_intro">At listing, Zomato was an asset-light food-delivery marketplace: it never owned the food, it took a cut, and restaurants and customers' money flowed through it before it paid out (negative working capital). Five years later Eternal is mainly a quick-commerce retailer that owns inventory, runs thousands of dark stores and carries big depreciation and lease bills. The highlighted changes below explain why revenue jumped, why margins look thin and why cash is now being used.</div>
+ <h3 data-i18n="ev_road">The journey road — four eras, twelve turning points</h3>
+ <div class="card">
+  <div class="cw"><div style="min-width:1000px"><svg id="road" viewBox="0 0 1200 360" width="100%"></svg></div></div>
+  <div class="note" data-i18n="ev_roadn">Tap any pin to read what changed. Filled pins = business-model changes. Colours: amber = model change, green = profit milestone, blue = capital, red = this quarter.</div>
+  <div class="card hl" id="roadCard" style="margin:10px 0 0"></div>
+ </div>
+ <h3 data-i18n="ev_era">Era scorecards — how the numbers changed with each model</h3>
+ <div class="cw"><div id="eraCards" style="display:grid;grid-template-columns:repeat(4,minmax(220px,1fr));gap:10px;min-width:900px"></div></div>
+ <h3 data-i18n="ev_flow">How the money flows — then vs now</h3>
+ <div class="grid g2">
+  <div class="card"><svg id="flowThen" viewBox="0 0 520 300" width="100%"></svg></div>
+  <div class="card"><svg id="flowNow" viewBox="0 0 520 300" width="100%"></svg></div>
+ </div>
+ <div class="note" data-i18n="ev_flown">Left: as a marketplace, customer money came in first and restaurants were paid later — suppliers funded the business. Right: Blinkit now pays for stock first and gets paid when a customer buys — the business funds its own shelves.</div>
+ <h3 data-i18n="ev_apps">From one app to four — the business staircase</h3>
+ <div class="card"><div class="cw"><div style="min-width:760px"><svg id="stairs" viewBox="0 0 900 290" width="100%"></svg></div></div></div>
+ <h3 data-i18n="ev_c2">Centre of gravity moved from food delivery to quick commerce (% of revenue)</h3>
+ <div class="card"><div class="cw"><div class="ci s"><canvas id="cShift"></canvas></div></div><div class="note" data-i18n="ev_c2n">FY22 from annual report segment data; quarterly shares on reported segment revenue / adjusted revenue. Q2FY25 shows the three reported segments only. † Q2FY27 food delivery includes "others" (derived).</div></div>
+ <h3 data-i18n="ev_c1">Revenue and profit since listing (₹ cr)</h3>
+ <div class="card"><div class="cw"><div class="ci"><canvas id="cAnn"></canvas></div></div><div class="note" data-i18n="ev_c1n">FY = April–March. TTM = last four quarters to Sep 2026. The FY26 jump is mostly the accounting effect of Blinkit owning inventory.</div></div>
+ <div class="grid g2">
+  <div><h3 data-i18n="ev_c3">Asset-light → asset-heavier (₹ cr)</h3>
+   <div class="card"><div class="cw"><div class="ci s" style="min-width:520px"><canvas id="cAssets"></canvas></div></div><div class="note" data-i18n="ev_c3n">Fixed assets include Blinkit goodwill/intangibles from FY23 and dark-store assets & leases later. Depreciation & amortisation grew 11x from FY22 to FY26.</div></div></div>
+  <div><h3 data-i18n="ev_c4">Working capital flipped (cash conversion cycle, days)</h3>
+   <div class="card"><div class="cw"><div class="ci s" style="min-width:520px"><canvas id="cCcc"></canvas></div></div><div class="note" data-i18n="ev_c4n">Green = suppliers fund the business (negative cycle). Red = the business funds its own inventory (positive cycle).</div></div></div>
+ </div>
+ <h3 data-i18n="ev_c5">Dark-store build-out (Blinkit stores)</h3>
+ <div class="card"><div class="cw"><div class="ci s"><canvas id="cStores"></canvas></div></div><div class="note" data-i18n="ev_c5n">Sep-24, Jun-26 and Sep-26 are reported counts; Mar-27 and Mar-28 are management targets (lighter bars).</div></div>
+ <h3 data-i18n="ev_then">Then vs now</h3>
+ <div class="tw"><table id="tnTbl"></table></div>
+ <details class="card" style="margin-top:14px"><summary style="cursor:pointer;font-weight:700" data-i18n="ev_tl">Full timeline (text)</summary><div class="tl" id="tline" style="margin-top:10px"></div></details>
+</section>
+
+<!-- PROFIT ANATOMY -->
+<section class="tab" id="t-pa">
+ <h2 data-i18n="pa_h">Profit anatomy — more from other income than from operations</h2>
+ <div class="grid g4" id="paKpi"></div>
+ <div class="card warn"><div class="big" data-i18n="pa_one">In Q2FY27, other income (₹351 cr) was 109% of profit before tax (₹323 cr). The operating business on its own was at −₹28 cr before tax. This has been true in almost every quarter since Zomato turned profitable — interest on the IPO and QIP money has been carrying the bottom line.</div></div>
+ <h3 data-i18n="pa_wf">From EBITDA to net profit — Q2FY27 waterfall (₹ cr)</h3>
+ <div class="card"><div class="cw"><div class="ci"><canvas id="cWf"></canvas></div></div><div class="note" data-i18n="pa_wfn">Reported EBITDA = revenue ₹24,138 cr − operating costs ₹23,386 cr. D&amp;A + finance cost (mostly dark-store leases) ₹780 cr is derived from reported EBITDA and PBT.</div></div>
+ <h3 data-i18n="pa_q">Quarter by quarter: other income vs profit before tax (₹ cr)</h3>
+ <div class="card"><div class="cw"><div class="ci"><canvas id="cOiQ"></canvas></div></div><div class="note" data-i18n="pa_qn">Red line = core PBT (PBT minus other income) — the profit the operating business made on its own. It is still below zero but has climbed from −₹271 cr (Q4FY25) to −₹28 cr (Q2FY27).</div></div>
+ <h3 data-i18n="pa_a">Year by year (₹ cr)</h3>
+ <div class="card"><div class="cw"><div class="ci s"><canvas id="cOiA"></canvas></div></div></div>
+ <div class="tw"><table id="oiTbl"></table></div>
+ <h3 data-i18n="pa_why">Why does this happen?</h3>
+ <div class="grid g3" id="paWhy"></div>
+ <h3 data-i18n="pa_seg">Segment Adjusted EBITDA — who earns, who burns (₹ cr, Q2FY27)</h3>
+ <div class="card"><div class="cw"><div class="ci s"><canvas id="cSeg"></canvas></div></div><div class="note" data-i18n="pa_segn">Adjusted EBITDA is the company's own measure (adds back ESOP cost, deducts rent). Total ₹666 cr. † Others = total − four segments (derived).</div></div>
+ <h3 data-i18n="pa_eb">Absolute EBITDA trend (₹ cr)</h3>
+ <div class="card"><div class="cw"><div class="ci s"><canvas id="cEb"></canvas></div></div></div>
+</section>
+
+<!-- CASH -->
+<section class="tab" id="t-cr">
+ <h2 data-i18n="cr_h">Cash reserves — the war chest</h2>
+ <div class="grid g4" id="crKpi"></div>
+ <div class="card hl" data-i18n="cr_one">Eternal closed Q2FY27 with ₹16,475 cr of cash, deposits and liquid investments — down ₹1,813 cr in the quarter as Blinkit stocked up for the festive season and opened 308 stores (capex ₹941 cr). This pile, built from the 2021 IPO and the ₹8,500 cr QIP of Nov 2024, earns roughly 8% a year, which is exactly the ₹351 cr other income that props up profit. Every rupee spent on stores and inventory therefore also lowers future other income.</div>
+ <h3 data-i18n="cr_c">Cash balance and the interest it earns (₹ cr)</h3>
+ <div class="card"><div class="cw"><div class="ci"><canvas id="cCash"></canvas></div></div><div class="note" data-i18n="cr_cn">Q2FY25: ₹2,014 cr paid for Paytm's ticketing business. Q3FY25: QIP money (net ₹8,446 cr) arrived. Q2FY27: festive inventory build-up and store capex.</div></div>
+ <h3 data-i18n="cr_f">Where the cash came from and where it goes</h3>
+ <div class="card"><div class="cw"><div style="min-width:820px"><svg id="cashFlowSvg" viewBox="0 0 1000 330" width="100%"></svg></div></div></div>
+ <div class="tw"><table id="crTbl"></table></div>
+</section>
+
+<!-- FINANCIALS -->
+<section class="tab" id="t-fin">
+ <h2 data-i18n="fin_h">Financials — Q2FY27 vs Q1FY27 vs Q2FY26</h2>
+ <div class="tw"><table id="finTbl"></table></div>
+ <div class="note" data-i18n="fin_n">Consolidated. † derived by CB Research. n/a = not disclosed in material reviewed. Q2FY27 results are unaudited (limited review).</div>
+ <h3 data-i18n="fin_c1">Revenue and Adjusted EBITDA (₹ cr)</h3>
+ <div class="card"><div class="cw"><div class="ci"><canvas id="cRevEb"></canvas></div></div></div>
+</section>
+
+<!-- CASH FLOW & WC -->
+<section class="tab" id="t-cf">
+ <h2 data-i18n="cf_h">Cash flow &amp; working capital</h2>
+ <div class="card hl" data-i18n="cf_one">The working-capital story is the business-model change in numbers. As a marketplace, Zomato collected money from customers and paid restaurants later, so suppliers funded it (cash conversion cycle of −513 days in FY21). Owning Blinkit inventory flipped this: inventory days rose to 26 and payable days fell to 36, so the cycle is now about +2 days. Growth now needs cash.</div>
+ <h3 data-i18n="cf_c1">Cash flows (₹ cr)</h3>
+ <div class="card"><div class="cw"><div class="ci"><canvas id="cCf"></canvas></div></div></div>
+ <h3 data-i18n="cf_c2">Working capital days</h3>
+ <div class="card"><div class="cw"><div class="ci s"><canvas id="cWc"></canvas></div></div></div>
+ <div class="tw"><table id="wcTbl"></table></div>
+ <h3 data-i18n="cf_rel">How working capital links to CFO and cash conversion</h3>
+ <div class="grid g3" id="cfCards"></div>
+</section>
+
+<!-- VALUATION -->
+<section class="tab" id="t-val">
+ <h2 data-i18n="val_h">Valuation</h2>
+ <div class="tw"><table id="valTbl"></table></div>
+ <div class="grid g2" style="margin-top:14px" id="valCards"></div>
+ <h3 data-i18n="val_c">Market cap vs cash vs earnings power (₹ cr)</h3>
+ <div class="card"><div class="cw"><div class="ci s"><canvas id="cVal"></canvas></div></div></div>
+</section>
+
+<!-- MARKET ACTIVITY -->
+<section class="tab" id="t-mk">
+ <h2 data-i18n="mk_h">Market activity — why the share price moved</h2>
+ <div class="grid g4" id="mkKpi"></div>
+ <div class="grid g2" id="mkCards"></div>
+ <h3 data-i18n="mk_c">Who owns Eternal — FIIs selling, DIIs buying (%)</h3>
+ <div class="card"><div class="cw"><div class="ci s"><canvas id="cSh"></canvas></div></div><div class="note" data-i18n="mk_cn">Eternal has no promoter group — it is 100% publicly held. Sep 2026: FII 33.01%, DII 36.22%, public 26.26%, others 4.53%.</div></div>
+</section>
+
+<!-- TRIGGERS & CYCLE -->
+<section class="tab" id="t-tc">
+ <h2 data-i18n="tc_h">Triggers &amp; cycle</h2>
+ <div class="grid g2">
+  <div class="card"><svg id="clock" viewBox="0 0 360 360" width="100%" style="max-width:360px;display:block;margin:auto"></svg></div>
+  <div class="card" id="cyCard"></div>
+ </div>
+ <h3 data-i18n="tc_tt">Trigger table</h3>
+ <div class="tw"><table id="trTbl"></table></div>
+ <h3 data-i18n="tc_tl">Upcoming dated events</h3>
+ <div class="card"><div class="cw"><div style="min-width:760px"><svg id="trLine" viewBox="0 0 900 150" width="100%"></svg></div></div></div>
+ <div class="card hl" id="tcChange"></div>
+</section>
+
+<!-- SWOT -->
+<section class="tab" id="t-sw">
+ <h2 data-i18n="sw_h">SWOT</h2>
+ <div class="swot" id="swot"></div>
+</section>
+
+<!-- ANALYSTS -->
+<section class="tab" id="t-an">
+ <h2 data-i18n="an_h">Analysts' rating (third-party views after Q2FY27)</h2>
+ <div class="tw"><table id="anTbl"></table></div>
+ <div class="card"><div class="cw"><div class="ci s"><canvas id="cAn"></canvas></div></div><div class="note" data-i18n="an_n">These are brokerage views as reported in the media on 21–22 Oct 2026. CB Research does not give buy, sell or hold recommendations.</div></div>
+</section>
+
+<!-- SELF CHECK -->
+<section class="tab" id="t-sc">
+ <h2 data-i18n="sc_h">CB Investor Self-check</h2>
+ <div class="card hl" data-i18n="sc_intro">Tick only what is true for you. Each box shows Eternal's own data. This only counts how many of your own conditions line up. It is not a recommendation.</div>
+ <div class="card"><div style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap"><b data-i18n="sc_all">Overall</b><span id="scAllTxt"></span></div><div class="bar" style="margin-top:6px"><i id="scAllBar"></i></div></div>
+ <div id="scGroups"></div>
+ <button class="btn" onclick="scClear()" data-i18n="sc_clear">Clear my ticks</button>
+</section>
+
+<!-- MANAGEMENT -->
+<section class="tab" id="t-mb">
+ <h2 data-i18n="mb_h">Management &amp; Board</h2>
+ <div class="mgr" id="mgr"></div>
+ <h3 data-i18n="mb_g">Governance notes</h3>
+ <div class="card"><ul class="tight" id="gov"></ul></div>
+</section>
+
+<!-- SOCRATES -->
+<section class="tab" id="t-so">
+ <h2 data-i18n="so_h">Cauvery Socrates — test your understanding</h2>
+ <div id="quiz"></div>
+ <div class="card"><b id="soFt"></b><textarea id="soAns"></textarea><div style="margin-top:6px"><button class="btn f" onclick="showModel()" data-i18n="so_show">Show model answer</button></div><div id="soModel" class="note" style="display:none;font-size:13.5px;color:#374151"></div></div>
+</section>
+
+</main>
+
+<div id="cbBadge" onclick="togDisc()" title="CB Research">CB</div>
+<div id="cbDisc"></div>
+<button id="asBtn" onclick="togAs()">🎙️ <span data-i18n="as_btn">CB Assist</span></button>
+<div id="asPanel">
+ <div id="asHead"><span data-i18n="as_title">CB Assist — ask by voice or text</span><button onclick="togAs()" style="background:none;border:0;color:#fff;font-size:18px;cursor:pointer">✕</button></div>
+ <div id="asLog"></div>
+ <div class="qs" id="asQs"></div>
+ <div id="asIn"><input type="text" id="asTxt" onkeydown="if(event.key==='Enter')ask()"><button id="asMic" onclick="mic()" title="Speak">🎤</button><button class="btn f" onclick="ask()">➤</button></div>
+</div>
+
+<script>
+
+/* ===== machine-readable company object ===== */
+var CO = {
+ name:"Eternal Ltd", nse:"ETERNAL", bse:"543320", quarter:"Q2FY27", periodEnd:"2026-09-30", resultDate:"2026-10-21",
+ price:312.35, priceDate:"2026-10-21", sharesCr:965.97, mcapCr:301720, cashCr:16475, bvps:32.1, hi52:345, lo52:213,
+ q:{rev:24138, adjRev:24621, adjEbitda:666, ebitda:752, oi:351, daFin:780, pbt:323, corePbt:-28, tax:198, pat:125, etr:61, capex:941, stores:2751, newStores:308, adPromo:1138},
+ seg:{fd:{nov:11445,g:21.5,ebitda:627,m:5.5,mtc:28.0}, qc:{nov:20940,g:79.3,rev:19152,rg:93.6,ebitda:184,m:0.9}, go:{nov:3259,g:58,rev:304,ebitda:-64,m:-2.0}, hp:{rev:1154,g:12.8,ebitda:10}, oth:{ebitda:-91}},
+ ttm:{rev:77956, pat:493, adjEbitda:2014},
+ cb:{g:9.0,m:4.5,d:8.5,c:5.0,v:3.0,r:6.5,score:6.1},
+ cycle:{sectorPhase:"S-curve: Rapid adoption (QC) / Maturing (FD)", stockStage:"Weinstein Stage 2 – late / extended", cy:71},
+ triggers:[
+  {name:"Blinkit store ramp to >3,500 by Mar-27 & mature-store margin uplift",sign:"+",I:4,C:0.7,W:1.0,P:0.7,pts:1.96,status:"Executing",date:"2026-10-21"},
+  {name:"Core PBT crossing zero (operations cover D&A + leases)",sign:"+",I:3,C:0.7,W:1.0,P:1.0,pts:2.10,status:"Watch",date:"2026-10-21"},
+  {name:"Remaining 1P (own-inventory) margin accretion",sign:"+",I:2,C:1.0,W:1.0,P:0.7,pts:1.40,status:"Executing",date:"2026-01-21"},
+  {name:"District (going-out) EBITDA breakeven",sign:"+",I:2,C:0.4,W:0.7,P:1.0,pts:0.56,status:"Watch",date:"2026-10-21"},
+  {name:"Standalone tax shields exhausted – 61% effective tax",sign:"-",I:3,C:1.0,W:1.0,P:0.7,pts:2.10,status:"Executing",date:"2026-10-21"},
+  {name:"QC competition (Instamart, Zepto, Amazon Now, Flipkart Minutes)",sign:"-",I:3,C:0.7,W:1.0,P:1.0,pts:2.10,status:"Executing",date:"2026-10-21"},
+  {name:"Cash drawdown from capex + inventory lowers other income",sign:"-",I:2,C:1.0,W:1.0,P:1.0,pts:2.00,status:"Executing",date:"2026-10-21"}
+ ],
+ tg:44
+};
+
+/* ===== Tamil dictionary for static text ===== */
+var TA = {
+title:"எட்டர்னல் லிமிடெட் (முன்னாள் சொமாட்டோ) — Q2 FY27 பிசினஸ் & இன்வெஸ்ட்மென்ட் அனாலிசிஸ்",
+subtitle:"30 செப் 2026-ல் முடிந்த காலாண்டு · ரிசல்ட் 21 அக் 2026 · NSE: ETERNAL · BSE: 543320 · விலை ₹312.35 (21 அக் 2026 குளோசிங்) · தொகைகள் ₹ கோடியில்",
+ov_h:"ஓவர்வியூ — ஒரே பார்வையில் இந்த காலாண்டு",
+ov_one:"இந்த காலாண்டுல எட்டர்னல் ராக்கெட் வேகத்துல வளர்ந்துச்சு, ஆனா சம்பாதிச்சது ஒரு பேங்க் மாதிரி: கையில இருக்கற கேஷ் மேல வந்த வட்டி (இதர வருமானம்) ₹351 கோடி — மொத்த வரிக்கு முந்தைய லாபம் ₹323 கோடியை விட அதிகம். அதை எடுத்துட்டா, நிஜ பிசினஸ் வரிக்கு முன்னாடி ₹28 கோடி நஷ்டம். ஆனா இந்த நஷ்டம் மூணு வருஷத்துல மிகக் குறைவு (போன வருஷம் இதே காலாண்டு −₹223 கோடி) — அதாவது ஆப்பரேஷன் இப்போ தன் கால்லயே நிக்கற நிலைக்கு ரொம்ப கிட்ட வந்துடுச்சு.",
+ov_kt:"முக்கியமான பாயிண்ட்ஸ்",
+ov_temple:"CB 6-தூண் ஸ்கோர் — கோயில்",
+ov_tnote:"ஒரு தூணை தட்டினா அதோட விளக்கத்துக்கு போகும். பச்சை 8–10 · மஞ்சள் 6–8 · சிவப்பு 6-க்கு கீழ. CB ஸ்கோர் கத்துக்கறதுக்கான கருவி மட்டும் — ரேட்டிங்கோ பரிந்துரையோ இல்ல.",
+bm_h:"பிசினஸ் மாடல் — எட்டர்னல் எப்படி பணம் சம்பாதிக்குது, எப்படி வெச்சுக்குது",
+bm_60t:"60 வினாடில பிசினஸ் மாடல்:",
+bm_60:"ஒரே டெலிவரி நெட்வொர்க் மேல எட்டர்னல் நாலு ஆப் நடத்துது. சொமாட்டோ ரெஸ்டாரன்ட் ஆர்டர்கள்ல கமிஷனும் கட்டணமும் வாங்குது. பிளிங்கிட் இப்போ பெரும்பாலும் பொருட்களை தானே வாங்கி, 2,751 டார்க் ஸ்டோர்ஸ்ல இருந்து சுமார் 10 நிமிஷத்துல விக்குது — அதனால பொருளோட முழு விலையும் ரெவென்யூவா வருது. டிஸ்ட்ரிக்ட் சினிமா, ஈவென்ட், டைனிங் டிக்கெட் விக்குது. ஹைப்பர்ப்யூர் ரெஸ்டாரன்ட்டுகளுக்கு சப்ளை பண்ணுது. டெபாசிட், பாண்ட்ல போட்டு வெச்சிருக்கற பெரிய கேஷ் வட்டி தருது — அது தான் \"இதர வருமானம்\".",
+bm_tap:"எந்த பெட்டியையும் தட்டினா அதோட அர்த்தம் கீழ வரும். எண்கள் Q2FY27. † = அறிவிக்கப்பட்ட எண்கள்ல இருந்து CB Research கணக்கிட்டது.",
+bm_formula:"<b>ரெவென்யூ ஃபார்முலா:</b> ரெவென்யூ ≈ பிளிங்கிட் சொந்த ஸ்டாக்ல இருந்து விக்கற பொருட்களோட மதிப்பு + சொமாட்டோ, டிஸ்ட்ரிக்ட் ஆர்டர்கள்ல கமிஷன், விளம்பர வருமானம், டெலிவரி/பிளாட்ஃபார்ம் கட்டணம் + ஹைப்பர்ப்யூர் சப்ளை. லாபம் = அந்த ரெவென்யூ − பொருள் செலவு − டெலிவரி, ஸ்டோர், சம்பளம், மார்க்கெட்டிங், தேய்மானம் & லீஸ் வட்டி − வரி + கேஷ் மேல வர்ற வட்டி.",
+bm_eng:"ரெவென்யூ இன்ஜின் — ஒவ்வொரு வரியையும் என்ன ஓட்டுது",
+bm_mix:"அட்ஜஸ்டட் ரெவென்யூ எங்க இருந்து வருது (Q2FY27)",
+ev_h:"பிசினஸ் மாடல் பயணம் — லிஸ்டிங் (ஜூலை 2021) முதல் Q2 FY27 வரை",
+ev_intro:"லிஸ்ட் ஆனப்போ சொமாட்டோ ஒரு அசெட்-லைட் ஃபுட் டெலிவரி மார்க்கெட்பிளேஸ்: சாப்பாட்டை அது வெச்சுக்கல, ஒரு பங்கு மட்டும் எடுத்துச்சு; கஸ்டமர் பணம் முதல்ல அதுகிட்ட வந்து, அப்புறம் தான் ரெஸ்டாரன்ட்டுக்கு போச்சு (நெகட்டிவ் வொர்க்கிங் கேப்பிட்டல்). அஞ்சு வருஷம் கழிச்சு எட்டர்னல் பெரும்பாலும் சொந்த ஸ்டாக் வெச்சு விக்கற குயிக் காமர்ஸ் ரீடெய்லர் — ஆயிரக்கணக்கான டார்க் ஸ்டோர்ஸ், பெரிய தேய்மானம், லீஸ் பில்கள். ரெவென்யூ ஏன் பாஞ்சது, மார்ஜின் ஏன் மெலிசா தெரியுது, கேஷ் ஏன் செலவாகுது — கீழ ஹைலைட் பண்ணின மாற்றங்கள் விளக்குது.",
+ev_then:"அப்போ vs இப்போ",
+ev_tl:"பெரிய மாற்றங்களோட டைம்லைன்",
+ev_c1:"லிஸ்டிங்ல இருந்து ரெவென்யூவும் லாபமும் (₹ கோடி)",
+ev_c1n:"FY = ஏப்ரல்–மார்ச். TTM = செப் 2026 வரை கடைசி நாலு காலாண்டு. FY26 பாய்ச்சல் பெரும்பாலும் பிளிங்கிட் சொந்த ஸ்டாக் வெச்சதால வந்த அக்கவுண்டிங் விளைவு.",
+ev_c2:"மையம் ஃபுட் டெலிவரில இருந்து குயிக் காமர்ஸுக்கு நகர்ந்துடுச்சு (ரெவென்யூவுல %)",
+ev_c2n:"FY22 ஆனுவல் ரிப்போர்ட் செக்மென்ட் டேட்டா; காலாண்டு பங்குகள் செக்மென்ட் ரெவென்யூ / அட்ஜஸ்டட் ரெவென்யூ அடிப்படையில. † Q2FY27 ஃபுட் டெலிவரி பங்குல \"மற்றவை\" சேர்ந்திருக்கு (கணக்கிட்டது).",
+pa_h:"லாப அனாடமி — ஆப்பரேஷனை விட இதர வருமானத்துல இருந்து அதிகம்",
+pa_one:"Q2FY27-ல இதர வருமானம் (₹351 கோடி) வரிக்கு முந்தைய லாபத்தோட (₹323 கோடி) 109%. ஆப்பரேஷன் தனியா பார்த்தா வரிக்கு முன்னாடி −₹28 கோடி. சொமாட்டோ லாபத்துக்கு வந்ததுல இருந்து கிட்டத்தட்ட ஒவ்வொரு காலாண்டும் இப்படி தான் — IPO, QIP பணத்து மேல வர்ற வட்டி தான் கடைசி வரியை தாங்கிட்டு இருக்கு.",
+pa_wf:"EBITDA-ல இருந்து நிகர லாபம் வரை — Q2FY27 வாட்டர்ஃபால் (₹ கோடி)",
+pa_wfn:"ரிப்போர்டட் EBITDA = ரெவென்யூ ₹24,138 கோடி − ஆப்பரேட்டிங் செலவு ₹23,386 கோடி. தேய்மானம் + ஃபைனான்ஸ் செலவு (பெரும்பாலும் டார்க் ஸ்டோர் லீஸ்) ₹780 கோடி — EBITDA, PBT-ல இருந்து கணக்கிட்டது.",
+pa_q:"காலாண்டு வாரியா: இதர வருமானம் vs வரிக்கு முந்தைய லாபம் (₹ கோடி)",
+pa_qn:"சிவப்பு கோடு = கோர் PBT (PBT − இதர வருமானம்) — ஆப்பரேஷன் தானே சம்பாதிச்ச லாபம். இன்னும் பூஜ்ஜியத்துக்கு கீழ தான், ஆனா −₹271 கோடில (Q4FY25) இருந்து −₹28 கோடிக்கு (Q2FY27) ஏறிடுச்சு.",
+pa_a:"வருஷ வாரியா (₹ கோடி)",
+pa_why:"இது ஏன் நடக்குது?",
+pa_seg:"செக்மென்ட் அட்ஜஸ்டட் EBITDA — யார் சம்பாதிக்கறாங்க, யார் செலவழிக்கறாங்க (₹ கோடி, Q2FY27)",
+pa_segn:"அட்ஜஸ்டட் EBITDA கம்பெனியோட சொந்த அளவுகோல் (ESOP செலவை திருப்பி சேர்க்கும், வாடகையை கழிக்கும்). மொத்தம் ₹666 கோடி. † மற்றவை = மொத்தம் − நாலு செக்மென்ட் (கணக்கிட்டது).",
+pa_eb:"EBITDA தொகை போக்கு (₹ கோடி)",
+cr_h:"கேஷ் இருப்பு — போர் நிதி",
+cr_one:"Q2FY27 முடிவுல எட்டர்னல் கிட்ட ₹16,475 கோடி கேஷ், டெபாசிட், லிக்விட் இன்வெஸ்ட்மென்ட்ஸ் இருக்கு — பண்டிகை சீசனுக்கு பிளிங்கிட் ஸ்டாக் சேர்த்ததாலும், 308 ஸ்டோர் திறந்ததாலும் (கேப்பெக்ஸ் ₹941 கோடி) காலாண்டுல ₹1,813 கோடி குறைஞ்சுது. 2021 IPO-வும், நவம்பர் 2024 ₹8,500 கோடி QIP-யும் சேர்த்த இந்த பணம் வருஷத்துக்கு சுமார் 8% சம்பாதிக்குது — லாபத்தை தாங்கற ₹351 கோடி இதர வருமானம் அது தான். அதனால ஸ்டோர், ஸ்டாக்ல செலவழிக்கற ஒவ்வொரு ரூபாயும் எதிர்கால இதர வருமானத்தையும் குறைக்கும்.",
+cr_c:"கேஷ் இருப்பும் அது தர்ற வட்டியும் (₹ கோடி)",
+cr_cn:"Q2FY25: பேடிஎம் டிக்கெட்டிங் பிசினஸுக்கு ₹2,014 கோடி கொடுத்தாங்க. Q3FY25: QIP பணம் (நிகர ₹8,446 கோடி) வந்துச்சு. Q2FY27: பண்டிகை ஸ்டாக், ஸ்டோர் கேப்பெக்ஸ்.",
+cr_f:"கேஷ் எங்க இருந்து வந்துச்சு, எங்க போகுது",
+fin_h:"ஃபைனான்ஷியல்ஸ் — Q2FY27 vs Q1FY27 vs Q2FY26",
+fin_n:"கன்சாலிடேட்டட். † CB Research கணக்கிட்டது. n/a = பார்த்த ஆவணங்கள்ல வெளியிடல. Q2FY27 ரிசல்ட் ஆடிட் ஆகல (லிமிடெட் ரிவ்யூ).",
+fin_c1:"ரெவென்யூவும் அட்ஜஸ்டட் EBITDA-வும் (₹ கோடி)",
+cf_h:"கேஷ் ஃப்ளோ & வொர்க்கிங் கேப்பிட்டல்",
+cf_one:"பிசினஸ் மாடல் மாற்றம் எண்களா தெரியறது வொர்க்கிங் கேப்பிட்டல்ல தான். மார்க்கெட்பிளேஸா இருந்தப்போ சொமாட்டோ கஸ்டமர்கிட்ட பணம் வாங்கி, ரெஸ்டாரன்ட்டுக்கு அப்புறம் கொடுத்துச்சு — சப்ளையர்ஸ் பணத்துல ஓடுச்சு (FY21-ல கேஷ் கன்வர்ஷன் சைக்கிள் −513 நாள்). பிளிங்கிட் ஸ்டாக் சொந்தமானதும் இது தலைகீழா ஆச்சு: இன்வென்டரி நாள் 26-ஆ ஏறிச்சு, பேயபிள் நாள் 36-ஆ இறங்கிச்சு — இப்போ சைக்கிள் சுமார் +2 நாள். இப்போ வளர்ச்சிக்கு கேஷ் தேவை.",
+cf_c1:"கேஷ் ஃப்ளோ (₹ கோடி)",
+cf_c2:"வொர்க்கிங் கேப்பிட்டல் நாட்கள்",
+cf_rel:"வொர்க்கிங் கேப்பிட்டல் CFO-வோடவும் கேஷ் கன்வர்ஷனோடவும் எப்படி இணையுது",
+val_h:"வேல்யூவேஷன்",
+val_c:"மார்க்கெட் கேப் vs கேஷ் vs சம்பாதிக்கும் திறன் (₹ கோடி)",
+mk_h:"மார்க்கெட் ஆக்டிவிட்டி — ஷேர் விலை ஏன் நகர்ந்துச்சு",
+mk_c:"எட்டர்னல் யாருடையது — FII விக்கறாங்க, DII வாங்கறாங்க (%)",
+mk_cn:"எட்டர்னலுக்கு புரமோட்டர் குரூப் இல்ல — 100% பொதுமக்கள் கையில. செப் 2026: FII 33.01%, DII 36.22%, பொது 26.26%, மற்றவை 4.53%.",
+tc_h:"டிரிக்கர்ஸ் & சைக்கிள்",
+tc_tt:"டிரிக்கர் டேபிள்",
+tc_tl:"வரப்போற தேதி நிகழ்வுகள்",
+sw_h:"SWOT",
+an_h:"அனலிஸ்ட் ரேட்டிங் (Q2FY27-க்கு பின் மூன்றாம் தரப்பு கருத்துகள்)",
+an_n:"இவை 21–22 அக் 2026 மீடியா ரிப்போர்ட்ஸ்ல வந்த ப்ரோக்கரேஜ் கருத்துகள். CB Research வாங்கு, விக்கு, வெச்சிரு — எந்த பரிந்துரையும் தராது.",
+sc_h:"CB இன்வெஸ்டர் செல்ஃப்-செக்",
+sc_intro:"உங்களுக்கு உண்மையா இருக்கறதை மட்டும் டிக் பண்ணுங்க. ஒவ்வொரு பெட்டியிலும் எட்டர்னலோட சொந்த டேட்டா இருக்கு. இது உங்க சொந்த நிபந்தனைகள்ல எத்தனை ஒத்துப்போகுதுன்னு எண்ணுது மட்டும் தான். இது பரிந்துரை இல்ல.",
+sc_all:"மொத்தம்",
+sc_clear:"என் டிக்ஸை அழி",
+mb_h:"மேனேஜ்மென்ட் & போர்டு",
+mb_g:"கவர்னன்ஸ் குறிப்புகள்",
+so_h:"காவேரி சாக்ரடீஸ் — உங்க புரிதலை சோதிங்க",
+so_show:"மாடல் பதிலை காட்டு",
+as_btn:"CB அசிஸ்ட்",
+as_title:"CB அசிஸ்ட் — குரலிலோ டைப் பண்ணியோ கேளுங்க"
+};
+var EN = {};
+var L = 'en';
+function t(p){return (L==='ta' && p[1]) ? p[1] : p[0];}
+function inr(n,d){if(n===null||n===undefined||n==='n/a')return 'n/a';return Number(n).toLocaleString('en-IN',{maximumFractionDigits:(d===undefined?0:d),minimumFractionDigits:(d===undefined?0:d)});}
+
+var TABS=[
+ ['ov',['Overview','ஓவர்வியூ']],['bm',['Business Model','பிசினஸ் மாடல்']],['ev',['Model Journey','மாடல் பயணம்']],
+ ['pa',['Profit Anatomy','லாப அனாடமி']],['cr',['Cash Reserves','கேஷ் இருப்பு']],['fin',['Financials','ஃபைனான்ஷியல்ஸ்']],
+ ['cf',['Cash Flow & WC','கேஷ் ஃப்ளோ & WC']],['val',['Valuations','வேல்யூவேஷன்']],['mk',['Market Activity','மார்க்கெட் ஆக்டிவிட்டி']],
+ ['tc',['Triggers & Cycle','டிரிக்கர்ஸ் & சைக்கிள்']],['sw',['SWOT','SWOT']],['an',["Analysts' Rating",'அனலிஸ்ட் ரேட்டிங்']],
+ ['sc',['Self-check','செல்ஃப்-செக்']],['mb',['Management & Board','மேனேஜ்மென்ட் & போர்டு']],['so',['Cauvery Socrates','காவேரி சாக்ரடீஸ்']]
+];
+
+var KPIS=[
+ [['Revenue from ops','செயல்பாட்டு ரெவென்யூ'],'₹24,138 cr',['+77.6% YoY · +19.4% QoQ','+77.6% YoY · +19.4% QoQ'],'up'],
+ [['Adjusted EBITDA','அட்ஜஸ்டட் EBITDA'],'₹666 cr',['+197% YoY · +20% QoQ','+197% YoY · +20% QoQ'],'up'],
+ [['Profit before tax','வரிக்கு முந்தைய லாபம்'],'₹323 cr',['vs ₹129 cr a year ago','போன வருஷம் ₹129 கோடி'],'up'],
+ [['Other income','இதர வருமானம்'],'₹351 cr',['= 109% of PBT','= PBT-யோட 109%'],'nt'],
+ [['Core PBT (PBT − other income)†','கோர் PBT (PBT − இதர வருமானம்)†'],'−₹28 cr',['was −₹223 cr in Q2FY26','Q2FY26-ல −₹223 கோடி'],'dn'],
+ [['Net profit','நிகர லாபம்'],'₹125 cr',['+92% YoY · tax rate 61%','+92% YoY · வரி விகிதம் 61%'],'up'],
+ [['Cash balance','கேஷ் இருப்பு'],'₹16,475 cr',['−₹1,813 cr QoQ','காலாண்டுல −₹1,813 கோடி'],'dn'],
+ [['Blinkit dark stores','பிளிங்கிட் டார்க் ஸ்டோர்ஸ்'],'2,751',['+308 in the quarter; >3,500 by Mar-27','காலாண்டுல +308; மார்ச்-27-க்குள் 3,500+'],'up']
+];
+var OVLIST=[
+ ['<b>Growth is real:</b> Blinkit NOV +79.3% YoY to ₹20,940 cr; Zomato food-delivery NOV +21.5% to ₹11,445 cr — the fifth straight quarter of faster growth.','<b>வளர்ச்சி உண்மை:</b> பிளிங்கிட் NOV +79.3% YoY ₹20,940 கோடி; சொமாட்டோ ஃபுட் டெலிவரி NOV +21.5% ₹11,445 கோடி — தொடர்ந்து அஞ்சாவது காலாண்டா வேகம் கூடுது.'],
+ ['<b>Profit still leans on the cash pile:</b> other income ₹351 cr vs PBT ₹323 cr. The core business is at −₹28 cr before tax, but improving every quarter.','<b>லாபம் இன்னும் கேஷ் மேல சாய்ஞ்சிருக்கு:</b> இதர வருமானம் ₹351 கோடி vs PBT ₹323 கோடி. கோர் பிசினஸ் வரிக்கு முன்னாடி −₹28 கோடி, ஆனா ஒவ்வொரு காலாண்டும் முன்னேறுது.'],
+ ['<b>Tax surprise:</b> the parent company used up its old carried-forward losses, so tax jumped to ₹198 cr (61% of PBT). That is why net profit (₹125 cr) missed street estimates (~₹393 cr) even though EBITDA beat.','<b>வரி அதிர்ச்சி:</b> பேரன்ட் கம்பெனியோட பழைய நஷ்ட கழிவுகள் தீர்ந்துடுச்சு, அதனால வரி ₹198 கோடி (PBT-யோட 61%). EBITDA எதிர்பார்ப்பை தாண்டினாலும் நிகர லாபம் (₹125 கோடி) எதிர்பார்ப்பை (~₹393 கோடி) மிஸ் பண்ணது இதனால தான்.'],
+ ['<b>Blinkit is now profitable at EBITDA:</b> ₹184 cr (0.9% of NOV) vs a ₹156 cr loss a year ago — sixth straight quarter of margin gains.','<b>பிளிங்கிட் இப்போ EBITDA-ல லாபம்:</b> ₹184 கோடி (NOV-ல 0.9%), போன வருஷம் ₹156 கோடி நஷ்டம் — தொடர்ந்து ஆறாவது காலாண்டா மார்ஜின் கூடுது.'],
+ ['<b>Cash is being deployed:</b> ₹16,475 cr, down ₹1,813 cr on festive inventory and ₹941 cr capex. Store target raised to >3,500 by Mar-27 and ~5,000 by Mar-28.','<b>கேஷ் செலவாகுது:</b> ₹16,475 கோடி, பண்டிகை ஸ்டாக், ₹941 கோடி கேப்பெக்ஸ்னால ₹1,813 கோடி குறைவு. ஸ்டோர் இலக்கு மார்ச்-27-க்குள் 3,500+, மார்ச்-28-க்குள் ~5,000.'],
+ ['<b>Housekeeping:</b> Going-out India business to move into subsidiary ZEPL (₹130.76 cr slump sale); Adonmo stake swapped for 4.4% of the merged Mygate entity (valued ₹156 cr vs ₹112 cr invested in Jan 2022).','<b>உள் சீரமைப்பு:</b> கோயிங்-அவுட் இந்தியா பிசினஸ் சப்சிடியரி ZEPL-க்கு மாறுது (₹130.76 கோடி ஸ்லம்ப் சேல்); அட்மோ பங்கு, இணைஞ்ச மைகேட் கம்பெனியோட 4.4%-க்கு மாத்தப்படுது (மதிப்பு ₹156 கோடி; ஜன 2022-ல போட்டது ₹112 கோடி).']
+];
+
+var PILLARS=[
+ {k:'g',n:['Growth','வளர்ச்சி'],s:9.0,x:['Revenue +77.6% YoY; Blinkit NOV +79.3%; food delivery NOV +21.5% and accelerating; District NOV +58%. Few large Indian companies grow this fast at this size.','ரெவென்யூ +77.6% YoY; பிளிங்கிட் NOV +79.3%; ஃபுட் டெலிவரி NOV +21.5%, வேகம் கூடுது; டிஸ்ட்ரிக்ட் NOV +58%. இவ்வளவு பெரிய சைஸ்ல இந்த வேகத்துல வளர்ற இந்திய கம்பெனிகள் ரொம்ப குறைவு.']},
+ {k:'m',n:['Margins','மார்ஜின்'],s:4.5,x:['Adjusted EBITDA is only 2.7% of revenue; core PBT is still −₹28 cr; 61% tax rate. Improving fast, but the operating business is not yet profitable on its own.','அட்ஜஸ்டட் EBITDA ரெவென்யூவுல 2.7% தான்; கோர் PBT இன்னும் −₹28 கோடி; வரி 61%. வேகமா முன்னேறுது, ஆனா ஆப்பரேஷன் தனியா இன்னும் லாபத்துல இல்ல.']},
+ {k:'d',n:['Balance sheet','பேலன்ஸ் ஷீட்'],s:8.5,x:['₹16,475 cr cash; borrowings (₹4,592 cr at Mar-26) are mostly lease liabilities for stores; net worth ~₹30,980 cr.','₹16,475 கோடி கேஷ்; கடன் (மார்ச்-26-ல ₹4,592 கோடி) பெரும்பாலும் ஸ்டோர் லீஸ் கடமைகள்; நிகர மதிப்பு ~₹30,980 கோடி.']},
+ {k:'c',n:['Cash flow & WC','கேஷ் ஃப்ளோ & WC'],s:5.0,x:['CFO positive (₹632 cr FY26) but free cash flow negative (−₹1,114 cr FY26) and cash fell ₹1,813 cr this quarter. Working-capital cycle has turned from −513 days to about +2 days.','CFO பாசிட்டிவ் (FY26 ₹632 கோடி), ஆனா ஃப்ரீ கேஷ் ஃப்ளோ நெகட்டிவ் (FY26 −₹1,114 கோடி), இந்த காலாண்டு கேஷ் ₹1,813 கோடி குறைஞ்சுது. வொர்க்கிங் கேப்பிட்டல் சைக்கிள் −513 நாள்ல இருந்து சுமார் +2 நாளா மாறிடுச்சு.']},
+ {k:'v',n:['Valuation','வேல்யூவேஷன்'],s:3.0,x:['P/E ~612x trailing profit, P/B 9.7x, EV/Adjusted EBITDA ~142x. The price already assumes many years of strong growth and margin expansion.','P/E ~612x, P/B 9.7x, EV/அட்ஜஸ்டட் EBITDA ~142x. பல வருஷ வலுவான வளர்ச்சியும் மார்ஜின் விரிவாக்கமும் ஏற்கனவே விலையில இருக்கு.']},
+ {k:'r',n:['Management & risk','மேனேஜ்மென்ட் & ரிஸ்க்'],s:6.5,x:['Smooth CEO handover to Blinkit co-founder Albinder Dhindsa; no promoter pledge (no promoter); but intense quick-commerce competition and regulatory focus on gig workers and dark stores.','பிளிங்கிட் கோ-ஃபவுண்டர் அல்பிந்தர் திந்த்சாவுக்கு CEO பொறுப்பு சுமூகமா மாறிச்சு; புரமோட்டர் இல்லாததால ப்ளெட்ஜ் இல்ல; ஆனா குயிக் காமர்ஸ்ல கடும் போட்டி, கிக் வொர்க்கர்ஸ் & டார்க் ஸ்டோர்ஸ் மேல ரெகுலேட்டரி கவனம்.']}
+];
+
+/* business model boxes */
+var BM={
+ cust:[['Customers','கஸ்டமர்கள்'],['Hungry diners, households, movie-goers. Zomato alone had 28.0 mn average monthly transacting customers (+16% YoY). They pay for food, groceries, tickets plus delivery/platform fees.','பசியோட இருக்கறவங்க, குடும்பங்கள், சினிமா ரசிகர்கள். சொமாட்டோல மட்டும் மாசத்துக்கு சராசரி 28.0 மில்லியன் கஸ்டமர்கள் (+16% YoY). சாப்பாடு, மளிகை, டிக்கெட்டுக்கும் டெலிவரி/பிளாட்ஃபார்ம் கட்டணத்துக்கும் பணம் கட்டறாங்க.']],
+ chan:[['Apps & delivery network','ஆப்ஸ் & டெலிவரி நெட்வொர்க்'],['Four apps — Zomato, Blinkit, District and Bistro — share one technology stack and a pool of about 3 mn delivery partners (1 lakh+ on EVs). Shared riders and data lower the cost per order.','நாலு ஆப் — சொமாட்டோ, பிளிங்கிட், டிஸ்ட்ரிக்ட், பிஸ்ட்ரோ — ஒரே டெக்னாலஜியையும் சுமார் 30 லட்சம் டெலிவரி பார்ட்னர்ஸையும் (1 லட்சம்+ EV-ல) பகிர்ந்துக்குது. ஒரே ரைடர்ஸ், டேட்டா — ஆர்டருக்கான செலவு குறையுது.']],
+ eter:[['Eternal (group)','எட்டர்னல் (குரூப்)'],['The holding platform. Combined B2C net order value of about ₹35,644 cr† this quarter. Allocates capital between businesses and holds the ₹16,475 cr treasury.','ஹோல்டிங் பிளாட்ஃபார்ம். இந்த காலாண்டு மொத்த B2C NOV சுமார் ₹35,644 கோடி†. பிசினஸ்களுக்கு இடையே மூலதனத்தை பிரிக்குது, ₹16,475 கோடி கேஷை வெச்சிருக்கு.']],
+ fd:[['Food delivery (Zomato)','ஃபுட் டெலிவரி (சொமாட்டோ)'],['The cash cow. NOV ₹11,445 cr (+21.5%), Adjusted EBITDA ₹627 cr = 5.5% of NOV. Earns commission from restaurants, ads, and delivery/platform fees from customers. Bistro (10-minute food) sits in "others".','பணம் கறக்கற பசு. NOV ₹11,445 கோடி (+21.5%), அட்ஜஸ்டட் EBITDA ₹627 கோடி = NOV-ல 5.5%. ரெஸ்டாரன்ட் கமிஷன், விளம்பரம், கஸ்டமர் டெலிவரி/பிளாட்ஃபார்ம் கட்டணம். பிஸ்ட்ரோ (10 நிமிஷ சாப்பாடு) \"மற்றவை\"ல இருக்கு.']],
+ qc:[['Quick commerce (Blinkit)','குயிக் காமர்ஸ் (பிளிங்கிட்)'],['The growth engine and now ~78% of adjusted revenue. Owns most of its inventory (1P), so revenue = value of goods sold: ₹19,152 cr (+93.6%). NOV ₹20,940 cr (+79.3%). Adjusted EBITDA turned to ₹184 cr (0.9% of NOV). 2,751 dark stores; >3,500 targeted by Mar-27.','வளர்ச்சி இன்ஜின், இப்போ அட்ஜஸ்டட் ரெவென்யூவுல ~78%. பெரும்பாலான ஸ்டாக் சொந்தம் (1P), அதனால ரெவென்யூ = விக்கற பொருள் மதிப்பு: ₹19,152 கோடி (+93.6%). NOV ₹20,940 கோடி (+79.3%). அட்ஜஸ்டட் EBITDA ₹184 கோடி (NOV-ல 0.9%). 2,751 டார்க் ஸ்டோர்ஸ்; மார்ச்-27-க்குள் 3,500+ இலக்கு.']],
+ go:[['Going-out (District)','கோயிங்-அவுட் (டிஸ்ட்ரிக்ட்)'],['Movies, events and dining-out ticketing, built on Paytm\'s ticketing business bought in Aug 2024. NOV ₹3,259 cr (+58%), revenue ₹304 cr, Adjusted EBITDA −₹64 cr (−2.0% of NOV, better than −3.1% a year ago).','சினிமா, ஈவென்ட், டைனிங் டிக்கெட்டிங் — ஆகஸ்ட் 2024-ல வாங்கின பேடிஎம் டிக்கெட்டிங் பிசினஸ் மேல கட்டினது. NOV ₹3,259 கோடி (+58%), ரெவென்யூ ₹304 கோடி, அட்ஜஸ்டட் EBITDA −₹64 கோடி (NOV-ல −2.0%; போன வருஷம் −3.1%).']],
+ hp:[['Hyperpure (B2B supplies)','ஹைப்பர்ப்யூர் (B2B சப்ளை)'],['Supplies vegetables, meat, dairy and packaging to restaurants. Revenue ₹1,154 cr (+12.8%), Adjusted EBITDA ₹10 cr. It shrank earlier when Blinkit stopped buying through third-party sellers it used to supply.','ரெஸ்டாரன்ட்டுகளுக்கு காய்கறி, இறைச்சி, பால், பேக்கேஜிங் சப்ளை. ரெவென்யூ ₹1,154 கோடி (+12.8%), அட்ஜஸ்டட் EBITDA ₹10 கோடி. பிளிங்கிட் சொந்த ஸ்டாக்குக்கு மாறினப்போ இது முதல்ல சுருங்கிச்சு.']],
+ ot:[['Others (Bistro, new bets)','மற்றவை (பிஸ்ட்ரோ, புது முயற்சிகள்)'],['Bistro (10-minute meals), Nugget and other experiments plus unallocated costs. Implied Adjusted EBITDA about −₹91 cr†.','பிஸ்ட்ரோ (10 நிமிஷ சாப்பாடு), நகெட் மற்ற முயற்சிகள், பிரிக்காத செலவுகள். கணக்கிட்ட அட்ஜஸ்டட் EBITDA சுமார் −₹91 கோடி†.']],
+ cash:[['Treasury ₹16,475 cr','கேஷ் இருப்பு ₹16,475 கோடி'],['IPO (2021) and QIP (2024) money held in fixed deposits, bonds and liquid funds. At ~8% a year it earns about ₹350 cr a quarter.','IPO (2021), QIP (2024) பணம் FD, பாண்ட், லிக்விட் ஃபண்டுகள்ல இருக்கு. வருஷத்துக்கு ~8%-ல காலாண்டுக்கு சுமார் ₹350 கோடி சம்பாதிக்குது.']],
+ rev:[['Revenue ₹24,138 cr','ரெவென்யூ ₹24,138 கோடி'],['Up 77.6% YoY. Most of the jump is because Blinkit now books the full value of goods it sells (own inventory) instead of only a commission. Like-for-like growth was 58%.','77.6% YoY உயர்வு. பெரும்பாலான பாய்ச்சல் பிளிங்கிட் இப்போ கமிஷன் மட்டும் இல்லாம விக்கற பொருளோட முழு மதிப்பையும் புக் பண்றதால. லைக்-ஃபார்-லைக் வளர்ச்சி 58%.']],
+ cost:[['Costs ₹24,166 cr','செலவுகள் ₹24,166 கோடி'],['Cost of goods for Blinkit, delivery, store rent and staff, marketing (ad & promotion ₹1,138 cr, +41%), depreciation and lease interest. Total costs were slightly higher than revenue.','பிளிங்கிட் பொருள் செலவு, டெலிவரி, ஸ்டோர் வாடகை & ஊழியர், மார்க்கெட்டிங் (விளம்பரம் ₹1,138 கோடி, +41%), தேய்மானம், லீஸ் வட்டி. மொத்த செலவு ரெவென்யூவை விட கொஞ்சம் அதிகம்.']],
+ core:[['Core result −₹28 cr†','கோர் முடிவு −₹28 கோடி†'],['Revenue minus all costs. This is what the operating business made on its own before tax — still a small loss, but it was −₹223 cr a year ago.','ரெவென்யூ மைனஸ் எல்லா செலவும். வரிக்கு முன்னாடி ஆப்பரேஷன் தானே சம்பாதிச்சது — இன்னும் சின்ன நஷ்டம், ஆனா போன வருஷம் −₹223 கோடி.']],
+ oi:[['Other income ₹351 cr','இதர வருமானம் ₹351 கோடி'],['Interest and gains on the treasury. It turns the −₹28 cr core result into a ₹323 cr pre-tax profit. It falls if cash is spent or interest rates drop.','கேஷ் மேல வட்டியும் லாபமும். −₹28 கோடி கோர் முடிவை ₹323 கோடி வரிக்கு முந்தைய லாபமா மாத்துது. கேஷ் செலவானாலோ வட்டி குறைஞ்சாலோ இது குறையும்.']],
+ pbt:[['PBT ₹323 cr','PBT ₹323 கோடி'],['Profit before tax = core result + other income.','வரிக்கு முந்தைய லாபம் = கோர் முடிவு + இதர வருமானம்.']],
+ tax:[['Tax ₹198 cr (61%)','வரி ₹198 கோடி (61%)'],['Profitable entities pay full tax while loss-making subsidiaries cannot offset it, and the parent has now used up its old losses. Hence the high effective rate.','லாபம் சம்பாதிக்கற யூனிட்ஸ் முழு வரி கட்டுது, நஷ்டத்துல இருக்கற சப்சிடியரிகளோட நஷ்டத்தை அதுல கழிக்க முடியாது, பேரன்ட்டோட பழைய நஷ்டமும் தீர்ந்துடுச்சு. அதனால வரி விகிதம் அதிகம்.']],
+ pat:[['Net profit ₹125 cr → shareholders','நிகர லாபம் ₹125 கோடி → பங்குதாரர்கள்'],['EPS about ₹0.13 for the quarter. No dividend; all cash is reinvested in stores, inventory and new businesses.','காலாண்டுக்கு EPS சுமார் ₹0.13. டிவிடெண்ட் இல்ல; எல்லா கேஷும் ஸ்டோர், ஸ்டாக், புது பிசினஸ்ல மறுமுதலீடு.']]
+};
+
+var ENG=[
+ [['Food delivery','ஃபுட் டெலிவரி'],['Customers × order frequency × order value = NOV; revenue = take-rate on NOV','கஸ்டமர் × ஆர்டர் அடிக்கடி × ஆர்டர் மதிப்பு = NOV; ரெவென்யூ = NOV-ல டேக்-ரேட்'],['NOV ₹11,445 cr · MTC 28.0 mn','NOV ₹11,445 கோடி · மாத கஸ்டமர் 2.8 கோடி'],'+21.5%'],
+ [['Quick commerce','குயிக் காமர்ஸ்'],['Stores × orders per store per day × basket value × days; revenue = goods value (1P)','ஸ்டோர் × ஒரு ஸ்டோருக்கு நாள் ஆர்டர் × பாஸ்கெட் மதிப்பு × நாட்கள்; ரெவென்யூ = பொருள் மதிப்பு (1P)'],['Rev ₹19,152 cr · NOV ₹20,940 cr · 2,751 stores','ரெவ் ₹19,152 கோடி · NOV ₹20,940 கோடி · 2,751 ஸ்டோர்'],'+93.6% / +79.3%'],
+ [['Going-out','கோயிங்-அவுட்'],['Tickets × ticket price = NOV; revenue = convenience fee/commission','டிக்கெட் × விலை = NOV; ரெவென்யூ = கன்வீனியன்ஸ் கட்டணம்/கமிஷன்'],['NOV ₹3,259 cr · Rev ₹304 cr','NOV ₹3,259 கோடி · ரெவ் ₹304 கோடி'],'+58%'],
+ [['Hyperpure','ஹைப்பர்ப்யூர்'],['Restaurants served × spend per restaurant','சேவை பெறும் ரெஸ்டாரன்ட் × ஒவ்வொன்றின் செலவு'],['Rev ₹1,154 cr','ரெவ் ₹1,154 கோடி'],'+12.8%'],
+ [['Treasury (other income)','கேஷ் (இதர வருமானம்)'],['Average cash × yield (~8% p.a.)','சராசரி கேஷ் × வருமான விகிதம் (~8%)'],['₹351 cr on ~₹17,400 cr avg cash†','சராசரி ~₹17,400 கோடி கேஷ்ல ₹351 கோடி†'],'−0.3% YoY']
+];
+
+var TN=[
+ [['What it mainly sells','முக்கியமா என்ன விக்குது'],['Restaurant food delivery (~81% of FY22 revenue)','ரெஸ்டாரன்ட் ஃபுட் டெலிவரி (FY22 ரெவென்யூவுல ~81%)'],['Groceries & everyday goods in ~10 min (~78% of adjusted revenue)','10 நிமிஷத்துல மளிகை & தினசரி பொருட்கள் (அட்ஜஸ்டட் ரெவென்யூவுல ~78%)']],
+ [['How it earns','எப்படி சம்பாதிக்குது'],['Commission & fees — asset-light marketplace','கமிஷன் & கட்டணம் — அசெட்-லைட் மார்க்கெட்பிளேஸ்'],['Buys and resells goods it owns (1P, ~90% of Blinkit NOV) + commissions','சொந்தமா வாங்கி விக்குது (1P, பிளிங்கிட் NOV-ல ~90%) + கமிஷன்']],
+ [['Revenue scale','ரெவென்யூ அளவு'],['₹4,192 cr in the whole of FY22','FY22 முழு வருஷத்துல ₹4,192 கோடி'],['₹24,138 cr in one quarter','ஒரே காலாண்டுல ₹24,138 கோடி']],
+ [['Working capital','வொர்க்கிங் கேப்பிட்டல்'],['Deeply negative (CCC −257 days, FY22)','ரொம்ப நெகட்டிவ் (CCC −257 நாள், FY22)'],['About neutral (CCC +2 days, FY26); inventory 26 days','கிட்டத்தட்ட சமம் (CCC +2 நாள், FY26); இன்வென்டரி 26 நாள்']],
+ [['Physical assets','பௌதிக சொத்துகள்'],['Few — offices and tech','குறைவு — ஆபீஸ், டெக்'],['2,751 dark stores + warehouses; D&A + lease interest ~₹780 cr/quarter','2,751 டார்க் ஸ்டோர்ஸ் + வேர்ஹவுஸ்; தேய்மானம் + லீஸ் வட்டி காலாண்டுக்கு ~₹780 கோடி']],
+ [['Profit','லாபம்'],['Net loss ₹1,222 cr (FY22)','நிகர நஷ்டம் ₹1,222 கோடி (FY22)'],['Net profit ₹125 cr, but core PBT −₹28 cr','நிகர லாபம் ₹125 கோடி, ஆனா கோர் PBT −₹28 கோடி']],
+ [['Businesses','பிசினஸ்கள்'],['Food delivery, dining-out, Hyperpure','ஃபுட் டெலிவரி, டைனிங்-அவுட், ஹைப்பர்ப்யூர்'],['Blinkit, Zomato, District, Hyperpure, Bistro','பிளிங்கிட், சொமாட்டோ, டிஸ்ட்ரிக்ட், ஹைப்பர்ப்யூர், பிஸ்ட்ரோ']],
+ [['Leader','தலைவர்'],['Deepinder Goyal, founder CEO','தீபிந்தர் கோயல், ஃபவுண்டர் CEO'],['Albinder Dhindsa, Group CEO (since 1 Feb 2026)','அல்பிந்தர் திந்த்சா, குரூப் CEO (1 பிப் 2026 முதல்)']],
+ [['Name','பெயர்'],['Zomato Ltd','சொமாட்டோ லிமிடெட்'],['Eternal Ltd (renamed 2025)','எட்டர்னல் லிமிடெட் (2025-ல பெயர் மாற்றம்)']],
+ [['Owners','உரிமையாளர்கள்'],['Foreign investors dominated (FII 54.9% in Dec-23)','வெளிநாட்டு முதலீட்டாளர்கள் ஆதிக்கம் (டிச-23-ல FII 54.9%)'],['Indian institutions lead (DII 36.2% vs FII 33.0%); foreign cap 49.5%','இந்திய நிறுவனங்கள் முன்னிலை (DII 36.2% vs FII 33.0%); வெளிநாட்டு வரம்பு 49.5%']]
+];
+
+var TL=[
+ ['Jul 2021',['IPO and listing','IPO & லிஸ்டிங்'],['₹9,375 cr IPO at ₹76 a share (₹9,000 cr fresh money). Listed on 23 Jul 2021 well above issue price. A loss-making food-delivery marketplace with dining-out and Hyperpure.','ஒரு ஷேர் ₹76-ல ₹9,375 கோடி IPO (₹9,000 கோடி புது பணம்). 23 ஜூலை 2021-ல இஷ்யூ விலைக்கு நல்லா மேல லிஸ்ட் ஆச்சு. அப்போ நஷ்டத்துல ஓடின ஃபுட் டெலிவரி மார்க்கெட்பிளேஸ் + டைனிங்-அவுட் + ஹைப்பர்ப்யூர்.'],1,'st'],
+ ['FY22',['Minority bets','சிறு பங்கு முதலீடுகள்'],['Stakes in Grofers (Blinkit), Shiprocket, Magicpin and Adonmo (₹112 cr, Jan 2022) — testing adjacent markets.','க்ரோஃபர்ஸ் (பிளிங்கிட்), ஷிப்ராக்கெட், மேஜிக்பின், அட்மோ (₹112 கோடி, ஜன 2022) — பக்கத்து மார்க்கெட்டுகளை சோதிச்சாங்க.'],0,''],
+ ['Aug 2022',['Blinkit acquired — quick commerce enters','பிளிங்கிட் வாங்கல் — குயிக் காமர்ஸ் நுழைவு'],['All-stock acquisition of Blinkit (~₹4,447 cr). The single biggest business-model change: from food only to 10-minute retail.','பிளிங்கிட்டை முழுக்க ஷேர் கொடுத்து வாங்கினாங்க (~₹4,447 கோடி). மிகப் பெரிய பிசினஸ் மாடல் மாற்றம்: சாப்பாட்டுல இருந்து 10 நிமிஷ ரீடெய்லுக்கு.'],1,'chg'],
+ ['Jun 2023',['First profit','முதல் லாபம்'],['First consolidated net profit (₹2 cr, Q1FY24); FY24 full-year profit ₹351 cr — but other income (₹846 cr) was bigger than PBT (₹291 cr).','முதல் கன்சாலிடேட்டட் நிகர லாபம் (₹2 கோடி, Q1FY24); FY24 முழு வருஷ லாபம் ₹351 கோடி — ஆனா இதர வருமானம் (₹846 கோடி) PBT-யை (₹291 கோடி) விட பெருசு.'],0,'pr'],
+ ['Aug 2024',['Paytm ticketing bought → District','பேடிஎம் டிக்கெட்டிங் வாங்கல் → டிஸ்ட்ரிக்ட்'],['Bought Paytm\'s movie and events ticketing for ~₹2,048 cr cash; launched the District going-out app (Nov 2024). A third consumer business is born.','பேடிஎம்-ஓட சினிமா, ஈவென்ட் டிக்கெட்டிங்கை ~₹2,048 கோடி கேஷ் கொடுத்து வாங்கினாங்க; டிஸ்ட்ரிக்ட் ஆப் தொடக்கம் (நவ 2024). மூணாவது கன்ஸ்யூமர் பிசினஸ் பிறந்தது.'],1,'chg'],
+ ['Nov 2024',['₹8,500 cr QIP','₹8,500 கோடி QIP'],['First fund-raise after listing, at ₹252.62 a share, to build a war chest against Swiggy Instamart and Zepto. Cash rose to ₹19,235 cr by Dec 2024.','லிஸ்டிங்குக்கு அப்புறம் முதல் நிதி திரட்டல், ஒரு ஷேர் ₹252.62-ல — ஸ்விக்கி இன்ஸ்டாமார்ட், ஜெப்டோவுக்கு எதிரா போர் நிதி. டிச 2024-க்குள் கேஷ் ₹19,235 கோடி.'],0,'cash'],
+ ['Mar 2025',['Renamed Eternal; side bets shut','எட்டர்னல்னு பெயர் மாற்றம்; சைடு முயற்சிகள் மூடல்'],['Zomato Ltd became Eternal Ltd — a group of Zomato, Blinkit, District and Hyperpure. Zomato Quick and Everyday were shut for lack of a path to profit.','சொமாட்டோ லிமிடெட் எட்டர்னல் லிமிடெட் ஆச்சு — சொமாட்டோ, பிளிங்கிட், டிஸ்ட்ரிக்ட், ஹைப்பர்ப்யூர் குரூப். லாப வழி இல்லாததால சொமாட்டோ குவிக், எவ்ரிடே மூடப்பட்டது.'],1,'chg'],
+ ['Apr 2025',['Foreign holding capped at 49.5%','வெளிநாட்டு பங்கு 49.5%-ல வரம்பு'],['Becoming an Indian-owned and controlled company allowed Blinkit to own inventory legally — the key that unlocked the 1P model.','இந்திய உரிமை & கட்டுப்பாட்டு கம்பெனியா ஆனதால பிளிங்கிட் சட்டப்படி சொந்த ஸ்டாக் வெச்சுக்க முடிஞ்சுது — 1P மாடலை திறந்த சாவி.'],1,'chg'],
+ ['FY26',['Blinkit shifts to own inventory (1P)','பிளிங்கிட் சொந்த ஸ்டாக்குக்கு மாற்றம் (1P)'],['From marketplace to inventory-led model; ~90% of NOV on own inventory by Q3FY26. Revenue nearly tripled to ₹54,364 cr; reported margins look thinner; working capital and Hyperpure B2B sales changed.','மார்க்கெட்பிளேஸ்ல இருந்து ஸ்டாக் அடிப்படையிலான மாடலுக்கு; Q3FY26-க்குள் NOV-ல ~90% சொந்த ஸ்டாக். ரெவென்யூ கிட்டத்தட்ட மூணு மடங்கு ₹54,364 கோடி; மார்ஜின் மெலிசா தெரியுது; வொர்க்கிங் கேப்பிட்டல், ஹைப்பர்ப்யூர் B2B விற்பனை மாறிச்சு.'],1,'chg'],
+ ['Q3 FY26',['Blinkit & Hyperpure EBITDA positive','பிளிங்கிட் & ஹைப்பர்ப்யூர் EBITDA பாசிட்டிவ்'],['Both turned Adjusted EBITDA positive for the first time.','ரெண்டுமே முதல் முறையா அட்ஜஸ்டட் EBITDA பாசிட்டிவ்.'],0,'pr'],
+ ['1 Feb 2026',['New Group CEO','புது குரூப் CEO'],['Founder Deepinder Goyal stepped back to Vice Chairman; Blinkit co-founder Albinder Dhindsa became Group CEO — the quick-commerce operator now runs the whole group.','ஃபவுண்டர் தீபிந்தர் கோயல் வைஸ் சேர்மனா பின்வாங்கினார்; பிளிங்கிட் கோ-ஃபவுண்டர் அல்பிந்தர் திந்த்சா குரூப் CEO — குயிக் காமர்ஸ் நடத்தினவர் இப்போ முழு குரூப்பையும் நடத்தறார்.'],1,'chg'],
+ ['Q2 FY27',['Scale-up and tax normalisation','விரிவாக்கம் & வரி சாதாரணமாதல்'],['2,751 stores (target >3,500 by Mar-27, ~5,000 by Mar-28). Parent\'s tax shields exhausted (61% effective tax). Going-out India moved to subsidiary ZEPL; Adonmo swapped for 4.4% of Mygate. Core PBT nearly breakeven (−₹28 cr).','2,751 ஸ்டோர்ஸ் (மார்ச்-27-க்குள் 3,500+, மார்ச்-28-க்குள் ~5,000). பேரன்ட்டோட வரி கழிவு தீர்ந்துடுச்சு (61% வரி). கோயிங்-அவுட் இந்தியா ZEPL-க்கு; அட்மோ மைகேட்டோட 4.4%-க்கு. கோர் PBT கிட்டத்தட்ட சமநிலை (−₹28 கோடி).'],1,'now']
+];
+
+/* profit anatomy data */
+var QL=['Q1FY24','Q2FY24','Q3FY24','Q4FY24','Q1FY25','Q2FY25','Q3FY25','Q4FY25','Q1FY26','Q2FY26','Q3FY26','Q4FY26','Q1FY27','Q2FY27'];
+var QOI=[181,212,219,235,236,221,252,368,354,352,348,342,375,351];
+var QPBT=[-15,21,124,161,239,237,124,97,88,129,170,228,272,323];
+var QEB=[-48,-47,51,86,177,226,162,72,115,239,368,486,594,752];
+var QPAT=[2,36,138,175,253,176,59,39,25,65,102,174,92,125];
+var QCORE=QPBT.map(function(v,i){return v-QOI[i];});
+var AL=['FY22','FY23','FY24','FY25','FY26','H1FY27'];
+var AOI=[793,682,846,1077,1396,726];
+var APBT=[-1220,-1015,291,697,615,595];
+var ACORE=APBT.map(function(v,i){return v-AOI[i];});
+var APAT=[-1222,-971,351,527,366,217];
+
+var PAWHY=[
+ [['Big cash pile, thin margins','பெரிய கேஷ், மெலிசான மார்ஜின்'],['~₹17,400 cr average cash × ~8% ≈ ₹351 cr a quarter. Meanwhile the operating businesses earn only 2.7% EBITDA on revenue because Blinkit is still young in most stores.','சராசரி ~₹17,400 கோடி கேஷ் × ~8% ≈ காலாண்டுக்கு ₹351 கோடி. ஆப்பரேஷன் ரெவென்யூவுல 2.7% EBITDA தான் — பெரும்பாலான பிளிங்கிட் ஸ்டோர்ஸ் இன்னும் புதுசு.']],
+ [['Stores eat the EBITDA','ஸ்டோர்ஸ் EBITDA-வை சாப்பிடுது'],['Depreciation and lease interest on dark stores and warehouses rose to ~₹780 cr a quarter — more than the ₹752 cr reported EBITDA. Each new store first adds cost, then profit as it matures.','டார்க் ஸ்டோர், வேர்ஹவுஸ் தேய்மானம், லீஸ் வட்டி காலாண்டுக்கு ~₹780 கோடி — ரிப்போர்டட் EBITDA ₹752 கோடியை விட அதிகம். ஒவ்வொரு புது ஸ்டோரும் முதல்ல செலவு, முதிர்ச்சி வந்தப்புறம் லாபம்.']],
+ [['Tax takes a large bite','வரி பெரிய கடி'],['The parent has used up its carried-forward losses, while losses in subsidiaries (District, Bistro) cannot be set off. So tax was 61% of PBT and only ₹125 cr reached shareholders.','பேரன்ட் பழைய நஷ்ட கழிவுகளை பயன்படுத்திட்டது; சப்சிடியரி நஷ்டங்களை (டிஸ்ட்ரிக்ட், பிஸ்ட்ரோ) கழிக்க முடியாது. அதனால வரி PBT-யோட 61%, பங்குதாரர்களுக்கு ₹125 கோடி தான்.']]
+];
+
+/* cash */
+var CL=['Q1FY25','Q2FY25','Q3FY25','Q4FY25','Q1FY26','Q2FY26','Q3FY26','Q4FY26','Q1FY27','Q2FY27'];
+var CASH=[12539,10813,19235,18824,18857,18314,17820,17972,18288,16475];
+var COI=[236,221,252,368,354,352,348,342,375,351];
+
+/* fin table rows: [label en/ta, q2fy27, q1fy27, q2fy26, isPct] ; category rows: ['#',en,ta] */
+var FIN=[
+ ['#','Growth & Balance sheet','வளர்ச்சி & பேலன்ஸ் ஷீட்'],
+ [['Revenue from operations','செயல்பாட்டு ரெவென்யூ'],24138,20211,13590],
+ [['Adjusted revenue','அட்ஜஸ்டட் ரெவென்யூ'],24621,20648,13968],
+ [['Quick commerce revenue','குயிக் காமர்ஸ் ரெவென்யூ'],19152,15664,9891],
+ [['Food delivery NOV','ஃபுட் டெலிவரி NOV'],11445,'n/a',9423],
+ [['Quick commerce NOV','குயிக் காமர்ஸ் NOV'],20940,'n/a','11,679†'],
+ [['Going-out NOV','கோயிங்-அவுட் NOV'],3259,'n/a','2,063†'],
+ [['Hyperpure revenue','ஹைப்பர்ப்யூர் ரெவென்யூ'],1154,'n/a',1023],
+ [['Blinkit stores (nos.)','பிளிங்கிட் ஸ்டோர்ஸ் (எண்ணிக்கை)'],2751,2443,'n/a'],
+ [['Net worth (Mar-26)','நிகர மதிப்பு (மார்ச்-26)'],'30,980','—','—'],
+ ['#','Profitability','லாபத்தன்மை'],
+ [['Reported EBITDA','ரிப்போர்டட் EBITDA'],752,594,239],
+ [['Adjusted EBITDA','அட்ஜஸ்டட் EBITDA'],666,555,224],
+ [['Adj. EBITDA % of adj. revenue','அட்ஜ. EBITDA % (அட்ஜ. ரெவென்யூ)'],'2.7%','2.7%','1.6%'],
+ [['Food delivery Adj. EBITDA','ஃபுட் டெலிவரி அட்ஜ. EBITDA'],627,'n/a','n/a'],
+ [['Quick commerce Adj. EBITDA','குயிக் காமர்ஸ் அட்ஜ. EBITDA'],184,'n/a',-156],
+ [['Going-out Adj. EBITDA','கோயிங்-அவுட் அட்ஜ. EBITDA'],-64,'n/a','n/a'],
+ [['Other income','இதர வருமானம்'],351,375,352],
+ [['D&A + finance cost†','தேய்மானம் + ஃபைனான்ஸ் செலவு†'],780,697,462],
+ [['Profit before tax','வரிக்கு முந்தைய லாபம்'],323,272,129],
+ [['Core PBT (PBT − other income)†','கோர் PBT (PBT − இதர வருமானம்)†'],-28,-103,-223],
+ [['Other income as % of PBT†','PBT-ல இதர வருமான %†'],'109%','138%','273%'],
+ [['Tax','வரி'],198,'180†',64],
+ [['Effective tax rate','பயனுள்ள வரி விகிதம்'],'61%','66%','50%'],
+ [['Net profit','நிகர லாபம்'],125,92,65],
+ ['#','Efficiency','செயல்திறன்'],
+ [['Ad & sales promotion','விளம்பரம் & விற்பனை ஊக்குவிப்பு'],1138,'n/a',806],
+ [['Ad & promo % of revenue†','விளம்பரம் % ரெவென்யூ†'],'4.7%','n/a','5.9%'],
+ [['Capex','கேப்பெக்ஸ்'],941,'n/a',417],
+ [['Zomato monthly transacting customers (mn)','சொமாட்டோ மாத கஸ்டமர்கள் (மில்லியன்)'],'28.0','n/a','24.1†'],
+ ['#','Asset quality / earnings quality','சொத்து / வருமான தரம்'],
+ [['Profit from operations without other income?','இதர வருமானம் இல்லாம லாபம்?'],'No (−28)','No (−103)','No (−223)'],
+ [['QC margin trend (% of NOV)','QC மார்ஜின் போக்கு (NOV %)'],'0.9%','n/a','−1.3%†'],
+ ['#','Capital & Liquidity','மூலதனம் & லிக்விடிட்டி'],
+ [['Cash balance','கேஷ் இருப்பு'],16475,18288,18314],
+ [['Change in cash (QoQ)','கேஷ் மாற்றம் (QoQ)'],-1813,316,-543],
+ [['Borrowings incl. leases (Mar-26)','கடன் (லீஸ் உட்பட, மார்ச்-26)'],'4,592','—','—'],
+ ['#','Valuation','வேல்யூவேஷன்'],
+ [['Share price (₹)','ஷேர் விலை (₹)'],'312.35','—','—'],
+ [['Market cap','மார்க்கெட் கேப்'],'3,01,720†','—','—'],
+ [['P/E (TTM)','P/E (TTM)'],'~612x†','—','—'],
+ [['P/B','P/B'],'9.7x','—','—']
+];
+
+var CFY=['FY21','FY22','FY23','FY24','FY25','FY26'];
+var CFO=[-1018,-693,-844,646,308,632], CFI=[-5245,-7971,797,-348,-7993,540], CFF=[6402,8750,-127,-207,8042,-842], FCF=[-1028,-750,-945,444,-623,-1114];
+var WCD={deb:[24,14,24,24,35,12],inv:[28,28,22,11,12,26],pay:[565,298,178,112,101,36],ccc:[-513,-257,-132,-77,-54,2]};
+var CFC=[
+ [['CFO vs profit','CFO vs லாபம்'],['FY26 CFO ₹632 cr vs net profit ₹366 cr (1.7x) — non-cash D&A keeps operating cash above profit. CFO/EBITDA 83%.','FY26 CFO ₹632 கோடி vs நிகர லாபம் ₹366 கோடி (1.7x) — கேஷ் இல்லாத தேய்மானம் CFO-வை லாபத்துக்கு மேல வெக்குது. CFO/EBITDA 83%.']],
+ [['Inventory eats cash','ஸ்டாக் கேஷை சாப்பிடுது'],['Inventory days went 12 → 26 (FY25→FY26) with the 1P shift. In Q2FY27 festive stocking alone pulled cash down ₹1,813 cr.','1P மாற்றத்தோட இன்வென்டரி நாள் 12 → 26 (FY25→FY26). Q2FY27-ல பண்டிகை ஸ்டாக் மட்டுமே கேஷை ₹1,813 கோடி இறக்கிச்சு.']],
+ [['Suppliers no longer fund growth','சப்ளையர் பணம் இனி வளர்ச்சிக்கு இல்ல'],['Payable days fell 101 → 36. The cash conversion cycle moved from −54 to +2 days, so every ₹100 of extra sales now needs some working capital.','பேயபிள் நாள் 101 → 36. கேஷ் கன்வர்ஷன் சைக்கிள் −54-ல இருந்து +2 நாள் — இனி ஒவ்வொரு ₹100 கூடுதல் விற்பனைக்கும் கொஞ்சம் வொர்க்கிங் கேப்பிட்டல் வேணும்.']],
+ [['Free cash flow negative','ஃப்ரீ கேஷ் ஃப்ளோ நெகட்டிவ்'],['FY26 FCF −₹1,114 cr as capex on stores outruns CFO. Q2FY27 capex ₹941 cr vs ₹417 cr a year ago.','ஸ்டோர் கேப்பெக்ஸ் CFO-வை தாண்டுறதால FY26 FCF −₹1,114 கோடி. Q2FY27 கேப்பெக்ஸ் ₹941 கோடி (போன வருஷம் ₹417 கோடி).']]
+];
+
+var VAL=[
+ [['Share price (21 Oct 2026)','ஷேர் விலை (21 அக் 2026)'],'₹312.35'],
+ [['Market cap†','மார்க்கெட் கேப்†'],'₹3,01,720 cr'],
+ [['Cash & investments','கேஷ் & இன்வெஸ்ட்மென்ட்ஸ்'],'₹16,475 cr'],
+ [['Enterprise value† (mcap − cash)','என்டர்பிரைஸ் வேல்யூ† (mcap − கேஷ்)'],'₹2,85,245 cr'],
+ [['TTM revenue†','TTM ரெவென்யூ†'],'₹77,956 cr'],
+ [['TTM net profit†','TTM நிகர லாபம்†'],'₹493 cr'],
+ [['TTM Adjusted EBITDA†','TTM அட்ஜஸ்டட் EBITDA†'],'₹2,014 cr'],
+ [['P/E (TTM)†','P/E (TTM)†'],'~612x'],
+ [['P/B','P/B'],'9.7x (book value ₹32.1)'],
+ [['EV / Sales (TTM)†','EV / சேல்ஸ் (TTM)†'],'3.7x'],
+ [['EV / Adjusted EBITDA (TTM)†','EV / அட்ஜ. EBITDA (TTM)†'],'~142x'],
+ [['Cash per share† / % of market cap','ஒரு ஷேருக்கு கேஷ்† / மார்க்கெட் கேப்ல %'],'₹17.1 / 5.5%'],
+ [['52-week high / low','52 வார உயர் / தாழ்'],'₹345 / ₹213'],
+ [['IPO price (Jul 2021)','IPO விலை (ஜூலை 2021)'],'₹76 → 4.1x since'],
+ [['Dividend','டிவிடெண்ட்'],'Nil']
+];
+var VALC=[
+ [['How the market values it','மார்க்கெட் எப்படி மதிப்பிடுது'],['Brokers use sum-of-the-parts: food delivery on EV/EBITDA (e.g. Nirmal Bang 35x Sep-28 EBITDA) and Blinkit on long-term DCF or EV/NOV. Trailing P/E (~612x) is not meaningful while profit is mainly interest income.','ப்ரோக்கர்கள் சம்-ஆஃப்-தி-பார்ட்ஸ் பயன்படுத்துறாங்க: ஃபுட் டெலிவரிக்கு EV/EBITDA (உதா. நிர்மல் பேங்க் செப்-28 EBITDA-க்கு 35x), பிளிங்கிட்டுக்கு நீண்டகால DCF அல்லது EV/NOV. லாபம் பெரும்பாலும் வட்டி வருமானமா இருக்கும்போது P/E (~612x) அர்த்தமில்ல.']],
+ [['What the price implies','விலை என்ன சொல்லுது'],['At ₹2.85 lakh cr EV, investors are paying ~142x current Adjusted EBITDA. That needs Blinkit margins to rise from 0.9% towards the 4–6% of NOV range that management has talked about, while NOV keeps compounding.','₹2.85 லட்சம் கோடி EV-ல, இன்றைய அட்ஜஸ்டட் EBITDA-வுக்கு ~142 மடங்கு கொடுக்கறாங்க. பிளிங்கிட் மார்ஜின் 0.9%-ல இருந்து மேனேஜ்மென்ட் சொன்ன NOV-ல 4–6% பக்கம் போகணும், NOV தொடர்ந்து வளரணும்.']]
+];
+
+var MKK=[
+ [['Close 21 Oct (results day)','21 அக் குளோசிங் (ரிசல்ட் நாள்)'],'₹312.35',['−2.45% on the day','அன்று −2.45%'],'dn'],
+ [['1 month / 6 months','1 மாசம் / 6 மாசம்'],'−4.4% / +23.7%',['Rallied from ₹254 (Apr-26)','ஏப்-26 ₹254-ல இருந்து ஏற்றம்'],'nt'],
+ [['1 year','1 வருஷம்'],'−8.8%',['52-wk range ₹213–345','52 வார வரம்பு ₹213–345'],'dn'],
+ [['Since IPO (₹76)','IPO-ல இருந்து (₹76)'],'4.1x',['~5 years','~5 வருஷம்'],'up']
+];
+var MKC=[
+ [['Why it fell on results day','ரிசல்ட் நாள் ஏன் விழுந்துச்சு'],['Net profit ₹125 cr vs street ~₹393 cr — a miss driven by the 61% tax rate, not operations. Cash also fell ₹1,813 cr, which worried some investors.','நிகர லாபம் ₹125 கோடி vs எதிர்பார்ப்பு ~₹393 கோடி — ஆப்பரேஷன் இல்ல, 61% வரி தான் காரணம். கேஷ் ₹1,813 கோடி குறைஞ்சதும் சிலரை கவலைப்படுத்துச்சு.']],
+ [['Why brokers stayed positive','ப்ரோக்கர்கள் ஏன் பாசிட்டிவா இருந்தாங்க'],['Adjusted EBITDA ₹666 cr beat expectations; Blinkit margin rose for the sixth quarter; food delivery growth accelerated; store guidance raised to >3,500. Reports say the stock held up on 22 Oct despite a weak market.','அட்ஜஸ்டட் EBITDA ₹666 கோடி எதிர்பார்ப்பை தாண்டிச்சு; பிளிங்கிட் மார்ஜின் ஆறாவது காலாண்டா ஏறிச்சு; ஃபுட் டெலிவரி வேகம் கூடிச்சு; ஸ்டோர் இலக்கு 3,500+. 22 அக் மார்க்கெட் பலவீனமா இருந்தும் ஷேர் நின்னுதுன்னு ரிப்போர்ட்ஸ்.']],
+ [['Flows','நிதி ஓட்டம்'],['MSCI August 2026 rebalance was expected to bring ~US$649 mn of inflows; a ₹82 cr block trade at ₹320 on 30 Sep. Foreign holding dropped from 54.9% (Dec-23) to 33.0% while domestic institutions rose to 36.2%.','MSCI ஆகஸ்ட் 2026 ரீபேலன்ஸ்ல ~US$649 மில்லியன் வரவு எதிர்பார்ப்பு; 30 செப் ₹320-ல ₹82 கோடி பிளாக் டிரேட். வெளிநாட்டு பங்கு 54.9%-ல (டிச-23) இருந்து 33.0%, உள்நாட்டு நிறுவனங்கள் 36.2%-க்கு ஏறிச்சு.']],
+ [['Earlier swings','முந்தைய ஏற்ற இறக்கங்கள்'],['Fell to ~₹220 in May 2025 when Blinkit losses widened; jumped after Q3FY26 when Blinkit turned EBITDA positive and the CEO change was announced.','பிளிங்கிட் நஷ்டம் கூடினப்போ மே 2025-ல ~₹220-க்கு விழுந்துச்சு; Q3FY26-ல பிளிங்கிட் EBITDA பாசிட்டிவ் ஆனதும், CEO மாற்ற அறிவிப்புக்கும் அப்புறம் தாவிச்சு.']]
+];
+var SHL=['Dec-23','Mar-24','Jun-24','Sep-24','Dec-24','Mar-25','Jun-25','Sep-25','Dec-25','Mar-26','Jun-26','Sep-26'];
+var SHF=[54.88,55.11,54.11,52.53,47.31,44.36,42.34,39.04,36.24,32.61,29.09,33.01];
+var SHD=[15.47,15.28,15.79,17.32,20.51,23.47,26.49,30.04,32.61,35.88,39.21,36.22];
+
+var SWOT={
+ S:[['Strengths','பலங்கள்'],[['#1 in quick commerce with a profitable food-delivery cash cow','குயிக் காமர்ஸ்ல #1, லாபகரமான ஃபுட் டெலிவரி பணப்பசு'],['₹16,475 cr cash war chest, almost no real debt','₹16,475 கோடி கேஷ் போர் நிதி, உண்மையான கடன் கிட்டத்தட்ட இல்ல'],['Shared delivery fleet, data and tech across four apps','நாலு ஆப்புக்கும் பொதுவான டெலிவரி, டேட்டா, டெக்'],['Founder-to-operator CEO transition done without disruption','ஃபவுண்டர்ல இருந்து ஆப்பரேட்டர் CEO-க்கு சுமூக மாற்றம்']]],
+ W:[['Weaknesses','பலவீனங்கள்'],[['Core business still loss-making before tax (−₹28 cr); PBT depends on other income','கோர் பிசினஸ் இன்னும் வரிக்கு முன் நஷ்டம் (−₹28 கோடி); PBT இதர வருமானத்தை சார்ந்திருக்கு'],['Thin reported margins (Adj. EBITDA 2.7% of revenue)','மெலிசான மார்ஜின் (அட்ஜ. EBITDA ரெவென்யூவுல 2.7%)'],['Negative free cash flow; inventory now ties up cash','நெகட்டிவ் ஃப்ரீ கேஷ் ஃப்ளோ; ஸ்டாக் கேஷை பிடிச்சு வெக்குது'],['High 61% tax rate while subsidiaries lose money','சப்சிடியரிகள் நஷ்டத்துல இருக்கும்போது 61% வரி']]],
+ O:[['Opportunities','வாய்ப்புகள்'],[['Doubling stores to ~5,000 by Mar-28; mature stores lift margins','மார்ச்-28-க்குள் ஸ்டோர்ஸ் இரட்டிப்பு ~5,000; முதிர்ந்த ஸ்டோர்ஸ் மார்ஜினை உயர்த்தும்'],['More categories (electronics, beauty, pharmacy) raise basket size','புது பிரிவுகள் (எலக்ட்ரானிக்ஸ், பியூட்டி, பார்மசி) பாஸ்கெட் சைஸை கூட்டும்'],['Advertising income from brands on Blinkit','பிளிங்கிட்ல பிராண்ட் விளம்பர வருமானம்'],['District breakeven; Bistro for low-ticket food','டிஸ்ட்ரிக்ட் சமநிலை; குறைந்த விலை சாப்பாட்டுக்கு பிஸ்ட்ரோ']]],
+ T:[['Threats','அச்சுறுத்தல்கள்'],[['Deep-pocketed rivals: Amazon Now, Flipkart Minutes, Instamart, Zepto','பெரும் பணம் உள்ள போட்டியாளர்கள்: அமேசான் நவ், ஃப்ளிப்கார்ட் மினிட்ஸ், இன்ஸ்டாமார்ட், ஜெப்டோ'],['Low-commission food apps (Rapido Ownly, Toing)','குறைந்த கமிஷன் ஃபுட் ஆப்ஸ் (ராபிடோ ஓன்லி, டோயிங்)'],['Gig-worker welfare rules and dark-store zoning/FDI scrutiny','கிக் வொர்க்கர் நல விதிகள், டார்க் ஸ்டோர் மண்டல/FDI கண்காணிப்பு'],['Falling interest rates would cut other income','வட்டி குறைஞ்சா இதர வருமானம் குறையும்']]]
+};
+
+var AN=[
+ ['CLSA',['High-conviction Outperform','ஹை-கன்விக்ஷன் அவுட்பெர்ஃபார்ம்'],513,'Highest on Street','p-g'],
+ ['JPMorgan',['Overweight','ஓவர்வெயிட்'],420,'','p-g'],
+ ['Emkay',['Buy','வாங்கு (Buy)'],420,'TP raised 5%','p-g'],
+ ['Morgan Stanley',['Overweight','ஓவர்வெயிட்'],417,'','p-g'],
+ ['Nirmal Bang',['Buy','வாங்கு (Buy)'],385,'FD at 35x Sep-28 EV/EBITDA','p-g'],
+ ['Motilal Oswal',['Buy','வாங்கு (Buy)'],'n/a','Cut FY27 EPS on tax','p-g'],
+ ['Macquarie',['Underperform','அண்டர்பெர்ஃபார்ம்'],225,'Lowest on Street','p-r'],
+ ['Consensus (Bloomberg)',['12-month target','12 மாத இலக்கு'],381,'+22% vs ₹312.35','p-b']
+];
+
+var MGR=[
+ ['Albinder Singh Dhindsa',['Group CEO (since 1 Feb 2026)','குரூப் CEO (1 பிப் 2026 முதல்)'],['Co-founded Blinkit (Grofers) in 2013 and led it from acquisition to EBITDA breakeven. Runs day-to-day operations; Blinkit stays his top priority.','2013-ல பிளிங்கிட்டை (க்ரோஃபர்ஸ்) தொடங்கினவர்; வாங்கல்ல இருந்து EBITDA சமநிலை வரை நடத்தினார். தினசரி ஆப்பரேஷன் இவர் கையில; பிளிங்கிட் தான் முதல் முன்னுரிமை.']],
+ ['Deepinder Goyal',['Founder, Vice Chairman & Director','ஃபவுண்டர், வைஸ் சேர்மன் & டைரக்டர்'],['Founded Zomato in 2008. Stepped down as MD & CEO on 1 Feb 2026; now focuses on long-term strategy, culture, leadership and governance. Pursues outside ventures (e.g. LAT Aerospace, Continue, Temple).','2008-ல சொமாட்டோவை தொடங்கினவர். 1 பிப் 2026-ல MD & CEO பதவியில இருந்து விலகினார்; இப்போ நீண்டகால உத்தி, கலாச்சாரம், தலைமை, கவர்னன்ஸ் மேல கவனம். வெளி முயற்சிகள் (LAT ஏரோஸ்பேஸ், கன்டினியூ, டெம்பிள்).']],
+ ['Akshant Goyal',['Group CFO','குரூப் CFO'],['Leads finance, capital allocation and investor communication; architect of the QIP and the 1P transition economics.','ஃபைனான்ஸ், மூலதன ஒதுக்கீடு, முதலீட்டாளர் தொடர்பு; QIP, 1P மாற்ற பொருளாதாரத்தை வடிவமைத்தவர்.']],
+ ['Rakesh Ranjan',['CEO, Food delivery (Zomato)','CEO, ஃபுட் டெலிவரி (சொமாட்டோ)'],['Runs the food-delivery business that funds the group.','குரூப்புக்கு பணம் தர்ற ஃபுட் டெலிவரி பிசினஸை நடத்தறார்.']],
+ ['Kaushik Dutta',['Chairman & Independent Director','சேர்மன் & இன்டிபென்டன்ட் டைரக்டர்'],['Independent chair of the board.','போர்டோட இன்டிபென்டன்ட் சேர்மன்.']],
+ ['Sanjeev Bikhchandani',['Non-executive Director (Info Edge nominee)','நான்-எக்ஸிகியூட்டிவ் டைரக்டர் (இன்ஃபோ எட்ஜ்)'],['Early investor via Info Edge; reappointed at the Aug 2026 AGM.','இன்ஃபோ எட்ஜ் மூலம் ஆரம்ப முதலீட்டாளர்; ஆகஸ்ட் 2026 AGM-ல மீண்டும் நியமனம்.']],
+ ['Aparna Popat Ved · Gunjan Soni · Sutapa Banerjee',['Independent Directors','இன்டிபென்டன்ட் டைரக்டர்கள்'],['Independent directors as per the latest annual reports reviewed; verify current composition on the company website.','பார்த்த ஆனுவல் ரிப்போர்ட்ஸ் படி இன்டிபென்டன்ட் டைரக்டர்கள்; தற்போதைய அமைப்பை கம்பெனி வெப்சைட்ல சரிபாருங்க.']]
+];
+var GOV=[
+ ['No promoter group — 100% public shareholding; so there is no promoter pledge risk, but also no controlling owner.','புரமோட்டர் குரூப் இல்ல — 100% பொதுமக்கள் பங்கு; ப்ளெட்ஜ் ரிஸ்க் இல்ல, ஆனா கட்டுப்படுத்தும் உரிமையாளரும் இல்ல.'],
+ ['Foreign shareholding capped at 49.5% (Indian-owned and controlled company) to permit owning inventory.','சொந்த ஸ்டாக் வெச்சுக்க வெளிநாட்டு பங்கு 49.5%-ல வரம்பு (இந்திய உரிமை & கட்டுப்பாட்டு கம்பெனி).'],
+ ['Regular ESOP grants (e.g. 1.37 cr options allotted Jul 2026) cause small, steady dilution.','அடிக்கடி ESOP வழங்கல் (உதா. ஜூலை 2026-ல 1.37 கோடி ஆப்ஷன்ஸ்) சின்ன, தொடர்ந்த டைலூஷன்.'],
+ ['Decentralised structure: each business has its own CEO with full ownership.','பரவலான அமைப்பு: ஒவ்வொரு பிசினஸுக்கும் முழு பொறுப்போட தனி CEO.'],
+ ['Internal restructuring: going-out business consolidated into wholly owned subsidiary ZEPL (approved 21 Oct 2026).','உள் சீரமைப்பு: கோயிங்-அவுட் பிசினஸ் முழு உரிமை சப்சிடியரி ZEPL-க்குள் (21 அக் 2026 ஒப்புதல்).'],
+ ['Small tax disputes (e.g. ₹6.49 cr GST demand, Jun 2026) are not material to net worth.','சின்ன வரி சர்ச்சைகள் (உதா. ஜூன் 2026 ₹6.49 கோடி GST) நிகர மதிப்புக்கு முக்கியமில்ல.']
+];
+
+
+var BML={
+ cust:[['Customers','Zomato MTC 28.0 mn','Diners · households · fans'],['கஸ்டமர்கள்','மாத கஸ்டமர் 2.8 கோடி','சாப்பிடுபவர் · குடும்பம் · ரசிகர்']],
+ chan:[['Apps & network','Zomato · Blinkit','District · Bistro','~3 mn delivery partners'],['ஆப்ஸ் & நெட்வொர்க்','சொமாட்டோ · பிளிங்கிட்','டிஸ்ட்ரிக்ட் · பிஸ்ட்ரோ','~30 லட்சம் டெலிவரி பார்ட்னர்']],
+ eter:[['ETERNAL','B2C NOV ₹35,644 cr†','Group & treasury'],['எட்டர்னல்','B2C NOV ₹35,644 கோடி†','குரூப் & கேஷ்']],
+ fd:[['Food delivery (Zomato)','NOV ₹11,445 cr · +21.5%','Adj. EBITDA ₹627 cr (5.5%)','~16% of revenue†'],['ஃபுட் டெலிவரி (சொமாட்டோ)','NOV ₹11,445 கோடி · +21.5%','அட்ஜ. EBITDA ₹627 கோடி (5.5%)','ரெவென்யூவுல ~16%†']],
+ qc:[['Quick commerce (Blinkit)','Rev ₹19,152 cr · +93.6%','Adj. EBITDA ₹184 cr (0.9%)','78% of revenue · 2,751 stores'],['குயிக் காமர்ஸ் (பிளிங்கிட்)','ரெவ் ₹19,152 கோடி · +93.6%','அட்ஜ. EBITDA ₹184 கோடி (0.9%)','ரெவென்யூவுல 78% · 2,751 ஸ்டோர்']],
+ go:[['Going-out (District)','NOV ₹3,259 cr · +58%','Adj. EBITDA −₹64 cr','1.2% of revenue'],['கோயிங்-அவுட் (டிஸ்ட்ரிக்ட்)','NOV ₹3,259 கோடி · +58%','அட்ஜ. EBITDA −₹64 கோடி','ரெவென்யூவுல 1.2%']],
+ hp:[['Hyperpure (B2B)','Rev ₹1,154 cr · +12.8%','Adj. EBITDA ₹10 cr','4.7% of revenue'],['ஹைப்பர்ப்யூர் (B2B)','ரெவ் ₹1,154 கோடி · +12.8%','அட்ஜ. EBITDA ₹10 கோடி','ரெவென்யூவுல 4.7%']],
+ ot:[['Others (Bistro etc.)','Adj. EBITDA −₹91 cr†','New bets & unallocated'],['மற்றவை (பிஸ்ட்ரோ)','அட்ஜ. EBITDA −₹91 கோடி†','புது முயற்சிகள்']],
+ rev:[['Revenue','₹24,138 cr (+77.6%)'],['ரெவென்யூ','₹24,138 கோடி (+77.6%)']],
+ cost:[['Total costs','₹24,166 cr'],['மொத்த செலவு','₹24,166 கோடி']],
+ core:[['Core result†','−₹28 cr'],['கோர் முடிவு†','−₹28 கோடி']],
+ cash:[['Treasury','₹16,475 cr','~8% yield'],['கேஷ் இருப்பு','₹16,475 கோடி','~8% வருமானம்']],
+ oi:[['Other income','+₹351 cr'],['இதர வருமானம்','+₹351 கோடி']],
+ pbt:[['PBT','₹323 cr'],['PBT','₹323 கோடி']],
+ tax:[['Tax (61%)','−₹198 cr'],['வரி (61%)','−₹198 கோடி']],
+ pat:[['Net profit → shareholders','₹125 cr · EPS ~₹0.13 · no dividend'],['நிகர லாபம் → பங்குதாரர்கள்','₹125 கோடி · EPS ~₹0.13 · டிவிடெண்ட் இல்ல']]
+};
+var BMP={cust:[10,240,140,120,'#eff6ff','#93c5fd'],chan:[175,215,160,170,'#f5f3ff','#a78bfa'],eter:[360,230,150,140,'#e8730c','#c2410c'],
+ fd:[545,20,215,88,'#fde8ea','#e23744'],qc:[545,128,215,88,'#fff6d6','#e6a800'],go:[545,236,215,88,'#f1e8ff','#7c3aed'],hp:[545,344,215,88,'#e7f8ee','#16a34a'],ot:[545,452,215,80,'#f3f4f6','#9ca3af'],
+ rev:[790,20,140,70,'#eef2ff','#6366f1'],cost:[790,120,140,70,'#fef2f2','#f87171'],core:[790,220,140,70,'#fee2e2','#dc2626'],cash:[950,20,140,120,'#e0f2fe','#0284c7'],oi:[950,220,140,70,'#e0f2fe','#0284c7'],
+ pbt:[790,330,140,64,'#ecfdf5','#10b981'],tax:[950,330,140,64,'#fff7ed','#f59e0b'],pat:[790,440,300,80,'#dcfce7','#16a34a']};
+
+var TRW=[
+ ['Store additions per quarter; NOV per store; QC margin % of NOV','ஒவ்வொரு காலாண்டும் புது ஸ்டோர்; ஒரு ஸ்டோருக்கு NOV; QC மார்ஜின் %'],
+ ['PBT minus other income each quarter','ஒவ்வொரு காலாண்டும் PBT − இதர வருமானம்'],
+ ['Share of NOV on own inventory; gross margin commentary','சொந்த ஸ்டாக் NOV பங்கு; கிராஸ் மார்ஜின் கருத்து'],
+ ['District EBITDA % of NOV (now −2.0%)','டிஸ்ட்ரிக்ட் EBITDA % (இப்போ −2.0%)'],
+ ['Effective tax rate in Q3/Q4 FY27','Q3/Q4 FY27 வரி விகிதம்'],
+ ['Discounting, delivery fees, rival store counts','தள்ளுபடி, டெலிவரி கட்டணம், போட்டியாளர் ஸ்டோர்ஸ்'],
+ ['Cash balance vs ₹15,000 cr; other income trend','கேஷ் ₹15,000 கோடிக்கு மேலா; இதர வருமான போக்கு']
+];
+var TREV=[['Nov 2026',['ZEPL slump sale completes (~30 days)','ZEPL ஸ்லம்ப் சேல் முடிவு (~30 நாள்)']],['Jan 2027',['Q3FY27 results — festive quarter','Q3FY27 ரிசல்ட் — பண்டிகை காலாண்டு']],['Feb 2027',['Union Budget — gig-worker & e-commerce rules','பட்ஜெட் — கிக் வொர்க்கர், இ-காமர்ஸ் விதிகள்']],['Mar 2027',['Target: >3,500 Blinkit stores','இலக்கு: 3,500+ பிளிங்கிட் ஸ்டோர்']],['Apr–May 2027',['Q4FY27 results — full-year tax rate','Q4FY27 ரிசல்ட் — முழு வருஷ வரி']],['Mar 2028',['Target: ~5,000 stores','இலக்கு: ~5,000 ஸ்டோர்']]];
+
+var SC=[
+ [['1. Questions about the stock','1. ஷேர் பத்தின கேள்விகள்'],[
+  [['I understand Eternal now earns most revenue by selling goods it owns (Blinkit 1P).','எட்டர்னல் இப்போ சொந்த பொருளை விக்கறதுல (பிளிங்கிட் 1P) பெரும்பாலான ரெவென்யூ சம்பாதிக்குதுன்னு புரியுது.'],['Quick commerce revenue ₹19,152 cr ≈ 78% of adjusted revenue','குயிக் காமர்ஸ் ரெவென்யூ ₹19,152 கோடி ≈ அட்ஜஸ்டட் ரெவென்யூவுல 78%']],
+  [['I know how much of pre-tax profit came from other income.','வரிக்கு முந்தைய லாபத்துல எவ்வளவு இதர வருமானம்னு தெரியும்.'],['Other income ₹351 cr vs PBT ₹323 cr (109%)','இதர வருமானம் ₹351 கோடி vs PBT ₹323 கோடி (109%)']],
+  [['I know why net profit fell short of estimates.','நிகர லாபம் ஏன் எதிர்பார்ப்பை மிஸ் பண்ணுச்சுன்னு தெரியும்.'],['Tax ₹198 cr = 61% of PBT; PAT ₹125 cr vs ~₹393 cr expected','வரி ₹198 கோடி = PBT-யோட 61%; PAT ₹125 கோடி vs எதிர்பார்ப்பு ~₹393 கோடி']],
+  [['I know the cash balance and why it fell.','கேஷ் இருப்பும் அது ஏன் குறைஞ்சதுன்னும் தெரியும்.'],['₹16,475 cr; −₹1,813 cr QoQ (festive inventory, capex ₹941 cr)','₹16,475 கோடி; காலாண்டுல −₹1,813 கோடி (பண்டிகை ஸ்டாக், கேப்பெக்ஸ் ₹941 கோடி)']]]],
+ [['2. Problems investors face','2. முதலீட்டாளர்கள் சந்திக்கற பிரச்சனைகள்'],[
+  [['I accept that a very high valuation makes the stock sensitive to any slowdown.','ரொம்ப அதிக வேல்யூவேஷன் எந்த மந்தத்துக்கும் ஷேரை உணர்திறனா ஆக்கும்னு ஏத்துக்கறேன்.'],['P/E ~612x TTM; P/B 9.7x; EV/Adj. EBITDA ~142x','P/E ~612x; P/B 9.7x; EV/அட்ஜ. EBITDA ~142x']],
+  [['I have thought about competition slowing margin gains.','போட்டி மார்ஜின் முன்னேற்றத்தை மெதுவாக்கலாம்னு யோசிச்சிருக்கேன்.'],['Rivals: Swiggy Instamart, Zepto, Amazon Now, Flipkart Minutes','போட்டியாளர்கள்: இன்ஸ்டாமார்ட், ஜெப்டோ, அமேசான் நவ், ஃப்ளிப்கார்ட் மினிட்ஸ்']],
+  [['I know free cash flow is negative while stores expand.','ஸ்டோர்ஸ் விரியும்போது ஃப்ரீ கேஷ் ஃப்ளோ நெகட்டிவ்னு தெரியும்.'],['FY26 FCF −₹1,114 cr','FY26 FCF −₹1,114 கோடி']]]],
+ [['3. Solutions (what I did)','3. தீர்வுகள் (நான் என்ன பண்ணேன்)'],[
+  [['I track core PBT (PBT minus other income) every quarter.','ஒவ்வொரு காலாண்டும் கோர் PBT (PBT − இதர வருமானம்) கவனிக்கிறேன்.'],['−₹223 cr (Q2FY26) → −₹103 cr (Q1FY27) → −₹28 cr (Q2FY27)','−₹223 கோடி (Q2FY26) → −₹103 கோடி (Q1FY27) → −₹28 கோடி (Q2FY27)']],
+  [['I compared the price with the full broker target range.','விலையை முழு ப்ரோக்கர் இலக்கு வரம்போட ஒப்பிட்டேன்.'],['₹225 (Macquarie) to ₹513 (CLSA); consensus ₹381; price ₹312.35','₹225 (மெக்குவாரி) முதல் ₹513 (CLSA); சராசரி ₹381; விலை ₹312.35']],
+  [['I checked whether Blinkit margins rise as stores mature.','ஸ்டோர்ஸ் முதிர்ச்சியடைய பிளிங்கிட் மார்ஜின் ஏறுதான்னு பார்த்தேன்.'],['QC Adj. EBITDA 0.9% of NOV — sixth straight quarterly improvement','QC அட்ஜ. EBITDA NOV-ல 0.9% — தொடர்ந்து ஆறாவது முன்னேற்றம்']]]],
+ [["4. Anchors' and analysts' view","4. ஆங்கர்ஸ் & அனலிஸ்ட் கருத்து"],[
+  [['I read at least one bullish and one bearish broker view.','குறைஞ்சது ஒரு பாசிட்டிவ், ஒரு நெகட்டிவ் ப்ரோக்கர் கருத்தை படிச்சேன்.'],['CLSA Outperform ₹513 · Macquarie Underperform ₹225','CLSA அவுட்பெர்ஃபார்ம் ₹513 · மெக்குவாரி அண்டர்பெர்ஃபார்ம் ₹225']],
+  [['I noted the shift in institutional ownership.','நிறுவன உரிமையில மாற்றத்தை கவனிச்சேன்.'],['DII 36.22% vs FII 33.01% (Sep-26); no promoter','DII 36.22% vs FII 33.01% (செப்-26); புரமோட்டர் இல்ல']]]]
+];
+var SCSUG=[['Core PBT turns positive','கோர் PBT பாசிட்டிவ் ஆகணும்'],['Blinkit EBITDA above 2% of NOV','பிளிங்கிட் EBITDA NOV-ல 2%-க்கு மேல'],['Cash stays above ₹15,000 cr','கேஷ் ₹15,000 கோடிக்கு மேல இருக்கணும்'],['Tax rate settles below 40%','வரி விகிதம் 40%-க்கு கீழ வரணும்'],['Price below my own value estimate','விலை என் சொந்த மதிப்பீட்டுக்கு கீழ']];
+
+var QZ=[
+ [['In Q2FY27, which number was bigger?','Q2FY27-ல எந்த எண் பெருசு?'],[['Profit before tax ₹323 cr','வரிக்கு முந்தைய லாபம் ₹323 கோடி'],['Other income ₹351 cr','இதர வருமானம் ₹351 கோடி'],['They were equal','ரெண்டும் சமம்']],1,['Other income was ₹351 cr, PBT ₹323 cr — so the operating business was at −₹28 cr before tax.','இதர வருமானம் ₹351 கோடி, PBT ₹323 கோடி — அதனால ஆப்பரேஷன் வரிக்கு முன்னாடி −₹28 கோடி.']],
+ [['Why did revenue nearly triple from FY25 to FY26?','FY25-ல இருந்து FY26-க்கு ரெவென்யூ ஏன் கிட்டத்தட்ட மூணு மடங்கு ஆச்சு?'],[['Big price hikes','பெரிய விலை ஏற்றம்'],['Blinkit started owning inventory, so the full value of goods is booked as revenue','பிளிங்கிட் சொந்த ஸ்டாக் வெச்சதால பொருளோட முழு மதிப்பும் ரெவென்யூவா வருது'],['It acquired Swiggy','ஸ்விக்கியை வாங்கிச்சு']],1,['The 1P (own-inventory) shift changed revenue recognition; like-for-like growth was much lower.','1P மாற்றம் ரெவென்யூ கணக்கிடும் முறையை மாத்திச்சு; லைக்-ஃபார்-லைக் வளர்ச்சி ரொம்ப குறைவு.']],
+ [['Why was net profit only ₹125 cr on a PBT of ₹323 cr?','PBT ₹323 கோடி இருந்தும் நிகர லாபம் ஏன் ₹125 கோடி தான்?'],[['A one-time write-off','ஒரு முறை எழுதித் தள்ளுதல்'],['High interest on debt','கடன் மேல அதிக வட்டி'],['The parent used up its tax losses, so tax was 61%','பேரன்ட்டோட வரி நஷ்ட கழிவு தீர்ந்ததால வரி 61%']],2,['Tax of ₹198 cr = 61% of PBT. Losses in subsidiaries cannot be set off against the parent\'s profit.','வரி ₹198 கோடி = PBT-யோட 61%. சப்சிடியரி நஷ்டத்தை பேரன்ட் லாபத்துல கழிக்க முடியாது.']],
+ [['Why did cash fall by ₹1,813 cr this quarter?','இந்த காலாண்டு கேஷ் ஏன் ₹1,813 கோடி குறைஞ்சுது?'],[['A dividend payout','டிவிடெண்ட் கொடுத்தாங்க'],['Festive inventory build-up and store capex','பண்டிகை ஸ்டாக் சேர்ப்பும் ஸ்டோர் கேப்பெக்ஸும்'],['A share buyback','ஷேர் பைபேக்']],1,['Eternal pays no dividend. Inventory and ₹941 cr capex used the cash.','எட்டர்னல் டிவிடெண்ட் தராது. ஸ்டாக்கும் ₹941 கோடி கேப்பெக்ஸும் கேஷை பயன்படுத்துச்சு.']],
+ [['The cash conversion cycle moved from −54 days (FY25) to +2 days (FY26). What does it mean?','கேஷ் கன்வர்ஷன் சைக்கிள் −54 நாள்ல (FY25) இருந்து +2 நாள் (FY26). என்ன அர்த்தம்?'],[['Suppliers no longer fund the business; it now funds its own inventory','சப்ளையர்ஸ் இனி பிசினஸுக்கு பணம் தரல; இப்போ சொந்த ஸ்டாக்குக்கு தானே பணம் போடுது'],['Customers pay later than before','கஸ்டமர்ஸ் முன்னை விட தாமதமா கட்டறாங்க'],['Nothing important','முக்கியமில்ல']],0,['Owning inventory (26 inventory days) and lower payables (36 days) mean growth now consumes working capital.','சொந்த ஸ்டாக் (26 நாள்), குறைஞ்ச பேயபிள் (36 நாள்) — வளர்ச்சி இப்போ வொர்க்கிங் கேப்பிட்டலை எடுக்குது.']],
+ [['If interest rates fall by 1 percentage point, what happens first?','வட்டி 1% குறைஞ்சா, முதல்ல என்ன நடக்கும்?'],[['Other income falls by roughly ₹40 cr a quarter, hurting PBT','இதர வருமானம் காலாண்டுக்கு சுமார் ₹40 கோடி குறையும், PBT பாதிக்கும்'],['Blinkit revenue falls','பிளிங்கிட் ரெவென்யூ குறையும்'],['Tax rate rises','வரி விகிதம் ஏறும்']],0,['₹16,475 cr × 1% ÷ 4 ≈ ₹41 cr a quarter — large versus a ₹323 cr PBT.','₹16,475 கோடி × 1% ÷ 4 ≈ காலாண்டுக்கு ₹41 கோடி — ₹323 கோடி PBT-க்கு இது பெருசு.']]
+];
+var SOFT=[['Free-text: What would have to happen for Eternal to report a profit even if it earned zero other income? List two numbers you would watch.','இதர வருமானம் பூஜ்ஜியமா இருந்தாலும் எட்டர்னல் லாபம் காட்ட என்ன நடக்கணும்? நீங்க கவனிக்கற ரெண்டு எண்களை எழுதுங்க.'],['Model answer: Core PBT must exceed zero — i.e. EBITDA (₹752 cr) must grow faster than D&A + lease interest (₹780 cr). Watch (1) Blinkit Adjusted EBITDA % of NOV rising from 0.9% as new stores mature, and (2) quarterly core PBT (PBT − other income) crossing above zero. A stable tax rate is a third check.','மாடல் பதில்: கோர் PBT பூஜ்ஜியத்தை தாண்டணும் — அதாவது EBITDA (₹752 கோடி) தேய்மானம் + லீஸ் வட்டியை (₹780 கோடி) விட வேகமா வளரணும். கவனிக்க: (1) புது ஸ்டோர்ஸ் முதிர்ச்சியடைய பிளிங்கிட் அட்ஜ. EBITDA NOV % 0.9%-ல இருந்து ஏறுதா, (2) காலாண்டு கோர் PBT (PBT − இதர வருமானம்) பூஜ்ஜியத்துக்கு மேல போகுதா. நிலையான வரி விகிதம் மூணாவது சோதனை.']];
+
+var DISC=['<b>Prepared by CB Research (Cauvery Business Research)</b> for financial education only. CB Research is not a SEBI-registered research analyst or investment adviser. Nothing here is a recommendation to buy, sell or hold any security. Figures are from company filings, the Q2FY27 shareholders\' letter and press reports available on 22 Oct 2026; Q2FY27 results are unaudited (limited review). † marks figures derived by CB Research. Broker ratings and targets belong to the named brokerages. Please do your own research or consult a registered adviser.','<b>CB Research (காவேரி பிசினஸ் ரிசர்ச்) தயாரித்தது</b> — நிதி கல்விக்காக மட்டும். CB Research SEBI-ல பதிவு செய்த ரிசர்ச் அனலிஸ்டோ முதலீட்டு ஆலோசகரோ இல்ல. இங்க இருக்கற எதுவும் எந்த ஷேரையும் வாங்கவோ, விக்கவோ, வெச்சிருக்கவோ பரிந்துரை இல்ல. எண்கள் 22 அக் 2026 வரை கிடைச்ச கம்பெனி ஃபைலிங்ஸ், Q2FY27 ஷேர்ஹோல்டர் கடிதம், செய்தி அறிக்கைகள்ல இருந்து; Q2FY27 ரிசல்ட் ஆடிட் ஆகல (லிமிடெட் ரிவ்யூ). † = CB Research கணக்கிட்டது. ப்ரோக்கர் ரேட்டிங், இலக்குகள் அந்தந்த நிறுவனங்களுடையது. நீங்களே ஆராய்ந்து பாருங்க அல்லது பதிவு செய்த ஆலோசகரை கேளுங்க.'];
+
+var KB=[
+ {k:['revenue','sales','topline','ரெவென்யூ','வருவாய்','விற்பனை'],a:['Q2FY27 revenue from operations was ₹24,138 cr, up 77.6% year on year and 19.4% over the last quarter. Adjusted revenue was ₹24,621 cr, up 76%; like-for-like growth was 58% because Blinkit now books the full value of goods it owns.','Q2FY27 செயல்பாட்டு ரெவென்யூ ₹24,138 கோடி — வருஷத்துக்கு 77.6%, போன காலாண்டை விட 19.4% உயர்வு. அட்ஜஸ்டட் ரெவென்யூ ₹24,621 கோடி, 76% உயர்வு; பிளிங்கிட் சொந்த பொருளோட முழு மதிப்பையும் புக் பண்றதால லைக்-ஃபார்-லைக் வளர்ச்சி 58%.']},
+ {k:['other income','interest','treasury','இதர','வட்டி'],a:['Other income was ₹351 cr — 109% of the ₹323 cr profit before tax. It is interest and gains on about ₹16,475 cr of cash. Without it the core business was at minus ₹28 cr before tax.','இதர வருமானம் ₹351 கோடி — ₹323 கோடி வரிக்கு முந்தைய லாபத்தோட 109%. சுமார் ₹16,475 கோடி கேஷ் மேல வர்ற வட்டி அது. அது இல்லாம கோர் பிசினஸ் வரிக்கு முன்னாடி மைனஸ் ₹28 கோடி.']},
+ {k:['core','operations','operating profit','ஆப்பரேஷன்','கோர்'],a:['Core PBT, meaning PBT minus other income, was minus ₹28 cr in Q2FY27, versus minus ₹103 cr last quarter and minus ₹223 cr a year ago. The operating business is close to covering its depreciation and lease costs on its own.','கோர் PBT, அதாவது PBT மைனஸ் இதர வருமானம், Q2FY27-ல மைனஸ் ₹28 கோடி; போன காலாண்டு மைனஸ் ₹103 கோடி, போன வருஷம் மைனஸ் ₹223 கோடி. ஆப்பரேஷன் தன் தேய்மானம், லீஸ் செலவை தானே கவர் பண்ற நிலைக்கு கிட்ட வந்துடுச்சு.']},
+ {k:['profit','pat','net profit','earnings','லாபம்','நிகர'],a:['Net profit was ₹125 cr, up 92% from ₹65 cr a year ago, but below the roughly ₹393 cr the street expected, because tax took ₹198 cr, or 61% of PBT.','நிகர லாபம் ₹125 கோடி — போன வருஷம் ₹65 கோடில இருந்து 92% உயர்வு, ஆனா எதிர்பார்த்த சுமார் ₹393 கோடிக்கு கீழ; வரி ₹198 கோடி, அதாவது PBT-யோட 61%.']},
+ {k:['tax','வரி'],a:['The effective tax rate was 61%. The parent company has used up its carried-forward losses, and losses in subsidiaries like District and Bistro cannot be set off, so tax rose to ₹198 cr from ₹64 cr a year ago.','பயனுள்ள வரி விகிதம் 61%. பேரன்ட் கம்பெனி பழைய நஷ்ட கழிவுகளை பயன்படுத்திட்டது; டிஸ்ட்ரிக்ட், பிஸ்ட்ரோ மாதிரி சப்சிடியரி நஷ்டத்தை கழிக்க முடியாது. அதனால வரி போன வருஷம் ₹64 கோடில இருந்து ₹198 கோடி.']},
+ {k:['cash','reserve','war chest','கேஷ்','ரொக்கம்','இருப்பு'],a:['Cash was ₹16,475 cr at the end of September 2026, down ₹1,813 cr in the quarter because of festive inventory and ₹941 cr capex. It came mainly from the 2021 IPO and the ₹8,500 cr QIP of November 2024, and earns about 8% a year.','செப்டம்பர் 2026 முடிவுல கேஷ் ₹16,475 கோடி; பண்டிகை ஸ்டாக், ₹941 கோடி கேப்பெக்ஸ்னால காலாண்டுல ₹1,813 கோடி குறைஞ்சுது. பெரும்பாலும் 2021 IPO-வும், நவம்பர் 2024 ₹8,500 கோடி QIP-யும் கொடுத்த பணம்; வருஷத்துக்கு சுமார் 8% சம்பாதிக்குது.']},
+ {k:['blinkit','quick commerce','qc','store','dark','பிளிங்கிட்','குயிக்','ஸ்டோர்'],a:['Blinkit revenue was ₹19,152 cr, up 93.6%; NOV ₹20,940 cr, up 79.3%. Adjusted EBITDA was ₹184 cr or 0.9% of NOV, versus a ₹156 cr loss a year ago. It has 2,751 dark stores and targets over 3,500 by March 2027 and about 5,000 by March 2028.','பிளிங்கிட் ரெவென்யூ ₹19,152 கோடி, 93.6% உயர்வு; NOV ₹20,940 கோடி, 79.3% உயர்வு. அட்ஜஸ்டட் EBITDA ₹184 கோடி, NOV-ல 0.9%; போன வருஷம் ₹156 கோடி நஷ்டம். 2,751 டார்க் ஸ்டோர்ஸ்; மார்ச் 2027-க்குள் 3,500-க்கு மேல, மார்ச் 2028-க்குள் சுமார் 5,000 இலக்கு.']},
+ {k:['food','zomato','delivery','ஃபுட்','சொமாட்டோ','சாப்பாடு'],a:['Zomato food delivery NOV was ₹11,445 cr, up 21.5% — the fifth straight quarter of faster growth. Adjusted EBITDA was ₹627 cr, 5.5% of NOV, and monthly transacting customers rose 16% to 28 million.','சொமாட்டோ ஃபுட் டெலிவரி NOV ₹11,445 கோடி, 21.5% உயர்வு — தொடர்ந்து அஞ்சாவது காலாண்டா வேகம் கூடுது. அட்ஜஸ்டட் EBITDA ₹627 கோடி, NOV-ல 5.5%; மாத கஸ்டமர்கள் 16% உயர்ந்து 2.8 கோடி.']},
+ {k:['district','going','ticket','டிஸ்ட்ரிக்ட்','கோயிங்','டிக்கெட்'],a:['District, the going-out business, had NOV of ₹3,259 cr, up 58%, revenue ₹304 cr and an Adjusted EBITDA loss of ₹64 cr, or minus 2.0% of NOV, better than minus 3.1% a year ago.','டிஸ்ட்ரிக்ட் கோயிங்-அவுட் பிசினஸ் NOV ₹3,259 கோடி, 58% உயர்வு; ரெவென்யூ ₹304 கோடி; அட்ஜஸ்டட் EBITDA நஷ்டம் ₹64 கோடி, NOV-ல மைனஸ் 2.0%; போன வருஷம் மைனஸ் 3.1%.']},
+ {k:['hyperpure','b2b','ஹைப்பர்ப்யூர்'],a:['Hyperpure revenue was ₹1,154 cr, up 12.8%, with Adjusted EBITDA of ₹10 cr.','ஹைப்பர்ப்யூர் ரெவென்யூ ₹1,154 கோடி, 12.8% உயர்வு; அட்ஜஸ்டட் EBITDA ₹10 கோடி.']},
+ {k:['ebitda','margin','மார்ஜின்','ebitda'],a:['Adjusted EBITDA was ₹666 cr, up 197% YoY and 20% QoQ, about 2.7% of adjusted revenue. Reported EBITDA was ₹752 cr. Depreciation plus finance cost of about ₹780 cr is slightly larger than reported EBITDA.','அட்ஜஸ்டட் EBITDA ₹666 கோடி — வருஷத்துக்கு 197%, காலாண்டுக்கு 20% உயர்வு; அட்ஜஸ்டட் ரெவென்யூவுல சுமார் 2.7%. ரிப்போர்டட் EBITDA ₹752 கோடி. தேய்மானம் + ஃபைனான்ஸ் செலவு சுமார் ₹780 கோடி — EBITDA-வை விட கொஞ்சம் அதிகம்.']},
+ {k:['valuation','pe','p/e','expensive','cheap','வேல்யூவேஷன்','மதிப்பு','விலை அதிகம்'],a:['At ₹312.35 the market cap is about ₹3.02 lakh cr. Trailing P/E is about 612 times, price to book 9.7 times and EV to Adjusted EBITDA about 142 times — the price assumes many years of strong growth and margin gains.','₹312.35-ல மார்க்கெட் கேப் சுமார் ₹3.02 லட்சம் கோடி. P/E சுமார் 612 மடங்கு, P/B 9.7 மடங்கு, EV/அட்ஜஸ்டட் EBITDA சுமார் 142 மடங்கு — பல வருஷ வலுவான வளர்ச்சியும் மார்ஜின் உயர்வும் விலையில ஏற்கனவே இருக்கு.']},
+ {k:['target','analyst','broker','rating','clsa','macquarie','இலக்கு','அனலிஸ்ட்','ப்ரோக்கர்'],a:['After Q2FY27, CLSA has the highest target at ₹513 and Macquarie the lowest at ₹225. JPMorgan ₹420, Emkay ₹420, Morgan Stanley ₹417, Nirmal Bang ₹385. Consensus is about ₹381, around 22% above ₹312. These are the brokers\' views, not CB Research\'s.','Q2FY27-க்கு அப்புறம் CLSA அதிக இலக்கு ₹513, மெக்குவாரி குறைவு ₹225. ஜேபி மார்கன் ₹420, எம்கே ₹420, மார்கன் ஸ்டான்லி ₹417, நிர்மல் பேங்க் ₹385. சராசரி சுமார் ₹381, ₹312-ஐ விட சுமார் 22% மேல. இவை ப்ரோக்கர்கள் கருத்து, CB Research-ஓடது இல்ல.']},
+ {k:['ceo','management','board','goyal','dhindsa','albinder','deepinder','மேனேஜ்மென்ட்','தலைவர்'],a:['Albinder Dhindsa, Blinkit\'s co-founder, has been Group CEO since 1 February 2026. Founder Deepinder Goyal is Vice Chairman and focuses on strategy and governance. Akshant Goyal is CFO. There is no promoter group.','பிளிங்கிட் கோ-ஃபவுண்டர் அல்பிந்தர் திந்த்சா 1 பிப்ரவரி 2026 முதல் குரூப் CEO. ஃபவுண்டர் தீபிந்தர் கோயல் வைஸ் சேர்மன், உத்தி & கவர்னன்ஸ் மேல கவனம். அக்ஷாந்த் கோயல் CFO. புரமோட்டர் குரூப் இல்ல.']},
+ {k:['model','change','journey','listing','ipo','history','மாடல்','மாற்றம்','லிஸ்டிங்'],a:['At listing in July 2021 Zomato was an asset-light food-delivery marketplace. It bought Blinkit in 2022, Paytm\'s ticketing in 2024 to create District, raised ₹8,500 cr in a QIP, renamed itself Eternal in 2025, capped foreign holding at 49.5% and moved Blinkit to owning inventory. Quick commerce is now about 78% of revenue.','ஜூலை 2021 லிஸ்டிங்கப்போ சொமாட்டோ அசெட்-லைட் ஃபுட் டெலிவரி மார்க்கெட்பிளேஸ். 2022-ல பிளிங்கிட், 2024-ல பேடிஎம் டிக்கெட்டிங் வாங்கி டிஸ்ட்ரிக்ட், ₹8,500 கோடி QIP, 2025-ல எட்டர்னல்னு பெயர் மாற்றம், வெளிநாட்டு பங்கு 49.5% வரம்பு, பிளிங்கிட் சொந்த ஸ்டாக்குக்கு மாற்றம். இப்போ ரெவென்யூவுல சுமார் 78% குயிக் காமர்ஸ்.']},
+ {k:['working capital','inventory','ccc','cash conversion','வொர்க்கிங்','ஸ்டாக்','இன்வென்டரி'],a:['The cash conversion cycle moved from minus 513 days in FY21 to about plus 2 days in FY26. Inventory days are 26 and payable days 36. Owning inventory means growth now needs working capital.','கேஷ் கன்வர்ஷன் சைக்கிள் FY21-ல மைனஸ் 513 நாள்ல இருந்து FY26-ல சுமார் பிளஸ் 2 நாள். இன்வென்டரி 26 நாள், பேயபிள் 36 நாள். சொந்த ஸ்டாக் வெச்சதால வளர்ச்சிக்கு இப்போ வொர்க்கிங் கேப்பிட்டல் வேணும்.']},
+ {k:['cash flow','cfo','fcf','free cash','கேஷ் ஃப்ளோ','ஃப்ரீ'],a:['FY26 cash from operations was ₹632 cr, 1.7 times net profit and 83% of EBITDA, but free cash flow was minus ₹1,114 cr because of store capex.','FY26 ஆப்பரேஷன் கேஷ் ₹632 கோடி — நிகர லாபத்தோட 1.7 மடங்கு, EBITDA-வோட 83%; ஆனா ஸ்டோர் கேப்பெக்ஸ்னால ஃப்ரீ கேஷ் ஃப்ளோ மைனஸ் ₹1,114 கோடி.']},
+ {k:['competition','swiggy','zepto','amazon','flipkart','instamart','போட்டி','ஸ்விக்கி','ஜெப்டோ'],a:['Blinkit competes with Swiggy Instamart, Zepto, Amazon Now and Flipkart Minutes. Management says it has not seen a material impact on customer behaviour or NOV share, but competition can slow margin gains.','பிளிங்கிட் இன்ஸ்டாமார்ட், ஜெப்டோ, அமேசான் நவ், ஃப்ளிப்கார்ட் மினிட்ஸ் கூட போட்டி போடுது. கஸ்டமர் நடத்தையிலோ NOV பங்கிலோ பெரிய பாதிப்பு இல்லன்னு மேனேஜ்மென்ட் சொல்லுது, ஆனா போட்டி மார்ஜின் முன்னேற்றத்தை மெதுவாக்கலாம்.']},
+ {k:['cycle','trigger','catalyst','சைக்கிள்','டிரிக்கர்'],a:['Quick commerce is in the rapid-adoption stage of its S-curve, food delivery is maturing. CB cycle score is 71 and trigger score 44: positive triggers are store maturity and core profit turning positive; negatives are the higher tax rate, competition and cash drawdown.','குயிக் காமர்ஸ் S-கர்வ்ல வேக ஏற்பு நிலை, ஃபுட் டெலிவரி முதிர்ச்சி நிலை. CB சைக்கிள் ஸ்கோர் 71, டிரிக்கர் ஸ்கோர் 44: பாசிட்டிவ் — ஸ்டோர் முதிர்ச்சி, கோர் லாபம் பாசிட்டிவ் ஆவது; நெகட்டிவ் — அதிக வரி, போட்டி, கேஷ் குறைவு.']},
+ {k:['price','fall','share price','stock','why','ஷேர்','விழுந்து','ஏன்'],a:['The share closed at ₹312.35 on 21 October, down 2.45%, mainly because net profit missed estimates on the 61% tax rate and cash fell. Brokers stayed positive because EBITDA beat and Blinkit margins improved.','21 அக்டோபர் ஷேர் ₹312.35-ல 2.45% இறங்கி முடிஞ்சுது — 61% வரியால நிகர லாபம் எதிர்பார்ப்பை மிஸ் பண்ணதும் கேஷ் குறைஞ்சதும் காரணம். EBITDA எதிர்பார்ப்பை தாண்டினதாலும் பிளிங்கிட் மார்ஜின் முன்னேறினதாலும் ப்ரோக்கர்கள் பாசிட்டிவா இருந்தாங்க.']}
+];
+var ANT={'Highest on Street':'அதிகபட்ச இலக்கு','TP raised 5%':'இலக்கு 5% உயர்வு','FD at 35x Sep-28 EV/EBITDA':'ஃபுட் டெலிவரிக்கு செப்-28 EV/EBITDA 35x','Cut FY27 EPS on tax':'வரியால FY27 EPS குறைப்பு','Lowest on Street':'குறைந்தபட்ச இலக்கு','+22% vs ₹312.35':'₹312.35-ல இருந்து +22%'};
+var BUYK=['buy','sell','hold','invest','should i','வாங்க','விக்க','வாங்கலாமா','முதலீடு'];
+
+/* ===== helpers ===== */
+function $(id){return document.getElementById(id);}
+var charts={}, inited={};
+if(window.Chart){Chart.defaults.font.family='"Segoe UI",Roboto,"Noto Sans Tamil",Arial,sans-serif';
+Chart.defaults.font.size=12;
+Chart.defaults.color='#374151';
+var vlPlugin={id:'vl',afterDatasetsDraw:function(ch){
+ var o=ch.options.plugins.vl; if(o===false)return; var ctx=ch.ctx; ctx.save(); ctx.font='600 11px "Segoe UI",Arial'; ctx.fillStyle='#111827';
+ var hor=ch.options.indexAxis==='y';
+ ch.data.datasets.forEach(function(ds,di){
+  var meta=ch.getDatasetMeta(di); if(meta.hidden||ds.vl===false)return;
+  if(meta.type!=='bar' && !ds.vl)return;
+  meta.data.forEach(function(el,i){
+   var raw=ds.data[i]; if(raw===null||raw===undefined)return;
+   if(Array.isArray(raw)){var s1=ds.lbl?ds.lbl[i]:inr(raw[1]-raw[0]);ctx.textAlign='center';ctx.textBaseline='bottom';ctx.fillText(s1,el.x,Math.min(el.y,el.base)-3);return;}
+   var v=raw,s=ds.lbl?ds.lbl[i]:inr(v,ds.dp||0)+(ds.suf||'');
+   if(hor){ctx.textBaseline='middle';ctx.textAlign=v<0?'right':'left';ctx.fillText(s,v<0?el.x-4:el.x+4,el.y);}
+   else{ctx.textAlign='center';ctx.textBaseline=v<0?'top':'bottom';ctx.fillText(s,el.x,v<0?el.y+3:el.y-3);}
+  });
+ }); ctx.restore();}};
+Chart.register(vlPlugin);}
+function mk(id,cfg){if(!window.Chart)return;if(charts[id])charts[id].destroy();cfg.options=cfg.options||{};cfg.options.responsive=true;cfg.options.maintainAspectRatio=false;
+ cfg.options.plugins=cfg.options.plugins||{};if(cfg.options.plugins.legend===undefined)cfg.options.plugins.legend={position:'bottom'};
+ cfg.options.plugins.tooltip={callbacks:{label:function(c){var r=c.raw;var v=Array.isArray(r)?(r[1]-r[0]):r;return c.dataset.label+': '+inr(v,c.dataset.dp||0)+(c.dataset.suf||'');}}};
+ charts[id]=new Chart($(id),cfg);}
+function yax(title,extra){var o={ticks:{callback:function(v){return inr(v);}},grid:{color:'#f1f5f9'}};if(title)o.title={display:true,text:title};if(extra)for(var k in extra)o[k]=extra[k];return o;}
+var CR=['₹ crore','₹ கோடி'];
+
+/* ===== charts per tab ===== */
+var CH={
+ bm:function(){mk('cMix',{type:'bar',data:{labels:[t(['Quick commerce','குயிக் காமர்ஸ்']),t(['Food delivery & others†','ஃபுட் டெலிவரி & மற்றவை†']),t(['Hyperpure','ஹைப்பர்ப்யூர்']),t(['Going-out','கோயிங்-அவுட்'])],datasets:[{label:t(['Adjusted revenue','அட்ஜஸ்டட் ரெவென்யூ']),data:[19152,4011,1154,304],backgroundColor:['#e6a800','#e23744','#16a34a','#7c3aed']}]},options:{indexAxis:'y',plugins:{legend:{display:false}},scales:{x:yax(t(CR),{suggestedMax:22500})}}});},
+ ev:function(){
+  mk('cAnn',{data:{labels:['FY21','FY22','FY23','FY24','FY25','FY26','TTM Sep-26'],datasets:[
+   {type:'bar',label:t(['Revenue','ரெவென்யூ']),data:[1994,4192,7079,12114,20243,54364,77956],backgroundColor:['#fca5a5','#fca5a5','#fde68a','#fde68a','#c4b5fd','#86efac','#86efac'],yAxisID:'y'},
+   {type:'line',label:t(['Net profit','நிகர லாபம்']),data:[-816,-1222,-971,351,527,366,493],borderColor:'#16a34a',backgroundColor:'#16a34a',yAxisID:'y1',vl:true,tension:.2,borderWidth:3}]},
+   options:{scales:{y:yax(t(CR)),y1:yax(t(['Net profit ₹ cr','நிகர லாபம் ₹ கோடி']),{position:'right',grid:{display:false}})}}});
+  mk('cShift',{type:'bar',data:{labels:['FY22','Q2FY25','Q2FY26','Q2FY27'],datasets:[
+   {label:t(['Quick commerce','குயிக் காமர்ஸ்']),data:[0,23.3,70.8,77.8],backgroundColor:'#e6a800',suf:'%',dp:1},
+   {label:t(['Food delivery†','ஃபுட் டெலிவரி†']),data:[81,47.1,17.8,16.3],backgroundColor:'#e23744',suf:'%',dp:1},
+   {label:t(['Hyperpure & others','ஹைப்பர்ப்யூர் & மற்றவை']),data:[19,29.6,7.3,4.7],backgroundColor:'#16a34a',suf:'%',dp:1},
+   {label:t(['Going-out & others','கோயிங்-அவுட் & மற்றவை']),data:[0,0,4.1,1.2],backgroundColor:'#7c3aed',suf:'%',dp:1}]},
+   options:{indexAxis:'y',plugins:{vl:false},scales:{x:{stacked:true,max:100,ticks:{callback:function(v){return v+'%';}}},y:{stacked:true}}}});
+  mk('cAssets',{data:{labels:CFY,datasets:[
+   {type:'bar',label:t(['Fixed assets','ஃபிக்ஸ்டு அசெட்ஸ்']),data:[1539,1404,6344,6448,9532,12675],backgroundColor:'#fdba74',yAxisID:'y'},
+   {type:'line',label:t(['Depreciation & amortisation (right)','தேய்மானம் (வலது)']),data:[138,150,437,526,863,1597],borderColor:'#dc2626',backgroundColor:'#dc2626',yAxisID:'y1',vl:true,borderWidth:3}]},
+   options:{scales:{y:yax(t(CR)),y1:yax('D&A',{position:'right',grid:{display:false}})}}});
+  mk('cCcc',{type:'bar',data:{labels:CFY,datasets:[{label:t(['Cash conversion cycle (days)','கேஷ் கன்வர்ஷன் சைக்கிள் (நாள்)']),data:WCD.ccc,backgroundColor:WCD.ccc.map(function(v){return v<0?'#22c55e':'#ef4444';})}]},options:{plugins:{legend:{display:false}},scales:{y:{title:{display:true,text:t(['days','நாட்கள்'])}}}}});
+  mk('cStores',{type:'bar',data:{labels:['Sep-24','Jun-26','Sep-26',t(['Mar-27 (target)','மார்ச்-27 (இலக்கு)']),t(['Mar-28 (target)','மார்ச்-28 (இலக்கு)'])],datasets:[{label:t(['Blinkit dark stores','பிளிங்கிட் டார்க் ஸ்டோர்ஸ்']),data:[791,2443,2751,3500,5000],backgroundColor:['#e6a800','#e6a800','#e8730c','#fde68a','#fef3c7'],borderColor:['#e6a800','#e6a800','#e8730c','#e6a800','#e6a800'],borderWidth:2,lbl:['791','2,443','2,751','3,500+','~5,000']}]},options:{plugins:{legend:{display:false}},scales:{y:{beginAtZero:true,suggestedMax:5600}}}});
+ },
+ pa:function(){
+  mk('cWf',{type:'bar',data:{labels:[t(['Reported EBITDA','ரிப்போர்டட் EBITDA']),t(['D&A + finance†','தேய்மானம் + ஃபைனான்ஸ்†']),t(['Core result†','கோர் முடிவு†']),t(['Other income','இதர வருமானம்']),t(['PBT','PBT']),t(['Tax','வரி']),t(['Net profit','நிகர லாபம்'])],
+   datasets:[{label:'₹ cr',data:[[0,752],[752,-28],[0,-28],[-28,323],[0,323],[323,125],[0,125]],lbl:['752','−780','−28','+351','323','−198','125'],backgroundColor:['#fb923c','#f87171','#dc2626','#2563eb','#10b981','#f59e0b','#16a34a']}]},
+   options:{plugins:{legend:{display:false}},scales:{y:yax(t(CR),{suggestedMin:-100,suggestedMax:850})}}});
+  mk('cOiQ',{data:{labels:QL,datasets:[
+   {type:'bar',label:t(['Other income','இதர வருமானம்']),data:QOI,backgroundColor:'#93c5fd'},
+   {type:'bar',label:t(['Profit before tax','வரிக்கு முந்தைய லாபம்']),data:QPBT,backgroundColor:'#fdba74'},
+   {type:'line',label:t(['Core PBT (PBT − other income)†','கோர் PBT (PBT − இதர வருமானம்)†']),data:QCORE,borderColor:'#dc2626',backgroundColor:'#dc2626',borderWidth:3,tension:.25,vl:true}]},
+   options:{scales:{y:yax(t(CR))}}});
+  mk('cOiA',{data:{labels:AL,datasets:[
+   {type:'bar',label:t(['Other income','இதர வருமானம்']),data:AOI,backgroundColor:'#93c5fd'},
+   {type:'bar',label:t(['Profit before tax','வரிக்கு முந்தைய லாபம்']),data:APBT,backgroundColor:'#fdba74'},
+   {type:'line',label:t(['Core PBT†','கோர் PBT†']),data:ACORE,borderColor:'#dc2626',backgroundColor:'#dc2626',borderWidth:3,vl:true}]},options:{scales:{y:yax(t(CR))}}});
+  mk('cSeg',{type:'bar',data:{labels:[t(['Food delivery','ஃபுட் டெலிவரி']),t(['Quick commerce','குயிக் காமர்ஸ்']),t(['Hyperpure','ஹைப்பர்ப்யூர்']),t(['Going-out','கோயிங்-அவுட்']),t(['Others†','மற்றவை†']),t(['Total','மொத்தம்'])],datasets:[{label:t(['Adjusted EBITDA','அட்ஜஸ்டட் EBITDA']),data:[627,184,10,-64,-91,666],backgroundColor:['#e23744','#e6a800','#16a34a','#7c3aed','#9ca3af','#e8730c']}]},options:{plugins:{legend:{display:false}},scales:{y:yax(t(CR))}}});
+  var adj=[null,null,null,null,null,331,null,165,172,224,364,429,555,666];
+  mk('cEb',{data:{labels:QL,datasets:[
+   {type:'bar',label:t(['Reported EBITDA','ரிப்போர்டட் EBITDA']),data:QEB,backgroundColor:'#fdba74'},
+   {type:'line',label:t(['Adjusted EBITDA','அட்ஜஸ்டட் EBITDA']),data:adj,borderColor:'#7c3aed',backgroundColor:'#7c3aed',spanGaps:true,borderWidth:3,vl:true}]},options:{scales:{y:yax(t(CR))}}});
+ },
+ cr:function(){mk('cCash',{data:{labels:CL,datasets:[
+   {type:'bar',label:t(['Cash balance','கேஷ் இருப்பு']),data:CASH,backgroundColor:CASH.map(function(v,i){return i===CASH.length-1?'#e8730c':'#7dd3fc';}),yAxisID:'y'},
+   {type:'line',label:t(['Other income (right axis)','இதர வருமானம் (வலது அச்சு)']),data:COI,borderColor:'#1e40af',backgroundColor:'#1e40af',yAxisID:'y1',vl:true,borderWidth:3}]},
+   options:{scales:{y:yax(t(CR),{beginAtZero:true}),y1:yax(t(['Other income ₹ cr','இதர வருமானம் ₹ கோடி']),{position:'right',beginAtZero:true,suggestedMax:500,grid:{display:false}})}}});},
+ fin:function(){var rv=[2416,2848,3288,3562,4206,4799,5405,5833,7167,13590,16315,17292,20211,24138];
+  mk('cRevEb',{data:{labels:QL,datasets:[
+   {type:'bar',label:t(['Revenue from operations','செயல்பாட்டு ரெவென்யூ']),data:rv,backgroundColor:'#fdba74',yAxisID:'y'},
+   {type:'line',label:t(['Reported EBITDA (right)','ரிப்போர்டட் EBITDA (வலது)']),data:QEB,borderColor:'#16a34a',backgroundColor:'#16a34a',yAxisID:'y1',vl:true,borderWidth:3},
+   {type:'line',label:t(['Adjusted EBITDA (right)','அட்ஜஸ்டட் EBITDA (வலது)']),data:[null,null,null,null,null,331,null,165,172,224,364,429,555,666],spanGaps:true,borderColor:'#7c3aed',backgroundColor:'#7c3aed',yAxisID:'y1',borderDash:[5,4]}]},
+   options:{scales:{y:yax(t(CR)),y1:yax('EBITDA',{position:'right',grid:{display:false}})}}});},
+ cf:function(){
+  mk('cCf',{data:{labels:CFY,datasets:[
+   {type:'bar',label:'CFO',data:CFO,backgroundColor:'#16a34a'},{type:'bar',label:'CFI',data:CFI,backgroundColor:'#60a5fa'},{type:'bar',label:'CFF',data:CFF,backgroundColor:'#c4b5fd'},
+   {type:'line',label:t(['Free cash flow','ஃப்ரீ கேஷ் ஃப்ளோ']),data:FCF,borderColor:'#dc2626',backgroundColor:'#dc2626',borderWidth:3,vl:true}]},options:{scales:{y:yax(t(CR))}}});
+  mk('cWc',{type:'line',data:{labels:CFY,datasets:[
+   {label:t(['Debtor days','கடனாளர் நாட்கள்']),data:WCD.deb,borderColor:'#2563eb'},{label:t(['Inventory days','இன்வென்டரி நாட்கள்']),data:WCD.inv,borderColor:'#e6a800'},
+   {label:t(['Payable days','பேயபிள் நாட்கள்']),data:WCD.pay,borderColor:'#7c3aed'},{label:t(['Cash conversion cycle','கேஷ் கன்வர்ஷன் சைக்கிள்']),data:WCD.ccc,borderColor:'#dc2626',borderWidth:3,vl:true}]},options:{scales:{y:{title:{display:true,text:t(['days','நாட்கள்'])}}}}});
+ },
+ val:function(){mk('cVal',{type:'bar',data:{labels:[t(['Market cap','மார்க்கெட் கேப்']),t(['Enterprise value','என்டர்பிரைஸ் வேல்யூ']),t(['TTM revenue','TTM ரெவென்யூ']),t(['Cash','கேஷ்']),t(['TTM Adj. EBITDA','TTM அட்ஜ. EBITDA']),t(['TTM net profit','TTM நிகர லாபம்'])],datasets:[{label:'₹ cr',data:[301720,285245,77956,16475,2014,493],backgroundColor:['#e8730c','#fb923c','#fdba74','#38bdf8','#a78bfa','#16a34a']}]},
+  options:{indexAxis:'y',plugins:{legend:{display:false}},scales:{x:{type:'logarithmic',max:2000000,title:{display:true,text:t(['₹ crore (log scale)','₹ கோடி (லாக் அளவு)'])},ticks:{callback:function(v){var s=String(v);return /^(1|10|100|1000|10000|100000|1000000)$/.test(s)?inr(v):'';}}}}}});},
+ mk:function(){mk('cSh',{type:'line',data:{labels:SHL,datasets:[{label:'FII %',data:SHF,borderColor:'#2563eb',backgroundColor:'#2563eb',borderWidth:3,vl:true,dp:1},{label:'DII %',data:SHD,borderColor:'#16a34a',backgroundColor:'#16a34a',borderWidth:3,vl:true,dp:1}]},options:{scales:{y:{min:0,max:65,ticks:{callback:function(v){return v+'%';}}}}}});},
+ an:function(){var lab=[],dat=[],col=[];AN.forEach(function(a){if(typeof a[2]==='number'){lab.push(a[0]);dat.push(a[2]);col.push(a[4]==='p-r'?'#f87171':(a[4]==='p-b'?'#60a5fa':'#86efac'));}});lab.push(t(['Price (21 Oct)','விலை (21 அக்)']));dat.push(312.35);col.push('#9ca3af');
+  mk('cAn',{type:'bar',data:{labels:lab,datasets:[{label:t(['Target price ₹','இலக்கு விலை ₹']),data:dat,backgroundColor:col}]},options:{indexAxis:'y',plugins:{legend:{display:false}},scales:{x:{min:0,max:600}}}});}
+};
+
+/* ===== static renders ===== */
+function renderAll(){
+ $('tabs').innerHTML=TABS.map(function(x){return '<button data-t="'+x[0]+'" onclick="showTab(\''+x[0]+'\')">'+t(x[1])+'</button>';}).join('');
+ $('chips').innerHTML='<span class="chip">'+t(['CB Score','CB ஸ்கோர்'])+' <b>'+CO.cb.score+'/10</b></span><span class="chip">'+t(['Cycle (CY)','சைக்கிள் (CY)'])+' <b>'+CO.cycle.cy+'</b></span><span class="chip">'+t(['Trigger (TG)','டிரிக்கர் (TG)'])+' <b>'+CO.tg+'</b></span><span class="chip">'+t(['Core PBT†','கோர் PBT†'])+' <b style="color:#dc2626">'+t(['−₹28 cr','−₹28 கோடி'])+'</b></span>';
+ $('kpis').innerHTML=KPIS.map(kpi).join('');
+ $('ovList').innerHTML=OVLIST.map(function(x){return '<li>'+t(x)+'</li>';}).join('');
+ $('pillarCards').innerHTML=PILLARS.map(function(p){var c=p.s>=8?'#16a34a':(p.s>=6?'#d97706':'#dc2626');return '<div class="card colcard" id="pc-'+p.k+'" style="border-left-color:'+c+'"><b>'+t(p.n)+' — <span style="color:'+c+'">'+p.s.toFixed(1)+'/10</span></b><div style="font-size:13.5px;margin-top:4px">'+t(p.x)+'</div></div>';}).join('');
+ drawTemple(); drawBM(); bmShow('qc');
+ $('engTbl').innerHTML='<tr><th>'+t(['Segment','செக்மென்ட்'])+'</th><th style="text-align:left">'+t(['Driver formula','டிரைவர் ஃபார்முலா'])+'</th><th>'+t(['Q2FY27','Q2FY27'])+'</th><th>'+t(['Growth YoY','வளர்ச்சி YoY'])+'</th></tr>'+ENG.map(function(r){return '<tr><td><b>'+t(r[0])+'</b></td><td class="l">'+t(r[1])+'</td><td>'+t(r[2])+'</td><td>'+r[3]+'</td></tr>';}).join('');
+ $('tnTbl').innerHTML='<tr><th>'+t(['Aspect','அம்சம்'])+'</th><th style="text-align:left">'+t(['At listing (FY22)','லிஸ்டிங்கப்போ (FY22)'])+'</th><th style="text-align:left">'+t(['Now (Q2FY27)','இப்போ (Q2FY27)'])+'</th></tr>'+TN.map(function(r){return '<tr><td><b>'+t(r[0])+'</b></td><td class="l">'+t(r[1])+'</td><td class="l" style="background:#fff7ef"><b>'+t(r[2])+'</b></td></tr>';}).join('');
+ var tagN={chg:['Business-model change','பிசினஸ் மாடல் மாற்றம்'],pr:['Profit milestone','லாப மைல்கல்'],cash:['Capital','மூலதனம்'],st:['Start','தொடக்கம்'],now:['This quarter','இந்த காலாண்டு']};
+ var tagC={chg:'p-a',pr:'p-g',cash:'p-b',st:'p-b',now:'p-r'};
+ $('tline').innerHTML=TL.map(function(x){return '<div class="tli'+(x[3]?' big':'')+'"><div class="tld">'+x[0]+(x[4]?'<span class="pill tag '+tagC[x[4]]+'">'+t(tagN[x[4]])+'</span>':'')+'</div><div class="tlt">'+t(x[1])+'</div><div class="tlx">'+t(x[2])+'</div></div>';}).join('');
+ drawRoad(); drawEras(); drawFlows(); drawStairs();
+ $('paKpi').innerHTML=[[['Other income','இதர வருமானம்'],'₹351 cr',['interest on cash','கேஷ் மேல வட்டி'],'nt'],[['Profit before tax','வரிக்கு முந்தைய லாபம்'],'₹323 cr',['= core + other income','= கோர் + இதர வருமானம்'],'up'],[['Core PBT†','கோர் PBT†'],'−₹28 cr',['operations on their own','ஆப்பரேஷன் தனியா'],'dn'],[['Other income ÷ PBT','இதர வருமானம் ÷ PBT'],'109%',['H1FY27: 122%','H1FY27: 122%'],'dn']].map(kpi).join('');
+ var oi='<tr><th>'+t(['Period','காலம்'])+'</th><th>'+t(['Other income','இதர வருமானம்'])+'</th><th>PBT</th><th>'+t(['Core PBT†','கோர் PBT†'])+'</th><th>'+t(['Other income % of PBT†','PBT-ல இதர வருமான %†'])+'</th></tr>';
+ AL.forEach(function(l,i){oi+='<tr><td>'+l+'</td><td>'+inr(AOI[i])+'</td><td>'+inr(APBT[i])+'</td><td class="'+(ACORE[i]<0?'dn':'up')+'">'+inr(ACORE[i])+'</td><td>'+(APBT[i]>0?Math.round(AOI[i]/APBT[i]*100)+'%':t(['PBT negative','PBT நெகட்டிவ்']))+'</td></tr>';});
+ [9,12,13].forEach(function(i){oi+='<tr style="background:#fff7ef"><td>'+QL[i]+'</td><td>'+inr(QOI[i])+'</td><td>'+inr(QPBT[i])+'</td><td class="dn">'+inr(QCORE[i])+'</td><td>'+Math.round(QOI[i]/QPBT[i]*100)+'%</td></tr>';});
+ $('oiTbl').innerHTML=oi;
+ $('paWhy').innerHTML=PAWHY.map(function(x){return '<div class="card"><b>'+t(x[0])+'</b><div style="font-size:13.5px;margin-top:4px">'+t(x[1])+'</div></div>';}).join('');
+ $('crKpi').innerHTML=[[['Cash & liquid investments','கேஷ் & லிக்விட் முதலீடு'],'₹16,475 cr',['−₹1,813 cr QoQ','காலாண்டுல −₹1,813 கோடி'],'dn'],[['Cash per share†','ஒரு ஷேருக்கு கேஷ்†'],'₹17.1',['5.5% of market cap','மார்க்கெட் கேப்ல 5.5%'],'nt'],[['Implied yield†','கணக்கிட்ட வருமானம்†'],'~8.1%',['other income × 4 ÷ avg cash','இதர வருமானம் × 4 ÷ சராசரி கேஷ்'],'nt'],[['Capex runway†','கேப்பெக்ஸ் காலம்†'],'~17 qtrs',['at ₹941 cr a quarter','காலாண்டுக்கு ₹941 கோடி'],'up']].map(kpi).join('');
+ drawCashFlow();
+ $('crTbl').innerHTML='<tr><th>'+t(['Quarter','காலாண்டு'])+'</th><th>'+t(['Cash','கேஷ்'])+'</th><th>'+t(['Change','மாற்றம்'])+'</th><th>'+t(['Other income','இதர வருமானம்'])+'</th><th style="text-align:left">'+t(['What happened','என்ன நடந்துச்சு'])+'</th></tr>'+CL.map(function(l,i){var ev={1:['Paytm ticketing purchase ₹2,014 cr','பேடிஎம் டிக்கெட்டிங் ₹2,014 கோடி'],2:['QIP proceeds (net ₹8,446 cr)','QIP பணம் (நிகர ₹8,446 கோடி)'],6:['Capex + Blinkit working capital','கேப்பெக்ஸ் + பிளிங்கிட் வொர்க்கிங் கேப்பிட்டல்'],9:['Festive inventory + 308 stores','பண்டிகை ஸ்டாக் + 308 ஸ்டோர்']}[i];return '<tr'+(i===9?' style="background:#fff7ef"':'')+'><td>'+l+'</td><td>'+inr(CASH[i])+'</td><td class="'+(i&&CASH[i]-CASH[i-1]<0?'dn':'up')+'">'+(i?inr(CASH[i]-CASH[i-1]):'—')+'</td><td>'+inr(COI[i])+'</td><td class="l">'+(ev?t(ev):'')+'</td></tr>';}).join('');
+ var fh='<tr><th>'+t(['Metric (₹ cr)','அளவீடு (₹ கோடி)'])+'</th><th>Q2FY27</th><th>Q1FY27</th><th>Q2FY26</th><th>QoQ</th><th>YoY</th></tr>';
+ FIN.forEach(function(r){if(r[0]==='#'){fh+='<tr class="cat"><td colspan="6">'+(L==='ta'?r[2]:r[1])+'</td></tr>';return;}
+  var a=r[1],b=r[2],c=r[3];function ch(x,y){if(typeof x!=='number'||typeof y!=='number'||y===0)return '—';var g=(x-y)/Math.abs(y)*100;return '<span class="'+(g>=0?'up':'dn')+'">'+(g>=0?'+':'')+g.toFixed(1)+'%</span>';}
+  function f(x){return typeof x==='number'?inr(x):(L==='ta'?String(x).replace('No','இல்ல'):x);}
+  fh+='<tr><td>'+t(r[0])+'</td><td><b>'+f(a)+'</b></td><td>'+f(b)+'</td><td>'+f(c)+'</td><td>'+ch(a,b)+'</td><td>'+ch(a,c)+'</td></tr>';});
+ $('finTbl').innerHTML=fh;
+ var wh='<tr><th>'+t(['Days','நாட்கள்'])+'</th>'+CFY.map(function(y){return '<th>'+y+'</th>';}).join('')+'</tr>';
+ [[['Debtor days','கடனாளர் நாட்கள்'],WCD.deb],[['Inventory days','இன்வென்டரி நாட்கள்'],WCD.inv],[['Payable days','பேயபிள் நாட்கள்'],WCD.pay],[['Cash conversion cycle','கேஷ் கன்வர்ஷன் சைக்கிள்'],WCD.ccc],[['CFO (₹ cr)','CFO (₹ கோடி)'],CFO],[['Free cash flow (₹ cr)','ஃப்ரீ கேஷ் ஃப்ளோ (₹ கோடி)'],FCF]].forEach(function(r){wh+='<tr><td>'+t(r[0])+'</td>'+r[1].map(function(v){return '<td>'+inr(v)+'</td>';}).join('')+'</tr>';});
+ $('wcTbl').innerHTML=wh;
+ $('cfCards').innerHTML=CFC.map(function(x){return '<div class="card"><b>'+t(x[0])+'</b><div style="font-size:13.5px;margin-top:4px">'+t(x[1])+'</div></div>';}).join('');
+ $('valTbl').innerHTML='<tr><th>'+t(['Measure','அளவீடு'])+'</th><th>'+t(['Value','மதிப்பு'])+'</th></tr>'+VAL.map(function(r){return '<tr><td>'+t(r[0])+'</td><td><b>'+(L==='ta'?r[1].replace(/ cr/g,' கோடி').replace('Nil','இல்ல').replace('since','இதுவரை').replace('book value','புக் வேல்யூ'):r[1])+'</b></td></tr>';}).join('');
+ $('valCards').innerHTML=VALC.map(function(x){return '<div class="card hl"><b>'+t(x[0])+'</b><div style="font-size:13.5px;margin-top:4px">'+t(x[1])+'</div></div>';}).join('');
+ $('mkKpi').innerHTML=MKK.map(kpi).join('');
+ $('mkCards').innerHTML=MKC.map(function(x){return '<div class="card"><b>'+t(x[0])+'</b><div style="font-size:13.5px;margin-top:4px">'+t(x[1])+'</div></div>';}).join('');
+ drawClock(); renderTC();
+ $('swot').innerHTML=['S','W','O','T'].map(function(k){var s=SWOT[k];return '<div class="s'+k+'"><b>'+t(s[0])+'</b><ul class="tight">'+s[1].map(function(x){return '<li>'+t(x)+'</li>';}).join('')+'</ul></div>';}).join('');
+ $('anTbl').innerHTML='<tr><th>'+t(['Brokerage','ப்ரோக்கரேஜ்'])+'</th><th style="text-align:left">'+t(['Rating','ரேட்டிங்'])+'</th><th>'+t(['Target ₹','இலக்கு ₹'])+'</th><th>'+t(['Upside vs ₹312.35','₹312.35-ல இருந்து'])+'</th><th style="text-align:left">'+t(['Note','குறிப்பு'])+'</th></tr>'+AN.map(function(a){var u=typeof a[2]==='number'?((a[2]/312.35-1)*100):null;return '<tr><td><b>'+a[0]+'</b></td><td class="l"><span class="pill '+a[4]+'">'+t(a[1])+'</span></td><td>'+(typeof a[2]==='number'?inr(a[2]):'n/a†')+'</td><td class="'+(u===null?'':(u>=0?'up':'dn'))+'">'+(u===null?'—':(u>=0?'+':'')+u.toFixed(0)+'%')+'</td><td class="l" style="font-size:12.5px">'+(L==='ta'?(ANT[a[3]]||''):a[3])+'</td></tr>';}).join('');
+ renderSC();
+ $('mgr').innerHTML=MGR.map(function(m){return '<div class="person"><div class="n">'+m[0]+'</div><div class="r">'+t(m[1])+'</div><div style="font-size:13px;margin-top:4px">'+t(m[2])+'</div></div>';}).join('');
+ $('gov').innerHTML=GOV.map(function(g){return '<li>'+t(g)+'</li>';}).join('');
+ renderQuiz();
+ $('cbDisc').innerHTML=t(DISC);
+ $('asTxt').placeholder=t(['Ask: other income? cash? Blinkit? targets?','கேளுங்க: இதர வருமானம்? கேஷ்? பிளிங்கிட்? இலக்கு?']);
+ $('asQs').innerHTML=[['Why is profit mostly other income?','லாபம் ஏன் பெரும்பாலும் இதர வருமானம்?'],['How much cash?','எவ்வளவு கேஷ்?'],['How did the business model change?','பிசினஸ் மாடல் எப்படி மாறிச்சு?'],['Broker targets?','ப்ரோக்கர் இலக்குகள்?'],['Should I buy?','நான் வாங்கலாமா?']].map(function(q){return '<button onclick="askQ(this)">'+t(q)+'</button>';}).join('');
+ if(!$('asLog').innerHTML) addMsg('b',t(['Hi! I answer questions about Eternal\'s Q2FY27 numbers by text or voice. Tap 🎤 and speak, or type.','வணக்கம்! எட்டர்னல் Q2FY27 எண்கள் பத்தி டைப் பண்ணியோ பேசியோ கேளுங்க. 🎤 தட்டி பேசுங்க.']));
+}
+function kpi(k){return '<div class="kpi"><div class="l">'+t(k[0])+'</div><div class="v">'+(L==='ta'?k[1].replace(' cr',' கோடி').replace(' qtrs',' காலாண்டு'):k[1])+'</div><div class="d '+k[3]+'">'+t(k[2])+'</div></div>';}
+
+function drawTemple(){
+ var s='<defs><linearGradient id="rf" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f59e0b"/><stop offset="1" stop-color="#e8730c"/></linearGradient></defs>';
+ s+='<polygon points="40,118 380,18 720,118" fill="url(#rf)" stroke="#c2410c" stroke-width="2"/>';
+ s+='<text x="380" y="72" text-anchor="middle" font-size="15" fill="#fff" font-weight="700">'+t(['CB SCORE','CB ஸ்கோர்'])+'</text><text x="380" y="104" text-anchor="middle" font-size="30" fill="#fff" font-weight="900">'+CO.cb.score+' / 10</text>';
+ s+='<rect x="40" y="118" width="680" height="38" fill="#fff7ef" stroke="#c2410c"/><text x="380" y="143" text-anchor="middle" font-size="16" font-weight="800" fill="#9a3412">'+t(['ETERNAL LTD · Q2 FY27','எட்டர்னல் · Q2 FY27'])+'</text>';
+ PILLARS.forEach(function(p,i){var x=78+i*107,y=168,h=190,w=68,c=p.s>=8?'#16a34a':(p.s>=6?'#d97706':'#dc2626');
+  s+='<g style="cursor:pointer" onclick="pillarGo(\''+p.k+'\')"><rect x="'+x+'" y="'+y+'" width="'+w+'" height="'+h+'" fill="#f3f4f6" stroke="#d1d5db"/>';
+  s+='<rect class="pf" data-h="'+(h*p.s/10)+'" x="'+x+'" y="'+(y+h)+'" width="'+w+'" height="0" fill="'+c+'" opacity=".85"/>';
+  for(var f=1;f<4;f++)s+='<line x1="'+(x+f*17)+'" y1="'+y+'" x2="'+(x+f*17)+'" y2="'+(y+h)+'" stroke="#fff" stroke-opacity=".55"/>';
+  s+='<circle cx="'+(x+w/2)+'" cy="'+(y+24)+'" r="19" fill="#fff" stroke="'+c+'" stroke-width="3"/><text x="'+(x+w/2)+'" y="'+(y+29)+'" text-anchor="middle" font-size="13" font-weight="800" fill="'+c+'">'+p.s.toFixed(1)+'</text>';
+  s+='<text x="'+(x+w/2)+'" y="412" text-anchor="middle" font-size="12" font-weight="700" fill="#374151">'+t(p.n)+'</text></g>';});
+ s+='<rect x="30" y="358" width="700" height="14" fill="#e5e7eb"/><rect x="15" y="372" width="730" height="16" fill="#d1d5db"/>';
+ $('temple').innerHTML=s;
+ setTimeout(function(){document.querySelectorAll('#temple .pf').forEach(function(r){var h=+r.getAttribute('data-h');var y0=358,st=null;function an(ts){if(!st)st=ts;var k=Math.min(1,(ts-st)/1100);var hh=h*k;r.setAttribute('y',y0-hh);r.setAttribute('height',hh);if(k<1)requestAnimationFrame(an);}requestAnimationFrame(an);});},150);
+}
+function pillarGo(k){var el=$('pc-'+k);el.scrollIntoView({behavior:'smooth',block:'center'});el.classList.add('flash');setTimeout(function(){el.classList.remove('flash');},1600);}
+
+function drawBM(){
+ var s='<defs><marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#9ca3af"/></marker></defs>';
+ function ln(x1,y1,x2,y2,c){return '<line x1="'+x1+'" y1="'+y1+'" x2="'+x2+'" y2="'+y2+'" stroke="'+(c||'#9ca3af')+'" stroke-width="2" marker-end="url(#ar)"/>';}
+ s+=ln(150,300,173,300)+ln(335,300,358,300);
+ ['fd','qc','go','hp','ot'].forEach(function(k){var p=BMP[k];s+=ln(510,300,543,p[1]+p[3]/2);s+=ln(760,p[1]+p[3]/2,788,55);});
+ s+=ln(860,90,860,118)+ln(860,190,860,218)+ln(860,290,860,328)+ln(1020,140,1020,218,'#0284c7')+ln(950,270,932,345,'#0284c7')+ln(930,362,948,362)+ln(860,394,860,438,'#16a34a');
+ Object.keys(BMP).forEach(function(k){var p=BMP[k],lines=BML[k][L==='ta'?1:0],dark=(k==='eter');
+  var g='<g class="bmbox" id="bx-'+k+'" onclick="bmShow(\''+k+'\')"><rect x="'+p[0]+'" y="'+p[1]+'" width="'+p[2]+'" height="'+p[3]+'" rx="10" fill="'+p[4]+'" stroke="'+p[5]+'" stroke-width="2"/>';
+  var n=lines.length,lh=k==='pat'?22:16,y0=p[1]+p[3]/2-((n-1)*lh)/2+4;
+  lines.forEach(function(tx,i){g+='<text x="'+(p[0]+p[2]/2)+'" y="'+(y0+i*lh)+'" text-anchor="middle" font-size="'+(i===0?(k==='eter'?17:12.5):11)+'" font-weight="'+(i===0?800:500)+'" fill="'+(dark?'#fff':(k==='core'&&i===1?'#dc2626':'#111827'))+'">'+tx+'</text>';});
+  s+=g+'</g>';});
+ $('bmMap').innerHTML=s;
+}
+var bmSel='qc';
+function bmShow(k){bmSel=k;document.querySelectorAll('.bmbox').forEach(function(b){b.classList.remove('sel');});var b=$('bx-'+k);if(b)b.classList.add('sel');
+ $('bmCard').innerHTML='<b style="color:#c2410c">'+t(BM[k][0])+'</b><div style="margin-top:4px">'+t(BM[k][1])+'</div>';}
+
+function drawCashFlow(){
+ var s='<defs><marker id="ar2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#0284c7"/></marker></defs>';
+ var src=[[['IPO 2021 (fresh)','IPO 2021 (புது பணம்)'],'₹9,000 cr'],[['QIP Nov 2024','QIP நவ 2024'],'₹8,500 cr'],[['Food-delivery cash profits','ஃபுட் டெலிவரி கேஷ் லாபம்'],t(['ongoing','தொடர்ந்து'])]];
+ var use=[[['Blinkit stores & warehouses (capex)','பிளிங்கிட் ஸ்டோர் & வேர்ஹவுஸ் (கேப்பெக்ஸ்)'],'₹941 cr '+t(['in Q2','Q2-ல'])],[['Inventory & working capital','ஸ்டாக் & வொர்க்கிங் கேப்பிட்டல்'],t(['festive build-up','பண்டிகை சேர்ப்பு'])],[['Acquisitions (Paytm ticketing)','வாங்கல் (பேடிஎம் டிக்கெட்டிங்)'],'₹2,014 cr (2024)'],[['Losses of new bets','புது முயற்சி நஷ்டம்'],t(['District, Bistro','டிஸ்ட்ரிக்ட், பிஸ்ட்ரோ'])]];
+ src.forEach(function(x,i){var y=30+i*95;s+='<rect x="10" y="'+y+'" width="230" height="70" rx="10" fill="#eff6ff" stroke="#93c5fd"/><text x="125" y="'+(y+30)+'" text-anchor="middle" font-size="13" font-weight="700">'+t(x[0])+'</text><text x="125" y="'+(y+52)+'" text-anchor="middle" font-size="13" fill="#1e40af">'+x[1]+'</text>';s+='<line x1="240" y1="'+(y+35)+'" x2="385" y2="165" stroke="#0284c7" stroke-width="2" marker-end="url(#ar2)"/>';});
+ s+='<rect x="390" y="95" width="220" height="140" rx="14" fill="#e8730c"/><text x="500" y="140" text-anchor="middle" font-size="14" fill="#fff" font-weight="700">'+t(['Cash pile','கேஷ் இருப்பு'])+'</text><text x="500" y="172" text-anchor="middle" font-size="24" fill="#fff" font-weight="900">₹16,475 cr</text><text x="500" y="200" text-anchor="middle" font-size="12" fill="#fff">'+t(['earns ~₹351 cr/qtr → other income','காலாண்டுக்கு ~₹351 கோடி → இதர வருமானம்'])+'</text>';
+ use.forEach(function(x,i){var y=10+i*80;s+='<line x1="610" y1="165" x2="745" y2="'+(y+32)+'" stroke="#dc2626" stroke-width="2" marker-end="url(#ar2)"/><rect x="750" y="'+y+'" width="240" height="64" rx="10" fill="#fef2f2" stroke="#fca5a5"/><text x="870" y="'+(y+27)+'" text-anchor="middle" font-size="12.5" font-weight="700">'+t(x[0])+'</text><text x="870" y="'+(y+48)+'" text-anchor="middle" font-size="12" fill="#991b1b">'+x[1]+'</text>';});
+ if(L==='ta')s=s.replace(/ cr/g,' கோடி');
+ $('cashFlowSvg').innerHTML=s;
+}
+
+function arcPath(cx,cy,r,a0,a1){var p0=[cx+r*Math.cos(a0),cy+r*Math.sin(a0)],p1=[cx+r*Math.cos(a1),cy+r*Math.sin(a1)];return 'M'+p0[0]+','+p0[1]+' A'+r+','+r+' 0 '+((a1-a0)>Math.PI?1:0)+' 1 '+p1[0]+','+p1[1];}
+function drawClock(){
+ var st=[[['Emerging','தொடக்கம்'],55,'#93c5fd'],[['Rapid adoption','வேக ஏற்பு'],80,'#16a34a'],[['Maturing','முதிர்ச்சி'],55,'#f59e0b'],[['Saturation','நிறைவு'],35,'#dc2626']];
+ var cx=180,cy=180,r=125,s='';
+ st.forEach(function(x,i){var a0=-Math.PI/2+i*Math.PI/2+0.04,a1=a0+Math.PI/2-0.08;s+='<path d="'+arcPath(cx,cy,r,a0,a1)+'" stroke="'+x[2]+'" stroke-width="26" fill="none"/>';var am=(a0+a1)/2;s+='<text x="'+(cx+(r+0)*Math.cos(am))+'" y="'+(cy+(r+0)*Math.sin(am)+4)+'" text-anchor="middle" font-size="10.5" font-weight="800" fill="#fff">'+x[1]+'</text>';
+  s+='<text x="'+(cx+(r-48)*Math.cos(am))+'" y="'+(cy+(r-48)*Math.sin(am)+4)+'" text-anchor="middle" font-size="11.5" font-weight="700" fill="#374151">'+t(x[0])+'</text>';});
+ var aq=-Math.PI/2+Math.PI/2*1.62; s+='<line x1="'+cx+'" y1="'+cy+'" x2="'+(cx+95*Math.cos(aq))+'" y2="'+(cy+95*Math.sin(aq))+'" stroke="#111827" stroke-width="4"/><circle cx="'+cx+'" cy="'+cy+'" r="8" fill="#111827"/>';
+ var af=-Math.PI/2+Math.PI/2*2.3; s+='<circle cx="'+(cx+r*Math.cos(af))+'" cy="'+(cy+r*Math.sin(af))+'" r="11" fill="#fff" stroke="#e23744" stroke-width="3"/><text x="'+(cx+r*Math.cos(af))+'" y="'+(cy+r*Math.sin(af)+4)+'" text-anchor="middle" font-size="9" font-weight="800" fill="#e23744">FD</text>';
+ s+='<text x="'+cx+'" y="'+(cy+36)+'" text-anchor="middle" font-size="11" fill="#111827" font-weight="700">'+t(['Pointer = Blinkit (QC)','முள் = பிளிங்கிட் (QC)'])+'</text>';
+ s+='<text x="'+cx+'" y="352" text-anchor="middle" font-size="11.5" fill="#6b7280">'+t(['Stock: Weinstein Stage 2 (late)','ஷேர்: வெய்ன்ஸ்டீன் நிலை 2 (பிற்பகுதி)'])+'</text>';
+ $('clock').innerHTML=s;
+}
+function renderTC(){
+ $('cyCard').innerHTML='<div class="grid g2"><div class="kpi"><div class="l">CY</div><div class="v">71</div><div class="d">'+t(['Cycle lens','சைக்கிள் லென்ஸ்'])+'</div></div><div class="kpi"><div class="l">TG</div><div class="v">44</div><div class="d">'+t(['Trigger lens','டிரிக்கர் லென்ஸ்'])+'</div></div></div>'+
+ '<ul class="tight" style="font-size:13.5px">'+[
+ ['<b>Sector type:</b> structural growth (S-curve). Quick commerce (≈78% of revenue) is in <b>rapid adoption</b> (80) — NOV +79%, stores sold out of capacity, margins rising. Food delivery (≈16–20%) is <b>maturing</b> (55) — 21% growth, new low-commission entrants. Weighted sector score ≈ 74.','<b>துறை வகை:</b> கட்டமைப்பு வளர்ச்சி (S-கர்வ்). குயிக் காமர்ஸ் (≈78%) <b>வேக ஏற்பு</b> (80) — NOV +79%, மார்ஜின் ஏறுது. ஃபுட் டெலிவரி <b>முதிர்ச்சி</b> (55) — 21% வளர்ச்சி, குறைந்த கமிஷன் போட்டியாளர்கள். சராசரி ≈ 74.'],
+ ['<b>Stock cycle ≈ 68:</b> lifecycle scaling 80 · earnings rising from a low base 85 · valuation in its own band 55 · price Stage 2 late (₹312 vs ₹345 high, +24% in 6 months) 50.','<b>ஷேர் சைக்கிள் ≈ 68:</b> விரிவாக்க நிலை 80 · குறைந்த அடிப்படையில இருந்து ஏறும் வருமானம் 85 · சொந்த வரம்புக்குள் வேல்யூவேஷன் 55 · விலை நிலை 2 பிற்பகுதி 50.'],
+ ['<b>CY = 50% × 74 + 50% × 68 ≈ 71.</b> TG = 50 + 8 × (2.10 + 1.96 + 1.40) − 8 × (2.10 + 2.10 + 2.00) ≈ 44: good catalysts, but the tax step-up, competition and cash drawdown are live.','<b>CY = 50% × 74 + 50% × 68 ≈ 71.</b> TG = 50 + 8 × (2.10 + 1.96 + 1.40) − 8 × (2.10 + 2.10 + 2.00) ≈ 44: நல்ல டிரிக்கர்ஸ் இருக்கு, ஆனா வரி ஏற்றம், போட்டி, கேஷ் குறைவு நடந்துகிட்டு இருக்கு.']
+ ].map(function(x){return '<li>'+t(x)+'</li>';}).join('')+'</ul>';
+ var h='<tr><th>'+t(['Trigger','டிரிக்கர்'])+'</th><th>+/−</th><th>I</th><th>C</th><th>W</th><th>P</th><th>'+t(['Points','புள்ளி'])+'</th><th style="text-align:left">'+t(['What to watch','என்ன கவனிக்கணும்'])+'</th><th>'+t(['Status','நிலை'])+'</th></tr>';
+ var TRN=[['Blinkit store ramp to >3,500 by Mar-27 & mature-store margin uplift','மார்ச்-27-க்குள் 3,500+ ஸ்டோர் & முதிர்ந்த ஸ்டோர் மார்ஜின் உயர்வு'],['Core PBT crossing zero','கோர் PBT பூஜ்ஜியத்தை தாண்டுவது'],['Remaining own-inventory margin gain','மீதி சொந்த-ஸ்டாக் மார்ஜின் லாபம்'],['District EBITDA breakeven','டிஸ்ட்ரிக்ட் EBITDA சமநிலை'],['Tax shields exhausted — 61% tax','வரி கழிவு தீர்ந்தது — 61% வரி'],['Quick-commerce competition','குயிக் காமர்ஸ் போட்டி'],['Cash drawdown lowers other income','கேஷ் குறைவு இதர வருமானத்தை குறைக்கும்']];
+ var STN={Executing:['Executing','நடக்குது'],Watch:['Watch','கவனிப்பு']};
+ CO.triggers.forEach(function(x,i){h+='<tr><td class="l">'+t(TRN[i])+'</td><td><span class="pill '+(x.sign==='+'?'p-g':'p-r')+'">'+(x.sign==='+'?'+':'−')+'</span></td><td>'+x.I+'</td><td>'+x.C+'</td><td>'+x.W+'</td><td>'+x.P+'</td><td><b>'+x.pts.toFixed(2)+'</b></td><td class="l" style="font-size:12.5px">'+t(TRW[i])+'</td><td>'+t(STN[x.status])+'</td></tr>';});
+ $('trTbl').innerHTML=h;
+ var s='<line x1="30" y1="60" x2="870" y2="60" stroke="#e8730c" stroke-width="4"/>';
+ TREV.forEach(function(e,i){var x=60+i*156;s+='<circle cx="'+x+'" cy="60" r="10" fill="#fff" stroke="#e8730c" stroke-width="4"/><text x="'+x+'" y="38" text-anchor="middle" font-size="12.5" font-weight="800" fill="#9a3412">'+e[0]+'</text>';
+  var w=t(e[1]).split(' '),l1=[],l2=[];w.forEach(function(q){(l1.join(' ').length<20?l1:l2).push(q);});
+  s+='<text x="'+x+'" y="92" text-anchor="middle" font-size="11.5" fill="#374151">'+l1.join(' ')+'</text><text x="'+x+'" y="108" text-anchor="middle" font-size="11.5" fill="#374151">'+l2.join(' ')+'</text>';});
+ $('trLine').innerHTML=s;
+ $('tcChange').innerHTML='<b>'+t(['What would change this view','இந்த பார்வையை எது மாத்தும்'])+'</b><ul class="tight">'+[
+  ['Positive: two straight quarters of positive core PBT and Blinkit margin above ~2% of NOV would lift TG towards 60+.','பாசிட்டிவ்: தொடர்ந்து ரெண்டு காலாண்டு கோர் PBT பாசிட்டிவ், பிளிங்கிட் மார்ஜின் NOV-ல ~2%-க்கு மேல — TG 60+ பக்கம் போகும்.'],
+  ['Negative: a price war that reverses Blinkit margins, or cash falling below ~₹12,000 cr without core profit, would push TG below 35.','நெகட்டிவ்: பிளிங்கிட் மார்ஜினை திருப்பும் விலைப் போர், அல்லது கோர் லாபம் இல்லாம கேஷ் ~₹12,000 கோடிக்கு கீழ — TG 35-க்கு கீழ போகும்.'],
+  ['Cycle: if store additions slow and growth falls to ~25%, QC moves from "rapid adoption" to "maturing" and CY drops to the low 60s.','சைக்கிள்: ஸ்டோர் சேர்ப்பு மெதுவாகி வளர்ச்சி ~25%-க்கு வந்தா, QC \"முதிர்ச்சி\" நிலைக்கு போகும், CY 60-களுக்கு இறங்கும்.']
+ ].map(function(x){return '<li>'+t(x)+'</li>';}).join('')+'</ul>';
+}
+
+/* ===== Self-check ===== */
+var SKEY='cb_sc_eternal_q2fy27';
+function scLoad(){try{return JSON.parse(localStorage.getItem(SKEY))||{t:{},own:[]};}catch(e){return {t:{},own:[]};}}
+function scSave(d){try{localStorage.setItem(SKEY,JSON.stringify(d));}catch(e){}}
+var SCD=scLoad();
+function renderSC(){
+ var h='';
+ SC.forEach(function(g,gi){h+='<div class="card sc-g"><div style="display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap"><b>'+t(g[0])+'</b><span id="scg'+gi+'" class="note"></span></div><div class="bar" style="margin:6px 0"><i id="scb'+gi+'"></i></div>';
+  g[1].forEach(function(it,ii){var id=gi+'_'+ii;h+='<label class="sc-item"><input type="checkbox" '+(SCD.t[id]?'checked':'')+' onchange="scTick(\''+id+'\',this.checked)"><span>'+t(it[0])+'<div class="sc-data">'+t(['Data: ','டேட்டா: '])+t(it[1])+'</div></span></label>';});
+  h+='</div>';});
+ h+='<div class="card sc-g"><div style="display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap"><b>'+t(['5. My own conditions','5. என் சொந்த நிபந்தனைகள்'])+'</b><span id="scg4" class="note"></span></div><div class="bar" style="margin:6px 0"><i id="scb4"></i></div>';
+ h+='<div class="sugg">'+SCSUG.map(function(s,i){return '<button onclick="scAddS('+i+')">+ '+t(s)+'</button>';}).join('')+'</div>';
+ h+='<div style="display:flex;gap:6px"><input type="text" id="scNew" style="flex:1" maxlength="90" placeholder="'+t(['Type your own condition (max 8)','உங்க நிபந்தனையை டைப் பண்ணுங்க (அதிகபட்சம் 8)'])+'"><button class="btn f" onclick="scAdd()">'+t(['Add','சேர்'])+'</button></div>';
+ SCD.own.forEach(function(o,i){h+='<label class="sc-item"><input type="checkbox" '+(o.c?'checked':'')+' onchange="scOwn('+i+',this.checked)"><span>'+o.x.replace(/</g,'&lt;')+'<div class="sc-data">'+t(['Data: ','டேட்டா: '])+'</div></span><button class="btn" style="margin-left:auto;padding:2px 8px" onclick="scDel('+i+')">✕</button></label>';});
+ h+='</div>';
+ $('scGroups').innerHTML=h; scProg();
+}
+function scTick(id,v){SCD.t[id]=v;scSave(SCD);scProg();}
+function scOwn(i,v){SCD.own[i].c=v;scSave(SCD);scProg();}
+function scDel(i){SCD.own.splice(i,1);scSave(SCD);renderSC();}
+function scAdd(){var v=$('scNew').value.trim();if(!v||SCD.own.length>=8)return;SCD.own.push({x:v,c:false});scSave(SCD);renderSC();}
+function scAddS(i){if(SCD.own.length>=8)return;SCD.own.push({x:t(SCSUG[i]),c:false});scSave(SCD);renderSC();}
+function scClear(){SCD={t:{},own:SCD.own.map(function(o){return {x:o.x,c:false};})};scSave(SCD);renderSC();}
+function scProg(){var tot=0,ok=0;SC.forEach(function(g,gi){var n=g[1].length,c=0;g[1].forEach(function(_,ii){if(SCD.t[gi+'_'+ii])c++;});tot+=n;ok+=c;$('scg'+gi).textContent=c+' / '+n;$('scb'+gi).style.width=(c/n*100)+'%';});
+ var on=SCD.own.length,oc=SCD.own.filter(function(o){return o.c;}).length;$('scg4').textContent=oc+' / '+on;$('scb4').style.width=(on?oc/on*100:0)+'%';tot+=on;ok+=oc;
+ $('scAllTxt').textContent=ok+' / '+tot+' — '+t(['This only counts how many of your own conditions line up. It is not a recommendation.','இது உங்க சொந்த நிபந்தனைகள்ல எத்தனை ஒத்துப்போகுதுன்னு மட்டும் எண்ணுது. இது பரிந்துரை இல்ல.']);$('scAllBar').style.width=(tot?ok/tot*100:0)+'%';}
+
+/* ===== Quiz ===== */
+function renderQuiz(){$('quiz').innerHTML=QZ.map(function(q,i){return '<div class="q"><b>Q'+(i+1)+'. '+t(q[0])+'</b>'+q[1].map(function(o,j){return '<button class="opt" onclick="qa('+i+','+j+',this)">'+t(o)+'</button>';}).join('')+'<div class="ex" id="qx'+i+'">'+t(q[3])+'</div></div>';}).join('');
+ $('soFt').textContent=t(SOFT[0]);$('soModel').textContent=t(SOFT[1]);}
+function qa(i,j,el){var q=QZ[i],box=el.parentNode;box.querySelectorAll('.opt').forEach(function(b,k){b.disabled=true;if(k===q[2])b.classList.add('ok');});if(j!==q[2])el.classList.add('no');$('qx'+i).style.display='block';}
+function showModel(){$('soModel').style.display='block';}
+
+
+TA.ev_road="பயணப் பாதை — நாலு காலங்கள், பன்னிரண்டு திருப்புமுனைகள்";
+TA.ev_roadn="எந்த பின்னையும் தட்டினா என்ன மாறிச்சுன்னு படிக்கலாம். நிரப்பின பின் = பிசினஸ் மாடல் மாற்றம். நிறங்கள்: மஞ்சள் = மாடல் மாற்றம், பச்சை = லாப மைல்கல், நீலம் = மூலதனம், சிவப்பு = இந்த காலாண்டு.";
+TA.ev_era="கால ஸ்கோர்கார்டு — ஒவ்வொரு மாடலோடவும் எண்கள் எப்படி மாறிச்சு";
+TA.ev_flow="பணம் எப்படி ஓடுது — அப்போ vs இப்போ";
+TA.ev_flown="இடது: மார்க்கெட்பிளேஸா இருந்தப்போ கஸ்டமர் பணம் முதல்ல வந்துச்சு, ரெஸ்டாரன்ட்டுக்கு அப்புறம் கொடுத்தாங்க — சப்ளையர்ஸ் பணத்துல பிசினஸ் ஓடுச்சு. வலது: இப்போ பிளிங்கிட் முதல்ல ஸ்டாக்குக்கு பணம் கட்டுது, கஸ்டமர் வாங்கினப்புறம் தான் பணம் வருது — தன் அலமாரிக்கு தானே பணம் போடுது.";
+TA.ev_apps="ஒரு ஆப்ல இருந்து நாலு ஆப் வரை — பிசினஸ் படிக்கட்டு";
+TA.ev_c3="அசெட்-லைட் → அசெட்-ஹெவி (₹ கோடி)";
+TA.ev_c3n="FY23-ல இருந்து பிளிங்கிட் குட்வில்/இன்டாஞ்சிபிள்ஸ், அப்புறம் டார்க் ஸ்டோர் சொத்துகள் & லீஸ் — ஃபிக்ஸ்டு அசெட்ஸ்ல சேர்ந்திருக்கு. தேய்மானம் FY22-ல இருந்து FY26-க்கு 11 மடங்கு.";
+TA.ev_c4="வொர்க்கிங் கேப்பிட்டல் தலைகீழ் (கேஷ் கன்வர்ஷன் சைக்கிள், நாட்கள்)";
+TA.ev_c4n="பச்சை = சப்ளையர் பணத்துல பிசினஸ் (நெகட்டிவ் சைக்கிள்). சிவப்பு = பிசினஸ் தன் ஸ்டாக்குக்கு தானே பணம் போடுது (பாசிட்டிவ் சைக்கிள்).";
+TA.ev_c5="டார்க் ஸ்டோர் விரிவாக்கம் (பிளிங்கிட் ஸ்டோர்ஸ்)";
+TA.ev_c5n="செப்-24, ஜூன்-26, செப்-26 அறிவிக்கப்பட்ட எண்ணிக்கை; மார்ச்-27, மார்ச்-28 மேனேஜ்மென்ட் இலக்குகள் (வெளிர் பார்கள்).";
+TA.ev_tl="முழு டைம்லைன் (எழுத்தில்)";
+TA.ev_c2n="FY22 ஆனுவல் ரிப்போர்ட் செக்மென்ட் டேட்டா; காலாண்டு பங்குகள் செக்மென்ட் ரெவென்யூ / அட்ஜஸ்டட் ரெவென்யூ அடிப்படையில. Q2FY25-ல அறிவிக்கப்பட்ட மூணு செக்மென்ட் மட்டும். † Q2FY27 ஃபுட் டெலிவரில \"மற்றவை\" சேர்ந்திருக்கு (கணக்கிட்டது).";
+
+var TLS=[['IPO & listing','IPO & லிஸ்டிங்'],['Minority bets','சிறு முதலீடுகள்'],['Blinkit bought','பிளிங்கிட் வாங்கல்'],['First profit','முதல் லாபம்'],['Paytm ticketing → District','பேடிஎம் → டிஸ்ட்ரிக்ட்'],['₹8,500 cr QIP','₹8,500 கோடி QIP'],['Renamed Eternal','எட்டர்னல் பெயர்'],['Foreign cap 49.5%','வெளிநாட்டு வரம்பு 49.5%'],['Blinkit owns stock (1P)','பிளிங்கிட் சொந்த ஸ்டாக் (1P)'],['Blinkit EBITDA +ve','பிளிங்கிட் EBITDA +'],['New Group CEO','புது குரூப் CEO'],['Q2FY27: scale & tax','Q2FY27: விரிவு & வரி']];
+var ERAS=[
+ {a:0,b:1,n:['Era 1 · Food marketplace','காலம் 1 · ஃபுட் மார்க்கெட்பிளேஸ்'],y:'2021–22',c:'#fde8ea',e:'#e23744',m:[[['Revenue','ரெவென்யூ'],'₹4,192 cr','FY22'],[['Net profit','நிகர லாபம்'],'−₹1,222 cr','FY22'],[['Cash cycle','கேஷ் சைக்கிள்'],'−257 '+'d','FY22'],[['Quick commerce share','குயிக் காமர்ஸ் பங்கு'],'0%','FY22']],x:['Commission business; losses funded by IPO cash.','கமிஷன் பிசினஸ்; நஷ்டத்துக்கு IPO பணம்.']},
+ {a:2,b:3,n:['Era 2 · Quick commerce enters','காலம் 2 · குயிக் காமர்ஸ் நுழைவு'],y:'2022–24',c:'#fff6d6',e:'#e6a800',m:[[['Revenue','ரெவென்யூ'],'₹12,114 cr','FY24'],[['Net profit','நிகர லாபம்'],'₹351 cr','FY24'],[['Cash cycle','கேஷ் சைக்கிள்'],'−77 d','FY24'],[['Other income ÷ PBT','இதர வருமானம் ÷ PBT'],'291%','FY24']],x:['Blinkit added; first profits, but carried by interest income.','பிளிங்கிட் சேர்ந்தது; முதல் லாபம், ஆனா வட்டி வருமானம் தாங்குச்சு.']},
+ {a:4,b:7,n:['Era 3 · Multi-app group + war chest','காலம் 3 · மல்டி-ஆப் குரூப் + போர் நிதி'],y:'2024–25',c:'#f1e8ff',e:'#7c3aed',m:[[['Revenue','ரெவென்யூ'],'₹20,243 cr','FY25'],[['Net profit','நிகர லாபம்'],'₹527 cr','FY25'],[['Cash cycle','கேஷ் சைக்கிள்'],'−54 d','FY25'],[['Cash','கேஷ்'],'₹18,824 cr','Mar-25']],x:['District added, QIP raised, renamed Eternal, foreign cap set.','டிஸ்ட்ரிக்ட், QIP, எட்டர்னல் பெயர், வெளிநாட்டு வரம்பு.']},
+ {a:8,b:11,n:['Era 4 · Own-inventory retailer','காலம் 4 · சொந்த-ஸ்டாக் ரீடெய்லர்'],y:'FY26 →',c:'#e7f8ee',e:'#16a34a',m:[[['Revenue','ரெவென்யூ'],'₹77,956 cr','TTM'],[['Net profit','நிகர லாபம்'],'₹493 cr','TTM'],[['Cash cycle','கேஷ் சைக்கிள்'],'+2 d','FY26'],[['Blinkit stores','பிளிங்கிட் ஸ்டோர்ஸ்'],'2,751','Sep-26']],x:['Retailer economics: big revenue, thin margins, inventory and stores need cash.','ரீடெய்லர் பொருளாதாரம்: பெரிய ரெவென்யூ, மெலிசான மார்ஜின், ஸ்டாக் & ஸ்டோருக்கு கேஷ் வேணும்.']}
+];
+var PINC={chg:'#e6a800',pr:'#16a34a',cash:'#2563eb',st:'#2563eb',now:'#dc2626','':'#9ca3af'};
+var roadSel=11;
+function wrap2(txt,n){var w=txt.split(' '),l1=[],l2=[];w.forEach(function(q){(l1.join(' ').length+q.length<=n&&!l2.length?l1:l2).push(q);});return [l1.join(' '),l2.join(' ')];}
+function drawRoad(){
+ var X=function(i){return 70+i*96;},s='';
+ ERAS.forEach(function(e){var x0=X(e.a)-44,x1=X(e.b)+44;s+='<rect x="'+x0+'" y="10" width="'+(x1-x0)+'" height="340" rx="12" fill="'+e.c+'" opacity=".75"/><text x="'+((x0+x1)/2)+'" y="32" text-anchor="middle" font-size="12.5" font-weight="800" fill="'+e.e+'">'+t(e.n)+'</text><text x="'+((x0+x1)/2)+'" y="48" text-anchor="middle" font-size="11" fill="#6b7280">'+e.y+'</text>';});
+ s+='<rect x="20" y="168" width="1160" height="26" rx="13" fill="#4b5563"/><line x1="30" y1="181" x2="1170" y2="181" stroke="#fff" stroke-width="2" stroke-dasharray="14 10"/>';
+ s+='<polygon points="1168,160 1192,181 1168,202" fill="#4b5563"/>';
+ TL.forEach(function(it,i){var x=X(i),up=(i%2===0),c=PINC[it[4]||''],r=it[3]?13:9,sel=(i===roadSel);
+  var ly=up?118:232;s+='<g style="cursor:pointer" onclick="roadShow('+i+')">';
+  s+='<line x1="'+x+'" y1="'+(up?ly+12:ly-26)+'" x2="'+x+'" y2="'+(up?168:194)+'" stroke="'+c+'" stroke-width="2"/>';
+  s+='<circle cx="'+x+'" cy="'+(up?ly+12:ly-26)+'" r="'+(r+(sel?4:0))+'" fill="'+(it[3]?c:'#fff')+'" stroke="'+(sel?'#111827':c)+'" stroke-width="3"/>';
+  var w=wrap2(t(TLS[i]),15),ty=up?ly-36:ly+2;
+  s+='<text x="'+x+'" y="'+ty+'" text-anchor="middle" font-size="11.5" font-weight="800" fill="#9a3412">'+it[0]+'</text>';
+  s+='<text x="'+x+'" y="'+(ty+15)+'" text-anchor="middle" font-size="11" font-weight="600" fill="#111827">'+w[0]+'</text><text x="'+x+'" y="'+(ty+29)+'" text-anchor="middle" font-size="11" font-weight="600" fill="#111827">'+w[1]+'</text></g>';});
+ $('road').innerHTML=s; roadCard();
+}
+function roadShow(i){roadSel=i;drawRoad();}
+function roadCard(){var it=TL[roadSel];var tagN={chg:['Business-model change','பிசினஸ் மாடல் மாற்றம்'],pr:['Profit milestone','லாப மைல்கல்'],cash:['Capital','மூலதனம்'],st:['Start','தொடக்கம்'],now:['This quarter','இந்த காலாண்டு']};
+ $('roadCard').innerHTML='<span class="tld">'+it[0]+'</span>'+(it[4]?' <span class="pill" style="background:'+PINC[it[4]]+';color:#fff">'+t(tagN[it[4]])+'</span>':'')+'<div style="font-weight:800;margin-top:2px">'+t(it[1])+'</div><div style="font-size:13.5px;margin-top:2px">'+t(it[2])+'</div><div style="margin-top:8px;display:flex;gap:6px"><button class="btn" onclick="roadShow('+Math.max(0,roadSel-1)+')">◀</button><button class="btn" onclick="roadShow('+Math.min(TL.length-1,roadSel+1)+')">▶</button></div>';}
+function drawEras(){$('eraCards').innerHTML=ERAS.map(function(e,i){return '<div style="border:2px solid '+e.e+';border-radius:12px;background:#fff;overflow:hidden"><div style="background:'+e.c+';padding:8px 10px"><b style="color:'+e.e+'">'+t(e.n)+'</b><div class="note" style="margin:0">'+e.y+'</div></div><div style="padding:8px 10px">'+e.m.map(function(m){var v=m[1];if(L==='ta')v=v.replace(' cr',' கோடி').replace(' d',' நாள்');return '<div style="display:flex;justify-content:space-between;gap:6px;border-bottom:1px dashed #e5e7eb;padding:4px 0;font-size:13px"><span>'+t(m[0])+' <span class="note">('+m[2]+')</span></span><b class="'+(v.charAt(0)==='−'?'dn':'')+'">'+v+'</b></div>';}).join('')+'<div style="font-size:12.5px;margin-top:6px;color:#374151">'+t(e.x)+'</div></div></div>';}).join('');}
+function box(x,y,w,h,fill,stroke,l1,l2){return '<rect x="'+x+'" y="'+y+'" width="'+w+'" height="'+h+'" rx="10" fill="'+fill+'" stroke="'+stroke+'" stroke-width="2"/><text x="'+(x+w/2)+'" y="'+(y+h/2-3)+'" text-anchor="middle" font-size="12.5" font-weight="800">'+l1+'</text><text x="'+(x+w/2)+'" y="'+(y+h/2+13)+'" text-anchor="middle" font-size="10.5" fill="#374151">'+(l2||'')+'</text>';}
+function arr(x1,y1,x2,y2,c,lab,ly,mid){var mk='url(#a_'+c.replace('#','')+')';return '<line x1="'+x1+'" y1="'+y1+'" x2="'+x2+'" y2="'+y2+'" stroke="'+c+'" stroke-width="2.5" marker-end="'+mk+'"/>'+(lab?'<text x="'+((x1+x2)/2)+'" y="'+(ly||((y1+y2)/2-6))+'" text-anchor="middle" font-size="10.5" font-weight="700" fill="'+c+'">'+lab+'</text>':'');}
+function defs(){return '<defs>'+['16a34a','dc2626','6b7280','2563eb'].map(function(c){return '<marker id="a_'+c+'" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#'+c+'"/></marker>';}).join('')+'</defs>';}
+function drawFlows(){
+ var a=defs();
+ a+='<text x="260" y="22" text-anchor="middle" font-size="14" font-weight="800" fill="#e23744">'+t(['THEN (FY22) — Food marketplace','அப்போ (FY22) — ஃபுட் மார்க்கெட்பிளேஸ்'])+'</text>';
+ a+=box(15,110,120,60,'#eff6ff','#93c5fd',t(['Customer','கஸ்டமர்']),t(['pays at order','ஆர்டர்ல பணம்']));
+ a+=box(200,100,130,80,'#fde8ea','#e23744',t(['Zomato app','சொமாட்டோ ஆப்']),t(['keeps commission','கமிஷன் வெச்சுக்குது']));
+ a+=box(390,40,120,60,'#fff7ed','#f59e0b',t(['Restaurant','ரெஸ்டாரன்ட்']),t(['cooks food','சமைக்குது']));
+ a+=box(390,180,120,60,'#f5f3ff','#a78bfa',t(['Delivery partner','டெலிவரி பார்ட்னர்']),t(['paid per order','ஆர்டருக்கு பணம்']));
+ a+=arr(135,140,198,140,'#16a34a',t(['₹ in first','₹ முதல்ல வரும்']));
+ a+=arr(330,120,388,75,'#dc2626',t(['₹ out later','₹ அப்புறம் போகும்']),88);
+ a+=arr(330,160,388,205,'#dc2626','');
+ a+='<rect x="15" y="250" width="495" height="40" rx="8" fill="#f0fdf4" stroke="#bbf7d0"/><text x="262" y="268" text-anchor="middle" font-size="11.5" font-weight="700" fill="#166534">'+t(['No inventory · cash cycle −257 days · suppliers fund growth','ஸ்டாக் இல்ல · கேஷ் சைக்கிள் −257 நாள் · சப்ளையர் பணத்துல வளர்ச்சி'])+'</text><text x="262" y="283" text-anchor="middle" font-size="11" fill="#166534">'+t(['Revenue = commission + fees (small slice of order value)','ரெவென்யூ = கமிஷன் + கட்டணம் (ஆர்டர் மதிப்புல சின்ன பங்கு)'])+'</text>';
+ $('flowThen').innerHTML=a;
+ var b=defs();
+ b+='<text x="260" y="22" text-anchor="middle" font-size="14" font-weight="800" fill="#16a34a">'+t(['NOW (Q2FY27) — Blinkit owns the stock','இப்போ (Q2FY27) — பிளிங்கிட் சொந்த ஸ்டாக்'])+'</text>';
+ b+=box(10,50,115,60,'#fff7ed','#f59e0b',t(['Brands','பிராண்ட்ஸ்']),t(['sell to Blinkit','பிளிங்கிட்டுக்கு விக்குது']));
+ b+=box(185,40,150,80,'#fff6d6','#e6a800',t(['Blinkit buys stock','பிளிங்கிட் ஸ்டாக் வாங்குது']),t(['₹ paid first','₹ முதல்ல கட்டுது']));
+ b+=box(185,160,150,70,'#f3f4f6','#9ca3af',t(['2,751 dark stores','2,751 டார்க் ஸ்டோர்']),t(['stock sits ~26 days','ஸ்டாக் ~26 நாள்']));
+ b+=box(395,160,115,70,'#eff6ff','#93c5fd',t(['Customer','கஸ்டமர்']),t(['10-min delivery','10 நிமிஷ டெலிவரி']));
+ b+=arr(183,80,127,80,'#dc2626',t(['₹ out first','₹ முதல்ல போகும்']),70);
+ b+=arr(260,120,260,158,'#6b7280','');
+ b+=arr(335,195,393,195,'#6b7280','');
+ b+=arr(452,158,337,95,'#16a34a',t(['₹ full value in','₹ முழு மதிப்பு வரும்']),118);
+ b+='<rect x="10" y="250" width="500" height="40" rx="8" fill="#fef2f2" stroke="#fecaca"/><text x="260" y="268" text-anchor="middle" font-size="11.5" font-weight="700" fill="#991b1b">'+t(['Owns inventory · cash cycle +2 days · growth needs cash','சொந்த ஸ்டாக் · கேஷ் சைக்கிள் +2 நாள் · வளர்ச்சிக்கு கேஷ் வேணும்'])+'</text><text x="260" y="283" text-anchor="middle" font-size="11" fill="#991b1b">'+t(['Revenue = full price of goods (₹19,152 cr in Q2FY27); profit = thin retail margin','ரெவென்யூ = பொருளோட முழு விலை (Q2FY27 ₹19,152 கோடி); லாபம் = மெலிசான ரீடெய்ல் மார்ஜின்'])+'</text>';
+ $('flowNow').innerHTML=b;
+}
+function drawStairs(){
+ var st=[['Jul 2021',['Zomato','சொமாட்டோ'],['Food delivery + dining-out','ஃபுட் டெலிவரி + டைனிங்-அவுட்'],'#e23744'],['Aug 2022',['+ Blinkit','+ பிளிங்கிட்'],['Quick commerce','குயிக் காமர்ஸ்'],'#e6a800'],['Nov 2024',['+ District','+ டிஸ்ட்ரிக்ட்'],['Movies, events, dining','சினிமா, ஈவென்ட், டைனிங்'],'#7c3aed'],['FY25',['+ Bistro','+ பிஸ்ட்ரோ'],['10-minute meals','10 நிமிஷ சாப்பாடு'],'#9ca3af']];
+ var s='';st.forEach(function(x,i){var w=200,h=50+i*45,X=20+i*215,Y=230-h;s+='<rect x="'+X+'" y="'+Y+'" width="'+w+'" height="'+h+'" rx="8" fill="'+x[3]+'" opacity=".9"/><text x="'+(X+w/2)+'" y="'+(Y+24)+'" text-anchor="middle" font-size="15" font-weight="900" fill="#fff">'+t(x[1])+'</text><text x="'+(X+w/2)+'" y="'+(Y+42)+'" text-anchor="middle" font-size="11.5" fill="#fff">'+t(x[2])+'</text><text x="'+(X+w/2)+'" y="'+(Y-8)+'" text-anchor="middle" font-size="12" font-weight="800" fill="#9a3412">'+x[0]+'</text><text x="'+(X+w/2)+'" y="250" text-anchor="middle" font-size="11.5" fill="#6b7280">'+(i+1)+' '+t(i?['apps','ஆப்ஸ்']:['app','ஆப்'])+'</text>';});
+ s+='<rect x="20" y="230" width="845" height="4" fill="#16a34a"/><text x="442" y="280" text-anchor="middle" font-size="12" font-weight="700" fill="#16a34a">'+t(['Hyperpure (B2B) runs underneath all along','ஹைப்பர்ப்யூர் (B2B) எப்போதும் அடியில'])+'</text>';
+ $('stairs').innerHTML=s;
+}
+
+/* ===== tabs & lang ===== */
+var cur='ov';
+function showTab(id){cur=id;document.querySelectorAll('section.tab').forEach(function(s){s.classList.toggle('on',s.id==='t-'+id);});document.querySelectorAll('#tabs button').forEach(function(b){b.classList.toggle('on',b.getAttribute('data-t')===id);});
+ if(CH[id]&&!inited[id]){setTimeout(function(){CH[id]();inited[id]=1;},30);} if(id==='ov')drawTemple(); window.scrollTo({top:0,behavior:'smooth'});}
+function setLang(l){L=l;try{localStorage.setItem('cb_lang',l);}catch(e){}document.documentElement.lang=(l==='ta'?'ta':'en');$('lgEn').classList.toggle('on',l==='en');$('lgTa').classList.toggle('on',l==='ta');
+ document.querySelectorAll('[data-i18n]').forEach(function(el){var k=el.getAttribute('data-i18n');el.innerHTML=(l==='ta'&&TA[k])?TA[k]:EN[k];});
+ Object.keys(charts).forEach(function(k){charts[k].destroy();delete charts[k];});inited={};
+ renderAll(); bmShow(bmSel); showTab(cur);}
+function togDisc(){$('cbDisc').classList.toggle('on');$('asPanel').classList.remove('on');}
+
+/* ===== CB Assist ===== */
+function togAs(){$('asPanel').classList.toggle('on');$('cbDisc').classList.remove('on');}
+function addMsg(w,h){var d=document.createElement('div');d.className='m '+w;d.innerHTML=h;$('asLog').appendChild(d);$('asLog').scrollTop=1e6;}
+function askQ(b){$('asTxt').value=b.textContent;ask();}
+function answer(q){var s=q.toLowerCase();
+ if(BUYK.some(function(k){return s.indexOf(k)>=0;}))return {a:t(['CB Research does not give buy, sell or hold advice. You can use the Self-check tab to see how many of your own conditions line up with Eternal\'s data.','CB Research வாங்கு, விக்கு, வெச்சிரு ஆலோசனை தராது. உங்க சொந்த நிபந்தனைகள் எட்டர்னல் டேட்டாவோட எத்தனை ஒத்துப்போகுதுன்னு செல்ஃப்-செக் டேப்ல பாருங்க.']),sc:1};
+ var best=null,bs=0;KB.forEach(function(e){var sc=0;e.k.forEach(function(k){if(s.indexOf(k)>=0)sc+=k.length;});if(sc>bs){bs=sc;best=e;}});
+ if(best)return {a:t(best.a)};
+ return {a:t(['I can answer about revenue, profit, other income, core profit, tax, cash, Blinkit, Zomato, District, Hyperpure, working capital, cash flow, valuation, broker targets, management, competition, triggers and the business-model journey.','ரெவென்யூ, லாபம், இதர வருமானம், கோர் லாபம், வரி, கேஷ், பிளிங்கிட், சொமாட்டோ, டிஸ்ட்ரிக்ட், ஹைப்பர்ப்யூர், வொர்க்கிங் கேப்பிட்டல், கேஷ் ஃப்ளோ, வேல்யூவேஷன், ப்ரோக்கர் இலக்கு, மேனேஜ்மென்ட், போட்டி, டிரிக்கர்ஸ், பிசினஸ் மாடல் பயணம் — இதைப் பத்தி பதில் சொல்லுவேன்.'])};}
+function ask(){var q=$('asTxt').value.trim();if(!q)return;addMsg('u',q.replace(/</g,'&lt;'));$('asTxt').value='';var r=answer(q);
+ addMsg('b',r.a+(r.sc?'<div style="margin-top:6px"><button class="btn" onclick="togAs();showTab(\'sc\')">'+t(['Open Self-check','செல்ஃப்-செக் திற'])+'</button></div>':''));speak(r.a);}
+function speak(x){try{if(!window.speechSynthesis)return;speechSynthesis.cancel();var u=new SpeechSynthesisUtterance(x.replace(/<[^>]+>/g,'').replace(/₹/g,L==='ta'?'ரூபாய் ':'rupees ').replace(/ cr\b/g,' crore').replace(/†/g,''));u.lang=(L==='ta'?'ta-IN':'en-IN');var vs=speechSynthesis.getVoices().filter(function(v){return v.lang&&v.lang.toLowerCase().indexOf(L==='ta'?'ta':'en-in')===0;});if(vs.length)u.voice=vs[0];u.rate=1;speechSynthesis.speak(u);}catch(e){}}
+var rec=null;
+function mic(){var SR=window.SpeechRecognition||window.webkitSpeechRecognition;if(!SR){addMsg('b',t(['Voice input is not supported in this browser — please type, or try Chrome.','இந்த ப்ரவுசர்ல குரல் உள்ளீடு இல்ல — டைப் பண்ணுங்க, அல்லது Chrome பயன்படுத்துங்க.']));return;}
+ if(rec){try{rec.stop();}catch(e){}rec=null;$('asMic').classList.remove('rec');return;}
+ rec=new SR();rec.lang=(L==='ta'?'ta-IN':'en-IN');rec.interimResults=false;rec.maxAlternatives=1;$('asMic').classList.add('rec');
+ rec.onresult=function(e){$('asTxt').value=e.results[0][0].transcript;ask();};
+ rec.onend=function(){$('asMic').classList.remove('rec');rec=null;};rec.onerror=function(){$('asMic').classList.remove('rec');rec=null;};
+ try{rec.start();}catch(e){$('asMic').classList.remove('rec');rec=null;}}
+
+/* ===== init ===== */
+document.querySelectorAll('[data-i18n]').forEach(function(el){EN[el.getAttribute('data-i18n')]=el.innerHTML;});
+var sl='en';try{sl=localStorage.getItem('cb_lang')||'en';}catch(e){}
+setLang(sl==='ta'?'ta':'en');
+
+</script>
+</body>
+</html>
