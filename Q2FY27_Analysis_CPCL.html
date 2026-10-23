@@ -1,0 +1,1037 @@
+<title>CPCL Q2 FY27 Dashboard</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;600&family=Noto+Sans+Tamil:wght@400;600;700&display=swap">
+<style>
+/* Layout: refinery control-room sheet — sticky tab rail, one column of instrument panels, white ground only */
+:root{
+  --bg:#ffffff; --panel:#f6f8f9; --line:#dde3e7; --ink:#14232e; --muted:#5b6b76;
+  --flame:#e8620c; --crude:#7a4b12; --steel:#1f5f7a; --good:#1d7f4e; --warn:#b77a00; --bad:#c0392b;
+  --f-disp:"Archivo","Arial Narrow",system-ui,sans-serif;
+  --f-body:"IBM Plex Sans","Noto Sans Tamil",system-ui,sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:15px;line-height:1.55;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:0 90px}
+body.ta{font-family:"Noto Sans Tamil","IBM Plex Sans",system-ui,sans-serif}
+body:not(.ta) .ta{display:none!important} body.ta .en{display:none!important}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bg)}
+.wrap{max-width:1120px;margin:0 auto}
+header.top{padding-block:22px 10px;display:flex;flex-wrap:wrap;gap:12px 24px;align-items:flex-end;justify-content:space-between;border-bottom:3px solid var(--ink)}
+.brand small{font-family:var(--f-mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--flame)}
+h1{font-family:var(--f-disp);font-weight:800;font-size:clamp(26px,4.4vw,42px);line-height:1.05;margin:4px 0 2px;text-wrap:balance;letter-spacing:-.01em}
+h1 span.qq{color:var(--flame)}
+[hidden]{display:none!important}
+.sub{color:var(--muted);font-size:13.5px}
+.ctrl{display:flex;gap:8px;align-items:center}
+.btn{font:600 13px var(--f-body);border:1.5px solid var(--ink);background:var(--bg);color:var(--ink);padding:7px 12px;border-radius:4px;cursor:pointer}
+.btn.on,.btn:hover{background:var(--ink);color:#fff}
+.btn:focus-visible,.tab:focus-visible,button:focus-visible{outline:3px solid var(--flame);outline-offset:2px}
+nav.tabs{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);display:flex;gap:2px;overflow-x:auto;padding-block:8px;border-bottom:1px solid var(--line);scrollbar-width:thin}
+.tab{flex:0 0 auto;font:600 13px var(--f-body);color:var(--muted);background:transparent;border:0;border-bottom:3px solid transparent;padding:8px 10px;cursor:pointer;white-space:nowrap}
+.tab.on{color:var(--ink);border-bottom-color:var(--flame)}
+section.pane{display:none;padding-block:22px 10px}
+section.pane.on{display:block}
+h2{font-family:var(--f-disp);font-weight:700;font-size:24px;margin:0 0 6px;text-wrap:balance}
+h3{font-family:var(--f-disp);font-weight:700;font-size:17px;margin:22px 0 8px;text-wrap:balance}
+.lede{max-width:70ch;color:var(--muted);margin:0 0 16px}
+p{max-width:72ch;margin:0 0 10px}
+.grid{display:grid;gap:12px}
+.g4{grid-template-columns:repeat(auto-fit,minmax(min(100%,230px),1fr))}
+.g3{grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
+.g2{grid-template-columns:repeat(auto-fit,minmax(320px,1fr))}
+.grid>*{min-width:0}
+.kpi{border:1px solid var(--line);border-top:4px solid var(--steel);padding:12px 14px;background:var(--bg)}
+.kpi .l{font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:600}
+.kpi .v{font-family:var(--f-disp);font-weight:800;font-size:28px;line-height:1.1;font-variant-numeric:tabular-nums}
+.kpi .d{font-family:var(--f-mono);font-size:12px;color:var(--muted)}
+.kpi.fl{border-top-color:var(--flame)} .kpi.cr{border-top-color:var(--crude)}
+.up{color:var(--good)} .dn{color:var(--bad)}
+.card{background:var(--panel);border:1px solid var(--line);padding:14px 16px}
+.card h4{margin:0 0 6px;font-family:var(--f-disp);font-size:15.5px}
+.card p:last-child{margin-bottom:0}
+.call{border-left:5px solid var(--flame);background:#fff6ef;padding:12px 16px;margin:12px 0}
+.call.steel{border-left-color:var(--steel);background:#eef5f8}
+.call.crude{border-left-color:var(--crude);background:#faf4ec}
+.tbl{overflow-x:auto;border:1px solid var(--line);margin:8px 0 14px}
+table{border-collapse:collapse;width:100%;font-size:13.5px;min-width:560px}
+th,td{padding:7px 10px;border-bottom:1px solid var(--line);text-align:right;font-variant-numeric:tabular-nums;vertical-align:top}
+th:first-child,td:first-child{text-align:left}
+thead th{background:var(--ink);color:#fff;font-weight:600;font-size:12.5px}
+tr.cat td{background:#eef1f3;font-weight:700;text-align:left;color:var(--steel);letter-spacing:.04em;font-size:12.5px;text-transform:uppercase}
+td.n{font-family:var(--f-mono);font-size:13px}
+.chip{display:inline-block;font:600 11.5px var(--f-mono);padding:2px 7px;border-radius:3px;border:1px solid currentColor}
+.chip.g{color:var(--good)} .chip.a{color:var(--warn)} .chip.r{color:var(--bad)} .chip.s{color:var(--steel)}
+.chartbox{overflow-x:auto;border:1px solid var(--line);padding:10px;background:var(--bg);margin:8px 0 14px}
+.chartbox .inner{min-width:640px;height:300px;position:relative}
+.note{font-size:12.5px;color:var(--muted)}
+.dag{color:var(--flame);font-weight:700}
+svg text{font-family:var(--f-body)}
+.svgbox{overflow-x:auto;border:1px solid var(--line);background:var(--bg);margin:8px 0}
+.svgbox svg{display:block;min-width:760px;width:100%;height:auto}
+.node{cursor:pointer}
+.node rect{transition:stroke-width .15s}
+.node:hover rect,.node.sel rect{stroke-width:3}
+#bmExplain,#schoolCard,#oddCard{min-height:64px}
+ul.tight{margin:0 0 10px;padding-left:20px} ul.tight li{margin:3px 0}
+/* temple */
+.temple{max-width:620px;margin:0 auto}
+.col-hit{cursor:pointer}
+.pill-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:8px}
+.pcard{border:1px solid var(--line);padding:10px 12px;border-left:5px solid var(--steel);transition:box-shadow .2s}
+.pcard.hl{box-shadow:0 0 0 3px var(--flame)}
+/* school */
+.sl{display:grid;grid-template-columns:150px 1fr 70px;gap:8px;align-items:center;font-size:13.5px;margin:5px 0}
+.sl input{width:100%}
+.sl output{font-family:var(--f-mono);text-align:right}
+.scen{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0}
+.gauge{font-family:var(--f-disp);font-weight:800;font-size:34px;font-variant-numeric:tabular-nums}
+/* self-check */
+.grpbox{border:1px solid var(--line);margin:10px 0;padding:10px 14px}
+.grpbox h4{margin:0 0 6px;font-family:var(--f-disp)}
+.ck{display:flex;gap:10px;padding:6px 0;border-bottom:1px dashed var(--line)}
+.ck:last-child{border-bottom:0}
+.ck input{margin-top:4px;width:18px;height:18px;flex:0 0 auto}
+.ck .data{font-size:12.5px;color:var(--muted)}
+.bar{height:8px;background:#e8ecef;border-radius:4px;overflow:hidden;margin:6px 0}
+.bar i{display:block;height:100%;background:var(--steel);width:0;transition:width .3s}
+/* quiz */
+.q{border:1px solid var(--line);padding:12px 14px;margin:10px 0}
+.q button.opt{display:block;width:100%;text-align:left;margin:5px 0;padding:8px 10px;border:1px solid var(--line);background:var(--bg);cursor:pointer;font:14px var(--f-body);color:var(--ink)}
+.q button.opt.ok{border-color:var(--good);background:#e9f6ef}
+.q button.opt.no{border-color:var(--bad);background:#fbecea}
+.q .fb{font-size:13.5px;margin-top:6px}
+textarea,input[type=text]{width:100%;font:14px var(--f-body);padding:8px;border:1px solid var(--line);color:var(--ink);background:var(--bg)}
+/* CB badge + assist */
+#cbBadge{position:fixed;right:calc(14px + env(safe-area-inset-right,0px));bottom:calc(14px + env(safe-area-inset-bottom,0px));z-index:30;width:52px;height:52px;border-radius:50%;background:var(--flame);color:#fff;font:800 18px var(--f-disp);border:3px solid #fff;box-shadow:0 2px 10px rgba(0,0,0,.25);cursor:pointer;animation:blink 2.4s infinite}
+@keyframes blink{0%,100%{box-shadow:0 0 0 0 rgba(232,98,12,.55)}50%{box-shadow:0 0 0 10px rgba(232,98,12,0)}}
+#disc{position:fixed;right:calc(14px + env(safe-area-inset-right,0px));bottom:calc(76px + env(safe-area-inset-bottom,0px));z-index:31;max-width:min(360px,calc(100vw - 32px));background:var(--bg);border:2px solid var(--flame);padding:12px 14px;font-size:13px;box-shadow:0 6px 24px rgba(0,0,0,.18)}
+#asBtn{position:fixed;right:calc(76px + env(safe-area-inset-right,0px));bottom:calc(18px + env(safe-area-inset-bottom,0px));z-index:30;background:var(--ink);color:#fff;border:0;border-radius:22px;padding:11px 16px;font:600 13.5px var(--f-body);cursor:pointer;box-shadow:0 2px 10px rgba(0,0,0,.2)}
+#assist{position:fixed;right:calc(14px + env(safe-area-inset-right,0px));bottom:calc(76px + env(safe-area-inset-bottom,0px));z-index:32;width:min(400px,calc(100vw - 28px));max-height:min(560px,70vh);display:flex;flex-direction:column;background:var(--bg);border:2px solid var(--ink);box-shadow:0 8px 30px rgba(0,0,0,.2)}
+#assist header{background:var(--ink);color:#fff;padding:8px 12px;display:flex;justify-content:space-between;align-items:center;font:700 14px var(--f-disp)}
+#assist header button{background:transparent;color:#fff;border:0;font-size:18px;cursor:pointer}
+#asLog{flex:1;overflow-y:auto;padding:10px 12px;font-size:13.5px}
+.msg{margin:6px 0;padding:8px 10px;border-radius:6px;max-width:92%}
+.msg.u{background:#eef5f8;margin-left:auto}
+.msg.b{background:var(--panel);border:1px solid var(--line)}
+#asSug{display:flex;flex-wrap:wrap;gap:5px;padding:0 12px 6px}
+#asSug button{font:12px var(--f-body);border:1px solid var(--line);background:var(--bg);color:var(--ink);padding:4px 8px;border-radius:12px;cursor:pointer}
+#asForm{display:flex;gap:6px;padding:8px 12px;border-top:1px solid var(--line)}
+#asForm input{flex:1}
+#asMic{min-width:42px}
+#asMic.rec{background:var(--bad);color:#fff;border-color:var(--bad)}
+.wm{position:fixed;left:50%;top:55%;transform:translate(-50%,-50%) rotate(-24deg);font:800 70px var(--f-disp);color:rgba(20,35,46,.035);pointer-events:none;white-space:nowrap;z-index:0}
+@media (max-width:560px){.sl{grid-template-columns:110px 1fr 56px}.kpi .v{font-size:24px}#asBtn span.lbl{display:none}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+<div class="wm">CB RESEARCH</div>
+<div class="wrap">
+<header class="top">
+  <div class="brand">
+    <small>CB Research · Q2 FY27 · Results Analysis</small>
+    <h1>Chennai Petroleum <span class="qq">(CPCL)</span></h1>
+    <div class="sub"><span class="en">Quarter ended 30 Sep 2026 · Results declared 22 Oct 2026 · NSE: CHENNPETRO · BSE: 500110</span><span class="ta">30 செப் 2026 காலாண்டு · முடிவு 22 அக் 2026 · NSE: CHENNPETRO · BSE: 500110</span></div>
+  </div>
+  <div class="ctrl" role="group" aria-label="Language">
+    <button class="btn on" id="lnEN" type="button">English</button>
+    <button class="btn" id="lnTA" type="button">தமிழ்</button>
+  </div>
+</header>
+
+<nav class="tabs" id="tabs" aria-label="Sections">
+  <button class="tab on" data-t="ov"><span class="en">Overview</span><span class="ta">சுருக்கம்</span></button>
+  <button class="tab" data-t="bm"><span class="en">Business model</span><span class="ta">வணிக மாடல்</span></button>
+  <button class="tab" data-t="odd"><span class="en">Odd man out</span><span class="ta">ஏன் தனி வழி?</span></button>
+  <button class="tab" data-t="grp"><span class="en">Group &amp; parent</span><span class="ta">குழுமம் &amp; தாய் நிறுவனம்</span></button>
+  <button class="tab" data-t="crude"><span class="en">Crude basket</span><span class="ta">கச்சா எண்ணெய்</span></button>
+  <button class="tab" data-t="school"><span class="en">Refinery School</span><span class="ta">ரிஃபைனரி பள்ளி</span></button>
+  <button class="tab" data-t="fin"><span class="en">Financials</span><span class="ta">நிதி நிலை</span></button>
+  <button class="tab" data-t="cf"><span class="en">Cash flow &amp; WC</span><span class="ta">பணப்புழக்கம்</span></button>
+  <button class="tab" data-t="val"><span class="en">Valuation &amp; market</span><span class="ta">மதிப்பீடு &amp; பங்குச்சந்தை</span></button>
+  <button class="tab" data-t="tc"><span class="en">Triggers &amp; cycle</span><span class="ta">தூண்டிகள் &amp; சுழற்சி</span></button>
+  <button class="tab" data-t="swot"><span class="en">SWOT</span><span class="ta">SWOT</span></button>
+  <button class="tab" data-t="an"><span class="en">Analysts' rating</span><span class="ta">ஆய்வாளர் மதிப்பீடு</span></button>
+  <button class="tab" data-t="self"><span class="en">Self-check</span><span class="ta">சுய சோதனை</span></button>
+  <button class="tab" data-t="mgmt"><span class="en">Management &amp; Board</span><span class="ta">நிர்வாகம்</span></button>
+  <button class="tab" data-t="soc"><span class="en">Cauvery Socrates</span><span class="ta">காவேரி சாக்ரடீஸ்</span></button>
+</nav>
+
+<!-- ================= OVERVIEW ================= -->
+<section class="pane on" id="ov">
+  <h2><span class="en">A pure refiner in a quarter that rewarded pure refining</span><span class="ta">சுத்திகரிப்புக்கு மட்டும் லாபம் கொடுத்த காலாண்டில், சுத்திகரிப்பு மட்டுமே செய்யும் நிறுவனம்</span></h2>
+  <p class="lede"><span class="en">Standalone profit more than doubled quarter on quarter and tripled year on year, on a gross refining margin (GRM) of $20.41 per barrel, even though it processed 9% less crude than in Q1.</span><span class="ta">Q1-ஐ விட 9% குறைவான கச்சா எண்ணெயைத்தான் சுத்திகரிச்சாங்க. ஆனாலும் ஒரு பேரலுக்கு $20.41 GRM கிடைச்சதால, லாபம் காலாண்டுக்கு காலாண்டு இரண்டு மடங்குக்கு மேல, வருஷத்துக்கு வருஷம் மூணு மடங்கு ஏறியிருக்கு.</span></p>
+  <div class="grid g4">
+    <div class="kpi fl"><div class="l">GRM ($/bbl)</div><div class="v">20.41</div><div class="d">Q1 8.78 · Q2FY26 9.04</div></div>
+    <div class="kpi fl"><div class="l"><span class="en">PAT, standalone</span><span class="ta">நிகர லாபம்</span></div><div class="v">₹2,271 cr</div><div class="d"><span class="up">+123% QoQ</span> · <span class="up">+210% YoY</span></div></div>
+    <div class="kpi"><div class="l">EBITDA</div><div class="v">₹3,032 cr</div><div class="d"><span class="en">margin 13.7% (Q1: 4.7%)</span><span class="ta">மார்ஜின் 13.7% (Q1: 4.7%)</span></div></div>
+    <div class="kpi"><div class="l"><span class="en">Revenue from operations</span><span class="ta">இயக்க வருவாய்</span></div><div class="v">₹22,055 cr</div><div class="d"><span class="dn">−24.9% QoQ</span> · <span class="up">+10.1% YoY</span></div></div>
+    <div class="kpi cr"><div class="l"><span class="en">Crude throughput</span><span class="ta">சுத்திகரித்த கச்சா</span></div><div class="v">2.59 MMT</div><div class="d"><span class="dn">−9.1% QoQ</span> · <span class="en">~99% utilisation</span><span class="ta">~99% பயன்பாடு</span></div></div>
+    <div class="kpi"><div class="l">EPS (₹)</div><div class="v">152.53</div><div class="d">Q2FY26 49.13 · H1 PAT ₹3,288 cr</div></div>
+    <div class="kpi"><div class="l"><span class="en">Interim dividend</span><span class="ta">இடைக்கால ஈவுத்தொகை</span></div><div class="v">₹25</div><div class="d"><span class="en">record date 30 Oct 2026</span><span class="ta">பதிவு தேதி 30 அக் 2026</span></div></div>
+    <div class="kpi"><div class="l"><span class="en">Trailing P/E (consol.)</span><span class="ta">P/E (கடந்த 4 காலாண்டு)</span></div><div class="v">~3.8×</div><div class="d"><span class="en">at ~₹1,452 (22 Oct)</span><span class="ta">~₹1,452 விலையில் (22 அக்)</span></div></div>
+  </div>
+
+  <div class="call">
+    <strong><span class="en">The short answer to "why the odd man out?"</span><span class="ta">"ஏன் தனி வழி?" — சுருக்கமான பதில்</span></strong>
+    <p class="en">CPCL refines but does not sell at the pump. In 2026 the US–Iran war pushed crude and product cracks up while retail prices stayed nearly frozen. That combination fattens the refining spread and punishes the retail marketer. The pain landed on Indian Oil's marketing books, not on CPCL's. So CPCL stayed profitable in Q1 FY27 while IOC, BPCL and HPCL reported losses, and in Q2 it captured the full jump in margins. The numbers also show CPCL's own GRM was the weakest in the group in Q1 and below HPCL in Q2. The outperformance comes from its position in the value chain more than from superior refining. One correction to the simple story: from 16 March 2026 the marketing companies paid refiners a discount to the normal trade-parity price, so CPCL did share part of the pump-price loss. That discount is the likeliest reason its Q1 GRM was so low.</p>
+    <p class="ta">CPCL எண்ணெயை சுத்திகரிக்குது, ஆனா பெட்ரோல் பங்க்ல விக்கறதில்ல. 2026-ல அமெரிக்கா–ஈரான் போரால கச்சா விலையும் டீசல் போன்ற பொருட்களோட விலையும் ஏறுச்சு; பங்க் விலை மட்டும் கிட்டத்தட்ட அப்படியே இருந்துச்சு. இந்த நிலைமையில சுத்திகரிப்பவருக்கு லாபம், பங்க்ல விக்கறவருக்கு நஷ்டம். அந்த நஷ்டம் இந்தியன் ஆயிலோட மார்க்கெட்டிங் கணக்குல விழுந்துச்சு, CPCL கணக்குல இல்ல. அதனாலதான் Q1-ல IOC, BPCL, HPCL எல்லாம் நஷ்டம் காட்டினப்போ CPCL லாபம் காட்டுச்சு. ஆனா எண்களைப் பார்த்தா, Q1-ல CPCL-ஓட GRM தான் குழுவிலேயே குறைவு; Q2-லயும் HPCL-ஐ விட குறைவு. அதாவது இந்த வெற்றிக்கு முக்கிய காரணம் சுத்திகரிப்புத் திறமையை விட, மதிப்புச் சங்கிலியில அது இருக்கற இடம்தான். ஒரு திருத்தம்: 16 மார்ச் 2026 முதல் OMC-கள் ரிஃபைனரிகளுக்கு வழக்கமான trade parity விலையை விட தள்ளுபடி விலை கொடுத்தாங்க. அதனால CPCL-உம் பங்க் நஷ்டத்துல ஒரு பங்கைத் தாங்குச்சு. Q1 GRM இவ்வளவு குறைவா இருந்ததுக்கு இதுதான் பெரும்பாலும் காரணம்.</p>
+  </div>
+
+  <h3><span class="en">GRM and profit, last six quarters</span><span class="ta">கடந்த 6 காலாண்டு GRM &amp; லாபம்</span></h3>
+  <div class="chartbox"><div class="inner"><canvas id="chOv" aria-label="GRM and PAT by quarter"></canvas></div></div>
+  <p class="note"><span class="en">Bars: consolidated PAT and EBITDA (₹ crore). Line: reported GRM ($/bbl). Q2 FY27 consolidated EBITDA as reported in results coverage.</span><span class="ta">பட்டைகள்: ஒருங்கிணைந்த நிகர லாபம் &amp; EBITDA (₹ கோடி). கோடு: GRM ($/பேரல்).</span></p>
+
+  <h3><span class="en">CB Score — six pillars</span><span class="ta">CB மதிப்பெண் — ஆறு தூண்கள்</span></h3>
+  <div class="temple"><svg id="temple" viewBox="0 0 620 400" role="img" aria-label="CB Score temple"></svg></div>
+  <div class="pill-grid" id="pillCards"></div>
+  <p class="note"><span class="en">Green 8–10 · amber 6–8 · red below 6. Tap a column to jump to its card.</span><span class="ta">பச்சை 8–10 · மஞ்சள் 6–8 · சிவப்பு 6-க்குக் கீழ். தூணைத் தொட்டா அதன் விளக்கம் வரும்.</span></p>
+</section>
+
+<!-- ================= BUSINESS MODEL ================= -->
+<section class="pane" id="bm">
+  <h2><span class="en">How a barrel becomes profit at Manali</span><span class="ta">மணலியில் ஒரு பேரல் எப்படி லாபமாகிறது</span></h2>
+  <p class="lede"><span class="en">Tap any box for the explanation. Figures are Q2 FY27 unless marked.</span><span class="ta">எந்த பெட்டியையும் தொட்டு விளக்கம் பாருங்க. எண்கள் Q2 FY27.</span></p>
+  <div class="svgbox"><svg id="bmSvg" viewBox="0 0 1000 560" role="img" aria-label="CPCL business model flow map"></svg></div>
+  <div class="call steel" id="bmExplain"><span class="en">Tap a box above.</span><span class="ta">மேல உள்ள பெட்டியைத் தொடுங்க.</span></div>
+  <p class="note"><strong><span class="en">Revenue formula:</span><span class="ta">வருவாய் சூத்திரம்:</span></strong> <span class="en">Profit ≈ GRM ($/bbl) × barrels processed × ₹ per $ − operating cost − interest − depreciation − tax. Revenue mostly tracks crude prices; profit tracks the spread.</span><span class="ta">லாபம் ≈ GRM × சுத்திகரித்த பேரல் × டாலர் மதிப்பு − இயக்கச் செலவு − வட்டி − தேய்மானம் − வரி. வருவாய் கச்சா விலையோட போகும்; லாபம் இடைவெளியோட (spread) போகும்.</span></p>
+  <h3><span class="en">Revenue engine — the drivers</span><span class="ta">வருவாய் இயந்திரம் — இயக்கிகள்</span></h3>
+  <div class="tbl"><table>
+    <thead><tr><th><span class="en">Driver</span><span class="ta">இயக்கி</span></th><th>Q1 FY27</th><th>Q2 FY27</th><th><span class="en">What it does to profit</span><span class="ta">லாபத்தில் விளைவு</span></th></tr></thead>
+    <tbody>
+      <tr><td><span class="en">Crude throughput (MMT)</span><span class="ta">சுத்திகரிப்பு அளவு (MMT)</span></td><td class="n">2.848</td><td class="n">2.59</td><td><span class="en">More barrels × same margin = more profit</span><span class="ta">அதிக பேரல் × அதே மார்ஜின் = அதிக லாபம்</span></td></tr>
+      <tr><td><span class="en">Barrels (mn, at 7.33 bbl/t)</span><span class="ta">பேரல் (மில்லியன்)</span></td><td class="n">20.9</td><td class="n">19.0</td><td><span class="en">Conversion used across this dashboard</span><span class="ta">இந்த டாஷ்போர்டு முழுக்க இதே மாற்று அளவு</span></td></tr>
+      <tr><td>GRM ($/bbl)</td><td class="n">8.78</td><td class="n">20.41</td><td><span class="en">The single biggest swing factor</span><span class="ta">மிகப் பெரிய மாற்றக் காரணி</span></td></tr>
+      <tr><td><span class="en">One-off price revision (₹ cr)</span><span class="ta">ஒருமுறை விலை திருத்தம் (₹ கோடி)</span></td><td class="n">385</td><td class="n">—</td><td><span class="en">Q1 revenue boost for March 2026 supplies, kept out of GRM</span><span class="ta">மார்ச் 2026 சப்ளைக்கான கூடுதல் வருவாய்; GRM-ல சேர்க்கல</span></td></tr>
+      <tr><td><span class="en">EBITDA per barrel (₹, derived)</span><span class="ta">ஒரு பேரலுக்கு EBITDA (₹, கணக்கிட்டது)</span></td><td class="n">653</td><td class="n">1,597</td><td><span class="en">EBITDA ÷ barrels</span><span class="ta">EBITDA ÷ பேரல்</span></td></tr>
+      <tr><td><span class="en">Sensitivity: +$1/bbl GRM, full year</span><span class="ta">GRM $1 ஏறினா, ஒரு வருஷத்துக்கு</span></td><td class="n" colspan="2">≈ ₹740 cr EBITDA · ≈ ₹37 EPS<span class="dag">†</span></td><td><span class="en">~11.5 MMT/yr × 7.33 × ₹88/$; post-tax at 25%</span><span class="ta">~11.5 MMT × 7.33 × ₹88; 25% வரிக்குப் பிறகு</span></td></tr>
+    </tbody></table></div>
+  <p class="note"><span class="dag">†</span> <span class="en">CB Research estimate using an assumed ₹88/$; the company does not publish this sensitivity.</span><span class="ta">₹88/$ என்ற அனுமானத்தில் CB Research கணக்கீடு; நிறுவனம் இதை வெளியிடவில்லை.</span></p>
+</section>
+
+<!-- ================= ODD MAN OUT ================= -->
+<section class="pane" id="odd">
+  <h2><span class="en">Why CPCL keeps breaking from the pack</span><span class="ta">CPCL ஏன் மற்றவர்களிடமிருந்து தனியாக நிக்குது</span></h2>
+  <p class="lede"><span class="en">Q1 FY27 is the clearest test. Crude averaged about $104 in the quarter, pump prices moved only once (about ₹7.5/litre in May), and LPG was sold below cost. Every PSU refiner earned a fat refining spread; only the ones that also run petrol pumps lost money.</span><span class="ta">Q1 FY27 தான் தெளிவான சோதனை. அந்த காலாண்டுல கச்சா சராசரி சுமார் $104; பங்க் விலை மே மாசம் ஒருமுறை மட்டும் சுமார் ₹7.5 ஏறுச்சு; LPG நஷ்டத்துல வித்தாங்க. எல்லா PSU ரிஃபைனரிக்கும் நல்ல சுத்திகரிப்பு லாபம் கிடைச்சுது; பங்க் நடத்தறவங்க மட்டும் நஷ்டமானாங்க.</span></p>
+
+  <h3><span class="en">Q1 FY27: who made money</span><span class="ta">Q1 FY27: யாருக்கு லாபம்</span></h3>
+  <div class="chartbox"><div class="inner"><canvas id="chOddQ1"></canvas></div></div>
+
+  <div class="tbl"><table>
+    <thead><tr><th><span class="en">Company</span><span class="ta">நிறுவனம்</span></th><th><span class="en">Parent</span><span class="ta">தாய்</span></th><th><span class="en">Runs pumps?</span><span class="ta">பங்க் உண்டா?</span></th><th><span class="en">Q1 GRM ($/bbl)</span><span class="ta">Q1 GRM</span></th><th><span class="en">Q1 PAT (₹ cr)</span><span class="ta">Q1 லாபம்</span></th><th><span class="en">Q2 GRM ($/bbl)</span><span class="ta">Q2 GRM</span></th><th><span class="en">Q2 PAT (₹ cr)</span><span class="ta">Q2 லாபம்</span></th></tr></thead>
+    <tbody>
+      <tr><td><strong>CPCL</strong></td><td>IOC</td><td><span class="en">No (pilot outlet only)</span><span class="ta">இல்லை (ஒரு சோதனை பங்க்)</span></td><td class="n">8.78</td><td class="n up">+1,017</td><td class="n">20.41</td><td class="n up">+2,271</td></tr>
+      <tr><td>MRPL</td><td>ONGC</td><td><span class="en">Small network</span><span class="ta">சிறிய அளவு</span></td><td class="n">8.3<span class="dag">‡</span></td><td class="n up">+915</td><td class="n">14.8<span class="dag">‡</span></td><td class="n up">+1,881</td></tr>
+      <tr><td>IOC</td><td>GoI</td><td><span class="en">Yes, largest</span><span class="ta">ஆம், மிகப் பெரியது</span></td><td class="n">15.6 <small>(net SAED)</small></td><td class="n dn">−2,661</td><td class="n">n/a <small>(30 Oct)</small></td><td class="n">n/a</td></tr>
+      <tr><td>BPCL</td><td>GoI</td><td><span class="en">Yes</span><span class="ta">ஆம்</span></td><td class="n">17.0 <small>(net SAED; 41.4 pre)</small></td><td class="n dn">−3,962</td><td class="n">n/a</td><td class="n">n/a</td></tr>
+      <tr><td>HPCL</td><td>ONGC</td><td><span class="en">Yes</span><span class="ta">ஆம்</span></td><td class="n">23.8</td><td class="n dn">−11,526</td><td class="n">32.15 <small>(pre cess)</small></td><td class="n up">+3,625 <small>(consol.)</small></td></tr>
+    </tbody></table></div>
+  <p class="note"><span class="dag">‡</span> <span class="en">MRPL implied GRM as computed by a brokerage; MRPL's own reported figure may differ. GRM definitions differ across companies (net or gross of export duty, with or without inventory effects), so compare direction more than decimals. IOC and BPCL Q2 results were not out at the time of writing.</span><span class="ta">MRPL GRM ஒரு புரோக்கர் கணக்கிட்டது. நிறுவனங்கள் GRM-ஐ வேற வேற மாதிரி கணக்கிடுவாங்க (ஏற்றுமதி வரி சேர்த்தோ இல்லாமலோ), அதனால தசம எண்களை விட திசையை ஒப்பிடுங்க. IOC, BPCL Q2 முடிவுகள் இன்னும் வரல.</span></p>
+
+  <h3><span class="en">How CPCL gets paid: international prices, with a war-time discount</span><span class="ta">CPCL-க்கு விலை எப்படி: சர்வதேச விலை, போர்க்கால தள்ளுபடியுடன்</span></h3>
+  <div class="svgbox"><svg id="rtpSvg" viewBox="0 0 1000 300" role="img" aria-label="Refinery transfer price build-up"></svg></div>
+  <div class="tbl"><table>
+    <thead><tr><th><span class="en">Price block</span><span class="ta">விலைக் கூறு</span></th><th><span class="en">What it is</span><span class="ta">என்ன அது</span></th><th><span class="en">Used for</span><span class="ta">எதற்கு</span></th></tr></thead>
+    <tbody>
+      <tr><td><span class="en">FOB price (Singapore / Arab Gulf)</span><span class="ta">FOB விலை (சிங்கப்பூர் / அரபு வளைகுடா)</span></td><td style="text-align:left"><span class="en">International product price at the loading port</span><span class="ta">ஏற்றுமதி துறைமுகத்தில் சர்வதேச பொருள் விலை</span></td><td style="text-align:left"><span class="en">Base of every Indian refinery price</span><span class="ta">எல்லா இந்திய ரிஃபைனரி விலைக்கும் அடிப்படை</span></td></tr>
+      <tr><td><span class="en">Import parity (IPP)</span><span class="ta">இறக்குமதி சமநிலை (IPP)</span></td><td style="text-align:left"><span class="en">FOB + ocean freight + insurance + customs duty + port charges: the cost of landing the product in India</span><span class="ta">FOB + கப்பல் சரக்கு + காப்பீடு + சுங்க வரி + துறைமுகக் கட்டணம்</span></td><td style="text-align:left"><span class="en">LPG, PDS kerosene (100%)</span><span class="ta">LPG, ரேஷன் மண்ணெண்ணெய் (100%)</span></td></tr>
+      <tr><td><span class="en">Export parity (EPP)</span><span class="ta">ஏற்றுமதி சமநிலை (EPP)</span></td><td style="text-align:left"><span class="en">What the refiner would get by exporting: FOB</span><span class="ta">ஏற்றுமதி செய்தால் கிடைப்பது: FOB</span></td><td style="text-align:left"><span class="en">20% weight in trade parity</span><span class="ta">trade parity-ல 20%</span></td></tr>
+      <tr><td><strong><span class="en">Trade parity (TPP) = 80% IPP + 20% EPP</span><span class="ta">Trade parity = 80% IPP + 20% EPP</span></strong></td><td style="text-align:left"><span class="en">The refinery transfer price for petrol and diesel since June 2006</span><span class="ta">ஜூன் 2006 முதல் பெட்ரோல், டீசலுக்கான ரிஃபைனரி விற்பனை விலை</span></td><td style="text-align:left"><span class="en">Petrol, diesel</span><span class="ta">பெட்ரோல், டீசல்</span></td></tr>
+      <tr><td><span class="en">War-time RTP discount (from 16 Mar 2026)</span><span class="ta">போர்க்கால RTP தள்ளுபடி (16 மார்ச் 2026 முதல்)</span></td><td style="text-align:left"><span class="en">OMCs pay refiners less than trade parity. Diesel: about ₹22/litre off for late March, about ₹60/litre off for early April (RTP cut from ₹1,46,243 to ₹86,004 per kl). ATF and kerosene about ₹46–51/litre off.</span><span class="ta">OMC-கள் trade parity-ஐ விட குறைவாக கொடுக்கறாங்க. டீசல்: மார்ச் இறுதி ~₹22/லிட்டர், ஏப்ரல் தொடக்கம் ~₹60/லிட்டர் தள்ளுபடி. ATF, மண்ணெண்ணெய் ~₹46–51.</span></td><td style="text-align:left"><span class="en">Petrol, diesel, ATF, kerosene; hits standalone refiners (CPCL, MRPL, HMEL) hardest</span><span class="ta">தனி ரிஃபைனரிகளுக்கு (CPCL, MRPL, HMEL) அதிக பாதிப்பு</span></td></tr>
+    </tbody></table></div>
+  <div class="grid g2">
+    <div class="card"><h4><span class="en">Why Indian GRMs sit above Singapore</span><span class="ta">இந்திய GRM ஏன் சிங்கப்பூரை விட அதிகம்</span></h4><p class="en">CPCL sells at the refinery gate in Chennai but is paid as if the product had been shipped in: 80% of the price carries notional freight, insurance and duty that it never pays. In 2026 freight and insurance rose several-fold because of the war, which enlarged this cushion. Add discounted Russian crude, and the premium over the Singapore benchmark follows.</p><p class="ta">CPCL சென்னை ரிஃபைனரி வாசல்லயே விக்குது, ஆனா இறக்குமதி செஞ்ச மாதிரி விலை கிடைக்குது: விலையில 80% பங்குக்கு, அது கொடுக்காத சரக்கு, காப்பீடு, வரி சேர்ந்திருக்கு. 2026 போரால சரக்கு, காப்பீடு பல மடங்கு ஏறுச்சு, அதனால இந்த கூடுதல் பெருசாச்சு. ரஷ்யத் தள்ளுபடி கச்சாவும் சேர்ந்தா சிங்கப்பூரை விட அதிக GRM.</p></div>
+    <div class="card"><h4><span class="en">What the discount did to Q1 and Q2</span><span class="ta">தள்ளுபடி Q1, Q2-ல் செய்தது</span></h4><p class="en">The discount moved part of IOC's pump-price loss onto CPCL's refining margin, which fits CPCL's low Q1 GRM of $8.78 when peers reported far more. The ₹385 cr "retrospective price revision" booked in Q1 also relates to prices effective 16 March. After the May pump-price hikes cut marketing losses, the discount probably eased, which fits the Q2 jump to $20.41. CPCL has not disclosed the discount amounts it received, so this link is CB Research's inference.</p><p class="ta">இந்த தள்ளுபடி IOC-ஓட பங்க் நஷ்டத்துல ஒரு பகுதியை CPCL மார்ஜினுக்கு மாற்றுச்சு; Q1 GRM $8.78-ஆ இருந்ததுக்கு இது பொருந்துது. Q1-ல பதிவு செஞ்ச ₹385 கோடி திருத்தமும் 16 மார்ச் விலைகளோட தொடர்புடையது. மே விலை ஏற்றத்துக்குப் பிறகு தள்ளுபடி குறைஞ்சிருக்கலாம்; Q2-ல $20.41-க்கு உயர்வு அதுக்குப் பொருந்துது. CPCL தள்ளுபடி அளவை வெளியிடல; இது CB Research ஊகம்.</p></div>
+  </div>
+  <div class="call"><strong><span class="en">Revised reading</span><span class="ta">திருத்திய பார்வை</span></strong><p class="en">CPCL's margins are international margins with a freight cushion, minus a war-time discount set by its own customers. The odd-man-out profit is real, but it is smaller than it would have been under pure trade parity, and the size of that discount is now the single biggest policy lever on CPCL's earnings.</p><p class="ta">CPCL மார்ஜின் = சர்வதேச மார்ஜின் + சரக்கு கூடுதல் − தன் வாடிக்கையாளர்களே நிர்ணயிச்ச போர்க்கால தள்ளுபடி. தனி வழி லாபம் உண்மைதான், ஆனா முழு trade parity-ல கிடைச்சிருக்கக்கூடியதை விட குறைவு. அந்த தள்ளுபடியோட அளவுதான் இப்போ CPCL லாபத்தை பாதிக்கற மிகப் பெரிய கொள்கைக் காரணி.</p></div>
+
+  <h3><span class="en">Where each company's P&amp;L stops</span><span class="ta">ஒவ்வொருவரின் லாப-நஷ்டக் கணக்கு எங்கே முடியுது</span></h3>
+  <div class="svgbox"><svg id="pipeSvg" viewBox="0 0 1000 250" role="img" aria-label="Value chain from crude to pump"></svg></div>
+  <div class="scen" id="pipeBtns">
+    <button class="btn on" data-p="war" type="button"><span class="en">War quarter (Q1 FY27)</span><span class="ta">போர் காலாண்டு (Q1)</span></button>
+    <button class="btn" data-p="q2" type="button"><span class="en">Cracks hold, pump prices raised (Q2)</span><span class="ta">விலை ஏற்றம் (Q2)</span></button>
+    <button class="btn" data-p="calm" type="button"><span class="en">Normal year (FY26)</span><span class="ta">சாதாரண வருஷம் (FY26)</span></button>
+  </div>
+  <div class="call" id="oddCard"></div>
+
+  <h3><span class="en">Headline vs the numbers behind it</span><span class="ta">தலைப்புச் செய்தி vs உண்மை எண்கள்</span></h3>
+  <div class="grid g3">
+    <div class="card"><h4><span class="en">1 · Structure, not superior refining</span><span class="ta">1 · அமைப்புதான், திறமை மட்டும் இல்ல</span></h4><p class="en">In Q1 CPCL's GRM of $8.78 was below every PSU peer's, even after their export-duty deductions. It still made ₹1,017 crore because it has no marketing loss to absorb. The low GRM itself most likely reflects the discount the OMCs applied to refinery transfer prices from 16 March.</p><p class="ta">Q1-ல CPCL GRM $8.78, எல்லா PSU போட்டியாளர்களையும் விட குறைவு. ஆனாலும் ₹1,017 கோடி லாபம், ஏன்னா தாங்க வேண்டிய மார்க்கெட்டிங் நஷ்டம் இல்ல.</p></div>
+    <div class="card"><h4><span class="en">2 · Tiny equity, big leverage</span><span class="ta">2 · சின்ன பங்கு மூலதனம், பெரிய தாக்கம்</span></h4><p class="en">Only 14.89 crore shares. Every $1/bbl of GRM is roughly ₹37 of annual EPS. That makes earnings, and the share price, swing hard both ways.</p><p class="ta">மொத்தம் 14.89 கோடி பங்குகள்தான். GRM-ல ஒவ்வொரு $1-க்கும் வருஷ EPS-ல சுமார் ₹37 மாறும். அதனால லாபமும் பங்கு விலையும் ரெண்டு பக்கமும் வேகமா ஆடும்.</p></div>
+    <div class="card"><h4><span class="en">3 · Running above nameplate</span><span class="ta">3 · திறனுக்கு மேல ஓட்டம்</span></h4><p class="en">FY26 throughput was 11.71 MMT on a 10.5 MMTPA Manali refinery, about 112% utilisation. Q2 dipped to about 99%; the filings reviewed do not say why.</p><p class="ta">10.5 MMTPA மணலி ரிஃபைனரியில FY26-ல 11.71 MMT, அதாவது சுமார் 112%. Q2-ல சுமார் 99%-க்கு இறங்குச்சு; காரணம் வெளியிடல.</p></div>
+    <div class="card"><h4><span class="en">4 · Premium to benchmark</span><span class="ta">4 · சிங்கப்பூர் அளவுகோலை விட அதிகம்</span></h4><p class="en">FY26 GRM was $9.28 against a Singapore benchmark of $5.83. Management credits crude selection, product optimisation and group procurement.</p><p class="ta">FY26 GRM $9.28; சிங்கப்பூர் அளவுகோல் $5.83. கச்சா தேர்வு, உற்பத்தி மேம்பாடு, குழும கொள்முதல் தான் காரணம்னு நிர்வாகம் சொல்லுது.</p></div>
+    <div class="card"><h4><span class="en">5 · Inventory can flatter or hurt</span><span class="ta">5 · இருப்பு லாபம்/நஷ்டம்</span></h4><p class="en">Crude fell from $104 average to about $72 in June, which hit Q1 with inventory losses. Reported GRM includes such swings, so a "core" GRM can differ by several dollars.</p><p class="ta">ஜூன்ல கச்சா $72-க்கு விழுந்ததால Q1-ல இருப்பு நஷ்டம். அறிவிக்கப்பட்ட GRM-ல இதுவும் அடங்கும்; அதனால "core" GRM பல டாலர் வேறுபடலாம்.</p></div>
+    <div class="card"><h4><span class="en">6 · Export duty matters less</span><span class="ta">6 · ஏற்றுமதி வரி பாதிப்பு குறைவு</span></h4><p class="en">The windfall export duty (SAED) on diesel reached ₹24–25.5/litre in August. A refiner that sells mostly to IOC at home is less exposed than an export-heavy one like MRPL.</p><p class="ta">ஆகஸ்ட்ல டீசல் ஏற்றுமதி வரி லிட்டருக்கு ₹24–25.5. பெரும்பாலும் உள்நாட்டுல IOC-க்கு விக்கிற CPCL-க்கு, MRPL மாதிரி ஏற்றுமதி அதிகம் உள்ளவங்களை விட பாதிப்பு குறைவு.</p></div>
+  </div>
+</section>
+
+<!-- ================= GROUP ================= -->
+<section class="pane" id="grp">
+  <h2><span class="en">Indian Oil, not ONGC — and what "parental care" really means</span><span class="ta">ONGC இல்ல, இந்தியன் ஆயில் — "தாய் நிறுவனக் கவனிப்பு" உண்மையில் என்ன</span></h2>
+  <p class="lede"><span class="en">CPCL's parent is Indian Oil (51.89%). ONGC is the parent of the two other refiners in this comparison, HPCL and MRPL. Iran's Naftiran Intertrade still owns 15.40%, a legacy of the 1965 joint venture.</span><span class="ta">CPCL-ஓட தாய் நிறுவனம் இந்தியன் ஆயில் (51.89%). ONGC என்பது HPCL, MRPL-ஓட தாய். ஈரானோட நஃப்டிரான் இன்டர்டிரேட் இன்னும் 15.40% வச்சிருக்கு — 1965 கூட்டு முயற்சியோட மிச்சம்.</span></p>
+  <div class="svgbox"><svg id="grpSvg" viewBox="0 0 1000 380" role="img" aria-label="Group structure"></svg></div>
+
+  <h3><span class="en">Parental care ledger</span><span class="ta">தாய் நிறுவன உதவி — கணக்கு</span></h3>
+  <div class="tbl"><table>
+    <thead><tr><th><span class="en">What IOC provides</span><span class="ta">IOC தருவது</span></th><th><span class="en">Evidence in the numbers</span><span class="ta">எண்களில் சான்று</span></th><th><span class="en">Effect</span><span class="ta">விளைவு</span></th></tr></thead>
+    <tbody>
+      <tr><td><span class="en">Assured offtake — IOC markets most of CPCL's fuels</span><span class="ta">உறுதியான வாங்குதல் — CPCL எரிபொருளில் பெரும்பகுதியை IOC விக்குது</span></td><td><span class="en">Debtor days 1–3 for five years</span><span class="ta">5 வருஷமா கடன் நாட்கள் 1–3</span></td><td><span class="chip g">+</span> <span class="en">No marketing cost, almost no receivables</span><span class="ta">மார்க்கெட்டிங் செலவு இல்ல</span></td></tr>
+      <tr><td><span class="en">Marketing risk sits with IOC</span><span class="ta">பங்க் விலை ரிஸ்க் IOC-யிடம்</span></td><td><span class="en">Q1 FY27: CPCL +₹1,017 cr; IOC −₹2,661 cr</span><span class="ta">Q1: CPCL +₹1,017 கோடி; IOC −₹2,661 கோடி</span></td><td><span class="chip g">+</span> <span class="en">Shield in a crude spike</span><span class="ta">கச்சா உயர்வில் பாதுகாப்பு</span></td></tr>
+      <tr><td><span class="en">Group crude procurement</span><span class="ta">குழுமக் கச்சா கொள்முதல்</span></td><td><span class="en">Management cites "optimised group procurement"; Russian share 25–30%</span><span class="ta">நிர்வாகம் சொல்வது; ரஷ்யக் கச்சா 25–30%</span></td><td><span class="chip g">+</span> <span class="en">Part of the premium over Singapore</span><span class="ta">சிங்கப்பூர் மேல் கூடுதல் GRM-ல ஒரு பங்கு</span></td></tr>
+      <tr><td><span class="en">Pricing to IOC at refinery transfer price (trade parity)</span><span class="ta">IOC-க்கு விற்பனை விலை "trade parity" அடிப்படையில்</span></td><td><span class="en">Discount to trade parity imposed by OMCs from 16 Mar 2026; ₹385 cr retrospective revision in Q1</span><span class="ta">16 மார்ச் 2026 முதல் OMC தள்ளுபடி; Q1-ல ₹385 கோடி திருத்தம்</span></td><td><span class="chip a">−</span> <span class="en">Market-linked in normal times; in the war the parent's marketing arm pushed part of its loss onto CPCL</span><span class="ta">சாதாரண காலத்தில் சந்தை விலை; போர்க்காலத்தில் நஷ்டத்தின் ஒரு பகுதி CPCL மேல்</span></td></tr>
+      <tr><td><span class="en">Capital backing</span><span class="ta">மூலதன ஆதரவு</span></td><td><span class="en">₹1,000 cr preference shares (2015); IOC takes 75% of the Cauvery Basin project</span><span class="ta">₹1,000 கோடி முன்னுரிமைப் பங்கு (2015); காவேரி படுகை திட்டத்துல IOC 75%</span></td><td><span class="chip g">+</span> <span class="en">CPCL avoids a balance-sheet-straining mega project</span><span class="ta">பெரிய கடன் சுமை தவிர்ப்பு</span></td></tr>
+      <tr><td><span class="en">Upside given away</span><span class="ta">விட்டுக்கொடுத்த லாபம்</span></td><td><span class="en">No retail margin when pump margins are fat (e.g. FY24)</span><span class="ta">பங்க் மார்ஜின் அதிகமா இருக்கற காலத்துல அந்த லாபம் கிடைக்காது</span></td><td><span class="chip a">−</span> <span class="en">Shield works both ways</span><span class="ta">இரு பக்கமும் வேலை செய்யும்</span></td></tr>
+      <tr><td><span class="en">Iran shareholder</span><span class="ta">ஈரான் பங்குதாரர்</span></td><td><span class="en">Dividend to Naftiran cannot be remitted under sanctions</span><span class="ta">தடைகளால் ஈவுத்தொகை அனுப்ப முடியல</span></td><td><span class="chip a">−</span> <span class="en">Governance oddity; no cash impact on others</span><span class="ta">நிர்வாக விசித்திரம்</span></td></tr>
+      <tr><td><span class="en">Board independence</span><span class="ta">சுயாதீன இயக்குநர்கள்</span></td><td><span class="en">Auditor flagged too few independent directors in Q1; one appointed 7 Oct 2026</span><span class="ta">Q1-ல குறைவுன்னு ஆடிட்டர் குறிப்பு; 7 அக் 2026-ல ஒருவர் நியமனம்</span></td><td><span class="chip a">−</span> <span class="en">Parent-dominated board</span><span class="ta">தாய் நிறுவன ஆதிக்கம்</span></td></tr>
+    </tbody></table></div>
+  <div class="call steel"><strong><span class="en">Verdict on parental care</span><span class="ta">தீர்ப்பு</span></strong>
+    <p class="en">IOC does not hand CPCL profits through favourable prices. Transfer pricing is market-linked in normal times, and in the 2026 war IOC and the other OMCs actually paid refiners below trade parity, so the parent took back part of CPCL's margin. What IOC gives is a structure: a guaranteed buyer, scale in crude buying, and a marketing arm that carries pump-price risk. In 2026's war-driven market, that structure was worth more than any refining skill. When marketing margins are healthy and cracks are thin, the same structure makes CPCL look ordinary, as FY25's ₹174 crore profit showed.</p>
+    <p class="ta">IOC சாதகமான விலை மூலமா CPCL-க்கு லாபம் கொடுக்கல. சாதாரண காலத்துல விலை சந்தையோட இணைஞ்சது; 2026 போர்ல OMC-கள் trade parity-ஐ விட குறைவாக கொடுத்தாங்க, அதாவது தாய் நிறுவனமே CPCL மார்ஜினில் ஒரு பகுதியை எடுத்துக்கிச்சு. IOC தர்றது ஒரு அமைப்பு: உறுதியான வாங்குபவர், பெரிய அளவுல கச்சா வாங்கும் பலம், பங்க் விலை ரிஸ்க்கை தாங்கற மார்க்கெட்டிங் பிரிவு. 2026 போர் சந்தையில அந்த அமைப்புதான் எந்தத் திறமையை விடவும் மதிப்பு. ஆனா பங்க் மார்ஜின் நல்லா இருந்து, கிராக் குறைவா இருக்கும்போது, அதே அமைப்பு CPCL-ஐ சாதாரணமா காட்டும் — FY25-ல வெறும் ₹174 கோடி லாபம் அதுக்கு சான்று.</p></div>
+</section>
+
+<!-- ================= CRUDE ================= -->
+<section class="pane" id="crude">
+  <h2><span class="en">Domestic crude? Practically none</span><span class="ta">உள்நாட்டுக் கச்சா? கிட்டத்தட்ட இல்லை</span></h2>
+  <p class="lede"><span class="en">The only CPCL unit that ran on domestic crude was the 1 MMTPA Cauvery Basin Refinery at Nagapattinam, fed by Cauvery basin oil. It was decommissioned in 2019. Manali, the 10.5 MMTPA refinery that now makes all the profit, runs on imported crude landed at Chennai.</span><span class="ta">உள்நாட்டுக் கச்சாவுல ஓடின CPCL யூனிட், நாகப்பட்டினத்துல இருந்த 1 MMTPA காவேரி படுகை ரிஃபைனரி மட்டும்தான். அது 2019-ல மூடப்பட்டுச்சு. இப்போ லாபம் முழுசும் தர்ற 10.5 MMTPA மணலி ரிஃபைனரி, சென்னை துறைமுகத்துக்கு வர்ற இறக்குமதி கச்சாவுலதான் ஓடுது.</span></p>
+  <div class="grid g2">
+    <div class="chartbox"><div class="inner" style="min-width:0;height:280px"><canvas id="chMix"></canvas></div></div>
+    <div class="chartbox"><div class="inner" style="min-width:0;height:280px"><canvas id="chRus"></canvas></div></div>
+  </div>
+  <div class="tbl"><table>
+    <thead><tr><th><span class="en">Source</span><span class="ta">மூலம்</span></th><th><span class="en">Share (management, Apr 2026)</span><span class="ta">பங்கு</span></th><th><span class="en">Contract</span><span class="ta">ஒப்பந்தம்</span></th><th><span class="en">What it means in 2026</span><span class="ta">2026-ல் பொருள்</span></th></tr></thead>
+    <tbody>
+      <tr><td><span class="en">Middle East (Gulf producers)</span><span class="ta">மத்திய கிழக்கு</span></td><td class="n">55–60%</td><td><span class="en">Term</span><span class="ta">நீண்டகால</span></td><td><span class="en">Exposed to the Strait of Hormuz disruption; producers offered to make up delayed volumes</span><span class="ta">ஹோர்முஸ் நீரிணை பாதிப்பு; தாமதமான அளவை ஈடு செய்வதாக உற்பத்தியாளர்கள் சொன்னாங்க</span></td></tr>
+      <tr><td><span class="en">Russia</span><span class="ta">ரஷ்யா</span></td><td class="n">25–30%</td><td><span class="en">Spot</span><span class="ta">உடனடி</span></td><td><span class="en">Discount to Brent cushions cost; sanctions can shrink it</span><span class="ta">பிரென்ட் விலையை விட தள்ளுபடி; தடைகள் அதைக் குறைக்கலாம்</span></td></tr>
+      <tr><td><span class="en">West Africa &amp; others</span><span class="ta">மேற்கு ஆப்பிரிக்கா &amp; பிற</span></td><td class="n"><span class="en">balance</span><span class="ta">மீதி</span></td><td><span class="en">Spot</span><span class="ta">உடனடி</span></td><td><span class="en">Raised in 2026 to replace Gulf barrels; lighter lube-friendly grades</span><span class="ta">2026-ல வளைகுடா கச்சாவுக்கு மாற்றா அதிகரிப்பு</span></td></tr>
+      <tr><td><span class="en">Domestic (Cauvery basin)</span><span class="ta">உள்நாடு (காவேரி படுகை)</span></td><td class="n">~0%</td><td>—</td><td><span class="en">Ended with the 2019 Nagapattinam shutdown</span><span class="ta">2019 நாகை மூடலோட முடிஞ்சுது</span></td></tr>
+    </tbody></table></div>
+  <div class="call crude"><p class="en">So the high profit is not a domestic-crude advantage. If anything, CPCL carries more import risk than an inland refiner. Its cost edge comes from the Russian discount and from choosing cheaper, heavier or opportunity crudes that its units can process. Management says it is now looking at upgrading some secondary units, which would widen that crude-flexibility edge.</p><p class="ta">அதனால இந்த அதிக லாபம் உள்நாட்டுக் கச்சாவால வந்தது இல்ல. உண்மையில உள்நாட்டு ரிஃபைனரியை விட CPCL-க்கு இறக்குமதி ரிஸ்க் அதிகம். அதோட செலவுச் சாதகம் ரஷ்யத் தள்ளுபடியிலும், விலை குறைஞ்ச கனமான கச்சாவைத் தேர்ந்தெடுக்கறதிலும்தான் இருக்கு. சில இரண்டாம் நிலை யூனிட்களை மேம்படுத்தறதா நிர்வாகம் சொல்லுது; அது இந்த நெகிழ்வுத்தன்மையை அதிகரிக்கும்.</p></div>
+  <p class="note"><span class="en">Russian share history: FY23 13%; Q4 FY23 22%; Q2 FY25 22%; Q1 FY26 14%; Q2 FY26 19%; management range 25–30% (Apr 2026, mid-point plotted). Earlier points are brokerage estimates from tanker data.</span><span class="ta">ரஷ்யக் கச்சா பங்கு வரலாறு; முந்தைய எண்கள் புரோக்கர் மதிப்பீடுகள்.</span></p>
+</section>
+
+<!-- ================= REFINERY SCHOOL ================= -->
+<section class="pane" id="school">
+  <h2><span class="en">Refinery School: GRM and GMM</span><span class="ta">ரிஃபைனரி பள்ளி: GRM &amp; GMM</span></h2>
+  <p class="lede"><span class="en">Two numbers decide an Indian oil company's quarter. Gross Refining Margin is what the refinery earns per barrel. Gross Marketing Margin is what the pump network earns per litre. CPCL reports only the first.</span><span class="ta">இந்திய எண்ணெய் நிறுவனத்தோட காலாண்டை ரெண்டு எண்கள் தீர்மானிக்குது. GRM — ரிஃபைனரி ஒரு பேரலுக்கு சம்பாதிப்பது. GMM — பங்க் நெட்வொர்க் ஒரு லிட்டருக்கு சம்பாதிப்பது. CPCL முதல் எண்ணை மட்டும்தான் அறிவிக்குது.</span></p>
+  <div class="grid g2">
+    <div class="card">
+      <h4>GRM = <span class="en">(value of products − cost of crude) ÷ barrels</span><span class="ta">(பொருட்களின் மதிப்பு − கச்சா செலவு) ÷ பேரல்</span></h4>
+      <p class="en">Measured in US$ per barrel. A "crack" is the price of one product minus the price of crude. GRM is roughly the yield-weighted sum of cracks, minus the crude burnt or lost inside the refinery, plus any discount on the crude bought, plus or minus inventory gains.</p>
+      <p class="ta">அளவு: பேரலுக்கு அமெரிக்க டாலர். "கிராக்" = ஒரு பொருளின் விலை − கச்சா விலை. GRM ≈ ஒவ்வொரு பொருளோட கிராக் × அதன் உற்பத்தி சதவீதம், மொத்தம்; அதுல ரிஃபைனரிக்குள்ள எரிஞ்சு போற/இழக்கற கச்சாவைக் கழிக்கணும்; கச்சா தள்ளுபடியைச் சேர்க்கணும்; இருப்பு லாப நஷ்டமும் சேரும்.</p>
+    </div>
+    <div class="card">
+      <h4>GMM = <span class="en">pump price (ex-tax, ex-dealer) − refinery transfer price</span><span class="ta">பங்க் விலை (வரி, டீலர் கமிஷன் இல்லாமல்) − ரிஃபைனரி விற்பனை விலை</span></h4>
+      <p class="en">Measured in ₹ per litre. If the government holds pump prices while product prices rise, GMM turns negative. The refining arm of the same company gains and the marketing arm loses. Integrated margin = GRM + GMM.</p>
+      <p class="ta">அளவு: லிட்டருக்கு ரூபாய். பொருள் விலை ஏறும்போது அரசு பங்க் விலையை நிறுத்தி வச்சா, GMM மைனஸ் ஆகும். அதே நிறுவனத்தோட ரிஃபைனரி லாபம், மார்க்கெட்டிங் நஷ்டம். ஒருங்கிணைந்த மார்ஜின் = GRM + GMM.</p>
+    </div>
+  </div>
+
+  <h3><span class="en">Try it: one barrel, two margins</span><span class="ta">முயற்சி செய்யுங்க: ஒரு பேரல், ரெண்டு மார்ஜின்</span></h3>
+  <p class="note"><span class="en">Illustrative model. Yields are a simplified CPCL-like slate (diesel 45%, petrol 12%, ATF 10%, LPG/naphtha 13%, fuel oil/bitumen/others 14%, fuel &amp; loss 6%). Quarterly profit uses 19 million barrels, ₹88/$, ₹380 cr opex, 25% tax.</span><span class="ta">விளக்க மாதிரி மட்டும். உற்பத்தி சதவீதம் எளிமைப்படுத்தியது. காலாண்டு லாபம்: 1.9 கோடி பேரல், ₹88/$, ₹380 கோடி செலவு, 25% வரி.</span></p>
+  <div class="scen" id="schScen">
+    <button class="btn" type="button" data-s="calm"><span class="en">Normal year</span><span class="ta">சாதாரண வருஷம்</span></button>
+    <button class="btn on" type="button" data-s="war"><span class="en">War spike, pump frozen</span><span class="ta">போர் உயர்வு, பங்க் விலை நிறுத்தம்</span></button>
+    <button class="btn" type="button" data-s="q2"><span class="en">Cracks stay high, pump raised</span><span class="ta">கிராக் அதிகம், பங்க் விலை ஏற்றம்</span></button>
+    <button class="btn" type="button" data-s="peace"><span class="en">Ceasefire crash</span><span class="ta">போர் நிறுத்தம், விலை சரிவு</span></button>
+  </div>
+  <div class="grid g2">
+    <div class="card" id="sliders"></div>
+    <div class="card">
+      <div class="grid g2">
+        <div><div class="note">GRM ($/bbl)</div><div class="gauge" id="oGRM">—</div></div>
+        <div><div class="note">GMM (₹/litre, diesel)</div><div class="gauge" id="oGMM">—</div></div>
+      </div>
+      <div class="svgbox" style="border:0;margin:6px 0"><svg id="grmBars" viewBox="0 0 460 210" style="min-width:0"></svg></div>
+      <div class="tbl"><table style="min-width:0">
+        <thead><tr><th><span class="en">Per quarter (₹ cr)</span><span class="ta">காலாண்டுக்கு (₹ கோடி)</span></th><th><span class="en">Pure refiner (CPCL-type)</span><span class="ta">சுத்திகரிப்பு மட்டும்</span></th><th><span class="en">Refiner + pumps</span><span class="ta">சுத்திகரிப்பு + பங்க்</span></th></tr></thead>
+        <tbody>
+          <tr><td><span class="en">Refining EBITDA</span><span class="ta">சுத்திகரிப்பு EBITDA</span></td><td class="n" id="oR1">—</td><td class="n" id="oR2">—</td></tr>
+          <tr><td><span class="en">Marketing EBITDA</span><span class="ta">மார்க்கெட்டிங் EBITDA</span></td><td class="n">0</td><td class="n" id="oM2">—</td></tr>
+          <tr><td><strong><span class="en">Approx. PAT</span><span class="ta">தோராய லாபம்</span></strong></td><td class="n" id="oP1">—</td><td class="n" id="oP2">—</td></tr>
+        </tbody></table></div>
+      <p class="note"><span class="en">"Refiner + pumps" assumes it sells the same 3 billion litres through its own pumps, a scaled-down stand-in for an IOC-type company.</span><span class="ta">"சுத்திகரிப்பு + பங்க்" — அதே 300 கோடி லிட்டரை சொந்த பங்க் மூலம் விக்கற மாதிரி கணக்கு.</span></p>
+    </div>
+  </div>
+  <div class="call steel" id="schoolCard"></div>
+
+  <h3><span class="en">Lesson cards</span><span class="ta">பாடங்கள்</span></h3>
+  <div class="grid g3">
+    <div class="card"><h4><span class="en">Reported vs core GRM</span><span class="ta">அறிவித்த GRM vs core GRM</span></h4><p class="en">Refiners hold 30–50 days of crude. When crude rises, cheaper old stock is sold at new prices: an inventory gain. When crude falls, the reverse. Core GRM strips this out. CPCL's Q1 FY26 GRM of $3.22 included a $1.9 inventory loss.</p><p class="ta">ரிஃபைனரிகள் 30–50 நாள் கச்சா இருப்பு வச்சிருப்பாங்க. விலை ஏறினா பழைய மலிவு இருப்பு புது விலையில விற்கும் — இருப்பு லாபம். விலை இறங்கினா நஷ்டம். Core GRM-ல இதை நீக்குவாங்க. CPCL Q1 FY26 GRM $3.22-ல $1.9 இருப்பு நஷ்டம் அடங்கியிருந்துச்சு.</p></div>
+    <div class="card"><h4><span class="en">Benchmark: Singapore GRM</span><span class="ta">அளவுகோல்: சிங்கப்பூர் GRM</span></h4><p class="en">The Singapore complex margin is the Asian yardstick. CPCL earned $9.28 in FY26 versus $5.83 for Singapore, a premium of about $3.4 that comes from crude choice and yields.</p><p class="ta">ஆசியாவுக்கான அளவுகோல் சிங்கப்பூர் மார்ஜின். FY26-ல CPCL $9.28, சிங்கப்பூர் $5.83 — சுமார் $3.4 கூடுதல்.</p></div>
+    <div class="card"><h4><span class="en">Windfall tax (SAED)</span><span class="ta">விண்ட்ஃபால் வரி (SAED)</span></h4><p class="en">Reintroduced in March 2026 on exports of diesel, ATF and petrol and reset every fortnight. It caps export cracks, so some companies quote GRM "before" and "net of" the duty. Domestic supplies are not taxed.</p><p class="ta">மார்ச் 2026-ல டீசல், ATF, பெட்ரோல் ஏற்றுமதிக்கு மீண்டும் வந்துச்சு; 15 நாளுக்கு ஒருமுறை மாறும். அதனால சில நிறுவனங்கள் வரிக்கு "முன்" "பின்" GRM ரெண்டையும் சொல்லுவாங்க. உள்நாட்டு விற்பனைக்கு இந்த வரி இல்ல.</p></div>
+    <div class="card"><h4><span class="en">Tonnes to barrels</span><span class="ta">டன் → பேரல்</span></h4><p class="en">One tonne of crude ≈ 7.33 barrels; one barrel = 159 litres. CPCL's 2.59 MMT in Q2 ≈ 19 million barrels. At $20.41 that is about $388 million of gross margin before costs.</p><p class="ta">ஒரு டன் கச்சா ≈ 7.33 பேரல்; ஒரு பேரல் = 159 லிட்டர். Q2-ல 2.59 MMT ≈ 1.9 கோடி பேரல். $20.41-ல அது சுமார் $388 மில்லியன் மொத்த மார்ஜின்.</p></div>
+    <div class="card"><h4><span class="en">Distillate yield</span><span class="ta">டிஸ்டிலேட் உற்பத்தி</span></h4><p class="en">Diesel, ATF and kerosene carry the fattest cracks. CPCL reached a record distillate yield of about 80% in FY26 and a new high in Q1 FY27. A higher distillate share lifts GRM most when diesel is scarce, as in 2026.</p><p class="ta">டீசல், ATF, மண்ணெண்ணெய்க்குத்தான் அதிக கிராக். CPCL FY26-ல சுமார் 80% டிஸ்டிலேட் உற்பத்தி, Q1 FY27-ல புது உச்சம். டீசல் தட்டுப்பாடு காலத்துல இது GRM-ஐ அதிகம் உயர்த்தும்.</p></div>
+    <div class="card"><h4><span class="en">How the refinery price is set</span><span class="ta">ரிஃபைனரி விலை எப்படி நிர்ணயம்</span></h4><p class="en">Petrol and diesel move from refinery to OMC at trade parity: 80% import parity (Singapore FOB + freight + insurance + duty) and 20% export parity (FOB). LPG and PDS kerosene use full import parity. So Indian cracks are international cracks plus a notional freight cushion.</p><p class="ta">பெட்ரோல், டீசல் ரிஃபைனரியிலிருந்து OMC-க்கு trade parity விலையில்: 80% இறக்குமதி சமநிலை (சிங்கப்பூர் FOB + சரக்கு + காப்பீடு + வரி), 20% ஏற்றுமதி சமநிலை (FOB). LPG, ரேஷன் மண்ணெண்ணெய்க்கு முழு இறக்குமதி சமநிலை.</p></div>
+    <div class="card"><h4><span class="en">The 2026 RTP discount</span><span class="ta">2026 RTP தள்ளுபடி</span></h4><p class="en">From 16 March 2026 the OMCs paid refiners below trade parity, up to about ₹60/litre on diesel in early April. Inside an integrated company this only moves profit from the refinery to the pumps. For a standalone refiner like CPCL it is a direct cut in GRM. Use the "RTP discount" slider above to see it.</p><p class="ta">16 மார்ச் 2026 முதல் OMC-கள் trade parity-ஐ விட குறைவாக கொடுத்தாங்க; ஏப்ரல் தொடக்கத்தில டீசலுக்கு ~₹60/லிட்டர் வரை. ஒருங்கிணைந்த நிறுவனத்துக்குள்ள இது லாபத்தை ஒரு பிரிவிலிருந்து இன்னொன்றுக்கு மாற்றும்; CPCL மாதிரி தனி ரிஃபைனரிக்கு நேரடியா GRM குறைவு. மேல உள்ள "RTP தள்ளுபடி" ஸ்லைடரில் பாருங்க.</p></div>
+    <div class="card"><h4><span class="en">Why CPCL has no GMM line</span><span class="ta">CPCL-க்கு ஏன் GMM இல்ல</span></h4><p class="en">It sells most products to IOC at the refinery gate. Its first own retail outlet opened only in March 2026 under a ₹400 crore plan. Until that network is meaningful, GMM belongs to IOC's results, not CPCL's.</p><p class="ta">பெரும்பாலான பொருட்களை ரிஃபைனரி வாசல்லயே IOC-க்கு விக்குது. முதல் சொந்த பங்க் மார்ச் 2026-ல தான் ₹400 கோடி திட்டத்துல திறந்தாங்க. அந்த நெட்வொர்க் பெருசாகற வரை GMM IOC கணக்குதான்.</p></div>
+  </div>
+</section>
+
+<!-- ================= FINANCIALS ================= -->
+<section class="pane" id="fin">
+  <h2><span class="en">Financials by category</span><span class="ta">வகைவாரியான நிதி அளவீடுகள்</span></h2>
+  <p class="lede"><span class="en">Standalone figures unless marked. ₹ crore.</span><span class="ta">குறிப்பிடாவிட்டால் தனிநிறுவன எண்கள். ₹ கோடி.</span></p>
+  <div class="tbl"><table>
+    <thead><tr><th><span class="en">Metric</span><span class="ta">அளவீடு</span></th><th>Q2 FY27</th><th>Q1 FY27</th><th>Q2 FY26</th><th>QoQ</th><th>YoY</th></tr></thead>
+    <tbody>
+      <tr class="cat"><td colspan="6"><span class="en">Growth &amp; scale</span><span class="ta">வளர்ச்சி &amp; அளவு</span></td></tr>
+      <tr><td><span class="en">Revenue from operations</span><span class="ta">இயக்க வருவாய்</span></td><td class="n">22,055</td><td class="n">29,359</td><td class="n">20,034</td><td class="n dn">−24.9%</td><td class="n up">+10.1%</td></tr>
+      <tr><td><span class="en">Crude throughput (MMT)</span><span class="ta">சுத்திகரிப்பு (MMT)</span></td><td class="n">2.59</td><td class="n">2.848</td><td class="n">3.013</td><td class="n dn">−9.1%</td><td class="n dn">−14.0%</td></tr>
+      <tr><td><span class="en">Capacity utilisation (derived)</span><span class="ta">திறன் பயன்பாடு</span></td><td class="n">~99%</td><td class="n">~108%</td><td class="n">~114%</td><td class="n">—</td><td class="n">—</td></tr>
+      <tr class="cat"><td colspan="6"><span class="en">Profitability</span><span class="ta">லாபத்தன்மை</span></td></tr>
+      <tr><td>GRM ($/bbl)</td><td class="n">20.41</td><td class="n">8.78</td><td class="n">9.04</td><td class="n up">+11.63</td><td class="n up">+11.37</td></tr>
+      <tr><td>EBITDA</td><td class="n">3,032</td><td class="n">1,366</td><td class="n">n/a</td><td class="n up">+122%</td><td class="n">—</td></tr>
+      <tr><td><span class="en">EBITDA margin</span><span class="ta">EBITDA மார்ஜின்</span></td><td class="n">13.7%</td><td class="n">4.7%</td><td class="n">n/a</td><td class="n up">+9.1 pp</td><td class="n">—</td></tr>
+      <tr><td><span class="en">PAT (standalone)</span><span class="ta">நிகர லாபம்</span></td><td class="n">2,271</td><td class="n">1,017</td><td class="n">732</td><td class="n up">+123%</td><td class="n up">+210%</td></tr>
+      <tr><td><span class="en">PAT (consolidated)</span><span class="ta">ஒருங்கிணைந்த லாபம்</span></td><td class="n">2,247</td><td class="n">1,031</td><td class="n">719</td><td class="n up">+118%</td><td class="n up">+212%</td></tr>
+      <tr><td>EPS (₹)</td><td class="n">152.53</td><td class="n">68.27</td><td class="n">49.13</td><td class="n up">+123%</td><td class="n up">+210%</td></tr>
+      <tr class="cat"><td colspan="6"><span class="en">Efficiency (derived)</span><span class="ta">செயல்திறன் (கணக்கிட்டது)</span></td></tr>
+      <tr><td><span class="en">EBITDA per barrel (₹)</span><span class="ta">பேரலுக்கு EBITDA (₹)</span></td><td class="n">1,597</td><td class="n">653</td><td class="n">n/a</td><td class="n up">+145%</td><td class="n">—</td></tr>
+      <tr><td><span class="en">PAT per tonne of crude (₹)</span><span class="ta">டன்னுக்கு லாபம் (₹)</span></td><td class="n">8,769</td><td class="n">3,570</td><td class="n">2,429</td><td class="n up">+146%</td><td class="n up">+261%</td></tr>
+      <tr class="cat"><td colspan="6"><span class="en">Balance sheet &amp; capital (consolidated, 31 Mar 2026)</span><span class="ta">இருப்புநிலை (31 மார்ச் 2026)</span></td></tr>
+      <tr><td><span class="en">Borrowings</span><span class="ta">கடன்</span></td><td class="n" colspan="3">1,964 <small>(FY22: 9,238)</small></td><td class="n" colspan="2">—</td></tr>
+      <tr><td><span class="en">Net worth</span><span class="ta">நிகர மதிப்பு</span></td><td class="n" colspan="3">11,109</td><td class="n" colspan="2">—</td></tr>
+      <tr><td><span class="en">Debt / equity</span><span class="ta">கடன் / பங்கு</span></td><td class="n" colspan="3">0.18×</td><td class="n" colspan="2">—</td></tr>
+      <tr><td>ROE / ROCE (FY26)</td><td class="n" colspan="3">31.8% / 34.9%</td><td class="n" colspan="2">—</td></tr>
+      <tr class="cat"><td colspan="6"><span class="en">Cash &amp; liquidity</span><span class="ta">பணம் &amp; திரவத்தன்மை</span></td></tr>
+      <tr><td><span class="en">Cash from operations (FY26)</span><span class="ta">இயக்கப் பணம் (FY26)</span></td><td class="n" colspan="3">2,945 <small>(H1 FY27 n/a)</small></td><td class="n" colspan="2">—</td></tr>
+      <tr><td><span class="en">Cash conversion cycle (FY26)</span><span class="ta">பண மாற்று சுழற்சி</span></td><td class="n" colspan="3">29 days</td><td class="n" colspan="2">—</td></tr>
+      <tr class="cat"><td colspan="6"><span class="en">Valuation &amp; returns</span><span class="ta">மதிப்பீடு &amp; வருமானம்</span></td></tr>
+      <tr><td><span class="en">Dividend per share</span><span class="ta">பங்குக்கு ஈவுத்தொகை</span></td><td class="n" colspan="3">₹25 interim FY27 · ₹62 FY26</td><td class="n" colspan="2">—</td></tr>
+      <tr><td><span class="en">Trailing P/E · P/B (est.)</span><span class="ta">P/E · P/B</span></td><td class="n" colspan="3">~3.8× · ~1.6×<span class="dag">†</span></td><td class="n" colspan="2">—</td></tr>
+    </tbody></table></div>
+  <p class="note"><span class="dag">†</span> <span class="en">P/B uses an estimated Sep 2026 book value of ~₹912/share (Mar 2026 ₹746 + H1 profit − ₹54 final dividend); the half-year balance sheet was not reviewed.</span><span class="ta">செப் 2026 புத்தக மதிப்பு ~₹912 என மதிப்பீடு.</span></p>
+  <h3><span class="en">Five-year view (consolidated)</span><span class="ta">ஐந்து வருஷப் பார்வை</span></h3>
+  <div class="chartbox"><div class="inner"><canvas id="chAnn"></canvas></div></div>
+  <p class="note"><span class="en">FY25 shows how thin the business gets when cracks fall: ₹214 crore consolidated profit on ₹58,983 crore of sales, GRM $4.22.</span><span class="ta">கிராக் குறைஞ்சா என்ன ஆகும்னு FY25 காட்டுது: ₹58,983 கோடி விற்பனையில ₹214 கோடி லாபம், GRM $4.22.</span></p>
+</section>
+
+<!-- ================= CASH FLOW & WC ================= -->
+<section class="pane" id="cf">
+  <h2><span class="en">Cash flow and working capital</span><span class="ta">பணப்புழக்கம் &amp; நடைமுறை மூலதனம்</span></h2>
+  <p class="lede"><span class="en">Consolidated, ₹ crore. Half-year cash flow for H1 FY27 was not in the material reviewed and is marked n/a.</span><span class="ta">ஒருங்கிணைந்த எண்கள், ₹ கோடி. H1 FY27 பணப்புழக்கம் கிடைக்கல (n/a).</span></p>
+  <div class="chartbox"><div class="inner"><canvas id="chCF"></canvas></div></div>
+  <div class="tbl"><table>
+    <thead><tr><th></th><th>FY22</th><th>FY23</th><th>FY24</th><th>FY25</th><th>FY26</th><th>H1 FY27</th></tr></thead>
+    <tbody>
+      <tr class="cat"><td colspan="7"><span class="en">Cash flows</span><span class="ta">பணப்புழக்கம்</span></td></tr>
+      <tr><td><span class="en">Operating (CFO)</span><span class="ta">இயக்கம்</span></td><td class="n">1,026</td><td class="n">5,749</td><td class="n">2,694</td><td class="n">1,352</td><td class="n">2,945</td><td class="n">n/a</td></tr>
+      <tr><td><span class="en">Investing</span><span class="ta">முதலீடு</span></td><td class="n">−676</td><td class="n">−403</td><td class="n">−589</td><td class="n">−649</td><td class="n">−930</td><td class="n">n/a</td></tr>
+      <tr><td><span class="en">Financing</span><span class="ta">நிதியளிப்பு</span></td><td class="n">−343</td><td class="n">−5,354</td><td class="n">−2,106</td><td class="n">−519</td><td class="n">−1,294</td><td class="n">n/a</td></tr>
+      <tr><td><span class="en">Free cash flow</span><span class="ta">இலவசப் பணம்</span></td><td class="n">326</td><td class="n">5,331</td><td class="n">2,092</td><td class="n">667</td><td class="n">2,045</td><td class="n">n/a</td></tr>
+      <tr><td>CFO / EBITDA</td><td class="n">38%</td><td class="n">119%</td><td class="n">81%</td><td class="n">130%</td><td class="n">82%</td><td class="n">n/a</td></tr>
+      <tr class="cat"><td colspan="7"><span class="en">Working capital days</span><span class="ta">நடைமுறை மூலதன நாட்கள்</span></td></tr>
+      <tr><td><span class="en">Inventory days</span><span class="ta">இருப்பு நாட்கள்</span></td><td class="n">71</td><td class="n">32</td><td class="n">48</td><td class="n">42</td><td class="n">53</td><td class="n">n/a</td></tr>
+      <tr><td><span class="en">Receivable days</span><span class="ta">வரவு நாட்கள்</span></td><td class="n">2</td><td class="n">1</td><td class="n">3</td><td class="n">1</td><td class="n">1</td><td class="n">n/a</td></tr>
+      <tr><td><span class="en">Payable days</span><span class="ta">செலுத்தும் நாட்கள்</span></td><td class="n">30</td><td class="n">16</td><td class="n">26</td><td class="n">20</td><td class="n">25</td><td class="n">n/a</td></tr>
+      <tr><td><strong><span class="en">Cash conversion cycle</span><span class="ta">பண மாற்று சுழற்சி</span></strong></td><td class="n">43</td><td class="n">17</td><td class="n">24</td><td class="n">23</td><td class="n">29</td><td class="n">n/a</td></tr>
+      <tr class="cat"><td colspan="7"><span class="en">Debt</span><span class="ta">கடன்</span></td></tr>
+      <tr><td><span class="en">Borrowings, year end</span><span class="ta">ஆண்டு இறுதி கடன்</span></td><td class="n">9,238</td><td class="n">4,260</td><td class="n">2,786</td><td class="n">3,117</td><td class="n">1,964</td><td class="n">n/a</td></tr>
+    </tbody></table></div>
+  <div class="grid g3">
+    <div class="card"><h4><span class="en">Receivables are almost zero</span><span class="ta">வரவு கிட்டத்தட்ட பூஜ்யம்</span></h4><p class="en">One to three days for five years. IOC pays almost on delivery. This is the clearest piece of "parental care" in the accounts.</p><p class="ta">5 வருஷமா 1–3 நாள். IOC கிட்டத்தட்ட டெலிவரிலயே பணம் தருது. கணக்குல தெரியற தாய் நிறுவன உதவியோட தெளிவான சான்று இது.</p></div>
+    <div class="card"><h4><span class="en">Inventory is the swing item</span><span class="ta">இருப்புதான் மாறும் அம்சம்</span></h4><p class="en">Crude stock of 30–70 days ties up cash when crude prices rise. FY26 inventory days rose to 53 and CFO converted only 82% of EBITDA. With crude near $117 in September, expect H1 FY27 cash conversion to lag profit too.</p><p class="ta">கச்சா விலை ஏறும்போது 30–70 நாள் இருப்பு பணத்தை அடைச்சு வைக்கும். FY26-ல இருப்பு 53 நாள், CFO EBITDA-ல 82% மட்டும். செப்டம்பர்ல கச்சா $117 அருகில் இருந்ததால H1 FY27-லயும் பண மாற்றம் லாபத்தை விட பின்தங்கலாம்.</p></div>
+    <div class="card"><h4><span class="en">Cash went to paying down debt</span><span class="ta">பணம் கடன் அடைப்புக்குப் போச்சு</span></h4><p class="en">Borrowings fell from ₹9,238 cr (FY22) to ₹1,964 cr (FY26). FY23's ₹5,354 cr financing outflow was mostly repayment. With little debt left and capex of ₹700–800 cr a year, more of the cash can flow to dividends.</p><p class="ta">கடன் ₹9,238 கோடியிலிருந்து (FY22) ₹1,964 கோடிக்கு (FY26) குறைஞ்சுது. கடன் குறைவு, வருஷ மூலதனச் செலவு ₹700–800 கோடி; அதனால ஈவுத்தொகைக்கு அதிகப் பணம் போகலாம்.</p></div>
+  </div>
+</section>
+
+<!-- ================= VALUATION & MARKET ================= -->
+<section class="pane" id="val">
+  <h2><span class="en">Valuation and share-price activity</span><span class="ta">மதிப்பீடு &amp; பங்கு விலை</span></h2>
+  <div class="grid g4">
+    <div class="kpi"><div class="l"><span class="en">Price (22 Oct, intraday)</span><span class="ta">விலை (22 அக்)</span></div><div class="v">~₹1,452</div><div class="d">52w ₹738 – ₹1,678</div></div>
+    <div class="kpi"><div class="l"><span class="en">Market cap</span><span class="ta">சந்தை மதிப்பு</span></div><div class="v">~₹21,600 cr</div><div class="d">14.89 cr shares</div></div>
+    <div class="kpi"><div class="l">EV / TTM EBITDA</div><div class="v">~2.8×</div><div class="d"><span class="en">TTM EBITDA ~₹8,270 cr</span><span class="ta">TTM EBITDA ~₹8,270 கோடி</span></div></div>
+    <div class="kpi"><div class="l"><span class="en">Dividend yield (FY26 ₹62)</span><span class="ta">ஈவுத்தொகை வருமானம்</span></div><div class="v">~4.3%</div><div class="d"><span class="en">payout ~30%</span><span class="ta">~30% வழங்கல்</span></div></div>
+  </div>
+  <div class="call"><strong><span class="en">Cyclical P/E trap — warning</span><span class="ta">சுழற்சி P/E பொறி — எச்சரிக்கை</span></strong><p class="en">A P/E under 4× looks cheap only if Q2-type margins last. Refining is a spread business at what looks like a war-driven peak. Repricing the stock on FY26's $9.28 GRM rather than Q2's $20.41 gives a very different earnings base. Brokers' own valuations lean on price-to-book (1.6×) and EV/EBITDA (6×) for that reason.</p><p class="ta">Q2 மாதிரி மார்ஜின் நீடிச்சாதான் 4×-க்குக் கீழ P/E மலிவு. இப்போ இருக்கறது போரால வந்த உச்சம் போல. Q2-ஓட $20.41-க்கு பதிலா FY26-ஓட $9.28 GRM-ஐ வச்சுப் பார்த்தா லாப அடிப்படை ரொம்ப வேறுபடும். அதனாலதான் புரோக்கர்களும் P/B, EV/EBITDA-ஐ பயன்படுத்தறாங்க.</p></div>
+  <h3><span class="en">Peer valuation snapshot</span><span class="ta">போட்டியாளர் மதிப்பீடு</span></h3>
+  <div class="tbl"><table>
+    <thead><tr><th></th><th>CPCL</th><th>MRPL</th><th>HPCL</th></tr></thead>
+    <tbody>
+      <tr><td><span class="en">P/E on FY27E EPS (CNBC-TV18 comparison)</span><span class="ta">FY27E P/E</span></td><td class="n">3.2×</td><td class="n">6.2×</td><td class="n">n/a</td></tr>
+      <tr><td><span class="en">Share price (22 Oct)</span><span class="ta">பங்கு விலை</span></td><td class="n">~₹1,452</td><td class="n">₹185 <small>(15 Oct)</small></td><td class="n">₹340.80</td></tr>
+      <tr><td><span class="en">Q2 FY27 PAT (₹ cr)</span><span class="ta">Q2 லாபம்</span></td><td class="n">2,271</td><td class="n">1,881</td><td class="n">3,625 <small>(consol.)</small></td></tr>
+    </tbody></table></div>
+  <h3><span class="en">Why the share price moved</span><span class="ta">பங்கு விலை ஏன் மாறியது</span></h3>
+  <div class="tbl"><table>
+    <thead><tr><th><span class="en">Date</span><span class="ta">தேதி</span></th><th><span class="en">Event</span><span class="ta">நிகழ்வு</span></th><th><span class="en">Move</span><span class="ta">மாற்றம்</span></th></tr></thead>
+    <tbody>
+      <tr><td>Mar 2026</td><td style="text-align:left"><span class="en">US–Iran war; crude from ~$73 to above $100; SAED reimposed</span><span class="ta">போர்; கச்சா $73 → $100+; SAED மீண்டும்</span></td><td><span class="chip g">▲</span></td></tr>
+      <tr><td>10 Jun 2026</td><td style="text-align:left"><span class="en">New 52-week high of ₹1,249 at the time</span><span class="ta">அப்போதைய 52 வார உச்சம் ₹1,249</span></td><td><span class="chip g">▲</span></td></tr>
+      <tr><td>19 Jun 2026</td><td style="text-align:left"><span class="en">Granted Navratna status</span><span class="ta">நவரத்னா அந்தஸ்து</span></td><td><span class="chip g">▲</span></td></tr>
+      <tr><td>23 Jul 2026</td><td style="text-align:left"><span class="en">Q1 result: profit back, but GRM $8.78 lagged peers</span><span class="ta">Q1: லாபம் வந்தாலும் GRM $8.78 பின்தங்கியது</span></td><td><span class="chip r">−3.7%</span></td></tr>
+      <tr><td>8 Oct 2026</td><td style="text-align:left"><span class="en">Exchange sought clarification on a volume spike; company said it was market-driven</span><span class="ta">வர்த்தக அளவு அதிகரிப்பு பற்றி விளக்கம்</span></td><td><span class="chip s">vol</span></td></tr>
+      <tr><td>22 Oct 2026</td><td style="text-align:left"><span class="en">Q2 result: intraday low ₹1,377, recovered over 5% to ~₹1,452; up ~71% in 2026</span><span class="ta">Q2: ₹1,377-லிருந்து ~₹1,452-க்கு மீட்சி; 2026-ல ~71% உயர்வு</span></td><td><span class="chip g">▲</span></td></tr>
+    </tbody></table></div>
+  <h3><span class="en">Who is buying</span><span class="ta">யார் வாங்குறாங்க</span></h3>
+  <div class="chartbox"><div class="inner" style="height:260px"><canvas id="chFII"></canvas></div></div>
+  <p class="note"><span class="en">Promoters steady at 67.29% (IOC 51.89%, Naftiran 15.40%). FIIs nearly doubled from 8.80% (Sep 2025) to 15.79% (Sep 2026). Shareholder count 1.57 lakh.</span><span class="ta">புரமோட்டர்கள் 67.29%. வெளிநாட்டு நிறுவன முதலீட்டாளர்கள் 8.80%-லிருந்து 15.79%-க்கு கிட்டத்தட்ட இரட்டிப்பு. பங்குதாரர்கள் 1.57 லட்சம்.</span></p>
+</section>
+
+<!-- ================= TRIGGERS & CYCLE ================= -->
+<section class="pane" id="tc">
+  <h2><span class="en">Triggers and cycle</span><span class="ta">தூண்டிகள் &amp; சுழற்சி</span></h2>
+  <div class="grid g4">
+    <div class="kpi"><div class="l"><span class="en">Cycle type</span><span class="ta">சுழற்சி வகை</span></div><div class="v" style="font-size:20px"><span class="en">Commodity spread</span><span class="ta">பொருள் இடைவெளி</span></div><div class="d"><span class="en">product cracks vs crude</span><span class="ta">கிராக் vs கச்சா</span></div></div>
+    <div class="kpi fl"><div class="l"><span class="en">Sector phase</span><span class="ta">துறை நிலை</span></div><div class="v" style="font-size:20px">P4 <span class="en">Late cycle</span><span class="ta">உச்சக் கட்டம்</span></div><div class="d"><span class="en">score 35</span><span class="ta">மதிப்பு 35</span></div></div>
+    <div class="kpi"><div class="l">CY</div><div class="v">38</div><div class="d"><span class="en">sector 35 · stock 40</span><span class="ta">துறை 35 · பங்கு 40</span></div></div>
+    <div class="kpi"><div class="l">TG</div><div class="v">40</div><div class="d"><span class="en">risks outweigh catalysts</span><span class="ta">ரிஸ்க் அதிகம்</span></div></div>
+  </div>
+  <div class="grid g2" style="margin-top:12px">
+    <div class="svgbox" style="margin:0"><svg id="clock" viewBox="0 0 360 330" style="min-width:0" role="img" aria-label="Cycle clock"></svg></div>
+    <div class="card">
+      <h4><span class="en">Evidence for P4</span><span class="ta">P4-க்கு சான்று</span></h4>
+      <ul class="tight en">
+        <li>Record margins: HPCL $32.15, CPCL $20.41 in Q2 vs $4–9 in FY25–26.</li>
+        <li>Diesel cracks about $113/bbl on 8 Oct, far above pre-war levels.</li>
+        <li>Government already skimming via fortnightly export duty since March.</li>
+        <li>New capacity everywhere: IOC targets ~90 MMT by FY29; CPCL plans Manali to 280,000 bpd.</li>
+      </ul>
+      <ul class="tight ta">
+        <li>சாதனை மார்ஜின்: Q2-ல HPCL $32.15, CPCL $20.41; FY25–26-ல $4–9.</li>
+        <li>8 அக்டோபர்ல டீசல் கிராக் சுமார் $113.</li>
+        <li>மார்ச் முதல் 15 நாளுக்கு ஒருமுறை ஏற்றுமதி வரி.</li>
+        <li>எங்கும் புதிய திறன்: IOC FY29-க்குள் ~90 MMT; மணலி 2.8 லட்சம் bpd திட்டம்.</li>
+      </ul>
+      <h4><span class="en">Stock cycle (40)</span><span class="ta">பங்கு சுழற்சி (40)</span></h4>
+      <p class="note en">Lifecycle mature 55 · earnings at 5-yr high 40 · valuation 30 (capped: P/E trap) · price Stage 3, whipsawing below the ₹1,678 high, 35.</p>
+      <p class="note ta">வாழ்க்கைச் சுழற்சி 55 · லாபம் 5 வருஷ உச்சம் 40 · மதிப்பீடு 30 (P/E பொறி) · விலை நிலை 3, 35.</p>
+    </div>
+  </div>
+  <h3><span class="en">Trigger table</span><span class="ta">தூண்டி அட்டவணை</span></h3>
+  <div class="tbl"><table>
+    <thead><tr><th><span class="en">Trigger</span><span class="ta">தூண்டி</span></th><th>±</th><th>I</th><th>C</th><th>W</th><th>P</th><th><span class="en">Points</span><span class="ta">புள்ளி</span></th><th><span class="en">What to watch</span><span class="ta">கவனிக்க வேண்டியது</span></th></tr></thead>
+    <tbody>
+      <tr><td><span class="en">Diesel cracks stay elevated into Q3</span><span class="ta">Q3-லும் டீசல் கிராக் அதிகம்</span></td><td><span class="chip g">+</span></td><td class="n">4</td><td class="n">0.7</td><td class="n">1.0</td><td class="n">0.7</td><td class="n">1.96</td><td><span class="en">Singapore gasoil crack; Q3 GRM</span><span class="ta">சிங்கப்பூர் டீசல் கிராக்</span></td></tr>
+      <tr><td><span class="en">Navratna autonomy + own retail outlets</span><span class="ta">நவரத்னா + சொந்த பங்க்</span></td><td><span class="chip g">+</span></td><td class="n">1</td><td class="n">1.0</td><td class="n">0.7</td><td class="n">0.7</td><td class="n">0.49</td><td><span class="en">Outlet count, capex use</span><span class="ta">பங்க் எண்ணிக்கை</span></td></tr>
+      <tr><td><span class="en">Manali expansion to 280,000 bpd</span><span class="ta">மணலி விரிவாக்கம்</span></td><td><span class="chip g">+</span></td><td class="n">4</td><td class="n">0.4</td><td class="n">0.2</td><td class="n">1.0</td><td class="n">0.32</td><td><span class="en">Board / ministry approval, cost</span><span class="ta">அனுமதி, செலவு</span></td></tr>
+      <tr><td><span class="en">Cracks normalise after ceasefire / Hormuz reopens</span><span class="ta">போர் நிறுத்தம், கிராக் சரிவு</span></td><td><span class="chip r">−</span></td><td class="n">5</td><td class="n">0.4</td><td class="n">0.7</td><td class="n">1.0</td><td class="n">1.40</td><td><span class="en">US–Iran talks, shipping insurance</span><span class="ta">பேச்சுவார்த்தை, கப்பல் காப்பீடு</span></td></tr>
+      <tr><td><span class="en">OMC discount to trade-parity RTP continues or widens (in force since 16 Mar 2026)</span><span class="ta">trade parity-க்கு கீழ் OMC தள்ளுபடி தொடர்வது/அதிகரிப்பது (16 மார்ச் முதல்)</span></td><td><span class="chip r">−</span></td><td class="n">3</td><td class="n">0.7</td><td class="n">1.0</td><td class="n">1.0</td><td class="n">2.10</td><td><span class="en">Fortnightly RTP notices, OMC marketing losses, Q3 GRM</span><span class="ta">RTP அறிவிப்புகள், OMC நஷ்டம், Q3 GRM</span></td></tr>
+      <tr><td><span class="en">Russian discount narrows (sanctions)</span><span class="ta">ரஷ்யத் தள்ளுபடி குறைவு</span></td><td><span class="chip r">−</span></td><td class="n">2</td><td class="n">0.4</td><td class="n">0.7</td><td class="n">1.0</td><td class="n">0.56</td><td><span class="en">Urals–Brent spread</span><span class="ta">Urals–Brent இடைவெளி</span></td></tr>
+    </tbody></table></div>
+  <p class="note">TG = 50 + 8 × (1.96 + 0.49 + 0.32) − 8 × (1.40 + 2.10 + 0.56) = 40</p>
+  <h3><span class="en">Dated events</span><span class="ta">தேதி நிகழ்வுகள்</span></h3>
+  <div class="svgbox"><svg id="timeline" viewBox="0 0 1000 130" role="img" aria-label="Upcoming events"></svg></div>
+  <div class="call steel"><strong><span class="en">What would change this view</span><span class="ta">இந்தப் பார்வையை மாற்றக்கூடியவை</span></strong>
+    <ul class="tight en"><li>A ceasefire that holds and drops diesel cracks below $30: phase moves to P5.</li><li>Q3 GRM above $15 with SAED unchanged: TG rises toward 60.</li><li>A government order sharing marketing losses with standalone refiners: negative trigger with C ≥ 0.7, Conviction capped.</li></ul>
+    <ul class="tight ta"><li>நிலையான போர் நிறுத்தம், டீசல் கிராக் $30-க்குக் கீழ்: P5 நிலை.</li><li>SAED மாறாமல் Q3 GRM $15-க்கு மேல்: TG 60 நோக்கி.</li><li>சுத்திகரிப்பாளர்களும் நஷ்டத்தைப் பகிர அரசு உத்தரவு: பெரிய எதிர்மறை.</li></ul></div>
+</section>
+
+<!-- ================= SWOT ================= -->
+<section class="pane" id="swot">
+  <h2>SWOT</h2>
+  <div class="grid g2">
+    <div class="card" style="border-top:4px solid var(--good)"><h4><span class="en">Strengths</span><span class="ta">பலங்கள்</span></h4>
+      <ul class="tight en"><li>Utilisation above 100%; record distillate yield</li><li>GRM premium to Singapore for 5–6 years</li><li>Captive offtake to IOC; receivables ~1 day</li><li>Debt down to ₹1,964 cr; ROE 31.8%</li></ul>
+      <ul class="tight ta"><li>100%-க்கு மேல் பயன்பாடு; சாதனை டிஸ்டிலேட்</li><li>5–6 வருஷமா சிங்கப்பூரை விட அதிக GRM</li><li>IOC உறுதியான வாங்குதல்</li><li>கடன் ₹1,964 கோடி; ROE 31.8%</li></ul></div>
+    <div class="card" style="border-top:4px solid var(--bad)"><h4><span class="en">Weaknesses</span><span class="ta">பலவீனங்கள்</span></h4>
+      <ul class="tight en"><li>Single refinery, single site</li><li>No marketing arm to capture GMM in good times</li><li>Full dependence on imported crude</li><li>Board short of independent directors in 2026</li></ul>
+      <ul class="tight ta"><li>ஒரே ரிஃபைனரி, ஒரே இடம்</li><li>நல்ல காலத்தில் GMM கிடைக்காது</li><li>முழுக்க இறக்குமதி கச்சா</li><li>சுயாதீன இயக்குநர் பற்றாக்குறை</li></ul></div>
+    <div class="card" style="border-top:4px solid var(--steel)"><h4><span class="en">Opportunities</span><span class="ta">வாய்ப்புகள்</span></h4>
+      <ul class="tight en"><li>Manali expansion to 280,000 bpd</li><li>Cauvery Basin petrochemicals JV (25% stake)</li><li>Own retail network (₹400 cr plan)</li><li>Secondary-unit upgrades for cheaper crudes</li></ul>
+      <ul class="tight ta"><li>மணலி 2.8 லட்சம் bpd விரிவாக்கம்</li><li>காவேரி படுகை பெட்ரோகெமிக்கல் (25%)</li><li>சொந்த பங்க் நெட்வொர்க்</li><li>மலிவான கச்சாவுக்கான யூனிட் மேம்பாடு</li></ul></div>
+    <div class="card" style="border-top:4px solid var(--warn)"><h4><span class="en">Threats</span><span class="ta">அச்சுறுத்தல்கள்</span></h4>
+      <ul class="tight en"><li>Crack collapse after a ceasefire</li><li>Windfall tax or loss-sharing policy</li><li>Russian discount squeezed by sanctions</li><li>Hormuz supply disruption for 55–60% term crude</li></ul>
+      <ul class="tight ta"><li>போர் நிறுத்தத்துக்குப் பின் கிராக் சரிவு</li><li>விண்ட்ஃபால் வரி / நஷ்டப் பகிர்வு</li><li>ரஷ்யத் தள்ளுபடி குறைவு</li><li>ஹோர்முஸ் பாதிப்பு</li></ul></div>
+  </div>
+</section>
+
+<!-- ================= ANALYSTS ================= -->
+<section class="pane" id="an">
+  <h2><span class="en">Analysts' rating</span><span class="ta">ஆய்வாளர் மதிப்பீடு</span></h2>
+  <p class="lede"><span class="en">Third-party views only. CB Research makes no recommendation. Post-Q2 broker notes had not been published at the time of writing; the targets below predate the Q2 result.</span><span class="ta">மூன்றாம் தரப்பு கருத்துகள் மட்டும். CB Research பரிந்துரை செய்யாது. Q2-க்குப் பிந்தைய புரோக்கர் அறிக்கைகள் இன்னும் வரல.</span></p>
+  <div class="tbl"><table>
+    <thead><tr><th><span class="en">Broker</span><span class="ta">புரோக்கர்</span></th><th><span class="en">Rating</span><span class="ta">மதிப்பீடு</span></th><th><span class="en">Target (₹)</span><span class="ta">இலக்கு (₹)</span></th><th><span class="en">Date</span><span class="ta">தேதி</span></th><th><span class="en">vs ~₹1,452</span><span class="ta">தற்போதைய விலையுடன்</span></th><th><span class="en">Basis</span><span class="ta">அடிப்படை</span></th></tr></thead>
+    <tbody>
+      <tr><td>YES Securities</td><td><span class="chip g">Buy</span></td><td class="n">1,592</td><td>Jul 2026</td><td class="n up">+9.6%</td><td><span class="en">Upgraded from Add</span><span class="ta">Add-லிருந்து உயர்வு</span></td></tr>
+      <tr><td>Choice Equity</td><td><span class="chip g">Buy</span></td><td class="n">1,265</td><td>2026</td><td class="n dn">−12.9%</td><td><span class="en">Initiation</span><span class="ta">தொடக்க மதிப்பீடு</span></td></tr>
+      <tr><td><span class="en">Consensus (Trendlyne)</span><span class="ta">ஒருமித்த கருத்து</span></td><td><span class="chip g">Buy</span></td><td class="n">1,265</td><td>16 Jul 2026</td><td class="n dn">−12.9%</td><td>—</td></tr>
+      <tr><td>Elara Securities</td><td><span class="chip g">Buy</span></td><td class="n">935</td><td>Oct 2025</td><td class="n dn">−35.6%</td><td><span class="en">6× EV/EBITDA, FY27E GRM $6.5 (dated)</span><span class="ta">பழைய அனுமானம்</span></td></tr>
+      <tr><td>YES Securities</td><td><span class="chip g">Buy</span></td><td class="n">1,100</td><td>Oct 2025</td><td class="n dn">−24.2%</td><td><span class="en">1.6× FY27 P/BV (superseded)</span><span class="ta">பின்னர் மாற்றப்பட்டது</span></td></tr>
+    </tbody></table></div>
+  <div class="call steel"><p class="en"><strong>Read-out.</strong> The stock has overtaken most published targets. Every brokerage model in the table assumed a FY27 GRM well below Q2's $20.41, so estimate upgrades are likely after Q2; the question for them is how long to assume these margins last. Cycle phase: P4 late. Top positive triggers: elevated diesel cracks, Navratna/retail. Top risk: crack normalisation after a ceasefire.</p><p class="ta"><strong>சுருக்கம்.</strong> பெரும்பாலான இலக்குகளை பங்கு விலை தாண்டிடுச்சு. எல்லா புரோக்கர் மாதிரிகளும் Q2-ஓட $20.41-ஐ விட ரொம்பக் குறைவான FY27 GRM-ஐத்தான் அனுமானிச்சது; Q2-க்குப் பிறகு மதிப்பீடுகள் உயரலாம். கேள்வி: இந்த மார்ஜின் எவ்வளவு காலம் நீடிக்கும்? சுழற்சி நிலை: P4. முக்கிய ரிஸ்க்: போர் நிறுத்தத்துக்குப் பின் கிராக் சரிவு.</p></div>
+</section>
+
+<!-- ================= SELF-CHECK ================= -->
+<section class="pane" id="self">
+  <h2><span class="en">CB Investor Self-check</span><span class="ta">CB முதலீட்டாளர் சுய சோதனை</span></h2>
+  <p class="lede"><span class="en">Tick what is true for you. Each line shows CPCL's own data. This only counts how many of your own conditions line up. It is not a recommendation.</span><span class="ta">உங்களுக்குப் பொருந்துவதைத் டிக் செய்யுங்க. ஒவ்வொரு வரியிலும் CPCL-ஓட சொந்த தகவல். இது உங்க நிபந்தனைகள் எத்தனை பொருந்துதுன்னு மட்டும் எண்ணுது. இது பரிந்துரை இல்ல.</span></p>
+  <div class="card"><div><strong><span class="en">Overall</span><span class="ta">மொத்தம்</span></strong> <span id="scAll" class="n">0/0</span></div><div class="bar"><i id="scAllBar"></i></div><div class="note" id="scMsg"></div>
+    <button class="btn" id="scClear" type="button" style="margin-top:6px"><span class="en">Clear my ticks</span><span class="ta">டிக்குகளை அழி</span></button></div>
+  <div id="scGroups"></div>
+</section>
+
+<!-- ================= MANAGEMENT ================= -->
+<section class="pane" id="mgmt">
+  <h2><span class="en">Management &amp; Board</span><span class="ta">நிர்வாகம் &amp; இயக்குநர் குழு</span></h2>
+  <div class="tbl"><table>
+    <thead><tr><th><span class="en">Role</span><span class="ta">பதவி</span></th><th><span class="en">Name</span><span class="ta">பெயர்</span></th><th><span class="en">Note</span><span class="ta">குறிப்பு</span></th></tr></thead>
+    <tbody>
+      <tr><td><span class="en">Chairman</span><span class="ta">தலைவர்</span></td><td style="text-align:left"><span class="en">Chairman of Indian Oil (ex officio)</span><span class="ta">இந்தியன் ஆயில் தலைவர் (பதவி வழி)</span></td><td style="text-align:left"><span class="en">Name not verified for Oct 2026 — n/a</span><span class="ta">பெயர் சரிபார்க்கப்படவில்லை</span></td></tr>
+      <tr><td><span class="en">Managing Director</span><span class="ta">நிர்வாக இயக்குநர்</span></td><td style="text-align:left">H. Shankar<span class="dag">†</span></td><td style="text-align:left"><span class="en">Led the ₹1 trillion revenue ambition and the Cauvery Basin approvals</span><span class="ta">₹1 லட்சம் கோடி வருவாய் இலக்கு, காவேரி படுகை அனுமதிகள்</span></td></tr>
+      <tr><td><span class="en">Director (Finance)</span><span class="ta">இயக்குநர் (நிதி)</span></td><td style="text-align:left">n/a</td><td style="text-align:left">—</td></tr>
+      <tr><td><span class="en">Company Secretary</span><span class="ta">நிறுவனச் செயலர்</span></td><td style="text-align:left">Lalit Kumar Mohanty</td><td style="text-align:left"><span class="en">From 1 Jul 2026</span><span class="ta">1 ஜூலை 2026 முதல்</span></td></tr>
+      <tr><td><span class="en">Independent Director</span><span class="ta">சுயாதீன இயக்குநர்</span></td><td style="text-align:left">Ritesh Kumar Golchha</td><td style="text-align:left"><span class="en">Appointed 7 Oct 2026</span><span class="ta">7 அக் 2026 நியமனம்</span></td></tr>
+    </tbody></table></div>
+  <p class="note"><span class="dag">†</span> <span class="en">Named as MD in 2024–25 coverage; current tenure should be confirmed on the company website.</span><span class="ta">2024–25 செய்திகளில் MD; தற்போதைய பதவிக்காலத்தை நிறுவன இணையதளத்தில் சரிபாருங்க.</span></p>
+  <div class="grid g2">
+    <div class="card"><h4><span class="en">Governance points</span><span class="ta">நிர்வாகக் குறிப்புகள்</span></h4>
+      <ul class="tight en"><li>Navratna CPSE from 19 Jun 2026 (28th Navratna), with more board autonomy on capex.</li><li>Q1 FY27 auditor note: minimum independent directors, including a woman independent director, not in place through the quarter.</li><li>Dividend to Iranian shareholder Naftiran held back by sanctions.</li><li>Unmodified audit opinion on Q1 results.</li></ul>
+      <ul class="tight ta"><li>19 ஜூன் 2026 முதல் நவரத்னா (28-வது).</li><li>Q1 ஆடிட்டர் குறிப்பு: குறைந்தபட்ச சுயாதீன இயக்குநர்கள் (பெண் இயக்குநர் உட்பட) இல்லை.</li><li>ஈரான் பங்குதாரருக்கு ஈவுத்தொகை தடைகளால் நிறுத்தம்.</li><li>Q1 முடிவுகளுக்கு மாற்றமில்லாத ஆடிட் கருத்து.</li></ul></div>
+    <div class="chartbox" style="margin:0"><div class="inner" style="min-width:0;height:250px"><canvas id="chShp"></canvas></div></div>
+  </div>
+</section>
+
+<!-- ================= SOCRATES ================= -->
+<section class="pane" id="soc">
+  <h2><span class="en">Cauvery Socrates</span><span class="ta">காவேரி சாக்ரடீஸ்</span></h2>
+  <p class="lede"><span class="en">Answer, then read why. The point is to reason, not to score.</span><span class="ta">பதில் சொல்லுங்க, பிறகு காரணத்தைப் படிங்க. மதிப்பெண்ணை விட சிந்தனைதான் முக்கியம்.</span></p>
+  <div id="quiz"></div>
+  <div class="q"><strong><span class="en">Open question</span><span class="ta">திறந்த கேள்வி</span></strong>
+    <p class="en">If a ceasefire cuts diesel cracks by half next quarter, which number in CPCL's results would you look at first, and what would you compare it with?</p>
+    <p class="ta">அடுத்த காலாண்டுல போர் நிறுத்தத்தால டீசல் கிராக் பாதியா குறைஞ்சா, CPCL முடிவுகள்ல முதல்ல எந்த எண்ணைப் பார்ப்பீங்க, எதோட ஒப்பிடுவீங்க?</p>
+    <label for="socFree" class="note"><span class="en">Your answer</span><span class="ta">உங்க பதில்</span></label>
+    <textarea id="socFree" rows="3"></textarea>
+    <button class="btn" id="socBtn" type="button" style="margin-top:6px"><span class="en">Compare with a model answer</span><span class="ta">மாதிரி பதிலுடன் ஒப்பிடு</span></button>
+    <div class="fb" id="socFb"></div></div>
+</section>
+
+</div><!-- /wrap -->
+
+<button id="cbBadge" type="button" aria-label="CB Research disclaimer">CB</button>
+<div id="disc" hidden><strong>CB Research</strong><p class="en" style="margin:4px 0 0">Prepared by CB Research (Cauvery Business) for education only. Not a SEBI-registered research analyst or adviser. Not investment advice or a recommendation to buy, sell or hold. Figures come from company filings and published coverage as of 23 Oct 2026; items marked n/a or † are unverified or estimated. Do your own research.</p><p class="ta" style="margin:4px 0 0">CB Research (காவேரி பிசினஸ்) கல்வி நோக்கில் தயாரித்தது. SEBI பதிவு பெற்ற ஆய்வாளர் அல்ல. இது முதலீட்டு ஆலோசனை அல்ல; வாங்க, விற்க, வைத்திருக்க பரிந்துரை அல்ல. 23 அக் 2026 வரையிலான நிறுவனத் தாக்கல்கள் மற்றும் செய்திகள் அடிப்படையில். n/a அல்லது † குறியிட்டவை சரிபார்க்கப்படாதவை/மதிப்பீடுகள். நீங்களே ஆய்வு செய்யுங்க.</p></div>
+<button id="asBtn" type="button" aria-label="Open CB Assist">🎙 <span class="lbl">CB Assist</span></button>
+<div id="assist" hidden role="dialog" aria-label="CB Assist">
+  <header><span>CB Assist · CPCL</span><button type="button" id="asClose" aria-label="Close">×</button></header>
+  <div id="asLog"></div>
+  <div id="asSug"></div>
+  <form id="asForm"><input type="text" id="asIn" autocomplete="off" placeholder="Ask about CPCL…"><button class="btn" id="asMic" type="button" aria-label="Ask by voice">🎤</button><button class="btn" type="submit">Ask</button></form>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<script>
+var CO = {
+  name:"Chennai Petroleum Corporation Ltd", ticker:"CHENNPETRO", bse:"500110", quarter:"Q2FY27", resultDate:"2026-10-22",
+  parent:{name:"Indian Oil Corporation", stake:51.89}, otherPromoter:{name:"Naftiran Intertrade Co (Iran)", stake:15.40},
+  capacityMMTPA:10.5, sharesCr:14.89,
+  q:{labels:["Q1FY26","Q2FY26","Q3FY26","Q4FY26","Q1FY27","Q2FY27"],
+     grm:[3.22,9.04,10.97,13.75,8.78,20.41], throughput:[2.981,3.013,2.79,2.93,2.848,2.59],
+     patConsol:[-40,719,1002,1422,1031,2247], ebitdaConsol:[99,1144,1478,2036,1555,3200],
+     patStandalone:[-57,732,987,1400,1017,2271], revStandalone:[18683,20034,19438,20455,29359,22055]},
+  q2:{rev:22055.45, ebitda:3031.57, ebitdaMargin:13.74, pat:2271.29, patConsol:2247.03, eps:152.53, grm:20.41, throughput:2.59, interimDiv:25, recordDate:"2026-10-30"},
+  annual:{labels:["FY22","FY23","FY24","FY25","FY26"], sales:[43068,76271,66024,58983,63148], ebitda:[2732,5698,4476,1038,4757], pat:[1352,3532,2745,214,3103],
+     cfo:[1026,5749,2694,1352,2945], cfi:[-676,-403,-589,-649,-930], cff:[-343,-5354,-2106,-519,-1294], fcf:[326,5331,2092,667,2045],
+     invDays:[71,32,48,42,53], recDays:[2,1,3,1,1], payDays:[30,16,26,20,25], ccc:[43,17,24,23,29], debt:[9238,4260,2786,3117,1964]},
+  valuation:{price:1452, mcapCr:21620, pe:3.8, pb:1.6, evEbitda:2.8, divYield:4.3},
+  peersQ1:{CPCL:1017, MRPL:915, IOC:-2661, BPCL:-3962, HPCL:-11526},
+  crudeMix:{middleEast:"55-60%", russia:"25-30%", westAfricaOthers:"balance", domestic:"~0%"},
+  cycle:{sectorPhase:"P4", stockStage:"Stage 3", cy:38},
+  triggers:[
+    {name:"Diesel cracks stay elevated into Q3",sign:"+",I:4,C:0.7,W:1.0,P:0.7,pts:1.96,status:"Executing"},
+    {name:"Navratna autonomy + own retail",sign:"+",I:1,C:1.0,W:0.7,P:0.7,pts:0.49,status:"Executing"},
+    {name:"Manali expansion to 280,000 bpd",sign:"+",I:4,C:0.4,W:0.2,P:1.0,pts:0.32,status:"Announced"},
+    {name:"Crack normalisation after ceasefire",sign:"-",I:5,C:0.4,W:0.7,P:1.0,pts:1.40,status:"Watch"},
+    {name:"OMC discount to trade-parity RTP continues or widens",sign:"-",I:3,C:0.7,W:1.0,P:1.0,pts:2.10,status:"Executing"},
+    {name:"Russian discount narrows",sign:"-",I:2,C:0.4,W:0.7,P:1.0,pts:0.56,status:"Watch"}],
+  tg:40,
+  cbScore:{g:8.0,m:8.5,d:8.5,v:7.0,t:6.0,r:4.5,composite:7.1},
+  analysts:[{b:"YES Securities",r:"Buy",tp:1592,d:"Jul 2026"},{b:"Choice Equity",r:"Buy",tp:1265,d:"2026"},{b:"Elara Securities",r:"Buy",tp:935,d:"Oct 2025"}]
+};
+
+var LANG='en';
+function L(en,ta){return LANG==='ta'?ta:en}
+function fmt(n,d){return Number(n).toLocaleString('en-IN',{maximumFractionDigits:d==null?0:d,minimumFractionDigits:d==null?0:d})}
+var C={ink:'#14232e',muted:'#5b6b76',flame:'#e8620c',crude:'#7a4b12',steel:'#1f5f7a',good:'#1d7f4e',warn:'#b77a00',bad:'#c0392b',line:'#dde3e7',panel:'#f6f8f9'};
+var NS='http://www.w3.org/2000/svg';
+function el(tag,attrs,parent,text){var e=document.createElementNS(NS,tag);for(var k in attrs)e.setAttribute(k,attrs[k]);if(text!=null)e.textContent=text;if(parent)parent.appendChild(e);return e}
+function stor(k,v){try{if(v===undefined)return localStorage.getItem(k);localStorage.setItem(k,v)}catch(e){return null}}
+
+/* ---------- language ---------- */
+function setLang(l){LANG=l;document.body.classList.toggle('ta',l==='ta');document.documentElement.lang=l==='ta'?'ta':'en';
+  document.getElementById('lnEN').classList.toggle('on',l==='en');document.getElementById('lnTA').classList.toggle('on',l==='ta');
+  document.getElementById('asIn').placeholder=L('Ask about CPCL…','CPCL பற்றி கேளுங்க…');
+  stor('cpcl_lang',l);renderSchoolCard();renderOdd(curPipe);renderSelf();renderSug();rebuildCharts();}
+document.getElementById('lnEN').onclick=function(){setLang('en')};
+document.getElementById('lnTA').onclick=function(){setLang('ta')};
+
+/* ---------- tabs ---------- */
+var tabs=document.querySelectorAll('.tab');
+function openTab(id){var ok=false;tabs.forEach(function(t){var on=t.dataset.t===id;t.classList.toggle('on',on);if(on)ok=true});
+  if(!ok)return;document.querySelectorAll('.pane').forEach(function(p){p.classList.toggle('on',p.id===id)});
+  try{history.replaceState(null,'','#'+id)}catch(e){} window.scrollTo({top:0});}
+tabs.forEach(function(t){t.addEventListener('click',function(){openTab(t.dataset.t)})});
+
+/* ---------- charts ---------- */
+var valPlugin={id:'vals',afterDatasetsDraw:function(ch,args,opts){var ctx=ch.ctx;ctx.save();ctx.font='600 11px "IBM Plex Mono",monospace';ctx.fillStyle=C.ink;ctx.textAlign='center';
+  ch.data.datasets.forEach(function(ds,i){if((ds.type||ch.config.type)!=='bar'||ds.noLabel)return;var m=ch.getDatasetMeta(i);if(m.hidden)return;
+    m.data.forEach(function(b,j){var v=ds.data[j];if(v==null)return;var y=v>=0?b.y-5:b.y+13;ctx.fillText(fmt(v,ds.dec||0),b.x,y)})});ctx.restore()}};
+if(window.Chart){Chart.register(valPlugin);Chart.defaults.font.family='"IBM Plex Sans","Noto Sans Tamil",sans-serif';Chart.defaults.color=C.muted;Chart.defaults.borderColor=C.line;Chart.defaults.maintainAspectRatio=false}
+var charts={};
+function mk(id,cfg){if(!window.Chart)return;if(charts[id])charts[id].destroy();var c=document.getElementById(id);if(!c)return;charts[id]=new Chart(c,cfg)}
+function rebuildCharts(){
+  var q=CO.q;
+  mk('chOv',{type:'bar',data:{labels:q.labels,datasets:[
+    {label:L('EBITDA (₹ cr)','EBITDA (₹ கோடி)'),data:q.ebitdaConsol,backgroundColor:'rgba(31,95,122,.35)',borderColor:C.steel,borderWidth:1,yAxisID:'y'},
+    {label:L('PAT (₹ cr)','நிகர லாபம் (₹ கோடி)'),data:q.patConsol,backgroundColor:C.steel,yAxisID:'y'},
+    {type:'line',label:'GRM ($/bbl)',data:q.grm,borderColor:C.flame,backgroundColor:C.flame,borderWidth:3,pointRadius:4,yAxisID:'y2',tension:.25}]},
+    options:{layout:{padding:{top:18}},plugins:{legend:{position:'bottom'}},scales:{y:{title:{display:true,text:'₹ cr'},ticks:{callback:function(v){return fmt(v)}}},y2:{position:'right',grid:{display:false},title:{display:true,text:'$/bbl'}}}}});
+  var pq=CO.peersQ1,pk=Object.keys(pq);
+  mk('chOddQ1',{type:'bar',data:{labels:pk,datasets:[{label:L('Q1 FY27 PAT (₹ cr)','Q1 FY27 லாபம் (₹ கோடி)'),data:pk.map(function(k){return pq[k]}),backgroundColor:pk.map(function(k){return pq[k]>=0?C.good:C.bad})}]},
+    options:{layout:{padding:{top:18,bottom:6}},plugins:{legend:{display:false},title:{display:true,text:L('Q1 FY27 net profit (₹ crore) — refiners vs refiner-marketers','Q1 FY27 நிகர லாபம் (₹ கோடி)')}},scales:{y:{ticks:{callback:function(v){return fmt(v)}}}}}});
+  mk('chMix',{type:'doughnut',data:{labels:[L('Middle East (term)','மத்திய கிழக்கு'),L('Russia (spot)','ரஷ்யா'),L('West Africa & others','மேற்கு ஆப்பிரிக்கா & பிற'),L('Domestic','உள்நாடு')],datasets:[{data:[57.5,27.5,15,0],backgroundColor:[C.crude,C.bad,C.warn,C.good]}]},
+    options:{plugins:{legend:{position:'bottom'},title:{display:true,text:L('Crude basket, approx. (mid-points)','கச்சா கலவை (தோராயமாக)')}}}});
+  mk('chRus',{type:'line',data:{labels:['FY23','Q4 FY23','Q2 FY25','Q1 FY26','Q2 FY26','Apr 2026'],datasets:[{label:L('Russian share of crude (%)','ரஷ்யக் கச்சா பங்கு (%)'),data:[13,22,22,14,19,27.5],borderColor:C.bad,backgroundColor:'rgba(192,57,43,.12)',fill:true,tension:.2,pointRadius:4}]},
+    options:{plugins:{legend:{position:'bottom'}},scales:{y:{min:0,max:35}}}});
+  var a=CO.annual;
+  mk('chAnn',{type:'bar',data:{labels:a.labels,datasets:[
+    {label:'EBITDA (₹ cr)',data:a.ebitda,backgroundColor:'rgba(31,95,122,.35)',borderColor:C.steel,borderWidth:1},
+    {label:L('PAT (₹ cr)','நிகர லாபம்'),data:a.pat,backgroundColor:C.steel},
+    {type:'line',label:L('Sales (₹ cr, right)','விற்பனை (வலது)'),data:a.sales,borderColor:C.crude,backgroundColor:C.crude,yAxisID:'y2',tension:.2}]},
+    options:{layout:{padding:{top:18}},plugins:{legend:{position:'bottom'}},scales:{y:{ticks:{callback:function(v){return fmt(v)}}},y2:{position:'right',grid:{display:false},ticks:{callback:function(v){return fmt(v)}}}}}});
+  mk('chCF',{type:'bar',data:{labels:a.labels,datasets:[
+    {label:L('Operating','இயக்கம்'),data:a.cfo,backgroundColor:C.good},
+    {label:L('Investing','முதலீடு'),data:a.cfi,backgroundColor:C.warn},
+    {label:L('Financing','நிதியளிப்பு'),data:a.cff,backgroundColor:C.muted},
+    {type:'line',label:'EBITDA',data:a.ebitda,borderColor:C.flame,backgroundColor:C.flame,tension:.2}]},
+    options:{layout:{padding:{top:18}},plugins:{legend:{position:'bottom'}},scales:{y:{ticks:{callback:function(v){return fmt(v)}}}}}});
+  mk('chFII',{type:'line',data:{labels:['Sep 25','Dec 25','Mar 26','Jun 26','Sep 26'],datasets:[{label:L('FII holding (%)','வெளிநாட்டு நிறுவன பங்கு (%)'),data:[8.80,12.87,12.59,14.98,15.79],borderColor:C.steel,backgroundColor:'rgba(31,95,122,.12)',fill:true,pointRadius:4,tension:.2}]},
+    options:{plugins:{legend:{position:'bottom'}},scales:{y:{min:0,max:20}}}});
+  mk('chShp',{type:'doughnut',data:{labels:['IOC','Naftiran (Iran)','FII','DII',L('Public','பொது')],datasets:[{data:[51.89,15.40,15.79,1.18,15.76],backgroundColor:[C.flame,C.crude,C.steel,C.good,'#9aa8b1']}]},
+    options:{plugins:{legend:{position:'bottom'},title:{display:true,text:L('Shareholding, Sep 2026 (%)','பங்குதாரர் அமைப்பு, செப் 2026 (%)')}}}});
+}
+
+/* ---------- temple ---------- */
+var PIL=[
+ {k:'g',en:'Growth',ta:'வளர்ச்சி',s:CO.cbScore.g,den:'Profit +210% YoY and +123% QoQ; revenue +10% YoY. Growth came from margin, not volume: throughput fell 14% YoY.',dta:'லாபம் ஆண்டுக்கு +210%, காலாண்டுக்கு +123%. ஆனா அளவு இல்ல, மார்ஜின்தான் காரணம்: சுத்திகரிப்பு 14% குறைவு.'},
+ {k:'m',en:'Profitability',ta:'லாபத்தன்மை',s:CO.cbScore.m,den:'GRM $20.41, EBITDA margin 13.7%, FY26 ROE 31.8%. Near the top of its own history.',dta:'GRM $20.41, EBITDA மார்ஜின் 13.7%, ROE 31.8%. வரலாற்று உச்சத்துக்கு அருகில்.'},
+ {k:'d',en:'Balance sheet',ta:'இருப்புநிலை',s:CO.cbScore.d,den:'Borrowings ₹1,964 cr (from ₹9,238 cr in FY22), debt/equity 0.18×, receivables about 1 day.',dta:'கடன் ₹1,964 கோடி (FY22-ல ₹9,238), கடன்/பங்கு 0.18×.'},
+ {k:'v',en:'Valuation',ta:'மதிப்பீடு',s:CO.cbScore.v,den:'Trailing P/E ~3.8×, EV/EBITDA ~2.8×. Scored down from 9 for the cyclical P/E trap.',dta:'P/E ~3.8×, EV/EBITDA ~2.8×. சுழற்சி P/E பொறிக்காக மதிப்பு குறைக்கப்பட்டது.'},
+ {k:'t',en:'Market & triggers',ta:'சந்தை & தூண்டிகள்',s:CO.cbScore.t,den:'Up ~71% in 2026, FIIs nearly doubled their stake; but TG is 40 and the price is in a Stage 3 top pattern.',dta:'2026-ல ~71% உயர்வு, FII பங்கு கிட்டத்தட்ட இரட்டிப்பு; ஆனா TG 47, விலை நிலை 3.'},
+ {k:'r',en:'Risk',ta:'ரிஸ்க்',s:CO.cbScore.r,den:'One site, import-dependent crude, war-driven peak margins, fortnightly windfall-tax resets.',dta:'ஒரே இடம், இறக்குமதி கச்சா, போரால் வந்த உச்ச மார்ஜின், விண்ட்ஃபால் வரி.'}];
+function sc(s){return s>=8?C.good:(s>=6?C.warn:C.bad)}
+function drawTemple(){var s=document.getElementById('temple');s.innerHTML='';
+  el('polygon',{points:'310,14 30,112 590,112',fill:C.flame},s);
+  el('text',{x:310,y:72,'text-anchor':'middle',fill:'#fff','font-size':34,'font-weight':800,'font-family':'Archivo,sans-serif'},s,CO.cbScore.composite.toFixed(1));
+  el('text',{x:310,y:96,'text-anchor':'middle',fill:'#fff','font-size':12,'font-weight':600},s,'CB SCORE / 10');
+  el('rect',{x:40,y:112,width:540,height:30,fill:C.ink},s);
+  el('text',{x:310,y:132,'text-anchor':'middle',fill:'#fff','font-size':14,'font-weight':700,'letter-spacing':'2'},s,'CPCL · Q2 FY27');
+  var top=150,h=176;
+  PIL.forEach(function(p,i){var x=62+i*88,w=56;var g=el('g',{class:'col-hit',tabindex:0,role:'button','aria-label':p.en+' '+p.s},s);
+    el('rect',{x:x,y:top,width:w,height:h,fill:C.panel,stroke:C.line},g);
+    for(var f=1;f<4;f++)el('line',{x1:x+f*w/4,y1:top,x2:x+f*w/4,y2:top+h,stroke:C.line},g);
+    var fh=h*p.s/10;var fr=el('rect',{x:x+3,y:top+h,width:w-6,height:0,fill:sc(p.s),opacity:.85},g);
+    setTimeout(function(){fr.setAttribute('y',top+h-fh);fr.setAttribute('height',fh)},120+i*90);
+    fr.style.transition='y .9s ease, height .9s ease';
+    el('circle',{cx:x+w/2,cy:top+h-fh-2>top+18?top+h-fh-2:top+18,r:17,fill:'#fff',stroke:sc(p.s),'stroke-width':3},g);
+    el('text',{x:x+w/2,y:(top+h-fh-2>top+18?top+h-fh-2:top+18)+5,'text-anchor':'middle','font-size':13,'font-weight':700,fill:C.ink},g,p.s.toFixed(1));
+    el('text',{x:x+w/2,y:384,'text-anchor':'middle','font-size':11.5,'font-weight':600,fill:C.ink,class:'en'},s,p.en);
+    el('text',{x:x+w/2,y:384,'text-anchor':'middle','font-size':11.5,'font-weight':600,fill:C.ink,class:'ta'},s,p.ta);
+    function go(){var c=document.getElementById('pc_'+p.k);document.querySelectorAll('.pcard').forEach(function(x){x.classList.remove('hl')});c.classList.add('hl');c.scrollIntoView({behavior:'smooth',block:'nearest'})}
+    g.addEventListener('click',go);g.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();go()}});});
+  el('rect',{x:30,y:330,width:560,height:12,fill:'#cfd6db'},s);el('rect',{x:16,y:342,width:588,height:12,fill:'#b8c2c9'},s);
+  var pc=document.getElementById('pillCards');pc.innerHTML='';
+  PIL.forEach(function(p){var d=document.createElement('div');d.className='pcard';d.id='pc_'+p.k;d.style.borderLeftColor=sc(p.s);
+    d.innerHTML='<strong><span class="en">'+p.en+'</span><span class="ta">'+p.ta+'</span> · '+p.s.toFixed(1)+'</strong><div class="note"><span class="en">'+p.den+'</span><span class="ta">'+p.dta+'</span></div>';pc.appendChild(d)});}
+
+/* ---------- business model ---------- */
+var BM={
+ me:{en:'Middle East term crude, 55–60% of the basket. Reliable but exposed to the 2026 Strait of Hormuz disruption. Gulf producers offered to make up delayed cargoes after the crisis.',ta:'மத்திய கிழக்கு நீண்டகால ஒப்பந்தக் கச்சா, 55–60%. நம்பகமானது, ஆனா 2026 ஹோர்முஸ் பாதிப்புக்கு உள்ளானது.'},
+ ru:{en:'Russian spot crude, 25–30% per management (April 2026). Bought at a discount to Brent, which lifts GRM. Sanctions can narrow or remove the discount.',ta:'ரஷ்ய உடனடி கச்சா, 25–30%. பிரென்ட் விலையை விட தள்ளுபடியில் வாங்குவதால் GRM உயருது. தடைகள் இதைக் குறைக்கலாம்.'},
+ wa:{en:'West African and other spot grades, raised in 2026 to replace Gulf barrels. Several suit CPCL\'s lube base-oil units.',ta:'மேற்கு ஆப்பிரிக்கா & பிற கச்சா; 2026-ல வளைகுடா கச்சாவுக்கு மாற்றா அதிகரிச்சாங்க.'},
+ grp:{en:'Crude is bought with Indian Oil\'s group procurement. Management lists "optimised group procurement" among the reasons for its GRM premium.',ta:'இந்தியன் ஆயில் குழுமக் கொள்முதல் மூலம் கச்சா வாங்கப்படுது; GRM கூடுதலுக்கு இதுவும் ஒரு காரணம்னு நிர்வாகம் சொல்லுது.'},
+ port:{en:'All crude is imported through Chennai and piped to Manali. There is no domestic crude feed since the Nagapattinam refinery closed in 2019.',ta:'எல்லா கச்சாவும் சென்னை துறைமுகம் வழியா மணலிக்கு குழாயில் வருது. 2019-ல நாகை ரிஃபைனரி மூடியதிலிருந்து உள்நாட்டுக் கச்சா இல்ல.'},
+ core:{en:'Manali refinery, 10.5 MMTPA nameplate. FY26 throughput 11.71 MMT (about 112%). Q2 FY27: 2.59 MMT, GRM $20.41. This one site produces all of CPCL\'s profit.',ta:'மணலி ரிஃபைனரி, 10.5 MMTPA. FY26-ல 11.71 MMT (~112%). Q2: 2.59 MMT, GRM $20.41. CPCL லாபம் முழுசும் இந்த ஒரே இடத்திலிருந்துதான்.'},
+ md:{en:'Middle distillates: diesel (HSD), ATF and kerosene. The highest-crack products in 2026; diesel cracks were about $113/bbl on 8 Oct. Distillate yield reached about 80% in FY26.',ta:'டீசல், ATF, மண்ணெண்ணெய் — 2026-ல அதிக கிராக். 8 அக்டோபர்ல டீசல் கிராக் ~$113. FY26-ல டிஸ்டிலேட் ~80%.'},
+ le:{en:'Light ends: LPG, petrol (MS) and naphtha. LPG goes into the subsidised domestic cylinder chain run by IOC; CPCL is paid at the refinery gate, so it does not carry LPG under-recoveries.',ta:'LPG, பெட்ரோல், நாஃப்தா. LPG மானிய சிலிண்டர் சங்கிலிக்குப் போகுது; CPCL-க்கு ரிஃபைனரி வாசல் விலை கிடைக்குது, அதனால LPG நஷ்டம் இல்ல.'},
+ sp:{en:'Specialities: lube base stocks, paraffin wax, hexane, mineral turpentine, and defence/space fuels such as JP-5, JP-7 and ISROSENE. Small volume, steadier margins.',ta:'லூப் அடிப்படை எண்ணெய், மெழுகு, ஹெக்சேன், JP-5, JP-7, ISROSENE போன்ற சிறப்புப் பொருட்கள். அளவு குறைவு, மார்ஜின் நிலையானது.'},
+ he:{en:'Heavy ends: bitumen, fuel oil and petrochemical feedstocks. These usually sell below crude (negative cracks), which is why upgrading secondary units raises GRM.',ta:'பிட்டுமென், ஃபியூல் ஆயில், பெட்ரோகெமிக்கல் மூலப்பொருள். இவை பொதுவா கச்சாவை விடக் குறைந்த விலை; அதனால யூனிட் மேம்பாடு GRM-ஐ உயர்த்தும்.'},
+ ioc:{en:'Indian Oil buys and markets most CPCL fuels at a refinery transfer price set at trade parity. Receivables run at about 1 day. Pump-price and LPG risk stay with IOC.',ta:'பெரும்பாலான CPCL எரிபொருளை IOC "trade parity" விலையில வாங்கி விக்குது. வரவு ~1 நாள். பங்க் விலை, LPG ரிஸ்க் IOC-யிடம்.'},
+ exp:{en:'Some products go to other buyers and export. Exports of diesel, ATF and petrol attract the fortnightly windfall duty (SAED) reimposed in March 2026.',ta:'சில பொருட்கள் பிற வாங்குபவர்கள், ஏற்றுமதிக்கு. ஏற்றுமதிக்கு மார்ச் 2026 முதல் SAED வரி.'},
+ ret:{en:'Own retail fuel outlets: the first opened in March 2026 under a ₹400 crore plan. Too small to change the model yet, but it is CPCL\'s first step into marketing margin.',ta:'சொந்த பங்க்: முதல் பங்க் மார்ச் 2026-ல, ₹400 கோடி திட்டம். இன்னும் சிறியது, ஆனா மார்க்கெட்டிங் மார்ஜினுக்கான முதல் அடி.'},
+ rev:{en:'Revenue from operations ₹22,055 cr in Q2, down 25% QoQ. Revenue mostly reflects crude prices and volumes plus excise; Q1 also carried a ₹385 cr one-off price revision.',ta:'Q2 இயக்க வருவாய் ₹22,055 கோடி, காலாண்டுக்கு 25% குறைவு. வருவாய் பெரும்பாலும் கச்சா விலை, அளவைப் பொறுத்தது.'},
+ cost:{en:'Crude is by far the largest cost. Add refinery fuel and loss, opex (about ₹380 cr a quarter, CB estimate), freight and insurance, which rose sharply in the war.',ta:'மிகப் பெரிய செலவு கச்சா. அதோட எரிபொருள் இழப்பு, இயக்கச் செலவு (~₹380 கோடி/காலாண்டு, CB மதிப்பீடு), சரக்கு, காப்பீடு.'},
+ ebitda:{en:'EBITDA ₹3,032 cr, margin 13.7%, against ₹1,366 cr (4.7%) in Q1. About ₹1,597 of EBITDA per barrel processed.',ta:'EBITDA ₹3,032 கோடி, 13.7% மார்ஜின்; Q1-ல ₹1,366 கோடி (4.7%). பேரலுக்கு ~₹1,597.'},
+ pat:{en:'PAT ₹2,271 cr standalone; EPS ₹152.53 for the quarter alone. H1 FY27 PAT ₹3,288 cr already exceeds all of FY26 (₹3,062 cr).',ta:'நிகர லாபம் ₹2,271 கோடி; காலாண்டு EPS ₹152.53. H1 FY27 லாபம் ₹3,288 கோடி — FY26 முழு வருஷத்தையும் (₹3,062) தாண்டிடுச்சு.'},
+ sh:{en:'Shareholders: IOC 51.89%, Naftiran (Iran) 15.40%, public 32.71%. Interim dividend ₹25; FY26 total ₹62. Naftiran\'s dividend cannot be remitted under sanctions.',ta:'IOC 51.89%, நஃப்டிரான் 15.40%, பொது 32.71%. இடைக்கால ஈவு ₹25; FY26 மொத்தம் ₹62.'},
+ cbr:{en:'Cauvery Basin project at Nagapattinam: IOC 75%, CPCL 25%. Being reconfigured toward petrochemicals. CPCL\'s small stake keeps the capex load off its balance sheet.',ta:'நாகை காவேரி படுகை திட்டம்: IOC 75%, CPCL 25%. பெட்ரோகெமிக்கல் நோக்கி மாற்றம். CPCL-ஓட சிறிய பங்கு கடன் சுமையைக் குறைக்குது.'}
+};
+function drawBM(){var s=document.getElementById('bmSvg');s.innerHTML='';
+  var defs=el('defs',{},s);var mk_=el('marker',{id:'ar',viewBox:'0 0 10 10',refX:9,refY:5,markerWidth:7,markerHeight:7,orient:'auto-start-reverse'},defs);el('path',{d:'M0,0L10,5L0,10z',fill:C.muted},mk_);
+  function arrow(x1,y1,x2,y2,dash){el('path',{d:'M'+x1+','+y1+' C'+(x1+(x2-x1)/2)+','+y1+' '+(x1+(x2-x1)/2)+','+y2+' '+x2+','+y2,fill:'none',stroke:C.muted,'stroke-width':1.6,'marker-end':'url(#ar)','stroke-dasharray':dash?'5 4':'none'},s)}
+  function box(k,x,y,w,h,fill,stroke,en,ta,dark){var g=el('g',{class:'node',tabindex:0,role:'button','data-k':k},s);
+    el('rect',{x:x,y:y,width:w,height:h,rx:4,fill:fill,stroke:stroke,'stroke-width':1.5},g);
+    [['en',en],['ta',ta]].forEach(function(pair){pair[1].forEach(function(line,i){el('text',{x:x+w/2,y:y+20+i*16,'text-anchor':'middle','font-size':i===0?13:11.5,'font-weight':i===0?700:400,fill:dark?'#fff':C.ink,class:pair[0]},g,line)})});
+    function pick(){document.querySelectorAll('#bmSvg .node').forEach(function(n){n.classList.remove('sel')});g.classList.add('sel');var b=BM[k];var c=document.getElementById('bmExplain');c.innerHTML='<span class="en">'+b.en+'</span><span class="ta">'+b.ta+'</span>'}
+    g.addEventListener('click',pick);g.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();pick()}});return g}
+  el('text',{x:100,y:20,'text-anchor':'middle','font-size':11,fill:C.muted,'letter-spacing':1.5},s,'CRUDE');
+  el('text',{x:290,y:20,'text-anchor':'middle','font-size':11,fill:C.muted,'letter-spacing':1.5},s,'LOGISTICS');
+  el('text',{x:495,y:20,'text-anchor':'middle','font-size':11,fill:C.muted,'letter-spacing':1.5},s,'REFINERY');
+  el('text',{x:710,y:14,'text-anchor':'middle','font-size':11,fill:C.muted,'letter-spacing':1.5},s,'PRODUCTS');
+  el('text',{x:905,y:20,'text-anchor':'middle','font-size':11,fill:C.muted,'letter-spacing':1.5},s,'BUYERS');
+  box('me',15,34,170,64,'#f6eee3',C.crude,['Middle East · term','55–60% of basket','Hormuz exposure'],['மத்திய கிழக்கு','55–60%','ஹோர்முஸ் ரிஸ்க்']);
+  box('ru',15,114,170,64,'#f6eee3',C.crude,['Russia · spot','25–30%','discount to Brent'],['ரஷ்யா','25–30%','பிரென்ட் தள்ளுபடி']);
+  box('wa',15,194,170,64,'#f6eee3',C.crude,['West Africa & others','balance','raised in 2026'],['மேற்கு ஆப்பிரிக்கா','மீதி','2026-ல அதிகரிப்பு']);
+  box('grp',215,34,150,64,'#eef5f8',C.steel,['IOC group buying','scale in procurement'],['IOC குழுமக் கொள்முதல்','பெரிய அளவு']);
+  box('port',215,134,150,76,'#eef5f8',C.steel,['Chennai port','→ pipeline to Manali','domestic crude ~0%'],['சென்னை துறைமுகம்','→ மணலி குழாய்','உள்நாட்டுக் கச்சா ~0%']);
+  box('core',395,54,200,178,C.ink,C.ink,['CPCL · Manali','10.5 MMTPA','Q2: 2.59 MMT · ~99%','GRM $20.41/bbl','FY26: 112% utilisation','distillates ~80%'],['CPCL · மணலி','10.5 MMTPA','Q2: 2.59 MMT · ~99%','GRM $20.41','FY26: 112%','டிஸ்டிலேட் ~80%'],true);
+  box('md',625,24,170,62,'#fdeee3',C.flame,['Diesel · ATF · kerosene','highest cracks','diesel ~$113 (8 Oct)'],['டீசல் · ATF · மண்ணெண்ணெய்','அதிக கிராக்','டீசல் ~$113']);
+  box('le',625,94,170,62,'#fdeee3',C.flame,['LPG · petrol · naphtha','paid at refinery gate'],['LPG · பெட்ரோல் · நாஃப்தா','ரிஃபைனரி வாசல் விலை']);
+  box('sp',625,164,170,62,'#fdeee3',C.flame,['Lubes · wax · specialities','JP-5/7 · ISROSENE'],['லூப் · மெழுகு · சிறப்பு','JP-5/7 · ISROSENE']);
+  box('he',625,234,170,62,'#fdeee3',C.flame,['Bitumen · fuel oil','petchem feed','negative cracks'],['பிட்டுமென் · ஃபியூல் ஆயில்','பெட்ரோகெம் மூலப்பொருள்','மைனஸ் கிராக்']);
+  box('ioc',825,34,160,100,'#eef5f8',C.steel,['Indian Oil','buys & markets most','trade-parity price','receivables ~1 day'],['இந்தியன் ஆயில்','பெரும்பகுதி வாங்குது','trade parity விலை','வரவு ~1 நாள்']);
+  box('exp',825,150,160,62,'#eef5f8',C.steel,['Others & exports','SAED on exports'],['பிற & ஏற்றுமதி','ஏற்றுமதிக்கு SAED']);
+  box('ret',825,228,160,58,'#eef5f8',C.steel,['Own retail (pilot)','first outlet Mar 2026'],['சொந்த பங்க் (சோதனை)','மார்ச் 2026']);
+  arrow(185,66,395,110);arrow(185,146,395,140);arrow(185,226,395,170);arrow(365,66,395,90,true);arrow(365,172,395,150);
+  [55,125,195,265].forEach(function(y){arrow(595,143,625,y)});
+  arrow(795,55,825,70);arrow(795,125,825,90);arrow(795,195,825,180);arrow(795,265,825,190);arrow(795,125,825,257,true);
+  var by=356;
+  box('rev',20,by,170,80,'#e9f6ef',C.good,['Revenue','₹22,055 cr','−25% QoQ · +10% YoY'],['வருவாய்','₹22,055 கோடி','−25% QoQ · +10% YoY']);
+  box('cost',215,by,170,80,'#fbecea',C.bad,['Costs','crude · fuel & loss','opex · freight'],['செலவுகள்','கச்சா · இழப்பு','இயக்கம் · சரக்கு']);
+  box('ebitda',410,by,170,80,'#e9f6ef',C.good,['EBITDA','₹3,032 cr','margin 13.7%'],['EBITDA','₹3,032 கோடி','மார்ஜின் 13.7%']);
+  box('pat',605,by,170,80,'#e9f6ef',C.good,['PAT','₹2,271 cr','EPS ₹152.53'],['நிகர லாபம்','₹2,271 கோடி','EPS ₹152.53']);
+  box('sh',800,by,185,80,'#fdeee3',C.flame,['Shareholders','IOC 51.89 · Naftiran 15.40','public 32.71 · div ₹25'],['பங்குதாரர்கள்','IOC 51.89 · நஃப்டிரான் 15.40','பொது 32.71 · ஈவு ₹25']);
+  arrow(905,286,105,by,false);
+  arrow(190,396,215,396);arrow(385,396,410,396);arrow(580,396,605,396);arrow(775,396,800,396);
+  box('cbr',395,470,200,64,'#ffffff',C.muted,['Cauvery Basin JV','IOC 75% · CPCL 25%','petrochemicals focus'],['காவேரி படுகை JV','IOC 75% · CPCL 25%','பெட்ரோகெமிக்கல்']);
+  arrow(400,232,400,470,true);
+}
+
+/* ---------- RTP build-up ---------- */
+function drawRTP(){var s=document.getElementById('rtpSvg');if(!s)return;s.innerHTML='';
+  var blocks=[[20,'FOB price','FOB விலை','Singapore / Gulf',C.steel],[215,'+ freight, insurance, duty','+ சரக்கு, காப்பீடு, வரி','= import parity',C.crude],[410,'80% IPP + 20% EPP','80% IPP + 20% EPP','= trade parity RTP',C.good],[605,'− OMC discount','− OMC தள்ளுபடி','from 16 Mar 2026',C.bad],[800,'Price CPCL is paid','CPCL-க்கு கிடைப்பது','refinery gate',C.flame]];
+  blocks.forEach(function(b,i){el('rect',{x:b[0],y:16,width:180,height:70,rx:5,fill:'#fff',stroke:b[4],'stroke-width':2.5},s);
+    el('text',{x:b[0]+90,y:44,'text-anchor':'middle','font-size':13,'font-weight':700,fill:C.ink,class:'en'},s,b[1]);el('text',{x:b[0]+90,y:44,'text-anchor':'middle','font-size':12.5,'font-weight':700,fill:C.ink,class:'ta'},s,b[2]);
+    el('text',{x:b[0]+90,y:66,'text-anchor':'middle','font-size':11.5,fill:C.muted},s,b[3]);
+    if(i<4)el('path',{d:'M'+(b[0]+182)+',51 L'+(b[0]+213)+',51',stroke:C.muted,'stroke-width':2.5},s)});
+  el('text',{x:20,y:128,'font-size':12.5,'font-weight':700,fill:C.ink,class:'en'},s,'Diesel RTP, first half of April 2026 (₹ per litre)');
+  el('text',{x:20,y:128,'font-size':12.5,'font-weight':700,fill:C.ink,class:'ta'},s,'டீசல் RTP, ஏப்ரல் 2026 முதல் பாதி (₹/லிட்டர்)');
+  var sc_=780/150,rows=[['Trade-parity price','Trade parity விலை',146.2,C.good],['Price actually paid','உண்மையில் கொடுத்தது',86.0,C.flame]];
+  rows.forEach(function(r_,i){var y=146+i*46;el('rect',{x:200,y:y,width:r_[2]*sc_,height:30,fill:r_[3],opacity:.85},s);
+    el('text',{x:192,y:y+20,'text-anchor':'end','font-size':12.5,fill:C.ink,class:'en'},s,r_[0]);el('text',{x:192,y:y+20,'text-anchor':'end','font-size':12,fill:C.ink,class:'ta'},s,r_[1]);
+    el('text',{x:200+r_[2]*sc_-8,y:y+20,'text-anchor':'end','font-size':13,'font-weight':700,fill:'#fff','font-family':'IBM Plex Mono,monospace'},s,'₹'+r_[2].toFixed(1))});
+  var x1=200+86*sc_,x2=200+146.2*sc_;el('path',{d:'M'+x1+',230 L'+x1+',244 L'+x2+',244 L'+x2+',230',fill:'none',stroke:C.bad,'stroke-width':2},s);
+  el('text',{x:(x1+x2)/2,y:266,'text-anchor':'middle','font-size':13,'font-weight':700,fill:C.bad,class:'en'},s,'discount ₹60.2/litre ≈ 41%');
+  el('text',{x:(x1+x2)/2,y:266,'text-anchor':'middle','font-size':12.5,'font-weight':700,fill:C.bad,class:'ta'},s,'தள்ளுபடி ₹60.2/லிட்டர் ≈ 41%');
+  el('text',{x:20,y:292,'font-size':11,fill:C.muted,class:'en'},s,'Reported OMC rates for one fortnight; the discount varied fortnight to fortnight and CPCL has not disclosed what it received.');
+  el('text',{x:20,y:292,'font-size':11,fill:C.muted,class:'ta'},s,'ஒரு 15 நாள் காலத்துக்கான விகிதம்; தள்ளுபடி மாறிக்கொண்டே இருந்தது, CPCL தனக்கான அளவை வெளியிடவில்லை.');}
+
+/* ---------- value-chain pipe ---------- */
+var PIPE={
+ war:{grm:'+',gmm:'−',en:'Crude averaged about $104 and diesel cracks spiked, so the refinery stage earned a wide spread. Pump prices rose only about ₹7.5/litre in May and LPG sold below cost, so the marketing stage lost heavily (BPCL implied GMM −₹5.4/litre for the quarter, with daily losses near ₹530 cr for the industry at the peak). CPCL\'s accounts end at the refinery gate: +₹1,017 cr. IOC, BPCL and HPCL include the marketing stage: all three reported losses. Part of the loss still reached CPCL, because from 16 March the OMCs paid refiners below trade parity.',ta:'கச்சா சராசரி ~$104, டீசல் கிராக் உயர்வு — ரிஃபைனரிக்கு பெரிய லாபம். பங்க் விலை மே-ல ~₹7.5 மட்டும் ஏறுச்சு, LPG நஷ்டத்துல — மார்க்கெட்டிங்குக்கு பெரிய நஷ்டம். CPCL கணக்கு ரிஃபைனரி வாசல்லயே முடியுது: +₹1,017 கோடி. IOC, BPCL, HPCL கணக்குல மார்க்கெட்டிங்கும் சேரும்: மூணும் நஷ்டம்.'},
+ q2:{grm:'+',gmm:'≈0',en:'Q2 kept refining spreads wide (HPCL $32.15, CPCL $20.41) while the May price hikes and lower LPG losses pulled marketing margins back toward zero or slightly positive. Both models made money, but CPCL kept 100% of a bigger refining spread with no marketing drag.',ta:'Q2-ல சுத்திகரிப்பு இடைவெளி அதிகமாவே இருந்துச்சு (HPCL $32.15, CPCL $20.41); மே விலை ஏற்றத்தால மார்க்கெட்டிங் மார்ஜின் பூஜ்யம் அருகில். ரெண்டு மாடலும் லாபம், ஆனா CPCL-க்கு எந்த இழுப்பும் இல்ல.'},
+ calm:{grm:'+',gmm:'+',en:'In a normal year (FY26 averages: GRM $9.28, crude about $66) the pump network earns a steady ₹3–5/litre. Integrated OMCs earn on both stages; CPCL earns only the modest refining spread. That is when CPCL looks ordinary — FY25, with GRM $4.22, gave just ₹174 cr of profit.',ta:'சாதாரண வருஷத்துல (FY26: GRM $9.28, கச்சா ~$66) பங்க் நெட்வொர்க் லிட்டருக்கு ₹3–5 சம்பாதிக்கும். ஒருங்கிணைந்த OMC-களுக்கு ரெண்டு இடத்துலயும் லாபம்; CPCL-க்கு சிறிய சுத்திகரிப்பு லாபம் மட்டும். FY25-ல GRM $4.22, லாபம் ₹174 கோடி மட்டும்.'}
+};
+var curPipe='war';
+function renderOdd(k){curPipe=k;var s=document.getElementById('pipeSvg');s.innerHTML='';var p=PIPE[k];
+  var stages=[{x:20,en:'Crude bought',ta:'கச்சா வாங்குதல்',c:C.crude,v:''},{x:270,en:'Refinery',ta:'ரிஃபைனரி',c:p.grm==='+'?C.good:C.bad,v:'GRM '+p.grm},{x:520,en:'Marketing / pumps',ta:'மார்க்கெட்டிங் / பங்க்',c:p.gmm==='+'?C.good:(p.gmm==='−'?C.bad:C.warn),v:'GMM '+p.gmm},{x:770,en:'Consumer',ta:'நுகர்வோர்',c:C.steel,v:''}];
+  stages.forEach(function(st,i){el('rect',{x:st.x,y:30,width:210,height:70,rx:6,fill:'#fff',stroke:st.c,'stroke-width':3},s);
+    el('text',{x:st.x+105,y:60,'text-anchor':'middle','font-size':15,'font-weight':700,fill:C.ink,class:'en'},s,st.en);
+    el('text',{x:st.x+105,y:60,'text-anchor':'middle','font-size':14,'font-weight':700,fill:C.ink,class:'ta'},s,st.ta);
+    if(st.v)el('text',{x:st.x+105,y:84,'text-anchor':'middle','font-size':15,'font-weight':800,fill:st.c,'font-family':'IBM Plex Mono,monospace'},s,st.v);
+    if(i<3)el('path',{d:'M'+(st.x+212)+',65 L'+(st.x+248)+',65',stroke:C.muted,'stroke-width':3},s)});
+  function brace(x1,x2,y,col,en,ta){el('path',{d:'M'+x1+','+y+' L'+x1+','+(y+10)+' L'+x2+','+(y+10)+' L'+x2+','+y,fill:'none',stroke:col,'stroke-width':2.5},s);
+    el('text',{x:(x1+x2)/2,y:y+30,'text-anchor':'middle','font-size':13.5,'font-weight':700,fill:col,class:'en'},s,en);el('text',{x:(x1+x2)/2,y:y+30,'text-anchor':'middle','font-size':13,'font-weight':700,fill:col,class:'ta'},s,ta)}
+  brace(20,480,112,C.flame,"CPCL's P&L ends here",'CPCL கணக்கு இங்கே முடியுது');
+  brace(20,730,170,C.steel,'IOC · BPCL · HPCL P&L includes marketing','IOC · BPCL · HPCL கணக்கில் மார்க்கெட்டிங்கும் சேரும்');
+  document.getElementById('oddCard').innerHTML='<span class="en">'+p.en+'</span><span class="ta">'+p.ta+'</span>';
+  document.querySelectorAll('#pipeBtns .btn').forEach(function(b){b.classList.toggle('on',b.dataset.p===k)});}
+document.querySelectorAll('#pipeBtns .btn').forEach(function(b){b.onclick=function(){renderOdd(b.dataset.p)}});
+
+/* ---------- group ---------- */
+function drawGroup(){var s=document.getElementById('grpSvg');s.innerHTML='';
+  function nb(x,y,w,h,fill,stroke,en,ta,dark){el('rect',{x:x,y:y,width:w,height:h,rx:5,fill:fill,stroke:stroke,'stroke-width':2},s);
+    [['en',en],['ta',ta]].forEach(function(p){p[1].forEach(function(t,i){el('text',{x:x+w/2,y:y+22+i*16,'text-anchor':'middle','font-size':i?11.5:13.5,'font-weight':i?400:700,fill:dark?'#fff':C.ink,class:p[0]},s,t)})})}
+  function ln(x1,y1,x2,y2,lab,col,dash){el('line',{x1:x1,y1:y1,x2:x2,y2:y2,stroke:col||C.muted,'stroke-width':2,'stroke-dasharray':dash?'5 4':'none'},s);if(lab)el('text',{x:(x1+x2)/2+6,y:(y1+y2)/2,'font-size':12.5,'font-weight':700,fill:col||C.ink,'font-family':'IBM Plex Mono,monospace'},s,lab)}
+  nb(400,10,200,46,'#fff',C.ink,['Government of India','controls both parents'],['இந்திய அரசு','இரு தாய் நிறுவனங்களும்']);
+  nb(160,100,220,56,'#fdeee3',C.flame,['Indian Oil (IOC)','refiner + largest marketer'],['இந்தியன் ஆயில்','சுத்திகரிப்பு + மார்க்கெட்டிங்']);
+  nb(640,100,220,56,'#eef5f8',C.steel,['ONGC','upstream producer'],['ONGC','கச்சா உற்பத்தியாளர்']);
+  ln(450,56,270,100);ln(550,56,750,100);
+  nb(30,230,170,56,'#fff',C.crude,['Naftiran (Iran)','NIOC affiliate'],['நஃப்டிரான் (ஈரான்)','NIOC துணை']);
+  nb(230,230,200,66,C.ink,C.ink,['CPCL','Manali 10.5 MMTPA','pure refiner'],['CPCL','மணலி 10.5 MMTPA','சுத்திகரிப்பு மட்டும்'],true);
+  nb(460,230,140,56,'#fff',C.muted,['Public','FII 15.79 · DII 1.18'],['பொது','FII 15.79 · DII 1.18']);
+  ln(270,156,330,230,'51.89%',C.flame);ln(115,230,250,262,'15.40%',C.crude);ln(530,230,430,262,'32.71%',C.muted);
+  nb(640,230,100,56,'#eef5f8',C.steel,['HPCL','refiner + pumps'],['HPCL','பங்க் உண்டு']);
+  nb(760,230,100,56,'#eef5f8',C.steel,['MRPL','refiner'],['MRPL','சுத்திகரிப்பு']);
+  ln(720,156,690,230);ln(780,156,810,230);
+  nb(230,320,200,50,'#fff',C.muted,['Cauvery Basin JV','IOC 75% · CPCL 25%'],['காவேரி படுகை JV','IOC 75% · CPCL 25%']);
+  ln(330,296,330,320,null,C.muted,true);ln(200,156,250,320,'75%',C.flame,true);
+  el('text',{x:900,y:270,'font-size':11.5,fill:C.muted,'text-anchor':'middle',class:'en'},s,'Ownership % not');el('text',{x:900,y:285,'font-size':11.5,fill:C.muted,'text-anchor':'middle',class:'en'},s,'shown for ONGC arm');
+}
+
+/* ---------- refinery school ---------- */
+var SL=[
+ {id:'crude',en:'Crude ($/bbl)',ta:'கச்சா ($/பேரல்)',min:40,max:140,step:1},
+ {id:'d',en:'Diesel crack',ta:'டீசல் கிராக்',min:0,max:120,step:1},
+ {id:'p',en:'Petrol crack',ta:'பெட்ரோல் கிராக்',min:-10,max:60,step:1},
+ {id:'a',en:'ATF crack',ta:'ATF கிராக்',min:0,max:100,step:1},
+ {id:'l',en:'LPG/naphtha crack',ta:'LPG/நாஃப்தா கிராக்',min:-20,max:20,step:1},
+ {id:'h',en:'Heavy-ends crack',ta:'கனப் பொருள் கிராக்',min:-40,max:10,step:1},
+ {id:'disc',en:'Crude discount',ta:'கச்சா தள்ளுபடி',min:0,max:10,step:.5},
+ {id:'inv',en:'Inventory gain/loss',ta:'இருப்பு லாப/நஷ்டம்',min:-15,max:15,step:.5},
+ {id:'rtpd',en:'RTP discount (₹/l)',ta:'RTP தள்ளுபடி (₹/l)',min:0,max:60,step:1},
+ {id:'pump',en:'Diesel pump base (₹/l)',ta:'டீசல் பங்க் அடிப்படை (₹/l)',min:40,max:110,step:1}];
+var SCN={calm:{crude:66,d:18,p:10,a:16,l:-3,h:-8,disc:3,inv:0,rtpd:0,pump:52},war:{crude:104,d:60,p:25,a:50,l:-5,h:-15,disc:2,inv:-12,rtpd:5,pump:66},q2:{crude:95,d:45,p:20,a:40,l:-4,h:-12,disc:3,inv:0,rtpd:0,pump:77},peace:{crude:70,d:20,p:8,a:15,l:-3,h:-8,disc:2,inv:-8,rtpd:0,pump:75}};
+var SCT={calm:{en:'Normal year. GRM in single digits, a healthy pump margin. The integrated company earns on both stages and the pure refiner looks ordinary. CPCL actual FY26: GRM $9.28, PAT ₹3,062 cr.',ta:'சாதாரண வருஷம். GRM ஒற்றை இலக்கம், பங்க் மார்ஜின் நல்லது. ஒருங்கிணைந்த நிறுவனத்துக்கு ரெண்டு இடத்திலும் லாபம். CPCL FY26: GRM $9.28, லாபம் ₹3,062 கோடி.'},
+ war:{en:'War spike with pump prices held. GRM jumps, GMM goes deeply negative. The pure refiner books a profit; the refiner-with-pumps can show a loss. The scenario also applies the inventory loss as crude fell in June and an illustrative ₹5/litre RTP discount, which brings GRM close to CPCL\'s actual Q1 figure of $8.78. Move the RTP discount slider: it lowers the pure refiner\'s profit, while the refiner with pumps only shifts profit between its two arms.',ta:'போர் உயர்வு, பங்க் விலை நிறுத்தம். GRM உயர்வு, GMM ஆழமான மைனஸ். சுத்திகரிப்பு மட்டும் உள்ளவருக்கு லாபம்; பங்கும் உள்ளவருக்கு நஷ்டம். இருப்பு நஷ்டமும் ₹5/லிட்டர் RTP தள்ளுபடியும் சேர்த்தா, CPCL உண்மையான Q1 GRM $8.78-க்கு அருகில் வரும். RTP தள்ளுபடி ஸ்லைடரை நகர்த்திப் பாருங்க.'},
+ q2:{en:'Cracks stay high, pump prices raised. Both models earn, but the pure refiner keeps the entire spread. Close to CPCL\'s actual Q2: GRM $20.41, PAT ₹2,271 cr.',ta:'கிராக் அதிகம், பங்க் விலை ஏற்றம். ரெண்டு மாடலும் லாபம். CPCL உண்மையான Q2: GRM $20.41, லாபம் ₹2,271 கோடி.'},
+ peace:{en:'Ceasefire crash. Crude and cracks fall fast, pump prices stay sticky, inventory losses hit. GRM collapses while GMM balloons. This is the quarter in which CPCL would underperform IOC, BPCL and HPCL.',ta:'போர் நிறுத்தம். கச்சா, கிராக் வேகமா சரிவு, பங்க் விலை அப்படியே, இருப்பு நஷ்டம். GRM சரிவு, GMM உயர்வு. இந்த காலாண்டுல CPCL, OMC-களை விட பின்தங்கும்.'}};
+var curScn='war',V={};
+function buildSliders(){var b=document.getElementById('sliders');b.innerHTML='';
+  SL.forEach(function(s){var r=document.createElement('div');r.className='sl';
+    r.innerHTML='<label for="sl_'+s.id+'"><span class="en">'+s.en+'</span><span class="ta">'+s.ta+'</span></label><input type="range" id="sl_'+s.id+'" min="'+s.min+'" max="'+s.max+'" step="'+s.step+'"><output id="o_'+s.id+'"></output>';b.appendChild(r);
+    r.querySelector('input').addEventListener('input',function(e){V[s.id]=+e.target.value;calc()})});}
+function setScn(k){curScn=k;var sc_=SCN[k];SL.forEach(function(s){V[s.id]=sc_[s.id];document.getElementById('sl_'+s.id).value=sc_[s.id]});
+  document.querySelectorAll('#schScen .btn').forEach(function(b){b.classList.toggle('on',b.dataset.s===k)});calc();renderSchoolCard()}
+function renderSchoolCard(){var t=SCT[curScn];document.getElementById('schoolCard').innerHTML='<span class="en">'+t.en+'</span><span class="ta">'+t.ta+'</span>'}
+function calc(){SL.forEach(function(s){document.getElementById('o_'+s.id).textContent=V[s.id]});
+  var parts=[['Diesel',.45*V.d],['Petrol',.12*V.p],['ATF',.10*V.a],['LPG/naph',.13*V.l],['Heavy',.14*V.h],['Fuel&loss',-.06*V.crude],['Discount',V.disc],['Inventory',V.inv],['RTP disc.',-V.rtpd*159/88]];
+  var grm=parts.reduce(function(a,b){return a+b[1]},0);
+  var rtp=(V.crude+V.d)*88/159-V.rtpd, gmm=V.pump-rtp;
+  var rE=grm*167.2-380, mE=gmm*300;
+  function pat(e){return e>170?(e-170)*.75:(e-170)}
+  document.getElementById('oGRM').textContent=grm.toFixed(2);document.getElementById('oGRM').style.color=grm>=0?C.good:C.bad;
+  document.getElementById('oGMM').textContent=(gmm>=0?'+':'')+gmm.toFixed(1);document.getElementById('oGMM').style.color=gmm>=0?C.good:C.bad;
+  document.getElementById('oR1').textContent=fmt(rE);document.getElementById('oR2').textContent=fmt(rE);document.getElementById('oM2').textContent=fmt(mE);
+  var p1=pat(rE),p2=pat(rE+mE);var e1=document.getElementById('oP1'),e2=document.getElementById('oP2');e1.textContent=fmt(p1);e2.textContent=fmt(p2);e1.style.color=p1>=0?C.good:C.bad;e2.style.color=p2>=0?C.good:C.bad;
+  var s=document.getElementById('grmBars');s.innerHTML='';var mx=Math.max.apply(null,parts.map(function(p){return Math.abs(p[1])}).concat([Math.abs(grm),5]));var cx=230,sc_=150/mx;
+  el('line',{x1:cx,y1:4,x2:cx,y2:200,stroke:C.line},s);
+  parts.concat([['= GRM',grm]]).forEach(function(p,i){var y=6+i*22,w=Math.abs(p[1])*sc_;var last=i===parts.length;
+    el('rect',{x:p[1]>=0?cx:cx-w,y:y,width:Math.max(w,1),height:15,fill:last?C.flame:(p[1]>=0?C.good:C.bad),opacity:last?1:.75},s);
+    el('text',{x:p[1]>=0?cx-6:cx+6,y:y+12,'text-anchor':p[1]>=0?'end':'start','font-size':11.5,fill:C.ink,'font-weight':last?700:400},s,p[0]);
+    el('text',{x:p[1]>=0?cx+w+4:cx-w-4,y:y+12,'text-anchor':p[1]>=0?'start':'end','font-size':11,fill:C.muted,'font-family':'IBM Plex Mono,monospace'},s,p[1].toFixed(1))});}
+document.querySelectorAll('#schScen .btn').forEach(function(b){b.onclick=function(){setScn(b.dataset.s)}});
+
+/* ---------- cycle clock & timeline ---------- */
+function drawClock(){var s=document.getElementById('clock');s.innerHTML='';var cx=180,cy=160,r=120;
+  var ph=[['P1','Trough','அடி'],['P2','Early recovery','மீட்சி'],['P3','Expansion','விரிவு'],['P4','Late / peak','உச்சம்'],['P5','Downturn','சரிவு']];
+  var cols=['#9aa8b1',C.good,C.steel,C.flame,C.bad];
+  function pt(a,rr){var t=(a-90)*Math.PI/180;return [cx+rr*Math.cos(t),cy+rr*Math.sin(t)]}
+  ph.forEach(function(p,i){var a0=i*72,a1=a0+72,p0=pt(a0,r),p1=pt(a1,r),q0=pt(a1,r-34),q1=pt(a0,r-34);
+    el('path',{d:'M'+p0+' A'+r+','+r+' 0 0 1 '+p1+' L'+q0+' A'+(r-34)+','+(r-34)+' 0 0 0 '+q1+' Z',fill:cols[i],opacity:i===3?1:.35,stroke:'#fff','stroke-width':2},s);
+    var m=pt(a0+36,r-17);el('text',{x:m[0],y:m[1]+4,'text-anchor':'middle','font-size':12,'font-weight':700,fill:i===3?'#fff':C.ink},s,p[0]);
+    var o=pt(a0+36,r+16);el('text',{x:o[0],y:o[1]+4,'text-anchor':'middle','font-size':10.5,fill:C.muted,class:'en'},s,p[1]);el('text',{x:o[0],y:o[1]+4,'text-anchor':'middle','font-size':10.5,fill:C.muted,class:'ta'},s,p[2])});
+  var tip=pt(252,r-40);el('line',{x1:cx,y1:cy,x2:tip[0],y2:tip[1],stroke:C.ink,'stroke-width':4,'stroke-linecap':'round'},s);el('circle',{cx:cx,cy:cy,r:7,fill:C.ink},s);
+  var sm=pt(262,r-52);el('circle',{cx:sm[0],cy:sm[1],r:9,fill:'#fff',stroke:C.flame,'stroke-width':3},s);
+  el('text',{x:cx,y:cy+40,'text-anchor':'middle','font-size':12,fill:C.ink,'font-weight':600,class:'en'},s,'Sector P4 · Stock Stage 3');
+  el('text',{x:cx,y:cy+40,'text-anchor':'middle','font-size':12,fill:C.ink,'font-weight':600,class:'ta'},s,'துறை P4 · பங்கு நிலை 3');}
+function drawTimeline(){var s=document.getElementById('timeline');s.innerHTML='';el('line',{x1:30,y1:60,x2:970,y2:60,stroke:C.ink,'stroke-width':2},s);
+  var ev=[[60,'30 Oct','Record date · IOC Q2','பதிவு தேதி · IOC Q2'],[230,'1 Nov','SAED review','SAED மாற்றம்'],[390,'16 Nov','SAED review','SAED மாற்றம்'],[550,'21 Nov','Dividend paid','ஈவு செலுத்தல்'],[730,'~Jan 2027','Q3 FY27 results (est.)','Q3 முடிவுகள் (மதிப்பீடு)'],[910,'n/a','Manali expansion nod','மணலி அனுமதி']];
+  ev.forEach(function(e,i){el('circle',{cx:e[0],cy:60,r:7,fill:i===5?'#fff':C.flame,stroke:C.flame,'stroke-width':2},s);
+    el('text',{x:e[0],y:40,'text-anchor':'middle','font-size':12.5,'font-weight':700,fill:C.ink,'font-family':'IBM Plex Mono,monospace'},s,e[1]);
+    el('text',{x:e[0],y:86,'text-anchor':'middle','font-size':12,fill:C.muted,class:'en'},s,e[2]);el('text',{x:e[0],y:86,'text-anchor':'middle','font-size':12,fill:C.muted,class:'ta'},s,e[3])});}
+
+/* ---------- self-check ---------- */
+var SC=[
+ {g:{en:'1 · Questions about the stock',ta:'1 · பங்கு பற்றிய கேள்விகள்'},items:[
+  {id:'a1',en:'I understand profit swings with GRM, roughly ₹37 of annual EPS per $1/bbl',ta:'GRM-ல $1-க்கு வருஷ EPS-ல சுமார் ₹37 மாறும்னு புரியுது',den:'GRM 8.78 → 20.41 lifted PAT from ₹1,017 cr to ₹2,271 cr in one quarter',dta:'GRM 8.78 → 20.41; லாபம் ₹1,017 → ₹2,271 கோடி'},
+  {id:'a2',en:'I know CPCL has no meaningful retail arm and sells mostly to IOC',ta:'CPCL பெரும்பாலும் IOC-க்கு விக்குது, சொந்த பங்க் கிட்டத்தட்ட இல்லைன்னு தெரியும்',den:'Receivables ~1 day; first own outlet March 2026',dta:'வரவு ~1 நாள்; முதல் பங்க் மார்ச் 2026'},
+  {id:'a3',en:'I have compared current GRM with its normal range',ta:'தற்போதைய GRM-ஐ சாதாரண வரம்புடன் ஒப்பிட்டேன்',den:'FY25 $4.22 · FY26 $9.28 · Q2 FY27 $20.41',dta:'FY25 $4.22 · FY26 $9.28 · Q2 $20.41'}]},
+ {g:{en:'2 · Problems investors face',ta:'2 · முதலீட்டாளர் சிக்கல்கள்'},items:[
+  {id:'b1',en:'I am aware a low P/E at record margins can be a cyclical trap',ta:'சாதனை மார்ஜினில் குறைந்த P/E பொறியாக இருக்கலாம்னு தெரியும்',den:'Trailing P/E ~3.8× with sector in P4',dta:'P/E ~3.8×, துறை P4'},
+  {id:'b2',en:'I have accounted for windfall-tax and policy risk',ta:'விண்ட்ஃபால் வரி, கொள்கை ரிஸ்க்கை கணக்கில் எடுத்தேன்',den:'Diesel export SAED ₹20–25.5/litre in Aug–Sep 2026',dta:'டீசல் ஏற்றுமதி SAED ₹20–25.5/லிட்டர்'},
+  {id:'b3',en:'I accept single-site concentration',ta:'ஒரே இட ரிஸ்க்கை ஏற்கிறேன்',den:'All profit from the 10.5 MMTPA Manali refinery',dta:'லாபம் முழுசும் மணலியிலிருந்து'}]},
+ {g:{en:'3 · Solutions (what I did)',ta:'3 · தீர்வுகள் (நான் செய்தது)'},items:[
+  {id:'c1',en:'I tested my thesis at a GRM of $8–10',ta:'$8–10 GRM-ல என் கணக்கைச் சோதித்தேன்',den:'FY26 average $9.28; FY26 PAT ₹3,062 cr',dta:'FY26 சராசரி $9.28; லாபம் ₹3,062 கோடி'},
+  {id:'c2',en:'I counted dividends as part of my expected return',ta:'ஈவுத்தொகையை வருமானத்தின் பகுதியா எண்ணினேன்',den:'FY26 ₹62/share; FY27 interim ₹25',dta:'FY26 ₹62; FY27 இடைக்கால ₹25'}]},
+ {g:{en:"4 · Anchors' and analysts' view",ta:'4 · ஆய்வாளர் பார்வை'},items:[
+  {id:'d1',en:'I have read the latest broker targets and their GRM assumptions',ta:'புரோக்கர் இலக்குகள், அனுமானங்களைப் படித்தேன்',den:'YES ₹1,592 (Jul 2026) · Choice ₹1,265',dta:'YES ₹1,592 · Choice ₹1,265'},
+  {id:'d2',en:'I have checked institutional flows',ta:'நிறுவன முதலீட்டு ஓட்டத்தைப் பார்த்தேன்',den:'FII 8.80% (Sep 25) → 15.79% (Sep 26)',dta:'FII 8.80% → 15.79%'}]}
+];
+var SUG=[{en:'Q3 GRM above $12',ta:'Q3 GRM $12-க்கு மேல்'},{en:'No new loss-sharing policy',ta:'புது நஷ்டப் பகிர்வு கொள்கை இல்லை'},{en:'Dividend yield above 4%',ta:'ஈவு வருமானம் 4%-க்கு மேல்'},{en:'Manali expansion approved',ta:'மணலி விரிவாக்க அனுமதி'}];
+var scState={},myConds=[];
+try{scState=JSON.parse(stor('cpcl_sc')||'{}')||{};myConds=JSON.parse(stor('cpcl_sc_my')||'[]')||[]}catch(e){scState={};myConds=[]}
+function saveSC(){stor('cpcl_sc',JSON.stringify(scState));stor('cpcl_sc_my',JSON.stringify(myConds))}
+function renderSelf(){var box=document.getElementById('scGroups');box.innerHTML='';var tot=0,on=0;
+  SC.forEach(function(g,gi){var d=document.createElement('div');d.className='grpbox';var gt=0,go=0;var h='<h4>'+L(g.g.en,g.g.ta)+'</h4><div class="bar"><i id="gb'+gi+'"></i></div>';d.innerHTML=h;
+    g.items.forEach(function(it){gt++;if(scState[it.id])go++;var r=document.createElement('label');r.className='ck';
+      r.innerHTML='<input type="checkbox" id="ck_'+it.id+'"'+(scState[it.id]?' checked':'')+'><span>'+L(it.en,it.ta)+'<div class="data">'+L('Data: ','தகவல்: ')+L(it.den,it.dta)+'</div></span>';
+      r.querySelector('input').addEventListener('change',function(e){scState[it.id]=e.target.checked;saveSC();renderSelf()});d.appendChild(r)});
+    tot+=gt;on+=go;box.appendChild(d);setTimeout(function(){var b=document.getElementById('gb'+gi);if(b)b.style.width=(gt?go/gt*100:0)+'%'},10)});
+  var d5=document.createElement('div');d5.className='grpbox';var mo=myConds.filter(function(c){return c.on}).length;
+  d5.innerHTML='<h4>'+L('5 · My own conditions (up to 8)','5 · என் சொந்த நிபந்தனைகள் (8 வரை)')+'</h4><div class="bar"><i style="width:'+(myConds.length?mo/myConds.length*100:0)+'%"></i></div>';
+  myConds.forEach(function(c,i){var r=document.createElement('label');r.className='ck';r.innerHTML='<input type="checkbox" id="my_'+i+'"'+(c.on?' checked':'')+'><span>'+c.t.replace(/</g,'&lt;')+'<div class="data">'+L('Data: ','தகவல்: ')+'</div></span>';
+    r.querySelector('input').addEventListener('change',function(e){c.on=e.target.checked;saveSC();renderSelf()});d5.appendChild(r)});
+  if(myConds.length<8){var f=document.createElement('div');f.style.cssText='display:flex;gap:6px;margin-top:6px;flex-wrap:wrap';
+    f.innerHTML='<input type="text" id="myIn" style="flex:1;min-width:180px" placeholder="'+L('Add a condition','நிபந்தனை சேர்')+'"><button class="btn" type="button" id="myAdd">'+L('Add','சேர்')+'</button>';d5.appendChild(f);
+    var sg=document.createElement('div');sg.className='scen';SUG.forEach(function(s){var b=document.createElement('button');b.type='button';b.className='btn';b.style.fontSize='12px';b.textContent='+ '+L(s.en,s.ta);b.onclick=function(){addCond(L(s.en,s.ta))};sg.appendChild(b)});d5.appendChild(sg)}
+  box.appendChild(d5);
+  var ma=document.getElementById('myAdd');if(ma)ma.onclick=function(){var v=document.getElementById('myIn').value.trim();if(v)addCond(v)};
+  tot+=myConds.length;on+=mo;document.getElementById('scAll').textContent=on+'/'+tot;document.getElementById('scAllBar').style.width=(tot?on/tot*100:0)+'%';
+  document.getElementById('scMsg').textContent=L(on+' of '+tot+' of your conditions line up. This only counts how many of your own conditions line up. It is not a recommendation.',tot+'-ல '+on+' நிபந்தனைகள் பொருந்துது. இது உங்க நிபந்தனைகளை மட்டும் எண்ணுது. இது பரிந்துரை இல்ல.');}
+function addCond(t){if(myConds.length>=8)return;myConds.push({t:t.slice(0,140),on:false});saveSC();renderSelf()}
+document.getElementById('scClear').onclick=function(){scState={};myConds.forEach(function(c){c.on=false});saveSC();renderSelf()};
+
+/* ---------- quiz ---------- */
+var QZ=[
+ {q:{en:'Why did CPCL earn a profit in Q1 FY27 when IOC, BPCL and HPCL reported losses?',ta:'Q1 FY27-ல IOC, BPCL, HPCL நஷ்டம் காட்டியப்போ CPCL ஏன் லாபம் காட்டுச்சு?'},o:[{en:'Its GRM was the highest in the group',ta:'அதன் GRM தான் அதிகம்'},{en:'It has no marketing losses because it sells mostly to IOC at the refinery gate',ta:'ரிஃபைனரி வாசல்லயே IOC-க்கு விக்கறதால மார்க்கெட்டிங் நஷ்டம் இல்ல'},{en:'It runs on cheap domestic crude',ta:'மலிவான உள்நாட்டுக் கச்சா'},{en:'It received a government subsidy',ta:'அரசு மானியம்'}],a:1,w:{en:'Its Q1 GRM ($8.78) was actually the lowest. The difference is the value-chain position: the marketing loss sat with IOC.',ta:'Q1 GRM ($8.78) உண்மையில குறைவு. வேறுபாடு மதிப்புச் சங்கிலி இடம்: மார்க்கெட்டிங் நஷ்டம் IOC-யிடம்.'}},
+ {q:{en:'Which company is CPCL\'s parent?',ta:'CPCL-ஓட தாய் நிறுவனம் எது?'},o:[{en:'ONGC',ta:'ONGC'},{en:'Indian Oil',ta:'இந்தியன் ஆயில்'},{en:'Government of India directly',ta:'நேரடியா இந்திய அரசு'},{en:'Naftiran',ta:'நஃப்டிரான்'}],a:1,w:{en:'IOC holds 51.89%. ONGC is the parent of HPCL and MRPL.',ta:'IOC 51.89%. ONGC என்பது HPCL, MRPL-ஓட தாய்.'}},
+ {q:{en:'Roughly how much annual EPS does $1/bbl of GRM add for CPCL?',ta:'GRM-ல $1 ஏறினா வருஷ EPS சுமார் எவ்வளவு கூடும்?'},o:[{en:'₹4',ta:'₹4'},{en:'₹37',ta:'₹37'},{en:'₹150',ta:'₹150'},{en:'₹370',ta:'₹370'}],a:1,w:{en:'About 84 million barrels a year × ₹88 ≈ ₹740 cr pre-tax, ≈ ₹555 cr post-tax, over 14.89 crore shares.',ta:'வருஷம் ~8.4 கோடி பேரல் × ₹88 ≈ ₹740 கோடி; வரிக்குப் பின் ~₹555 கோடி ÷ 14.89 கோடி பங்குகள்.'}},
+ {q:{en:'When does gross marketing margin (GMM) turn negative?',ta:'GMM எப்போ மைனஸ் ஆகும்?'},o:[{en:'When pump prices are held while product prices rise',ta:'பொருள் விலை ஏறும்போது பங்க் விலை நிறுத்தப்பட்டால்'},{en:'When refinery throughput falls',ta:'சுத்திகரிப்பு குறைஞ்சா'},{en:'When the rupee strengthens',ta:'ரூபாய் வலுவானா'},{en:'When GRM falls',ta:'GRM குறைஞ்சா'}],a:0,w:{en:'GMM is pump price (ex-tax, ex-dealer) minus the refinery transfer price. Freeze the first and raise the second, and it goes negative.',ta:'GMM = பங்க் விலை − ரிஃபைனரி விலை. முதலை நிறுத்தி இரண்டாவது ஏறினா மைனஸ்.'}},
+ {q:{en:'What share of Manali\'s crude is domestic today?',ta:'மணலியில இன்று உள்நாட்டுக் கச்சா எவ்வளவு?'},o:[{en:'About half',ta:'சுமார் பாதி'},{en:'About a quarter',ta:'சுமார் கால்'},{en:'Practically none',ta:'கிட்டத்தட்ட இல்லை'},{en:'All of it',ta:'முழுசும்'}],a:2,w:{en:'The domestic-crude unit at Nagapattinam closed in 2019. Manali runs on imported crude: Middle East, Russia, West Africa.',ta:'நாகை உள்நாட்டுக் கச்சா யூனிட் 2019-ல மூடப்பட்டுச்சு. மணலி இறக்குமதி கச்சாவுல ஓடுது.'}},
+ {q:{en:'A P/E of 3.8× at record refining margins is best read as:',ta:'சாதனை மார்ஜினில் 3.8× P/E-ஐ எப்படிப் புரிஞ்சுக்கணும்?'},o:[{en:'Proof the stock is undervalued',ta:'பங்கு மலிவுக்குச் சான்று'},{en:'A possible cyclical P/E trap',ta:'சுழற்சி P/E பொறியாக இருக்கலாம்'},{en:'A sign of falling profits',ta:'லாபம் குறைவதன் அறிகுறி'},{en:'Irrelevant for refiners',ta:'ரிஃபைனரிக்குப் பொருந்தாது'}],a:1,w:{en:'Cheap-looking P/E on peak earnings is the classic late-cycle trap. Test the value at normal margins.',ta:'உச்ச லாபத்தில் மலிவான P/E என்பது பழைய பொறி. சாதாரண மார்ஜினில் மதிப்பைச் சோதிங்க.'}},
+ {q:{en:'At what price does CPCL normally sell diesel to IOC?',ta:'CPCL சாதாரணமா IOC-க்கு டீசலை எந்த விலையில் விக்குது?'},o:[{en:'Cost of production plus a fixed margin',ta:'உற்பத்திச் செலவு + நிலையான லாபம்'},{en:'Trade parity: 80% import parity + 20% export parity',ta:'Trade parity: 80% இறக்குமதி + 20% ஏற்றுமதி சமநிலை'},{en:'The retail pump price',ta:'பங்க் விலை'},{en:'A price fixed by the Tamil Nadu government',ta:'தமிழ்நாடு அரசு நிர்ணயித்த விலை'}],a:1,w:{en:'Trade parity since June 2006. In 2026 the OMCs added a discount to it from 16 March, which squeezed standalone refiners.',ta:'ஜூன் 2006 முதல் trade parity. 2026-ல 16 மார்ச் முதல் OMC-கள் அதில தள்ளுபடி சேர்த்தாங்க.'}}];
+function renderQuiz(){var b=document.getElementById('quiz');b.innerHTML='';
+  QZ.forEach(function(q,qi){var d=document.createElement('div');d.className='q';d.innerHTML='<strong>'+(qi+1)+'. <span class="en">'+q.q.en+'</span><span class="ta">'+q.q.ta+'</span></strong>';
+    var fb=document.createElement('div');fb.className='fb';
+    q.o.forEach(function(o,oi){var bt=document.createElement('button');bt.type='button';bt.className='opt';bt.innerHTML='<span class="en">'+o.en+'</span><span class="ta">'+o.ta+'</span>';
+      bt.onclick=function(){d.querySelectorAll('.opt').forEach(function(x,xi){x.classList.remove('ok','no');if(xi===q.a)x.classList.add('ok')});if(oi!==q.a)bt.classList.add('no');
+        fb.innerHTML=(oi===q.a?'<strong class="up">✓</strong> ':'<strong class="dn">✗</strong> ')+'<span class="en">'+q.w.en+'</span><span class="ta">'+q.w.ta+'</span>'};d.appendChild(bt)});
+    d.appendChild(fb);b.appendChild(d)});}
+document.getElementById('socBtn').onclick=function(){var v=document.getElementById('socFree').value.toLowerCase();var hits=['grm','singapore','inventory','core','9.28','throughput','சிங்கப்பூர்','இருப்பு'].filter(function(k){return v.indexOf(k)>=0}).length;
+  document.getElementById('socFb').innerHTML='<p class="en"><strong>Model answer.</strong> Start with reported GRM, then strip out inventory effects to get core GRM, because a falling crude price would add an inventory loss. Compare core GRM with the Singapore benchmark (to see whether CPCL\'s premium of about $3 holds) and with FY26\'s $9.28 average. Then check throughput: high utilisation can cushion a lower spread. '+(hits>=2?'Your answer touches several of these points.':'Try to name GRM, inventory effects and a benchmark.')+'</p><p class="ta"><strong>மாதிரி பதில்.</strong> முதல்ல அறிவித்த GRM, பிறகு இருப்பு விளைவை நீக்கி core GRM. அதை சிங்கப்பூர் அளவுகோலுடனும் FY26 சராசரி $9.28-உடனும் ஒப்பிடுங்க. பிறகு சுத்திகரிப்பு அளவு. '+(hits>=2?'உங்க பதில் பல அம்சங்களைத் தொடுது.':'GRM, இருப்பு விளைவு, அளவுகோல் — இவற்றைக் குறிப்பிட முயலுங்க.')+'</p>'};
+
+/* ---------- CB Assist ---------- */
+var KB=[
+ {k:['profit','pat','net profit','earn','லாபம்','நிகர'],en:'Q2 FY27 standalone PAT was ₹2,271 crore, up 123% from Q1 (₹1,017 cr) and 210% from Q2 FY26 (₹732 cr). Consolidated PAT ₹2,247 cr. H1 profit of ₹3,288 cr already beats all of FY26.',ta:'Q2 FY27 நிகர லாபம் ₹2,271 கோடி — Q1-ஐ விட 123%, போன வருஷத்தை விட 210% அதிகம். H1 லாபம் ₹3,288 கோடி, FY26 முழுவதையும் தாண்டிடுச்சு.'},
+ {k:['grm','refining margin','margin','spread','சுத்திகரிப்பு மார்ஜின்'],en:'GRM was $20.41 per barrel in Q2 FY27, against $8.78 in Q1 and $9.04 a year ago. FY26 averaged $9.28 versus Singapore\'s $5.83. HPCL reported $32.15 before cess; MRPL\'s implied GRM was about $14.8.',ta:'Q2 GRM பேரலுக்கு $20.41; Q1-ல $8.78, போன வருஷம் $9.04. FY26 சராசரி $9.28, சிங்கப்பூர் $5.83. HPCL $32.15, MRPL ~$14.8.'},
+ {k:['gmm','marketing margin','pump','பங்க்','மார்க்கெட்டிங்'],en:'Gross marketing margin is the pump price (ex-tax, ex-dealer) minus the refinery transfer price, in ₹ per litre. CPCL has no meaningful pump network, so it reports no GMM. In Q1 FY27 BPCL\'s implied GMM was −₹5.4/litre, which is why the integrated companies lost money.',ta:'GMM = பங்க் விலை − ரிஃபைனரி விலை (லிட்டருக்கு). CPCL-க்கு பங்க் நெட்வொர்க் இல்லாததால GMM இல்ல. Q1-ல BPCL GMM −₹5.4/லிட்டர்; அதனால்தான் OMC-களுக்கு நஷ்டம்.'},
+ {k:['price','pricing','rtp','transfer','parity','international','priced','cushion','விலை நிர்ணய'],en:'Petrol and diesel go from refinery to OMC at trade parity: 80% import parity (Singapore FOB plus freight, insurance and duty) and 20% export parity. LPG and PDS kerosene use full import parity. So CPCL earns international cracks plus a notional freight cushion. But from 16 March 2026 the OMCs paid refiners a discount to this price, up to about ₹60/litre on diesel in early April, which most likely held down CPCL\'s Q1 GRM.',ta:'பெட்ரோல், டீசல் trade parity விலையில்: 80% இறக்குமதி சமநிலை, 20% ஏற்றுமதி சமநிலை. LPG, மண்ணெண்ணெய்க்கு முழு இறக்குமதி சமநிலை. அதனால CPCL-க்கு சர்வதேச கிராக் + சரக்கு கூடுதல். ஆனா 16 மார்ச் 2026 முதல் OMC-கள் தள்ளுபடி விலை கொடுத்தாங்க (டீசலுக்கு ~₹60/லிட்டர் வரை); Q1 GRM குறைவுக்கு இதுதான் பெரும்பாலும் காரணம்.'},
+ {k:['odd','why','different','outperform','beat','ஏன்','தனி'],en:'CPCL is a pure refiner. In 2026 the war widened refining spreads while pump prices were held, so refiners gained and marketers lost. Most of the marketing loss sat with IOC, though the OMCs also paid refiners below trade parity from 16 March, so CPCL shared part of it. Its own Q1 GRM was the weakest in the group, so the outperformance is structural.',ta:'CPCL சுத்திகரிப்பு மட்டும் செய்யுது. 2026 போர்ல சுத்திகரிப்பு இடைவெளி அதிகமாச்சு, பங்க் விலை நிறுத்தம் — சுத்திகரிப்பவருக்கு லாபம், விற்பவருக்கு நஷ்டம். நஷ்டம் IOC-யிடம். அதனால இது அமைப்பு சார்ந்த வெற்றி.'},
+ {k:['parent','ioc','indian oil','ongc','group','தாய்','இந்தியன் ஆயில்','குழும'],en:'The parent is Indian Oil with 51.89%, not ONGC; ONGC owns HPCL and MRPL. IOC gives CPCL assured offtake (receivables ~1 day), group crude buying and a marketing arm that carries pump-price risk. Transfer pricing is market-linked, so it is a structural shield rather than a subsidy.',ta:'தாய் நிறுவனம் இந்தியன் ஆயில், 51.89%; ONGC இல்ல. IOC உறுதியான வாங்குதல், குழுமக் கொள்முதல், பங்க் ரிஸ்க்கை தாங்கும் பிரிவு தருது. விலை சந்தையோட இணைஞ்சது — மானியம் இல்ல.'},
+ {k:['crude','domestic','import','russia','russian','basket','கச்சா','உள்நாட்டு','ரஷ்ய'],en:'Practically no domestic crude. The Nagapattinam unit that used Cauvery basin crude closed in 2019. Manali imports: about 55–60% Middle East term, 25–30% Russian spot, the rest West African and other grades.',ta:'உள்நாட்டுக் கச்சா கிட்டத்தட்ட இல்ல. நாகை யூனிட் 2019-ல மூடப்பட்டுச்சு. மணலி: மத்திய கிழக்கு 55–60%, ரஷ்யா 25–30%, மீதி மேற்கு ஆப்பிரிக்கா.'},
+ {k:['dividend','ஈவு'],en:'Interim dividend of ₹25 per share; record date 30 Oct 2026, payment by 21 Nov 2026. FY26 total was ₹62 (₹8 interim + ₹54 final), a yield of about 4.3% at ~₹1,452.',ta:'இடைக்கால ஈவு ₹25; பதிவு தேதி 30 அக், 21 நவம்பருக்குள் செலுத்தல். FY26 மொத்தம் ₹62, ~4.3% வருமானம்.'},
+ {k:['valuation','pe','p/e','cheap','price','pb','மதிப்பீடு','விலை'],en:'At about ₹1,452: trailing P/E ~3.8×, estimated P/B ~1.6×, EV/EBITDA ~2.8×, dividend yield ~4.3%. These look cheap only if peak margins last; treat it as a possible cyclical P/E trap.',ta:'~₹1,452-ல: P/E ~3.8×, P/B ~1.6×, EV/EBITDA ~2.8×. உச்ச மார்ஜின் நீடிச்சாதான் மலிவு; சுழற்சி P/E பொறியாக இருக்கலாம்.'},
+ {k:['debt','borrowing','balance','கடன்'],en:'Consolidated borrowings were ₹1,964 crore at March 2026, down from ₹9,238 crore in FY22. Debt/equity about 0.18×.',ta:'மார்ச் 2026 கடன் ₹1,964 கோடி; FY22-ல ₹9,238 கோடி. கடன்/பங்கு ~0.18×.'},
+ {k:['cash','working capital','cfo','inventory days','பணம்','நடைமுறை'],en:'FY26 CFO was ₹2,945 cr, 82% of EBITDA. Receivable days ~1, inventory days 53, payable days 25, cash conversion cycle 29 days. Inventory is the swing item when crude prices rise. H1 FY27 cash flow was not available.',ta:'FY26 இயக்கப் பணம் ₹2,945 கோடி, EBITDA-ல 82%. வரவு ~1 நாள், இருப்பு 53, செலுத்தல் 25, சுழற்சி 29 நாள்.'},
+ {k:['risk','threat','ceasefire','ரிஸ்க்','அச்சுறுத்தல்'],en:'Main risks: crack collapse after a ceasefire, windfall-tax or loss-sharing policy, a narrower Russian discount, Hormuz disruption, and single-site concentration at Manali.',ta:'முக்கிய ரிஸ்க்: போர் நிறுத்தத்துக்குப் பின் கிராக் சரிவு, விண்ட்ஃபால் வரி, ரஷ்யத் தள்ளுபடி குறைவு, ஹோர்முஸ், ஒரே இடம்.'},
+ {k:['trigger','cycle','phase','catalyst','தூண்டி','சுழற்சி'],en:'Sector cycle is P4, late cycle, with the stock in a Stage 3 pattern. CY score 38, TG score 40. Top positive trigger: diesel cracks staying high into Q3. Top risk trigger: cracks normalising after a ceasefire.',ta:'துறை P4 (உச்சக் கட்டம்), பங்கு நிலை 3. CY 38, TG 40. முக்கிய நேர்மறை: Q3-லும் டீசல் கிராக் அதிகம். முக்கிய ரிஸ்க்: போர் நிறுத்தம்.'},
+ {k:['analyst','target','broker','rating','ஆய்வாளர்','இலக்கு'],en:'Published targets: YES Securities Buy ₹1,592 (Jul 2026), Choice Equity Buy ₹1,265, consensus ₹1,265 (Jul 2026). Older: Elara ₹935, YES ₹1,100 (Oct 2025). Post-Q2 notes were not out yet.',ta:'YES Securities ₹1,592 (ஜூலை 2026), Choice ₹1,265. பழையவை: Elara ₹935, YES ₹1,100. Q2-க்குப் பிந்தைய அறிக்கைகள் இன்னும் வரல.'},
+ {k:['peer','hpcl','mrpl','bpcl','compare','rank','போட்டி','ஒப்பிடு'],en:'Q2 FY27 ranking by GRM: HPCL $32.15 (pre-cess), CPCL $20.41, MRPL ~$14.8; IOC and BPCL report later. By Q2 PAT: HPCL ₹3,625 cr consolidated, CPCL ₹2,271 cr, MRPL ₹1,881 cr. In Q1 only CPCL and MRPL were profitable.',ta:'Q2 GRM: HPCL $32.15, CPCL $20.41, MRPL ~$14.8. Q2 லாபம்: HPCL ₹3,625, CPCL ₹2,271, MRPL ₹1,881 கோடி. Q1-ல CPCL, MRPL மட்டும் லாபம்.'},
+ {k:['throughput','utilisation','capacity','volume','அளவு','திறன்'],en:'Q2 throughput was 2.59 MMT, about 99% utilisation of the 10.5 MMTPA Manali refinery, down from 2.848 MMT in Q1. FY26 throughput was a record 11.71 MMT (112%).',ta:'Q2 சுத்திகரிப்பு 2.59 MMT, ~99%. Q1-ல 2.848. FY26 சாதனை 11.71 MMT (112%).'},
+ {k:['iran','naftiran','sanction','ஈரான்'],en:'Naftiran Intertrade, an affiliate of the National Iranian Oil Company, holds 15.40%. Dividends due to it cannot be remitted because of sanctions.',ta:'ஈரானிய NIOC துணை நிறுவனம் நஃப்டிரான் 15.40% வச்சிருக்கு. தடைகளால் ஈவுத்தொகை அனுப்ப முடியல.'},
+ {k:['cauvery','nagapattinam','expansion','manali','project','காவேரி','நாகை','விரிவாக்க'],en:'Two growth items: the Cauvery Basin project at Nagapattinam (IOC 75%, CPCL 25%), now tilted to petrochemicals; and a plan to lift Manali capacity by a third to about 280,000 barrels per day.',ta:'காவேரி படுகை திட்டம் (IOC 75%, CPCL 25%), பெட்ரோகெமிக்கல் நோக்கி; மணலி திறனை மூணில் ஒரு பங்கு உயர்த்தி ~2.8 லட்சம் bpd ஆக்கும் திட்டம்.'},
+ {k:['sensitivity','per dollar','1 dollar','eps'],en:'CB estimate: each $1/bbl of GRM is worth about ₹740 cr of annual EBITDA and about ₹37 of EPS, assuming ~11.5 MMT a year and ₹88/$.',ta:'CB மதிப்பீடு: GRM-ல $1 = வருஷ EBITDA ~₹740 கோடி, EPS ~₹37.'},
+ {k:['windfall','saed','export duty','tax','வரி'],en:'The windfall export duty (SAED) came back in March 2026 and is reset every fortnight. Diesel export duty reached ₹24–25.5/litre in August, then ₹20 from 16 September. It applies only to exports.',ta:'SAED மார்ச் 2026-ல மீண்டும்; 15 நாளுக்கு ஒருமுறை மாற்றம். டீசல் ஏற்றுமதி வரி ஆகஸ்ட்ல ₹24–25.5, செப் 16 முதல் ₹20. ஏற்றுமதிக்கு மட்டும்.'},
+ {k:['score','cb score','pillar','மதிப்பெண்'],en:'CB Score 7.1/10: Growth 8.0, Profitability 8.5, Balance sheet 8.5, Valuation 7.0, Market & triggers 6.0, Risk 4.5.',ta:'CB மதிப்பெண் 7.1/10: வளர்ச்சி 8.0, லாபத்தன்மை 8.5, இருப்புநிலை 8.5, மதிப்பீடு 7.0, சந்தை 6.0, ரிஸ்க் 4.5.'},
+ {k:['management','board','md','director','chairman','நிர்வாக','இயக்குநர்'],en:'Board is led by IOC\'s chairman ex officio. H. Shankar has been MD (tenure to be confirmed). Lalit Kumar Mohanty became Company Secretary on 1 Jul 2026, and Ritesh Kumar Golchha joined as an independent director on 7 Oct 2026. CPCL became a Navratna on 19 Jun 2026.',ta:'IOC தலைவர் பதவி வழி தலைவர். MD H. சங்கர். லலித் குமார் மொஹந்தி நிறுவனச் செயலர் (1 ஜூலை 2026). ரித்தேஷ் குமார் கோல்ச்சா சுயாதீன இயக்குநர் (7 அக்). 19 ஜூன் 2026 நவரத்னா.'}
+];
+var NOADV={en:'I can\'t tell you whether to buy, sell or hold. CB Research is education only. The Self-check tab lets you test the facts against your own conditions.',ta:'வாங்கலாமா, விற்கலாமான்னு சொல்ல முடியாது. CB Research கல்வி நோக்கம் மட்டும். சுய சோதனை தாவலில் உங்க நிபந்தனைகளைச் சோதிச்சுப் பாருங்க.'};
+var asLog=document.getElementById('asLog');
+function addMsg(t,who,btn){var d=document.createElement('div');d.className='msg '+who;d.textContent=t;if(btn){var b=document.createElement('button');b.className='btn';b.type='button';b.style.cssText='display:block;margin-top:6px;font-size:12px';b.textContent=L('Open Self-check','சுய சோதனை திற');b.onclick=function(){openTab('self');document.getElementById('assist').hidden=true};d.appendChild(b)}asLog.appendChild(d);asLog.scrollTop=asLog.scrollHeight}
+function speak(t){try{if(!window.speechSynthesis)return;speechSynthesis.cancel();var u=new SpeechSynthesisUtterance(t);u.lang=LANG==='ta'?'ta-IN':'en-IN';u.rate=1;speechSynthesis.speak(u)}catch(e){}}
+function answer(q){var s=q.toLowerCase();
+  if(/\b(buy|sell|hold|invest|should i)\b/.test(s)||/வாங்க|விற்க/.test(s)){var t=L(NOADV.en,NOADV.ta);addMsg(t,'b',true);speak(t);return}
+  var best=null,bs=0;KB.forEach(function(e){var sc_=0;e.k.forEach(function(k){if(s.indexOf(k)>=0)sc_+=k.length>4?2:1});if(sc_>bs){bs=sc_;best=e}});
+  var t=best?L(best.en,best.ta):L('I can answer about profit, GRM, GMM, why CPCL is the odd man out, IOC vs ONGC, crude sourcing, dividend, valuation, debt, cash flow, risks, triggers, analysts and peers. Try one of the suggestions below.','லாபம், GRM, GMM, ஏன் தனி வழி, IOC vs ONGC, கச்சா, ஈவு, மதிப்பீடு, கடன், பணப்புழக்கம், ரிஸ்க், தூண்டி, ஆய்வாளர், போட்டியாளர் — இவை பற்றி கேளுங்க.');
+  addMsg(t,'b');speak(t)}
+function renderSug(){var b=document.getElementById('asSug');b.innerHTML='';
+  [[ 'Why is CPCL the odd man out?','CPCL ஏன் தனி வழி?'],['Is IOC or ONGC the parent?','தாய் நிறுவனம் IOC-ஆ ONGC-ஆ?'],['Does it use domestic crude?','உள்நாட்டுக் கச்சா உண்டா?'],['Compare peers','போட்டியாளர் ஒப்பீடு'],['What is GMM?','GMM என்றால் என்ன?']].forEach(function(p){var x=document.createElement('button');x.type='button';x.textContent=L(p[0],p[1]);x.onclick=function(){addMsg(x.textContent,'u');answer(x.textContent)};b.appendChild(x)})}
+document.getElementById('asForm').addEventListener('submit',function(e){e.preventDefault();var i=document.getElementById('asIn');var v=i.value.trim();if(!v)return;addMsg(v,'u');i.value='';answer(v)});
+document.getElementById('asBtn').onclick=function(){var a=document.getElementById('assist');a.hidden=!a.hidden;document.getElementById('disc').hidden=true;if(!a.hidden&&!asLog.children.length)addMsg(L('Ask me about CPCL\'s Q2 FY27 results by typing or with the mic. Answers are spoken aloud.','CPCL Q2 FY27 பற்றி டைப் செய்தோ மைக் மூலமோ கேளுங்க. பதில் குரலில் வரும்.'),'b')};
+document.getElementById('asClose').onclick=function(){document.getElementById('assist').hidden=true;try{speechSynthesis.cancel()}catch(e){}};
+var REC=null;
+document.getElementById('asMic').onclick=function(){var SR=window.SpeechRecognition||window.webkitSpeechRecognition;var m=document.getElementById('asMic');
+  if(!SR){addMsg(L('Voice input is not available in this browser view. Type your question; answers will still be spoken.','இந்த உலாவியில் குரல் உள்ளீடு இல்ல. டைப் செய்யுங்க; பதில் குரலில் வரும்.'),'b');return}
+  try{if(REC){REC.stop();return}REC=new SR();REC.lang=LANG==='ta'?'ta-IN':'en-IN';REC.interimResults=false;m.classList.add('rec');
+    REC.onresult=function(e){var t=e.results[0][0].transcript;addMsg(t,'u');answer(t)};
+    REC.onerror=function(){addMsg(L('Microphone access was not allowed here. Type your question instead.','இங்கே மைக் அனுமதி இல்ல. டைப் செய்யுங்க.'),'b')};
+    REC.onend=function(){m.classList.remove('rec');REC=null};REC.start()}catch(e){m.classList.remove('rec');REC=null;addMsg(L('Voice input could not start. Type your question instead.','குரல் உள்ளீடு தொடங்கல. டைப் செய்யுங்க.'),'b')}};
+document.getElementById('cbBadge').onclick=function(){var d=document.getElementById('disc');d.hidden=!d.hidden;document.getElementById('assist').hidden=true};
+
+/* ---------- init ---------- */
+drawTemple();drawBM();drawRTP();drawGroup();drawClock();drawTimeline();buildSliders();setScn('war');renderQuiz();renderOdd('war');
+var saved=stor('cpcl_lang');setLang(saved==='ta'?'ta':'en');
+var h=(location.hash||'').replace('#','');if(h)openTab(h);
+</script>
