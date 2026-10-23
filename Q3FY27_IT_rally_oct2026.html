@@ -1,0 +1,521 @@
+<title>IT Rally Decoder</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;800&family=Archivo:wght@400;600;800&family=JetBrains+Mono:wght@500;700&family=Noto+Sans+Tamil:wght@400;600;800&display=swap">
+<style>
+/* Layout: white research sheet — sticky tab rail, one section per tab, orange used only for UI chrome */
+:root{
+  --bg:#FFFFFF; --ink:#141414; --muted:#4A4744; --line:#E8E2DA;
+  --accent:#F28C28; --accent-soft:#FFF2E4; --accent-ink:#9A4F05;
+  --up:#17803F; --down:#C2312A; --fii:#6B46C1; --dii:#1F5FBF;
+  --display:"Bricolage Grotesque","Archivo",system-ui,sans-serif;
+  --body:"Archivo","Noto Sans Tamil",system-ui,sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,monospace;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:15px;line-height:1.55;font-weight:600}
+body.ta{font-family:"Noto Sans Tamil","Archivo",system-ui,sans-serif}
+body.ta .en, body:not(.ta) .ta{display:none!important}
+.wrap{max-width:1080px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:18px 90px}
+header.top{display:flex;flex-wrap:wrap;gap:12px;align-items:flex-end;justify-content:space-between;border-bottom:3px solid var(--ink);padding-bottom:12px}
+.brand{font-family:var(--mono);font-size:12px;letter-spacing:.08em;color:var(--accent-ink);text-transform:uppercase}
+h1{font-family:var(--display);font-weight:800;font-size:clamp(26px,5vw,42px);line-height:1.05;margin:4px 0 4px;text-wrap:balance}
+.slogan{font-weight:800;color:var(--accent-ink)}
+.tools{display:flex;gap:8px;flex-wrap:wrap}
+button{font:inherit;cursor:pointer}
+.btn{border:2px solid var(--ink);background:var(--bg);color:var(--ink);padding:7px 12px;border-radius:8px;font-weight:800}
+.btn.on{background:var(--accent);border-color:var(--accent);color:#141414}
+.btn:focus-visible,.tab:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+nav.tabs{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);display:flex;gap:4px;overflow-x:auto;padding:10px 0;border-bottom:1px solid var(--line);scrollbar-width:thin}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bg)}
+.tab{white-space:nowrap;border:0;background:transparent;color:var(--muted);padding:8px 12px;border-radius:999px;font-weight:800;font-size:14px}
+.tab[aria-selected="true"]{background:var(--accent-soft);color:var(--accent-ink);box-shadow:inset 0 0 0 2px var(--accent)}
+section.pane{padding-top:18px}
+h2{font-family:var(--display);font-size:24px;margin:0 0 10px;text-wrap:balance}
+h3{font-size:16px;margin:16px 0 6px}
+ul{margin:6px 0;padding-left:20px} li{margin:3px 0}
+.grid{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(240px,1fr))}
+.grid>*{min-width:0}
+.card{border:1.5px solid var(--line);border-radius:12px;padding:14px}
+.verdict{border:2.5px solid var(--ink);border-radius:14px;padding:16px;background:var(--accent-soft)}
+.verdict b.big{font-family:var(--display);font-size:22px;display:block;margin-bottom:6px}
+.kpi{display:flex;flex-direction:column;gap:2px}
+.kpi .n{font-family:var(--mono);font-size:26px;font-weight:700;font-variant-numeric:tabular-nums}
+.kpi .l{color:var(--muted);font-size:13px}
+.up{color:var(--up)} .down{color:var(--down)}
+.chip{display:inline-block;padding:2px 9px;border-radius:999px;font-size:12px;font-weight:800;border:1.5px solid currentColor}
+.tbl{overflow-x:auto;border:1.5px solid var(--line);border-radius:10px}
+table{border-collapse:collapse;width:100%;font-variant-numeric:tabular-nums;font-size:14px}
+th,td{padding:8px 10px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+th{background:#FAF7F3;font-weight:800;white-space:nowrap}
+td.num,th.num{text-align:right;font-family:var(--mono)}
+svg text{font-family:var(--body);fill:var(--ink)}
+.q-a{display:grid;gap:12px}
+.qa{border-left:5px solid var(--accent);padding:8px 12px;background:#FFFBF6;border-radius:0 10px 10px 0}
+.qa .q{font-weight:800}
+.picture{border:2px dashed var(--accent);border-radius:12px;padding:12px}
+.picture .tag{font-family:var(--mono);font-size:11px;color:var(--accent-ink);letter-spacing:.08em;text-transform:uppercase}
+.check{display:flex;gap:10px;align-items:flex-start;padding:8px 0;border-bottom:1px solid var(--line)}
+.check input{width:20px;height:20px;margin-top:3px;accent-color:var(--accent);flex:none}
+.check .d{font-size:13px;color:var(--muted);font-weight:600}
+.bar{height:8px;background:var(--line);border-radius:99px;overflow:hidden}
+.bar i{display:block;height:100%;background:var(--accent);width:0;transition:width .3s}
+.opt{display:block;width:100%;text-align:left;border:2px solid var(--line);background:var(--bg);border-radius:10px;padding:10px;margin:6px 0;font-weight:700;color:var(--ink)}
+.opt.ok{border-color:var(--up);background:#EEF8F1} .opt.no{border-color:var(--down);background:#FCEFEE}
+.assist-box{border:2px solid var(--ink);border-radius:14px;padding:12px}
+.log{max-height:360px;overflow-y:auto;display:flex;flex-direction:column;gap:8px;margin-bottom:10px}
+.msg{padding:8px 12px;border-radius:12px;max-width:90%}
+.msg.u{align-self:flex-end;background:var(--accent-soft)} .msg.b{align-self:flex-start;background:#F4F4F2}
+.row{display:flex;gap:8px;flex-wrap:wrap}
+input[type=text]{flex:1;min-width:0;font:inherit;padding:9px 11px;border:2px solid var(--ink);border-radius:8px;background:var(--bg);color:var(--ink)}
+.sugg{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0}
+.sugg button{border:1.5px solid var(--accent);background:var(--bg);color:var(--accent-ink);border-radius:999px;padding:4px 10px;font-weight:700;font-size:13px}
+#cb{position:fixed;right:calc(14px + env(safe-area-inset-right,0px));bottom:calc(14px + env(safe-area-inset-bottom,0px));z-index:20}
+#cb .badge{width:44px;height:44px;border-radius:50%;background:var(--accent);color:#141414;font-family:var(--display);font-weight:800;display:grid;place-items:center;border:2px solid var(--ink);animation:blink 1.6s ease-in-out infinite;cursor:pointer}
+#cb .tip{position:absolute;right:0;bottom:52px;width:min(300px,80vw);background:var(--bg);border:2px solid var(--ink);border-radius:10px;padding:10px;font-size:12.5px;display:none}
+#cb:hover .tip,#cb.open .tip{display:block}
+#va{position:fixed;right:calc(14px + env(safe-area-inset-right,0px));bottom:calc(68px + env(safe-area-inset-bottom,0px));z-index:20;border:2px solid var(--ink);background:var(--bg);border-radius:999px;padding:8px 12px;font-weight:800}
+@keyframes blink{50%{opacity:.45}}
+@media (prefers-reduced-motion:reduce){#cb .badge{animation:none}.bar i{transition:none}}
+.score{font-family:var(--mono);font-size:30px;font-weight:700}
+.small{font-size:13px;color:var(--muted)}
+</style>
+
+<div class="wrap">
+<header class="top">
+  <div>
+    <div class="brand">CB Research · Sector pulse · 23 Oct 2026</div>
+    <h1><span class="en">Why are IT stocks suddenly rising?</span><span class="ta">IT shares ஏன் திடீர்னு ஏறுது?</span></h1>
+    <div class="slogan"><span class="en">A CB a day keeps ignorance away</span><span class="ta">தினமும் ஒரு CB — அறியாமை தூரம் போகும்!</span></div>
+  </div>
+  <div class="tools">
+    <button class="btn on" id="bEN" type="button">English</button>
+    <button class="btn" id="bTA" type="button">தமிழ்</button>
+    <button class="btn" id="readTab" type="button"><span class="en">🔊 Read this tab</span><span class="ta">🔊 இந்த tab படிங்க</span></button>
+  </div>
+</header>
+
+<nav class="tabs" role="tablist" id="tabs"></nav>
+
+<!-- 1 DASHBOARD -->
+<section class="pane" id="dash" data-label-en="Dashboard" data-label-ta="Dashboard">
+  <div class="verdict">
+    <b class="big"><span class="en">Verdict: sentiment changed more than the numbers did.</span><span class="ta">முடிவு: Numbers-ஐ விட sentiment தான் அதிகம் மாறியிருக்கு.</span></b>
+    <ul class="en">
+      <li>Q2 results were <b>better than feared</b>, not a growth boom.</li>
+      <li>Prices rose mostly because <b>P/E multiples expanded</b> from very low levels — earnings estimates were not raised.</li>
+      <li>Funds were <b>badly under-owned</b> in IT (record low weight) — catch-up buying adds fuel.</li>
+      <li>Market fell on Reliance / Jio IPO money pull and FII selling; IT became the <b>place to hide</b>.</li>
+    </ul>
+    <ul class="ta">
+      <li>Q2 results <b>பயந்த அளவுக்கு மோசமில்லை</b> — ஆனா பெரிய growth இல்லை.</li>
+      <li>Price ஏறினது பெரும்பாலும் <b>P/E multiple விரிஞ்சதால</b> — earnings estimate ஏறலை.</li>
+      <li>Mutual funds IT-ல <b>record low</b> weight-ல இருந்தாங்க — இப்போ catch-up buying.</li>
+      <li>Reliance / Jio IPO-க்கு பணம் போனது, FII selling — market இறங்குச்சு; IT ஒரு <b>safe corner</b> ஆச்சு.</li>
+    </ul>
+  </div>
+  <div class="grid" style="margin-top:14px">
+    <div class="card kpi"><span class="n up">+17%</span><span class="l"><span class="en">Nifty IT in October (to 21 Oct)</span><span class="ta">October-ல Nifty IT (21 Oct வரை)</span></span></div>
+    <div class="card kpi"><span class="n up">+₹3.87 L cr</span><span class="l"><span class="en">IT market value added this month</span><span class="ta">இந்த மாசம் IT m-cap கூடினது</span></span></div>
+    <div class="card kpi"><span class="n">18x <small style="font-size:14px">vs 23x</small></span><span class="l"><span class="en">Sector forward P/E vs 5-yr average (HSBC)</span><span class="ta">Forward P/E vs 5 வருஷ சராசரி (HSBC)</span></span></div>
+    <div class="card kpi"><span class="n down">5.3%</span><span class="l"><span class="en">MF equity AUM in IT, Sep 2026 — record low</span><span class="ta">MF-ல IT weight, Sep 2026 — record low</span></span></div>
+    <div class="card kpi"><span class="n up">₹6,463 cr</span><span class="l"><span class="en">FPI buying in IT, Jul–Sep quarter</span><span class="ta">Jul–Sep-ல IT-ல FPI வாங்கினது</span></span></div>
+    <div class="card kpi"><span class="n down">−3% to −5%</span><span class="l"><span class="en">Cut in consensus EPS for large IT (Jefferies)</span><span class="ta">Large IT EPS estimate குறைப்பு (Jefferies)</span></span></div>
+  </div>
+
+  <h3><span class="en">Your questions, answered direct</span><span class="ta">உங்க கேள்விகளுக்கு நேரடி பதில்</span></h3>
+  <div class="q-a">
+    <div class="qa"><div class="q"><span class="en">Is it buying at lowest valuations?</span><span class="ta">Lowest valuation-ல வாங்குறாங்களா?</span></div>
+      <span class="en">Partly yes. After a ~20% fall in Jan–Feb, IT traded well below its 5-yr P/E; the October rise is mainly a re-rating from that low base.</span><span class="ta">ஓரளவு ஆமா. Jan–Feb-ல ~20% விழுந்த பிறகு P/E 5 வருஷ சராசரிக்கு கீழே இருந்துச்சு; October ஏற்றம் அந்த low base-லிருந்து re-rating தான்.</span></div>
+    <div class="qa"><div class="q"><span class="en">Are FIIs coming back?</span><span class="ta">FII திரும்ப வர்றாங்களா?</span></div>
+      <span class="en">Selectively. They bought ₹6,463 cr of IT in Jul–Sep while still selling India overall (−₹3,459 cr on 22 Oct alone). Early interest, not a broad return.</span><span class="ta">தேர்ந்தெடுத்து மட்டும். Jul–Sep-ல IT-ல ₹6,463 கோடி வாங்கினாங்க, ஆனா மொத்த market-ல இன்னும் விற்றுட்டு தான் இருக்காங்க (22 Oct மட்டும் −₹3,459 கோடி).</span></div>
+    <div class="qa"><div class="q"><span class="en">Are DIIs propping these stocks up?</span><span class="ta">DII தான் தாங்கிப் பிடிக்கிறாங்களா?</span></div>
+      <span class="en">Not alone. DIIs buy the whole market daily, but mutual funds had cut IT to a record-low 5.3% weight by September. Their catch-up (more Infosys and TCS shares) helps, but it started from being underweight.</span><span class="ta">அவங்க மட்டும் இல்லை. DII தினமும் market முழுக்க வாங்குறாங்க; ஆனா MF-கள் Sep-க்குள்ள IT weight-ஐ 5.3%-க்கு குறைச்சிருந்தாங்க. இப்போ Infosys, TCS share கூட்டுறாங்க — underweight-லிருந்து catch-up.</span></div>
+    <div class="qa"><div class="q"><span class="en">Is there any material change?</span><span class="ta">ஏதாவது material change இருக்கா?</span></div>
+      <span class="en">Small, real changes: HCLTech raised the low end of guidance, AI revenue is now visible, the US visa scare was defused, and AI-replacement fear cooled. Growth is still low single digit.</span><span class="ta">சின்ன, ஆனா உண்மையான மாற்றங்கள்: HCLTech guidance low end-ஐ ஏத்தியது, AI revenue தெரிய ஆரம்பிச்சிருக்கு, US visa பயம் குறைஞ்சது, AI replace பண்ணிடும்ங்கிற பயம் தணிஞ்சது. Growth இன்னும் low single digit தான்.</span></div>
+  </div>
+</section>
+
+<!-- 2 WHY -->
+<section class="pane" id="why" data-label-en="Why the rally" data-label-ta="ஏன் ஏற்றம்">
+  <h2><span class="en">Six forces behind the move</span><span class="ta">இந்த ஏற்றத்துக்கு பின்னாடி 6 காரணங்கள்</span></h2>
+  <div class="grid">
+    <div class="card"><b><span class="en">1 · Results better than feared</span><span class="ta">1 · பயந்ததை விட நல்ல results</span></b>
+      <ul class="en"><li>TCS profit +14.9% (₹13,884 cr), margin 24%.</li><li>HCLTech profit +21.2%; guidance low end raised to 2.5%.</li></ul>
+      <ul class="ta"><li>TCS profit +14.9% (₹13,884 கோடி), margin 24%.</li><li>HCLTech profit +21.2%; guidance low end 2.5%-க்கு ஏறியது.</li></ul></div>
+    <div class="card"><b><span class="en">2 · AI fear cooled</span><span class="ta">2 · AI பயம் குறைஞ்சது</span></b>
+      <ul class="en"><li>OpenAI's Sept run-rate ~$50 bn vs ~$70 bn it had signalled.</li><li>Read as: AI firms won't replace IT services overnight.</li></ul>
+      <ul class="ta"><li>OpenAI Sept run-rate ~$50 bn — சொன்னது ~$70 bn.</li><li>அர்த்தம்: AI கம்பெனிகள் ஒரே இரவுல IT services-ஐ replace பண்ணாது.</li></ul></div>
+    <div class="card"><b><span class="en">3 · Visa scare defused</span><span class="ta">3 · Visa பயம் தணிஞ்சது</span></b>
+      <ul class="en"><li>US paused PERM filings for 5 Indian-linked IT firms.</li><li>NASSCOM: H-1B use already cut; TCS PERM filings in single digits.</li></ul>
+      <ul class="ta"><li>US, 5 IT கம்பெனிகளுக்கு PERM filing நிறுத்தியது.</li><li>NASSCOM: H-1B use ஏற்கனவே குறைஞ்சாச்சு; TCS PERM ஒற்றை இலக்கம் தான்.</li></ul></div>
+    <div class="card"><b><span class="en">4 · Cheap starting point</span><span class="ta">4 · Cheap-ஆன ஆரம்பம்</span></b>
+      <ul class="en"><li>Nifty IT fell ~20% in Jan–Feb 2026.</li><li>Forward P/E 18x vs ~23x 5-yr average.</li></ul>
+      <ul class="ta"><li>Jan–Feb 2026-ல Nifty IT ~20% விழுந்தது.</li><li>Forward P/E 18x — சராசரி ~23x.</li></ul></div>
+    <div class="card"><b><span class="en">5 · Under-owned sector</span><span class="ta">5 · யாரும் அதிகம் வச்சிருக்கல</span></b>
+      <ul class="en"><li>MF weight in IT 5.3% — lowest ever.</li><li>Small buying moves prices fast.</li></ul>
+      <ul class="ta"><li>MF-ல IT weight 5.3% — இதுவரை குறைவு.</li><li>கொஞ்சம் வாங்கினாலே price வேகமா ஏறும்.</li></ul></div>
+    <div class="card"><b><span class="en">6 · Rotation away from the weak market</span><span class="ta">6 · Weak market-லிருந்து rotation</span></b>
+      <ul class="en"><li>Reliance near 52-wk low; Jio IPO pulling ₹29–30k cr.</li><li>IT earns in dollars — seen as a shelter.</li></ul>
+      <ul class="ta"><li>Reliance 52-வார low பக்கம்; Jio IPO ₹29–30 ஆயிரம் கோடி இழுக்குது.</li><li>IT dollar-ல சம்பாதிக்கும் — shelter-ஆ பாக்குறாங்க.</li></ul></div>
+  </div>
+
+  <div class="picture" style="margin-top:16px">
+    <div class="tag"><span class="en">Picture it</span><span class="ta">இப்படி யோசிங்க</span></div>
+    <svg viewBox="0 0 640 170" width="100%" role="img" aria-label="Rubber band: P/E stretched down to 18x snaps back toward 23x">
+      <line x1="40" y1="120" x2="600" y2="120" stroke="#E8E2DA" stroke-width="2"/>
+      <circle cx="120" cy="120" r="9" fill="#141414"/><circle cx="520" cy="120" r="9" fill="#141414"/>
+      <path d="M120 120 Q 240 160 300 150" stroke="#F28C28" stroke-width="5" fill="none"/>
+      <path d="M300 150 Q 400 135 520 120" stroke="#F28C28" stroke-width="5" fill="none" stroke-dasharray="8 6"/>
+      <text x="120" y="100" text-anchor="middle" font-size="13" font-weight="800">P/E 18x (Sep)</text>
+      <text x="520" y="100" text-anchor="middle" font-size="13" font-weight="800">5-yr avg ~23x</text>
+      <text x="320" y="40" text-anchor="middle" font-size="14" font-weight="800" class="en">Stretched band snaps back — without new earnings</text>
+      <text x="320" y="62" text-anchor="middle" font-size="12" fill="#4A4744">Jefferies: upside thin beyond 17–18x unless growth improves</text>
+    </svg>
+    <ul class="en small"><li>The band (P/E) was stretched too far by fear. October was the snap-back.</li><li>To go further, earnings must actually grow.</li></ul>
+    <ul class="ta small"><li>பயத்தால rubber band (P/E) ரொம்ப இழுக்கப்பட்டிருந்துச்சு. October-ல திரும்ப வந்துச்சு.</li><li>இன்னும் மேலே போக, earnings உண்மையா வளரணும்.</li></ul>
+  </div>
+</section>
+
+<!-- 3 FLOWS -->
+<section class="pane" id="flows" data-label-en="FII vs DII" data-label-ta="FII vs DII">
+  <h2><span class="en">Who is buying?</span><span class="ta">யாரு வாங்குறாங்க?</span></h2>
+  <div class="grid">
+    <div class="card">
+      <b><span class="en">Daily cash flows (₹ cr)</span><span class="ta">தினசரி cash flows (₹ கோடி)</span></b>
+      <svg viewBox="0 0 320 200" width="100%" role="img" aria-label="FII and DII flows on 19 and 22 October">
+        <line x1="20" y1="100" x2="310" y2="100" stroke="#141414"/>
+        <!-- scale 1000cr = 20px -->
+        <rect x="45" y="100" width="34" height="23" fill="#6B46C1"/><rect x="85" y="36" width="34" height="64" fill="#1F5FBF"/>
+        <rect x="185" y="100" width="34" height="69" fill="#6B46C1"/><rect x="225" y="42" width="34" height="58" fill="#1F5FBF"/>
+        <text x="62" y="138" font-size="11" text-anchor="middle">−1,149</text><text x="102" y="30" font-size="11" text-anchor="middle">+3,201</text>
+        <text x="202" y="184" font-size="11" text-anchor="middle">−3,459</text><text x="242" y="36" font-size="11" text-anchor="middle">+2,891</text>
+        <text x="82" y="198" font-size="12" font-weight="800" text-anchor="middle">19 Oct</text><text x="222" y="198" font-size="12" font-weight="800" text-anchor="middle">22 Oct</text>
+        <rect x="230" y="160" width="10" height="10" fill="#6B46C1"/><text x="244" y="169" font-size="11">FII</text>
+        <rect x="270" y="160" width="10" height="10" fill="#1F5FBF"/><text x="284" y="169" font-size="11">DII</text>
+      </svg>
+      <ul class="en small"><li>FIIs still net sellers of India overall.</li><li>DIIs absorb the selling every day.</li></ul>
+      <ul class="ta small"><li>FII மொத்தமா இன்னும் net seller.</li><li>DII தினமும் அந்த selling-ஐ வாங்கிக்கிறாங்க.</li></ul>
+    </div>
+    <div class="card">
+      <b><span class="en">Mutual fund weight in IT (% of equity AUM)</span><span class="ta">MF-ல IT weight (equity AUM %)</span></b>
+      <svg viewBox="0 0 320 200" width="100%" role="img" aria-label="MF IT weight: 13.4% 2021, 9.24% 2024, 7.6% 2025, 5.3% Sep 2026">
+        <line x1="30" y1="170" x2="310" y2="170" stroke="#E8E2DA"/>
+        <polyline points="50,36 130,98 210,120 290,151" fill="none" stroke="#F28C28" stroke-width="4"/>
+        <g font-size="12" font-weight="800">
+        <circle cx="50" cy="36" r="5" fill="#141414"/><text x="50" y="26" text-anchor="middle">13.4%</text>
+        <circle cx="130" cy="98" r="5" fill="#141414"/><text x="130" y="88" text-anchor="middle">9.24%</text>
+        <circle cx="210" cy="120" r="5" fill="#141414"/><text x="210" y="110" text-anchor="middle">7.6%</text>
+        <circle cx="290" cy="151" r="7" fill="#C2312A"/><text x="290" y="140" text-anchor="middle" fill="#C2312A">5.3%</text></g>
+        <g font-size="11" text-anchor="middle"><text x="50" y="188">2021</text><text x="130" y="188">2024</text><text x="210" y="188">2025</text><text x="290" y="188">Sep 26</text></g>
+      </svg>
+      <ul class="en small"><li>MF IT holdings fell from ₹3.98 L cr (Dec 25) to ₹2.97 L cr.</li><li>Yet MFs added 2.7 cr Infosys and 61 lakh TCS shares.</li></ul>
+      <ul class="ta small"><li>MF IT holdings ₹3.98 லட்சம் கோடி (Dec 25) → ₹2.97 லட்சம் கோடி.</li><li>ஆனாலும் MF-கள் 2.7 கோடி Infosys, 61 லட்சம் TCS share சேர்த்தாங்க.</li></ul>
+    </div>
+  </div>
+  <h3><span class="en">FII stake change, Jun → Sep 2026</span><span class="ta">FII பங்கு மாற்றம், Jun → Sep 2026</span></h3>
+  <div class="tbl"><table>
+    <tr><th>Company</th><th class="num">Jun</th><th class="num">Sep</th><th><span class="en">Read</span><span class="ta">அர்த்தம்</span></th></tr>
+    <tr><td>Infosys</td><td class="num">27.09%</td><td class="num">27.44%</td><td class="up"><span class="en">Adding</span><span class="ta">கூட்டுறாங்க</span></td></tr>
+    <tr><td>Wipro</td><td class="num">8.85%</td><td class="num">9.46%</td><td class="up"><span class="en">Adding</span><span class="ta">கூட்டுறாங்க</span></td></tr>
+    <tr><td>Oracle Fin Serv</td><td class="num">9.70%</td><td class="num">11.43%</td><td class="up">+173 bps</td></tr>
+    <tr><td>Persistent</td><td class="num" colspan="2">—</td><td><span class="en">No change</span><span class="ta">மாற்றம் இல்லை</span></td></tr>
+    <tr><td>TCS, Mphasis</td><td class="num" colspan="2">—</td><td class="down"><span class="en">Marginal cut</span><span class="ta">லேசா குறைப்பு</span></td></tr>
+  </table></div>
+  <p class="small"><span class="en">Selective buying, not a sector-wide FII return.</span><span class="ta">தேர்ந்தெடுத்த வாங்குதல் — sector முழுக்க FII திரும்பல.</span></p>
+</section>
+
+<!-- 4 EARNINGS -->
+<section class="pane" id="earn" data-label-en="Q2 results" data-label-ta="Q2 results">
+  <h2><span class="en">Q2 FY27 scorecard</span><span class="ta">Q2 FY27 scorecard</span></h2>
+  <div class="tbl"><table>
+    <tr><th>Company</th><th><span class="en">Profit / revenue</span><span class="ta">Profit / revenue</span></th><th class="num">Margin</th><th><span class="en">Key signal</span><span class="ta">முக்கிய signal</span></th><th><span class="en">Tone</span><span class="ta">Tone</span></th></tr>
+    <tr><td>TCS</td><td>PAT ₹13,884 cr, +14.9%</td><td class="num">24.0%</td><td><span class="en">Growth across markets; US hiring 15,000 locals in 5 yrs</span><span class="ta">எல்லா market-லயும் growth; 5 வருஷத்துல US-ல 15,000 local hiring</span></td><td><span class="chip up">+</span></td></tr>
+    <tr><td>HCLTech</td><td>PAT ₹5,132 cr, +21.2%; rev +2.6% CC</td><td class="num">18.2%</td><td><span class="en">Guidance 2.5–4% (low end raised); AI rev $219 mn, +78%</span><span class="ta">Guidance 2.5–4% (low end ஏறியது); AI rev $219 mn, +78%</span></td><td><span class="chip up">+</span></td></tr>
+    <tr><td>Tech Mahindra</td><td>PAT ₹1,586 cr, +32.7%</td><td class="num">14.8%</td><td><span class="en">12th straight quarter of margin gain; 1:1 bonus</span><span class="ta">தொடர்ந்து 12-வது quarter margin ஏற்றம்; 1:1 bonus</span></td><td><span class="chip up">+</span></td></tr>
+    <tr><td>Wipro</td><td>IT services flat QoQ CC, +0.6% YoY</td><td class="num">16.5%</td><td><span class="en">Margin up 50 bps; growth still stuck</span><span class="ta">Margin 50 bps ஏறியது; growth இன்னும் நிக்குது</span></td><td><span class="chip" style="color:var(--muted)">±</span></td></tr>
+    <tr><td>Infosys</td><td><span class="en">Results due today, 23 Oct</span><span class="ta">Results இன்னைக்கு, 23 Oct</span></td><td class="num">—</td><td><span class="en">FY27 guidance was cut to 1.5–3% in July — watch if it holds</span><span class="ta">July-ல FY27 guidance 1.5–3%-க்கு குறைச்சாங்க — நிக்குமா பாருங்க</span></td><td><span class="chip" style="color:var(--accent-ink)">?</span></td></tr>
+  </table></div>
+  <ul class="en"><li>Profit growth is helped by a weak rupee (~₹95–97/$ for most of the quarter); constant-currency revenue growth is only 0–3%.</li><li>HSBC: sector earnings growth slowed to ~2–3% due to AI-led price deflation; FY27 the toughest year.</li></ul>
+  <ul class="ta"><li>Profit growth-க்கு weak rupee (~₹95–97/$) உதவுச்சு; constant currency revenue growth 0–3% தான்.</li><li>HSBC: AI deflation-ஆல sector earnings growth ~2–3%-க்கு குறைஞ்சது; FY27 கஷ்டமான வருஷம்.</li></ul>
+</section>
+
+<!-- 5 VALUATIONS -->
+<section class="pane" id="val" data-label-en="Valuations" data-label-ta="Valuations">
+  <h2><span class="en">How stretched after the run?</span><span class="ta">இவ்ளோ ஏறின பிறகு எவ்ளோ stretch?</span></h2>
+  <div class="tbl"><table>
+    <tr><th>Stock</th><th class="num">Price 21 Oct</th><th class="num">Oct %</th><th class="num">P/E</th><th class="num">ROE</th><th class="num">Div yld</th><th class="num">RSI</th><th>Jefferies</th></tr>
+    <tr><td>TCS</td><td class="num">₹2,518</td><td class="num up">+23%</td><td class="num">17.2</td><td class="num">43.4%</td><td class="num">4.5%</td><td class="num down">88</td><td>Underperform ₹2,125</td></tr>
+    <tr><td>Infosys</td><td class="num">₹1,166</td><td class="num up">+17%</td><td class="num">15.1</td><td class="num">33.2%</td><td class="num">4.2%</td><td class="num down">72</td><td>Hold ₹1,160</td></tr>
+    <tr><td>HCLTech</td><td class="num">₹1,410</td><td class="num up">+16%</td><td class="num">20.4</td><td class="num">24.1%</td><td class="num">3.9%</td><td class="num down">79</td><td>—</td></tr>
+    <tr><td>Wipro</td><td class="num">₹189</td><td class="num up">+19%</td><td class="num">13.6</td><td class="num">16.7%</td><td class="num">6.4%</td><td class="num">—</td><td>—</td></tr>
+    <tr><td>Tech Mahindra</td><td class="num">₹1,831</td><td class="num up">+20%</td><td class="num">31.3</td><td class="num">18.6%</td><td class="num">2.9%</td><td class="num">—</td><td>—</td></tr>
+  </table></div>
+  <p class="small"><span class="en">Industry P/E ~17.5. RSI above 70 = short-term overbought.</span><span class="ta">Industry P/E ~17.5. RSI 70-க்கு மேல = short-term overbought.</span></p>
+  <ul class="en"><li>TCS trades ~18% above Jefferies' target; Infosys right at it.</li><li>Jefferies: today's prices still imply growth 2–4 pts below the last decade — so not expensive on long-term view, but not cheap after October either.</li><li>Wipro and Infosys sit below industry P/E; TechM's P/E is high on recovering margins.</li></ul>
+  <ul class="ta"><li>TCS, Jefferies target-ஐ விட ~18% மேலே; Infosys சரியா target-ல.</li><li>Jefferies: இப்போதைய price, கடந்த 10 வருஷத்தை விட 2–4 pts குறைவான growth-ஐ தான் நினைக்குது — long term-ல costly இல்லை, ஆனா October-க்கு பிறகு cheap-உம் இல்லை.</li><li>Wipro, Infosys industry P/E-க்கு கீழே; TechM P/E margin recovery-ஆல அதிகம்.</li></ul>
+</section>
+
+<!-- 6 MARKET -->
+<section class="pane" id="mkt" data-label-en="Reliance & market" data-label-ta="Reliance & market">
+  <h2><span class="en">Market down, IT up — the seesaw</span><span class="ta">Market இறங்குது, IT ஏறுது — seesaw</span></h2>
+  <div class="picture">
+    <div class="tag"><span class="en">Picture it</span><span class="ta">இப்படி யோசிங்க</span></div>
+    <svg viewBox="0 0 640 190" width="100%" role="img" aria-label="Seesaw: Reliance and Jio IPO side down, IT side up">
+      <polygon points="320,170 300,190 340,190" fill="#141414"/>
+      <line x1="90" y1="105" x2="550" y2="165" stroke="#141414" stroke-width="6" transform="rotate(0)"/>
+      <rect x="440" y="120" width="150" height="40" rx="8" fill="#FCEFEE" stroke="#C2312A" stroke-width="2"/>
+      <text x="515" y="145" text-anchor="middle" font-size="13" font-weight="800">Reliance · Jio IPO</text>
+      <rect x="40" y="58" width="150" height="40" rx="8" fill="#EEF8F1" stroke="#17803F" stroke-width="2"/>
+      <text x="115" y="83" text-anchor="middle" font-size="13" font-weight="800">IT stocks ▲</text>
+      <text x="320" y="28" text-anchor="middle" font-size="13" font-weight="800">21 Oct: Nifty IT +2.5% · Nifty 50 −0.7% · Bank Nifty −1.25%</text>
+    </svg>
+  </div>
+  <div class="grid" style="margin-top:12px">
+    <div class="card"><b><span class="en">What is weighing on the market</span><span class="ta">Market-ஐ இழுக்கிறது என்ன</span></b>
+      <ul class="en"><li>Reliance −26% in 2026; ₹1,184.5 on 22 Oct, near 52-wk low.</li><li>Jio IPO (₹28,755–30,213 cr, 21–23 Oct) pulls cash from secondary market.</li><li>Holding-company discount worry on RIL.</li><li>FII selling, Brent ~$110, high US yields.</li></ul>
+      <ul class="ta"><li>Reliance 2026-ல −26%; 22 Oct ₹1,184.5, 52-வார low பக்கம்.</li><li>Jio IPO (₹28,755–30,213 கோடி, 21–23 Oct) secondary market-லிருந்து பணம் இழுக்குது.</li><li>RIL-க்கு holding company discount பயம்.</li><li>FII selling, Brent ~$110, US yields அதிகம்.</li></ul></div>
+    <div class="card"><b><span class="en">Why IT gains from this</span><span class="ta">இதுல IT-க்கு ஏன் லாபம்</span></b>
+      <ul class="en"><li>Earnings in dollars — not tied to crude or Jio.</li><li>Already de-rated, so less downside fear.</li><li>Money leaving Reliance/banks needs a large-cap home.</li></ul>
+      <ul class="ta"><li>Dollar-ல வருமானம் — crude, Jio-க்கு சம்பந்தம் இல்லை.</li><li>ஏற்கனவே de-rate ஆயிடுச்சு — கீழே போற பயம் குறைவு.</li><li>Reliance/bank-லிருந்து போற பணத்துக்கு large-cap இடம் வேணும்.</li></ul></div>
+    <div class="card"><b><span class="en">One catch: the rupee</span><span class="ta">ஒரு சிக்கல்: rupee</span></b>
+      <ul class="en"><li>Rupee firmed from ~96.7 (8 Oct) to ~94.8 (21 Oct) on Jio inflows.</li><li>A stronger rupee trims IT's rupee earnings.</li></ul>
+      <ul class="ta"><li>Jio inflows-ஆல rupee ~96.7 (8 Oct) → ~94.8 (21 Oct).</li><li>Rupee strong ஆனா IT-யோட rupee earnings குறையும்.</li></ul></div>
+  </div>
+</section>
+
+<!-- 7 TRIGGERS & CYCLE -->
+<section class="pane" id="tc" data-label-en="Triggers & Cycle" data-label-ta="Triggers & Cycle">
+  <h2><span class="en">Cycle and catalysts</span><span class="ta">Cycle-உம் catalysts-உம்</span></h2>
+  <div class="grid">
+    <div class="card">
+      <svg viewBox="0 0 260 240" width="100%" role="img" aria-label="Cycle clock: sector at P1 trough moving toward P2">
+        <circle cx="130" cy="120" r="88" fill="none" stroke="#E8E2DA" stroke-width="18"/>
+        <g font-size="11" font-weight="800" text-anchor="middle">
+          <text x="130" y="20">P1 Trough</text><text x="236" y="92">P2 Early</text><text x="210" y="226">P3 Expansion</text><text x="50" y="226">P4 Peak</text><text x="28" y="92">P5 Down</text></g>
+        <path d="M130 32 A88 88 0 0 1 214 93" fill="none" stroke="#F28C28" stroke-width="18"/>
+        <line x1="130" y1="120" x2="168" y2="44" stroke="#141414" stroke-width="4" stroke-linecap="round"/>
+        <circle cx="130" cy="120" r="7" fill="#141414"/>
+        <text x="130" y="150" text-anchor="middle" font-size="12" font-weight="800">P1 → P2?</text>
+      </svg>
+      <p class="small"><span class="en">Global-linked cycle. Bottoming: growth at lows, valuations below band, first guidance nudges up. Not yet confirmed P2 — EPS still being cut.</span><span class="ta">Global-linked cycle. அடிமட்டம்: growth குறைவு, valuation band-க்கு கீழே, guidance லேசா ஏறுது. P2 இன்னும் confirm இல்லை — EPS இன்னும் குறையுது.</span></p>
+    </div>
+    <div class="card">
+      <div class="grid" style="grid-template-columns:1fr 1fr">
+        <div><div class="small">CY · Cycle</div><div class="score">63</div></div>
+        <div><div class="small">TG · Trigger</div><div class="score">52</div></div>
+      </div>
+      <ul class="en small"><li>CY: sector P1 = 60; stock-side 66 (mature, margins rising, P/E below 5-yr band, early price uptrend).</li><li>TG: positives and negatives nearly cancel → neutral.</li><li>Gate: AI deflation is a negative trigger with impact 4 and certainty 0.7 → conviction capped at 50.</li></ul>
+      <ul class="ta small"><li>CY: sector P1 = 60; stock பக்கம் 66 (mature, margin ஏறுது, P/E band-க்கு கீழே, ஆரம்ப uptrend).</li><li>TG: positive-உம் negative-உம் கிட்டத்தட்ட சமம் → neutral.</li><li>Gate: AI deflation impact 4, certainty 0.7 → conviction 50-க்கு cap.</li></ul>
+    </div>
+  </div>
+  <h3><span class="en">Trigger table</span><span class="ta">Trigger table</span></h3>
+  <div class="tbl"><table>
+    <tr><th>Trigger</th><th>±</th><th class="num">I</th><th class="num">C</th><th class="num">W</th><th class="num">P</th><th class="num">Pts</th><th><span class="en">Watch</span><span class="ta">கவனிங்க</span></th></tr>
+    <tr><td><span class="en">Q2 beats + HCL guidance raise</span><span class="ta">Q2 beat + HCL guidance ஏற்றம்</span></td><td class="up">+</td><td class="num">3</td><td class="num">1.0</td><td class="num">1.0</td><td class="num">0.7</td><td class="num">2.10</td><td><span class="en">Infosys today</span><span class="ta">இன்னைக்கு Infosys</span></td></tr>
+    <tr><td><span class="en">AI services revenue scaling</span><span class="ta">AI services revenue வளர்ச்சி</span></td><td class="up">+</td><td class="num">3</td><td class="num">1.0</td><td class="num">0.7</td><td class="num">0.7</td><td class="num">1.47</td><td><span class="en">AI rev share each quarter</span><span class="ta">ஒவ்வொரு quarter AI rev</span></td></tr>
+    <tr><td><span class="en">Fund catch-up (under-owned)</span><span class="ta">Fund catch-up (underweight)</span></td><td class="up">+</td><td class="num">2</td><td class="num">0.7</td><td class="num">1.0</td><td class="num">0.7</td><td class="num">0.98</td><td><span class="en">Oct MF portfolios</span><span class="ta">Oct MF portfolios</span></td></tr>
+    <tr><td><span class="en">US rate cuts / discretionary revival</span><span class="ta">US rate cut / spending revival</span></td><td class="up">+</td><td class="num">3</td><td class="num">0.4</td><td class="num">0.7</td><td class="num">0.7</td><td class="num">0.59</td><td>Fed</td></tr>
+    <tr><td><span class="en">AI-led price deflation</span><span class="ta">AI-ஆல price deflation</span></td><td class="down">−</td><td class="num">4</td><td class="num">0.7</td><td class="num">0.7</td><td class="num">1.0</td><td class="num">1.96</td><td><span class="en">Deal pricing, CC growth</span><span class="ta">Deal pricing, CC growth</span></td></tr>
+    <tr><td><span class="en">Rupee strengthening</span><span class="ta">Rupee strong ஆகுறது</span></td><td class="down">−</td><td class="num">2</td><td class="num">0.7</td><td class="num">1.0</td><td class="num">1.0</td><td class="num">1.40</td><td>USD-INR</td></tr>
+    <tr><td><span class="en">US visa / PERM curbs</span><span class="ta">US visa / PERM கட்டுப்பாடு</span></td><td class="down">−</td><td class="num">2</td><td class="num">0.7</td><td class="num">0.7</td><td class="num">1.0</td><td class="num">0.98</td><td><span class="en">US Labor Dept</span><span class="ta">US Labor Dept</span></td></tr>
+  </table></div>
+  <p class="small">TG = 50 + 8 × (2.10+1.47+0.98) − 8 × (1.96+1.40+0.98) = 52</p>
+  <h3><span class="en">What would change this view</span><span class="ta">இந்த view எது மாத்தும்</span></h3>
+  <ul class="en"><li>Infosys holds or raises guidance tonight → P2 case strengthens.</li><li>EPS estimates start rising (not just P/E) → rally gets a base.</li><li>Guidance cuts or rupee below ₹93 → re-rating can unwind fast.</li></ul>
+  <ul class="ta"><li>இன்னைக்கு Infosys guidance நிறுத்தினா/ஏத்தினா → P2 வாய்ப்பு வலுக்கும்.</li><li>EPS estimate ஏற ஆரம்பிச்சா (P/E மட்டும் இல்லாம) → rally-க்கு அடித்தளம்.</li><li>Guidance cut அல்லது rupee ₹93-க்கு கீழே → re-rating வேகமா திரும்பலாம்.</li></ul>
+</section>
+
+<!-- 8 SELF-CHECK -->
+<section class="pane" id="self" data-label-en="Investor self-check" data-label-ta="Self-check">
+  <h2><span class="en">Your 5-group self-check</span><span class="ta">உங்க 5-group self-check</span></h2>
+  <div class="row" style="align-items:center"><div class="bar" style="flex:1"><i id="allBar"></i></div><b id="allCount">0 / 0</b></div>
+  <p class="small"><span class="en">This counts only your own conditions. It is not a recommendation.</span><span class="ta">இது உங்க சொந்த conditions-ஐ மட்டும் எண்ணுது. Recommendation இல்லை.</span></p>
+  <div id="groups"></div>
+  <div class="card" style="margin-top:12px">
+    <b><span class="en">5 · Your own conditions</span><span class="ta">5 · உங்க சொந்த conditions</span></b>
+    <div class="row" style="margin-top:8px"><input type="text" id="ownIn" placeholder="e.g. Wait for RSI below 60"><button class="btn" id="ownAdd" type="button"><span class="en">Add</span><span class="ta">சேர்</span></button></div>
+    <div id="ownList"></div>
+  </div>
+</section>
+
+<!-- 9 ASSIST -->
+<section class="pane" id="assistTab" data-label-en="Cauvery Assist" data-label-ta="Cauvery Assist">
+  <h2>Cauvery Assist</h2>
+  <div class="assist-box">
+    <div class="log" id="log" aria-live="polite"></div>
+    <div class="sugg" id="sugg"></div>
+    <div class="row"><input type="text" id="ask"><button class="btn on" id="askBtn" type="button"><span class="en">Ask</span><span class="ta">கேளுங்க</span></button></div>
+    <div class="row" style="margin-top:10px;align-items:center">
+      <label for="rate" class="small"><span class="en">Read-aloud speed</span><span class="ta">படிக்கும் வேகம்</span></label>
+      <input type="range" id="rate" min="0.5" max="1.5" step="0.1" value="0.8" style="flex:1;min-width:120px"><b id="rateV">0.8×</b>
+      <button class="btn" id="stopSp" type="button">■ Stop</button>
+    </div>
+    <p class="small"><span class="en">Answers are direct, from this page's data only. No buy/sell advice.</span><span class="ta">இந்த page data-லிருந்து மட்டும் நேரடி பதில். Buy/sell advice கிடையாது.</span></p>
+  </div>
+</section>
+
+<!-- 10 QUIZ -->
+<section class="pane" id="quiz" data-label-en="Cauvery Socrates" data-label-ta="Socrates quiz">
+  <h2>Cauvery Socrates</h2>
+  <div id="qz"></div>
+  <p><b id="qScore"></b></p>
+</section>
+
+<!-- 11 ANALYST VIEW -->
+<section class="pane" id="view" data-label-en="Analyst View" data-label-ta="Analyst View">
+  <h2><span class="en">CB Analyst View</span><span class="ta">CB Analyst View</span></h2>
+  <ul class="en">
+    <li><b>What moved:</b> a valuation snap-back from fear-level P/Es, helped by better-than-feared Q2 and under-ownership.</li>
+    <li><b>What didn't move:</b> earnings estimates. Growth is still 0–4% in constant currency.</li>
+    <li><b>Cycle:</b> bottoming (P1), possibly turning toward early recovery — not confirmed.</li>
+    <li><b>Top positive triggers:</b> Q2 beats with guidance support; AI revenue scaling.</li>
+    <li><b>Top risk trigger:</b> AI-led price deflation; also a stronger rupee.</li>
+    <li><b>Flows:</b> FIIs selective in IT, still selling India; MFs catching up from a record-low weight.</li>
+    <li><b>Near-term:</b> RSI 72–88 in leaders — the easy part of the move may be done; tonight's Infosys numbers are the next test.</li>
+  </ul>
+  <ul class="ta">
+    <li><b>என்ன நகர்ந்தது:</b> பயத்தால குறைஞ்ச P/E திரும்ப ஏறுச்சு; நல்ல Q2, underweight positioning உதவுச்சு.</li>
+    <li><b>என்ன நகரலை:</b> Earnings estimates. Constant currency growth இன்னும் 0–4% தான்.</li>
+    <li><b>Cycle:</b> அடிமட்டம் (P1), early recovery பக்கம் திரும்பலாம் — confirm இல்லை.</li>
+    <li><b>முக்கிய positive triggers:</b> Q2 beat + guidance support; AI revenue வளர்ச்சி.</li>
+    <li><b>முக்கிய risk:</b> AI-ஆல price deflation; rupee strong ஆகுறது.</li>
+    <li><b>Flows:</b> FII IT-ல தேர்ந்தெடுத்து வாங்குறாங்க, India-ல இன்னும் விக்கிறாங்க; MF record low-லிருந்து catch-up.</li>
+    <li><b>Near-term:</b> Leaders-ல RSI 72–88 — easy ஏற்றம் முடிஞ்சிருக்கலாம்; இன்னைக்கு Infosys numbers அடுத்த test.</li>
+  </ul>
+</section>
+</div>
+
+<button id="va" type="button"><span class="en">🎙 Voice Assist</span><span class="ta">🎙 Voice Assist</span></button>
+<div id="cb"><div class="badge" tabindex="0" role="button" aria-label="CB disclaimer">CB</div>
+  <div class="tip"><span class="en">CB Research (Cauvery Business Research) is an education platform, not SEBI-registered. Nothing here is a buy, sell or hold recommendation. Data as of 21–23 Oct 2026; verify before acting.</span><span class="ta">CB Research ஒரு education platform; SEBI-registered இல்லை. இது buy/sell/hold recommendation இல்லை. Data 21–23 Oct 2026 நிலவரம்; முடிவு எடுக்கும் முன் சரிபாருங்க.</span></div></div>
+
+<script>
+(function(){
+var lang="en";
+var panes=[].slice.call(document.querySelectorAll("section.pane"));
+var nav=document.getElementById("tabs");
+function store(k,v){try{if(v===undefined)return localStorage.getItem(k);localStorage.setItem(k,v)}catch(e){return null}}
+panes.forEach(function(p,i){
+  var b=document.createElement("button");b.className="tab";b.type="button";b.setAttribute("role","tab");b.dataset.id=p.id;
+  b.innerHTML='<span class="en">'+p.dataset.labelEn+'</span><span class="ta">'+p.dataset.labelTa+'</span>';
+  b.onclick=function(){show(p.id)};nav.appendChild(b);
+});
+function show(id){panes.forEach(function(p){p.hidden=p.id!==id});
+  [].forEach.call(nav.children,function(b){b.setAttribute("aria-selected",b.dataset.id===id)});store("cbit_tab",id)}
+var start=(location.hash||"").slice(1);if(!document.getElementById(start))start=store("cbit_tab")||"dash";
+if(!document.getElementById(start))start="dash";show(start);
+
+function setLang(l){lang=l;document.body.classList.toggle("ta",l==="ta");
+  document.getElementById("bEN").classList.toggle("on",l==="en");document.getElementById("bTA").classList.toggle("on",l==="ta");
+  document.getElementById("ask").placeholder=l==="en"?"Ask: Are FIIs coming back to IT?":"கேளுங்க: FII IT-க்கு திரும்ப வர்றாங்களா?";
+  renderSugg();renderGroups();renderQuiz();store("cbit_lang",l)}
+document.getElementById("bEN").onclick=function(){setLang("en")};
+document.getElementById("bTA").onclick=function(){setLang("ta")};
+
+/* speech */
+var rate=parseFloat(store("cbit_rate")||"0.8");var rEl=document.getElementById("rate");rEl.value=rate;
+document.getElementById("rateV").textContent=rate+"×";
+rEl.oninput=function(){rate=parseFloat(rEl.value);document.getElementById("rateV").textContent=rate+"×";store("cbit_rate",rate)};
+function speak(t){if(!("speechSynthesis" in window))return;speechSynthesis.cancel();
+  var parts=t.split(/(?<=[.?!।])\s+/);parts.forEach(function(s){if(!s.trim())return;var u=new SpeechSynthesisUtterance(s);u.lang=lang==="ta"?"ta-IN":"en-IN";u.rate=rate;
+  var v=speechSynthesis.getVoices().filter(function(x){return x.lang===u.lang})[0];if(v)u.voice=v;speechSynthesis.speak(u)})}
+document.getElementById("stopSp").onclick=function(){try{speechSynthesis.cancel()}catch(e){}};
+document.getElementById("readTab").onclick=function(){var p=panes.filter(function(x){return !x.hidden})[0];
+  var txt=[].map.call(p.querySelectorAll(lang==="ta"?".ta":".en"),function(e){return e.textContent}).join(". ");speak(txt.replace(/\s+/g," "))};
+document.getElementById("va").onclick=function(){show("assistTab");document.getElementById("ask").focus()};
+var cb=document.getElementById("cb");cb.querySelector(".badge").onclick=function(){cb.classList.toggle("open")};
+
+/* assist */
+var KB=[
+ {k:["buy","sell","hold","invest now","should i","வாங்கலாமா","விக்கலாமா","வாங்க"],en:"I can't give buy or sell advice — CB Research is not SEBI-registered. Use the self-check tab to test your own conditions.",ta:"Buy/sell advice சொல்ல முடியாது — CB Research SEBI-registered இல்லை. Self-check tab-ல உங்க conditions-ஐ சரிபாருங்க.",tab:"self"},
+ {k:["why","reason","rally","rising","ஏன்","காரணம்","ஏறுது"],en:"Mainly a P/E re-rating: Q2 was better than feared, AI fear cooled and funds were under-owned. Earnings estimates did not rise.",ta:"முக்கியமா P/E re-rating: Q2 பயந்ததை விட நல்லா இருந்துச்சு, AI பயம் குறைஞ்சது, funds underweight. Earnings estimate ஏறலை.",tab:"why"},
+ {k:["fii","foreign","fpi","வெளிநாட்டு","எஃப்ஐஐ"],en:"Selectively, yes. FPIs bought ₹6,463 crore of IT in Jul–Sep, but are still net sellers of India overall.",ta:"தேர்ந்தெடுத்து மட்டும். Jul–Sep-ல IT-ல ₹6,463 கோடி வாங்கினாங்க, ஆனா மொத்த India-ல இன்னும் net seller.",tab:"flows"},
+ {k:["dii","mutual","mf","domestic","டிஐஐ","மியூச்சுவல்"],en:"Not alone. Mutual funds had IT at a record-low 5.3% weight in September and are only now catching up.",ta:"அவங்க மட்டும் இல்லை. Sep-ல MF-கள் IT weight record low 5.3%; இப்போ தான் catch-up பண்றாங்க.",tab:"flows"},
+ {k:["valuation","cheap","p/e","pe","expensive","வேல்யூ","மலிவு","costly"],en:"Sector forward P/E is about 18x versus a 23x five-year average, but after October's rise leaders look short-term overbought.",ta:"Sector forward P/E ~18x, 5 வருஷ சராசரி 23x. ஆனா October ஏற்றத்துக்கு பிறகு leaders short-term overbought.",tab:"val"},
+ {k:["material","change","fundamental","மாற்றம்","மெட்டீரியல்"],en:"Small but real changes: HCLTech raised its guidance floor, AI revenue is visible and the visa scare eased. Growth is still low single digit.",ta:"சின்ன, உண்மையான மாற்றங்கள்: HCLTech guidance floor ஏத்தியது, AI revenue தெரியுது, visa பயம் குறைஞ்சது. Growth இன்னும் low single digit.",tab:"earn"},
+ {k:["reliance","jio","market down","ரிலையன்ஸ்","ஜியோ"],en:"Reliance is down about 26% this year and the Jio IPO is pulling about ₹30,000 crore, so money rotated into IT as a dollar-earning shelter.",ta:"Reliance இந்த வருஷம் ~26% இறங்கியிருக்கு, Jio IPO ~₹30,000 கோடி இழுக்குது; அதனால பணம் dollar-earning IT-க்கு போச்சு.",tab:"mkt"},
+ {k:["tcs","டிசிஎஸ்"],en:"TCS rose 23% in October, the most among large caps. Profit grew 14.9% to ₹13,884 crore, but RSI is 88 and it trades above Jefferies' target.",ta:"TCS October-ல 23% ஏறியது — large cap-ல அதிகம். Profit 14.9% ஏறி ₹13,884 கோடி; ஆனா RSI 88, Jefferies target-க்கு மேலே.",tab:"val"},
+ {k:["hcl","ஹெச்சிஎல்"],en:"HCLTech profit rose 21.2% and it raised its guidance floor to 2.5%; AI revenue hit $219 million, up 78%.",ta:"HCLTech profit 21.2% ஏறியது, guidance floor 2.5%-க்கு ஏறியது; AI revenue $219 million, +78%.",tab:"earn"},
+ {k:["infosys","infy","இன்ஃபோசிஸ்"],en:"Infosys reports today, 23 October. Watch whether its 1.5–3% FY27 guidance holds.",ta:"Infosys results இன்னைக்கு, 23 October. FY27 guidance 1.5–3% நிக்குமா பாருங்க.",tab:"earn"},
+ {k:["wipro","விப்ரோ"],en:"Wipro's IT services revenue was flat in constant currency; margin improved to 16.5%. It has the highest dividend yield, 6.4%.",ta:"Wipro IT services revenue constant currency-ல flat; margin 16.5%-க்கு ஏறியது. Dividend yield அதிகம் — 6.4%.",tab:"earn"},
+ {k:["tech mahindra","techm","டெக் மஹிந்திரா"],en:"Tech Mahindra profit rose 32.7% with a 12th straight quarter of margin gains, but its P/E of 31 is the highest of the five.",ta:"Tech Mahindra profit 32.7% ஏறியது, தொடர்ந்து 12-வது quarter margin ஏற்றம்; ஆனா P/E 31 — ஐந்துல அதிகம்.",tab:"earn"},
+ {k:["risk","danger","fall","ரிஸ்க்","ஆபத்து"],en:"The biggest risk is AI-led price deflation; a stronger rupee and overbought RSI add short-term risk.",ta:"பெரிய risk AI-ஆல price deflation; rupee strong ஆகுறதும், overbought RSI-உம் short-term risk.",tab:"tc"},
+ {k:["cycle","trigger","சைக்கிள்","ட்ரிகர்"],en:"Cycle score is 63 and trigger score 52: the sector is bottoming, with positives and negatives roughly balanced.",ta:"Cycle score 63, trigger score 52: sector அடிமட்டத்துல, positive-உம் negative-உம் கிட்டத்தட்ட சமம்.",tab:"tc"},
+ {k:["rupee","dollar","ரூபாய்","டாலர்"],en:"The rupee firmed from about 96.7 to 94.8 per dollar in October, which trims IT's rupee earnings slightly.",ta:"October-ல rupee ~96.7-லிருந்து 94.8-க்கு strong ஆச்சு; IT rupee earnings லேசா குறையும்.",tab:"mkt"},
+ {k:["ai","openai","ஏஐ"],en:"AI fear cooled after OpenAI's run-rate came in near $50 billion versus about $70 billion signalled, but AI still pushes prices down.",ta:"OpenAI run-rate ~$50 billion தான் (சொன்னது ~$70 billion) — AI பயம் குறைஞ்சது; ஆனா AI இன்னும் price-ஐ குறைக்குது.",tab:"why"}
+];
+var SUG=[["Why are IT stocks rising?","IT ஏன் ஏறுது?"],["Are FIIs coming back?","FII திரும்ப வர்றாங்களா?"],["Are DIIs propping it up?","DII தாங்குறாங்களா?"],["Is there a material change?","Material change இருக்கா?"],["Why is the market down?","Reliance ஏன் இறங்குது?"],["Should I buy TCS?","TCS வாங்கலாமா?"]];
+var log=document.getElementById("log");
+function add(t,who,tab){var d=document.createElement("div");d.className="msg "+who;d.textContent=t;
+  if(tab){var b=document.createElement("button");b.className="btn";b.style.cssText="display:block;margin-top:6px;padding:3px 8px;font-size:12px";b.type="button";
+   b.textContent=lang==="ta"?"Related tab திறங்க →":"Open related tab →";b.onclick=function(){show(tab)};d.appendChild(b)}
+  log.appendChild(d);log.scrollTop=log.scrollHeight}
+function answer(q){var s=q.toLowerCase();add(q,"u");
+  var hit=KB.filter(function(e){return e.k.some(function(k){return s.indexOf(k)>-1})})[0];
+  if(!hit){var t=lang==="ta"?"இந்த page-ல அதுக்கு data இல்லை. FII, DII, valuation, Reliance, TCS, HCL, risk பத்தி கேளுங்க.":"I don't have data for that on this page. Try FII, DII, valuation, Reliance, TCS, HCL or risk.";add(t,"b");speak(t);return}
+  var t2=hit[lang];add(t2,"b",hit.tab);speak(t2)}
+function renderSugg(){var s=document.getElementById("sugg");s.innerHTML="";SUG.forEach(function(x){var b=document.createElement("button");b.type="button";b.textContent=lang==="ta"?x[1]:x[0];b.onclick=function(){answer(b.textContent)};s.appendChild(b)})}
+document.getElementById("askBtn").onclick=function(){var i=document.getElementById("ask");if(i.value.trim()){answer(i.value.trim());i.value=""}};
+document.getElementById("ask").onkeydown=function(e){if(e.key==="Enter")document.getElementById("askBtn").click()};
+add("Vanakam! Ask me why IT is rising, FII/DII flows, valuations or Reliance. வணக்கம்! கேளுங்க.","b");
+
+/* self-check */
+var G=[
+ {t:["1 · About the stock / sector move","1 · Stock / sector நகர்வு பத்தி"],i:[
+  ["I know how much it has already run","ஏற்கனவே எவ்ளோ ஏறிருக்குன்னு தெரியும்","Nifty IT +17% in Oct; TCS +23%, TechM +20%, Wipro +19%"],
+  ["I know whether price or earnings drove it","Price-ஆ earnings-ஆ — எது ஏத்துச்சுன்னு தெரியும","P/E re-rating; consensus EPS cut 3–5%"],
+  ["I checked my entry vs short-term heat","என் entry vs short-term heat பாத்தேன்","RSI: TCS 88, HCL 79, Infosys 72"]]},
+ {t:["2 · Problems investors face","2 · Investors-க்கு வர்ற சிக்கல்கள்"],i:[
+  ["I understand how AI changes IT pricing","AI எப்படி IT pricing-ஐ மாத்துதுன்னு புரியும்","HSBC: earnings growth slowed to ~2–3% on AI deflation"],
+  ["I know how the rupee affects profits","Rupee profit-ஐ எப்படி பாதிக்கும்னு தெரியும","Rupee ~96.7 → ~94.8 in Oct"],
+  ["I know the company's growth rate","கம்பெனி growth rate தெரியும","CC growth: HCL 2.6%, Wipro 0.6%; Infosys FY27 guide 1.5–3%"]]},
+ {t:["3 · Solutions — what I did","3 · தீர்வு — நான் என்ன பண்ணினேன்"],i:[
+  ["I read the Q2 release and guidance","Q2 release, guidance படிச்சேன்","HCL 2.5–4%; Infosys results 23 Oct"],
+  ["I compared with a peer","ஒரு peer-ஓட compare பண்ணினேன்","P/E: Wipro 13.6, Infosys 15.1, TCS 17.2, HCL 20.4, TechM 31.3"],
+  ["I kept the amount small and fixed a review date","Amount சின்னதா, review date fix பண்ணினேன்","Next check: Q3 results, Jan 2027"]]},
+ {t:["4 · Institutions' and analysts' view","4 · Institutions, analysts view"],i:[
+  ["I checked FII stake trend","FII stake trend பாத்தேன்","Infosys 27.09→27.44%; Wipro 8.85→9.46%; TCS marginal cut"],
+  ["I checked mutual fund positioning","MF positioning பாத்தேன்","MF IT weight 5.3% (Sep) — record low"],
+  ["I read independent analyst views","Independent analyst views படிச்சேன்","Jefferies: TCS Underperform ₹2,125; HSBC FY27 toughest; Axis MF, PL underweight"],
+  ["I noted CB cycle and trigger view","CB cycle, trigger view கவனிச்சேன்","CY 63 · TG 52 · Sector P1 bottoming"]]}
+];
+var done={};try{done=JSON.parse(store("cbit_chk")||"{}")||{}}catch(e){done={}}
+var own=[];try{own=JSON.parse(store("cbit_own")||"[]")||[]}catch(e){own=[]}
+function save(){store("cbit_chk",JSON.stringify(done));store("cbit_own",JSON.stringify(own))}
+function renderGroups(){var w=document.getElementById("groups");w.innerHTML="";var tot=0,dn=0;
+  G.forEach(function(g,gi){var c=document.createElement("div");c.className="card";c.style.marginTop="12px";var n=0;
+   var h='<b>'+g.t[lang==="ta"?1:0]+'</b> <span class="small" id="gc'+gi+'"></span>';
+   g.i.forEach(function(it,ii){var id="c"+gi+"_"+ii;if(done[id])n++;
+    h+='<label class="check" for="'+id+'"><input type="checkbox" id="'+id+'"'+(done[id]?" checked":"")+'><span>'+it[lang==="ta"?1:0]+'<div class="d">Data: '+it[2]+'</div></span></label>'});
+   c.innerHTML=h;w.appendChild(c);c.querySelector("#gc"+gi).textContent=n+" / "+g.i.length;tot+=g.i.length;dn+=n});
+  var ol=document.getElementById("ownList");ol.innerHTML="";
+  own.forEach(function(o,k){var d=document.createElement("div");d.className="check";
+   d.innerHTML='<input type="checkbox" id="own'+k+'"'+(o.d?" checked":"")+'><span style="flex:1"></span><button class="btn" type="button" style="padding:2px 8px">✕</button>';
+   d.querySelector("span").textContent=o.t;d.querySelector("input").onchange=function(e){o.d=e.target.checked;save();renderGroups()};
+   d.querySelector("button").onclick=function(){own.splice(k,1);save();renderGroups()};ol.appendChild(d);tot++;if(o.d)dn++});
+  document.getElementById("allCount").textContent=dn+" / "+tot;document.getElementById("allBar").style.width=(tot?dn/tot*100:0)+"%";
+  [].forEach.call(w.querySelectorAll("input"),function(x){x.onchange=function(){done[x.id]=x.checked;save();renderGroups()}})}
+document.getElementById("ownAdd").onclick=function(){var i=document.getElementById("ownIn");if(i.value.trim()){own.push({t:i.value.trim(),d:false});i.value="";save();renderGroups()}};
+
+/* quiz */
+var Q=[
+ {q:["What mainly drove October's IT rally?","October IT ஏற்றத்துக்கு முக்கிய காரணம்?"],o:[["Big earnings upgrades","பெரிய earnings upgrade"],["P/E re-rating from low levels","Low level-லிருந்து P/E re-rating"],["Index inclusion","Index inclusion"]],a:1,e:["Jefferies: multiples expanded; EPS was actually cut 3–5%.","Jefferies: multiple விரிஞ்சது; EPS உண்மையில 3–5% குறைஞ்சது."]},
+ {q:["MF weight in IT in Sep 2026 was…","Sep 2026-ல MF IT weight…"],o:[["13.4%","13.4%"],["7.6%","7.6%"],["5.3%, a record low","5.3%, record low"]],a:2,e:["Under-owned sectors move fast when buying returns.","Underweight sector-ல வாங்குதல் வந்தா price வேகமா நகரும்."]},
+ {q:["Why can a stronger rupee hurt IT?","Rupee strong ஆனா IT-க்கு ஏன் பாதிப்பு?"],o:[["Dollar revenue converts to fewer rupees","Dollar revenue குறைவான rupee-ஆ மாறும்"],["It raises US visa fees","US visa fee ஏறும்"],["It cuts dividends by law","சட்டப்படி dividend குறையும்"]],a:0,e:["IT earns in dollars and reports in rupees.","IT dollar-ல சம்பாதிச்சு rupee-ல report பண்ணும்."]},
+ {q:["Which cycle phase fits IT now?","IT இப்போ எந்த cycle phase?"],o:[["P4 Peak","P4 Peak"],["P1 Trough, maybe turning","P1 Trough, திரும்பலாம்"],["P3 Expansion","P3 Expansion"]],a:1,e:["Growth at lows, valuations below band, first guidance nudges up.","Growth குறைவு, valuation band-க்கு கீழே, guidance லேசா ஏறுது."]}
+];
+var picks={};
+function renderQuiz(){var w=document.getElementById("qz");w.innerHTML="";var sc=0;var L=lang==="ta"?1:0;
+  Q.forEach(function(x,i){var c=document.createElement("div");c.className="card";c.style.marginBottom="10px";
+   c.innerHTML="<b>"+(i+1)+". "+x.q[L]+"</b>";
+   x.o.forEach(function(o,j){var b=document.createElement("button");b.className="opt";b.type="button";b.textContent=o[L];
+    if(picks[i]!==undefined){if(j===x.a)b.classList.add("ok");else if(j===picks[i])b.classList.add("no")}
+    b.onclick=function(){if(picks[i]===undefined){picks[i]=j;renderQuiz()}};c.appendChild(b)});
+   if(picks[i]!==undefined){var p=document.createElement("div");p.className="small";p.textContent=(picks[i]===x.a?"✓ ":"✗ ")+x.e[L];c.appendChild(p);if(picks[i]===x.a)sc++}
+   w.appendChild(c)});
+  var n=Object.keys(picks).length;document.getElementById("qScore").textContent=n?(lang==="ta"?"Score: ":"Score: ")+sc+" / "+Q.length:""}
+
+setLang(store("cbit_lang")==="ta"?"ta":"en");
+})();
+</script>
