@@ -1,0 +1,726 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>JSW Steel Q2FY27</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<style>
+:root{--bg:#ffffff;--panel:#f7f9fc;--ink:#1d2433;--mute:#5b6478;--line:#e3e8f0;--or:#f07c1a;--bl:#1f5fbf;--gr:#1e9e5a;--am:#e0a100;--rd:#d64545;--pu:#7a4fd0;--tl:#0f9aa8}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--ink);font-family:"Segoe UI",Roboto,"Noto Sans Tamil",Arial,sans-serif;font-size:15px;line-height:1.5}
+body::before{content:"CB Research";position:fixed;top:45%;left:50%;transform:translate(-50%,-50%) rotate(-25deg);font-size:110px;font-weight:800;color:rgba(240,124,26,.045);pointer-events:none;z-index:0;white-space:nowrap}
+body.lang-ta .en{display:none!important}
+body:not(.lang-ta) .ta{display:none!important}
+header{position:sticky;top:0;z-index:20;background:#fff;border-bottom:2px solid var(--or);padding:10px 16px}
+.hrow{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.brand{font-weight:800;font-size:19px}.brand small{display:block;font-weight:500;color:var(--mute);font-size:12.5px}
+.langbtn{border:1.5px solid var(--or);background:#fff;color:var(--or);border-radius:20px;padding:5px 14px;font-weight:700;cursor:pointer}
+.langbtn.on{background:var(--or);color:#fff}
+nav{display:flex;gap:6px;overflow-x:auto;padding:8px 16px;background:#fff;border-bottom:1px solid var(--line);position:sticky;top:62px;z-index:19;scrollbar-width:thin}
+nav button{flex:0 0 auto;border:1px solid var(--line);background:var(--panel);border-radius:18px;padding:6px 12px;font-size:13px;cursor:pointer;color:var(--ink)}
+nav button.act{background:var(--bl);color:#fff;border-color:var(--bl)}
+main{position:relative;z-index:1;max-width:1180px;margin:0 auto;padding:16px}
+section.tab{display:none}section.tab.act{display:block;animation:fd .35s}
+@keyframes fd{from{opacity:0;transform:translateY(6px)}to{opacity:1}}
+h2{font-size:21px;margin:6px 0 12px;color:var(--bl)}h3{font-size:16.5px;margin:18px 0 8px}
+.card{background:#fff;border:1px solid var(--line);border-radius:12px;padding:14px;margin:10px 0;box-shadow:0 1px 3px rgba(20,30,60,.05)}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}
+.kpi{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:10px 12px}
+.kpi b{display:block;font-size:20px}.kpi span{font-size:12.5px;color:var(--mute)}
+.up{color:var(--gr);font-weight:700}.dn{color:var(--rd);font-weight:700}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media(max-width:780px){.grid2{grid-template-columns:1fr}}
+.tw{overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-size:13.5px;min-width:560px}
+th,td{border-bottom:1px solid var(--line);padding:7px 8px;text-align:left;vertical-align:top}
+th{background:#eef3fb;font-weight:700}
+td.n,th.n{text-align:right;white-space:nowrap}
+tr.cat td{background:#fff4ea;color:#b25a0c;font-weight:800;letter-spacing:.2px}
+.chip{display:inline-block;padding:3px 10px;border-radius:14px;font-size:12.5px;font-weight:700;margin:2px 4px 2px 0}
+.c-g{background:#e4f6ec;color:var(--gr)}.c-a{background:#fff4d6;color:#a07300}.c-r{background:#fde7e7;color:var(--rd)}.c-b{background:#e6eefc;color:var(--bl)}.c-o{background:#fff0e2;color:#c05e08}
+.note{font-size:12.5px;color:var(--mute)}
+.dag{color:var(--pu);font-weight:700}
+.chartbox{position:relative;overflow-x:auto}.chartbox .in{min-width:640px;height:320px}
+.why{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:10px}
+.why .w{border-left:5px solid var(--or);background:var(--panel);border-radius:10px;padding:10px 12px}
+.why .w h4{margin:0 0 4px;font-size:15px}
+.svgwrap{overflow-x:auto;border:1px solid var(--line);border-radius:12px;background:#fff}
+.svgwrap svg{min-width:900px;display:block}
+.bm-box{cursor:pointer;transition:opacity .2s}.bm-box:hover{opacity:.85}
+.bm-box.sel rect{stroke:#111;stroke-width:3}
+#bmCard,#pillarCards .pc.hl{box-shadow:0 0 0 3px var(--or)}
+.pc{border-left:6px solid #ccc}
+.flowtxt{font-size:12px}
+.slider{display:grid;grid-template-columns:160px 1fr 60px;gap:8px;align-items:center;margin:6px 0}
+.slider input{width:100%}
+.out{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px;margin-top:8px}
+.tl{display:flex;gap:0;overflow-x:auto;padding:12px 0}
+.tl .ev{flex:0 0 170px;border-top:4px solid var(--bl);padding:8px 10px;position:relative;font-size:13px}
+.tl .ev::before{content:"";position:absolute;top:-9px;left:10px;width:14px;height:14px;border-radius:50%;background:var(--bl)}
+.tl .ev.neg{border-top-color:var(--rd)}.tl .ev.neg::before{background:var(--rd)}
+.tl .ev b{display:block}
+.swot{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+@media(max-width:700px){.swot{grid-template-columns:1fr}}
+.swot div{border-radius:12px;padding:12px}.swot ul{margin:6px 0 0 18px;padding:0}
+.s1{background:#e9f7ef}.s2{background:#fdeeee}.s3{background:#e9f0fd}.s4{background:#fff6e5}
+.prog{height:10px;background:#eef1f6;border-radius:6px;overflow:hidden;margin:4px 0 8px}.prog i{display:block;height:100%;background:var(--gr);width:0;transition:width .4s}
+.sc-item{display:flex;gap:8px;align-items:flex-start;padding:6px 0;border-bottom:1px dashed var(--line)}
+.sc-item small{display:block;color:var(--mute)}
+.btn{border:none;background:var(--bl);color:#fff;border-radius:8px;padding:7px 12px;cursor:pointer;font-weight:600;margin:3px}
+.btn.o{background:var(--or)}.btn.g{background:#eef1f6;color:var(--ink)}
+.q{margin:10px 0;padding:10px;border:1px solid var(--line);border-radius:10px}
+.q label{display:block;padding:4px 6px;border-radius:6px;cursor:pointer}
+.q label.ok{background:#e4f6ec}.q label.no{background:#fde7e7}
+/* CB badge & assist */
+#cbBadge{position:fixed;right:16px;bottom:16px;z-index:50;width:56px;height:56px;border-radius:50%;background:var(--or);color:#fff;font-weight:900;font-size:21px;display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 3px 10px rgba(240,124,26,.45);animation:blink 2.2s infinite}
+@keyframes blink{0%,100%{box-shadow:0 0 0 0 rgba(240,124,26,.55)}50%{box-shadow:0 0 0 12px rgba(240,124,26,0)}}
+#disc{display:none;position:fixed;right:16px;bottom:82px;z-index:51;max-width:330px;background:#fff;border:2px solid var(--or);border-radius:12px;padding:12px;font-size:13px;box-shadow:0 6px 20px rgba(0,0,0,.15)}
+#asBtn{position:fixed;right:84px;bottom:22px;z-index:50;background:var(--bl);color:#fff;border:none;border-radius:22px;padding:10px 14px;font-weight:700;cursor:pointer;box-shadow:0 3px 10px rgba(31,95,191,.35)}
+#asPanel{display:none;position:fixed;right:16px;bottom:84px;z-index:52;width:min(370px,calc(100vw - 32px));max-height:70vh;background:#fff;border:2px solid var(--bl);border-radius:14px;box-shadow:0 8px 24px rgba(0,0,0,.18);flex-direction:column}
+#asLog{flex:1;overflow-y:auto;padding:10px;font-size:13.5px}
+#asLog .u{background:#e6eefc;border-radius:10px;padding:6px 9px;margin:6px 0 6px 30px}
+#asLog .b{background:#f4f6fa;border-radius:10px;padding:6px 9px;margin:6px 30px 6px 0}
+#asIn{display:flex;gap:6px;padding:8px;border-top:1px solid var(--line)}
+#asIn input{flex:1;border:1px solid var(--line);border-radius:8px;padding:7px}
+#asSug{padding:0 8px 8px;display:flex;flex-wrap:wrap;gap:4px}
+#asSug button{font-size:11.5px;border:1px solid var(--line);background:var(--panel);border-radius:12px;padding:3px 8px;cursor:pointer}
+.mic.on{background:var(--rd)!important}
+footer{height:90px}
+</style>
+</head>
+<body>
+<header>
+ <div class="hrow">
+  <div class="brand">JSW Steel Ltd · Q2FY27 <span class="en">Business &amp; Investment Analysis</span><span class="ta">வணிகம் &amp; முதலீட்டு அலசல்</span>
+   <small class="en">Quarter ended 30 Sep 2026 · Results declared 23 Oct 2026 · NSE: JSWSTEEL · BSE: 500228 · ₹ crore unless stated</small>
+   <small class="ta">30 செப் 2026-ல முடிஞ்ச காலாண்டு · முடிவுகள் 23 அக் 2026 · NSE: JSWSTEEL · BSE: 500228 · தொகைகள் ₹ கோடியில</small>
+  </div>
+  <div><button class="langbtn on" id="bEN" onclick="setLang('en')">English</button> <button class="langbtn" id="bTA" onclick="setLang('ta')">தமிழ்</button></div>
+ </div>
+</header>
+<nav id="nav"></nav>
+<main>
+
+<!-- ============ OVERVIEW ============ -->
+<section class="tab act" id="t-ov" data-en="Overview" data-ta="மேலோட்டம்">
+<h2><span class="en">Overview — record volumes, profit up ~3.3x</span><span class="ta">மேலோட்டம் — சாதனை அளவு விற்பனை, லாபம் ~3.3 மடங்கு</span></h2>
+<div class="kpis">
+ <div class="kpi"><span class="en">Revenue from operations</span><span class="ta">செயல்பாட்டு வருவாய்</span><b>₹54,486</b><span class="up">+20.7% YoY · +15.0% QoQ</span></div>
+ <div class="kpi"><span class="en">Adjusted EBITDA</span><span class="ta">சரிசெய்த EBITDA</span><b>₹9,941</b><span class="up">+26.7% YoY · +6.1% QoQ</span></div>
+ <div class="kpi"><span class="en">Reported EBITDA</span><span class="ta">அறிவிச்ச EBITDA</span><b>₹10,120</b><span class="up">+42.2% YoY</span></div>
+ <div class="kpi"><span class="en">Net profit (PAT)</span><span class="ta">நிகர லாபம் (PAT)</span><b>₹5,359</b><span class="up">+225.6% YoY · +14.1% QoQ</span></div>
+ <div class="kpi"><span class="en">Steel sales</span><span class="ta">ஸ்டீல் விற்பனை</span><b>7.46 mt</b><span class="up">+13% YoY · +19% QoQ</span></div>
+ <div class="kpi"><span class="en">Sales to auto sector</span><span class="ta">ஆட்டோ துறைக்கு விற்பனை</span><b><span class="en">Record</span><span class="ta">சாதனை</span></b><span class="up">+36% YoY</span></div>
+ <div class="kpi"><span class="en">EBITDA margin (adj.)</span><span class="ta">EBITDA மார்ஜின்</span><b>18.3%</b><span>Q1FY27: 19.8%</span></div>
+ <div class="kpi"><span class="en">Net debt / EBITDA</span><span class="ta">நிகர கடன் / EBITDA</span><b>1.28x</b><span class="up">Jun-26: 1.46x</span></div>
+</div>
+<p class="note"><span class="en">YoY growth on revenue is versus reported Q2FY26 (₹45,152 cr, which still included Bhushan Power &amp; Steel). On a like-for-like basis excluding BPSL, revenue grew ~31%. Some media show PAT as ₹5,279 cr (owners' share basis); the company presentation and concall use ₹5,359 cr.</span><span class="ta">வருவாய் வளர்ச்சி, போன வருஷ Q2FY26 அறிவிப்பு (₹45,152 கோடி — அதுல Bhushan Power &amp; Steel இருந்துச்சு) கூட ஒப்பிட்டது. BPSL-ஐ தள்ளி ஒரே மாதிரி ஒப்பிட்டா வருவாய் ~31% வளர்ச்சி. சில மீடியா PAT-ஐ ₹5,279 கோடின்னு சொல்றாங்க; கம்பெனி ப்ரெசன்டேஷன் ₹5,359 கோடின்னு சொல்லுது.</span></p>
+
+<div class="grid2">
+ <div class="card">
+  <h3><span class="en">CB Six-Pillar Score</span><span class="ta">CB ஆறு தூண் மதிப்பெண்</span></h3>
+  <div class="svgwrap" style="border:none"><svg id="temple" viewBox="0 0 520 380" style="min-width:320px;width:100%"></svg></div>
+  <div><span class="chip c-b">CY 63 · <span class="en">Cycle</span><span class="ta">சுழற்சி</span></span><span class="chip c-g">TG 76 · <span class="en">Triggers</span><span class="ta">தூண்டிகள்</span></span></div>
+ </div>
+ <div class="card">
+  <h3><span class="en">The quarter in five lines</span><span class="ta">ஐந்து வரியில இந்த காலாண்டு</span></h3>
+  <ol class="en">
+   <li>Highest-ever production (7.27 mt) and sales (7.46 mt); Vijayanagar BF-3 back after upgrade to 4.5 MTPA.</li>
+   <li>Profit rose far faster than EBITDA because interest cost fell sharply after the BPSL slump sale to the JSW-JFE JV cut net debt from ₹79,153 cr (Sep-25) to ₹44,482 cr.</li>
+   <li>Mix helped: value-added &amp; special products 4.11 mt (55% of sales); auto +36%, appliances +28%, renewables +14%.</li>
+   <li>Headwinds: realisation fell ~3.6% QoQ (long products), coking coal up ~$10/t; EBITDA per tonne fell from ~₹15,000 to ~₹13,300.</li>
+   <li>Board approved new projects; capex plan raised to ₹1.48 lakh crore over 5–6 years. Stock fell 2.83% to ₹1,185.50 on the day.</li>
+  </ol>
+  <ol class="ta">
+   <li>இதுவரை இல்லாத உற்பத்தி (7.27 mt) &amp; விற்பனை (7.46 mt); விஜயநகர் BF-3 4.5 MTPA-க்கு அப்கிரேட் ஆகி திரும்ப வந்துச்சு.</li>
+   <li>EBITDA-வை விட லாபம் ரொம்ப வேகமா ஏறுச்சு — BPSL-ஐ JSW-JFE JV-க்கு மாத்தினதால நிகர கடன் ₹79,153 கோடியிலிருந்து ₹44,482 கோடிக்கு குறைஞ்சு, வட்டி செலவு நல்லா குறைஞ்சது.</li>
+   <li>பொருள் கலவை உதவுச்சு: மதிப்பு கூட்டிய &amp; ஸ்பெஷல் பொருட்கள் 4.11 mt (55%); ஆட்டோ +36%, அப்ளையன்ஸ் +28%, ரினியூவபிள்ஸ் +14%.</li>
+   <li>எதிர்காற்று: டன் விலை QoQ ~3.6% குறைஞ்சது, கோக்கிங் கோல் ~$10/t ஏறுச்சு; டன்னுக்கு EBITDA ~₹15,000-லிருந்து ~₹13,300.</li>
+   <li>புது ப்ராஜெக்ட்டுக்கு போர்டு ஒப்புதல்; கேபெக்ஸ் திட்டம் ₹1.48 லட்சம் கோடி. அன்னைக்கு ஷேர் 2.83% குறைஞ்சு ₹1,185.50.</li>
+  </ol>
+ </div>
+</div>
+<div id="pillarCards" class="grid2"></div>
+</section>
+
+<!-- ============ WHY THE SPURT ============ -->
+<section class="tab" id="t-why" data-en="Why the Spurt" data-ta="ஏன் இந்த பாய்ச்சல்">
+<h2><span class="en">Why did revenue and profit jump this quarter?</span><span class="ta">இந்த காலாண்டுல வருவாயும் லாபமும் ஏன் இவ்ளோ ஏறுச்சு?</span></h2>
+<div class="why">
+ <div class="w"><h4>① <span class="en">Volume — record tonnes</span><span class="ta">அளவு — சாதனை டன்கள்</span></h4><span class="en">Sales 7.46 mt (+13% YoY, +19% QoQ). BF-3 at Vijayanagar relit end-June after upgrade (3 → 4.5 MTPA) and reached ~90% utilisation; JVML had record output; demand recovered in the second half of the quarter after the monsoon. Domestic sales +12% vs Indian market +7%.</span><span class="ta">விற்பனை 7.46 mt (+13% YoY, +19% QoQ). விஜயநகர் BF-3 ஜூன் கடைசில திரும்ப ஆரம்பிச்சு ~90% ஓடுச்சு; JVML சாதனை உற்பத்தி; மழைக்கப்புறம் டிமாண்ட் ஏறுச்சு. உள்நாட்டு விற்பனை +12%, சந்தை வளர்ச்சி +7% தான்.</span></div>
+ <div class="w"><h4>② <span class="en">Price — higher than a year ago</span><span class="ta">விலை — போன வருஷத்தை விட அதிகம்</span></h4><span class="en">On a like-for-like basis (ex-BPSL) revenue per tonne was ~₹73,000 vs ~₹62,800 a year ago (+~16%) — safeguard protection and recovery in flat-steel prices. This is the "margin/t effect" in the YoY bridge. Versus Q1, however, realisation slipped ~3.6%.</span><span class="ta">BPSL இல்லாம ஒப்பிட்டா டன் விலை ~₹73,000, போன வருஷம் ~₹62,800 (+~16%) — சேஃப்கார்டு பாதுகாப்பு, ஃப்ளாட் ஸ்டீல் விலை மீட்சி. YoY பாலத்துல "டன் மார்ஜின் விளைவு" இதுதான். Q1-ஐ விட ~3.6% குறைவு.</span></div>
+ <div class="w"><h4>③ <span class="en">Mix — auto &amp; value-added</span><span class="ta">கலவை — ஆட்டோ &amp; மதிப்பு கூட்டியவை</span></h4><span class="en">VASP 4.11 mt (+11%). Flats +16%. Auto +36%, appliances +28%, renewables +14%, institutional +15%. Auto-grade CR/galvanised steel sells at a premium to plain HR and TMT.</span><span class="ta">VASP 4.11 mt (+11%). ஃப்ளாட்ஸ் +16%. ஆட்டோ +36%, அப்ளையன்ஸ் +28%, ரினியூவபிள்ஸ் +14%. ஆட்டோ கிரேட் CR/கால்வனைஸ்டு ஸ்டீலுக்கு சாதா HR, TMT-ஐ விட நல்ல விலை கிடைக்கும்.</span></div>
+ <div class="w"><h4>④ <span class="en">Interest cost collapse</span><span class="ta">வட்டி செலவு சரிவு</span></h4><span class="en">Net debt ₹79,153 cr (Sep-25) → ₹44,482 cr (Sep-26). Gross debt cut by more than ₹29,000 cr in H1 FY27; costly dollar debt repaid. This is why PAT (+226%) grew much faster than EBITDA (+27% on adjusted basis).</span><span class="ta">நிகர கடன் ₹79,153 கோடி (செப்-25) → ₹44,482 கோடி (செப்-26). H1-ல மொத்த கடன் ₹29,000 கோடிக்கு மேல குறைச்சாங்க; காஸ்ட்லி டாலர் கடன் அடைச்சாங்க. அதனால தான் EBITDA (+27%) விட PAT (+226%) ரொம்ப வேகமா ஏறுச்சு.</span></div>
+ <div class="w"><h4>⑤ <span class="en">Weak base last year</span><span class="ta">போன வருஷ பலவீனமான அடிப்படை</span></h4><span class="en">Q2FY26 profit was only ₹1,646 cr — buyers had deferred purchases ahead of the GST rate change. Like-for-like (ex-BPSL) Q2FY26 PAT was ₹1,662 cr.</span><span class="ta">Q2FY26 லாபம் ₹1,646 கோடி தான் — GST மாற்றத்துக்கு முன்னாடி வாங்கறவங்க வாங்கறத தள்ளிப்போட்டாங்க. BPSL இல்லாம ஒப்பிட்டா ₹1,662 கோடி.</span></div>
+ <div class="w" style="border-left-color:var(--rd)"><h4>⑥ <span class="en">What held it back</span><span class="ta">எது தடுத்துச்சு</span></h4><span class="en">Realisation fell QoQ (long-product prices fell in June–July on monsoon and Middle-East war); coking coal ~+$10/t; iron ore, zinc, tin, ferro-alloys higher. EBITDA/tonne fell ~11% QoQ. JSW-JFE JV posted a PAT loss due to a ₹276 cr stamp-duty provision.</span><span class="ta">டன் விலை QoQ குறைஞ்சது (மழை, மத்திய கிழக்கு போர்னால லாங் ப்ராடக்ட் விலை ஜூன்–ஜூலைல சரிஞ்சது); கோக்கிங் கோல் ~$10/t ஏற்றம்; இரும்புத்தாது, ஜிங்க், டின் விலையும் ஏறுச்சு. டன்னுக்கு EBITDA QoQ ~11% குறைஞ்சது. JSW-JFE JV-ல ₹276 கோடி ஸ்டாம்ப் டியூட்டி ப்ரொவிஷனால நஷ்டம்.</span></div>
+</div>
+
+<div class="grid2">
+ <div class="card"><h3><span class="en">EBITDA bridge — YoY like-for-like (₹ cr)</span><span class="ta">EBITDA பாலம் — YoY ஒரே அடிப்படை (₹ கோடி)</span></h3><div class="chartbox"><div class="in" style="min-width:420px"><canvas id="cBrY"></canvas></div></div>
+ <p class="note"><span class="en">CB derived: base = Q2FY26 adj. EBITDA ₹7,849 cr minus BPSL ₹724 cr = ₹7,125 cr on 6.62 mt (₹10,763/t). Volume effect = extra 0.84 mt × base margin; margin effect = 7.46 mt × change in EBITDA/t.</span><span class="ta">CB கணக்கு: அடிப்படை = Q2FY26 EBITDA ₹7,849 − BPSL ₹724 = ₹7,125 கோடி, 6.62 mt (₹10,763/t). அளவு விளைவு = கூடுதல் 0.84 mt × பழைய மார்ஜின்; மார்ஜின் விளைவு = 7.46 mt × டன் EBITDA மாற்றம்.</span></p></div>
+ <div class="card"><h3><span class="en">EBITDA bridge — QoQ (₹ cr)</span><span class="ta">EBITDA பாலம் — QoQ (₹ கோடி)</span></h3><div class="chartbox"><div class="in" style="min-width:420px"><canvas id="cBrQ"></canvas></div></div>
+ <p class="note"><span class="en">Volume added ₹1,815 cr, but lower spread per tonne took away ₹1,247 cr — so QoQ the jump was purely volume-led.</span><span class="ta">அளவு ₹1,815 கோடி சேர்த்துச்சு, ஆனா டன்னுக்கு ஸ்ப்ரெட் குறைஞ்சதால ₹1,247 கோடி போச்சு — QoQ ஏற்றம் முழுக்க அளவால தான்.</span></p></div>
+</div>
+<div class="card"><h3><span class="en">EBITDA per tonne vs realisation per tonne (₹/t, CB derived)</span><span class="ta">டன்னுக்கு EBITDA vs டன் விலை (₹/t, CB கணக்கு)</span></h3><div class="chartbox"><div class="in"><canvas id="cPT"></canvas></div></div>
+<p class="note"><span class="en">Realisation = consolidated revenue ÷ consolidated sales tonnes (includes non-steel revenue, so indicative). Q2FY26 and Q4FY26 include BPSL.</span><span class="ta">டன் விலை = மொத்த வருவாய் ÷ மொத்த விற்பனை டன் (ஸ்டீல் அல்லாத வருவாயும் இருக்கு, அதனால தோராயம்). Q2FY26, Q4FY26-ல BPSL இருக்கு.</span></p></div>
+<div class="card"><h3><span class="en">Why PAT grew 3.3x while EBITDA grew 1.3x</span><span class="ta">EBITDA 1.3 மடங்கு, PAT 3.3 மடங்கு — ஏன்?</span></h3>
+<p class="en">Below EBITDA, two big costs are largely fixed: depreciation and interest. When EBITDA rises and interest falls at the same time, the extra EBITDA flows almost fully to profit. Net debt fell by ~₹34,700 cr in a year — at typical borrowing costs that removes several hundred crore of interest every quarter (exact Q2 finance cost not separately reported in the material reviewed — <span class="dag">n/a</span>). This "financial leverage in reverse" is the single biggest reason the profit jump looks larger than the operating improvement.</p>
+<p class="ta">EBITDA-க்கு கீழ இரண்டு பெரிய செலவு — தேய்மானமும் வட்டியும் — பெரும்பாலும் நிலையானது. EBITDA ஏறி, வட்டி குறைஞ்சா, கூடுதல் EBITDA கிட்டத்தட்ட முழுசா லாபத்துக்கு போகும். ஒரு வருஷத்துல நிகர கடன் ~₹34,700 கோடி குறைஞ்சது — ஒவ்வொரு காலாண்டும் பல நூறு கோடி வட்டி மிச்சம் (Q2 வட்டி செலவு தனியா கிடைக்கல — <span class="dag">n/a</span>). லாப பாய்ச்சல் செயல்பாட்டு முன்னேற்றத்தை விட பெருசா தெரியறதுக்கு இதுதான் முக்கிய காரணம்.</p></div>
+</section>
+
+<!-- ============ BUSINESS MODEL ============ -->
+<section class="tab" id="t-bm" data-en="Business Model" data-ta="வணிக மாடல்">
+<h2><span class="en">Business model — from mine to customer</span><span class="ta">வணிக மாடல் — சுரங்கத்திலிருந்து வாடிக்கையாளர் வரை</span></h2>
+<p class="note"><span class="en">Tap any box to see what it means. Scroll sideways on a phone.</span><span class="ta">எந்த பெட்டியையும் தொட்டா விளக்கம் வரும். போன்ல பக்கவாட்டுல ஸ்க்ரோல் பண்ணுங்க.</span></p>
+<div class="svgwrap"><svg id="bmSvg" viewBox="0 0 1120 560"></svg></div>
+<div class="card" id="bmCard"><b id="bmT"></b><div id="bmD"></div></div>
+<p class="note"><b><span class="en">Revenue formula:</span><span class="ta">வருவாய் சூத்திரம்:</span></b> <span class="en">Revenue ≈ Sales tonnes (7.46 mt) × average realisation (~₹73,000/t) — with VASP share, domestic/export split and auto contract prices deciding the realisation.</span><span class="ta">வருவாய் ≈ விற்பனை டன் (7.46 mt) × சராசரி டன் விலை (~₹73,000/t) — VASP பங்கு, உள்நாடு/ஏற்றுமதி பிரிவு, ஆட்டோ ஒப்பந்த விலை இதையெல்லாம் வெச்சு டன் விலை முடிவாகும்.</span></p>
+<div class="card"><h3><span class="en">Revenue engine — the drivers</span><span class="ta">வருவாய் இன்ஜின் — இயக்கிகள்</span></h3><div class="tw"><table>
+<tr><th><span class="en">Driver</span><span class="ta">இயக்கி</span></th><th class="n">Q2FY27</th><th><span class="en">Direction</span><span class="ta">திசை</span></th><th><span class="en">Why it matters</span><span class="ta">ஏன் முக்கியம்</span></th></tr>
+<tr><td><span class="en">Sales volume</span><span class="ta">விற்பனை அளவு</span></td><td class="n">7.46 mt</td><td class="up">▲ +13%</td><td><span class="en">Every extra 1 mt at Q2 spread ≈ ₹1,330 cr EBITDA</span><span class="ta">கூடுதல் 1 mt ≈ ₹1,330 கோடி EBITDA</span></td></tr>
+<tr><td><span class="en">Capacity utilisation (India)</span><span class="ta">திறன் பயன்பாடு</span></td><td class="n">88%</td><td class="up">▲ ~90% in Sep</td><td><span class="en">Fixed costs spread over more tonnes</span><span class="ta">நிலை செலவு அதிக டன்ல பகிரப்படும்</span></td></tr>
+<tr><td><span class="en">VASP share</span><span class="ta">VASP பங்கு</span></td><td class="n">55%</td><td>◆</td><td><span class="en">Higher price, stickier customers</span><span class="ta">நல்ல விலை, நிலையான வாடிக்கையாளர்</span></td></tr>
+<tr><td><span class="en">Auto sales growth</span><span class="ta">ஆட்டோ விற்பனை வளர்ச்சி</span></td><td class="n">+36%</td><td class="up">▲</td><td><span class="en">Quarterly/half-yearly contract pricing; premium grades</span><span class="ta">காலாண்டு/அரையாண்டு ஒப்பந்த விலை; ப்ரீமியம் கிரேடுகள்</span></td></tr>
+<tr><td><span class="en">Domestic vs export</span><span class="ta">உள்நாடு vs ஏற்றுமதி</span></td><td class="n">87% / 13%</td><td>◆</td><td><span class="en">Domestic prices usually above export parity</span><span class="ta">உள்நாட்டு விலை பொதுவா ஏற்றுமதியை விட அதிகம்</span></td></tr>
+<tr><td><span class="en">Realisation per tonne</span><span class="ta">டன் விலை</span></td><td class="n">~₹73,000</td><td class="dn">▼ ~3.6% QoQ</td><td><span class="en">Long products fell; October hikes flow into Q3</span><span class="ta">லாங் விலை குறைஞ்சது; அக்டோபர் உயர்வு Q3-ல வரும்</span></td></tr>
+<tr><td><span class="en">Coking coal cost</span><span class="ta">கோக்கிங் கோல் செலவு</span></td><td class="n">~+$10/t</td><td class="dn">▼ +$25/t guided Q3</td><td><span class="en">Biggest single cost; mostly imported</span><span class="ta">மிகப் பெரிய செலவு; பெரும்பாலும் இறக்குமதி</span></td></tr>
+</table></div></div>
+</section>
+
+<!-- ============ SEGMENTS & SUBSIDIARIES ============ -->
+<section class="tab" id="t-seg" data-en="Segments &amp; Subsidiaries" data-ta="பிரிவுகள் &amp; துணை நிறுவனங்கள்">
+<h2><span class="en">Segments, customers and subsidiaries</span><span class="ta">பிரிவுகள், வாடிக்கையாளர்கள், துணை நிறுவனங்கள்</span></h2>
+<div class="grid2">
+ <div class="card"><h3><span class="en">Domestic sales by customer segment (FY26)</span><span class="ta">வாடிக்கையாளர் வாரியா உள்நாட்டு விற்பனை (FY26)</span></h3><div style="height:280px"><canvas id="cMix"></canvas></div>
+ <p class="note"><span class="en">Auto and Retail shares are from the company's FY26 presentation; the split between Construction &amp; Infra and Industrial is read off the chart <span class="dag">†</span>. Q2FY27 split not yet extracted.</span><span class="ta">ஆட்டோ, ரீடெயில் பங்கு கம்பெனி FY26 ப்ரெசன்டேஷன்ல இருந்து; கட்டுமானம் &amp; உள்கட்டமைப்பு / இண்டஸ்ட்ரியல் பிரிவு சார்ட்ல இருந்து படிச்சது <span class="dag">†</span>.</span></p></div>
+ <div class="card"><h3><span class="en">Q2FY27 volume split (mt)</span><span class="ta">Q2FY27 அளவு பிரிவு (mt)</span></h3><div class="chartbox"><div class="in" style="min-width:420px;height:280px"><canvas id="cVol"></canvas></div></div></div>
+</div>
+<div class="card"><h3><span class="en">Product segments</span><span class="ta">பொருள் பிரிவுகள்</span></h3><div class="tw"><table>
+<tr><th><span class="en">Segment</span><span class="ta">பிரிவு</span></th><th><span class="en">Main products</span><span class="ta">முக்கிய பொருட்கள்</span></th><th><span class="en">Q2FY27 signal</span><span class="ta">Q2FY27 நிலை</span></th><th><span class="en">Key users</span><span class="ta">முக்கிய பயனர்கள்</span></th></tr>
+<tr><td><b><span class="en">Flat products</span><span class="ta">ஃப்ளாட் பொருட்கள்</span></b></td><td>HR coil, HRPO, CRCA, CRFH</td><td class="up">+16% YoY, <span class="en">record</span><span class="ta">சாதனை</span></td><td><span class="en">Auto bodies &amp; frames, pipes, appliances, capital goods</span><span class="ta">கார் பாடி, ஃப்ரேம், பைப், அப்ளையன்ஸ்</span></td></tr>
+<tr><td><b><span class="en">Coated / value-added</span><span class="ta">கோட்டட் / மதிப்பு கூட்டியவை</span></b></td><td>Galvanised, Galvalume, colour-coated, tinplate</td><td>VASP 4.11 mt (+11%)</td><td><span class="en">Auto (rust-proof panels), roofing, appliances, packaging</span><span class="ta">ஆட்டோ, கூரை, அப்ளையன்ஸ், பேக்கேஜிங்</span></td></tr>
+<tr><td><b><span class="en">Electrical steel</span><span class="ta">எலக்ட்ரிகல் ஸ்டீல்</span></b></td><td>CRNO, CRGO (with JFE)</td><td><span class="en">Capacity being added</span><span class="ta">திறன் விரிவாக்கம்</span></td><td><span class="en">EV motors, transformers, renewables</span><span class="ta">EV மோட்டார், ட்ரான்ஸ்ஃபார்மர்</span></td></tr>
+<tr><td><b><span class="en">Long products</span><span class="ta">லாங் பொருட்கள்</span></b></td><td>TMT, wire rod, special bars &amp; rounds, rails, sections</td><td class="dn"><span class="en">Prices fell in Jun–Jul</span><span class="ta">ஜூன்–ஜூலைல விலை சரிவு</span></td><td><span class="en">Construction, auto forgings (special bars), railways</span><span class="ta">கட்டுமானம், ஆட்டோ ஃபோர்ஜிங், ரயில்வே</span></td></tr>
+<tr><td><b><span class="en">Exports</span><span class="ta">ஏற்றுமதி</span></b></td><td><span class="en">Mainly HR / semis</span><span class="ta">பெரும்பாலும் HR</span></td><td>0.98 mt · 13%</td><td><span class="en">Europe, Middle East, Asia</span><span class="ta">ஐரோப்பா, மத்திய கிழக்கு, ஆசியா</span></td></tr>
+</table></div></div>
+<div class="card"><h3><span class="en">Subsidiaries, JV and their contribution</span><span class="ta">துணை நிறுவனங்கள், JV — பங்களிப்பு</span></h3><div class="tw"><table>
+<tr><th><span class="en">Entity</span><span class="ta">நிறுவனம்</span></th><th><span class="en">Role</span><span class="ta">பங்கு</span></th><th class="n">Q2FY27</th><th><span class="en">Comment</span><span class="ta">குறிப்பு</span></th></tr>
+<tr><td><b><span class="en">India operations</span><span class="ta">இந்திய செயல்பாடுகள்</span></b></td><td><span class="en">Vijayanagar, Dolvi, Salem, JVML, coated &amp; downstream</span><span class="ta">விஜயநகர், டோல்வி, சேலம், JVML</span></td><td class="n">Rev ₹50,188 · EBITDA ₹9,636 (19.2%)</td><td><span class="en">~92% of consolidated revenue and ~97% of adj. EBITDA</span><span class="ta">மொத்த வருவாயில ~92%, EBITDA-ல ~97%</span></td></tr>
+<tr><td><b>JSW Steel USA</b></td><td><span class="en">Ohio (EAF slabs/HRC), Texas (plates &amp; pipes)</span><span class="ta">ஓஹியோ, டெக்சாஸ்</span></td><td class="n">EBITDA ~$19 mn</td><td><span class="en">Ohio vacuum-tank degasser commissioned (API grades); Texas mill shut in Sep for upgrade</span><span class="ta">ஓஹியோல புது degasser; டெக்சாஸ் மில் செப்ல அப்கிரேடுக்கு மூடல்</span></td></tr>
+<tr><td><b>JSW Steel Italy</b></td><td><span class="en">Piombino rail mill</span><span class="ta">பியோம்பினோ ரெயில் மில்</span></td><td class="n">EBITDA $7 mn</td><td><span class="en">Flat QoQ</span><span class="ta">QoQ மாற்றமில்லை</span></td></tr>
+<tr><td><b>JSW-JFE Steel (JJSL) · 50:50 JV</b></td><td><span class="en">Former BPSL steel plant, Odisha (4.5 MTPA)</span><span class="ta">முன்னாள் BPSL ஆலை, ஒடிசா (4.5 MTPA)</span></td><td class="n">Sales 0.92 mt · EBITDA ₹1,136</td><td><span class="en">PAT loss due to ₹276 cr stamp-duty provision; positive otherwise. Equity-accounted, not consolidated</span><span class="ta">₹276 கோடி ஸ்டாம்ப் டியூட்டியால நஷ்டம்; இல்லைன்னா லாபம். ஈக்விட்டி முறையில் கணக்கு</span></td></tr>
+<tr><td><b>JSW One Platforms (66%)</b></td><td><span class="en">B2B e-commerce + credit for MSMEs</span><span class="ta">MSME-க்கு B2B இ-காமர்ஸ் + கடன்</span></td><td class="n">GMV ₹6,989 (+77%)</td><td><span class="en">EBITDA positive; DRHP filed Sep 2026 for IPO — a value-unlock trigger</span><span class="ta">EBITDA லாபம்; IPO-க்கு DRHP செப் 2026-ல தாக்கல்</span></td></tr>
+</table></div>
+<p class="note"><span class="en">Overseas units together ≈ $26 mn EBITDA — small versus India's ₹9,636 cr. India is the profit engine.</span><span class="ta">வெளிநாட்டு யூனிட்டுகள் சேர்ந்து ≈ $26 மில்லியன் EBITDA தான் — இந்தியா ₹9,636 கோடி. லாபத்தோட இன்ஜின் இந்தியா தான்.</span></p></div>
+</section>
+
+<!-- ============ AUTO LINKAGE ============ -->
+<section class="tab" id="t-auto" data-en="Auto Linkage" data-ta="ஆட்டோ தொடர்பு">
+<h2><span class="en">JSW Steel as an automobile proxy</span><span class="ta">ஆட்டோமொபைல் துறையின் மறைமுக பங்கு — JSW Steel</span></h2>
+<div class="kpis">
+ <div class="kpi"><span class="en">Auto share of domestic sales, FY26</span><span class="ta">FY26 உள்நாட்டு விற்பனையில ஆட்டோ பங்கு</span><b>~14%</b><span>FY25: ~13%</span></div>
+ <div class="kpi"><span class="en">Auto share, Q2FY27 (CB est.)</span><span class="ta">Q2FY27 ஆட்டோ பங்கு (CB மதிப்பீடு)</span><b>~15–18% <span class="dag">†</span></b><span><span class="en">≈ 0.95–1.1 mt</span><span class="ta">≈ 0.95–1.1 mt</span></span></div>
+ <div class="kpi"><span class="en">JSW auto sales growth</span><span class="ta">JSW ஆட்டோ விற்பனை வளர்ச்சி</span><b class="up">+36%</b><span>Q2FY27 YoY</span></div>
+ <div class="kpi"><span class="en">Industry vehicle sales (SIAM)</span><span class="ta">வாகன விற்பனை (SIAM)</span><b class="up">+18.2%</b><span>83.88 lakh, Q2FY27</span></div>
+</div>
+<div class="card"><h3><span class="en">How much of JSW's steel goes into vehicles?</span><span class="ta">JSW ஸ்டீல்ல எவ்வளவு வாகனங்களுக்கு போகுது?</span></h3>
+<p class="en"><b>Directly:</b> about one in seven tonnes sold in India went to auto OEMs and tier-1 suppliers in FY26 (~14%). With auto sales up 36% against domestic sales up 12% this quarter, the share has likely risen to roughly 15–18% (<span class="dag">†</span> CB estimate from the FY26 base; the company has not yet published the Q2 split in the material reviewed). <b>Indirectly:</b> more steel reaches the auto chain through the industrial and retail channels — special bars to forging makers, HR to tube and wheel makers, coated sheet to component makers. That indirect share is not disclosed, so total auto exposure is higher than the direct figure.</p>
+<p class="ta"><b>நேரடியா:</b> FY26-ல இந்தியால விற்ற ஏழு டன்ல ஒரு டன் (~14%) ஆட்டோ OEM, டயர்-1 சப்ளையர்களுக்கு போச்சு. இந்த காலாண்டுல ஆட்டோ விற்பனை +36%, உள்நாட்டு விற்பனை +12% — அதனால பங்கு ~15–18% ஆகியிருக்கலாம் (<span class="dag">†</span> FY26 அடிப்படையில CB மதிப்பீடு; Q2 பிரிவு இன்னும் கிடைக்கல). <b>மறைமுகமா:</b> இண்டஸ்ட்ரியல், ரீடெயில் சேனல் மூலமாவும் ஆட்டோ சங்கிலிக்கு ஸ்டீல் போகுது — ஃபோர்ஜிங் கம்பெனிகளுக்கு ஸ்பெஷல் பார்கள், ட்யூப்/வீல் தயாரிப்பாளர்களுக்கு HR. அந்த பங்கு வெளியிடப்படல, அதனால மொத்த ஆட்டோ தொடர்பு நேரடி எண்ணை விட அதிகம்.</p></div>
+
+<div class="grid2">
+ <div class="card"><h3><span class="en">Vehicle sales Q2FY27 vs JSW auto growth (YoY %)</span><span class="ta">Q2FY27 வாகன விற்பனை vs JSW ஆட்டோ வளர்ச்சி (%)</span></h3><div class="chartbox"><div class="in" style="min-width:420px"><canvas id="cAuto"></canvas></div></div></div>
+ <div class="card"><h3><span class="en">JSW auto sales growth by quarter (YoY %)</span><span class="ta">காலாண்டு வாரியா JSW ஆட்டோ வளர்ச்சி (%)</span></h3><div class="chartbox"><div class="in" style="min-width:420px"><canvas id="cAutoQ"></canvas></div></div><p class="note">Q1FY27: n/a</p></div>
+</div>
+
+<div class="card"><h3><span class="en">Why JSW grew faster than vehicle volumes</span><span class="ta">வாகன விற்பனையை விட JSW ஏன் வேகமா வளர்ந்துச்சு</span></h3>
+<ul class="en"><li><b>Low base + GST cut:</b> PV sales fell 1.5% in Q2FY26 as buyers waited for the GST cut; this year PV rose 30.7% and CV 28.7%.</li><li><b>Mix shift to SUVs:</b> utility vehicles are 68% of PV sales (+34%) — heavier bodies, more steel per vehicle.</li><li><b>Share gains:</b> new cold-rolling and galvanising lines, JFE technology tie-up for high-strength auto grades, and OEM approvals let JSW take share from imports and rivals.</li><li><b>Contract pricing:</b> auto contracts are negotiated periodically, so they cushion swings in spot prices (Q2 negotiations closed; Q3 still under negotiation).</li></ul>
+<ul class="ta"><li><b>குறைந்த அடிப்படை + GST குறைப்பு:</b> Q2FY26-ல GST குறைப்புக்கு காத்திருந்ததால PV விற்பனை −1.5%; இந்த வருஷம் PV +30.7%, CV +28.7%.</li><li><b>SUV-க்கு மாற்றம்:</b> PV-ல 68% யுடிலிட்டி வாகனங்கள் (+34%) — பெரிய பாடி, அதிக ஸ்டீல்.</li><li><b>சந்தை பங்கு:</b> புது கோல்ட்-ரோலிங், கால்வனைசிங் லைன்கள், JFE தொழில்நுட்பம், OEM ஒப்புதல்கள் — இறக்குமதி, போட்டியாளர்களிடமிருந்து பங்கு எடுத்தாங்க.</li><li><b>ஒப்பந்த விலை:</b> ஆட்டோ ஒப்பந்தங்கள் குறிப்பிட்ட இடைவெளியில பேசி முடிவாகும் — ஸ்பாட் விலை ஏற்ற இறக்கத்தை தணிக்கும்.</li></ul></div>
+
+<div class="card"><h3><span class="en">Vehicle-population calculator — what more vehicles mean for JSW</span><span class="ta">வாகன கணக்கீட்டு கருவி — அதிக வாகனம் JSW-க்கு என்ன தரும்</span></h3>
+<p class="note"><span class="en">Move the sliders. Steel per vehicle and JSW's share are rough, editable assumptions <span class="dag">†</span> — for learning, not forecasting.</span><span class="ta">ஸ்லைடரை நகர்த்துங்க. வாகனத்துக்கு ஸ்டீல், JSW பங்கு — தோராய அனுமானங்கள் <span class="dag">†</span> — கற்றுக்கொள்ள மட்டும்.</span></p>
+<div id="calc"></div>
+<div class="out" id="calcOut"></div>
+</div>
+</section>
+
+<!-- ============ CAPACITY ============ -->
+<section class="tab" id="t-cap" data-en="Capacity" data-ta="உற்பத்தி திறன்">
+<h2><span class="en">Capacity today and the road to 54.8 MTPA</span><span class="ta">இன்றைய திறன் — 54.8 MTPA நோக்கி பயணம்</span></h2>
+<div class="kpis">
+ <div class="kpi"><span class="en">Combined crude steel capacity</span><span class="ta">மொத்த கச்சா ஸ்டீல் திறன்</span><b>37.9 MTPA</b><span><span class="en">incl. 4.5 MTPA JV</span><span class="ta">4.5 MTPA JV உட்பட</span></span></div>
+ <div class="kpi"><span class="en">Target in ~4 years</span><span class="ta">~4 வருஷத்துல இலக்கு</span><b>54.8 MTPA</b><span>+45%</span></div>
+ <div class="kpi"><span class="en">India incl. JVs by 2032</span><span class="ta">2032-க்குள் இந்தியா (JV உட்பட)</span><b>78 MTPA</b></div>
+ <div class="kpi"><span class="en">India utilisation</span><span class="ta">இந்திய பயன்பாடு</span><b>88%</b><span><span class="en">~90% in Sep</span><span class="ta">செப்ல ~90%</span></span></div>
+ <div class="kpi"><span class="en">Capex plan</span><span class="ta">கேபெக்ஸ் திட்டம்</span><b>₹1.48 lakh cr</b><span><span class="en">5–6 years (was ₹1.3 lakh cr)</span><span class="ta">5–6 வருஷம் (முன்பு ₹1.3 லட்சம் கோடி)</span></span></div>
+ <div class="kpi"><span class="en">FY27 capex guidance</span><span class="ta">FY27 கேபெக்ஸ் வழிகாட்டல்</span><b>₹22–24k cr</b><span>H1: ₹11,136 cr</span></div>
+</div>
+<div class="card"><h3><span class="en">Site-wise capacity: now vs planned (MTPA)</span><span class="ta">இட வாரியான திறன்: இப்போ vs திட்டம் (MTPA)</span></h3><div class="chartbox"><div class="in"><canvas id="cCap"></canvas></div></div></div>
+<div class="card"><div class="tw"><table>
+<tr><th><span class="en">Site</span><span class="ta">இடம்</span></th><th class="n"><span class="en">Now</span><span class="ta">இப்போ</span></th><th class="n"><span class="en">Planned</span><span class="ta">திட்டம்</span></th><th><span class="en">Timeline &amp; detail</span><span class="ta">காலம் &amp; விவரம்</span></th></tr>
+<tr><td><b>Vijayanagar, Karnataka (incl. JVML)</b></td><td class="n">19.5</td><td class="n">25.0</td><td><span class="en">BF-3 upgraded 3→4.5 MTPA (relit Jun-26); JVML phase-2 converter + caster; new 8 MTPA pellet plant; ~FY30. World's largest single-site target.</span><span class="ta">BF-3 3→4.5 MTPA (ஜூன்-26); JVML 2-ஆம் கட்டம்; 8 MTPA பெல்லட் ஆலை; ~FY30.</span></td></tr>
+<tr><td><b>Dolvi, Maharashtra</b></td><td class="n">10.0</td><td class="n">15.0</td><td><span class="en">Phase-3 (+5 MTPA) due next year; added caster and plate facility; CSP mill to 7 MTPA.</span><span class="ta">3-ஆம் கட்டம் (+5 MTPA) அடுத்த வருஷம்; CSP மில் 7 MTPA.</span></td></tr>
+<tr><td><b>JSW Utkal, Odisha (greenfield)</b></td><td class="n">0</td><td class="n">10.0</td><td><span class="en">Phase-1 5 MTPA by Q3FY30; Phase-2 5 MTPA (approved 23 Oct) by Q1FY31; slurry pipeline by Mar-27. 10 MTPA cost ~₹48,000 cr.</span><span class="ta">1-ஆம் கட்டம் Q3FY30; 2-ஆம் கட்டம் Q1FY31; ஸ்லரி பைப்லைன் மார்ச்-27.</span></td></tr>
+<tr><td><b>Salem, Tamil Nadu</b></td><td class="n">1.0</td><td class="n">1.0+</td><td><span class="en">Special/bearing steel; lines debottlenecked</span><span class="ta">ஸ்பெஷல்/பேரிங் ஸ்டீல்; டிபாட்டில்நெக்கிங்</span></td></tr>
+<tr><td><b><span class="en">Other India (BMM Ispat, Kadapa EAF etc.)</span><span class="ta">மற்றவை (BMM, கடப்பா)</span></b></td><td class="n">1.5 <span class="dag">†</span></td><td class="n">2.5 <span class="dag">†</span></td><td><span class="en">Kadapa 1 MTPA EAF + wide HR sections; Raigarh rails &amp; sections</span><span class="ta">கடப்பா 1 MTPA EAF; ராய்கர் ரெயில் &amp; செக்ஷன்</span></td></tr>
+<tr><td><b>JSW-JFE (JJSL), Odisha · 50%</b></td><td class="n">4.5</td><td class="n">9.5</td><td><span class="en">+5 MTPA approved by both partners; by FY31</span><span class="ta">+5 MTPA; FY31-க்குள்</span></td></tr>
+<tr><td><b>USA – Ohio</b></td><td class="n">1.5</td><td class="n">1.5</td><td><span class="en">EAF; degasser added</span><span class="ta">EAF; degasser சேர்ப்பு</span></td></tr>
+</table></div>
+<p class="note"><span class="en">Site figures for "Other India" are a residual to reconcile with the 37.9 MTPA combined figure <span class="dag">†</span>. Planned total shown in chart is illustrative of announced projects.</span><span class="ta">"மற்றவை" எண் 37.9 MTPA மொத்தத்தோட பொருந்த வைக்க கணக்கிட்டது <span class="dag">†</span>.</span></p></div>
+<div class="grid2">
+<div class="card"><h3><span class="en">Downstream additions</span><span class="ta">டவுன்ஸ்ட்ரீம் விரிவாக்கம்</span></h3><ul class="en"><li>Vasind cold-rolling complex 1.8 MTPA — Q2FY30</li><li>CRNO / CRGO electrical steel (CRGO JV with JFE at Nashik &amp; Vijayanagar)</li><li>Tinplate (0.2 MTPA), bearing steel, alloy longs (BMM)</li><li>Khopoli &amp; Rajpura downstream expansion</li></ul><ul class="ta"><li>வசிந்த் கோல்ட்-ரோலிங் 1.8 MTPA — Q2FY30</li><li>CRNO / CRGO எலக்ட்ரிகல் ஸ்டீல் (JFE உடன்)</li><li>டின்பிளேட், பேரிங் ஸ்டீல், அலாய் லாங்</li><li>கோபோலி, ராஜ்புரா விரிவாக்கம்</li></ul></div>
+<div class="card"><h3><span class="en">Raw-material security</span><span class="ta">மூலப்பொருள் பாதுகாப்பு</span></h3><ul class="en"><li>25 iron-ore mines, 13 operating; EC capacity ~42 mt; ~50% of needs captive</li><li>3 new Karnataka mines Q4FY27 (+4 mt → ~15 mt); Goa ~6 mt</li><li>Mozambique (MdR) hard coking coal — ~9 mt, production from CY2028; Illawarra 2 mt</li><li>Washeries (Parvatpur, Dugda) ~3.5 mt clean domestic coal → ~15 mt captive coking coal linkage</li><li>Renewables &gt;1,000 MW live, heading to 2.5 GW+</li></ul><ul class="ta"><li>25 இரும்புத்தாது சுரங்கம், 13 இயங்குது; ~50% தேவை சொந்தமா</li><li>கர்நாடகா 3 புது சுரங்கம் Q4FY27 (+4 mt)</li><li>மொசாம்பிக் கோக்கிங் கோல் ~9 mt, CY2028 முதல்</li><li>வாஷரிகள் ~3.5 mt → ~15 mt சொந்த கோக்கிங் கோல்</li><li>ரினியூவபிள் &gt;1,000 MW, 2.5 GW நோக்கி</li></ul></div>
+</div>
+</section>
+
+<!-- ============ FINANCIALS ============ -->
+<section class="tab" id="t-fin" data-en="Financials" data-ta="நிதி நிலை">
+<h2><span class="en">Financials — grouped by category</span><span class="ta">நிதி நிலை — வகை வாரியா</span></h2>
+<div class="card"><div class="tw"><table id="finTbl"></table></div>
+<p class="note"><span class="en">Q2FY26 is as reported (includes BPSL). <span class="dag">†</span> = CB derived from reported figures. n/a = not available in the material reviewed.</span><span class="ta">Q2FY26 அறிவிச்ச படி (BPSL உட்பட). <span class="dag">†</span> = CB கணக்கு. n/a = கிடைக்கல.</span></p></div>
+<div class="grid2">
+ <div class="card"><h3><span class="en">Revenue &amp; EBITDA (₹ cr) with margin</span><span class="ta">வருவாய் &amp; EBITDA (₹ கோடி), மார்ஜின்</span></h3><div class="chartbox"><div class="in"><canvas id="cRev"></canvas></div></div></div>
+ <div class="card"><h3><span class="en">Net profit (₹ cr)</span><span class="ta">நிகர லாபம் (₹ கோடி)</span></h3><div class="chartbox"><div class="in"><canvas id="cPat"></canvas></div></div><p class="note"><span class="en">Q4FY26 shown as normalised PAT ₹3,475 cr (reported ₹19,243 cr included a ₹17,888 cr one-time gain on BPSL).</span><span class="ta">Q4FY26 சாதாரண PAT ₹3,475 கோடி (அறிவிச்சது ₹19,243 — BPSL ஒருமுறை லாபம் ₹17,888 உட்பட).</span></p></div>
+</div>
+<div class="card"><h3><span class="en">Peer check — same quarter</span><span class="ta">போட்டியாளர் ஒப்பீடு — அதே காலாண்டு</span></h3><div class="tw"><table>
+<tr><th></th><th class="n"><span class="en">Revenue</span><span class="ta">வருவாய்</span></th><th class="n"><span class="en">Rev growth</span><span class="ta">வளர்ச்சி</span></th><th class="n">EBITDA</th><th class="n"><span class="en">EBITDA growth</span><span class="ta">EBITDA வளர்ச்சி</span></th><th><span class="en">Margin trend</span><span class="ta">மார்ஜின் போக்கு</span></th></tr>
+<tr><td><b>JSW Steel</b></td><td class="n">54,486</td><td class="n up">+20.7%</td><td class="n">10,120</td><td class="n up">+42.2%</td><td class="up"><span class="en">Expanded (+280 bps reported)</span><span class="ta">விரிவு (+280 bps)</span></td></tr>
+<tr><td><b>Jindal Steel</b></td><td class="n">16,679</td><td class="n up">+43%</td><td class="n">2,573</td><td class="n up">+24%</td><td class="dn"><span class="en">Contracted</span><span class="ta">சுருக்கம்</span></td></tr>
+<tr><td><b>Tata Steel</b></td><td class="n">n/a</td><td class="n">n/a</td><td class="n">n/a</td><td class="n">n/a</td><td>n/a</td></tr>
+</table></div></div>
+</section>
+
+<!-- ============ CASH FLOW & WORKING CAPITAL ============ -->
+<section class="tab" id="t-cf" data-en="Cash Flow &amp; WC" data-ta="பணப்புழக்கம் &amp; WC">
+<h2><span class="en">Cash flow, working capital and debt</span><span class="ta">பணப்புழக்கம், நடைமுறை மூலதனம், கடன்</span></h2>
+<div class="grid2">
+ <div class="card"><h3><span class="en">Annual cash flows (₹ cr)</span><span class="ta">வருடாந்திர பணப்புழக்கம் (₹ கோடி)</span></h3><div class="chartbox"><div class="in"><canvas id="cCF"></canvas></div></div>
+ <p class="note"><span class="en">FY26 investing cash flow was positive (+₹18,690 cr) because of proceeds linked to the BPSL slump sale / JFE transaction — a one-off.</span><span class="ta">FY26 முதலீட்டு பணப்புழக்கம் நேர்மறை (+₹18,690 கோடி) — BPSL/JFE பரிவர்த்தனை வரவு — ஒருமுறை மட்டும்.</span></p></div>
+ <div class="card"><h3><span class="en">Net debt (₹ cr) and net debt / EBITDA</span><span class="ta">நிகர கடன் (₹ கோடி) &amp; நிகர கடன் / EBITDA</span></h3><div class="chartbox"><div class="in"><canvas id="cND"></canvas></div></div>
+ <p class="note"><span class="en">Mar-26 net debt from a third-party compilation <span class="dag">†</span>; others as reported.</span><span class="ta">மார்ச்-26 நிகர கடன் மூன்றாம் தரப்பு தொகுப்பு <span class="dag">†</span>.</span></p></div>
+</div>
+<div class="card"><h3><span class="en">Working capital</span><span class="ta">நடைமுறை மூலதனம்</span></h3><div class="tw"><table>
+<tr><th><span class="en">Metric</span><span class="ta">அளவீடு</span></th><th class="n">FY25</th><th class="n">FY26</th><th><span class="en">Read</span><span class="ta">பொருள்</span></th></tr>
+<tr class="cat"><td colspan="4"><span class="en">Working-capital days</span><span class="ta">நடைமுறை மூலதன நாட்கள்</span></td></tr>
+<tr><td><span class="en">Inventory (₹ cr)</span><span class="ta">சரக்கு இருப்பு (₹ கோடி)</span></td><td class="n">34,956</td><td class="n">32,765</td><td class="up"><span class="en">Down despite higher sales</span><span class="ta">விற்பனை ஏறியும் குறைஞ்சது</span></td></tr>
+<tr><td><span class="en">Inventory days (on revenue) †</span><span class="ta">சரக்கு நாட்கள் (வருவாய் அடிப்படை) †</span></td><td class="n">75.6</td><td class="n">64.5</td><td class="up"><span class="en">~11 days faster</span><span class="ta">~11 நாள் வேகம்</span></td></tr>
+<tr><td><span class="en">Receivable days</span><span class="ta">வரவேண்டிய நாட்கள்</span></td><td class="n">n/a</td><td class="n">n/a</td><td>—</td></tr>
+<tr><td><span class="en">Payable days (incl. acceptances)</span><span class="ta">செலுத்தவேண்டிய நாட்கள்</span></td><td class="n">n/a</td><td class="n">n/a</td><td><span class="en">Acceptances ~$2 bn at Sep-26</span><span class="ta">ஏற்புகள் ~$2 பில்லியன்</span></td></tr>
+<tr><td><span class="en">Cash conversion cycle</span><span class="ta">பண மாற்று சுழற்சி</span></td><td class="n">n/a</td><td class="n">n/a</td><td>—</td></tr>
+<tr class="cat"><td colspan="4"><span class="en">Link to cash flow</span><span class="ta">பணப்புழக்கத்துடன் தொடர்பு</span></td></tr>
+<tr><td><span class="en">Change in working capital (₹ cr)</span><span class="ta">WC மாற்றம் (₹ கோடி)</span></td><td class="n">−681</td><td class="n">−3,708</td><td><span class="en">Cash absorbed by WC in FY26</span><span class="ta">FY26-ல WC பணம் எடுத்துச்சு</span></td></tr>
+<tr><td><span class="en">Cash from operations (CFO)</span><span class="ta">செயல்பாட்டு பணப்புழக்கம் (CFO)</span></td><td class="n">20,899</td><td class="n">25,152</td><td class="up">+20.4%</td></tr>
+<tr><td><span class="en">Capex</span><span class="ta">கேபெக்ஸ்</span></td><td class="n">12,694</td><td class="n">14,654</td><td>—</td></tr>
+<tr><td><span class="en">Free cash flow</span><span class="ta">இலவச பணப்புழக்கம்</span></td><td class="n">8,205</td><td class="n">10,498</td><td class="up">+28%</td></tr>
+</table></div>
+<p class="en"><b>What this means:</b> steel makers tie up cash in iron ore, coal and finished coil. JSW turned its inventory faster in FY26, which helped CFO rise 20% to ₹25,152 cr even though working capital still absorbed ₹3,708 cr. In Q2FY27 the company spent ~₹6,500 cr on capex and still reduced net debt by ₹1,675 cr — operating cash more than covered investment. Watch the ~$2 bn of acceptances (supplier credit): if they are cut, reported net debt would rise. H1FY27 cash-flow statement and receivable/payable days are not in the material reviewed (n/a).</p>
+<p class="ta"><b>இதன் பொருள்:</b> ஸ்டீல் கம்பெனிகள் இரும்புத்தாது, நிலக்கரி, காயில் இருப்புல பணத்தை முடக்கும். FY26-ல JSW சரக்கை வேகமா சுழற்றினதால CFO 20% ஏறி ₹25,152 கோடி ஆச்சு — WC ₹3,708 கோடி எடுத்துக்கிட்டும். Q2FY27-ல ~₹6,500 கோடி கேபெக்ஸ் செஞ்சும் நிகர கடன் ₹1,675 கோடி குறைஞ்சது — செயல்பாட்டு பணம் முதலீட்டை முழுசா கவர் பண்ணுச்சு. ~$2 பில்லியன் ஏற்புகளை (சப்ளையர் கடன்) கவனிக்கணும்: குறைச்சா நிகர கடன் ஏறும். H1FY27 பணப்புழக்க அறிக்கை, வரவு/செலுத்து நாட்கள் கிடைக்கல (n/a).</p></div>
+</section>
+
+<!-- ============ VALUATIONS ============ -->
+<section class="tab" id="t-val" data-en="Valuations" data-ta="மதிப்பீடு">
+<h2><span class="en">Valuation snapshot (at ₹1,185.50, 23 Oct 2026)</span><span class="ta">மதிப்பீடு (₹1,185.50, 23 அக் 2026)</span></h2>
+<div class="kpis">
+ <div class="kpi"><span class="en">Market cap †</span><span class="ta">சந்தை மதிப்பு †</span><b>₹2.90 lakh cr</b><span><span class="en">~244.5 cr shares</span><span class="ta">~244.5 கோடி பங்குகள்</span></span></div>
+ <div class="kpi"><span class="en">Enterprise value †</span><span class="ta">நிறுவன மதிப்பு (EV) †</span><b>₹3.34 lakh cr</b><span><span class="en">+ net debt ₹44,482 cr</span><span class="ta">+ நிகர கடன்</span></span></div>
+ <div class="kpi"><span class="en">TTM EBITDA †</span><span class="ta">12 மாத EBITDA †</span><b>~₹34,750 cr</b><span><span class="en">from 1.28x leverage</span><span class="ta">1.28x-லிருந்து</span></span></div>
+ <div class="kpi">EV / EBITDA †<b>~9.6x</b><span>TTM</span></div>
+ <div class="kpi"><span class="en">P/E on H1 annualised †</span><span class="ta">P/E (H1 ×2) †</span><b>~14.4x</b><span>EPS ~₹82</span></div>
+ <div class="kpi">P/B †<b>~2.5x</b><span>BVPS ~₹466</span></div>
+ <div class="kpi"><span class="en">ROE (H1 annualised) †</span><span class="ta">ROE †</span><b>~17.6%</b></div>
+ <div class="kpi"><span class="en">52-week range</span><span class="ta">52 வார வரம்பு</span><b>₹1,073–1,351</b><span><span class="en">12% above low</span><span class="ta">குறைவை விட 12% மேல்</span></span></div>
+</div>
+<div class="card"><p class="en">Steel is a cyclical, capital-heavy business, so analysts value it on <b>EV/EBITDA</b> rather than P/E. Brokers' recent targets use roughly 7.5x one-year-forward EV/EBITDA (Motilal Oswal on FY28E). At ~9.6x trailing EBITDA the stock is pricing in the coming volume growth from Dolvi, BF-3 and JVML. If FY28 EBITDA reaches broker estimates, the forward multiple compresses toward the 7–8x band — that is the bull case; if steel spreads shrink, trailing multiples look expensive.</p>
+<p class="ta">ஸ்டீல் சுழற்சி தொழில், மூலதனம் அதிகம் — அதனால அனலிஸ்டுகள் P/E விட <b>EV/EBITDA</b> பார்ப்பாங்க. ப்ரோக்கர்கள் ~7.5x முன்னோக்கு EV/EBITDA பயன்படுத்துறாங்க. இப்போ ~9.6x — டோல்வி, BF-3, JVML-லிருந்து வரப்போற வளர்ச்சியை விலை ஏற்கனவே எதிர்பார்க்குது. FY28 EBITDA எதிர்பார்ப்பை எட்டினா மல்டிபிள் 7–8x-க்கு வரும்; ஸ்ப்ரெட் சுருங்கினா விலை அதிகமா தெரியும்.</p>
+<p class="note"><span class="en">† All valuation ratios are CB derived from reported net debt, leverage and gearing; share count derived from net-debt-per-share data. P/E excludes the Q4FY26 one-time gain.</span><span class="ta">† எல்லா விகிதங்களும் அறிவிச்ச நிகர கடன், லெவரேஜ், கியரிங் வெச்சு CB கணக்கிட்டது.</span></p></div>
+</section>
+
+<!-- ============ MARKET ACTIVITY ============ -->
+<section class="tab" id="t-mkt" data-en="Market Activity" data-ta="சந்தை நகர்வு">
+<h2><span class="en">Why the share fell 2.83% on a record quarter</span><span class="ta">சாதனை காலாண்டுலயும் ஷேர் ஏன் 2.83% குறைஞ்சது</span></h2>
+<div class="kpis">
+ <div class="kpi"><span class="en">Close 23 Oct</span><span class="ta">23 அக் முடிவு</span><b>₹1,185.50</b><span class="dn">−₹34.50 (−2.83%)</span></div>
+ <div class="kpi"><span class="en">Previous close</span><span class="ta">முந்தைய முடிவு</span><b>₹1,220.00</b></div>
+ <div class="kpi"><span class="en">Options-implied move</span><span class="ta">ஆப்ஷன் எதிர்பார்ப்பு</span><b>±2.8%</b><span><span class="en">pre-results</span><span class="ta">முடிவுக்கு முன்</span></span></div>
+ <div class="kpi"><span class="en">Beat vs poll</span><span class="ta">எதிர்பார்ப்பை மிஞ்சியது</span><b class="up"><span class="en">Yes</span><span class="ta">ஆமா</span></b><span>Rev ₹54,110 · PAT ₹4,752 · EBITDA ₹9,845 est.</span></div>
+</div>
+<div class="card"><div class="tw"><table>
+<tr><th>#</th><th><span class="en">Reason</span><span class="ta">காரணம்</span></th><th><span class="en">Evidence</span><span class="ta">ஆதாரம்</span></th></tr>
+<tr><td>1</td><td><span class="en">Price-led quality was weak — growth was all volume</span><span class="ta">வளர்ச்சி முழுக்க அளவால — விலையால இல்ல</span></td><td><span class="en">EBITDA/t fell ~11% QoQ; realisation −3.6% QoQ</span><span class="ta">டன் EBITDA QoQ ~11% குறைவு</span></td></tr>
+<tr><td>2</td><td><span class="en">Cost guidance for Q3 is negative</span><span class="ta">Q3 செலவு வழிகாட்டல் எதிர்மறை</span></td><td><span class="en">Coking coal ~+$25/t; iron ore marginally higher</span><span class="ta">கோக்கிங் கோல் ~+$25/t</span></td></tr>
+<tr><td>3</td><td><span class="en">Bigger capex = execution &amp; balance-sheet worry</span><span class="ta">பெரிய கேபெக்ஸ் — செயலாக்க கவலை</span></td><td><span class="en">₹1.3 → ₹1.48 lakh cr; 4–5 sites at once; JV leverage questions on the call</span><span class="ta">₹1.3 → ₹1.48 லட்சம் கோடி; ஒரே நேரத்துல 4–5 இடங்கள்</span></td></tr>
+<tr><td>4</td><td><span class="en">Good news was expected</span><span class="ta">நல்ல செய்தி எதிர்பார்க்கப்பட்டது</span></td><td><span class="en">Record production published 8 Oct; Kotak had forecast revenue ₹54,888 cr — almost exact</span><span class="ta">8 அக்-லயே உற்பத்தி வெளியிடப்பட்டது</span></td></tr>
+<tr><td>5</td><td><span class="en">Macro mood</span><span class="ta">பொருளாதார மனநிலை</span></td><td><span class="en">RBI hiked rates recently; oil and energy prices elevated</span><span class="ta">RBI வட்டி உயர்வு; எண்ணெய் விலை உயர்வு</span></td></tr>
+</table></div></div>
+</section>
+
+<!-- ============ TRIGGERS & CYCLE ============ -->
+<section class="tab" id="t-tc" data-en="Triggers &amp; Cycle" data-ta="தூண்டிகள் &amp; சுழற்சி">
+<h2><span class="en">Triggers &amp; Cycle</span><span class="ta">தூண்டிகள் &amp; சுழற்சி</span></h2>
+<div class="grid2">
+ <div class="card"><h3><span class="en">Cycle clock</span><span class="ta">சுழற்சி கடிகாரம்</span></h3><svg id="clock" viewBox="0 0 340 340" style="width:100%;max-width:340px"></svg>
+ <p><span class="chip c-b">CY 63</span> <span class="en">Sector: Metals in <b>P3 Expansion</b> (70) — Indian demand +7–8%, utilisation 88–90%, safeguard support; but late-cycle signs: capacity announced everywhere, coking coal rising. Stock: scaling business 80, margin flat mid-range 50, valuation in band 55, price Stage 3 (whipsawing below Feb high) 35 → 55.</span><span class="ta">துறை: மெட்டல்ஸ் <b>P3 விரிவாக்க கட்டம்</b> (70) — டிமாண்ட் +7–8%, பயன்பாடு 88–90%; ஆனா எல்லாரும் திறன் அறிவிக்கிறாங்க, கோல் விலை ஏறுது. பங்கு: வளரும் தொழில் 80, மார்ஜின் நிலையா 50, மதிப்பீடு நடுவில 55, விலை Stage 3 — 35 → 55.</span></p></div>
+ <div class="card"><h3><span class="en">Scores</span><span class="ta">மதிப்பெண்கள்</span></h3>
+ <p><span class="chip c-g">TG 76</span> <span class="en">TG = 50 + 8 × (3.00 + 1.96 + 1.40) − 8 × (2.10 + 0.56 + 0.42) = 76. Near-term volume ramp and price hikes outweigh the coal-cost hit.</span><span class="ta">TG = 50 + 8 × (3.00 + 1.96 + 1.40) − 8 × (2.10 + 0.56 + 0.42) = 76. அருகிலுள்ள அளவு உயர்வு, விலை உயர்வு — கோல் செலவை விட அதிகம்.</span></p>
+ <h3><span class="en">What would change this view</span><span class="ta">இந்த பார்வையை எது மாத்தும்</span></h3>
+ <ul class="en"><li>China semis exports surge further and safeguard duty lapses → spreads compress.</li><li>Dolvi Phase-3 slips beyond FY28 → volume trigger fades.</li><li>Coking coal falls back below Q2 levels → margins rebound faster.</li></ul>
+ <ul class="ta"><li>சீனா ஏற்றுமதி இன்னும் ஏறி, சேஃப்கார்டு டியூட்டி முடிஞ்சா → ஸ்ப்ரெட் சுருங்கும்.</li><li>டோல்வி 3-ஆம் கட்டம் FY28 தாண்டி தாமதமானா.</li><li>கோக்கிங் கோல் Q2 அளவுக்கு கீழ வந்தா → மார்ஜின் வேகமா ஏறும்.</li></ul></div>
+</div>
+<div class="card"><h3><span class="en">Trigger table</span><span class="ta">தூண்டி அட்டவணை</span></h3><div class="tw"><table>
+<tr><th><span class="en">Trigger</span><span class="ta">தூண்டி</span></th><th>±</th><th class="n">I</th><th class="n">C</th><th class="n">W</th><th class="n">P</th><th class="n"><span class="en">Points</span><span class="ta">புள்ளி</span></th><th><span class="en">What to watch</span><span class="ta">கவனிக்க</span></th><th><span class="en">Basis &amp; date</span><span class="ta">அடிப்படை &amp; தேதி</span></th></tr>
+<tr><td><span class="en">BF-3 + JVML full-quarter production in Q3</span><span class="ta">Q3-ல BF-3 + JVML முழு உற்பத்தி</span></td><td class="up">+</td><td class="n">3</td><td class="n">1.0</td><td class="n">1.0</td><td class="n">1.0</td><td class="n"><b>3.00</b></td><td><span class="en">Q3 production release (early Jan)</span><span class="ta">Q3 உற்பத்தி அறிக்கை</span></td><td>Q2FY27 call, 23 Oct 2026</td></tr>
+<tr><td><span class="en">Dolvi Phase-3 (+5 MTPA)</span><span class="ta">டோல்வி 3-ஆம் கட்டம் (+5 MTPA)</span></td><td class="up">+</td><td class="n">4</td><td class="n">0.7</td><td class="n">0.7</td><td class="n">1.0</td><td class="n"><b>1.96</b></td><td><span class="en">Commissioning filings FY28</span><span class="ta">FY28 தொடக்க அறிவிப்பு</span></td><td>Q2FY27 call, 23 Oct 2026</td></tr>
+<tr><td><span class="en">October price hikes flow into Q3</span><span class="ta">அக்டோபர் விலை உயர்வு Q3-ல</span></td><td class="up">+</td><td class="n">2</td><td class="n">0.7</td><td class="n">1.0</td><td class="n">1.0</td><td class="n"><b>1.40</b></td><td><span class="en">HRC/TMT price trackers</span><span class="ta">HRC/TMT விலை</span></td><td>Q2FY27 call, 23 Oct 2026</td></tr>
+<tr><td><span class="en">JSW One IPO (value unlock)</span><span class="ta">JSW One IPO</span></td><td class="up">+</td><td class="n">2</td><td class="n">0.7</td><td class="n">0.7</td><td class="n">1.0</td><td class="n">0.98</td><td><span class="en">SEBI observation, listing date</span><span class="ta">SEBI ஒப்புதல்</span></td><td>DRHP, Sep 2026</td></tr>
+<tr><td><span class="en">Coking coal ~+$25/t in Q3</span><span class="ta">Q3-ல கோக்கிங் கோல் ~+$25/t</span></td><td class="dn">−</td><td class="n">3</td><td class="n">0.7</td><td class="n">1.0</td><td class="n">1.0</td><td class="n"><b>2.10</b></td><td><span class="en">Australian PLV coal price</span><span class="ta">ஆஸ்திரேலிய கோல் விலை</span></td><td>Q2FY27 call, 23 Oct 2026</td></tr>
+<tr><td><span class="en">Capex up to ₹1.48 lakh cr; JV leverage</span><span class="ta">கேபெக்ஸ் ₹1.48 லட்சம் கோடி; JV கடன்</span></td><td class="dn">−</td><td class="n">2</td><td class="n">0.7</td><td class="n">0.4</td><td class="n">1.0</td><td class="n">0.56</td><td><span class="en">Net debt/EBITDA path</span><span class="ta">கடன்/EBITDA போக்கு</span></td><td>Board approval, 23 Oct 2026</td></tr>
+<tr><td><span class="en">Safeguard duty not renewed</span><span class="ta">சேஃப்கார்டு டியூட்டி நீட்டிக்கப்படாமை</span></td><td class="dn">−</td><td class="n">3</td><td class="n">0.2</td><td class="n">0.7</td><td class="n">1.0</td><td class="n">0.42</td><td><span class="en">DGTR / Finance Ministry notices</span><span class="ta">DGTR அறிவிப்பு</span></td><td>Analyst Q&amp;A, 23 Oct 2026</td></tr>
+</table></div>
+<p class="note"><span class="en">Delivered and excluded (already in numbers): deleveraging to 1.28x, BPSL deconsolidation, BF-3 relight. I = impact 1–5, C = certainty, W = timing, P = priced-in.</span><span class="ta">ஏற்கனவே எண்ணுல வந்தவை (சேர்க்கல): கடன் குறைப்பு 1.28x, BPSL பிரிப்பு, BF-3 தொடக்கம்.</span></p></div>
+<div class="card"><h3><span class="en">Trigger timeline</span><span class="ta">தூண்டி காலவரிசை</span></h3><div class="tl">
+ <div class="ev"><b>Oct–Dec 2026</b><span class="en">Price hikes + full BF-3/JVML volumes</span><span class="ta">விலை உயர்வு + முழு உற்பத்தி</span></div>
+ <div class="ev neg"><b>Q3FY27</b><span class="en">Coking coal +$25/t</span><span class="ta">கோல் +$25/t</span></div>
+ <div class="ev"><b>Q4FY27</b><span class="en">3 new Karnataka iron-ore mines</span><span class="ta">கர்நாடகா 3 சுரங்கம்</span></div>
+ <div class="ev"><b>Mar 2027</b><span class="en">Odisha slurry pipeline</span><span class="ta">ஒடிசா ஸ்லரி பைப்லைன்</span></div>
+ <div class="ev"><b>FY27–28</b><span class="en">JSW One listing</span><span class="ta">JSW One லிஸ்டிங்</span></div>
+ <div class="ev"><b>FY28</b><span class="en">Dolvi Phase-3 (+5 MTPA)</span><span class="ta">டோல்வி +5 MTPA</span></div>
+ <div class="ev"><b>CY2028</b><span class="en">Mozambique coking coal</span><span class="ta">மொசாம்பிக் கோல்</span></div>
+ <div class="ev"><b>Q3FY30 – Q1FY31</b><span class="en">JSW Utkal 10 MTPA</span><span class="ta">JSW உத்கல் 10 MTPA</span></div>
+</div></div>
+</section>
+
+<!-- ============ SWOT ============ -->
+<section class="tab" id="t-swot" data-en="SWOT" data-ta="SWOT">
+<h2>SWOT</h2>
+<div class="swot">
+<div class="s1"><b><span class="en">Strengths</span><span class="ta">பலங்கள்</span></b><ul class="en"><li>India's largest steelmaker by capacity; Vijayanagar scale</li><li>55% value-added mix; leading auto-grade franchise</li><li>Net debt/EBITDA 1.28x after JFE deal</li><li>~50% captive iron ore; RE 1 GW+</li></ul><ul class="ta"><li>இந்தியாவின் பெரிய ஸ்டீல் தயாரிப்பாளர்</li><li>55% மதிப்பு கூட்டிய கலவை; ஆட்டோ கிரேடு பலம்</li><li>நிகர கடன்/EBITDA 1.28x</li><li>~50% சொந்த இரும்புத்தாது</li></ul></div>
+<div class="s2"><b><span class="en">Weaknesses</span><span class="ta">பலவீனங்கள்</span></b><ul class="en"><li>Imported coking coal dependence</li><li>Overseas units earn little (~$26 mn EBITDA)</li><li>EBITDA/t fell 11% QoQ — limited pricing power in longs</li><li>Large capex appetite raises execution load</li></ul><ul class="ta"><li>இறக்குமதி கோக்கிங் கோல் சார்பு</li><li>வெளிநாட்டு யூனிட் லாபம் குறைவு</li><li>டன் EBITDA 11% குறைவு</li><li>பெரிய கேபெக்ஸ் சுமை</li></ul></div>
+<div class="s3"><b><span class="en">Opportunities</span><span class="ta">வாய்ப்புகள்</span></b><ul class="en"><li>Per-capita steel 116 kg vs ~210 kg world; draft NSP 2047 sees 505 mt demand</li><li>Vehicle population growth — PV +30.7%, CV +28.7% in Q2</li><li>Electrical steel for EVs, transformers, renewables</li><li>JSW One IPO; Mozambique coal lowers cost</li></ul><ul class="ta"><li>தலைக்கு 116 கிலோ vs உலகம் ~210 கிலோ; 2047-ல 505 mt</li><li>வாகன எண்ணிக்கை வளர்ச்சி — PV +30.7%, CV +28.7%</li><li>EV, ட்ரான்ஸ்ஃபார்மருக்கு எலக்ட்ரிகல் ஸ்டீல்</li><li>JSW One IPO; மொசாம்பிக் கோல்</li></ul></div>
+<div class="s4"><b><span class="en">Threats</span><span class="ta">அச்சுறுத்தல்கள்</span></b><ul class="en"><li>China semis exports up 3.3% (Jan–Sep)</li><li>Safeguard duty expiry</li><li>Coking coal shocks (China/Mongolia supply, Australian cyclones)</li><li>Energy prices, RBI tightening, rupee depreciation on capex</li></ul><ul class="ta"><li>சீனா செமி ஏற்றுமதி +3.3%</li><li>சேஃப்கார்டு டியூட்டி முடிவு</li><li>கோக்கிங் கோல் அதிர்ச்சி</li><li>எரிசக்தி விலை, RBI இறுக்கம், ரூபாய் சரிவு</li></ul></div>
+</div>
+</section>
+
+<!-- ============ ANALYSTS ============ -->
+<section class="tab" id="t-an" data-en="Analysts' Rating" data-ta="அனலிஸ்ட் மதிப்பீடு">
+<h2><span class="en">Analysts' rating (third-party views, not CB's)</span><span class="ta">அனலிஸ்ட் மதிப்பீடு (மூன்றாம் தரப்பு கருத்து, CB-யுடையது அல்ல)</span></h2>
+<div class="card"><div class="tw"><table>
+<tr><th><span class="en">Broker</span><span class="ta">ப்ரோக்கர்</span></th><th><span class="en">Rating</span><span class="ta">மதிப்பீடு</span></th><th class="n"><span class="en">Target ₹</span><span class="ta">இலக்கு ₹</span></th><th class="n"><span class="en">vs ₹1,185.5</span><span class="ta">vs ₹1,185.5</span></th><th><span class="en">Date / basis</span><span class="ta">தேதி / அடிப்படை</span></th></tr>
+<tr><td>Anand Rathi</td><td><span class="chip c-g">Buy</span></td><td class="n">1,480</td><td class="n up">+24.8%</td><td>18 Jul 2026 · post-Q1</td></tr>
+<tr><td>Motilal Oswal</td><td><span class="chip c-g">Buy</span></td><td class="n">1,470</td><td class="n up">+24.0%</td><td>17 Jul 2026 · SoTP, ~7.5x FY28E EV/EBITDA</td></tr>
+<tr><td>Nomura</td><td><span class="chip c-g">Buy</span></td><td class="n">1,400</td><td class="n up">+18.1%</td><td>13 Oct 2026 · pre-results</td></tr>
+<tr><td>IDBI Capital</td><td><span class="chip c-a">Hold</span></td><td class="n">1,332</td><td class="n up">+12.4%</td><td>20 Jul 2026 · post-Q1</td></tr>
+<tr><td>Citi</td><td><span class="chip c-r">Sell</span></td><td class="n">915</td><td class="n dn">−22.8%</td><td><span class="en">Late 2025 · dated, may have changed</span><span class="ta">2025 இறுதி · பழையது</span></td></tr>
+<tr><td><b><span class="en">Consensus (avg)</span><span class="ta">சராசரி</span></b></td><td><span class="chip c-g">Buy</span></td><td class="n">1,383.57</td><td class="n up">+16.7%</td><td>22 Oct 2026 · low 1,100 / high 1,650</td></tr>
+<tr><td><b><span class="en">Consensus (37 analysts)</span><span class="ta">37 அனலிஸ்ட் சராசரி</span></b></td><td>—</td><td class="n">1,428</td><td class="n up">+20.5%</td><td>Oct 2026 · low 1,111 / high 1,732.5</td></tr>
+</table></div>
+<p class="note"><span class="en">Post-results target revisions were not yet available at the time of preparation; expect updates from Monday. CB Research does not issue buy/sell/hold views.</span><span class="ta">முடிவுக்கப்புறம் இலக்கு மாற்றங்கள் இன்னும் வரல. CB Research வாங்கு/விற்கு பரிந்துரை தராது.</span></p></div>
+<div class="card"><h3><span class="en">Target range vs price</span><span class="ta">இலக்கு வரம்பு vs விலை</span></h3><div class="chartbox"><div class="in" style="height:260px"><canvas id="cTgt"></canvas></div></div></div>
+<div class="card"><b><span class="en">Analyst view in three lines</span><span class="ta">மூணு வரியில அனலிஸ்ட் பார்வை</span></b><ul class="en"><li>Cycle: Metals in expansion phase (P3) with late-cycle signs.</li><li>Top positives: Q3 volume ramp from BF-3/JVML; Dolvi Phase-3.</li><li>Top risk: coking coal +$25/t in Q3 squeezing spreads.</li></ul><ul class="ta"><li>சுழற்சி: மெட்டல்ஸ் விரிவாக்க கட்டம் (P3), பிற்கால அறிகுறிகளுடன்.</li><li>முக்கிய நேர்மறை: Q3 BF-3/JVML அளவு; டோல்வி 3-ஆம் கட்டம்.</li><li>முக்கிய அபாயம்: Q3-ல கோல் +$25/t.</li></ul></div>
+</section>
+
+<!-- ============ SELF-CHECK ============ -->
+<section class="tab" id="t-sc" data-en="Self-check" data-ta="சுய சோதனை">
+<h2><span class="en">CB Investor Self-check</span><span class="ta">CB முதலீட்டாளர் சுய சோதனை</span></h2>
+<div class="card"><b><span class="en">Overall</span><span class="ta">மொத்தம்</span></b> <span id="scAll"></span><div class="prog"><i id="scAllBar"></i></div>
+<p class="note"><span class="en">This only counts how many of your own conditions line up. It is not a recommendation.</span><span class="ta">இது உங்க சொந்த நிபந்தனைகள்ல எத்தனை பொருந்துதுன்னு மட்டும் எண்ணுது. இது பரிந்துரை அல்ல.</span></p>
+<button class="btn g" onclick="scClear()"><span class="en">Clear</span><span class="ta">அழி</span></button></div>
+<div id="scBox"></div>
+</section>
+
+<!-- ============ MANAGEMENT ============ -->
+<section class="tab" id="t-mg" data-en="Management &amp; Board" data-ta="நிர்வாகம் &amp; போர்டு">
+<h2><span class="en">Management &amp; Board</span><span class="ta">நிர்வாகம் &amp; இயக்குநர் குழு</span></h2>
+<div class="card"><div class="tw"><table>
+<tr><th><span class="en">Name</span><span class="ta">பெயர்</span></th><th><span class="en">Role</span><span class="ta">பதவி</span></th><th><span class="en">This quarter</span><span class="ta">இந்த காலாண்டுல</span></th></tr>
+<tr><td><b>Sajjan Jindal</b></td><td><span class="en">Chairman &amp; Managing Director</span><span class="ta">தலைவர் &amp; நிர்வாக இயக்குநர்</span></td><td><span class="en">Group strategy; JFE partnership; 80 MTPA ambition incl. JVs</span><span class="ta">குழும உத்தி; JFE கூட்டு</span></td></tr>
+<tr><td><b>Jayant Acharya</b></td><td><span class="en">Joint MD &amp; CEO</span><span class="ta">இணை MD &amp; CEO</span></td><td><span class="en">Led the call; new projects; "H2 looks very strong"</span><span class="ta">கால் நடத்தினார்; புது ப்ராஜெக்ட்கள்</span></td></tr>
+<tr><td><b>G. S. Rathod</b></td><td><span class="en">Chief Operating Officer</span><span class="ta">தலைமை செயல்பாட்டு அதிகாரி</span></td><td><span class="en">In-house project execution across 4–5 sites</span><span class="ta">4–5 இடங்களில் செயலாக்கம்</span></td></tr>
+<tr><td><b>Arun Maheshwari</b></td><td><span class="en">Director – Commercial &amp; Marketing</span><span class="ta">வணிக &amp; மார்க்கெட்டிங் இயக்குநர்</span></td><td><span class="en">Iron ore &amp; coking coal sourcing; pricing</span><span class="ta">மூலப்பொருள் கொள்முதல்; விலை</span></td></tr>
+<tr><td><b>Swayam Saurabh</b></td><td><span class="en">Chief Financial Officer</span><span class="ta">தலைமை நிதி அதிகாரி</span></td><td><span class="en">Capex largely self-funded; $ exposure cut from &gt;$6 bn to ~$3.5–3.6 bn; $500 mn bond prepaid in Oct</span><span class="ta">டாலர் கடன் $6 → ~$3.5 பில்லியன்; $500 மில்லியன் பாண்ட் முன்கூட்டி அடைப்பு</span></td></tr>
+</table></div>
+<p class="note"><span class="en">Strategic partner: JFE Steel (Japan) — 50:50 in JSW-JFE Steel and JSW JFE Kalinga; CRGO JV. Full board composition and Sep-26 shareholding: n/a in material reviewed.</span><span class="ta">உத்தி கூட்டாளி: JFE Steel (ஜப்பான்). முழு போர்டு பட்டியல், செப்-26 பங்கு அமைப்பு: n/a.</span></p></div>
+<div class="card"><b><span class="en">Governance read</span><span class="ta">நிர்வாக மதிப்பீடு</span></b><p class="en">Management has delivered on deleveraging promises (net debt halved in a year) and is ring-fencing JV debt from the listed company. The open question is capital discipline: the capex plan rose ~14% in one quarter.</p><p class="ta">கடன் குறைப்பு வாக்குறுதியை நிர்வாகம் நிறைவேத்துச்சு (ஒரு வருஷத்துல பாதியா குறைஞ்சது), JV கடனை தனியா வெக்கிறாங்க. கேள்வி: மூலதன ஒழுக்கம் — ஒரே காலாண்டுல கேபெக்ஸ் திட்டம் ~14% ஏறுச்சு.</p></div>
+</section>
+
+<!-- ============ SOCRATES ============ -->
+<section class="tab" id="t-soc" data-en="Cauvery Socrates" data-ta="காவேரி சாக்ரடீஸ்">
+<h2><span class="en">Cauvery Socrates — think it through</span><span class="ta">காவேரி சாக்ரடீஸ் — யோசிச்சு பாருங்க</span></h2>
+<div id="socBox"></div>
+<div class="q"><b><span class="en">Your turn: if Indian car sales slowed to +5% next year, which two numbers in this dashboard would you watch first, and why?</span><span class="ta">உங்க முறை: அடுத்த வருஷம் கார் விற்பனை +5%-க்கு குறைஞ்சா, இந்த டேஷ்போர்டுல எந்த இரண்டு எண்களை முதல்ல பார்ப்பீங்க, ஏன்?</span></b>
+<textarea id="socFree" rows="3" style="width:100%;margin-top:6px"></textarea><button class="btn" onclick="socFb()"><span class="en">Reflect</span><span class="ta">சிந்தி</span></button><div id="socFbOut" class="note"></div></div>
+</section>
+
+</main>
+<footer></footer>
+<div id="cbBadge" onclick="togDisc()" title="CB Research">CB</div>
+<div id="disc"><b>CB Research · Cauvery Business</b><br><span class="en">Prepared by CB Research (Cauvery Business Research) for financial education only. CB Research is not a SEBI-registered research analyst or investment adviser. Nothing here is a recommendation to buy, sell or hold any security. Figures are from company disclosures and public reports for Q2FY27; items marked † are CB estimates and n/a means not available. Please consult a SEBI-registered adviser before investing.</span><span class="ta">CB Research (காவேரி பிசினஸ் ரிசர்ச்) நிதிக் கல்விக்காக மட்டும் தயாரிச்சது. CB Research SEBI-யில் பதிவு செய்த அனலிஸ்ட் அல்லது ஆலோசகர் அல்ல. இங்க எதுவும் வாங்க/விற்க/வைத்திருக்க பரிந்துரை இல்ல. † குறி = CB மதிப்பீடு; n/a = கிடைக்கல. முதலீட்டுக்கு முன் SEBI பதிவு ஆலோசகரை அணுகுங்க.</span></div>
+<button id="asBtn" onclick="togAs()">🎙 CB Assist</button>
+<div id="asPanel"><div style="padding:8px 10px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center"><b>CB Assist · JSW Steel</b><button class="btn g" onclick="togAs()">✕</button></div>
+<div id="asLog"></div><div id="asSug"></div>
+<div id="asIn"><button class="btn mic" id="micB" onclick="mic()">🎤</button><input id="asQ" placeholder="Ask… / கேளுங்க…" onkeydown="if(event.key==='Enter')ask()"><button class="btn" onclick="ask()">➤</button></div></div>
+
+<script>
+/* ===== Machine-readable data ===== */
+var CO = {
+ name:"JSW Steel Ltd", nse:"JSWSTEEL", bse:"500228", quarter:"Q2FY27", resultsDate:"2026-10-23",
+ price:1185.5, prevClose:1220, w52:[1073.2,1351],
+ q:{ labels:["Q2FY26","Q4FY26","Q1FY27","Q2FY27"],
+     rev:[45152,51100,47364,54486], adjEbitda:[7849,9713,9373,9941], pat:[1646,3475,4696,5359],
+     salesMt:[7.34,7.97,6.25,7.46] },
+ q2fy27:{rev:54486,repEbitda:10120,adjEbitda:9941,margin:18.3,pat:5359,prodMt:7.27,salesMt:7.46,indiaSalesMt:7.27,domesticMt:6.29,exportMt:0.98,vaspMt:4.11,vaspShare:55,util:88,
+   indiaRev:50188,indiaEbitda:9636,netDebt:44482,ndEbitda:1.28,gearing:0.39,capexH1:11136,autoGrowth:36,applGrowth:28,renewGrowth:14,flatsGrowth:16,instGrowth:15},
+ capacity:{combined:37.9,target:54.8,india2032:78},
+ cfAnnual:{labels:["FY25","FY26"],cfo:[20899,25152],capex:[-12694,-14654],fcf:[8205,10498],cfi:[-16997,18690],cff:[-262,-16111]},
+ netDebt:{labels:["Sep-25","Mar-26†","Jun-26","Sep-26"],v:[79153,56276,46157,44482],x:[null,1.81,1.46,1.28]},
+ pillars:[{k:"g",en:"Growth",ta:"வளர்ச்சி",s:8.5},{k:"m",en:"Margin",ta:"மார்ஜின்",s:7.0},{k:"d",en:"Debt",ta:"கடன்",s:8.0},{k:"v",en:"Valuation",ta:"மதிப்பீடு",s:6.0},{k:"t",en:"Trend",ta:"போக்கு",s:5.5},{k:"r",en:"Risk",ta:"அபாயம்",s:6.0}],
+ cbScore:68, cycle:{sectorPhase:"P3",stockStage:3,cy:63}, tg:76,
+ triggers:[
+  {name:"BF-3 + JVML full-quarter volumes",sign:"+",I:3,C:1.0,W:1.0,P:1.0,pts:3.00,date:"2026-10-23",status:"Executing"},
+  {name:"Dolvi Phase-3 +5 MTPA",sign:"+",I:4,C:0.7,W:0.7,P:1.0,pts:1.96,date:"2026-10-23",status:"Approved"},
+  {name:"October price hikes",sign:"+",I:2,C:0.7,W:1.0,P:1.0,pts:1.40,date:"2026-10-23",status:"Announced"},
+  {name:"JSW One IPO",sign:"+",I:2,C:0.7,W:0.7,P:1.0,pts:0.98,date:"2026-09",status:"Announced"},
+  {name:"Coking coal +$25/t Q3",sign:"-",I:3,C:0.7,W:1.0,P:1.0,pts:2.10,date:"2026-10-23",status:"Announced"},
+  {name:"Capex ₹1.48 lakh cr / JV leverage",sign:"-",I:2,C:0.7,W:0.4,P:1.0,pts:0.56,date:"2026-10-23",status:"Approved"},
+  {name:"Safeguard duty lapse",sign:"-",I:3,C:0.2,W:0.7,P:1.0,pts:0.42,date:"2026-10-23",status:"Watch"}]
+};
+var LANG='en';
+function L(e,t){return LANG==='ta'?t:e;}
+function fmt(n,d){if(n===null||n===undefined||isNaN(n))return 'n/a';return Number(n).toLocaleString('en-IN',{maximumFractionDigits:d===undefined?0:d,minimumFractionDigits:d===undefined?0:d});}
+
+/* ===== Tabs ===== */
+var built={}, charts={};
+var tabs=[].slice.call(document.querySelectorAll('section.tab'));
+var nav=document.getElementById('nav');
+function buildNav(){nav.innerHTML='';tabs.forEach(function(s){var b=document.createElement('button');b.textContent=LANG==='ta'?s.dataset.ta:s.dataset.en;b.dataset.t=s.id;if(s.classList.contains('act'))b.classList.add('act');b.onclick=function(){show(s.id)};nav.appendChild(b);});}
+function show(id){tabs.forEach(function(s){s.classList.toggle('act',s.id===id)});[].forEach.call(nav.children,function(b){b.classList.toggle('act',b.dataset.t===id)});window.scrollTo({top:0,behavior:'smooth'});initTab(id);}
+function setLang(l){LANG=l;document.body.classList.toggle('lang-ta',l==='ta');document.getElementById('bEN').classList.toggle('on',l==='en');document.getElementById('bTA').classList.toggle('on',l==='ta');buildNav();
+ Object.keys(charts).forEach(function(k){try{charts[k].destroy()}catch(e){}});charts={};built={};
+ var a=document.querySelector('section.tab.act');initTab(a.id);drawTemple();drawBM();drawClock();renderSC();renderSoc();buildCalc();renderFin();asSugg();}
+
+/* ===== Chart helpers ===== */
+var valPlugin={id:'vals',afterDatasetsDraw:function(ch,args,opts){if(opts===false)return;var ctx=ch.ctx;ctx.save();ctx.font='600 11px Segoe UI,Arial';ctx.fillStyle='#1d2433';ctx.textAlign='center';
+ ch.data.datasets.forEach(function(ds,i){var m=ch.getDatasetMeta(i);if(m.hidden||ds.noVal)return;if(m.type!=='bar'&&ds.type!=='bar'&&ch.config.type!=='bar')return;
+  m.data.forEach(function(el,j){var v=ds.data[j];if(v===null||v===undefined)return;if(Array.isArray(v))v=v[1]-v[0];var txt=(ds.pre||'')+fmt(v,ds.dec)+(ds.suf||'');var y=el.y;var neg=v<0;ctx.fillText(txt,el.x,neg?y+13:y-5);});});ctx.restore();}};
+Chart.register(valPlugin);
+Chart.defaults.font.family='Segoe UI,Roboto,Noto Sans Tamil,Arial';Chart.defaults.color='#3b4558';
+function mk(id,cfg){var c=document.getElementById(id);if(!c)return;if(charts[id])charts[id].destroy();cfg.options=cfg.options||{};cfg.options.maintainAspectRatio=false;cfg.options.responsive=true;charts[id]=new Chart(c,cfg);}
+var C={or:'#f07c1a',bl:'#1f5fbf',gr:'#1e9e5a',rd:'#d64545',am:'#e0a100',pu:'#7a4fd0',tl:'#0f9aa8',gy:'#9aa4b5'};
+
+function initTab(id){if(built[id])return;built[id]=1;
+ if(id==='t-why'){
+  mk('cBrY',{type:'bar',data:{labels:[L('Q2FY26 base (ex-BPSL)','Q2FY26 அடிப்படை'),L('Volume effect','அளவு விளைவு'),L('Margin/t effect','டன் மார்ஜின் விளைவு'),'Q2FY27'],datasets:[{data:[[0,7125],[7125,8029],[8029,9941],[0,9941]],backgroundColor:[C.gy,C.gr,C.gr,C.bl],borderRadius:4}]},options:{plugins:{legend:{display:false}},scales:{y:{beginAtZero:true,ticks:{callback:function(v){return fmt(v)}}}}}});
+  mk('cBrQ',{type:'bar',data:{labels:['Q1FY27',L('Volume effect','அளவு விளைவு'),L('Spread/t effect','டன் ஸ்ப்ரெட் விளைவு'),'Q2FY27'],datasets:[{data:[[0,9373],[9373,11188],[9941,11188],[0,9941]],backgroundColor:[C.gy,C.gr,C.rd,C.bl],borderRadius:4,
+   pre:'',dec:0}]},options:{plugins:{legend:{display:false},vals:false},scales:{y:{min:0,ticks:{callback:function(v){return fmt(v)}}}}},plugins:[{id:'brq',afterDatasetsDraw:function(ch){var ctx=ch.ctx,m=ch.getDatasetMeta(0),t=['9,373','+1,815','−1,247','9,941'];ctx.save();ctx.font='600 11px Segoe UI';ctx.textAlign='center';ctx.fillStyle='#1d2433';m.data.forEach(function(el,j){ctx.fillText(t[j],el.x,Math.min(el.y,el.base)-5)});ctx.restore();}}]});
+  mk('cPT',{type:'bar',data:{labels:CO.q.labels,datasets:[{type:'bar',label:L('EBITDA ₹/t','டன் EBITDA ₹'),data:[10693,12187,14997,13326],backgroundColor:C.or,borderRadius:4,yAxisID:'y'},{type:'line',label:L('Realisation ₹/t','டன் விலை ₹'),data:[61515,64115,75782,73038],borderColor:C.bl,backgroundColor:C.bl,yAxisID:'y1',tension:.3,noVal:true}]},options:{scales:{y:{position:'left',ticks:{callback:function(v){return fmt(v)}}},y1:{position:'right',grid:{display:false},ticks:{callback:function(v){return fmt(v)}}}}}});
+ }
+ if(id==='t-seg'){
+  mk('cMix',{type:'doughnut',data:{labels:[L('Retail','ரீடெயில்'),L('Construction & Infra †','கட்டுமானம் †'),L('Industrial †','இண்டஸ்ட்ரியல் †'),L('Auto','ஆட்டோ')],datasets:[{data:[37,33,16,14],backgroundColor:[C.bl,C.tl,C.pu,C.or]}]},options:{plugins:{vals:false,legend:{position:'bottom'},tooltip:{callbacks:{label:function(c){return c.label+': '+c.raw+'%'}}}}}});
+  mk('cVol',{type:'bar',data:{labels:[L('Production','உற்பத்தி'),L('Total sales','மொத்த விற்பனை'),L('India sales','இந்திய விற்பனை'),L('Domestic','உள்நாடு'),'VASP',L('Exports','ஏற்றுமதி')],datasets:[{data:[7.27,7.46,7.27,6.29,4.11,0.98],dec:2,backgroundColor:[C.gy,C.bl,C.bl,C.gr,C.or,C.pu],borderRadius:4}]},options:{plugins:{legend:{display:false}},scales:{y:{beginAtZero:true}}}});
+ }
+ if(id==='t-auto'){
+  mk('cAuto',{type:'bar',data:{labels:[L('Passenger vehicles','பயணிகள் வாகனம்'),L('Commercial vehicles','வணிக வாகனம்'),L('Three-wheelers','மூன்று சக்கரம்'),L('Two-wheelers','இரு சக்கரம்'),L('All vehicles','மொத்தம்'),L('JSW auto steel','JSW ஆட்டோ ஸ்டீல்')],datasets:[{data:[30.7,28.7,23.6,15.2,18.2,36],dec:1,suf:'%',backgroundColor:[C.bl,C.bl,C.bl,C.bl,C.gy,C.or],borderRadius:4}]},options:{plugins:{legend:{display:false}},scales:{y:{beginAtZero:true,ticks:{callback:function(v){return v+'%'}}}}}});
+  mk('cAutoQ',{type:'bar',data:{labels:['Q2FY26','Q3FY26','Q4FY26','FY26','Q1FY27','Q2FY27'],datasets:[{data:[15,15,27,19,null,36],suf:'%',backgroundColor:[C.gy,C.gy,C.bl,C.pu,C.gy,C.or],borderRadius:4}]},options:{plugins:{legend:{display:false}},scales:{y:{beginAtZero:true,ticks:{callback:function(v){return v+'%'}}}}}});
+ }
+ if(id==='t-cap'){
+  mk('cCap',{type:'bar',data:{labels:['Vijayanagar','Dolvi','JSW Utkal','Salem','Other India †','JSW-JFE (JV)','USA Ohio'],datasets:[{label:L('Now','இப்போ'),data:[19.5,10,0,1,1.5,4.5,1.5],dec:1,backgroundColor:C.bl,borderRadius:4},{label:L('Planned','திட்டம்'),data:[25,15,10,1,2.5,9.5,1.5],dec:1,backgroundColor:C.or,borderRadius:4}]},options:{scales:{y:{beginAtZero:true,title:{display:true,text:'MTPA'}}}}});
+ }
+ if(id==='t-fin'){
+  mk('cRev',{type:'bar',data:{labels:CO.q.labels,datasets:[{label:L('Revenue','வருவாய்'),data:CO.q.rev,backgroundColor:C.bl,borderRadius:4,yAxisID:'y'},{label:L('Adj. EBITDA','EBITDA'),data:CO.q.adjEbitda,backgroundColor:C.or,borderRadius:4,yAxisID:'y'},{type:'line',label:L('Margin %','மார்ஜின் %'),data:[17.4,19.0,19.8,18.3],borderColor:C.gr,backgroundColor:C.gr,yAxisID:'y1',noVal:true,tension:.3}]},options:{scales:{y:{beginAtZero:true,ticks:{callback:function(v){return fmt(v)}}},y1:{position:'right',min:10,max:25,grid:{display:false},ticks:{callback:function(v){return v+'%'}}}}}});
+  mk('cPat',{type:'bar',data:{labels:CO.q.labels,datasets:[{label:'PAT',data:CO.q.pat,backgroundColor:[C.gy,C.pu,C.bl,C.gr],borderRadius:4}]},options:{plugins:{legend:{display:false}},scales:{y:{beginAtZero:true,ticks:{callback:function(v){return fmt(v)}}}}}});
+ }
+ if(id==='t-cf'){
+  mk('cCF',{type:'bar',data:{labels:CO.cfAnnual.labels,datasets:[{label:'CFO',data:CO.cfAnnual.cfo,backgroundColor:C.gr,borderRadius:4},{label:L('Capex','கேபெக்ஸ்'),data:CO.cfAnnual.capex,backgroundColor:C.rd,borderRadius:4},{label:'FCF',data:CO.cfAnnual.fcf,backgroundColor:C.bl,borderRadius:4},{label:'CFI',data:CO.cfAnnual.cfi,backgroundColor:C.pu,borderRadius:4},{label:'CFF',data:CO.cfAnnual.cff,backgroundColor:C.gy,borderRadius:4}]},options:{scales:{y:{ticks:{callback:function(v){return fmt(v)}}}}}});
+  mk('cND',{type:'bar',data:{labels:CO.netDebt.labels,datasets:[{label:L('Net debt ₹ cr','நிகர கடன் ₹ கோடி'),data:CO.netDebt.v,backgroundColor:C.rd,borderRadius:4,yAxisID:'y'},{type:'line',label:L('Net debt / EBITDA (x)','கடன் / EBITDA (x)'),data:CO.netDebt.x,borderColor:C.bl,backgroundColor:C.bl,yAxisID:'y1',noVal:true,spanGaps:true}]},options:{scales:{y:{beginAtZero:true,ticks:{callback:function(v){return fmt(v)}}},y1:{position:'right',min:0,max:2.5,grid:{display:false}}}}});
+ }
+ if(id==='t-an'){
+  var names=['Citi (dated)','Low','IDBI','Consensus','Nomura','Alpha consensus','Motilal','Anand Rathi','High'],vals=[915,1100,1332,1383.57,1400,1428,1470,1480,1650];
+  mk('cTgt',{type:'bar',data:{labels:names,datasets:[{label:L('Target ₹','இலக்கு ₹'),data:vals,backgroundColor:vals.map(function(v){return v<CO.price?C.rd:C.gr}),borderRadius:4},{type:'line',label:L('Price ₹1,185.5','விலை ₹1,185.5'),data:names.map(function(){return CO.price}),borderColor:C.or,borderDash:[6,4],pointRadius:0,noVal:true}]},options:{scales:{y:{min:800,ticks:{callback:function(v){return fmt(v)}}}}}});
+ }
+}
+
+/* ===== Temple 6-pillar ===== */
+function pc(s){return s>=8?C.gr:(s>=6?C.am:C.rd);}
+var PDESC={g:["Volume +13%, revenue +20.7%, PAT ×3.3; capacity to grow 45% in ~4 years.","அளவு +13%, வருவாய் +20.7%, லாபம் 3.3 மடங்கு; 4 வருஷத்துல திறன் 45% வளர்ச்சி."],
+ m:["Adj. EBITDA margin 18.3%; EBITDA/t ~₹13,300, down 11% QoQ but up ~24% YoY.","EBITDA மார்ஜின் 18.3%; டன் EBITDA ~₹13,300 — QoQ 11% குறைவு, YoY ~24% அதிகம்."],
+ d:["Net debt ₹44,482 cr, 1.28x EBITDA, gearing 0.39x; dollar exposure cut to ~$3.5 bn.","நிகர கடன் ₹44,482 கோடி, 1.28x; டாலர் கடன் ~$3.5 பில்லியனா குறைப்பு."],
+ v:["~9.6x trailing EV/EBITDA, ~2.5x P/B — fair for a leader, not cheap for a cyclical.","~9.6x EV/EBITDA, ~2.5x P/B — தலைவருக்கு நியாயம், சுழற்சி பங்குக்கு மலிவு இல்ல."],
+ t:["Price ₹1,185.5, 12% below 52-week high; fell 2.83% on results; consensus target ~17% above.","விலை ₹1,185.5, 52 வார உச்சத்தை விட 12% கீழ; முடிவு நாள் −2.83%."],
+ r:["Coking coal +$25/t in Q3, China semis exports, capex ₹1.48 lakh cr across 4–5 sites.","Q3 கோல் +$25/t, சீனா ஏற்றுமதி, ₹1.48 லட்சம் கோடி கேபெக்ஸ்."]};
+function drawTemple(){var s=document.getElementById('temple');if(!s)return;var h='';
+ h+='<polygon points="260,10 30,92 490,92" fill="#f07c1a"/><text x="260" y="62" text-anchor="middle" font-size="26" font-weight="800" fill="#fff">'+CO.cbScore+'/100</text><text x="260" y="82" text-anchor="middle" font-size="12" fill="#fff">CB Score</text>';
+ h+='<rect x="40" y="94" width="440" height="30" fill="#fff4ea" stroke="#f07c1a"/><text x="260" y="114" text-anchor="middle" font-size="14" font-weight="700" fill="#b25a0c">JSW Steel · Q2FY27</text>';
+ CO.pillars.forEach(function(p,i){var x=58+i*70,y0=132,H=170,fh=H*p.s/10,col=pc(p.s);
+  h+='<g style="cursor:pointer" onclick="jumpP(\''+p.k+'\')"><rect x="'+x+'" y="'+y0+'" width="44" height="'+H+'" rx="4" fill="#eef1f6" stroke="#d5dbe6"/>';
+  h+='<rect class="pf" data-h="'+fh+'" x="'+x+'" y="'+(y0+H)+'" width="44" height="0" rx="4" fill="'+col+'"/>';
+  for(var f=1;f<4;f++)h+='<line x1="'+(x+f*11)+'" y1="'+y0+'" x2="'+(x+f*11)+'" y2="'+(y0+H)+'" stroke="rgba(255,255,255,.55)" stroke-width="1.5"/>';
+  h+='<circle cx="'+(x+22)+'" cy="'+(y0+20)+'" r="15" fill="#fff" stroke="'+col+'" stroke-width="2.5"/><text x="'+(x+22)+'" y="'+(y0+25)+'" text-anchor="middle" font-size="12" font-weight="800" fill="'+col+'">'+p.s.toFixed(1)+'</text></g>';
+  h+='<text x="'+(x+22)+'" y="352" text-anchor="middle" font-size="12" font-weight="600" fill="#1d2433">'+(LANG==='ta'?p.ta:p.en)+'</text>';});
+ h+='<rect x="34" y="304" width="452" height="10" fill="#d5dbe6"/><rect x="24" y="316" width="472" height="12" fill="#c3cad8"/>';
+ s.innerHTML=h;setTimeout(function(){[].forEach.call(s.querySelectorAll('.pf'),function(r){var fh=+r.dataset.h;var st=null;function an(t){if(!st)st=t;var k=Math.min(1,(t-st)/900);r.setAttribute('height',fh*k);r.setAttribute('y',302-fh*k);if(k<1)requestAnimationFrame(an);}requestAnimationFrame(an);});},120);
+ var pcEl=document.getElementById('pillarCards');pcEl.innerHTML='';CO.pillars.forEach(function(p){var d=document.createElement('div');d.className='card pc';d.id='pc-'+p.k;d.style.borderLeftColor=pc(p.s);d.innerHTML='<b style="color:'+pc(p.s)+'">'+(LANG==='ta'?p.ta:p.en)+' · '+p.s.toFixed(1)+'/10</b><div>'+(LANG==='ta'?PDESC[p.k][1]:PDESC[p.k][0])+'</div>';pcEl.appendChild(d);});}
+function jumpP(k){var e=document.getElementById('pc-'+k);[].forEach.call(document.querySelectorAll('.pc'),function(x){x.classList.remove('hl')});e.classList.add('hl');e.scrollIntoView({behavior:'smooth',block:'center'});}
+
+/* ===== Business model SVG ===== */
+var BM=[
+ {id:'rm',x:400,y:12,w:200,h:62,c:'#7a4fd0',t:['Raw materials','மூலப்பொருட்கள்'],s:['Iron ore ~50% captive · coking coal mostly imported','இரும்புத்தாது ~50% சொந்தம் · கோல் இறக்குமதி'],d:['Iron ore from 13 operating mines (EC ~42 mt), coking coal from Australia and others; Mozambique (9 mt) from CY2028 and domestic washeries (3.5 mt) will lower cost. Coal rose ~$10/t in Q2 and is guided +$25/t in Q3.','13 சுரங்கங்களிலிருந்து இரும்புத்தாது; கோக்கிங் கோல் ஆஸ்திரேலியா போன்ற இடங்களிலிருந்து. மொசாம்பிக் (9 mt), உள்நாட்டு வாஷரி (3.5 mt) செலவை குறைக்கும். Q2-ல கோல் +$10/t, Q3-ல +$25/t.']},
+ {id:'c1',x:10,y:96,w:170,h:58,c:'#1f5fbf',t:['Retail & MSME','ரீடெயில் & MSME'],s:['~37% of domestic sales','உள்நாட்டு விற்பனையில் ~37%'],d:['Small builders, fabricators and traders buy branded TMT, roofing and coated sheet through ~20,100 retail stores and JSW One. Branded sales are ~50% of retail.','சிறு கட்டுநர்கள், ஃபேப்ரிகேட்டர்கள் ~20,100 கடைகள், JSW One மூலம் வாங்குறாங்க. ரீடெயில்ல ~50% பிராண்டட்.']},
+ {id:'c2',x:10,y:162,w:170,h:58,c:'#0f9aa8',t:['Construction & Infra','கட்டுமானம் & உள்கட்டமைப்பு'],s:['~33% † · public capex','~33% † · அரசு கேபெக்ஸ்'],d:['Highways, metros, rail, ports, real estate — TMT, plates, sections. Driven by public and private capex.','நெடுஞ்சாலை, மெட்ரோ, ரயில், துறைமுகம் — TMT, பிளேட், செக்ஷன்.']},
+ {id:'c3',x:10,y:228,w:170,h:58,c:'#7a4fd0',t:['Industrial','இண்டஸ்ட்ரியல்'],s:['~16% † · appliances +28%, renewables +14%','~16% † · அப்ளையன்ஸ் +28%'],d:['Pipes and tubes, capital goods, appliances (+28%), solar structures and wind (+14%), packaging (tinplate).','பைப், மூலதன பொருட்கள், அப்ளையன்ஸ் (+28%), சோலார் (+14%), டின்பிளேட்.']},
+ {id:'c4',x:10,y:294,w:170,h:58,c:'#f07c1a',t:['Auto OEMs & tier-1','ஆட்டோ OEM & டயர்-1'],s:['~14% FY26 · +36% in Q2','FY26 ~14% · Q2-ல +36%'],d:['Car and CV makers and their suppliers buy CR, galvanised and high-strength steel on periodic contracts. Record sales this quarter as PV (+30.7%) and CV (+28.7%) volumes boomed.','கார், CV தயாரிப்பாளர்கள் CR, கால்வனைஸ்டு ஸ்டீலை ஒப்பந்த விலையில வாங்குறாங்க. PV +30.7%, CV +28.7% — சாதனை விற்பனை.']},
+ {id:'c5',x:10,y:360,w:170,h:58,c:'#9aa4b5',t:['Export customers','ஏற்றுமதி வாடிக்கையாளர்கள்'],s:['0.98 mt · 13% of India sales','0.98 mt · 13%'],d:['Surplus HR and semis are exported; export prices are usually lower than domestic, so a falling export share helps realisation.','கூடுதல் HR ஏற்றுமதி; ஏற்றுமதி விலை பொதுவா குறைவு.']},
+ {id:'ch1',x:204,y:116,w:184,h:60,c:'#1f5fbf',t:['Distributors & stores','விநியோகஸ்தர்கள் & கடைகள்'],s:['493 distributors · 2,390 branded stores','493 விநியோகஸ்தர்'],d:['Distribution network of ~2,900 points incl. 729 JSW Shoppes (FY26 data). Reaches small towns.','~2,900 விநியோக புள்ளிகள், 729 JSW ஷாப்பிகள்.']},
+ {id:'ch2',x:204,y:184,w:184,h:60,c:'#0f9aa8',t:['JSW One (digital)','JSW One (டிஜிட்டல்)'],s:['GMV ₹6,989 cr · +77%','GMV ₹6,989 கோடி · +77%'],d:['66%-owned B2B marketplace with credit for MSMEs; steel volumes +53%; EBITDA positive; IPO papers filed.','66% சொந்தமான B2B சந்தை; ஸ்டீல் அளவு +53%; IPO.']},
+ {id:'ch3',x:204,y:252,w:184,h:60,c:'#f07c1a',t:['Direct OEM / institutional','நேரடி OEM / நிறுவன'],s:['Institutional sales +15%','நிறுவன விற்பனை +15%'],d:['Key-account teams sell directly to auto OEMs, appliance makers, project companies and government buyers under contracts.','முக்கிய வாடிக்கையாளர்களுக்கு நேரடி ஒப்பந்த விற்பனை.']},
+ {id:'ch4',x:204,y:320,w:184,h:60,c:'#9aa4b5',t:['Export desk','ஏற்றுமதி பிரிவு'],s:['Europe, Middle East, Asia','ஐரோப்பா, ஆசியா'],d:['Used to balance plant loading when domestic demand dips.','உள்நாட்டு தேவை குறைஞ்சா ஆலையை நிரப்ப உதவும்.']},
+ {id:'core',x:400,y:150,w:200,h:220,c:'#f07c1a',t:['JSW STEEL','JSW STEEL'],s:['37.9 MTPA combined · 88% utilisation · 7.27 mt produced','37.9 MTPA · 88% பயன்பாடு · 7.27 mt உற்பத்தி'],d:['Integrated blast-furnace steelmaker: ore + coal → hot metal → crude steel → hot-rolled coil/billets → cold-rolled, coated and special products. Plants at Vijayanagar (19.5), Dolvi (10), Salem, plus JV in Odisha and units in the USA and Italy.','ஒருங்கிணைந்த ஸ்டீல் ஆலை: தாது + கோல் → உருக்கு → கச்சா ஸ்டீல் → HR → CR, கோட்டட், ஸ்பெஷல். விஜயநகர் (19.5), டோல்வி (10), சேலம், ஒடிசா JV, அமெரிக்கா, இத்தாலி.']},
+ {id:'p1',x:630,y:96,w:200,h:58,c:'#1f5fbf',t:['Flats — HR / CR','ஃப்ளாட் — HR / CR'],s:['+16% YoY · record','+16% · சாதனை'],d:['Hot-rolled and cold-rolled coil — the backbone of volume and the base for auto and appliance grades.','HR, CR காயில் — அளவோட முதுகெலும்பு.']},
+ {id:'p2',x:630,y:162,w:200,h:58,c:'#1e9e5a',t:['Coated & VASP','கோட்டட் & VASP'],s:['4.11 mt · 55% of sales · +11%','4.11 mt · 55% · +11%'],d:['Galvanised, Galvalume, colour-coated, tinplate, CRCA — higher price per tonne and stickier customers.','கால்வனைஸ்டு, கலர் கோட்டட், டின்பிளேட் — அதிக டன் விலை.']},
+ {id:'p3',x:630,y:228,w:200,h:58,c:'#7a4fd0',t:['Electrical & special steel','எலக்ட்ரிகல் & ஸ்பெஷல்'],s:['CRNO/CRGO · bearing · alloy','CRNO/CRGO · பேரிங்'],d:['Growth niche tied to EVs, transformers and electrification; CRGO with JFE.','EV, ட்ரான்ஸ்ஃபார்மருக்கு — வளர்ச்சி பிரிவு.']},
+ {id:'p4',x:630,y:294,w:200,h:58,c:'#e0a100',t:['Long products','லாங் பொருட்கள்'],s:['TMT · wire rod · rails · sections','TMT · வயர் ராட் · ரெயில்'],d:['Construction-linked; prices are volatile because 65–70% of longs supply comes from secondary producers. Prices fell in Jun–Jul and recovered in Aug–Sep.','கட்டுமானம் சார்ந்தது; விலை ஏற்ற இறக்கம் அதிகம்.']},
+ {id:'p5',x:630,y:360,w:200,h:58,c:'#9aa4b5',t:['Overseas units','வெளிநாட்டு யூனிட்டுகள்'],s:['USA $19 mn · Italy $7 mn EBITDA','அமெரிக்கா $19M · இத்தாலி $7M'],d:['Ohio (EAF), Texas plates & pipes, Italy rails — small contributors; improving sequentially.','சிறு பங்களிப்பு; QoQ முன்னேற்றம்.']},
+ {id:'r1',x:870,y:40,w:230,h:56,c:'#1f5fbf',t:['Revenue','வருவாய்'],s:['₹54,486 cr · +20.7%','₹54,486 கோடி · +20.7%'],d:['7.46 mt × ~₹73,000/t. India ₹50,188 cr.','7.46 mt × ~₹73,000/t.']},
+ {id:'r2',x:870,y:128,w:230,h:62,c:'#d64545',t:['Operating costs','செயல்பாட்டு செலவு'],s:['~₹44,545 cr † · coal, ore, power, freight','~₹44,545 கோடி † · கோல், தாது'],d:['Revenue minus adjusted EBITDA. Coking coal is the single largest item.','வருவாய் − EBITDA. கோக்கிங் கோல் மிகப் பெரியது.']},
+ {id:'r3',x:870,y:220,w:230,h:56,c:'#f07c1a',t:['Adj. EBITDA','EBITDA'],s:['₹9,941 cr · 18.3% · ~₹13,300/t','₹9,941 கோடி · 18.3%'],d:['Reported EBITDA ₹10,120 cr includes forex effects; adjusted excludes forex on long-term borrowings.','அறிவிச்ச EBITDA ₹10,120 கோடி அந்நியச் செலாவணி விளைவு உட்பட.']},
+ {id:'r4',x:870,y:308,w:230,h:62,c:'#9aa4b5',t:['Interest, D&A, tax, JV','வட்டி, தேய்மானம், வரி, JV'],s:['Interest falling as debt halves','கடன் குறைய வட்டி குறையுது'],d:['Net debt fell ~₹34,700 cr in a year — the main reason PAT outgrew EBITDA. JV share includes JJSL stamp-duty loss.','ஒரு வருஷத்துல நிகர கடன் ~₹34,700 கோடி குறைவு.']},
+ {id:'r5',x:870,y:400,w:230,h:66,c:'#1e9e5a',t:['PAT → shareholders & capex','லாபம் → பங்குதாரர் & கேபெக்ஸ்'],s:['₹5,359 cr · ×3.3 YoY','₹5,359 கோடி · 3.3 மடங்கு'],d:['Profit plus depreciation funds the ₹22–24k cr FY27 capex; free cash also cut debt this quarter.','லாபம் + தேய்மானம் → FY27 கேபெக்ஸ் ₹22–24k கோடி.']}];
+function drawBM(){var s=document.getElementById('bmSvg');if(!s)return;var i=LANG==='ta'?1:0,h='<defs><marker id="ar" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#9aa4b5"/></marker></defs>';
+ function ln(x1,y1,x2,y2){h+='<line x1="'+x1+'" y1="'+y1+'" x2="'+x2+'" y2="'+y2+'" stroke="#c3cad8" stroke-width="1.6" marker-end="url(#ar)"/>';}
+ ['c1','c2','c3','c4','c5'].forEach(function(k,j){var b=BM.filter(function(o){return o.id===k})[0];ln(b.x+b.w,b.y+b.h/2,202,147+j*64>342?339:147+j*64);});
+ ['ch1','ch2','ch3','ch4'].forEach(function(k){var b=BM.filter(function(o){return o.id===k})[0];ln(b.x+b.w,b.y+b.h/2,398,b.y+b.h/2);});
+ ln(500,74,500,148);
+ ['p1','p2','p3','p4','p5'].forEach(function(k){var b=BM.filter(function(o){return o.id===k})[0];ln(600,b.y+b.h/2>370?360:Math.max(160,b.y+b.h/2),628,b.y+b.h/2);});
+ ['p1','p2','p3','p4','p5'].forEach(function(k){var b=BM.filter(function(o){return o.id===k})[0];ln(830,b.y+b.h/2,868,68);});
+ ln(985,96,985,128);ln(985,186,985,218);ln(985,276,985,308);ln(985,366,985,398);
+ h+='<text x="95" y="86" text-anchor="middle" font-size="12" font-weight="700" fill="#5b6478">'+L('CUSTOMERS','வாடிக்கையாளர்கள்')+'</text><text x="292" y="110" text-anchor="middle" font-size="12" font-weight="700" fill="#5b6478">'+L('CHANNELS','சேனல்கள்')+'</text><text x="730" y="86" text-anchor="middle" font-size="12" font-weight="700" fill="#5b6478">'+L('PRODUCTS','பொருட்கள்')+'</text><text x="985" y="30" text-anchor="middle" font-size="12" font-weight="700" fill="#5b6478">'+L('MONEY FLOW','பண ஓட்டம்')+'</text>';
+ BM.forEach(function(b){var core=b.id==='core';h+='<g class="bm-box" data-id="'+b.id+'" onclick="bmSel(\''+b.id+'\')"><rect x="'+b.x+'" y="'+b.y+'" width="'+b.w+'" height="'+b.h+'" rx="10" fill="'+(core?b.c:'#fff')+'" stroke="'+b.c+'" stroke-width="2"/>'+(core?'':'<rect x="'+b.x+'" y="'+b.y+'" width="6" height="'+b.h+'" rx="3" fill="'+b.c+'"/>');
+  var tc=core?'#fff':'#1d2433';h+='<text x="'+(b.x+(core?b.w/2:14))+'" y="'+(b.y+(core?100:22))+'" '+(core?'text-anchor="middle" font-size="22"':'font-size="13"')+' font-weight="800" fill="'+tc+'">'+b.t[i]+'</text>';
+  var sub=b.s[i];if(core){var parts=sub.split(' · ');parts.forEach(function(p,j){h+='<text x="'+(b.x+b.w/2)+'" y="'+(b.y+130+j*20)+'" text-anchor="middle" font-size="12.5" fill="#fff">'+p+'</text>'});}
+  else{var words=sub.split(' '),line='',lines=[];words.forEach(function(w){if((line+' '+w).length>(b.w>190?34:30)){lines.push(line);line=w}else line=(line?line+' ':'')+w});lines.push(line);lines.slice(0,2).forEach(function(p,j){h+='<text x="'+(b.x+14)+'" y="'+(b.y+39+j*14)+'" font-size="11.5" fill="#5b6478">'+p+'</text>'});}
+  h+='</g>';});
+ h+='<text x="560" y="545" text-anchor="middle" font-size="12" fill="#5b6478">'+L('Revenue ≈ 7.46 mt × ~₹73,000/t  →  EBITDA ₹9,941 cr  →  PAT ₹5,359 cr','வருவாய் ≈ 7.46 mt × ~₹73,000/t  →  EBITDA ₹9,941 கோடி  →  லாபம் ₹5,359 கோடி')+'</text>';
+ s.innerHTML=h;bmSel(window._bmSel||'core');}
+function bmSel(id){window._bmSel=id;var b=BM.filter(function(o){return o.id===id})[0],i=LANG==='ta'?1:0;[].forEach.call(document.querySelectorAll('.bm-box'),function(g){g.classList.toggle('sel',g.dataset.id===id)});document.getElementById('bmT').innerHTML='<span style="color:'+b.c+'">■</span> '+b.t[i]+' — '+b.s[i];document.getElementById('bmD').textContent=b.d[i];}
+
+/* ===== Calculator ===== */
+var CALC=[{k:'pv',en:'PV growth %',ta:'PV வளர்ச்சி %',min:-10,max:40,st:0.5,v:10},{k:'cv',en:'CV growth %',ta:'CV வளர்ச்சி %',min:-10,max:40,st:0.5,v:10},{k:'tw',en:'2W growth %',ta:'2W வளர்ச்சி %',min:-10,max:30,st:0.5,v:8},
+ {k:'spv',en:'Steel per PV (t) †',ta:'PV-க்கு ஸ்டீல் (t) †',min:0.6,max:1.3,st:0.05,v:0.95},{k:'scv',en:'Steel per CV (t) †',ta:'CV-க்கு ஸ்டீல் (t) †',min:1,max:6,st:0.1,v:2.5},{k:'stw',en:'Steel per 2W (t) †',ta:'2W-க்கு ஸ்டீல் (t) †',min:0.05,max:0.15,st:0.01,v:0.1},{k:'sh',en:'JSW share of auto steel % †',ta:'ஆட்டோ ஸ்டீல்ல JSW பங்கு % †',min:20,max:50,st:1,v:35}];
+function buildCalc(){var c=document.getElementById('calc');if(!c)return;c.innerHTML='';CALC.forEach(function(o){var d=document.createElement('div');d.className='slider';d.innerHTML='<label>'+L(o.en,o.ta)+'</label><input type="range" min="'+o.min+'" max="'+o.max+'" step="'+o.st+'" value="'+o.v+'" oninput="CALCv(\''+o.k+'\',this.value)"><b id="cv-'+o.k+'">'+o.v+'</b>';c.appendChild(d);});calcRun();}
+function CALCv(k,v){CALC.forEach(function(o){if(o.k===k)o.v=+v});document.getElementById('cv-'+k).textContent=v;calcRun();}
+function calcRun(){var g={};CALC.forEach(function(o){g[o.k]=o.v});var base={pv:13.61,cv:3.09,tw:64.33};
+ var dNow=(base.pv*g.spv+base.cv*g.scv+base.tw*g.stw)/10;var dNext=(base.pv*(1+g.pv/100)*g.spv+base.cv*(1+g.cv/100)*g.scv+base.tw*(1+g.tw/100)*g.stw)/10;
+ var jNow=dNow*g.sh/100,jNext=dNext*g.sh/100,inc=jNext-jNow;var ebit=inc*1332.6,rev=inc*7300;
+ document.getElementById('calcOut').innerHTML=[[L('Vehicle steel demand now (mt/qtr)','இப்போ வாகன ஸ்டீல் தேவை (mt/காலாண்டு)'),fmt(dNow,2)],[L('Same quarter next year (mt)','அடுத்த வருஷம் அதே காலாண்டு (mt)'),fmt(dNext,2)],[L('JSW auto tonnes now → next (mt)','JSW ஆட்டோ டன் இப்போ → அடுத்து'),fmt(jNow,2)+' → '+fmt(jNext,2)],[L('Extra revenue / qtr (₹ cr) @ ₹73,000/t','கூடுதல் வருவாய் (₹ கோடி)'),fmt(rev)],[L('Extra EBITDA / qtr (₹ cr) @ ₹13,326/t','கூடுதல் EBITDA (₹ கோடி)'),fmt(ebit)],[L('As % of Q2FY27 EBITDA','Q2FY27 EBITDA-ல %'),fmt(ebit/9941*100,1)+'%']].map(function(r){return '<div class="kpi"><span>'+r[0]+'</span><b>'+r[1]+'</b></div>'}).join('');}
+
+/* ===== Financial table ===== */
+var FIN=[
+ ['cat',['Growth & Scale','வளர்ச்சி & அளவு']],
+ [['Revenue from operations (₹ cr)','செயல்பாட்டு வருவாய்'],'45,152','47,364','54,486','+20.7%','+15.0%'],
+ [['Crude steel production (mt)','கச்சா ஸ்டீல் உற்பத்தி'],'7.90','6.59','7.27','+5% LFL','+10%'],
+ [['Steel sales (mt)','ஸ்டீல் விற்பனை'],'7.34','6.25','7.46','+13% LFL','+19%'],
+ [['Domestic sales, India (mt)','உள்நாட்டு விற்பனை'],'6.33','5.33 †','6.29','+12% LFL','+18%'],
+ [['VASP sales (mt)','VASP விற்பனை'],'n/a','n/a','4.11','+11%','n/a'],
+ ['cat',['Profitability','லாபத்தன்மை']],
+ [['Reported EBITDA (₹ cr)','அறிவிச்ச EBITDA'],'7,115','n/a','10,120','+42.2%','n/a'],
+ [['Adjusted EBITDA (₹ cr)','சரிசெய்த EBITDA'],'7,849','9,373','9,941','+26.7%','+6.1%'],
+ [['Adj. EBITDA margin','EBITDA மார்ஜின்'],'17.4% †','19.8% †','18.3%','+90 bps','−150 bps'],
+ [['EBITDA per tonne (₹) †','டன்னுக்கு EBITDA †'],'10,693','14,997','13,326','+24.6%','−11.1%'],
+ [['Net profit (₹ cr)','நிகர லாபம்'],'1,646','4,696','5,359','+225.6%','+14.1%'],
+ [['EPS (₹) †','EPS †'],'6.7','19.2','21.9','×3.3','+14%'],
+ ['cat',['Efficiency','செயல்திறன்']],
+ [['India capacity utilisation','இந்திய திறன் பயன்பாடு'],'92%','n/a','88%','−4 pp','n/a'],
+ [['Realisation per tonne (₹) †','டன் விலை †'],'61,515','75,782','73,038','+16% LFL','−3.6%'],
+ [['VASP share of sales','VASP பங்கு'],'64%','n/a','55%','n/m','n/a'],
+ [['Export share (India ops)','ஏற்றுமதி பங்கு'],'10%','n/a','13%','+3 pp','n/a'],
+ ['cat',['Capital & Liquidity','மூலதனம் & பணப்புழக்கம்']],
+ [['Net debt (₹ cr)','நிகர கடன்'],'79,153','46,157','44,482','−43.8%','−3.6%'],
+ [['Net debt / EBITDA (x)','கடன் / EBITDA'],'n/a','1.46','1.28','—','−0.18'],
+ [['Net gearing (x)','நிகர கியரிங்'],'n/a','0.42','0.39','—','−0.03'],
+ [['Capex in quarter (₹ cr)','காலாண்டு கேபெக்ஸ்'],'n/a','~4,636 †','~6,500','—','—'],
+ [['Supplier acceptances','சப்ளையர் ஏற்புகள்'],'n/a','n/a','~$2 bn','—','—'],
+ ['cat',['Valuation','மதிப்பீடு']],
+ [['Share price (₹)','பங்கு விலை'],'n/a','n/a','1,185.50','—','—'],
+ [['EV / EBITDA (TTM) †','EV / EBITDA †'],'—','—','~9.6x','—','—'],
+ [['P/B †','P/B †'],'—','—','~2.5x','—','—']];
+function renderFin(){var t=document.getElementById('finTbl');if(!t)return;var h='<tr><th>'+L('Metric','அளவீடு')+'</th><th class="n">Q2FY26</th><th class="n">Q1FY27</th><th class="n">Q2FY27</th><th class="n">YoY</th><th class="n">QoQ</th></tr>';
+ FIN.forEach(function(r){if(r[0]==='cat'){h+='<tr class="cat"><td colspan="6">'+L(r[1][0],r[1][1])+'</td></tr>';return;}h+='<tr><td>'+L(r[0][0],r[0][1])+'</td>';for(var k=1;k<6;k++){var v=r[k],cl='n';if(k>=4){if(/^\+|^×/.test(v))cl+=' up';if(/^−/.test(v))cl+=' dn';}h+='<td class="'+cl+'">'+v+'</td>';}h+='</tr>';});t.innerHTML=h;}
+
+/* ===== Cycle clock ===== */
+function drawClock(){var s=document.getElementById('clock');if(!s)return;var ph=[['P1 Trough','P1 அடிமட்டம்','#9aa4b5'],['P2 Early recovery','P2 ஆரம்ப மீட்சி','#1e9e5a'],['P3 Expansion','P3 விரிவாக்கம்','#1f5fbf'],['P4 Late / peak','P4 உச்சம்','#e0a100'],['P5 Downturn','P5 சரிவு','#d64545']];
+ var cx=170,cy=170,R=140,r=78,h='';function pt(a,rad){return [cx+rad*Math.cos(a),cy+rad*Math.sin(a)];}
+ ph.forEach(function(p,i){var a0=-Math.PI/2+i*2*Math.PI/5,a1=a0+2*Math.PI/5;var A=pt(a0,R),B=pt(a1,R),Cc=pt(a1,r),D=pt(a0,r);h+='<path d="M'+A+' A'+R+','+R+' 0 0 1 '+B+' L'+Cc+' A'+r+','+r+' 0 0 0 '+D+' Z" fill="'+p[2]+'" opacity="'+(i===2?1:.35)+'" stroke="#fff" stroke-width="2"/>';
+  var m=pt((a0+a1)/2,(R+r)/2);var lab=(LANG==='ta'?p[1]:p[0]).split(' ');h+='<text x="'+m[0]+'" y="'+(m[1]-4)+'" text-anchor="middle" font-size="11" font-weight="700" fill="'+(i===2?'#fff':'#1d2433')+'">'+lab[0]+'</text><text x="'+m[0]+'" y="'+(m[1]+10)+'" text-anchor="middle" font-size="10" fill="'+(i===2?'#fff':'#1d2433')+'">'+lab.slice(1).join(' ')+'</text>';});
+ var pa=-Math.PI/2+2.5*2*Math.PI/5-0.15,P=pt(pa,R-6);h+='<line x1="'+cx+'" y1="'+cy+'" x2="'+P[0]+'" y2="'+P[1]+'" stroke="#111" stroke-width="3"/><circle cx="'+cx+'" cy="'+cy+'" r="7" fill="#111"/>';
+ h+='<circle cx="'+cx+'" cy="'+cy+'" r="52" fill="#fff" stroke="#f07c1a" stroke-width="2"/><text x="'+cx+'" y="'+(cy-12)+'" text-anchor="middle" font-size="11" fill="#5b6478">'+L('Sector','துறை')+': P3</text><text x="'+cx+'" y="'+(cy+4)+'" text-anchor="middle" font-size="11" font-weight="700" fill="#b25a0c">'+L('Stock: Stage 3','பங்கு: Stage 3')+'</text><text x="'+cx+'" y="'+(cy+22)+'" text-anchor="middle" font-size="14" font-weight="800" fill="#1f5fbf">CY 63</text>';
+ s.innerHTML=h;}
+
+/* ===== Self-check ===== */
+var SC=[
+ {g:['1 · Questions about the stock','1 · பங்கு பற்றிய கேள்விகள்'],it:[[['I know where the profit comes from','லாபம் எங்கிருந்து வருதுன்னு தெரியும்'],['India ops adj. EBITDA ₹9,636 cr of ₹9,941 cr (~97%)','இந்திய EBITDA ₹9,636 / ₹9,941 கோடி (~97%)']],[['I know how much is linked to autos','ஆட்டோ தொடர்பு எவ்வளவுன்னு தெரியும்'],['Auto ~14% of domestic sales FY26; +36% YoY in Q2FY27','FY26-ல ~14%; Q2FY27 +36%']],[['I know the debt position','கடன் நிலை தெரியும்'],['Net debt ₹44,482 cr; 1.28x EBITDA','நிகர கடன் ₹44,482 கோடி; 1.28x']],[['I understand the capacity runway','திறன் வளர்ச்சி புரியும்'],['37.9 → 54.8 MTPA in ~4 years','37.9 → 54.8 MTPA ~4 வருஷம்']]]},
+ {g:['2 · Problems investors face','2 · முதலீட்டாளர் சந்திக்கும் சிக்கல்கள்'],it:[[['I accept that steel earnings swing with the cycle','ஸ்டீல் லாபம் சுழற்சியில ஏறி இறங்கும்னு ஏத்துக்கிறேன்'],['Q2FY23 consolidated net loss ₹848 cr','Q2FY23 நஷ்டம் ₹848 கோடி']],[['I can live with cost shocks','செலவு அதிர்ச்சியை தாங்க முடியும்'],['Coking coal ~+$25/t guided for Q3FY27','Q3 கோல் ~+$25/t']],[['I accept heavy-capex risk','பெரிய கேபெக்ஸ் அபாயம் ஏத்துக்கிறேன்'],['₹1.48 lakh cr over 5–6 years','5–6 வருஷத்துல ₹1.48 லட்சம் கோடி']],[['I understand China/import risk','சீனா/இறக்குமதி அபாயம் புரியும்'],['China steel exports incl. semis +3.3% Jan–Sep 2026','சீனா ஏற்றுமதி +3.3%']]]},
+ {g:['3 · Solutions (what I did)','3 · தீர்வுகள் (நான் செஞ்சது)'],it:[[['I checked per-tonne margin, not just profit','லாபம் மட்டுமில்ல, டன் மார்ஜினும் பார்த்தேன்'],['EBITDA/t ~₹14,997 → ~₹13,326 QoQ','டன் EBITDA ~₹14,997 → ~₹13,326']],[['I compared with a peer','போட்டியாளருடன் ஒப்பிட்டேன்'],['Jindal Steel EBITDA +24% with margin contraction','ஜிண்டால் EBITDA +24%, மார்ஜின் சுருக்கம்']],[['I read why the stock fell on results day','முடிவு நாள் ஷேர் ஏன் குறைஞ்சதுன்னு படிச்சேன்'],['−2.83% to ₹1,185.50 on 23 Oct 2026','23 அக் −2.83%, ₹1,185.50']],[['I sized my position for volatility','ஏற்ற இறக்கத்துக்கு ஏத்த அளவு'],['52-week range ₹1,073–1,351','52 வாரம் ₹1,073–1,351']]]},
+ {g:["4 · Anchors' and analysts' view","4 · அனலிஸ்ட் பார்வை"],it:[[['I looked at the full target range','முழு இலக்கு வரம்பையும் பார்த்தேன்'],['₹1,100–1,650; average ₹1,383.57','₹1,100–1,650; சராசரி ₹1,383.57']],[['I noted both bulls and bears','நேர்மறை, எதிர்மறை இரண்டும் பார்த்தேன்'],['Anand Rathi Buy ₹1,480; Citi Sell ₹915 (dated)','ஆனந்த் ராத்தி ₹1,480; சிட்டி ₹915 (பழையது)']],[['I checked whether targets are post-results','இலக்குகள் முடிவுக்கு பிறகா என பார்த்தேன்'],['Listed targets are pre-results (Jul–Oct 2026)','பட்டியல் இலக்குகள் முடிவுக்கு முன்']]]},
+ {g:['5 · My own conditions','5 · என் சொந்த நிபந்தனைகள்'],own:1}];
+var SCSUG=[['EBITDA/t back above ₹14,000','டன் EBITDA ₹14,000-க்கு மேல்'],['Net debt/EBITDA stays below 2x','கடன்/EBITDA 2x-க்கு கீழ்'],['Dolvi Phase-3 commissioned on time','டோல்வி 3 நேரத்துக்கு'],['Auto sales growth above 15%','ஆட்டோ வளர்ச்சி 15%-க்கு மேல்'],['Coking coal below $250/t','கோல் $250/t-க்கு கீழ்'],['Price below ₹1,100','விலை ₹1,100-க்கு கீழ்']];
+var KEY='cbsc_JSWSTEEL_Q2FY27';function scLoad(){try{return JSON.parse(localStorage.getItem(KEY))||{t:{},own:[]}}catch(e){return {t:{},own:[]}}}function scSave(d){try{localStorage.setItem(KEY,JSON.stringify(d))}catch(e){}}
+function renderSC(){var box=document.getElementById('scBox');if(!box)return;var d=scLoad(),h='',tot=0,on=0;
+ SC.forEach(function(G,gi){var items=G.own?d.own.map(function(o){return [[o,o],['','']]}):G.it;var c=0;items.forEach(function(it,ii){if(d.t[gi+'_'+ii])c++});tot+=items.length;on+=c;
+  h+='<div class="card"><b>'+L(G.g[0],G.g[1])+'</b> <span class="note">'+c+' / '+items.length+'</span><div class="prog"><i style="width:'+(items.length?c/items.length*100:0)+'%"></i></div>';
+  items.forEach(function(it,ii){var k=gi+'_'+ii;h+='<label class="sc-item"><input type="checkbox" '+(d.t[k]?'checked':'')+' onchange="scTick(\''+k+'\',this.checked)"><span>'+L(it[0][0],it[0][1])+(it[1][0]?'<small>Data: '+L(it[1][0],it[1][1])+'</small>':'<small>Data: </small>')+'</span></label>';});
+  if(G.own){h+='<div style="margin-top:8px"><input id="scNew" maxlength="80" style="width:70%;padding:6px;border:1px solid var(--line);border-radius:6px" placeholder="'+L('Add your condition (max 8)','உங்க நிபந்தனை (அதிகபட்சம் 8)')+'"> <button class="btn o" onclick="scAdd()">+</button></div><div style="margin-top:6px">'+SCSUG.map(function(s){return '<button class="btn g" onclick="scAdd(\''+L(s[0],s[1]).replace(/'/g,"\\'")+'\')">'+L(s[0],s[1])+'</button>'}).join('')+'</div>';}
+  h+='</div>';});
+ box.innerHTML=h;document.getElementById('scAll').textContent=on+' / '+tot;document.getElementById('scAllBar').style.width=(tot?on/tot*100:0)+'%';}
+function scTick(k,v){var d=scLoad();d.t[k]=v;scSave(d);renderSC();}
+function scAdd(t){var d=scLoad();t=t||(document.getElementById('scNew')||{}).value;if(!t)return;if(d.own.length>=8){alert(L('Up to 8 conditions','அதிகபட்சம் 8'));return;}d.own.push(t);scSave(d);renderSC();}
+function scClear(){scSave({t:{},own:[]});renderSC();}
+
+/* ===== Socrates ===== */
+var SOC=[
+ {q:['Why did PAT grow much faster than EBITDA this quarter?','இந்த காலாண்டுல EBITDA விட PAT ஏன் வேகமா வளர்ந்துச்சு?'],o:[['Steel prices alone','ஸ்டீல் விலை மட்டும்'],['Interest cost fell as net debt nearly halved','நிகர கடன் பாதியானதால வட்டி குறைஞ்சது'],['A tax refund','வரி திரும்பப் பெறல்'],['Exports doubled','ஏற்றுமதி இரட்டிப்பு']],a:1,e:['Net debt fell from ₹79,153 cr to ₹44,482 cr. Lower interest lets more EBITDA reach profit.','நிகர கடன் ₹79,153 → ₹44,482 கோடி. வட்டி குறைஞ்சா EBITDA அதிகமா லாபத்துக்கு போகும்.']},
+ {q:['Quarter-on-quarter, what lifted EBITDA?','QoQ EBITDA-வை ஏத்தினது எது?'],o:[['Higher EBITDA per tonne','டன் EBITDA உயர்வு'],['Higher volume','அதிக அளவு'],['Cheaper coal','மலிவான கோல்'],['Forex gain','அந்நியச் செலாவணி லாபம்']],a:1,e:['Volume added ~₹1,815 cr while lower spread per tonne took away ~₹1,247 cr.','அளவு ~₹1,815 கோடி சேர்த்துச்சு; ஸ்ப்ரெட் ~₹1,247 கோடி குறைச்சது.']},
+ {q:['Roughly what share of JSW domestic sales went directly to autos in FY26?','FY26-ல JSW உள்நாட்டு விற்பனையில நேரடியா ஆட்டோவுக்கு எவ்வளவு?'],o:[['5%','5%'],['14%','14%'],['35%','35%'],['60%','60%']],a:1,e:['About 14% directly; more reaches the auto chain indirectly via forgers and tube makers.','நேரடியா ~14%; மறைமுகமா இன்னும் அதிகம்.']},
+ {q:['Which valuation metric suits a capital-heavy cyclical like steel best?','ஸ்டீல் மாதிரி சுழற்சி தொழிலுக்கு எந்த மதிப்பீடு பொருத்தம்?'],o:[['P/E','P/E'],['EV/EBITDA','EV/EBITDA'],['Dividend yield','டிவிடெண்ட் வருவாய்'],['Price/Sales','விலை/விற்பனை']],a:1,e:['EV/EBITDA includes debt and ignores swings in depreciation and interest.','EV/EBITDA கடனையும் சேர்க்கும்; வட்டி, தேய்மான மாற்றங்களை தவிர்க்கும்.']},
+ {q:['Which cycle phase does the CB lens assign to Metals now?','CB பார்வையில மெட்டல்ஸ் எந்த கட்டம்?'],o:[['P1 Trough','P1'],['P2 Early recovery','P2'],['P3 Expansion','P3'],['P5 Downturn','P5']],a:2,e:['Demand +7–8%, utilisation ~90%, but capacity announcements everywhere — expansion with late-cycle signs.','டிமாண்ட் +7–8%, பயன்பாடு ~90% — பிற்கால அறிகுறிகளுடன் விரிவாக்கம்.']},
+ {q:['Biggest near-term negative trigger?','அருகிலுள்ள மிகப்பெரிய எதிர்மறை தூண்டி?'],o:[['JSW One IPO','JSW One IPO'],['Coking coal +$25/t in Q3','Q3 கோல் +$25/t'],['Dolvi Phase-3','டோல்வி 3'],['Mozambique coal','மொசாம்பிக் கோல்']],a:1,e:['It scores 2.10 points — the largest negative in the trigger table.','2.10 புள்ளி — அட்டவணையில மிகப் பெரிய எதிர்மறை.']}];
+function renderSoc(){var b=document.getElementById('socBox');if(!b)return;b.innerHTML=SOC.map(function(q,i){return '<div class="q"><b>'+(i+1)+'. '+L(q.q[0],q.q[1])+'</b>'+q.o.map(function(o,j){return '<label id="so'+i+'_'+j+'"><input type="radio" name="so'+i+'" onchange="socAns('+i+','+j+')"> '+L(o[0],o[1])+'</label>'}).join('')+'<div class="note" id="se'+i+'"></div></div>'}).join('');}
+function socAns(i,j){var q=SOC[i];q.o.forEach(function(o,k){document.getElementById('so'+i+'_'+k).className=k===q.a?'ok':(k===j?'no':'')});document.getElementById('se'+i).textContent=(j===q.a?L('✓ Right. ','✓ சரி. '):L('Think again — ','மறுபடி யோசிங்க — '))+L(q.e[0],q.e[1]);}
+function socFb(){var t=(document.getElementById('socFree').value||'').toLowerCase();var hits=[];if(/auto|ஆட்டோ|vehicle|வாகன/.test(t))hits.push(L('auto share','ஆட்டோ பங்கு'));if(/tonne|டன்|ebitda/.test(t))hits.push('EBITDA/t');if(/debt|கடன்/.test(t))hits.push(L('debt','கடன்'));if(/volume|அளவு|sales|விற்பனை/.test(t))hits.push(L('volumes','அளவு'));
+ document.getElementById('socFbOut').textContent=hits.length?L('You picked: '+hits.join(', ')+'. Ask yourself: if auto demand slows, can JSW redirect those tonnes to infra or exports — and at what price?','நீங்க தேர்ந்தெடுத்தது: '+hits.join(', ')+'. யோசிங்க: ஆட்டோ டிமாண்ட் குறைஞ்சா அந்த டன்களை உள்கட்டமைப்பு/ஏற்றுமதிக்கு திருப்ப முடியுமா — என்ன விலையில?'):L('Hint: look at the auto share of sales and EBITDA per tonne — which moves first?','குறிப்பு: ஆட்டோ பங்கு, டன் EBITDA — எது முதல்ல நகரும்?');}
+
+/* ===== CB Assist (voice Q&A) ===== */
+var KB=[
+ {k:['why','spurt','jump','reason','rise','ஏன்','பாய்ச்சல்','காரணம்'],a:['Four reasons: record volume (7.46 mt, +13%), richer mix (VASP 55%, auto +36%), much lower interest as net debt fell from ₹79,153 cr to ₹44,482 cr, and a weak base last year. Realisation was ~16% higher than a year ago but fell 3.6% versus Q1.','நாலு காரணம்: சாதனை அளவு (7.46 mt, +13%), நல்ல கலவை (VASP 55%, ஆட்டோ +36%), நிகர கடன் ₹79,153-லிருந்து ₹44,482 கோடியா குறைஞ்சதால வட்டி குறைவு, போன வருஷ பலவீன அடிப்படை. டன் விலை YoY ~16% அதிகம், QoQ 3.6% குறைவு.']},
+ {k:['revenue','sales','turnover','வருவாய்','விற்பனை'],a:['Revenue was ₹54,486 crore, up 20.7% year on year and 15% quarter on quarter, on record sales of 7.46 million tonnes.','வருவாய் ₹54,486 கோடி — YoY 20.7%, QoQ 15% ஏற்றம்; 7.46 மில்லியன் டன் சாதனை விற்பனை.']},
+ {k:['profit','pat','net','earning','லாபம்'],a:['Net profit was ₹5,359 crore, about 3.3 times the ₹1,646 crore of Q2FY26 and 14% above Q1FY27.','நிகர லாபம் ₹5,359 கோடி — Q2FY26-ஐ விட ~3.3 மடங்கு, Q1FY27-ஐ விட 14% அதிகம்.']},
+ {k:['ebitda','margin','tonne','மார்ஜின்','டன்'],a:['Adjusted EBITDA ₹9,941 crore, margin 18.3%, about ₹13,300 per tonne — down from ~₹15,000 in Q1 because of lower realisation and higher coal.','EBITDA ₹9,941 கோடி, மார்ஜின் 18.3%, டன்னுக்கு ~₹13,300 — Q1-ல ~₹15,000.']},
+ {k:['auto','car','vehicle','automobile','passenger','commercial','ஆட்டோ','வாகன','கார்'],a:['About 14% of domestic sales went directly to autos in FY26; CB estimates 15–18% in Q2FY27 after auto sales rose 36%. Industry PV sales grew 30.7% and CV 28.7% in the quarter. Use the calculator in the Auto Linkage tab to test vehicle growth.','FY26-ல உள்நாட்டு விற்பனையில ~14% நேரடியா ஆட்டோவுக்கு; Q2FY27-ல ~15–18% (CB மதிப்பீடு). PV +30.7%, CV +28.7%. ஆட்டோ டேப்ல கணக்கீட்டு கருவி பாருங்க.']},
+ {k:['capacity','mtpa','plant','expansion','dolvi','vijayanagar','utkal','திறன்','ஆலை','விரிவாக்க'],a:['Combined capacity is 37.9 MTPA including the 4.5 MTPA JV, rising to 54.8 MTPA in about four years and 78 MTPA in India including JVs by 2032. Dolvi goes 10 to 15, Vijayanagar 19.5 to 25, and JSW Utkal adds 10.','மொத்த திறன் 37.9 MTPA; ~4 வருஷத்துல 54.8 MTPA; 2032-க்குள் 78 MTPA. டோல்வி 10→15, விஜயநகர் 19.5→25, உத்கல் +10.']},
+ {k:['debt','leverage','gearing','கடன்'],a:['Net debt is ₹44,482 crore, 1.28 times EBITDA, gearing 0.39. It was ₹79,153 crore a year ago.','நிகர கடன் ₹44,482 கோடி, EBITDA-வின் 1.28 மடங்கு. போன வருஷம் ₹79,153 கோடி.']},
+ {k:['valuation','pe','p/e','ev','book','cheap','expensive','மதிப்பீடு','மலிவு'],a:['On CB estimates: about 9.6 times trailing EV/EBITDA, 14.4 times H1-annualised earnings and 2.5 times book.','CB கணக்கு: ~9.6x EV/EBITDA, ~14.4x P/E, ~2.5x P/B.']},
+ {k:['target','analyst','broker','rating','இலக்கு','அனலிஸ்ட்','ப்ரோக்கர்'],a:['Third-party targets range from ₹1,100 to ₹1,650; the average is ₹1,383.57. Anand Rathi ₹1,480 and Motilal Oswal ₹1,470 say Buy, IDBI ₹1,332 Hold, and an older Citi note said Sell at ₹915.','இலக்கு ₹1,100–1,650; சராசரி ₹1,383.57. ஆனந்த் ராத்தி ₹1,480, மோதிலால் ₹1,470 Buy; IDBI ₹1,332 Hold; சிட்டி ₹915 Sell (பழையது).']},
+ {k:['buy','sell','hold','invest','should','வாங்க','விற்க','முதலீடு'],a:['CB Research does not give buy, sell or hold advice. You can work through your own conditions in the Self-check tab.','CB Research வாங்கு/விற்கு ஆலோசனை தராது. சுய சோதனை டேப்ல உங்க நிபந்தனைகளை பாருங்க.'],btn:1},
+ {k:['coal','cost','iron ore','raw','கோல்','செலவு','தாது'],a:['Coking coal rose about $10 a tonne in Q2 and is guided up about $25 in Q3. Captive iron ore covers about half of needs; Mozambique coal comes from 2028.','Q2-ல கோல் ~$10/t ஏறுச்சு; Q3-ல ~$25 ஏறும். இரும்புத்தாது ~பாதி சொந்தம்; மொசாம்பிக் கோல் 2028 முதல்.']},
+ {k:['fell','fall','down','share price','stock','குறைஞ்ச','விலை'],a:['The share fell 2.83% to ₹1,185.50 because growth was volume-led while per-tonne margin fell, coal costs will rise in Q3, and the capex plan was raised to ₹1.48 lakh crore.','அளவு வளர்ச்சி மட்டும், டன் மார்ஜின் குறைவு, Q3 கோல் செலவு, ₹1.48 லட்சம் கோடி கேபெக்ஸ் — அதனால 2.83% குறைஞ்சு ₹1,185.50.']},
+ {k:['capex','investment','கேபெக்ஸ்'],a:['Capex plan is ₹1.48 lakh crore over 5 to 6 years; FY27 guidance ₹22,000 to 24,000 crore, with ₹11,136 crore spent in H1.','கேபெக்ஸ் ₹1.48 லட்சம் கோடி 5–6 வருஷத்துல; FY27 ₹22,000–24,000 கோடி; H1-ல ₹11,136 கோடி.']},
+ {k:['subsidiary','jv','jfe','bpsl','usa','italy','jsw one','துணை','கூட்டு'],a:['India operations earned ₹9,636 crore EBITDA. US units about $19 million, Italy $7 million. The JSW-JFE JV sold 0.92 mt with ₹1,136 crore EBITDA but a stamp-duty loss. JSW One GMV rose 77% to ₹6,989 crore.','இந்தியா EBITDA ₹9,636 கோடி; அமெரிக்கா ~$19M, இத்தாலி $7M; JSW-JFE JV 0.92 mt, EBITDA ₹1,136 கோடி; JSW One GMV ₹6,989 கோடி (+77%).']},
+ {k:['cycle','trigger','catalyst','சுழற்சி','தூண்டி'],a:['Metals sit in the expansion phase P3 with late-cycle signs; cycle score 63. Trigger score 76: Q3 volume ramp, Dolvi Phase-3 and price hikes, against coking coal +$25.','மெட்டல்ஸ் P3 விரிவாக்க கட்டம்; CY 63. TG 76: Q3 அளவு, டோல்வி, விலை உயர்வு vs கோல் +$25.']},
+ {k:['cash','flow','working capital','inventory','cfo','பணப்புழக்கம்','சரக்கு'],a:['FY26 cash from operations was ₹25,152 crore and free cash flow ₹10,498 crore. Inventory days improved from about 76 to 65. In Q2 JSW cut net debt despite ₹6,500 crore capex.','FY26 CFO ₹25,152 கோடி, FCF ₹10,498 கோடி. சரக்கு நாட்கள் ~76→65. Q2-ல ₹6,500 கோடி கேபெக்ஸ் இருந்தும் கடன் குறைஞ்சது.']},
+ {k:['management','ceo','cfo','board','jindal','acharya','நிர்வாக','போர்டு'],a:['Sajjan Jindal is Chairman and MD, Jayant Acharya Joint MD and CEO, Swayam Saurabh CFO, G S Rathod COO and Arun Maheshwari Director Commercial.','சஜ்ஜன் ஜிண்டால் தலைவர் & MD; ஜெயந்த் ஆச்சார்யா இணை MD & CEO; ஸ்வயம் சௌரப் CFO; G S ரத்தோட் COO.']},
+ {k:['rank','compare','fastest','segment','growth','ஒப்பி','வேகமா','பிரிவு'],a:['Fastest-growing sales segments this quarter: auto +36%, appliances +28%, flats +16%, institutional +15%, renewables +14%, value-added +11%.','வேகமா வளர்ந்த பிரிவுகள்: ஆட்டோ +36%, அப்ளையன்ஸ் +28%, ஃப்ளாட்ஸ் +16%, நிறுவன +15%, ரினியூவபிள் +14%, VASP +11%.']},
+ {k:['score','pillar','cb score','மதிப்பெண்','தூண்'],a:['CB Score is 68 out of 100: growth 8.5, debt 8, margin 7, valuation 6, risk 6 and trend 5.5.','CB மதிப்பெண் 68/100: வளர்ச்சி 8.5, கடன் 8, மார்ஜின் 7, மதிப்பீடு 6, அபாயம் 6, போக்கு 5.5.']}];
+function togAs(){var p=document.getElementById('asPanel');p.style.display=p.style.display==='flex'?'none':'flex';if(!document.getElementById('asLog').children.length)bot(L('Ask me anything about JSW Steel Q2FY27 — type or tap 🎤 and speak.','JSW Steel Q2FY27 பற்றி எதுவும் கேளுங்க — டைப் பண்ணுங்க இல்ல 🎤 தொட்டு பேசுங்க.'));asSugg();}
+function asSugg(){var s=document.getElementById('asSug');if(!s)return;var q=LANG==='ta'?['ஏன் இந்த பாய்ச்சல்?','ஆட்டோ பங்கு எவ்வளவு?','திறன் என்ன?','ஷேர் ஏன் குறைஞ்சது?']:['Why the spurt?','How much goes to autos?','What is the capacity?','Why did the share fall?'];s.innerHTML=q.map(function(x){return '<button onclick="ask(\''+x+'\')">'+x+'</button>'}).join('');}
+function bot(t,btn){var d=document.createElement('div');d.className='b';d.textContent=t;if(btn){var b=document.createElement('button');b.className='btn o';b.textContent=L('Open Self-check','சுய சோதனை திற');b.onclick=function(){show('t-sc');togAs();};d.appendChild(document.createElement('br'));d.appendChild(b);}var l=document.getElementById('asLog');l.appendChild(d);l.scrollTop=l.scrollHeight;}
+function speak(t){try{if(!window.speechSynthesis)return;speechSynthesis.cancel();var u=new SpeechSynthesisUtterance(t);u.lang=LANG==='ta'?'ta-IN':'en-IN';var vs=speechSynthesis.getVoices().filter(function(v){return v.lang&&v.lang.indexOf(LANG==='ta'?'ta':'en-IN')===0});if(vs[0])u.voice=vs[0];u.rate=1;speechSynthesis.speak(u);}catch(e){}}
+function ask(q,viaVoice){var inp=document.getElementById('asQ');q=q||inp.value;if(!q)return;inp.value='';var u=document.createElement('div');u.className='u';u.textContent=q;document.getElementById('asLog').appendChild(u);
+ var ql=q.toLowerCase(),best=null,bs=0;KB.forEach(function(e){var sc=0;e.k.forEach(function(k){if(ql.indexOf(k)>=0)sc+=k.length>3?2:1});if(sc>bs){bs=sc;best=e}});
+ var ans=best?L(best.a[0],best.a[1]):L('I could not match that. Try: revenue, profit, auto share, capacity, debt, valuation, targets, cycle, cash flow.','புரியல. இப்படி கேளுங்க: வருவாய், லாபம், ஆட்டோ, திறன், கடன், மதிப்பீடு, இலக்கு, சுழற்சி.');
+ bot(ans,best&&best.btn);if(viaVoice||window._voiceOn)speak(ans);}
+var rec=null;function mic(){var SR=window.SpeechRecognition||window.webkitSpeechRecognition;var b=document.getElementById('micB');if(!SR){bot(L('Voice input is not supported in this browser — please type. Answers can still be read aloud in Chrome/Edge.','இந்த ப்ரௌசர்ல குரல் உள்ளீடு இல்ல — டைப் பண்ணுங்க.'));return;}
+ if(rec){rec.stop();return;}rec=new SR();rec.lang=LANG==='ta'?'ta-IN':'en-IN';rec.interimResults=false;rec.onresult=function(e){var t=e.results[0][0].transcript;window._voiceOn=true;ask(t,true);};rec.onend=function(){b.classList.remove('on');rec=null;};rec.onerror=function(){b.classList.remove('on');rec=null;};b.classList.add('on');rec.start();}
+function togDisc(){var d=document.getElementById('disc');d.style.display=d.style.display==='block'?'none':'block';}
+
+/* ===== Init ===== */
+buildNav();drawTemple();drawBM();drawClock();renderSC();renderSoc();buildCalc();renderFin();
+</script>
+</body>
+</html>
