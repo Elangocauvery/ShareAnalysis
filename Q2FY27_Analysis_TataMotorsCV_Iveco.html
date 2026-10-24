@@ -1,0 +1,708 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Tata Motors CV Q2FY27</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<style>
+:root{--bg:#ffffff;--panel:#f7f8fb;--ink:#1d2433;--mute:#5b6476;--line:#e3e6ee;--navy:#1f3a5f;--or:#e8731a;--gr:#1f9d55;--am:#d99a00;--rd:#d64545;--bl:#2f6fd6;--pu:#7b4fd0;--te:#0f9488}
+*{box-sizing:border-box}
+body{margin:0;background:#fff;color:var(--ink);font-family:"Segoe UI",Roboto,"Noto Sans Tamil",Arial,sans-serif;font-size:15px;line-height:1.5}
+header{background:#fff;border-bottom:3px solid var(--or);padding:14px 16px 8px;position:sticky;top:0;z-index:20}
+.hrow{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+h1{font-size:20px;margin:0;color:var(--navy)}
+.sub{color:var(--mute);font-size:13px}
+.lang{display:flex;gap:6px}
+.lang button{border:1px solid var(--navy);background:#fff;color:var(--navy);border-radius:16px;padding:4px 12px;cursor:pointer;font-size:13px}
+.lang button.on{background:var(--navy);color:#fff}
+nav{display:flex;gap:6px;overflow-x:auto;padding:8px 0 2px;scrollbar-width:thin}
+nav button{flex:0 0 auto;border:1px solid var(--line);background:var(--panel);border-radius:8px;padding:6px 11px;font-size:13px;cursor:pointer;color:var(--ink)}
+nav button.on{background:var(--or);color:#fff;border-color:var(--or)}
+main{max-width:1180px;margin:0 auto;padding:16px}
+.tab{display:none}.tab.on{display:block}
+h2{color:var(--navy);font-size:19px;margin:18px 0 8px;border-left:4px solid var(--or);padding-left:8px}
+h3{color:var(--navy);font-size:16px;margin:14px 0 6px}
+.grid{display:grid;gap:12px}
+.g4{grid-template-columns:repeat(auto-fit,minmax(200px,1fr))}
+.g3{grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
+.g2{grid-template-columns:repeat(auto-fit,minmax(320px,1fr))}
+.card{background:#fff;border:1px solid var(--line);border-radius:10px;padding:12px 14px}
+.kpi .v{font-size:22px;font-weight:700;color:var(--navy)}
+.kpi .l{font-size:12px;color:var(--mute);text-transform:uppercase;letter-spacing:.4px}
+.kpi .d{font-size:13px}
+.up{color:var(--gr);font-weight:600}.dn{color:var(--rd);font-weight:600}.fl{color:var(--am);font-weight:600}
+.note{font-size:12px;color:var(--mute)}
+.pill{display:inline-block;border-radius:12px;padding:2px 10px;font-size:12px;font-weight:600;margin:2px}
+.pg{background:#e5f5ec;color:var(--gr)}.pa{background:#fff4d6;color:#a07000}.pr{background:#fde7e7;color:var(--rd)}.pb{background:#e6efff;color:var(--bl)}
+table{border-collapse:collapse;width:100%;font-size:13.5px}
+th,td{border-bottom:1px solid var(--line);padding:7px 8px;text-align:right;vertical-align:top}
+th:first-child,td:first-child{text-align:left}
+thead th{background:var(--navy);color:#fff;position:sticky;top:0}
+tr.cat td{background:#fff1e6;color:var(--or);font-weight:700;text-align:left}
+.tw{overflow-x:auto;border:1px solid var(--line);border-radius:8px}
+.cw{overflow-x:auto}.cw .ci{min-width:640px;height:320px;position:relative}
+.callout{background:#fff8f1;border:1px solid #f5cfa9;border-radius:10px;padding:12px 14px}
+.callout.blue{background:#f2f6ff;border-color:#c9d8fb}
+.callout.green{background:#eefaf3;border-color:#bfe8cf}
+.callout.red{background:#fff2f2;border-color:#f3c4c4}
+ul.t{margin:6px 0;padding-left:20px}ul.t li{margin:3px 0}
+svg text{font-family:"Segoe UI",Roboto,Arial,sans-serif}
+.bm rect.bx{cursor:pointer;transition:all .15s}.bm g.node:hover rect.bx{stroke-width:3}
+#bmCard{min-height:90px}
+.pillarCard{transition:box-shadow .3s}.pillarCard.hl{box-shadow:0 0 0 3px var(--or)}
+.slid{display:grid;grid-template-columns:1fr 90px;gap:6px 10px;align-items:center;font-size:13.5px}
+.slid input[type=range]{width:100%}
+.big{font-size:26px;font-weight:800}
+.badge{position:fixed;right:16px;bottom:16px;width:58px;height:58px;border-radius:50%;background:var(--or);color:#fff;font-weight:800;font-size:20px;display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:40;box-shadow:0 3px 10px rgba(0,0,0,.25);animation:blink 2.4s infinite;border:3px solid #fff}
+@keyframes blink{0%,100%{box-shadow:0 0 0 0 rgba(232,115,26,.6)}50%{box-shadow:0 0 0 12px rgba(232,115,26,0)}}
+#disc{display:none;position:fixed;right:16px;bottom:84px;max-width:340px;background:#fff;border:2px solid var(--or);border-radius:12px;padding:12px 14px;font-size:12.5px;z-index:41;box-shadow:0 6px 20px rgba(0,0,0,.18)}
+.asst{position:fixed;right:84px;bottom:20px;z-index:39}
+.asst>button{background:var(--navy);color:#fff;border:none;border-radius:24px;padding:12px 16px;font-size:14px;cursor:pointer;box-shadow:0 3px 10px rgba(0,0,0,.2)}
+#asstBox{display:none;position:fixed;right:16px;bottom:84px;width:min(380px,calc(100vw - 32px));max-height:70vh;background:#fff;border:1px solid var(--line);border-radius:12px;box-shadow:0 8px 24px rgba(0,0,0,.2);z-index:42;flex-direction:column}
+#asstLog{overflow-y:auto;padding:10px;flex:1;font-size:13.5px;max-height:48vh}
+.msg{margin:6px 0;padding:8px 10px;border-radius:10px}.msg.u{background:#e6efff;margin-left:30px}.msg.b{background:#f7f8fb;margin-right:20px}
+.arow{display:flex;gap:6px;padding:8px;border-top:1px solid var(--line)}
+.arow input{flex:1;border:1px solid var(--line);border-radius:8px;padding:8px}
+.arow button{border:none;border-radius:8px;padding:8px 10px;cursor:pointer;background:var(--or);color:#fff}
+.chips button{border:1px solid var(--line);background:var(--panel);border-radius:14px;padding:3px 9px;margin:2px;font-size:12px;cursor:pointer}
+.mic.rec{background:var(--rd)!important}
+.q{margin:10px 0;padding:10px;border:1px solid var(--line);border-radius:10px}
+.q button.opt{display:block;width:100%;text-align:left;margin:4px 0;padding:7px 10px;border:1px solid var(--line);border-radius:8px;background:#fff;cursor:pointer}
+.q button.opt.ok{background:#e5f5ec;border-color:var(--gr)}.q button.opt.no{background:#fde7e7;border-color:var(--rd)}
+.sc label{display:block;padding:6px 0;border-bottom:1px dashed var(--line)}
+.sc .data{display:block;font-size:12px;color:var(--mute);margin-left:24px}
+.bar{height:10px;background:var(--line);border-radius:6px;overflow:hidden}.bar i{display:block;height:100%;background:var(--or);width:0}
+.tl{border-left:3px solid var(--or);margin-left:8px;padding-left:14px}
+.tl div{position:relative;margin:0 0 12px}
+.tl div:before{content:"";position:absolute;left:-21px;top:5px;width:11px;height:11px;border-radius:50%;background:#fff;border:3px solid var(--or)}
+.tl b{color:var(--navy)}
+.foot{margin:30px 0 70px;font-size:12px;color:var(--mute)}
+@media(max-width:600px){h1{font-size:17px}.kpi .v{font-size:19px}main{padding:12px}}
+</style>
+</head>
+<body>
+<header>
+ <div class="hrow">
+  <div><h1 class="i18n" data-ta="டாடா மோட்டார்ஸ் (கமர்ஷியல் வாகனங்கள்) · Q2 FY27 பிசினஸ் & முதலீட்டு அனாலிசிஸ்">Tata Motors (Commercial Vehicles) · Q2 FY27 Business &amp; Investment Analysis</h1>
+  <div class="sub i18n" data-ta="காலாண்டு முடிவு: 30 செப் 2026 · முடிவுகள் வெளியானது 23 அக் 2026 · NSE: TMCV · BSE: 544569">Quarter ended 30 Sep 2026 · Results declared 23 Oct 2026 · NSE: TMCV · BSE: 544569 · CB Research</div></div>
+  <div class="lang"><button id="lgEN" class="on" onclick="setLang('en')">English</button><button id="lgTA" onclick="setLang('ta')">தமிழ்</button></div>
+ </div>
+ <nav id="nav"></nav>
+</header>
+<main>
+
+<!-- ================= OVERVIEW ================= -->
+<section class="tab on" id="t-ov">
+<h2 class="i18n" data-ta="ஒரு வரியில் சொன்னா">The quarter in one line</h2>
+<div class="callout"><b class="i18n" data-ta="வாலியூம் ரெக்கார்டு, ஆனா மார்ஜின் அழுத்தம்.">Record volumes, squeezed margins.</b> <span class="i18n" data-ta="வண்டி விற்பனை 42% ஏறுச்சு, கன்சாலிடேட்டட் வருமானம் 36% ஏறி ₹25,338 கோடி. ஆனா ஸ்டீல், ரப்பர் விலை ஏறினதால EBITDA மார்ஜின் 10.9%க்கு இறங்குச்சு. கேஷ் ஃப்ளோ ரொம்ப வலுவா இருக்கு (FCF ₹4,600 கோடி). இதுக்கு நடுவுல €3.91 பில்லியன் இவெகோ டீல் இன்னும் முடிவாகல – 80% ஷேர்ஸ் வரணும், 22 அக் வரைக்கும் 35% தான் வந்திருக்கு.">Wholesales jumped 42% and consolidated revenue rose 36% to ₹25,338 Cr, but steel and rubber inflation pulled EBITDA margin to 10.9%. Cash generation was exceptional (FCF ₹4,600 Cr). Hanging over everything: the €3.91 bn Iveco takeover, which needs 80% acceptance and had only ~35% by 22 Oct.</span></div>
+
+<div class="grid g4" style="margin-top:12px">
+ <div class="card kpi"><div class="l i18n" data-ta="கன்சாலிடேட்டட் வருமானம்">Consolidated revenue</div><div class="v">₹25,338 Cr</div><div class="d up">+36.3% YoY</div></div>
+ <div class="card kpi"><div class="l i18n" data-ta="ஸ்டாண்ட்அலோன் வருமானம்">Standalone revenue</div><div class="v">₹23,900 Cr</div><div class="d up">+42% YoY</div></div>
+ <div class="card kpi"><div class="l">EBITDA (consol.)</div><div class="v">≈₹2,762 Cr†</div><div class="d up">+31% YoY · <span class="dn">margin 10.9% (−40 bps)</span></div></div>
+ <div class="card kpi"><div class="l">EBITDA (standalone)</div><div class="v">≈₹2,796 Cr†</div><div class="d"><span class="dn">margin 11.7% (−90 bps)</span></div></div>
+ <div class="card kpi"><div class="l i18n" data-ta="நிகர லாபம் (கன்சால்.)">Net profit (consol.)</div><div class="v">₹1,253 Cr</div><div class="d up i18n" data-ta="போன வருஷம் ₹867 கோடி நஷ்டம்">vs loss of ₹867 Cr</div></div>
+ <div class="card kpi"><div class="l i18n" data-ta="மொத்த வண்டி விற்பனை">Wholesales</div><div class="v">1,35,114</div><div class="d up">+42.7% YoY</div></div>
+ <div class="card kpi"><div class="l">Free cash flow (Q2)</div><div class="v">₹4,600 Cr</div><div class="d up">vs ₹2,200 Cr · H1 ₹5,721 Cr</div></div>
+ <div class="card kpi"><div class="l i18n" data-ta="நெட் கேஷ் (கன்சால்.)">Net cash (consol.)</div><div class="v">₹15,900 Cr</div><div class="d">Standalone ₹11,300 Cr</div></div>
+</div>
+<p class="note">† CB-derived from reported margin × revenue or reported growth; not a reported line item. Standalone includes Tata Cummins joint operation as reported.</p>
+
+<h2 class="i18n" data-ta="CB 6-தூண் ஸ்கோர் (கோவில் மாடல்)">CB six-pillar score</h2>
+<div class="grid g2">
+ <div class="card"><svg id="temple" viewBox="0 0 600 440" style="width:100%;height:auto"></svg>
+ <div style="text-align:center"><span class="pill pb">CY 41</span><span class="pill pa">TG 58</span><span class="pill pa">CB Conviction 59</span></div></div>
+ <div id="pillarCards" class="grid" style="gap:8px"></div>
+</div>
+
+<h2 class="i18n" data-ta="முக்கியமான 6 விஷயங்கள்">Six things that matter</h2>
+<div class="grid g3">
+ <div class="card"><b class="i18n" data-ta="1. வளர்ச்சி எக்ஸ்போர்ட்டால தான்">1. Growth beat came from exports</b><p class="i18n" data-ta="மொத்த விற்பனை 42% ஏறுச்சு, ஆனா உள்நாட்டு விற்பனை 30.9% தான் – இண்டஸ்ட்ரி வளர்ச்சி (~30.5%) அளவுக்கு தான். இண்டர்நேஷனல் 177% ஏறி 21,132 வண்டி – பெரும்பாலும் இந்தோனேஷியா ஆர்டர்.">Total volume +42%, but domestic +30.9% — roughly in line with domestic industry (~30.5%). International +177% to 21,132 units, mainly the Indonesia order. Outperformance is export-led, not share-led.</p></div>
+ <div class="card"><b class="i18n" data-ta="2. Q2ல மார்க்கெட் ஷேர் கொஞ்சம் இறங்குச்சு">2. Q2 market share slipped vs Q1</b><p class="i18n" data-ta="H1 ஷேர் (36.2%) Q1 ஷேரை (36.8%) விட குறைவு. அப்போ Q2 மட்டும் Q1ஐ விட குறைவு – HCV, ILMCV, SCV, பஸ் எல்லாத்திலயும். ஆனா FY26 (35.7%) விட இன்னும் மேல தான்.">H1 share (36.2%) is below Q1 (36.8%) in every category — so Q2 alone was weaker than Q1. Still above FY26 (35.7%).</p></div>
+ <div class="card"><b class="i18n" data-ta="3. ஒரு வண்டிக்கு லாபம் குறைஞ்சிருக்கு">3. Profit per vehicle fell</b><p class="i18n" data-ta="ஒரு வண்டிக்கு EBITDA சுமார் ₹2.07 லட்சம் – போன வருஷம் ₹2.19 லட்சம், Q4FY26ல ₹2.58 லட்சம். கமாடிட்டி விலை ஏற்றம் + எக்ஸ்போர்ட்/SCV மிக்ஸ்.">EBITDA per vehicle ≈₹2.07 lakh† vs ₹2.19 lakh a year ago and ₹2.58 lakh in Q4FY26 — commodity inflation plus a mix tilt to exports and SCVs.</p></div>
+ <div class="card"><b class="i18n" data-ta="4. கேஷ் வலுவா, ஆனா சப்ளையர் பணம் மூலமா">4. Cash is strong — partly supplier-funded</b><p class="i18n" data-ta="H1 FCF ₹5,721 கோடில ₹2,447 கோடி வொர்க்கிங் கேபிடல்ல இருந்து (பேயபிள்ஸ்). டவுன்சைக்கிள் வந்தா இது திரும்பிப் போகும்.">Of H1 FCF ₹5,721 Cr, ₹2,447 Cr came from working capital (payables/acceptances). Negative working capital reverses in a downturn.</p></div>
+ <div class="card"><b class="i18n" data-ta="5. Q3ல இன்னும் 150–200 bps செலவு அழுத்தம்">5. Another 150–200 bps cost hit guided for Q3</b><p class="i18n" data-ta="ஸ்டீல் 52 வார உச்சத்துல. அக் 1ல இருந்து 1–2% விலை ஏற்றம். டிமாண்ட் வளர்ச்சி ஹை சிங்கிள் டிஜிட்/லோ டபுள் டிஜிட்டுக்கு குறையும்னு மேனேஜ்மென்ட் சொல்லுது.">Steel at 52-week highs; 1–2% price hike from 1 Oct; management expects industry growth to cool to high-single/low-double digits.</p></div>
+ <div class="card"><b class="i18n" data-ta="6. இவெகோ – டெக் ஆம், பணம் இப்போதைக்கு இல்ல">6. Iveco — technology yes, money not yet</b><p class="i18n" data-ta="இவெகோ H1 2026 EBIT மார்ஜின் ~1.2% மட்டும்; டாடா CV ~11% EBITDA. CB மாடல்படி இவெகோ ~2.4% EBIT மார்ஜினுக்கு வந்தா தான் EPS குறையாம இருக்கும். விவரம் 'இவெகோ' டேப்ல.">Iveco's H1 2026 adjusted EBIT margin was ~1.2%. CB's model says Iveco must reach ~2.4% EBIT just to avoid diluting TMCV EPS. See the Iveco tab.</p></div>
+</div>
+</section>
+
+<!-- ================= BUSINESS MODEL ================= -->
+<section class="tab" id="t-bm">
+<h2 class="i18n" data-ta="பிசினஸ் மாடல் வரைபடம் – எந்த பெட்டியையும் தொட்டுப் பாருங்க">Business-model map — tap any box</h2>
+<div class="card cw"><div style="min-width:900px"><svg id="bmSvg" class="bm" viewBox="0 0 1000 600" style="width:100%;height:auto"></svg></div></div>
+<div id="bmCard" class="callout blue" style="margin-top:10px"><span class="i18n" data-ta="ஒரு பெட்டியைத் தொட்டா அதோட விளக்கம் இங்க வரும்.">Tap a box above to see its explanation here.</span></div>
+<p class="note"><b>Revenue formula:</b> Revenue ≈ Σ (segment wholesales × average realisation per vehicle) + parts, service &amp; digital (≈20% of revenue) + international sales. Q2FY27 standalone realisation ≈ ₹17.7 lakh per vehicle†.</p>
+<h3 class="i18n" data-ta="வருமான இன்ஜின் – என்ன நகர்த்துது">Revenue engine — what drives each line</h3>
+<div class="tw"><table>
+<thead><tr><th>Driver</th><th>Q2FY27 reading</th><th>Direction</th><th>What moves it</th></tr></thead>
+<tbody>
+<tr><td>HCV trucks (33,800 units)</td><td>+41% · share 55.7% (H1)</td><td class="up">▲</td><td style="text-align:left">Infra execution, mining, e-way bills, replacement cycle, freight rates</td></tr>
+<tr><td>ILMCV (~21,800 units†)</td><td>share 36.3% (H1)</td><td class="up">▲</td><td style="text-align:left">E-commerce, FMCG distribution, festive stocking</td></tr>
+<tr><td>SCV &amp; pickups (44,000 units)</td><td>+27% · share 27.6% (H1) · SCV EV 4,400 retail</td><td class="up">▲</td><td style="text-align:left">Rural demand, GST 2.0 cut, last-mile EV adoption</td></tr>
+<tr><td>CV passenger / buses (~14,400 units†)</td><td>share 41.1% (H1), +500 bps vs FY26</td><td class="up">▲</td><td style="text-align:left">State/STU tenders, e-bus schemes, staff transport</td></tr>
+<tr><td>International (21,132 units)</td><td>+177%</td><td class="up">▲▲</td><td style="text-align:left">Indonesia large order (~70,000 units over time), SAARC, Middle East, Africa</td></tr>
+<tr><td>Parts, service, digital</td><td>≈20% of revenue</td><td class="fl">●</td><td style="text-align:left">Vehicle parc, uptime contracts, Fleet Edge connected services — non-cyclical cushion</td></tr>
+<tr><td>Realisation per vehicle</td><td>≈₹17.7 lakh† (+1.7% YoY)</td><td class="fl">●</td><td style="text-align:left">Price hikes (Jan ~1%, Apr 2%, Jul 2.5%, Oct 1–2%), mix (exports/SCV dilute)</td></tr>
+<tr><td>Variable cost</td><td>₹1,416 Cr adverse (5.9% impact)</td><td class="dn">▼</td><td style="text-align:left">Steel (52-week high), rubber, precious metals</td></tr>
+</tbody></table></div>
+</section>
+
+<!-- ================= FINANCIALS ================= -->
+<section class="tab" id="t-fin">
+<h2 class="i18n" data-ta="காலாண்டு போக்கு – கன்சாலிடேட்டட்">Quarterly trend — consolidated</h2>
+<div class="card cw"><div class="ci"><canvas id="cRev"></canvas></div></div>
+<p class="note">Bars: revenue and EBITDA (₹ Cr, absolute). Line: EBITDA margin (%). Q3FY26 EBITDA not available in verified sources (n/a).</p>
+<div class="grid g2">
+ <div class="card cw"><div class="ci" style="height:280px"><canvas id="cPat"></canvas></div></div>
+ <div class="card cw"><div class="ci" style="height:280px"><canvas id="cVol"></canvas></div></div>
+</div>
+<p class="note">Q2FY26 PAT hit by ~₹2,000 Cr mark-to-market loss on Tata Capital shares; Q1FY27 PAT boosted by Tata Capital MTM gain. Q3FY26 volume = FY26 total less other quarters†.</p>
+
+<h2 class="i18n" data-ta="முக்கிய அளவீடுகள் – வகைப்படி">Key metrics — by category</h2>
+<div class="tw"><table>
+<thead><tr><th>Metric</th><th>Q2FY27</th><th>Q1FY27</th><th>Q4FY26</th><th>Q2FY26</th><th>YoY</th></tr></thead>
+<tbody>
+<tr class="cat"><td colspan="6">Growth &amp; Balance sheet</td></tr>
+<tr><td>Consolidated revenue (₹ Cr)</td><td>25,338</td><td>20,667</td><td>26,098</td><td>18,491</td><td class="up">+36.3%</td></tr>
+<tr><td>Standalone revenue (₹ Cr)</td><td>23,900</td><td>19,329</td><td>24,452</td><td>16,831†</td><td class="up">+42%</td></tr>
+<tr><td>Total wholesales (units)</td><td>1,35,114</td><td>1,08,700</td><td>1,31,800</td><td>96,800</td><td class="up">+42.7%</td></tr>
+<tr><td>Domestic / International (units)</td><td>1,13,982 / 21,132</td><td>n/a</td><td>n/a</td><td>87,061 / 7,620†</td><td class="up">+30.9% / +177%</td></tr>
+<tr><td>Domestic CV market share (VAHAN)</td><td>36.2% (H1)</td><td>36.8%</td><td>35.7% (FY26)</td><td>n/a</td><td class="up">+110 bps vs FY26</td></tr>
+<tr><td>Net cash, consolidated (₹ Cr)</td><td>15,900</td><td>13,500</td><td>7,500 (FY26)</td><td>1,200</td><td class="up">+14,700</td></tr>
+<tr class="cat"><td colspan="6">Profitability</td></tr>
+<tr><td>EBITDA, consolidated (₹ Cr)</td><td>≈2,762†</td><td>2,257</td><td>≈3,210†</td><td>≈2,140†</td><td class="up">+31%</td></tr>
+<tr><td>EBITDA margin, consolidated</td><td>10.9%</td><td>10.9%</td><td>12.3%</td><td>11.3%</td><td class="dn">−40 bps</td></tr>
+<tr><td>EBITDA, standalone (₹ Cr)</td><td>≈2,796†</td><td>2,263</td><td>3,400</td><td>≈2,121†</td><td class="up">+31%</td></tr>
+<tr><td>EBITDA margin, standalone</td><td>11.7%</td><td>11.7%</td><td>13.9%</td><td>12.6%</td><td class="dn">−90 bps</td></tr>
+<tr><td>PBT before exceptional, standalone</td><td colspan="4">+51% YoY (absolute n/a)</td><td class="up">+51%</td></tr>
+<tr><td>Exceptional items (₹ Cr)</td><td>218</td><td>n/a</td><td>220</td><td>n/a</td><td>—</td></tr>
+<tr><td>PAT, consolidated (₹ Cr)</td><td>1,253</td><td>2,560</td><td>1,793</td><td>−867</td><td class="up">turnaround</td></tr>
+<tr><td>PAT, standalone (₹ Cr)</td><td>n/a</td><td>1,528</td><td>2,406</td><td>n/a</td><td>—</td></tr>
+<tr class="cat"><td colspan="6">Efficiency</td></tr>
+<tr><td>Realisation per vehicle, standalone (₹ lakh)</td><td>17.69†</td><td>17.78†</td><td>18.55†</td><td>17.39†</td><td class="up">+1.7%</td></tr>
+<tr><td>EBITDA per vehicle, standalone (₹ lakh)</td><td>2.07†</td><td>2.08†</td><td>2.58†</td><td>2.19†</td><td class="dn">−5.5%</td></tr>
+<tr><td>Investment spend: R&amp;D + capex (₹ Cr)</td><td>597 (339 + 258)</td><td>n/a</td><td>n/a</td><td>686</td><td class="up">−13%</td></tr>
+<tr><td>Non-cyclical share (parts, service, digital)</td><td>≈20%</td><td colspan="3">strategic focus</td><td>—</td></tr>
+<tr class="cat"><td colspan="6">Cash flow &amp; Working capital</td></tr>
+<tr><td>Free cash flow (₹ Cr)</td><td>4,600</td><td>1,121†</td><td>FY26: 9,200</td><td>2,200</td><td class="up">×2.1</td></tr>
+<tr><td>Working-capital inflow in H1FY27 (₹ Cr)</td><td colspan="4">2,447 (payables &amp; acceptances)</td><td>—</td></tr>
+<tr><td>FCF ÷ EBITDA, standalone</td><td>165%†</td><td colspan="3">H1: 113%† (65%† excluding WC release)</td><td>—</td></tr>
+<tr class="cat"><td colspan="6">Capital &amp; Liquidity</td></tr>
+<tr><td>Net cash, standalone (₹ Cr)</td><td>11,300</td><td>n/a</td><td>n/a</td><td>n/a</td><td>—</td></tr>
+<tr><td>Finance cost, standalone Q4FY26 (₹ Cr)</td><td colspan="4">166 (vs 319 in Q4FY25)</td><td>—</td></tr>
+<tr><td>Auto ROCE (FY26, company-reported)</td><td colspan="4">72%</td><td>—</td></tr>
+<tr class="cat"><td colspan="6">Valuation (at ₹395, 23 Oct 2026 close)</td></tr>
+<tr><td>Market cap (₹ Cr)</td><td colspan="4">≈1,45,450† (368.23 crore shares)</td><td>—</td></tr>
+<tr><td>P/E (TTM consolidated PAT ₹6,311 Cr†)</td><td colspan="4">≈23x† (incl. Tata Capital MTM gain); 36–44x on data-site TTM windows</td><td>—</td></tr>
+<tr><td>EV/EBITDA (TTM ≈₹10,800 Cr†)</td><td colspan="4">≈12x†</td><td>—</td></tr>
+<tr><td>P/B</td><td colspan="4">≈11.4x (BVPS ≈₹34.6–36.4)</td><td>—</td></tr>
+<tr><td>Dividend (FY26)</td><td colspan="4">₹4 per share · yield ≈1.0%</td><td>—</td></tr>
+</tbody></table></div>
+<p class="note">† CB-derived. n/a = not available in verified filings at the time of writing. Q2FY26 international units derived as total less domestic.</p>
+</section>
+
+<!-- ================= CASH FLOW & WC ================= -->
+<section class="tab" id="t-cf">
+<h2 class="i18n" data-ta="கேஷ் ஃப்ளோ">Cash flow</h2>
+<div class="grid g2">
+ <div class="card cw"><div class="ci" style="height:280px"><canvas id="cFcf"></canvas></div></div>
+ <div class="card"><h3 class="i18n" data-ta="பணம் எங்க இருந்து வருது">Where the cash came from (H1FY27, standalone)</h3>
+ <div class="tw"><table><thead><tr><th>Item</th><th>₹ Cr</th></tr></thead><tbody>
+ <tr><td>EBITDA (Q1 2,263 + Q2 ≈2,796†)</td><td>≈5,059</td></tr>
+ <tr><td>Working-capital release</td><td class="up">+2,447</td></tr>
+ <tr><td>Investment (Q2 597; Q1 n/a)</td><td class="dn">−</td></tr>
+ <tr><td>Tax, interest, others</td><td class="dn">−</td></tr>
+ <tr><td><b>Free cash flow</b></td><td><b>5,721</b></td></tr>
+ </tbody></table></div>
+ <p class="note">Operating cash flow (CFO) proxy for Q2 ≈ FCF + investment = ≈₹5,200 Cr†.</p></div>
+</div>
+<div class="grid g3" style="margin-top:12px">
+ <div class="card"><b>Operating CF</b><p>Very strong. Q2 CFO proxy ≈₹5,200 Cr† on EBITDA ≈₹2,796 Cr — cash conversion above 100% because suppliers financed growth.</p></div>
+ <div class="card"><b>Investing CF</b><p>Disciplined: ₹597 Cr in Q2 (R&amp;D ₹339 Cr, capex ₹258 Cr), down from ₹686 Cr. This changes sharply once ~€3.9 bn is paid for Iveco on settlement.</p></div>
+ <div class="card"><b>Financing CF</b><p>Low in Q2. From Q3: drawdown of the Iveco bridge loan (€3.875 bn facility, Euribor + 102.5 bps), then refinancing into roughly 70% term debt / 30% equity within 12–18 months.</p></div>
+</div>
+
+<h2 class="i18n" data-ta="வொர்க்கிங் கேபிடல் – CFO உடன் தொடர்பு">Working capital — and its link to CFO</h2>
+<div class="grid g2">
+ <div class="card cw"><div class="ci" style="height:280px"><canvas id="cWc"></canvas></div></div>
+ <div class="card"><div class="tw"><table>
+ <thead><tr><th>Days</th><th>FY25 (S)</th><th>FY26 (S)</th><th>FY26 (C)</th></tr></thead><tbody>
+ <tr><td>Inventory days</td><td>32</td><td>26</td><td>35</td></tr>
+ <tr><td>Receivable days</td><td>16</td><td>9</td><td>12</td></tr>
+ <tr><td>Payable days</td><td>135</td><td>99</td><td>87</td></tr>
+ <tr><td><b>Cash conversion cycle</b></td><td><b>−87</b></td><td><b>−64</b></td><td><b>−40</b></td></tr>
+ <tr><td>Working-capital days (data-site basis)</td><td>−83</td><td>−66</td><td>−66</td></tr>
+ </tbody></table></div><p class="note">S = standalone, C = consolidated. CCC = inventory + receivable − payable days.</p></div>
+</div>
+<div class="callout blue" style="margin-top:12px"><b class="i18n" data-ta="இது ஏன் முக்கியம்">Why this matters</b>
+<ul class="t">
+<li>TMCV runs a <b>negative cash-conversion cycle</b>: it collects from dealers in ~9 days and holds stock ~26 days, but pays suppliers in ~99 days. Every extra vehicle sold pulls in cash before suppliers are paid.</li>
+<li>So when volumes rise 42%, CFO rises faster than profit — that is exactly the ₹2,447 Cr WC inflow in H1FY27 and FCF/EBITDA of 165%† in Q2.</li>
+<li>The same engine runs in reverse in a CV downturn: payables shrink faster than sales and CFO falls below profit. Payable days already eased from 135 to 99 in FY26.</li>
+<li>Iveco's model is different: dealer and customer financing (Iveco Capital) sits on its balance sheet with external debt, so consolidated working capital will look heavier from Q3FY27.</li>
+</ul></div>
+</section>
+
+<!-- ================= OTHER LENSES ================= -->
+<section class="tab" id="t-ol">
+<h2 class="i18n" data-ta="வேற கோணங்கள்ல இருந்து பார்த்தா">Other ways to read the results</h2>
+<p class="i18n" data-ta="வழக்கமான வருமானம்–லாபம் பார்வைக்கு மேல, ஐந்து வேற லென்ஸ்கள்.">Beyond revenue and profit — five extra lenses on the same quarter.</p>
+
+<h3>Lens 1 · Unit economics — per vehicle</h3>
+<div class="card cw"><div class="ci" style="height:280px"><canvas id="cUnit"></canvas></div></div>
+<p>Realisation per vehicle is flat (≈₹17.4–17.8 lakh), so <b>all of the revenue growth is volume</b>. EBITDA per vehicle has dropped from ₹2.58 lakh in Q4FY26 to ₹2.07 lakh — the commodity squeeze plus more low-priced export and SCV units.</p>
+
+<h3>Lens 2 · Profit bridge — what moved PBT (standalone, YoY)</h3>
+<div class="card cw"><div class="ci" style="height:260px"><canvas id="cBridge"></canvas></div></div>
+<p>Volume &amp; mix (+₹1,159 Cr) and price realisation (+₹1,017 Cr) more than offset the ₹1,416 Cr variable-cost hit; FX &amp; other income added ₹356 Cr. Pricing did the heavy lifting — which is why further price hikes are a key watch item.</p>
+
+<h3>Lens 3 · Growth decomposition — share-led or market-led?</h3>
+<div class="grid g2">
+ <div class="card cw"><div class="ci" style="height:280px"><canvas id="cShare"></canvas></div></div>
+ <div class="card"><div class="tw"><table><thead><tr><th>Source of growth</th><th>Reading</th></tr></thead><tbody>
+ <tr><td>Domestic industry growth (Q2)</td><td>~30.5%</td></tr>
+ <tr><td>TMCV domestic growth</td><td>30.9%</td></tr>
+ <tr><td>→ Domestic share effect</td><td class="fl">≈ neutral</td></tr>
+ <tr><td>International growth</td><td class="up">+177%</td></tr>
+ <tr><td>→ Share of total growth from exports</td><td class="up">≈33%† (13,512 of 40,433 extra units)</td></tr>
+ </tbody></table></div><p class="note">H1 shares below Q1 in every category imply Q2 shares were lower than Q1, though above FY26.</p></div>
+</div>
+
+<h3>Lens 4 · DuPont (FY26 consolidated)</h3>
+<div class="grid g4">
+ <div class="card kpi"><div class="l">Net margin</div><div class="v">3.6%</div><div class="d">PAT 3,030 ÷ revenue 83,855</div></div>
+ <div class="card kpi"><div class="l">Asset turnover</div><div class="v">1.60x</div><div class="d">Revenue ÷ assets 52,309</div></div>
+ <div class="card kpi"><div class="l">Equity multiplier</div><div class="v">4.11x</div><div class="d">Assets ÷ equity 12,734</div></div>
+ <div class="card kpi"><div class="l">ROE (year-end equity)</div><div class="v">≈23.8%†</div><div class="d">Thin margin, high turnover, thin post-demerger equity</div></div>
+</div>
+<p class="note">FY26 net margin is depressed by ~₹3,700 Cr of exceptional items (mostly Tata Capital MTM and demerger-related). On core earnings ROE is far higher (data sites show 43–54%).</p>
+
+<h3>Lens 5 · Operating leverage</h3>
+<div class="callout"><p>Revenue +42% but standalone EBITDA only +31%, so the <b>degree of operating leverage was below 1 (≈0.74x†)</b> this quarter — unusual for a 42% volume jump. Normally fixed-cost absorption makes EBITDA grow faster than sales. Here variable costs (commodities) rose faster than prices, so the leverage never showed up. When steel cools, this is the spring that can recoil upward — and if demand slows while steel stays high, it hurts on both sides.</p></div>
+</section>
+
+<!-- ================= IVECO ================= -->
+<section class="tab" id="t-iv">
+<h2 class="i18n" data-ta="இவெகோவுக்கு என்ன ஆச்சு?">What has happened to Iveco?</h2>
+<div class="grid g2">
+<div class="card"><div class="tl">
+ <div><b>30 Jul 2025</b> · Deal announced: €14.10/share all-cash for Iveco's non-defence business (~€3.8 bn). Defence unit (IDV, Astra) sold separately to Leonardo for €1.7 bn.</div>
+ <div><b>Aug 2025</b> · €3.875 bn 12-month bridge loan underwritten by Morgan Stanley &amp; MUFG at Euribor + 102.5 bps, backed by a Tata Sons letter of support. Plan: ~€1 bn equity + Tata Capital stake sale, repay in ~4 years.</div>
+ <div><b>18 Mar 2026</b> · Defence business transferred to Leonardo; Iveco paid a €1,551 m extraordinary dividend from proceeds.</div>
+ <div><b>7 May 2026</b> · Iveco Q1 2026: adjusted EBIT −€55 m (−1.9%), Truck EBIT −€71 m, bus rework costs. Closing pushed from Q2 to Q3 2026.</div>
+ <div><b>30 Jul 2026</b> · Iveco Q2 2026: revenue €3,764 m (+7.3%), adjusted EBIT €131 m (3.5%); Europe medium/heavy truck orders +47%; one approval pending.</div>
+ <div><b>7 Sep 2026</b> · Tender offer opens after Consob approval.</div>
+ <div><b>9 Oct 2026</b> · Offer raised to €14.40 — "best and final" — deal value ≈€3.91 bn.</div>
+ <div><b>16 Oct 2026</b> · Iveco EGM approves all resolutions; minimum acceptance cut from 95% to 80%.</div>
+ <div><b>22 Oct 2026</b> · Only ~35% tendered. Exor (27.06%) is in. Three funds hold out.</div>
+ <div><b>26 Oct 2026</b> · Acceptance period ends (can be extended). <b>30 Oct</b> · settlement if conditions met. <b>Q3FY27</b> · consolidation begins.</div>
+</div></div>
+<div class="card"><h3 class="i18n" data-ta="80% கணக்கு – இதுதான் முக்கிய சிக்கல்">The 80% arithmetic — the real issue</h3>
+<svg id="accSvg" viewBox="0 0 420 220" style="width:100%;height:auto"></svg>
+<div class="tw"><table><thead><tr><th>Holder</th><th>Stake</th><th>Status</th></tr></thead><tbody>
+<tr><td>Exor</td><td>27.06%</td><td class="up">Tendered</td></tr>
+<tr><td>Davidson Kempner</td><td>10.17%</td><td class="dn">Holding out</td></tr>
+<tr><td>Syquant Capital</td><td>6.45%</td><td class="dn">Holding out</td></tr>
+<tr><td>Petrus Advisers</td><td>3.80%</td><td class="dn">Holding out (sees ~€18 fair value)</td></tr>
+<tr><td><b>Maximum possible without the three funds</b></td><td><b>79.58%</b></td><td class="dn"><b>Below 80%</b></td></tr>
+</tbody></table></div>
+<p class="callout red" style="margin-top:8px">Even if every other shareholder tendered, the offer cannot reach 80% unless at least one of the three funds sells, or Tata extends the window or waives/adjusts the condition. Watch the 26–30 Oct announcements.</p>
+</div></div>
+
+<h2 class="i18n" data-ta="இவெகோ எப்படி செயல்படுது">How Iveco is performing</h2>
+<div class="grid g2">
+ <div class="card cw"><div class="ci" style="height:280px;min-width:300px"><canvas id="cIv"></canvas></div></div>
+ <div class="card"><div class="tw"><table><thead><tr><th>Iveco (€ m)</th><th>Q1 2026</th><th>Q2 2026</th><th>H1 2026</th></tr></thead><tbody>
+ <tr><td>Consolidated revenue</td><td>2,828</td><td>3,764</td><td>6,592</td></tr>
+ <tr><td>Adjusted EBIT</td><td class="dn">−55</td><td>131</td><td>76</td></tr>
+ <tr><td>Adjusted EBIT margin</td><td class="dn">−1.9%</td><td>3.5%</td><td>1.2%†</td></tr>
+ <tr><td>Industrial adjusted EBIT</td><td class="dn">−90</td><td>104</td><td>14</td></tr>
+ <tr><td>Adjusted net income</td><td class="dn">−74</td><td>46</td><td class="dn">−28</td></tr>
+ <tr><td>Truck book-to-bill</td><td>n/a</td><td>0.91</td><td>—</td></tr>
+ </tbody></table></div>
+ <p class="note">TMCV comparison: consolidated EBITDA margin 10.9%, FY26 standalone EBIT margin 11.0%. Iveco's own plan targets 7–7.5% EBIT by 2028.</p></div>
+</div>
+
+<h2 class="i18n" data-ta="TMCVக்கு லாபமா? டெக்னாலஜி vs பணம்">Will it benefit TMCV? Technology vs money</h2>
+<div class="grid g2">
+<div class="card"><h3 class="up i18n" data-ta="டெக்னாலஜி – ஆமாம்">Technology — yes, clearly</h3><ul class="t">
+<li><b>FPT Industrial powertrains</b> — diesel, natural-gas and hydrogen engines, e-axles; a ready path to future Indian emission norms without building every engine family in-house.</li>
+<li><b>Natural-gas trucks</b> — Iveco's long-haul LNG/CNG trucks fit India's gas-truck and LNG-corridor push.</li>
+<li><b>Electric buses</b> — IVECO BUS is No.1 in Europe's e-bus market (~23–25% share); directly useful for TMCV's large Indian e-bus programme.</li>
+<li><b>Daily LCV / vans</b> — a segment where TMCV is thin.</li>
+<li><b>European safety, ADAS &amp; connectivity know-how</b> and the new MY26 truck range.</li>
+<li><b>Captive finance &amp; service network</b> (Iveco Capital, €8.1 bn managed portfolio) — management says such capabilities take years to build organically.</li>
+</ul></div>
+<div class="card"><h3 class="dn i18n" data-ta="பணம் – இப்போதைக்கு இல்ல, பின்னால ஆகலாம்">Financially — not yet; maybe later</h3><ul class="t">
+<li><b>Margin dilution:</b> Iveco H1 2026 adjusted EBIT 1.2% vs TMCV ~11% EBIT. Revenue roughly triples (Iveco ≈€13.4 bn a year) but blended margins fall sharply from Q3FY27.</li>
+<li><b>Interest cost:</b> on ~€2.9 bn of term debt after a €1 bn equity raise at ~4%, ≈₹1,280 Cr pre-tax a year† — against FY26 consolidated PAT of ₹3,030 Cr.</li>
+<li><b>Equity dilution:</b> €1 bn ≈₹11,000 Cr† at ₹395 ≈ 28 crore new shares (≈7.6%†).</li>
+<li><b>Balance sheet:</b> ₹15,900 Cr net cash turns into ≈₹27,000 Cr† acquisition net debt before Iveco's own industrial cash; agencies expect leverage around 1x–1.3x EBITDA.</li>
+<li><b>Price paid is low</b> (~3x forecast operating income at announcement) — the value is real only if Iveco's margins recover.</li>
+<li>Management: EPS accretive from <b>year two</b> after the capital raise; acquisition debt repaid in ~4 years.</li>
+</ul></div></div>
+
+<h2 class="i18n" data-ta="நீங்களே கணக்கு போட்டுப் பாருங்க – இவெகோ EPS சிமுலேட்டர்">Try it yourself — Iveco EPS simulator</h2>
+<div class="grid g2">
+<div class="card slid" id="simBox">
+ <span>Iveco revenue (€ bn / year)</span><b id="vRev"></b><input type="range" id="sRev" min="11" max="16" step="0.1" value="13.4" style="grid-column:1/3">
+ <span>Iveco adjusted EBIT margin (%)</span><b id="vMar"></b><input type="range" id="sMar" min="-1" max="8" step="0.1" value="1.2" style="grid-column:1/3">
+ <span>Acquisition debt after equity raise (€ bn)</span><b id="vDebt"></b><input type="range" id="sDebt" min="1.5" max="3.9" step="0.1" value="2.9" style="grid-column:1/3">
+ <span>Interest rate on that debt (%)</span><b id="vRate"></b><input type="range" id="sRate" min="2.5" max="7" step="0.1" value="4" style="grid-column:1/3">
+ <span>Equity raised (€ bn)</span><b id="vEq"></b><input type="range" id="sEq" min="0" max="2" step="0.1" value="1" style="grid-column:1/3">
+ <span>EUR/INR</span><b id="vFx"></b><input type="range" id="sFx" min="95" max="125" step="1" value="110" style="grid-column:1/3">
+ <span>TMCV core PAT without Iveco (₹ Cr / year)</span><b id="vBase"></b><input type="range" id="sBase" min="4000" max="9000" step="100" value="6000" style="grid-column:1/3">
+</div>
+<div class="card"><div class="cw"><div class="ci" style="height:220px;min-width:300px"><canvas id="cSim"></canvas></div></div>
+ <div id="simOut" style="margin-top:8px"></div>
+ <p class="note">CB illustrative model only. Assumes 25% tax, Iveco own net finance cost €0.15 bn/yr, new shares issued at ₹395, no synergies, no purchase-price amortisation. Defaults: H1 2026 Iveco margin, ~€1 bn equity, ₹110/€ (assumed rate).</p></div>
+</div>
+
+<div class="callout green" style="margin-top:12px"><b class="i18n" data-ta="CB பதில்">CB answer to the question</b>
+<p class="i18n" data-ta="டெக்னாலஜி பக்கம்: ஆமாம், ரொம்ப பயன். எஞ்சின், கேஸ் டிரக், இ-பஸ், ஐரோப்பா மார்க்கெட், ஃபைனான்ஸ் நெட்வொர்க் – எல்லாம் ரெடிமேடா கிடைக்குது. பணம் பக்கம்: முதல் வருஷம் EPS குறைய வாய்ப்பு அதிகம். இவெகோ மார்ஜின் இப்போ ~1.2%; EPS குறையாம இருக்க ~2.4% தேவை; அவங்களோட இலக்கு 7%. 7% வந்தா TMCV EPS ரொம்ப ஏறும். அதனால இது ஒரு 'டர்ன்அரவுண்ட் பெட்' – டீல் முடியுமா (80%), இவெகோ மார்ஜின் ஏறுமா, கடன்–ஈக்விட்டி ரீஃபைனான்ஸ் சரியா நடக்குமா – இந்த மூணும் தான் முக்கியம்.">Technology: yes — engines, gas trucks, e-buses, Europe/LatAm access and a finance network arrive ready-made. Financially: likely EPS-dilutive in year one. Iveco earns ~1.2% EBIT today; on CB's model it needs ~2.4% just to break even for TMCV shareholders, and its own 7% target would make the deal strongly accretive. This is a turnaround bet on three things: the deal closing (80%), Iveco's margin recovery, and a clean debt/equity refinancing.</p></div>
+</section>
+
+<!-- ================= VALUATION & MARKET ================= -->
+<section class="tab" id="t-va">
+<h2 class="i18n" data-ta="வேல்யுவேஷன்">Valuation snapshot</h2>
+<div class="grid g4">
+ <div class="card kpi"><div class="l">Share price (23 Oct close)</div><div class="v">≈₹395</div><div class="d dn">−4.6% on results day</div></div>
+ <div class="card kpi"><div class="l">52-week range</div><div class="v">₹306 – ₹509</div><div class="d">22% below high</div></div>
+ <div class="card kpi"><div class="l">Market cap</div><div class="v">≈₹1.45 lakh Cr†</div><div class="d">Iveco deal ≈30%† of it</div></div>
+ <div class="card kpi"><div class="l">EV/EBITDA (TTM)</div><div class="v">≈12x†</div><div class="d">P/B ≈11.4x</div></div>
+</div>
+<div class="callout blue" style="margin-top:10px">Brokers' sum-of-parts before the results valued the Iveco piece at roughly ₹70–91 per share — about 15–18% of their targets. So the market price already carries an Iveco expectation; a failed or delayed close, or worse-than-hoped Iveco numbers, would test that.</div>
+
+<h2 class="i18n" data-ta="பங்கு விலை ஏன் நகர்ந்தது">Why the share price moved</h2>
+<div class="tw"><table><thead><tr><th>Date</th><th>Move</th><th style="text-align:left">Reason</th></tr></thead><tbody>
+<tr><td>14 Oct 2025</td><td>₹261 (price discovery)</td><td style="text-align:left">Pre-listing special session after PV/CV demerger</td></tr>
+<tr><td>12 Nov 2025</td><td>Listed</td><td style="text-align:left">CV entity listed on BSE/NSE as Tata Motors Ltd</td></tr>
+<tr><td>Jan 2026</td><td>Up</td><td style="text-align:left">Brokers initiate on CV upcycle; GST 2.0 demand</td></tr>
+<tr><td>14 May 2026</td><td>−4% to −7% intraday</td><td style="text-align:left">Q4FY26 margin peak (13.9%) but no FY27 guidance; commodity pressure flagged</td></tr>
+<tr><td>13 Aug 2026</td><td>+6% to ~₹485</td><td style="text-align:left">Q1FY27 beat; Nomura upgrade; bus orders, exports</td></tr>
+<tr><td>Sep 2026</td><td>~₹458</td><td style="text-align:left">Tender offer opens; Iveco overhang begins</td></tr>
+<tr><td>22 Oct 2026</td><td>₹414</td><td style="text-align:left">Holdouts at Iveco; low acceptance (~35%)</td></tr>
+<tr><td>23 Oct 2026</td><td>−4.6% to ~₹395</td><td style="text-align:left">Margin squeeze, 150–200 bps more cost pressure guided for Q3, growth to moderate on high base</td></tr>
+</tbody></table></div>
+<h3>Shareholding</h3>
+<div class="grid g2"><div class="card cw"><div class="ci" style="height:260px;min-width:300px"><canvas id="cSh"></canvas></div></div>
+<div class="card"><p>Promoter (Tata group) 42.5% · FIIs 19.0% · DIIs 18.7% (of which mutual funds ≈11.6%) · Public 19.8%.</p><p class="note">An equity raise of ~€1 bn (rights issue or QIP) is planned within ~12–18 months of closing; a rights issue would let the promoter maintain its stake.</p></div></div>
+</section>
+
+<!-- ================= TRIGGERS & CYCLE ================= -->
+<section class="tab" id="t-tc">
+<h2 class="i18n" data-ta="சைக்கிள் கடிகாரம்">Cycle clock</h2>
+<div class="grid g2">
+<div class="card"><svg id="clock" viewBox="0 0 360 360" style="width:100%;max-width:380px;display:block;margin:auto"></svg></div>
+<div class="card"><h3>Sector: Indian CVs — phase P3 → P4 (scored P4 = 35)</h3><ul class="t">
+<li>FY26 industry volumes crossed the pre-FY19 peak; TMCV FY26 wholesales 428K (+14%).</li>
+<li>Q2FY27 industry growth ~30% now expected to slow to high-single/low-double digits.</li>
+<li>Margins rolling over from a 13.9% peak (Q4FY26) to 11.7% on commodities; four price hikes in a year.</li>
+<li>Counter-signals: freight rates up (index 106.4), HCV fleet utilisation 76.4%, transporter profitability recovering.</li>
+</ul><p class="note">Indicators disagree, so CB's rule takes the lower-scoring adjacent phase.</p>
+<h3>Stock cycle: 47.5</h3>
+<div class="tw"><table><tbody>
+<tr><td>Business lifecycle — re-inventing (Iveco, EV)</td><td>75</td></tr>
+<tr><td>Earnings cycle — margin falling</td><td>25</td></tr>
+<tr><td>Valuation cycle — in band (short listed history)</td><td>55</td></tr>
+<tr><td>Price stage — Stage 3 (top/whipsaw), estimate</td><td>35</td></tr>
+</tbody></table></div>
+<p><b>CY = 50% × 35 + 50% × 47.5 ≈ 41</b></p></div></div>
+
+<h2 class="i18n" data-ta="ட்ரிகர் டேபிள்">Trigger table</h2>
+<div class="tw"><table><thead><tr><th>Trigger</th><th>+/−</th><th>I</th><th>C</th><th>W</th><th>P</th><th>Points</th><th style="text-align:left">What to watch</th></tr></thead><tbody>
+<tr><td>Iveco close &amp; consolidation (scale ×3, Europe/LatAm)</td><td class="up">+</td><td>5</td><td>0.4</td><td>1.0</td><td>1.0</td><td>2.00</td><td style="text-align:left">26–30 Oct acceptance/settlement</td></tr>
+<tr><td>International / Indonesia order (remaining tranche)</td><td class="up">+</td><td>2</td><td>1.0</td><td>1.0</td><td>1.0</td><td>2.00</td><td style="text-align:left">Monthly export volumes</td></tr>
+<tr><td>Price hikes 1–2% from 1 Oct</td><td class="up">+</td><td>2</td><td>1.0</td><td>1.0</td><td>1.0</td><td>2.00</td><td style="text-align:left">Q3 realisation per vehicle</td></tr>
+<tr><td>EV: Delhi-NCR EV-only CV registrations from 1 Jan 2027; SCV EV 12% → 20% by FY28</td><td class="up">+</td><td>2</td><td>0.7</td><td>1.0</td><td>1.0</td><td>1.40</td><td style="text-align:left">eSCV share, imported aggregate supply</td></tr>
+<tr><td>Commodity inflation, 150–200 bps more in Q3</td><td class="dn">−</td><td>3</td><td>0.7</td><td>1.0</td><td>1.0</td><td>2.10</td><td style="text-align:left">Steel HRC, rubber prices</td></tr>
+<tr><td>Iveco near-term EPS dilution &amp; leverage</td><td class="dn">−</td><td>3</td><td>0.7</td><td>1.0</td><td>0.7</td><td>1.47</td><td style="text-align:left">Q3FY27 consolidated margin, interest cost</td></tr>
+<tr><td>Demand moderation on high base / supply bottlenecks</td><td class="dn">−</td><td>2</td><td>0.7</td><td>1.0</td><td>1.0</td><td>1.40</td><td style="text-align:left">Monthly VAHAN, castings &amp; machining supply</td></tr>
+</tbody></table></div>
+<p><b>TG = 50 + 8 × (2.00 + 2.00 + 2.00) − 8 × (2.10 + 1.47 + 1.40) ≈ 58</b> · No gate triggered.</p>
+
+<h3>Trigger timeline</h3>
+<div class="tl">
+<div><b>26 Oct 2026</b> · Iveco acceptance period ends (extension possible)</div>
+<div><b>30 Oct 2026</b> · Settlement, if 80% condition met</div>
+<div><b>Nov 2026</b> · October wholesales; first month post price hike</div>
+<div><b>1 Jan 2027</b> · Delhi-NCR EV-only CV registrations begin</div>
+<div><b>Jan–Feb 2027</b> · Q3FY27 results — first quarter with Iveco consolidated</div>
+<div><b>Within ~12–18 months of close</b> · ~€1 bn equity raise and bridge refinancing</div>
+</div>
+
+<h3>CB Conviction (education only)</h3>
+<div class="tw"><table><thead><tr><th>Lens</th><th>Score</th><th>Weight</th></tr></thead><tbody>
+<tr><td>E — Earnings actuals</td><td>70</td><td>25%</td></tr><tr><td>F — CB six-pillar score</td><td>67</td><td>20%</td></tr>
+<tr><td>M — Macro</td><td>60</td><td>15%</td></tr><tr><td>T — Market pulse</td><td>40</td><td>15%</td></tr>
+<tr><td>CY — Cycle</td><td>41</td><td>10%</td></tr><tr><td>TG — Trigger</td><td>58</td><td>15%</td></tr>
+<tr><td><b>Conviction</b></td><td><b>≈59</b></td><td>—</td></tr></tbody></table></div>
+<div class="callout"><b>What would change this view</b><ul class="t">
+<li>Iveco closes and Q3FY27 shows Iveco adjusted EBIT ≥3% → TG and F rise.</li>
+<li>Steel cools and Q3 standalone margin holds ≥11.5% → earnings cycle score rises.</li>
+<li>Deal fails or Iveco margin stays near 1% with full debt → negative trigger strengthens.</li>
+</ul></div>
+</section>
+
+<!-- ================= SWOT ================= -->
+<section class="tab" id="t-sw">
+<h2>SWOT</h2>
+<div class="grid g2">
+<div class="card" style="border-top:4px solid var(--gr)"><h3>Strengths</h3><ul class="t"><li>India CV leader: HCV share ~55.7%, overall 36.2%</li><li>Negative working capital, FCF ~12% of revenue (FY26)</li><li>₹15,900 Cr consolidated net cash before Iveco</li><li>~20% non-cyclical revenue (parts, service, digital)</li><li>eSCV leadership (~47% share in Q1FY27)</li></ul></div>
+<div class="card" style="border-top:4px solid var(--am)"><h3>Weaknesses</h3><ul class="t"><li>Margins exposed to steel/rubber; EBITDA/vehicle down 5.5% YoY</li><li>Q2 market share slipped vs Q1 across categories</li><li>Profit quality noisy (Tata Capital MTM swings)</li><li>Supply constraints in castings, machining, EV aggregates</li></ul></div>
+<div class="card" style="border-top:4px solid var(--bl)"><h3>Opportunities</h3><ul class="t"><li>Iveco: Europe/LatAm, FPT engines, gas &amp; e-bus tech, captive finance</li><li>Cross-selling Tata trucks into Iveco markets and vice versa; joint sourcing and R&amp;D</li><li>Export orders (Indonesia), EV mandates (Delhi-NCR 2027)</li><li>CV replacement cycle and infrastructure spending</li></ul></div>
+<div class="card" style="border-top:4px solid var(--rd)"><h3>Threats</h3><ul class="t"><li>Iveco tender may miss 80% or require extension/waiver</li><li>Iveco margin recovery may lag; Europe truck book-to-bill 0.91</li><li>Leverage returns after years of deleveraging</li><li>Domestic CV cycle peaking; diesel/commodity shocks</li><li>Two-year no-layoff/no-closure covenants in Italy limit restructuring</li></ul></div>
+</div>
+</section>
+
+<!-- ================= ANALYSTS ================= -->
+<section class="tab" id="t-an">
+<h2 class="i18n" data-ta="அனலிஸ்ட் ரேட்டிங் (மூன்றாம் தரப்பு)">Analysts' rating (third-party views)</h2>
+<div class="grid g2">
+<div class="card"><div class="tw"><table><thead><tr><th>Broker</th><th>Rating</th><th>Target (₹)</th><th>Date</th></tr></thead><tbody>
+<tr><td>Emkay Global</td><td class="up">Buy</td><td>700</td><td>Aug 2026</td></tr>
+<tr><td>Nomura</td><td class="up">Buy</td><td>554</td><td>Aug 2026</td></tr>
+<tr><td>JM Financial</td><td class="up">Buy</td><td>535</td><td>Aug 2026</td></tr>
+<tr><td>Nuvama</td><td class="up">Buy</td><td>480</td><td>May 2026</td></tr>
+<tr><td>Motilal Oswal</td><td class="fl">Neutral</td><td>434</td><td>Aug 2026</td></tr>
+</tbody></table></div>
+<p>About 89% of 19 covering analysts rate the stock Buy (data-site tally). Post-Q2FY27 revisions are still coming in; several targets above predate the margin guidance and the Iveco acceptance shortfall.</p></div>
+<div class="card cw"><div class="ci" style="height:280px;min-width:420px"><canvas id="cAn"></canvas></div></div>
+</div>
+<p class="note">CB Research does not issue buy, sell or hold calls. Third-party views are shown as attributed.</p>
+</section>
+
+<!-- ================= SELF-CHECK ================= -->
+<section class="tab" id="t-sc">
+<h2 class="i18n" data-ta="CB முதலீட்டாளர் சுய சோதனை">CB Investor Self-check</h2>
+<p class="note">Tick what is true for you. This only counts how many of your own conditions line up. It is not a recommendation.</p>
+<div id="scWrap"></div>
+<div class="card" style="margin-top:10px"><b>Overall</b><div class="bar"><i id="scAll"></i></div><div id="scMsg" class="note"></div>
+<button onclick="scClear()" style="margin-top:6px;border:1px solid var(--line);background:#fff;border-radius:8px;padding:5px 10px;cursor:pointer">Clear</button></div>
+</section>
+
+<!-- ================= MANAGEMENT ================= -->
+<section class="tab" id="t-mg">
+<h2 class="i18n" data-ta="நிர்வாகம் & போர்டு">Management &amp; Board</h2>
+<div class="grid g3">
+<div class="card"><b>N Chandrasekaran</b><div class="note">Chairman (also Chairman, Tata Sons)</div><p>Architect of the Iveco deal; frames it as giving the company "two home markets" — India and Europe.</p></div>
+<div class="card"><b>Girish Wagh</b><div class="note">Managing Director &amp; CEO</div><p>Led the CV turnaround to teen-level margins and FCF ~12% of revenue; now owns Iveco integration — cross-selling, sourcing, R&amp;D synergies.</p></div>
+<div class="card"><b>G V Ramanan</b><div class="note">Chief Financial Officer</div><p>Presented Q2FY27; responsible for the bridge refinancing and equity raise.</p></div>
+<div class="card"><b>P B Balaji</b><div class="note">Group CFO, Tata Motors group</div><p>Set out the funding plan in 2025: ~€1 bn equity, Tata Capital stake monetisation, repay acquisition debt over ~4 years, EPS accretive from year two.</p></div>
+<div class="card"><b>Olof Persson</b><div class="note">CEO, Iveco Group</div><p>Running Iveco's quality reset (bus rework finished in Q2 2026) and MY26 truck launch; Iveco keeps its Turin HQ and brands.</p></div>
+<div class="card"><b>Governance notes</b><p>Two-year covenants: no layoffs or plant closures in Italy; Iveco board structure largely retained with independent oversight. Full TMCV board list: refer annual report (n/a here).</p></div>
+</div>
+</section>
+
+<!-- ================= SOCRATES ================= -->
+<section class="tab" id="t-so">
+<h2 class="i18n" data-ta="காவேரி சாக்ரடீஸ் – யோசிச்சு பதில் சொல்லுங்க">Cauvery Socrates — think it through</h2>
+<div id="quiz"></div>
+<div class="q"><b>Free-text:</b> If steel prices fall 10% next quarter but CV demand also slows to 5% growth, what happens to TMCV's EBITDA per vehicle and to its free cash flow? Think about operating leverage and negative working capital.
+<textarea id="ft" rows="3" style="width:100%;margin-top:6px;border:1px solid var(--line);border-radius:8px;padding:6px"></textarea>
+<button onclick="ftHint()" style="margin-top:6px;border:none;background:var(--navy);color:#fff;border-radius:8px;padding:6px 12px;cursor:pointer">Show a guiding thought</button><div id="ftOut" class="note" style="margin-top:6px"></div></div>
+<p class="foot">Data drawn from company results releases, investor presentation and earnings call of 23 Oct 2026; Iveco Group Q1/Q2 2026 releases; exchange filings and rating rationales. † = CB-derived. n/a = not available in verified sources.</p>
+</section>
+</main>
+
+<div class="badge" id="cbBadge" onclick="toggleDisc()">CB</div>
+<div id="disc"><b>Prepared by CB Research (Cauvery Business Research)</b> for financial education only. CB Research is not a SEBI-registered research analyst. Nothing here is a recommendation to buy, sell or hold any security. Figures marked † are CB estimates; verify with company filings before relying on them. Third-party broker views are attributed to their authors.</div>
+<div class="asst"><button onclick="openAsst()">🎙 CB Assist</button></div>
+<div id="asstBox">
+ <div style="padding:8px 10px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center"><b>CB Assist — ask by voice or text</b><button onclick="closeAsst()" style="border:none;background:none;font-size:18px;cursor:pointer">×</button></div>
+ <div id="asstLog"></div>
+ <div class="chips" style="padding:0 8px" id="chips"></div>
+ <div class="arow"><button class="mic" id="micBtn" onclick="mic()" title="Speak">🎙</button><input id="aIn" placeholder="e.g. Will Iveco help financially?" onkeydown="if(event.key==='Enter')ask()"><button onclick="ask()">Ask</button></div>
+</div>
+
+<script>
+var CO = {
+ name:"Tata Motors Ltd (Commercial Vehicles)", nse:"TMCV", bse:"544569", quarter:"Q2FY27", resultsDate:"2026-10-23",
+ cmp:395, shares_cr:368.23,
+ q:["Q2FY26","Q3FY26","Q4FY26","Q1FY27","Q2FY27"],
+ consRev:[18491,21732,26098,20667,25338], consEbitda:[2140,null,3210,2257,2762], consMargin:[11.3,null,12.3,10.9,10.9],
+ consPat:[-867,705,1793,2560,1253], volK:[96.8,113.1,131.8,108.7,135.1],
+ saRev:[16831,20404,24452,19329,23900], saEbitda:[2121,null,3400,2263,2796],
+ share:{cats:["Overall","HCV","ILMCV","SCV PU","CV Passenger"],q1:[36.8,56.3,36.9,27.7,41.3],h1:[36.2,55.7,36.3,27.6,41.1]},
+ fcf:{q2fy26:2200,q2fy27:4600,h1fy27:5721,fy26:9200,wcH1:2447}, netCash:{cons:15900,sa:11300},
+ wc:{fy25s:[32,16,135],fy26s:[26,9,99],fy26c:[35,12,87]},
+ iveco:{offer:14.40,valueEur:3.91,q:["Q1 2025","Q2 2025","Q1 2026","Q2 2026"],adjEbit:[117,171,-55,131],rev:[2806,3508,2828,3764],tendered:35,exor:27.06,holdouts:{DK:10.17,Syquant:6.45,Petrus:3.80}},
+ scores:{g:9.0,m:6.5,d:8.5,v:5.5,t:5.0,r:5.5}, cy:41, tg:58, conviction:59,
+ analysts:[["Emkay",700,"Buy"],["Nomura",554,"Buy"],["JM Fin",535,"Buy"],["Nuvama",480,"Buy"],["MOFSL",434,"Neutral"]]
+};
+var LANG='en';
+function inr(n){return (n==null||isNaN(n))?'n/a':Number(n).toLocaleString('en-IN');}
+var TABS=[["t-ov","Overview","கண்ணோட்டம்"],["t-bm","Business Model","பிசினஸ் மாடல்"],["t-fin","Financials","நிதி நிலை"],["t-cf","Cash Flow & WC","கேஷ் ஃப்ளோ & WC"],["t-ol","Other Lenses","வேற கோணங்கள்"],["t-iv","Iveco","இவெகோ"],["t-va","Valuation & Market","வேல்யுவேஷன்"],["t-tc","Triggers & Cycle","ட்ரிகர்ஸ் & சைக்கிள்"],["t-sw","SWOT","ஸ்வாட்"],["t-an","Analysts' Rating","அனலிஸ்ட் ரேட்டிங்"],["t-sc","Self-check","சுய சோதனை"],["t-mg","Management & Board","நிர்வாகம்"],["t-so","Cauvery Socrates","சாக்ரடீஸ்"]];
+function buildNav(){var n=document.getElementById('nav');n.innerHTML='';TABS.forEach(function(t,i){var b=document.createElement('button');b.textContent=LANG==='ta'?t[2]:t[1];b.id='nb-'+t[0];if(document.getElementById(t[0]).classList.contains('on'))b.className='on';b.onclick=function(){showTab(t[0]);};n.appendChild(b);});}
+function showTab(id){document.querySelectorAll('.tab').forEach(function(s){s.classList.toggle('on',s.id===id);});document.querySelectorAll('#nav button').forEach(function(b){b.classList.toggle('on',b.id==='nb-'+id);});window.scrollTo({top:0});drawCharts(id);}
+function setLang(l){LANG=l;document.getElementById('lgEN').classList.toggle('on',l==='en');document.getElementById('lgTA').classList.toggle('on',l==='ta');document.querySelectorAll('.i18n').forEach(function(e){if(e.dataset.en===undefined)e.dataset.en=e.innerHTML;e.innerHTML=(l==='ta'&&e.dataset.ta)?e.dataset.ta:e.dataset.en;});buildNav();renderPillars();bmShow(null);}
+
+/* ---------- value label plugin ---------- */
+var valPlug={id:'vals',afterDatasetsDraw:function(ch){var c=ch.ctx;ch.data.datasets.forEach(function(ds,i){var m=ch.getDatasetMeta(i);if(m.hidden||m.type!=='bar')return;m.data.forEach(function(el,j){var v=ds.data[j];if(v==null)return;c.save();c.fillStyle='#1d2433';c.font='600 11px Segoe UI,Arial';c.textAlign='center';var horiz=ch.options.indexAxis==='y';var txt=(ds.fmt?ds.fmt(v):inr(v));if(horiz){c.textAlign='left';c.fillText(txt,el.x+4,el.y+4);}else{c.fillText(txt,el.x,v>=0?el.y-4:el.y+12);}c.restore();});});}};
+Chart.register(valPlug);
+Chart.defaults.font.family='Segoe UI,Roboto,Arial';Chart.defaults.color='#3b4456';
+var drawn={};
+function mk(id,cfg){var el=document.getElementById(id);if(!el)return;if(drawn[id])drawn[id].destroy();cfg.options=cfg.options||{};cfg.options.responsive=true;cfg.options.maintainAspectRatio=false;drawn[id]=new Chart(el,cfg);}
+var OR='#e8731a',NV='#1f3a5f',GR='#1f9d55',RD='#d64545',BL='#2f6fd6',AM='#d99a00',TE='#0f9488',PU='#7b4fd0';
+function drawCharts(id){
+ if(id==='t-fin'){
+  mk('cRev',{type:'bar',data:{labels:CO.q,datasets:[{label:'Revenue (₹ Cr)',data:CO.consRev,backgroundColor:NV,yAxisID:'y'},{label:'EBITDA (₹ Cr)',data:CO.consEbitda,backgroundColor:OR,yAxisID:'y'},{label:'EBITDA margin %',type:'line',data:CO.consMargin,borderColor:GR,backgroundColor:GR,yAxisID:'y2',spanGaps:true,tension:.3}]},options:{plugins:{title:{display:true,text:'Consolidated revenue, EBITDA and margin'}},scales:{y:{beginAtZero:true,ticks:{callback:function(v){return inr(v);}}},y2:{position:'right',min:8,max:14,grid:{display:false},ticks:{callback:function(v){return v+'%';}}}}}});
+  mk('cPat',{type:'bar',data:{labels:CO.q,datasets:[{label:'Consolidated PAT (₹ Cr)',data:CO.consPat,backgroundColor:CO.consPat.map(function(v){return v<0?RD:TE;})}]},options:{plugins:{title:{display:true,text:'Consolidated PAT (₹ Cr)'},legend:{display:false}}}});
+  mk('cVol',{type:'bar',data:{labels:CO.q,datasets:[{label:'Wholesales (000 units)',data:CO.volK,backgroundColor:BL,fmt:function(v){return v.toFixed(1)+'K';}}]},options:{plugins:{title:{display:true,text:'CV wholesales (000 units)'},legend:{display:false}}}});
+ }
+ if(id==='t-cf'){
+  mk('cFcf',{type:'bar',data:{labels:['Q2FY26','Q2FY27','H1FY27','of which WC (H1)','FY26'],datasets:[{label:'₹ Cr',data:[2200,4600,5721,2447,9200],backgroundColor:[NV,OR,OR,AM,NV]}]},options:{plugins:{title:{display:true,text:'Free cash flow (₹ Cr)'},legend:{display:false}}}});
+  mk('cWc',{type:'bar',data:{labels:['Inventory','Receivable','Payable','CCC'],datasets:[{label:'FY25 standalone',data:[32,16,135,-87],backgroundColor:'#9fb3cf'},{label:'FY26 standalone',data:[26,9,99,-64],backgroundColor:NV},{label:'FY26 consolidated',data:[35,12,87,-40],backgroundColor:OR}]},options:{plugins:{title:{display:true,text:'Working-capital days'}}}});
+ }
+ if(id==='t-ol'){
+  mk('cUnit',{type:'bar',data:{labels:['Q2FY26','Q4FY26','Q1FY27','Q2FY27'],datasets:[{label:'Revenue per vehicle (₹ lakh)',data:[17.39,18.55,17.78,17.69],backgroundColor:NV,fmt:function(v){return v.toFixed(2);}},{label:'EBITDA per vehicle (₹ lakh)',data:[2.19,2.58,2.08,2.07],backgroundColor:OR,fmt:function(v){return v.toFixed(2);}}]},options:{plugins:{title:{display:true,text:'Standalone unit economics (₹ lakh per vehicle)†'}}}});
+  mk('cBridge',{type:'bar',data:{labels:['Variable cost','Volume & mix','Net realisation','FX & other'],datasets:[{label:'₹ Cr',data:[-1416,1159,1017,356],backgroundColor:[RD,GR,GR,BL]}]},options:{indexAxis:'y',plugins:{title:{display:true,text:'PBT (bei) drivers, Q2FY27 vs Q2FY26 (₹ Cr)'},legend:{display:false}}}});
+  mk('cShare',{type:'bar',data:{labels:CO.share.cats,datasets:[{label:'Q1FY27',data:CO.share.q1,backgroundColor:'#9fb3cf',fmt:function(v){return v+'%';}},{label:'H1FY27',data:CO.share.h1,backgroundColor:OR,fmt:function(v){return v+'%';}}]},options:{plugins:{title:{display:true,text:'Domestic VAHAN market share (%)'}},scales:{y:{min:20}}}});
+ }
+ if(id==='t-iv'){
+  mk('cIv',{type:'bar',data:{labels:CO.iveco.q,datasets:[{label:'Iveco adjusted EBIT (€ m)',data:CO.iveco.adjEbit,backgroundColor:CO.iveco.adjEbit.map(function(v){return v<0?RD:NV;})}]},options:{plugins:{title:{display:true,text:'Iveco Group adjusted EBIT (€ m)'},legend:{display:false}}}});
+  drawAcc();sim();
+ }
+ if(id==='t-va'){
+  mk('cSh',{type:'doughnut',data:{labels:['Promoter','FII','DII','Public'],datasets:[{data:[42.5,19.0,18.7,19.8],backgroundColor:[OR,NV,TE,'#b7c0d0']}]},options:{plugins:{title:{display:true,text:'Shareholding (%)'}}}});
+ }
+ if(id==='t-an'){
+  mk('cAn',{type:'bar',data:{labels:CO.analysts.map(function(a){return a[0]+' ('+a[2]+')';}),datasets:[{label:'Target (₹)',data:CO.analysts.map(function(a){return a[1];}),backgroundColor:CO.analysts.map(function(a){return a[2]==='Buy'?GR:AM;})}]},options:{indexAxis:'y',plugins:{title:{display:true,text:'Broker targets vs CMP ₹395'},legend:{display:false}},scales:{x:{min:300,max:760}}}});
+ }
+ if(id==='t-tc')drawClock();
+}
+
+/* ---------- temple ---------- */
+var PIL=[["g","Growth","வளர்ச்சி","Volumes +42.7%, consolidated revenue +36%, H1 volumes +35%. Growth will moderate in H2 on a higher base.","வாலியூம் 42.7%, வருமானம் 36% ஏற்றம். H2ல வளர்ச்சி கொஞ்சம் குறையும்."],["m","Margins","மார்ஜின்","EBITDA 10.9% consolidated / 11.7% standalone, down 40–90 bps; EBITDA per vehicle down 5.5%; Q3 faces 150–200 bps more cost pressure.","EBITDA மார்ஜின் 10.9%/11.7% – இறக்கம். Q3ல இன்னும் 150–200 bps அழுத்தம்."],["d","Debt & cash","கடன் & கேஷ்","Net cash ₹15,900 Cr and FCF ₹4,600 Cr in the quarter; will turn into acquisition net debt after Iveco settlement.","நெட் கேஷ் ₹15,900 கோடி. இவெகோ டீல் முடிஞ்சதும் கடன் வரும்."],["v","Valuation","வேல்யுவேஷன்","≈12x EV/EBITDA†, P/B ≈11x; P/E 23–44x depending on how one-offs are treated. Not cheap for a cyclical near peak volumes.","EV/EBITDA ~12x, P/B ~11x. சைக்கிள் உச்சத்துல இது மலிவு இல்ல."],["t","Market trend","மார்க்கெட் போக்கு","Stock ~22% below its 52-week high of ₹509 and down ~6% over six months; fell 4.6% on results day.","52 வார உச்சத்தை விட 22% கீழ. ரிசல்ட் நாள் 4.6% இறக்கம்."],["r","Risk","ரிஸ்க்","Iveco acceptance shortfall, low Iveco margins, commodity inflation and a peaking domestic CV cycle.","இவெகோ 80% சிக்கல், குறைந்த இவெகோ மார்ஜின், கமாடிட்டி விலை, சைக்கிள் உச்சம்."]];
+function col(s){return s>=8?'#1f9d55':(s>=6?'#d99a00':'#d64545');}
+function renderTemple(){var s=document.getElementById('temple');var comp=Object.values(CO.scores).reduce(function(a,b){return a+b;},0)/6*10;var h='';
+ h+='<polygon points="300,10 40,110 560,110" fill="#e8731a"/><text x="300" y="70" text-anchor="middle" fill="#fff" font-size="30" font-weight="800">'+comp.toFixed(1)+'</text><text x="300" y="96" text-anchor="middle" fill="#fff" font-size="13">CB Score / 100</text>';
+ h+='<rect x="50" y="112" width="500" height="34" fill="#1f3a5f"/><text x="300" y="134" text-anchor="middle" fill="#fff" font-size="14" font-weight="700">Tata Motors (CV) · Q2 FY27</text>';
+ PIL.forEach(function(p,i){var x=70+i*80,sc=CO.scores[p[0]],c=col(sc);h+='<g style="cursor:pointer" onclick="pilClick('+i+')"><rect x="'+x+'" y="152" width="60" height="210" fill="#f1f3f7" stroke="#cfd5e0"/>';for(var k=1;k<5;k++)h+='<line x1="'+(x+k*12)+'" y1="152" x2="'+(x+k*12)+'" y2="362" stroke="#dde2ea"/>';h+='<rect class="pf" data-h="'+(210*sc/10)+'" x="'+x+'" y="362" width="60" height="0" fill="'+c+'" opacity=".85"/><circle cx="'+(x+30)+'" cy="178" r="17" fill="#fff" stroke="'+c+'" stroke-width="3"/><text x="'+(x+30)+'" y="183" text-anchor="middle" font-size="13" font-weight="700" fill="'+c+'">'+sc.toFixed(1)+'</text></g>';});
+ h+='<rect x="40" y="364" width="520" height="12" fill="#cfd5e0"/><rect x="25" y="376" width="550" height="12" fill="#b7c0d0"/>';
+ PIL.forEach(function(p,i){h+='<text x="'+(100+i*80)+'" y="408" text-anchor="middle" font-size="12" font-weight="600" fill="#1d2433">'+(LANG==='ta'?p[2]:p[1])+'</text>';});
+ s.innerHTML=h;setTimeout(function(){s.querySelectorAll('.pf').forEach(function(r){var hh=+r.dataset.h,t0=null;function st(ts){if(!t0)t0=ts;var f=Math.min(1,(ts-t0)/1100);r.setAttribute('height',hh*f);r.setAttribute('y',362-hh*f);if(f<1)requestAnimationFrame(st);}requestAnimationFrame(st);});},150);}
+function renderPillars(){renderTemple();var w=document.getElementById('pillarCards');w.innerHTML='';PIL.forEach(function(p,i){var sc=CO.scores[p[0]];var d=document.createElement('div');d.className='card pillarCard';d.id='pil'+i;d.style.borderLeft='5px solid '+col(sc);d.innerHTML='<b>'+(LANG==='ta'?p[2]:p[1])+' · '+sc.toFixed(1)+'/10</b><div style="font-size:13.5px">'+(LANG==='ta'?p[4]:p[3])+'</div>';w.appendChild(d);});}
+function pilClick(i){var e=document.getElementById('pil'+i);e.scrollIntoView({behavior:'smooth',block:'center'});document.querySelectorAll('.pillarCard').forEach(function(x){x.classList.remove('hl');});e.classList.add('hl');}
+
+/* ---------- business model svg ---------- */
+var BM={
+ cust:{t:"Customers",c:"#5b6476",en:"Fleet owners and transporters (HCV/ILMCV), small businesses and first-time buyers (SCV/pickups), state transport undertakings and private bus operators, mining and construction firms, and overseas distributors such as the Indonesia order. Buying decisions run on total cost of ownership, uptime and finance availability.",ta:"ஃப்ளீட் ஓனர்ஸ், டிரான்ஸ்போர்ட்டர்ஸ், சின்ன பிசினஸ்காரங்க, அரசு பஸ் கழகங்கள், மைனிங் கம்பெனிகள், வெளிநாட்டு டிஸ்ட்ரிப்யூட்டர்கள். இவங்க TCO, அப்டைம், லோன் கிடைக்குதான்னு பார்த்து வாங்குறாங்க."},
+ chan:{t:"Channels",c:"#5b6476",en:"Dealer and service touchpoints across India, retail financiers and banks, government tenders (e-buses), and export distributors. Dealers pay fast (receivable ~9 days) which helps the negative cash cycle.",ta:"டீலர்ஸ், சர்வீஸ் சென்டர், பேங்க்/ஃபைனான்ஸ் கம்பெனிகள், அரசு டெண்டர், எக்ஸ்போர்ட் டிஸ்ட்ரிப்யூட்டர்கள். டீலர்ஸ் ~9 நாள்ல பணம் கொடுக்குறாங்க."},
+ co:{t:"Tata Motors CV",c:"#1f3a5f",en:"India's largest CV maker. Q2FY27 consolidated revenue ₹25,338 Cr, 1,35,114 units, domestic share 36.2% (H1). Subsidiaries include Tata Daewoo (Korea) and Tata Cummins joint operation for engines; Iveco to be added from Q3FY27.",ta:"இந்தியாவின் மிகப்பெரிய CV கம்பெனி. Q2 வருமானம் ₹25,338 கோடி, 1,35,114 வண்டி, ஷேர் 36.2%. Tata Daewoo, Tata Cummins; Q3ல இருந்து இவெகோ சேரும்."},
+ hcv:{t:"HCV",c:"#e8731a",en:"Heavy trucks: 33,800 units (+41%), market share 55.7% (H1). Highest value per vehicle; most sensitive to infrastructure spending, freight rates and the replacement cycle.",ta:"பெரிய லாரிகள்: 33,800 (+41%), ஷேர் 55.7%. ஒரு வண்டிக்கு அதிக விலை; இன்ஃப்ரா, ஃப்ரெய்ட் ரேட்டை பொறுத்தது."},
+ ilm:{t:"ILMCV",c:"#2f6fd6",en:"Intermediate/light/medium trucks: ~21,800 units† , share 36.3% (H1). Serves e-commerce, FMCG and regional distribution; management expects double-digit growth to continue.",ta:"நடுத்தர லாரிகள்: ~21,800†, ஷேர் 36.3%. இ-காமர்ஸ், FMCG டிஸ்ட்ரிப்யூஷன். இரட்டை இலக்க வளர்ச்சி தொடரும்னு எதிர்பார்ப்பு."},
+ scv:{t:"SCV & Pickups",c:"#0f9488",en:"Small CVs and pickups: 44,000 units (+27%), share 27.6% (H1). Lowest price point; EV is the growth lever — SCV EV retail 4,400 units, salience ~12% now, target ~20% by FY28.",ta:"சின்ன வண்டிகள், பிக்அப்: 44,000 (+27%), ஷேர் 27.6%. EV தான் வளர்ச்சி – 4,400 EV, இப்போ 12%, FY28க்குள் 20% இலக்கு."},
+ bus:{t:"CV Passenger",c:"#7b4fd0",en:"Buses and vans: ~14,400 units†, share 41.1% (H1), up 500 bps vs FY26. Strong tender wins in e-buses; deployed e-bus fleet has run over 64 crore green km.",ta:"பஸ், வேன்: ~14,400†, ஷேர் 41.1% (+500 bps). இ-பஸ் டெண்டர்கள்ல நல்ல வெற்றி."},
+ intl:{t:"International",c:"#d99a00",en:"Exports: 21,132 units (+177%), driven by the large Indonesia order. About a third of Q2's extra units came from here. Iveco would add Europe and Latin America.",ta:"எக்ஸ்போர்ட்: 21,132 (+177%), இந்தோனேஷியா ஆர்டர். Q2 கூடுதல் வண்டிகள்ல மூணுல ஒரு பங்கு இங்க இருந்து."},
+ nc:{t:"Parts, service, digital",c:"#1f9d55",en:"About 20% of revenue — spares, annual maintenance, uptime contracts and connected-fleet services. Less cyclical than vehicle sales; a priority to scale.",ta:"வருமானத்துல ~20% – ஸ்பேர்ஸ், சர்வீஸ், டிஜிட்டல். சைக்கிள் பாதிப்பு குறைவு."},
+ rev:{t:"Revenue",c:"#1f3a5f",en:"₹25,338 Cr consolidated (+36.3%); standalone ₹23,900 Cr (+42%). Realisation per vehicle ≈₹17.7 lakh†, roughly flat — growth is volume-driven.",ta:"கன்சால். ₹25,338 கோடி; ஸ்டாண்ட்அலோன் ₹23,900 கோடி. வளர்ச்சி முழுக்க வாலியூம்ல இருந்து."},
+ cost:{t:"Costs",c:"#d64545",en:"Materials dominate: variable cost rose ₹1,416 Cr (5.9% impact) on steel and rubber. R&D ₹339 Cr and capex ₹258 Cr in the quarter. Finance cost is small today but will rise with Iveco debt.",ta:"மெட்டீரியல் தான் பெரிய செலவு – ஸ்டீல், ரப்பர் ₹1,416 கோடி அதிகம். இவெகோ கடனால வட்டி செலவு ஏறும்."},
+ prof:{t:"Profit & shareholders",c:"#1f9d55",en:"EBITDA ≈₹2,762 Cr† (10.9%), PAT ₹1,253 Cr, FCF ₹4,600 Cr. FY26 dividend ₹4/share. Cash will now fund the Iveco purchase rather than payouts.",ta:"EBITDA ≈₹2,762 கோடி, PAT ₹1,253 கோடி, FCF ₹4,600 கோடி. டிவிடெண்ட் ₹4. இனி கேஷ் இவெகோவுக்கு போகும்."}
+};
+function bmBox(k,x,y,w,h,l1,l2){var b=BM[k];return '<g class="node" onclick="bmShow(\''+k+'\')"><rect class="bx" x="'+x+'" y="'+y+'" width="'+w+'" height="'+h+'" rx="9" fill="#fff" stroke="'+b.c+'" stroke-width="2"/><rect x="'+x+'" y="'+y+'" width="'+w+'" height="6" rx="3" fill="'+b.c+'"/><text x="'+(x+w/2)+'" y="'+(y+h/2-3)+'" text-anchor="middle" font-size="13" font-weight="700" fill="'+b.c+'">'+b.t+'</text><text x="'+(x+w/2)+'" y="'+(y+h/2+14)+'" text-anchor="middle" font-size="11" fill="#3b4456">'+(l1||'')+'</text>'+(l2?'<text x="'+(x+w/2)+'" y="'+(y+h/2+28)+'" text-anchor="middle" font-size="11" fill="#3b4456">'+l2+'</text>':'')+'</g>';}
+function arr(x1,y1,x2,y2){return '<line x1="'+x1+'" y1="'+y1+'" x2="'+x2+'" y2="'+y2+'" stroke="#9aa4b6" stroke-width="2" marker-end="url(#ah)"/>';}
+function renderBM(){var h='<defs><marker id="ah" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#9aa4b6"/></marker></defs>';
+ h+=bmBox('cust',10,230,130,110,'Fleets · STUs','SMEs · exporters');
+ h+=bmBox('chan',170,230,130,110,'Dealers · financiers','tenders · distributors');
+ h+=bmBox('co',330,215,150,140,'₹25,338 Cr','1,35,114 units');
+ var segs=[['hcv','33.8K +41%','share 55.7%'],['ilm','~21.8K†','share 36.3%'],['scv','44.0K +27%','share 27.6%'],['bus','~14.4K†','share 41.1%'],['intl','21.1K +177%','~16% of units'],['nc','≈20% of revenue','non-cyclical']];
+ segs.forEach(function(s,i){var y=12+i*96;h+=bmBox(s[0],520,y,165,84,s[1],s[2]);h+=arr(480,285,518,y+42);h+=arr(687,y+42,733,285);});
+ h+=bmBox('rev',735,235,115,100,'+36.3% YoY','');
+ h+=bmBox('cost',875,120,115,110,'Var. cost','+₹1,416 Cr');
+ h+=bmBox('prof',875,350,115,120,'EBITDA ≈2,762†','PAT 1,253');
+ h+=arr(140,285,168,285)+arr(300,285,328,285)+arr(850,270,873,180)+arr(850,300,873,405)+arr(932,232,932,348);
+ document.getElementById('bmSvg').innerHTML=h;}
+function bmShow(k){var c=document.getElementById('bmCard');if(!k){if(c.dataset.k)k=c.dataset.k;else return;}c.dataset.k=k;var b=BM[k];c.innerHTML='<b style="color:'+b.c+'">'+b.t+'</b><div>'+(LANG==='ta'?b.ta:b.en)+'</div>';}
+
+/* ---------- acceptance gauge ---------- */
+function drawAcc(){var s=document.getElementById('accSvg');var W=380,x0=20,h='';function bx(a,b,c,lab){h+='<rect x="'+(x0+W*a/100)+'" y="60" width="'+(W*(b-a)/100)+'" height="40" fill="'+c+'"/>';if(lab)h+='<text x="'+(x0+W*(a+b)/200)+'" y="85" text-anchor="middle" font-size="11" fill="#fff" font-weight="700">'+lab+'</text>';}
+ bx(0,27.06,'#1f9d55','Exor 27.1');bx(27.06,35,'#62c48b','8');bx(35,79.58,'#b7c0d0','others 44.6');bx(79.58,100,'#d64545','3 funds 20.4');
+ var m=x0+W*0.8;h+='<line x1="'+m+'" y1="40" x2="'+m+'" y2="120" stroke="#1d2433" stroke-width="2" stroke-dasharray="4 3"/><text x="'+m+'" y="34" text-anchor="middle" font-size="12" font-weight="700">80% needed</text>';
+ h+='<text x="20" y="145" font-size="12" fill="#1d2433">Tendered by 22 Oct: ~35%  ·  Max without the 3 funds: 79.58%</text><text x="20" y="168" font-size="12" fill="#d64545" font-weight="700">Gap to threshold even in best case: 0.42 percentage points</text>';
+ s.innerHTML=h;}
+
+/* ---------- simulator ---------- */
+function sim(){var g=function(i){return +document.getElementById(i).value;};var R=g('sRev'),M=g('sMar'),D=g('sDebt'),r=g('sRate'),E=g('sEq'),FX=g('sFx'),B=g('sBase');
+ document.getElementById('vRev').textContent='€'+R.toFixed(1)+' bn';document.getElementById('vMar').textContent=M.toFixed(1)+'%';document.getElementById('vDebt').textContent='€'+D.toFixed(1)+' bn';document.getElementById('vRate').textContent=r.toFixed(1)+'%';document.getElementById('vEq').textContent='€'+E.toFixed(1)+' bn';document.getElementById('vFx').textContent='₹'+FX;document.getElementById('vBase').textContent='₹'+inr(B);
+ var ivPat=(R*M/100-0.15)*0.75*FX*100; var intr=D*r/100*0.75*FX*100; var newSh=E*FX*100/CO.cmp; var sh=CO.shares_cr;
+ var epsB=B/sh, epsA=(B+ivPat-intr)/(sh+newSh), acc=(epsA/epsB-1)*100;
+ var need=((B*(sh+newSh)/sh-B+intr)/(0.75*FX*100)+0.15)/R*100;
+ mk('cSim',{type:'bar',data:{labels:['EPS without Iveco','EPS with Iveco'],datasets:[{label:'₹ per share (annual)',data:[+epsB.toFixed(2),+epsA.toFixed(2)],backgroundColor:[NV,acc>=0?GR:RD],fmt:function(v){return '₹'+v.toFixed(2);}}]},options:{animation:false,plugins:{legend:{display:false}},scales:{y:{beginAtZero:true}}}});
+ document.getElementById('simOut').innerHTML='<div class="big '+(acc>=0?'up':'dn')+'">'+(acc>=0?'+':'')+acc.toFixed(1)+'% EPS '+(acc>=0?'accretion':'dilution')+'</div>Iveco PAT ₹'+inr(Math.round(ivPat))+' Cr · after-tax interest ₹'+inr(Math.round(intr))+' Cr · new shares '+newSh.toFixed(1)+' crore<br><b>Break-even Iveco EBIT margin ≈ '+need.toFixed(1)+'%</b> (Iveco H1 2026: 1.2%; Iveco 2028 target: 7–7.5%)';}
+['sRev','sMar','sDebt','sRate','sEq','sFx','sBase'].forEach(function(i){document.getElementById(i).addEventListener('input',sim);});
+
+/* ---------- cycle clock ---------- */
+function drawClock(){var s=document.getElementById('clock'),cx=180,cy=180,R=140,h='';var ph=[['P1 Trough','#9fb3cf'],['P2 Early recovery','#1f9d55'],['P3 Expansion','#62c48b'],['P4 Late cycle','#d99a00'],['P5 Downturn','#d64545']];
+ ph.forEach(function(p,i){var a0=(i*72-90)*Math.PI/180,a1=((i+1)*72-90)*Math.PI/180;var x0=cx+R*Math.cos(a0),y0=cy+R*Math.sin(a0),x1=cx+R*Math.cos(a1),y1=cy+R*Math.sin(a1);h+='<path d="M'+cx+','+cy+' L'+x0+','+y0+' A'+R+','+R+' 0 0 1 '+x1+','+y1+' z" fill="'+p[1]+'" opacity=".85" stroke="#fff" stroke-width="3"/>';var am=((i+.5)*72-90)*Math.PI/180;h+='<text x="'+(cx+(R*.68)*Math.cos(am))+'" y="'+(cy+(R*.68)*Math.sin(am))+'" text-anchor="middle" font-size="11" font-weight="700" fill="#fff">'+p[0].split(' ')[0]+'</text><text x="'+(cx+(R*.68)*Math.cos(am))+'" y="'+(cy+(R*.68)*Math.sin(am)+13)+'" text-anchor="middle" font-size="9" fill="#fff">'+p[0].split(' ').slice(1).join(' ')+'</text>';});
+ var a=(3*72-90)*Math.PI/180;h+='<line x1="'+cx+'" y1="'+cy+'" x2="'+(cx+(R-12)*Math.cos(a))+'" y2="'+(cy+(R-12)*Math.sin(a))+'" stroke="#1f3a5f" stroke-width="5" stroke-linecap="round"/><circle cx="'+cx+'" cy="'+cy+'" r="22" fill="#1f3a5f"/><text x="'+cx+'" y="'+(cy+5)+'" text-anchor="middle" fill="#fff" font-size="13" font-weight="800">CY 41</text>';
+ var b=(3.35*72-90)*Math.PI/180;h+='<circle cx="'+(cx+(R+8)*Math.cos(b))+'" cy="'+(cy+(R+8)*Math.sin(b))+'" r="8" fill="#e8731a" stroke="#fff" stroke-width="2"/><text x="'+(cx+(R+8)*Math.cos(b)-12)+'" y="'+(cy+(R+8)*Math.sin(b)+22)+'" font-size="10" fill="#e8731a" font-weight="700">Stock: Stage 3</text>';
+ h+='<text x="180" y="352" text-anchor="middle" font-size="11" fill="#3b4456">Pointer = sector phase (P3→P4) · orange dot = stock price stage</text>';s.innerHTML=h;}
+
+/* ---------- self-check ---------- */
+var SC=[["1. Questions about the stock",[["I understand that TMCV earns mainly from Indian trucks, buses and SCVs, and that Iveco will roughly triple revenue","Q2FY27 revenue ₹25,338 Cr; Iveco ≈€13.4 bn a year"],["I know what Q2FY27 margin did","EBITDA margin 10.9% consolidated, −40 bps YoY"],["I know the deal status as of today","~35% tendered by 22 Oct vs 80% needed; window closes 26 Oct"]]],
+["2. Problems investors face",[["I am comfortable with a cyclical business near peak volumes","FY26 volumes crossed the pre-FY19 peak; H2 growth to moderate"],["I can tolerate EPS dilution in year one","Iveco H1 2026 adjusted net income −€28 m"],["I accept that negative working capital can reverse","Payable days 99 (FY26) vs 135 (FY25)"]]],
+["3. Solutions (what I did)",[["I read the Q2FY27 results and investor presentation myself",""],["I tried the Iveco simulator with my own assumptions","Break-even Iveco EBIT ≈2.4% on CB defaults"],["I checked the 26–30 Oct Iveco announcements",""]]],
+["4. Anchors' and analysts' view",[["I looked at both bullish and cautious brokers","Targets ₹434 (MOFSL Neutral) to ₹700 (Emkay Buy), mostly pre-Q2"],["I noted brokers value Iveco at ~₹70–91 per share",""]]],
+["5. My own conditions",[]]];
+var SUG=["Iveco deal closes on time","Q3 margin above 11%","Steel prices ease","Price within my valuation band","Equity raise via rights, not QIP","Iveco EBIT above 3% in first consolidated quarter","My position size is within limits","I have a 3-year horizon"];
+function scKey(){return 'cb_sc_TMCV_Q2FY27';}
+function scLoad(){try{return JSON.parse(localStorage.getItem(scKey())||'{}');}catch(e){return {};}}
+function scSave(o){try{localStorage.setItem(scKey(),JSON.stringify(o));}catch(e){}}
+function scRender(){var st=scLoad();st.own=st.own||[];var w=document.getElementById('scWrap');w.innerHTML='';SC.forEach(function(g,gi){var items=gi===4?st.own.map(function(t){return [t,''];}):g[1];var d=document.createElement('div');d.className='card sc';d.style.marginTop='8px';var hh='<b>'+g[0]+'</b>';items.forEach(function(it,ii){var k=gi+'_'+ii;hh+='<label><input type="checkbox" data-k="'+k+'" '+(st[k]?'checked':'')+'> '+it[0]+(it[1]?'<span class="data">Data: '+it[1]+'</span>':'')+'</label>';});
+ if(gi===4){hh+='<div style="margin-top:6px">'+(st.own.length<8?SUG.filter(function(s){return st.own.indexOf(s)<0;}).map(function(s){return '<button class="chips" style="border:1px solid #e3e6ee;background:#f7f8fb;border-radius:14px;padding:3px 9px;margin:2px;font-size:12px;cursor:pointer" onclick="scAdd(\''+s.replace(/'/g,'')+'\')">+ '+s+'</button>';}).join(''):'<span class="note">Maximum 8 conditions.</span>')+'</div>';}
+ hh+='<div class="bar" style="margin-top:6px"><i id="scb'+gi+'"></i></div>';d.innerHTML=hh;w.appendChild(d);});
+ w.querySelectorAll('input[type=checkbox]').forEach(function(c){c.onchange=function(){var s=scLoad();s[c.dataset.k]=c.checked;scSave(s);scProg();};});scProg();}
+function scAdd(t){var s=scLoad();s.own=s.own||[];if(s.own.length<8&&s.own.indexOf(t)<0)s.own.push(t);scSave(s);scRender();}
+function scProg(){var s=scLoad(),tot=0,on=0;SC.forEach(function(g,gi){var n=gi===4?(s.own||[]).length:g[1].length,c=0;for(var i=0;i<n;i++)if(s[gi+'_'+i])c++;tot+=n;on+=c;var b=document.getElementById('scb'+gi);if(b)b.style.width=(n?c/n*100:0)+'%';});document.getElementById('scAll').style.width=(tot?on/tot*100:0)+'%';document.getElementById('scMsg').textContent=on+' of '+tot+' of your own conditions line up. This only counts how many of your own conditions line up. It is not a recommendation.';}
+function scClear(){try{localStorage.removeItem(scKey());}catch(e){}scRender();}
+
+/* ---------- socrates ---------- */
+var QZ=[["TMCV's total volumes grew 42.7% but domestic grew 30.9%. What explains the gap?",["Price hikes","International sales up 177%","Iveco consolidation","Tata Capital gains"],1,"Exports (mainly Indonesia) rose 177% to 21,132 units — about a third of the extra units."],
+["Revenue +42% but EBITDA +31%. What does that tell you?",["Operating leverage was strong","Costs rose faster than prices","Volumes fell","Depreciation rose"],1,"Variable costs (steel, rubber) outran price hikes, so the degree of operating leverage was below 1."],
+["Why can TMCV's FCF exceed its EBITDA in a growth quarter?",["It sells assets","Negative working capital — suppliers are paid later than customers pay","Tax refunds","Iveco dividends"],1,"With payable days ~99 versus inventory + receivables ~35, growth releases cash."],
+["What is the main obstacle to the Iveco offer closing as of 22 Oct?",["Regulators","Price too high","Three funds holding ~20.4% have not tendered, so 80% is out of reach without them","Italian government opposition"],2,"Without them the maximum is 79.58%."],
+["On CB's model, roughly what Iveco EBIT margin avoids diluting TMCV EPS?",["~0.5%","~2.4%","~7%","~11%"],1,"About 2.4% on default assumptions; Iveco's H1 2026 margin was 1.2%."],
+["Which cycle phase does CB assign to Indian CVs now?",["P1 Trough","P2 Early recovery","P3→P4 (scored as P4 late cycle)","P5 Downturn"],2,"Volumes above prior peak, margins rolling over, growth guided to moderate."]];
+function renderQuiz(){var w=document.getElementById('quiz');w.innerHTML='';QZ.forEach(function(q,i){var d=document.createElement('div');d.className='q';d.innerHTML='<b>Q'+(i+1)+'. '+q[0]+'</b>';q[1].forEach(function(o,j){var b=document.createElement('button');b.className='opt';b.textContent=o;b.onclick=function(){d.querySelectorAll('.opt').forEach(function(x,k){x.disabled=true;if(k===q[2])x.classList.add('ok');});if(j!==q[2])b.classList.add('no');var e=document.createElement('div');e.className='note';e.textContent=(j===q[2]?'Right. ':'Think again: ')+q[3];d.appendChild(e);};d.appendChild(b);});w.appendChild(d);});}
+function ftHint(){document.getElementById('ftOut').textContent='Cheaper steel lifts EBITDA per vehicle, but slower volume means less fixed-cost absorption and a smaller working-capital inflow — FCF could fall even as margin improves. Which effect is bigger for a company with payable days near 99?';}
+
+/* ---------- CB Assist ---------- */
+var KB=[[["revenue","sales","turnover","வருமானம்"],"Consolidated revenue was ₹25,338 crore, up 36.3%. Standalone revenue was ₹23,900 crore, up 42%.","கன்சாலிடேட்டட் வருமானம் ₹25,338 கோடி, 36.3% ஏற்றம். ஸ்டாண்ட்அலோன் ₹23,900 கோடி, 42% ஏற்றம்."],
+[["ebitda","margin","மார்ஜின்"],"Consolidated EBITDA was about ₹2,762 crore at a 10.9% margin, down 40 basis points. Standalone margin was 11.7%, down 90 basis points, because of steel and rubber costs.","கன்சால். EBITDA சுமார் ₹2,762 கோடி, மார்ஜின் 10.9%. ஸ்டாண்ட்அலோன் 11.7%, ஸ்டீல் ரப்பர் விலையால இறக்கம்."],
+[["profit","pat","net","லாபம்"],"Consolidated net profit was ₹1,253 crore against a loss of ₹867 crore a year ago, which was hit by Tata Capital mark-to-market losses.","நிகர லாபம் ₹1,253 கோடி. போன வருஷம் ₹867 கோடி நஷ்டம்."],
+[["volume","units","wholesale","விற்பனை","வண்டி"],"Wholesales were 1,35,114 units, up 42.7%. Domestic was 1,13,982, up 30.9%, and international 21,132, up 177%.","மொத்தம் 1,35,114 வண்டி, 42.7% ஏற்றம். உள்நாடு 30.9%, வெளிநாடு 177% ஏற்றம்."],
+[["cash","fcf","free cash","கேஷ்"],"Free cash flow was ₹4,600 crore in the quarter and ₹5,721 crore in the half year. Net cash is ₹15,900 crore consolidated.","FCF ₹4,600 கோடி, H1ல ₹5,721 கோடி. நெட் கேஷ் ₹15,900 கோடி."],
+[["working capital","payable","inventory","receivable","cycle"],"TMCV has a negative cash conversion cycle of about minus 64 days standalone in FY26: inventory 26 days, receivables 9, payables 99. Growth releases cash, which is why H1 working capital added ₹2,447 crore to free cash flow.","FY26ல கேஷ் சைக்கிள் சுமார் −64 நாள். வளர்ச்சி வந்தா கேஷ் கூடுது; H1ல ₹2,447 கோடி வொர்க்கிங் கேபிடல்ல இருந்து."],
+[["share","market share","ஷேர்"],"Domestic market share was 36.2% for H1, up 110 basis points over FY26. HCV 55.7%, ILMCV 36.3%, SCV pickups 27.6%, CV passenger 41.1%. Q2 alone was slightly weaker than Q1.","H1 ஷேர் 36.2%. HCV 55.7%, பஸ் 41.1%. Q2 மட்டும் Q1ஐ விட கொஞ்சம் குறைவு."],
+[["what happened","iveco status","tender","80","holdout","deal","இவெகோ"],"Tata raised its Iveco offer to 14.40 euros, about 3.91 billion euros. All regulatory approvals are in and the acceptance threshold was cut to 80%. But only about 35% was tendered by 22 October. Three funds with about 20.4% are holding out, so the maximum without them is 79.58%. The window closes on 26 October.","இவெகோ ஆஃபர் €14.40, மொத்தம் €3.91 பில்லியன். 80% வேணும்; 22 அக் வரைக்கும் 35% தான். மூணு ஃபண்ட்ஸ் 20.4% வச்சிருக்காங்க – அவங்க இல்லாம அதிகபட்சம் 79.58% தான். 26 அக் கடைசி நாள்."],
+[["benefit","financially","technology","accretive","dilutive","help","லாபமா"],"Technology, yes: FPT engines, gas trucks, Europe's leading e-bus business, vans and a finance network. Financially, not in year one: Iveco earned about 1.2% EBIT in H1 2026, and on CB's model it needs about 2.4% just to avoid diluting EPS. If it reaches its 7% target, the deal becomes strongly accretive.","டெக்னாலஜி – ஆமாம். பணம் – முதல் வருஷம் இல்ல. இவெகோ மார்ஜின் 1.2%; EPS குறையாம இருக்க 2.4% வேணும்; 7% வந்தா ரொம்ப லாபம்."],
+[["debt","loan","bridge","leverage","கடன்"],"The deal uses a 3.875 billion euro bridge loan at Euribor plus 102.5 basis points, to be refinanced with about 70% term debt and 30% equity, including roughly 1 billion euros of equity. Net cash of ₹15,900 crore turns into net debt.","€3.875 பில்லியன் பிரிட்ஜ் லோன். பின்னால 70% கடன், 30% ஈக்விட்டி (~€1 பில்லியன்). நெட் கேஷ் போய் கடன் வரும்."],
+[["commodity","steel","cost","guidance","outlook","q3"],"Management guided another 150 to 200 basis points of commodity pressure in Q3, took a 1 to 2% price hike from 1 October, and expects industry growth to moderate to high single or low double digits.","Q3ல இன்னும் 150–200 bps செலவு அழுத்தம். அக் 1ல இருந்து 1–2% விலை ஏற்றம். வளர்ச்சி குறையும்."],
+[["ev","electric","இவி"],"EV volumes were 2.4 times last year. SCV EV retail was 4,400 units; SCV EV salience is about 12% and targeted at about 20% by FY28. Delhi NCR moves to EV-only CV registrations from 1 January 2027.","EV 2.4 மடங்கு. SCV EV 4,400; இப்போ 12%, FY28க்குள் 20%. டெல்லியில் ஜன 2027ல இருந்து EV மட்டும்."],
+[["valuation","pe","p/e","cheap","expensive","price"],"At about ₹395, the stock trades near 12 times trailing EV to EBITDA and about 11 times book. P/E ranges from 23 to 44 times depending on one-offs. It is 22% below its 52-week high.","₹395ல EV/EBITDA ~12x, P/B ~11x. 52 வார உச்சத்தை விட 22% கீழ."],
+[["analyst","target","broker"],"Pre-results broker targets ranged from ₹434 at Motilal Oswal, Neutral, to ₹700 at Emkay, Buy. Nomura ₹554 and JM Financial ₹535 are Buy. Post-results revisions are pending.","ப்ரோக்கர் டார்கெட் ₹434 (MOFSL) முதல் ₹700 (Emkay) வரை. Q2க்கு அப்புறம் மாற்றம் வரலாம்."],
+[["buy","sell","hold","invest","should i","வாங்கலாமா"],"CB Research does not give buy, sell or hold advice. Please use the Self-check tab to test your own conditions.","CB Research வாங்கு/விக்கு அட்வைஸ் கொடுக்காது. 'சுய சோதனை' டேப்ல உங்க கண்டிஷன்ஸ் பாருங்க."],
+[["cycle","trigger","conviction","score"],"CB rates the CV sector at the P3 to P4 transition, scored as late cycle, giving a cycle score of 41. The trigger score is 58 and CB Conviction about 59, for education only. Six-pillar CB score is 66.7.","சைக்கிள் ஸ்கோர் 41, ட்ரிகர் 58, கன்விக்ஷன் ~59. CB ஸ்கோர் 66.7."],
+[["management","ceo","cfo","board","chairman"],"N Chandrasekaran is Chairman, Girish Wagh is MD and CEO, and G V Ramanan is CFO. Olof Persson runs Iveco.","சேர்மன் N சந்திரசேகரன், MD & CEO கிரீஷ் வாக், CFO G V ராமனன்."],
+[["risk","risks","ரிஸ்க்"],"Key risks: the Iveco offer missing 80%, Iveco margins staying low, higher debt, commodity inflation and a peaking domestic CV cycle.","ரிஸ்க்: இவெகோ 80% சிக்கல், குறைந்த மார்ஜின், கடன், கமாடிட்டி, சைக்கிள் உச்சம்."]];
+var CHIPS=["Will Iveco help financially?","What happened to Iveco?","Margin?","Free cash flow?","Working capital?","Valuation?","Should I buy?"];
+function openAsst(){var b=document.getElementById('asstBox');b.style.display='flex';document.getElementById('disc').style.display='none';var c=document.getElementById('chips');c.innerHTML='';CHIPS.forEach(function(t){var x=document.createElement('button');x.textContent=t;x.onclick=function(){document.getElementById('aIn').value=t;ask();};c.appendChild(x);});if(!document.getElementById('asstLog').innerHTML)say(LANG==='ta'?'வணக்கம்! டாடா மோட்டார்ஸ் CV Q2FY27 பத்தி பேசியோ டைப் பண்ணியோ கேளுங்க.':'Hello! Ask me anything about Tata Motors CV Q2FY27 — by voice or text.',false);}
+function closeAsst(){document.getElementById('asstBox').style.display='none';try{speechSynthesis.cancel();}catch(e){}}
+function say(t,speak){var l=document.getElementById('asstLog');var d=document.createElement('div');d.className='msg b';d.textContent=t;l.appendChild(d);l.scrollTop=l.scrollHeight;if(speak){try{speechSynthesis.cancel();var u=new SpeechSynthesisUtterance(t);u.lang=LANG==='ta'?'ta-IN':'en-IN';u.rate=1;speechSynthesis.speak(u);}catch(e){}}}
+function answer(q){q=q.toLowerCase();var best=null,bs=0;KB.forEach(function(k){var s=0;k[0].forEach(function(w){if(q.indexOf(w)>=0)s+=w.length;});if(s>bs){bs=s;best=k;}});
+ if(!best)return LANG==='ta'?'மன்னிக்கவும், அது புரியல. வருமானம், மார்ஜின், இவெகோ, கேஷ், வேல்யுவேஷன் பத்தி கேளுங்க.':'Sorry, I did not catch that. Try asking about revenue, margin, Iveco, cash flow, working capital, valuation or risks.';
+ if(/compare|vs|versus|rank/.test(q))return 'Comparison: TMCV consolidated EBITDA margin 10.9% versus Iveco adjusted EBIT margin 1.2% in H1 2026 and 3.5% in Q2 2026. TMCV is far more profitable per euro of sales; Iveco brings scale and technology.';
+ if(/buy|sell|should i|invest|வாங்க/.test(q)){showTab('t-sc');}
+ return LANG==='ta'?best[2]:best[1];}
+function ask(){var i=document.getElementById('aIn'),q=i.value.trim();if(!q)return;var l=document.getElementById('asstLog');var d=document.createElement('div');d.className='msg u';d.textContent=q;l.appendChild(d);i.value='';say(answer(q),true);}
+var rec=null;
+function mic(){var SR=window.SpeechRecognition||window.webkitSpeechRecognition;if(!SR){say('Voice input is not supported in this browser. Please type your question.',false);return;}var b=document.getElementById('micBtn');if(rec){rec.stop();return;}rec=new SR();rec.lang=LANG==='ta'?'ta-IN':'en-IN';rec.interimResults=false;b.classList.add('rec');rec.onresult=function(e){document.getElementById('aIn').value=e.results[0][0].transcript;ask();};rec.onend=function(){b.classList.remove('rec');rec=null;};rec.onerror=function(){b.classList.remove('rec');rec=null;};rec.start();}
+function toggleDisc(){var d=document.getElementById('disc');d.style.display=d.style.display==='block'?'none':'block';document.getElementById('asstBox').style.display='none';}
+
+/* ---------- init ---------- */
+buildNav();renderPillars();renderBM();scRender();renderQuiz();
+</script>
+</body>
+</html>
