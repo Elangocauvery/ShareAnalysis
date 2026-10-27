@@ -1,0 +1,934 @@
+<title>ITC Hotels Q2FY27</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Marcellus&family=Mukta+Malar:wght@400;600;700&family=IBM+Plex+Mono:wght@500&display=swap">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<style>
+/* Layout: sticky tab rail + single reading column; each tab is a stack of panels; one fixed CB badge + CB Assist bubble */
+:root{
+  --bg:#ffffff; --paper:#f7f5f0; --ink:#1c2230; --muted:#5d6472; --line:#e4e0d6;
+  --brass:#9a6b1f; --forest:#1f4d3a; --cb:#f07a1a; --good:#1e8a4c; --warn:#c98a0b; --bad:#c23b2a; --blue:#2f5d8a;
+  --f-display:"Marcellus","Cormorant Garamond",Georgia,serif;
+  --f-body:"Mukta Malar","Noto Sans Tamil","Segoe UI",system-ui,sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:15px;line-height:1.55;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:0 90px}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bg)}
+.wrap{max-width:1040px;margin:0 auto}
+h1,h2,h3{font-family:var(--f-display);font-weight:400;text-wrap:balance;margin:0}
+h1{font-size:1.9rem;line-height:1.15}
+h2{font-size:1.35rem;margin-bottom:.6rem;color:var(--forest)}
+h3{font-size:1.05rem;margin-bottom:.4rem}
+.mono,.num{font-family:var(--f-mono);font-variant-numeric:tabular-nums}
+header.top{padding-block:18px 10px;display:flex;flex-wrap:wrap;gap:10px 18px;align-items:flex-end;justify-content:space-between}
+.eyebrow{font-size:.74rem;letter-spacing:.12em;text-transform:uppercase;color:var(--brass);font-weight:600}
+.sub{color:var(--muted);font-size:.9rem}
+.lang{display:flex;border:1px solid var(--line);border-radius:999px;overflow:hidden}
+.lang button{border:0;background:transparent;padding:6px 14px;font:inherit;cursor:pointer;color:var(--muted)}
+.lang button.on{background:var(--forest);color:#fff}
+nav.tabs{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);border-bottom:1px solid var(--line);display:flex;gap:4px;overflow-x:auto;padding-block:8px;scrollbar-width:thin}
+nav.tabs button{flex:0 0 auto;border:1px solid var(--line);background:var(--paper);color:var(--ink);padding:6px 12px;border-radius:8px;font:inherit;font-size:.88rem;cursor:pointer}
+nav.tabs button.on{background:var(--forest);border-color:var(--forest);color:#fff}
+nav.tabs button:focus-visible,button:focus-visible{outline:2px solid var(--cb);outline-offset:2px}
+section.tab{display:none;padding-block:18px}
+section.tab.on{display:grid;gap:18px}
+.panel{background:var(--bg);border:1px solid var(--line);border-radius:12px;padding:16px;min-width:0}
+.panel.tint{background:var(--paper)}
+.grid{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}
+.grid2{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(300px,1fr))}
+.kpi{border-left:3px solid var(--brass);padding:4px 0 4px 12px}
+.kpi .v{font-family:var(--f-mono);font-size:1.45rem}
+.kpi .l{font-size:.8rem;color:var(--muted);letter-spacing:.04em;text-transform:uppercase}
+.kpi .d{font-size:.85rem}
+.up{color:var(--good)} .dn{color:var(--bad)} .fl{color:var(--warn)}
+.chip{display:inline-block;padding:2px 9px;border-radius:999px;font-size:.78rem;font-weight:600;border:1px solid currentColor}
+table{border-collapse:collapse;width:100%;font-size:.88rem}
+th,td{padding:7px 8px;border-bottom:1px solid var(--line);text-align:right;vertical-align:top}
+th:first-child,td:first-child{text-align:left}
+th{font-weight:600;color:var(--muted);font-size:.78rem;text-transform:uppercase;letter-spacing:.04em}
+tr.cat td{background:var(--paper);color:var(--forest);font-weight:700;text-align:left;font-family:var(--f-display);font-size:.98rem}
+td.num,th.num{font-family:var(--f-mono);font-variant-numeric:tabular-nums}
+.scroll{overflow-x:auto}
+.chartbox{overflow-x:auto}
+.chartbox .inner{min-width:900px;height:320px;position:relative}
+.chartbox.sm .inner{min-width:560px;height:280px}
+ul.clean{margin:0;padding-left:1.1rem} ul.clean li{margin:.25rem 0}
+.note{font-size:.8rem;color:var(--muted)}
+.lang-ta .en{display:none!important} body:not(.lang-ta) .ta{display:none!important}
+/* business model map */
+.bm svg{width:100%;max-width:720px;height:auto;display:block;margin:0 auto}
+.bm g.box{cursor:pointer}
+.bm g.box rect{transition:stroke-width .2s}
+.bm g.box.sel rect{stroke:var(--cb);stroke-width:3}
+#bmCard{margin-top:12px;border-left:4px solid var(--cb);background:var(--paper);padding:12px 14px;border-radius:8px}
+/* temple */
+.temple svg{width:100%;max-width:520px;height:auto;display:block;margin:0 auto}
+.temple g.col{cursor:pointer}
+.pcard{border:1px solid var(--line);border-left-width:5px;border-radius:10px;padding:10px 12px;transition:box-shadow .3s}
+.pcard.hl{box-shadow:0 0 0 3px rgba(240,122,26,.35)}
+/* cycle */
+.trow td:nth-child(2){font-weight:700}
+/* self-check */
+.sc-group{border:1px solid var(--line);border-radius:10px;padding:12px}
+.sc-item{display:grid;grid-template-columns:22px 1fr;gap:8px;padding:6px 0;border-bottom:1px dashed var(--line)}
+.sc-item:last-child{border-bottom:0}
+.sc-item .dl{font-size:.8rem;color:var(--muted)}
+.bar{height:8px;background:var(--line);border-radius:4px;overflow:hidden}
+.bar i{display:block;height:100%;background:var(--forest);width:0;transition:width .4s}
+.btn{border:1px solid var(--forest);background:var(--bg);color:var(--forest);padding:6px 12px;border-radius:8px;font:inherit;cursor:pointer;font-size:.88rem}
+.btn.solid{background:var(--forest);color:#fff}
+input[type=text]{font:inherit;padding:7px 10px;border:1px solid var(--line);border-radius:8px;width:100%;background:var(--bg);color:var(--ink)}
+/* quiz */
+.q{border:1px solid var(--line);border-radius:10px;padding:12px}
+.q button.opt{display:block;width:100%;text-align:left;margin:5px 0;border:1px solid var(--line);background:var(--paper);padding:8px 10px;border-radius:8px;font:inherit;cursor:pointer;color:var(--ink)}
+.q button.opt.right{border-color:var(--good);background:#e9f6ee}
+.q button.opt.wrong{border-color:var(--bad);background:#fbeae7}
+/* fixed CB badge + assist */
+#cbBadge{position:fixed;right:calc(14px + env(safe-area-inset-right,0px));bottom:calc(14px + env(safe-area-inset-bottom,0px));width:52px;height:52px;border-radius:50%;background:var(--cb);color:#fff;font-family:var(--f-display);font-size:1.25rem;border:0;cursor:pointer;z-index:20;box-shadow:0 4px 14px rgba(240,122,26,.45);animation:blink 2.4s ease-in-out infinite}
+@keyframes blink{50%{box-shadow:0 0 0 8px rgba(240,122,26,.12);opacity:.85}}
+#cbPop{position:fixed;right:calc(14px + env(safe-area-inset-right,0px));bottom:calc(76px + env(safe-area-inset-bottom,0px));max-width:min(340px,calc(100vw - 32px));background:var(--bg);border:1px solid var(--cb);border-radius:12px;padding:14px;z-index:21;font-size:.85rem;box-shadow:0 10px 30px rgba(0,0,0,.12)}
+#asBtn{position:fixed;right:calc(76px + env(safe-area-inset-right,0px));bottom:calc(18px + env(safe-area-inset-bottom,0px));height:44px;padding:0 14px;border-radius:22px;background:var(--forest);color:#fff;border:0;font:inherit;cursor:pointer;z-index:20}
+#asPanel{position:fixed;right:calc(14px + env(safe-area-inset-right,0px));bottom:calc(76px + env(safe-area-inset-bottom,0px));width:min(380px,calc(100vw - 28px));max-height:70vh;display:flex;flex-direction:column;background:var(--bg);border:1px solid var(--forest);border-radius:14px;z-index:22;box-shadow:0 10px 30px rgba(0,0,0,.15)}
+#asLog{overflow-y:auto;padding:12px;display:grid;gap:8px;font-size:.88rem}
+.msg{padding:8px 10px;border-radius:10px;max-width:92%}
+.msg.u{background:var(--paper);justify-self:end}
+.msg.b{background:#eef4f0;border-left:3px solid var(--forest)}
+#asForm{display:flex;gap:6px;padding:10px;border-top:1px solid var(--line)}
+#asMic.rec{background:var(--bad);color:#fff;border-color:var(--bad)}
+.wm{position:fixed;left:50%;top:50%;transform:translate(-50%,-50%) rotate(-24deg);font-family:var(--f-display);font-size:5rem;color:rgba(31,77,58,.035);pointer-events:none;white-space:nowrap;z-index:0}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+
+<div class="wm">CB Research</div>
+<div class="wrap">
+<header class="top">
+  <div style="min-width:0">
+    <div class="eyebrow">CB Research · Q2 FY27 · Quarter ended 30 Sep 2026</div>
+    <h1>ITC Hotels Ltd <span class="sub mono">NSE: ITCHOTELS · BSE: 544325</span></h1>
+    <div class="sub"><span class="en">Business &amp; investment analysis of Q2 FY27 results (declared 26 Oct 2026). Consolidated unless stated. ₹ crore.</span><span class="ta">Q2 FY27 ரிசல்ட் (26 அக்டோபர் 2026) — பிசினஸ் &amp; முதலீட்டு அலசல். கன்சாலிடேட்டட் எண்கள், ₹ கோடியில்.</span></div>
+  </div>
+  <div class="lang" role="group" aria-label="Language"><button id="lgEn" class="on">English</button><button id="lgTa">தமிழ்</button></div>
+</header>
+
+<nav class="tabs" id="tabs"></nav>
+
+<!-- OVERVIEW -->
+<section class="tab" id="t-overview">
+  <div class="panel tint">
+    <h2><span class="en">The quarter in one view</span><span class="ta">இந்த காலாண்டு — ஒரே பார்வையில்</span></h2>
+    <div class="grid" id="kpiGrid"></div>
+  </div>
+  <div class="grid2">
+    <div class="panel">
+      <h3><span class="en">What went right</span><span class="ta">எது நல்லா போச்சு</span></h3>
+      <ul class="clean en">
+        <li>Record Q2: revenue ₹1,054 cr (+26%), EBITDA ₹337 cr (+37%), PAT ₹203 cr (+52%).</li>
+        <li>Core hotels (ex-residences) revenue ₹983 cr, +17%; EBITDA ₹314 cr, margin 32% (+263 bps).</li>
+        <li>Owned-hotel occupancy 76% (+481 bps), ARR ~₹12,800 (+14%), RevPAR ~₹9,700 (+21%).</li>
+        <li>RevPAR premium of 44% over the luxury/upscale industry benchmark.</li>
+        <li>Exclusive F&amp;B partner for the BRICS India 2026 Summit; MICE &amp; weddings rose to 21% of owned room revenue.</li>
+        <li>Domestic operating ROCE 19.5% vs 17.3% a year ago.</li>
+      </ul>
+      <ul class="clean ta">
+        <li>Q2 சாதனை: வருமானம் ₹1,054 கோடி (+26%), EBITDA ₹337 கோடி (+37%), லாபம் ₹203 கோடி (+52%).</li>
+        <li>முக்கிய ஹோட்டல் பிசினஸ் (ரெசிடென்ஸ் தவிர) ₹983 கோடி, +17%; மார்ஜின் 32%.</li>
+        <li>சொந்த ஹோட்டல் ஆக்யுபன்சி 76%, ரூம் ரேட் ~₹12,800 (+14%), RevPAR ~₹9,700 (+21%).</li>
+        <li>இண்டஸ்ட்ரியை விட 44% அதிக RevPAR — பிராண்ட் பலம்.</li>
+        <li>BRICS 2026 மாநாட்டுக்கு உணவு சேவை ITC தான்; MICE, கல்யாண பிசினஸ் பங்கு 21% ஆச்சு.</li>
+        <li>உள்நாட்டு ROCE 19.5% — போன வருஷம் 17.3%.</li>
+      </ul>
+    </div>
+    <div class="panel">
+      <h3><span class="en">What to watch</span><span class="ta">எதை கவனிக்கணும்</span></h3>
+      <ul class="clean en">
+        <li>7 points of the 26% revenue growth came from Sapphire Residences flats in Colombo — lumpy, not recurring.</li>
+        <li>Domestic air traffic fell 6% in Aug–Sep 2026 on fuel costs and airline capacity cuts.</li>
+        <li>Crude prices, inflation, geopolitics and climate events flagged by management.</li>
+        <li>RevPAR premium is only ~3% in Mumbai and Kolkata.</li>
+        <li>Return on equity is still single-digit (~8%) because of a large cash pile and young hotels.</li>
+      </ul>
+      <ul class="clean ta">
+        <li>26% வளர்ச்சியில் சுமார் 7 பாயிண்ட் கொழும்பு Sapphire வீடுகள் விற்பனை — இது ஒவ்வொரு காலாண்டும் வராது.</li>
+        <li>ஆகஸ்ட்–செப்டம்பர்ல விமான பயணிகள் 6% குறைஞ்சாங்க.</li>
+        <li>கச்சா எண்ணெய் விலை, விலைவாசி, உலக டென்ஷன் — நிர்வாகமே சொன்ன ரிஸ்க்.</li>
+        <li>மும்பை, கொல்கத்தாவுல பிரீமியம் வெறும் 3% தான்.</li>
+        <li>ROE இன்னும் ~8% — நிறைய கேஷ், புது ஹோட்டல்கள் இன்னும் முழுசா சம்பாதிக்கல.</li>
+      </ul>
+    </div>
+  </div>
+  <div class="panel">
+    <h3><span class="en">Quarterly trend — Revenue, EBITDA, PAT (₹ cr) and EBITDA margin</span><span class="ta">காலாண்டு போக்கு — வருமானம், EBITDA, லாபம் (₹ கோடி), மார்ஜின்</span></h3>
+    <div class="chartbox"><div class="inner"><canvas id="chQtr"></canvas></div></div>
+    <p class="note"><span class="en">Q3 and Q4 are the peak season (weddings, winter leisure). Compare Q2 with Q2, not with Q4.</span><span class="ta">Q3, Q4 தான் சீசன் (கல்யாணம், விடுமுறை). Q2-ஐ Q2 கூட தான் ஒப்பிடணும்.</span></p>
+  </div>
+</section>
+
+<!-- BUSINESS MODEL -->
+<section class="tab" id="t-model">
+  <div class="panel bm">
+    <h2><span class="en">How ITC Hotels makes money</span><span class="ta">ITC Hotels எப்படி சம்பாதிக்குது</span></h2>
+    <p class="note"><span class="en">Tap any box to see what it means.</span><span class="ta">எந்த பெட்டியையும் தொட்டு விளக்கம் பாருங்க.</span></p>
+    <div id="bmSvg"></div>
+    <div id="bmCard"></div>
+    <p class="note mono" style="margin-top:10px">Room revenue = Available room-nights × Occupancy × ARR  →  RevPAR = Occupancy × ARR  (76% × ₹12,800 ≈ ₹9,700)</p>
+  </div>
+  <div class="panel">
+    <h3><span class="en">Revenue engine — the drivers behind each line</span><span class="ta">வருமான இயந்திரம் — ஒவ்வொரு வரிக்கும் பின்னாலுள்ள காரணிகள்</span></h3>
+    <div class="scroll"><table id="engTbl"></table></div>
+  </div>
+  <div class="panel tint">
+    <h3><span class="en">Brands and where they sit</span><span class="ta">பிராண்டுகள் — எந்த செக்மென்ட்</span></h3>
+    <div class="scroll"><table id="brandTbl"></table></div>
+    <p class="note"><span class="en">"Asset-right": own the marquee hotels in big cities, grow everywhere else through management contracts that earn fees without capital.</span><span class="ta">"Asset-right": பெரிய நகர முக்கிய ஹோட்டல்கள் சொந்தம்; மற்ற இடங்களில் மேனேஜ்மென்ட் ஒப்பந்தம் — முதலீடு இல்லாம கட்டணம்.</span></p>
+  </div>
+</section>
+
+<!-- HOTEL KPIs -->
+<section class="tab" id="t-kpi">
+  <div class="panel tint">
+    <h2><span class="en">Hotel metrics that matter</span><span class="ta">ஹோட்டல் பிசினஸின் முக்கிய அளவீடுகள்</span></h2>
+    <div class="grid" id="hkGrid"></div>
+  </div>
+  <div class="grid2">
+    <div class="panel">
+      <h3><span class="en">Occupancy, ARR and RevPAR</span><span class="ta">ஆக்யுபன்சி, ARR, RevPAR</span></h3>
+      <div class="chartbox sm"><div class="inner"><canvas id="chKpi"></canvas></div></div>
+      <p class="note"><span class="en">Q2 FY26 ARR and RevPAR derived from the reported growth rates (14% and 21%).</span><span class="ta">Q2 FY26 ARR, RevPAR — அறிவிச்ச வளர்ச்சி சதவீதத்திலிருந்து கணக்கிட்டது.</span></p>
+    </div>
+    <div class="panel">
+      <h3><span class="en">Who fills the rooms (share of owned room revenue)</span><span class="ta">ரூம்களை யார் நிரப்புறாங்க</span></h3>
+      <div class="chartbox sm"><div class="inner"><canvas id="chMix"></canvas></div></div>
+    </div>
+  </div>
+  <div class="panel">
+    <h3><span class="en">Location factor — RevPAR premium over the industry</span><span class="ta">இடம் முக்கியம் — நகர வாரியான பிரீமியம்</span></h3>
+    <div class="scroll"><table id="locTbl"></table></div>
+    <p class="note"><span class="en">City-level premiums are qualitative as disclosed (strongest vs weakest); the 44% is the portfolio figure.</span><span class="ta">நகர அளவில் "அதிகம் / குறைவு" மட்டும் சொல்லியிருக்காங்க; 44% மொத்த போர்ட்ஃபோலியோ எண்.</span></p>
+  </div>
+  <div class="panel">
+    <h3><span class="en">Cost ratios — where operating leverage came from</span><span class="ta">செலவு விகிதங்கள் — மார்ஜின் ஏன் கூடுச்சு</span></h3>
+    <div class="scroll"><table id="costTbl"></table></div>
+  </div>
+</section>
+
+<!-- FINANCIALS -->
+<section class="tab" id="t-fin">
+  <div class="panel">
+    <h2><span class="en">Financials — grouped by category</span><span class="ta">நிதி அளவீடுகள் — வகைப்படி</span></h2>
+    <div class="scroll"><table id="finTbl"></table></div>
+    <p class="note">† <span class="en">derived or estimated by CB Research from disclosed figures.</span><span class="ta">வெளியிட்ட எண்களிலிருந்து CB Research கணக்கிட்டது.</span></p>
+  </div>
+  <div class="grid2">
+    <div class="panel">
+      <h3><span class="en">Segments (₹ cr)</span><span class="ta">செக்மென்ட்கள் (₹ கோடி)</span></h3>
+      <div class="scroll"><table id="segTbl"></table></div>
+    </div>
+    <div class="panel">
+      <h3><span class="en">Revenue mix Q2 FY27 (ex-residences, ₹983 cr)</span><span class="ta">வருமான பங்கீடு (₹983 கோடி)</span></h3>
+      <div class="chartbox sm"><div class="inner"><canvas id="chRev"></canvas></div></div>
+    </div>
+  </div>
+  <div class="panel">
+    <h3><span class="en">Debt and balance sheet</span><span class="ta">கடன் &amp; இருப்புநிலை</span></h3>
+    <div class="grid" id="bsGrid"></div>
+    <p class="note"><span class="en">ITC Hotels carries no borrowings. The tiny interest line (~₹8 cr a year) is lease interest. Cash funded the Kumarakom and Ahmedabad buys in FY27.</span><span class="ta">ITC Hotels-க்கு கடனே இல்ல. வருஷத்துக்கு ~₹8 கோடி வட்டி — அது லீஸ் வட்டி மட்டும். குமரகம், அகமதாபாத் வாங்கியது கையிலிருந்த கேஷில்.</span></p>
+  </div>
+</section>
+
+<!-- CASH FLOW & WC -->
+<section class="tab" id="t-cash">
+  <div class="panel">
+    <h2><span class="en">Cash flow</span><span class="ta">பணப்புழக்கம்</span></h2>
+    <div class="scroll"><table id="cfTbl"></table></div>
+    <p class="note"><span class="en">H1 FY27 cash flow statement figures were not in the sources reviewed; FY26 audited-year figures shown.</span><span class="ta">H1 FY27 கேஷ் ஃப்ளோ எண்கள் கிடைக்கல; FY26 எண்கள் காட்டப்பட்டுள்ளன.</span></p>
+  </div>
+  <div class="grid2">
+    <div class="panel">
+      <h3><span class="en">Working capital days (FY26, on revenue)</span><span class="ta">வொர்கிங் கேபிடல் நாட்கள் (FY26)</span></h3>
+      <div class="chartbox sm"><div class="inner"><canvas id="chWc"></canvas></div></div>
+    </div>
+    <div class="panel tint">
+      <h3><span class="en">Reading it right</span><span class="ta">சரியா புரிஞ்சுக்கணும்</span></h3>
+      <ul class="clean en">
+        <li>A hotel's guests pay at checkout, so receivables are small (~20 days, mostly corporate and travel-agent credit).</li>
+        <li>The ₹1,303 cr inventory is mostly unsold Sapphire Residences flats in Colombo, not food stock. That one item inflates inventory days to ~115 and the cash cycle to ~88 days.</li>
+        <li>Stripping the flats out, the hotel business runs on a near-zero or negative cash cycle: suppliers (~47 days) fund the stock.</li>
+        <li>Each flat handed over turns inventory into cash, which is why CFO tracked PBT at ~99% in FY26.</li>
+        <li>CFO covered capex about 2.7 times in FY26, leaving ~₹700 cr free cash flow.</li>
+      </ul>
+      <ul class="clean ta">
+        <li>விருந்தினர் செக்-அவுட்ல பணம் கட்டுவாங்க — அதனால ரிசீவபிள் குறைவு (~20 நாள்).</li>
+        <li>₹1,303 கோடி இன்வென்டரி பெரும்பாலும் கொழும்பு Sapphire வீடுகள் — உணவு ஸ்டாக் இல்ல. அதனால் தான் 115 நாள், 88 நாள் கேஷ் சைக்கிள் மாதிரி தெரியுது.</li>
+        <li>வீடுகளை விட்டுட்டா ஹோட்டல் பிசினஸ் கிட்டத்தட்ட பூஜ்ஜிய கேஷ் சைக்கிள்.</li>
+        <li>ஒவ்வொரு வீடும் ஒப்படைக்கும் போது இன்வென்டரி கேஷா மாறுது — அதனால CFO = PBT-ல 99%.</li>
+        <li>FY26-ல CFO கேபெக்ஸை 2.7 மடங்கு கவர் பண்ணுச்சு; ~₹700 கோடி ஃப்ரீ கேஷ்.</li>
+      </ul>
+    </div>
+  </div>
+  <div class="panel">
+    <h3><span class="en">Working capital table</span><span class="ta">வொர்கிங் கேபிடல் அட்டவணை</span></h3>
+    <div class="scroll"><table id="wcTbl"></table></div>
+  </div>
+</section>
+
+<!-- GROWTH -->
+<section class="tab" id="t-growth">
+  <div class="panel tint">
+    <h2><span class="en">Future business plans</span><span class="ta">எதிர்கால திட்டங்கள்</span></h2>
+    <div class="grid" id="grGrid"></div>
+  </div>
+  <div class="grid2">
+    <div class="panel">
+      <h3><span class="en">Keys: today vs 2031 target</span><span class="ta">ரூம்கள்: இன்று vs 2031 இலக்கு</span></h3>
+      <div class="chartbox sm"><div class="inner"><canvas id="chKeys"></canvas></div></div>
+    </div>
+    <div class="panel">
+      <h3><span class="en">Owned projects and acquisitions</span><span class="ta">சொந்த திட்டங்கள் &amp; கையகப்படுத்தல்</span></h3>
+      <div class="scroll"><table id="projTbl"></table></div>
+    </div>
+  </div>
+  <div class="grid2">
+    <div class="panel">
+      <h3><span class="en">Sri Lanka — ITC Ratnadipa &amp; Sapphire Residences</span><span class="ta">இலங்கை — ITC ரத்னதீபா &amp; Sapphire</span></h3>
+      <ul class="clean en">
+        <li>Ratnadipa kept RevPAR leadership in Colombo and was EBITDA-positive in Q2 and H1 FY27; Q2 RevPAR is 1.8× its FY25 level.</li>
+        <li>Sapphire Residences: 4 flats (20,000 sq ft) handed over in Q2; 20 flats / 1,01,000 sq ft cumulative at above ₹31,600 per sq ft.</li>
+        <li>Branded residences: Q2 revenue ₹71.1 cr, segment profit ₹22.9 cr.</li>
+        <li>Retail and office rentals at Ratnadipa expected from Q4 FY27 — a new annuity income line.</li>
+        <li>Tourist arrivals in Sri Lanka still slightly below 2025.</li>
+      </ul>
+      <ul class="clean ta">
+        <li>ரத்னதீபா கொழும்புல RevPAR-ல முதலிடம்; Q2, H1-ல EBITDA லாபத்தில்; RevPAR FY25-ஐ விட 1.8 மடங்கு.</li>
+        <li>Sapphire: Q2-ல 4 வீடுகள்; மொத்தம் 20 வீடுகள், சதுர அடிக்கு ₹31,600-க்கு மேல்.</li>
+        <li>Q2 வருமானம் ₹71.1 கோடி, லாபம் ₹22.9 கோடி.</li>
+        <li>Q4 FY27 முதல் கடை, ஆபீஸ் வாடகை வருமானம் தொடங்கும்.</li>
+        <li>இலங்கை சுற்றுலா பயணிகள் இன்னும் 2025 அளவுக்கு கொஞ்சம் கீழே.</li>
+      </ul>
+    </div>
+    <div class="panel">
+      <h3><span class="en">New frontiers and sustainability</span><span class="ta">புதிய திசைகள் &amp; பசுமை</span></h3>
+      <ul class="clean en">
+        <li>Board approved a wholly owned subsidiary in Dubai (subject to approvals) — first step outside the subcontinent.</li>
+        <li>Land added at Yashobhoomi (Delhi) and a 2.8-acre freehold plot in Lucknow (200+ key luxury hotel possible).</li>
+        <li>20 managed hotels (1,600+ keys) signed in H1 FY27 — Greater Noida, Roorkee, Rajgir, Ujjain, wildlife and beach markets.</li>
+        <li>13 LEED Zero Carbon hotels, 25 LEED Platinum, 13 LEED Zero Water; 65% renewable electricity.</li>
+        <li>2030 goal: every owned hotel LEED Zero Carbon, Zero Water and Platinum; renewable electricity above 95%.</li>
+      </ul>
+      <ul class="clean ta">
+        <li>துபாயில் முழு உரிமை துணை நிறுவனம் — போர்டு ஒப்புதல்.</li>
+        <li>டெல்லி யசோபூமி, லக்னோவில் 2.8 ஏக்கர் நிலம் (200+ ரூம் லக்ஷுரி ஹோட்டல்).</li>
+        <li>H1-ல 20 மேனேஜ்டு ஹோட்டல்கள் (1,600+ ரூம்) கையெழுத்து — நொய்டா, ரூர்க்கி, ராஜ்கிர், உஜ்ஜைன்.</li>
+        <li>13 LEED Zero Carbon, 25 LEED Platinum ஹோட்டல்கள்; 65% பசுமை மின்சாரம்.</li>
+        <li>2030 இலக்கு: எல்லா சொந்த ஹோட்டலும் Zero Carbon, Zero Water.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- VALUATION -->
+<section class="tab" id="t-val">
+  <div class="panel temple">
+    <h2><span class="en">CB Score — six pillars</span><span class="ta">CB ஸ்கோர் — ஆறு தூண்கள்</span></h2>
+    <div id="templeSvg"></div>
+    <div class="grid" id="pillarCards" style="margin-top:14px"></div>
+  </div>
+  <div class="panel">
+    <h3><span class="en">Valuation multiples (CMP ₹164.31, NSE close 26 Oct 2026)</span><span class="ta">மதிப்பீட்டு விகிதங்கள் (விலை ₹164.31)</span></h3>
+    <div class="scroll"><table id="valTbl"></table></div>
+  </div>
+  <div class="panel">
+    <h3><span class="en">Peer P/E snapshot (trailing)</span><span class="ta">போட்டியாளர் P/E ஒப்பீடு</span></h3>
+    <div class="chartbox sm"><div class="inner"><canvas id="chPeer"></canvas></div></div>
+    <p class="note"><span class="en">Peer figures from a market data screen taken before the Q2 results season; read as approximate.</span><span class="ta">போட்டியாளர் எண்கள் Q2 ரிசல்ட்டுக்கு முன் எடுத்தவை — தோராயமாக பாருங்க.</span></p>
+  </div>
+  <div class="panel tint">
+    <h3><span class="en">Market activity — why the share moved</span><span class="ta">பங்கு விலை ஏன் நகர்ந்தது</span></h3>
+    <div class="scroll"><table id="mktTbl"></table></div>
+  </div>
+</section>
+
+<!-- TRIGGERS & CYCLE -->
+<section class="tab" id="t-trig">
+  <div class="grid2">
+    <div class="panel">
+      <h2><span class="en">Cycle clock</span><span class="ta">சைக்கிள் கடிகாரம்</span></h2>
+      <div id="clockSvg"></div>
+      <p class="note"><span class="en">Sector: hotels are a consumption cycle. Phase P3 Expansion — occupancy and rates rising across the industry, limited new luxury supply; offset by weaker air traffic and inflation.</span><span class="ta">துறை: ஹோட்டல் = நுகர்வு சைக்கிள். இப்போ P3 விரிவாக்க கட்டம் — ஆக்யுபன்சி, ரேட் ரெண்டும் ஏறுது; விமான பயணம் குறைவு ஒரு தடை.</span></p>
+    </div>
+    <div class="panel tint">
+      <h3><span class="en">Lens scores</span><span class="ta">லென்ஸ் ஸ்கோர்</span></h3>
+      <div class="scroll"><table id="cyTbl"></table></div>
+    </div>
+  </div>
+  <div class="panel">
+    <h3><span class="en">Trigger table</span><span class="ta">தூண்டுதல் அட்டவணை</span></h3>
+    <div class="scroll"><table id="trTbl"></table></div>
+    <p class="note mono">TG = 50 + 8 × (1.47 + 1.40 + 1.40) − 8 × 1.40 = 73</p>
+  </div>
+  <div class="panel">
+    <h3><span class="en">Trigger timeline</span><span class="ta">காலவரிசை</span></h3>
+    <div class="scroll"><div id="tlSvg" style="min-width:700px"></div></div>
+  </div>
+  <div class="panel tint">
+    <h3><span class="en">What would change this view</span><span class="ta">இந்த பார்வை எப்போ மாறும்</span></h3>
+    <ul class="clean en"><li>Two quarters of falling owned-hotel occupancy or ARR growth below inflation.</li><li>Signed managed hotels not converting into openings (pipeline stuck above 80 hotels with few launches).</li><li>A large debt-funded acquisition that drags ROCE below the current 19.5%.</li></ul>
+    <ul class="clean ta"><li>ரெண்டு காலாண்டு தொடர்ந்து ஆக்யுபன்சி அல்லது ARR குறைஞ்சா.</li><li>கையெழுத்து போட்ட ஹோட்டல்கள் திறக்காம நின்னா.</li><li>பெரிய கடனில் வாங்கி ROCE 19.5%-க்கு கீழ போனா.</li></ul>
+  </div>
+</section>
+
+<!-- SWOT -->
+<section class="tab" id="t-swot">
+  <div class="grid2" id="swotGrid"></div>
+</section>
+
+<!-- ANALYSTS -->
+<section class="tab" id="t-ana">
+  <div class="panel">
+    <h2><span class="en">Analysts' rating</span><span class="ta">அனலிஸ்ட் மதிப்பீடு</span></h2>
+    <div class="scroll"><table id="anaTbl"></table></div>
+    <p class="note"><span class="en">Third-party broker views, attributed as published. Post-Q2 FY27 revisions were not yet available in the sources reviewed on 27 Oct 2026. CB Research does not issue buy, sell or hold calls.</span><span class="ta">இவை மூன்றாம் தரப்பு ப்ரோக்கர் கருத்துகள். Q2-க்கு பிறகு புது டார்கெட் இன்னும் கிடைக்கல. CB Research வாங்கு/விற்று என்று சொல்லாது.</span></p>
+  </div>
+  <div class="panel tint">
+    <h3><span class="en">Analyst view in three lines</span><span class="ta">மூணு வரியில்</span></h3>
+    <ul class="clean en"><li>Cycle: sector in P3 Expansion; stock basing after a 37% fall from its July 2025 high.</li><li>Top positive triggers: managed-pipeline conversion and new owned launches (Kumarakom, Ahmedabad), plus Colombo rentals from Q4 FY27.</li><li>Top risk trigger: softer air travel and inflation hitting leisure demand.</li></ul>
+    <ul class="clean ta"><li>சைக்கிள்: துறை P3; பங்கு ஜூலை 2025 உச்சத்திலிருந்து 37% இறங்கி அடித்தளம் போடுது.</li><li>நல்ல தூண்டுதல்: மேனேஜ்டு ஹோட்டல் திறப்பு, குமரகம், அகமதாபாத், கொழும்பு வாடகை.</li><li>பெரிய ரிஸ்க்: விமான பயணம் குறைவு, விலைவாசி.</li></ul>
+  </div>
+</section>
+
+<!-- MANAGEMENT -->
+<section class="tab" id="t-mgmt">
+  <div class="panel">
+    <h2><span class="en">Management &amp; Board</span><span class="ta">நிர்வாகம் &amp; இயக்குநர் குழு</span></h2>
+    <div class="scroll"><table id="mgTbl"></table></div>
+  </div>
+  <div class="panel tint">
+    <h3><span class="en">Ownership</span><span class="ta">பங்குதாரர்கள்</span></h3>
+    <div class="scroll"><table id="shTbl"></table></div>
+  </div>
+</section>
+
+<!-- SELF CHECK -->
+<section class="tab" id="t-self">
+  <div class="panel tint">
+    <h2><span class="en">CB Investor Self-check</span><span class="ta">CB முதலீட்டாளர் சுய-சோதனை</span></h2>
+    <p class="note"><span class="en">This only counts how many of your own conditions line up. It is not a recommendation.</span><span class="ta">இது உங்க சொந்த நிபந்தனைகள் எத்தனை பொருந்துதுன்னு எண்ணுது மட்டும். இது பரிந்துரை இல்ல.</span></p>
+    <div style="display:flex;gap:10px;align-items:center;margin:8px 0"><div class="bar" style="flex:1"><i id="scAll"></i></div><span class="mono" id="scAllTxt"></span><button class="btn" id="scClear"><span class="en">Clear</span><span class="ta">அழி</span></button></div>
+  </div>
+  <div class="grid2" id="scGroups"></div>
+</section>
+
+<!-- SOCRATES -->
+<section class="tab" id="t-soc">
+  <div class="panel tint">
+    <h2><span class="en">Cauvery Socrates — test your understanding</span><span class="ta">காவேரி சாக்ரடீஸ் — உங்க புரிதலை சோதிங்க</span></h2>
+    <p class="mono" id="socScore"></p>
+  </div>
+  <div class="grid2" id="socQs"></div>
+  <div class="panel">
+    <h3><span class="en">Think it through</span><span class="ta">யோசிச்சு பாருங்க</span></h3>
+    <p class="en">ITC Hotels holds ~₹1,500 cr of cash and no debt, yet its ROE is ~8%. Should a hotel company return cash, borrow to build faster, or keep the cushion? Write your answer, then compare it with the hint.</p>
+    <p class="ta">ITC Hotels-கிட்ட ~₹1,500 கோடி கேஷ், கடன் இல்ல; ஆனா ROE ~8% தான். கேஷை திருப்பி கொடுக்கணுமா, கடன் வாங்கி வேகமா கட்டணுமா, இல்ல கையில வச்சுக்கணுமா? உங்க பதிலை எழுதி, பிறகு குறிப்பை பாருங்க.</p>
+    <input type="text" id="socFree" aria-label="Your answer">
+    <div style="margin-top:8px"><button class="btn" id="socHintBtn"><span class="en">Show hint</span><span class="ta">குறிப்பு காட்டு</span></button></div>
+    <p id="socHint" hidden class="note"><span class="en">Hotels are cyclical and capital-heavy; a cash cushion lets them buy assets cheaply in downturns (as with Kumarakom and Ahmedabad). The asset-right plan lifts ROE by growing fee income without equity, so ROE should rise as managed keys move from 59% to 67%.</span><span class="ta">ஹோட்டல் பிசினஸ் சைக்கிள் மாதிரி, நிறைய முதலீடு தேவை. கையில கேஷ் இருந்தா நல்ல சொத்தை மலிவா வாங்கலாம். மேனேஜ்டு ரூம் 59%-லிருந்து 67% ஆகும் போது முதலீடு இல்லாம கட்டணம் கூடி ROE ஏறும்.</span></p>
+  </div>
+</section>
+
+<!-- SOURCES -->
+<section class="tab" id="t-src">
+  <div class="panel">
+    <h2><span class="en">Sources and data notes</span><span class="ta">ஆதாரங்கள் &amp; குறிப்புகள்</span></h2>
+    <div class="scroll"><table id="srcTbl"></table></div>
+  </div>
+</section>
+</div>
+
+<button id="cbBadge" aria-label="About this dashboard">CB</button>
+<div id="cbPop" hidden><b>Prepared by CB Research (Cauvery Business Research)</b><br><span class="en">For financial education only. Not investment advice. CB Research is not a SEBI-registered research analyst. Figures are from company filings and published reports as of 27 Oct 2026; derived figures are marked †. Please consult a registered advisor before investing.</span><span class="ta">இது நிதிக் கல்விக்காக மட்டும். முதலீட்டு ஆலோசனை இல்ல. CB Research SEBI பதிவு பெற்ற அனலிஸ்ட் இல்ல. எண்கள் 27 அக்டோபர் 2026 வரை வெளியானவை; † குறி போட்டவை கணக்கிட்டவை. முதலீடு செய்யும் முன் பதிவு பெற்ற ஆலோசகரை அணுகுங்க.</span></div>
+<button id="asBtn" aria-label="Open CB Assist">🎙 CB Assist</button>
+<div id="asPanel" hidden>
+  <div style="padding:10px 12px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center"><b>CB Assist</b><button class="btn" id="asClose" aria-label="Close">✕</button></div>
+  <div id="asLog"></div>
+  <form id="asForm"><input type="text" id="asIn" placeholder="Ask: occupancy, ARR, debt, pipeline…" aria-label="Question"><button type="button" class="btn" id="asMic" aria-label="Ask by voice">🎤</button><button class="btn solid" type="submit">↵</button></form>
+</div>
+
+<script>
+(function(){
+const $=s=>document.querySelector(s);
+const fmt=(n,d=0)=>Number(n).toLocaleString('en-IN',{minimumFractionDigits:d,maximumFractionDigits:d});
+let LANG='en';
+try{LANG=localStorage.getItem('cbLang')||'en'}catch(e){}
+const L=(en,ta)=>`<span class="en">${en}</span><span class="ta">${ta}</span>`;
+const pick=(o)=>Array.isArray(o)?(LANG==='ta'?o[1]:o[0]):o;
+
+/* ===== machine-readable data ===== */
+var CO={
+ name:"ITC Hotels Ltd",nse:"ITCHOTELS",bse:"544325",quarter:"Q2FY27",cmp:164.31,cmpDate:"2026-10-26",shares_cr:208.12,
+ q:{labels:["Q2 FY26","Q3 FY26","Q4 FY26","Q1 FY27","Q2 FY27"],rev:[839.48,1230.68,1253.7,936.02,1054.14],ebitda:[245.7,467,466.3,292.3,337],pat:[133.29,236.83,317.4,181.91,202.65]},
+ kpi:{labels:["Q2 FY26","Q1 FY27","Q2 FY27"],occ:[71,76,76],arr:[11230,11320,12800],revpar:[8020,8550,9700]},
+ revmix:{rooms:501,fnb:380,fees:43,other:58,residences:71.1},
+ portfolio:{hotels:156,keys:14300,ownedPct:41,managedPct:59,pipelineHotels:84,pipelineKeys:8200,target2031:{hotels:250,keys:22000,owned:7500,managed:15000}},
+ cycle:{sectorPhase:"P3",stockStage:"Stage 1 late",cy:73},
+ triggers:[
+  {name:"Managed pipeline conversion",sign:"+",I:3,C:0.7,W:0.7,P:1.0,pts:1.47,status:"Executing"},
+  {name:"Owned launches: Kumarakom, Ahmedabad, 5 projects",sign:"+",I:2,C:0.7,W:1.0,P:1.0,pts:1.40,status:"Approved"},
+  {name:"Ratnadipa rentals + Sapphire handovers",sign:"+",I:2,C:0.7,W:1.0,P:1.0,pts:1.40,status:"Announced"},
+  {name:"Dubai subsidiary",sign:"+",I:2,C:0.4,W:0.4,P:1.0,pts:0.32,status:"Approved"},
+  {name:"Air traffic fall, crude, inflation",sign:"-",I:2,C:0.7,W:1.0,P:1.0,pts:1.40,status:"Watch"}],
+ tg:73,cbScore:7.1
+};
+
+/* ===== tabs ===== */
+const TABS=[["overview","Overview","மேலோட்டம்"],["model","Business Model","பிசினஸ் மாடல்"],["kpi","Hotel KPIs","ஹோட்டல் அளவீடுகள்"],["fin","Financials","நிதிநிலை"],["cash","Cash Flow & WC","கேஷ் ஃப்ளோ"],["growth","Growth Plans","வளர்ச்சி திட்டம்"],["val","Valuation","மதிப்பீடு"],["trig","Triggers & Cycle","தூண்டுதல் & சைக்கிள்"],["swot","SWOT","SWOT"],["ana","Analysts' Rating","அனலிஸ்ட் ரேட்டிங்"],["mgmt","Management & Board","நிர்வாகம்"],["self","Self-check","சுய-சோதனை"],["soc","Cauvery Socrates","சாக்ரடீஸ்"],["src","Sources","ஆதாரங்கள்"]];
+const nav=$('#tabs');
+nav.innerHTML=TABS.map(t=>`<button data-t="${t[0]}">${L(t[1],t[2])}</button>`).join('');
+function show(id){
+  document.querySelectorAll('section.tab').forEach(s=>s.classList.toggle('on',s.id==='t-'+id));
+  nav.querySelectorAll('button').forEach(b=>b.classList.toggle('on',b.dataset.t===id));
+  try{localStorage.setItem('cbTab',id)}catch(e){}
+  if(id==='val')animTemple();
+  window.scrollTo({top:0});
+}
+nav.addEventListener('click',e=>{const b=e.target.closest('button');if(b)show(b.dataset.t)});
+
+/* ===== language ===== */
+function setLang(l){LANG=l;document.body.classList.toggle('lang-ta',l==='ta');$('#lgEn').classList.toggle('on',l==='en');$('#lgTa').classList.toggle('on',l==='ta');try{localStorage.setItem('cbLang',l)}catch(e){};renderCharts();renderBM(curBM);}
+$('#lgEn').onclick=()=>setLang('en');$('#lgTa').onclick=()=>setLang('ta');
+
+/* ===== KPI tiles ===== */
+const tiles=[
+ [["Revenue","வருமானம்"],"₹1,054 cr","+25.6% YoY · +12.6% QoQ","up"],
+ [["EBITDA","EBITDA"],"₹337 cr","+37% YoY · margin 32.0%","up"],
+ [["PAT","நிகர லாபம்"],"₹202.65 cr","+52% YoY · +11.4% QoQ","up"],
+ [["Occupancy (owned)","ஆக்யுபன்சி"],"76%","+481 bps YoY","up"],
+ [["ARR","சராசரி ரூம் ரேட்"],"~₹12,800","+14% YoY","up"],
+ [["RevPAR","RevPAR"],"~₹9,700","+21% YoY · 44% premium","up"],
+ [["Net debt","நிகர கடன்"],"Nil","Net cash ~₹1,500 cr","up"],
+ [["Domestic ROCE","உள்நாட்டு ROCE"],"19.5%","vs 17.3% YoY","up"]];
+$('#kpiGrid').innerHTML=tiles.map(t=>`<div class="kpi"><div class="l">${L(t[0][0],t[0][1])}</div><div class="v">${t[1]}</div><div class="d ${t[3]}">${t[2]}</div></div>`).join('');
+
+const hk=[
+ [["ARR — Average Room Rate","ARR — சராசரி ரூம் ரேட்"],"~₹12,800","+14%",["Room revenue ÷ rooms actually sold. The price lever.","விற்ற ரூம்களுக்கு கிடைச்ச சராசரி விலை."]],
+ [["Occupancy","ஆக்யுபன்சி"],"76%","+481 bps",["Rooms sold ÷ rooms available. The volume lever.","கிடைக்கும் ரூம்களில் எத்தனை விற்றது."]],
+ [["RevPAR","RevPAR"],"~₹9,700","+21%",["ARR × occupancy: revenue per available room, the single best hotel health number.","ARR × ஆக்யுபன்சி — ஹோட்டல் ஆரோக்கியத்தின் முக்கிய எண்."]],
+ [["RevPAR premium","RevPAR பிரீமியம்"],"44%","vs industry",["How much more each ITC room earns than comparable luxury/upscale rooms.","ஒப்பான ஹோட்டல்களை விட ITC ரூம் எவ்வளவு அதிகம் சம்பாதிக்குது."]],
+ [["F&B revenue","உணவு வருமானம்"],"₹380 cr","+12%",["~39% of revenue — the highest share among listed Indian hotel chains.","வருமானத்தில் ~39% — இந்திய ஹோட்டல்களில் அதிகம்."]],
+ [["Management fees","மேனேஜ்மென்ட் கட்டணம்"],"₹43 cr","+25%",["Fee income from hotels ITC runs but does not own; almost pure margin.","சொந்தமில்லாத ஹோட்டல்களை நடத்தி வரும் கட்டணம் — கிட்டத்தட்ட முழு லாபம்."]]];
+$('#hkGrid').innerHTML=hk.map(t=>`<div class="kpi"><div class="l">${L(t[0][0],t[0][1])}</div><div class="v">${t[1]}</div><div class="d up">${t[2]}</div><div class="note">${L(t[3][0],t[3][1])}</div></div>`).join('');
+
+/* ===== tables helper ===== */
+function tbl(el,head,rows){
+  let h='<thead><tr>'+head.map((c,i)=>`<th class="${i?'num':''}">${Array.isArray(c)?L(c[0],c[1]):c}</th>`).join('')+'</tr></thead><tbody>';
+  rows.forEach(r=>{
+    if(r.cat){h+=`<tr class="cat"><td colspan="${head.length}">${L(r.cat[0],r.cat[1])}</td></tr>`;return;}
+    h+='<tr>'+r.map((c,i)=>`<td class="${i?'num':''}">${Array.isArray(c)?L(c[0],c[1]):c}</td>`).join('')+'</tr>';
+  });
+  $(el).innerHTML=h+'</tbody>';
+}
+
+tbl('#engTbl',[["Revenue line","வருமான வரி"],["Q2 FY27","Q2 FY27"],["Growth","வளர்ச்சி"],["Driven by","காரணிகள்"]],[
+ [["Rooms","ரூம்கள்"],"₹501 cr","+22%",["Keys × occupancy × ARR × days","ரூம் × ஆக்யுபன்சி × ARR × நாட்கள்"]],
+ [["Food & beverage","உணவு & பானம்"],"₹380 cr","+12%",["Banquets, weddings, MICE, signature restaurants (Bukhara, Dum Pukht)","விருந்து, கல்யாணம், மாநாடு, பிரபல உணவகங்கள்"]],
+ [["Management fees","மேனேஜ்மென்ட் கட்டணம்"],"₹43 cr","+25%",["Managed keys × base fee % of revenue + incentive fee % of profit","மேனேஜ்டு ரூம் × அடிப்படை கட்டணம் + ஊக்க கட்டணம்"]],
+ [["Other operating","பிற வருமானம்"],"₹58 cr","—",["Spa, laundry, rentals, Club ITC, Sri Lanka extras","ஸ்பா, சலவை, வாடகை"]],
+ [["Branded residences","பிராண்டட் ரெசிடென்ஸ்"],"₹71 cr","new",["Flats handed over × area × price per sq ft (Sapphire, Colombo)","ஒப்படைச்ச வீடு × சதுர அடி × விலை"]]]);
+
+tbl('#brandTbl',[["Brand","பிராண்ட்"],["Segment","செக்மென்ட்"],["Role","பங்கு"]],[
+ ["ITC Hotels",["Luxury","லக்ஷுரி"],["Flagships: ITC Maurya, Grand Chola, Kohenur, Narmada","முக்கிய ஹோட்டல்கள்"]],
+ ["Mementos",["Luxury leisure","லக்ஷுரி ரிசார்ட்"],["Experiential resorts","அனுபவ ரிசார்ட்டுகள்"]],
+ ["Epiq Collection",["Upscale conversions","அப்ஸ்கேல்"],["~1,000 keys planned through conversions","~1,000 ரூம் இலக்கு"]],
+ ["Welcomhotel",["Upper upscale","அப்பர் அப்ஸ்கேல்"],["Tier-1/2 business and leisure","வணிக & சுற்றுலா"]],
+ ["Storii",["Boutique premium","பூட்டிக்"],["Small experiential hotels","சிறிய ஹோட்டல்கள்"]],
+ ["Fortune",["Midscale","மிட்ஸ்கேல்"],["Fee-led growth in smaller cities","சிறு நகர வளர்ச்சி"]],
+ ["WelcomHeritage",["Heritage","பாரம்பரியம்"],["Palaces, forts, havelis","அரண்மனை, கோட்டை"]]]);
+
+tbl('#locTbl',[["City / market","நகரம்"],["RevPAR premium","பிரீமியம்"],["Why","ஏன்"]],[
+ ["Hyderabad",["Strongest","மிக அதிகம்"],["Kohenur + Kakatiya; IT corridor demand","IT வணிக தேவை"]],
+ ["Goa",["Strongest","மிக அதிகம்"],["Grand Goa resort; leisure and weddings","சுற்றுலா, கல்யாணம்"]],
+ ["Delhi NCR",["Strongest","மிக அதிகம்"],["ITC Maurya; BRICS summit, diplomacy, MICE","BRICS, அரசு நிகழ்வுகள்"]],
+ ["Agra",["Strongest","மிக அதிகம்"],["Mughal; Taj tourism","தாஜ் சுற்றுலா"]],
+ ["Chennai",["Strongest","மிக அதிகம்"],["Grand Chola; largest banquet base in the south","தென்னிந்தியாவின் பெரிய விருந்து அரங்கம்"]],
+ ["Ahmedabad",["Strongest","மிக அதிகம்"],["Narmada; year-round business demand","வருஷம் முழுக்க வணிக தேவை"]],
+ ["Mumbai, Kolkata",["~3%","~3%"],["Heavy competition / older supply","அதிக போட்டி"]],
+ [["Portfolio","மொத்தம்"],"44%",["Luxury, upper-upscale and upscale benchmark","லக்ஷுரி & அப்ஸ்கேல் அளவுகோல்"]]]);
+
+tbl('#costTbl',[["Cost line","செலவு"],["Q2 FY26","Q2 FY26"],["Q2 FY27","Q2 FY27"],["Change","மாற்றம்"]],[
+ [["F&B cost (% of F&B revenue)","உணவு செலவு"],"25%","24%",'<span class="up">−1 pt</span>'],
+ [["People cost incl. contractors (% of revenue)","ஊழியர் செலவு"],"25%","24%",'<span class="up">−1 pt</span>'],
+ [["Energy (% of revenue)","மின்சாரம்"],"6%","5%",'<span class="up">−1 pt</span>'],
+ [["Other operating (% of revenue)","பிற செலவு"],"29%","29%",'<span class="fl">flat</span>']]);
+
+/* ===== financials categorized ===== */
+const g=(a,b)=>((a/b-1)*100).toFixed(1)+'%';
+tbl('#finTbl',[["Metric","அளவீடு"],"Q2 FY27","Q2 FY26",["YoY","YoY"],"Q1 FY27",["QoQ","QoQ"]],[
+ {cat:["Growth & Balance sheet","வளர்ச்சி & இருப்புநிலை"]},
+ [["Revenue from operations","செயல்பாட்டு வருமானம்"],"1,054.14","839.48",g(1054.14,839.48),"936.02",g(1054.14,936.02)],
+ [["Revenue ex-residences","ரெசிடென்ஸ் தவிர வருமானம்"],"983","~840","17%","898",g(983,898)],
+ [["Total income","மொத்த வருமானம்"],"1,106.04","884.89",g(1106.04,884.89),"n/a","n/a"],
+ [["Hotels segment revenue","ஹோட்டல் செக்மென்ட்"],"966.25","822.80",g(966.25,822.80),"881.06",g(966.25,881.06)],
+ [["H1 revenue","H1 வருமானம்"],"1,990.16","1,655.02",g(1990.16,1655.02),"—","—"],
+ {cat:["Profitability","லாபத்திறன்"]},
+ [["EBITDA","EBITDA"],"337","245.7",g(337,245.7),"292.3",g(337,292.3)],
+ [["EBITDA margin","EBITDA மார்ஜின்"],"32.0%","29.3%","+274 bps","31.2%","+80 bps"],
+ [["EBITDA ex-residences","ரெசிடென்ஸ் தவிர EBITDA"],"314","~246","28%","281",g(314,281)],
+ [["Other income †","பிற வருமானம் †"],"51.9","45.4",g(51.9,45.41),"n/a","n/a"],
+ [["PBT","வரிக்கு முன் லாபம்"],"277.98","188.69",g(277.98,188.69),"n/a","n/a"],
+ [["Tax † (effective rate)","வரி †"],"75.3 (27.1%)","55.4 (29.4%)","—","n/a","n/a"],
+ [["PAT","நிகர லாபம்"],"202.65","133.29",g(202.65,133.29),"181.91",g(202.65,181.91)],
+ [["PAT margin †","லாப மார்ஜின் †"],"19.2%","15.9%","+330 bps","19.4%","−20 bps"],
+ [["Hotels segment result","ஹோட்டல் செக்மென்ட் லாபம்"],"205.86","140.64",g(205.86,140.64),"176.54",g(205.86,176.54)],
+ [["EPS (₹)","ஒரு பங்கு வருமானம் (₹)"],"0.97","0.64",g(0.97,0.64),"0.87",g(0.97,0.87)],
+ [["H1 PAT","H1 லாபம்"],"384.56","~267","44%","—","—"],
+ {cat:["Efficiency","செயல்திறன்"]},
+ [["Owned occupancy","சொந்த ஹோட்டல் ஆக்யுபன்சி"],"76%","71%","+481 bps","76%","flat"],
+ [["ARR (₹)","ARR (₹)"],"~12,800","~11,230 †","14%","11,320",g(12800,11320)],
+ [["RevPAR (₹)","RevPAR (₹)"],"~9,700","~8,020 †","21%","8,550",g(9700,8550)],
+ [["People cost / revenue","ஊழியர் செலவு / வருமானம்"],"24%","25%","−1 pt","n/a","n/a"],
+ [["Domestic operating ROCE","உள்நாட்டு ROCE"],"19.5%","17.3%","+220 bps","n/a","n/a"],
+ {cat:["Capital & Liquidity","மூலதனம் & பணப்புழக்கம்"]},
+ [["Borrowings","கடன்"],"Nil","Nil","—","Nil","—"],
+ [["Net cash (latest disclosed)","நிகர கேஷ்"],"~1,600 (Jun-26)","—","—","—","—"],
+ [["Net worth † (est.)","நிகர மதிப்பு †"],"~11,700","~11,000","—","—","—"],
+ [["ROE TTM † (est.)","ROE †"],"~8.1%","—","—","—","—"],
+ {cat:["Valuation","மதிப்பீடு"]},
+ [["P/E (TTM EPS ₹4.51) †","P/E †"],"36.4×","—","—","—","—"],
+ [["EV/EBITDA (TTM ₹1,563 cr) †","EV/EBITDA †"],"20.9×","—","—","—","—"],
+ [["P/B †","P/B †"],"~2.9×","—","—","—","—"]]);
+
+tbl('#segTbl',[["Segment","செக்மென்ட்"],"Q2 FY27","Q2 FY26",["YoY","YoY"]],[
+ [["Hotels — revenue","ஹோட்டல் — வருமானம்"],"966.25","822.80",g(966.25,822.80)],
+ [["Hotels — result","ஹோட்டல் — லாபம்"],"205.86","140.64",g(205.86,140.64)],
+ [["Hotels — margin †","ஹோட்டல் மார்ஜின் †"],"21.3%","17.1%","+420 bps"],
+ [["Branded residences — revenue","ரெசிடென்ஸ் — வருமானம்"],"71.10","0","new"],
+ [["Branded residences — result","ரெசிடென்ஸ் — லாபம்"],"22.93","0","new"]]);
+
+const bs=[[["Borrowings","கடன்"],"Nil"],[["Net cash, Jun-26","நிகர கேஷ்"],"~₹1,600 cr"],[["Net cash, Mar-26","நிகர கேஷ் (மார்ச்)"],"₹1,518 cr"],[["Net worth (est.)","நிகர மதிப்பு"],"~₹11,700 cr"],[["Net debt / equity","கடன்/பங்கு"],"≈ −0.13"],[["Lease interest FY26","லீஸ் வட்டி"],"~₹8 cr"]];
+$('#bsGrid').innerHTML=bs.map(b=>`<div class="kpi"><div class="l">${L(b[0][0],b[0][1])}</div><div class="v">${b[1]}</div></div>`).join('');
+
+tbl('#cfTbl',[["Item (₹ cr)","விவரம் (₹ கோடி)"],"FY26","FY25",["Read-out","விளக்கம்"]],[
+ [["Cash from operations (CFO)","செயல்பாட்டு கேஷ்"],"1,109.85","~803",["+38%; tracks profits","லாபத்துக்கு ஏத்த மாதிரி"]],
+ [["PBT","வரிக்கு முன் லாபம்"],"1,122.98","~880",["—","—"]],
+ [["CFO / PBT","CFO / PBT"],"99%","~91%",["Very high cash conversion","மிக அதிக கேஷ் மாற்றம்"]],
+ [["CFO / EBITDA †","CFO / EBITDA †"],"78%","n/a",["After tax, healthy","வரிக்கு பிறகு நல்ல அளவு"]],
+ [["Capex †","கேபெக்ஸ் †"],"~410","~388",["Renovations and owned projects","புதுப்பித்தல், புது ஹோட்டல்"]],
+ [["Free cash flow","ஃப்ரீ கேஷ் ஃப்ளோ"],"699.6","415.1",["FCF margin 16.9%","FCF மார்ஜின் 16.9%"]],
+ [["Investing / financing CF","முதலீடு / நிதி CF"],"n/a","n/a",["Not in sources reviewed","கிடைக்கல"]],
+ [["Dividend paid (FY26 final, Aug-26)","டிவிடெண்ட்"],"₹1/share ≈ 208","—",["First-ever dividend","முதல் டிவிடெண்ட்"]]]);
+
+tbl('#wcTbl',[["Item (FY26)","விவரம் (FY26)"],["₹ cr","₹ கோடி"],["Days on revenue","நாட்கள்"],["Note","குறிப்பு"]],[
+ [["Trade receivables","வரவேண்டியவை"],"230.3","20",["Corporate & agent credit","கார்ப்பரேட் கடன்"]],
+ [["Inventory (incl. Sapphire flats)","இன்வென்டரி"],"1,302.7","115",["Mostly unsold flats","பெரும்பாலும் விற்காத வீடுகள்"]],
+ [["Trade payables †","செலுத்தவேண்டியவை †"],"~531","47",["Supplier credit","சப்ளையர் கடன்"]],
+ [["Cash conversion cycle †","கேஷ் சைக்கிள் †"],"—","~88",["Near zero ex-flats","வீடுகள் தவிர ~0"]]]);
+
+/* ===== growth ===== */
+const gr=[[["Operating hotels","இயங்கும் ஹோட்டல்கள்"],"156","14,300+ keys"],[["Owned / managed keys","சொந்தம் / மேனேஜ்டு"],"41% / 59%","→ 33% / 67% by 2031"],[["Managed pipeline","மேனேஜ்டு பைப்லைன்"],"84 hotels","~8,200 keys"],[["2031 target","2031 இலக்கு"],"250 hotels","22,000+ keys"],[["H1 FY27 signings","H1 கையெழுத்து"],"20 hotels","1,600+ keys"],[["Owned projects","சொந்த திட்டங்கள்"],"5 ongoing","700+ keys"]];
+$('#grGrid').innerHTML=gr.map(b=>`<div class="kpi"><div class="l">${L(b[0][0],b[0][1])}</div><div class="v">${b[1]}</div><div class="d">${b[2]}</div></div>`).join('');
+tbl('#projTbl',[["Project","திட்டம்"],["Keys","ரூம்"],["Status","நிலை"]],[
+ ["ITC Kumarakom (Kerala)","72",["Acquired May-26; launch by Dec-26","மே-26 வாங்கியது; டிசம்பர் திறப்பு"]],
+ ["Welcomhotel Ahmedabad (GHK)","130",["Acquired Sep-26 (~₹155 cr); 6-month refurbishment","செப்-26; 6 மாத புதுப்பிப்பு"]],
+ ["Puri, Visakhapatnam, Bhubaneswar","700+ (5 projects)",["Under construction","கட்டுமானத்தில்"]],
+ ["New Delhi, ITC Grand Bharat expansion","",["Under construction","கட்டுமானத்தில்"]],
+ ["Lucknow (2.8 acres freehold)","200+",["Land acquired","நிலம் வாங்கியது"]],
+ ["Yashobhoomi, Delhi","n/a",["Land added","நிலம் சேர்த்தது"]],
+ ["Dubai WOS","—",["Board-approved","போர்டு ஒப்புதல்"]]]);
+
+/* ===== valuation ===== */
+tbl('#valTbl',[["Multiple","விகிதம்"],["Value","மதிப்பு"],["Basis","அடிப்படை"]],[
+ [["Market cap †","சந்தை மதிப்பு †"],"₹34,197 cr",["208.12 cr shares × ₹164.31","208.12 கோடி பங்கு × ₹164.31"]],
+ [["Enterprise value †","EV †"],"₹32,679 cr",["Less net cash ₹1,518 cr (Mar-26)","நிகர கேஷ் கழித்து"]],
+ [["P/E TTM †","P/E †"],"36.4×",["TTM PAT ₹938.8 cr","TTM லாபம் ₹938.8 கோடி"]],
+ [["EV/EBITDA TTM †","EV/EBITDA †"],"20.9×",["TTM EBITDA ₹1,562.6 cr","TTM EBITDA"]],
+ [["P/B (est.) †","P/B †"],"~2.9×",["Net worth ~₹11,700 cr","நிகர மதிப்பு"]],
+ [["Dividend yield †","டிவிடெண்ட் ஈல்ட் †"],"0.6%",["₹1 per share","₹1 ஒரு பங்குக்கு"]]]);
+tbl('#mktTbl',[["Date","தேதி"],["Price","விலை"],["Reason","காரணம்"]],[
+ ["29 Jan 2025","₹188",["Listing after demerger from ITC","ITC-யிலிருந்து பிரிந்து பட்டியல்"]],
+ ["21 Jul 2025","₹261.62",["All-time high after strong Q1 FY26","உச்சம்"]],
+ ["30 Mar 2026","₹137.30",["52-week low; hotel stocks sold off, down 19% in 2026","52 வார குறைவு"]],
+ ["16 Jul 2026","~₹175",["Fell ~5% on Q1 FY27 as profit dropped QoQ from peak Q4","Q1-ல் QoQ சரிவு"]],
+ ["23 Oct 2026","₹156.20",["Pre-results close; air-traffic and crude worries","ரிசல்ட் முன்"]],
+ ["26 Oct 2026","₹168.45 high / ₹164.31 close",["+5.2% on 52% PAT growth, 21% RevPAR jump, Dubai subsidiary","52% லாப வளர்ச்சி, RevPAR +21%"]]]);
+
+/* ===== pillars / temple ===== */
+const PIL=[["Growth","வளர்ச்சி",8.0,["Revenue +26%, PAT +52%, hotels +17%; 2031 plan to 22,000 keys.","வருமானம் +26%, லாபம் +52%."]],
+ ["Margins","மார்ஜின்",7.5,["EBITDA 32%, segment margin 21%; cost ratios falling.","EBITDA 32%."]],
+ ["Debt","கடன்",9.5,["Zero borrowings, ~₹1,500 cr net cash, CFO/PBT 99%.","கடன் இல்ல, கேஷ் அதிகம்."]],
+ ["Valuation","மதிப்பீடு",5.0,["36× P/E and 21× EV/EBITDA: below IHCL and Leela, not cheap in absolute terms.","36× P/E — மலிவு இல்ல."]],
+ ["Trend","போக்கு",5.5,["Stock 37% below its 2025 high; basing near ₹155–170.","உச்சத்திலிருந்து 37% கீழ."]],
+ ["Risk","ரிஸ்க்",7.0,["Cyclical demand, Sri Lanka, execution of 84-hotel pipeline.","சைக்கிள், இலங்கை, திறப்பு."]]];
+const colr=s=>s>=8?'var(--good)':s>=6?'var(--warn)':'var(--bad)';
+function templeSVG(){
+  let s='<svg viewBox="0 0 360 320" role="img" aria-label="CB Score temple">';
+  s+=`<polygon points="20,82 180,14 340,82" fill="var(--cb)"/><text x="180" y="60" text-anchor="middle" font-family="Marcellus,serif" font-size="22" fill="#fff">CB Score ${CO.cbScore}</text>`;
+  s+=`<rect x="24" y="84" width="312" height="26" fill="var(--forest)"/><text x="180" y="102" text-anchor="middle" font-size="12" fill="#fff" font-family="Mukta Malar,sans-serif">ITC Hotels · Q2 FY27</text>`;
+  PIL.forEach((p,i)=>{const x=36+i*50,top=118,h=140;const fh=h*p[2]/10;
+    s+=`<g class="col" data-i="${i}" tabindex="0"><rect x="${x}" y="${top}" width="36" height="${h}" fill="#f1ede4" stroke="#d8d2c4"/>`;
+    for(let k=1;k<4;k++)s+=`<line x1="${x+k*9}" y1="${top}" x2="${x+k*9}" y2="${top+h}" stroke="#ddd6c7"/>`;
+    s+=`<rect class="fill" x="${x}" y="${top+h}" width="36" height="0" data-h="${fh}" data-top="${top+h-fh}" fill="${colr(p[2])}" opacity=".85"/>`;
+    s+=`<circle cx="${x+18}" cy="${top+16}" r="13" fill="#fff" stroke="${colr(p[2])}" stroke-width="2"/><text x="${x+18}" y="${top+20}" text-anchor="middle" font-size="11" font-family="IBM Plex Mono,monospace" fill="#1c2230">${p[2]}</text></g>`;
+    s+=`<text x="${x+18}" y="${top+h+40}" text-anchor="middle" font-size="10.5" fill="#1c2230" font-family="Mukta Malar,sans-serif">${LANG==='ta'?p[1]:p[0]}</text>`;});
+  s+=`<rect x="24" y="258" width="312" height="8" fill="#cfc8b8"/><rect x="14" y="266" width="332" height="8" fill="#bfb7a5"/>`;
+  return s+'</svg>';
+}
+function renderTemple(){
+  $('#templeSvg').innerHTML=templeSVG();
+  $('#pillarCards').innerHTML=PIL.map((p,i)=>`<div class="pcard" id="pc${i}" style="border-left-color:${colr(p[2])}"><b>${L(p[0],p[1])} · <span class="mono">${p[2]}/10</span></b><div class="note">${L(p[3][0],p[3][1])}</div></div>`).join('');
+  $('#templeSvg').querySelectorAll('g.col').forEach(c=>{const f=()=>{const el=$('#pc'+c.dataset.i);el.scrollIntoView({behavior:'smooth',block:'center'});el.classList.add('hl');setTimeout(()=>el.classList.remove('hl'),1800)};c.onclick=f;c.onkeydown=e=>{if(e.key==='Enter')f()}});
+}
+function animTemple(){
+  document.querySelectorAll('#templeSvg rect.fill').forEach(r=>{r.setAttribute('height',0);r.setAttribute('y',+r.dataset.top+ +r.dataset.h);let t=0;const H=+r.dataset.h,base=+r.dataset.top+H;const st=()=>{t=Math.min(1,t+0.05);r.setAttribute('height',H*t);r.setAttribute('y',base-H*t);if(t<1)requestAnimationFrame(st)};requestAnimationFrame(st)});
+}
+
+/* ===== cycle clock ===== */
+function clock(){
+  const ph=[["P1 Trough","அடிமட்டம்"],["P2 Early recovery","ஆரம்ப மீட்சி"],["P3 Expansion","விரிவாக்கம்"],["P4 Late cycle","உச்சம்"],["P5 Downturn","சரிவு"]];
+  let s='<svg viewBox="0 0 320 300" style="width:100%;max-width:360px;display:block;margin:0 auto" role="img" aria-label="Cycle clock">';
+  s+='<circle cx="160" cy="150" r="110" fill="#f7f5f0" stroke="#e4e0d6" stroke-width="2"/>';
+  ph.forEach((p,i)=>{const a=(-90+i*72)*Math.PI/180,x=160+128*Math.cos(a),y=150+128*Math.sin(a);const on=i===2;
+    s+=`<circle cx="${160+110*Math.cos(a)}" cy="${150+110*Math.sin(a)}" r="${on?9:6}" fill="${on?'#f07a1a':'#b9b2a3'}"/>`;
+    s+=`<text x="${x}" y="${y+4}" text-anchor="middle" font-size="10.5" font-weight="${on?700:400}" fill="#1c2230" font-family="Mukta Malar,sans-serif">${LANG==='ta'?p[1]:p[0]}</text>`;});
+  const a=(-90+2*72)*Math.PI/180;
+  s+=`<line x1="160" y1="150" x2="${160+85*Math.cos(a)}" y2="${150+85*Math.sin(a)}" stroke="#f07a1a" stroke-width="4" stroke-linecap="round"/>`;
+  const b=(-90+0.75*72)*Math.PI/180;
+  s+=`<line x1="160" y1="150" x2="${160+60*Math.cos(b)}" y2="${150+60*Math.sin(b)}" stroke="#1f4d3a" stroke-width="3" stroke-dasharray="4 3"/>`;
+  s+='<circle cx="160" cy="150" r="6" fill="#1c2230"/>';
+  s+=`<text x="160" y="292" text-anchor="middle" font-size="10" fill="#5d6472" font-family="Mukta Malar,sans-serif">${LANG==='ta'?'ஆரஞ்சு = துறை · பச்சை = பங்கு (Stage 1 கடைசி)':'Orange = sector phase · Green = stock (Weinstein Stage 1 late)'}</text>`;
+  $('#clockSvg').innerHTML=s+'</svg>';
+}
+tbl('#cyTbl',[["Lens","லென்ஸ்"],["Score","ஸ்கோர்"],["Why","ஏன்"]],[
+ [["Sector cycle","துறை சைக்கிள்"],"70",["P3 Expansion","P3 விரிவாக்கம்"]],
+ [["Business lifecycle","பிசினஸ் கட்டம்"],"80",["Scaling: 156 → 250 hotels","வளர்ச்சி கட்டம்"]],
+ [["Earnings cycle","லாப சைக்கிள்"],"70",["Margin rising mid-range","மார்ஜின் ஏறுது"]],
+ [["Valuation cycle","மதிப்பீட்டு சைக்கிள்"],"85",["P/E down from ~55× to 36× while EPS rose","EPS ஏற, P/E இறங்குச்சு"]],
+ [["Price stage","விலை கட்டம்"],"70",["Stage 1 late base","அடித்தளம்"]],
+ [["CY lens","CY லென்ஸ்"],"73",["50% sector + 50% stock (76)","சராசரி"]],
+ [["TG lens","TG லென்ஸ்"],"73",["3 positive, 1 negative trigger","3 நல்லது, 1 ரிஸ்க்"]]]);
+tbl('#trTbl',[["Trigger","தூண்டுதல்"],"+/−","I","C","W","P",["Points","புள்ளி"],["Status","நிலை"],["What to watch","கவனிக்க"]],[
+ [["Managed pipeline: 84 hotels, ~8,200 keys","மேனேஜ்டு பைப்லைன்"],"+","3","0.7","0.7","1.0","1.47","Executing",["Openings per quarter, fee growth","ஒவ்வொரு காலாண்டு திறப்பு"]],
+ [["Owned launches: Kumarakom Dec-26, Ahmedabad refurb, 5 projects","சொந்த திறப்புகள்"],"+","2","0.7","1.0","1.0","1.40","Approved",["Launch dates, ramp-up occupancy","திறப்பு தேதி"]],
+ [["Ratnadipa rentals from Q4 FY27 + Sapphire handovers","கொழும்பு வாடகை"],"+","2","0.7","1.0","1.0","1.40","Announced",["Leasing, flats handed over","குத்தகை, ஒப்படைப்பு"]],
+ [["Dubai subsidiary","துபாய்"],"+","2","0.4","0.4","1.0","0.32","Approved",["First project","முதல் திட்டம்"]],
+ [["Air traffic −6% (Aug–Sep 26), crude, inflation","விமான பயணம் குறைவு"],"−","2","0.7","1.0","1.0","1.40","Watch",["DGCA monthly data, Q3 occupancy","DGCA தரவு"]]]);
+function timeline(){
+  const ev=[["Dec-26","Kumarakom launch","குமரகம் திறப்பு"],["Jan-27","Q3 FY27 results","Q3 ரிசல்ட்"],["Mar-27","Ahmedabad relaunch","அகமதாபாத்"],["Q4 FY27","Ratnadipa rentals","கொழும்பு வாடகை"],["May-27","Q4 FY27 results","Q4 ரிசல்ட்"],["2031","22,000 keys","22,000 ரூம்"]];
+  let s='<svg viewBox="0 0 700 110" style="width:100%" role="img" aria-label="Trigger timeline"><line x1="30" y1="50" x2="670" y2="50" stroke="#1f4d3a" stroke-width="2"/>';
+  ev.forEach((e,i)=>{const x=40+i*124;s+=`<circle cx="${x}" cy="50" r="7" fill="#f07a1a"/><text x="${x}" y="32" text-anchor="middle" font-size="12" font-family="IBM Plex Mono,monospace" fill="#1c2230">${e[0]}</text><text x="${x}" y="76" text-anchor="middle" font-size="11.5" fill="#1c2230" font-family="Mukta Malar,sans-serif">${LANG==='ta'?e[2]:e[1]}</text>`});
+  $('#tlSvg').innerHTML=s+'</svg>';
+}
+
+/* ===== SWOT ===== */
+const SW=[["Strengths","பலம்","var(--good)",[["Iconic owned luxury hotels in key metros; 44% RevPAR premium","முக்கிய நகர லக்ஷுரி ஹோட்டல்கள்; 44% பிரீமியம்"],["Debt-free with ~₹1,500 cr net cash","கடன் இல்ல, ₹1,500 கோடி கேஷ்"],["F&B at ~39% of revenue — banqueting and cuisine moat","உணவு பிசினஸ் பலம்"],["ITC as ~40% anchor shareholder","ITC 40% பங்குதாரர்"]]],
+ ["Weaknesses","பலவீனம்","var(--warn)",[["ROE ~8% — capital-heavy owned base","ROE 8% தான்"],["Weak premium in Mumbai and Kolkata","மும்பை, கொல்கத்தாவில் பலவீனம்"],["Fee income only 4.4% of core revenue","கட்டண வருமானம் 4.4% மட்டும்"]]],
+ ["Opportunities","வாய்ப்பு","var(--blue)",[["84-hotel managed pipeline, 250 hotels by 2031","84 ஹோட்டல் பைப்லைன்"],["Spiritual and tier-2/3 tourism; Epiq conversions","ஆன்மிக, சிறு நகர சுற்றுலா"],["Colombo rentals and international (Dubai) entry","கொழும்பு வாடகை, துபாய்"],["Rising MICE and wedding demand","MICE, கல்யாண தேவை"]]],
+ ["Threats","அச்சுறுத்தல்","var(--bad)",[["Air-travel slowdown, crude and inflation","விமான பயணம், விலைவாசி"],["New luxury supply from IHCL, Leela, Marriott","போட்டி ஹோட்டல்கள்"],["Sri Lanka tourism volatility","இலங்கை சுற்றுலா"],["Climate events at leisure destinations","பருவநிலை பாதிப்பு"]]]];
+$('#swotGrid').innerHTML=SW.map(s=>`<div class="panel" style="border-top:4px solid ${s[2]}"><h3>${L(s[0],s[1])}</h3><ul class="clean">${s[3].map(x=>`<li>${L(x[0],x[1])}</li>`).join('')}</ul></div>`).join('');
+
+/* ===== analysts ===== */
+tbl('#anaTbl',[["Broker","ப்ரோக்கர்"],["Rating","ரேட்டிங்"],["Target (₹)","டார்கெட் (₹)"],["Upside vs ₹164.31","உயர்வு"],["Date","தேதி"],["Thesis","காரணம்"]],[
+ ["Jefferies",'<span class="chip up">Buy</span>',"210","+27.8%","22 Sep 2026",["Keys 14,300 → 22,000; managed mix and Sri Lanka lift ROCE","ரூம் வளர்ச்சி, ROCE"]],
+ ["Elara Capital",'<span class="chip up">Buy</span>',"213","+29.6%","5 Oct 2026",["Q2 preview; BRICS beneficiary, demand-supply gap","BRICS பலன்"]],
+ [["Post-Q2 FY27 revisions","Q2-க்கு பிந்தைய மாற்றம்"],"—","—","—",["Awaited","காத்திருப்பு"],["Not yet published in sources reviewed","இன்னும் வரல"]]]);
+
+/* ===== management ===== */
+tbl('#mgTbl',[["Name","பெயர்"],["Role","பதவி"],["Note","குறிப்பு"]],[
+ ["Sanjiv Puri",["Chairman (Non-Executive)","தலைவர்"],["Also Chairman & MD of ITC Ltd","ITC-யின் தலைவரும் கூட"]],
+ ["Anil Chadha",["Managing Director","நிர்வாக இயக்குநர்"],["Architect of the asset-right strategy; led hotels division before demerger","Asset-right உத்தியின் தலைவர்"]],
+ [["Other directors","மற்ற இயக்குநர்கள்"],"n/a",["Refer company website / annual report","நிறுவன இணையதளம்"]],
+ ["S.R. Batliboi & Co. LLP",["Statutory auditor","தணிக்கையாளர்"],["Unmodified limited-review conclusion on Q2 FY27","Q2-க்கு குறையற்ற அறிக்கை"]]]);
+tbl('#shTbl',[["Holder","பங்குதாரர்"],["Stake","பங்கு"],["Note","குறிப்பு"]],[
+ ["ITC Ltd","~40%",["Promoter; anchor for growth plans","முக்கிய பங்குதாரர்"]],
+ ["British American Tobacco","~15.3% → exit",["Announced divestment as non-strategic","விற்பனை அறிவிப்பு"]],
+ [["Public & institutions","பொது & நிறுவனங்கள்"],"balance",["Latest pattern: see BSE filing","BSE தாக்கல்"]]]);
+
+/* ===== sources ===== */
+tbl('#srcTbl',[["Data","தரவு"],["Source","ஆதாரம்"]],[
+ [["Q2 FY27 P&L, H1, segments, auditor","Q2 ரிசல்ட்"],"Company filing (26 Oct 2026) via Free Press Journal, Investywise, Zee Business"],
+ [["Occupancy, ARR, RevPAR, revenue mix, cost ratios, ROCE, pipeline, Sri Lanka, ESG","செயல்பாட்டு தரவு"],"Q2 FY27 investor presentation via Multibagg AI, Business Today, Kotak Neo"],
+ [["Q3 FY26, Q4 FY26, Q1 FY27 quarters","முந்தைய காலாண்டுகள்"],"Storyboard18, Free Press Journal, Sahi, Kotak Neo, ICICI Direct result update"],
+ [["FY26 CFO, FCF, receivables, inventory, net cash","கேஷ் ஃப்ளோ"],"Sahi (FY26 results), StockAnalysis; payables from a market data screen"],
+ [["Debt-free status, net worth","கடன் நிலை"],"CRISIL rating rationale (Apr 2026), MarketsMojo"],
+ [["Broker targets","டார்கெட்"],"Zee Business (Jefferies, 22 Sep 2026), Business Today (Elara, 5 Oct 2026)"],
+ [["Peer P/E","போட்டியாளர்"],"FYERS peer screen"],
+ [["Share price history","பங்கு விலை"],"Business Standard, Kotak Neo, Zee Business"]]);
+
+/* ===== Business model SVG ===== */
+const BM={
+ c1:{x:10,y:10,w:108,h:52,t:["Leisure & retail","சுற்றுலா & தனிநபர்"],v:"59% of rooms",d:["Individual travellers booking directly or via OTAs. Share fell from 64% as group business grew.","தனியா புக் பண்றவங்க. பங்கு 64%-லிருந்து 59%."]},
+ c2:{x:126,y:10,w:108,h:52,t:["MICE & weddings","மாநாடு & கல்யாணம்"],v:"21% (14%)",d:["Conferences, summits (BRICS 2026) and weddings fill rooms and banquet halls together — the highest-value guests.","மாநாடு, BRICS, கல்யாணம் — ரூம், விருந்து ரெண்டும் நிரம்பும்."]},
+ c3:{x:242,y:10,w:108,h:52,t:["Corporate & others","கார்ப்பரேட்"],v:"~20%",d:["Negotiated corporate rates, airline crew, government travel.","நிறுவன ஒப்பந்தங்கள், அரசு பயணம்."]},
+ ch1:{x:10,y:92,w:108,h:44,t:["Direct & Club ITC","நேரடி & Club ITC"],v:"",d:["Brand website and loyalty programme — cheapest channel, no commission.","சொந்த இணையதளம் — கமிஷன் இல்ல."]},
+ ch2:{x:126,y:92,w:108,h:44,t:["OTAs & agents","OTA & ஏஜென்ட்"],v:"",d:["Online travel agents and tour operators; reach, at a commission.","ஆன்லைன் ஏஜென்ட் — கமிஷன் உண்டு."]},
+ ch3:{x:242,y:92,w:108,h:44,t:["Sales & Marriott","விற்பனை குழு"],v:"",d:["Corporate/MICE sales team plus Marriott's Luxury Collection distribution for flagship hotels.","Marriott Luxury Collection மூலம் வெளிநாட்டு விருந்தினர்."]},
+ core:{x:60,y:166,w:240,h:64,t:["ITC Hotels","ITC Hotels"],v:"156 hotels · 14,300+ keys · 41% owned",d:["India's second-largest listed hotel chain. Owns flagship luxury hotels and manages the rest under 7 brands (asset-right).","இந்தியாவின் 2வது பெரிய ஹோட்டல் நிறுவனம்; 7 பிராண்டுகள்."]},
+ s1:{x:10,y:262,w:108,h:58,t:["Rooms","ரூம்கள்"],v:"₹501 cr · +22% · 51%",d:["Occupancy 76% × ARR ~₹12,800. Highest-margin line after fees.","76% × ₹12,800. அதிக லாப வரி."],col:"#1f4d3a"},
+ s2:{x:126,y:262,w:108,h:58,t:["Food & beverage","உணவு"],v:"₹380 cr · +12% · 39%",d:["Banquets, weddings, Bukhara, Dum Pukht. Highest F&B share in Indian hospitality; F&B cost 24% of F&B revenue.","விருந்து, பிரபல உணவகங்கள்; உணவு செலவு 24%."],col:"#9a6b1f"},
+ s3:{x:242,y:262,w:108,h:58,t:["Management fees","கட்டணம்"],v:"₹43 cr · +25% · 4%",d:["Fees from 59% of keys ITC manages but doesn't own. Grows with the 84-hotel pipeline at almost no capital.","மேனேஜ்டு ஹோட்டல் கட்டணம் — முதலீடு இல்லாத வளர்ச்சி."],col:"#2f5d8a"},
+ s4:{x:10,y:330,w:165,h:48,t:["Other operating","பிற"],v:"₹58 cr · 6%",d:["Spa, laundry, rentals and ancillary services.","ஸ்பா, சலவை, வாடகை."],col:"#6b5b8a"},
+ s5:{x:185,y:330,w:165,h:48,t:["Branded residences","ரெசிடென்ஸ்"],v:"₹71 cr · profit ₹23 cr",d:["Sapphire flats in Colombo, booked as each is handed over. Lumpy, finite.","கொழும்பு வீடுகள் — ஒப்படைக்கும் போது வருமானம்."],col:"#c98a0b"},
+ rev:{x:60,y:410,w:240,h:44,t:["Revenue","வருமானம்"],v:"₹1,054 cr · +26%",d:["Total revenue from operations; ₹983 cr (+17%) excluding residences.","மொத்தம் ₹1,054 கோடி; ரெசிடென்ஸ் தவிர ₹983 கோடி."]},
+ cost:{x:60,y:484,w:240,h:44,t:["Operating costs","செலவுகள்"],v:"F&B 24% · People 24% · Energy 5% · Other 29%",d:["Each ratio fell or held, so EBITDA grew faster than revenue (operating leverage).","செலவு விகிதம் குறைஞ்சதால EBITDA வேகமா வளர்ந்தது."]},
+ eb:{x:10,y:558,w:165,h:48,t:["EBITDA","EBITDA"],v:"₹337 cr · 32%",d:["+37% YoY. Ex-residences ₹314 cr, also 32%.","+37%; ரெசிடென்ஸ் தவிர ₹314 கோடி."]},
+ pat:{x:185,y:558,w:165,h:48,t:["PAT","நிகர லாபம்"],v:"₹203 cr · +52%",d:["After depreciation, lease interest and 27% tax. EPS ₹0.97.","தேய்மானம், வரி போக லாபம். EPS ₹0.97."]},
+ sh:{x:60,y:636,w:240,h:44,t:["Shareholders","பங்குதாரர்கள்"],v:"ITC ~40% · ₹1 dividend · ₹1,500 cr cash",d:["Profits retained for expansion; first dividend ₹1/share for FY26. No debt to service.","லாபம் விரிவாக்கத்துக்கு; முதல் டிவிடெண்ட் ₹1."]}
+};
+const EDGES=[["c1","ch1"],["c2","ch3"],["c3","ch3"],["c1","ch2"],["ch1","core"],["ch2","core"],["ch3","core"],["core","s1"],["core","s2"],["core","s3"],["s1","rev"],["s2","rev"],["s3","rev"],["s4","rev"],["s5","rev"],["rev","cost"],["cost","eb"],["eb","pat"],["pat","sh"]];
+let curBM='core';
+function renderBM(sel){
+  curBM=sel;const ta=LANG==='ta';
+  let s='<svg viewBox="0 0 360 690" role="img" aria-label="Business model flow map"><defs><marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0L10,5L0,10z" fill="#9aa1ad"/></marker></defs>';
+  EDGES.forEach(([a,b])=>{const A=BM[a],B=BM[b];const x1=A.x+A.w/2,y1=A.y+A.h,x2=B.x+B.w/2,y2=B.y;s+=`<path d="M${x1},${y1} C${x1},${(y1+y2)/2} ${x2},${(y1+y2)/2} ${x2},${y2-2}" fill="none" stroke="#c5c9d0" stroke-width="1.4" marker-end="url(#ar)"/>`});
+  Object.entries(BM).forEach(([k,b])=>{const core=k==='core';const fill=b.col||(core?'#1f4d3a':(k.startsWith('c')&&k.length<3?'#fdf3e8':'#f7f5f0'));const tc=(b.col||core)?'#ffffff':'#1c2230';
+    s+=`<g class="box${k===sel?' sel':''}" data-k="${k}" tabindex="0"><rect x="${b.x}" y="${b.y}" width="${b.w}" height="${b.h}" rx="8" fill="${fill}" stroke="#d9d4c8"/>`;
+    s+=`<text x="${b.x+b.w/2}" y="${b.y+(b.v?18:b.h/2+4)}" text-anchor="middle" font-size="${core?15:11.5}" font-weight="700" fill="${tc}" font-family="Mukta Malar,sans-serif">${ta?b.t[1]:b.t[0]}</text>`;
+    if(b.v){const words=b.v.split(' · ');const lines=b.w<120&&words.length>1?[words.slice(0,2).join(' · '),words.slice(2).join(' · ')].filter(Boolean):[b.v];
+      lines.forEach((ln,i)=>s+=`<text x="${b.x+b.w/2}" y="${b.y+34+i*13}" text-anchor="middle" font-size="${b.w>200?10.5:9.5}" fill="${tc}" font-family="IBM Plex Mono,monospace">${ln}</text>`);}
+    s+='</g>';});
+  $('#bmSvg').innerHTML=s+'</svg>';
+  const b=BM[sel];$('#bmCard').innerHTML=`<b>${L(b.t[0],b.t[1])}</b>${b.v?` <span class="mono note">${b.v}</span>`:''}<div>${L(b.d[0],b.d[1])}</div>`;
+  $('#bmSvg').querySelectorAll('g.box').forEach(g=>{g.onclick=()=>renderBM(g.dataset.k);g.onkeydown=e=>{if(e.key==='Enter')renderBM(g.dataset.k)}});
+}
+
+/* ===== charts ===== */
+const CH={};
+function mk(id,cfg){if(CH[id])CH[id].destroy();CH[id]=new Chart(document.getElementById(id),cfg)}
+const valPlugin={id:'vals',afterDatasetsDraw(c){const{ctx}=c;ctx.save();ctx.font='11px IBM Plex Mono, monospace';ctx.fillStyle='#1c2230';ctx.textAlign='center';c.data.datasets.forEach((d,i)=>{if(d.type==='line'||c.config.type==='doughnut')return;const m=c.getDatasetMeta(i);if(m.hidden)return;m.data.forEach((b,j)=>{const v=d.data[j];if(v==null)return;ctx.fillText(d.fmt?d.fmt(v):fmt(v),b.x,b.y-5)})});ctx.restore()}};
+function renderCharts(){
+  if(typeof Chart==='undefined')return;
+  Chart.defaults.font.family='Mukta Malar, sans-serif';Chart.defaults.color='#5d6472';
+  const T=(e,t)=>LANG==='ta'?t:e;
+  const mg=CO.q.ebitda.map((e,i)=>+(e/CO.q.rev[i]*100).toFixed(1));
+  mk('chQtr',{type:'bar',data:{labels:CO.q.labels,datasets:[
+    {label:T('Revenue','வருமானம்'),data:CO.q.rev,backgroundColor:'#1f4d3a'},
+    {label:'EBITDA',data:CO.q.ebitda,backgroundColor:'#9a6b1f'},
+    {label:T('PAT','லாபம்'),data:CO.q.pat,backgroundColor:'#f07a1a'},
+    {type:'line',label:T('EBITDA margin %','மார்ஜின் %'),data:mg,yAxisID:'y1',borderColor:'#2f5d8a',backgroundColor:'#2f5d8a',tension:.3}]},
+    options:{maintainAspectRatio:false,layout:{padding:{top:18}},scales:{y:{title:{display:true,text:'₹ cr'},grid:{color:'#eee9df'}},y1:{position:'right',min:20,max:45,grid:{display:false},ticks:{callback:v=>v+'%'}}},plugins:{legend:{position:'bottom'}}},plugins:[valPlugin]});
+  mk('chKpi',{type:'bar',data:{labels:CO.kpi.labels,datasets:[
+    {label:'ARR ₹',data:CO.kpi.arr,backgroundColor:'#1f4d3a'},{label:'RevPAR ₹',data:CO.kpi.revpar,backgroundColor:'#9a6b1f'},
+    {type:'line',label:T('Occupancy %','ஆக்யுபன்சி %'),data:CO.kpi.occ,yAxisID:'y1',borderColor:'#f07a1a',backgroundColor:'#f07a1a'}]},
+    options:{maintainAspectRatio:false,layout:{padding:{top:18}},scales:{y:{grid:{color:'#eee9df'}},y1:{position:'right',min:60,max:85,grid:{display:false},ticks:{callback:v=>v+'%'}}},plugins:{legend:{position:'bottom'}}},plugins:[valPlugin]});
+  mk('chMix',{type:'bar',data:{labels:[T('Retail / leisure','தனிநபர்'),T('MICE & weddings','MICE & கல்யாணம்'),T('Others','மற்றவை')],datasets:[
+    {label:'Q2 FY26',data:[64,14,22],backgroundColor:'#c5c9d0',fmt:v=>v+'%'},{label:'Q2 FY27',data:[59,21,20],backgroundColor:'#1f4d3a',fmt:v=>v+'%'}]},
+    options:{maintainAspectRatio:false,layout:{padding:{top:18}},scales:{y:{max:75,ticks:{callback:v=>v+'%'},grid:{color:'#eee9df'}}},plugins:{legend:{position:'bottom'}}},plugins:[valPlugin]});
+  mk('chRev',{type:'doughnut',data:{labels:[T('Rooms','ரூம்'),T('F&B','உணவு'),T('Mgmt fees','கட்டணம்'),T('Other','பிற')],datasets:[{data:[501,380,43,58],backgroundColor:['#1f4d3a','#9a6b1f','#2f5d8a','#6b5b8a']}]},
+    options:{maintainAspectRatio:false,plugins:{legend:{position:'right'},tooltip:{callbacks:{label:c=>`${c.label}: ₹${fmt(c.raw)} cr (${(c.raw/982*100).toFixed(1)}%)`}}}}});
+  mk('chWc',{type:'bar',data:{labels:[T('Receivable days','வரவு நாட்கள்'),T('Inventory days','இன்வென்டரி நாட்கள்'),T('Payable days','செலுத்தும் நாட்கள்'),T('Cash cycle','கேஷ் சைக்கிள்')],datasets:[{label:T('Days','நாட்கள்'),data:[20,115,47,88],backgroundColor:['#1f4d3a','#c98a0b','#2f5d8a','#f07a1a']}]},
+    options:{maintainAspectRatio:false,layout:{padding:{top:18}},scales:{y:{grid:{color:'#eee9df'}}},plugins:{legend:{display:false}}},plugins:[valPlugin]});
+  mk('chKeys',{type:'bar',data:{labels:[T('Sep 2026','செப் 2026'),T('2031 target','2031 இலக்கு')],datasets:[
+    {label:T('Owned keys','சொந்தம்'),data:[5863,7500],backgroundColor:'#1f4d3a'},{label:T('Managed keys','மேனேஜ்டு'),data:[8437,15000],backgroundColor:'#9a6b1f'}]},
+    options:{maintainAspectRatio:false,layout:{padding:{top:18}},scales:{x:{stacked:true},y:{stacked:true,grid:{color:'#eee9df'}}},plugins:{legend:{position:'bottom'}}},plugins:[{id:'vals2',afterDatasetsDraw(c){const{ctx}=c;ctx.save();ctx.font='11px IBM Plex Mono, monospace';ctx.fillStyle='#ffffff';ctx.textAlign='center';c.data.datasets.forEach((d,i)=>c.getDatasetMeta(i).data.forEach((b,j)=>ctx.fillText(fmt(d.data[j]),b.x,(b.y+b.base)/2+4)));ctx.restore()}}]});
+  mk('chPeer',{type:'bar',data:{labels:['IHCL','Leela','ITC Hotels','Chalet','Lemon Tree','Juniper','Ventive','EIH'],datasets:[{label:'P/E',data:[48.6,42.6,36.4,37.0,35.4,29.2,28.6,25.6],backgroundColor:c=>c.dataIndex===2?'#f07a1a':'#1f4d3a',fmt:v=>v+'×'}]},
+    options:{maintainAspectRatio:false,layout:{padding:{top:18}},scales:{y:{grid:{color:'#eee9df'}}},plugins:{legend:{display:false}}},plugins:[valPlugin]});
+}
+
+/* ===== Self-check ===== */
+const SC=[
+ [["1. Questions about the stock","1. பங்கு பற்றிய கேள்விகள்"],[
+  [["Do I understand how a hotel earns: rooms × occupancy × rate, plus F&B and fees?","ஹோட்டல் வருமானம் எப்படின்னு புரியுதா?"],"Rooms 51%, F&B 39%, fees 4% of ₹983 cr"],
+  [["Is core growth strong without the Colombo flats?","கொழும்பு வீடுகள் இல்லாமலும் வளர்ச்சி இருக்கா?"],"Ex-residences revenue +17%, EBITDA +28%"],
+  [["Is the balance sheet safe?","இருப்புநிலை பாதுகாப்பா?"],"Zero debt, net cash ~₹1,500 cr"]]],
+ [["2. Problems investors face","2. முதலீட்டாளர் சிக்கல்கள்"],[
+  [["Am I comparing Q2 with Q4 (peak season) by mistake?","Q2-ஐ சீசன் Q4 கூட தப்பா ஒப்பிடுறேனா?"],"Q4 FY26 PAT ₹317 cr vs Q2 FY27 ₹203 cr is seasonal"],
+  [["Am I ready for a cyclical sector's swings?","சைக்கிள் துறையின் ஏற்ற இறக்கத்துக்கு தயாரா?"],"Stock fell from ₹261.62 to ₹137.30 within 9 months"]]],
+ [["3. Solutions (what I did)","3. நான் செய்தது"],[
+  [["I checked RevPAR, not just profit","லாபம் மட்டும் இல்ல, RevPAR-ம் பார்த்தேன்"],"RevPAR +21%, premium 44%"],
+  [["I looked at cash flow, not only PAT","கேஷ் ஃப்ளோவும் பார்த்தேன்"],"FY26 CFO ₹1,110 cr, FCF ₹700 cr"]]],
+ [["4. Anchors' and analysts' view","4. அனலிஸ்ட் கருத்து"],[
+  [["I read what brokers say and why","ப்ரோக்கர்கள் சொல்றதையும் காரணத்தையும் படிச்சேன்"],"Jefferies ₹210 (Sep-26), Elara ₹213 (Oct-26)"],
+  [["I know the promoter's stake and plans","ப்ரொமோட்டர் பங்கு தெரியும்"],"ITC holds ~40%"]]]];
+let scState={};try{scState=JSON.parse(localStorage.getItem('cbSC_ITCH')||'{}')}catch(e){}
+function saveSC(){try{localStorage.setItem('cbSC_ITCH',JSON.stringify(scState))}catch(e){}}
+const SUG=[["P/E below 35×","P/E 35×-க்கு கீழ்"],["Occupancy stays ≥ 75%","ஆக்யுபன்சி 75%+"],["No debt-funded buys","கடன் வாங்கி வாங்கக்கூடாது"],["Managed share rising","மேனேஜ்டு பங்கு ஏறணும்"]];
+function renderSC(){
+  scState.own=scState.own||[];
+  let h=SC.map((g,gi)=>`<div class="sc-group"><h3>${L(g[0][0],g[0][1])}</h3><div class="bar"><i id="scb${gi}"></i></div>${g[1].map((it,ii)=>{const k=gi+'_'+ii;return `<label class="sc-item"><input type="checkbox" data-k="${k}" ${scState[k]?'checked':''}><span>${L(it[0][0],it[0][1])}<div class="dl">Data: ${it[1]}</div></span></label>`}).join('')}<div class="note" id="scm${gi}"></div></div>`).join('');
+  h+=`<div class="sc-group"><h3>${L('5. My own conditions','5. என் சொந்த நிபந்தனைகள்')}</h3><div class="bar"><i id="scb4"></i></div><div id="ownList">${scState.own.map((o,i)=>`<label class="sc-item"><input type="checkbox" data-o="${i}" ${o.c?'checked':''}><span>${o.t.replace(/</g,'&lt;')}<div class="dl">Data:</div></span></label>`).join('')}</div>
+  <div style="display:flex;gap:6px;margin-top:8px"><input type="text" id="ownIn" maxlength="80" aria-label="Add condition"><button class="btn" id="ownAdd">+</button></div>
+  <div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:6px">${SUG.map(s=>`<button class="btn sug" data-s="${s[0]}">${L(s[0],s[1])}</button>`).join('')}</div><div class="note" id="scm4"></div></div>`;
+  $('#scGroups').innerHTML=h;
+  $('#scGroups').querySelectorAll('input[data-k]').forEach(c=>c.onchange=()=>{scState[c.dataset.k]=c.checked;saveSC();scProg()});
+  $('#scGroups').querySelectorAll('input[data-o]').forEach(c=>c.onchange=()=>{scState.own[c.dataset.o].c=c.checked;saveSC();scProg()});
+  const add=t=>{t=(t||'').trim();if(!t||scState.own.length>=8)return;scState.own.push({t,c:false});saveSC();renderSC()};
+  $('#ownAdd').onclick=()=>add($('#ownIn').value);
+  $('#scGroups').querySelectorAll('.sug').forEach(b=>b.onclick=()=>add(b.dataset.s));
+  scProg();
+}
+function scProg(){
+  let tot=0,on=0;
+  SC.forEach((g,gi)=>{let n=g[1].length,c=0;g[1].forEach((_,ii)=>{if(scState[gi+'_'+ii])c++});tot+=n;on+=c;$('#scb'+gi).style.width=(c/n*100)+'%';$('#scm'+gi).textContent=`${c} / ${n}`});
+  const n4=scState.own.length,c4=scState.own.filter(o=>o.c).length;tot+=n4;on+=c4;$('#scb4').style.width=(n4?c4/n4*100:0)+'%';$('#scm4').textContent=`${c4} / ${n4}`;
+  $('#scAll').style.width=(tot?on/tot*100:0)+'%';$('#scAllTxt').textContent=`${on} / ${tot}`;
+}
+$('#scClear').onclick=()=>{scState={own:[]};saveSC();renderSC()};
+
+/* ===== Socrates ===== */
+const QZ=[
+ [["Occupancy is 76% and ARR is ₹12,800. What is RevPAR closest to?","ஆக்யுபன்சி 76%, ARR ₹12,800 — RevPAR எவ்வளவு?"],["₹9,700","₹12,800","₹16,800","₹7,600"],0,["RevPAR = 0.76 × 12,800 ≈ ₹9,728.","RevPAR = 0.76 × 12,800 ≈ ₹9,728."]],
+ [["Why did EBITDA grow faster (+37%) than revenue (+26%)?","EBITDA ஏன் வருமானத்தை விட வேகமா வளர்ந்தது?"],[["Cost ratios fell — operating leverage","செலவு விகிதம் குறைஞ்சது"],["More debt","அதிக கடன்"],["Lower tax","குறைந்த வரி"],["Share buyback","பங்கு திரும்ப வாங்கல்"]],0,["F&B, people and energy costs each fell ~1 point of revenue.","உணவு, ஊழியர், மின் செலவு ஒவ்வொன்றும் 1 பாயிண்ட் குறைஞ்சது."]],
+ [["Which revenue line needs almost no capital to grow?","எந்த வருமானத்துக்கு முதலீடு தேவையில்லை?"],[["Management fees","மேனேஜ்மென்ட் கட்டணம்"],["Rooms in owned hotels","சொந்த ஹோட்டல் ரூம்"],["Branded residences","ரெசிடென்ஸ்"],["F&B","உணவு"]],0,["Managed hotels are owned by others; ITC earns fees (+25% in Q2).","மேனேஜ்டு ஹோட்டல் வேற ஒருத்தருடையது; ITC-க்கு கட்டணம்."]],
+ [["Inventory looks high (115 days). Why?","இன்வென்டரி 115 நாள் — ஏன்?"],[["Unsold Sapphire flats in Colombo","விற்காத கொழும்பு வீடுகள்"],["Too much food stock","அதிக உணவு ஸ்டாக்"],["Unpaid bills","செலுத்தாத பில்"],["Slow guests","தாமத விருந்தினர்"]],0,["Residential inventory sits on the balance sheet until handover.","ஒப்படைக்கும் வரை வீடுகள் இன்வென்டரியா இருக்கும்."]],
+ [["The hotel sector is in which cycle phase per this dashboard?","இந்த டாஷ்போர்டு படி துறை எந்த கட்டத்தில்?"],["P1 Trough","P2 Early recovery","P3 Expansion","P5 Downturn"],2,["Rates and occupancy rising broadly; P3 Expansion.","ரேட், ஆக்யுபன்சி ரெண்டும் ஏறுது — P3."]]];
+let qScore=0,qDone=0;
+function renderQ(){qScore=0;qDone=0;
+  $('#socQs').innerHTML=QZ.map((q,i)=>`<div class="q" data-i="${i}"><b>${L(q[0][0],q[0][1])}</b>${q[1].map((o,j)=>`<button class="opt" data-j="${j}">${Array.isArray(o)?L(o[0],o[1]):o}</button>`).join('')}<div class="note ex" hidden>${L(q[3][0],q[3][1])}</div></div>`).join('');
+  $('#socQs').querySelectorAll('.q').forEach(d=>d.querySelectorAll('.opt').forEach(b=>b.onclick=()=>{if(d.dataset.done)return;d.dataset.done=1;const q=QZ[d.dataset.i];const ok=+b.dataset.j===q[2];b.classList.add(ok?'right':'wrong');d.querySelectorAll('.opt')[q[2]].classList.add('right');d.querySelector('.ex').hidden=false;qDone++;if(ok)qScore++;$('#socScore').textContent=`${qScore} / ${qDone}`}));
+  $('#socScore').textContent='0 / 0';}
+$('#socHintBtn').onclick=()=>{$('#socHint').hidden=false};
+
+/* ===== CB badge ===== */
+$('#cbBadge').onclick=()=>{$('#cbPop').hidden=!$('#cbPop').hidden;$('#asPanel').hidden=true};
+
+/* ===== CB Assist (voice Q&A, offline) ===== */
+const KB=[
+ [["arr","room rate","rate","ரேட்","ரூம் விலை"],["Average room rate rose 14% to about ₹12,800 at owned hotels in Q2 FY27.","சொந்த ஹோட்டல்களில் சராசரி ரூம் ரேட் 14% ஏறி சுமார் ₹12,800."]],
+ [["occupancy","occupied","ஆக்யுபன்சி","நிரம்பு"],["Same-store owned-hotel occupancy was 76%, up 481 basis points from 71%.","சொந்த ஹோட்டல் ஆக்யுபன்சி 76%, போன வருஷம் 71%."]],
+ [["revpar"],["RevPAR rose 21% to about ₹9,700, a 44% premium over the industry benchmark.","RevPAR 21% ஏறி சுமார் ₹9,700; இண்டஸ்ட்ரியை விட 44% அதிகம்."]],
+ [["debt","loan","borrow","கடன்"],["ITC Hotels has no borrowings and about ₹1,500 to ₹1,600 crore of net cash.","ITC Hotels-க்கு கடனே இல்ல; சுமார் ₹1,500–1,600 கோடி கேஷ் இருக்கு."]],
+ [["profit","pat","லாபம்"],["Consolidated PAT was ₹202.65 crore, up 52% year on year and 11% over Q1.","நிகர லாபம் ₹202.65 கோடி, 52% வளர்ச்சி."]],
+ [["revenue","sales","வருமானம்"],["Revenue was ₹1,054 crore, up 26%; excluding Colombo residences ₹983 crore, up 17%.","வருமானம் ₹1,054 கோடி, 26% வளர்ச்சி; ரெசிடென்ஸ் தவிர ₹983 கோடி."]],
+ [["ebitda","margin","மார்ஜின்"],["EBITDA was ₹337 crore, up 37%, at a 32% margin.","EBITDA ₹337 கோடி, 37% வளர்ச்சி, 32% மார்ஜின்."]],
+ [["pipeline","plan","future","expansion","growth","திட்டம்","வளர்ச்சி"],["156 hotels and 14,300 keys today; 84 managed hotels with 8,200 keys in the pipeline; target 250 hotels and 22,000 keys by 2031.","இப்போ 156 ஹோட்டல், 14,300 ரூம்; பைப்லைனில் 84 ஹோட்டல்; 2031-க்குள் 250 ஹோட்டல், 22,000 ரூம்."]],
+ [["location","city","mumbai","delhi","chennai","நகரம்","இடம்"],["The premium is strongest in Hyderabad, Goa, Delhi, Agra, Chennai and Ahmedabad, and only about 3% in Mumbai and Kolkata.","ஹைதராபாத், கோவா, டெல்லி, ஆக்ரா, சென்னை, அகமதாபாத்தில் பிரீமியம் அதிகம்; மும்பை, கொல்கத்தாவில் 3% தான்."]],
+ [["sri lanka","colombo","ratnadipa","sapphire","இலங்கை","கொழும்பு"],["ITC Ratnadipa was EBITDA positive; Sapphire Residences added ₹71 crore revenue; rentals start in Q4 FY27.","ரத்னதீபா EBITDA லாபத்தில்; Sapphire ₹71 கோடி; Q4 FY27 முதல் வாடகை."]],
+ [["valuation","pe","p/e","price","expensive","cheap","மதிப்பீடு","விலை"],["At ₹164.31 the stock trades near 36 times trailing earnings and 21 times EV to EBITDA, below IHCL's about 49 times.","₹164.31-ல் P/E சுமார் 36, EV/EBITDA சுமார் 21; IHCL 49."]],
+ [["target","analyst","broker","டார்கெட்","அனலிஸ்ட்"],["Jefferies has Buy with ₹210 target and Elara Buy with ₹213. Post-Q2 revisions are awaited.","Jefferies ₹210, Elara ₹213 — ரெண்டும் Buy. Q2-க்கு பிறகு மாற்றம் இன்னும் வரல."]],
+ [["cash flow","cfo","working capital","வொர்கிங்","கேஷ்"],["FY26 cash from operations was ₹1,110 crore, 99% of PBT; free cash flow ₹700 crore. Inventory days look high only because of unsold Colombo flats.","FY26 CFO ₹1,110 கோடி, PBT-ல 99%; ஃப்ரீ கேஷ் ₹700 கோடி."]],
+ [["cycle","trigger","சைக்கிள்","தூண்டுதல்"],["Sector is in P3 Expansion; Cycle score 73, Trigger score 73. Top triggers: pipeline conversion, Kumarakom and Ahmedabad launches, Colombo rentals.","துறை P3; CY 73, TG 73."]],
+ [["risk","threat","ரிஸ்க்"],["Main risks: air traffic fell 6% in August and September, crude and inflation, Sri Lanka tourism, and new luxury supply.","முக்கிய ரிஸ்க்: விமான பயணம் குறைவு, விலைவாசி, இலங்கை, போட்டி."]],
+ [["buy","sell","invest","வாங்க","விற்க"],["CB Research does not give buy or sell advice. Open the Self-check tab to test your own conditions.","CB Research வாங்கு/விற்று சொல்லாது. சுய-சோதனை டேப்பை பாருங்க."],"self"],
+ [["management","md","chairman","chadha","puri","நிர்வாகம்"],["Sanjiv Puri is the non-executive Chairman and Anil Chadha the Managing Director. ITC Ltd holds about 40%.","சஞ்சீவ் பூரி தலைவர்; அனில் சத்தா நிர்வாக இயக்குநர்; ITC 40%."]],
+ [["dubai","international","துபாய்"],["The board approved a wholly owned subsidiary in Dubai, subject to regulatory approvals.","துபாயில் முழு உரிமை துணை நிறுவனம் — போர்டு ஒப்புதல்."]]];
+function answer(q){
+  const s=q.toLowerCase();let best=null,bs=0;
+  KB.forEach(k=>{let sc=0;k[0].forEach(w=>{if(s.includes(w))sc+=w.length});if(sc>bs){bs=sc;best=k}});
+  if(!best)return [LANG==='ta'?'மன்னிக்கணும், புரியல. ARR, ஆக்யுபன்சி, கடன், லாபம், திட்டம் பற்றி கேளுங்க.':'Try asking about ARR, occupancy, RevPAR, debt, profit, pipeline, valuation or risks.',null];
+  return [LANG==='ta'?best[1][1]:best[1][0],best[2]||null];
+}
+function say(t){try{if(!window.speechSynthesis)return;speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(t);u.lang=LANG==='ta'?'ta-IN':'en-IN';speechSynthesis.speak(u)}catch(e){}}
+function post(t,who,act){const d=document.createElement('div');d.className='msg '+who;d.textContent=t;if(act){const b=document.createElement('button');b.className='btn';b.style.marginTop='6px';b.textContent=LANG==='ta'?'சுய-சோதனை திற':'Open Self-check';b.onclick=()=>show('self');d.appendChild(document.createElement('br'));d.appendChild(b)}$('#asLog').appendChild(d);$('#asLog').scrollTop=1e6}
+function ask(q){if(!q.trim())return;post(q,'u');const [a,act]=answer(q);post(a,'b',act);say(a)}
+$('#asBtn').onclick=()=>{$('#asPanel').hidden=!$('#asPanel').hidden;$('#cbPop').hidden=true;if(!$('#asLog').children.length)post(LANG==='ta'?'வணக்கம்! ITC Hotels Q2 பற்றி பேசியோ டைப் பண்ணியோ கேளுங்க.':'Hello! Ask about ITC Hotels Q2 FY27 by voice or text.','b')};
+$('#asClose').onclick=()=>{$('#asPanel').hidden=true};
+$('#asForm').onsubmit=e=>{e.preventDefault();ask($('#asIn').value);$('#asIn').value=''};
+const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+$('#asMic').onclick=()=>{
+  if(!SR){post(LANG==='ta'?'இந்த பிரவுசரில் குரல் வசதி இல்லை; டைப் பண்ணுங்க.':'Voice input is not available in this browser; please type.','b');return}
+  try{const r=new SR();r.lang=LANG==='ta'?'ta-IN':'en-IN';r.interimResults=false;$('#asMic').classList.add('rec');
+    r.onresult=e=>ask(e.results[0][0].transcript);
+    r.onerror=()=>post(LANG==='ta'?'மைக் அனுமதி கிடைக்கல; டைப் பண்ணுங்க.':'Microphone not allowed here; please type, or open the file from your own site.','b');
+    r.onend=()=>$('#asMic').classList.remove('rec');r.start()}catch(e){$('#asMic').classList.remove('rec')}
+};
+
+/* ===== init ===== */
+renderBM('core');renderTemple();clock();timeline();renderSC();renderQ();
+setLang(LANG);
+const relang=()=>{renderTemple();clock();timeline();animTemple()};
+$('#lgEn').addEventListener('click',relang);$('#lgTa').addEventListener('click',relang);
+let start='overview';try{start=localStorage.getItem('cbTab')||'overview'}catch(e){}
+if(!document.getElementById('t-'+start))start='overview';
+show(start);
+})();
+</script>
