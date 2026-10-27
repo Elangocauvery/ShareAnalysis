@@ -1,0 +1,1142 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Shree vs UltraTech</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+Tamil:wght@400;600;700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<style>
+:root{
+  --bg:#ffffff; --bg2:#f6f8fb; --card:#ffffff; --ink:#1b2430; --mute:#5b6675; --line:#e3e8ef;
+  --brand:#e8701a; --brand2:#fff3e8; --navy:#1f3b63; --green:#1f9d55; --green2:#e7f6ee;
+  --amber:#d99a06; --amber2:#fff6dc; --red:#d64545; --red2:#fdeaea; --blue:#2f6fd6; --blue2:#e9f1fd;
+  --purple:#7a4bc4; --teal:#13958c;
+}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,"Noto Sans Tamil",system-ui,sans-serif;font-size:15px;line-height:1.5}
+body.ta{font-family:"Noto Sans Tamil",Inter,system-ui,sans-serif}
+a{color:var(--blue)}
+.wm{position:fixed;inset:0;pointer-events:none;display:flex;align-items:center;justify-content:center;z-index:0;opacity:.035;font-size:9vw;font-weight:800;color:var(--navy);transform:rotate(-24deg);white-space:nowrap}
+header{position:sticky;top:0;z-index:20;background:#fff;border-bottom:1px solid var(--line)}
+.hwrap{max-width:1240px;margin:0 auto;padding:10px 16px;display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+.logo{width:38px;height:38px;border-radius:50%;background:var(--brand);color:#fff;font-weight:800;display:flex;align-items:center;justify-content:center;flex:none}
+.htitle{flex:1;min-width:200px}
+.htitle h1{margin:0;font-size:18px;line-height:1.2}
+.htitle .sub{color:var(--mute);font-size:12.5px}
+.lang{display:flex;border:1px solid var(--line);border-radius:999px;overflow:hidden}
+.lang button{border:0;background:#fff;padding:6px 12px;font-weight:600;cursor:pointer;color:var(--mute);font-family:inherit}
+.lang button.on{background:var(--navy);color:#fff}
+nav.tabs{max-width:1240px;margin:0 auto;padding:0 10px 8px;display:flex;gap:6px;overflow-x:auto;scrollbar-width:thin}
+nav.tabs button{flex:none;border:1px solid var(--line);background:var(--bg2);color:var(--ink);padding:7px 12px;border-radius:999px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;white-space:nowrap}
+nav.tabs button.on{background:var(--brand);border-color:var(--brand);color:#fff}
+main{position:relative;z-index:1;max-width:1240px;margin:0 auto;padding:16px 16px 120px}
+section.tab{display:none}
+section.tab.on{display:block;animation:fade .25s ease}
+@keyframes fade{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+h2{font-size:20px;margin:6px 0 12px}
+h3{font-size:16px;margin:18px 0 8px;color:var(--navy)}
+.grid{display:grid;gap:12px}
+.g2{grid-template-columns:repeat(auto-fit,minmax(320px,1fr))}
+.g3{grid-template-columns:repeat(auto-fit,minmax(240px,1fr))}
+.g4{grid-template-columns:repeat(auto-fit,minmax(170px,1fr))}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px 16px;box-shadow:0 1px 2px rgba(20,30,50,.04)}
+.kpi .lbl{font-size:12px;color:var(--mute);font-weight:600;text-transform:uppercase;letter-spacing:.02em}
+body.ta .kpi .lbl{text-transform:none}
+.kpi .val{font-size:24px;font-weight:800;margin-top:2px}
+.kpi .chg{font-size:12.5px;font-weight:600}
+.up{color:var(--green)} .dn{color:var(--red)} .flat{color:var(--amber)}
+.chip{display:inline-flex;align-items:center;gap:6px;padding:4px 10px;border-radius:999px;font-size:12.5px;font-weight:700;border:1px solid var(--line);background:#fff}
+.chip.cy{background:var(--blue2);color:var(--blue);border-color:#c9dbf8}
+.chip.tg{background:var(--green2);color:var(--green);border-color:#bfe6cf}
+.chip.cb{background:var(--brand2);color:var(--brand);border-color:#f7cfae}
+.chip.warn{background:var(--amber2);color:#8a6200;border-color:#f1dca0}
+.hero{display:flex;gap:14px;flex-wrap:wrap;align-items:center;background:linear-gradient(120deg,#fff7ef,#f3f7ff);border:1px solid var(--line);border-radius:16px;padding:14px 16px;margin-bottom:12px}
+.hero .big{font-size:15px;font-weight:600;flex:1;min-width:260px}
+.kt{list-style:none;margin:0;padding:0;display:grid;gap:10px;grid-template-columns:repeat(auto-fit,minmax(290px,1fr))}
+.kt li{border-radius:12px;padding:11px 13px;border:1px solid var(--line);background:#fff;position:relative;padding-left:44px}
+.kt li .n{position:absolute;left:11px;top:11px;width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;color:#fff}
+.kt li.pos{border-left:5px solid var(--green)} .kt li.pos .n{background:var(--green)}
+.kt li.neg{border-left:5px solid var(--red)} .kt li.neg .n{background:var(--red)}
+.kt li.neu{border-left:5px solid var(--amber)} .kt li.neu .n{background:var(--amber)}
+.kt li b{display:block;margin-bottom:2px}
+.kt li span{color:var(--mute);font-size:13.5px}
+.tblwrap{overflow-x:auto;border:1px solid var(--line);border-radius:12px}
+table{border-collapse:collapse;width:100%;font-size:13.5px;background:#fff}
+th,td{padding:8px 10px;border-bottom:1px solid var(--line);text-align:right;white-space:nowrap}
+th:first-child,td:first-child{text-align:left;white-space:normal;min-width:180px}
+thead th{background:var(--bg2);font-size:12.5px;color:var(--mute);position:sticky;top:0}
+tr.cat td{background:#fdf1e6;color:#9a4a0c;font-weight:800;text-align:left;font-size:12.5px;letter-spacing:.02em}
+td.l{text-align:left;white-space:normal}
+.note{font-size:12.5px;color:var(--mute);margin-top:6px}
+.chartbox{position:relative;height:300px}
+.chartbox.tall{height:340px}
+.pill{display:inline-block;padding:2px 8px;border-radius:999px;font-size:12px;font-weight:700}
+.p-buy{background:var(--green2);color:var(--green)} .p-hold{background:var(--amber2);color:#8a6200} .p-sell{background:var(--red2);color:var(--red)} .p-na{background:var(--bg2);color:var(--mute)}
+/* business model */
+.bmwrap{overflow-x:auto;border:1px solid var(--line);border-radius:14px;background:#fcfdff}
+#bmsvg{display:block;min-width:980px;width:100%;height:auto}
+#bmsvg .node{cursor:pointer;transition:filter .15s}
+#bmsvg .node:hover rect{filter:brightness(.97)}
+#bmsvg .node.sel rect{stroke:#111;stroke-width:2.5}
+.explain{margin-top:10px;border-left:5px solid var(--brand);background:var(--brand2);border-radius:10px;padding:12px 14px}
+.explain h4{margin:0 0 4px}
+/* temple */
+.temple{max-width:760px;margin:0 auto}
+#templeSvg{width:100%;height:auto;display:block}
+#templeSvg .col{cursor:pointer}
+.pcard{border:1px solid var(--line);border-radius:12px;padding:12px 14px;border-left:6px solid var(--line);transition:box-shadow .2s, transform .2s}
+.pcard.hl{box-shadow:0 0 0 3px rgba(232,112,26,.35);transform:translateY(-2px)}
+.sc{display:inline-flex;width:34px;height:34px;border-radius:50%;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:13px;margin-right:8px;flex:none}
+/* swot */
+.swot .card h3{margin-top:0}
+.swot ul{margin:0;padding-left:18px}
+.s-s{border-top:5px solid var(--green)} .s-w{border-top:5px solid var(--red)} .s-o{border-top:5px solid var(--blue)} .s-t{border-top:5px solid var(--amber)}
+/* cycle */
+#cycleSvg{width:100%;max-width:420px;display:block;margin:0 auto}
+.tl{position:relative;overflow-x:auto;padding:8px 0}
+.tl-inner{position:relative;min-width:860px;height:150px}
+.tl-line{position:absolute;left:10px;right:10px;top:70px;height:4px;background:var(--line);border-radius:2px}
+.tl-ev{position:absolute;top:0;width:150px;transform:translateX(-50%);text-align:center;font-size:12px}
+.tl-ev .dot{width:16px;height:16px;border-radius:50%;margin:62px auto 6px;border:3px solid #fff;box-shadow:0 0 0 2px var(--brand);background:var(--brand)}
+.tl-ev .d{font-weight:800;color:var(--navy);position:absolute;top:30px;left:0;right:0}
+/* self check */
+.scg{border:1px solid var(--line);border-radius:12px;margin-bottom:12px;overflow:hidden}
+.scg h4{margin:0;padding:10px 14px;background:var(--bg2);display:flex;justify-content:space-between;gap:8px;align-items:center}
+.scg .items{padding:6px 14px 12px}
+.scg label{display:flex;gap:10px;align-items:flex-start;padding:8px 0;border-bottom:1px dashed var(--line);cursor:pointer}
+.scg label:last-child{border-bottom:0}
+.scg input[type=checkbox]{width:18px;height:18px;margin-top:2px;accent-color:var(--brand);flex:none}
+.scg .data{display:block;color:var(--mute);font-size:12.5px}
+.bar{height:9px;background:var(--bg2);border-radius:99px;overflow:hidden;min-width:120px}
+.bar i{display:block;height:100%;background:var(--brand);width:0;transition:width .3s}
+.btn{border:1px solid var(--line);background:#fff;border-radius:10px;padding:7px 12px;font-weight:600;cursor:pointer;font-family:inherit;font-size:13px}
+.btn.pri{background:var(--brand);border-color:var(--brand);color:#fff}
+.sugg button{margin:3px;font-size:12px;padding:4px 9px;border-radius:999px}
+input[type=text],textarea{font-family:inherit;font-size:14px;border:1px solid var(--line);border-radius:10px;padding:8px 10px;width:100%}
+/* management */
+.person{display:flex;gap:12px;align-items:flex-start}
+.avatar{width:46px;height:46px;border-radius:50%;background:var(--navy);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;flex:none}
+/* socrates */
+.q{border:1px solid var(--line);border-radius:12px;padding:12px 14px;margin-bottom:10px}
+.opts button{display:block;width:100%;text-align:left;margin:6px 0;padding:8px 10px;border:1px solid var(--line);border-radius:10px;background:#fff;cursor:pointer;font-family:inherit;font-size:14px}
+.opts button.ok{background:var(--green2);border-color:var(--green)}
+.opts button.bad{background:var(--red2);border-color:var(--red)}
+.fb{font-size:13.5px;margin-top:6px}
+/* CB badge + disclaimer */
+#cbBadge{position:fixed;right:16px;bottom:16px;z-index:60;width:54px;height:54px;border-radius:50%;background:var(--brand);color:#fff;font-weight:800;font-size:18px;border:3px solid #fff;box-shadow:0 4px 14px rgba(232,112,26,.45);cursor:pointer;animation:blink 2.2s ease-in-out infinite;font-family:Inter,sans-serif}
+@keyframes blink{0%,100%{box-shadow:0 0 0 0 rgba(232,112,26,.55)}50%{box-shadow:0 0 0 10px rgba(232,112,26,0)}}
+#discl{position:fixed;right:16px;bottom:82px;z-index:61;max-width:360px;width:calc(100% - 32px);background:#fff;border:1px solid var(--line);border-radius:14px;padding:14px 16px;box-shadow:0 10px 30px rgba(20,30,50,.18);display:none;font-size:13px}
+#discl.on{display:block}
+/* CB Assist */
+#asBtn{position:fixed;right:82px;bottom:22px;z-index:60;border-radius:999px;background:var(--navy);color:#fff;border:0;padding:10px 14px;font-weight:700;cursor:pointer;box-shadow:0 4px 14px rgba(31,59,99,.35);font-family:inherit;font-size:13px}
+#asPanel{position:fixed;right:16px;bottom:82px;z-index:62;width:min(380px,calc(100% - 32px));height:min(520px,70vh);background:#fff;border:1px solid var(--line);border-radius:16px;box-shadow:0 12px 34px rgba(20,30,50,.22);display:none;flex-direction:column;overflow:hidden}
+#asPanel.on{display:flex}
+#asHead{background:var(--navy);color:#fff;padding:10px 14px;display:flex;justify-content:space-between;align-items:center;font-weight:700}
+#asHead button{background:transparent;color:#fff;border:0;font-size:18px;cursor:pointer}
+#asLog{flex:1;overflow-y:auto;padding:10px 12px;background:var(--bg2)}
+.msg{max-width:88%;padding:8px 11px;border-radius:12px;margin:6px 0;font-size:13.5px;white-space:pre-line}
+.msg.u{background:var(--navy);color:#fff;margin-left:auto;border-bottom-right-radius:4px}
+.msg.b{background:#fff;border:1px solid var(--line);border-bottom-left-radius:4px}
+#asIn{display:flex;gap:6px;padding:8px;border-top:1px solid var(--line)}
+#asIn input{flex:1}
+#asMic{width:42px;border-radius:10px;border:1px solid var(--line);background:#fff;cursor:pointer;font-size:18px}
+#asMic.rec{background:var(--red2);border-color:var(--red);animation:blink 1s infinite}
+.qchips{padding:4px 8px;display:flex;gap:6px;flex-wrap:wrap;border-top:1px solid var(--line)}
+.qchips button{font-size:11.5px;border:1px solid var(--line);background:#fff;border-radius:999px;padding:3px 8px;cursor:pointer;font-family:inherit}
+@media (max-width:600px){
+  .kpi .val{font-size:20px}
+  h2{font-size:18px}
+  th:first-child,td:first-child{min-width:150px}
+  #asBtn{right:78px;bottom:22px;padding:9px 11px}
+}
+.win{display:inline-block;padding:2px 9px;border-radius:999px;font-size:12px;font-weight:800;white-space:nowrap}
+.w-ut{background:#fff3e8;color:#c45a0c;border:1px solid #f3c39b}
+.w-sh{background:#e9f1fd;color:#1f56b3;border:1px solid #bcd3f6}
+.w-tie{background:#f1f3f7;color:#5b6675;border:1px solid #d5dbe5}
+.vs{display:grid;grid-template-columns:1fr auto 1fr;gap:10px;align-items:center}
+.vs .side{border-radius:14px;padding:12px 14px;border:1px solid var(--line)}
+.vs .ut{background:#fff7ef} .vs .sh{background:#f2f7ff}
+.dot{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:6px;vertical-align:middle}
+.tog button{border:1px solid var(--line);background:#fff;padding:6px 12px;border-radius:999px;font-weight:700;cursor:pointer;font-family:inherit;margin-right:6px}
+.tog button.on{background:var(--navy);color:#fff;border-color:var(--navy)}
+.verdict{border:2px solid var(--brand);border-radius:16px;padding:16px 18px;background:linear-gradient(120deg,#fff7ef,#f3f7ff)}
+.tick{color:var(--green);font-weight:800} .cross{color:var(--red);font-weight:800}
+</style>
+</head>
+<body>
+<div class="wm">CB Research</div>
+<header>
+  <div class="hwrap">
+    <div class="logo">CB</div>
+    <div class="htitle">
+      <h1 id="hTitle">Shree Cement vs UltraTech — Q2 FY27 Business &amp; Investment Comparison</h1>
+      <div class="sub" id="hSub">Quarter ended 30-Sep-2026 · Shree results 23-Oct-2026 · NSE: SHREECEM · BSE: 500387 · Prepared 27-Oct-2026, 10:50 IST</div>
+    </div>
+    <div class="lang"><button id="bEN" class="on">English</button><button id="bTA">தமிழ்</button></div>
+  </div>
+  <nav class="tabs" id="tabs"></nav>
+</header>
+<main id="main"></main>
+
+<button id="asBtn">🎙 CB Assist</button>
+<div id="asPanel" role="dialog" aria-label="CB Assist">
+  <div id="asHead"><span id="asTitle">CB Assist — ask by voice or text</span><button id="asClose" aria-label="Close">×</button></div>
+  <div id="asLog"></div>
+  <div class="qchips" id="asChips"></div>
+  <div id="asIn"><input type="text" id="asText" placeholder="Ask about Shree vs UltraTech…"><button id="asMic" title="Speak">🎤</button><button class="btn pri" id="asSend">➤</button></div>
+</div>
+<button id="cbBadge" aria-label="Disclaimer">CB</button>
+<div id="discl"></div>
+<script>
+/* ============ MACHINE-READABLE DATA (CB Research standard) ============ */
+var CO = {
+ name:"Shree Cement Ltd", nse:"SHREECEM", bse:"500387", quarter:"Q2FY27", qEnd:"30-Sep-2026", resultsDate:"23-Oct-2026",
+ promoter:"Bangur family", unit:"₹ crore (consolidated) unless stated",
+ refPrice:22801, refDate:"26-Oct-2026", sharesCr:3.608, week52:{lo:21355,hi:29425},
+ q:["Q2FY26","Q3FY26","Q4FY26","Q1FY27","Q2FY27"],
+ rev:[4761,4801,6101,6233,5897],
+ ebitda:[974,null,1384,1272,1016],
+ pat:[310,268,528,531,263],
+ cur:{rev:5897, ebitda:1016, ebitdaOI:1128.7, pat:263, indVol:9.31, consVol:10.52, ebitdaT:966, realT:4870, copT:4636,
+      kcal:2.09, util:56, premium:28.7, blended:58, trade:61, green:65.2, greenMW:667, powerMW:1170, tsr:5, lead:427,
+      rmcVol:2.73, rmcRev:129, rmcPlants:35, uaeCap:7.0, indCap:66.7, netCash:8168, de:0.08, h1Capex:895},
+ prevY:{rev:4761, ebitda:974, pat:310, indVol:7.91, consVol:9.23, ebitdaT:1055, realT:4840, copT:4245, kcal:1.66, util:52, premium:21.1, blended:68, lead:441},
+ prevQ:{rev:6233, ebitda:1272, pat:531, indVol:10.49, consVol:11.45, ebitdaT:1111, realT:4919, copT:4329, kcal:1.95},
+ fuelMix:{petcoke:11, impCoal:75, indCoal:2, af:12, petcokePrev:66},
+ fy:{yrs:["FY24","FY25","FY26"], sales:[20404,19283,20943], op:[4517,3934,4638], dep:[1897,3007,2794], int:[258,205,212], np:[2396,1124,1749],
+     cfo:[3347,4920,3794], cfi:[-1418,-3726,-3714], cff:[-1710,-1296,-110]},
+ wc:{yrs:["FY23","FY24","FY25","FY26"], debtor:[25,23,27,32], inv:[703,670,444,469], pay:[305,229,247,274], ccc:[423,464,223,227], wcd:[-27,7,-8,-10]},
+ share:{asOf:"Sep-26", promoter:62.56, fii:8.45, dii:16.49, pub:12.51},
+ mcap:82266, pe:52.0, pb:3.44, bvps:6614, roe:7.51, roce:10.3, dy:0.66, dps:150,
+ analysts:[
+  {b:"HDFC Securities", r:"Buy", tp:28400, d:"26-Oct-26", n:{en:"Upgraded from Add on volume growth and the recent price dip",ta:"விற்பனை வளர்ச்சி, சமீபத்திய விலை இறக்கத்தால Add-ல இருந்து Buy-க்கு உயர்த்தினாங்க"}},
+  {b:"Prabhudas Lilladher", r:"n/a", tp:28379, d:"Oct-26", n:{en:"Target raised; stock ~14x FY28E earnings per the report",ta:"இலக்கை உயர்த்தினாங்க"}},
+  {b:"Anand Rathi", r:"Buy", tp:28021, d:"Oct-26", n:{en:"Upgrade; Sep-28E earnings plus UAE asset value",ta:"உயர்த்தினாங்க; செப்-28 லாபம் + UAE சொத்து மதிப்பு"}},
+  {b:"Motilal Oswal", r:"Neutral", tp:27000, d:"n/a", n:{en:"Date of this target not verified",ta:"இந்த இலக்கோட தேதி உறுதி ஆகல"}},
+  {b:"Citi", r:"Buy", tp:null, d:"May-26", n:{en:"After Q4FY26; target not verified",ta:"Q4FY26-க்கு அப்புறம்; இலக்கு உறுதி ஆகல"}},
+  {b:"Morgan Stanley", r:"Underweight", tp:null, d:"May-26", n:{en:"After Q4FY26; target not verified",ta:"Q4FY26-க்கு அப்புறம்; இலக்கு உறுதி ஆகல"}}
+ ],
+ pillars:[{k:"g",s:7.5},{k:"m",s:6.0},{k:"d",s:9.5},{k:"v",s:4.5},{k:"t",s:4.0},{k:"r",s:6.5}],
+ cycle:{sectorScore:70, sub:{life:80, earn:25, val:55, price:15}, stockScore:44, cy:57},
+ triggers:[
+  {k:"price",sign:"+",I:3,C:1.0,W:1.0,P:1.0,st:"Executing"},
+  {k:"util",sign:"+",I:3,C:0.7,W:0.7,P:1.0,st:"Executing"},
+  {k:"uae",sign:"+",I:2,C:1.0,W:0.7,P:1.0,st:"Executing"},
+  {k:"cap",sign:"+",I:3,C:0.7,W:0.4,P:1.0,st:"Approved"},
+  {k:"fuel",sign:"−",I:3,C:1.0,W:1.0,P:0.7,st:"Executing"},
+  {k:"pat",sign:"−",I:2,C:1.0,W:1.0,P:0.7,st:"Executing"},
+  {k:"wa",sign:"−",I:2,C:0.4,W:0.7,P:1.0,st:"Watch"},
+  {k:"meg",sign:"−",I:1,C:0.4,W:0.4,P:1.0,st:"Watch"}
+ ],
+ tg:63
+};
+CO.ev = CO.mcap - CO.cur.netCash;                 // 74,098
+CO.evEbitdaFY26 = CO.ev/CO.fy.op[2];              // ~16.0x
+CO.evT = CO.ev/(CO.cur.indCap+CO.cur.uaeCap)*10;  // ₹/t ≈ 10,054
+CO.ttmPat = 268+528+531+263;
+CO.ttmEps = CO.ttmPat/CO.sharesCr;
+CO.peCalc = CO.refPrice/CO.ttmEps;
+
+/* UltraTech reference figures (from the Q2FY27 UltraTech dashboard) */
+var UT = {
+ refPrice:10680, mcap:314718, rev:23295, ebitda:3721, pat:1501, domVol:35.94, domVolG:13.8, ebitdaT:974, ebitdaTyoy:60,
+ util:71, utilPrev:66, cap:204.7, capCons:210.1, ovsCap:5.4, green:48, greenMW:2024, tsr:7.2, kcal:2.09, fuelTyoy:14,
+ premium:37, blended:67.3, rmcPlants:485, rmcRev:2338, netDebt:23536, ndE:1.26, roe:11.6, pe:35.9, evEbitda:18.2, evT:16100, dy:2.2,
+ cfoConv:87, wcd:-41, capex:10000, patG:21.3, consensus:13730, realQ1:5218, cbScore:6.6, cy:60, tg:74
+};
+var SHQ1REAL=4919;
+
+/* ============ HEAD-TO-HEAD SCORECARD ============ */
+/* w: "u" UltraTech, "s" Shree, "t" tie */
+var SCORE = [
+ {c:{en:"Size & scale",ta:"அளவு"}, rows:[
+  {p:{en:"Domestic cement capacity (MTPA)",ta:"உள்நாட்டு கொள்ளளவு (MTPA)"}, u:"204.7", s:"≈66.7 †", w:"u", why:{en:"UltraTech ≈3.1x larger",ta:"அல்ட்ராடெக் சுமார் 3.1 மடங்கு பெருசு"}},
+  {p:{en:"India cement volume in Q2 (MT)",ta:"Q2 உள்நாட்டு விற்பனை (மி.டன்)"}, u:"35.94", s:"9.31", w:"u", why:{en:"UltraTech sold ≈3.9x more",ta:"அல்ட்ராடெக் சுமார் 3.9 மடங்கு அதிகம் வித்துச்சு"}},
+  {p:{en:"Market capitalisation (₹ cr)",ta:"சந்தை மதிப்பு (₹ கோடி)"}, u:"≈3,14,718", s:"≈82,266", w:"u", why:{en:"≈3.8x",ta:"சுமார் 3.8 மடங்கு"}},
+  {p:{en:"Revenue Q2 (₹ cr)",ta:"Q2 வருமானம் (₹ கோடி)"}, u:"23,295", s:"5,897", w:"u", why:{en:"≈4x — UltraTech also earns from RMC, white cement, chemicals",ta:"சுமார் 4 மடங்கு — அல்ட்ராடெக்குக்கு RMC, வெள்ளை சிமெண்ட், கெமிக்கல்ஸ்லயும் வருமானம்"}}
+ ]},
+ {c:{en:"Operational parameters",ta:"செயல்பாட்டு அளவீடுகள்"}, rows:[
+  {p:{en:"India volume growth YoY",ta:"உள்நாட்டு விற்பனை வளர்ச்சி"}, u:"+13.8%", s:"+17.7%", w:"s", why:{en:"Shree grows faster off a smaller, under-used base",ta:"சின்ன, முழுசா பயன்படாத அடித்தளத்துல இருந்து ஷ்ரீ வேகமா வளருது"}},
+  {p:{en:"Capacity utilisation",ta:"கொள்ளளவு பயன்பாடு"}, u:"71%", s:"56%", w:"u", why:{en:"Shree's newly built plants are still ramping up",ta:"ஷ்ரீயோட புது ஆலைகள் இன்னும் முழு வேகத்துக்கு வரல"}},
+  {p:{en:"Operating EBITDA per tonne (₹)",ta:"டன்னுக்கு EBITDA (₹)"}, u:"974", s:"966", w:"t", why:{en:"Virtually equal (₹8 gap)",ta:"கிட்டத்தட்ட சமம் (₹8 வித்தியாசம்)"}},
+  {p:{en:"EBITDA per tonne change YoY",ta:"டன்னுக்கு EBITDA மாற்றம் (வருடம்)"}, u:"+₹60", s:"−₹89", w:"u", why:{en:"UltraTech improved; Shree fell on fuel",ta:"அல்ட்ராடெக் ஏறிச்சு; எரிபொருளால ஷ்ரீ இறங்கிச்சு"}},
+  {p:{en:"Operating EBITDA margin",ta:"EBITDA மார்ஜின்"}, u:"16.0%", s:"17.2%", w:"s", why:{en:"Shree's revenue is mostly pure cement, so margin % reads higher",ta:"ஷ்ரீ வருமானம் பெரும்பாலும் சிமெண்ட் மட்டும், அதனால % அதிகமா தெரியுது"}},
+  {p:{en:"India realisation per tonne (Q1FY27 basis)",ta:"டன்னுக்கு விலை (Q1FY27)"}, u:"₹5,218", s:"₹4,919", w:"u", why:{en:"UltraTech earns ≈₹300/t more — brand premium",ta:"அல்ட்ராடெக்குக்கு டன்னுக்கு சுமார் ₹300 அதிகம் — பிராண்ட் மதிப்பு"}}
+ ]},
+ {c:{en:"Energy: fuel & power costs",ta:"ஆற்றல்: எரிபொருள் & மின் செலவு"}, rows:[
+  {p:{en:"Green power share of electricity",ta:"மின்சாரத்துல கிரீன் பவர் பங்கு"}, u:"48%", s:"65.2%", w:"s", why:{en:"Shree is a green-power leader",ta:"கிரீன் பவர்ல ஷ்ரீ முன்னிலை"}},
+  {p:{en:"Green power capacity (MW)",ta:"கிரீன் பவர் கொள்ளளவு (MW)"}, u:"≈2,024", s:"667", w:"u", why:{en:"In absolute MW; per tonne of capacity both are ≈9–10 MW/MTPA",ta:"மொத்த MW-ல; டன் கொள்ளளவுக்கு ரெண்டும் சுமார் 9–10 MW"}},
+  {p:{en:"Landed fuel cost (₹ per 1,000 kcal)",ta:"எரிபொருள் செலவு (1,000 kcal-க்கு ₹)"}, u:"≈2.09", s:"2.09", w:"t", why:{en:"Same cost of heat this quarter",ta:"இந்த காலாண்டு ஒரே அளவு"}},
+  {p:{en:"Fuel cost inflation YoY",ta:"எரிபொருள் செலவு ஏற்றம் (வருடம்)"}, u:{en:"+14% per t",ta:"டன்னுக்கு +14%"}, s:{en:"+26% per kcal",ta:"kcal-க்கு +26%"}, w:"u", why:{en:"Shree had locked in cheap petcoke last year, so its jump is sharper",ta:"போன வருஷம் ஷ்ரீ மலிவான பெட்கோக் வாங்கியிருந்ததால ஏற்றம் அதிகமா தெரியுது"}},
+  {p:{en:"Alternative fuel (thermal substitution)",ta:"மாற்று எரிபொருள் பயன்பாடு"}, u:"≈7.2%", s:"≈5%", w:"u", why:{en:"UltraTech burns more waste-derived fuel",ta:"அல்ட்ராடெக் அதிக கழிவு எரிபொருள் பயன்படுத்துது"}}
+ ]},
+ {c:{en:"Product mix & brand",ta:"பொருள் கலவை & பிராண்ட்"}, rows:[
+  {p:{en:"Premium products share",ta:"பிரீமியம் பங்கு"}, u:"37%", s:"28.7%", w:"u", why:{en:"Shree rising fast (+7.6 pts YoY), target >40%",ta:"ஷ்ரீ வேகமா ஏறுது (+7.6 புள்ளி), இலக்கு 40%-க்கு மேல"}},
+  {p:{en:"Blended cement share",ta:"பிளெண்டட் சிமெண்ட் பங்கு"}, u:"67.3%", s:"58%", w:"u", why:{en:"Shree's blend share fell from 68% — more OPC",ta:"ஷ்ரீ பிளெண்ட் 68%-ல இருந்து குறைஞ்சுது"}},
+  {p:{en:"Product breadth",ta:"பொருள் வகைகள்"}, u:{en:"Grey, white, putty, RMC, chemicals, wires",ta:"கிரே, வெள்ளை, புட்டி, RMC, கெமிக்கல்ஸ், வயர்"}, s:{en:"Grey cement, RMC, power",ta:"கிரே சிமெண்ட், RMC, மின்"}, w:"u", why:{en:"UltraTech sells many more products through each dealer",ta:"அல்ட்ராடெக் ஒவ்வொரு டீலர் வழியாவும் அதிக பொருள் விக்குது"}},
+  {p:{en:"RMC network",ta:"RMC நெட்வொர்க்"}, u:{en:"485 plants",ta:"485 ஆலைகள்"}, s:{en:"35 plants",ta:"35 ஆலைகள்"}, w:"u", why:{en:"Shree's RMC is small but grew 182%",ta:"ஷ்ரீ RMC சின்னது, ஆனா 182% வளர்ந்துச்சு"}},
+  {p:{en:"Brand strength",ta:"பிராண்ட் பலம்"}, u:{en:"One national brand",ta:"ஒரே தேசிய பிராண்ட்"}, s:{en:"Bangur family, strong in North",ta:"பாங்கூர் பிராண்டுகள், வடக்குல வலுவா"}, w:"u", why:{en:"Shows up as UltraTech's higher price per tonne",ta:"அல்ட்ராடெக்கோட அதிக டன் விலைல இது தெரியுது"}}
+ ]},
+ {c:{en:"Geography & market share",ta:"புவியியல் & மார்க்கெட் ஷேர்"}, rows:[
+  {p:{en:"Pan-India reach",ta:"இந்தியா முழுக்க இருப்பு"}, u:{en:"All 5 regions",ta:"5 பகுதிலயும்"}, s:{en:"North-heavy; East & South",ta:"வடக்கு அதிகம்; கிழக்கு, தெற்கு"}, w:"u", why:{en:"Shree is thin in West and Central",ta:"மேற்கு, மத்தியல ஷ்ரீ குறைவு"}},
+  {p:{en:"Relative market share (volume)",ta:"ஒப்பீட்டு மார்க்கெட் ஷேர்"}, u:{en:"≈3.9x Shree",ta:"ஷ்ரீயை விட ≈3.9 மடங்கு"}, s:"1x", w:"u", why:{en:"Both gained share this quarter (industry ~7–10%)",ta:"ரெண்டும் இந்த காலாண்டு ஷேர் கூட்டிச்சு (இண்டஸ்ட்ரி 7–10%)"}},
+  {p:{en:"Overseas capacity (MTPA)",ta:"வெளிநாட்டு கொள்ளளவு (MTPA)"}, u:"≈5.4 †", s:"7.0 (UAE)", w:"s", why:{en:"Larger, but more exposed to West Asia risk",ta:"பெருசு தான், ஆனா மேற்கு ஆசியா ரிஸ்க் அதிகம்"}}
+ ]},
+ {c:{en:"Financial strength & returns",ta:"நிதி பலம் & லாபம்"}, rows:[
+  {p:{en:"Net debt (−) / net cash (+) (₹ cr)",ta:"நிகர கடன் (−) / கையிருப்பு (+)"}, u:"−23,536", s:"+8,168", w:"s", why:{en:"Shree is net-cash; UltraTech borrowed for capex and dividend",ta:"ஷ்ரீ கையில பணம்; அல்ட்ராடெக் கேபெக்ஸ், டிவிடெண்டுக்கு கடன்"}},
+  {p:{en:"Net profit growth YoY",ta:"நிகர லாப வளர்ச்சி"}, u:"+21.3%", s:"−15.2%", w:"u", why:{en:"Shree's profit fell despite 24% revenue growth",ta:"வருமானம் 24% ஏறியும் ஷ்ரீ லாபம் இறங்கிச்சு"}},
+  {p:{en:"Return on equity",ta:"ROE"}, u:"≈11.6%", s:"≈7.5%", w:"u", why:{en:"Shree's idle capacity and cash drag returns",ta:"பயன்படாத ஆலை, சும்மா இருக்கிற பணம் ஷ்ரீ லாப விகிதத்தை குறைக்குது"}},
+  {p:{en:"Cash conversion FY26 (CFO / EBITDA)",ta:"FY26 கேஷ் மாற்றம் (CFO / EBITDA)"}, u:"87%", s:"82%", w:"u", why:{en:"Both convert well",ta:"ரெண்டும் நல்லா மாத்துது"}},
+  {p:{en:"Working capital days FY26",ta:"FY26 வொர்க்கிங் கேப்பிட்டல் நாட்கள்"}, u:"−41", s:"−10", w:"u", why:{en:"UltraTech's suppliers fund more of its operations",ta:"அல்ட்ராடெக்குக்கு சப்ளையர்கள் அதிகம் நிதி கொடுக்குறாங்க"}},
+  {p:{en:"Capex intensity FY27 (₹ cr)",ta:"FY27 கேபெக்ஸ் (₹ கோடி)"}, u:"≈10,000", s:"≈1,600–1,700", w:"s", why:{en:"Shree spends little while it fills existing plants",ta:"இருக்கிற ஆலைகளை நிரப்புற வரை ஷ்ரீ குறைவா செலவழிக்குது"}}
+ ]},
+ {c:{en:"Valuation",ta:"மதிப்பீடு"}, rows:[
+  {p:{en:"P/E (TTM)",ta:"P/E (TTM)"}, u:"≈35.9x", s:"≈52x", w:"u", why:{en:"UltraTech is cheaper on current earnings",ta:"இப்போதைய லாபத்துக்கு அல்ட்ராடெக் மலிவு"}},
+  {p:{en:"EV / EBITDA",ta:"EV / EBITDA"}, u:"≈18.2x TTM", s:"≈16.0x FY26 †", w:"s", why:{en:"Shree's cash lowers its EV (different periods — indicative)",ta:"ஷ்ரீ கையிருப்பு EV-ஐ குறைக்குது (காலம் வேற — தோராயம்)"}},
+  {p:{en:"EV per tonne of capacity (₹)",ta:"டன் கொள்ளளவுக்கு EV (₹)"}, u:"≈16,100", s:"≈10,050 †", w:"s", why:{en:"Shree is cheaper per tonne because it is under-utilised",ta:"பயன்பாடு குறைவா இருக்கிறதால ஷ்ரீ டன்னுக்கு மலிவு"}},
+  {p:{en:"Dividend yield",ta:"டிவிடெண்ட் ஈல்ட்"}, u:{en:"≈2.2% (special)",ta:"≈2.2% (ஸ்பெஷல்)"}, s:"≈0.66%", w:"u", why:{en:"UltraTech's FY26 yield is boosted by a one-off ₹240 special",ta:"அல்ட்ராடெக் FY26-ல ₹240 ஸ்பெஷல் கொடுத்ததால அதிகம்"}},
+  {p:{en:"Upside to brokers' targets",ta:"ப்ரோக்கர் இலக்குக்கு இடைவெளி"}, u:{en:"≈+28.6% (consensus)",ta:"≈+28.6% (சராசரி)"}, s:{en:"≈+22.6% (avg of 4)",ta:"≈+22.6% (4-ன் சராசரி)"}, w:"u", why:{en:"Third-party targets, for comparison only",ta:"மூன்றாம் தரப்பு இலக்குகள், ஒப்பீட்டுக்கு மட்டும்"}}
+ ]}
+];
+</script>
+<script>
+var TX = {
+ title:{en:"Shree Cement vs UltraTech — Q2 FY27 Business & Investment Comparison",ta:"ஷ்ரீ சிமெண்ட் vs அல்ட்ராடெக் — Q2 FY27 பிசினஸ் & முதலீட்டு ஒப்பீடு"},
+ sub:{en:"Quarter ended 30-Sep-2026 · Shree results 23-Oct-2026 · NSE: SHREECEM · BSE: 500387 · Prepared 27-Oct-2026, 10:50 IST",
+      ta:"30-செப்-2026 முடிஞ்ச காலாண்டு · ஷ்ரீ ரிசல்ட் 23-அக்-2026 · NSE: SHREECEM · BSE: 500387 · தயாரிச்சது 27-அக்-2026, காலை 10:50"},
+ tabs:[
+  {id:"dash",en:"Dashboard",ta:"டாஷ்போர்டு"},
+  {id:"bm",en:"Shree Business Model",ta:"ஷ்ரீ பிசினஸ் மாடல்"},
+  {id:"h2h",en:"Head-to-Head",ta:"நேருக்கு நேர்"},
+  {id:"ops",en:"Operations & Energy",ta:"செயல்பாடு & ஆற்றல்"},
+  {id:"geo",en:"Size & Geography",ta:"அளவு & புவியியல்"},
+  {id:"mix",en:"Product Mix & Brand",ta:"பொருள் கலவை & பிராண்ட்"},
+  {id:"fin",en:"Financials",ta:"நிதி நிலை"},
+  {id:"cf",en:"Cash Flow & Working Capital",ta:"கேஷ் ஃப்ளோ & வொர்க்கிங் கேப்பிட்டல்"},
+  {id:"val",en:"Valuations",ta:"மதிப்பீடு"},
+  {id:"tc",en:"Triggers & Cycle",ta:"ட்ரிக்கர்ஸ் & சைக்கிள்"},
+  {id:"pil",en:"CB Score – 6 Pillars",ta:"CB ஸ்கோர் – 6 தூண்கள்"},
+  {id:"swot",en:"SWOT",ta:"SWOT"},
+  {id:"an",en:"Analysts' Rating",ta:"அனலிஸ்ட் ரேட்டிங்"},
+  {id:"sc",en:"Self-check",ta:"சுய சோதனை"},
+  {id:"mg",en:"Management & Board",ta:"நிர்வாகம் & போர்டு"},
+  {id:"ver",en:"Verdict",ta:"தீர்ப்பு"},
+  {id:"soc",en:"Cauvery Socrates",ta:"காவேரி சாக்ரடீஸ்"}
+ ],
+ hero:{en:"Shree sold 18% more cement but earned 15% less profit: fuel costs and a still-ramping plant base squeezed it. UltraTech wins most head-to-head parameters; Shree wins on balance sheet, green power, growth rate and margin %.",
+       ta:"ஷ்ரீ 18% அதிகம் சிமெண்ட் வித்துச்சு, ஆனா லாபம் 15% குறைஞ்சுது: எரிபொருள் செலவும் இன்னும் முழு வேகத்துக்கு வராத ஆலைகளும் காரணம். பெரும்பாலான அளவீடுகள்ல அல்ட்ராடெக் ஜெயிக்குது; கையிருப்பு, கிரீன் பவர், வளர்ச்சி வேகம், மார்ஜின் %-ல ஷ்ரீ ஜெயிக்குது."},
+ ktTitle:{en:"Key takeaways — Shree Cement Q2 FY27",ta:"முக்கிய விஷயங்கள் — ஷ்ரீ சிமெண்ட் Q2 FY27"},
+ kt:[
+  {c:"pos",en:["Volume +18% — faster than UltraTech","India sales 9.31 MT (+17.7% YoY) vs industry ~7–10%; consolidated 10.52 MT (+14%)."],ta:["விற்பனை 18% ஏற்றம் — அல்ட்ராடெக்கை விட வேகம்","உள்நாட்டு விற்பனை 9.31 மி.டன் (+17.7%); இண்டஸ்ட்ரி சுமார் 7–10%; மொத்தம் 10.52 மி.டன் (+14%)."]},
+  {c:"pos",en:["Revenue +24% to ₹5,897 cr","Faster than UltraTech's +18.8%; EBITDA ₹1,016 cr (+4%)."],ta:["வருமானம் 24% ஏறி ₹5,897 கோடி","அல்ட்ராடெக்கோட +18.8%-ஐ விட வேகம்; EBITDA ₹1,016 கோடி (+4%)."]},
+  {c:"neg",en:["Profit down 15% to ₹263 cr","PAT fell YoY and halved QoQ: higher fuel cost, on top of a large depreciation base from new plants (FY26 depreciation ₹2,794 cr)."],ta:["லாபம் 15% குறைஞ்சு ₹263 கோடி","எரிபொருள் செலவும், புது ஆலைகளோட தேய்மானமும் காரணம்; முந்தைய காலாண்டை விட பாதி."]},
+  {c:"neg",en:["EBITDA/t ₹966 — down ₹89 YoY","Landed fuel cost jumped to ₹2.09/kcal from ₹1.66; cost of production ₹4,636/t (+9%). UltraTech's EBITDA/t rose ₹60 to ₹974."],ta:["டன்னுக்கு EBITDA ₹966 — ₹89 இறக்கம்","எரிபொருள் ₹1.66-ல இருந்து ₹2.09/kcal; உற்பத்தி செலவு ₹4,636/டன் (+9%). அல்ட்ராடெக் ₹60 ஏறி ₹974."]},
+  {c:"neu",en:["Realisation flat at ₹4,870/t","+1% YoY, −1% QoQ. October prices better than September; Q3 price expected higher via premium mix."],ta:["டன் விலை ₹4,870 — அசைவில்ல","வருடத்துக்கு +1%, காலாண்டுக்கு −1%. அக்டோபர் விலை செப்டம்பரை விட நல்லா இருக்கு."]},
+  {c:"pos",en:["Premium share 28.7% (from 21.1%)","Bangur premium brands sell ₹25–40/bag higher; target above 40% by FY28–29."],ta:["பிரீமியம் பங்கு 28.7% (21.1%-ல இருந்து)","பாங்கூர் பிரீமியம் மூட்டைக்கு ₹25–40 அதிக விலை; FY28–29-க்குள் 40%-க்கு மேல இலக்கு."]},
+  {c:"pos",en:["Green power 65.2% — beats UltraTech's 48%","667 MW of solar, wind and waste-heat capacity; fuel switched from petcoke (66% → 11%) to imported coal (75%)."],ta:["கிரீன் பவர் 65.2% — அல்ட்ராடெக்கோட 48%-ஐ விட அதிகம்","667 MW சோலார், காற்று, கழிவு வெப்பம்; பெட்கோக் 66%-ல இருந்து 11%, இறக்குமதி நிலக்கரி 75%."]},
+  {c:"neu",en:["Utilisation only 56%","Up from 52%, but far below UltraTech's 71% — the big lever (and drag) for Shree."],ta:["பயன்பாடு 56% தான்","52%-ல இருந்து ஏறிச்சு, ஆனா அல்ட்ராடெக்கோட 71%-ஐ விட ரொம்ப குறைவு — ஷ்ரீக்கு இது தான் பெரிய வாய்ப்பும் சுமையும்."]},
+  {c:"pos",en:["Net cash ₹8,168 cr; D/E 0.08","Capex just ₹895 cr in H1 vs UltraTech's ₹5,882 cr; FY27 capex ₹1,600–1,700 cr."],ta:["கையிருப்பு ₹8,168 கோடி; கடன் விகிதம் 0.08","முதல் பாதி கேபெக்ஸ் ₹895 கோடி (அல்ட்ராடெக் ₹5,882 கோடி); FY27 ₹1,600–1,700 கோடி."]},
+  {c:"pos",en:["UAE mill doubles overseas reach","Union Cement (UAE) added a 3 MTPA mill in Sep, taking it to 7 MTPA; RMC volume +153%."],ta:["UAE ஆலை வெளிநாட்டு அளவை இரட்டிப்பாக்குது","யூனியன் சிமெண்ட் (UAE) செப்ல 3 MTPA மில் சேர்த்து 7 MTPA; RMC அளவு +153%."]},
+  {c:"neu",en:["Guidance: 40–41 MT India volume in FY27","Q3 fuel cost guided higher at ₹2.15–2.20/kcal; Meghalaya plant by the Mar-28 quarter; 80 MTPA by 2029."],ta:["வழிகாட்டல்: FY27-ல 40–41 மி.டன்","Q3 எரிபொருள் ₹2.15–2.20/kcal; மேகாலயா ஆலை மார்ச்-28 காலாண்டுக்குள்; 2029-க்குள் 80 MTPA."]},
+  {c:"neu",en:["Stock near 52-week low, then rebounded","Fell to ₹21,770 on results day, closed up ~1.8% near ₹22,730; HDFC Securities upgraded to Buy."],ta:["பங்கு 52 வார குறைஞ்ச அளவுக்கு பக்கத்துல, அப்புறம் மீண்டுச்சு","ரிசல்ட் அன்னிக்கு ₹21,770 வரை இறங்கி, சுமார் ₹22,730-ல முடிஞ்சுது; HDFC செக்யூரிட்டீஸ் Buy-க்கு உயர்த்தினாங்க."]}
+ ],
+ kpi:{rev:{en:"Revenue",ta:"வருமானம்"},eb:{en:"EBITDA",ta:"EBITDA"},pat:{en:"Net profit",ta:"நிகர லாபம்"},vol:{en:"India volume",ta:"உள்நாட்டு விற்பனை"},et:{en:"EBITDA / tonne",ta:"டன்னுக்கு EBITDA"},util:{en:"Utilisation",ta:"பயன்பாடு"},green:{en:"Green power",ta:"கிரீன் பவர்"},cash:{en:"Net cash",ta:"கையிருப்பு"}},
+ yoy:{en:"YoY",ta:"வருடம்"}, qoq:{en:"QoQ",ta:"காலாண்டு"}, cr:{en:"cr",ta:"கோடி"},
+ vsTitle:{en:"Same quarter, side by side",ta:"அதே காலாண்டு, பக்கம் பக்கமா"},
+ trend:{en:"Shree five-quarter trend (₹ cr)",ta:"ஷ்ரீ 5 காலாண்டு போக்கு (₹ கோடி)"},
+ lRev:{en:"Revenue",ta:"வருமானம்"}, lEb:{en:"EBITDA",ta:"EBITDA"}, lPat:{en:"PAT",ta:"நிகர லாபம்"},
+ trendNote:{en:"Q3FY26 EBITDA not verified (bar left blank). EBITDA excludes other income; including it, Q2FY27 EBITDA was ≈₹1,129 cr.",ta:"Q3FY26 EBITDA உறுதி ஆகல (காலியா விட்டிருக்கோம்). EBITDA-ல மற்ற வருமானம் சேர்க்கல; சேர்த்தா Q2FY27-ல சுமார் ₹1,129 கோடி."}
+};
+
+/* ============ SHREE BUSINESS MODEL ============ */
+var BM = {
+ title:{en:"How Shree Cement makes money — tap any box",ta:"ஷ்ரீ சிமெண்ட் எப்படி சம்பாதிக்குது — எந்த பெட்டியையும் தொடுங்க"},
+ formula:{en:"Revenue ≈ India cement volume × realisation (9.31 MT × ₹4,870/t ≈ ₹4,534 cr) + UAE cement + RMC + power and others ≈ ₹5,897 cr.",
+          ta:"வருமானம் ≈ உள்நாட்டு விற்பனை × டன் விலை (9.31 மி.டன் × ₹4,870 ≈ ₹4,534 கோடி) + UAE சிமெண்ட் + RMC + மின் & மற்றவை ≈ ₹5,897 கோடி."},
+ nodes:{
+  c1:{t:{en:"Home builders (trade)",ta:"வீடு கட்டுறவங்க (டிரேட்)"},s:{en:"61% of volume",ta:"விற்பனைல 61%"},x:{en:"Individual builders buying bags through dealers — 61% of Shree's volume. Premium Bangur products are sold mainly here.",ta:"டீலர் வழியா மூட்டை வாங்குற தனி வீடு கட்டுறவங்க — ஷ்ரீ விற்பனைல 61%. பாங்கூர் பிரீமியம் இங்க தான் அதிகம்."}},
+  c2:{t:{en:"Infra & bulk (non-trade)",ta:"இன்ஃப்ரா & மொத்தம்"},s:{en:"39% of volume",ta:"விற்பனைல 39%"},x:{en:"Roads, railways, housing projects, data centres — 39% of volume, usually at lower prices than trade.",ta:"ரோடு, ரயில், வீட்டு திட்டங்கள், டேட்டா சென்டர் — 39%, பொதுவா டிரேடை விட குறைஞ்ச விலை."}},
+  c3:{t:{en:"Gulf buyers",ta:"வளைகுடா வாங்குபவர்கள்"},s:{en:"UAE & exports",ta:"UAE & ஏற்றுமதி"},x:{en:"Union Cement Company in Ras Al Khaimah sells in the UAE (e.g. new Dubai airport demand) and exports, including oil-well cement from its coastal plant. H1 UAE volume ~2.1 MT.",ta:"ராஸ் அல் கைமாவுல இருக்கிற யூனியன் சிமெண்ட் UAE-ல விக்குது (புது துபாய் ஏர்போர்ட்), ஏற்றுமதியும் — ஆயில்-வெல் சிமெண்ட் உட்பட. முதல் பாதில சுமார் 2.1 மி.டன்."}},
+  c4:{t:{en:"Urban RMC users",ta:"நகர RMC வாங்குபவர்கள்"},s:{en:"Builders, contractors",ta:"பில்டர்ஸ், கான்ட்ராக்டர்ஸ்"},x:{en:"Ready-mix concrete delivered to site — a new, fast-growing line for Shree.",ta:"சைட்டுக்கே ரெடி-மிக்ஸ் — ஷ்ரீக்கு புதுசா, வேகமா வளர்ற தொழில்."}},
+  d1:{t:{en:"Dealers & retailers",ta:"டீலர்ஸ் & கடைகள்"},s:{en:"North-heavy network",ta:"வடக்குல அதிகம்"},x:{en:"Shree's deepest dealer network is in North India (its Rajasthan home base); East and South are the other two legs.",ta:"ஷ்ரீயோட ஆழமான டீலர் நெட்வொர்க் வட இந்தியாவுல (ராஜஸ்தான் தான் சொந்த ஊர்); கிழக்கு, தெற்கு அடுத்தது."}},
+  d2:{t:{en:"Direct / project sales",ta:"நேரடி / ப்ராஜெக்ட்"},s:{en:"Institutional",ta:"நிறுவனங்கள்"},x:{en:"Direct supply to large infrastructure and housing projects.",ta:"பெரிய இன்ஃப்ரா, வீட்டு திட்டங்களுக்கு நேரடி சப்ளை."}},
+  d3:{t:{en:"UAE ports & distributors",ta:"UAE துறைமுகம் & விநியோகம்"},s:{en:"Coastal plant",ta:"கடற்கரை ஆலை"},x:{en:"The UAE subsidiary's coastal location supports exports by sea.",ta:"UAE ஆலை கடற்கரைல இருக்கிறதால கடல் வழி ஏற்றுமதி சுலபம்."}},
+  d4:{t:{en:"35 RMC plants",ta:"35 RMC ஆலைகள்"},s:{en:"28 commercial",ta:"28 வணிக"},x:{en:"35 plants (28 commercial + captive); 2.73 lakh m³ in Q2 (+153%), EBITDA-positive.",ta:"35 ஆலைகள் (28 வணிக + சொந்த பயன்பாடு); Q2-ல 2.73 லட்சம் கன மீ (+153%), லாபத்துல."}},
+  co:{t:{en:"Shree Cement",ta:"ஷ்ரீ சிமெண்ட்"},s:{en:"≈66.7 MTPA India + 7 UAE",ta:"≈66.7 MTPA இந்தியா + 7 UAE"},x:{en:"India's third-largest cement maker by capacity, promoted by the Bangur family. Known for lean operations and organic, self-funded growth — it built rather than bought its plants. India utilisation 56%.",ta:"இந்தியாவோட மூணாவது பெரிய சிமெண்ட் கம்பெனி, பாங்கூர் குடும்பம் ப்ரமோட்டர். சிக்கனமான செயல்பாடு, சொந்த பணத்துல வளர்ச்சி — ஆலைகளை வாங்காம கட்டினாங்க. பயன்பாடு 56%."}},
+  s1:{t:{en:"India grey cement",ta:"இந்திய கிரே சிமெண்ட்"},v:"≈₹4,534 cr †",g:{en:"≈+18% YoY †",ta:"≈+18% †"},sh:"≈77%",x:{en:"9.31 MT at ₹4,870/t. Premium 28.7%; blended 58%; trade 61%. Brands: Bangur Cement, Shree Jung Rodhak, Rockstrong; premium Bangur Total and Bangur Marble.",ta:"9.31 மி.டன், டன்னுக்கு ₹4,870. பிரீமியம் 28.7%; பிளெண்டட் 58%; டிரேட் 61%. பிராண்டுகள்: பாங்கூர் சிமெண்ட், ஷ்ரீ ஜங் ரோதக், ராக்ஸ்ட்ராங்; பிரீமியம் பாங்கூர் டோட்டல், பாங்கூர் மார்பிள்."}},
+  s2:{t:{en:"UAE (Union Cement)",ta:"UAE (யூனியன் சிமெண்ட்)"},v:{en:"In balance †",ta:"மீதில †"},g:{en:"7 MTPA from Sep",ta:"செப் முதல் 7 MTPA"},sh:"—",x:{en:"Listed UAE subsidiary. Capacity raised to 7 MTPA; volumes guided at 4–5 MT annualised. Separate revenue not disclosed in the sources used.",ta:"UAE லிஸ்டட் துணை. 7 MTPA-க்கு உயர்வு; வருஷத்துக்கு 4–5 மி.டன் எதிர்பார்ப்பு. தனி வருமானம் கிடைக்கல."}},
+  s3:{t:{en:"Ready-mix concrete",ta:"ரெடி-மிக்ஸ்"},v:"₹129 cr",g:{en:"+182% YoY",ta:"+182%"},sh:"≈2%",x:{en:"Small but fast-growing; EBITDA-positive.",ta:"சின்னது, ஆனா வேகமா வளருது; லாபத்துல."}},
+  s4:{t:{en:"Power & others",ta:"மின் & மற்றவை"},v:{en:"In balance †",ta:"மீதில †"},g:{en:"1,170 MW",ta:"1,170 MW"},sh:"—",x:{en:"About 1,170 MW of power capacity (503 MW thermal, ~667 MW green). Management declined to share external power sales.",ta:"சுமார் 1,170 MW மின் கொள்ளளவு (503 MW அனல், சுமார் 667 MW கிரீன்). வெளியே விக்கிற மின் அளவை சொல்லல."}},
+  r1:{t:{en:"Revenue ₹5,897 cr",ta:"வருமானம் ₹5,897 கோடி"},s:{en:"+23.9% YoY",ta:"+23.9%"},x:{en:"Consolidated revenue from operations ₹5,897 cr vs ₹4,761 cr a year ago.",ta:"மொத்த செயல்பாட்டு வருமானம் ₹5,897 கோடி (போன வருஷம் ₹4,761)."}},
+  r2:{t:{en:"Costs ≈ ₹4,881 cr",ta:"செலவு ≈ ₹4,881 கோடி"},s:{en:"₹4,636 / t",ta:"டன்னுக்கு ₹4,636"},x:{en:"Blended cost of production ₹4,636/t (vs ₹4,245 a year ago). Fuel ₹2.09/kcal (vs ₹1.66); lead distance 427 km (vs 441).",ta:"உற்பத்தி செலவு டன்னுக்கு ₹4,636 (₹4,245-ல இருந்து). எரிபொருள் ₹2.09/kcal (₹1.66); லாரி தூரம் 427 கி.மீ (441)."}},
+  r3:{t:{en:"EBITDA ₹1,016 cr",ta:"EBITDA ₹1,016 கோடி"},s:{en:"₹966 / tonne",ta:"டன்னுக்கு ₹966"},x:{en:"EBITDA +4.3% YoY; margin 17.2%; with other income ≈₹1,129 cr.",ta:"EBITDA +4.3%; மார்ஜின் 17.2%; மற்ற வருமானம் சேர்த்து சுமார் ₹1,129 கோடி."}},
+  r4:{t:{en:"PAT ₹263 cr",ta:"நிகர லாபம் ₹263 கோடி"},s:{en:"−15.2% YoY",ta:"−15.2%"},x:{en:"Depreciation on the large new plant base (FY26: ₹2,794 cr) eats most of EBITDA.",ta:"புது ஆலைகளோட பெரிய தேய்மானம் (FY26: ₹2,794 கோடி) EBITDA-ல பெரும்பகுதியை எடுக்குது."}},
+  r5:{t:{en:"Shareholders & capex",ta:"பங்குதாரர்கள் & கேபெக்ஸ்"},s:{en:"₹150/sh FY26 · ₹1.6–1.7k cr capex",ta:"₹150 டிவிடெண்ட் · ₹1.6–1.7 ஆயிரம் கோடி"},x:{en:"FY26 dividend ₹150/share; FY27 capex ₹1,600–1,700 cr; net cash ₹8,168 cr kept on the balance sheet.",ta:"FY26 டிவிடெண்ட் ₹150; FY27 கேபெக்ஸ் ₹1,600–1,700 கோடி; ₹8,168 கோடி கையிருப்பு."}}
+ },
+ engine:{title:{en:"Revenue engine — Shree's drivers",ta:"வருமான இன்ஜின் — ஷ்ரீ"},
+  head:{en:["Driver","Q2FY27","Change","Compared with UltraTech"],ta:["காரணி","Q2FY27","மாற்றம்","அல்ட்ராடெக்கோட ஒப்பீடு"]},
+  rows:[
+   {en:["India volume","9.31 MT","+17.7% YoY","UltraTech 35.94 MT, +13.8%"],ta:["உள்நாட்டு விற்பனை","9.31 மி.டன்","+17.7%","அல்ட்ராடெக் 35.94, +13.8%"]},
+   {en:["India realisation","₹4,870/t","+1% YoY","UltraTech grey ₹5,218/t (Q1FY27 basis)"],ta:["டன் விலை","₹4,870","+1%","அல்ட்ராடெக் ₹5,218 (Q1FY27)"]},
+   {en:["Premium share","28.7%","+7.6 pts","UltraTech 37%"],ta:["பிரீமியம்","28.7%","+7.6 புள்ளி","அல்ட்ராடெக் 37%"]},
+   {en:["Utilisation","56%","+4 pts","UltraTech 71%"],ta:["பயன்பாடு","56%","+4 புள்ளி","அல்ட்ராடெக் 71%"]},
+   {en:["Trade share","61%","—","UltraTech not disclosed"],ta:["டிரேட் பங்கு","61%","—","அல்ட்ராடெக் வெளியிடல"]},
+   {en:["RMC volume","2.73 lakh m³","+153%","UltraTech 46.5 lakh m³"],ta:["RMC அளவு","2.73 லட்சம் கன மீ","+153%","அல்ட்ராடெக் 46.5 லட்சம்"]}
+  ],
+  note:{en:"† Derived by CB Research (India volume × realisation; balance = consolidated revenue − India cement − RMC). Segment revenue is not separately reported.",ta:"† CB ரிசர்ச் கணக்கீடு. பிரிவு வாரியா வருமானம் தனியா வெளியிடல."}
+ },
+ segTitle:{en:"Approximate revenue split Q2FY27 (₹ cr) †",ta:"தோராய வருமான பிரிவு Q2FY27 (₹ கோடி) †"},
+ seg:[{en:"India cement",ta:"இந்திய சிமெண்ட்",v:4534},{en:"UAE, power & others",ta:"UAE, மின் & மற்றவை",v:1234},{en:"RMC",ta:"RMC",v:129}],
+ gsTitle:{en:"Group structure",ta:"குழும அமைப்பு"},
+ gs:[
+  {t:{en:"Bangur family (promoters, 62.56%)",ta:"பாங்கூர் குடும்பம் (ப்ரமோட்டர், 62.56%)"},lvl:0},
+  {t:{en:"Shree Cement Ltd — India plants, Bangur brands, power",ta:"ஷ்ரீ சிமெண்ட் — இந்திய ஆலைகள், பாங்கூர் பிராண்டுகள், மின்"},lvl:1},
+  {t:{en:"Union Cement Company (UAE, listed) — 7 MTPA",ta:"யூனியன் சிமெண்ட் (UAE, லிஸ்டட்) — 7 MTPA"},lvl:2},
+  {t:{en:"Wholly owned India subsidiaries (power, RMC)",ta:"முழு உரிமை இந்திய துணைகள் (மின், RMC)"},lvl:2},
+  {t:{en:"China sourcing entity (via UAE) — equipment & spares",ta:"சீனா கொள்முதல் (UAE வழியா) — உபகரணம்"},lvl:2}
+ ]
+};
+
+/* ============ GEOGRAPHY ============ */
+var GEO = {
+ title:{en:"Where each company sells — regional presence",ta:"யார் எங்க விக்கிறாங்க — பிராந்திய இருப்பு"},
+ lvl:{3:{en:"Strong",ta:"வலுவா"},2:{en:"Medium",ta:"நடுத்தரம்"},1:{en:"Limited",ta:"குறைவு"},0:{en:"None",ta:"இல்ல"}},
+ regions:[
+  {k:"N",x:250,y:40,n:{en:"North",ta:"வடக்கு"},u:3,s:3,un:{en:"Growth >20%, util >70%",ta:"வளர்ச்சி 20%+, பயன்பாடு 70%+"},sn:{en:"Home base (Rajasthan) — largest share of Shree volume",ta:"சொந்த ஊர் (ராஜஸ்தான்) — ஷ்ரீ விற்பனைல பெரிய பங்கு"}},
+  {k:"C",x:250,y:170,n:{en:"Central",ta:"மத்திய"},u:3,s:1,un:{en:"~10% growth; util ~60% (long monsoon)",ta:"சுமார் 10%; பயன்பாடு சுமார் 60%"},sn:{en:"Not separately reported",ta:"தனியா வெளியிடல"}},
+  {k:"W",x:40,y:170,n:{en:"West",ta:"மேற்கு"},u:3,s:1,un:{en:"~10% growth; util ~70%",ta:"சுமார் 10%; பயன்பாடு சுமார் 70%"},sn:{en:"Thin; Maharashtra plant planned",ta:"குறைவு; மகாராஷ்டிரா ஆலை திட்டம்"}},
+  {k:"E",x:460,y:170,n:{en:"East",ta:"கிழக்கு"},u:3,s:2,un:{en:"~5% growth; util ~60%",ta:"சுமார் 5%; பயன்பாடு சுமார் 60%"},sn:{en:"About half of the non-North volume; hurt by weak monsoon; Meghalaya plant by Mar-28",ta:"வடக்கு தவிர்த்த விற்பனைல சுமார் பாதி; மழை குறைவால பாதிப்பு; மேகாலயா ஆலை மார்ச்-28"}},
+  {k:"S",x:250,y:300,n:{en:"South",ta:"தெற்கு"},u:3,s:2,un:{en:"15–20% growth; incl. India Cements",ta:"15–20%; இந்தியா சிமெண்ட்ஸ் உட்பட"},sn:{en:"Fastest-growing region for Shree (Karnataka, Telangana)",ta:"ஷ்ரீக்கு வேகமா வளர்ற பகுதி (கர்நாடகா, தெலங்கானா)"}},
+  {k:"O",x:460,y:300,n:{en:"Overseas",ta:"வெளிநாடு"},u:2,s:2,un:{en:"UAE, Bahrain, Sri Lanka (~5.4 MTPA †)",ta:"UAE, பஹ்ரைன், இலங்கை (~5.4 MTPA †)"},sn:{en:"UAE 7 MTPA (Union Cement)",ta:"UAE 7 MTPA (யூனியன் சிமெண்ட்)"}}
+ ],
+ note:{en:"Presence levels are CB Research's qualitative reading of company disclosures (regional growth, utilisation and management commentary); neither company publishes a regional revenue split.",ta:"இருப்பு அளவு நிறுவன தகவல் அடிப்படையில CB ரிசர்ச் மதிப்பீடு; ரெண்டு கம்பெனியும் பிராந்திய வருமானத்தை வெளியிடல."},
+ capTitle:{en:"Capacity (MTPA)",ta:"கொள்ளளவு (MTPA)"},
+ volTitle:{en:"Q2FY27 India volume (MT) and growth",ta:"Q2FY27 உள்நாட்டு விற்பனை (மி.டன்) & வளர்ச்சி"},
+ plan:{t:{en:"Expansion roadmaps",ta:"விரிவாக்க திட்டங்கள்"},rows:[
+  {en:["UltraTech","204.7 → ~237 (domestic) by FY28; detailed plan beyond 240 MTPA by FY27-end","≈₹10,000 cr/yr capex"],ta:["அல்ட்ராடெக்","FY28-க்குள் 204.7 → சுமார் 237; 240-க்கு மேல திட்டம் FY27 கடைசில","வருஷத்துக்கு சுமார் ₹10,000 கோடி"]},
+  {en:["Shree","≈66.7 → 80+ MTPA by 2029; Meghalaya by Mar-28 quarter; Maharashtra plant","≈₹1,600–1,700 cr in FY27"],ta:["ஷ்ரீ","2029-க்குள் சுமார் 66.7 → 80+; மார்ச்-28-க்குள் மேகாலயா; மகாராஷ்டிரா ஆலை","FY27-ல சுமார் ₹1,600–1,700 கோடி"]}
+ ]}
+};
+
+/* ============ PRODUCT MIX & BRAND ============ */
+var MIX = {
+ title:{en:"Product mix & brand",ta:"பொருள் கலவை & பிராண்ட்"},
+ mtx:{head:{en:["Product line","UltraTech","Shree"],ta:["பொருள்","அல்ட்ராடெக்","ஷ்ரீ"]},
+  rows:[
+   [{en:"Grey cement (OPC/PPC/PSC/composite)",ta:"கிரே சிமெண்ட்"},1,1],
+   [{en:"Premium cement brands",ta:"பிரீமியம் பிராண்டுகள்"},1,1],
+   [{en:"White cement & wall putty",ta:"வெள்ளை சிமெண்ட் & புட்டி"},1,0],
+   [{en:"Ready-mix concrete (scale)",ta:"ரெடி-மிக்ஸ் (அளவு)"},{en:"485 plants",ta:"485 ஆலைகள்"},{en:"35 plants",ta:"35 ஆலைகள்"}],
+   [{en:"Construction chemicals",ta:"கட்டுமான கெமிக்கல்ஸ்"},1,0],
+   [{en:"Wires & cables",ta:"வயர் & கேபிள்"},1,0],
+   [{en:"Power generation & sales",ta:"மின் உற்பத்தி & விற்பனை"},{en:"Captive only",ta:"சொந்த பயன்பாடு"},1],
+   [{en:"Oil-well cement exports",ta:"ஆயில்-வெல் சிமெண்ட் ஏற்றுமதி"},0,1]
+  ]},
+ brands:{u:{en:"UltraTech — one national brand ('The Engineer's Choice'), UltraTech Premium, Birla White. Acquired brands (Kesoram, India Cements) fully converted to UltraTech.",ta:"அல்ட்ராடெக் — ஒரே தேசிய பிராண்ட், அல்ட்ராடெக் பிரீமியம், பிர்லா ஒயிட். வாங்கின கம்பெனிகளோட பிராண்டுகளையும் அல்ட்ராடெக்-ஆ மாத்திட்டாங்க."},
+         s:{en:"Shree — multi-brand: Bangur Cement, Shree Jung Rodhak, Rockstrong; premium Bangur Total (waterproofing) and Bangur Marble. Brand pull strongest in North India.",ta:"ஷ்ரீ — பல பிராண்டுகள்: பாங்கூர் சிமெண்ட், ஷ்ரீ ஜங் ரோதக், ராக்ஸ்ட்ராங்; பிரீமியம் பாங்கூர் டோட்டல் (வாட்டர்ப்ரூஃப்), பாங்கூர் மார்பிள். வட இந்தியாவுல அதிக பலம்."}},
+ focus:{t:{en:"Strategic focus — two different playbooks",ta:"உத்தி — ரெண்டு வேற வழிகள்"},
+  u:[{en:"Scale leader: grow faster than the market through new capacity and acquisitions",ta:"அளவு தலைவர்: புது ஆலை, கையகப்படுத்தல் மூலம் சந்தையை விட வேகமா வளர்ச்சி"},
+     {en:"Adjacencies on the same dealer: RMC, chemicals, putty, now wires & cables",ta:"அதே டீலர் வழியா மற்ற பொருள்: RMC, கெமிக்கல்ஸ், புட்டி, இப்போ வயர்"},
+     {en:"Willing to carry debt (1.26x) to build 240 MTPA",ta:"240 MTPA-க்கு கடன் வாங்க தயார் (1.26 மடங்கு)"},
+     {en:"Target: ₹1,400/t EBITDA by Mar-28",ta:"இலக்கு: மார்ச்-28-க்குள் டன்னுக்கு ₹1,400"}],
+  s:[{en:"Value over volume: protect price, push premium share above 40%",ta:"அளவை விட விலை: விலையை காப்பாத்தி, பிரீமியத்தை 40%-க்கு மேல"},
+     {en:"Organic, self-funded growth; no large acquisitions",ta:"சொந்த பணத்துல வளர்ச்சி; பெரிய கையகப்படுத்தல் இல்ல"},
+     {en:"Cost leadership via green power (65%) and fuel flexibility",ta:"கிரீன் பவர் (65%), எரிபொருள் மாற்றம் மூலம் குறைஞ்ச செலவு"},
+     {en:"Pure-play cement; keeps a net-cash balance sheet",ta:"சிமெண்ட் மட்டும்; கடன் இல்லாத, கையிருப்பு வெச்சுக்கிற கம்பெனி"}]},
+ chTitle:{en:"Mix comparison (% of cement volume)",ta:"கலவை ஒப்பீடு (% விற்பனை)"},
+ chL:[{en:"Premium share",ta:"பிரீமியம்"},{en:"Blended share",ta:"பிளெண்டட்"},{en:"Trade share",ta:"டிரேட்"}],
+ note:{en:"UltraTech's trade share is not disclosed (management says ratios are maintained), so it is left blank. Premium definitions differ slightly between companies.",ta:"அல்ட்ராடெக் டிரேட் பங்கு வெளியிடல, அதனால காலியா விட்டிருக்கோம். பிரீமியம் வரையறை கம்பெனிக்கு கம்பெனி கொஞ்சம் வேற."}
+};
+</script>
+<script>
+/* ============ OPERATIONS & ENERGY ============ */
+var OPS = {
+ title:{en:"Operations & energy — the two biggest costs",ta:"செயல்பாடு & ஆற்றல் — ரெண்டு பெரிய செலவுகள்"},
+ intro:{en:"Fuel (kiln heat) and power (grinding) together are roughly a third of a cement maker's cost. Both companies paid the same ₹2.09 per 1,000 kcal this quarter, but they got there differently.",
+        ta:"எரிபொருள் (சூளை வெப்பம்), மின் (அரைத்தல்) — ரெண்டும் சேர்ந்து சிமெண்ட் செலவுல சுமார் மூணுல ஒரு பங்கு. இந்த காலாண்டு ரெண்டு கம்பெனியும் 1,000 kcal-க்கு ₹2.09 தான் கொடுத்தாங்க, ஆனா வேற வேற வழில."},
+ etTitle:{en:"EBITDA per tonne (₹)",ta:"டன்னுக்கு EBITDA (₹)"},
+ kcalTitle:{en:"Landed fuel cost (₹ per 1,000 kcal)",ta:"எரிபொருள் செலவு (1,000 kcal-க்கு ₹)"},
+ utilTitle:{en:"Capacity utilisation (%)",ta:"கொள்ளளவு பயன்பாடு (%)"},
+ greenTitle:{en:"Green power share & alternative fuel (%)",ta:"கிரீன் பவர் & மாற்று எரிபொருள் (%)"},
+ lGreen:{en:"Green power share",ta:"கிரீன் பவர்"}, lTsr:{en:"Alternative fuel (TSR)",ta:"மாற்று எரிபொருள்"},
+ fuelTitle:{en:"Shree's fuel mix — Q2FY27",ta:"ஷ்ரீ எரிபொருள் கலவை — Q2FY27"},
+ fuelL:[{en:"Imported coal",ta:"இறக்குமதி நிலக்கரி"},{en:"Alternative fuels",ta:"மாற்று எரிபொருள்"},{en:"Petcoke",ta:"பெட்கோக்"},{en:"Indian coal",ta:"இந்திய நிலக்கரி"}],
+ kcalNote:{en:"Q3FY27 = management guidance (Shree ₹2.15–2.20, plotted at the midpoint; UltraTech spot ~₹2.2). UltraTech Q2FY26 ₹/kcal not verified.",ta:"Q3FY27 = நிர்வாக வழிகாட்டல் (ஷ்ரீ ₹2.15–2.20, நடு மதிப்பு; அல்ட்ராடெக் சுமார் ₹2.2). அல்ட்ராடெக் Q2FY26 உறுதி ஆகல."},
+ reads:[
+  {en:"Same heat cost, different journeys: Shree enjoyed cheap petcoke a year ago (₹1.66/kcal) and then switched to imported coal (75% of mix) as petcoke spiked — so its YoY jump (+26%) is much sharper than UltraTech's.",ta:"ஒரே வெப்ப செலவு, வேற பயணம்: போன வருஷம் ஷ்ரீக்கு மலிவான பெட்கோக் (₹1.66) கிடைச்சுது, அப்புறம் இறக்குமதி நிலக்கரிக்கு (75%) மாறிச்சு — அதனால அதோட ஏற்றம் (+26%) அல்ட்ராடெக்கை விட அதிகம்."},
+  {en:"Power: Shree wins on share (65.2% green vs 48%) — meaning a larger part of its grinding power is near-zero marginal cost. UltraTech wins on absolute capacity (~2 GW vs 667 MW).",ta:"மின்: பங்குல ஷ்ரீ ஜெயிக்குது (65.2% vs 48%) — அதனால அதோட அரைக்கும் மின்சாரத்துல பெரிய பகுதி கிட்டத்தட்ட இலவசம். மொத்த அளவுல அல்ட்ராடெக் (சுமார் 2 GW vs 667 MW)."},
+  {en:"Alternative fuel: UltraTech's thermal substitution (~7.2%) is ahead of Shree (~5%, up from ~2%). Shree says real cost gains show at 6–8%.",ta:"மாற்று எரிபொருள்: அல்ட்ராடெக் (சுமார் 7.2%) ஷ்ரீயை (சுமார் 5%, 2%-ல இருந்து) விட முன்னால. 6–8% வந்தா தான் உண்மையான சேமிப்புன்னு ஷ்ரீ சொல்லுது."},
+  {en:"Utilisation is the real gap: at 56%, Shree spreads fixed cost over far fewer tonnes than UltraTech (71%). Raising utilisation is Shree's biggest single lever on EBITDA/t, alongside fuel.",ta:"பயன்பாடு தான் உண்மையான இடைவெளி: 56%-ல ஷ்ரீ நிலையான செலவை அல்ட்ராடெக்கை (71%) விட குறைஞ்ச டன்ல பரப்புது. பயன்பாட்டை ஏத்துறது தான் ஷ்ரீக்கு டன் லாபத்துக்கு பெரிய வழி, எரிபொருளோட சேர்த்து."},
+  {en:"Freight: Shree cut lead distance to 427 km (from 441 km) with rail lean-season discounts; UltraTech cut its lead by 8 km and is adding 600+ e-trucks.",ta:"போக்குவரத்து: ஷ்ரீ லாரி தூரத்தை 441-ல இருந்து 427 கி.மீ-க்கு குறைச்சுது; அல்ட்ராடெக் 8 கி.மீ குறைச்சு 600+ மின்சார லாரிகள் சேர்க்குது."}
+ ],
+ head:{en:["Energy metric","UltraTech","Shree","Winner"],ta:["ஆற்றல் அளவீடு","அல்ட்ராடெக்","ஷ்ரீ","ஜெயிச்சவர்"]}
+};
+
+/* ============ FINANCIALS ============ */
+var FIN = {
+ title:{en:"Financial metrics — Shree vs UltraTech, grouped by category",ta:"நிதி அளவீடுகள் — ஷ்ரீ vs அல்ட்ராடெக், வகை வாரியா"},
+ head:{en:["Metric","Shree Q2FY27","Shree Q2FY26","Shree YoY","Shree Q1FY27","UltraTech Q2FY27"],ta:["அளவீடு","ஷ்ரீ Q2FY27","ஷ்ரீ Q2FY26","ஷ்ரீ வருடம்","ஷ்ரீ Q1FY27","அல்ட்ராடெக் Q2FY27"]},
+ cats:[
+  {c:{en:"Growth & Balance sheet",ta:"வளர்ச்சி & பேலன்ஸ் ஷீட்"},rows:[
+   [{en:"Revenue (₹ cr)",ta:"வருமானம் (₹ கோடி)"},5897,4761,6233,"23,295"],
+   [{en:"India volume (MT)",ta:"உள்நாட்டு விற்பனை (மி.டன்)"},9.31,7.91,10.49,"35.94"],
+   [{en:"Consolidated volume (MT)",ta:"மொத்த விற்பனை (மி.டன்)"},10.52,9.23,11.45,"38.22"],
+   [{en:"Net cash (+) / net debt (−) (₹ cr)",ta:"கையிருப்பு (+) / கடன் (−)"},8168,"n/a","n/a","−23,536"],
+   [{en:"Debt / equity (x)",ta:"கடன் / பங்கு மூலதனம்"},0.08,"n/a","n/a","≈0.28 (Mar-26)"]
+  ]},
+  {c:{en:"Profitability",ta:"லாபத்தன்மை"},rows:[
+   [{en:"EBITDA (₹ cr)",ta:"EBITDA (₹ கோடி)"},1016,974,1272,"3,721"],
+   [{en:"EBITDA margin (%)",ta:"EBITDA மார்ஜின் (%)"},17.2,20.5,20.4,"16.0"],
+   [{en:"EBITDA / tonne (₹)",ta:"டன்னுக்கு EBITDA (₹)"},966,1055,1111,"974"],
+   [{en:"Net profit (₹ cr)",ta:"நிகர லாபம் (₹ கோடி)"},263,310,531,"1,501"],
+   [{en:"PAT margin (%)",ta:"நிகர லாப மார்ஜின் (%)"},4.5,6.5,8.5,"6.4"]
+  ]},
+  {c:{en:"Efficiency",ta:"திறன்"},rows:[
+   [{en:"India realisation (₹/t)",ta:"டன் விலை (₹)"},4870,4840,4919,"≈6,024 blended †"],
+   [{en:"Cost of production (₹/t)",ta:"உற்பத்தி செலவு (₹/டன்)"},4636,4245,4329,"n/a"],
+   [{en:"Fuel cost (₹ / 1,000 kcal)",ta:"எரிபொருள் (₹/1,000 kcal)"},2.09,1.66,1.95,"≈2.09"],
+   [{en:"Lead distance (km)",ta:"லாரி தூரம் (கி.மீ)"},427,441,"445 (prior qtr)","−8 km YoY"]
+  ]},
+  {c:{en:"Asset quality (plants & mix)",ta:"சொத்து தரம் (ஆலைகள் & கலவை)"},rows:[
+   [{en:"Capacity utilisation (%)",ta:"பயன்பாடு (%)"},56,52,"n/a","71"],
+   [{en:"Premium share (%)",ta:"பிரீமியம் (%)"},28.7,21.1,23,"37"],
+   [{en:"Blended cement share (%)",ta:"பிளெண்டட் (%)"},58,68,"n/a","67.3"],
+   [{en:"Green power share (%)",ta:"கிரீன் பவர் (%)"},65.2,"n/a","n/a","48"]
+  ]},
+  {c:{en:"Capital & Liquidity",ta:"மூலதனம் & பணப்புழக்கம்"},rows:[
+   [{en:"H1 capex (₹ cr)",ta:"முதல் பாதி கேபெக்ஸ் (₹ கோடி)"},895,"n/a","—","5,882"],
+   [{en:"FY27 capex guidance (₹ cr)",ta:"FY27 கேபெக்ஸ் (₹ கோடி)"},"1,595–1,695","—","—","≈10,000"],
+   [{en:"ROE (%)",ta:"ROE (%)"},7.5,"—","—","≈11.6"],
+   [{en:"ROCE (%)",ta:"ROCE (%)"},10.3,"—","—","≈13.3 (FY26)"]
+  ]},
+  {c:{en:"Valuation",ta:"மதிப்பீடு"},rows:"VAL"}
+ ],
+ note:{en:"Shree EBITDA excludes other income (the company's reported basis). Q1FY27 EBITDA margin and PAT margin computed by CB Research. † derived. n/a = not disclosed/verified.",
+       ta:"ஷ்ரீ EBITDA-ல மற்ற வருமானம் இல்ல. Q1FY27 மார்ஜின்களை CB ரிசர்ச் கணக்கிட்டது. † = கணக்கீடு. n/a = வெளியிடல/உறுதி ஆகல."}
+};
+
+/* ============ CASH FLOW & WC ============ */
+var CF = {
+ title:{en:"Cash flow & working capital — Shree, with UltraTech reference",ta:"கேஷ் ஃப்ளோ & வொர்க்கிங் கேப்பிட்டல் — ஷ்ரீ, அல்ட்ராடெக் ஒப்பீட்டோட"},
+ points:[
+  {en:"FY26 operating cash flow ₹3,794 cr = 82% of operating profit (₹4,638 cr) — healthy, slightly below UltraTech's 87%.",ta:"FY26 ஆப்பரேட்டிங் கேஷ் ₹3,794 கோடி = ஆப்பரேட்டிங் லாபத்துல (₹4,638) 82% — நல்லது, அல்ட்ராடெக்கோட 87%-ஐ விட கொஞ்சம் குறைவு."},
+  {en:"FY25 cash conversion was unusually high (₹4,920 cr CFO on ₹3,934 cr profit = 125%) — inventory release; FY26 normalised.",ta:"FY25-ல அசாதாரணமா அதிகம் (125%) — சரக்கு குறைஞ்சதால; FY26-ல சாதாரணமாச்சு."},
+  {en:"Shree carries far more inventory (469 days on a raw-material basis vs UltraTech's 206) — clinker stocks built ahead of H2 demand (clinker output +33% YoY). Payables offset it, keeping working-capital days at −10.",ta:"ஷ்ரீ அதிக சரக்கு வெச்சிருக்கு (469 நாள், அல்ட்ராடெக் 206) — இரண்டாம் பாதி டிமாண்டுக்கு கிளிங்கர் சேமிச்சு வெச்சிருக்காங்க (+33%). கொடுக்க வேண்டியது அதை ஈடு செய்யுது, அதனால −10 நாட்கள்."},
+  {en:"Receivable days crept up to 32 (from 23 in FY24) as non-trade sales grew; management flagged ~₹300 cr higher receivables this half.",ta:"நான்-டிரேட் விற்பனை கூடினதால வரவேண்டிய நாட்கள் 23-ல இருந்து 32-க்கு ஏறிச்சு; இந்த அரையாண்டுல சுமார் ₹300 கோடி அதிகம்."},
+  {en:"Investing outflow of ₹3,714 cr in FY26 vs FY27 capex guidance of only ₹1,600–1,700 cr — free cash flow should rise sharply in FY27, adding to the ₹8,168 cr net cash.",ta:"FY26 முதலீடு ₹3,714 கோடி, FY27 கேபெக்ஸ் ₹1,600–1,700 கோடி தான் — FY27-ல ஃப்ரீ கேஷ் நிறைய ஏறும், ₹8,168 கோடி கையிருப்பு கூடும்."},
+  {en:"Contrast: UltraTech funded a ₹7,072 cr special dividend and ₹5,882 cr capex partly with debt in H1; Shree financed everything internally (FY26 financing outflow just ₹110 cr).",ta:"ஒப்பீடு: அல்ட்ராடெக் ₹7,072 கோடி டிவிடெண்டும் ₹5,882 கோடி கேபெக்ஸும் ஓரளவு கடன்ல; ஷ்ரீ எல்லாத்தையும் சொந்த பணத்துல (FY26 நிதி வெளிப்போக்கு ₹110 கோடி தான்)."}
+ ],
+ cfHead:{en:["Shree cash flow (₹ cr)","FY24","FY25","FY26"],ta:["ஷ்ரீ கேஷ் ஃப்ளோ (₹ கோடி)","FY24","FY25","FY26"]},
+ cfRows:[{en:"Operating (CFO)",ta:"ஆப்பரேட்டிங் (CFO)",k:"cfo"},{en:"Investing (CFI)",ta:"முதலீடு (CFI)",k:"cfi"},{en:"Financing (CFF)",ta:"நிதி (CFF)",k:"cff"},{en:"Operating profit (EBITDA)",ta:"ஆப்பரேட்டிங் லாபம்",k:"op"}],
+ wcHead:{en:["Days (annual)","FY23","FY24","FY25","FY26","UltraTech FY26"],ta:["நாட்கள்","FY23","FY24","FY25","FY26","அல்ட்ராடெக் FY26"]},
+ wcRows:[{en:"Inventory days",ta:"சரக்கு நாட்கள்",k:"inv",u:206},{en:"Receivable days",ta:"வரவேண்டிய நாட்கள்",k:"debtor",u:25},{en:"Payable days",ta:"கொடுக்க வேண்டிய நாட்கள்",k:"pay",u:217},{en:"Cash conversion cycle",ta:"கேஷ் கன்வர்ஷன் சைக்கிள்",k:"ccc",u:13},{en:"Working capital days (on sales)",ta:"வொர்க்கிங் கேப்பிட்டல் நாட்கள்",k:"wcd",u:-41}],
+ convTitle:{en:"Cash conversion: CFO vs operating profit (₹ cr)",ta:"லாபம் பணமா மாறுதா (₹ கோடி)"},
+ wcTitle:{en:"Working-capital days — Shree",ta:"வொர்க்கிங் கேப்பிட்டல் நாட்கள் — ஷ்ரீ"},
+ note:{en:"Annual days per a standard data-aggregator method (inventory and payables on raw-material cost, so levels look large); trends matter more than levels. H1FY27 cash-flow statement figures were not available in the sources used.",ta:"வருடாந்திர நாட்கள் ஒரு நிலையான முறைல (மூலப்பொருள் செலவு அடிப்படை); அளவை விட போக்கு முக்கியம். H1FY27 கேஷ் ஃப்ளோ கிடைக்கல."}
+};
+
+/* ============ VALUATION ============ */
+var VAL = {
+ title:{en:"Valuation — side by side",ta:"மதிப்பீடு — பக்கம் பக்கமா"},
+ head:{en:["Measure","UltraTech","Shree","Cheaper"],ta:["அளவீடு","அல்ட்ராடெக்","ஷ்ரீ","மலிவு"]},
+ ref:{en:"Prices: Shree ≈₹22,801 (26-Oct-26), UltraTech ≈₹10,680 (19–21 Oct-26). Shree shares ≈3.61 cr. TTM = Q3FY26–Q2FY27.",ta:"விலை: ஷ்ரீ ≈₹22,801 (26-அக்), அல்ட்ராடெக் ≈₹10,680 (19–21 அக்). TTM = Q3FY26–Q2FY27."},
+ read:[
+  {en:"On earnings, Shree looks expensive (~52x P/E vs ~36x) because its profit is depressed by low utilisation and heavy depreciation.",ta:"லாபத்து மேல பாத்தா ஷ்ரீ விலை அதிகம் (P/E சுமார் 52 vs 36) — குறைஞ்ச பயன்பாடும் அதிக தேய்மானமும் லாபத்தை குறைச்சிருக்கு."},
+  {en:"On assets, Shree looks cheaper: ≈₹10,050 EV per tonne of capacity vs ≈₹16,100 for UltraTech. The market is paying for tonnes Shree has not yet filled.",ta:"சொத்து மேல பாத்தா ஷ்ரீ மலிவு: டன் கொள்ளளவுக்கு EV சுமார் ₹10,050, அல்ட்ராடெக் ₹16,100. ஷ்ரீ இன்னும் நிரப்பாத டன்களுக்கு சந்தை விலை கொடுக்குது."},
+  {en:"So the two valuations price different stories: UltraTech = proven earnings at scale; Shree = an option on utilisation rising from 56% toward 70%+.",ta:"அதனால ரெண்டு மதிப்பீடும் வேற கதை: அல்ட்ராடெக் = நிரூபிச்ச லாபம்; ஷ்ரீ = பயன்பாடு 56%-ல இருந்து 70%+ போகும்னு ஒரு வாய்ப்பு."}
+ ],
+ sensTitle:{en:"What-if: Shree utilisation → indicative EBITDA (illustration only)",ta:"ஒருவேளை: ஷ்ரீ பயன்பாடு → தோராய EBITDA (விளக்கம் மட்டும்)"},
+ sensHead:{en:["India utilisation","India volume (MT/yr)","EBITDA at ₹966/t (₹ cr)","EV / EBITDA at today's EV"],ta:["பயன்பாடு","வருட விற்பனை (மி.டன்)","டன்னுக்கு ₹966-ல EBITDA (₹ கோடி)","இன்றைய EV-ல மடங்கு"]},
+ sensNote:{en:"Assumes ≈66.7 MTPA India capacity and Q2's ₹966/t held flat; ignores UAE and price changes. Not a forecast.",ta:"சுமார் 66.7 MTPA, டன்னுக்கு ₹966 மாறாதுன்னு வெச்சு; UAE, விலை மாற்றம் சேர்க்கல. இது கணிப்பு இல்ல."}
+};
+
+/* ============ TRIGGERS & CYCLE (Shree) ============ */
+var TC = {
+ title:{en:"Triggers & Cycle — Shree Cement",ta:"ட்ரிக்கர்ஸ் & சைக்கிள் — ஷ்ரீ சிமெண்ட்"},
+ phases:[{k:"P1",en:"Trough",ta:"அடிமட்டம்"},{k:"P2",en:"Early recovery",ta:"மீட்சி ஆரம்பம்"},{k:"P3",en:"Expansion",ta:"விரிவாக்கம்"},{k:"P4",en:"Late cycle",ta:"உச்ச கட்டம்"},{k:"P5",en:"Downturn",ta:"இறக்கம்"}],
+ sector:{en:"Sector: cement is a commodity/spread cycle — same P3 Expansion reading as the UltraTech file (score 70): demand +7–10%, prices firming in Oct, heavy industry capacity additions.",ta:"துறை: சிமெண்ட் கமாடிட்டி/ஸ்ப்ரெட் சைக்கிள் — அல்ட்ராடெக் ஃபைல் மாதிரியே P3 விரிவாக்கம் (70): டிமாண்ட் +7–10%, அக்ல விலை ஏற்றம், நிறைய புது ஆலைகள்."},
+ stockHead:{en:["Stock cycle item","Reading","Score"],ta:["பங்கு சைக்கிள்","நிலை","ஸ்கோர்"]},
+ stockRows:[
+  {k:"life",en:["Business lifecycle","Scaling — utilisation ramping from 56% on newly built plants; 80 MTPA plan"],ta:["தொழில் சுழற்சி","வளர்ச்சி கட்டம் — புது ஆலைகள்ல 56%-ல இருந்து ஏறுது; 80 MTPA திட்டம்"]},
+  {k:"earn",en:["Earnings cycle","Falling — EBITDA/t down ₹89 YoY, PAT −15% YoY, −50% QoQ"],ta:["லாப சுழற்சி","இறங்குமுகம் — டன்னுக்கு ₹89 குறைவு, லாபம் −15%"]},
+  {k:"val",en:["Valuation cycle","P/E ~52x and EV/EBITDA ~16x — inside its historically rich band"],ta:["மதிப்பீட்டு சுழற்சி","P/E சுமார் 52, EV/EBITDA 16 — வழக்கமான உயர் வரம்புக்குள்"]},
+  {k:"price",en:["Price stage (30-week MA)","Stage 4 — from ₹29,425 high to a ₹21,355 low (1-Oct-26); bounce off lows after results"],ta:["விலை கட்டம்","கட்டம் 4 — ₹29,425 உச்சத்துல இருந்து ₹21,355 வரை (1-அக்); ரிசல்ட்டுக்கு அப்புறம் கொஞ்சம் மீட்சி"]}
+ ],
+ cyLine:{en:"CY = 50% × sector 70 + 50% × stock 44 = 57 (UltraTech: 60)",ta:"CY = 50% × துறை 70 + 50% × பங்கு 44 = 57 (அல்ட்ராடெக்: 60)"},
+ trigHead:{en:["Trigger","+/−","Impact","Certainty","Timing","Priced-in","Points","Status","What to watch"],ta:["ட்ரிக்கர்","+/−","தாக்கம்","உறுதி","நேரம்","விலைல சேர்ந்தது","புள்ளி","நிலை","எதை கவனிக்கணும்"]},
+ trig:{
+  price:{en:["Oct price hikes + premium mix","Q3 realisation above ₹4,870/t"],ta:["அக் விலை ஏற்றம் + பிரீமியம்","Q3 விலை ₹4,870-க்கு மேல"]},
+  util:{en:["Utilisation ramp-up (56% → 70%+)","FY27 volume 40–41 MT delivered?"],ta:["பயன்பாடு ஏற்றம் (56% → 70%+)","FY27-ல 40–41 மி.டன் வருமா?"]},
+  uae:{en:["UAE 7 MTPA mill ramp-up","4–5 MT annualised UAE volume"],ta:["UAE 7 MTPA மில் வேகம்","வருஷத்துக்கு 4–5 மி.டன்"]},
+  cap:{en:["Capacity to 80 MTPA by 2029","Meghalaya on time (Mar-28 quarter)"],ta:["2029-க்குள் 80 MTPA","மேகாலயா நேரத்துக்கு (மார்ச்-28)"]},
+  fuel:{en:["Fuel cost rising (Q3 ₹2.15–2.20/kcal)","Imported coal prices; TSR toward 6–8%"],ta:["எரிபொருள் ஏற்றம் (Q3 ₹2.15–2.20)","இறக்குமதி நிலக்கரி விலை; மாற்று எரிபொருள் 6–8%"]},
+  pat:{en:["Depreciation-heavy earnings (PAT falling)","PAT growth vs EBITDA growth"],ta:["அதிக தேய்மானம் (லாபம் இறங்குது)","லாப வளர்ச்சி vs EBITDA"]},
+  wa:{en:["West Asia risk to UAE operations","Gulf construction demand, shipping"],ta:["UAE-க்கு மேற்கு ஆசியா ரிஸ்க்","வளைகுடா கட்டுமானம், கப்பல்"]},
+  meg:{en:["Meghalaya site execution","Local issues, construction start"],ta:["மேகாலயா செயல்பாடு","உள்ளூர் பிரச்சனைகள், கட்டுமான ஆரம்பம்"]}
+ },
+ tgLine:{en:"TG = 50 + 8 × (3.00 + 1.47 + 1.40) − 8 × (2.10 + 1.40 + 0.56 + 0.16) = 63 (UltraTech: 74). The 80 MTPA trigger (0.84) is outside the top three positives.",
+         ta:"TG = 50 + 8 × (3.00 + 1.47 + 1.40) − 8 × (2.10 + 1.40 + 0.56 + 0.16) = 63 (அல்ட்ராடெக்: 74). 80 MTPA ட்ரிக்கர் (0.84) முதல் 3-ல இல்ல."},
+ gate:{en:"Gate: Shree is in Weinstein Stage 4, so CB Conviction is capped at 55 until price structure improves — the same cap as UltraTech.",ta:"கேட்: ஷ்ரீ கட்டம் 4-ல, அதனால CB கன்விக்ஷன் 55-க்கு மேல போகாது — அல்ட்ராடெக் மாதிரியே."}
+};
+
+/* ============ PILLARS ============ */
+var PIL = {
+ title:{en:"CB Score — six-pillar temple (tap a column)",ta:"CB ஸ்கோர் — 6 தூண் கோயில் (தூணை தொடுங்க)"},
+ name:{g:{en:"Growth",ta:"வளர்ச்சி"},m:{en:"Margins",ta:"மார்ஜின்"},d:{en:"Debt & Cash",ta:"கடன் & கேஷ்"},v:{en:"Valuation",ta:"மதிப்பீடு"},t:{en:"Trend",ta:"போக்கு"},r:{en:"Risk & Moat",ta:"ரிஸ்க் & அரண்"}},
+ ut:{g:8.5,m:6.5,d:7.0,v:5.5,t:4.0,r:8.0},
+ why:{
+  g:{en:"Volume +17.7%, revenue +24% — faster than UltraTech — but PAT −15%; capacity to 80 MTPA by 2029.",ta:"விற்பனை +17.7%, வருமானம் +24% — அல்ட்ராடெக்கை விட வேகம் — ஆனா லாபம் −15%; 2029-க்குள் 80 MTPA."},
+  m:{en:"EBITDA/t ₹966 (−₹89 YoY); margin 17.2% (from 20.5%); fuel cost +26% per kcal. Utilisation 56% caps operating leverage.",ta:"டன்னுக்கு ₹966 (−₹89); மார்ஜின் 17.2% (20.5%-ல இருந்து); எரிபொருள் +26%. பயன்பாடு 56%."},
+  d:{en:"Net cash ₹8,168 cr, D/E 0.08, FY27 capex only ₹1.6–1.7k cr, CFO 82% of EBITDA — one of the strongest balance sheets among large cement makers.",ta:"கையிருப்பு ₹8,168 கோடி, கடன் விகிதம் 0.08, FY27 கேபெக்ஸ் ₹1.6–1.7 ஆயிரம் கோடி தான், CFO 82% — பெரிய சிமெண்ட் கம்பெனிகள்ல வலுவான பேலன்ஸ் ஷீட்டுகள்ல ஒண்ணு."},
+  v:{en:"P/E ~52x on depressed earnings, P/B 3.4x with ROE 7.5%; cheaper on EV per tonne (≈₹10,050).",ta:"குறைஞ்ச லாபத்துல P/E சுமார் 52, ROE 7.5%-க்கு P/B 3.4; டன்னுக்கு EV மலிவு (≈₹10,050)."},
+  t:{en:"Stage 4: fell from ₹29,425 to ₹21,355 (52-week low on 1-Oct-26); FII holding just 8.45%; bounced after results.",ta:"கட்டம் 4: ₹29,425-ல இருந்து ₹21,355 வரை; FII 8.45% தான்; ரிசல்ட்டுக்கு அப்புறம் மீட்சி."},
+  r:{en:"Strong cost culture, 65% green power, Bangur brand in North. Risks: regional concentration, under-utilised plants, UAE/West Asia, fuel.",ta:"செலவு கட்டுப்பாடு, 65% கிரீன் பவர், வடக்குல பாங்கூர் பிராண்ட். ரிஸ்க்: ஒரு பகுதி சார்பு, பயன்படாத ஆலைகள், UAE, எரிபொருள்."}
+ },
+ compNote:{en:"Shree composite = 6.3 / 10 vs UltraTech 6.6 / 10. Educational assessment, not a recommendation.",ta:"ஷ்ரீ மொத்தம் = 6.3 / 10, அல்ட்ராடெக் 6.6 / 10. கல்வி மதிப்பீடு, பரிந்துரை இல்ல."},
+ tog:{sh:{en:"Shree Cement",ta:"ஷ்ரீ சிமெண்ட்"},ut:{en:"UltraTech",ta:"அல்ட்ராடெக்"}},
+ cmpTitle:{en:"Pillar by pillar",ta:"தூண் வாரியா"}
+};
+
+/* ============ SWOT (Shree) ============ */
+var SW = {
+ s:{t:{en:"Strengths",ta:"பலங்கள்"},l:[{en:"Net cash ₹8,168 cr; almost debt-free",ta:"₹8,168 கோடி கையிருப்பு; கிட்டத்தட்ட கடன் இல்ல"},{en:"Green power 65.2% of electricity — sector-leading share",ta:"மின்சாரத்துல 65.2% கிரீன் — துறைல முன்னிலை"},{en:"Fast volume growth (+18%) and rising premium share",ta:"வேகமான விற்பனை வளர்ச்சி (+18%), பிரீமியம் ஏற்றம்"},{en:"Fuel flexibility — switched petcoke→imported coal in a year",ta:"எரிபொருள் மாற்றும் திறன் — ஒரு வருஷத்துல பெட்கோக்கல இருந்து நிலக்கரிக்கு"},{en:"Strong Bangur brand franchise in North India",ta:"வட இந்தியாவுல வலுவான பாங்கூர் பிராண்ட்"}]},
+ w:{t:{en:"Weaknesses",ta:"பலவீனங்கள்"},l:[{en:"Utilisation only 56% — fixed costs spread thinly",ta:"பயன்பாடு 56% தான்"},{en:"Realisation ~₹300/t below UltraTech",ta:"அல்ட்ராடெக்கை விட டன்னுக்கு சுமார் ₹300 குறைஞ்ச விலை"},{en:"ROE ~7.5% and falling PAT",ta:"ROE சுமார் 7.5%, லாபம் இறங்குது"},{en:"Thin presence in West and Central India",ta:"மேற்கு, மத்திய இந்தியாவுல குறைஞ்ச இருப்பு"},{en:"Blended share fell to 58% — more clinker per tonne",ta:"பிளெண்டட் 58%-க்கு குறைஞ்சுது — டன்னுக்கு அதிக கிளிங்கர்"}]},
+ o:{t:{en:"Opportunities",ta:"வாய்ப்புகள்"},l:[{en:"Filling idle capacity is the cheapest growth available",ta:"பயன்படாத ஆலைகளை நிரப்புறது தான் மலிவான வளர்ச்சி"},{en:"Premium share to 40%+ at ₹25–40/bag extra",ta:"பிரீமியம் 40%+, மூட்டைக்கு ₹25–40 அதிகம்"},{en:"UAE 7 MTPA for Gulf projects and oil-well cement exports",ta:"வளைகுடா திட்டங்கள், ஆயில்-வெல் சிமெண்ட்டுக்கு UAE 7 MTPA"},{en:"Cash pile allows opportunistic expansion or higher payouts",ta:"கையிருப்பு — விரிவாக்கம் அல்லது அதிக டிவிடெண்ட்"},{en:"RMC from a small base (+182%)",ta:"சின்ன அடித்தளத்துல RMC (+182%)"}]},
+ t:{t:{en:"Threats",ta:"அச்சுறுத்தல்கள்"},l:[{en:"Imported-coal dependence (75% of fuel) — exposed to global prices and INR",ta:"இறக்குமதி நிலக்கரி சார்பு (75%) — உலக விலை, ரூபாய் மதிப்பு"},{en:"Price competition from much larger UltraTech and Adani",ta:"பெரிய அல்ட்ராடெக், அதானியோட விலை போட்டி"},{en:"West Asia conflict affecting UAE operations",ta:"மேற்கு ஆசியா பிரச்சனை UAE-ஐ பாதிக்கலாம்"},{en:"Weak monsoon hurting rural/East demand",ta:"மழை குறைவால கிராம/கிழக்கு டிமாண்ட் பாதிப்பு"}]}
+};
+
+/* ============ ANALYSTS ============ */
+var AN = {
+ title:{en:"Analysts' Rating — Shree Cement (with UltraTech reference)",ta:"அனலிஸ்ட் ரேட்டிங் — ஷ்ரீ சிமெண்ட் (அல்ட்ராடெக் ஒப்பீட்டோட)"},
+ head:{en:["Brokerage","Rating","Target (₹)","Upside vs ₹22,801","Date","Note"],ta:["ப்ரோக்கரேஜ்","ரேட்டிங்","இலக்கு (₹)","₹22,801-ல இருந்து","தேதி","குறிப்பு"]},
+ sum:{en:"Shree: 3 Buy, 1 Neutral, 1 Underweight among the views found, plus one target without a stated rating. Average of the four verified targets ≈ ₹27,950 (≈+22.6%). UltraTech consensus ≈ ₹13,730 (≈+28.6%), with 9 of 10 tracked brokerages positive.",
+      ta:"ஷ்ரீ: 3 Buy, 1 Neutral, 1 Underweight; 4 உறுதியான இலக்குகளோட சராசரி ≈ ₹27,950 (≈+22.6%). அல்ட்ராடெக் சராசரி ≈ ₹13,730 (≈+28.6%), 10-ல 9 பாசிட்டிவ்."},
+ caveat:{en:"These are the named brokerages' views, shown for education. CB Research does not issue buy, sell or hold recommendations.",ta:"இவை அந்தந்த ப்ரோக்கரேஜ் கருத்துகள், கல்விக்காக. CB ரிசர்ச் பரிந்துரை செய்வதில்லை."},
+ utRef:{en:"UltraTech reference: Nomura Buy ₹13,700 · Nuvama Buy ₹15,209 · Prabhudas Lilladher ₹14,623 · ICICI Securities Hold ₹12,138",ta:"அல்ட்ராடெக் ஒப்பீடு: நோமுரா Buy ₹13,700 · நுவாமா Buy ₹15,209 · பிரபுதாஸ் ₹14,623 · ICICI செக்யூரிட்டீஸ் Hold ₹12,138"},
+ chart:{en:"Shree target prices vs reference price (₹)",ta:"ஷ்ரீ இலக்கு விலை vs குறிப்பு விலை (₹)"}
+};
+
+/* ============ MANAGEMENT ============ */
+var MG = {
+ title:{en:"Management & Board — Shree Cement",ta:"நிர்வாகம் & போர்டு — ஷ்ரீ சிமெண்ட்"},
+ people:[
+  {i:"HMB",n:"H. M. Bangur",r:{en:"Chairman",ta:"சேர்மன்"},x:{en:"Leads the Bangur family promoter group; architect of Shree's low-cost, organic expansion over three decades.",ta:"பாங்கூர் ப்ரமோட்டர் குழுமத் தலைவர்; 30 வருஷமா ஷ்ரீயோட குறைஞ்ச செலவு, சொந்த வளர்ச்சிக்கு காரணம்."}},
+  {i:"PB",n:"Prashant Bangur",r:{en:"Vice Chairman",ta:"வைஸ் சேர்மன்"},x:{en:"Next-generation promoter on the board.",ta:"அடுத்த தலைமுறை ப்ரமோட்டர்."}},
+  {i:"NA",n:"Neeraj Akhoury",r:{en:"Managing Director",ta:"மேனேஜிங் டைரக்டர்"},x:{en:"Professional MD (formerly led Ambuja Cements/ACC); leads the company's stated 'value over volume' and premiumisation approach; led the Q2FY27 call.",ta:"தொழில்முறை MD (முன்னாடி அம்புஜா/ACC தலைவர்); கம்பெனியோட 'அளவை விட விலை', பிரீமியம் உத்தியை வழிநடத்துறார்; Q2 கால் நடத்தினார்."}},
+  {i:"SJ",n:"Subhash Jajoo",r:{en:"Chief Financial Officer",ta:"CFO"},x:{en:"CFO; guided FY27 capex ₹1,595–1,695 cr.",ta:"CFO; FY27 கேபெக்ஸ் ₹1,595–1,695 கோடின்னு சொன்னார்."}},
+  {i:"SSK",n:"S. S. Khandelwal",r:{en:"Company Secretary",ta:"கம்பெனி செக்ரட்டரி"},x:{en:"Company secretary and compliance officer.",ta:"கம்பெனி செக்ரட்டரி."}}
+ ],
+ gov:{t:{en:"Governance & ownership",ta:"நிர்வாகம் & உரிமை"},l:[
+  {en:"Promoters hold 62.56% (Sep-26) — higher than UltraTech's ~59.3%.",ta:"ப்ரமோட்டர் 62.56% (செப்-26) — அல்ட்ராடெக்கோட சுமார் 59.3%-ஐ விட அதிகம்."},
+  {en:"Low foreign ownership: FII 8.45% vs DII 16.49%; public float 12.51%.",ta:"வெளிநாட்டு பங்கு குறைவு: FII 8.45%, DII 16.49%; பொதுமக்கள் 12.51%."},
+  {en:"Family-promoted, professionally managed — a different model from UltraTech's group-professional structure under Grasim.",ta:"குடும்ப ப்ரமோட்டர், தொழில்முறை நிர்வாகம் — கிராசிம் கீழ இருக்கிற அல்ட்ராடெக்கை விட வேற மாதிரி."},
+  {en:"Conservative capital allocation: net cash, ₹150/share dividend in FY26 (27% payout), no large acquisitions.",ta:"கவனமான மூலதன ஒதுக்கீடு: கையிருப்பு, FY26-ல ₹150 டிவிடெண்ட் (27%), பெரிய கையகப்படுத்தல் இல்ல."}
+ ]},
+ shTitle:{en:"Shareholding comparison (%)",ta:"பங்குதாரர் ஒப்பீடு (%)"},
+ shL:[{en:"Promoter",ta:"ப்ரமோட்டர்"},{en:"DII",ta:"உள்நாட்டு நிறுவனங்கள்"},{en:"FII",ta:"வெளிநாட்டு நிறுவனங்கள்"},{en:"Public & others",ta:"பொதுமக்கள் & மற்றவை"}],
+ utSh:[59.33,19.69,12.86,8.12], shSh:[62.56,16.49,8.45,12.51]
+};
+
+/* ============ VERDICT ============ */
+var VER = {
+ title:{en:"Verdict — who beats whom",ta:"தீர்ப்பு — யார் ஜெயிக்கிறாங்க"},
+ tallyTitle:{en:"Scorecard tally by category",ta:"வகை வாரியா மதிப்பெண்"},
+ lead:{en:"UltraTech beats Shree on most parameters. Shree wins the balance-sheet and green-power contests and grows faster, but it has not yet turned that growth into profit.",
+       ta:"பெரும்பாலான அளவீடுகள்ல அல்ட்ராடெக் ஷ்ரீயை ஜெயிக்குது. கையிருப்பு, கிரீன் பவர்ல ஷ்ரீ ஜெயிக்குது, வேகமாவும் வளருது — ஆனா அந்த வளர்ச்சி இன்னும் லாபமா மாறல."},
+ utWins:{t:{en:"Where UltraTech wins",ta:"அல்ட்ராடெக் ஜெயிக்கிற இடம்"},l:[
+  {en:"Size: ≈3x capacity, ≈3.9x volume, pan-India in all five regions",ta:"அளவு: சுமார் 3 மடங்கு கொள்ளளவு, 3.9 மடங்கு விற்பனை, 5 பகுதிலயும்"},
+  {en:"Utilisation 71% vs 56% — the single biggest operating gap",ta:"பயன்பாடு 71% vs 56% — பெரிய இடைவெளி"},
+  {en:"Brand & pricing: ≈₹300/t higher realisation; premium 37% vs 29%",ta:"பிராண்ட் & விலை: டன்னுக்கு சுமார் ₹300 அதிகம்; பிரீமியம் 37% vs 29%"},
+  {en:"Product breadth: RMC (485 plants), white cement, chemicals, wires",ta:"பொருள் வகை: RMC (485), வெள்ளை சிமெண்ட், கெமிக்கல்ஸ், வயர்"},
+  {en:"Profit momentum (+21% vs −15%) and higher ROE (≈11.6% vs 7.5%)",ta:"லாப வேகம் (+21% vs −15%), அதிக ROE"},
+  {en:"Better fuel hedging this year and more alternative fuel (7.2% vs 5%)",ta:"எரிபொருள் சிறப்பா கையாண்டது, அதிக மாற்று எரிபொருள்"}]},
+ shWins:{t:{en:"Where Shree wins",ta:"ஷ்ரீ ஜெயிக்கிற இடம்"},l:[
+  {en:"Balance sheet: ₹8,168 cr net cash vs UltraTech's ₹23,536 cr net debt",ta:"பேலன்ஸ் ஷீட்: ₹8,168 கோடி கையிருப்பு vs அல்ட்ராடெக் ₹23,536 கோடி கடன்"},
+  {en:"Green power share 65.2% vs 48%",ta:"கிரீன் பவர் 65.2% vs 48%"},
+  {en:"Faster growth: volume +17.7% vs +13.8%; revenue +24% vs +19%",ta:"வேகமான வளர்ச்சி: விற்பனை +17.7% vs +13.8%"},
+  {en:"Slightly higher EBITDA margin % (17.2% vs 16.0%) on a pure-cement revenue base",ta:"கொஞ்சம் அதிக மார்ஜின் % (17.2% vs 16.0%)"},
+  {en:"Cheaper per tonne of capacity (≈₹10,050 vs ≈₹16,100 EV/t); low capex need",ta:"டன் கொள்ளளவுக்கு மலிவு; குறைஞ்ச கேபெக்ஸ் தேவை"},
+  {en:"Larger overseas base (UAE 7 MTPA)",ta:"பெரிய வெளிநாட்டு அளவு (UAE 7 MTPA)"}]},
+ ties:{en:"Tied: EBITDA per tonne (₹974 vs ₹966) and the cost of heat (₹2.09/kcal each).",ta:"சமம்: டன்னுக்கு EBITDA (₹974 vs ₹966), வெப்ப செலவு (ரெண்டும் ₹2.09/kcal)."},
+ biz:{t:{en:"Business verdict",ta:"பிசினஸ் தீர்ப்பு"},x:{en:"UltraTech is the stronger cement business today: bigger, better utilised, better priced and more diversified, with profit rising. Shree is the leaner, cash-rich challenger with the greenest power mix — but at 56% utilisation and with profit falling, its strengths are still potential rather than delivered.",
+   ta:"இன்னைக்கு அல்ட்ராடெக் தான் வலுவான சிமெண்ட் தொழில்: பெருசு, அதிக பயன்பாடு, அதிக விலை, பல பொருள், லாபமும் ஏறுது. ஷ்ரீ சிக்கனமான, கையில பணம் இருக்கிற போட்டியாளர், கிரீன் பவர்ல முன்னிலை — ஆனா 56% பயன்பாட்டோட, லாபம் இறங்குற நிலைல, அதோட பலம் இன்னும் வாய்ப்பா தான் இருக்கு, நிஜமா வரல."}},
+ inv:{t:{en:"Investment-model verdict (educational)",ta:"முதலீட்டு மாடல் தீர்ப்பு (கல்வி)"},x:{en:"The two stocks price different bets. UltraTech: proven earnings at a lower P/E (~36x), with debt and the wires-and-cables bet as the risks. Shree: an option on utilisation and premium mix rising — expensive on today's earnings (~52x) but cheaper per tonne and risk-cushioned by net cash. Both are in a Stage-4 price structure, so the cycle tools cap conviction for each at 55 for now. This is not a buy, sell or hold recommendation.",
+   ta:"ரெண்டு பங்கும் வேற வேற பந்தயம். அல்ட்ராடெக்: குறைஞ்ச P/E-ல (சுமார் 36) நிரூபிச்ச லாபம்; ரிஸ்க் = கடன், வயர்-கேபிள். ஷ்ரீ: பயன்பாடும் பிரீமியமும் ஏறும்னு ஒரு வாய்ப்பு — இன்றைய லாபத்துக்கு விலை அதிகம் (சுமார் 52), ஆனா டன்னுக்கு மலிவு, கையிருப்பு பாதுகாப்பு. ரெண்டும் கட்டம் 4-ல, அதனால கன்விக்ஷன் 55-க்கு மேல போகாது. இது வாங்க/விற்க பரிந்துரை இல்ல."}},
+ watch:{t:{en:"What would change the verdict",ta:"எது தீர்ப்பை மாத்தும்"},l:[
+  {en:"Shree utilisation above 65% with EBITDA/t back above ₹1,100 → the operations gap closes",ta:"ஷ்ரீ பயன்பாடு 65%-க்கு மேல, டன்னுக்கு ₹1,100-க்கு மேல → இடைவெளி குறையும்"},
+  {en:"UltraTech net debt/EBITDA failing to fall below 1x by Mar-27 → Shree's balance-sheet edge matters more",ta:"மார்ச்-27-க்குள் அல்ட்ராடெக் கடன் 1-க்கு கீழ வரலைன்னா → ஷ்ரீயோட பலம் இன்னும் முக்கியம்"},
+  {en:"Shree premium share crossing 35% → the realisation gap narrows",ta:"ஷ்ரீ பிரீமியம் 35%-ஐ தாண்டினா → விலை இடைவெளி குறையும்"}]}
+};
+</script>
+<script>
+/* ============ SELF-CHECK (Shree) ============ */
+var SC = {
+ title:{en:"CB Investor Self-check — Shree Cement",ta:"CB முதலீட்டாளர் சுய சோதனை — ஷ்ரீ சிமெண்ட்"},
+ intro:{en:"Tick what you have personally checked. Each line shows Shree's own facts from this quarter.",ta:"நீங்களே சரிபார்த்ததை டிக் பண்ணுங்க. ஒவ்வொரு வரிலயும் ஷ்ரீயோட இந்த காலாண்டு தகவல்."},
+ msg:{en:"This only counts how many of your own conditions line up. It is not a recommendation.",ta:"உங்க சொந்த நிபந்தனைகள்ல எத்தனை பொருந்துதுன்னு மட்டும் எண்ணுது. இது பரிந்துரை இல்ல."},
+ clear:{en:"Clear all ticks",ta:"எல்லா டிக்கையும் அழி"}, add:{en:"Add",ta:"சேர்"}, overall:{en:"Overall",ta:"மொத்தம்"},
+ addPh:{en:"Type your own condition…",ta:"உங்க நிபந்தனையை டைப் பண்ணுங்க…"},
+ groups:[
+  {t:{en:"1. Questions about the stock",ta:"1. பங்கு பற்றிய கேள்விகள்"},items:[
+   {en:"I understand how Shree earns: India volume × realisation",ta:"ஷ்ரீ எப்படி சம்பாதிக்குதுன்னு புரியுது",d:{en:"9.31 MT × ₹4,870/t ≈ ₹4,534 cr of ₹5,897 cr revenue",ta:"9.31 மி.டன் × ₹4,870 ≈ ₹5,897 கோடில ₹4,534 கோடி"}},
+   {en:"I know why profit fell while revenue rose",ta:"வருமானம் ஏறியும் லாபம் ஏன் குறைஞ்சுதுன்னு தெரியும்",d:{en:"Fuel ₹1.66 → ₹2.09/kcal; EBITDA/t ₹1,055 → ₹966; PAT −15%",ta:"எரிபொருள் ₹1.66 → ₹2.09; டன்னுக்கு ₹1,055 → ₹966; லாபம் −15%"}},
+   {en:"I know how Shree compares with UltraTech",ta:"அல்ட்ராடெக்கோட எப்படி ஒப்பிடுதுன்னு தெரியும்",d:{en:"Utilisation 56% vs 71%; premium 28.7% vs 37%; net cash vs net debt",ta:"பயன்பாடு 56% vs 71%; பிரீமியம் 28.7% vs 37%; கையிருப்பு vs கடன்"}},
+   {en:"I know where Shree sells",ta:"ஷ்ரீ எங்க விக்குதுன்னு தெரியும்",d:{en:"Mostly North; balance East and South; UAE 7 MTPA",ta:"பெரும்பாலும் வடக்கு; மீதி கிழக்கு, தெற்கு; UAE 7 MTPA"}}
+  ]},
+  {t:{en:"2. Problems investors face",ta:"2. முதலீட்டாளர் பிரச்சனைகள்"},items:[
+   {en:"I accept that earnings are depressed by idle capacity",ta:"பயன்படாத ஆலைகளால லாபம் குறைஞ்சிருக்குன்னு ஏத்துக்கிறேன்",d:{en:"Utilisation 56%; FY26 depreciation ₹2,794 cr",ta:"பயன்பாடு 56%; FY26 தேய்மானம் ₹2,794 கோடி"}},
+   {en:"I know I'm paying a high P/E",ta:"அதிக P/E கொடுக்கிறேன்னு தெரியும்",d:{en:"P/E ≈52x vs UltraTech ≈36x; ROE 7.5%",ta:"P/E ≈52 vs அல்ட்ராடெக் ≈36; ROE 7.5%"}},
+   {en:"I accept imported-fuel and West Asia risk",ta:"இறக்குமதி எரிபொருள், மேற்கு ஆசியா ரிஸ்க்கை ஏத்துக்கிறேன்",d:{en:"Imported coal 75% of fuel; UAE subsidiary 7 MTPA",ta:"இறக்குமதி நிலக்கரி 75%; UAE 7 MTPA"}},
+   {en:"I know the stock is in a downtrend",ta:"பங்கு இறங்குமுகத்துல இருக்குன்னு தெரியும்",d:{en:"₹29,425 high → ₹21,355 low (1-Oct-26); Stage 4",ta:"₹29,425 → ₹21,355 (1-அக்-26); கட்டம் 4"}}
+  ]},
+  {t:{en:"3. Solutions (what I did)",ta:"3. தீர்வுகள் (நான் என்ன செஞ்சேன்)"},items:[
+   {en:"I checked the balance sheet",ta:"பேலன்ஸ் ஷீட்டை பாத்தேன்",d:{en:"Net cash ₹8,168 cr; D/E 0.08",ta:"கையிருப்பு ₹8,168 கோடி; கடன் விகிதம் 0.08"}},
+   {en:"I read the FY27 guidance",ta:"FY27 வழிகாட்டலை படிச்சேன்",d:{en:"40–41 MT India volume; Q3 fuel ₹2.15–2.20/kcal; capex ₹1,595–1,695 cr",ta:"40–41 மி.டன்; Q3 எரிபொருள் ₹2.15–2.20; கேபெக்ஸ் ₹1,595–1,695 கோடி"}},
+   {en:"I compared cash flow with profit",ta:"கேஷ் ஃப்ளோவை லாபத்தோட ஒப்பிட்டேன்",d:{en:"FY26 CFO ₹3,794 cr on ₹4,638 cr operating profit (82%)",ta:"FY26 CFO ₹3,794 கோடி, ஆப். லாபம் ₹4,638 (82%)"}},
+   {en:"I checked the premium-mix trend",ta:"பிரீமியம் போக்கை பாத்தேன்",d:{en:"21.1% → 23% → 28.7% (Q2FY26 → Q1 → Q2FY27); target >40%",ta:"21.1% → 23% → 28.7%; இலக்கு 40%+"}}
+  ]},
+  {t:{en:"4. Anchors' and analysts' view",ta:"4. நிறுவன & அனலிஸ்ட் பார்வை"},items:[
+   {en:"I've seen the latest targets",ta:"சமீபத்திய இலக்குகளை பாத்தேன்",d:{en:"HDFC Sec Buy ₹28,400; Anand Rathi Buy ₹28,021; PL ₹28,379; MOSL Neutral ₹27,000",ta:"HDFC Buy ₹28,400; ஆனந்த் ரதி Buy ₹28,021; PL ₹28,379; MOSL Neutral ₹27,000"}},
+   {en:"I've seen negative views too",ta:"நெகட்டிவ் கருத்துகளையும் பாத்தேன்",d:{en:"Morgan Stanley Underweight (May-26)",ta:"மார்கன் ஸ்டான்லி Underweight (மே-26)"}},
+   {en:"I know who owns the stock",ta:"யார் பங்கு வெச்சிருக்காங்கன்னு தெரியும்",d:{en:"Promoter 62.56%, DII 16.49%, FII 8.45% (Sep-26)",ta:"ப்ரமோட்டர் 62.56%, DII 16.49%, FII 8.45%"}}
+  ]},
+  {t:{en:"5. My own conditions",ta:"5. என் சொந்த நிபந்தனைகள்"},own:true,sugg:[
+   {en:"Utilisation above 65%",ta:"பயன்பாடு 65%-க்கு மேல"},{en:"EBITDA/t back above ₹1,100",ta:"டன்னுக்கு ₹1,100-க்கு மேல"},{en:"Premium share above 35%",ta:"பிரீமியம் 35%-க்கு மேல"},
+   {en:"PAT growing again YoY",ta:"லாபம் மீண்டும் ஏறுது"},{en:"P/E within my comfort level",ta:"P/E என் வசதி அளவுக்குள்"},{en:"Cement exposure within my limit",ta:"சிமெண்ட் முதலீடு என் வரம்புக்குள்"}
+  ]}
+ ]
+};
+
+/* ============ SOCRATES ============ */
+var SO = {
+ title:{en:"Cauvery Socrates — compare by questioning",ta:"காவேரி சாக்ரடீஸ் — கேள்வி கேட்டு ஒப்பிடலாம்"},
+ mcq:[
+  {q:{en:"Shree grew volume 17.7% but profit fell 15%. What is the most important reason?",ta:"ஷ்ரீ விற்பனை 17.7% ஏறிச்சு, லாபம் 15% குறைஞ்சுது. முக்கிய காரணம்?"},o:[{en:"Lower cement prices",ta:"விலை குறைஞ்சுது"},{en:"Higher fuel cost per tonne and heavy depreciation",ta:"டன்னுக்கு அதிக எரிபொருள் செலவு, அதிக தேய்மானம்"},{en:"Higher debt interest",ta:"அதிக கடன் வட்டி"},{en:"Lost market share",ta:"மார்க்கெட் ஷேர் போச்சு"}],a:1,e:{en:"Realisation was flat (+1%); fuel rose to ₹2.09/kcal from ₹1.66, and depreciation on new plants is large. Shree is net-cash, so interest is minor.",ta:"விலை அசைவில்ல (+1%); எரிபொருள் ₹1.66-ல இருந்து ₹2.09; புது ஆலை தேய்மானம் அதிகம். ஷ்ரீ கடன் இல்லாததால வட்டி சின்னது."}},
+  {q:{en:"Both paid ₹2.09 per 1,000 kcal. Why did Shree's EBITDA/t fall while UltraTech's rose YoY?",ta:"ரெண்டும் ₹2.09 கொடுத்தாங்க. ஷ்ரீ டன்னுக்கு EBITDA குறைஞ்சு அல்ட்ராடெக் ஏறினது ஏன்?"},o:[{en:"Shree's fuel cost a year ago was much lower (₹1.66), so its jump was bigger",ta:"போன வருஷம் ஷ்ரீ எரிபொருள் ரொம்ப மலிவு (₹1.66), அதனால ஏற்றம் பெருசு"},{en:"UltraTech uses no fuel",ta:"அல்ட்ராடெக் எரிபொருள் பயன்படுத்தாது"},{en:"Shree sold less cement",ta:"ஷ்ரீ குறைவா வித்துச்சு"},{en:"UltraTech cut prices",ta:"அல்ட்ராடெக் விலை குறைச்சுது"}],a:0,e:{en:"Same level today, different starting points: Shree's YoY fuel inflation (+26%) far exceeded UltraTech's.",ta:"இன்னைக்கு ஒரே அளவு, ஆனா ஆரம்ப புள்ளி வேற: ஷ்ரீ ஏற்றம் (+26%) அதிகம்."}},
+  {q:{en:"Shree has 65% green power vs UltraTech's 48%, yet UltraTech has more green MW. How?",ta:"ஷ்ரீ 65% கிரீன், அல்ட்ராடெக் 48% — ஆனா அல்ட்ராடெக்குக்கு அதிக MW. எப்படி?"},o:[{en:"UltraTech is ~3x bigger, so it needs far more electricity in total",ta:"அல்ட்ராடெக் சுமார் 3 மடங்கு பெருசு, மொத்த மின் தேவை அதிகம்"},{en:"Shree's data is wrong",ta:"ஷ்ரீ தகவல் தப்பு"},{en:"UltraTech buys green power from Shree",ta:"அல்ட்ராடெக் ஷ்ரீகிட்ட வாங்குது"},{en:"Green MW don't count",ta:"MW கணக்கில்ல"}],a:0,e:{en:"Share (%) and absolute (MW) answer different questions — always check both.",ta:"பங்கு (%), மொத்தம் (MW) வேற கேள்விகள் — ரெண்டையும் பாருங்க."}},
+  {q:{en:"Shree's P/E is ~52x but its EV per tonne is lower than UltraTech's. What explains this?",ta:"ஷ்ரீ P/E சுமார் 52, ஆனா டன்னுக்கு EV அல்ட்ராடெக்கை விட குறைவு. ஏன்?"},o:[{en:"Its earnings are depressed by low utilisation, while it owns many unused tonnes",ta:"குறைஞ்ச பயன்பாட்டால லாபம் குறைவு, பயன்படாத டன்கள் நிறைய"},{en:"It has huge debt",ta:"அதிக கடன்"},{en:"Its share count is small",ta:"பங்கு எண்ணிக்கை குறைவு"},{en:"It pays no tax",ta:"வரி கட்டல"}],a:0,e:{en:"High P/E + low EV/tonne = the market is valuing assets that have not yet produced full earnings.",ta:"அதிக P/E + குறைஞ்ச EV/டன் = இன்னும் முழு லாபம் கொடுக்காத சொத்துக்கு சந்தை மதிப்பு."}},
+  {q:{en:"Which single metric would most quickly close the operating gap between Shree and UltraTech?",ta:"ஷ்ரீ–அல்ட்ராடெக் இடைவெளியை சீக்கிரம் குறைக்கிறது எது?"},o:[{en:"Capacity utilisation",ta:"கொள்ளளவு பயன்பாடு"},{en:"Number of brands",ta:"பிராண்டுகள் எண்ணிக்கை"},{en:"Dividend per share",ta:"டிவிடெண்ட்"},{en:"Overseas capacity",ta:"வெளிநாட்டு கொள்ளளவு"}],a:0,e:{en:"At 56% vs 71%, filling plants spreads fixed costs and lifts EBITDA/t faster than any other lever.",ta:"56% vs 71% — ஆலைகளை நிரப்பினா நிலையான செலவு பரவி டன் லாபம் வேகமா ஏறும்."}},
+  {q:{en:"Which company is net-cash?",ta:"எந்த கம்பெனி கையில பணம் வெச்சிருக்கு (கடன் இல்லாம)?"},o:[{en:"UltraTech",ta:"அல்ட்ராடெக்"},{en:"Shree",ta:"ஷ்ரீ"},{en:"Both",ta:"ரெண்டும்"},{en:"Neither",ta:"ரெண்டும் இல்ல"}],a:1,e:{en:"Shree: +₹8,168 cr net cash. UltraTech: ₹23,536 cr net debt.",ta:"ஷ்ரீ: +₹8,168 கோடி. அல்ட்ராடெக்: ₹23,536 கோடி கடன்."}}
+ ],
+ open:[
+  {q:{en:"If you had to own just one, what would you need to believe for Shree to be the better pick over three years?",ta:"ஒண்ணு மட்டும் தேர்ந்தெடுக்கணும்னா, 3 வருஷத்துல ஷ்ரீ சிறந்ததா இருக்க நீங்க எதை நம்பணும்?"},m:{en:"That utilisation rises toward 70%+, premium share passes 40% (closing much of the ₹300/t price gap), fuel cost stabilises, and the cash is deployed well. If those happen, today's high P/E shrinks quickly as earnings catch up with the asset base.",ta:"பயன்பாடு 70%+ போகணும், பிரீமியம் 40%-ஐ தாண்டணும் (₹300 விலை இடைவெளி குறையும்), எரிபொருள் நிலையாகணும், கையிருப்பு நல்லா பயன்படணும். இது நடந்தா லாபம் ஏறி, இன்றைய அதிக P/E சீக்கிரம் குறையும்."}},
+  {q:{en:"UltraTech carries debt and Shree carries cash. Which is the better capital-allocation choice for a cement company?",ta:"அல்ட்ராடெக் கடன், ஷ்ரீ கையிருப்பு. சிமெண்ட் கம்பெனிக்கு எது சிறந்த மூலதன முடிவு?"},m:{en:"It depends on returns: debt helps if new capacity earns more than the ~7% borrowing cost (UltraTech's ~13% ROCE says yes, if demand holds). Cash is safer in a downturn but drags ROE (Shree ~7.5%). The best answer balances growth with the cycle phase.",ta:"லாப விகிதத்தை பொறுத்தது: புது ஆலை ~7% கடன் வட்டியை விட அதிகம் சம்பாதிச்சா கடன் உதவும் (அல்ட்ராடெக் ROCE சுமார் 13%). கையிருப்பு இறக்கத்துல பாதுகாப்பு, ஆனா ROE குறையும் (ஷ்ரீ 7.5%)."}}
+ ],
+ yourAns:{en:"Write your answer, then reveal the model answer",ta:"உங்க பதிலை எழுதுங்க, அப்புறம் மாதிரி பதிலை பாருங்க"},
+ reveal:{en:"Reveal model answer",ta:"மாதிரி பதிலை காட்டு"}, right:{en:"Correct. ",ta:"சரி. "}, wrong:{en:"Not quite. ",ta:"சரியில்ல. "}, score:{en:"Score",ta:"மதிப்பெண்"}
+};
+
+/* ============ CB ASSIST KNOWLEDGE ============ */
+var KB = [
+ {k:["who wins","who beats","better","verdict","winner","யார் ஜெயி","தீர்ப்பு","சிறந்த"],en:"UltraTech wins most parameters: size, utilisation, brand pricing, premium mix, product range, profit growth and return on equity. Shree wins on its net-cash balance sheet, green power share, growth rate and margin percentage. This is a business comparison, not a buy or sell recommendation.",ta:"பெரும்பாலான அளவீடுகள்ல அல்ட்ராடெக் ஜெயிக்குது: அளவு, பயன்பாடு, பிராண்ட் விலை, பிரீமியம், பொருள் வகை, லாப வளர்ச்சி, ROE. ஷ்ரீ கையிருப்பு, கிரீன் பவர், வளர்ச்சி வேகம், மார்ஜின் %-ல ஜெயிக்குது. இது பரிந்துரை இல்ல."},
+ {k:["profit","pat","லாபம்"],en:"Shree's Q2 profit fell 15% to ₹263 crore, while UltraTech's rose 21% to ₹1,501 crore.",ta:"ஷ்ரீ Q2 லாபம் 15% குறைஞ்சு ₹263 கோடி; அல்ட்ராடெக் 21% ஏறி ₹1,501 கோடி."},
+ {k:["revenue","sales","வருமானம்"],en:"Shree's revenue grew 24% to ₹5,897 crore; UltraTech's grew 19% to ₹23,295 crore.",ta:"ஷ்ரீ வருமானம் 24% ஏறி ₹5,897 கோடி; அல்ட்ராடெக் 19% ஏறி ₹23,295 கோடி."},
+ {k:["volume","tonnes","விற்பனை அளவு","மில்லியன் டன்"],en:"Shree sold 9.31 million tonnes in India, up 18%. UltraTech sold 35.94 million tonnes, up 14%.",ta:"ஷ்ரீ 9.31 மில்லியன் டன், 18% ஏற்றம். அல்ட்ராடெக் 35.94 மில்லியன் டன், 14%."},
+ {k:["ebitda per","per tonne","டன்னுக்கு"],en:"EBITDA per tonne is almost tied: UltraTech ₹974, Shree ₹966. But UltraTech's rose ₹60 from last year while Shree's fell ₹89.",ta:"டன்னுக்கு EBITDA கிட்டத்தட்ட சமம்: அல்ட்ராடெக் ₹974, ஷ்ரீ ₹966. ஆனா அல்ட்ராடெக் ₹60 ஏறிச்சு, ஷ்ரீ ₹89 இறங்கிச்சு."},
+ {k:["utilisation","utilization","பயன்பாடு"],en:"Shree runs at 56% capacity utilisation versus 71% for UltraTech. That is the biggest operating gap between them.",ta:"ஷ்ரீ பயன்பாடு 56%, அல்ட்ராடெக் 71%. இது தான் பெரிய இடைவெளி."},
+ {k:["green","renewable","power","கிரீன்","மின்"],en:"Shree gets 65.2% of its electricity from green sources against UltraTech's 48%. UltraTech has more green capacity in total, about 2 gigawatts against Shree's 667 megawatts.",ta:"ஷ்ரீ மின்சாரத்துல 65.2% கிரீன், அல்ட்ராடெக் 48%. மொத்த அளவுல அல்ட்ராடெக் சுமார் 2 ஜிகாவாட், ஷ்ரீ 667 மெகாவாட்."},
+ {k:["fuel","coal","petcoke","kcal","எரிபொருள்","நிலக்கரி"],en:"Both paid about ₹2.09 per thousand kilocalories. Shree's fuel cost was ₹1.66 a year ago, so its rise was sharper. Shree now uses 75% imported coal and only 11% petcoke.",ta:"ரெண்டும் சுமார் ₹2.09. போன வருஷம் ஷ்ரீக்கு ₹1.66, அதனால ஏற்றம் அதிகம். இப்போ ஷ்ரீ 75% இறக்குமதி நிலக்கரி, 11% பெட்கோக்."},
+ {k:["premium","mix","blend","பிரீமியம்","கலவை"],en:"Premium products are 37% of UltraTech's mix and 28.7% of Shree's, though Shree's share is rising fast. Blended cement is 67% at UltraTech and 58% at Shree.",ta:"பிரீமியம்: அல்ட்ராடெக் 37%, ஷ்ரீ 28.7% (வேகமா ஏறுது). பிளெண்டட்: அல்ட்ராடெக் 67%, ஷ்ரீ 58%."},
+ {k:["debt","cash","balance sheet","கடன்","கையிருப்பு"],en:"Shree has ₹8,168 crore of net cash. UltraTech has ₹23,536 crore of net debt after its special dividend and capex.",ta:"ஷ்ரீக்கு ₹8,168 கோடி கையிருப்பு. அல்ட்ராடெக்குக்கு ₹23,536 கோடி கடன்."},
+ {k:["capacity","size","mtpa","கொள்ளளவு","அளவு"],en:"UltraTech has 204.7 million tonnes a year of domestic capacity, about three times Shree's roughly 66.7. Shree also has 7 million tonnes in the UAE.",ta:"அல்ட்ராடெக் உள்நாட்டு கொள்ளளவு 204.7, ஷ்ரீயை விட சுமார் 3 மடங்கு (ஷ்ரீ சுமார் 66.7). ஷ்ரீக்கு UAE-ல 7 மில்லியன் டன்."},
+ {k:["geograph","region","north","south","பகுதி","வடக்கு","தெற்கு"],en:"UltraTech is strong in all five regions. Shree is strongest in the North, with the rest split between East and South, and is thin in the West and Central regions.",ta:"அல்ட்ராடெக் 5 பகுதிலயும் வலுவா. ஷ்ரீ வடக்குல அதிகம், மீதி கிழக்கு, தெற்கு; மேற்கு, மத்தியல குறைவு."},
+ {k:["brand","bangur","பிராண்ட்","பாங்கூர்"],en:"UltraTech sells one national brand. Shree sells the Bangur family of brands, strongest in North India. UltraTech earns about ₹300 more per tonne.",ta:"அல்ட்ராடெக் ஒரே தேசிய பிராண்ட். ஷ்ரீ பாங்கூர் பிராண்டுகள், வடக்குல வலுவா. அல்ட்ராடெக்குக்கு டன்னுக்கு சுமார் ₹300 அதிகம்."},
+ {k:["valuation","p/e","pe ","expensive","cheap","மதிப்பீடு","மலிவு"],en:"Shree trades near 52 times earnings against about 36 for UltraTech, but it is cheaper per tonne of capacity, about ₹10,050 against ₹16,100.",ta:"ஷ்ரீ P/E சுமார் 52, அல்ட்ராடெக் 36; ஆனா டன் கொள்ளளவுக்கு ஷ்ரீ மலிவு, சுமார் ₹10,050 vs ₹16,100."},
+ {k:["target","analyst","broker","இலக்கு","அனலிஸ்ட்"],en:"For Shree, HDFC Securities upgraded to Buy with a ₹28,400 target, Anand Rathi says Buy at ₹28,021, Prabhudas Lilladher ₹28,379 and Motilal Oswal Neutral at ₹27,000. These are third-party views.",ta:"ஷ்ரீக்கு HDFC செக்யூரிட்டீஸ் Buy ₹28,400, ஆனந்த் ரதி Buy ₹28,021, பிரபுதாஸ் ₹28,379, மோதிலால் Neutral ₹27,000. இவை மூன்றாம் தரப்பு கருத்து."},
+ {k:["focus","strategy","உத்தி"],en:"UltraTech focuses on scale and adjacent products through the same dealers. Shree focuses on value over volume, cost leadership and organic growth with a net-cash balance sheet.",ta:"அல்ட்ராடெக்: அளவு, அதே டீலர் வழியா மற்ற பொருட்கள். ஷ்ரீ: அளவை விட விலை, குறைஞ்ச செலவு, கடன் இல்லாத சொந்த வளர்ச்சி."},
+ {k:["market share","ஷேர்"],en:"UltraTech sells about 3.9 times Shree's volume in India. Both grew faster than the industry this quarter, so both gained share.",ta:"அல்ட்ராடெக் ஷ்ரீயை விட சுமார் 3.9 மடங்கு அதிகம் விக்குது. ரெண்டும் இண்டஸ்ட்ரியை விட வேகமா வளர்ந்ததால ஷேர் கூடிச்சு."},
+ {k:["score","pillar","ஸ்கோர்","தூண்"],en:"CB Score: UltraTech 6.6 out of 10, Shree 6.3. Shree scores highest on debt and cash at 9.5 and lowest on trend at 4.",ta:"CB ஸ்கோர்: அல்ட்ராடெக் 6.6, ஷ்ரீ 6.3. ஷ்ரீக்கு கடன் & கேஷ் 9.5, போக்கு 4."},
+ {k:["buy","sell","hold","invest","should i","வாங்க","விக்க"],en:"CB Research does not give buy, sell or hold advice. Please use the Self-check tab to test Shree against your own conditions.",ta:"CB ரிசர்ச் வாங்க/விற்க ஆலோசனை தராது. சுய சோதனை டேப்பை பயன்படுத்துங்க.",act:"sc"},
+ {k:["takeaway","summary","key","சுருக்கம்","முக்கிய"],en:"Shree's quarter: volume up 18%, revenue up 24%, but profit down 15% on fuel costs; EBITDA per tonne ₹966; premium share 28.7%; green power 65%; utilisation 56%; net cash ₹8,168 crore.",ta:"ஷ்ரீ காலாண்டு: விற்பனை +18%, வருமானம் +24%, லாபம் −15%; டன்னுக்கு ₹966; பிரீமியம் 28.7%; கிரீன் 65%; பயன்பாடு 56%; கையிருப்பு ₹8,168 கோடி."}
+];
+var AS = {
+ hello:{en:"Hi! Ask me to compare Shree and UltraTech — by voice (🎤) or text. Try: 'Who wins?'",ta:"வணக்கம்! ஷ்ரீ–அல்ட்ராடெக் ஒப்பீடு பத்தி கேளுங்க — குரல் (🎤) அல்லது டைப். உதா: 'யார் ஜெயிக்கிறாங்க?'"},
+ miss:{en:"I don't have that in this file. Try: who wins, utilisation, green power, fuel, premium mix, debt, valuation or brand.",ta:"அது இந்த ஃபைல்ல இல்ல. யார் ஜெயிக்கிறாங்க, பயன்பாடு, கிரீன் பவர், எரிபொருள், பிரீமியம், கடன், மதிப்பீடு பத்தி கேளுங்க."},
+ nomic:{en:"Voice input isn't supported in this browser — please type your question.",ta:"இந்த பிரவுசர்ல குரல் உள்ளீடு இல்ல — டைப் பண்ணுங்க."},
+ open:{en:"Open Self-check tab",ta:"சுய சோதனை டேப்பை திற"},
+ title:{en:"CB Assist — ask by voice or text",ta:"CB அசிஸ்ட் — குரல் அல்லது டைப்"},
+ ph:{en:"Ask about Shree vs UltraTech…",ta:"ஷ்ரீ vs அல்ட்ராடெக் பத்தி கேளுங்க…"},
+ chips:[{en:"Who wins?",ta:"யார் ஜெயிக்கிறாங்க?"},{en:"Utilisation",ta:"பயன்பாடு"},{en:"Green power",ta:"கிரீன் பவர்"},{en:"Debt",ta:"கடன்"},{en:"Valuation",ta:"மதிப்பீடு"}]
+};
+var DISC = {en:"<b>Prepared by CB Research (Cauvery Business Research)</b><br>For education only. CB Research is not a SEBI-registered research analyst and does not give buy, sell or hold recommendations. Brokerage ratings are third-party views attributed by name. Figures are from company results, Q2FY27 earnings calls and published reports as of 27-Oct-2026; UltraTech figures are from the Q2FY27 UltraTech dashboard; † marks CB Research derivations; n/a marks data not disclosed or not verified. Please consult a SEBI-registered adviser before investing.",
+            ta:"<b>CB ரிசர்ச் (காவேரி பிசினஸ் ரிசர்ச்) தயாரிச்சது</b><br>கல்விக்காக மட்டும். CB ரிசர்ச் SEBI பதிவு பெற்ற அனலிஸ்ட் இல்ல; வாங்க/விற்க/வெச்சுக்க பரிந்துரை தராது. ப்ரோக்கரேஜ் ரேட்டிங் அவங்க பேர்லயே. எண்கள் 27-அக்-2026 வரையிலான கம்பெனி ரிசல்ட், Q2FY27 கான்ஃபரன்ஸ் கால், வெளியான ரிப்போர்ட்ஸ்ல இருந்து; † = CB கணக்கீடு; n/a = வெளியிடல/உறுதி ஆகல. முதலீட்டுக்கு முன் SEBI பதிவு பெற்ற ஆலோசகரை கேளுங்க."};
+var SRC = {t:{en:"Sources",ta:"ஆதாரங்கள்"},l:[
+ "Shree Cement Q2FY27 results (23-Oct-2026) and earnings call — call highlights and transcript summaries",
+ "Free Press Journal, Equitymaster, Business Standard: Shree Q2FY27 results and share-price reaction (23–26 Oct 2026)",
+ "Business Today, Whalesbook: brokerage targets for Shree Cement (Oct 2026)",
+ "Screener-method annual financials, cash flows, working-capital days and shareholding for Shree Cement",
+ "Angel One, Multibagg: Shree Q4FY26 and Q1FY27 results coverage; capacity plan coverage (Feb 2026)",
+ "UltraTech Cement Q2FY27 figures: results filing, investor presentation and earnings call (19-Oct-2026)"
+]};
+</script>
+<script>
+(function(){
+var LANG="en", CUR="dash", CH={}, PILSEL="sh";
+var CU="#e8701a", CS_="#2f6fd6";
+function L(o){ if(o==null) return ""; if(typeof o!=="object") return String(o); return (o[LANG]!=null?o[LANG]:o.en); }
+function T(en,ta){ return LANG==="ta"?ta:en; }
+function f(n,d){ if(typeof n!=="number") return n; d=d==null?0:d; return n.toLocaleString("en-IN",{minimumFractionDigits:d,maximumFractionDigits:d}); }
+function chg(a,b){ return (a/b-1)*100; }
+function sgn(x,d){ d=d==null?1:d; return (x>=0?"+":"−")+Math.abs(x).toFixed(d)+"%"; }
+function cls(x){ return x>0.05?"up":(x<-0.05?"dn":"flat"); }
+function col(s){ return s>=8?"#1f9d55":(s>=6?"#d99a06":"#d64545"); }
+function esc(s){ return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
+function card(inner,extra){ return '<div class="card '+(extra||"")+'">'+inner+'</div>'; }
+function ul(a){ return '<ul style="margin:0;padding-left:18px">'+a.map(function(x){return '<li style="margin:4px 0">'+L(x)+'</li>';}).join("")+'</ul>'; }
+function table(head,rows){ var h='<div class="tblwrap"><table><thead><tr>'+head.map(function(x){return '<th>'+x+'</th>';}).join("")+'</tr></thead><tbody>';
+  rows.forEach(function(r){ h+= r.cat? '<tr class="cat"><td colspan="'+head.length+'">'+r.cat+'</td></tr>' : '<tr>'+r.map(function(c,i){return '<td'+(i>0&&r.lcols&&r.lcols.indexOf(i)>=0?' class="l"':'')+'>'+c+'</td>';}).join("")+'</tr>'; });
+  return h+'</tbody></table></div>'; }
+function chartBox(id,tall){ return '<div class="chartbox'+(tall?' tall':'')+'"><canvas id="'+id+'"></canvas></div>'; }
+function mkChart(id,cfg){ if(CH[id]){CH[id].destroy();} var el=document.getElementById(id); if(!el||typeof Chart==="undefined") return; CH[id]=new Chart(el,cfg); }
+var yIN=function(v){ return Number(v).toLocaleString("en-IN"); };
+if(typeof Chart!=="undefined"){ Chart.defaults.font.family="Inter, 'Noto Sans Tamil', sans-serif"; Chart.defaults.color="#5b6675"; Chart.defaults.maintainAspectRatio=false; }
+var BAR={ id:"barTop", afterDatasetsDraw:function(c){ var ctx=c.ctx; c.data.datasets.forEach(function(ds,i){ var m=c.getDatasetMeta(i); if(m.hidden||ds.type==="line"||ds.noTop) return; m.data.forEach(function(b,j){ var v=ds.data[j]; if(v==null||Array.isArray(v)) return; ctx.save(); ctx.fillStyle="#1b2430"; ctx.font="600 10.5px Inter, sans-serif"; ctx.textAlign="center"; ctx.fillText(ds.fmt?ds.fmt(v):Number(v).toLocaleString("en-IN"), b.x, b.y-4); ctx.restore(); }); }); } };
+var LINEL={ id:"lineLbl", afterDatasetsDraw:function(c){ var ctx=c.ctx; c.data.datasets.forEach(function(ds,i){ var m=c.getDatasetMeta(i); if(m.hidden||ds.type!=="line"&&c.config.type!=="line") return; if(ds.noLbl) return; m.data.forEach(function(p,j){ var v=ds.data[j]; if(v==null) return; ctx.save(); ctx.font="700 10.5px Inter"; ctx.fillStyle=ds.borderColor; ctx.textAlign="center"; ctx.fillText(ds.fmt?ds.fmt(v):v, p.x, p.y-9); ctx.restore(); }); }); } };
+function lbl(k){ return k==="u"?T("UltraTech","அல்ட்ராடெக்"):(k==="s"?T("Shree","ஷ்ரீ"):T("Tie","சமம்")); }
+function winB(k){ return '<span class="win '+(k==="u"?"w-ut":(k==="s"?"w-sh":"w-tie"))+'">'+(k==="t"?"= ":"🏆 ")+lbl(k)+'</span>'; }
+function tally(){ var t={u:0,s:0,t:0}, bycat=[]; SCORE.forEach(function(c){ var x={u:0,s:0,t:0}; c.rows.forEach(function(r){ t[r.w]++; x[r.w]++; }); bycat.push(x); }); return {t:t,c:bycat}; }
+
+function buildTabs(){ var n=document.getElementById("tabs"); n.innerHTML=TX.tabs.map(function(t){return '<button data-t="'+t.id+'" class="'+(t.id===CUR?"on":"")+'">'+L(t)+'</button>';}).join("");
+  n.querySelectorAll("button").forEach(function(b){ b.onclick=function(){ go(b.getAttribute("data-t")); }; }); }
+function go(id){ CUR=id; document.querySelectorAll("nav.tabs button").forEach(function(b){b.classList.toggle("on",b.getAttribute("data-t")===id);});
+  document.querySelectorAll("section.tab").forEach(function(s){s.classList.toggle("on",s.id==="t_"+id);}); window.scrollTo({top:0,behavior:"smooth"}); POST[id]&&POST[id](); }
+var POST={};
+
+/* ---------- DASHBOARD ---------- */
+function secDash(){
+  var c=CO.cur,p=CO.prevY,q=CO.prevQ, tl=tally().t;
+  var k=[["rev","₹"+f(c.rev)+" "+L(TX.cr),chg(c.rev,p.rev),chg(c.rev,q.rev)],["eb","₹"+f(c.ebitda)+" "+L(TX.cr),chg(c.ebitda,p.ebitda),chg(c.ebitda,q.ebitda)],
+   ["pat","₹"+f(c.pat)+" "+L(TX.cr),chg(c.pat,p.pat),chg(c.pat,q.pat)],["vol",f(c.indVol,2)+" MT",chg(c.indVol,p.indVol),chg(c.indVol,q.indVol)],
+   ["et","₹"+f(c.ebitdaT),c.ebitdaT-p.ebitdaT,c.ebitdaT-q.ebitdaT,"abs"],["util",c.util+"%",c.util-p.util,null,"pts"],
+   ["green",c.green+"%",null,null,"g"],["cash","₹"+f(c.netCash)+" "+L(TX.cr),null,null,"c"]];
+  var kp=k.map(function(x){ var line;
+    if(x[4]==="abs") line='<span class="dn">'+L(TX.yoy)+' −₹'+Math.abs(x[2])+'</span> · <span class="dn">'+L(TX.qoq)+' −₹'+Math.abs(x[3])+'</span>';
+    else if(x[4]==="pts") line='<span class="up">'+L(TX.yoy)+' +'+x[2]+T(" pts"," புள்ளி")+'</span> · <span class="dn">UltraTech 71%</span>';
+    else if(x[4]==="g") line='<span class="up">'+T("UltraTech 48% · 667 MW","அல்ட்ராடெக் 48% · 667 MW")+'</span>';
+    else if(x[4]==="c") line='<span class="up">'+T("D/E 0.08 · UltraTech net debt ₹23,536 cr","கடன் விகிதம் 0.08 · அல்ட்ராடெக் கடன் ₹23,536 கோடி")+'</span>';
+    else line='<span class="'+cls(x[2])+'">'+L(TX.yoy)+" "+sgn(x[2])+'</span> · <span class="'+cls(x[3])+'">'+L(TX.qoq)+" "+sgn(x[3])+'</span>';
+    return card('<div class="lbl">'+L(TX.kpi[x[0]])+'</div><div class="val">'+x[1]+'</div><div class="chg">'+line+'</div>','kpi'); }).join("");
+  var kt=TX.kt.map(function(x,i){ var t=L(x); return '<li class="'+x.c+'"><span class="n">'+(i+1)+'</span><b>'+t[0]+'</b><span>'+t[1]+'</span></li>'; }).join("");
+  var vsRows=[[T("Revenue (₹ cr)","வருமானம் (₹ கோடி)"),"23,295 (+18.8%)","5,897 (+23.9%)"],[T("EBITDA (₹ cr)","EBITDA (₹ கோடி)"),"3,721 (+20.3%)","1,016 (+4.3%)"],[T("Net profit (₹ cr)","நிகர லாபம் (₹ கோடி)"),"1,501 (+21.3%)","263 (−15.2%)"],
+   [T("EBITDA / tonne","டன்னுக்கு EBITDA"),"₹974 (+₹60)","₹966 (−₹89)"],[T("Utilisation","பயன்பாடு"),"71%","56%"],[T("Green power","கிரீன் பவர்"),"48%","65.2%"],[T("Net debt / cash","கடன் / கையிருப்பு"),"−₹23,536 cr","+₹8,168 cr"],[T("P/E (TTM)","P/E"),"≈36x","≈52x"]];
+  return '<div class="hero"><div class="big">'+L(TX.hero)+'</div><div style="display:flex;gap:6px;flex-wrap:wrap">'+
+   '<span class="chip cb">'+T("Scorecard","மதிப்பெண்")+': UltraTech '+tl.u+' · Shree '+tl.s+' · '+T("Tie","சமம்")+' '+tl.t+'</span><span class="chip cb">CB Shree 6.3 · UT 6.6</span><span class="chip cy">CY 57</span><span class="chip tg">TG 63</span></div></div>'+
+   '<div class="grid g4">'+kp+'</div>'+
+   '<h3>⭐ '+L(TX.ktTitle)+'</h3><ul class="kt">'+kt+'</ul>'+
+   '<h3>'+L(TX.vsTitle)+'</h3><div class="grid g2"><div>'+table([T("Q2FY27","Q2FY27"),'<span class="dot" style="background:'+CU+'"></span>UltraTech','<span class="dot" style="background:'+CS_+'"></span>Shree'],vsRows)+'</div>'+
+   card('<b>'+L(TX.trend)+'</b>'+chartBox("cTrend")+'<div class="note">'+L(TX.trendNote)+'</div>')+'</div>';
+}
+POST.dash=function(){
+  mkChart("cTrend",{type:"bar",data:{labels:CO.q,datasets:[{label:L(TX.lRev),data:CO.rev,backgroundColor:"#1f3b63"},{label:L(TX.lEb),data:CO.ebitda,backgroundColor:"#2f6fd6"},{label:L(TX.lPat),data:CO.pat,backgroundColor:"#8fb3e8"}]},
+   options:{scales:{y:{beginAtZero:true,grace:"10%",ticks:{callback:yIN}}}},plugins:[BAR]});
+};
+
+/* ---------- BUSINESS MODEL ---------- */
+function bmSvg(){
+  var N=BM.nodes,out=[],ar=[], segCol=["#1f3b63","#13958c","#7a4bc4","#d99a06"];
+  function box(id,x,y,w,h,fill,stroke,lines){ var t='<g class="node" data-id="'+id+'"><rect x="'+x+'" y="'+y+'" width="'+w+'" height="'+h+'" rx="12" fill="'+fill+'" stroke="'+stroke+'" stroke-width="1.5"/>';
+    lines.forEach(function(l,i){ t+='<text x="'+(x+w/2)+'" y="'+(y+22+i*18)+'" text-anchor="middle" font-size="'+(i===0?13:11.5)+'" font-weight="'+(i===0?700:500)+'" fill="'+(l.c||"#1b2430")+'">'+esc(l.t)+'</text>'; }); return t+'</g>'; }
+  function arrow(x1,y1,x2,y2,c){ return '<path d="M'+x1+','+y1+' C'+((x1+x2)/2)+','+y1+' '+((x1+x2)/2)+','+y2+' '+x2+','+y2+'" fill="none" stroke="'+(c||"#b8c2d0")+'" stroke-width="1.6" marker-end="url(#ah)"/>'; }
+  [[105,T("CUSTOMERS","வாங்குபவர்கள்")],[312,T("CHANNELS","விற்பனை வழி")],[530,T("COMPANY","கம்பெனி")],[760,T("SEGMENTS (Q2)","பிரிவுகள் (Q2)")],[1025,T("MONEY FLOW","பண ஓட்டம்")]].forEach(function(h){ out.push('<text x="'+h[0]+'" y="24" text-anchor="middle" font-size="12.5" font-weight="800" fill="#1f56b3">'+esc(h[1])+'</text>'); });
+  var cy=[90,210,330,450];
+  ["c1","c2","c3","c4"].forEach(function(id,i){ out.push(box(id,20,cy[i],170,90,"#fff7ef","#f3c39b",[{t:L(N[id].t)},{t:L(N[id].s),c:"#5b6675"}])); ar.push(arrow(190,cy[i]+45,225,cy[i]+45)); });
+  ["d1","d2","d3","d4"].forEach(function(id,i){ out.push(box(id,225,cy[i],175,90,"#f1faf5","#bfe6cf",[{t:L(N[id].t)},{t:L(N[id].s),c:"#5b6675"}])); ar.push(arrow(400,cy[i]+45,440,320)); });
+  out.push(box("co",440,230,180,180,"#e9f1fd","#2f6fd6",[{t:L(N.co.t)},{t:T("≈66.7 MTPA + 7 UAE","≈66.7 + 7 UAE")},{t:T("10.52 MT sold","10.52 மி.டன்"),c:"#5b6675"},{t:T("EBITDA/t ₹966","டன்னுக்கு ₹966"),c:"#5b6675"},{t:T("Utilisation 56%","பயன்பாடு 56%"),c:"#5b6675"}]));
+  ["s1","s2","s3","s4"].forEach(function(id,i){ var y=60+i*130, n=N[id];
+    out.push(box(id,660,y,200,96,"#ffffff",segCol[i],[{t:L(n.t),c:segCol[i]},{t:(typeof n.v==="object"?L(n.v):n.v)+"  ·  "+L(n.g)},{t:T("Share ","பங்கு ")+n.sh,c:"#5b6675"}]));
+    ar.push(arrow(620,320,660,y+48,segCol[i])); ar.push(arrow(860,y+48,900,85,"#d7dde6")); });
+  var rc=["#eef4ff","#fdeaea","#fff6dc","#e7f6ee","#fff3e8"], rs=["#2f6fd6","#d64545","#d99a06","#1f9d55","#e8701a"];
+  ["r1","r2","r3","r4","r5"].forEach(function(id,i){ var y=40+i*122; out.push(box(id,900,y,250,90,rc[i],rs[i],[{t:L(N[id].t)},{t:L(N[id].s),c:"#5b6675"}])); if(i<4) ar.push('<line x1="1025" y1="'+(y+90)+'" x2="1025" y2="'+(y+122)+'" stroke="'+rs[i+1]+'" stroke-width="2" marker-end="url(#ah)"/>'); });
+  return '<svg id="bmsvg" viewBox="0 0 1180 660"><defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#8f9bb0"/></marker></defs>'+ar.join("")+out.join("")+'</svg>';
+}
+function secBm(){ var e=BM.engine;
+  var gs=BM.gs.map(function(g){ return '<div style="margin-left:'+(g.lvl*28)+'px;padding:8px 12px;border-radius:10px;margin-bottom:6px;border:1.5px solid '+(g.lvl===0?"#8f9bb0":(g.lvl===1?"#2f6fd6":"#bcd3f6"))+';background:'+(g.lvl===1?"#e9f1fd":"#fff")+';font-weight:'+(g.lvl<2?700:500)+'">'+(g.lvl?"↳ ":"")+L(g.t)+'</div>'; }).join("");
+  return '<h2>'+L(BM.title)+'</h2><div class="bmwrap">'+bmSvg()+'</div><div class="explain" id="bmEx"><h4>'+L(BM.nodes.co.t)+'</h4><div>'+L(BM.nodes.co.x)+'</div></div>'+
+   '<div class="note" style="margin-top:8px"><b>ƒ</b> '+L(BM.formula)+'</div>'+
+   '<h3>'+L(e.title)+'</h3>'+table(L(e.head),e.rows.map(function(r){var x=L(r).slice(); x.lcols=[3]; return x;}))+'<div class="note">'+L(e.note)+'</div>'+
+   '<div class="grid g2" style="margin-top:12px">'+card('<b>'+L(BM.segTitle)+'</b>'+chartBox("cSeg"))+card('<b>'+L(BM.gsTitle)+'</b><div style="margin-top:10px">'+gs+'</div>')+'</div>';
+}
+POST.bm=function(){
+  document.querySelectorAll("#bmsvg .node").forEach(function(g){ g.onclick=function(){ document.querySelectorAll("#bmsvg .node").forEach(function(x){x.classList.remove("sel");}); g.classList.add("sel");
+    var n=BM.nodes[g.getAttribute("data-id")]; var ex=document.getElementById("bmEx"); ex.innerHTML='<h4>'+L(n.t)+'</h4><div>'+L(n.x)+'</div>'; ex.scrollIntoView({behavior:"smooth",block:"nearest"}); }; });
+  mkChart("cSeg",{type:"doughnut",data:{labels:BM.seg.map(function(s){return L(s);}),datasets:[{data:BM.seg.map(function(s){return s.v;}),backgroundColor:["#1f3b63","#d99a06","#13958c"]}]},
+   options:{plugins:{legend:{position:"bottom"},tooltip:{callbacks:{label:function(c){return c.label+": ₹"+yIN(c.raw)+" cr";}}}}}});
+};
+
+/* ---------- HEAD TO HEAD ---------- */
+function secH2h(){ var tl=tally(), rows=[];
+  SCORE.forEach(function(c,ci){ var x=tl.c[ci]; rows.push({cat:L(c.c)+'  —  '+lbl('u')+' '+x.u+' · '+lbl('s')+' '+x.s+(x.t?' · '+T("Tie","சமம்")+' '+x.t:'')});
+    c.rows.forEach(function(r){ var row=[L(r.p),'<b>'+L(r.u)+'</b>','<b>'+L(r.s)+'</b>',winB(r.w),L(r.why)]; row.lcols=[4]; rows.push(row); }); });
+  return '<h2>'+T("Head-to-head scorecard","நேருக்கு நேர் மதிப்பெண்")+'</h2>'+
+   '<div class="vs" style="margin-bottom:12px"><div class="side ut"><div class="lbl" style="font-size:12px;color:#5b6675;font-weight:700">'+lbl("u").toUpperCase()+'</div><div style="font-size:30px;font-weight:800;color:'+CU+'">'+tl.t.u+'</div><div class="note">'+T("parameters won","ஜெயிச்ச அளவீடுகள்")+'</div></div>'+
+   '<div style="text-align:center;font-weight:800;color:#5b6675">'+T("Tie","சமம்")+'<div style="font-size:22px">'+tl.t.t+'</div></div>'+
+   '<div class="side sh" style="text-align:right"><div class="lbl" style="font-size:12px;color:#5b6675;font-weight:700">'+lbl("s").toUpperCase()+'</div><div style="font-size:30px;font-weight:800;color:'+CS_+'">'+tl.t.s+'</div><div class="note">'+T("parameters won","ஜெயிச்ச அளவீடுகள்")+'</div></div></div>'+
+   table([T("Parameter","அளவீடு"),lbl("u"),lbl("s"),T("Winner","ஜெயிச்சவர்"),T("Why","ஏன்")],rows)+
+   '<div class="note">'+T("† derived by CB Research. Each parameter counts once; counting parameters is a simple guide, not a weighting of importance — see the Verdict tab.","† CB ரிசர்ச் கணக்கீடு. ஒவ்வொரு அளவீடும் ஒரு முறை கணக்கு; இது முக்கியத்துவ எடை இல்ல — தீர்ப்பு டேப்பை பாருங்க.")+'</div>';
+}
+
+/* ---------- OPERATIONS ---------- */
+function secOps(){
+  var e=SCORE[2].rows.map(function(r){ return [L(r.p),L(r.u),L(r.s),winB(r.w)]; });
+  e.unshift([T("Capacity utilisation","பயன்பாடு"),"71%","56%",winB("u")]);
+  return '<h2>'+L(OPS.title)+'</h2>'+card(L(OPS.intro))+
+   '<div class="grid g2" style="margin-top:12px">'+card('<b>'+L(OPS.etTitle)+'</b>'+chartBox("cEt"))+card('<b>'+L(OPS.kcalTitle)+'</b>'+chartBox("cKcal")+'<div class="note">'+L(OPS.kcalNote)+'</div>')+
+   card('<b>'+L(OPS.utilTitle)+'</b>'+chartBox("cUtil"))+card('<b>'+L(OPS.greenTitle)+'</b>'+chartBox("cGreen"))+'</div>'+
+   '<div class="grid g2" style="margin-top:12px">'+card('<b>'+L(OPS.fuelTitle)+'</b>'+chartBox("cFuel")+'<div class="note">'+T("Petcoke was 66% of Shree's fuel a year ago.","போன வருஷம் ஷ்ரீ எரிபொருள்ல 66% பெட்கோக்.")+'</div>')+
+   '<div>'+table(L(OPS.head),e)+'</div></div>'+
+   '<h3>'+T("How to read it","எப்படி புரிஞ்சுக்கலாம்")+'</h3>'+card(ul(OPS.reads));
+}
+POST.ops=function(){
+  var two=function(id,labels,u,s,opt,fmt){ mkChart(id,{type:"bar",data:{labels:labels,datasets:[{label:"UltraTech",data:u,backgroundColor:CU,fmt:fmt},{label:"Shree",data:s,backgroundColor:CS_,fmt:fmt}]},options:opt||{scales:{y:{beginAtZero:true,grace:"12%"}}},plugins:[BAR]}); };
+  two("cEt",["Q2FY26","Q1FY27","Q2FY27"],[914,1214,974],[1055,1111,966],{scales:{y:{beginAtZero:true,grace:"12%",ticks:{callback:yIN}}}});
+  mkChart("cKcal",{type:"line",data:{labels:["Q2FY26","Q1FY27","Q2FY27","Q3FY27E"],datasets:[{label:"UltraTech",data:[null,1.90,2.09,2.20],borderColor:CU,backgroundColor:CU,tension:.3,spanGaps:true,fmt:function(v){return "₹"+v.toFixed(2);}},{label:"Shree",data:[1.66,1.95,2.09,2.175],borderColor:CS_,backgroundColor:CS_,tension:.3,fmt:function(v){return "₹"+v.toFixed(2);}}]},options:{scales:{y:{min:1.5,max:2.35}}},plugins:[LINEL]});
+  two("cUtil",["Q2FY26","Q2FY27"],[66,71],[52,56],{scales:{y:{min:0,max:100,ticks:{callback:function(v){return v+"%";}}}}},function(v){return v+"%";});
+  mkChart("cGreen",{type:"bar",data:{labels:[L(OPS.lGreen),L(OPS.lTsr)],datasets:[{label:"UltraTech",data:[48,7.2],backgroundColor:CU,fmt:function(v){return v+"%";}},{label:"Shree",data:[65.2,5],backgroundColor:CS_,fmt:function(v){return v+"%";}}]},options:{scales:{y:{min:0,max:80,ticks:{callback:function(v){return v+"%";}}}}},plugins:[BAR]});
+  mkChart("cFuel",{type:"doughnut",data:{labels:OPS.fuelL.map(function(x){return L(x);}),datasets:[{data:[75,12,11,2],backgroundColor:["#1f3b63","#1f9d55","#d64545","#8a8f98"]}]},options:{plugins:{legend:{position:"bottom"},tooltip:{callbacks:{label:function(c){return c.label+": "+c.raw+"%";}}}}}});
+};
+
+/* ---------- GEOGRAPHY ---------- */
+function geoSvg(){ var o=[];
+  function bars(x,y,lv,c){ var s=''; for(var i=0;i<3;i++) s+='<rect x="'+(x+i*16)+'" y="'+y+'" width="13" height="10" rx="2" fill="'+(i<lv?c:"#e3e8ef")+'"/>'; return s; }
+  GEO.regions.forEach(function(r){ var w=190,h=112;
+    o.push('<g class="node geo" data-k="'+r.k+'" style="cursor:pointer"><rect x="'+r.x+'" y="'+r.y+'" width="'+w+'" height="'+h+'" rx="14" fill="#fff" stroke="#c9d3e0" stroke-width="1.5"/>'+
+     '<text x="'+(r.x+14)+'" y="'+(r.y+26)+'" font-size="14" font-weight="800" fill="#1b2430">'+esc(L(r.n))+'</text>'+
+     '<text x="'+(r.x+14)+'" y="'+(r.y+56)+'" font-size="11.5" font-weight="700" fill="'+CU+'">UltraTech</text>'+bars(r.x+90,r.y+47,r.u,CU)+'<text x="'+(r.x+142)+'" y="'+(r.y+56)+'" font-size="10.5" fill="#5b6675">'+esc(L(GEO.lvl[r.u]))+'</text>'+
+     '<text x="'+(r.x+14)+'" y="'+(r.y+84)+'" font-size="11.5" font-weight="700" fill="'+CS_+'">Shree</text>'+bars(r.x+90,r.y+75,r.s,CS_)+'<text x="'+(r.x+142)+'" y="'+(r.y+84)+'" font-size="10.5" fill="#5b6675">'+esc(L(GEO.lvl[r.s]))+'</text></g>'); });
+  return '<svg id="geoSvg" viewBox="0 0 670 430" style="min-width:560px;width:100%;display:block">'+o.join("")+'</svg>';
+}
+function secGeo(){
+  var pr=GEO.plan.rows.map(function(r){var x=L(r).slice(); x.lcols=[1,2]; return x;});
+  return '<h2>'+L(GEO.title)+'</h2><div class="grid g2"><div class="bmwrap" style="padding:8px">'+geoSvg()+'</div><div><div class="explain" id="geoEx"><h4>'+L(GEO.regions[0].n)+'</h4><div><b style="color:'+CU+'">UltraTech:</b> '+L(GEO.regions[0].un)+'<br><b style="color:'+CS_+'">Shree:</b> '+L(GEO.regions[0].sn)+'</div></div><div class="note">'+L(GEO.note)+'</div></div></div>'+
+   '<div class="grid g2" style="margin-top:12px">'+card('<b>'+L(GEO.capTitle)+'</b>'+chartBox("cCap"))+card('<b>'+L(GEO.volTitle)+'</b>'+chartBox("cVol"))+'</div>'+
+   '<h3>'+L(GEO.plan.t)+'</h3>'+table([T("Company","கம்பெனி"),T("Capacity path","கொள்ளளவு திட்டம்"),T("Capex","கேபெக்ஸ்")],pr);
+}
+POST.geo=function(){
+  document.querySelectorAll("#geoSvg .geo").forEach(function(g){ g.onclick=function(){ var r=GEO.regions.filter(function(x){return x.k===g.getAttribute("data-k");})[0];
+    document.querySelectorAll("#geoSvg .geo rect:first-child").forEach(function(x){x.setAttribute("stroke","#c9d3e0");x.setAttribute("stroke-width","1.5");}); g.querySelector("rect").setAttribute("stroke","#1b2430"); g.querySelector("rect").setAttribute("stroke-width","2.5");
+    document.getElementById("geoEx").innerHTML='<h4>'+L(r.n)+'</h4><div><b style="color:'+CU+'">UltraTech:</b> '+L(r.un)+'<br><b style="color:'+CS_+'">Shree:</b> '+L(r.sn)+'</div>'; }; });
+  mkChart("cCap",{type:"bar",data:{labels:[T("India","இந்தியா"),T("Overseas","வெளிநாடு"),T("Total","மொத்தம்")],datasets:[{label:"UltraTech",data:[204.7,5.4,210.1],backgroundColor:CU,fmt:function(v){return v.toFixed(1);}},{label:"Shree †",data:[66.7,7.0,73.7],backgroundColor:CS_,fmt:function(v){return v.toFixed(1);}}]},options:{scales:{y:{beginAtZero:true,grace:"10%"}}},plugins:[BAR]});
+  mkChart("cVol",{type:"bar",data:{labels:["UltraTech","Shree"],datasets:[{label:T("India volume (MT)","விற்பனை (மி.டன்)"),data:[35.94,9.31],backgroundColor:[CU,CS_],fmt:function(v){return v.toFixed(2);}},{type:"line",label:T("YoY growth %","வளர்ச்சி %"),data:[13.8,17.7],borderColor:"#1f9d55",backgroundColor:"#1f9d55",yAxisID:"y1",fmt:function(v){return "+"+v+"%";}}]},
+   options:{scales:{y:{beginAtZero:true,grace:"12%"},y1:{position:"right",min:0,max:25,grid:{display:false},ticks:{callback:function(v){return v+"%";}}}}},plugins:[BAR,LINEL]});
+};
+
+/* ---------- MIX & BRAND ---------- */
+function mk(v){ if(v===1) return '<span class="tick">✓</span>'; if(v===0) return '<span class="cross">✗</span>'; return L(v); }
+function secMix(){
+  var m=MIX.mtx.rows.map(function(r){ return [L(r[0]),mk(r[1]),mk(r[2])]; });
+  return '<h2>'+L(MIX.title)+'</h2><div class="grid g2">'+card('<b>'+L(MIX.chTitle)+'</b>'+chartBox("cMix")+'<div class="note">'+L(MIX.note)+'</div>')+'<div>'+table(L(MIX.mtx.head),m)+'</div></div>'+
+   '<h3>'+T("Brand","பிராண்ட்")+'</h3><div class="grid g2">'+card('<b style="color:'+CU+'">UltraTech</b><div style="margin-top:6px">'+L(MIX.brands.u)+'</div>','')+card('<b style="color:'+CS_+'">Shree</b><div style="margin-top:6px">'+L(MIX.brands.s)+'</div>','')+'</div>'+
+   '<h3>'+L(MIX.focus.t)+'</h3><div class="grid g2">'+card('<b style="color:'+CU+'">UltraTech</b><div style="margin-top:6px">'+ul(MIX.focus.u)+'</div>')+card('<b style="color:'+CS_+'">Shree</b><div style="margin-top:6px">'+ul(MIX.focus.s)+'</div>')+'</div>';
+}
+POST.mix=function(){
+  mkChart("cMix",{type:"bar",data:{labels:MIX.chL.map(function(x){return L(x);}),datasets:[{label:"UltraTech",data:[37,67.3,null],backgroundColor:CU,fmt:function(v){return v+"%";}},{label:"Shree",data:[28.7,58,61],backgroundColor:CS_,fmt:function(v){return v+"%";}}]},
+   options:{scales:{y:{min:0,max:100,ticks:{callback:function(v){return v+"%";}}}}},plugins:[BAR]});
+};
+
+/* ---------- FINANCIALS ---------- */
+function secFin(){ var rows=[];
+  FIN.cats.forEach(function(c){ rows.push({cat:L(c.c)});
+    if(c.rows==="VAL"){
+      rows.push([T("Market cap (₹ cr)","சந்தை மதிப்பு (₹ கோடி)"),f(CO.mcap),"—","—","—","≈3,14,718"]);
+      rows.push(["P/E (TTM, x)",CO.peCalc.toFixed(1),"—","—","—","≈35.9"]);
+      rows.push(["EV / EBITDA (x)",CO.evEbitdaFY26.toFixed(1)+" (FY26) †","—","—","—","≈18.2 (TTM)"]);
+      rows.push(["P/B (x)",CO.pb.toFixed(2),"—","—","—","≈3.9"]);
+      rows.push([T("Dividend yield (%)","டிவிடெண்ட் ஈல்ட் (%)"),CO.dy.toFixed(2),"—","—","—","≈2.2"]); return; }
+    c.rows.forEach(function(r){ var a=r[1],b=r[2],q=r[3],isP=/%|kcal|x\)/.test(L(r[0])), d=(typeof a==="number"&&a%1!==0)?(a<10?2:1):0;
+      var yy="—"; if(typeof a==="number"&&typeof b==="number") yy= isP? ((a-b>=0?"+":"−")+Math.abs(a-b).toFixed(1)+(/kcal/.test(L(r[0]))?"":T(" pts"," புள்ளி"))) : sgn(chg(a,b));
+      if(/kcal/.test(L(r[0]))&&typeof a==="number"&&typeof b==="number") yy=sgn(chg(a,b));
+      function fx(v){ return typeof v==="number"? f(v,(v%1!==0)?(v<10?2:1):0):v; }
+      rows.push([L(r[0]),'<b>'+fx(a)+'</b>',fx(b),'<span class="'+(yy.charAt(0)==="+"?"up":(yy.charAt(0)==="−"?"dn":""))+'">'+yy+'</span>',fx(q),r[4]]); }); });
+  return '<h2>'+L(FIN.title)+'</h2>'+table(L(FIN.head),rows)+'<div class="note">'+L(FIN.note)+' '+T("For cost lines, a + change means higher cost.","செலவு வரிகள்ல + என்றால் செலவு அதிகம்.")+'</div>'+
+   '<h3>'+T("Shree annual P&L (₹ cr)","ஷ்ரீ வருடாந்திர லாப-நஷ்டம் (₹ கோடி)")+'</h3>'+table(["",].concat(CO.fy.yrs),[[T("Sales","விற்பனை")].concat(CO.fy.sales.map(f)),[T("Operating profit","ஆப். லாபம்")].concat(CO.fy.op.map(f)),[T("Depreciation","தேய்மானம்")].concat(CO.fy.dep.map(f)),[T("Interest","வட்டி")].concat(CO.fy.int.map(f)),[T("Net profit","நிகர லாபம்")].concat(CO.fy.np.map(f))])+
+   '<h3>'+L(SRC.t)+'</h3>'+card('<ol style="margin:0;padding-left:20px;font-size:13px">'+SRC.l.map(function(s){return '<li>'+esc(s)+'</li>';}).join("")+'</ol>');
+}
+
+/* ---------- CASH FLOW ---------- */
+function secCf(){ var fy=CO.fy, w=CO.wc;
+  return '<h2>'+L(CF.title)+'</h2>'+card(ul(CF.points))+
+   '<div class="grid g2" style="margin-top:12px">'+card('<b>'+L(CF.convTitle)+'</b>'+chartBox("cConv",true))+card('<b>'+L(CF.wcTitle)+'</b>'+chartBox("cWc",true))+'</div>'+
+   '<h3>'+T("Cash flow statement","கேஷ் ஃப்ளோ")+'</h3>'+table(L(CF.cfHead),CF.cfRows.map(function(r){ var src=r.k==="op"?fy.op:fy[r.k]; return [L(r)].concat(src.map(f)); }))+
+   '<h3>'+T("Working capital days","வொர்க்கிங் கேப்பிட்டல் நாட்கள்")+'</h3>'+table(L(CF.wcHead),CF.wcRows.map(function(r){ return [L(r)].concat(w[r.k]).concat(['<span style="color:'+CU+';font-weight:700">'+r.u+'</span>']); }))+'<div class="note">'+L(CF.note)+'</div>';
+}
+POST.cf=function(){ var fy=CO.fy, cv=fy.cfo.map(function(o,i){return Math.round(o/fy.op[i]*100);});
+  mkChart("cConv",{type:"bar",data:{labels:fy.yrs,datasets:[{label:T("Operating profit","ஆப். லாபம்"),data:fy.op,backgroundColor:"#8fb3e8",yAxisID:"y"},{label:"CFO",data:fy.cfo,backgroundColor:"#1f3b63",yAxisID:"y"},{type:"line",label:"CFO / EBITDA %",data:cv,borderColor:"#1f9d55",backgroundColor:"#1f9d55",yAxisID:"y1",fmt:function(v){return v+"%";}},{type:"line",label:T("UltraTech FY26 87%","அல்ட்ராடெக் FY26 87%"),data:[null,null,87],borderColor:CU,backgroundColor:CU,yAxisID:"y1",pointRadius:7,pointStyle:"rectRot",fmt:function(v){return "UT "+v+"%";}}]},
+   options:{scales:{y:{beginAtZero:true,grace:"10%",ticks:{callback:yIN}},y1:{position:"right",min:0,max:140,grid:{display:false},ticks:{callback:function(v){return v+"%";}}}}},plugins:[BAR,LINEL]});
+  var w=CO.wc; mkChart("cWc",{type:"bar",data:{labels:w.yrs,datasets:[{label:L(CF.wcRows[0]),data:w.inv,backgroundColor:"#9fb6d6"},{label:L(CF.wcRows[1]),data:w.debtor,backgroundColor:"#13958c"},{label:L(CF.wcRows[2]),data:w.pay,backgroundColor:"#f3b27f"},{type:"line",label:L(CF.wcRows[3]),data:w.ccc,borderColor:"#d64545",backgroundColor:"#d64545",tension:.3,noLbl:true}]},options:{scales:{y:{beginAtZero:true}}},plugins:[BAR]});
+};
+
+/* ---------- VALUATION ---------- */
+function secVal(){
+  var rows=[["Market cap (₹ cr)","≈3,14,718",f(CO.mcap),"—"],["P/E (TTM)","≈35.9x",CO.peCalc.toFixed(1)+"x",winB("u")],["EV / EBITDA","≈18.2x (TTM)",CO.evEbitdaFY26.toFixed(1)+"x (FY26) †",winB("s")],["EV / tonne (₹)","≈16,100","≈"+f(Math.round(CO.evT/50)*50)+" †",winB("s")],
+   ["P/B","≈3.9x",CO.pb.toFixed(2)+"x",winB("s")],["ROE","≈11.6%",CO.roe+"%",winB("u")],["Dividend yield","≈2.2%",CO.dy+"%",winB("u")]];
+  var sens=[56,65,75].map(function(u){ var v=66.7*u/100, e=v*966/10; return [u+"%", f(v,1), f(Math.round(e)), (CO.ev/e).toFixed(1)+"x"]; });
+  return '<h2>'+L(VAL.title)+'</h2>'+table(L(VAL.head),rows)+'<div class="note">'+L(VAL.ref)+'</div>'+
+   '<h3>'+T("How to read it","எப்படி புரிஞ்சுக்கலாம்")+'</h3>'+card(ul(VAL.read))+
+   '<div class="grid g2" style="margin-top:12px"><div><h3>'+L(VAL.sensTitle)+'</h3>'+table(L(VAL.sensHead),sens)+'<div class="note">'+L(VAL.sensNote)+'</div></div>'+card('<b>'+T("P/E vs EV per tonne","P/E vs டன்னுக்கு EV")+'</b>'+chartBox("cVal"))+'</div>';
+}
+POST.val=function(){
+  mkChart("cVal",{type:"bar",data:{labels:["P/E (x)",T("EV/tonne (₹ '000)","டன்னுக்கு EV (₹ ஆயிரம்)")],datasets:[{label:"UltraTech",data:[35.9,16.1],backgroundColor:CU,fmt:function(v){return v.toFixed(1);}},{label:"Shree",data:[+CO.peCalc.toFixed(1),+(CO.evT/1000).toFixed(1)],backgroundColor:CS_,fmt:function(v){return v.toFixed(1);}}]},options:{scales:{y:{beginAtZero:true,grace:"12%"}}},plugins:[BAR]});
+};
+
+/* ---------- TRIGGERS & CYCLE ---------- */
+function cycleSvg(){ var cx=210,cy=200,r=150, cols=["#9fb6d6","#1f9d55","#2f6fd6","#d99a06","#d64545"], out=[];
+  function p(a,rr){ var t=a*Math.PI/180; return [cx+rr*Math.sin(t), cy-rr*Math.cos(t)]; }
+  TC.phases.forEach(function(ph,i){ var a0=i*72,a1=a0+72, s=p(a0,r), e=p(a1,r), m=p(a0+36,r*0.66);
+    out.push('<path d="M'+cx+','+cy+' L'+s[0]+','+s[1]+' A'+r+','+r+' 0 0 1 '+e[0]+','+e[1]+' Z" fill="'+cols[i]+'" opacity="'+(ph.k==="P3"?1:.55)+'" stroke="#fff" stroke-width="3"/><text x="'+m[0]+'" y="'+(m[1]-4)+'" text-anchor="middle" font-size="13" font-weight="800" fill="#fff">'+ph.k+'</text><text x="'+m[0]+'" y="'+(m[1]+12)+'" text-anchor="middle" font-size="10.5" font-weight="600" fill="#fff">'+esc(L(ph))+'</text>'); });
+  var n=p(180,r-18); out.push('<line x1="'+cx+'" y1="'+cy+'" x2="'+n[0]+'" y2="'+n[1]+'" stroke="#1b2430" stroke-width="5" stroke-linecap="round"/><circle cx="'+cx+'" cy="'+cy+'" r="10" fill="#1b2430"/>');
+  out.push('<text x="'+cx+'" y="392" text-anchor="middle" font-size="12.5" font-weight="700" fill="#1b2430">'+esc(T("Sector ▶ P3 Expansion · Shree ▶ Weinstein Stage 4","துறை ▶ P3 · ஷ்ரீ ▶ கட்டம் 4"))+'</text>');
+  return '<svg id="cycleSvg" viewBox="0 0 420 405">'+out.join("")+'</svg>'; }
+function secTc(){ var cy=CO.cycle;
+  var sr=TC.stockRows.map(function(r){ var x=L(r).slice(); x.push('<b>'+cy.sub[r.k]+'</b>'); x.lcols=[1]; return x; }); sr.push(['<b>'+T("Stock cycle score","பங்கு சைக்கிள் ஸ்கோர்")+'</b>','','<b>'+cy.stockScore+'</b>']);
+  var tr=CO.triggers.map(function(t){ var pts=t.I*t.C*t.W*t.P, x=L(TC.trig[t.k]); var r=[x[0],'<b class="'+(t.sign==="+"?"up":"dn")+'">'+t.sign+'</b>',t.I,t.C.toFixed(1),t.W.toFixed(1),t.P.toFixed(1),'<b>'+pts.toFixed(2)+'</b>',t.st,x[1]]; r.lcols=[8]; return r; });
+  return '<h2>'+L(TC.title)+' <span class="chip cy">CY '+cy.cy+'</span> <span class="chip tg">TG '+CO.tg+'</span></h2>'+
+   '<div class="grid g2">'+card(cycleSvg())+card('<div class="explain" style="margin-top:0">'+L(TC.sector)+'</div><div style="margin-top:10px">'+table([T("Lens","அளவீடு"),"UltraTech","Shree"],[["CY (cycle)","60","57"],["TG (triggers)","74","63"],["CB Score","6.6","6.3"],[T("Price stage","விலை கட்டம்"),"Stage 4","Stage 4"]])+'</div>')+'</div>'+
+   '<h3>'+T("Shree's own cycle","ஷ்ரீயோட சொந்த சைக்கிள்")+'</h3>'+table(L(TC.stockHead),sr)+'<div class="note"><b>'+L(TC.cyLine)+'</b></div>'+
+   '<h3>'+T("Trigger table (points = I × C × W × P)","ட்ரிக்கர் அட்டவணை")+'</h3>'+table(L(TC.trigHead),tr)+'<div class="note"><b>'+L(TC.tgLine)+'</b></div><div class="explain" style="background:#fff6dc;border-color:#d99a06">'+L(TC.gate)+'</div>';
+}
+
+/* ---------- PILLARS ---------- */
+function templeSvg(P,name){ var comp=P.reduce(function(a,b){return a+b.s;},0)/P.length, out=[];
+  out.push('<polygon points="30,135 380,22 730,135" fill="#e8701a"/><polygon points="70,128 380,38 690,128" fill="#f08a3c"/><text x="380" y="95" text-anchor="middle" font-size="15" font-weight="700" fill="#fff">CB Score</text><text x="380" y="122" text-anchor="middle" font-size="24" font-weight="800" fill="#fff">'+comp.toFixed(1)+' / 10</text>');
+  out.push('<rect x="40" y="135" width="680" height="40" fill="#1f3b63"/><text x="380" y="161" text-anchor="middle" font-size="15" font-weight="700" fill="#fff">'+esc(name)+' · Q2 FY27</text>');
+  P.forEach(function(p,i){ var x=78+i*110,w=62,top=185,h=245,c=col(p.s);
+    out.push('<g class="col" data-k="'+p.k+'" style="cursor:pointer"><rect x="'+x+'" y="'+top+'" width="'+w+'" height="'+h+'" fill="#f1f3f7" stroke="#d5dbe5"/><rect class="fill" data-h="'+(h*p.s/10)+'" x="'+x+'" y="'+(top+h)+'" width="'+w+'" height="0" fill="'+c+'" opacity=".9"/>');
+    for(var j=1;j<5;j++) out.push('<line x1="'+(x+j*w/5)+'" y1="'+top+'" x2="'+(x+j*w/5)+'" y2="'+(top+h)+'" stroke="#fff" stroke-opacity=".55" stroke-width="2"/>');
+    out.push('<rect x="'+(x-6)+'" y="'+(top-8)+'" width="'+(w+12)+'" height="10" fill="#c9d3e0"/><circle class="sc-c" cx="'+(x+w/2)+'" cy="'+(top+h-6)+'" r="19" fill="#fff" stroke="'+c+'" stroke-width="3"/><text class="sc-t" x="'+(x+w/2)+'" y="'+(top+h-1)+'" text-anchor="middle" font-size="13" font-weight="800" fill="'+c+'">'+p.s.toFixed(1)+'</text></g>'); });
+  out.push('<rect x="40" y="430" width="680" height="16" fill="#c9d3e0"/><rect x="20" y="446" width="720" height="16" fill="#b5c0cf"/>');
+  P.forEach(function(p,i){ out.push('<text x="'+(109+i*110)+'" y="484" text-anchor="middle" font-size="13" font-weight="700" fill="#1b2430">'+esc(L(PIL.name[p.k]))+'</text>'); });
+  return '<svg id="templeSvg" viewBox="0 0 760 500">'+out.join("")+'</svg>'; }
+function secPil(){
+  var P = PILSEL==="sh"? CO.pillars : ["g","m","d","v","t","r"].map(function(k){return {k:k,s:PIL.ut[k]};});
+  var cards=CO.pillars.map(function(p){ return '<div class="pcard" id="pc_'+p.k+'" style="border-left-color:'+col(p.s)+'"><div style="display:flex;align-items:center"><span class="sc" style="background:'+col(p.s)+'">'+p.s.toFixed(1)+'</span><b>'+L(PIL.name[p.k])+'</b><span class="note" style="margin:0 0 0 auto">UltraTech '+PIL.ut[p.k].toFixed(1)+'</span></div><div style="margin-top:6px;font-size:14px">'+L(PIL.why[p.k])+'</div></div>'; }).join("");
+  return '<h2>'+L(PIL.title)+'</h2><div class="tog" style="margin-bottom:8px"><button data-p="sh" class="'+(PILSEL==="sh"?"on":"")+'">'+L(PIL.tog.sh)+'</button><button data-p="ut" class="'+(PILSEL==="ut"?"on":"")+'">'+L(PIL.tog.ut)+'</button></div>'+
+   '<div class="temple">'+templeSvg(P,PILSEL==="sh"?"Shree Cement":"UltraTech Cement")+'</div><div class="note" style="text-align:center">'+T("Green 8–10 · Amber 6–8 · Red below 6","பச்சை 8–10 · மஞ்சள் 6–8 · சிவப்பு 6-க்கு கீழ")+'</div>'+
+   '<div class="grid g2" style="margin-top:12px">'+card('<b>'+L(PIL.cmpTitle)+'</b>'+chartBox("cPil"))+'<div class="grid">'+cards+'</div></div><div class="note">'+L(PIL.compNote)+'</div>';
+}
+POST.pil=function(){
+  var fills=document.querySelectorAll("#templeSvg .fill"),t0=null;
+  function step(ts){ if(!t0) t0=ts; var k=Math.min(1,(ts-t0)/900), e=1-Math.pow(1-k,3);
+    fills.forEach(function(r){ var h=+r.getAttribute("data-h")*e; r.setAttribute("height",h); r.setAttribute("y",430-h); var g=r.parentNode, cy=430-h+(h>30?18:-24); g.querySelector(".sc-c").setAttribute("cy",cy); g.querySelector(".sc-t").setAttribute("y",cy+5); });
+    if(k<1) requestAnimationFrame(step); } requestAnimationFrame(step);
+  document.querySelectorAll("#templeSvg .col").forEach(function(g){ g.onclick=function(){ var el=document.getElementById("pc_"+g.getAttribute("data-k")); document.querySelectorAll(".pcard").forEach(function(x){x.classList.remove("hl");}); el.classList.add("hl"); el.scrollIntoView({behavior:"smooth",block:"center"}); }; });
+  document.querySelectorAll(".tog button").forEach(function(b){ b.onclick=function(){ PILSEL=b.getAttribute("data-p"); rerender("pil"); }; });
+  var ks=["g","m","d","v","t","r"];
+  mkChart("cPil",{type:"bar",data:{labels:ks.map(function(k){return L(PIL.name[k]);}),datasets:[{label:"UltraTech",data:ks.map(function(k){return PIL.ut[k];}),backgroundColor:CU,fmt:function(v){return v.toFixed(1);}},{label:"Shree",data:CO.pillars.map(function(p){return p.s;}),backgroundColor:CS_,fmt:function(v){return v.toFixed(1);}}]},options:{indexAxis:"x",scales:{y:{min:0,max:10}}},plugins:[BAR]});
+};
+
+/* ---------- SWOT ---------- */
+function secSwot(){ var m={s:"s-s",w:"s-w",o:"s-o",t:"s-t"};
+  return '<h2>SWOT — Shree Cement</h2><div class="grid g2 swot">'+["s","w","o","t"].map(function(k){ var x=SW[k]; return '<div class="card '+m[k]+'"><h3>'+L(x.t)+'</h3>'+ul(x.l)+'</div>'; }).join("")+'</div>'; }
+
+/* ---------- ANALYSTS ---------- */
+function secAn(){
+  var rows=CO.analysts.map(function(a){ var cl=/Buy|Overweight/.test(a.r)?"p-buy":(/Neutral|Hold/.test(a.r)?"p-hold":(/Sell|Underweight/.test(a.r)?"p-sell":"p-na")); var up=a.tp?(a.tp/CO.refPrice-1)*100:null;
+    var r=[a.b,'<span class="pill '+cl+'">'+a.r+'</span>',a.tp?f(a.tp):"n/a",up==null?"—":'<span class="'+cls(up)+'">'+sgn(up)+'</span>',a.d,L(a.n)]; r.lcols=[5]; return r; });
+  return '<h2>'+L(AN.title)+'</h2>'+card('<b>'+L(AN.sum)+'</b>')+'<div style="margin-top:12px">'+table(L(AN.head),rows)+'</div>'+
+   '<div class="grid g2" style="margin-top:12px">'+card('<b>'+L(AN.chart)+'</b>'+chartBox("cAn"))+card('<b>UltraTech</b><div style="margin-top:6px">'+L(AN.utRef)+'</div>')+'</div><div class="explain" style="background:#eef4ff;border-color:#2f6fd6">'+L(AN.caveat)+'</div>';
+}
+POST.an=function(){ var a=CO.analysts.filter(function(x){return x.tp;});
+  mkChart("cAn",{type:"bar",data:{labels:a.map(function(x){return x.b;}),datasets:[{data:a.map(function(x){return x.tp;}),backgroundColor:a.map(function(x){return x.r==="Buy"?"#1f9d55":(x.r==="Neutral"?"#d99a06":"#8a8f98");})}]},
+   options:{plugins:{legend:{display:false}},scales:{y:{min:18000,max:30000,ticks:{callback:yIN}}}},
+   plugins:[BAR,{id:"ref",afterDraw:function(c){ var y=c.scales.y.getPixelForValue(CO.refPrice), ctx=c.ctx, ar=c.chartArea; ctx.save(); ctx.setLineDash([6,4]); ctx.strokeStyle="#d64545"; ctx.beginPath(); ctx.moveTo(ar.left,y); ctx.lineTo(ar.right,y); ctx.stroke(); ctx.setLineDash([]); ctx.font="700 11px Inter"; ctx.fillStyle="#d64545"; ctx.fillText(T("Price ≈ ₹22,801","விலை ≈ ₹22,801"),ar.left+6,y-5); ctx.restore(); }}]});
+};
+
+/* ---------- SELF-CHECK ---------- */
+var SKEY="cb_sc_SHREECEM_Q2FY27";
+function scLoad(){ try{ var v=JSON.parse(localStorage.getItem(SKEY)||"null"); if(v&&v.t) return v; }catch(e){} return {t:{},own:[]}; }
+function scSave(v){ try{ localStorage.setItem(SKEY,JSON.stringify(v)); }catch(e){} }
+var SCV=scLoad();
+function secSc(){
+  var h='<h2>'+L(SC.title)+'</h2><div class="note" style="margin-bottom:10px">'+L(SC.intro)+'</div><div class="card" style="margin-bottom:12px"><div style="display:flex;justify-content:space-between;gap:10px;align-items:center;flex-wrap:wrap"><b>'+L(SC.overall)+': <span id="scAll">0/0</span></b><div class="bar" style="flex:1;max-width:420px"><i id="scAllBar"></i></div><button class="btn" id="scClear">'+L(SC.clear)+'</button></div><div class="note">'+L(SC.msg)+'</div></div>';
+  SC.groups.forEach(function(g,gi){ h+='<div class="scg"><h4><span>'+L(g.t)+'</span><span style="display:flex;gap:8px;align-items:center"><span id="scc'+gi+'" class="note" style="margin:0"></span><span class="bar" style="width:120px"><i id="scb'+gi+'"></i></span></span></h4><div class="items">';
+    if(g.own){ SCV.own.forEach(function(o,oi){ h+='<label><input type="checkbox" data-own="'+oi+'"'+(o.c?" checked":"")+'><span>'+esc(o.t)+' <a href="#" data-del="'+oi+'" style="font-size:12px">✕</a></span></label>'; });
+      h+= SCV.own.length<8? '<div style="display:flex;gap:6px;margin-top:8px"><input type="text" id="scOwn" placeholder="'+esc(L(SC.addPh))+'"><button class="btn pri" id="scAdd">'+L(SC.add)+'</button></div><div class="sugg">'+g.sugg.map(function(s){return '<button class="btn" data-sg="'+esc(L(s))+'">+ '+L(s)+'</button>';}).join("")+'</div>':'';
+    } else g.items.forEach(function(it,ii){ var id=gi+"_"+ii; h+='<label><input type="checkbox" data-id="'+id+'"'+(SCV.t[id]?" checked":"")+'><span>'+L(it)+'<span class="data">'+T("Data: ","தகவல்: ")+L(it.d)+'</span></span></label>'; });
+    h+='</div></div>'; }); return h; }
+function scProg(){ var all=0,tot=0; SC.groups.forEach(function(g,gi){ var n,c; if(g.own){ n=SCV.own.length; c=SCV.own.filter(function(o){return o.c;}).length; } else { n=g.items.length; c=g.items.filter(function(x,ii){return SCV.t[gi+"_"+ii];}).length; }
+    all+=c; tot+=n; var e=document.getElementById("scc"+gi); if(e) e.textContent=c+"/"+n; var b=document.getElementById("scb"+gi); if(b) b.style.width=(n?c/n*100:0)+"%"; });
+  var a=document.getElementById("scAll"); if(a) a.textContent=all+"/"+tot; var ab=document.getElementById("scAllBar"); if(ab) ab.style.width=(tot?all/tot*100:0)+"%"; }
+POST.sc=function(){ var s=document.getElementById("t_sc");
+  s.querySelectorAll("input[data-id]").forEach(function(i){ i.onchange=function(){ SCV.t[i.getAttribute("data-id")]=i.checked; scSave(SCV); scProg(); }; });
+  s.querySelectorAll("input[data-own]").forEach(function(i){ i.onchange=function(){ SCV.own[+i.getAttribute("data-own")].c=i.checked; scSave(SCV); scProg(); }; });
+  s.querySelectorAll("a[data-del]").forEach(function(a){ a.onclick=function(e){ e.preventDefault(); SCV.own.splice(+a.getAttribute("data-del"),1); scSave(SCV); rerender("sc"); }; });
+  function add(t){ t=(t||"").trim(); if(!t||SCV.own.length>=8) return; SCV.own.push({t:t,c:false}); scSave(SCV); rerender("sc"); }
+  var ad=document.getElementById("scAdd"); if(ad) ad.onclick=function(){ add(document.getElementById("scOwn").value); };
+  s.querySelectorAll("button[data-sg]").forEach(function(b){ b.onclick=function(){ add(b.getAttribute("data-sg")); }; });
+  document.getElementById("scClear").onclick=function(){ SCV.t={}; SCV.own.forEach(function(o){o.c=false;}); scSave(SCV); rerender("sc"); }; scProg(); };
+
+/* ---------- MANAGEMENT ---------- */
+function secMg(){
+  return '<h2>'+L(MG.title)+'</h2><div class="grid g2">'+MG.people.map(function(p){ return card('<div class="person"><div class="avatar" style="background:#1f56b3">'+p.i+'</div><div><b>'+p.n+'</b><div style="color:#1f56b3;font-weight:700;font-size:13px">'+L(p.r)+'</div><div style="font-size:14px;margin-top:4px">'+L(p.x)+'</div></div></div>'); }).join("")+'</div>'+
+   '<h3>'+L(MG.gov.t)+'</h3>'+card(ul(MG.gov.l))+'<h3>'+L(MG.shTitle)+'</h3><div class="grid g2">'+card(chartBox("cSh"))+'<div>'+table([T("Holder","பங்குதாரர்"),"UltraTech (Jun-26)","Shree (Sep-26)"],MG.shL.map(function(x,i){return [L(x),MG.utSh[i],MG.shSh[i]];}))+'</div></div>';
+}
+POST.mg=function(){ mkChart("cSh",{type:"bar",data:{labels:MG.shL.map(function(x){return L(x);}),datasets:[{label:"UltraTech",data:MG.utSh,backgroundColor:CU,fmt:function(v){return v.toFixed(1)+"%";}},{label:"Shree",data:MG.shSh,backgroundColor:CS_,fmt:function(v){return v.toFixed(1)+"%";}}]},options:{scales:{y:{min:0,max:75,ticks:{callback:function(v){return v+"%";}}}}},plugins:[BAR]}); };
+
+/* ---------- VERDICT ---------- */
+function secVer(){ var tl=tally();
+  return '<h2>⚖ '+L(VER.title)+'</h2><div class="verdict"><div style="font-size:16px;font-weight:700">'+L(VER.lead)+'</div><div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap">'+winB("u")+' <b>'+tl.t.u+'</b> &nbsp; '+winB("s")+' <b>'+tl.t.s+'</b> &nbsp; '+winB("t")+' <b>'+tl.t.t+'</b></div></div>'+
+   '<div class="grid g2" style="margin-top:12px">'+card('<b>'+L(VER.tallyTitle)+'</b>'+chartBox("cTally",true))+'<div class="grid">'+card('<b style="color:'+CU+'">🏆 '+L(VER.utWins.t)+'</b><div style="margin-top:6px">'+ul(VER.utWins.l)+'</div>')+card('<b style="color:'+CS_+'">🏆 '+L(VER.shWins.t)+'</b><div style="margin-top:6px">'+ul(VER.shWins.l)+'</div>')+'</div></div>'+
+   '<div class="note">'+L(VER.ties)+'</div>'+
+   '<h3>'+L(VER.biz.t)+'</h3>'+card(L(VER.biz.x))+'<h3>'+L(VER.inv.t)+'</h3>'+card(L(VER.inv.x))+'<h3>'+L(VER.watch.t)+'</h3>'+card(ul(VER.watch.l));
+}
+POST.ver=function(){ var tl=tally();
+  mkChart("cTally",{type:"bar",data:{labels:SCORE.map(function(c){return L(c.c);}),datasets:[{label:"UltraTech",data:tl.c.map(function(x){return x.u;}),backgroundColor:CU},{label:"Shree",data:tl.c.map(function(x){return x.s;}),backgroundColor:CS_},{label:T("Tie","சமம்"),data:tl.c.map(function(x){return x.t;}),backgroundColor:"#c9d3e0"}]},
+   options:{indexAxis:"y",scales:{x:{stacked:true,ticks:{stepSize:1}},y:{stacked:true,ticks:{font:{size:11}}}},plugins:{legend:{position:"bottom"}}},
+   plugins:[{id:"st",afterDatasetsDraw:function(c){ var ctx=c.ctx; c.data.datasets.forEach(function(ds,i){ c.getDatasetMeta(i).data.forEach(function(b,j){ var v=ds.data[j]; if(!v) return; ctx.save(); ctx.font="700 11px Inter"; ctx.fillStyle=i===2?"#1b2430":"#fff"; ctx.textAlign="center"; ctx.fillText(v,(b.x+b.base)/2,b.y+4); ctx.restore(); }); }); }}]});
+};
+
+/* ---------- SOCRATES ---------- */
+var SOS={};
+function secSoc(){ var h='<h2>'+L(SO.title)+'</h2><div class="card" style="margin-bottom:10px"><b>'+L(SO.score)+': <span id="soScore">0</span> / '+SO.mcq.length+'</b></div>';
+  SO.mcq.forEach(function(q,qi){ h+='<div class="q"><b>Q'+(qi+1)+'. '+L(q.q)+'</b><div class="opts">'+q.o.map(function(o,oi){return '<button data-q="'+qi+'" data-o="'+oi+'">'+String.fromCharCode(65+oi)+'. '+L(o)+'</button>';}).join("")+'</div><div class="fb" id="fb'+qi+'"></div></div>'; });
+  SO.open.forEach(function(q,qi){ h+='<div class="q"><b>✍ '+L(q.q)+'</b><div class="note">'+L(SO.yourAns)+'</div><textarea rows="3" style="margin-top:6px"></textarea><button class="btn" data-rev="'+qi+'" style="margin-top:6px">'+L(SO.reveal)+'</button><div class="fb" id="ofb'+qi+'"></div></div>'; });
+  return h; }
+POST.soc=function(){ SOS={}; var s=document.getElementById("t_soc");
+  s.querySelectorAll("button[data-q]").forEach(function(b){ b.onclick=function(){ var qi=+b.getAttribute("data-q"),oi=+b.getAttribute("data-o"),q=SO.mcq[qi]; if(SOS[qi]!=null) return; SOS[qi]=oi===q.a;
+    b.classList.add(oi===q.a?"ok":"bad"); if(oi!==q.a) s.querySelector('button[data-q="'+qi+'"][data-o="'+q.a+'"]').classList.add("ok");
+    document.getElementById("fb"+qi).innerHTML='<b>'+(oi===q.a?L(SO.right):L(SO.wrong))+'</b>'+L(q.e); document.getElementById("soScore").textContent=Object.keys(SOS).filter(function(k){return SOS[k];}).length; }; });
+  s.querySelectorAll("button[data-rev]").forEach(function(b){ b.onclick=function(){ var i=+b.getAttribute("data-rev"); document.getElementById("ofb"+i).innerHTML='<div class="explain">'+L(SO.open[i].m)+'</div>'; }; }); };
+
+/* ---------- RENDER ---------- */
+var SECS={dash:secDash,bm:secBm,h2h:secH2h,ops:secOps,geo:secGeo,mix:secMix,fin:secFin,cf:secCf,val:secVal,tc:secTc,pil:secPil,swot:secSwot,an:secAn,sc:secSc,mg:secMg,ver:secVer,soc:secSoc};
+function rerender(id){ var s=document.getElementById("t_"+id); s.innerHTML=SECS[id](); POST[id]&&POST[id](); }
+function render(){
+  document.body.classList.toggle("ta",LANG==="ta"); document.documentElement.lang=LANG==="ta"?"ta":"en";
+  document.getElementById("hTitle").textContent=L(TX.title); document.getElementById("hSub").textContent=L(TX.sub);
+  buildTabs();
+  document.getElementById("main").innerHTML=TX.tabs.map(function(t){ return '<section class="tab'+(t.id===CUR?" on":"")+'" id="t_'+t.id+'">'+SECS[t.id]()+'</section>'; }).join("");
+  Object.keys(CH).forEach(function(k){ try{CH[k].destroy();}catch(e){} delete CH[k]; });
+  POST.bm(); POST.geo(); POST.sc(); POST.soc(); POST[CUR]&&POST[CUR]();
+  document.getElementById("discl").innerHTML=L(DISC);
+  document.getElementById("asTitle").textContent=L(AS.title); document.getElementById("asText").placeholder=L(AS.ph);
+  document.getElementById("asChips").innerHTML=AS.chips.map(function(c){return '<button>'+L(c)+'</button>';}).join("");
+  document.querySelectorAll("#asChips button").forEach(function(b){ b.onclick=function(){ ask(b.textContent); }; });
+}
+document.getElementById("bEN").onclick=function(){ LANG="en"; this.classList.add("on"); document.getElementById("bTA").classList.remove("on"); render(); };
+document.getElementById("bTA").onclick=function(){ LANG="ta"; this.classList.add("on"); document.getElementById("bEN").classList.remove("on"); render(); };
+document.getElementById("cbBadge").onclick=function(e){ e.stopPropagation(); document.getElementById("discl").classList.toggle("on"); document.getElementById("asPanel").classList.remove("on"); };
+document.addEventListener("click",function(e){ var d=document.getElementById("discl"); if(d.classList.contains("on")&&!d.contains(e.target)) d.classList.remove("on"); });
+
+/* ---------- CB ASSIST ---------- */
+var log=document.getElementById("asLog"), started=false;
+function say(t){ try{ if(!window.speechSynthesis) return; speechSynthesis.cancel(); var u=new SpeechSynthesisUtterance(t.replace(/₹/g, LANG==="ta"?"ரூபாய் ":"rupees ")); u.lang=LANG==="ta"?"ta-IN":"en-IN";
+  var vs=speechSynthesis.getVoices().filter(function(v){return v.lang&&v.lang.toLowerCase().indexOf(LANG==="ta"?"ta":"en-in")===0;}); if(vs[0]) u.voice=vs[0]; speechSynthesis.speak(u); }catch(e){} }
+function addMsg(t,who){ var m=document.createElement("div"); m.className="msg "+who; m.textContent=t; log.appendChild(m); log.scrollTop=log.scrollHeight; return m; }
+function answer(q){ var s=" "+q.toLowerCase()+" ", best=null, bs=0; KB.forEach(function(k){ var sc=0; k.k.forEach(function(w){ if(s.indexOf(w.toLowerCase())>=0) sc+=w.length>4?2:1; }); if(sc>bs){bs=sc;best=k;} }); return best; }
+function ask(q){ q=(q||"").trim(); if(!q) return; addMsg(q,"u"); var a=answer(q); if(!a){ addMsg(L(AS.miss),"b"); say(L(AS.miss)); return; }
+  var t=L(a), m=addMsg(t,"b"); if(a.act){ var b=document.createElement("button"); b.className="btn pri"; b.style.marginTop="6px"; b.textContent=L(AS.open); b.onclick=function(){ go(a.act); document.getElementById("asPanel").classList.remove("on"); }; m.appendChild(document.createElement("br")); m.appendChild(b); } say(t); }
+document.getElementById("asBtn").onclick=function(e){ e.stopPropagation(); var p=document.getElementById("asPanel"); p.classList.toggle("on"); document.getElementById("discl").classList.remove("on"); if(p.classList.contains("on")&&!started){ started=true; addMsg(L(AS.hello),"b"); } };
+document.getElementById("asClose").onclick=function(){ document.getElementById("asPanel").classList.remove("on"); try{speechSynthesis.cancel();}catch(e){} };
+document.getElementById("asSend").onclick=function(){ var i=document.getElementById("asText"); ask(i.value); i.value=""; };
+document.getElementById("asText").onkeydown=function(e){ if(e.key==="Enter"){ ask(this.value); this.value=""; } };
+var SR=window.SpeechRecognition||window.webkitSpeechRecognition, rec=null;
+document.getElementById("asMic").onclick=function(){ var b=this; if(!SR){ addMsg(L(AS.nomic),"b"); return; } if(rec){ try{rec.stop();}catch(e){} return; }
+  rec=new SR(); rec.lang=LANG==="ta"?"ta-IN":"en-IN"; rec.interimResults=false; rec.onresult=function(ev){ ask(ev.results[0][0].transcript); };
+  rec.onend=function(){ b.classList.remove("rec"); rec=null; }; rec.onerror=function(){ b.classList.remove("rec"); rec=null; }; b.classList.add("rec"); try{ rec.start(); }catch(e){ b.classList.remove("rec"); rec=null; } };
+
+render();
+})();
+</script>
+</body>
+</html>
