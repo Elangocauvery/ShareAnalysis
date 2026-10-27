@@ -1,0 +1,857 @@
+<title>SJVN Q1 FY27</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Mukta+Malar:wght@400;600;800&display=swap">
+<style>
+/* Layout: sticky brand bar + scrollable tab strip; each tab is one panel of bullet cards, tables and SVG explainers on a light-orange ground. */
+:root{
+  --bg:#FFF4E8; --panel:#FFFAF4; --line:#F3CFA6; --accent:#F28C28; --accentSoft:#FDE3C6;
+  --ink:#1B1006; --ink2:#4A3420; --good:#13703A; --bad:#B3261E; --warn:#9A5B00;
+  --hydro:#1F6FA8; --thermal:#5B4636; --solar:#D99A00; --wind:#2E8B57;
+  --display:"Bricolage Grotesque", "Mukta Malar", system-ui, sans-serif;
+  --body:"Mukta Malar", "Noto Sans Tamil", system-ui, sans-serif;
+  color-scheme: light;
+}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:15.5px;line-height:1.5;font-weight:600;
+  padding-left:max(16px, env(safe-area-inset-left,0px));padding-right:max(16px, env(safe-area-inset-right,0px));padding-block:0 120px}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bg)}
+body.lang-en .ta{display:none!important} body.lang-ta .en{display:none!important}
+h1,h2,h3{font-family:var(--display);text-wrap:balance;margin:0;color:var(--ink)}
+h2{font-size:1.45rem;font-weight:800;margin-bottom:.4rem}
+h3{font-size:1.08rem;font-weight:800;margin-bottom:.35rem}
+.wrap{max-width:1140px;margin:0 auto}
+header.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:9;background:var(--bg);padding-top:10px;border-bottom:2px solid var(--line)}
+.brand{display:flex;flex-wrap:wrap;gap:8px 16px;align-items:center;justify-content:space-between}
+.brand h1{font-size:1.5rem;font-weight:800;letter-spacing:-.01em}
+.brand .sub{font-size:.92rem;color:var(--ink2)}
+.slogan{font-family:var(--display);font-weight:800;color:var(--ink);background:var(--accentSoft);border:2px solid var(--accent);border-radius:999px;padding:2px 12px;font-size:.9rem}
+.langbtn{display:flex;border:2px solid var(--accent);border-radius:999px;overflow:hidden}
+.langbtn button{border:0;background:transparent;padding:5px 14px;font:800 .9rem var(--body);color:var(--ink);cursor:pointer}
+.langbtn button[aria-pressed="true"]{background:var(--accent);color:var(--ink)}
+.tabs{display:flex;gap:6px;overflow-x:auto;padding:10px 0;scrollbar-width:thin}
+.tabs button{flex:0 0 auto;border:2px solid var(--line);background:var(--panel);color:var(--ink);font:800 .88rem var(--body);padding:6px 12px;border-radius:10px;cursor:pointer;white-space:nowrap}
+.tabs button[aria-selected="true"]{background:var(--accent);border-color:var(--accent)}
+.tabs button:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid var(--ink);outline-offset:2px}
+.panel{display:none;padding-top:16px}
+.panel.on{display:block}
+.toolrow{display:flex;justify-content:flex-end;margin-bottom:8px}
+.btn{border:2px solid var(--accent);background:var(--accentSoft);color:var(--ink);font:800 .88rem var(--body);padding:6px 12px;border-radius:10px;cursor:pointer}
+.btn.solid{background:var(--accent)}
+.grid{display:grid;gap:14px}
+.g2{grid-template-columns:repeat(auto-fit,minmax(min(100%,330px),1fr))}
+.g3{grid-template-columns:repeat(auto-fit,minmax(min(100%,250px),1fr))}
+.g4{grid-template-columns:repeat(auto-fit,minmax(min(100%,190px),1fr))}
+.card{background:var(--panel);border:2px solid var(--line);border-radius:14px;padding:14px;min-width:0}
+.card.hl{border-color:var(--accent)}
+.kpi .v{font-family:var(--display);font-size:1.7rem;font-weight:800;font-variant-numeric:tabular-nums;line-height:1.1}
+.kpi .l{font-size:.85rem;color:var(--ink2);text-transform:uppercase;letter-spacing:.04em}
+.kpi .d{font-size:.9rem}
+.up{color:var(--good)} .dn{color:var(--bad)} .wn{color:var(--warn)}
+ul.b{margin:.2rem 0;padding-left:1.15rem} ul.b li{margin:.18rem 0}
+.tw{overflow-x:auto;border:2px solid var(--line);border-radius:12px;background:var(--panel)}
+table{border-collapse:collapse;width:100%;font-variant-numeric:tabular-nums;font-size:.93rem}
+th,td{padding:7px 10px;text-align:right;border-bottom:1px solid var(--line);white-space:nowrap}
+th:first-child,td:first-child{text-align:left;white-space:normal;min-width:150px}
+thead th{background:var(--accentSoft);font-weight:800}
+tr.em td{font-weight:800;background:#FFF0DE}
+.chip{display:inline-block;padding:1px 9px;border-radius:999px;border:2px solid var(--line);font-size:.8rem;font-weight:800;background:var(--panel)}
+.chip.g{border-color:var(--good);color:var(--good)} .chip.r{border-color:var(--bad);color:var(--bad)} .chip.a{border-color:var(--accent)}
+.note{font-size:.85rem;color:var(--ink2)}
+.sec{margin-top:18px}
+svg text{font-family:var(--body);fill:var(--ink);font-weight:700}
+.svgw{overflow-x:auto}
+/* flow map */
+.flow{display:grid;gap:10px;grid-template-columns:1fr 1.2fr 1fr;align-items:stretch}
+@media (max-width:760px){.flow{grid-template-columns:1fr}}
+.fbox{border:2px solid var(--line);border-radius:12px;padding:10px;background:var(--panel);cursor:pointer;text-align:left;font:inherit;color:inherit;width:100%}
+.fbox:hover{border-color:var(--accent)}
+.fbox b{display:block;font-family:var(--display);font-size:1rem}
+.fbox span.n{display:block;font-size:.88rem;color:var(--ink2)}
+.hub{border:3px solid var(--accent);background:var(--accentSoft)}
+.fcol{display:flex;flex-direction:column;gap:10px}
+.arrow{text-align:center;font-weight:800;color:var(--accent);font-size:1.2rem}
+.detail{margin-top:10px;border-left:5px solid var(--accent);background:var(--panel);padding:10px 12px;border-radius:8px;min-height:48px}
+.money{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin-top:10px}
+.money .fbox{width:auto;flex:1 1 120px}
+/* timeline */
+.tl{position:relative;padding-left:22px}
+.tl::before{content:"";position:absolute;left:8px;top:4px;bottom:4px;width:3px;background:var(--line)}
+.tl .it{position:relative;margin-bottom:10px}
+.tl .it::before{content:"";position:absolute;left:-19px;top:6px;width:13px;height:13px;border-radius:50%;background:var(--panel);border:3px solid var(--accent)}
+.tl .it.done::before{background:var(--good);border-color:var(--good)}
+.tl .it.late::before{background:var(--warn);border-color:var(--warn)}
+.tl .dt{font-weight:800;font-size:.85rem;color:var(--ink2)}
+/* quiz & checks */
+.opt{display:block;width:100%;text-align:left;margin:6px 0;border:2px solid var(--line);background:var(--panel);border-radius:10px;padding:8px 10px;font:700 .95rem var(--body);color:var(--ink);cursor:pointer}
+.opt.right{border-color:var(--good);background:#E3F4E8} .opt.wrong{border-color:var(--bad);background:#FBE4E2}
+.chk{display:flex;gap:8px;align-items:flex-start;padding:6px 0;border-bottom:1px dashed var(--line)}
+.chk input{width:20px;height:20px;margin-top:3px;accent-color:var(--accent);flex:0 0 auto}
+.chk .data{display:block;font-size:.84rem;color:var(--ink2)}
+.bar{height:10px;background:var(--accentSoft);border-radius:99px;overflow:hidden;border:1px solid var(--line)}
+.bar i{display:block;height:100%;background:var(--accent)}
+/* assist */
+.assist{display:flex;flex-direction:column;gap:10px}
+.chat{max-height:420px;overflow-y:auto;display:flex;flex-direction:column;gap:8px;padding:6px}
+.msg{padding:8px 12px;border-radius:12px;max-width:92%}
+.msg.u{align-self:flex-end;background:var(--accentSoft);border:2px solid var(--accent)}
+.msg.a{align-self:flex-start;background:var(--panel);border:2px solid var(--line)}
+.msg details{margin-top:4px;font-size:.88rem}
+.arow{display:flex;gap:6px;flex-wrap:wrap}
+.arow input[type=text]{flex:1 1 220px;min-width:0;border:2px solid var(--line);border-radius:10px;padding:8px 10px;font:700 1rem var(--body);background:#fff;color:var(--ink)}
+.sugg button{margin:3px;border:2px dashed var(--accent);background:var(--panel);border-radius:999px;padding:4px 10px;font:700 .85rem var(--body);cursor:pointer;color:var(--ink)}
+.ctrl{display:flex;flex-wrap:wrap;gap:8px;align-items:center;font-size:.88rem}
+.ctrl select,.ctrl input[type=range]{accent-color:var(--accent)}
+.ctrl select{border:2px solid var(--line);border-radius:8px;padding:3px 6px;font:700 .85rem var(--body);background:#fff;color:var(--ink)}
+.listen{height:6px;background:var(--accentSoft);border-radius:4px;overflow:hidden}
+.listen i{display:block;height:100%;width:0;background:var(--accent);transition:width .1s linear}
+/* floating */
+.cb{position:fixed;right:calc(14px + env(safe-area-inset-right,0px));bottom:calc(14px + env(safe-area-inset-bottom,0px));z-index:20}
+.cb button.logo{width:46px;height:46px;border-radius:50%;border:3px solid var(--ink);background:var(--accent);font:800 1rem var(--display);color:var(--ink);cursor:pointer;animation:blink 1.6s ease-in-out infinite}
+@keyframes blink{50%{box-shadow:0 0 0 7px rgba(242,140,40,.35)}}
+@media (prefers-reduced-motion:reduce){.cb button.logo{animation:none}}
+.cb .disc{display:none;position:absolute;right:0;bottom:56px;width:min(300px,80vw);background:var(--panel);border:2px solid var(--accent);border-radius:12px;padding:10px;font-size:.84rem}
+.cb:hover .disc,.cb.open .disc{display:block}
+.vbub{position:fixed;right:calc(10px + env(safe-area-inset-right,0px));bottom:calc(72px + env(safe-area-inset-bottom,0px));z-index:20;border:2px solid var(--ink);background:var(--accentSoft);border-radius:999px;padding:7px 12px;font:800 .85rem var(--body);color:var(--ink);cursor:pointer}
+.hot{cursor:pointer}.hot:hover rect,.hot:hover circle{stroke:#F28C28}.hot:focus-visible{outline:3px solid #1B1006}
+.pillarnote{font-size:.85rem}
+.score{font-family:var(--display);font-weight:800}
+.legend{display:flex;flex-wrap:wrap;gap:10px;font-size:.85rem}
+.legend i{display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:4px;vertical-align:-1px}
+</style>
+
+<header class="top"><div class="wrap">
+  <div class="brand">
+    <div>
+      <h1>SJVN · Q1 FY27</h1>
+      <div class="sub"><span class="en">Hydro major turning into hydro + coal + solar · Results Apr–Jun 2026 · Price data to 23 Oct 2026</span><span class="ta">Hydro company இப்போ hydro + coal + solar ஆகுது · Apr–Jun 2026 results · 23 Oct 2026 price</span></div>
+    </div>
+    <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+      <span class="slogan"><span class="en">Know before you own</span><span class="ta">புரிஞ்சு வாங்குங்க!</span></span>
+      <div class="langbtn" role="group" aria-label="Language">
+        <button id="bEn" aria-pressed="true">EN</button><button id="bTa" aria-pressed="false">தமிழ்</button>
+      </div>
+    </div>
+  </div>
+  <nav class="tabs" id="tabs" role="tablist"></nav>
+</div></header>
+
+<main class="wrap" id="main"></main>
+
+<button class="vbub" id="vbub" aria-label="Voice Assist">🎙 <span class="en">Voice Assist</span><span class="ta">Voice Assist</span></button>
+<div class="cb" id="cb">
+  <div class="disc"><b>CB Research</b> — <span class="en">Education only. Not SEBI-registered. No buy/sell/hold advice. Figures from company filings and public reports; "CB est." marks our own estimates. Do your own research.</span><span class="ta">Education-க்கு மட்டும் தான். நாங்க SEBI-registered இல்லை. Buy/sell/hold advice இல்லை. "CB est." நம்ம estimate. நீங்களே research பண்ணுங்க.</span></div>
+  <button class="logo" id="cbBtn" aria-label="Disclaimer">CB</button>
+</div>
+
+<script>
+// ---------- helpers ----------
+const T=(en,ta)=>`<span class="en">${en}</span><span class="ta">${ta}</span>`;
+const A=(en,ta)=>({en,ta});
+let LANG='en';
+const f0=n=>n==null?'—':n.toLocaleString('en-IN',{maximumFractionDigits:0});
+const f1=n=>n==null?'—':n.toLocaleString('en-IN',{minimumFractionDigits:1,maximumFractionDigits:1});
+const f2=n=>n==null?'—':n.toLocaleString('en-IN',{minimumFractionDigits:2,maximumFractionDigits:2});
+const pct=(a,b)=>(a==null||b==null||b<=0||a<0)?null:((a/b-1)*100);
+const pc=v=>v==null?'<span class="note">n.m.</span>':`<span class="${v>=0?'up':'dn'}">${v>=0?'+':''}${v.toFixed(1)}%</span>`;
+const ul=items=>`<ul class="b">${items.map(i=>`<li>${i}</li>`).join('')}</ul>`;
+const card=(h,b,cls='')=>`<div class="card ${cls}">${h?`<h3>${h}</h3>`:''}${b}</div>`;
+
+// ---------- data ----------
+const Q=[ // consolidated, ₹ cr: Q1FY27, Q4FY26, Q1FY26
+ {k:A('Revenue from operations','Revenue (operations)'),v:[1394.38,1496.47,917.45],em:1},
+ {k:A('Other income','Other income'),v:[34.40,51.99,53.55]},
+ {k:A('Total income','Total income'),v:[1428.78,1548.46,971.0]},
+ {k:A('EBITDA (ex other income)','EBITDA (other income இல்லாம)'),v:[884.3,916.1,742.3],em:1},
+ {k:A('EBITDA margin %','EBITDA margin %'),v:[63.4,61.2,80.9],m:1},
+ {k:A('Finance cost','Interest (finance cost)'),v:[326.14,522.14,215.97]},
+ {k:A('Depreciation','Depreciation'),v:[247.33,494.39,160.40]},
+ {k:A('Profit before tax (reported)','PBT (reported)'),v:[310.48,-48.45,null]},
+ {k:A('Net profit (PAT)','Net profit (PAT)'),v:[224.74,-117.84,227.58],em:1},
+ {k:A('PAT margin %','PAT margin %'),v:[16.1,-7.9,24.8],m:1},
+ {k:A('EPS (₹)','EPS (₹)'),v:[0.57,-0.30,0.58],e:1},
+];
+const TREND={q:["Dec'24","Mar'25","Jun'25","Sep'25","Dec'25","Mar'26","Jun'26"],rev:[670.99,504.40,917.45,1032.40,1081.97,1496.47,1394.38],pat:[149.03,-127.72,227.58,307.91,224.38,-117.84,224.74]};
+const CAP=[{n:A('Hydro','Hydro'),mw:1972,c:'var(--hydro)'},{n:A('Thermal (coal)','Thermal (coal)'),mw:1320,c:'var(--thermal)'},{n:A('Solar','Solar'),mw:1541.9,c:'var(--solar)'},{n:A('Wind','Wind'),mw:97.6,c:'var(--wind)'}];
+const CAP_OLD=[{mw:1972,c:'var(--hydro)'},{mw:0,c:'var(--thermal)'},{mw:396.9,c:'var(--solar)'},{mw:97.6,c:'var(--wind)'}]; // ~Mar 2025: 2,466.5 MW
+
+// ---------- tabs ----------
+const TABS=[
+ ['dash',A('Dashboard','Dashboard')],
+ ['bm',A('Business Model','Business Model')],
+ ['seg',A('Segments','Segments')],
+ ['bet',A('Big Bet: Hydro → Coal + Solar','Big Bet: Hydro → Coal + Solar')],
+ ['val chain',A('Sector Need & Value Chain','Sector need & Value chain')],
+ ['fin',A('Financials','Financials')],
+ ['cf',A('Cash Flow & Ratios','Cash Flow & Ratios')],
+ ['valn',A('Valuations','Valuations')],
+ ['kt',A('5 Key Takeaways','5 Key Takeaways')],
+ ['mkt',A('Share Market Activity','Share market activity')],
+ ['tc',A('Triggers & Cycle','Triggers & Cycle')],
+ ['pil',A('6 Pillars','6 Pillars')],
+ ['swot',A('SWOT','SWOT')],
+ ['self',A('Investor Self-Check','Investor Self-Check')],
+ ['assist',A('Cauvery Assist','Cauvery Assist')],
+ ['quiz',A('Cauvery Socrates','Cauvery Socrates')],
+ ['av',A('Analyst View','Analyst View')],
+].map(([id,l])=>[id.replace(' ','-'),l]);
+
+const P={}; // panel html builders
+
+// ===== Dashboard =====
+P.dash=()=>`
+<div class="grid g4">
+ ${kpi(A('Revenue','Revenue'),'₹1,394 cr',T('+52.0% YoY · −6.8% QoQ','+52.0% YoY · −6.8% QoQ'))}
+ ${kpi(A('Net profit','Net profit'),'₹225 cr',T('−1.2% YoY · Q4 was a ₹118 cr loss','−1.2% YoY · Q4-ல ₹118 கோடி loss'),'wn')}
+ ${kpi(A('EBITDA margin','EBITDA margin'),'63.4%',T('was 80.9% a year ago','போன வருஷம் 80.9%'),'dn')}
+ ${kpi(A('Interest cost','Interest cost'),'₹326 cr',T('+51% YoY · 23% of revenue','+51% YoY · revenue-ல 23%'),'dn')}
+ ${kpi(A('Q1 generation','Q1 generation'),'3,625 MU',T('Hydro+RE 2,004 · Solar 762 · Coal 859','Hydro+RE 2,004 · Solar 762 · Coal 859'))}
+ ${kpi(A('Capacity now','இப்போ capacity'),'4,931.5 MW',T('2× the ~2,467 MW of Mar 2025','Mar 2025 ~2,467 MW-ஐ விட 2 மடங்கு'),'up')}
+ ${kpi(A('Share price','Share price'),'₹47.39',T('23 Oct · 52-wk low ₹46.09 · ~−48% in 1 yr','23 Oct · 52-wk low ₹46.09 · 1 வருஷத்துல ~−48%'),'dn')}
+ ${kpi(A('P/E · P/B','P/E · P/B'),'29× · 1.3×',T('TTM EPS ₹1.63 · standalone BV ₹37.4','TTM EPS ₹1.63 · standalone BV ₹37.4'))}
+</div>
+<div class="grid g2 sec">
+ ${card(T('Q1 in one look','Q1 ஒரே பார்வையில'),ul([
+  T('Top line jumped: Buxar coal Unit-1 and the 1,000 MW Bikaner solar plant now sell power.','Revenue ஏறிடுச்சு: Buxar coal Unit-1, Bikaner 1,000 MW solar இப்போ power விக்குது.'),
+  T('Bottom line did not: interest (+51%) and depreciation (+54%) of the new plants ate the gain.','Profit ஏறல: புது plants-ஓட interest (+51%), depreciation (+54%) gain-ஐ சாப்பிட்டுடுச்சு.'),
+  T('Parent (hydro) still makes the profit: ₹247 cr standalone PAT vs ₹225 cr consolidated.','Profit இன்னும் hydro parent-ல இருந்துதான்: standalone PAT ₹247 கோடி, consolidated ₹225 கோடி.'),
+  T('New businesses (subsidiaries) lost ~₹22 cr in Q1, less than ~₹31 cr a year ago (CB est.).','புது business (subsidiaries) Q1-ல ~₹22 கோடி loss; போன வருஷம் ~₹31 கோடி (CB est.).'),
+  T('Buxar Unit-2 reached COD on 12 Sep 2026, so Q2 FY27 (due 6 Nov) gets 19 days of it.','Buxar Unit-2 COD 12 Sep 2026; Q2 results (6 Nov) -ல 19 நாள் தான் வரும்.'),
+ ]),'hl')}
+ ${card(T('Capacity mix today (4,931.5 MW)','இன்றைய capacity mix (4,931.5 MW)'),`<div class="svgw">${donut(CAP)}</div>${legend()}`)}
+</div>
+<div class="grid g3 sec">
+ ${card(T('Cycle (CY)','Cycle (CY)'),`<div class="score" style="font-size:1.6rem">54/100</div>`+T('Sector in expansion; stock in a falling (Stage 4) price trend.','Sector expansion-ல; stock விலை Stage 4 (இறங்குற trend)-ல.'))}
+ ${card(T('Triggers (TG)','Triggers (TG)'),`<div class="score" style="font-size:1.6rem">55/100</div>`+T('Buxar full COD is the big plus; debt cost is the big minus.','Buxar full COD பெரிய plus; debt cost பெரிய minus.'))}
+ ${card(T('6 Pillars','6 Pillars'),`<div class="score" style="font-size:1.6rem">31/60</div>`+T('Growth strong, financial strength weak.','Growth strong, financial strength weak.'))}
+</div>`;
+function kpi(l,v,d,c=''){return `<div class="card kpi"><div class="l">${T(l.en,l.ta)}</div><div class="v">${v}</div><div class="d ${c}">${d}</div></div>`}
+function legend(){return `<div class="legend">${CAP.map(c=>`<span><i style="background:${c.c}"></i>${T(c.n.en,c.n.ta)} ${f0(c.mw)} MW</span>`).join('')}</div>`}
+function donut(arr,size=220){
+ const tot=arr.reduce((s,a)=>s+a.mw,0);let ang=-Math.PI/2;const r=80,cx=size/2,cy=size/2;let out='';
+ arr.forEach(a=>{const fr=a.mw/tot;if(!fr)return;const a2=ang+fr*2*Math.PI;const lg=fr>.5?1:0;
+  const x1=cx+r*Math.cos(ang),y1=cy+r*Math.sin(ang),x2=cx+r*Math.cos(a2),y2=cy+r*Math.sin(a2);
+  out+=`<path d="M${x1} ${y1} A${r} ${r} 0 ${lg} 1 ${x2} ${y2}" stroke="${a.c}" stroke-width="34" fill="none"/>`;
+  const m=(ang+a2)/2;out+=`<text x="${cx+(r+30)*Math.cos(m)}" y="${cy+(r+30)*Math.sin(m)}" text-anchor="middle" font-size="12">${Math.round(fr*100)}%</text>`;ang=a2;});
+ return `<svg viewBox="-20 -10 ${size+40} ${size+20}" width="100%" style="max-width:300px" role="img" aria-label="Capacity mix">${out}<text x="${cx}" y="${cy-4}" text-anchor="middle" font-size="18" font-weight="800">${f0(tot)}</text><text x="${cx}" y="${cy+16}" text-anchor="middle" font-size="12">MW</text></svg>`;
+}
+
+// ===== Business model =====
+const BM={
+ cust:A('<b>Customers</b><span class="n">State discoms: HP, Punjab, Haryana, Rajasthan, UP, Bihar, J&K, Uttarakhand, Gujarat</span>','<b>Customers</b><span class="n">State discoms: HP, Punjab, Haryana, Rajasthan, UP, Bihar, J&K, Uttarakhand, Gujarat</span>'),
+ ch:A('<b>Channel</b><span class="n">25–35 yr PPAs · regulated tariff (hydro, coal) · bid tariff (solar ₹2.57/unit at Bikaner)</span>','<b>Channel</b><span class="n">25–35 வருஷ PPA · regulated tariff (hydro, coal) · bid tariff (Bikaner solar ₹2.57/unit)</span>'),
+ hub:A('<b>SJVN group hub</b><span class="n">4,931.5 MW: Nathpa Jhakri 1,500 · Rampur 412 · Naitwar Mori 60 · Buxar coal 2×660 · Bikaner solar 1,000 · other solar 542 · wind 98</span>','<b>SJVN group hub</b><span class="n">4,931.5 MW: Nathpa Jhakri 1,500 · Rampur 412 · Naitwar Mori 60 · Buxar coal 2×660 · Bikaner solar 1,000 · மற்ற solar 542 · wind 98</span>'),
+ in1:A('<b>Water</b><span class="n">Satluj river flow → 9,925 MU hydro in FY26</span>','<b>Water</b><span class="n">Satluj river flow → FY26-ல 9,925 MU hydro</span>'),
+ in2:A('<b>Coal</b><span class="n">Feeds Buxar, Bihar · ₹287 cr fuel cost in FY26 (Unit-1, 4.5 months)</span>','<b>Coal</b><span class="n">Buxar (Bihar)-க்கு · FY26 fuel cost ₹287 கோடி (Unit-1, 4.5 மாசம்)</span>'),
+ in3:A('<b>Sunlight + Capital</b><span class="n">Free fuel for solar · debt funds capex (FY27 plan ₹9,400 cr)</span>','<b>Sunlight + Capital</b><span class="n">Solar-க்கு free fuel · capex debt-ல (FY27 plan ₹9,400 கோடி)</span>'),
+ prod:A('<b>Product</b><span class="n">Electricity: 3,625 MU in Q1 FY27 (13,302 MU in FY26)</span>','<b>Product</b><span class="n">Electricity: Q1 FY27-ல 3,625 MU (FY26-ல 13,302 MU)</span>'),
+};
+const BMD={
+ cust:A('Discoms buy almost all power under long contracts. Payment risk sits with state utilities; receivables ~₹1,299 cr billed + ₹906 cr unbilled (FY26).','Discoms தான் almost எல்லா power-ஐயும் long contract-ல வாங்குறாங்க. Payment risk state utilities கிட்ட; receivables ~₹1,299 கோடி + unbilled ₹906 கோடி (FY26).'),
+ ch:A('Hydro and coal earn a cost-plus tariff: fixed charge (recovers capital + return) when the plant is available, plus energy charge per unit. Solar earns a fixed bid price per unit, so low output = low revenue.','Hydro, coal-க்கு cost-plus tariff: plant ready-ஆ இருந்தா fixed charge (capital + return) + ஒவ்வொரு unit-க்கும் energy charge. Solar-க்கு fixed bid price per unit, output குறைஞ்சா revenue குறையும்.'),
+ hub:A('Hydro was 80% of capacity in Mar 2025; now 40%. Coal is 27%, solar 31%. Profit still comes mainly from the old hydro plants.','Mar 2025-ல hydro 80% capacity; இப்போ 40%. Coal 27%, solar 31%. Profit இன்னும் பழைய hydro plants-ல இருந்துதான்.'),
+ in1:A('Hydro needs no fuel, so margins are high, but output swings with snow-melt and monsoon. Q1–Q2 are the strong quarters; Q4 is the weakest.','Hydro-க்கு fuel வேண்டாம், அதனால margin அதிகம்; ஆனா output பனி உருகல், மழை-யை பொறுத்து மாறும். Q1–Q2 strong, Q4 weak.'),
+ in2:A('Coal cost is passed through in the energy charge, but the plant must run at high load (management says above ~70% PLF) to cover interest and depreciation.','Coal cost energy charge-ல pass ஆகும்; ஆனா interest, depreciation cover பண்ண plant ~70% PLF-க்கு மேல ஓடணும்னு management சொல்றாங்க.'),
+ in3:A('Every new plant is mostly debt-funded. Interest and depreciation start on COD day, before the plant reaches full output.','ஒவ்வொரு புது plant-உம் பெரும்பாலும் debt-ல. COD நாள்ல இருந்தே interest, depreciation ஆரம்பிக்கும், full output வர்றதுக்கு முன்னாடியே.'),
+ prod:A('1 MU = 1 million units (kWh). Q1 split: SJVN hydro + RE 2,004 MU (55%), SGEL solar 762 MU (21%), Buxar coal 859 MU (24%).','1 MU = 10 லட்சம் units (kWh). Q1 split: SJVN hydro + RE 2,004 MU (55%), SGEL solar 762 MU (21%), Buxar coal 859 MU (24%).'),
+ rev:A('Revenue ₹1,394 cr in Q1 FY27, up 52% YoY.','Q1 FY27 revenue ₹1,394 கோடி, 52% YoY ஏற்றம்.'),
+ cost:A('Operating costs (fuel, O&M, employees) ₹510 cr. Coal fuel is the new cost line.','Operating costs (fuel, O&M, staff) ₹510 கோடி. Coal fuel தான் புது cost.'),
+ ebitda:A('EBITDA ₹884 cr, margin 63.4% (80.9% a year ago): coal plants run on thinner margins than hydro.','EBITDA ₹884 கோடி, margin 63.4% (போன வருஷம் 80.9%): coal plant margin hydro-வை விட குறைவு.'),
+ below:A('Interest ₹326 cr + depreciation ₹247 cr + tax ₹86 cr.','Interest ₹326 கோடி + depreciation ₹247 கோடி + tax ₹86 கோடி.'),
+ pat:A('PAT ₹225 cr, almost the same as a year ago despite 52% more revenue.','PAT ₹225 கோடி, revenue 52% ஏறியும் போன வருஷம் மாதிரியே.'),
+ solar:A('Solar sells at a fixed bid price for 25 years (Bikaner ₹2.57/unit). Output depends on sunlight and on the grid taking the power; FY26 saw curtailment at Bikaner.','Solar 25 வருஷத்துக்கு fixed bid price-ல விக்கும் (Bikaner ₹2.57/unit). Output வெயில், grid power எடுக்கறதை பொறுத்தது; FY26-ல Bikaner-ல curtailment.'),
+ wind:A('Two small wind farms: Khirvire 47.6 MW (Maharashtra) and Sadla 50 MW (Gujarat). FY26 output 126 MU, about 1% of the group.','ரெண்டு சின்ன wind farms: Khirvire 47.6 MW (Maharashtra), Sadla 50 MW (Gujarat). FY26 output 126 MU, group-ல ~1%.'),
+ grid:A('Power travels on national and state transmission lines (owned mostly by others). SJVN owns only 123 km of lines, so it pays or relies on the grid to deliver.','Power national, state transmission lines-ல போகும் (பெரும்பாலும் மற்றவங்களோடது). SJVN-கிட்ட 123 km lines தான், grid-ஐ நம்பித்தான் deliver.'),
+};
+function hydroIcon(x,y){return `<polygon points="${x},${y+52} ${x+28},${y+2} ${x+56},${y+52}" fill="#D6E8F5" stroke="#1F6FA8" stroke-width="2"/><polygon points="${x+36},${y+20} ${x+52},${y+20} ${x+60},${y+52} ${x+30},${y+52}" fill="#8FB6D6" stroke="#1F6FA8" stroke-width="2"/><path d="M${x-2} ${y+60} q8 -6 16 0 t16 0 t16 0 t16 0" stroke="#1F6FA8" stroke-width="3" fill="none"/>`}
+function coalIcon(x,y){return `<rect x="${x}" y="${y+22}" width="56" height="32" fill="#D9CCBF" stroke="#5B4636" stroke-width="2"/><rect x="${x+38}" y="${y}" width="11" height="24" fill="#B5A08C" stroke="#5B4636" stroke-width="2"/><circle cx="${x+48}" cy="${y-6}" r="5" fill="#E9E0D7"/><circle cx="${x+56}" cy="${y-14}" r="7" fill="#E9E0D7"/><rect x="${x+6}" y="${y+32}" width="9" height="9" fill="#FFFAF4"/><rect x="${x+20}" y="${y+32}" width="9" height="9" fill="#FFFAF4"/><rect x="${x-6}" y="${y+56}" width="22" height="9" rx="2" fill="#5B4636"/><rect x="${x+20}" y="${y+56}" width="22" height="9" rx="2" fill="#5B4636"/>`}
+function solarIcon(x,y){let g='';for(let i=1;i<4;i++)g+=`<line x1="${x+10+i*12}" y1="${y+52}" x2="${x+20+i*11}" y2="${y+28}" stroke="#D99A00" stroke-width="1.5"/>`;return `<circle cx="${x+12}" cy="${y+10}" r="10" fill="#F6C343"/><polygon points="${x+6},${y+52} ${x+20},${y+28} ${x+64},${y+28} ${x+54},${y+52}" fill="#FFE7A3" stroke="#D99A00" stroke-width="2"/>${g}<line x1="${x+13}" y1="${y+40}" x2="${x+59}" y2="${y+40}" stroke="#D99A00" stroke-width="1.5"/>`}
+function windIcon(x,y){const cx=x+30,cy=y+14;let b='';[0,120,240].forEach(a=>{const r=(a-90)*Math.PI/180;b+=`<line x1="${cx}" y1="${cy}" x2="${cx+22*Math.cos(r)}" y2="${cy+22*Math.sin(r)}" stroke="#2E8B57" stroke-width="4" stroke-linecap="round"/>`});return `<line x1="${cx}" y1="${cy}" x2="${cx}" y2="${y+56}" stroke="#2E8B57" stroke-width="4"/>${b}<circle cx="${cx}" cy="${cy}" r="4" fill="#1B1006"/>`}
+function towerIcon(x,y){return `<polyline points="${x},${y+80} ${x+20},${y} ${x+40},${y+80}" fill="none" stroke="#4A3420" stroke-width="3"/><line x1="${x+4}" y1="${y+20}" x2="${x+36}" y2="${y+20}" stroke="#4A3420" stroke-width="3"/><line x1="${x-6}" y1="${y+20}" x2="${x+46}" y2="${y+20}" stroke="#4A3420" stroke-width="2"/><line x1="${x+8}" y1="${y+48}" x2="${x+32}" y2="${y+48}" stroke="#4A3420" stroke-width="2"/><line x1="${x+8}" y1="${y+48}" x2="${x+28}" y2="${y+20}" stroke="#4A3420"/><line x1="${x+32}" y1="${y+48}" x2="${x+12}" y2="${y+20}" stroke="#4A3420"/>`}
+function houseIcon(x,y){return `<polygon points="${x},${y+18} ${x+18},${y} ${x+36},${y+18}" fill="#F28C28"/><rect x="${x+5}" y="${y+18}" width="26" height="20" fill="#FDE3C6" stroke="#F28C28" stroke-width="2"/><rect x="${x+15}" y="${y+26}" width="7" height="12" fill="#F28C28"/>`}
+function bmSvg(){
+ const L=(en,ta,x,y,sz=13,w=700)=>`<text x="${x}" y="${y}" font-size="${sz}" font-weight="${w}"><tspan class="en">${en}</tspan><tspan class="ta">${ta}</tspan></text>`;
+ const src=[
+  ['in1',hydroIcon,'Hydro','Hydro','1,972 MW · Satluj water','1,972 MW · Satluj தண்ணீர்','Q1: 2,004 MU (incl. wind)','Q1: 2,004 MU (wind சேர்த்து)','#1F6FA8',14],
+  ['in2',coalIcon,'Coal (Buxar)','Coal (Buxar)','1,320 MW · coal by rail','1,320 MW · rail-ல coal','Q1: 859 MU','Q1: 859 MU','#5B4636',7],
+  ['solar',solarIcon,'Solar','Solar','1,542 MW · sunlight','1,542 MW · வெயில்','Q1: 762 MU','Q1: 762 MU','#D99A00',6],
+  ['wind',windIcon,'Wind','Wind','98 MW · wind','98 MW · காற்று','~1% of output','output-ல ~1%','#2E8B57',2]];
+ let o='';const hx=470,hy=195;
+ src.forEach((s,i)=>{const y=22+i*90;
+  o+=`<path d="M232 ${y+30} C 330 ${y+30}, 330 ${hy}, ${hx-72} ${hy}" stroke="${s[8]}" stroke-width="${s[9]}" fill="none" opacity=".75"/>`;
+  o+=`<g data-bm="${s[0]}" class="hot"><rect x="8" y="${y-8}" width="226" height="80" rx="12" fill="#FFFAF4" stroke="#F3CFA6" stroke-width="2"/>${s[1](22,y)}${L(s[2],s[3],100,y+16,14,800)}${L(s[4],s[5],100,y+36,11.5,600)}${L(s[6],s[7],100,y+54,11.5,700)}</g>`;});
+ o+=`<g data-bm="hub" class="hot"><circle cx="${hx}" cy="${hy}" r="72" fill="#FDE3C6" stroke="#F28C28" stroke-width="4"/><text x="${hx}" y="${hy-18}" text-anchor="middle" font-size="22" font-weight="800">SJVN</text><text x="${hx}" y="${hy+4}" text-anchor="middle" font-size="14">4,931.5 MW</text><text x="${hx}" y="${hy+24}" text-anchor="middle" font-size="13">3,625 MU · Q1</text></g>`;
+ o+=`<line x1="${hx+72}" y1="${hy}" x2="602" y2="${hy}" stroke="#F28C28" stroke-width="12"/>`;
+ o+=`<g data-bm="grid" class="hot">${towerIcon(602,hy-40)}${L('Grid','Grid',604,hy+60,12,800)}</g>`;
+ const cs=[['Northern states','வடக்கு states','hydro: HP, Punjab, Haryana…','hydro: HP, Punjab, Haryana…'],['Bihar','Bihar','Buxar coal','Buxar coal'],['Rajasthan, J&K, Uttarakhand…','Rajasthan, J&K, Uttarakhand…','solar','solar']];
+ cs.forEach((c,i)=>{const y=95+i*72;o+=`<path d="M650 ${hy} C 690 ${hy}, 680 ${y+18}, 712 ${y+18}" stroke="#F28C28" stroke-width="4" fill="none"/><g data-bm="cust" class="hot">${houseIcon(714,y)}${L(c[0],c[1],756,y+14,12.5,800)}${L(c[2],c[3],756,y+31,11,600)}</g>`;});
+ o+=`<g data-bm="rev" class="hot"><path d="M870 330 L 520 330" stroke="#13703A" stroke-width="4" stroke-dasharray="8 6" fill="none" marker-end="url(#ah)"/>${L('Discoms pay: ₹1,394 cr revenue (Q1) → ₹225 cr profit','Discoms pay பண்றாங்க: ₹1,394 கோடி revenue (Q1) → ₹225 கோடி profit',545,356,12.5,800)}</g>`;
+ o+=`<path d="M${hx} ${hy+72} L ${hx} 318" stroke="#13703A" stroke-width="3" stroke-dasharray="4 4"/>`;
+ return `<svg viewBox="0 0 960 370" width="100%" style="min-width:760px" role="img" aria-label="SJVN from source to customer"><defs><marker id="ah" markerWidth="10" markerHeight="10" refX="6" refY="5" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="#13703A"/></marker></defs>${o}</svg>`;}
+function mapSvg(){
+ const pr=(lon,lat)=>[(lon-68)*25+150,(35-lat)*25+20];
+ const C={h:'#1F6FA8',c:'#5B4636',s:'#D99A00',w:'#2E8B57'};
+ const pts=[['Nathpa Jhakri + Rampur',77.6,31.45,1912,'h',1,10,-4,'start'],['Naitwar Mori',78.4,30.9,60,'h',1,10,14,'start'],['Dhaulasidh (u/c)',76.3,31.7,69.5,'h',0,-12,-6,'end'],['Punjab solar (u/c)',75.6,30.7,300,'s',0,-16,8,'end'],
+  ['Bikaner',73.3,28.0,1000,'s',1,0,-26,'middle'],['Nawa (u/c)',75.2,27.0,100,'s',0,14,4,'start'],['UP solar ×3',79.5,26.2,200,'s',1,0,26,'middle'],['Arun-3, Nepal (u/c)',87.2,27.7,900,'h',0,0,-26,'middle'],
+  ['Buxar coal',84.0,25.55,1320,'c',1,0,34,'middle'],['Jamui',86.4,24.6,75,'s',1,12,14,'start'],['Dhubri',90.0,26.0,70,'s',1,0,-14,'middle'],['Sonitpur (u/c)',92.8,26.6,50,'s',0,0,-14,'middle'],
+  ['Omkareshwar floating',76.15,22.25,90,'s',1,14,4,'start'],['Gujarat solar + wind',71.6,23.9,155.6,'s',1,-14,-4,'end'],['GUVNL solar (u/c)',70.9,22.2,1410,'s',0,-24,20,'end'],['Khirvire wind',73.8,19.5,47.6,'w',1,14,4,'start']];
+ let o='';for(let lat=20;lat<=34;lat+=2){const y=pr(70,lat)[1];o+=`<line x1="10" x2="900" y1="${y}" y2="${y}" stroke="#F3CFA6" stroke-width="1"/>`;}
+ for(let lon=70;lon<=96;lon+=4){const x=pr(lon,30)[0];o+=`<line y1="10" y2="470" x1="${x}" x2="${x}" stroke="#F3CFA6" stroke-width="1"/>`;}
+ [...pts].sort((a,b)=>b[3]-a[3]).forEach(p=>{const [x,y]=pr(p[1],p[2]);const r=5+Math.sqrt(p[3])*.45;o+=`<circle cx="${x}" cy="${y}" r="${r}" fill="${p[5]?C[p[4]]:'#FFFAF4'}" fill-opacity="${p[5]?.85:1}" stroke="${C[p[4]]}" stroke-width="3" ${p[5]?'':'stroke-dasharray="5 3"'}/>`;});
+ pts.forEach(p=>{const [x,y]=pr(p[1],p[2]);o+=`<text x="${x+p[6]}" y="${y+p[7]}" text-anchor="${p[8]}" font-size="11.5"><tspan font-weight="800">${p[0]}</tspan> ${f0(p[3])}</text>`;});
+ o+=`<text x="900" y="455" text-anchor="end" font-size="11"><tspan class="en">Approximate positions · MW · dashed = under construction</tspan><tspan class="ta">தோராயமான இடம் · MW · dashed = construction-ல</tspan></text>`;
+ return `<svg viewBox="0 0 910 465" width="100%" style="min-width:680px" role="img" aria-label="Plant locations">${o}</svg>`;}
+function unitSvg(){const rows=[['Coal (Buxar, Q1 FY27 est.)','Coal (Buxar, Q1 FY27 est.)',4.9,'#5B4636'],['Coal (Buxar, FY26 start-up)','Coal (Buxar, FY26 start-up)',3.76,'#B5A08C'],['Hydro + wind (SJVN, FY26)','Hydro + wind (SJVN, FY26)',3.52,'#1F6FA8'],['Solar (SGEL, FY26)','Solar (SGEL, FY26)',2.75,'#D99A00'],['Bikaner bid tariff','Bikaner bid tariff',2.57,'#D99A00']];
+ let o='';rows.forEach((r,i)=>{const y=12+i*48,w=r[2]/5.2*330;o+=`<text x="0" y="${y+12}" font-size="12.5"><tspan class="en">${r[0]}</tspan><tspan class="ta">${r[1]}</tspan></text><rect x="0" y="${y+18}" width="${w}" height="18" rx="4" fill="${r[3]}"/><text x="${w+8}" y="${y+32}" font-size="14" font-weight="800">₹${r[2].toFixed(2)}</text>`;});
+ return `<svg viewBox="0 0 420 252" width="100%" style="max-width:520px">${o}</svg>`;}
+function hundredSvg(){const seg=[['Operating costs','Operating costs',36.6,'#B5A08C'],['Interest','Interest',23.4,'#B3261E'],['Depreciation','Depreciation',17.7,'#E58A7A'],['Tax','Tax',6.1,'#F6C343'],['Profit','Profit',16.1,'#13703A']];
+ let x=0,o='';seg.forEach((s,i)=>{const w=s[2]*6.4;o+=`<rect x="${x}" y="30" width="${w}" height="44" fill="${s[3]}"/><text x="${x+w/2}" y="58" text-anchor="middle" font-size="14" font-weight="800" style="fill:#1B1006">₹${Math.round(s[2])}</text><text x="${x+w/2}" y="${i%2?110:94}" text-anchor="middle" font-size="11.5"><tspan class="en">${s[0]}</tspan><tspan class="ta">${s[1]}</tspan></text>`;x+=w;});
+ o+=`<text x="0" y="18" font-size="12.5" font-weight="800"><tspan class="en">₹100 of Q1 FY27 revenue</tspan><tspan class="ta">Q1 FY27-ல ₹100 revenue</tspan></text>`;
+ return `<svg viewBox="0 0 650 120" width="100%" style="min-width:520px">${o}</svg>`;}
+function paySvg(){const box=(x,y,w,t1,t2,c)=>`<rect x="${x}" y="${y}" width="${w}" height="50" rx="10" fill="#FFFAF4" stroke="${c}" stroke-width="2.5"/><text x="${x+w/2}" y="${y+22}" text-anchor="middle" font-size="12.5" font-weight="800">${t1}</text><text x="${x+w/2}" y="${y+40}" text-anchor="middle" font-size="11">${t2}</text>`;
+ const op=(x,y,t)=>`<text x="${x}" y="${y}" text-anchor="middle" font-size="22" font-weight="800" style="fill:#F28C28">${t}</text>`;
+ let o=`<text x="0" y="20" font-size="13" font-weight="800"><tspan class="en">Hydro & coal (regulated)</tspan><tspan class="ta">Hydro & coal (regulated)</tspan></text>`;
+ o+=box(0,32,190,'<tspan class="en">Fixed charge</tspan><tspan class="ta">Fixed charge</tspan>','<tspan class="en">paid if plant is available</tspan><tspan class="ta">plant ready-ஆ இருந்தா</tspan>','#1F6FA8')+op(212,64,'+')+box(234,32,190,'<tspan class="en">Energy charge</tspan><tspan class="ta">Energy charge</tspan>','<tspan class="en">per unit sold (covers coal)</tspan><tspan class="ta">ஒவ்வொரு unit-க்கும் (coal cost)</tspan>','#5B4636')+op(446,64,'=')+box(468,32,170,'<tspan class="en">Loan + depreciation</tspan><tspan class="ta">Loan + depreciation</tspan>','<tspan class="en">+ agreed return</tspan><tspan class="ta">+ agreed return</tspan>','#13703A');
+ o+=`<text x="0" y="122" font-size="13" font-weight="800"><tspan class="en">Solar (bid)</tspan><tspan class="ta">Solar (bid)</tspan></text>`;
+ o+=box(0,134,190,'<tspan class="en">Units generated</tspan><tspan class="ta">Generate ஆன units</tspan>','<tspan class="en">depends on sun + grid</tspan><tspan class="ta">வெயில் + grid பொறுத்து</tspan>','#D99A00')+op(212,166,'×')+box(234,134,190,'₹2.57 / unit','<tspan class="en">fixed for 25 years</tspan><tspan class="ta">25 வருஷம் fixed</tspan>','#D99A00')+op(446,166,'=')+box(468,134,170,'<tspan class="en">Revenue</tspan><tspan class="ta">Revenue</tspan>','<tspan class="en">no output, no money</tspan><tspan class="ta">output இல்லைனா பணம் இல்லை</tspan>','#B3261E');
+ return `<svg viewBox="0 0 650 195" width="100%" style="min-width:560px">${o}</svg>`;}
+P.bm=()=>{const b=(k,c='')=>`<button class="fbox ${c}" data-bm="${k}">${T(BM[k].en,BM[k].ta)}</button>`;
+ const m=(k,en,ta)=>`<button class="fbox" data-bm="${k}"><b>${T(en,ta)}</b></button>`;
+ return `<h2>${T('From river, coal and sun to the customer','River, coal, sun-ல இருந்து customer வரை')}</h2>
+ <div class="card hl"><h3>${T('Picture it: how SJVN makes and sells power','Picture it: SJVN power எப்படி தயாரிச்சு விக்குது')}</h3>
+ <p class="note">${T('Line thickness = Q1 FY27 output. Tap any picture for what it means.','Line தடிமன் = Q1 FY27 output. எந்த படத்தையும் tap பண்ணுங்க.')}</p>
+ <div class="svgw">${bmSvg()}</div><div class="detail bmd">${T('Tap a picture above.','மேல ஒரு படத்தை tap பண்ணுங்க.')}</div></div>
+ <div class="sec">${card(T('Where the plants are','Plants எங்க இருக்கு'),`<div class="svgw">${mapSvg()}</div><p class="note">${T('Also under construction in Himachal: Sunni Dam 382 MW and Luhri-I 210 MW, next to Nathpa Jhakri.','Himachal-ல construction-ல: Sunni Dam 382 MW, Luhri-I 210 MW, Nathpa Jhakri பக்கத்துல.')}</p>`)}</div>
+ <div class="grid g2 sec">
+   ${card(T('What one unit earns (₹ per kWh, CB est.)','ஒரு unit-க்கு எவ்வளவு கிடைக்குது (₹/kWh, CB est.)'),`<div class="svgw">${unitSvg()}</div>${ul([T('Coal now earns ~₹4.9 a unit, but about ₹2.1 of it goes on coal; hydro has no fuel bill, so it keeps the most.','Coal இப்போ ~₹4.9/unit, ஆனா அதுல ~₹2.1 coal-க்கே போகுது; hydro-க்கு fuel bill இல்லை, அதனால அதிகம் மிச்சம்.'),T('FY26 coal (₹3.76) was a start-up figure: low availability cut the fixed-charge payment and the tariff is still provisional.','FY26 coal (₹3.76) start-up number: availability குறைவா இருந்ததால fixed charge முழுசா கிடைக்கல, tariff இன்னும் provisional.'),T('Solar earns the least per unit and its loans are new, so profit comes slowly.','Solar per unit குறைவு, loans புதுசு; profit மெதுவா வரும்.')])}`)}
+   ${card(T('Where ₹100 of revenue goes','₹100 revenue எங்க போகுது'),`<div class="svgw">${hundredSvg()}</div>${ul([T('₹41 of every ₹100 goes to interest and depreciation of the plants.','ஒவ்வொரு ₹100-லயும் ₹41 interest, depreciation-க்கு போகுது.'),T('Only ₹16 stays as profit (₹25 a year ago).','₹16 தான் profit-ஆ மிச்சம் (போன வருஷம் ₹25).')])}<p class="note">${T('Rounded; other income and small adjustments net out.','Rounded; other income, சின்ன adjustments net ஆகிடும்.')}</p>`)}
+  </div>
+ ${card(T('How SJVN gets paid','SJVN-க்கு பணம் எப்படி வருது'),`<div class="svgw">${paySvg()}</div>`,'sec')}
+ <h3 class="sec">${T('Box view: tap for details','Box view: tap பண்ணி விவரம் பாருங்க')}</h3>
+ <div class="flow">
+  <div class="fcol">${b('cust')}<div class="arrow">↑</div>${b('ch')}</div>
+  <div class="fcol">${b('hub','hub')}<div class="arrow">↓</div>${b('prod')}</div>
+  <div class="fcol">${b('in1')}${b('in2')}${b('in3')}</div>
+ </div>
+ <h3 class="sec">${T('Money flow, Q1 FY27 (₹ cr)','Money flow, Q1 FY27 (₹ கோடி)')}</h3>
+ <div class="money">${m('rev','Revenue 1,394','Revenue 1,394')}<span class="arrow">→</span>${m('cost','− Costs 510','− Costs 510')}<span class="arrow">→</span>${m('ebitda','EBITDA 884','EBITDA 884')}<span class="arrow">→</span>${m('below','− Int 326 · D&A 247 · Tax 86','− Int 326 · D&A 247 · Tax 86')}<span class="arrow">→</span>${m('pat','PAT 225','PAT 225')}</div>
+ <div class="detail bmd">${T('Tap a box above.','மேல ஒரு box tap பண்ணுங்க.')}</div>
+ <div class="card hl sec"><b>${T('Revenue formula','Revenue formula')}:</b> ${T('Units sold (MU) × tariff (fixed charge for availability + energy charge per unit for hydro/coal; flat ₹/unit for solar)','விக்குற units (MU) × tariff (hydro/coal-க்கு availability fixed charge + per unit energy charge; solar-க்கு flat ₹/unit)')}</div>`;};
+
+// ===== Segments =====
+P.seg=()=>`
+<h2>${T('Who earns, who loses','யார் சம்பாதிக்கிறாங்க, யார் loss')}</h2>
+<p class="note">${T('SJVN reports one segment (power). We split it by entity: Standalone = hydro + wind + small solar; Subsidiaries = SGEL (solar) + STPL (Buxar coal) + others. Subsidiary figures = consolidated minus standalone (CB est.).','SJVN ஒரே segment (power) தான் report பண்றாங்க. நாம entity-ஆ பிரிச்சிருக்கோம்: Standalone = hydro + wind + சின்ன solar; Subsidiaries = SGEL (solar) + STPL (Buxar coal) + others. Subsidiary numbers = consolidated − standalone (CB est.).')}</p>
+<div class="tw"><table><thead><tr><th>₹ cr</th><th>Q1 FY27</th><th>Q1 FY26</th><th>YoY</th><th>${T('Share of Q1 FY27','Q1 FY27 share')}</th></tr></thead><tbody>
+<tr><td>${T('Standalone revenue (hydro-led)','Standalone revenue (hydro)')}</td><td>758.83</td><td>822.44</td><td>${pc(pct(758.83,822.44))}</td><td>54%</td></tr>
+<tr><td>${T('Subsidiaries revenue (coal + solar)','Subsidiaries revenue (coal + solar)')}</td><td>635.55</td><td>95.01</td><td>${pc(pct(635.55,95.01))}</td><td>46%</td></tr>
+<tr class="em"><td>${T('Consolidated revenue','Consolidated revenue')}</td><td>1,394.38</td><td>917.45</td><td>${pc(pct(1394.38,917.45))}</td><td>100%</td></tr>
+<tr><td>${T('Standalone PAT','Standalone PAT')}</td><td>246.88</td><td>258.51</td><td>${pc(pct(246.88,258.51))}</td><td>—</td></tr>
+<tr><td>${T('Subsidiaries PAT (net of eliminations)','Subsidiaries PAT')}</td><td class="dn">−22.14</td><td class="dn">−30.93</td><td><span class="up">${T('loss narrower','loss குறைஞ்சிருக்கு')}</span></td><td>—</td></tr>
+<tr class="em"><td>${T('Consolidated PAT','Consolidated PAT')}</td><td>224.74</td><td>227.58</td><td>${pc(pct(224.74,227.58))}</td><td>—</td></tr>
+</tbody></table></div>
+<div class="grid g3 sec">
+ ${card(`<span style="color:var(--hydro)">■</span> ${T('Hydro (parent)','Hydro (parent)')}`,ul([
+  T('FY26: 9,925 MU; Nathpa Jhakri 7,507 MU at 96.8% availability (norm 87%).','FY26: 9,925 MU; Nathpa Jhakri 7,507 MU, availability 96.8% (norm 87%).'),
+  T('Rampur record 2,108 MU; Naitwar Mori 17% above design energy.','Rampur record 2,108 MU; Naitwar Mori design energy-ஐ விட 17% அதிகம்.'),
+  T('Q1 FY27 standalone revenue −7.7% YoY, PAT −4.5%: a softer hydro quarter.','Q1 FY27 standalone revenue −7.7%, PAT −4.5%: hydro quarter கொஞ்சம் soft.'),
+ ]))}
+ ${card(`<span style="color:var(--thermal)">■</span> ${T('Coal: Buxar (STPL)','Coal: Buxar (STPL)')}`,ul([
+  T('Q1 FY27: 859 MU from Unit-1 ≈ 60% PLF (CB est.).','Q1 FY27: Unit-1 859 MU ≈ 60% PLF (CB est.).'),
+  T('FY26 (4.5 months): revenue ₹522 cr, expenses ₹644 cr, loss ₹93 cr.','FY26 (4.5 மாசம்): revenue ₹522 கோடி, expenses ₹644 கோடி, loss ₹93 கோடி.'),
+  T('Realisation ≈ ₹4.9/unit in Q1 FY27 (CB est.), up from ₹3.76 in FY26 start-up months; fuel ≈ ₹2.1/unit.','Q1 FY27 realisation ≈ ₹4.9/unit (CB est.); FY26 start-up மாசங்கள்ல ₹3.76; fuel ≈ ₹2.1/unit.'),T('Tariff is provisional until CERC approves the ₹13,757 cr capital cost; 85% of power goes to Bihar under a 25-year PPA.','CERC ₹13,757 கோடி capital cost approve பண்ற வரை tariff provisional; 85% power Bihar-க்கு 25 வருஷ PPA-ல.'),
+ ]))}
+ ${card(`<span style="color:var(--solar)">■</span> ${T('Solar: SGEL','Solar: SGEL')}`,ul([
+  T('Q1 FY27: 762 MU from ~1,460 MW ≈ 24% CUF (summer quarter, CB est.).','Q1 FY27: ~1,460 MW-ல 762 MU ≈ 24% CUF (summer quarter, CB est.).'),
+  T('FY26: revenue ₹510 cr, expenses ₹802 cr, loss ₹258 cr (curtailment, part-year).','FY26: revenue ₹510 கோடி, expenses ₹802 கோடி, loss ₹258 கோடி (curtailment, part-year).'),
+  T('Realisation ≈ ₹2.75/unit, under half of Buxar coal.','Realisation ≈ ₹2.75/unit, Buxar coal-ல பாதிக்கும் கம்மி.'),
+ ]))}
+</div>
+<div class="card sec"><h3>${T('Q1 FY27 generation by business (MU)','Q1 FY27 generation, business-வாரியா (MU)')}</h3><div class="svgw">${hbars([[A('Hydro + wind + small solar (SJVN)','Hydro + wind + சின்ன solar (SJVN)'),2004.1,'var(--hydro)'],[A('Coal (Buxar)','Coal (Buxar)'),859.4,'var(--thermal)'],[A('Solar (SGEL)','Solar (SGEL)'),761.6,'var(--solar)']],2200,' MU')}</div></div>`;
+function hbars(rows,max,unit){const h=rows.length*44+10;let o='';rows.forEach((r,i)=>{const w=r[1]/max*360;o+=`<text x="0" y="${i*44+16}" font-size="13"><tspan class="en">${r[0].en}</tspan><tspan class="ta">${r[0].ta}</tspan></text><rect x="0" y="${i*44+22}" width="${w}" height="14" rx="3" fill="${r[2]}"/><text x="${w+6}" y="${i*44+34}" font-size="13">${f0(r[1])}${unit}</text>`;});return `<svg viewBox="0 0 460 ${h}" width="100%" style="max-width:600px">${o}</svg>`}
+
+// ===== Big bet =====
+const TL=[
+ ['done','2 Apr 2025',A('Bikaner solar Phase-1: 241.77 MW COD','Bikaner solar Phase-1: 241.77 MW COD')],
+ ['done','15 May 2025',A('Bikaner +78.23 MW COD','Bikaner +78.23 MW COD')],
+ ['done','21 Aug 2025',A('Buxar Unit-1 synchronised with the grid','Buxar Unit-1 grid-ல sync')],
+ ['late','14 Nov 2025',A('Buxar Unit-1 (660 MW) COD · first target was Jun 2023','Buxar Unit-1 (660 MW) COD · முதல் target Jun 2023')],
+ ['late','24 Dec 2025',A('Bikaner full 1,000 MW COD · guided 30 Sep 2025','Bikaner full 1,000 MW COD · guide 30 Sep 2025')],
+ ['done','5 Feb 2026',A('Dhubri solar 70 MW (Assam) COD','Dhubri solar 70 MW (Assam) COD')],
+ ['done','Q1–Q2 FY27',A('Jamui solar 75 MW (Bihar) commissioned','Jamui solar 75 MW (Bihar) commissioned')],
+ ['late','12 Sep 2026',A('Buxar Unit-2 (660 MW) COD · first target Jan 2024, guided Jan–Feb 2026','Buxar Unit-2 (660 MW) COD · முதல் target Jan 2024, guide Jan–Feb 2026')],
+ ['next','Dec 2026',A('Guided: ~900 MW Gujarat solar (GUVNL XXI, XXIII, XVII)','Guide: ~900 MW Gujarat solar (GUVNL XXI, XXIII, XVII)')],
+ ['next','Mar 2027',A('Guided: Dhaulasidh hydro 69.5 MW; ~1,500 MW more solar awarded (Punjab, Assam, ET-3)','Guide: Dhaulasidh hydro 69.5 MW; ~1,500 MW solar award ஆகியிருக்கு')],
+ ['next','Dec 2028',A('Guided: Arun-3 hydro 900 MW, Nepal (subsidiary SAPDC)','Guide: Arun-3 hydro 900 MW, Nepal (subsidiary SAPDC)')],
+ ['next','2029–30',A('Guided: Sunni Dam 382 MW (Dec 2029), Luhri-I 210 MW (May 2030)','Guide: Sunni Dam 382 MW (Dec 2029), Luhri-I 210 MW (May 2030)')],
+];
+P.bet=()=>`
+<h2>${T('The big bet: from pure hydro to hydro + coal + solar','Big bet: pure hydro-ல இருந்து hydro + coal + solar')}</h2>
+<div class="grid g2">
+ ${card(T('Picture it: capacity before and after','Picture it: முன்னும் பின்னும் capacity'),`<div class="svgw">${stackBar()}</div>${legend()}`)}
+ ${card(T('What changed on the P&L (Q1 FY27 vs Q1 FY26)','P&L-ல என்ன மாறுச்சு (Q1 FY27 vs Q1 FY26)'),ul([
+  T('Revenue +₹477 cr: almost all of it (+₹541 cr) from the coal and solar subsidiaries; hydro parent −₹64 cr.','Revenue +₹477 கோடி: இதுல +₹541 கோடி coal, solar subsidiaries-ல இருந்து; hydro parent −₹64 கோடி.'),
+  T('EBITDA +₹142 cr, but interest +₹110 cr and depreciation +₹87 cr.','EBITDA +₹142 கோடி, ஆனா interest +₹110 கோடி, depreciation +₹87 கோடி.'),
+  T('Net result: PAT −₹3 cr. The new assets pay for themselves, not yet for shareholders.','Final-ஆ PAT −₹3 கோடி. புது assets தன் செலவை cover பண்ணுது, shareholders-க்கு இன்னும் லாபம் தரல.'),
+  T('Margin trade-off: EBITDA margin 80.9% → 63.4%. Coal and solar earn thinner margins than paid-off hydro.','Margin trade-off: EBITDA margin 80.9% → 63.4%. Coal, solar margin பழைய hydro-வை விட குறைவு.'),
+ ]),'hl')}
+</div>
+<div class="grid g2 sec">
+ ${card(T('COD timeline: done vs guided','COD timeline: முடிஞ்சது vs guide'),`<div class="tl">${TL.map(t=>`<div class="it ${t[0]==='next'?'':t[0]}"><div class="dt">${t[1]} ${t[0]==='late'?`<span class="chip">${T('late vs first target','first target-ஐ விட late')}</span>`:t[0]==='next'?`<span class="chip a">${T('guided','guide')}</span>`:`<span class="chip g">${T('done','done')}</span>`}</div>${T(t[2].en,t[2].ta)}</div>`).join('')}</div>`)}
+ <div class="grid">
+ ${card(T('Buxar coal plant: the numbers that matter','Buxar coal plant: முக்கிய numbers'),`<div class="tw"><table><tbody>
+  <tr><td>${T('Capacity','Capacity')}</td><td>2 × 660 MW ${T('supercritical','supercritical')}</td></tr>
+  <tr><td>${T('Ownership','Ownership')}</td><td>${T('100% subsidiary STPL (own plant, not JV)','100% subsidiary STPL (own plant, JV இல்லை)')}</td></tr>
+  <tr><td>${T('Project cost','Project cost')}</td><td>₹13,757 cr (${T('~₹11,000 cr at start','ஆரம்பத்துல ~₹11,000 கோடி')})</td></tr>
+  <tr><td>${T('Full-load output','Full output')}</td><td>9,829 MU/yr</td></tr>
+  <tr><td>${T('Q1 FY27 PLF (Unit-1)','Q1 FY27 PLF (Unit-1)')}</td><td>~60% (CB est.)</td></tr>
+  <tr><td>${T('Break-even per management','Management break-even')}</td><td>${T('above ~70% PLF','~70% PLF-க்கு மேல')}</td></tr>
+  <tr><td>${T('Revenue at 60% / 85% PLF','Revenue 60% / 85% PLF-ல')}</td><td>~₹3,400 / ~₹4,500 cr/yr (CB est. @ ~₹4.6–4.9)</td></tr>
+ </tbody></table></div>`)}
+ ${card(T('Bikaner solar: the numbers that matter','Bikaner solar: முக்கிய numbers'),`<div class="tw"><table><tbody>
+  <tr><td>${T('Capacity','Capacity')}</td><td>1,000 MW, 5,000 acres ${T('owned land','own land')}</td></tr>
+  <tr><td>${T('Ownership','Ownership')}</td><td>${T('100% subsidiary SGEL; DCR modules bought from Indian makers (SJVN does not make modules)','100% subsidiary SGEL; DCR modules இந்திய makers கிட்ட வாங்கினது (SJVN modules தயாரிக்கல)')}</td></tr>
+  <tr><td>${T('Tariff','Tariff')}</td><td>₹2.57/unit, 25 ${T('years','வருஷம்')}</td></tr>
+  <tr><td>${T('Year-1 output','Year-1 output')}</td><td>2,455 MU → ~₹630 cr/yr (CB est.)</td></tr>
+  <tr><td>${T('Watch','கவனிங்க')}</td><td>${T('Grid curtailment hit FY26 output','FY26-ல grid curtailment output-ஐ குறைச்சுது')}</td></tr>
+ </tbody></table></div>`)}
+ </div>
+</div>
+<div class="grid g2 sec">
+ ${card(T('Who is ahead in the diversification race?','Diversification race-ல யார் முன்னாடி?'),ul([
+  T('NHPC (sister hydro PSU, same CMD now): bigger, lower debt (D/E ~1.2) and ROE ~9.3% vs SJVN ~6.7%.','NHPC (sister hydro PSU, இப்போ அதே CMD): பெரிசு, debt குறைவு (D/E ~1.2), ROE ~9.3%; SJVN ~6.7%.'),
+  T('SJVN moved faster into coal: Buxar gives it 1,320 MW of round-the-clock power that hydro peers lack.','SJVN coal-க்கு வேகமா போச்சு: Buxar 1,320 MW round-the-clock power, மற்ற hydro peers-க்கு இல்லை.'),
+  T('In solar, NTPC Green and private players are far larger; SJVN is a mid-size bidder.','Solar-ல NTPC Green, private players ரொம்ப பெரிசு; SJVN mid-size bidder.'),
+ ]))}
+ ${card(T('How SJVN got here','SJVN இங்க எப்படி வந்துச்சு'),ul([
+  T('1988: born as a GoI + Himachal joint venture to build Nathpa Jhakri (1,500 MW, COD 2004).','1988: Nathpa Jhakri (1,500 MW, 2004 COD) கட்ட GoI + Himachal JV-ஆ ஆரம்பம்.'),
+  T('2014: Rampur 412 MW; 2014–19: first wind and solar plants.','2014: Rampur 412 MW; 2014–19: முதல் wind, solar plants.'),
+  T('Buxar coal project handed over from the Bihar government; built by STPL.','Buxar coal project Bihar government-கிட்ட இருந்து வந்துச்சு; STPL கட்டுச்சு.'),
+  T('FY26: biggest-ever year, +1,730 MW; FY27: Buxar complete.','FY26: record வருஷம், +1,730 MW; FY27: Buxar முழுசா ready.'),
+ ]))}
+</div>`;
+function stackBar(){const W=360;const tot1=2466.5,tot2=4931.5,sc=W/tot2;let o='';
+ const row=(arr,y,lab)=>{let x=0;arr.forEach(a=>{if(!a.mw)return;const w=a.mw*sc;o+=`<rect x="${110+x}" y="${y}" width="${w}" height="28" fill="${a.c}"/>`;if(w>34)o+=`<text x="${110+x+w/2}" y="${y+19}" text-anchor="middle" font-size="11" style="fill:#FFFAF4">${Math.round(a.mw)}</text>`;x+=w;});o+=`<text x="0" y="${y+19}" font-size="13">${lab}</text>`;};
+ row(CAP_OLD,10,'Mar 2025');row(CAP,56,'Oct 2026');
+ o+=`<text x="110" y="110" font-size="12"><tspan class="en">2,467 MW → 4,932 MW · hydro share 80% → 40%</tspan><tspan class="ta">2,467 MW → 4,932 MW · hydro share 80% → 40%</tspan></text>`;
+ return `<svg viewBox="0 0 480 120" width="100%" style="max-width:620px">${o}</svg>`}
+
+// ===== Sector & value chain =====
+P['val-chain']=()=>`
+<h2>${T('What India needs, and where SJVN plays','இந்தியாவுக்கு என்ன தேவை, SJVN எங்க விளையாடுது')}</h2>
+<div class="grid g3">
+ ${kpi(A('Peak demand met FY26','FY26 peak demand'),'242.5 GW',T('all-time high','all-time high'))}
+ ${kpi(A('India capacity','இந்தியா capacity'),'532+ GW',T('over 50% non-fossil','50%+ non-fossil'))}
+ ${kpi(A('2030 target','2030 target'),'500 GW',T('non-fossil capacity','non-fossil capacity'))}
+</div>
+<div class="card sec"><h3>${T('Picture it: the power value chain','Picture it: power value chain')}</h3><div class="svgw">${chainSvg()}</div>
+<p class="note">${T('Filled orange = SJVN is present. Dashed = small or pipeline only.','Orange fill = SJVN இருக்கு. Dashed = சின்னது அல்லது pipeline மட்டும்.')}</p></div>
+<div class="grid g2 sec">
+ ${card(T('Which source does which job','எந்த source என்ன வேலை செய்யும்'),`<div class="tw"><table><thead><tr><th>${T('Source','Source')}</th><th>${T('Job in the grid','Grid-ல வேலை')}</th><th>SJVN MW</th></tr></thead><tbody>
+ <tr><td>Hydro</td><td>${T('Peaking + balancing','Peak + balance')}</td><td>1,972</td></tr>
+ <tr><td>Coal</td><td>${T('Round-the-clock base load','24 மணி base load')}</td><td>1,320</td></tr>
+ <tr><td>Solar</td><td>${T('Cheap daytime power','மலிவான பகல் power')}</td><td>1,542</td></tr>
+ <tr><td>Wind</td><td>${T('Evening/monsoon top-up','மாலை/மழைக்கால top-up')}</td><td>98</td></tr>
+ <tr><td>${T('Storage (pumped hydro, BESS)','Storage (pumped hydro, BESS)')}</td><td>${T('Shift solar to night','Solar-ஐ ராத்திரிக்கு மாத்தும்')}</td><td>${T('pipeline: 1,800 MW Kotpali PSP; 265 MW BESS tender','pipeline: 1,800 MW Kotpali PSP; 265 MW BESS tender')}</td></tr>
+ </tbody></table></div>`)}
+ ${card(T('What it means for SJVN','SJVN-க்கு என்ன அர்த்தம்'),ul([
+  T('Solar alone cannot meet evening peaks; hydro and coal fill that gap, so SJVN holds the "firm power" pieces.','Solar மட்டும் evening peak-ஐ handle பண்ணாது; hydro, coal அந்த gap-ஐ fill பண்ணும். SJVN-கிட்ட "firm power" இருக்கு.'),
+  T('Solar is crowded: bid tariffs near ₹2.5–2.6/unit leave thin returns.','Solar-ல போட்டி அதிகம்: ₹2.5–2.6/unit bid tariff-ல return குறைவு.'),
+  T('Transmission is tiny for SJVN (86 km JV line + 37 km); not a profit driver.','SJVN-க்கு transmission ரொம்ப சின்னது (86 km JV line + 37 km); profit driver இல்லை.'),
+  T('Next growth lever is storage (pumped hydro), where hydro skills help.','அடுத்த growth lever storage (pumped hydro); இதுல hydro skill உதவும்.'),
+ ]))}
+</div>`;
+function chainSvg(){const st=[['Fuel / resource','Fuel / resource',1,'Water · coal · sun'],['Generation','Generation',1,'4,931.5 MW'],['Storage','Storage',0,'pipeline'],['Transmission','Transmission',0,'123 km'],['Discoms','Discoms',-1,'customers'],['Homes & industry','வீடு & industry',-1,'end users']];
+ let o='';st.forEach((s,i)=>{const x=i*118;const fill=s[2]===1?'#FDE3C6':'#FFFAF4';const stroke=s[2]===1?'#F28C28':'#F3CFA6';const dash=s[2]===0?'stroke-dasharray="6 4"':'';
+ o+=`<rect x="${x}" y="10" width="104" height="70" rx="10" fill="${fill}" stroke="${s[2]===0?'#F28C28':stroke}" stroke-width="2.5" ${dash}/><text x="${x+52}" y="38" text-anchor="middle" font-size="12.5"><tspan class="en">${s[0]}</tspan><tspan class="ta">${s[1]}</tspan></text><text x="${x+52}" y="60" text-anchor="middle" font-size="11">${s[3]}</text>`;
+ if(i<st.length-1)o+=`<text x="${x+111}" y="50" text-anchor="middle" font-size="16" style="fill:#F28C28">→</text>`;});
+ return `<svg viewBox="0 0 700 90" width="100%" style="min-width:600px">${o}</svg>`}
+
+// ===== Financials =====
+P.fin=()=>`
+<h2>${T('Results: Q1 FY27 vs Q4 FY26 vs Q1 FY26 (consolidated, ₹ cr)','Results: Q1 FY27 vs Q4 FY26 vs Q1 FY26 (consolidated, ₹ கோடி)')}</h2>
+<div class="tw"><table><thead><tr><th></th><th>Q1 FY27</th><th>Q4 FY26</th><th>Q1 FY26</th><th>QoQ</th><th>YoY</th></tr></thead><tbody>
+${Q.map(r=>{const v=r.v;const fm=r.e?f2:(r.m?f1:f2);const qq=r.m?(v[0]-v[1]).toFixed(1)+' pp':null;const yy=r.m?(v[0]-v[2]).toFixed(1)+' pp':null;
+ return `<tr class="${r.em?'em':''}"><td>${T(r.k.en,r.k.ta)}</td><td>${fm(v[0])}</td><td class="${v[1]<0?'dn':''}">${fm(v[1])}</td><td>${fm(v[2])}</td><td>${r.m?`<span class="${v[0]-v[1]>=0?'up':'dn'}">${qq}</span>`:pc(pct(v[0],v[1]))}</td><td>${r.m?`<span class="${v[0]-v[2]>=0?'up':'dn'}">${yy}</span>`:pc(pct(v[0],v[2]))}</td></tr>`}).join('')}
+</tbody></table></div>
+<p class="note">${T('Q4 FY26 EBITDA is derived (PBT + interest + depreciation − other income). Q1 FY26 PBT not available in our data. Q4 FY26 interest and depreciation include a year-end catch-up after Bikaner and Buxar were capitalised. n.m. = not meaningful (loss base).','Q4 FY26 EBITDA derive பண்ணினது (PBT + interest + depreciation − other income). Q1 FY26 PBT நம்ம data-ல இல்லை. Q4 FY26 interest, depreciation-ல Bikaner, Buxar capitalise ஆனதுக்கு year-end catch-up இருக்கு. n.m. = loss base, அர்த்தமில்லை.')}</p>
+<div class="grid g2 sec">
+ ${card(T('7-quarter trend: revenue vs profit','7 quarter trend: revenue vs profit'),`<div class="svgw">${trendSvg()}</div><div class="legend"><span><i style="background:var(--accent)"></i>${T('Revenue','Revenue')}</span><span><i style="background:var(--hydro)"></i>PAT</span></div>`)}
+ ${card(T('Reading the table','Table-ஐ எப்படி படிக்கணும்'),ul([
+  T('Revenue keeps rising each year; profit does not. Q4 is a loss quarter two years running (low hydro + year-end costs).','Revenue ஒவ்வொரு வருஷமும் ஏறுது; profit ஏறல. Q4 தொடர்ந்து 2 வருஷம் loss (hydro குறைவு + year-end cost).'),
+  T('Interest is 23% of revenue; every ₹100 earned, ₹23 goes to lenders before depreciation.','Interest revenue-ல 23%; ₹100 சம்பாதிச்சா ₹23 lenders-க்கு போகுது.'),
+  T('Tax ₹86 cr = 27.6% of PBT.','Tax ₹86 கோடி = PBT-ல 27.6%.'),
+  T('Standalone: revenue ₹758.8 cr (−7.7%), PAT ₹246.9 cr (−4.5%), EPS ₹0.63.','Standalone: revenue ₹758.8 கோடி (−7.7%), PAT ₹246.9 கோடி (−4.5%), EPS ₹0.63.'),
+ ]))}
+</div>
+<div class="card sec"><h3>${T('Full year FY26 vs FY25 (consolidated, ₹ cr)','FY26 vs FY25 முழு வருஷம் (consolidated, ₹ கோடி)')}</h3>
+<div class="tw"><table><thead><tr><th></th><th>FY26</th><th>FY25</th><th>YoY</th></tr></thead><tbody>
+${[[A('Revenue','Revenue'),4528.29,3072.01],[A('Total income','Total income'),4722.81,3376.50],[A('Fuel cost','Fuel cost'),286.79,0],[A('EBITDA (CB calc.)','EBITDA (CB calc.)'),3349.6,2221.1],[A('Finance cost','Finance cost'),1297.86,743.37],[A('Depreciation','Depreciation'),1041.98,676.21],[A('PBT','PBT'),1200.63,1111.69],[A('PAT','PAT'),641.85,818.02],[A('EPS (₹)','EPS (₹)'),1.63,2.08]].map(r=>`<tr><td>${T(r[0].en,r[0].ta)}</td><td>${f2(r[1])}</td><td>${f2(r[2])}</td><td>${pc(r[2]?pct(r[1],r[2]):null)}</td></tr>`).join('')}
+</tbody></table></div></div>`;
+function trendSvg(){const W=460,H=220,pl=44,pb=28,pt=12;const mx=1600,mn=-200;const y=v=>pt+(mx-v)/(mx-mn)*(H-pt-pb);const n=TREND.q.length,bw=(W-pl)/n;
+ let o='';[-200,0,400,800,1200,1600].forEach(g=>{o+=`<line x1="${pl}" x2="${W}" y1="${y(g)}" y2="${y(g)}" stroke="#F3CFA6" ${g===0?'stroke-width="2"':''}/><text x="${pl-6}" y="${y(g)+4}" text-anchor="end" font-size="10">${g}</text>`;});
+ TREND.rev.forEach((v,i)=>{o+=`<rect x="${pl+i*bw+bw*.18}" y="${y(v)}" width="${bw*.64}" height="${y(0)-y(v)}" fill="#F28C28" rx="3"/><text x="${pl+i*bw+bw/2}" y="${H-10}" text-anchor="middle" font-size="10">${TREND.q[i]}</text>`;});
+ let d='';TREND.pat.forEach((v,i)=>{d+=(i?'L':'M')+(pl+i*bw+bw/2)+' '+y(v);});o+=`<path d="${d}" stroke="#1F6FA8" stroke-width="3" fill="none"/>`;
+ TREND.pat.forEach((v,i)=>{o+=`<circle cx="${pl+i*bw+bw/2}" cy="${y(v)}" r="${i===n-1?5:3.5}" fill="#1F6FA8"/>`;});
+ o+=`<text x="${pl+(n-1)*bw+bw/2}" y="${y(TREND.pat[n-1])-9}" text-anchor="middle" font-size="11">225</text>`;
+ return `<svg viewBox="0 0 ${W} ${H}" width="100%" style="max-width:620px" role="img" aria-label="Revenue and PAT trend">${o}</svg>`}
+
+// ===== Cash flow & ratios =====
+P.cf=()=>`
+<h2>${T('Cash flow, debt and working capital','Cash flow, debt, working capital')}</h2>
+<div class="grid g2">
+ ${card(T('Cash flow (consolidated, ₹ cr)','Cash flow (consolidated, ₹ கோடி)'),`<div class="tw"><table><thead><tr><th></th><th>FY25</th><th>${T('FY26–27 direction','FY26–27 direction')}</th></tr></thead><tbody>
+ <tr><td>${T('Cash from operations','Operations cash')}</td><td>2,482</td><td>${T('rising with Buxar + Bikaner','Buxar + Bikaner-ஆல ஏறும்')}</td></tr>
+ <tr><td>${T('Investing (capex)','Investing (capex)')}</td><td class="dn">−6,429</td><td>${T('FY26 ~₹7,500 cr; FY27 guide ₹9,400 cr','FY26 ~₹7,500 கோடி; FY27 guide ₹9,400 கோடி')}</td></tr>
+ <tr><td>${T('Financing (mostly new debt)','Financing (பெரும்பாலும் debt)')}</td><td class="up">+3,939</td><td>${T('more borrowing needed','இன்னும் கடன் தேவை')}</td></tr>
+ <tr class="em"><td>${T('Free cash flow','Free cash flow')}</td><td class="dn">−3,947</td><td>${T('negative until capex slows (FY28 ₹7,800 cr, FY29 ₹7,500 cr)','capex குறையும் வரை negative')}</td></tr>
+ </tbody></table></div>`)}
+ ${card(T('Picture it: where cash came from in FY25','Picture it: FY25-ல cash எங்க இருந்து வந்துச்சு'),`<div class="svgw">${waterfall()}</div>`)}
+</div>
+<div class="card sec"><h3>${T('Key ratios','Key ratios')}</h3><div class="tw"><table><thead><tr><th>${T('Ratio','Ratio')}</th><th>${T('Latest','Latest')}</th><th>${T('Read','அர்த்தம்')}</th></tr></thead><tbody>
+${[
+ [A('EBITDA margin (Q1 FY27)','EBITDA margin (Q1 FY27)'),'63.4%',A('Down from 80.9%: coal and solar dilute hydro margins','80.9%-ல இருந்து இறக்கம்: coal, solar hydro margin-ஐ குறைக்குது'),'wn'],
+ [A('PAT margin (Q1 FY27)','PAT margin (Q1 FY27)'),'16.1%',A('Was 24.8%','முன்னாடி 24.8%'),'dn'],
+ [A('ROE (5-yr avg / latest)','ROE (5-yr avg / latest)'),'6.7% / ~4.5%',A('Below cost of equity','Cost of equity-க்கு கீழ'),'dn'],
+ [A('ROCE','ROCE'),'~5.2%',A('Big capital, small return so far','Capital பெரிசு, return இதுவரை சின்னது'),'dn'],
+ [A('Debt / Equity (consolidated)','Debt / Equity (consolidated)'),'~2.1×',A('Standalone only 0.69×; debt sits in subsidiaries','Standalone 0.69× தான்; debt subsidiaries-ல'),'dn'],
+ [A('Debt / EBITDA','Debt / EBITDA'),'~9.6×',A('High; utilities are comfortable under ~6×','அதிகம்; utilities-க்கு ~6× கீழ comfortable'),'dn'],
+ [A('Interest cover (EBIT)','Interest cover (EBIT)'),'3.85×',A('Thin cushion','Cushion குறைவு'),'wn'],
+ [A('Dividend payout (FY26, on consolidated EPS ₹1.63)','Dividend payout (FY26)'),'92%',A('₹1.50 paid; high payout while borrowing','₹1.50 கொடுத்தாங்க; கடன் வாங்கிக்கிட்டே high payout'),'wn'],
+].map(r=>`<tr><td>${T(r[0].en,r[0].ta)}</td><td class="${r[3]}">${r[1]}</td><td style="text-align:left;white-space:normal">${T(r[2].en,r[2].ta)}</td></tr>`).join('')}
+</tbody></table></div></div>
+<div class="card sec"><h3>${T('Working capital days','Working capital days')}</h3>
+<div class="tw"><table><thead><tr><th></th><th>FY26</th><th>${T('Days (on FY26 revenue ₹4,528 cr)','Days (FY26 revenue ₹4,528 கோடி)')}</th></tr></thead><tbody>
+<tr><td>${T('Billed receivables','Billed receivables')}</td><td>₹1,299 cr</td><td>~105</td></tr>
+<tr><td>${T('Unbilled revenue','Unbilled revenue')}</td><td>₹906 cr</td><td>~73</td></tr>
+<tr class="em"><td>${T('Total money owed by discoms','Discoms கொடுக்க வேண்டியது')}</td><td>₹2,205 cr</td><td>~178</td></tr>
+<tr><td>${T('Coal inventory (Buxar)','Coal inventory (Buxar)')}</td><td colspan="2" style="text-align:left">${T('New line from FY26; not disclosed separately','FY26-ல இருந்து புது line; தனியா disclose பண்ணல')}</td></tr>
+</tbody></table></div>
+${ul([T('Receivable days are CB estimates. Unbilled revenue is typical for tariff true-ups, but it ties up cash.','Receivable days CB estimate. Unbilled revenue tariff true-up-க்கு சாதாரணம், ஆனா cash-ஐ அடைச்சு வைக்கும்.'),T('Cash and equivalents fell to ~₹2,523 cr, the lowest in recent periods.','Cash ~₹2,523 கோடியா குறைஞ்சிருக்கு, சமீபத்துல lowest.')])}</div>`;
+function waterfall(){const steps=[['CFO',2482],['Capex',-6429],['Financing',3939]];let o='',run=0;const sc=v=>v*0.022;const base=150;
+ steps.forEach((s,i)=>{const y0=base-sc(run),y1=base-sc(run+s[1]);const top=Math.min(y0,y1),h=Math.abs(y1-y0);o+=`<rect x="${30+i*110}" y="${top}" width="70" height="${h}" fill="${s[1]>0?'#13703A':'#B3261E'}" rx="3"/><text x="${65+i*110}" y="${top-5}" text-anchor="middle" font-size="12">${s[1]>0?'+':''}${f0(s[1])}</text><text x="${65+i*110}" y="185" text-anchor="middle" font-size="12">${s[0]}</text>`;run+=s[1];});
+ o+=`<line x1="20" x2="360" y1="${base}" y2="${base}" stroke="#4A3420"/>`;
+ return `<svg viewBox="0 -10 370 200" width="100%" style="max-width:440px">${o}</svg>`}
+
+// ===== Valuations =====
+P.valn=()=>`
+<h2>${T('What the price assumes (at ₹47.39, 23 Oct 2026)','இந்த விலை என்ன எதிர்பார்க்குது (₹47.39, 23 Oct 2026)')}</h2>
+<div class="grid g4">
+ ${kpi(A('Market cap','Market cap'),'₹18,620 cr',T('393 cr shares','393 கோடி shares'))}
+ ${kpi(A('P/E (TTM)','P/E (TTM)'),'29×',T('TTM PAT ₹639 cr','TTM PAT ₹639 கோடி'))}
+ ${kpi(A('P/B (standalone BV)','P/B (standalone BV)'),'1.27×',T('BV ₹37.43/share','BV ₹37.43/share'))}
+ ${kpi(A('Dividend yield','Dividend yield'),'3.2%',T('₹1.50 for FY26','FY26-க்கு ₹1.50'))}
+</div>
+<div class="grid g2 sec">
+ ${card(T('Peers (multiples as of Jul 2026)','Peers (Jul 2026 multiples)'),`<div class="tw"><table><thead><tr><th></th><th>P/E</th><th>P/B</th><th>ROE</th><th>D/E</th></tr></thead><tbody>
+ <tr class="em"><td>SJVN (${T('now','இப்போ')})</td><td>29</td><td>1.3</td><td>6.7%</td><td>2.1</td></tr>
+ <tr><td>NHPC</td><td>21</td><td>1.9</td><td>9.3%</td><td>1.2</td></tr>
+ <tr><td>NLC India</td><td>11.7</td><td>1.9</td><td>11.7%</td><td>1.3</td></tr>
+ <tr><td>NTPC Green</td><td>125</td><td>4.0</td><td>2.7%</td><td>1.6</td></tr>
+ <tr><td>JSW Energy</td><td>50</td><td>3.3</td><td>8.1%</td><td>2.2</td></tr>
+ </tbody></table></div><p class="note">${T('Peer prices have moved since July; use as a rough guide.','July-க்கு அப்புறம் peer prices மாறியிருக்கு; rough guide-ஆ மட்டும் பாருங்க.')}</p>`)}
+ ${card(T('Scenario: what P/E are you paying on future profit?','Scenario: future profit-க்கு எந்த P/E கொடுக்கறீங்க?'),`<div class="tw"><table><thead><tr><th>${T('If yearly PAT becomes','Yearly PAT இப்படி ஆனா')}</th><th>EPS</th><th>${T('P/E at ₹47.39','₹47.39-ல P/E')}</th></tr></thead><tbody>
+ ${[[639,A('Today (TTM)','இன்று (TTM)')],[900,A('Buxar at break-even, solar steady','Buxar break-even, solar steady')],[1250,A('Buxar profitable, FY27 solar adds','Buxar profit, FY27 solar adds')],[1600,A('Plus Arun-3 (2029+)','+ Arun-3 (2029+)')]].map(r=>`<tr><td>₹${f0(r[0])} cr · ${T(r[1].en,r[1].ta)}</td><td>₹${(r[0]/392.98).toFixed(2)}</td><td>${(18620/r[0]).toFixed(1)}×</td></tr>`).join('')}
+ </tbody></table></div><p class="note">${T('Illustrative CB scenarios, not forecasts or targets.','CB scenarios மட்டும்; forecast/target இல்லை.')}</p>`)}
+</div>
+<div class="card sec">${ul([
+ T('P/B is the steadier yardstick for a regulated utility: SJVN at ~1.3× is below NHPC (~1.9×) because its ROE is lower.','Regulated utility-க்கு P/B steady yardstick: SJVN ~1.3×, NHPC ~1.9×-ஐ விட குறைவு, ஏன்னா ROE குறைவு.'),
+ T('P/E of 29× looks high only because current profit is depressed by new-plant costs; it falls fast if Buxar turns profitable.','29× P/E high-ஆ தெரியுது, ஏன்னா புது plant cost-ஆல profit அமுங்கி இருக்கு; Buxar profit ஆனா வேகமா குறையும்.'),
+])}</div>`;
+
+// ===== Takeaways =====
+P.kt=()=>`<h2>${T('5 Key Takeaways','5 Key Takeaways')}</h2><div class="grid g2">${[
+ [A('Revenue doubled its base, profit stood still','Revenue base ஏறுச்சு, profit நின்னுடுச்சு'),A('+52% revenue but −1.2% PAT: new plants cover their own interest and depreciation, little more.','Revenue +52%, PAT −1.2%: புது plants தன் interest, depreciation-ஐ மட்டும் cover பண்ணுது.')],
+ [A('Hydro is still the profit engine','Hydro தான் இன்னும் profit engine'),A('Standalone PAT ₹247 cr exceeds group PAT ₹225 cr; the subsidiaries are still loss-making.','Standalone PAT ₹247 கோடி > group PAT ₹225 கோடி; subsidiaries இன்னும் loss.')],
+ [A('Buxar is now complete','Buxar இப்போ முழுசா ready'),A('Unit-2 COD 12 Sep 2026 doubles coal capacity to 1,320 MW. Profit needs PLF above ~70%; Q1 was ~60%.','Unit-2 COD 12 Sep 2026; coal 1,320 MW. Profit-க்கு PLF ~70%+ வேணும்; Q1 ~60%.')],
+ [A('Debt is the main risk','Debt தான் main risk'),A('Debt/EBITDA ~9.6×, interest +51% YoY, FY27 capex ₹9,400 cr.','Debt/EBITDA ~9.6×, interest +51% YoY, FY27 capex ₹9,400 கோடி.')],
+ [A('Execution has run late','Execution late-ஆ நடக்குது'),A('Buxar ~2.5 years behind first targets; Bikaner ~3 months late. Watch the Dec 2026 solar dates.','Buxar first target-ஐ விட ~2.5 வருஷம் late; Bikaner ~3 மாசம். Dec 2026 solar dates-ஐ கவனிங்க.')],
+].map((t,i)=>card(`${i+1}. ${T(t[0].en,t[0].ta)}`,T(t[1].en,t[1].ta),i===0?'hl':'')).join('')}</div>`;
+
+// ===== Market activity =====
+P.mkt=()=>`
+<h2>${T('Why the share has fallen ~48% in a year','ஏன் share ஒரு வருஷத்துல ~48% விழுந்துச்சு')}</h2>
+<div class="grid g4">
+ ${kpi(A('Close 23 Oct','23 Oct close'),'₹47.39',T('−12.4% that week','அந்த வாரம் −12.4%'),'dn')}
+ ${kpi(A('52-week range','52-week range'),'₹46.09 – ~92',T('near the low','low-க்கு பக்கத்துல'),'dn')}
+ ${kpi(A('Promoter (GoI + HP)','Promoter (GoI + HP)'),'81.85%',T('unchanged','மாறல'))}
+ ${kpi(A('Mutual funds','Mutual funds'),'0.84%',T('from 1.48% (Sep 2025)','Sep 2025-ல 1.48%'),'dn')}
+</div>
+<div class="grid g2 sec">
+ ${card(T('Reasons on the downside','விழுந்ததுக்கு காரணங்கள்'),ul([
+  T('Q4 FY26 loss (₹118 cr) and a flat Q1 despite +52% revenue.','Q4 FY26 loss (₹118 கோடி), revenue +52% ஆனாலும் Q1 flat.'),
+  T('Interest +51% and Debt/EBITDA ~9.6×: market fears more borrowing.','Interest +51%, Debt/EBITDA ~9.6×: இன்னும் கடன் வரும்னு market பயம்.'),
+  T('Broad market weakness: Sensex near its own 52-week low, −13.8% in a year; PSU power names de-rated.','Market முழுக்க weak: Sensex 52-week low பக்கத்துல, ஒரு வருஷத்துல −13.8%; PSU power stocks de-rate.'),
+  T('Domestic funds trimmed holdings; FIIs hold only 2.8%.','Domestic funds holding குறைச்சாங்க; FII 2.8% தான்.'),
+  T('Six straight losing sessions to 23 Oct; price below all key moving averages.','23 Oct வரை தொடர்ந்து 6 நாள் இறக்கம்; எல்லா moving averages-க்கும் கீழ.'),
+ ]))}
+ ${card(T('What did not lift it','ஏறாத காரணம்'),ul([
+  T('Buxar Unit-2 COD (12 Sep): good news, but price kept falling.','Buxar Unit-2 COD (12 Sep): நல்ல செய்தி, ஆனா விலை தொடர்ந்து விழுந்துச்சு.'),
+  T('Record FY26 generation (13,302 MU) was already known.','FY26 record generation (13,302 MU) ஏற்கனவே தெரிஞ்சது.'),
+  T('Next event: Q2 FY27 results scheduled 6 Nov 2026 (peak hydro quarter + 19 days of Unit-2).','அடுத்த event: Q2 FY27 results 6 Nov 2026 (peak hydro quarter + Unit-2 19 நாள்).'),
+ ]))}
+</div>`;
+
+// ===== Triggers & Cycle =====
+const TRG=[
+ ['+',A('Buxar Unit-2 COD → full 1,320 MW','Buxar Unit-2 COD → full 1,320 MW'),4,1.0,1.0,1.0,A('Executing','Executing'),A('Q2/Q3 coal MU, PLF','Q2/Q3 coal MU, PLF')],
+ ['+',A('~1,555 MW solar adds in FY27','FY27-ல ~1,555 MW solar'),3,0.7,0.7,1.0,A('Awarded, building','Award, construction'),A('Dec 2026 CODs','Dec 2026 CODs')],
+ ['+',A('Buxar PLF above ~70% (break-even)','Buxar PLF ~70%+ (break-even)'),3,0.4,0.7,1.0,A('Mgmt guidance','Mgmt guidance'),A('Bihar offtake, coal supply','Bihar offtake, coal supply')],
+ ['+',A('Arun-3 900 MW (Nepal)','Arun-3 900 MW (Nepal)'),4,0.7,0.2,1.0,A('Building, Dec 2028','Construction, Dec 2028'),A('E&M progress','E&M progress')],
+ ['−',A('Interest + depreciation of new plants','புது plants interest + depreciation'),4,1.0,1.0,0.4,A('In numbers','Numbers-ல இருக்கு'),A('Interest/revenue %','Interest/revenue %')],
+ ['−',A('Solar curtailment / grid limits','Solar curtailment / grid limits'),2,0.7,1.0,1.0,A('Seen in FY26','FY26-ல பார்த்தது'),A('SGEL CUF','SGEL CUF')],
+ ['−',A('Heavy capex → more debt or equity','Heavy capex → debt/equity'),3,0.4,0.7,1.0,A('Guided ₹9,400 cr','₹9,400 கோடி guide'),A('Borrowings, any QIP/OFS','Borrowings, QIP/OFS')],
+ ['−',A('Hydrology / Himalayan floods','Hydrology / Himalaya floods'),2,0.4,1.0,1.0,A('Seasonal','Seasonal'),A('Monsoon, snow-melt','Monsoon, பனி உருகல்')],
+ ['−',A('CMD on additional charge (also NHPC CMD)','CMD additional charge (NHPC CMD-உம்)'),1,1.0,1.0,1.0,A('Ongoing','நடக்குது'),A('Full-time CMD','Full-time CMD')],
+];
+P.tc=()=>{const rows=TRG.map(t=>{const pts=t[2]*t[3]*t[4]*t[5];return {t,pts}});
+ return `<h2>${T('Triggers & Cycle','Triggers & Cycle')}</h2>
+<div class="grid g2">
+ ${card(T('Cycle clock','Cycle clock'),`<div class="svgw">${clock()}</div>${ul([
+  T('Sector: power generation in P3 Expansion (record demand, capacity build-out) = 70; solar maturing (crowded bids, curtailment) = 55; blended 65.','Sector: power generation P3 Expansion (record demand) = 70; solar maturing (போட்டி, curtailment) = 55; blend 65.'),
+  T('Stock: re-inventing 75 · margin falling 25 · valuation in band 55 · Weinstein Stage 4 decline 15 → 43.','Stock: re-inventing 75 · margin இறங்குது 25 · valuation band-ல 55 · Weinstein Stage 4 15 → 43.'),
+  T('<b>CY = 54</b>','<b>CY = 54</b>')])}`)}
+ ${card(T('Scores & gates','Scores & gates'),ul([
+  T('<b>TG = 55</b>: top-3 positives +6.31 pts vs negatives −5.64 pts.','<b>TG = 55</b>: top-3 positives +6.31 vs negatives −5.64.'),
+  T('Gate: Stage 4 price trend → conviction capped at 55.','Gate: Stage 4 price → conviction max 55.'),
+  T('Gate: a negative trigger with Impact ≥4 and Certainty ≥0.7 (debt cost) → cap at 50.','Gate: Impact ≥4, Certainty ≥0.7 negative trigger (debt cost) → max 50.'),
+  T('What would change this view: Buxar PLF >70% for two quarters; interest/revenue falling below 18%; price moving back above its 30-week average.','View மாற என்ன வேணும்: Buxar PLF 2 quarter 70%+; interest/revenue 18%-க்கு கீழ; விலை 30-week average-க்கு மேல.'),
+ ]),'hl')}
+</div>
+<div class="card sec"><h3>${T('Trigger table (Points = Impact × Certainty × Timing × Priced-in)','Trigger table (Points = Impact × Certainty × Timing × Priced-in)')}</h3>
+<div class="tw"><table><thead><tr><th>${T('Trigger','Trigger')}</th><th>+/−</th><th>I</th><th>C</th><th>W</th><th>P</th><th>${T('Points','Points')}</th><th>${T('Status','Status')}</th><th>${T('Watch','கவனிங்க')}</th></tr></thead><tbody>
+${rows.map(r=>`<tr><td>${T(r.t[1].en,r.t[1].ta)}</td><td class="${r.t[0]==='+'?'up':'dn'}">${r.t[0]}</td><td>${r.t[2]}</td><td>${r.t[3]}</td><td>${r.t[4]}</td><td>${r.t[5]}</td><td class="${r.t[0]==='+'?'up':'dn'}"><b>${r.pts.toFixed(2)}</b></td><td>${T(r.t[6].en,r.t[6].ta)}</td><td>${T(r.t[7].en,r.t[7].ta)}</td></tr>`).join('')}
+</tbody></table></div></div>
+<div class="card sec"><h3>${T('Trigger timeline','Trigger timeline')}</h3><div class="svgw">${trigTL()}</div></div>`;};
+function clock(){const cx=150,cy=130,r=95;const ph=['P1 Trough','P2 Early','P3 Expansion','P4 Peak','P5 Down'];let o='';
+ ph.forEach((p,i)=>{const a1=-Math.PI/2+i*2*Math.PI/5,a2=a1+2*Math.PI/5;const x1=cx+r*Math.cos(a1),y1=cy+r*Math.sin(a1),x2=cx+r*Math.cos(a2),y2=cy+r*Math.sin(a2);
+  o+=`<path d="M${cx} ${cy} L${x1} ${y1} A${r} ${r} 0 0 1 ${x2} ${y2} Z" fill="${i===2?'#FDE3C6':'#FFFAF4'}" stroke="#F28C28" stroke-width="2"/>`;const m=(a1+a2)/2;o+=`<text x="${cx+(r+22)*Math.cos(m)}" y="${cy+(r+22)*Math.sin(m)+4}" text-anchor="middle" font-size="11">${p}</text>`;});
+ const am=-Math.PI/2+2.5*2*Math.PI/5;o+=`<line x1="${cx}" y1="${cy}" x2="${cx+75*Math.cos(am)}" y2="${cy+75*Math.sin(am)}" stroke="#1B1006" stroke-width="4"/><circle cx="${cx}" cy="${cy}" r="6" fill="#1B1006"/>`;
+ const as=-Math.PI/2+4.4*2*Math.PI/5;o+=`<circle cx="${cx+60*Math.cos(as)}" cy="${cy+60*Math.sin(as)}" r="9" fill="#B3261E"/><text x="${cx+60*Math.cos(as)}" y="${cy+60*Math.sin(as)+4}" text-anchor="middle" font-size="10" style="fill:#FFFAF4">S4</text>`;
+ o+=`<text x="10" y="262" font-size="11"><tspan class="en">Needle = sector (P3) · red dot = stock price Stage 4</tspan><tspan class="ta">Needle = sector (P3) · சிவப்பு dot = stock Stage 4</tspan></text>`;
+ return `<svg viewBox="-20 0 340 270" width="100%" style="max-width:360px">${o}</svg>`}
+function trigTL(){const ev=[['6 Nov 2026','Q2 FY27 results'],['Dec 2026','~900 MW solar COD'],['Mar 2027','Dhaulasidh 69.5 MW'],['FY27 end','Buxar full-year PLF'],['Dec 2028','Arun-3 900 MW'],['2029–30','Sunni, Luhri']];let o=`<line x1="20" x2="700" y1="40" y2="40" stroke="#F28C28" stroke-width="3"/>`;
+ ev.forEach((e,i)=>{const x=40+i*128;o+=`<circle cx="${x}" cy="40" r="8" fill="#FFFAF4" stroke="#F28C28" stroke-width="3"/><text x="${x}" y="22" text-anchor="middle" font-size="12" font-weight="800">${e[0]}</text><text x="${x}" y="66" text-anchor="middle" font-size="11.5">${e[1]}</text>`;});
+ return `<svg viewBox="0 0 720 80" width="100%" style="min-width:640px">${o}</svg>`}
+
+// ===== 6 Pillars =====
+const PIL=[[A('Business quality','Business quality'),6,A('Hydro plants at 96–97% availability on cost-plus tariffs; new coal/solar earn less.','Hydro plants 96–97% availability, cost-plus tariff; புது coal/solar குறைவா சம்பாதிக்குது.')],
+ [A('Competitive advantage','Competitive advantage'),6,A('Government backing, Himalayan hydro skills and sites; solar is a commodity.','Government backing, Himalaya hydro skill, sites; solar commodity.')],
+ [A('Growth opportunity','Growth opportunity'),7,A('Capacity doubled to 4,931.5 MW; 3,900+ MW under construction; 17.6 GW total portfolio.','Capacity 4,931.5 MW-ஆ 2 மடங்கு; 3,900+ MW construction-ல; total 17.6 GW portfolio.')],
+ [A('Financial strength','Financial strength'),3,A('Debt/EBITDA ~9.6×, D/E ~2.1×, negative free cash flow.','Debt/EBITDA ~9.6×, D/E ~2.1×, free cash flow negative.')],
+ [A('Valuation','Valuation'),5,A('P/B ~1.3× and 3.2% yield are reasonable; P/E 29× on depressed profit.','P/B ~1.3×, 3.2% yield ok; அமுங்கின profit-ல P/E 29×.')],
+ [A('Risk & reward','Risk & reward'),4,A('Delays, hydrology, falling price trend vs a clear earnings path if Buxar ramps.','Delays, hydrology, இறங்குற trend vs Buxar ramp ஆனா earnings path.')]];
+P.pil=()=>`<h2>${T('6 Pillars: 31 / 60','6 Pillars: 31 / 60')}</h2>
+<div class="grid g2"><div class="card"><div class="svgw">${temple()}</div></div>
+<div class="card">${PIL.map(p=>`<div style="margin-bottom:8px"><b>${T(p[0].en,p[0].ta)}: <span class="score">${p[1]}/10</span></b><div class="pillarnote">${T(p[2].en,p[2].ta)}</div></div>`).join('')}</div></div>
+<div class="card sec"><h3>${T('How we graded','எப்படி grade பண்ணினோம்')}</h3>${ul([T('1–3 weak, 4–6 average, 7–8 strong, 9–10 best-in-class, judged against Indian power-generation peers.','1–3 weak, 4–6 average, 7–8 strong, 9–10 best — இந்திய power generation peers-ஓட compare பண்ணி.'),T('Each score uses only numbers shown in this dashboard.','ஒவ்வொரு score-உம் இந்த dashboard numbers-ல இருந்துதான்.'),T('Pillar height in the temple = score; a short pillar is the weak support.','Temple-ல pillar உயரம் = score; குட்டை pillar தான் weak support.')])}</div>`;
+function temple(){let o=`<polygon points="20,60 230,10 440,60" fill="#FDE3C6" stroke="#F28C28" stroke-width="3"/><rect x="20" y="60" width="420" height="16" fill="#F28C28"/><text x="230" y="48" text-anchor="middle" font-size="16" font-weight="800">SJVN 31/60</text>`;
+ PIL.forEach((p,i)=>{const x=40+i*68,full=170,h=full*p[1]/10;const c=p[1]>=7?'#13703A':p[1]>=5?'#F28C28':'#B3261E';
+ o+=`<rect x="${x}" y="${76+full-h}" width="44" height="${h}" fill="${c}" rx="3"/><rect x="${x}" y="76" width="44" height="${full}" fill="none" stroke="#F3CFA6" stroke-dasharray="4 3"/><text x="${x+22}" y="${70+full-h+0}" text-anchor="middle" font-size="13" font-weight="800">${p[1]}</text><text x="${x+22}" y="266" text-anchor="middle" font-size="10"><tspan class="en">${p[0].en.split(' ')[0]}</tspan><tspan class="ta">${p[0].ta.split(' ')[0]}</tspan></text>`;});
+ o+=`<rect x="10" y="246" width="440" height="8" fill="#4A3420"/>`;return `<svg viewBox="0 0 460 275" width="100%" style="max-width:520px">${o}</svg>`}
+
+// ===== SWOT =====
+P.swot=()=>`<h2>SWOT</h2><div class="grid g2">
+${card(T('Strengths','Strengths'),ul([T('Nathpa Jhakri: India\'s largest operating hydro station, 96.8% availability.','Nathpa Jhakri: இந்தியாவின் பெரிய hydro station, 96.8% availability.'),T('Regulated cost-plus tariffs for hydro and coal.','Hydro, coal-க்கு regulated cost-plus tariff.'),T('81.85% government ownership; Navratna status.','81.85% government ownership; Navratna.')]))}
+${card(T('Weaknesses','Weaknesses'),ul([T('High debt; interest 23% of revenue.','Debt அதிகம்; interest revenue-ல 23%.'),T('Long project delays (Buxar ~2.5 years).','Project delays (Buxar ~2.5 வருஷம்).'),T('Low ROE (~6.7%) and ROCE (~5%).','ROE (~6.7%), ROCE (~5%) குறைவு.')]))}
+${card(T('Opportunities','Opportunities'),ul([T('Buxar full ramp-up; second-phase 800 MW unit in pipeline.','Buxar full ramp-up; 800 MW 3rd unit pipeline-ல.'),T('Pumped storage and BESS demand as solar grows.','Solar வளர வளர pumped storage, BESS demand.'),T('Nepal hydro (Arun-3, Lower Arun, Upper Karnali JV).','Nepal hydro (Arun-3, Lower Arun, Upper Karnali JV).')]))}
+${card(T('Threats','Threats'),ul([T('Weak monsoon or Himalayan floods cut hydro output.','Monsoon weak அல்லது Himalaya floods hydro output-ஐ குறைக்கும்.'),T('Solar curtailment and low bid tariffs.','Solar curtailment, குறைஞ்ச bid tariff.'),T('Possible government stake sale: public float 18.15% is below the 25% norm.','Government stake sale வாய்ப்பு: public float 18.15%, 25% norm-க்கு கீழ.')]))}
+</div>`;
+
+// ===== Self-check =====
+const SC=[
+ [A('1. About the stock','1. Stock பற்றி'),[
+  [A('I know the size: ₹18,620 cr market cap, 393 cr shares.','Size தெரியும்: ₹18,620 கோடி market cap, 393 கோடி shares.'),A('Data: price ₹47.39 (23 Oct 2026)','Data: விலை ₹47.39 (23 Oct 2026)')],
+  [A('I know where the price sits in its range.','Range-ல விலை எங்க இருக்குன்னு தெரியும்.'),A('Data: 52-wk ₹46.09–~92; −48% in 1 yr','Data: 52-wk ₹46.09–~92; 1 வருஷத்துல −48%')],
+  [A('I know who owns it and the float.','யார் own பண்றாங்க, float தெரியும்.'),A('Data: promoter 81.85%, MF 0.84%, FII 2.79%; float 18.15% (below 25% norm → OFS possible)','Data: promoter 81.85%, MF 0.84%, FII 2.79%; float 18.15% (25%-க்கு கீழ → OFS வாய்ப்பு)')],
+  [A('I know where new money goes.','புது பணம் எங்க போகுதுன்னு தெரியும்.'),A('Data: FY27 capex ₹9,400 cr into solar, hydro, Nepal','Data: FY27 capex ₹9,400 கோடி solar, hydro, Nepal-க்கு')],
+  [A('I know the next result date.','அடுத்த result date தெரியும்.'),A('Data: Q2 FY27 on 6 Nov 2026','Data: Q2 FY27, 6 Nov 2026')],
+ ]],
+ [A('2. Problems investors face','2. Investors-க்கு வர்ற problems'),[
+  [A('I understand how a regulated tariff earns money.','Regulated tariff எப்படி சம்பாதிக்குதுன்னு புரியுது.'),A('Data: fixed charge for availability + energy charge per unit','Data: availability fixed charge + per unit energy charge')],
+  [A('I can connect revenue growth to profit.','Revenue growth-ஐ profit-ஓட connect பண்ண முடியுது.'),A('Data: revenue +52%, PAT −1.2% (interest +51%)','Data: revenue +52%, PAT −1.2% (interest +51%)')],
+  [A('I know the seasonal pattern.','Seasonal pattern தெரியும்.'),A('Data: Q4 losses in FY25 and FY26','Data: FY25, FY26 Q4 loss')],
+  [A('I know the biggest risks.','பெரிய risks தெரியும்.'),A('Data: Debt/EBITDA ~9.6×; Buxar PLF ~60% vs ~70% break-even','Data: Debt/EBITDA ~9.6×; Buxar PLF ~60% vs ~70% break-even')],
+ ]],
+ [A('3. What I did about it','3. நான் என்ன செஞ்சேன்'),[
+  [A('I read the annual report business and risk pages.','Annual report business, risk pages படிச்சேன்.'),A('Data: FY26 annual report, AGM 31 Aug 2026','Data: FY26 annual report, AGM 31 Aug 2026')],
+  [A('I compared with a listed peer (NHPC).','Listed peer (NHPC)-ஓட compare பண்ணினேன்.'),A('Data: NHPC ROE ~9.3%, D/E ~1.2','Data: NHPC ROE ~9.3%, D/E ~1.2')],
+  [A('I kept the amount small for my portfolio.','Portfolio-க்கு amount சின்னதா வச்சேன்.'),A('Data: stock volatility ~32% vs Sensex ~14%','Data: stock volatility ~32% vs Sensex ~14%')],
+  [A('I fixed a horizon and a review point.','Horizon, review point fix பண்ணினேன்.'),A('Data: review after Q2 (6 Nov) and Q3 Buxar PLF','Data: Q2 (6 Nov), Q3 Buxar PLF-க்கு அப்புறம் review')],
+  [A('I am prepared for a weak Q4 every year.','ஒவ்வொரு வருஷமும் Q4 weak-ஆ இருக்கும்னு ready.'),A('Data: Q4 FY26 −₹118 cr, Q4 FY25 −₹128 cr','Data: Q4 FY26 −₹118 கோடி, Q4 FY25 −₹128 கோடி')],
+ ]],
+ [A('4. Anchors\' and analysts\' view','4. Anchors / analysts view'),[
+  [A('I checked long-term fund holding.','Long-term fund holding பார்த்தேன்.'),A('Data: MF 1.48% → 0.84%; insurance 2.90% steady','Data: MF 1.48% → 0.84%; insurance 2.90% steady')],
+  [A('I read independent analyst views (both sides).','Independent analyst views (இரண்டு பக்கமும்) படிச்சேன்.'),A('Data: views range from sharply negative (valuation, debt) to positive (capacity-led growth)','Data: views negative (valuation, debt) முதல் positive (capacity growth) வரை')],
+  [A('I checked the CB cycle & trigger view.','CB cycle & trigger view பார்த்தேன்.'),A('Data: CY 54, TG 55, Stage 4 price','Data: CY 54, TG 55, Stage 4 price')],
+  [A('I checked market mood.','Market mood பார்த்தேன்.'),A('Data: Sensex near 52-week low in Oct 2026','Data: Oct 2026-ல Sensex 52-week low பக்கத்துல')],
+ ]],
+];
+P.self=()=>`<h2>${T('Investor Self-Check','Investor Self-Check')}</h2>
+<p class="note">${T('It only counts your own conditions. It is not a recommendation.','இது உங்க conditions-ஐ மட்டும் count பண்ணும். Recommendation இல்லை.')}</p>
+<div class="card hl"><b>${T('Overall','Overall')}: <span id="scAll">0</span></b><div class="bar" style="margin-top:6px"><i id="scBar" style="width:0"></i></div></div>
+<div class="grid g2 sec" id="scGroups">${SC.map((g,gi)=>card(`${T(g[0].en,g[0].ta)} <span class="chip a" id="scg${gi}">0/${g[1].length}</span>`,g[1].map((it,ii)=>`<label class="chk"><input type="checkbox" id="sc_${gi}_${ii}" data-g="${gi}"><span>${T(it[0].en,it[0].ta)}<span class="data">${T(it[1].en,it[1].ta)}</span></span></label>`).join(''))).join('')}
+${card(`${T('5. My own conditions','5. என் conditions')} <span class="chip a" id="scg4">0/0</span>`,`<div id="custom"></div><div class="arow" style="margin-top:8px"><input type="text" id="cIn" placeholder="${LANG==='ta'?'உங்க condition':'Add your own check'}"><button class="btn solid" id="cAdd">${T('Add','சேர்')}</button></div>`)}
+</div>`;
+
+// ===== Analyst view =====
+P.av=()=>`<h2>${T('Analyst View (CB Research, education only)','Analyst View (CB Research, education மட்டும்)')}</h2>
+<div class="grid g2">
+${card(T('Where SJVN stands','SJVN எங்க நிக்குது'),ul([
+ T('A sound hydro franchise carrying an expensive transition: revenue is there, profit is not yet.','நல்ல hydro franchise, costly transition: revenue வந்துடுச்சு, profit இன்னும் வரல.'),
+ T('Q1 FY27 confirms new assets are earning at about break-even after interest and depreciation.','Q1 FY27: புது assets interest, depreciation-க்கு அப்புறம் break-even பக்கத்துல.'),
+ T('The swing factor for the next 4 quarters is Buxar PLF; for 2028+, Arun-3.','அடுத்த 4 quarter swing factor Buxar PLF; 2028+-க்கு Arun-3.'),
+]),'hl')}
+${card(T('Cycle & triggers in one line each','Cycle & triggers, ஒரே line'),ul([
+ T('Cycle: sector in expansion, stock price in Stage 4 decline (CY 54).','Cycle: sector expansion, stock price Stage 4 (CY 54).'),
+ T('Top positives: Buxar 1,320 MW now live; ~1,555 MW solar due in FY27.','Top positives: Buxar 1,320 MW live; FY27-ல ~1,555 MW solar.'),
+ T('Top risk: interest and depreciation growing as fast as revenue.','Top risk: interest, depreciation revenue அளவுக்கு வேகமா ஏறுது.'),
+]))}
+${card(T('What to watch on 6 Nov (Q2 FY27)','6 Nov (Q2 FY27)-ல என்ன பார்க்கணும்'),ul([
+ T('Buxar Q2 generation and PLF (Unit-1 full quarter + Unit-2 from 12 Sep).','Buxar Q2 generation, PLF (Unit-1 full quarter + Unit-2 12 Sep முதல்).'),
+ T('Hydro output in the peak monsoon quarter vs Q2 FY26 PAT of ₹308 cr.','Peak monsoon quarter hydro output vs Q2 FY26 PAT ₹308 கோடி.'),
+ T('Interest as % of revenue: below 23% would show leverage easing.','Interest revenue %: 23%-க்கு கீழ வந்தா leverage குறையுது.'),
+]))}
+${card(T('Bottom line','Bottom line'),T('Growth story is real and visible in revenue; the balance sheet and the price trend say the payoff is not yet proven. No buy/sell/hold view: decide using your own self-check.','Growth story real, revenue-ல தெரியுது; balance sheet, price trend payoff இன்னும் prove ஆகலன்னு சொல்லுது. Buy/sell/hold view இல்லை: உங்க self-check வச்சு முடிவு பண்ணுங்க.'))}
+</div>`;
+
+// ===== Quiz =====
+const QZ=[
+ [A('What lifted Q1 FY27 revenue by 52%?','Q1 FY27 revenue 52% ஏற என்ன காரணம்?'),[A('Higher hydro tariffs','Hydro tariff ஏற்றம்'),A('Buxar coal + Bikaner solar now selling power','Buxar coal + Bikaner solar power விற்பனை'),A('Power trading','Power trading')],1,A('New subsidiaries added ~₹541 cr; the hydro parent fell ₹64 cr.','புது subsidiaries ~₹541 கோடி சேர்த்தது; hydro parent ₹64 கோடி குறைஞ்சது.')],
+ [A('Why did PAT stay flat?','PAT ஏன் flat?'),[A('Interest and depreciation of new plants','புது plants-ஓட interest, depreciation'),A('Higher tax rate','Tax rate ஏற்றம்'),A('Lower revenue','Revenue குறைஞ்சது')],0,A('Interest +51%, depreciation +54% YoY.','Interest +51%, depreciation +54% YoY.')],
+ [A('When did Buxar Unit-2 reach COD?','Buxar Unit-2 COD எப்போ?'),[A('14 Nov 2025','14 Nov 2025'),A('24 Dec 2025','24 Dec 2025'),A('12 Sep 2026','12 Sep 2026')],2,A('Unit-1 was 14 Nov 2025; Unit-2 on 12 Sep 2026.','Unit-1 14 Nov 2025; Unit-2 12 Sep 2026.')],
+ [A('Above what PLF does management expect Buxar to turn profitable?','Buxar profit ஆக management சொல்ற PLF?'),[A('~50%','~50%'),A('~70%','~70%'),A('~95%','~95%')],1,A('Q1 FY27 was ~60%.','Q1 FY27 ~60%.')],
+ [A('What is CUF?','CUF என்ன?'),[A('Actual output ÷ maximum possible output','Actual output ÷ maximum output'),A('Cost per unit of fuel','Fuel cost per unit'),A('A tariff type','Tariff type')],0,A('SGEL solar ran at ~24% CUF in Q1.','Q1-ல SGEL solar ~24% CUF.')],
+ [A('Which cycle phase fits the stock price now?','இப்போ stock price எந்த stage?'),[A('Stage 2 advance','Stage 2 advance'),A('Stage 4 decline','Stage 4 decline'),A('Stage 1 base','Stage 1 base')],1,A('Below all key moving averages with repeated 52-week lows.','எல்லா moving averages-க்கும் கீழ, தொடர்ந்து 52-week lows.')],
+ [A('Which business earns the lowest price per unit?','Per unit price குறைவு எந்த business-க்கு?'),[A('Coal (Buxar)','Coal (Buxar)'),A('Solar (Bikaner ₹2.57)','Solar (Bikaner ₹2.57)'),A('Hydro','Hydro')],1,A('Solar ~₹2.6–2.75 vs coal ~₹4.9 in Q1 FY27 (CB est.).','Solar ~₹2.6–2.75 vs coal Q1 FY27-ல ~₹4.9 (CB est.).')],
+ [A('Where is most of the group debt?','Group debt பெரும்பாலும் எங்க?'),[A('In the parent','Parent-ல'),A('In subsidiaries building new plants','புது plants கட்டுற subsidiaries-ல'),A('There is no debt','Debt இல்லை')],1,A('Standalone D/E 0.69× vs consolidated ~2.1×.','Standalone D/E 0.69× vs consolidated ~2.1×.')],
+];
+let qi=0,qs=0;
+P.quiz=()=>`<h2>${T('Cauvery Socrates','Cauvery Socrates')}</h2><div class="card hl" id="qbox"></div>`;
+function renderQuiz(){const box=document.getElementById('qbox');if(!box)return;if(qi>=QZ.length){box.innerHTML=`<h3>${T('Score','Score')}: ${qs}/${QZ.length}</h3><button class="btn solid" id="qre">${T('Try again','மறுபடி')}</button>`;document.getElementById('qre').onclick=()=>{qi=0;qs=0;renderQuiz()};return;}
+ const q=QZ[qi];box.innerHTML=`<div class="note">${qi+1}/${QZ.length}</div><h3>${T(q[0].en,q[0].ta)}</h3>${q[1].map((o,i)=>`<button class="opt" data-i="${i}">${T(o.en,o.ta)}</button>`).join('')}<div id="qfb"></div>`;
+ box.querySelectorAll('.opt').forEach(b=>b.onclick=()=>{if(box.dataset.done==='1')return;box.dataset.done='1';const i=+b.dataset.i;box.querySelectorAll('.opt')[q[2]].classList.add('right');if(i!==q[2])b.classList.add('wrong');else qs++;
+  document.getElementById('qfb').innerHTML=`<p><b>${i===q[2]?T('Right!','சரி!'):T('Not quite.','இல்லை.')}</b> ${T(q[3].en,q[3].ta)}</p><button class="btn solid" id="qn">${T('Next','அடுத்து')}</button>`;document.getElementById('qn').onclick=()=>{qi++;box.dataset.done='0';renderQuiz()};});}
+
+// ===== Cauvery Assist (stand-in) =====
+const KB=[
+ {k:['buy','sell','hold','invest','should i','வாங்க','விக்க','விற்க','முதலீடு'],nb:1},
+ {k:['profit','pat','net profit','earn','லாபம்','ப்ராபிட்','profit-'],a:A('Q1 FY27 net profit was ₹225 crore, 1.2% lower than ₹228 crore a year ago.','Q1 FY27 net profit ₹225 கோடி; போன வருஷம் ₹228 கோடி, 1.2% கம்மி.'),d:A('Standalone (hydro) PAT ₹247 cr; Q4 FY26 was a ₹118 cr loss.','Standalone (hydro) PAT ₹247 கோடி; Q4 FY26-ல ₹118 கோடி loss.'),tab:'fin'},
+ {k:['revenue','sales','income','turnover','ரெவின்யூ','வருமானம்'],a:A('Revenue was ₹1,394 crore, up 52% YoY, thanks to Buxar coal and Bikaner solar.','Revenue ₹1,394 கோடி, 52% YoY ஏற்றம்; Buxar coal, Bikaner solar காரணம்.'),tab:'fin'},
+ {k:['flat','why profit','not grow','interest','finance cost','இன்ட்ரஸ்ட்','வட்டி','ஏன் profit'],a:A('Profit stayed flat because interest rose 51% and depreciation 54% as new plants started.','புது plants வந்ததால interest 51%, depreciation 54% ஏறிச்சு; அதனால profit flat.'),tab:'fin'},
+ {k:['buxar','coal','thermal','unit 2','unit-2','பக்ஸர்','கோல்','நிலக்கரி','தெர்மல்'],a:A('Buxar Unit-1 started commercial operation on 14 Nov 2025 and Unit-2 on 12 Sep 2026, so all 1,320 MW now runs.','Buxar Unit-1 COD 14 Nov 2025, Unit-2 COD 12 Sep 2026; இப்போ full 1,320 MW ஓடுது.'),d:A('Q1 PLF ~60%; management says profit above ~70%.','Q1 PLF ~60%; ~70%-க்கு மேல profit-னு management.'),tab:'bet'},
+ {k:['plf','break even','breakeven','profitable','பிஎல்எஃப்'],a:A('Buxar ran near 60% PLF in Q1; management expects profit once PLF crosses about 70%.','Q1-ல Buxar ~60% PLF; ~70% தாண்டினா profit-னு management சொல்றாங்க.'),tab:'bet'},
+ {k:['bikaner','solar','sgel','cuf','சோலார்','பிகானேர்'],a:A('Bikaner\'s 1,000 MW reached full COD on 24 Dec 2025 at ₹2.57 a unit; group solar ran at about 24% CUF in Q1.','Bikaner 1,000 MW full COD 24 Dec 2025, ₹2.57/unit; Q1-ல group solar ~24% CUF.'),d:A('SGEL lost ₹258 cr in FY26 due to curtailment and part-year costs.','FY26-ல SGEL ₹258 கோடி loss: curtailment, part-year cost.'),tab:'seg'},
+ {k:['hydro','nathpa','rampur','water','ஹைட்ரோ','நீர்'],a:A('Hydro is still the profit engine: the standalone hydro business earned ₹247 crore in Q1.','Hydro தான் profit engine: Q1-ல standalone hydro ₹247 கோடி.'),d:A('Nathpa Jhakri ran at 96.8% availability in FY26.','FY26-ல Nathpa Jhakri 96.8% availability.'),tab:'seg'},
+ {k:['debt','loan','borrow','leverage','கடன்','டெட்'],a:A('Debt is high: about 9.6 times EBITDA and 2.1 times equity on a consolidated basis.','கடன் அதிகம்: EBITDA-ஓட ~9.6 மடங்கு, equity-ஓட ~2.1 மடங்கு (consolidated).'),tab:'cf'},
+ {k:['pe','p/e','valuation','price earning','pb','p/b','book','வேல்யுவேஷன்','மதிப்பு'],a:A('At ₹47.39 the stock trades at about 29 times trailing earnings and 1.3 times book value.','₹47.39-ல stock ~29× earnings, ~1.3× book value-ல trade ஆகுது.'),tab:'valn'},
+ {k:['fall','falling','down','drop','why share','price','share price','விழுந்','இறங்','ஷேர்'],a:A('The share is down about 48% in a year on flat profit, rising interest and a weak market.','Profit flat, interest ஏற்றம், weak market: ஒரு வருஷத்துல share ~48% இறக்கம்.'),tab:'mkt'},
+ {k:['capacity','mw','megawatt','கெபாசிட்டி','திறன்'],a:A('Capacity is now 4,931.5 MW: hydro 1,972, coal 1,320, solar 1,542 and wind 98.','இப்போ capacity 4,931.5 MW: hydro 1,972, coal 1,320, solar 1,542, wind 98.'),tab:'dash'},
+ {k:['arun','nepal','அருண்','நேபாள்'],a:A('Arun-3 is a 900 MW hydro project in Nepal, guided for December 2028.','Arun-3 Nepal-ல 900 MW hydro project; Dec 2028 guide.'),tab:'bet'},
+ {k:['dividend','yield','டிவிடெண்ட்'],a:A('SJVN paid ₹1.50 a share for FY26, about a 3.2% yield at ₹47.39.','FY26-க்கு ₹1.50/share; ₹47.39-ல ~3.2% yield.'),tab:'valn'},
+ {k:['next result','q2','results date','அடுத்த result'],a:A('Q2 FY27 results are scheduled for 6 November 2026.','Q2 FY27 results 6 November 2026.'),tab:'av'},
+ {k:['cycle','trigger','stage','சைக்கிள்','ட்ரிகர்'],a:A('Cycle score is 54 and trigger score 55; the price is in a Stage 4 downtrend.','Cycle score 54, trigger score 55; price Stage 4 downtrend-ல.'),tab:'tc'},
+ {k:['capex','spend','expansion','கேபெக்ஸ்'],a:A('SJVN plans about ₹9,400 crore of capex in FY27, mostly debt-funded.','FY27-ல ~₹9,400 கோடி capex plan; பெரும்பாலும் debt.'),tab:'cf'},
+ {k:['what is cod','cod mean','meaning of cod'],a:A('COD is the commercial operation date: the day a plant starts billing as a regular power station.','COD = commercial operation date: plant regular-ஆ bill பண்ண ஆரம்பிக்கிற நாள்.')},
+ {k:['what is plf','plf mean','what is cuf','cuf mean'],a:A('PLF (or CUF for solar) is actual output divided by the maximum a plant could make.','PLF (solar-க்கு CUF) = actual output ÷ plant-ஆல முடிஞ்ச maximum output.')},
+ {k:['pillar','score','rating','பில்லர்'],a:A('SJVN scores 31 out of 60 on the 6 Pillars: growth is strong, financial strength is weak.','6 Pillars-ல SJVN 31/60: growth strong, financial strength weak.'),tab:'pil'},
+ {k:['margin','ebitda','மார்ஜின்'],a:A('EBITDA margin fell to 63.4% from 80.9% because coal and solar earn thinner margins than hydro.','EBITDA margin 80.9%-ல இருந்து 63.4%; coal, solar margin hydro-வை விட குறைவு.'),tab:'fin'},
+];
+const NOADV=A('CB Research does not give buy, sell or hold advice; we are not SEBI-registered. Use the Self-Check tab to test your own conditions.','CB Research buy/sell/hold advice கொடுக்காது; நாங்க SEBI-registered இல்லை. Self-Check tab-ல உங்க conditions-ஐ check பண்ணுங்க.');
+const FALL=A('I don\'t have that in this dashboard. Try asking about profit, Buxar, solar, debt, valuation or the share price.','இந்த dashboard-ல அது இல்லை. Profit, Buxar, solar, debt, valuation, share price பத்தி கேளுங்க.');
+const SUGG=[['Why is profit flat?','Profit ஏன் flat?'],['When did Buxar Unit-2 start?','Buxar Unit-2 எப்போ ஆரம்பிச்சது?'],['How is solar doing?','Solar எப்படி போகுது?'],['How much debt?','கடன் எவ்வளவு?'],['Why did the share fall?','Share ஏன் விழுந்துச்சு?'],['Should I buy?','வாங்கலாமா?']];
+function answer(q){const s=q.toLowerCase();let best=null,bs=0;for(const e of KB){let sc=0;for(const k of e.k){if(s.includes(k))sc+=k.length;}if(sc>bs){bs=sc;best=e;}}
+ if(best&&best.nb)return {a:NOADV};return best?best:{a:FALL};}
+const ST={rate:0.8,wait:3,review:false,conv:false};
+try{const s=JSON.parse(localStorage.getItem('cba_q1fy27_sjvn')||'{}');Object.assign(ST,s);}catch(e){}
+const saveST=()=>{try{localStorage.setItem('cba_q1fy27_sjvn',JSON.stringify(ST))}catch(e){}};
+P.assist=()=>`<h2>${T('Cauvery Assist','Cauvery Assist')}</h2>
+<div class="card hl assist">
+ <div class="ctrl">${T('Speed','Speed')} <button class="btn" id="spDn" aria-label="slower">−</button><input type="range" id="spR" min="0.5" max="1.5" step="0.1" value="${ST.rate}"><button class="btn" id="spUp" aria-label="faster">+</button><b id="spV">${ST.rate.toFixed(1)}×</b>
+ <select id="spP"><option value="0.6">Slow</option><option value="0.8">Relaxed</option><option value="1">Normal</option><option value="1.2">Fast</option></select>
+ ${T('Wait','Wait')} <select id="wt"><option value="2">2s</option><option value="3">3s</option><option value="5">5s</option><option value="0">${LANG==='ta'?'Done tap':'Tap Done'}</option></select>
+ <label><input type="checkbox" id="rv"> ${T('Check text before sending','அனுப்பும் முன் text பார்க்க')}</label>
+ <label><input type="checkbox" id="cv"> ${T('Conversation mode','Conversation mode')}</label></div>
+ <div class="chat" id="chat" aria-live="polite"></div>
+ <div class="listen" id="lsn"><i></i></div>
+ <div class="arow"><input type="text" id="aq" placeholder="Ask: Why is profit flat?"><button class="btn solid" id="aGo">${T('Ask','கேளுங்க')}</button><button class="btn" id="aMic">🎙 ${T('Speak','பேசுங்க')}</button><button class="btn" id="aDone" hidden>${T('Done','Done')}</button><button class="btn" id="aPause">⏯</button><button class="btn" id="aStop">⏹</button></div>
+ <div class="sugg">${SUGG.map(s=>`<button data-q-en="${s[0]}" data-q-ta="${s[1]}">${T(s[0],s[1])}</button>`).join('')}</div>
+ <p class="note" id="vNote">${T('Answers are read aloud one sentence at a time. Voice input needs Chrome or Edge on a hosted page; inside the Claude viewer the microphone is blocked, so type instead.','Answers ஒவ்வொரு sentence-ஆ படிக்கும். Voice input Chrome/Edge hosted page-ல வேலை செய்யும்; Claude viewer-ல mic block, type பண்ணுங்க.')}</p>
+</div>`;
+function addMsg(who,html){const c=document.getElementById('chat');if(!c)return;const d=document.createElement('div');d.className='msg '+who;d.innerHTML=html;c.appendChild(d);c.scrollTop=c.scrollHeight;}
+function ask(q){if(!q.trim())return;addMsg('u',q);const r=answer(q);const a=r.a[LANG];let h=`<b>${a}</b>`;if(r.d)h+=`<details><summary>${LANG==='ta'?'மேலும் விவரம்':'More details'}</summary>${r.d[LANG]}</details>`;if(r.tab)h+=`<div><button class="btn" data-open="${r.tab}" style="margin-top:6px">${LANG==='ta'?'Related tab திறங்க':'Open related tab'}</button></div>`;addMsg('a',h);speak(a,()=>{if(ST.conv)startMic();});}
+// speech
+let queue=[],onDone=null;
+function pickVoice(){const vs=speechSynthesis.getVoices();const want=LANG==='ta'?'ta':'en-IN';return vs.find(v=>v.lang.replace('_','-').startsWith(want))||(LANG==='ta'?null:vs.find(v=>v.lang.startsWith('en')));}
+function speak(text,cb){if(!('speechSynthesis' in window)||!window.SpeechSynthesisUtterance){cb&&cb();return;}speechSynthesis.cancel();queue=text.replace(/\s+/g,' ').split(/(?<=[.!?।])\s+/).filter(Boolean);onDone=cb||null;
+ if(LANG==='ta'&&!speechSynthesis.getVoices().some(v=>v.lang.startsWith('ta'))){const n=document.getElementById('vNote');if(n&&!n.dataset.w){n.dataset.w=1;n.insertAdjacentHTML('beforeend','<br><b>இந்த device-ல Tamil voice இல்லை; English voice-ல படிக்கும்.</b>');}}
+ next();}
+function next(){if(!queue.length){if(onDone)onDone();return;}const u=new SpeechSynthesisUtterance(queue.shift());const v=pickVoice();if(v){u.voice=v;u.lang=v.lang;}else u.lang=LANG==='ta'?'ta-IN':'en-IN';u.rate=ST.rate;u.onend=()=>setTimeout(next,350);u.onerror=()=>{};speechSynthesis.speak(u);}
+// mic
+let rec=null,heard='',silT=null,tick=null,stopReq=false;
+function startMic(){const SR=window.SpeechRecognition||window.webkitSpeechRecognition;if(!SR){addMsg('a',LANG==='ta'?'இந்த browser-ல voice input இல்லை; type பண்ணுங்க.':'Voice input is not available in this browser; please type.');return;}
+ speechSynthesis.cancel();heard='';stopReq=false;rec=new SR();rec.lang=LANG==='ta'?'ta-IN':'en-IN';rec.continuous=true;rec.interimResults=true;
+ document.getElementById('aDone').hidden=false;
+ rec.onresult=e=>{let t='';for(let i=0;i<e.results.length;i++)t+=e.results[i][0].transcript;heard=t;document.getElementById('aq').value=t;armSilence();};
+ rec.onerror=e=>{if(e.error==='not-allowed'||e.error==='service-not-allowed'){stopReq=true;finishMic(false);addMsg('a',LANG==='ta'?'Mic block ஆகியிருக்கு (Claude viewer). Type பண்ணுங்க அல்லது hosted page-ல open பண்ணுங்க.':'The microphone is blocked here (Claude viewer). Type your question, or open the hosted copy in Chrome/Edge.');}};
+ rec.onend=()=>{if(!stopReq){try{rec.start()}catch(e){}}};
+ try{rec.start();}catch(e){}armSilence();}
+function armSilence(){clearTimeout(silT);clearInterval(tick);const bar=document.querySelector('#lsn i');if(!ST.wait){bar.style.width='100%';return;}const t0=Date.now(),ms=ST.wait*1000;
+ tick=setInterval(()=>{bar.style.width=Math.min(100,(Date.now()-t0)/ms*100)+'%'},100);silT=setTimeout(()=>finishMic(true),ms);}
+function finishMic(send){stopReq=true;clearTimeout(silT);clearInterval(tick);document.querySelector('#lsn i').style.width='0';document.getElementById('aDone').hidden=true;try{rec&&rec.stop()}catch(e){}
+ if(send&&heard.trim()){if(ST.review){document.getElementById('aq').focus();}else{ask(heard);document.getElementById('aq').value='';}}}
+function wireAssist(){
+ const r=document.getElementById('spR'),v=document.getElementById('spV');const setR=x=>{ST.rate=Math.max(.5,Math.min(1.5,Math.round(x*10)/10));r.value=ST.rate;v.textContent=ST.rate.toFixed(1)+'×';saveST();};
+ r.oninput=()=>setR(+r.value);document.getElementById('spDn').onclick=()=>setR(ST.rate-.1);document.getElementById('spUp').onclick=()=>setR(ST.rate+.1);
+ const p=document.getElementById('spP');p.value=String(ST.rate);p.onchange=()=>setR(+p.value);
+ const w=document.getElementById('wt');w.value=String(ST.wait);w.onchange=()=>{ST.wait=+w.value;saveST()};
+ const rv=document.getElementById('rv');rv.checked=ST.review;rv.onchange=()=>{ST.review=rv.checked;saveST()};
+ const cv=document.getElementById('cv');cv.checked=ST.conv;cv.onchange=()=>{ST.conv=cv.checked;saveST()};
+ const q=document.getElementById('aq');q.placeholder=LANG==='ta'?'கேளுங்க: Profit ஏன் flat?':'Ask: Why is profit flat?';
+ document.getElementById('aGo').onclick=()=>{ask(q.value);q.value=''};q.onkeydown=e=>{if(e.key==='Enter'){ask(q.value);q.value=''}};
+ document.getElementById('aMic').onclick=startMic;document.getElementById('aDone').onclick=()=>finishMic(true);
+ document.getElementById('aPause').onclick=()=>{if(speechSynthesis.paused)speechSynthesis.resume();else speechSynthesis.pause()};
+ document.getElementById('aStop').onclick=()=>{queue=[];speechSynthesis.cancel()};
+ document.querySelectorAll('.sugg button').forEach(b=>b.onclick=()=>ask(b.dataset['q'+(LANG==='ta'?'Ta':'En')]));
+ const c=document.getElementById('chat');if(!c.children.length)addMsg('a',`<b>${LANG==='ta'?'வணக்கம்! SJVN Q1 FY27 பத்தி கேளுங்க. Answer முதல்ல, சுருக்கமா.':'Vanakam! Ask me about SJVN Q1 FY27. I answer first, in a line or two.'}</b>`);
+ c.addEventListener('click',e=>{const t=e.target.closest('[data-open]');if(t)show(t.dataset.open)});
+}
+
+// ---------- render & tabs ----------
+const main=document.getElementById('main'),tabs=document.getElementById('tabs');
+let cur='dash';
+function build(){tabs.innerHTML=TABS.map(([id,l])=>`<button role="tab" id="t-${id}" aria-selected="${id===cur}" data-t="${id}">${l[LANG]}</button>`).join('');
+ main.innerHTML=TABS.map(([id])=>`<section class="panel ${id===cur?'on':''}" id="p-${id}" role="tabpanel"><div class="toolrow"><button class="btn" data-read="${id}">🔊 ${T('Read this tab','இந்த tab படிங்க')}</button></div>${P[id]()}</section>`).join('');
+ wireAssist();renderQuiz();wireSelf();wireBM();}
+function show(id){cur=id;try{localStorage.setItem('sjvn_tab',id)}catch(e){}
+ document.querySelectorAll('.panel').forEach(p=>p.classList.toggle('on',p.id==='p-'+id));document.querySelectorAll('.tabs button').forEach(b=>b.setAttribute('aria-selected',b.dataset.t===id));
+ const b=document.getElementById('t-'+id);b&&b.scrollIntoView({block:'nearest',inline:'center'});window.scrollTo({top:0});}
+tabs.addEventListener('click',e=>{const b=e.target.closest('[data-t]');if(b)show(b.dataset.t)});
+main.addEventListener('click',e=>{const r=e.target.closest('[data-read]');if(r){const p=document.getElementById('p-'+r.dataset.read);const clone=p.cloneNode(true);clone.querySelectorAll('.toolrow,svg,button,input,select').forEach(x=>x.remove());document.body.appendChild(clone);clone.style.position='absolute';clone.style.left='-9999px';const txt=clone.innerText;clone.remove();speak(txt);}});
+function wireBM(){document.querySelectorAll('[data-bm]').forEach(b=>{b.onclick=()=>{const d=BMD[b.dataset.bm];if(!d)return;const inSvg=!!b.closest('svg');const cards=[...document.querySelectorAll('.bmd')];const t=inSvg?cards[0]:cards[cards.length-1];t.innerHTML=T(d.en,d.ta);};if(b.tagName.toLowerCase()==='g'){b.setAttribute('tabindex','0');b.setAttribute('role','button');b.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();b.onclick();}};}});}
+// self-check
+let custom=[];try{custom=JSON.parse(localStorage.getItem('sjvn_custom')||'[]')}catch(e){}
+let checks={};try{checks=JSON.parse(localStorage.getItem('sjvn_checks')||'{}')}catch(e){}
+function wireSelf(){const box=document.getElementById('custom');if(!box)return;
+ box.innerHTML=custom.map((c,i)=>`<label class="chk"><input type="checkbox" id="cc_${i}" data-g="4"><span>${c.replace(/</g,'&lt;')}</span><button class="btn" data-rm="${i}" style="margin-left:auto;padding:2px 8px">✕</button></label>`).join('');
+ document.querySelectorAll('#scGroups input[type=checkbox]').forEach(c=>{c.checked=!!checks[c.id];c.onchange=()=>{checks[c.id]=c.checked;try{localStorage.setItem('sjvn_checks',JSON.stringify(checks))}catch(e){}tally()};});
+ box.querySelectorAll('[data-rm]').forEach(b=>b.onclick=e=>{e.preventDefault();custom.splice(+b.dataset.rm,1);try{localStorage.setItem('sjvn_custom',JSON.stringify(custom))}catch(e){}wireSelf();});
+ const add=document.getElementById('cAdd'),inp=document.getElementById('cIn');add.onclick=()=>{if(!inp.value.trim())return;custom.push(inp.value.trim());inp.value='';try{localStorage.setItem('sjvn_custom',JSON.stringify(custom))}catch(e){}wireSelf();};tally();}
+function tally(){let all=0,tot=0;for(let g=0;g<5;g++){const cs=[...document.querySelectorAll(`#scGroups input[data-g="${g}"]`)];const n=cs.filter(c=>c.checked).length;all+=n;tot+=cs.length;const el=document.getElementById('scg'+g);if(el)el.textContent=`${n}/${cs.length}`;}
+ document.getElementById('scAll').textContent=`${all}/${tot}`;document.getElementById('scBar').style.width=(tot?all/tot*100:0)+'%';}
+// language
+function setLang(l){LANG=l;document.body.className='lang-'+l;document.documentElement.lang=l==='ta'?'ta':'en';document.getElementById('bEn').setAttribute('aria-pressed',l==='en');document.getElementById('bTa').setAttribute('aria-pressed',l==='ta');
+ try{localStorage.setItem('sjvn_lang',l)}catch(e){}speechSynthesis&&speechSynthesis.cancel();
+ tabs.querySelectorAll('button').forEach(b=>{const t=TABS.find(x=>x[0]===b.dataset.t);b.textContent=t[1][l]});
+ const q=document.getElementById('aq');if(q)q.placeholder=l==='ta'?'கேளுங்க: Profit ஏன் flat?':'Ask: Why is profit flat?';}
+document.getElementById('bEn').onclick=()=>setLang('en');document.getElementById('bTa').onclick=()=>setLang('ta');
+document.getElementById('cbBtn').onclick=()=>document.getElementById('cb').classList.toggle('open');
+document.getElementById('vbub').onclick=()=>{show('assist');setTimeout(()=>document.getElementById('aq').focus(),50)};
+// boot
+document.body.className='lang-en';
+try{const t=localStorage.getItem('sjvn_tab');if(t&&TABS.some(x=>x[0]===t))cur=t;}catch(e){}
+const h=location.hash.slice(1);if(TABS.some(x=>x[0]===h))cur=h;
+build();
+try{const l=localStorage.getItem('sjvn_lang');if(l)setLang(l);}catch(e){}
+if('speechSynthesis' in window)speechSynthesis.onvoiceschanged=()=>{};
+</script>
