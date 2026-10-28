@@ -1,0 +1,874 @@
+<title>L&amp;T Q2 FY27 Dashboard</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&family=Inter:wght@400;600;700;800&family=IBM+Plex+Mono:wght@500;700&family=Noto+Sans+Tamil:wght@500;700&display=swap">
+<style>
+/* Layout: sticky brand bar + scrollable tab rail, one tab panel at a time; CB house style (very light orange ground, orange accent, bold dark text) */
+:root{
+  --bg:#FFF5EA; --card:#FFFBF6; --line:#F3D3B0; --accent:#F28C28; --accent-soft:#FDE3C6;
+  --ink:#1B1006; --ink2:#4A3420; --lt:#0B4F8A; --lt-soft:#DCEAF7;
+  --good:#1E7B3A; --good-soft:#DDF2E2; --warn:#A35A00; --warn-soft:#FFEBC8; --bad:#B3261E; --bad-soft:#FBE0DD;
+  --f-disp:"Playfair Display",Georgia,serif; --f-body:"Inter","Noto Sans Tamil",system-ui,sans-serif; --f-mono:"IBM Plex Mono",ui-monospace,monospace;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-weight:600;font-size:15px;line-height:1.5}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bg)}
+.wrap{padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));max-width:1180px;margin:0 auto}
+header.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:9;background:var(--bg);border-bottom:2px solid var(--line)}
+.brand{display:flex;flex-wrap:wrap;align-items:center;gap:10px 16px;padding-block:10px}
+.brand h1{font-family:var(--f-disp);font-size:clamp(20px,3.4vw,30px);margin:0;line-height:1.1;text-wrap:balance}
+.brand .sub{font-size:12.5px;color:var(--ink2);font-weight:700}
+.slogan{font-family:var(--f-mono);font-size:12px;font-weight:700;color:var(--ink);background:var(--accent-soft);border:1.5px solid var(--accent);padding:3px 8px;border-radius:4px}
+.brand .sp{flex:1}
+.langbtn{display:flex;border:2px solid var(--accent);border-radius:6px;overflow:hidden}
+.langbtn button{border:0;background:var(--card);font:800 13px var(--f-body);padding:6px 12px;cursor:pointer;color:var(--ink)}
+.langbtn button[aria-pressed="true"]{background:var(--accent);color:var(--ink)}
+nav.tabs{display:flex;gap:6px;overflow-x:auto;padding-bottom:8px;scrollbar-width:thin}
+nav.tabs button{flex:0 0 auto;border:1.5px solid var(--line);background:var(--card);color:var(--ink);font:700 13px var(--f-body);padding:6px 11px;border-radius:5px;cursor:pointer;white-space:nowrap}
+nav.tabs button[aria-selected="true"]{background:var(--accent);border-color:var(--accent)}
+nav.tabs button:focus-visible,button:focus-visible{outline:3px solid var(--lt);outline-offset:2px}
+main{padding-block:18px 120px}
+h2{font-family:var(--f-disp);font-size:clamp(22px,3vw,30px);margin:0 0 4px;text-wrap:balance}
+h3{font-size:16px;margin:0 0 8px;font-weight:800}
+.lead{color:var(--ink2);margin:0 0 14px;font-weight:700}
+.grid{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
+.grid2{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(340px,1fr))}
+.grid>*,.grid2>*{min-width:0}
+.card{background:var(--card);border:1.5px solid var(--line);border-radius:8px;padding:14px}
+.kpis{display:grid;gap:10px;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));margin-bottom:14px}
+.kpi{background:var(--card);border:1.5px solid var(--line);border-radius:8px;padding:10px 12px}
+.kpi .l{font-size:12px;color:var(--ink2);font-weight:700;text-transform:uppercase;letter-spacing:.04em}
+.kpi .v{font-family:var(--f-mono);font-size:22px;font-weight:700;font-variant-numeric:tabular-nums}
+.kpi .d{font-size:12.5px;font-weight:800}
+.up{color:var(--good)} .dn{color:var(--bad)} .flat{color:var(--warn)}
+ul.b{margin:0;padding-left:18px} ul.b li{margin:3px 0}
+.tw{overflow-x:auto;border:1.5px solid var(--line);border-radius:8px;background:var(--card)}
+table{border-collapse:collapse;width:100%;font-variant-numeric:tabular-nums;font-size:13.5px}
+th,td{padding:7px 10px;border-bottom:1px solid var(--line);text-align:right;white-space:nowrap}
+th:first-child,td:first-child{text-align:left}
+thead th{background:var(--accent-soft);font-weight:800}
+.pill{display:inline-block;font-size:12px;font-weight:800;padding:2px 8px;border-radius:20px;border:1.5px solid currentColor}
+.pg{color:var(--good);background:var(--good-soft)} .pw{color:var(--warn);background:var(--warn-soft)} .pb{color:var(--bad);background:var(--bad-soft)} .pl{color:var(--lt);background:var(--lt-soft)}
+svg text{font-family:var(--f-body);fill:var(--ink);font-weight:700}
+svg .mono{font-family:var(--f-mono)}
+.note{font-size:12.5px;color:var(--ink2);font-weight:600}
+.svgbox{overflow-x:auto}
+.svgbox svg{width:100%;height:auto;min-width:300px;display:block}
+/* Business model flow map */
+.flow{display:grid;gap:10px;grid-template-columns:1fr 1.3fr 1fr;align-items:stretch}
+.flow .col{display:flex;flex-direction:column;gap:10px;min-width:0}
+.node{background:var(--card);border:2px solid var(--line);border-radius:8px;padding:10px;cursor:pointer;text-align:left;font:inherit;color:var(--ink)}
+.node:hover{border-color:var(--accent)}
+.node.hub{border-color:var(--lt);background:var(--lt-soft)}
+.node b{display:block;font-size:14px}
+.node span{font-size:12.5px;color:var(--ink2)}
+.node .n{font-family:var(--f-mono);color:var(--ink);font-weight:700}
+.arrow{font-family:var(--f-mono);text-align:center;color:var(--accent);font-weight:800}
+.detail{margin-top:12px;border:2px solid var(--accent);background:var(--accent-soft);border-radius:8px;padding:12px}
+.formula{margin-top:12px;font-family:var(--f-mono);font-weight:700;background:var(--card);border:1.5px dashed var(--accent);padding:10px;border-radius:8px;text-align:center}
+@media (max-width:760px){.flow{grid-template-columns:1fr}.arrow.h{transform:rotate(90deg)}}
+/* quiz/self-check */
+.opt{display:block;width:100%;text-align:left;margin:6px 0;padding:9px 12px;border:1.5px solid var(--line);border-radius:6px;background:var(--card);font:700 14px var(--f-body);color:var(--ink);cursor:pointer}
+.opt.ok{background:var(--good-soft);border-color:var(--good)} .opt.no{background:var(--bad-soft);border-color:var(--bad)}
+.chk{display:flex;gap:10px;align-items:flex-start;padding:8px 0;border-bottom:1px dashed var(--line)}
+.chk input{width:20px;height:20px;accent-color:var(--accent);flex:0 0 auto;margin-top:2px}
+.chk .data{font-size:12.5px;color:var(--lt);font-weight:700}
+.bar{height:10px;background:var(--accent-soft);border-radius:6px;overflow:hidden;border:1px solid var(--line)}
+.bar i{display:block;height:100%;background:var(--accent)}
+.btn{border:2px solid var(--accent);background:var(--accent-soft);color:var(--ink);font:800 13px var(--f-body);padding:7px 12px;border-radius:6px;cursor:pointer}
+.btn.solid{background:var(--accent)}
+/* CB badge + voice bubble */
+#cbBadge{position:fixed;right:calc(14px + env(safe-area-inset-right,0px));bottom:calc(14px + env(safe-area-inset-bottom,0px));z-index:20}
+#cbBadge .logo{width:46px;height:46px;border-radius:50%;background:var(--accent);border:3px solid var(--ink);display:grid;place-items:center;font:800 16px var(--f-disp);color:var(--ink);cursor:pointer;animation:blink 1.6s infinite}
+@keyframes blink{50%{box-shadow:0 0 0 6px rgba(242,140,40,.35)}}
+#cbBadge .tip{display:none;position:absolute;right:0;bottom:56px;width:min(300px,80vw);background:var(--card);border:2px solid var(--accent);border-radius:8px;padding:10px;font-size:12.5px}
+#cbBadge:hover .tip,#cbBadge.open .tip{display:block}
+#voiceBubble{position:fixed;right:calc(10px + env(safe-area-inset-right,0px));bottom:calc(72px + env(safe-area-inset-bottom,0px));z-index:20;border:2px solid var(--ink);background:var(--accent-soft);color:var(--ink);font:800 12.5px var(--f-body);padding:8px 12px;border-radius:22px;cursor:pointer}
+@media (prefers-reduced-motion:reduce){#cbBadge .logo{animation:none}}
+/* assist */
+.chat{height:360px;overflow-y:auto;border:1.5px solid var(--line);border-radius:8px;background:var(--card);padding:10px;display:flex;flex-direction:column;gap:8px}
+.msg{max-width:88%;padding:8px 11px;border-radius:8px;font-size:14px}
+.msg.u{align-self:flex-end;background:var(--lt-soft);border:1.5px solid var(--lt)}
+.msg.a{align-self:flex-start;background:var(--accent-soft);border:1.5px solid var(--accent)}
+.msg details{margin-top:4px;font-size:13px}
+.askrow{display:flex;gap:8px;margin-top:8px;flex-wrap:wrap}
+.askrow input{flex:1;min-width:180px;padding:9px;border:2px solid var(--line);border-radius:6px;font:700 14px var(--f-body);background:var(--card);color:var(--ink)}
+.sugg{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.sugg button{border:1.5px solid var(--line);background:var(--card);border-radius:16px;padding:4px 10px;font:700 12.5px var(--f-body);cursor:pointer;color:var(--ink)}
+.ctrl{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:8px;font-size:13px}
+.ctrl input[type=range]{accent-color:var(--accent)}
+.readbtn{float:right}
+.pic h3{color:var(--ink)}
+.pics{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(min(100%,520px),1fr))}.pics>*{min-width:0}.pic.wide{grid-column:1/-1}.pic.wide .svgbox svg{max-width:960px;margin:0 auto}
+</style>
+
+<header class="top">
+  <div class="wrap">
+    <div class="brand">
+      <div>
+        <h1>Larsen &amp; Toubro · Q2 FY27</h1>
+        <div class="sub" id="subline"></div>
+      </div>
+      <span class="slogan" id="slogan"></span>
+      <span class="sp"></span>
+      <div class="langbtn" role="group" aria-label="Language">
+        <button id="bEN" aria-pressed="true">English</button>
+        <button id="bTA" aria-pressed="false">தமிழ்</button>
+      </div>
+    </div>
+    <nav class="tabs" id="tabs" role="tablist"></nav>
+  </div>
+</header>
+<main class="wrap" id="main"></main>
+
+<button id="voiceBubble" aria-label="Voice Assist">🎙 Voice Assist</button>
+<div id="cbBadge"><div class="logo" tabindex="0" aria-label="Disclaimer">CB</div><div class="tip" id="disc"></div></div>
+
+<script>
+/* ============ Language helpers ============ */
+var LANG="en";
+try{var s=localStorage.getItem("cb_lt_lang");if(s)LANG=s;}catch(e){}
+function A(en,ta){return {en:en,ta:ta};}
+function L(en,ta){return LANG==="ta"?ta:en;}
+function t(o){return o?(LANG==="ta"?o.ta:o.en):"";}
+function f0(n){return Number(n).toLocaleString("en-IN",{maximumFractionDigits:0});}
+function f1(n){return Number(n).toLocaleString("en-IN",{maximumFractionDigits:1,minimumFractionDigits:1});}
+function chg(a,b){if(a==null||b==null)return "—";var c=(a/b-1)*100;return '<span class="'+(c>=0?"up":"dn")+'">'+(c>=0?"+":"")+f1(c)+"%</span>";}
+function bps(a,b){if(a==null||b==null)return "—";var c=Math.round((a-b)*100);return '<span class="'+(c>=0?"up":"dn")+'">'+(c>=0?"+":"")+c+" bps</span>";}
+
+/* ============ Data (₹ crore unless stated) ============ */
+var Q={ // consolidated
+  rev:[78750,67942,67984], ebitda:[6845,6116,6806], margin:[8.7,9.0,10.0], pat:[5202,4123,3926],
+  oi:[147665,108014,115784], ob:[853514,778954,667047], intlRevShare:[58,51,56], intlOI:[92375,60702,75561],
+  intlOIShare:[63,56,65], nwc:[1.7,4.9,10.2], fin:[473,null,763], oth:[2310,null,1384]
+};
+var SEG=[ // Q2FY27, Q1FY27, Q2FY26 (Q2FY26 derived from reported YoY growth, approx.)
+ {id:"iu",n:A("Infrastructure & Utilities","Infrastructure & Utilities"),rev:[25133,21858,23710],m:[5.7,5.1,6.2],oi:[35509,44357,40815],obShare:42,g:6,col:"#0B4F8A",
+  what:A("Metros, airports, buildings & factories, water, power T&D, minerals & metals","Metro, airport, buildings, factory, water, power line, metals plants")},
+ {id:"ec",n:A("Energy – Conventional","Energy – Conventional"),rev:[17285,14239,13400],m:[7.4,7.6,8.2],oi:[78413,3053,38900],obShare:34,g:29,col:"#C2410C",
+  what:A("Hydrocarbon (offshore & onshore oil-gas plants) + CarbonLite (thermal/clean power)","Oil & gas offshore platform, onshore plant + CarbonLite power")},
+ {id:"eg",n:A("Energy – Green","Energy – Green"),rev:[11493,5607,8037],m:[6.0,6.0,6.2],oi:[6558,33042,11924],obShare:17,g:43,col:"#2F7D32",
+  what:A("Solar EPC, offshore wind transmission, battery storage, green hydrogen","Solar EPC, offshore wind, battery storage, green hydrogen")},
+ {id:"mp",n:A("Manufacturing & Products","Manufacturing & Products"),rev:[4480,null,3343],m:[15.7,15.2,13.5],oi:[5778,null,4312],obShare:5,g:34,col:"#7A3E9D",
+  what:A("Heavy engineering, precision engineering & defence systems, valves","Heavy engineering, defence systems, precision engineering")},
+ {id:"tp",n:A("Technology, Platforms & Services","Technology, Platforms & Services"),rev:[14826,14627,13357],m:[19.5,19.2,20.0],oi:[null,null,null],obShare:null,g:11,col:"#00838F",
+  what:A("LTIMindtree, LTTS, digital platforms, data centres, semiconductor design","LTIMindtree, LTTS, digital platforms, data centre, chip design")},
+ {id:"fs",n:A("Financial Services","Financial Services"),rev:[5307,null,4179],m:[null,null,null],oi:[null,null,null],obShare:null,g:27,col:"#8D6E00",
+  what:A("L&T Finance — retail loans (rural, 2W, personal, home, gold)","L&T Finance — rural, two-wheeler, personal, home, gold loans")},
+ {id:"re",n:A("Realty","Realty"),rev:[225,null,395],m:[54.3,36.9,67.6],oi:[1292,null,1468],obShare:null,g:-43,col:"#6D4C41",
+  what:A("L&T Realty — residential & commercial projects","L&T Realty — வீடு & office projects")}
+];
+
+/* ============ Chart helpers (SVG) ============ */
+function hbars(items,opt){ // items:[{l,v,c,s}] horizontal bars
+  opt=opt||{};var W=640,rowH=34,lw=opt.lw||210,H=items.length*rowH+12;
+  var max=opt.max||Math.max.apply(null,items.map(function(i){return Math.abs(i.v)}));
+  var s='<svg viewBox="0 0 '+W+' '+H+'" role="img">';
+  items.forEach(function(it,i){var y=6+i*rowH,w=Math.max(2,(Math.abs(it.v)/max)*(W-lw-125));
+    s+='<text x="0" y="'+(y+20)+'" font-size="13">'+it.l+'</text>';
+    s+='<rect x="'+lw+'" y="'+(y+6)+'" width="'+w+'" height="18" rx="3" fill="'+(it.c||"#F28C28")+'"/>';
+    s+='<text class="mono" x="'+(lw+w+6)+'" y="'+(y+20)+'" font-size="13">'+(it.s||f0(it.v))+'</text>';});
+  return s+'</svg>';}
+function vgroup(cats,series,opt){ // grouped vertical bars
+  opt=opt||{};var W=640,H=260,pl=10,pb=40,pt=20,cw=(W-pl*2)/cats.length,n=series.length,bw=Math.min(36,(cw-20)/n);
+  var max=opt.max||Math.max.apply(null,[].concat.apply([],series.map(function(s){return s.v.filter(function(x){return x!=null})})));
+  var s='<svg viewBox="0 0 '+W+' '+H+'" role="img">';
+  s+='<line x1="0" x2="'+W+'" y1="'+(H-pb)+'" y2="'+(H-pb)+'" stroke="#E2B98C" stroke-width="1.5"/>';
+  cats.forEach(function(c,ci){var x0=pl+ci*cw+(cw-n*bw)/2;
+    series.forEach(function(se,si){var v=se.v[ci];if(v==null)return;var h=(v/max)*(H-pb-pt);
+      s+='<rect x="'+(x0+si*bw)+'" y="'+(H-pb-h)+'" width="'+(bw-4)+'" height="'+h+'" rx="2" fill="'+se.c+'"/>';
+      if(opt.labels!==false)s+='<text class="mono" x="'+(x0+si*bw+(bw-4)/2)+'" y="'+(H-pb-h-4)+'" font-size="10.5" text-anchor="middle">'+(opt.fmt?opt.fmt(v):f0(v))+'</text>';});
+    s+='<text x="'+(pl+ci*cw+cw/2)+'" y="'+(H-pb+18)+'" font-size="12" text-anchor="middle">'+c+'</text>';});
+  var lx=0;series.forEach(function(se){s+='<rect x="'+lx+'" y="'+(H-14)+'" width="12" height="12" fill="'+se.c+'"/><text x="'+(lx+16)+'" y="'+(H-3)+'" font-size="12">'+se.n+'</text>';lx+=150;});
+  return s+'</svg>';}
+function donut(parts,center){var R=80,r=50,cx=110,cy=110,tot=parts.reduce(function(a,p){return a+p.v},0),a0=-Math.PI/2;
+  var s='<svg viewBox="0 0 540 220" role="img">';
+  parts.forEach(function(p,i){var a1=a0+2*Math.PI*p.v/tot,lg=(a1-a0)>Math.PI?1:0;
+    s+='<path d="M'+(cx+R*Math.cos(a0))+' '+(cy+R*Math.sin(a0))+' A'+R+' '+R+' 0 '+lg+' 1 '+(cx+R*Math.cos(a1))+' '+(cy+R*Math.sin(a1))+' L'+(cx+r*Math.cos(a1))+' '+(cy+r*Math.sin(a1))+' A'+r+' '+r+' 0 '+lg+' 0 '+(cx+r*Math.cos(a0))+' '+(cy+r*Math.sin(a0))+'Z" fill="'+p.c+'" stroke="#FFFBF6" stroke-width="2"/>';
+    s+='<rect x="240" y="'+(30+i*30)+'" width="14" height="14" fill="'+p.c+'"/><text x="262" y="'+(42+i*30)+'" font-size="13">'+p.l+' — '+(p.s||Math.round(p.v/tot*100)+"%")+'</text>';a0=a1;});
+  s+='<text x="'+cx+'" y="'+(cy+5)+'" text-anchor="middle" font-size="14">'+(center||"")+'</text>';
+  return s+'</svg>';}
+function line(pts,opt){opt=opt||{};var W=640,H=230,p=40,max=opt.max||Math.max.apply(null,pts.map(function(x){return x.v})),min=opt.min||0;
+  var step=(W-2*p)/(pts.length-1),s='<svg viewBox="0 0 '+W+' '+H+'" role="img">',d="",dots="";
+  for(var g=0;g<=4;g++){var gy=H-p-(H-2*p)*g/4;s+='<line x1="'+p+'" x2="'+(W-p)+'" y1="'+gy+'" y2="'+gy+'" stroke="#F3D3B0"/>';}
+  pts.forEach(function(q,i){var x=p+i*step,y=H-p-(q.v-min)/(max-min)*(H-2*p);d+=(i?"L":"M")+x+" "+y;
+    dots+='<circle cx="'+x+'" cy="'+y+'" r="'+(i==pts.length-1?7:5)+'" fill="'+(opt.c||"#F28C28")+'" stroke="#1B1006" stroke-width="1.5"/>';
+    dots+='<text class="mono" x="'+x+'" y="'+(y-12)+'" text-anchor="middle" font-size="13">'+(opt.fmt?opt.fmt(q.v):q.v)+'</text>';
+    dots+='<text x="'+x+'" y="'+(H-12)+'" text-anchor="middle" font-size="12">'+q.l+'</text>';});
+  return s+'<path d="'+d+'" fill="none" stroke="'+(opt.c||"#F28C28")+'" stroke-width="3"/>'+dots+'</svg>';}
+function gauge(val,min,max,label,bands){ // semicircle gauge
+  var cx=160,cy=150,R=110,s='<svg viewBox="0 0 320 190" role="img">';
+  bands.forEach(function(b){var a0=Math.PI*(1-(b[0]-min)/(max-min)),a1=Math.PI*(1-(b[1]-min)/(max-min));
+    s+='<path d="M'+(cx+R*Math.cos(a0))+' '+(cy-R*Math.sin(a0))+' A'+R+' '+R+' 0 0 1 '+(cx+R*Math.cos(a1))+' '+(cy-R*Math.sin(a1))+'" stroke="'+b[2]+'" stroke-width="22" fill="none"/>';});
+  var a=Math.PI*(1-(Math.min(max,Math.max(min,val))-min)/(max-min));
+  s+='<line x1="'+cx+'" y1="'+cy+'" x2="'+(cx+(R-20)*Math.cos(a))+'" y2="'+(cy-(R-20)*Math.sin(a))+'" stroke="#1B1006" stroke-width="5" stroke-linecap="round"/><circle cx="'+cx+'" cy="'+cy+'" r="8" fill="#1B1006"/>';
+  s+='<text class="mono" x="'+cx+'" y="'+(cy+32)+'" text-anchor="middle" font-size="20">'+label+'</text>';
+  s+='<text x="'+(cx-R)+'" y="'+(cy+20)+'" text-anchor="middle" font-size="11">'+min+'</text><text x="'+(cx+R)+'" y="'+(cy+20)+'" text-anchor="middle" font-size="11">'+max+'</text>';
+  return s+'</svg>';}
+function box(h){return '<div class="svgbox">'+h+'</div>';}
+function bl(arr){return '<ul class="b">'+arr.map(function(x){return "<li>"+t(x)+"</li>"}).join("")+"</ul>";}
+
+/* ============ Tabs ============ */
+var TABS=[
+ ["dash",A("Dashboard","Dashboard")],["bm",A("Business Model","Business Model")],["seg",A("Segments","Segments")],
+ ["geo",A("India vs Global","India vs Global")],["subs",A("Subsidiaries","Subsidiaries")],["why",A("Why L&T Leads","L&T ஏன் முன்னாடி?")],
+ ["bet",A("Big Bet: Lakshya 31","Big Bet: Lakshya 31")],["chain",A("Sector Need & Value Chain","Sector & Value Chain")],
+ ["fin",A("Financials","Financials")],["cf",A("Cash Flow & Ratios","Cash Flow & Ratios")],["val",A("Valuations","Valuations")],
+ ["kt",A("5 Key Takeaways","5 முக்கிய பாயிண்ட்")],["mkt",A("Share Market Activity","Share Market நகர்வு")],["tc",A("Triggers & Cycle","Triggers & Cycle")],
+ ["pil",A("6 Pillars","6 தூண்கள்")],["swot",A("SWOT","SWOT")],["chk",A("Investor Self-Check","Self-Check")],
+ ["ask",A("Cauvery Assist","Cauvery Assist")],["quiz",A("Cauvery Socrates","Cauvery Socrates")],["av",A("Analyst View","Analyst View")]
+];
+var CUR="dash";try{var h=location.hash.replace("#","");if(h&&TABS.some(function(x){return x[0]===h}))CUR=h;}catch(e){}
+
+function head(en,ta,len,lta){return '<button class="btn readbtn" onclick="readTab()">🔊 '+L("Read this tab","இந்த tab-ஐ படிக்க")+'</button><h2>'+L(en,ta)+'</h2><p class="lead">'+L(len,lta)+'</p>';}
+
+var R={};
+/* ---- Dashboard ---- */
+R.dash=function(){
+  var k=[
+   [A("Revenue","Revenue"),"₹"+f0(Q.rev[0])+" cr",chg(Q.rev[0],Q.rev[2])+" YoY"],
+   [A("Profit (PAT)","Profit (PAT)"),"₹"+f0(Q.pat[0])+" cr",chg(Q.pat[0],Q.pat[2])+" YoY"],
+   [A("EBITDA margin","EBITDA margin"),"8.7%",'<span class="dn">−130 bps YoY</span>'],
+   [A("Order inflow","Order inflow"),"₹1.48 L cr",chg(Q.oi[0],Q.oi[2])+" · "+L("record","record")],
+   [A("Order book","Order book"),"₹8.54 L cr",chg(Q.ob[0],Q.ob[2])+" · 2.8 "+L("yrs work","வருஷ வேலை")],
+   [A("Net working capital","Net working capital"),"1.7%",'<span class="up">'+L("of revenue · record low","revenue-ல · record low")+'</span>'],
+   [A("International revenue","International revenue"),"58%",L("of total","மொத்தத்துல")],
+   [A("Share price (27 Oct)","Share விலை (27 Oct)"),"₹3,665",'<span class="dn">−9.8% YTD</span>']];
+  var kp='<div class="kpis">'+k.map(function(x){return '<div class="kpi"><div class="l">'+t(x[0])+'</div><div class="v">'+x[1]+'</div><div class="d">'+x[2]+'</div></div>'}).join("")+'</div>';
+  var verdict='<div class="card"><h3>'+L("At a glance","ஒரே பார்வையில")+'</h3>'+bl([
+   A("Record orders: ₹1.48 lakh cr in one quarter (+28%) — led by Middle East oil & gas mega jobs.","ஒரே quarter-ல ₹1.48 லட்சம் கோடி orders (+28%) — Middle East oil & gas mega jobs தான் காரணம்."),
+   A("Profit +33%, but operating profit (EBITDA) only +0.6% — lower interest and higher other income did the lifting.","Profit +33%, ஆனா EBITDA வெறும் +0.6% தான் — interest குறைஞ்சது, other income கூடியது தான் தூக்கிச்சு."),
+   A("Margins slipped to 8.7% from 10.0% — water projects cost pressure, supply chain costs, many young projects.","Margin 10.0%-லிருந்து 8.7%-க்கு இறங்கியிருக்கு — water projects cost, supply chain, புது projects."),
+   A("Cash is strong: net working capital just 1.7% of revenue; H1 operating cash ₹28,100 cr.","Cash நல்லா இருக்கு: working capital revenue-ல 1.7% தான்; H1 operating cash ₹28,100 கோடி."),
+   A("FY27 guidance kept: orders & revenue +10–12%, PP&M EBITDA margin ~7.8%.","FY27 guidance மாறல: orders & revenue +10–12%, PP&M margin ~7.8%.")])+'</div>';
+  var chips='<div class="card"><h3>'+L("CB lens chips","CB lens chips")+'</h3><p><span class="pill pl">6 Pillars 46/60</span> <span class="pill pw">CY 62</span> <span class="pill pw">TG 41</span> <span class="pill pg">'+L("Cash: strong","Cash: strong")+'</span> <span class="pill pb">'+L("Margin: falling","Margin: இறங்குது")+'</span></p>'+
+   box(vgroup([L("Revenue","Revenue"),L("Order inflow","Order inflow")],[{n:"Q2 FY26",c:"#F5B97A",v:[67984,115784]},{n:"Q1 FY27",c:"#E2B98C",v:[67942,108014]},{n:"Q2 FY27",c:"#0B4F8A",v:[78750,147665]}]))+'<p class="note">'+L("₹ crore. Orders came in 1.9× faster than revenue (book-to-bill 1.88).","₹ கோடி. Revenue-ஐ விட orders 1.9 மடங்கு வேகமா வந்திருக்கு (book-to-bill 1.88).")+'</p></div>';
+  return head("Dashboard","Dashboard","India's biggest engineering & construction group: record orders, strong cash, thinner margins.","இந்தியாவோட பெரிய engineering & construction group: record orders, strong cash, ஆனா margin கொஞ்சம் குறைவு.")+kp+'<div class="grid2">'+verdict+chips+'</div>';
+};
+/* ---- Business model flow map ---- */
+var BM={
+ cust:[A("Customers","Customers"),A("Gulf oil majors, Indian govt & PSUs, states, private industry, global IT clients, retail borrowers","Gulf oil companies, மத்திய/மாநில அரசு, PSUs, private industry, IT clients, loan வாங்குறவங்க"),"51% of Q2 orders from Middle East",
+   A("Who pays L&T. In Q2, 51% of new orders came from the Middle East and 37% from India. Sovereign oil companies usually pay on schedule; some Indian state projects pay late.","L&T-க்கு காசு கொடுக்கறவங்க. Q2-ல 51% புது orders Middle East, 37% India. Gulf oil companies சரியா pay பண்ணுவாங்க; சில state projects-ல payment late ஆகும்.")],
+ chan:[A("Channel: tender & bid","Channel: tender & bid"),A("Competitive bids, pre-qualification for mega jobs, long client relationships","Tender bid, mega jobs-க்கு pre-qualification, நீண்ட கால client உறவு"),"₹10 lakh cr prospects pipeline",
+   A("L&T wins work by bidding. Ultra-mega jobs (₹10,000 cr+) need huge bank guarantees and proven track record — only a few global players qualify.","L&T bid பண்ணி வேலை வாங்குது. ₹10,000 கோடி+ ultra-mega jobs-க்கு பெரிய bank guarantee, track record வேணும் — உலகத்துல சில company-க்கு தான் தகுதி.")],
+ inp:[A("Inputs","Inputs"),A("Steel, cement, equipment, sub-contractors, skilled workforce","Steel, cement, equipment, vendors, skilled workers"),"Supply chain costs ↑ in Q2",
+   A("Raw materials and sub-contractors. Higher supply chain costs in the Middle East squeezed margins this quarter.","Raw material, sub-contractors. Middle East supply chain cost ஏறினதால இந்த quarter margin அழுத்தம்.")],
+ hub:[A("L&T hub","L&T hub"),A("Fabrication yards (Kattupalli, Hazira), heavy engineering works, design centres; order book ₹8.54 lakh cr","Fabrication yards (Kattupalli, Hazira), heavy engineering, design centres; order book ₹8.54 லட்சம் கோடி"),"₹8,53,514 cr order book",
+   A("The engine: design + procure + build. Modular yards build oil-gas modules in India and ship them abroad, cutting site cost and time.","Engine: design + procure + build. Yards-ல oil-gas modules India-ல செஞ்சு வெளிநாட்டுக்கு அனுப்புறாங்க — site cost, நேரம் குறையும்.")],
+ prod:[A("Products / outputs","Products / outputs"),A("Offshore platforms, refineries, metros, power lines, solar & wind, defence systems, IT services, loans","Offshore platform, refinery, metro, power line, solar & wind, defence, IT services, loans"),"7 segments",
+   A("What L&T delivers. Projects are billed as work progresses (percentage of completion), so revenue follows execution.","L&T கொடுக்கறது. வேலை முன்னேற முன்னேற bill — அதனால revenue execution-ஐ பொறுத்து வரும்.")],
+ money:[A("Money flow (Q2)","Money flow (Q2)"),A("Revenue ₹78,750 → EBITDA ₹6,845 → −Interest ₹473 +Other income ₹2,310 → −D&A, tax, minority ₹3,480 → PAT ₹5,202","Revenue ₹78,750 → EBITDA ₹6,845 → −Interest ₹473 +Other income ₹2,310 → −D&A, tax, minority ₹3,480 → PAT ₹5,202"),"PAT margin 6.6%",
+   A("Every ₹100 of revenue left ₹8.7 as EBITDA and ₹6.6 as profit. Other income (₹2,310 cr, incl. a one-time LTTS gain) was a big profit helper.","₹100 revenue-ல ₹8.7 EBITDA, ₹6.6 profit. Other income ₹2,310 கோடி (LTTS one-time gain உட்பட) profit-க்கு பெரிய help.")]
+};
+function nd(k,cls){var b=BM[k];return '<button class="node '+(cls||"")+'" onclick="bmShow(\''+k+'\')"><b>'+t(b[0])+'</b><span>'+t(b[1])+'</span><br><span class="n">'+b[2]+'</span></button>';}
+window.bmShow=function(k){var d=document.getElementById("bmd");d.innerHTML='<b>'+t(BM[k][0])+'</b><br>'+t(BM[k][3]);};
+R.bm=function(){
+  return head("Business Model — from tender to customer","Business Model — tender-லிருந்து customer வரை","Tap any box to see what it means.","எந்த box-ஐ tap பண்ணினாலும் விளக்கம் வரும்.")+
+  '<div class="flow"><div class="col">'+nd("cust")+'<div class="arrow">▼</div>'+nd("chan")+'</div>'+
+  '<div class="col">'+nd("hub","hub")+'<div class="arrow">▼</div>'+nd("prod")+'</div>'+
+  '<div class="col">'+nd("inp")+'<div class="arrow">◀ '+L("feeds hub","hub-க்கு")+'</div>'+nd("money")+'</div></div>'+
+  '<div class="detail" id="bmd">'+L("Tap a box above.","மேல ஒரு box-ஐ tap பண்ணுங்க.")+'</div>'+
+  '<div class="formula">'+L("Revenue ≈ Order book ₹8.54 L cr × ~9% executed per quarter","Revenue ≈ Order book ₹8.54 L cr × ஒவ்வொரு quarter-லயும் ~9% execution")+'</div>';
+};
+/* ---- Segments ---- */
+R.seg=function(){
+  var rows=SEG.map(function(s){return '<tr><td><b>'+t(s.n)+'</b></td><td>'+f0(s.rev[0])+'</td><td>'+(s.rev[1]!=null?f0(s.rev[1]):"—")+'</td><td>≈'+f0(s.rev[2])+'</td><td>'+chg(s.rev[0],s.rev[1])+'</td><td><span class="'+(s.g>=0?"up":"dn")+'">'+(s.g>0?"+":"")+s.g+'%</span></td><td>'+(s.m[0]!=null?s.m[0]+"%":"—")+'</td><td>'+(s.m[2]!=null?s.m[2]+"%":"—")+'</td><td>'+bps(s.m[0],s.m[2])+'</td></tr>'}).join("");
+  var mBars=hbars(SEG.filter(function(s){return s.m[0]!=null&&s.id!=="re"}).map(function(s){return{l:t(s.n),v:s.m[0],c:s.col,s:s.m[0]+"% ("+(s.m[0]>=s.m[2]?"▲":"▼")+")"}}),{lw:230,max:22});
+  var rBars=hbars(SEG.filter(function(s){return s.id!=="re"}).map(function(s){return{l:t(s.n),v:s.rev[0],c:s.col}}),{lw:230});
+  var cards=SEG.map(function(s){return '<div class="card"><h3 style="color:'+s.col+'">'+t(s.n)+'</h3><p class="note">'+t(s.what)+'</p><p>Q2 '+L("revenue","revenue")+': <b class="mono">₹'+f0(s.rev[0])+' cr</b> ('+(s.g>0?"+":"")+s.g+'% YoY)'+(s.oi[0]?'<br>'+L("Orders","Orders")+': <b class="mono">₹'+f0(s.oi[0])+' cr</b>':'')+(s.obShare?'<br>'+L("Share of order book","Order book-ல பங்கு")+': <b>'+s.obShare+'%</b>':'')+'</p></div>'}).join("");
+  return head("Segment performance","Segment performance","Energy grew fastest; Manufacturing has the best project margin; Infra (the biggest) lagged.","Energy வேகமா வளர்ந்தது; Manufacturing-க்கு margin அதிகம்; பெரிய Infra segment பின்னாடி.")+
+   '<div class="grid2"><div class="card"><h3>'+L("Q2 revenue by segment (₹ cr)","Segment வாரியா Q2 revenue (₹ கோடி)")+'</h3>'+box(rBars)+'</div><div class="card"><h3>'+L("EBITDA margin Q2 FY27 (▲/▼ vs Q2 FY26)","EBITDA margin Q2 FY27 (▲/▼ vs Q2 FY26)")+'</h3>'+box(mBars)+'</div></div><br>'+
+   '<div class="tw"><table><thead><tr><th>'+L("Segment (₹ cr)","Segment (₹ கோடி)")+'</th><th>Q2 FY27</th><th>Q1 FY27</th><th>Q2 FY26</th><th>QoQ</th><th>YoY</th><th>Margin Q2 FY27</th><th>Margin Q2 FY26</th><th>Δ</th></tr></thead><tbody>'+rows+'</tbody></table></div>'+
+   '<p class="note">'+L("Customer revenue. Q2 FY26 segment figures are back-calculated from reported YoY growth (≈). Financial Services shows income from operations; margins not comparable. Realty Q1 margin 36.9%.","Customer revenue. Q2 FY26 segment numbers YoY growth-லிருந்து கணக்கு (≈). Financial Services = income from operations. Realty Q1 margin 36.9%.")+'</p><div class="grid">'+cards+'</div>';
+};
+/* ---- India vs Global ---- */
+R.geo=function(){
+  var map='<svg viewBox="0 0 640 260" role="img"><rect x="0" y="0" width="640" height="260" fill="#FFFBF6"/>'+
+   '<circle cx="420" cy="150" r="58" fill="#DCEAF7" stroke="#0B4F8A" stroke-width="3"/><text x="420" y="146" text-anchor="middle" font-size="15">India</text><text class="mono" x="420" y="166" text-anchor="middle" font-size="14">37% orders</text>'+
+   '<circle cx="240" cy="120" r="72" fill="#FDE3C6" stroke="#C2410C" stroke-width="3"/><text x="240" y="112" text-anchor="middle" font-size="15">Middle East</text><text class="mono" x="240" y="132" text-anchor="middle" font-size="14">51% orders</text>'+
+   '<circle cx="80" cy="200" r="38" fill="#DDF2E2" stroke="#2F7D32" stroke-width="3"/><text x="80" y="196" text-anchor="middle" font-size="13">'+L("Others","மற்றவை")+'</text><text class="mono" x="80" y="214" text-anchor="middle" font-size="13">12%</text>'+
+   '<path d="M362 150 Q330 150 312 132" stroke="#1B1006" stroke-width="2.5" fill="none" marker-end="url(#ah)"/><defs><marker id="ah" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="#1B1006"/></marker></defs>'+
+   '<text x="470" y="40" font-size="12">'+L("Modules built in Indian yards → shipped to Gulf","Indian yards-ல modules → Gulf-க்கு")+'</text><text x="470" y="58" font-size="12">'+L("Q2 order inflow split","Q2 order inflow பிரிவு")+'</text></svg>';
+  var rows=[[A("International revenue (₹ cr)","International revenue (₹ கோடி)"),45870,34393,38071],[A("Share of revenue","Revenue பங்கு"),"58%","51%","56%"],[A("International orders (₹ cr)","International orders (₹ கோடி)"),92375,60702,75561],[A("Share of orders","Orders பங்கு"),"63%","56%","65%"]];
+  var tb=rows.map(function(r){return '<tr><td>'+t(r[0])+'</td>'+[1,2,3].map(function(i){return '<td>'+(typeof r[i]==="number"?f0(r[i]):r[i])+'</td>'}).join("")+'</tr>'}).join("");
+  return head("Domestic vs International business","India vs வெளிநாடு business","The Gulf is now L&T's growth engine; India is steady but slower.","Gulf தான் இப்போ L&T-யோட growth engine; India steady, ஆனா மெதுவா.")+
+   '<div class="grid2"><div class="card"><h3>'+L("Where Q2 orders came from","Q2 orders எங்கிருந்து")+'</h3>'+box(map)+'</div><div class="card"><h3>'+L("H1 FY27 revenue split","H1 FY27 revenue பிரிவு")+'</h3>'+box(donut([{l:L("International","வெளிநாடு"),v:80263,c:"#C2410C",s:"₹80,263 cr · 55%"},{l:"India",v:66429,c:"#0B4F8A",s:"₹66,429 cr · 45%"}],"H1 ₹1.47 L cr"))+'</div></div><br>'+
+   '<div class="tw"><table><thead><tr><th></th><th>Q2 FY27</th><th>Q1 FY27</th><th>Q2 FY26</th></tr></thead><tbody>'+tb+'</tbody></table></div><br>'+
+   '<div class="grid2"><div class="card"><h3>🌍 '+L("International","வெளிநாடு")+'</h3>'+bl([A("Ultra-mega offshore & onshore hydrocarbon orders (Saudi, Qatar, UAE region) drove the record quarter.","Saudi, Qatar, UAE offshore/onshore oil-gas ultra-mega orders தான் record-க்கு காரணம்."),A("Also: battery storage (6 GWh, Middle East), Dubai airport people-mover, offshore wind links in Europe.","Battery storage 6 GWh (Middle East), Dubai airport people mover, Europe offshore wind."),A("Risk: US–Iran war in 2026 slowed awards earlier; projects mostly kept running.","Risk: 2026 US–Iran war-ஆல awards கொஞ்ச நாள் slow ஆச்சு; projects பெரும்பாலும் ஓடிக்கிட்டு தான் இருந்தது.")])+'</div>'+
+   '<div class="card"><h3>🇮🇳 India</h3>'+bl([A("Infra orders −13% in Q2 (targeted orders deferred); solar orders deferred too.","Q2-ல Infra orders −13% (சில orders தள்ளிப் போச்சு); solar orders-உம் தள்ளிப் போச்சு."),A("Water (Jal Jeevan type) projects hit by state payment delays and cost pressure.","Water projects — state payment delay, cost அழுத்தம்."),A("Bright spots: private factories, buildings, transmission, defence exports, data centres.","நல்ல பகுதிகள்: private factories, buildings, transmission, defence exports, data centres.")])+'</div></div>';
+};
+/* ---- Subsidiaries ---- */
+R.subs=function(){
+  var subs=[["LTIMindtree","~68.6%","#00838F",A("IT services. Q2 FY27 revenue ₹11,808 cr, PAT ₹1,380 cr.","IT services. Q2 revenue ₹11,808 கோடி, PAT ₹1,380 கோடி.")],
+   ["L&T Technology Services","~73.7%","#00838F",A("Engineering R&D services. Revenue ₹3,040 cr (+12.1%), EBIT 16.3%; profit +66.8% incl. one-time gain on sale of its SWC business.","Engineering R&D. Revenue ₹3,040 கோடி (+12.1%), EBIT 16.3%; profit +66.8% — SWC business விற்ற one-time gain உட்பட.")],
+   ["L&T Finance","~66%","#8D6E00",A("Retail lender. PAT ₹975 cr (+33%), AUM ₹1.37 L cr (+28%), credit cost 2.46%, RoA 2.60%.","Retail loans. PAT ₹975 கோடி (+33%), AUM ₹1.37 லட்சம் கோடி (+28%), credit cost 2.46%, RoA 2.60%.")],
+   ["L&T Realty","100%","#6D4C41",A("Revenue ₹225 cr (−43%, fewer handovers); pre-sales ₹1,292 cr (−12%, launches delayed). Plan: listed realty arm.","Revenue ₹225 கோடி (−43%); pre-sales ₹1,292 கோடி (−12%). Plan: தனி listed realty company.")],
+   ["L&T Semiconductor Tech.","100%","#7A3E9D",A("Design-led (fabless) chips; in talks with customers. No fab — design stage.","Chip design (fabless); customers-உடன் பேச்சுவார்த்தை. Fab இல்ல — design stage தான்.")],
+   ["L&T-Vyoma (data centres)","100%","#7A3E9D",A("~32 MW capacity targeted by Mar 2026; aim 100 MW. Stake in E2E Networks (cloud).","Mar 2026-க்குள் ~32 MW target; இலக்கு 100 MW. E2E Networks-ல stake.")],
+   ["L&T Energy GreenTech","100%","#2F7D32",A("Green hydrogen: IOC Panipat 10,000 TPA plant order (building). Kandla 300 ktpa green ammonia with ITOCHU = partnership, not yet built.","Green hydrogen: IOC Panipat 10,000 TPA plant order (கட்டிக்கிட்டு இருக்காங்க). Kandla 300 ktpa green ammonia ITOCHU-வுடன் — partnership, இன்னும் plant இல்ல.")]];
+  var W=640,H=300,s='<svg viewBox="0 0 '+W+' '+H+'" role="img"><rect x="245" y="10" width="150" height="44" rx="6" fill="#DCEAF7" stroke="#0B4F8A" stroke-width="2.5"/><text x="320" y="38" text-anchor="middle" font-size="15">L&amp;T (parent)</text>';
+  subs.forEach(function(x,i){var col=i%4,row=Math.floor(i/4),bx=10+col*158,by=110+row*100;
+    s+='<path d="M320 54 L320 80 L'+(bx+72)+' 80 L'+(bx+72)+' '+by+'" stroke="#E2B98C" stroke-width="2" fill="none"/>';
+    s+='<rect x="'+bx+'" y="'+by+'" width="145" height="62" rx="6" fill="#FFFBF6" stroke="'+x[2]+'" stroke-width="2.5"/>';
+    s+='<text x="'+(bx+72)+'" y="'+(by+26)+'" text-anchor="middle" font-size="11.5">'+x[0].replace("&","&amp;")+'</text><text class="mono" x="'+(bx+72)+'" y="'+(by+46)+'" text-anchor="middle" font-size="13">'+x[1]+'</text>';});
+  s+='</svg>';
+  return head("Subsidiaries — the group behind the parent","Subsidiaries — L&T-க்கு பின்னால இருக்கற group","IT and finance arms smooth out the lumpy project business.","IT, finance arms — project business-ஓட ஏற்ற இறக்கத்தை சமன் பண்ணுது.")+
+   '<div class="card">'+box(s)+'<p class="note">'+L("Stakes approximate. Exited in 2026: Nabha Power (sold 25 Jun) and Hyderabad Metro (to Telangana govt; out of accounts from 30 Apr).","Stake % தோராயம். 2026-ல வெளியேறியது: Nabha Power (25 Jun விற்பனை), Hyderabad Metro (Telangana அரசுக்கு; 30 Apr முதல் accounts-ல இல்ல).")+'</p></div><br><div class="grid">'+
+   subs.map(function(x){return '<div class="card"><h3 style="color:'+x[2]+'">'+x[0].replace("&","&amp;")+' <span class="pill pl">'+x[1]+'</span></h3><p>'+t(x[3])+'</p></div>'}).join("")+
+   '<div class="card"><h3>'+L("Why the exits matter","Exit ஏன் முக்கியம்")+'</h3>'+bl([A("Finance cost fell 38% to ₹473 cr — mainly because Hyderabad Metro's debt left the books.","Finance cost 38% குறைஞ்சு ₹473 கோடி — Hyderabad Metro கடன் வெளியே போனதால."),A("Removes a loss-making asset; RoE moves toward the 16–17% target.","நஷ்ட asset போச்சு; RoE 16–17% target நோக்கி.")])+'</div></div>';
+};
+/* ---- Why L&T leads ---- */
+R.why=function(){
+  var ob=hbars([{l:"L&T",v:853514,c:"#0B4F8A",s:"₹8,53,514 cr"},{l:"NCC",v:71300,c:"#E2B98C",s:"₹71,300 cr"},{l:"Afcons",v:43290,c:"#E2B98C",s:"₹43,290 cr"},{l:"KEC",v:40000,c:"#E2B98C",s:"₹40,000+ cr"},{l:"G R Infra",v:25319,c:"#E2B98C",s:"₹25,319 cr"},{l:"Ahluwalia",v:20664,c:"#E2B98C",s:"₹20,664 cr"}],{lw:110});
+  var mg='<div class="tw"><table><thead><tr><th>'+L("Company","Company")+'</th><th>Q1 FY27</th><th>Q1 FY26</th><th>Δ</th></tr></thead><tbody>'+
+   [["Afcons",9.6,13.0],["KEC",5.8,7.0],["Ahluwalia",4.3,8.6],["IRCON",13.6,17.1],["G R Infra",11.0,12.65],["L&T (group)",9.0,9.9]].map(function(r){return '<tr><td>'+r[0].replace("&","&amp;")+'</td><td>'+r[1]+'%</td><td>'+r[2]+'%</td><td>'+bps(r[1],r[2])+'</td></tr>'}).join("")+'</tbody></table></div>';
+  var reasons=[
+   [A("1. Not stuck on roads","1. Roads-ஐ மட்டும் நம்பல"),A("Peers got 50–60% of orders from roads; road building in FY27 so far is 1,053 km, −24%. L&T spans oil-gas, power, metros, wind, defence, IT.","மற்றவங்களுக்கு 50–60% orders roads-லிருந்து; FY27-ல இதுவரை road கட்டுமானம் 1,053 km, −24%. L&T-க்கு oil-gas, power, metro, wind, defence, IT எல்லாம் இருக்கு.")],
+   [A("2. Global reach","2. உலகம் முழுக்க"),A("58% of revenue is international. When India ordering slows, Gulf orders fill the gap. Most peers depend on Indian government budgets.","58% revenue வெளிநாடு. India orders slow ஆனா Gulf orders நிரப்புது. மற்றவங்க பெரும்பாலும் Indian அரசு budget-ஐ நம்பி.")],
+   [A("3. Clients who pay","3. சரியா pay பண்ற clients"),A("Gulf national oil companies and private firms pay on schedule; peers wait on delayed state bills (e.g. water projects).","Gulf oil companies, private firms சரியா pay பண்றாங்க; மற்றவங்க state bills-க்கு காத்திருக்காங்க.")],
+   [A("4. Balance sheet to bid big","4. பெரிய bid-க்கு balance sheet"),A("Ultra-mega jobs need large bank guarantees and performance bonds. L&T's cash and ratings let it bid; few Indian peers can.","Ultra-mega jobs-க்கு பெரிய bank guarantee வேணும். L&T-க்கு cash, rating இருக்கு; மற்றவங்களுக்கு கஷ்டம்.")],
+   [A("5. Technology & yards","5. Technology & yards"),A("Offshore modular yards, heavy engineering (nuclear, space, defence hardware) — high entry barriers.","Offshore modular yards, heavy engineering (nuclear, space, defence) — புதுசா வர்றவங்களுக்கு கடினம்.")],
+   [A("6. Cash discipline","6. Cash ஒழுக்கம்"),A("Net working capital 1.7% of revenue vs 10.2% a year ago — less borrowing, more surplus earning other income.","Working capital 1.7% (போன வருஷம் 10.2%) — கடன் குறைவு, surplus-ல other income.")],
+   [A("7. Cushion from subsidiaries","7. Subsidiaries கொடுக்கற cushion"),A("IT (LTIMindtree, LTTS) and L&T Finance earn steady profits when project margins dip.","Project margin இறங்கும்போது IT, L&T Finance steady profit தருது.")],
+   [A("8. Professional, promoter-free","8. Promoter இல்லாத professional management"),A("No promoter; institutions own ~62% (DIIs 43.1%, FIIs 19.2%). Strategy runs on 5-year Lakshya plans.","Promoter இல்ல; institutions ~62% (DII 43.1%, FII 19.2%). 5 வருஷ Lakshya plan-படி ஓடுது.")]];
+  var wheel='<svg viewBox="0 0 640 300" role="img"><circle cx="320" cy="150" r="62" fill="#DCEAF7" stroke="#0B4F8A" stroke-width="3"/><text x="320" y="146" text-anchor="middle" font-size="16">L&amp;T</text><text x="320" y="166" text-anchor="middle" font-size="12">'+L("moat","moat")+'</text>';
+  var lab=[L("Diversified","பல துறை"),L("Global","Global"),L("Paying clients","Paying clients"),L("Balance sheet","Balance sheet"),L("Technology","Technology"),L("Cash discipline","Cash ஒழுக்கம்"),L("Subsidiaries","Subsidiaries"),L("Professional mgmt","Professional mgmt")];
+  lab.forEach(function(l,i){var a=i/8*2*Math.PI-Math.PI/2,x=320+180*Math.cos(a),y=150+115*Math.sin(a);wheel+='<line x1="'+(320+62*Math.cos(a))+'" y1="'+(150+62*Math.sin(a))+'" x2="'+(320+140*Math.cos(a))+'" y2="'+(150+92*Math.sin(a))+'" stroke="#F28C28" stroke-width="2.5"/><rect x="'+(x-62)+'" y="'+(y-14)+'" width="124" height="26" rx="13" fill="#FDE3C6" stroke="#F28C28" stroke-width="1.5"/><text x="'+x+'" y="'+(y+4)+'" text-anchor="middle" font-size="12">'+l+'</text>';});
+  wheel+='</svg>';
+  return head("Why L&T keeps winning when other infra companies struggle","மற்ற infra companies கஷ்டப்படும்போது L&T மட்டும் ஏன் ஜெயிக்குது?","Eight reasons. But note: L&T is not immune — its own margin and India infra growth also slipped.","8 காரணங்கள். ஆனா கவனிங்க: L&T-க்கும் பாதிப்பு இருக்கு — margin-உம் India infra growth-உம் இறங்கியிருக்கு.")+
+   '<div class="grid2"><div class="card"><h3>'+L("The L&T moat wheel","L&T moat wheel")+'</h3>'+box(wheel)+'</div><div class="card"><h3>'+L("Order book size (₹ cr, latest)","Order book அளவு (₹ கோடி)")+'</h3>'+box(ob)+'<p class="note">'+L("L&T's order book is ~12× NCC's and ~20× Afcons'.","L&T order book NCC-ஐ விட ~12 மடங்கு, Afcons-ஐ விட ~20 மடங்கு.")+'</p></div></div><br>'+
+   '<div class="grid">'+reasons.map(function(r){return '<div class="card"><h3>'+t(r[0])+'</h3><p>'+t(r[1])+'</p></div>'}).join("")+'</div><br>'+
+   '<div class="grid2"><div class="card"><h3>'+L("Peers: margins fell sharply (EBITDA %)","Peers margin நல்லா இறங்கியது (EBITDA %)")+'</h3>'+mg+'</div><div class="card"><h3>'+L("Fair picture","நியாயமான பார்வை")+'</h3>'+bl([A("Not alone: T&D contractors (KEC, Kalpataru) also won strong orders — Kalpataru FY27 orders cross ₹22,000 cr.","தனியா இல்ல: KEC, Kalpataru போன்ற T&D companies-உம் நல்ல orders — Kalpataru FY27 orders ₹22,000 கோடி தாண்டியது."),A("L&T's India infra revenue grew only 6% in Q2 and fell 3% in Q1.","L&T India infra revenue Q2-ல 6% தான், Q1-ல −3%."),A("Its edge is scale + spread: when one engine stalls, another runs.","Edge = அளவு + பரவல்: ஒரு engine நின்னா இன்னொன்னு ஓடும்.")])+'</div></div>';
+};
+/* ---- Big bet ---- */
+R.bet=function(){
+  var cap=hbars([{l:L("Green hydrogen","Green hydrogen"),v:15000,c:"#2F7D32"},{l:L("Data centres","Data centres"),v:10000,c:"#7A3E9D"},{l:L("Industrial electronics","Industrial electronics"),v:5000,c:"#00838F"},{l:L("Semiconductors","Semiconductors"),v:5000,c:"#7A3E9D"},{l:L("Hydrocarbon yards upgrade","Hydrocarbon yards upgrade"),v:5000,c:"#C2410C"},{l:L("Realty","Realty"),v:4400,c:"#6D4C41"}],{lw:220});
+  var ms=[["Mar 2026",1,A("Lakshya 2026 plan completed","Lakshya 2026 முடிஞ்சது")],["Apr 2026",1,A("Hyderabad Metro deconsolidated","Hyderabad Metro வெளியே")],["Jun 2026",1,A("Nabha Power sold","Nabha Power விற்பனை")],["FY26",1,A("IOC Panipat green H₂ plant order won","IOC Panipat green H₂ order")],["FY27",0,A("₹5,500–6,000 cr capex in new areas (guided)","புது துறைகளுக்கு ₹5,500–6,000 கோடி capex (guided)")],["FY27–31",0,A("Data centres to 100 MW; listed realty arm (guided)","100 MW data centre; realty listing (guided)")],["FY31",0,A("Revenue ~₹5.8 L cr (12–15% CAGR), RoE 16–17% (guided)","Revenue ~₹5.8 லட்சம் கோடி, RoE 16–17% (guided)")]];
+  var W=640,H=170,s='<svg viewBox="0 0 '+W+' '+H+'" role="img"><line x1="20" x2="620" y1="70" y2="70" stroke="#1B1006" stroke-width="3"/>';
+  ms.forEach(function(m,i){var x=30+i*95;s+='<circle cx="'+x+'" cy="70" r="11" fill="'+(m[1]?"#1E7B3A":"#FFFBF6")+'" stroke="'+(m[1]?"#1E7B3A":"#F28C28")+'" stroke-width="3"/><text x="'+x+'" y="45" text-anchor="middle" font-size="12">'+m[0]+'</text><text x="'+x+'" y="100" text-anchor="middle" font-size="11">'+(m[1]?L("Done","முடிஞ்சது"):L("Guided","Guided"))+'</text>';});
+  s+='</svg>';
+  return head("Big bet: Lakshya 2031","Big bet: Lakshya 2031","₹42,400–45,000 cr into new-age businesses while the core EPC keeps running.","Core EPC ஓடிக்கிட்டே, ₹42,400–45,000 கோடி புது துறைகளில்.")+
+   '<div class="grid2"><div class="card"><h3>'+L("Planned capital allocation (₹ cr)","Capex ஒதுக்கீடு (₹ கோடி)")+'</h3>'+box(cap)+'</div><div class="card"><h3>'+L("Milestones: done vs guided","Milestones: முடிஞ்சது vs guided")+'</h3>'+box(s)+'<ul class="b">'+ms.map(function(m){return '<li><b>'+m[0]+'</b> — '+t(m[2])+'</li>'}).join("")+'</ul></div></div><br>'+
+   '<div class="grid2"><div class="card"><h3>'+L("Who is ahead in the race?","Race-ல யார் முன்னாடி?")+'</h3>'+bl([A("Green hydrogen & data centres: Reliance and Adani are bigger, with their own power and capital.","Green hydrogen, data centres: Reliance, Adani பெருசு — சொந்த power, capital."),A("L&T's edge: it can build the plant itself (EPC) and makes electrolysers — it sells the shovels and digs too.","L&T edge: plant-ஐ தானே கட்ட முடியும் (EPC), electrolyser-உம் செய்யுது."),A("Semiconductors: design-only today; no fab. Treat as an early option.","Semiconductors: இப்போ design மட்டும்; fab இல்ல. ஆரம்ப நிலை."),A("Status words: Panipat = order under execution; Kandla ammonia = partnership/plan; DC = operating capacity.","Status: Panipat = execution-ல order; Kandla = partnership/plan; DC = இயங்குது.")])+'</div>'+
+   '<div class="card"><h3>📖 '+L("How L&T got there","L&T இங்க எப்படி வந்துச்சு")+'</h3>'+bl([A("1938: started in Bombay by two Danish engineers, Henning Holck-Larsen and Søren Kristian Toubro.","1938: Bombay-ல இரண்டு Danish engineers — Holck-Larsen, Toubro — ஆரம்பிச்சாங்க."),A("Grew by building what India could not import: heavy equipment for nuclear, space and defence programmes.","India import பண்ண முடியாததை கட்டி வளர்ந்தது: nuclear, space, defence equipment."),A("Moved early into the Gulf; modular yards made it a top offshore contractor.","சீக்கிரமே Gulf-க்கு போனது; modular yards-ஆல offshore-ல top contractor."),A("Each 5-year Lakshya plan rotated capital: exited power plants and metro, added IT, finance, now green & digital.","ஒவ்வொரு Lakshya plan-லும் capital மாற்றம்: power plant, metro-லிருந்து வெளியே; IT, finance; இப்போ green & digital.")])+'</div></div>';
+};
+/* ---- Sector need & value chain ---- */
+R.chain=function(){
+  var steps=[[A("Design & engineering","Design & engineering"),1],[A("Procure equipment","Equipment procure"),1],[A("Fabricate modules / manufacture","Modules fabricate / manufacture"),1],[A("Build & install on site","Site-ல build & install"),1],[A("Own & operate asset","Asset own & operate"),0],[A("Finance & digital services","Finance & digital"),1]];
+  var W=640,H=150,s='<svg viewBox="0 0 '+W+' '+H+'" role="img">';
+  steps.forEach(function(x,i){var bx=6+i*106;s+='<rect x="'+bx+'" y="30" width="96" height="70" rx="6" fill="'+(x[1]?"#DCEAF7":"#FFFBF6")+'" stroke="'+(x[1]?"#0B4F8A":"#E2B98C")+'" stroke-width="2.5" stroke-dasharray="'+(x[1]?"0":"5 4")+'"/>';
+    var w=t(x[0]).split(" ");var l1=w.slice(0,Math.ceil(w.length/2)).join(" "),l2=w.slice(Math.ceil(w.length/2)).join(" ");
+    s+='<text x="'+(bx+48)+'" y="60" text-anchor="middle" font-size="11">'+l1.replace("&","&amp;")+'</text><text x="'+(bx+48)+'" y="76" text-anchor="middle" font-size="11">'+l2.replace("&","&amp;")+'</text>';
+    if(i<steps.length-1)s+='<text x="'+(bx+100)+'" y="70" font-size="14" fill="#F28C28">›</text>';});
+  s+='<rect x="6" y="118" width="14" height="14" fill="#DCEAF7" stroke="#0B4F8A"/><text x="26" y="130" font-size="12">'+L("L&T plays","L&T இருக்கு")+'</text><rect x="140" y="118" width="14" height="14" fill="#FFFBF6" stroke="#E2B98C" stroke-dasharray="3 2"/><text x="160" y="130" font-size="12">'+L("L&T exited (Metro, Nabha) — asset-light now","L&T வெளியேறியது — இப்போ asset-light")+'</text></svg>';
+  var need=hbars([{l:L("Gulf oil & gas capex","Gulf oil & gas capex"),v:90,c:"#C2410C",s:L("Strong","வலுவா")},{l:L("Power T&D / storage","Power T&D / storage"),v:80,c:"#2F7D32",s:L("Strong","வலுவா")},{l:L("Offshore wind (Europe)","Offshore wind (Europe)"),v:65,c:"#2F7D32",s:L("Rising","ஏறுது")},{l:L("Data centres","Data centres"),v:70,c:"#7A3E9D",s:L("Rising","ஏறுது")},{l:L("India solar EPC","India solar EPC"),v:40,c:"#F5B97A",s:L("Deferrals","தள்ளிப்போகுது")},{l:L("India roads","India roads"),v:20,c:"#B3261E",s:L("Weak (−24% km)","Weak (−24% km)")},{l:L("India water","India water"),v:25,c:"#B3261E",s:L("Payment stress","Payment பிரச்சனை")}],{lw:200,max:100});
+  return head("Sector need & where L&T plays","Sector தேவை & L&T எங்க இருக்கு","Demand is strongest in energy and power — exactly where L&T's order book sits.","Energy, power-ல தான் demand அதிகம் — L&T order book-உம் அங்க தான்.")+
+   '<div class="card"><h3>'+L("Project value chain","Project value chain")+'</h3>'+box(s)+'</div><br><div class="grid2"><div class="card"><h3>'+L("Demand heat by end-market (CB read, 0–100)","End-market demand (CB மதிப்பீடு, 0–100)")+'</h3>'+box(need)+'</div><div class="card"><h3>'+L("Order book mix (Sep 2026)","Order book mix (Sep 2026)")+'</h3>'+box(donut([{l:"Infra & Utilities",v:42,c:"#0B4F8A"},{l:"Energy–Conventional",v:34,c:"#C2410C"},{l:"Energy–Green",v:17,c:"#2F7D32"},{l:L("Others","மற்றவை"),v:7,c:"#E2B98C"}],"₹8.54 L cr"))+'<p class="note">'+L("51% of the order book is energy (conventional + green).","Order book-ல 51% energy (conventional + green).")+'</p></div></div>';
+};
+/* ---- Financials ---- */
+R.fin=function(){
+  var rows=[[A("Revenue","Revenue"),Q.rev],[A("EBITDA","EBITDA"),Q.ebitda],[A("PAT","PAT"),Q.pat],[A("Order inflow","Order inflow"),Q.oi],[A("Order book","Order book"),Q.ob],[A("International orders","International orders"),Q.intlOI]];
+  var tb=rows.map(function(r){var v=r[1];return '<tr><td><b>'+t(r[0])+'</b></td><td>'+f0(v[0])+'</td><td>'+f0(v[1])+'</td><td>'+f0(v[2])+'</td><td>'+chg(v[0],v[1])+'</td><td>'+chg(v[0],v[2])+'</td></tr>'}).join("")+
+   '<tr><td><b>EBITDA margin</b></td><td>8.7%</td><td>9.0%</td><td>10.0%</td><td>'+bps(8.7,9.0)+'</td><td>'+bps(8.7,10.0)+'</td></tr>'+
+   '<tr><td><b>PAT margin</b></td><td>6.6%</td><td>6.1%</td><td>5.8%</td><td>'+bps(6.6,6.1)+'</td><td>'+bps(6.6,5.8)+'</td></tr>'+
+   '<tr><td><b>'+L("Finance cost","Finance cost")+'</b></td><td>473</td><td>—</td><td>≈763</td><td>—</td><td>'+chg(473,763)+'</td></tr>'+
+   '<tr><td><b>'+L("Other income","Other income")+'</b></td><td>2,310</td><td>—</td><td>1,384</td><td>—</td><td>'+chg(2310,1384)+'</td></tr>';
+  var h1='<tr><td>Revenue</td><td>1,46,692</td><td>1,31,663</td><td>'+chg(146692,131663)+'</td></tr><tr><td>EBITDA</td><td>12,961</td><td>≈13,124</td><td><span class="dn">−1%</span></td></tr><tr><td>PAT</td><td>9,325</td><td>7,543</td><td>'+chg(9325,7543)+'</td></tr><tr><td>Order inflow</td><td>2,55,678</td><td>2,10,237</td><td>'+chg(255678,210237)+'</td></tr>';
+  var bridge=hbars([{l:"EBITDA",v:6845,c:"#0B4F8A"},{l:L("+ Other income","+ Other income"),v:2310,c:"#1E7B3A"},{l:L("− Finance cost","− Finance cost"),v:473,c:"#B3261E"},{l:L("− D&A, tax, minority","− D&A, tax, minority"),v:3480,c:"#B3261E"},{l:"= PAT",v:5202,c:"#F28C28"}],{lw:200});
+  return head("Financials — actual results","Financials — உண்மையான results","Q2 FY27 vs Q1 FY27 vs Q2 FY26 (₹ crore, consolidated).","Q2 FY27 vs Q1 FY27 vs Q2 FY26 (₹ கோடி, consolidated).")+
+   '<div class="tw"><table><thead><tr><th>₹ cr</th><th>Q2 FY27</th><th>Q1 FY27</th><th>Q2 FY26</th><th>QoQ</th><th>YoY</th></tr></thead><tbody>'+tb+'</tbody></table></div><br>'+
+   '<div class="grid2"><div class="card"><h3>'+L("Revenue vs EBITDA vs PAT (₹ cr)","Revenue vs EBITDA vs PAT (₹ கோடி)")+'</h3>'+box(vgroup(["Q2 FY26","Q1 FY27","Q2 FY27"],[{n:"EBITDA",c:"#0B4F8A",v:[6806,6116,6845]},{n:"PAT",c:"#F28C28",v:[3926,4123,5202]}]))+'</div><div class="card"><h3>'+L("Q2 profit bridge (₹ cr)","Q2 profit bridge (₹ கோடி)")+'</h3>'+box(bridge)+'<p class="note">'+L("Profit grew faster than operations: interest fell, other income jumped (incl. one-time LTTS SWC sale gain).","Operations-ஐ விட profit வேகமா: interest குறைஞ்சது, other income ஏறியது (LTTS SWC one-time gain உட்பட).")+'</p></div></div><br>'+
+   '<div class="card"><h3>H1 FY27 vs H1 FY26</h3><div class="tw"><table><thead><tr><th>₹ cr</th><th>H1 FY27</th><th>H1 FY26</th><th>YoY</th></tr></thead><tbody>'+h1+'</tbody></table></div><p class="note">'+L("Q2 FY26 finance cost back-calculated from −38% YoY (≈).","Q2 FY26 finance cost −38%-லிருந்து கணக்கு (≈).")+'</p></div>';
+};
+/* ---- Cash flow & ratios ---- */
+R.cf=function(){
+  var wc=line([{l:"Sep 2025",v:37},{l:"Jun 2026",v:18},{l:"Sep 2026",v:6}],{max:40,fmt:function(v){return v+" "+L("days","நாள்")},c:"#1E7B3A"});
+  var cfo=vgroup(["H1 FY26","H1 FY27"],[{n:L("Op. profit before WC","WC-க்கு முன் op. profit"),c:"#0B4F8A",v:[12070,11970]},{n:L("Cash released from WC","WC-லிருந்து cash"),c:"#1E7B3A",v:[950,8720]}]);
+  var ratios=[[A("EBITDA margin","EBITDA margin"),"8.7%","9.0%","10.0%"],[A("PAT margin","PAT margin"),"6.6%","6.1%","5.8%"],[A("Net working capital / revenue","Net working capital / revenue"),"1.7%","4.9%","10.2%"],[A("Working capital days (NWC% × 365)","Working capital days"),"~6","~18","~37"],[A("Book-to-bill (orders ÷ revenue)","Book-to-bill"),"1.88×","1.59×","1.70×"],[A("Order book cover (yrs of TTM revenue)","Order book cover (வருஷம்)"),"2.8","—","—"],[A("International revenue share","International revenue share"),"58%","51%","56%"],[A("RoE (trailing)","RoE (trailing)"),"16.7%","—","—"]];
+  return head("Cash flow, ratios & working capital days","Cash flow, ratios & working capital days","Cash collection is the standout of this quarter.","இந்த quarter-ஓட highlight cash collection தான்.")+
+   '<div class="kpis"><div class="kpi"><div class="l">CFO Q2 '+L("(ex-finance)","(ex-finance)")+'</div><div class="v">₹12,800 cr</div><div class="d up">+170% YoY</div></div><div class="kpi"><div class="l">CFO H1</div><div class="v">₹28,100 cr</div><div class="d up">+70% YoY</div></div><div class="kpi"><div class="l">'+L("WC days","WC days")+'</div><div class="v">~6</div><div class="d up">'+L("from ~37","~37-லிருந்து")+'</div></div><div class="kpi"><div class="l">RoE</div><div class="v">16.7%</div><div class="d">'+L("target 16–17%","target 16–17%")+'</div></div></div>'+
+   '<div class="grid2"><div class="card"><h3>'+L("Working capital days (net)","Working capital days")+'</h3>'+box(wc)+'</div><div class="card"><h3>'+L("Where H1 cash came from (₹ cr)","H1 cash எங்கிருந்து (₹ கோடி)")+'</h3>'+box(cfo)+'<p class="note">'+L("Operating profit was flat; the jump came from releasing working capital (advances, collections). Watch if it repeats.","Op. profit flat; jump working capital release-ல வந்தது. இது தொடருமா பாருங்க.")+'</p></div></div><br>'+
+   '<div class="tw"><table><thead><tr><th>'+L("Ratio","Ratio")+'</th><th>Q2 FY27</th><th>Q1 FY27</th><th>Q2 FY26</th></tr></thead><tbody>'+ratios.map(function(r){return '<tr><td>'+t(r[0])+'</td><td>'+r[1]+'</td><td>'+r[2]+'</td><td>'+r[3]+'</td></tr>'}).join("")+'</tbody></table></div>';
+};
+/* ---- Valuations ---- */
+R.val=function(){
+  var sotp='<svg viewBox="0 0 640 180" role="img"><rect x="10" y="40" width="380" height="60" fill="#DCEAF7" stroke="#0B4F8A" stroke-width="2"/><text x="200" y="76" text-anchor="middle" font-size="14">'+L("Core engineering & construction (rest)","Core E&amp;C (மீதி)")+'</text>'+
+   '<rect x="390" y="40" width="120" height="60" fill="#E0F4F5" stroke="#00838F" stroke-width="2"/><text x="450" y="68" text-anchor="middle" font-size="12">'+L("IT subs","IT subs")+'</text><text x="450" y="86" text-anchor="middle" font-size="11">LTIM + LTTS</text>'+
+   '<rect x="510" y="40" width="70" height="60" fill="#FFF3C4" stroke="#8D6E00" stroke-width="2"/><text x="545" y="74" text-anchor="middle" font-size="11">LTF</text>'+
+   '<rect x="580" y="40" width="50" height="60" fill="#FDE3C6" stroke="#F28C28" stroke-width="2"/><text x="605" y="74" text-anchor="middle" font-size="10">New</text>'+
+   '<text x="10" y="128" font-size="13">'+L("Market cap ≈ ₹5.04 lakh cr. L&T Finance alone ≈ ₹63,500 cr m-cap (L&T share ~₹42,000 cr).","Market cap ≈ ₹5.04 லட்சம் கோடி. L&amp;T Finance m-cap ≈ ₹63,500 கோடி (L&amp;T பங்கு ~₹42,000 கோடி).")+'</text><text x="10" y="150" font-size="13">'+L("Analysts value L&T as sum-of-parts: listed stakes + core E&C on its own P/E.","Analysts SOTP முறை: listed stakes + core E&amp;C-க்கு தனி P/E.")+'</text><text x="10" y="25" font-size="12">'+L("Sum-of-the-parts picture (boxes not to exact scale)","SOTP படம் (அளவு தோராயம்)")+'</text></svg>';
+  var tb=[[A("Share price (27 Oct 2026, NSE)","Share விலை (27 Oct)"),"₹3,665"],[A("Market cap","Market cap"),"≈ ₹5.04 lakh cr"],[A("TTM PAT (Q3 FY26–Q2 FY27)","TTM PAT"),"≈ ₹17,870 cr"],[A("TTM EPS","TTM EPS"),"≈ ₹130"],[A("P/E (trailing)","P/E (trailing)"),"≈ 28×"],[A("P/E on FY26 PAT (₹16,084 cr)","FY26 PAT-ல P/E"),"≈ 31×"],[A("P/B (approx., from RoE)","P/B (தோராயம்)"),"≈ 4.7×"],[A("Dividend FY26","Dividend FY26"),"₹38 / share (~1.0% yield)"],[A("52-week range","52-week range"),"₹3,288 – ₹4,440"],[A("EPC/infra peers (broker est.)","EPC/infra peers"),"~18× FY27E core EPS"]];
+  return head("Valuations","Valuations","L&T trades at a clear premium to infra peers — paying for scale, cash and visibility.","Infra peers-ஐ விட L&T-க்கு premium — scale, cash, visibility-க்கு கொடுக்கற விலை.")+
+   '<div class="grid2"><div class="card"><h3>'+L("Trailing P/E gauge","Trailing P/E gauge")+'</h3>'+box(gauge(28,10,45,"≈28×",[[10,20,"#DDF2E2"],[20,32,"#FFEBC8"],[32,45,"#FBE0DD"]]))+'<p class="note">'+L("Green <20× · amber 20–32× · red >32×. Peers sit near 18×.","பச்சை <20× · மஞ்சள் 20–32× · சிவப்பு >32×. Peers ~18×.")+'</p></div><div class="card"><h3>'+L("Key valuation numbers","முக்கிய valuation numbers")+'</h3><div class="tw"><table><tbody>'+tb.map(function(r){return '<tr><td>'+t(r[0])+'</td><td>'+r[1]+'</td></tr>'}).join("")+'</tbody></table></div></div></div><br><div class="card">'+box(sotp)+'</div>'+
+   '<div class="card" style="margin-top:14px">'+bl([A("Premium is justified only if margins recover toward guidance and orders convert on time.","Margin guidance-க்கு திரும்பி, orders நேரத்துக்கு convert ஆனா தான் premium சரி."),A("Stock is ~17% below its 52-week high while orders are at a record — expectations have cooled.","Orders record-ல இருந்தும் share 52-week high-லிருந்து ~17% கீழே — எதிர்பார்ப்பு குறைஞ்சிருக்கு."),A("Q2 profit includes one-time items; use recurring profit when judging P/E.","Q2 profit-ல one-time items இருக்கு; P/E பார்க்கும்போது recurring profit பாருங்க.")])+'</div>';
+};
+/* ---- Takeaways ---- */
+R.kt=function(){
+  var K=[["📦",A("Record orders","Record orders"),A("₹1.48 lakh cr in Q2 (+28%); order book ₹8.54 lakh cr = ~2.8 years of revenue.","Q2-ல ₹1.48 லட்சம் கோடி (+28%); order book ₹8.54 லட்சம் கோடி = ~2.8 வருஷ revenue."),88,"#0B4F8A"],
+   ["💰",A("Profit up, but help from below","Profit ஏறியது, ஆனா கீழிருந்து help"),A("PAT +33% vs EBITDA +0.6%: lower interest and higher other income (incl. one-time LTTS gain).","PAT +33%, EBITDA +0.6%: interest குறைவு, other income அதிகம் (LTTS one-time gain)."),60,"#F28C28"],
+   ["📉",A("Margins under pressure","Margin அழுத்தம்"),A("8.7% vs 10.0% — water project costs, supply chain, young projects below margin threshold.","8.7% vs 10.0% — water project cost, supply chain, புது projects."),35,"#B3261E"],
+   ["🏦",A("Cash discipline","Cash ஒழுக்கம்"),A("NWC 1.7% of revenue (record low); H1 operating cash ₹28,100 cr.","NWC 1.7% (record low); H1 operating cash ₹28,100 கோடி."),90,"#1E7B3A"],
+   ["🌍",A("Gulf = engine and risk","Gulf = engine-உம் risk-உம்"),A("51% of Q2 orders from Middle East; 58% of revenue international.","Q2 orders-ல 51% Middle East; revenue-ல 58% international."),55,"#C2410C"]];
+  return head("5 Key Takeaways","5 முக்கிய பாயிண்ட்","Bar = how positive the point is for the business (CB read).","Bar = business-க்கு எவ்வளவு positive (CB மதிப்பீடு).")+'<div class="grid">'+K.map(function(k,i){return '<div class="card"><div style="font-size:30px">'+k[0]+'</div><h3>'+(i+1)+'. '+t(k[1])+'</h3><p>'+t(k[2])+'</p><div class="bar"><i style="width:'+k[3]+'%;background:'+k[4]+'"></i></div></div>'}).join("")+'</div>';
+};
+/* ---- Market activity ---- */
+R.mkt=function(){
+  var W=640,s='<svg viewBox="0 0 '+W+' 120" role="img"><rect x="40" y="50" width="560" height="16" rx="8" fill="#FDE3C6" stroke="#F28C28"/>';
+  var x=function(p){return 40+(p-3288)/(4440-3288)*560;};
+  s+='<line x1="'+x(3607)+'" x2="'+x(3607)+'" y1="38" y2="78" stroke="#1E7B3A" stroke-width="2" stroke-dasharray="4 3"/><text x="'+x(3607)+'" y="98" text-anchor="middle" font-size="11">'+L("support ~3,607","support ~3,607")+'</text>';
+  s+='<circle cx="'+x(3665)+'" cy="58" r="10" fill="#0B4F8A"/><text class="mono" x="'+x(3665)+'" y="30" text-anchor="middle" font-size="13">₹3,665</text>';
+  s+='<text x="40" y="98" font-size="12">₹3,288</text><text x="600" y="98" text-anchor="end" font-size="12">₹4,440</text><text x="320" y="116" text-anchor="middle" font-size="12">'+L("52-week range","52-week range")+'</text></svg>';
+  var perf=hbars([{l:"1W",v:0.1,c:"#1E7B3A",s:"+0.1%"},{l:"1M",v:5.45,c:"#B3261E",s:"−5.5%"},{l:"6M",v:9.58,c:"#B3261E",s:"−9.6%"},{l:"YTD",v:9.8,c:"#B3261E",s:"−9.8%"},{l:"1Y",v:6.59,c:"#B3261E",s:"−6.6%"}],{lw:60,max:12});
+  return head("Reasons for share market activity","Share market நகர்வுக்கான காரணங்கள்","Stock has lagged despite record orders. Results came after market hours on 27 Oct; today is the first reaction.","Record orders இருந்தும் share பின்னாடி. 27 Oct market முடிஞ்ச பிறகு results; இன்னிக்கு தான் முதல் reaction.")+
+   '<div class="grid2"><div class="card"><h3>'+L("Where the price sits","விலை எங்க இருக்கு")+'</h3>'+box(s)+'</div><div class="card"><h3>'+L("Returns (to 27 Oct)","Returns (27 Oct வரை)")+'</h3>'+box(perf)+'</div></div><br>'+
+   '<div class="grid2"><div class="card"><h3 class="dn">▼ '+L("Why it fell","ஏன் இறங்கியது")+'</h3>'+bl([A("US–Iran war (2026) hit Gulf awards & supply chains — L&T's biggest market.","2026 US–Iran war — Gulf awards, supply chain பாதிப்பு."),A("Margins fell for several quarters (10.4% Q4 FY26 → 9.0% → 8.7%).","பல quarters margin இறக்கம் (10.4% → 9.0% → 8.7%)."),A("Q4 FY26 profit −3%; stock fell 3% that day.","Q4 FY26 profit −3%; அன்னிக்கு share −3%."),A("India infra ordering slow (roads, water, solar deferrals).","India infra orders slow (roads, water, solar).")])+'</div><div class="card"><h3 class="up">▲ '+L("What could support it","எது தூக்கலாம்")+'</h3>'+bl([A("Q2 beat estimates: revenue ₹78,750 vs ~₹72,750 cr expected; PAT ₹5,202 vs ~₹4,430 cr.","Q2 estimates-ஐ தாண்டியது: revenue ₹78,750 (எதிர்பார்ப்பு ~₹72,750), PAT ₹5,202 (~₹4,430)."),A("Record orders + record-low working capital.","Record orders + record-low working capital."),A("Gulf awards reviving after the conflict.","Conflict-க்கு பிறகு Gulf awards திரும்புது."),A("DIIs hold 43.1% — steady domestic support.","DIIs 43.1% — உள்நாட்டு ஆதரவு.")])+'</div></div>';
+};
+/* ---- Triggers & Cycle ---- */
+var TRIG=[
+ ["+",A("Ultra-mega Gulf hydrocarbon orders moving into execution","Gulf ultra-mega oil-gas orders execution-க்கு"),4,0.7,0.7,1.0,A("Revenue ramp in H2 FY27","H2 FY27 revenue ramp"),"Q2 FY27 results, 27 Oct 2026"],
+ ["+",A("₹10 lakh cr near-term prospects pipeline","₹10 லட்சம் கோடி prospects pipeline"),3,0.4,1.0,1.0,A("Q3 order inflow","Q3 order inflow"),"Q2 FY27 presentation"],
+ ["+",A("Margin recovery as projects cross margin threshold (PP&M ~7.8% guided)","Projects threshold தாண்டும்போது margin recovery"),3,0.4,0.7,1.0,A("PP&M margin in Q3/Q4","Q3/Q4 PP&M margin"),"Q2 FY27 earnings call"],
+ ["+",A("Lakshya 31 new businesses (green H₂, data centres, semis)","Lakshya 31 புது businesses"),4,0.4,0.2,1.0,A("First revenue disclosures","முதல் revenue"),"Lakshya 31, May 2026"],
+ ["−",A("Middle East conflict / concentration (51% of Q2 orders)","Middle East conflict / concentration"),4,0.4,1.0,1.0,A("Gulf ceasefire, project pace","Gulf நிலைமை"),"Q2 FY27 presentation"],
+ ["−",A("Margin compression: water projects, supply-chain costs","Margin அழுத்தம்: water, supply chain"),3,1.0,1.0,0.7,A("Infra & Energy margins","Infra & Energy margins"),"Q2 FY27 earnings call"],
+ ["−",A("India solar / infra order deferrals","India solar/infra orders தள்ளிப்போவது"),2,0.7,1.0,1.0,A("Domestic inflow","Domestic inflow"),"Q2 FY27 results"]];
+R.tc=function(){
+  var rows=TRIG.map(function(r){var p=r[2]*r[3]*r[4]*r[5];r.pts=p;return '<tr><td style="text-align:left;white-space:normal;min-width:200px">'+t(r[1])+'</td><td><span class="pill '+(r[0]=="+"?"pg":"pb")+'">'+r[0]+'</span></td><td>'+r[2]+'</td><td>'+r[3]+'</td><td>'+r[4]+'</td><td>'+r[5]+'</td><td><b>'+p.toFixed(2)+'</b></td><td style="white-space:normal">'+t(r[6])+'</td><td style="white-space:normal">'+r[7]+'</td></tr>'}).join("");
+  // cycle clock
+  var ph=[L("P1 Trough","P1 Trough"),L("P2 Early recovery","P2 Early recovery"),L("P3 Expansion","P3 Expansion"),L("P4 Peak","P4 Peak"),L("P5 Downturn","P5 Downturn")];
+  var c='<svg viewBox="0 0 640 300" role="img"><circle cx="320" cy="150" r="110" fill="#FFFBF6" stroke="#F3D3B0" stroke-width="22"/>';
+  ph.forEach(function(p,i){var a=i/5*2*Math.PI-Math.PI/2,x=320+165*Math.cos(a),y=150+128*Math.sin(a);c+='<text x="'+x+'" y="'+(y+4)+'" text-anchor="middle" font-size="12.5">'+p+'</text><circle cx="'+(320+110*Math.cos(a))+'" cy="'+(150+110*Math.sin(a))+'" r="7" fill="'+(i==2?"#F28C28":"#E2B98C")+'"/>';});
+  var a3=2/5*2*Math.PI-Math.PI/2;c+='<line x1="320" y1="150" x2="'+(320+90*Math.cos(a3))+'" y2="'+(150+90*Math.sin(a3))+'" stroke="#1B1006" stroke-width="5" stroke-linecap="round"/><circle cx="320" cy="150" r="8" fill="#1B1006"/>';
+  var a1=0.15*2*Math.PI-Math.PI/2;c+='<rect x="'+(320+60*Math.cos(a1)-40)+'" y="'+(150+60*Math.sin(a1)-12)+'" width="80" height="22" rx="11" fill="#DCEAF7" stroke="#0B4F8A"/><text x="'+(320+60*Math.cos(a1))+'" y="'+(150+60*Math.sin(a1)+4)+'" text-anchor="middle" font-size="11">'+L("Stock: Stage 1","Stock: Stage 1")+'</text></svg>';
+  var tl=[["Nov 2026",A("Q2 earnings call follow-ups, Gulf award news","Gulf award news")],["Jan 2027",A("Q3 FY27 results","Q3 FY27 results")],["Feb 2027",A("Union Budget FY28 capex","Budget FY28 capex")],["May 2027",A("FY27 results vs guidance","FY27 results vs guidance")]];
+  var tls='<svg viewBox="0 0 640 110" role="img"><line x1="20" x2="620" y1="50" y2="50" stroke="#1B1006" stroke-width="3"/>'+tl.map(function(x,i){var px=60+i*170;return '<circle cx="'+px+'" cy="50" r="9" fill="#F28C28" stroke="#1B1006" stroke-width="1.5"/><text x="'+px+'" y="30" text-anchor="middle" font-size="12">'+x[0]+'</text><text x="'+px+'" y="78" text-anchor="middle" font-size="11">'+t(x[1])+'</text>'}).join("")+'</svg>';
+  return head("Triggers & Cycle","Triggers & Cycle","CY 62 (cycle neutral-positive) · TG 41 (risks currently outweigh fresh catalysts).","CY 62 (cycle ஓரளவு positive) · TG 41 (புது catalysts-ஐ விட risks கொஞ்சம் அதிகம்).")+
+   '<div class="grid2"><div class="card"><h3>'+L("Cycle clock","Cycle clock")+'</h3>'+box(c)+bl([A("Sector (capex/order-book): P3 Expansion = 70 — Gulf energy & T&D strong; India roads/water weak.","Sector: P3 Expansion = 70 — Gulf energy, T&D strong; India roads/water weak."),A("Stock: re-inventing 75 · margin falling 25 · valuation in band 55 · price base (Stage 1, approx.) 60 → 54.","Stock: re-inventing 75 · margin இறக்கம் 25 · valuation band-ல 55 · Stage 1 base 60 → 54."),A("CY = 50% × 70 + 50% × 54 = 62.","CY = 50% × 70 + 50% × 54 = 62.")])+'</div><div class="card"><h3>'+L("Trigger score","Trigger score")+'</h3>'+box(gauge(41,0,100,"TG 41",[[0,40,"#FBE0DD"],[40,60,"#FFEBC8"],[60,100,"#DDF2E2"]]))+'<p class="note">TG = 50 + 8×(1.96+1.20+0.84) − 8×(1.60+2.10+1.40) = 41</p></div></div><br>'+
+   '<div class="tw"><table><thead><tr><th>Trigger</th><th>+/−</th><th>I</th><th>C</th><th>W</th><th>P</th><th>'+L("Points","Points")+'</th><th>'+L("What to watch","என்ன பாக்கணும்")+'</th><th>'+L("Basis & date","அடிப்படை & தேதி")+'</th></tr></thead><tbody>'+rows+'</tbody></table></div><br>'+
+   '<div class="grid2"><div class="card"><h3>'+L("Trigger timeline","Trigger timeline")+'</h3>'+box(tls)+'</div><div class="card"><h3>'+L("What would change this view","இந்த பார்வை எப்போ மாறும்")+'</h3>'+bl([A("Two quarters of margin improvement → TG and CY rise.","2 quarters margin ஏறினா → TG, CY ஏறும்."),A("Gulf conflict flares and halts sites → strong negative.","Gulf conflict மீண்டும் வந்து sites நின்னா → பெரிய negative."),A("Cash flow falls back as working-capital release reverses.","Working capital release திரும்பினா cash flow இறங்கும்.")])+'</div></div>';
+};
+/* ---- 6 Pillars ---- */
+var PIL=[[A("Business quality","Business quality"),9,A("85+ years, diversified, global; record ₹8.54 L cr book","85+ வருஷம், பல துறை, global; ₹8.54 L cr book")],[A("Competitive advantage","Competitive edge"),9,A("Mega-job qualification, yards, tech; peers far smaller","Mega jobs தகுதி, yards, tech; peers சின்னது")],[A("Growth opportunity","Growth"),8,A("Guided 10–12% FY27; 12–15% CAGR to FY31; ₹10 L cr pipeline","FY27 10–12%; FY31 வரை 12–15% CAGR")],[A("Financial strength","Financial strength"),9,A("NWC 1.7%, H1 CFO ₹28,100 cr, RoE 16.7%","NWC 1.7%, CFO ₹28,100 cr, RoE 16.7%")],[A("Valuation","Valuation"),5,A("~28× trailing vs peers ~18×; premium","~28× vs peers ~18×; premium")],[A("Risk & reward","Risk & reward"),6,A("Gulf concentration, margin slide, one-time profit items","Gulf concentration, margin இறக்கம், one-time items")]];
+R.pil=function(){
+  var tot=PIL.reduce(function(a,p){return a+p[1]},0);
+  var s='<svg viewBox="0 0 640 330" role="img"><polygon points="40,80 320,14 600,80" fill="#FDE3C6" stroke="#F28C28" stroke-width="3"/><text x="320" y="66" text-anchor="middle" font-size="18" style="font-family:Playfair Display,serif">L&amp;T · '+tot+'/60</text><rect x="40" y="80" width="560" height="16" fill="#F3D3B0"/>';
+  PIL.forEach(function(p,i){var x=58+i*92,h=p[1]*18;s+='<rect x="'+x+'" y="'+(276-h)+'" width="58" height="'+h+'" fill="'+(p[1]>=8?"#DCEAF7":p[1]>=6?"#FFEBC8":"#FBE0DD")+'" stroke="#1B1006" stroke-width="1.5"/><text class="mono" x="'+(x+29)+'" y="'+(268-h+30)+'" text-anchor="middle" font-size="17">'+p[1]+'</text><text x="'+(x+29)+'" y="296" text-anchor="middle" font-size="10.5">'+t(p[0]).split(" ")[0]+'</text><text x="'+(x+29)+'" y="310" text-anchor="middle" font-size="10.5">'+(t(p[0]).split(" ").slice(1).join(" ")||"")+'</text><line x1="'+(x+29)+'" x2="'+(x+29)+'" y1="96" y2="'+(276-h)+'" stroke="#E2B98C" stroke-dasharray="3 3"/>';});
+  s+='<rect x="30" y="276" width="580" height="8" fill="#1B1006"/></svg>';
+  return head("6 Pillars","6 தூண்கள்","Taller pillar = stronger. Roof holds at "+tot+"/60.","உயரமான தூண் = வலிமை. கூரை "+tot+"/60.")+'<div class="card">'+box(s)+'</div><br><div class="tw"><table><thead><tr><th>'+L("Pillar","தூண்")+'</th><th>'+L("Score","Score")+'</th><th style="text-align:left">'+L("Evidence","ஆதாரம்")+'</th></tr></thead><tbody>'+PIL.map(function(p){return '<tr><td>'+t(p[0])+'</td><td>'+p[1]+'/10</td><td style="text-align:left;white-space:normal">'+t(p[2])+'</td></tr>'}).join("")+'</tbody></table></div><p class="note">'+L("Grading: 9–10 best-in-class with numbers to prove it · 7–8 strong with gaps · 5–6 average or mixed · ≤4 weak. Scores are CB education estimates, not recommendations.","Grading: 9–10 சிறந்தது · 7–8 strong · 5–6 சராசரி · ≤4 weak. இது CB education மதிப்பீடு, recommendation இல்ல.")+'</p>';
+};
+/* ---- SWOT ---- */
+R.swot=function(){
+  var q=[["S","#1E7B3A","#DDF2E2",A("Strengths","Strengths"),[A("Record ₹8.54 L cr order book","Record ₹8.54 L cr order book"),A("Record-low working capital (1.7%)","Record-low working capital"),A("Diversified sectors & geographies","பல துறை, பல நாடு"),A("Strong IT & finance subsidiaries","IT, finance subsidiaries")]],
+   ["W","#B3261E","#FBE0DD",A("Weaknesses","Weaknesses"),[A("EBITDA margin down 130 bps YoY","Margin −130 bps"),A("India infra revenue only +6%","India infra +6% தான்"),A("Realty revenue −43%","Realty −43%"),A("Profit leaned on other income","Profit other income-ஐ நம்பியது")]],
+   ["O","#0B4F8A","#DCEAF7",A("Opportunities","Opportunities"),[A("Gulf energy capex revival","Gulf energy capex"),A("Offshore wind, storage, T&D","Offshore wind, storage, T&D"),A("Green H₂, data centres, chips (Lakshya 31)","Green H₂, data centres, chips"),A("Defence exports","Defence exports")]],
+   ["T","#A35A00","#FFEBC8",A("Threats","Threats"),[A("Middle East war / concentration","Middle East war / concentration"),A("State payment delays in India","State payment delays"),A("Commodity & supply-chain spikes","Commodity, supply chain"),A("New-business capex may earn low early returns","புது business capex returns")]]];
+  return head("SWOT","SWOT","","")+'<div class="grid2">'+q.map(function(x){return '<div class="card" style="background:'+x[2]+';border-color:'+x[1]+'"><div style="font:800 40px var(--f-disp);color:'+x[1]+'">'+x[0]+'</div><h3>'+t(x[3])+'</h3>'+bl(x[4])+'</div>'}).join("")+'</div>';
+};
+/* ---- Investor self-check ---- */
+var CHK=[
+ [A("1. Questions about the stock","1. Stock பற்றிய கேள்விகள்"),[[A("Do I know the size? Market cap ≈ ₹5.04 lakh cr — a Nifty heavyweight.","Size தெரியுமா? Market cap ≈ ₹5.04 லட்சம் கோடி."),A("Data: ₹3,665 (27 Oct); 52-wk ₹3,288–4,440","Data: ₹3,665; 52-wk ₹3,288–4,440")],[A("Do I know where profit came from this quarter?","இந்த quarter profit எங்கிருந்து வந்தது தெரியுமா?"),A("Data: EBITDA +0.6%, PAT +33% (other income, lower interest)","Data: EBITDA +0.6%, PAT +33%")],[A("Have I compared price with its own history and peers?","Share விலையை பழைய range, peers-உடன் compare பண்ணீங்களா?"),A("Data: ~28× trailing P/E vs peers ~18×","Data: ~28× vs peers ~18×")],[A("Do I know who owns it?","யாரு வச்சிருக்காங்க தெரியுமா?"),A("Data: DIIs 43.1%, FIIs 19.2%, public 37.7%; no promoter","Data: DII 43.1%, FII 19.2%, public 37.7%; promoter இல்ல")]]],
+ [A("2. Problems investors face","2. Investors சந்திக்கும் பிரச்சனைகள்"),[[A("I understand how EPC revenue follows execution, not orders.","EPC revenue orders இல்ல, execution-ஐ பொறுத்து தான் — புரிஞ்சதா?"),A("Data: order book ₹8.54 L cr; ~9% executed per quarter","Data: ~9% execution / quarter")],[A("I can connect with at least 3 of its 7 segments.","7 segments-ல குறைஞ்சது 3 புரியுதா?"),A("Data: Infra, Energy-Conv, Energy-Green, M&P, Tech, Finance, Realty","Data: 7 segments")],[A("I know the earnings risk: margins and one-time items.","Earnings risk — margin, one-time items தெரியுமா?"),A("Data: margin 8.7% vs 10.0%; LTTS one-time gain in Q2","Data: margin 8.7%; LTTS one-time gain")],[A("I know the Gulf risk.","Gulf risk தெரியுமா?"),A("Data: 51% of Q2 orders from Middle East","Data: Q2 orders-ல 51% Middle East")]]],
+ [A("3. What I did about it","3. நான் என்ன பண்ணினேன்"),[[A("Read the annual report business & risk pages.","Annual report business, risk pages படிச்சேன்."),A("Data: FY26 annual report, Lakshya 31 section","Data: FY26 annual report")],[A("Compared with a listed peer (KEC, Kalpataru, NCC).","ஒரு listed peer-உடன் compare பண்ணினேன்."),A("Data: see 'Why L&T Leads' tab","Data: 'Why L&T Leads' tab")],[A("Kept the amount small relative to my portfolio.","Portfolio-ல சின்ன அளவு தான் வச்சேன்."),A("Data: lumpy quarters are normal for EPC","Data: EPC quarters ஏற்ற இறக்கம் சகஜம்")],[A("Fixed a horizon and a review point (e.g. Q4 FY27 results).","Horizon, review point fix பண்ணினேன்."),A("Data: FY27 guidance 10–12% growth, PP&M margin 7.8%","Data: FY27 guidance")]]],
+ [A("4. Institutions' & analysts' view","4. Institutions, analysts பார்வை"),[[A("Long-term funds are holding.","Long-term funds வச்சிருக்காங்க."),A("Data: DIIs 43.1%","Data: DIIs 43.1%")],[A("Read at least two independent analyst reviews after Q2.","Q2-க்கு பிறகு 2 analyst reviews படிச்சேன்."),A("Data: Q2 beat consensus on revenue & PAT","Data: Q2 consensus-ஐ தாண்டியது")],[A("Checked CB cycle & trigger view.","CB cycle & trigger பார்த்தேன்."),A("Data: CY 62, TG 41","Data: CY 62, TG 41")],[A("Know the market mood.","Market mood தெரியும்."),A("Data: stock −9.8% YTD, near support ~₹3,607","Data: −9.8% YTD")]]]
+];
+var CUSTOM=[];try{CUSTOM=JSON.parse(localStorage.getItem("cb_lt_custom")||"[]");}catch(e){}
+var TICK={};try{TICK=JSON.parse(localStorage.getItem("cb_lt_tick")||"{}");}catch(e){}
+function saveChk(){try{localStorage.setItem("cb_lt_tick",JSON.stringify(TICK));localStorage.setItem("cb_lt_custom",JSON.stringify(CUSTOM));}catch(e){}}
+window.tick=function(id,el){TICK[id]=el.checked;saveChk();render();};
+window.addCustom=function(){var i=document.getElementById("custIn");if(i&&i.value.trim()){CUSTOM.push(i.value.trim());saveChk();render();}};
+window.delCustom=function(k){CUSTOM.splice(k,1);delete TICK["c"+k];saveChk();render();};
+R.chk=function(){
+  var total=0,done=0,html="";
+  CHK.forEach(function(g,gi){var gd=0;var items=g[1].map(function(it,ii){var id="g"+gi+"i"+ii;total++;if(TICK[id]){done++;gd++;}return '<label class="chk"><input type="checkbox" '+(TICK[id]?"checked":"")+' onchange="tick(\''+id+'\',this)"><span>'+t(it[0])+'<br><span class="data">'+t(it[1])+'</span></span></label>'}).join("");
+    html+='<div class="card"><h3>'+t(g[0])+'</h3><div class="bar"><i style="width:'+(gd/g[1].length*100)+'%"></i></div><p class="note">'+gd+'/'+g[1].length+'</p>'+items+'</div>';});
+  var cu=CUSTOM.map(function(c,k){var id="c"+k;total++;if(TICK[id])done++;return '<label class="chk"><input type="checkbox" '+(TICK[id]?"checked":"")+' onchange="tick(\''+id+'\',this)"><span>'+c.replace(/</g,"&lt;")+' <button class="btn" onclick="delCustom('+k+');return false">✕</button></span></label>'}).join("");
+  html+='<div class="card"><h3>'+L("5. My own conditions","5. என் சொந்த conditions")+'</h3>'+cu+'<div class="askrow"><input id="custIn" placeholder="'+L("Add my own check…","என் check சேர்க்க…")+'"><button class="btn solid" onclick="addCustom()">'+L("Add","சேர்")+'</button></div></div>';
+  var pct=total?Math.round(done/total*100):0;
+  var ring='<svg viewBox="0 0 160 160" width="140" role="img"><circle cx="80" cy="80" r="60" fill="none" stroke="#FDE3C6" stroke-width="16"/><circle cx="80" cy="80" r="60" fill="none" stroke="#F28C28" stroke-width="16" stroke-dasharray="'+(377*pct/100)+' 377" transform="rotate(-90 80 80)"/><text class="mono" x="80" y="88" text-anchor="middle" font-size="22">'+done+'/'+total+'</text></svg>';
+  return head("CB 5-group investor self-check","CB 5-group investor self-check","Tick only what you have actually done.","நீங்க உண்மையா செஞ்சதை மட்டும் tick பண்ணுங்க.")+'<div class="card" style="display:flex;gap:16px;align-items:center;flex-wrap:wrap">'+ring+'<p style="flex:1;min-width:200px">'+L("This only counts your own conditions. It is not a recommendation to buy or sell.","இது உங்க conditions-ஐ மட்டும் எண்ணுது. Buy/sell recommendation இல்ல.")+'</p></div><br><div class="grid2">'+html+'</div>';
+};
+/* ---- Quiz ---- */
+var QZ=[[A("What was L&T's Q2 FY27 order inflow?","Q2 FY27 order inflow எவ்வளவு?"),["₹78,750 cr","₹1,08,014 cr","₹1,47,665 cr","₹8,53,514 cr"],2,A("₹1,47,665 cr — a record, +28% YoY. ₹78,750 cr is revenue.","₹1,47,665 கோடி — record, +28%. ₹78,750 revenue.")],
+ [A("Why did PAT (+33%) grow much faster than EBITDA (+0.6%)?","PAT +33%, EBITDA +0.6% — ஏன்?"),[L("Price hikes","விலை ஏற்றம்"),L("Lower interest + higher other income","Interest குறைவு + other income அதிகம்"),L("Tax refund only","Tax refund மட்டும்"),L("New realty launches","Realty launches")],1,A("Finance cost −38% (Metro exit) and other income +67% (incl. one-time LTTS gain).","Finance cost −38%, other income +67%.")],
+ [A("Net working capital at 1.7% of revenue means roughly how many days?","NWC 1.7% = எத்தனை நாள்?"),["~6","~18","~37","~60"],0,A("1.7% × 365 ≈ 6 days (vs ~37 a year ago).","1.7% × 365 ≈ 6 நாள்.")],
+ [A("Which region gave 51% of Q2 orders?","Q2 orders-ல 51% எந்த region?"),["India","Europe","Middle East","Africa"],2,A("Middle East — led by hydrocarbon mega orders.","Middle East — oil-gas mega orders.")],
+ [A("Which segment had the highest project EBITDA margin (excluding Tech)?","Tech தவிர, எந்த segment-க்கு margin அதிகம்?"),["Infra & Utilities","Energy – Conventional","Manufacturing & Products","Energy – Green"],2,A("Manufacturing & Products at 15.7%.","Manufacturing & Products 15.7%.")],
+ [A("CB cycle view: sector phase for L&T's mix?","CB cycle: sector phase?"),["P1 Trough","P3 Expansion","P4 Peak","P5 Downturn"],1,A("P3 Expansion (score 70): Gulf energy & T&D strong, India roads/water weak.","P3 Expansion (70).")]];
+var QA={};
+window.qAns=function(i,j){QA[i]=j;render();};
+R.quiz=function(){
+  var sc=0,n=0;var h=QZ.map(function(q,i){var a=QA[i];if(a!=null){n++;if(a===q[2])sc++;}
+    return '<div class="card"><h3>'+(i+1)+'. '+t(q[0])+'</h3>'+q[1].map(function(o,j){var cls=a==null?"":(j===q[2]?"ok":(j===a?"no":""));return '<button class="opt '+cls+'" onclick="qAns('+i+','+j+')" '+(a!=null?"disabled":"")+'>'+o+'</button>'}).join("")+(a!=null?'<p><b>'+(a===q[2]?L("Correct!","சரி!"):L("Not quite.","கொஞ்சம் மிஸ்."))+'</b> '+t(q[3])+'</p>':'')+'</div>'}).join("");
+  var bars=hbars([{l:L("Correct","சரி"),v:sc,c:"#1E7B3A",s:String(sc)},{l:L("Answered","பதில்"),v:n,c:"#F28C28",s:n+"/"+QZ.length}],{lw:100,max:QZ.length});
+  return head("Cauvery Socrates","Cauvery Socrates","Test what you learned.","கத்துக்கிட்டதை test பண்ணுங்க.")+'<div class="card">'+box(bars)+'<button class="btn" onclick="QA={};render()">'+L("Reset","Reset")+'</button></div><br><div class="grid2">'+h+'</div>';
+};
+/* ---- Analyst view ---- */
+R.av=function(){
+  var sc=hbars([{l:L("Orders & visibility","Orders & visibility"),v:9,c:"#1E7B3A",s:"9/10"},{l:L("Cash & balance sheet","Cash & balance sheet"),v:9,c:"#1E7B3A",s:"9/10"},{l:L("Margins","Margins"),v:4,c:"#B3261E",s:"4/10"},{l:L("Earnings quality (Q2)","Earnings quality"),v:6,c:"#A35A00",s:"6/10"},{l:L("Valuation comfort","Valuation comfort"),v:5,c:"#A35A00",s:"5/10"}],{lw:200,max:10});
+  return head("Analyst View","Analyst View","CB education view — not a buy/sell/hold call.","CB education பார்வை — buy/sell/hold இல்ல.")+'<div class="grid2"><div class="card"><h3>'+L("Scorecard","Scorecard")+'</h3>'+box(sc)+'</div><div class="card">'+bl([
+   A("Business: L&T leads because it is spread across sectors, countries and clients that still spend — not because India infra is booming.","Business: India infra boom-ஆல இல்ல — பல துறை, நாடு, clients-ல பரவி இருக்கறதால L&T முன்னாடி."),
+   A("Quality of Q2: strong orders and cash; operating profit flat; profit growth partly from one-time and below-the-line items.","Q2 quality: orders, cash strong; op. profit flat; profit growth-ல one-time பங்கு."),
+   A("Cycle: sector in P3 Expansion (70); stock near a base after a ~10% YTD fall.","Cycle: sector P3 (70); share ~10% இறங்கி base-ல."),
+   A("Top positive triggers: Gulf mega orders entering execution; ₹10 L cr prospects.","Top positive triggers: Gulf mega orders execution; ₹10 L cr prospects."),
+   A("Top risk trigger: margin slide in Infra & Energy; Middle East exposure.","Top risk: Infra & Energy margin இறக்கம்; Middle East."),
+   A("Watch next: Q3 PP&M margin vs 7.8% guide; whether cash flow holds without more working-capital release.","அடுத்து பாருங்க: Q3 PP&M margin vs 7.8%; working capital release இல்லாம cash தொடருமா.")])+'</div></div>';
+};
+
+/* ============ Cauvery Assist ============ */
+var CONFIG={
+  title:"Cauvery Assist", storageKey:"cba_q2fy27_lt", lang:"en",
+  placeholder:A("Ask: Which segment has the highest margin?","கேளுங்க: எந்த segment-க்கு margin அதிகம்?"),
+  greeting:A("Vanakam! Ask me anything about L&T's Q2 FY27 results.","வணக்கம்! L&T Q2 FY27 results பத்தி என்ன வேணாலும் கேளுங்க."),
+  noAdvice:A("I can't tell you to buy or sell — CB Research is not SEBI-registered. Use the Self-Check tab to test your own conditions.","Buy/sell சொல்ல முடியாது — CB Research SEBI-registered இல்ல. Self-Check tab-ல உங்க conditions-ஐ பாருங்க."),
+  fallback:A("That's not on this page. Try: orders, margin, profit, cash, Middle East, subsidiaries, why L&T leads.","இது இந்த page-ல இல்ல. Try: orders, margin, profit, cash, Middle East, subsidiaries."),
+  onOpenTab:function(id){go(id);},
+  metrics:[
+   {key:"rev",kw:["revenue","sales","ரெவின்யூ","வருமானம்"],label:A("Q2 revenue","Q2 revenue"),fmt:function(v){return "₹"+f0(v)+" cr"}},
+   {key:"g",kw:["growth","grew","க்ரோத்","வளர்ச்சி"],label:A("YoY revenue growth","YoY growth"),fmt:function(v){return (v>0?"+":"")+v+"%"}},
+   {key:"m",kw:["margin","ebitda","மார்ஜின்"],label:A("EBITDA margin","EBITDA margin"),fmt:function(v){return v+"%"}},
+   {key:"oi",kw:["order","orders","ஆர்டர்"],label:A("Q2 order inflow","Q2 order inflow"),fmt:function(v){return "₹"+f0(v)+" cr"}}],
+  entities:SEG.filter(function(s){return s.id!=="re"}).map(function(s){return {id:s.id,name:s.n.en,
+    aliases:{iu:["infra","infrastructure","utilities","இன்ஃப்ரா"],ec:["conventional","hydrocarbon","oil","ஹைட்ரோகார்பன்"],eg:["green","solar","wind","கிரீன்","சோலார்"],mp:["manufacturing","defence","மேனுஃபேக்சரிங்"],tp:["technology","tech","it","டெக்"],fs:["financial","finance","ஃபைனான்ஸ்"]}[s.id],
+    values:{rev:s.rev[0],g:s.g,m:s.m[0],oi:s.oi[0]}}}),
+  kb:[
+   {k:["profit","pat","லாபம்","ப்ராஃபிட்"],a:A("Q2 FY27 profit (PAT) was ₹5,202 crore, up 33% year on year.","Q2 FY27 profit ₹5,202 கோடி — 33% ஏற்றம்."),d:A("EBITDA was flat at ₹6,845 cr; lower interest and higher other income lifted profit.","EBITDA ₹6,845 கோடி flat; interest குறைவு, other income அதிகம்."),tab:"fin"},
+   {k:["total order","order inflow","record","order book","ஆர்டர் புக்"],a:A("Orders hit a record ₹1.48 lakh crore in Q2, and the order book is ₹8.54 lakh crore.","Q2 orders record ₹1.48 லட்சம் கோடி; order book ₹8.54 லட்சம் கோடி."),tab:"dash"},
+   {k:["group margin","overall margin","margin fall","why margin"],a:A("Group EBITDA margin fell to 8.7% from 10.0%, due to water project costs, supply-chain costs and young projects.","Group margin 10.0%-லிருந்து 8.7% — water project cost, supply chain, புது projects."),tab:"seg"},
+   {k:["cash","working capital","wc","கேஷ்"],a:A("Net working capital is a record-low 1.7% of revenue, about 6 days; H1 operating cash was ₹28,100 crore.","Working capital 1.7% — ~6 நாள்; H1 operating cash ₹28,100 கோடி."),tab:"cf"},
+   {k:["middle east","gulf","international","மிடில் ஈஸ்ட்","வெளிநாடு"],a:A("The Middle East gave 51% of Q2 orders; international is 58% of revenue.","Q2 orders-ல 51% Middle East; revenue-ல 58% international."),tab:"geo"},
+   {k:["why","lead","alone","others","peers","ஏன்"],preferOverMetric:true,a:A("L&T leads because it is diversified across sectors and countries, has clients who pay, and a balance sheet that can bid for mega jobs.","பல துறை, பல நாடு, சரியா pay பண்ற clients, mega jobs-க்கு bid பண்ற balance sheet — அதனால L&T முன்னாடி."),tab:"why"},
+   {k:["subsidiar","ltimindtree","ltts","l&t finance","சப்சிடியரி"],preferOverMetric:true,a:A("Key subsidiaries: LTIMindtree, LTTS and L&T Finance; L&T Finance's Q2 profit rose 33% to ₹975 crore.","முக்கிய subsidiaries: LTIMindtree, LTTS, L&T Finance; LTF profit 33% ஏறி ₹975 கோடி."),tab:"subs"},
+   {k:["valuation","pe","p/e","expensive","வேல்யுவேஷன்"],a:A("L&T trades near 28 times trailing earnings, above infra peers near 18 times.","L&T ~28× P/E; infra peers ~18×."),tab:"val"},
+   {k:["guidance","fy27","outlook","கைடன்ஸ்"],a:A("FY27 guidance: orders and revenue up 10–12%, PP&M EBITDA margin about 7.8%.","FY27 guidance: orders, revenue +10–12%, PP&M margin ~7.8%."),tab:"dash"},
+   {k:["lakshya","hydrogen","data centre","semiconductor","லக்ஷ்யா"],preferOverMetric:true,a:A("Lakshya 31 plans ₹42,400–45,000 crore for green hydrogen, data centres, electronics, chips and realty.","Lakshya 31: ₹42,400–45,000 கோடி — green hydrogen, data centres, electronics, chips, realty."),tab:"bet"},
+   {k:["share price","stock","fall","ஷேர்"],a:A("The share closed at ₹3,665 on 27 October, down about 10% this year.","27 Oct share ₹3,665; இந்த வருஷம் ~10% இறக்கம்."),tab:"mkt"},
+   {k:["trigger","cycle","ட்ரிகர்","சைக்கிள்"],a:A("CB scores: Cycle 62 and Trigger 41 — cycle is supportive but risks currently outweigh fresh catalysts.","CB: Cycle 62, Trigger 41."),tab:"tc"},
+   {k:["pillar","score","தூண்"],a:A("L&T scores 46 out of 60 on the 6 Pillars; valuation is its weakest pillar at 5.","6 Pillars-ல 46/60; valuation தான் weak (5)."),tab:"pil"}],
+  suggestions:[["Why is L&T doing better than other infra companies?","மற்ற infra companies-ஐ விட L&T ஏன் நல்லா இருக்கு?"],["Which segment has the highest margin?","எந்த segment-க்கு margin அதிகம்?"],["What was the profit?","Profit எவ்வளவு?"],["How much came from the Middle East?","Middle East-லிருந்து எவ்வளவு?"],["Should I buy L&T?","L&T வாங்கலாமா?"]]
+};
+/* Own-voice common clip library (record once in your voice, reuse in every dashboard). Missing files fall back to device voice. */
+var CLIPS={greeting:"clips/greeting_"+"{lang}.mp3",noAdvice:"clips/no_advice_{lang}.mp3",fallback:"clips/not_on_page_{lang}.mp3"};
+
+/* Lightweight built-in engine — used only if cauvery-assist.js is not pasted above this script. */
+var MiniAssist=(function(){
+  var st={rate:0.8,wait:3,msgs:[],lastEnt:null,speaking:false};
+  try{var r=localStorage.getItem(CONFIG.storageKey+"_rate");if(r)st.rate=parseFloat(r);var w=localStorage.getItem(CONFIG.storageKey+"_wait");if(w)st.wait=parseFloat(w);}catch(e){}
+  function low(s){return (s||"").toLowerCase();}
+  function has(q,arr){return (arr||[]).some(function(k){k=low(k);if(/^[a-z&\/ ]+$/.test(k)&&k.length<=5)return new RegExp("(^|[^a-z])"+k.replace("/","\\/")+"([^a-z]|$)").test(q);return q.indexOf(k)>=0});}
+  function answer(q0){var q=low(q0);
+    if(/\b(buy|sell|hold|invest|target price)\b/.test(q)||has(q,["வாங்கலாமா","விற்கலாமா","வாங்க"]))return{a:t(CONFIG.noAdvice),clip:"noAdvice",tab:"chk"};
+    var met=CONFIG.metrics.filter(function(m){return has(q,m.kw)})[0];
+    var ent=CONFIG.entities.filter(function(e){return has(q,e.aliases)||q.indexOf(low(e.name))>=0})[0];
+    var kb=CONFIG.kb.filter(function(k){return has(q,k.k)});
+    var pref=kb.filter(function(k){return k.preferOverMetric})[0];
+    if(pref&&(!ent||!met))return{a:t(pref.a),d:pref.d?t(pref.d):"",tab:pref.tab};
+    if(!ent&&met&&/(highest|lowest|best|worst|most|least|அதிகம்|குறைவு|top)/.test(q)){
+      var lowQ=/(lowest|least|worst|குறைவு)/.test(q);
+      var list=CONFIG.entities.filter(function(e){return e.values[met.key]!=null}).sort(function(a,b){return lowQ?a.values[met.key]-b.values[met.key]:b.values[met.key]-a.values[met.key]});
+      var x=list[0],y=list[1];st.lastEnt=x;
+      return{a:L(x.name+" has the "+(lowQ?"lowest ":"highest ")+t(met.label)+": "+met.fmt(x.values[met.key])+". Next: "+y.name+" ("+met.fmt(y.values[met.key])+").",x.name+"-க்கு தான் "+t(met.label)+" "+(lowQ?"குறைவு":"அதிகம்")+" — "+met.fmt(x.values[met.key])+". அடுத்து "+y.name+" ("+met.fmt(y.values[met.key])+")."),tab:"seg"};}
+    if(!ent&&met&&st.lastEnt&&/(its|that|அதோட|அதுக்கு)/.test(q))ent=st.lastEnt;
+    if(ent){st.lastEnt=ent;var m=met||CONFIG.metrics[0];var v=ent.values[m.key];
+      if(v==null)return{a:L(ent.name+": "+t(m.label)+" is not disclosed.",ent.name+": "+t(m.label)+" disclose பண்ணல."),tab:"seg"};
+      return{a:L(t(m.label).charAt(0).toUpperCase()+t(m.label).slice(1)+" for "+ent.name+": "+m.fmt(v)+".",ent.name+" "+t(m.label)+" "+m.fmt(v)+"."),tab:"seg"};}
+    if(kb.length)return{a:t(kb[0].a),d:kb[0].d?t(kb[0].d):"",tab:kb[0].tab};
+    if(met&&met.key==="m")return{a:t(CONFIG.kb[2].a),tab:"seg"};
+    if(met&&met.key==="oi")return{a:t(CONFIG.kb[1].a),tab:"dash"};
+    return{a:t(CONFIG.fallback),clip:"fallback"};}
+  function speak(text,clip){stop();
+    if(clip&&CLIPS[clip]){var au=new Audio(CLIPS[clip].replace("{lang}",LANG));au.onerror=function(){tts(text)};au.play().catch(function(){tts(text)});return;}
+    tts(text);}
+  function tts(text){if(!("speechSynthesis" in window))return;var parts=text.match(/[^.!?।]+[.!?।]?/g)||[text];var vs=speechSynthesis.getVoices();
+    var want=LANG==="ta"?"ta":"en-IN";var v=vs.filter(function(x){return x.lang&&x.lang.indexOf(want)===0})[0]||vs.filter(function(x){return /IN/.test(x.lang||"")})[0];
+    parts.forEach(function(p){var u=new SpeechSynthesisUtterance(p.trim());u.rate=st.rate;u.lang=LANG==="ta"?"ta-IN":"en-IN";if(v)u.voice=v;speechSynthesis.speak(u);});}
+  function stop(){try{speechSynthesis.cancel();}catch(e){}}
+  function plain(h){var d=document.createElement("div");d.innerHTML=h;d.querySelectorAll("svg,button,table").forEach(function(n){n.remove()});return d.textContent.replace(/\s+/g," ").trim();}
+  function ask(q){if(!q)return;st.msgs.push({u:q});var r=answer(q);st.msgs.push({a:r.a,d:r.d,tab:r.tab});draw();speak(r.a,r.clip);}
+  var host;
+  function draw(){if(!host)return;var c=host.querySelector(".chat");c.innerHTML=st.msgs.map(function(m){return m.u?'<div class="msg u">'+m.u.replace(/</g,"&lt;")+'</div>':'<div class="msg a">'+m.a+(m.d?'<details><summary>'+L("More details","மேலும்")+'</summary>'+m.d+'</details>':'')+(m.tab?' <button class="btn" onclick="go(\''+m.tab+'\')">'+L("Open related tab","Tab-ஐ திற")+'</button>':'')+'</div>'}).join("");c.scrollTop=c.scrollHeight;}
+  function listen(){var SR=window.SpeechRecognition||window.webkitSpeechRecognition;var note=host.querySelector("#micNote");
+    if(!SR){note.textContent=L("Voice input isn't available here. It works on GitHub Pages in Chrome or Edge.","இங்க mic வேலை செய்யாது. GitHub Pages-ல Chrome/Edge-ல வேலை செய்யும்.");return;}
+    var rec=new SR(),txt="",timer;rec.lang=LANG==="ta"?"ta-IN":"en-IN";rec.continuous=true;rec.interimResults=true;
+    rec.onresult=function(e){txt="";for(var i=0;i<e.results.length;i++)txt+=e.results[i][0].transcript;host.querySelector("#askIn").value=txt;clearTimeout(timer);note.textContent=L("Listening… waiting "+st.wait+"s after you stop","கேட்டுக்கிட்டு இருக்கேன்… நீங்க நிறுத்தின பிறகு "+st.wait+" நொடி");timer=setTimeout(function(){rec.stop();},st.wait*1000);};
+    rec.onend=function(){note.textContent="";if(txt)ask(txt);host.querySelector("#askIn").value="";};
+    rec.onerror=function(){note.textContent=L("Microphone blocked in this view. Use GitHub Pages in Chrome/Edge.","இந்த view-ல mic block. GitHub Pages-ல Chrome/Edge பயன்படுத்துங்க.");};
+    try{rec.start();note.textContent=L("Listening…","கேட்டுக்கிட்டு இருக்கேன்…");}catch(e){rec.onerror();}}
+  function mount(el){host=el;if(!st.msgs.length)st.msgs.push({a:t(CONFIG.greeting)});
+    el.innerHTML='<div class="chat"></div><div class="askrow"><input id="askIn" placeholder="'+t(CONFIG.placeholder)+'"><button class="btn solid" id="askGo">'+L("Ask","கேளு")+'</button><button class="btn" id="askMic">🎙 '+L("Speak","பேசு")+'</button><button class="btn" id="askStop">⏹ '+L("Stop","நிறுத்து")+'</button></div><p class="note" id="micNote"></p>'+
+      '<div class="ctrl"><label for="rate">'+L("Speed","வேகம்")+'</label><button class="btn" id="rMinus">−</button><input id="rate" type="range" min="0.5" max="1.5" step="0.05" value="'+st.rate+'"><button class="btn" id="rPlus">+</button><span class="mono" id="rVal">'+st.rate.toFixed(2)+'×</span>'+
+      [["Slow",0.6],["Relaxed",0.8],["Normal",1],["Fast",1.25]].map(function(p){return '<button class="btn" data-r="'+p[1]+'">'+p[0]+'</button>'}).join("")+
+      '<label for="waitSel">'+L("Wait after I stop","நிறுத்தின பிறகு காத்திரு")+'</label><select id="waitSel">'+[2,3,5].map(function(w){return '<option '+(w==st.wait?"selected":"")+' value="'+w+'">'+w+'s</option>'}).join("")+'</select></div>'+
+      '<div class="sugg">'+CONFIG.suggestions.map(function(s){return '<button>'+(LANG==="ta"?s[1]:s[0])+'</button>'}).join("")+'</div>';
+    function setRate(r){st.rate=Math.min(1.5,Math.max(0.5,r));el.querySelector("#rate").value=st.rate;el.querySelector("#rVal").textContent=st.rate.toFixed(2)+"×";try{localStorage.setItem(CONFIG.storageKey+"_rate",st.rate)}catch(e){}}
+    el.querySelector("#askGo").onclick=function(){var i=el.querySelector("#askIn");ask(i.value.trim());i.value="";};
+    el.querySelector("#askIn").onkeydown=function(e){if(e.key==="Enter")el.querySelector("#askGo").click();};
+    el.querySelector("#askMic").onclick=listen;el.querySelector("#askStop").onclick=stop;
+    el.querySelector("#rate").oninput=function(e){setRate(parseFloat(e.target.value))};
+    el.querySelector("#rMinus").onclick=function(){setRate(st.rate-0.1)};el.querySelector("#rPlus").onclick=function(){setRate(st.rate+0.1)};
+    el.querySelectorAll("[data-r]").forEach(function(b){b.onclick=function(){setRate(parseFloat(b.dataset.r))}});
+    el.querySelector("#waitSel").onchange=function(e){st.wait=parseFloat(e.target.value);try{localStorage.setItem(CONFIG.storageKey+"_wait",st.wait)}catch(x){}};
+    el.querySelectorAll(".sugg button").forEach(function(b){b.onclick=function(){ask(b.textContent)}});
+    draw();return{setLang:function(){},speak:function(x){speak(x)},plain:plain};}
+  return{mount:mount,speak:speak,plain:plain,stop:stop};
+})();
+var assist=null;
+R.ask=function(){return head("Cauvery Assist","Cauvery Assist","Ask in English or Tamil. Direct one-line answers, read aloud slowly.","English அல்லது தமிழ்-ல கேளுங்க. நேரடி பதில், மெதுவா படிக்கும்.")+'<div class="card"><div id="assist"></div></div>';};
+
+/* ============ "Picture it" graphics layer ============ */
+var C={ink:"#1B1006",acc:"#F28C28",soft:"#FDE3C6",card:"#FFFBF6",lt:"#0B4F8A",lts:"#DCEAF7",good:"#1E7B3A",gs:"#DDF2E2",bad:"#B3261E",bs:"#FBE0DD",warn:"#A35A00",line:"#E2B98C"};
+function sv(w,h,body){return '<svg viewBox="0 0 '+w+' '+h+'" role="img">'+body+'</svg>';}
+function tx(x,y,s,o){o=o||{};return '<text x="'+x+'" y="'+y+'" font-size="'+(o.fs||12)+'" text-anchor="'+(o.a||"middle")+'"'+(o.mono?' class="mono"':'')+(o.fill?' style="fill:'+o.fill+'"':'')+'>'+String(s).replace(/&(?!amp;)/g,"&amp;")+'</text>';}
+function rc(x,y,w,h,f,st,r){return '<rect x="'+x+'" y="'+y+'" width="'+w+'" height="'+h+'" rx="'+(r==null?6:r)+'" fill="'+f+'" stroke="'+(st||C.ink)+'" stroke-width="2"/>';}
+function arw(x1,y1,x2,y2,col,lbl){var id="a"+Math.random().toString(36).slice(2,7);return '<defs><marker id="'+id+'" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="'+(col||C.acc)+'"/></marker></defs><line x1="'+x1+'" y1="'+y1+'" x2="'+x2+'" y2="'+y2+'" stroke="'+(col||C.acc)+'" stroke-width="3" marker-end="url(#'+id+')"/>'+(lbl?tx((x1+x2)/2,(y1+y2)/2-7,lbl,{fs:11}):"");}
+function pic(title,svg,note,wide){return '<div class="card pic'+(wide?' wide':'')+'"><h3>🖼 '+title+'</h3>'+box(svg)+(note?'<p class="note">'+note+'</p>':'')+'</div>';}
+function picWrap(a){return '<h3 style="margin:22px 0 10px;font-family:var(--f-disp);font-size:22px">'+L("Picture it","படமா பாருங்க")+'</h3><div class="pics">'+a.join("")+'</div>';}
+/* simple icons */
+var IC={
+ factory:function(x,y){return '<path d="M'+x+' '+(y+40)+'v-22l14-10v10l14-10v10l14-10v-14h8v46z" fill="'+C.lts+'" stroke="'+C.lt+'" stroke-width="2"/>';},
+ platform:function(x,y){return '<path d="M'+(x+4)+' '+(y+44)+'l8-24h28l8 24M'+(x+12)+' '+(y+20)+'v-8h28v8M'+(x+30)+' '+(y+12)+'v-12" stroke="'+C.ink+'" stroke-width="2.5" fill="none"/><path d="M'+x+' '+(y+46)+'q13-6 26 0t26 0" stroke="'+C.lt+'" stroke-width="2.5" fill="none"/>';},
+ tower:function(x,y){return '<path d="M'+(x+26)+' '+y+'l-16 46M'+(x+26)+' '+y+'l16 46M'+(x+8)+' '+(y+14)+'h36M'+(x+14)+' '+(y+28)+'h24" stroke="'+C.ink+'" stroke-width="2.5" fill="none"/>';},
+ metro:function(x,y){return rc(x,y+12,52,26,C.soft,C.ink,8)+'<rect x="'+(x+6)+'" y="'+(y+17)+'" width="12" height="9" fill="'+C.card+'" stroke="'+C.ink+'"/><rect x="'+(x+22)+'" y="'+(y+17)+'" width="12" height="9" fill="'+C.card+'" stroke="'+C.ink+'"/><line x1="'+(x-4)+'" y1="'+(y+44)+'" x2="'+(x+56)+'" y2="'+(y+44)+'" stroke="'+C.ink+'" stroke-width="2.5"/>';},
+ sun:function(x,y){return '<circle cx="'+(x+26)+'" cy="'+(y+16)+'" r="10" fill="#FFD27A" stroke="'+C.warn+'" stroke-width="2"/><path d="M'+(x+6)+' '+(y+46)+'l8-14h28l8 14z" fill="'+C.lts+'" stroke="'+C.lt+'" stroke-width="2"/>';},
+ chip:function(x,y){return rc(x+12,y+10,28,28,C.lts,C.lt,3)+'<path d="M'+(x+18)+' '+(y+4)+'v6M'+(x+26)+' '+(y+4)+'v6M'+(x+34)+' '+(y+4)+'v6M'+(x+18)+' '+(y+38)+'v6M'+(x+26)+' '+(y+38)+'v6M'+(x+34)+' '+(y+38)+'v6" stroke="'+C.lt+'" stroke-width="2"/>';},
+ coin:function(x,y){return '<circle cx="'+(x+26)+'" cy="'+(y+24)+'" r="18" fill="#FFD27A" stroke="'+C.warn+'" stroke-width="2.5"/>'+tx(x+26,y+29,"₹",{fs:16});},
+ beam:function(x,y){return '<path d="M'+(x+4)+' '+(y+14)+'h44M'+(x+4)+' '+(y+36)+'h44M'+(x+26)+' '+(y+14)+'v22" stroke="'+C.ink+'" stroke-width="5" fill="none"/>';},
+ people:function(x,y){return '<circle cx="'+(x+16)+'" cy="'+(y+12)+'" r="7" fill="'+C.soft+'" stroke="'+C.ink+'" stroke-width="2"/><circle cx="'+(x+36)+'" cy="'+(y+12)+'" r="7" fill="'+C.soft+'" stroke="'+C.ink+'" stroke-width="2"/><path d="M'+(x+4)+' '+(y+40)+'q12-22 24 0M'+(x+24)+' '+(y+40)+'q12-22 24 0" stroke="'+C.ink+'" stroke-width="2" fill="'+C.soft+'"/>';},
+ gov:function(x,y){return '<path d="M'+(x+4)+' '+(y+16)+'l22-12 22 12z" fill="'+C.soft+'" stroke="'+C.ink+'" stroke-width="2"/><path d="M'+(x+10)+' '+(y+18)+'v20M'+(x+20)+' '+(y+18)+'v20M'+(x+32)+' '+(y+18)+'v20M'+(x+42)+' '+(y+18)+'v20M'+(x+4)+' '+(y+40)+'h44" stroke="'+C.ink+'" stroke-width="2.5"/>';},
+ drop:function(x,y){return '<path d="M'+(x+26)+' '+(y+4)+'q16 22 0 38q-16-16 0-38z" fill="'+C.lts+'" stroke="'+C.lt+'" stroke-width="2"/>';}
+};
+function waterfall(steps,opt){ // steps:[{l,v,type:'total'|'delta'}]
+  opt=opt||{};var W=680,H=290,pb=58,pt=26,n=steps.length,bw=(W-40)/n,max=opt.max||100,run=0,s="";
+  var y=function(v){return H-pb-(v/max)*(H-pb-pt);};
+  s+='<line x1="10" x2="'+(W-10)+'" y1="'+(H-pb)+'" y2="'+(H-pb)+'" stroke="'+C.line+'" stroke-width="1.5"/>';
+  steps.forEach(function(st,i){var x=20+i*bw+8,w=bw-16,a,b,col;
+    if(st.type==="total"){a=0;b=st.v;run=st.v;col=st.c||C.lt;}else{a=run;b=run+st.v;run=b;col=st.v>=0?C.good:C.bad;}
+    var top=y(Math.max(a,b)),h=Math.max(2,Math.abs(y(a)-y(b)));
+    s+='<rect x="'+x+'" y="'+top+'" width="'+w+'" height="'+h+'" rx="2" fill="'+col+'"/>';
+    s+=tx(x+w/2,top-6,(st.type==="total"?"":(st.v>=0?"+":"−"))+(opt.fmt?opt.fmt(Math.abs(st.v)):Math.abs(st.v)),{fs:12,mono:1});
+    var parts=st.l.split("|");parts.forEach(function(p,k){s+=tx(x+w/2,H-pb+16+k*14,p,{fs:11});});
+    if(i<n-1)s+='<line x1="'+(x+w)+'" x2="'+(x+w+16)+'" y1="'+y(run)+'" y2="'+y(run)+'" stroke="'+C.ink+'" stroke-dasharray="3 3"/>';});
+  return sv(W,H,s);}
+function bubble(items,xr,yr,opt){opt=opt||{};var W=640,H=320,pl=50,pb=46,pt=16,pr=20,s="";
+  var X=function(v){return pl+(v-xr[0])/(xr[1]-xr[0])*(W-pl-pr)},Y=function(v){return H-pb-(v-yr[0])/(yr[1]-yr[0])*(H-pb-pt)};
+  for(var g=0;g<=4;g++){var gy=Y(yr[0]+(yr[1]-yr[0])*g/4);s+='<line x1="'+pl+'" x2="'+(W-pr)+'" y1="'+gy+'" y2="'+gy+'" stroke="#F3D3B0"/>'+tx(pl-8,gy+4,Math.round(yr[0]+(yr[1]-yr[0])*g/4)+(opt.yu||""),{a:"end",fs:11,mono:1});}
+  for(g=0;g<=5;g++){var gx=X(xr[0]+(xr[1]-xr[0])*g/5);s+=tx(gx,H-pb+16,Math.round(xr[0]+(xr[1]-xr[0])*g/5)+(opt.xu||""),{fs:11,mono:1});}
+  if(xr[0]<0)s+='<line x1="'+X(0)+'" x2="'+X(0)+'" y1="'+pt+'" y2="'+(H-pb)+'" stroke="'+C.ink+'" stroke-dasharray="4 3"/>';
+  s+=tx((W+pl)/2,H-8,opt.xl||"",{fs:12})+'<text x="14" y="'+(H/2)+'" font-size="12" text-anchor="middle" transform="rotate(-90 14 '+(H/2)+')">'+(opt.yl||"")+'</text>';
+  items.forEach(function(it){var r=Math.max(8,Math.sqrt(it.s)*opt.k);s+='<circle cx="'+X(it.x)+'" cy="'+Y(it.y)+'" r="'+r+'" fill="'+it.c+'" fill-opacity=".35" stroke="'+it.c+'" stroke-width="2.5"/>'+tx(X(it.x),Y(it.y)-r-5,it.l,{fs:11.5});});
+  return sv(W,H,s);}
+function dumbbell(rows,min,max,unit){var W=640,rh=38,lw=130,H=rows.length*rh+40,s="";var X=function(v){return lw+(v-min)/(max-min)*(W-lw-40)};
+  rows.forEach(function(r,i){var y=24+i*rh;s+=tx(0,y+5,r[0],{a:"start",fs:12.5})+'<line x1="'+X(r[1])+'" x2="'+X(r[2])+'" y1="'+y+'" y2="'+y+'" stroke="'+C.line+'" stroke-width="6" stroke-linecap="round"/><circle cx="'+X(r[1])+'" cy="'+y+'" r="7" fill="'+C.card+'" stroke="'+C.ink+'" stroke-width="2"/><circle cx="'+X(r[2])+'" cy="'+y+'" r="8" fill="'+(r[2]<r[1]?C.bad:C.good)+'"/>'+tx(X(r[2])+(r[2]<r[1]?-16:16),y-10,r[2]+unit,{fs:11,mono:1});});
+  s+='<circle cx="'+lw+'" cy="'+(H-10)+'" r="6" fill="'+C.card+'" stroke="'+C.ink+'" stroke-width="2"/>'+tx(lw+12,H-6,L("year ago","போன வருஷம்"),{a:"start",fs:11})+'<circle cx="'+(lw+130)+'" cy="'+(H-10)+'" r="6" fill="'+C.bad+'"/>'+tx(lw+142,H-6,L("latest","இப்போ"),{a:"start",fs:11});
+  return sv(W,H,s);}
+
+var X={};
+/* ---- Business Model (graphics-first) ---- */
+X.bm=function(){
+  var s="";
+  // zones
+  s+=rc(10,40,170,250,C.card,C.line)+tx(95,62,L("1 · INPUTS","1 · INPUTS"),{fs:13});
+  s+=rc(250,40,220,250,C.lts,C.lt)+tx(360,62,L("2 · L&T HUB","2 · L&T HUB"),{fs:13});
+  s+=rc(540,40,170,250,C.card,C.line)+tx(625,62,L("3 · PRODUCTS","3 · PRODUCTS"),{fs:13});
+  s+=IC.beam(30,80)+tx(130,105,L("Steel","Steel"),{fs:12})+IC.drop(30,140)+tx(130,165,L("Cement, water","Cement"),{fs:12})+IC.people(30,200)+tx(130,225,L("Engineers, workers","Engineers, workers"),{fs:12});
+  s+=IC.factory(275,80)+tx(410,96,L("Design centres","Design centres"),{fs:11.5})+tx(410,112,L("+ yards (Kattupalli, Hazira)","+ yards (Kattupalli, Hazira)"),{fs:11.5});
+  s+=IC.chip(275,150)+tx(410,176,L("Heavy & precision","Heavy & precision"),{fs:11.5})+tx(410,190,L("engineering works","engineering"),{fs:11.5});
+  s+=tx(360,240,L("Order book","Order book"),{fs:12})+tx(360,262,"₹8,53,514 cr",{fs:16,mono:1});
+  s+=IC.platform(560,76)+tx(660,104,L("Oil-gas","Oil-gas"),{fs:12})+IC.metro(560,130)+tx(660,160,L("Metros, buildings","Metro, buildings"),{fs:12})+IC.tower(560,192)+tx(660,220,L("Power, wind, solar","Power, wind, solar"),{fs:12})+tx(625,268,L("+ IT services, loans","+ IT services, loans"),{fs:11.5});
+  s+=arw(182,165,246,165,C.acc,"")+arw(472,165,536,165,C.acc,"");
+  // customers row
+  s+=rc(130,330,460,90,C.soft,C.acc)+tx(360,352,L("4 · CUSTOMERS (Q2 orders)","4 · CUSTOMERS (Q2 orders)"),{fs:13});
+  s+=IC.platform(150,360)+tx(250,388,L("Middle East 51%","Middle East 51%"),{fs:13})+IC.gov(340,362)+tx(445,388,L("India 37%","India 37%"),{fs:13})+tx(540,388,L("Others 12%","Others 12%"),{fs:13});
+  s+=arw(625,292,520,328,C.acc,L("tender & bid → deliver","tender → deliver"));
+  // money back
+  s+='<path d="M228 380 Q20 390 22 296" stroke="'+C.good+'" stroke-width="3" fill="none" stroke-dasharray="7 5"/>'+tx(52,318,L("₹ revenue","₹ revenue"),{fs:12,fill:C.good})+tx(52,334,"₹78,750 cr",{fs:12,mono:1,fill:C.good});
+  s+=IC.coin(20,0)+tx(78,24,L("Money flows back as work is billed","வேலை முடிய முடிய bill → பணம் திரும்பி வருது"),{a:"start",fs:12});
+  var flow=sv(720,430,s);
+  var wf=waterfall([{l:L("Revenue","Revenue"),v:100,type:"total",c:C.lt},{l:L("Costs","Costs"),v:-91.3},{l:"EBITDA",v:8.7,type:"total",c:C.acc},{l:L("Other|income","Other|income"),v:2.9},{l:L("Interest","Interest"),v:-0.6},{l:L("D&A, tax,|minority","D&A, tax,|minority"),v:-4.4},{l:"PAT",v:6.6,type:"total",c:C.good}],{max:100,fmt:function(v){return v.toFixed(1)}});
+  // zoomed bottom waterfall (EBITDA to PAT)
+  var wf2=waterfall([{l:"EBITDA",v:6845,type:"total",c:C.acc},{l:L("+ Other|income","+ Other|income"),v:2310},{l:L("− Interest","− Interest"),v:-473},{l:L("− D&A, tax,|minority","− D&A, tax,|minority"),v:-3480},{l:"PAT",v:5202,type:"total",c:C.good}],{max:9500,fmt:function(v){return f0(v)}});
+  // order-book tank
+  var tk='';tk+=rc(40,30,140,200,C.card,C.ink,10)+'<rect x="42" y="'+(32+196*0.08)+'" width="136" height="'+(196*0.92)+'" fill="'+C.lts+'"/>'+tx(110,140,L("Order book","Order book"),{fs:13})+tx(110,160,"₹8.54 L cr",{fs:15,mono:1});
+  tk+=arw(250,40,190,80,C.good,"")+tx(320,40,L("Fresh orders ₹1.48 L cr","புது orders ₹1.48 L cr"),{fs:12})+tx(320,56,L("(book-to-bill 1.88×)","(book-to-bill 1.88×)"),{fs:11});
+  tk+='<path d="M180 210 h40 v30" stroke="'+C.ink+'" stroke-width="5" fill="none"/>'+arw(220,244,220,282,C.acc,"")+tx(330,262,L("~9% drains out each quarter","ஒவ்வொரு quarter-லயும் ~9% execution"),{fs:12})+tx(330,280,L("= Revenue ₹78,750 cr","= Revenue ₹78,750 cr"),{fs:12,mono:1});
+  tk+=tx(110,256,L("≈ 2.8 years of work","≈ 2.8 வருஷ வேலை"),{fs:12});
+  var tank=sv(520,300,tk);
+  // segment revenue strip
+  var tot=SEG.reduce(function(a,x){return a+x.rev[0]},0),xx=10,st="";
+  SEG.forEach(function(x){var w=x.rev[0]/tot*620;st+='<rect x="'+xx+'" y="20" width="'+w+'" height="46" fill="'+x.col+'" stroke="'+C.card+'" stroke-width="2"/>';if(w>48)st+=tx(xx+w/2,48,Math.round(x.rev[0]/tot*100)+"%",{fs:13,fill:"#FFFBF6"});xx+=w;});
+  var legend="";SEG.forEach(function(x,i){legend+='<rect x="'+(10+(i%4)*160)+'" y="'+(84+Math.floor(i/4)*20)+'" width="12" height="12" fill="'+x.col+'"/>'+tx(26+(i%4)*160,94+Math.floor(i/4)*20,t(x.n).replace("Technology, Platforms & Services","Tech, Platforms").replace("Infrastructure & Utilities","Infra & Utilities"),{a:"start",fs:11});});
+  var strip=sv(640,128,st+legend);
+  return [pic(L("Source to customer — the full map","Source-லிருந்து customer வரை — முழு map"),flow,L("Inputs → hub → products → customers; money returns as work gets billed.","Inputs → hub → products → customers; வேலைக்கு bill போட்டதும் பணம் திரும்ப வருது."),1),
+    pic(L("Where every ₹100 of revenue goes (Q2)","₹100 revenue எங்க போகுது (Q2)"),wf,L("₹91.3 goes on costs; ₹6.6 ends as profit.","₹91.3 செலவு; ₹6.6 profit.")),
+    pic(L("EBITDA to profit bridge (₹ cr)","EBITDA → profit bridge (₹ கோடி)"),wf2,L("Other income was 44% of PAT this quarter.","இந்த quarter PAT-ல 44% other income.")),
+    pic(L("Revenue formula as a water tank","Revenue formula — தண்ணீர் tank மாதிரி"),tank,L("Orders fill the tank faster than execution drains it, so the tank keeps rising.","Execution வெளியேற்றுவதை விட orders வேகமா நிரப்புது — tank ஏறிக்கிட்டே இருக்கு.")),
+    pic(L("Revenue mix by segment (Q2)","Segment வாரியா revenue mix (Q2)"),strip,"",1)];
+};
+/* ---- Dashboard ---- */
+X.dash=function(){
+  var s="";var qs=[["Q2 FY26",10.0,115784,67984],["Q3 FY26",10.4,0,0],["Q4 FY26",10.4,89772,82762],["Q1 FY27",9.0,108014,67942],["Q2 FY27",8.7,147665,78750]];
+  var mline=line([{l:"Q2 FY26",v:10.0},{l:"Q4 FY26",v:10.4},{l:"Q1 FY27",v:9.0},{l:"Q2 FY27",v:8.7}],{min:8,max:11,fmt:function(v){return v+"%"},c:C.bad});
+  var obl=line([{l:"Sep 25",v:6.67},{l:"Mar 26",v:7.40},{l:"Jun 26",v:7.79},{l:"Sep 26",v:8.54}],{min:6,max:9,fmt:function(v){return "₹"+v+"L cr"},c:C.lt});
+  // traffic lights
+  var tl=[[L("Orders","Orders"),C.good],[L("Revenue","Revenue"),C.good],[L("Profit","Profit"),C.good],[L("Margin","Margin"),C.bad],[L("Cash","Cash"),C.good],[L("Share price","Share price"),C.warn]],t2="";
+  tl.forEach(function(x,i){var cx=60+i*105;t2+=rc(cx-26,10,52,96,C.card,C.ink,12)+'<circle cx="'+cx+'" cy="34" r="11" fill="'+(x[1]==C.bad?C.bad:"#F3D3B0")+'"/><circle cx="'+cx+'" cy="58" r="11" fill="'+(x[1]==C.warn?"#E8A33A":"#F3D3B0")+'"/><circle cx="'+cx+'" cy="82" r="11" fill="'+(x[1]==C.good?C.good:"#F3D3B0")+'"/>'+tx(cx,126,x[0],{fs:12});});
+  return [pic(L("Quarter health lights","Quarter health lights"),sv(640,140,t2),L("Green = improving, amber = mixed, red = worsening.","பச்சை = முன்னேற்றம், மஞ்சள் = கலவை, சிவப்பு = மோசம்.")),
+    pic(L("Order book keeps climbing (₹ lakh cr)","Order book ஏறிக்கிட்டே இருக்கு (₹ லட்சம் கோடி)"),obl,""),
+    pic(L("…while EBITDA margin slides","…ஆனா EBITDA margin இறங்குது"),mline,L("Margin path: 10.0% → 10.4% → 9.0% → 8.7%.","Margin: 10.0% → 10.4% → 9.0% → 8.7%."))];
+};
+/* ---- Segments ---- */
+X.seg=function(){
+  var b=bubble(SEG.filter(function(s){return s.m[0]!=null&&s.id!=="re"}).map(function(s){return{x:s.g,y:s.m[0],s:s.rev[0],c:s.col,l:t(s.n).split(" ")[0]+(s.id==="ec"?" Conv":s.id==="eg"?" Green":"")}}),[0,50],[0,24],{k:0.16,xu:"%",yu:"%",xl:L("Revenue growth YoY →","Revenue growth YoY →"),yl:L("EBITDA margin →","EBITDA margin →")});
+  var oi=donut(SEG.filter(function(s){return s.oi[0]}).map(function(s){return{l:t(s.n).replace("Infrastructure & Utilities","Infra & Utilities").replace("Manufacturing & Products","Manufacturing"),v:s.oi[0],c:s.col,s:"₹"+f0(s.oi[0])}}),L("Q2 orders","Q2 orders"));
+  var db=dumbbell(SEG.filter(function(s){return s.m[0]!=null&&s.id!=="re"}).map(function(s){return[t(s.n).replace("Infrastructure & Utilities","Infra & Util.").replace("Technology, Platforms & Services","Tech & Services").replace("Manufacturing & Products","Manufacturing"),s.m[2],s.m[0]]}),0,22,"%");
+  return [pic(L("Growth vs margin (bubble = revenue size)","Growth vs margin (bubble = revenue அளவு)"),b,L("Top-right is the sweet spot. Manufacturing sits closest; Infra is big but slow and thin.","மேல்-வலது தான் best. Manufacturing அருகில்; Infra பெருசு, ஆனா மெதுவா, margin குறைவு.")),
+    pic(L("Who brought the Q2 orders","Q2 orders யார் கொண்டு வந்தாங்க"),oi,L("Energy – Conventional alone brought 53%.","Energy – Conventional மட்டும் 53%.")),
+    pic(L("Margin move: year ago → now","Margin மாற்றம்: போன வருஷம் → இப்போ"),db,L("Only Manufacturing improved.","Manufacturing மட்டும் முன்னேறியது."))];
+};
+/* ---- India vs Global ---- */
+X.geo=function(){
+  var s="",qs=[["Q2 FY26",56,65],["Q1 FY27",51,56],["Q2 FY27",58,63]];
+  qs.forEach(function(q,i){var x=40+i*200;s+=tx(x+70,20,q[0],{fs:13});
+    s+=rc(x,32,60,180,C.lts,C.lt,4)+'<rect x="'+x+'" y="'+(32+180*(1-q[1]/100))+'" width="60" height="'+(180*q[1]/100)+'" fill="#C2410C" rx="4"/>'+tx(x+30,26+180*(1-q[1]/100)+22,q[1]+"%",{fs:13,fill:"#FFFBF6"})+tx(x+30,232,L("Revenue","Revenue"),{fs:11});
+    s+=rc(x+80,32,60,180,C.lts,C.lt,4)+'<rect x="'+(x+80)+'" y="'+(32+180*(1-q[2]/100))+'" width="60" height="'+(180*q[2]/100)+'" fill="#C2410C" rx="4"/>'+tx(x+110,26+180*(1-q[2]/100)+22,q[2]+"%",{fs:13,fill:"#FFFBF6"})+tx(x+110,232,L("Orders","Orders"),{fs:11});});
+  s+='<rect x="40" y="246" width="12" height="12" fill="#C2410C"/>'+tx(58,256,L("International","International"),{a:"start",fs:11})+'<rect x="170" y="246" width="12" height="12" fill="'+C.lts+'" stroke="'+C.lt+'"/>'+tx(188,256,"India",{a:"start",fs:11});
+  // two engines
+  var e="";function eng(cx,lbl,pct,col,sub){var a=Math.PI*(1-pct/100);return '<path d="M'+(cx-80)+' 130 A80 80 0 0 1 '+(cx+80)+' 130" stroke="#F3D3B0" stroke-width="18" fill="none"/><path d="M'+(cx-80)+' 130 A80 80 0 0 1 '+(cx+80*Math.cos(a))+' '+(130-80*Math.sin(a))+'" stroke="'+col+'" stroke-width="18" fill="none"/>'+tx(cx,120,lbl,{fs:14})+tx(cx,152,sub,{fs:12});}
+  e+=eng(170,L("Gulf engine","Gulf engine"),85,"#C2410C",L("orders 2× faster","orders வேகம்"))+eng(470,L("India engine","India engine"),40,C.lt,L("infra orders −13%","infra orders −13%"));
+  return [pic(L("International share: revenue vs orders","International பங்கு: revenue vs orders"),sv(640,268,s),L("More than half of both revenue and orders now come from abroad.","Revenue, orders இரண்டிலும் பாதிக்கு மேல வெளிநாடு.")),
+    pic(L("Two engines, two speeds (CB read)","இரண்டு engines, இரண்டு வேகம்"),sv(640,180,e),L("When India slows, the Gulf engine carries the plane.","India slow ஆனா Gulf engine தூக்கிக்கிட்டு போகுது."))];
+};
+/* ---- Subsidiaries ---- */
+X.subs=function(){
+  var rv=hbars([{l:"LTIMindtree",v:11808,c:"#00838F"},{l:"L&amp;T Finance",v:5484,c:"#8D6E00"},{l:"LTTS",v:3040,c:"#00838F"},{l:"L&amp;T Realty",v:225,c:"#6D4C41"}],{lw:130});
+  var pt=hbars([{l:"LTIMindtree",v:1380,c:"#00838F"},{l:"L&amp;T Finance",v:975,c:"#8D6E00"}],{lw:130,max:1500});
+  // share of group PAT pie: LTIM 1380*0.686=947, LTF 975*0.66=644
+  var d=donut([{l:L("LTIMindtree share","LTIMindtree பங்கு"),v:947,c:"#00838F",s:"~₹947 cr"},{l:L("L&T Finance share","L&T Finance பங்கு"),v:644,c:"#8D6E00",s:"~₹644 cr"},{l:L("Rest of group","மீதி group"),v:5202-947-644,c:C.lt,s:"~₹3,611 cr"}],"PAT ₹5,202");
+  return [pic(L("Subsidiary revenue, Q2 FY27 (₹ cr)","Subsidiary revenue, Q2 FY27 (₹ கோடி)"),rv,L("L&T Finance shows total revenue from operations.","L&T Finance = total revenue from operations.")),
+    pic(L("Subsidiary profit, Q2 FY27 (₹ cr)","Subsidiary profit (₹ கோடி)"),pt,L("LTTS profit included a one-time sale gain, so it is not shown.","LTTS profit-ல one-time gain இருக்கு, அதனால காட்டல.")),
+    pic(L("How much of L&T's profit is IT + Finance? (CB estimate)","L&T profit-ல IT + Finance எவ்வளவு? (CB மதிப்பீடு)"),d,L("≈ subsidiary PAT × L&T's stake. Roughly 3 rupees in 10 of group profit.","≈ subsidiary PAT × L&T stake. Group profit-ல சுமார் 10-க்கு 3 ரூபாய்."))];
+};
+/* ---- Why ---- */
+X.why=function(){
+  var db=dumbbell([["Ahluwalia",8.6,4.3],["Afcons",13.0,9.6],["IRCON",17.1,13.6],["G R Infra",12.65,11.0],["KEC",7.0,5.8],["L&amp;T",9.9,9.0]],0,18,"%");
+  var rd=line([{l:"FY26 base",v:100},{l:"FY27 YTD",v:76}],{min:50,max:110,fmt:function(v){return v},c:C.bad});
+  var s="";[["Roads",55,C.bad],["Other",45,C.line]].forEach(function(){});
+  // dependence comparison stacked bars
+  var bars=[[L("Typical road EPC peer","Road EPC peer"),[[55,C.bad,L("Roads","Roads")],[35,C.lt,L("Other govt","Other govt")],[10,C.line,L("Others","Others")]]],[ "L&amp;T",[[42,C.lt,"Infra"],[34,"#C2410C","Energy-C"],[17,C.good,"Green"],[7,C.line,""]]]];
+  bars.forEach(function(b,i){var y=24+i*70,x=150;s+=tx(0,y+26,b[0],{a:"start",fs:12.5});b[1].forEach(function(p){var w=p[0]*4.6;s+='<rect x="'+x+'" y="'+y+'" width="'+w+'" height="40" fill="'+p[1]+'" stroke="#FFFBF6" stroke-width="2"/>';if(w>40)s+=tx(x+w/2,y+25,p[2]+" "+p[0]+"%",{fs:11,fill:p[1]==C.line?C.ink:"#FFFBF6"});x+=w;});});
+  return [pic(L("Peers' margins fell harder (EBITDA %, Q1 FY26 → Q1 FY27)","Peers margin அதிகமா இறங்கியது"),db,L("L&T fell 0.9 pts; Ahluwalia 4.3 pts, Afcons 3.4 pts.","L&T 0.9 pts; Ahluwalia 4.3, Afcons 3.4 pts.")),
+    pic(L("Eggs in one basket vs many","ஒரே கூடை vs பல கூடை"),sv(640,170,s),L("Peer mix is illustrative (roads gave 50–60% of their orders). L&T mix = order book Sep 2026.","Peer mix ஒரு உதாரணம் (roads 50–60%). L&T = Sep 2026 order book.")),
+    pic(L("India road building index (FY26 pace = 100)","India road building (FY26 = 100)"),rd,L("Road km built so far in FY27 is 24% lower — the core work of most peers.","FY27-ல road km 24% குறைவு — பெரும்பாலான peers-ஓட முக்கிய வேலை."))];
+};
+/* ---- Big bet race ---- */
+X.bet=function(){
+  var s="",lanes=[["Green H₂",L("Order under execution (IOC Panipat)","Order execution-ல (IOC Panipat)"),0.35],["Data centres",L("~32 MW targeted, aim 100 MW","~32 MW, இலக்கு 100 MW"),0.3],["Semiconductors",L("Design stage, no fab","Design stage, fab இல்ல"),0.12],["Realty listing",L("Planned","Plan"),0.1]];
+  lanes.forEach(function(l,i){var y=20+i*56;s+=tx(0,y+22,l[0],{a:"start",fs:13})+'<line x1="140" x2="620" y1="'+(y+18)+'" y2="'+(y+18)+'" stroke="#F3D3B0" stroke-width="14" stroke-linecap="round"/><line x1="140" x2="'+(140+480*l[2])+'" y1="'+(y+18)+'" y2="'+(y+18)+'" stroke="'+C.acc+'" stroke-width="14" stroke-linecap="round"/><circle cx="'+(140+480*l[2])+'" cy="'+(y+18)+'" r="10" fill="'+C.ink+'"/>'+tx(150,y+44,l[1],{a:"start",fs:11});});
+  s+='<line x1="620" x2="620" y1="10" y2="240" stroke="'+C.good+'" stroke-width="3" stroke-dasharray="5 4"/>'+tx(620,256,L("FY31 goal","FY31 goal"),{fs:12});
+  return [pic(L("New-business race track (CB read of progress)","புது business race track"),sv(660,262,s),L("Dot = how far along each bet is; all are early.","Dot = எவ்வளவு தூரம் வந்திருக்கு; எல்லாம் ஆரம்பம் தான்.")),
+    pic(L("Revenue goal: FY26 → FY31 (₹ lakh cr)","Revenue இலக்கு: FY26 → FY31"),vgroup(["FY26","FY31 (12%)","FY31 (15%)"],[{n:L("Revenue","Revenue"),c:C.lt,v:[2.86,5.04,5.75]}],{fmt:function(v){return "₹"+v}}),L("12–15% CAGR roughly doubles revenue in 5 years.","12–15% CAGR = 5 வருஷத்துல revenue இரட்டிப்பு."))];
+};
+/* ---- Value chain ---- */
+X.chain=function(){
+  var s="",st=[[L("Order won","Order"),C.lt],[L("Advance from client","Client advance"),C.good],[L("Design & procure","Design & procure"),C.acc],[L("Build & bill","Build & bill"),C.acc],[L("Collect cash","Cash collect"),C.good],[L("Retention released","Retention"),C.line]];
+  st.forEach(function(x,i){var cx=60+i*104;s+='<circle cx="'+cx+'" cy="60" r="34" fill="'+C.card+'" stroke="'+x[1]+'" stroke-width="4"/>'+tx(cx,64,(i+1),{fs:18,mono:1})+tx(cx,118,x[0],{fs:11});if(i<st.length-1)s+=arw(cx+36,60,cx+66,60,C.ink,"");});
+  s+=tx(320,150,L("L&T's edge: advances come early and collections are fast → working capital only ~6 days","L&T edge: advance சீக்கிரம், collection வேகம் → working capital ~6 நாள்"),{fs:12});
+  return [pic(L("Life of an EPC project (cash view)","ஒரு EPC project-ஓட வாழ்க்கை (cash பார்வை)"),sv(640,165,s),"")];
+};
+/* ---- Financials ---- */
+X.fin=function(){
+  var p=line([{l:"Q2 FY26",v:3926},{l:"Q4 FY26",v:5326},{l:"Q1 FY27",v:4123},{l:"Q2 FY27",v:5202}],{min:3000,max:6000,fmt:function(v){return f0(v)},c:C.good});
+  var r=line([{l:"Q2 FY26",v:67984},{l:"Q4 FY26",v:82762},{l:"Q1 FY27",v:67942},{l:"Q2 FY27",v:78750}],{min:60000,max:90000,fmt:function(v){return f0(v)},c:C.lt});
+  var gr=hbars([{l:L("Order inflow","Order inflow"),v:28,c:C.lt,s:"+28%"},{l:"PAT",v:33,c:C.good,s:"+33%"},{l:L("Revenue","Revenue"),v:16,c:C.acc,s:"+16%"},{l:"EBITDA",v:0.6,c:C.warn,s:"+0.6%"},{l:L("Finance cost","Finance cost"),v:38,c:C.good,s:"−38%"}],{lw:130,max:40});
+  return [pic(L("Revenue trend (₹ cr)","Revenue trend (₹ கோடி)"),r,L("Q4 is seasonally the biggest quarter.","Q4 தான் வழக்கமா பெரிய quarter.")),pic(L("Profit trend (₹ cr)","Profit trend (₹ கோடி)"),p,""),pic(L("YoY change at a glance","YoY மாற்றம் ஒரே பார்வையில"),gr,L("EBITDA barely moved — the gap between EBITDA and PAT growth is the story.","EBITDA நகரல — EBITDA, PAT growth இடையே உள்ள இடைவெளி தான் கதை."))];
+};
+/* ---- Cash flow ---- */
+X.cf=function(){
+  var s='<circle cx="320" cy="150" r="100" fill="none" stroke="#F3D3B0" stroke-width="26"/>',st=[[L("Advances","Advances"),0],[L("Work done","வேலை"),72],[L("Bill client","Bill"),144],[L("Collect","Collect"),216],[L("Pay vendors","Vendors"),288]];
+  st.forEach(function(x){var a=(x[1]-90)*Math.PI/180;s+='<circle cx="'+(320+100*Math.cos(a))+'" cy="'+(150+100*Math.sin(a))+'" r="22" fill="'+C.soft+'" stroke="'+C.acc+'" stroke-width="2.5"/>'+tx(320+150*Math.cos(a),150+138*Math.sin(a)+4,x[0],{fs:12});});
+  s+=tx(320,145,L("Cash cycle","Cash cycle"),{fs:14})+tx(320,168,L("~6 days","~6 நாள்"),{fs:18,mono:1});
+  var d=gauge(6,0,60,L("~6 days","~6 நாள்"),[[0,15,C.gs],[15,35,"#FFEBC8"],[35,60,C.bs]]);
+  return [pic(L("The cash cycle","Cash cycle"),sv(640,300,s),L("Shorter cycle = less money stuck in projects.","Cycle குறைவு = project-ல சிக்கின பணம் குறைவு.")),pic(L("Working capital days dial","Working capital days dial"),d,L("A year ago this needle was at ~37.","போன வருஷம் ~37-ல இருந்தது."))];
+};
+/* ---- Valuations ---- */
+X.val=function(){
+  var b=hbars([{l:"L&amp;T (trailing)",v:28,c:C.lt,s:"~28×"},{l:L("EPC/infra peers (FY27E)","EPC peers (FY27E)"),v:18,c:C.line,s:"~18×"}],{lw:200,max:32});
+  var s="";var x=function(p){return 40+(p-3288)/(4440-3288)*560};s+='<rect x="40" y="40" width="560" height="14" rx="7" fill="'+C.soft+'" stroke="'+C.acc+'"/><circle cx="'+x(3665)+'" cy="47" r="10" fill="'+C.lt+'"/>'+tx(x(3665),28,"₹3,665",{fs:13,mono:1})+tx(40,80,"₹3,288",{fs:12})+tx(600,80,"₹4,440",{fs:12})+tx(x(3665),80,L("33% of range","range-ல 33%"),{fs:11});
+  return [pic(L("P/E: L&T vs peers","P/E: L&T vs peers"),b,L("Premium ≈ 1.5× peers.","Premium ≈ peers-ஐ விட 1.5 மடங்கு.")),pic(L("Where the price sits in its 52-week range","52-week range-ல விலை"),sv(640,96,s),"")];
+};
+/* ---- Takeaways ---- */
+X.kt=function(){
+  var s='<line x1="40" x2="600" y1="60" y2="60" stroke="'+C.ink+'" stroke-width="3"/>',it=[["📦",88],["💰",60],["📉",35],["🏦",90],["🌍",55]];
+  s+=tx(40,90,L("Negative","Negative"),{fs:12})+tx(600,90,L("Positive","Positive"),{fs:12});
+  it.forEach(function(x,i){var px=40+x[1]/100*560;s+='<line x1="'+px+'" x2="'+px+'" y1="48" y2="72" stroke="'+C.ink+'" stroke-width="2"/>'+tx(px,40-(i%2)*18,x[0]+" "+(i+1),{fs:15});});
+  return [pic(L("The 5 takeaways on one scale","5 points ஒரே அளவுகோலில"),sv(640,100,s),L("Numbers match the cards above.","மேல உள்ள cards-ஓட numbers."))];
+};
+/* ---- Market ---- */
+X.mkt=function(){
+  var s='<line x1="320" x2="320" y1="20" y2="190" stroke="'+C.ink+'" stroke-width="2" stroke-dasharray="4 4"/>'+tx(320,14,L("Tug of war","Tug of war"),{fs:13});
+  var neg=[[L("Gulf war hit","Gulf war"),4],[L("Margin slide","Margin இறக்கம்"),4],[L("Slow India infra","India infra slow"),3]],pos=[[L("Q2 beat","Q2 beat"),4],[L("Record orders","Record orders"),4],[L("Cash strength","Cash"),3]];
+  neg.forEach(function(n,i){var w=n[1]*55,y=36+i*50;s+='<rect x="'+(316-w)+'" y="'+y+'" width="'+w+'" height="32" rx="4" fill="'+C.bs+'" stroke="'+C.bad+'" stroke-width="2"/>'+tx(316-w/2,y+21,n[0],{fs:12});});
+  pos.forEach(function(n,i){var w=n[1]*55,y=36+i*50;s+='<rect x="324" y="'+y+'" width="'+w+'" height="32" rx="4" fill="'+C.gs+'" stroke="'+C.good+'" stroke-width="2"/>'+tx(324+w/2,y+21,n[0],{fs:12});});
+  s+=tx(160,200,L("◀ pulling down","◀ கீழே இழுக்குது"),{fs:12})+tx(480,200,L("pulling up ▶","மேலே இழுக்குது ▶"),{fs:12});
+  return [pic(L("Forces on the share price (CB read)","Share விலை மேல உள்ள சக்திகள்"),sv(640,210,s),L("Bar length = strength of the force (1–4).","Bar நீளம் = சக்தியின் அளவு (1–4)."))];
+};
+/* ---- SWOT ---- */
+X.swot=function(){
+  var s='<rect x="60" y="20" width="560" height="260" fill="'+C.card+'" stroke="'+C.line+'"/><line x1="340" x2="340" y1="20" y2="280" stroke="'+C.line+'"/><line x1="60" x2="620" y1="150" y2="150" stroke="'+C.line+'"/>';
+  s+=tx(340,300,L("Likelihood →","வாய்ப்பு →"),{fs:12})+'<text x="24" y="150" font-size="12" text-anchor="middle" transform="rotate(-90 24 150)">'+L("Impact →","தாக்கம் →")+'</text>';
+  s+=tx(480,40,L("Watch closely","கவனமா பாருங்க"),{fs:11,fill:C.bad});
+  [[L("Margin slide","Margin இறக்கம்"),0.8,0.75],[L("Middle East war","Middle East war"),0.45,0.88],[L("State payment delays","Payment delays"),0.7,0.45],[L("New-business low returns","புது business returns"),0.5,0.5],[L("Commodity spike","Commodity spike"),0.35,0.35]].forEach(function(r){var x=60+r[1]*560,y=280-r[2]*260;s+='<circle cx="'+x+'" cy="'+y+'" r="12" fill="'+C.bs+'" stroke="'+C.bad+'" stroke-width="2"/>'+tx(x,y-17,r[0],{fs:11.5});});
+  return [pic(L("Risk map (threats & weaknesses)","Risk map"),sv(640,310,s),L("Top-right = high impact and likely. CB judgement.","மேல்-வலது = அதிக தாக்கம், அதிக வாய்ப்பு. CB மதிப்பீடு."))];
+};
+/* ---- Self-check ---- */
+X.chk=function(){
+  var s="",groups=CHK.length+1;for(var i=0;i<groups;i++){var x=40+i*120;s+='<circle cx="'+x+'" cy="40" r="22" fill="'+C.soft+'" stroke="'+C.acc+'" stroke-width="3"/>'+tx(x,46,i+1,{fs:16,mono:1});if(i<groups-1)s+=arw(x+24,40,x+94,40,C.ink,"");}
+  var lb=[L("The stock","Stock"),L("My problems","பிரச்சனை"),L("My fixes","தீர்வு"),L("Experts","Experts"),L("My rules","என் rules")];lb.forEach(function(l,i){s+=tx(40+i*120,84,l,{fs:12});});
+  return [pic(L("The 5-step path before you own","வாங்கும் முன் 5 படிகள்"),sv(560,100,s),"")];
+};
+/* ---- Assist ---- */
+X.ask=function(){
+  var s="",st=[["🗣",L("You ask","நீங்க கேளுங்க")],["⏳",L("Waits till you stop","நீங்க முடிக்கும் வரை காத்திருக்கும்")],["🔎",L("Finds the number","Number தேடும்")],["💬",L("One-line answer","ஒரு வரி பதில்")],["🔊",L("Reads slowly","மெதுவா படிக்கும்")]];
+  st.forEach(function(x,i){var cx=60+i*125;s+='<circle cx="'+cx+'" cy="44" r="30" fill="'+C.soft+'" stroke="'+C.acc+'" stroke-width="2.5"/>'+tx(cx,53,x[0],{fs:24})+tx(cx,98,x[1],{fs:11});if(i<st.length-1)s+=arw(cx+32,44,cx+90,44,C.ink,"");});
+  return [pic(L("How Cauvery Assist works","Cauvery Assist எப்படி வேலை செய்யுது"),sv(640,112,s),L("Buy/sell questions always get the no-advice reply.","Buy/sell கேள்விக்கு எப்போதும் no-advice பதில்."))];
+};
+/* ---- Analyst view ---- */
+X.av=function(){
+  var s='<path d="M320 60 L320 230" stroke="'+C.ink+'" stroke-width="5"/><path d="M290 230h60l-30-24z" fill="'+C.ink+'"/>';
+  var tilt=-6;s+='<g transform="rotate('+tilt+' 320 60)"><line x1="120" x2="520" y1="60" y2="60" stroke="'+C.ink+'" stroke-width="5"/>'+
+   '<path d="M120 60 L80 130 L160 130Z" fill="none" stroke="'+C.ink+'" stroke-width="2"/><path d="M520 60 L480 130 L560 130Z" fill="none" stroke="'+C.ink+'" stroke-width="2"/>'+
+   rc(70,130,100,60,C.gs,C.good)+tx(120,155,L("Orders","Orders"),{fs:12})+tx(120,175,L("Cash","Cash"),{fs:12})+
+   rc(470,130,100,60,C.bs,C.bad)+tx(520,155,L("Margins","Margins"),{fs:12})+tx(520,175,L("Valuation","Valuation"),{fs:12})+'</g>';
+  s+=tx(320,30,L("Balance: positives slightly heavier","சமநிலை: positives கொஞ்சம் அதிகம்"),{fs:13});
+  return [pic(L("The balance scale","தராசு"),sv(640,250,s),L("CB education view, not a recommendation.","CB education பார்வை, recommendation இல்ல."))];
+};
+/* tabs that already had graphics still get one more where useful */
+X.tc=function(){var s="";[["CY",62],["TG",41],["6P",77]].forEach(function(x,i){var cx=110+i*210;s+='<circle cx="'+cx+'" cy="80" r="60" fill="none" stroke="'+C.soft+'" stroke-width="16"/><circle cx="'+cx+'" cy="80" r="60" fill="none" stroke="'+(x[1]>=60?C.good:x[1]>=45?C.acc:C.bad)+'" stroke-width="16" stroke-dasharray="'+(377*x[1]/100)+' 377" transform="rotate(-90 '+cx+' 80)"/>'+tx(cx,88,x[1],{fs:24,mono:1})+tx(cx,164,x[0]==="6P"?L("6 Pillars (46/60 → %)","6 Pillars (%)"):x[0]==="CY"?L("Cycle","Cycle"):L("Trigger","Trigger"),{fs:12});});
+  return [pic(L("CB lens rings","CB lens rings"),sv(640,175,s),"")];};
+X.pil=function(){var s="";PIL.forEach(function(p,i){var y=18+i*34;s+=tx(0,y+14,t(p[0]),{a:"start",fs:12});for(var k=0;k<10;k++)s+='<rect x="'+(180+k*42)+'" y="'+y+'" width="36" height="20" rx="3" fill="'+(k<p[1]?(p[1]>=8?C.lt:p[1]>=6?C.acc:C.bad):"#F3D3B0")+'"/>';});
+  return [pic(L("Pillar blocks (each block = 1 point)","Pillar blocks (1 block = 1 point)"),sv(640,220,s),"")];};
+X.quiz=function(){var s="";for(var i=0;i<QZ.length;i++){var a=QA[i],c=a==null?"#F3D3B0":(a===QZ[i][2]?C.good:C.bad);s+='<circle cx="'+(50+i*100)+'" cy="40" r="26" fill="'+c+'"/>'+tx(50+i*100,47,"Q"+(i+1),{fs:14,fill:a==null?C.ink:"#FFFBF6"});}
+  return [pic(L("Your answer trail","உங்க பதில் பாதை"),sv(620,80,s),L("Green = right, red = review the tab again.","பச்சை = சரி, சிவப்பு = tab-ஐ மறுபடி பாருங்க."))];};
+
+/* ============ Render & navigation ============ */
+function render(){
+  document.documentElement.lang=LANG==="ta"?"ta":"en";
+  document.getElementById("subline").textContent=L("Business & investment analysis · Results 27 Oct 2026 · CB Research","Business & investment analysis · Results 27 Oct 2026 · CB Research");
+  document.getElementById("slogan").textContent=L("Know before you own","புரிஞ்சு வாங்குங்க!");
+  document.getElementById("disc").textContent=L("CB Research is an independent education platform, not SEBI-registered. Nothing here is a buy, sell or hold recommendation. Figures from company disclosures and news reports; ≈ marks derived or approximate numbers. Do your own research.","CB Research ஒரு கல்வி platform, SEBI-registered இல்ல. இதுல எதுவும் buy/sell/hold recommendation இல்ல. ≈ = கணக்கிட்ட/தோராய எண்கள். நீங்களே research பண்ணுங்க.");
+  document.getElementById("bEN").setAttribute("aria-pressed",LANG==="en");document.getElementById("bTA").setAttribute("aria-pressed",LANG==="ta");
+  document.getElementById("tabs").innerHTML=TABS.map(function(x){return '<button role="tab" aria-selected="'+(x[0]===CUR)+'" onclick="go(\''+x[0]+'\')">'+t(x[1])+'</button>'}).join("");
+  var body=R[CUR](),ex=X[CUR]?picWrap(X[CUR]()):"";
+  if(CUR==="bm"){var cut=body.indexOf('<div class="flow">');body=body.slice(0,cut)+picWrap(X.bm())+'<h3 style="margin:22px 0 10px;font-family:var(--f-disp);font-size:22px">'+L("Tap-to-learn boxes","Tap பண்ணி கத்துக்கோங்க")+'</h3>'+body.slice(cut);ex="";}
+  document.getElementById("main").innerHTML=body+ex;
+  if(CUR==="ask"){var el=document.getElementById("assist");
+    if(window.CauveryAssist&&CauveryAssist.mount){assist=CauveryAssist.mount(el,CONFIG);assist.setLang(LANG);}else{assist=MiniAssist.mount(el);}}
+}
+window.go=function(id){CUR=id;try{history.replaceState(null,"","#"+id)}catch(e){}render();var b=document.querySelector('nav.tabs button[aria-selected="true"]');if(b)b.scrollIntoView({inline:"center",block:"nearest"});window.scrollTo(0,0);};
+window.readTab=function(){var m=document.getElementById("main");var txt=MiniAssist.plain(m.innerHTML);if(window.CauveryAssist&&assist&&assist.speak)assist.speak(txt);else MiniAssist.speak(txt);};
+function setLang(l){LANG=l;try{localStorage.setItem("cb_lt_lang",l)}catch(e){}if(assist&&assist.setLang)assist.setLang(l);render();}
+document.getElementById("bEN").onclick=function(){setLang("en")};document.getElementById("bTA").onclick=function(){setLang("ta")};
+document.getElementById("voiceBubble").onclick=function(){go("ask")};
+document.querySelector("#cbBadge .logo").onclick=function(){document.getElementById("cbBadge").classList.toggle("open")};
+window.addEventListener("hashchange",function(){var h=location.hash.replace("#","");if(h&&R[h]&&h!==CUR){CUR=h;render();}});
+render();
+</script>
