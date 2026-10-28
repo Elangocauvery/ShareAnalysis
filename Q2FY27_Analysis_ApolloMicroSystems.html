@@ -1,0 +1,883 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Apollo Micro Q2FY27</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-datalabels/2.2.0/chartjs-plugin-datalabels.min.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Noto+Sans+Tamil:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#ffffff;--bg2:#f6f8fb;--ink:#1b2430;--mut:#5b6675;--line:#e3e8ef;--navy:#12355b;--org:#e8710a;--grn:#1e8e3e;--amb:#d99a00;--red:#d93025;--blu:#1a73e8;--pur:#7b3fbf;--teal:#0f8b8d}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,"Noto Sans Tamil",system-ui,sans-serif;font-size:15px;line-height:1.5}
+body.lang-ta{font-family:"Noto Sans Tamil",Inter,sans-serif}
+body:not(.lang-ta) .ta{display:none!important}
+body.lang-ta .en{display:none!important}
+header{background:linear-gradient(135deg,#fff 0%,#fff6ee 100%);border-bottom:3px solid var(--org);padding:14px 16px}
+.hwrap{max-width:1200px;margin:0 auto;display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between}
+h1{font-size:21px;margin:0;color:var(--navy)}
+.meta{font-size:12.5px;color:var(--mut)}
+.chip{display:inline-block;padding:3px 9px;border-radius:999px;font-size:12px;font-weight:700;background:var(--bg2);border:1px solid var(--line);margin:2px 3px 2px 0}
+.chip.o{background:#fff1e4;border-color:#f7c79b;color:#a44c00}.chip.g{background:#e8f5ec;border-color:#a8d8b5;color:#14692c}.chip.r{background:#fdecea;border-color:#f3b5ae;color:#a51d14}.chip.b{background:#e8f0fe;border-color:#aecbfa;color:#174ea6}
+.lang{display:flex;border:1px solid var(--line);border-radius:8px;overflow:hidden}
+.lang button{border:0;background:#fff;padding:6px 12px;cursor:pointer;font-weight:700;color:var(--mut)}
+.lang button.on{background:var(--navy);color:#fff}
+nav{position:sticky;top:0;z-index:20;background:#fff;border-bottom:1px solid var(--line);overflow-x:auto;white-space:nowrap}
+nav .in{max-width:1200px;margin:0 auto;padding:0 8px}
+nav button{border:0;background:none;padding:11px 12px;font-weight:600;color:var(--mut);cursor:pointer;border-bottom:3px solid transparent;font-size:14px}
+nav button.on{color:var(--navy);border-bottom-color:var(--org)}
+main{max-width:1200px;margin:0 auto;padding:16px 16px 110px}
+.panel{display:none}.panel.on{display:block;animation:fd .25s}
+@keyframes fd{from{opacity:.3}to{opacity:1}}
+h2{font-size:19px;color:var(--navy);margin:6px 0 10px}
+h3{font-size:16px;color:var(--navy);margin:18px 0 8px}
+.grid{display:grid;gap:12px}
+.g2{grid-template-columns:repeat(auto-fit,minmax(320px,1fr))}
+.g3{grid-template-columns:repeat(auto-fit,minmax(240px,1fr))}
+.g6{grid-template-columns:repeat(auto-fit,minmax(165px,1fr))}
+.card{background:#fff;border:1px solid var(--line);border-radius:12px;padding:14px;box-shadow:0 1px 2px rgba(16,24,40,.04)}
+.kpi .v{font-size:23px;font-weight:800;color:var(--navy)}
+.kpi .l{font-size:12px;color:var(--mut);font-weight:600;text-transform:uppercase;letter-spacing:.3px}
+.kpi .d{font-size:12.5px;margin-top:3px}
+.up{color:var(--grn);font-weight:700}.dn{color:var(--red);font-weight:700}.nt{color:var(--amb);font-weight:700}
+.note{font-size:12.5px;color:var(--mut)}
+.box{border-left:4px solid var(--org);background:#fff8f1;padding:10px 12px;border-radius:8px;margin:10px 0}
+.box.g{border-color:var(--grn);background:#f1faf3}.box.r{border-color:var(--red);background:#fef4f3}.box.b{border-color:var(--blu);background:#f2f7ff}
+.tw{overflow-x:auto;border:1px solid var(--line);border-radius:10px}
+table{border-collapse:collapse;width:100%;font-size:13.5px;min-width:640px}
+th,td{padding:8px 10px;border-bottom:1px solid var(--line);text-align:right;vertical-align:top}
+th:first-child,td:first-child{text-align:left}
+thead th{background:var(--navy);color:#fff;font-weight:600;position:sticky;top:0}
+tr.cat td{background:#fff1e4;color:#8a3f00;font-weight:800;text-align:left;letter-spacing:.2px}
+td.l,th.l{text-align:left}
+.cw{overflow-x:auto}.cw .ci{min-width:700px;height:330px;position:relative}
+.cw .ci.s{height:280px}
+.g2 .cw .ci{min-width:480px}
+ul.t{margin:6px 0;padding-left:18px}ul.t li{margin:3px 0}
+.pill{display:inline-block;font-size:11px;font-weight:800;padding:2px 7px;border-radius:6px;color:#fff}
+.pill.p{background:var(--grn)}.pill.n{background:var(--red)}.pill.w{background:var(--amb)}
+/* temple */
+#temple{width:100%;max-width:760px;display:block;margin:0 auto}
+.pcard{transition:box-shadow .3s,transform .3s}
+.pcard.hl{box-shadow:0 0 0 3px var(--org);transform:translateY(-2px)}
+/* bm map */
+#bmWrap{overflow-x:auto;border:1px solid var(--line);border-radius:12px;background:#fcfdff}
+#bmSvg{min-width:1060px;width:100%;display:block}
+.bmb{cursor:pointer}.bmb rect{transition:filter .2s,stroke-width .2s}
+.bmb:hover rect{filter:brightness(.97);stroke-width:3}
+.bmb.sel rect{stroke-width:3.5}
+#bmCard{min-height:70px}
+/* swot */
+.sw{border-radius:12px;padding:12px;border:1px solid var(--line)}
+.sw.s{background:#f1faf3}.sw.w{background:#fff8e6}.sw.o{background:#f2f7ff}.sw.t{background:#fef4f3}
+/* self check */
+.scg{margin-bottom:14px}
+.sci{display:flex;gap:10px;align-items:flex-start;padding:8px;border-bottom:1px dashed var(--line)}
+.sci input{margin-top:4px;transform:scale(1.2)}
+.sci .dt{font-size:12px;color:var(--mut)}
+.bar{height:9px;background:var(--bg2);border-radius:9px;overflow:hidden;border:1px solid var(--line)}
+.bar i{display:block;height:100%;background:var(--org);width:0;transition:width .4s}
+.btn{border:1px solid var(--navy);background:var(--navy);color:#fff;border-radius:8px;padding:7px 12px;font-weight:700;cursor:pointer;font-size:13px}
+.btn.o{background:#fff;color:var(--navy)}
+.sugg button{margin:3px;border:1px dashed var(--org);background:#fff;color:#a44c00;border-radius:999px;padding:4px 10px;cursor:pointer;font-size:12.5px}
+/* quiz */
+.q{margin-bottom:12px}.q .op{display:block;width:100%;text-align:left;border:1px solid var(--line);background:#fff;border-radius:8px;padding:8px 10px;margin:5px 0;cursor:pointer;font:inherit}
+.q .op.ok{background:#e8f5ec;border-color:var(--grn)}.q .op.bad{background:#fdecea;border-color:var(--red)}
+textarea{width:100%;min-height:70px;border:1px solid var(--line);border-radius:8px;padding:8px;font:inherit}
+/* timeline */
+.tl{display:flex;gap:0;overflow-x:auto;padding:8px 0 4px}
+.tl .ev{min-width:170px;border-top:4px solid var(--org);padding:8px 10px 8px 0;margin-right:10px;position:relative}
+.tl .ev:before{content:"";position:absolute;top:-9px;left:0;width:14px;height:14px;border-radius:50%;background:#fff;border:3px solid var(--org)}
+.tl .ev b{display:block;font-size:12.5px;color:var(--navy);margin-top:6px}
+.tl .ev span{font-size:12.5px}
+/* badge */
+#cbBadge{position:fixed;right:16px;bottom:16px;width:54px;height:54px;border-radius:50%;background:var(--org);color:#fff;font-weight:900;font-size:19px;display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:60;box-shadow:0 4px 14px rgba(232,113,10,.45);animation:blink 2.2s infinite;border:3px solid #fff}
+@keyframes blink{0%,100%{box-shadow:0 0 0 0 rgba(232,113,10,.55)}50%{box-shadow:0 0 0 10px rgba(232,113,10,0)}}
+#cbPop{position:fixed;right:16px;bottom:80px;max-width:360px;background:#fff;border:1px solid var(--line);border-radius:12px;padding:12px 14px;font-size:12.5px;box-shadow:0 10px 30px rgba(0,0,0,.15);z-index:61;display:none}
+#cbPop.on{display:block}
+/* assist */
+#asBtn{position:fixed;right:80px;bottom:20px;z-index:59;border:0;background:var(--navy);color:#fff;border-radius:999px;padding:12px 16px;font-weight:800;cursor:pointer;box-shadow:0 4px 14px rgba(18,53,91,.35)}
+#asWin{position:fixed;right:16px;bottom:84px;width:min(380px,calc(100vw - 32px));max-height:70vh;background:#fff;border:1px solid var(--line);border-radius:14px;box-shadow:0 14px 40px rgba(0,0,0,.18);z-index:62;display:none;flex-direction:column;overflow:hidden}
+#asWin.on{display:flex}
+#asHead{background:var(--navy);color:#fff;padding:10px 12px;font-weight:800;display:flex;justify-content:space-between;align-items:center}
+#asLog{padding:10px;overflow-y:auto;flex:1;font-size:13.5px;background:#fbfcfe}
+.m{margin:6px 0;padding:8px 10px;border-radius:10px;max-width:90%}
+.m.u{background:#e8f0fe;margin-left:auto}.m.a{background:#fff;border:1px solid var(--line)}
+#asIn{display:flex;gap:6px;padding:8px;border-top:1px solid var(--line)}
+#asIn input{flex:1;border:1px solid var(--line);border-radius:8px;padding:8px;font:inherit}
+#asMic{border:0;background:var(--org);color:#fff;border-radius:8px;padding:0 12px;font-size:17px;cursor:pointer}
+#asMic.rec{animation:blink 1s infinite;background:var(--red)}
+.qs button{margin:3px;border:1px solid var(--line);background:#fff;border-radius:999px;padding:4px 9px;font-size:12px;cursor:pointer}
+.wm{position:fixed;left:50%;top:55%;transform:translate(-50%,-50%) rotate(-24deg);font-size:76px;font-weight:900;color:rgba(18,53,91,.035);pointer-events:none;z-index:0;white-space:nowrap}
+@media(max-width:600px){h1{font-size:17px}.kpi .v{font-size:19px}main{padding:12px 16px 110px}}
+</style>
+</head>
+<body>
+<div class="wm">CB RESEARCH</div>
+<header>
+ <div class="hwrap">
+  <div>
+   <h1><span class="en">Apollo Micro Systems Ltd — Q2 FY27 Business &amp; Investment Analysis</span><span class="ta">அப்போலோ மைக்ரோ சிஸ்டம்ஸ் — Q2 FY27 பிசினஸ் &amp; முதலீட்டு அலசல்</span></h1>
+   <div class="meta">27 Oct 2026, 17:09 IST · <span class="en">Quarter: Q2 FY27 (Jul–Sep 2026) · Results approved 24 Oct 2026 (unaudited, limited review) · Concall 26 Oct 2026</span><span class="ta">காலாண்டு: Q2 FY27 (ஜூலை–செப் 2026) · ரிசல்ட் 24 அக் 2026 (ஆடிட் ஆகாதது, லிமிடெட் ரிவ்யூ) · கான்கால் 26 அக் 2026</span></div>
+   <div style="margin-top:6px">
+    <span class="chip">NSE: APOLLO</span><span class="chip">BSE: 540879</span>
+    <span class="chip b"><span class="en">₹426.65 at 2:34 PM, 27 Oct (day high ₹447)</span><span class="ta">₹426.65 (27 அக், மதியம் 2:34; அன்றைய உச்சம் ₹447)</span></span>
+    <span class="chip"><span class="en">Mcap ≈ ₹15,856 cr</span><span class="ta">சந்தை மதிப்பு ≈ ₹15,856 கோடி</span></span>
+    <span class="chip o" id="chipScore">CB Score 63</span><span class="chip b" id="chipConv">Conviction 70</span><span class="chip g">CY 65</span><span class="chip r">TG 43</span>
+   </div>
+  </div>
+  <div class="lang"><button id="bEn" class="on" onclick="setLang('en')">EN</button><button id="bTa" onclick="setLang('ta')">தமிழ்</button></div>
+ </div>
+</header>
+<nav><div class="in" id="tabs">
+ <button data-t="ov" class="on"><span class="en">Overview</span><span class="ta">மேலோட்டம்</span></button>
+ <button data-t="bm"><span class="en">Business Model</span><span class="ta">பிசினஸ் மாடல்</span></button>
+ <button data-t="fin"><span class="en">Financials</span><span class="ta">நிதிநிலை</span></button>
+ <button data-t="cf"><span class="en">Cash Flow &amp; WC</span><span class="ta">பணப்புழக்கம் &amp; WC</span></button>
+ <button data-t="val"><span class="en">Valuations</span><span class="ta">மதிப்பீடு</span></button>
+ <button data-t="mkt"><span class="en">Market Activity</span><span class="ta">பங்கு விலை நகர்வு</span></button>
+ <button data-t="tc"><span class="en">Triggers &amp; Cycle</span><span class="ta">ட்ரிகர்ஸ் &amp; சைக்கிள்</span></button>
+ <button data-t="sw">SWOT</button>
+ <button data-t="an"><span class="en">Analysts' Rating</span><span class="ta">அனலிஸ்ட் ரேட்டிங்</span></button>
+ <button data-t="sc"><span class="en">Self-check</span><span class="ta">சுய சோதனை</span></button>
+ <button data-t="mg"><span class="en">Management &amp; Board</span><span class="ta">நிர்வாகம் &amp; போர்டு</span></button>
+ <button data-t="so"><span class="en">Cauvery Socrates</span><span class="ta">காவேரி சாக்ரடீஸ்</span></button>
+</div></nav>
+<main>
+
+<!-- ============ OVERVIEW ============ -->
+<section class="panel on" id="ov">
+ <h2><span class="en">Q2 FY27 at a glance (consolidated)</span><span class="ta">Q2 FY27 ஒரே பார்வையில் (கன்சாலிடேட்டட்)</span></h2>
+ <div class="grid g6">
+  <div class="card kpi"><div class="l"><span class="en">Revenue</span><span class="ta">வருமானம்</span></div><div class="v">₹388.15 cr</div><div class="d"><span class="up">+72.3% YoY</span> · <span class="up">+54.5% QoQ</span></div></div>
+  <div class="card kpi"><div class="l">EBITDA</div><div class="v">₹111.18 cr</div><div class="d"><span class="up">+87.8% YoY</span> · <span class="en">margin 28.6%</span><span class="ta">மார்ஜின் 28.6%</span></div></div>
+  <div class="card kpi"><div class="l">PAT</div><div class="v">₹46.15 cr</div><div class="d"><span class="up">+53.7% YoY</span> · <span class="en">owners ₹48.43 cr</span><span class="ta">உரிமையாளருக்கு ₹48.43 கோடி</span></div></div>
+  <div class="card kpi"><div class="l">EPS</div><div class="v">₹1.32</div><div class="d"><span class="up">+37.5% YoY</span> <span class="note">(₹0.96)</span></div></div>
+  <div class="card kpi"><div class="l"><span class="en">Order book</span><span class="ta">ஆர்டர் புக்</span></div><div class="v">₹1,765 cr</div><div class="d"><span class="en">record · ~1.5× TTM revenue</span><span class="ta">ரெக்கார்டு · ~1.5× TTM வருமானம்</span></div></div>
+  <div class="card kpi"><div class="l"><span class="en">Standalone EBITDA margin</span><span class="ta">ஸ்டாண்ட்அலோன் மார்ஜின்</span></div><div class="v">35.1%</div><div class="d"><span class="up">+880 bps YoY</span></div></div>
+ </div>
+
+ <div class="box b" style="margin-top:14px">
+  <b><span class="en">The business in 60 seconds</span><span class="ta">60 விநாடியில் பிசினஸ்</span></b>
+  <p class="en" style="margin:6px 0 0">Apollo Micro Systems builds the "electronic brains" — onboard computers, navigation, control and processing units — that go inside Indian missiles, torpedoes, mines and rockets. It is now moving up the value chain into explosives (IDL Explosives today, Premier Explosives once the deal closes) and complete weapons (MIGM ground mine, moored and limpet mines, RGB-60 rocket). In Q2 FY27 the core business earned a record 35% EBITDA margin because the quarter was rich in production orders, while the explosives subsidiary added about ₹82 cr of revenue but almost no operating profit. The share price reacted to the record numbers; the open questions are cash conversion, valuation and how fast the big orders (MIGM, Pinaka, torpedoes) actually land.</p>
+  <p class="ta" style="margin:6px 0 0">அப்போலோ மைக்ரோ சிஸ்டம்ஸ், நம்ம நாட்டு மிசைல், டார்பிடோ, மைன், ராக்கெட் உள்ள போற "எலக்ட்ரானிக் மூளை" — ஆன்போர்டு கம்ப்யூட்டர், நேவிகேஷன், கன்ட்ரோல் யூனிட் — இதையெல்லாம் செய்ற கம்பெனி. இப்போ ஒரு படி மேல ஏறுறாங்க: வெடிமருந்து (இப்போ IDL எக்ஸ்ப்ளோசிவ்ஸ், டீல் முடிஞ்சதும் பிரீமியர் எக்ஸ்ப்ளோசிவ்ஸ்), முழு ஆயுதம் (MIGM கிரவுண்ட் மைன், மூர்டு &amp; லிம்பெட் மைன், RGB-60 ராக்கெட்). Q2 FY27-ல புரொடக்ஷன் ஆர்டர்கள் அதிகமா இருந்ததால மெயின் பிசினஸ் 35% EBITDA மார்ஜின் எடுத்துச்சு — இதுவரை இல்லாத உச்சம். ஆனா வெடிமருந்து சப்சிடியரி சுமார் ₹82 கோடி வருமானம் சேர்த்துச்சு, லாபம் கிட்டத்தட்ட இல்ல. ரெக்கார்டு நம்பர்களுக்கு பங்கு விலை ஏறிச்சு; இன்னும் பதில் வரவேண்டியது — கேஷ் எப்போ கைக்கு வரும், வேல்யூவேஷன், பெரிய ஆர்டர்கள் (MIGM, பினாகா, டார்பிடோ) எவ்வளவு சீக்கிரம் வரும்.</p>
+ </div>
+
+ <div class="grid g2">
+  <div class="card">
+   <h3 style="margin-top:0"><span class="en">CB 6-pillar score (CBF26)</span><span class="ta">CB 6-தூண் ஸ்கோர் (CBF26)</span></h3>
+   <svg id="temple" viewBox="0 0 760 470" role="img" aria-label="CB six pillar temple"></svg>
+   <div class="note" style="text-align:center"><span class="en">Tap a column to jump to its explanation.</span><span class="ta">ஒரு தூணை தட்டினா அதோட விளக்கத்துக்கு போகும்.</span></div>
+  </div>
+  <div class="card">
+   <h3 style="margin-top:0"><span class="en">CB Conviction read-out</span><span class="ta">CB கன்விக்ஷன் ரீட்-அவுட்</span></h3>
+   <div id="convBars"></div>
+   <div class="box" style="margin-top:12px">
+    <span class="en"><b>Conviction 70 / 100 — "High", not "Very high".</b> The business lenses are strong (Earnings 85, Macro 80). The score is held back by the Trigger lens (43): rising promoter pledge (35.57% of holding), ~21% potential dilution from the ₹3,322 cr raise, and the auditor's material-uncertainty note on subsidiaries outweigh the positive catalysts in the formula. Valuation (P/E ~116×) also drags the CB Score. A signed MIGM order, Premier closing and a positive full-year CFO are the three things that would lift it.</span>
+    <span class="ta"><b>கன்விக்ஷன் 70 / 100 — "ஹை", "வெரி ஹை" இல்ல.</b> பிசினஸ் லென்ஸ் எல்லாம் ஸ்ட்ராங் (வருமானம் 85, மேக்ரோ 80). ஆனா ட்ரிகர் லென்ஸ் (43) கீழ இழுக்குது: ப்ரோமோட்டர் அடமானம் ஏறியிருக்கு (ஹோல்டிங்ல 35.57%), ₹3,322 கோடி நிதி திரட்டல்ல சுமார் 21% டைல்யூஷன் வாய்ப்பு, சப்சிடியரிகள் பத்தி ஆடிட்டர் சொன்ன "மெட்டீரியல் அன்சர்டன்டி" குறிப்பு — இவை பாசிட்டிவ் ட்ரிகர்களை விட அதிக எடை. வேல்யூவேஷன் (P/E ~116×) CB ஸ்கோரையும் குறைக்குது. MIGM ஆர்டர் கையெழுத்து, பிரீமியர் டீல் முடிவு, முழு வருட CFO பாசிட்டிவ் — இந்த மூணும் வந்தா ஸ்கோர் ஏறும்.</span>
+   </div>
+  </div>
+ </div>
+
+ <div class="grid g3" id="pillarCards" style="margin-top:12px"></div>
+
+ <h3><span class="en">Quarterly trend — revenue, EBITDA (₹ cr) and EBITDA margin</span><span class="ta">காலாண்டு டிரெண்ட் — வருமானம், EBITDA (₹ கோடி), EBITDA மார்ஜின்</span></h3>
+ <div class="card cw"><div class="ci"><canvas id="cOv"></canvas></div></div>
+
+ <div class="grid g2" style="margin-top:12px">
+  <div class="card"><h3 style="margin-top:0"><span class="en">What the market liked</span><span class="ta">மார்க்கெட்டுக்கு பிடிச்சது</span></h3>
+   <ul class="t en"><li>Record revenue, EBITDA and PAT for the quarter and the half-year.</li><li>Standalone EBITDA margin of 35% (+9 points YoY) on a richer production mix.</li><li>"What we earned at the operating level a quarter ago, we now delivered at the bottom line" — Q1 standalone EBITDA ₹48 cr ≈ Q2 standalone PAT ₹48 cr.</li><li>Clear catalyst calendar: MIGM RFQ in Nov 2026 and PO by Feb–Mar 2027; heavyweight-torpedo order in Nov; Pinaka orders before Dec.</li><li>Premier Explosives deal cleared CCI (approval not required) and SEBI's observation letter.</li></ul>
+   <ul class="t ta"><li>காலாண்டுக்கும் அரையாண்டுக்கும் ரெக்கார்டு வருமானம், EBITDA, PAT.</li><li>புரொடக்ஷன் ஆர்டர் கலவையால ஸ்டாண்ட்அலோன் EBITDA மார்ஜின் 35% (வருடத்துக்கு +9 பாயிண்ட்).</li><li>"போன காலாண்டு ஆபரேட்டிங் லெவல்ல சம்பாதிச்சதை, இப்போ நிகர லாபமா கொடுத்திருக்கோம்" — Q1 EBITDA ₹48 கோடி ≈ Q2 PAT ₹48 கோடி (ஸ்டாண்ட்அலோன்).</li><li>தெளிவான கேடலிஸ்ட் காலண்டர்: MIGM RFQ நவம்பர் 2026, PO பிப்–மார்ச் 2027; ஹெவிவெயிட் டார்பிடோ ஆர்டர் நவம்பர்ல; பினாகா ஆர்டர் டிசம்பருக்குள்.</li><li>பிரீமியர் எக்ஸ்ப்ளோசிவ்ஸ் டீலுக்கு CCI அனுமதி தேவையில்லைன்னு சொல்லிடுச்சு; SEBI லெட்டரும் வந்தாச்சு.</li></ul>
+  </div>
+  <div class="card"><h3 style="margin-top:0"><span class="en">What still needs proof</span><span class="ta">இன்னும் நிரூபிக்க வேண்டியது</span></h3>
+   <ul class="t en"><li>Half of the extra revenue came from subsidiaries, which added only ₹3.6 cr of EBITDA.</li><li>Tax jumped to ₹46.32 cr (≈50% of PBT) — PBT +114% became PAT +54%.</li><li>H1 operating cash flow ₹22 cr vs PAT ₹71 cr; FY26 CFO was −₹130 cr; working capital 353 days.</li><li>H1 standalone growth 29% vs full-year 45–50% guidance — H2 has to carry the year.</li><li>Order book rose only ₹61 cr QoQ; the big jump depends on MIGM.</li></ul>
+   <ul class="t ta"><li>கூடுதல் வருமானத்துல பாதி சப்சிடியரிகள்ல இருந்து வந்துச்சு; அவங்க சேர்த்த EBITDA வெறும் ₹3.6 கோடி.</li><li>வரி ₹46.32 கோடியா எகிறிச்சு (PBT-ல ≈50%) — PBT +114% ஆனது, PAT +54% தான்.</li><li>அரையாண்டு ஆபரேட்டிங் கேஷ் ₹22 கோடி, PAT ₹71 கோடி; FY26 CFO −₹130 கோடி; வொர்க்கிங் கேபிடல் 353 நாள்.</li><li>அரையாண்டு ஸ்டாண்ட்அலோன் வளர்ச்சி 29%, ஆனா முழு வருட கைடன்ஸ் 45–50% — மீதி பாதியில தான் வருடம் தீர்மானம் ஆகும்.</li><li>ஆர்டர் புக் காலாண்டுக்கு ₹61 கோடி தான் ஏறிச்சு; பெரிய ஜம்ப் MIGM-ஐ நம்பி இருக்கு.</li></ul>
+  </div>
+ </div>
+</section>
+
+<!-- ============ BUSINESS MODEL ============ -->
+<section class="panel" id="bm">
+ <h2><span class="en">How Apollo makes money — interactive business-model map</span><span class="ta">அப்போலோ எப்படி சம்பாதிக்குது — இன்டராக்டிவ் பிசினஸ் மாடல் மேப்</span></h2>
+ <p class="note"><span class="en">Customers → order channel → Apollo group → business lines (Q2 FY27 figures, share of revenue, growth) → revenue → costs → profit → shareholders. Tap any box.</span><span class="ta">வாடிக்கையாளர் → ஆர்டர் வழி → அப்போலோ குழுமம் → பிசினஸ் பிரிவுகள் (Q2 FY27 எண்கள், பங்கு, வளர்ச்சி) → வருமானம் → செலவு → லாபம் → பங்குதாரர். எந்த பெட்டியையும் தட்டுங்க.</span></p>
+ <div id="bmWrap"><svg id="bmSvg" viewBox="0 0 1080 640"></svg></div>
+ <div class="card" id="bmCard" style="margin-top:10px"></div>
+ <p class="note"><b><span class="en">Revenue formula:</span><span class="ta">வருமான ஃபார்முலா:</span></b> <span class="en">Quarterly revenue ≈ opening order book × execution rate (Q2: ₹388 cr ÷ ₹1,704 cr ≈ 23%) + short-cycle explosives sales; margin ≈ production-order share × production margin + development-order share × development margin − subsidiary drag.</span><span class="ta">காலாண்டு வருமானம் ≈ தொடக்க ஆர்டர் புக் × செயல்படுத்தும் விகிதம் (Q2: ₹388 ÷ ₹1,704 கோடி ≈ 23%) + குறுகிய கால வெடிமருந்து விற்பனை; மார்ஜின் ≈ புரொடக்ஷன் ஆர்டர் பங்கு × புரொடக்ஷன் மார்ஜின் + டெவலப்மென்ட் பங்கு × டெவலப்மென்ட் மார்ஜின் − சப்சிடியரி இழுப்பு.</span></p>
+
+ <h3><span class="en">Revenue engine — the drivers to watch</span><span class="ta">வருமான இன்ஜின் — கவனிக்க வேண்டிய டிரைவர்கள்</span></h3>
+ <div class="tw"><table>
+  <thead><tr><th class="l"><span class="en">Driver</span><span class="ta">டிரைவர்</span></th><th class="l"><span class="en">Q2 FY27 reading</span><span class="ta">Q2 FY27 நிலை</span></th><th class="l"><span class="en">Direction</span><span class="ta">திசை</span></th><th class="l"><span class="en">Why it matters</span><span class="ta">ஏன் முக்கியம்</span></th></tr></thead>
+  <tbody>
+   <tr><td><span class="en">Order book</span><span class="ta">ஆர்டர் புக்</span></td><td class="l">₹1,765 cr (₹1,300 cr standalone, rest IDL)</td><td class="l up">▲ <span class="en">record</span><span class="ta">ரெக்கார்டு</span></td><td class="l"><span class="en">Sets the ceiling for the next 4–6 quarters of revenue.</span><span class="ta">அடுத்த 4–6 காலாண்டு வருமானத்தோட உச்சவரம்பு இதுதான்.</span></td></tr>
+   <tr><td><span class="en">Implied order inflow</span><span class="ta">புதிய ஆர்டர் வரவு (கணக்கீடு)</span></td><td class="l">≈ ₹449 cr (1,765 − 1,704 + 388); <span class="en">book-to-bill ≈ 1.16</span><span class="ta">புக்-டு-பில் ≈ 1.16</span></td><td class="l nt">► <span class="en">slower than Q1 (≈2.1)</span><span class="ta">Q1-ஐ விட குறைவு (≈2.1)</span></td><td class="l"><span class="en">Above 1 means the book still grows; MIGM would make it jump.</span><span class="ta">1-க்கு மேல இருந்தா புக் இன்னும் வளருது; MIGM வந்தா பெரிய ஜம்ப்.</span></td></tr>
+   <tr><td><span class="en">Production vs development mix</span><span class="ta">புரொடக்ஷன் vs டெவலப்மென்ட் கலவை</span></td><td class="l"><span class="en">Production-heavy quarter</span><span class="ta">புரொடக்ஷன் அதிகமான காலாண்டு</span></td><td class="l up">▲</td><td class="l"><span class="en">Drove standalone margin to 35%; management warns quarterly margins swing by a few hundred bps.</span><span class="ta">ஸ்டாண்ட்அலோன் மார்ஜினை 35%-க்கு கொண்டு போச்சு; காலாண்டுக்கு காலாண்டு சில நூறு bps மாறும்னு நிர்வாகமே சொல்லுது.</span></td></tr>
+   <tr><td><span class="en">Capacity</span><span class="ta">உற்பத்தி திறன்</span></td><td class="l"><span class="en">Unit 3 phase 1 live; full by Mar 2027 (~12× current)</span><span class="ta">யூனிட் 3 முதல் கட்டம் இயங்குது; மார்ச் 2027-க்குள் முழுசா (~12 மடங்கு)</span></td><td class="l up">▲</td><td class="l"><span class="en">Removes the execution bottleneck for MIGM-size orders and exports.</span><span class="ta">MIGM மாதிரி பெரிய ஆர்டர், ஏற்றுமதிக்கு இருந்த தடையை நீக்கும்.</span></td></tr>
+   <tr><td><span class="en">In-house testing</span><span class="ta">சொந்த டெஸ்டிங்</span></td><td class="l"><span class="en">EMI, navigation and calibration labs due in ~1 month</span><span class="ta">EMI, நேவிகேஷன், கேலிப்ரேஷன் லேப் ~1 மாசத்துல</span></td><td class="l up">▲</td><td class="l"><span class="en">Today critical tests wait weeks for DRDO slots; own labs shorten the cycle.</span><span class="ta">இப்போ முக்கிய டெஸ்ட்டுக்கு DRDO ஸ்லாட்டுக்காக வாரக்கணக்கா காத்திருக்காங்க; சொந்த லேப் வந்தா நேரம் குறையும்.</span></td></tr>
+   <tr><td><span class="en">Subsidiary drag</span><span class="ta">சப்சிடியரி இழுப்பு</span></td><td class="l"><span class="en">₹82 cr revenue, ₹3.6 cr EBITDA (~4%)</span><span class="ta">₹82 கோடி வருமானம், ₹3.6 கோடி EBITDA (~4%)</span></td><td class="l dn">▼</td><td class="l"><span class="en">IDL turnaround guided over ~4 quarters; Q2 is the off-season for commercial explosives.</span><span class="ta">IDL திருப்பம் ~4 காலாண்டு ஆகும்னு கைடன்ஸ்; Q2 வணிக வெடிமருந்துக்கு ஆஃப்-சீசன்.</span></td></tr>
+   <tr><td><span class="en">Tax rate</span><span class="ta">வரி விகிதம்</span></td><td class="l">≈ 50% <span class="en">consolidated (30% slab now applies)</span><span class="ta">கன்சாலிடேட்டட் (இப்போ 30% ஸ்லாப்)</span></td><td class="l dn">▼</td><td class="l"><span class="en">Converts operating growth into slower PAT growth; part is deferred (non-cash).</span><span class="ta">ஆபரேட்டிங் வளர்ச்சி PAT-ல குறைஞ்சு தெரியுது; இதுல ஒரு பகுதி டிஃபர்டு (கேஷ் இல்லாதது).</span></td></tr>
+   <tr><td><span class="en">Working capital</span><span class="ta">வொர்க்கிங் கேபிடல்</span></td><td class="l">353 <span class="en">days (FY26: 359)</span><span class="ta">நாள் (FY26: 359)</span></td><td class="l nt">► <span class="en">marginal improvement</span><span class="ta">லேசான முன்னேற்றம்</span></td><td class="l"><span class="en">Every extra ₹100 of annual sales ties up roughly ₹97 of cash until collected.</span><span class="ta">ஒவ்வொரு கூடுதல் ₹100 வருட விற்பனைக்கும் சுமார் ₹97 கேஷ் கைக்கு வரும் வரை மாட்டிக்கிடக்கும்.</span></td></tr>
+  </tbody></table></div>
+
+ <h3><span class="en">Order book — history and guidance (₹ cr)</span><span class="ta">ஆர்டர் புக் — வரலாறும் கைடன்ஸும் (₹ கோடி)</span></h3>
+ <div class="card cw"><div class="ci s"><canvas id="cOb"></canvas></div></div>
+ <p class="note"><span class="en">Lighter bars are management guidance, not booked orders: ">₹2,000 cr by Mar 2027 excluding MIGM" and "₹4,500–5,000 cr if MIGM is placed this financial year".</span><span class="ta">லைட் கலர் பார்கள் நிர்வாக கைடன்ஸ், புக் ஆன ஆர்டர் இல்ல: "MIGM இல்லாம மார்ச் 2027-க்குள் ₹2,000 கோடிக்கு மேல்", "இந்த வருஷமே MIGM வந்தா ₹4,500–5,000 கோடி".</span></p>
+
+ <h3><span class="en">Group structure &amp; subsidiaries' contribution</span><span class="ta">குழும அமைப்பு &amp; சப்சிடியரிகளின் பங்களிப்பு</span></h3>
+ <div class="tw"><table>
+  <thead><tr><th class="l"><span class="en">Entity</span><span class="ta">நிறுவனம்</span></th><th class="l"><span class="en">Apollo stake</span><span class="ta">அப்போலோ பங்கு</span></th><th class="l"><span class="en">What it does</span><span class="ta">என்ன செய்யுது</span></th><th class="l"><span class="en">Q2 FY27 contribution</span><span class="ta">Q2 FY27 பங்களிப்பு</span></th></tr></thead>
+  <tbody>
+   <tr><td>Apollo Micro Systems (standalone)</td><td class="l">—</td><td class="l"><span class="en">Defence electronics, subsystems, complete weapons (licensed)</span><span class="ta">பாதுகாப்பு எலக்ட்ரானிக்ஸ், சப்சிஸ்டம், முழு ஆயுதம் (லைசென்ஸ் உண்டு)</span></td><td class="l"><span class="en">Revenue ₹306.29 cr · EBITDA ₹107.56 cr · PAT ≈ ₹48 cr</span><span class="ta">வருமானம் ₹306.29 கோடி · EBITDA ₹107.56 கோடி · PAT ≈ ₹48 கோடி</span></td></tr>
+   <tr><td>Apollo Defence Industries Pvt Ltd (ADIPL) → IDL Explosives</td><td class="l">51% (ADIPL owns 100% of IDL)</td><td class="l"><span class="en">Commercial &amp; industrial explosives (Coal India subsidiaries), moving into defence energetics; Bolkunda silo unit commissioned (9,000 t storage)</span><span class="ta">வணிக &amp; தொழில் வெடிமருந்து (கோல் இந்தியா துணை நிறுவனங்கள்), பாதுகாப்பு எனர்ஜெடிக்ஸுக்கு மாறுது; போல்குண்டா சைலோ யூனிட் தொடக்கம் (9,000 டன் சேமிப்பு)</span></td><td class="l" rowspan="2"><span class="en">Subsidiaries together (consolidated − standalone): revenue ≈ ₹81.9 cr, EBITDA ≈ ₹3.6 cr, PAT ≈ −₹2.3 cr; minority share of losses lifts owners' PAT to ₹48.43 cr</span><span class="ta">சப்சிடியரிகள் மொத்தம் (கன்சாலிடேட்டட் − ஸ்டாண்ட்அலோன்): வருமானம் ≈ ₹81.9 கோடி, EBITDA ≈ ₹3.6 கோடி, PAT ≈ −₹2.3 கோடி; மைனாரிட்டி நஷ்ட பங்கால உரிமையாளர் PAT ₹48.43 கோடி</span></td></tr>
+   <tr><td>Ananya SIP RF Technologies Pvt Ltd</td><td class="l">51%</td><td class="l"><span class="en">RF / microwave packaging (SIP) technology</span><span class="ta">RF / மைக்ரோவேவ் பேக்கேஜிங் (SIP) தொழில்நுட்பம்</span></td></tr>
+   <tr><td>Shauryastra Defence Systems</td><td class="l">34% (associate)</td><td class="l"><span class="en">Design of complete long-range weapon systems, led by Dr V.K. Saraswat; Apollo to manufacture, IP held jointly</span><span class="ta">முழு நீண்ட தூர ஆயுத வடிவமைப்பு, டாக்டர் V.K. சரஸ்வத் தலைமையில்; உற்பத்தி அப்போலோ, IP கூட்டு</span></td><td class="l">n/a <span class="en">(new)</span><span class="ta">(புதுசு)</span></td></tr>
+   <tr><td>Premier Explosives Ltd</td><td class="l"><span class="en">Pending: 41.33% via SPA (₹1,550 cr) + open offer up to 26% at ₹698 (₹975.66 cr)</span><span class="ta">நிலுவையில்: SPA வழியா 41.33% (₹1,550 கோடி) + ₹698-க்கு 26% வரை ஓபன் ஆஃபர் (₹975.66 கோடி)</span></td><td class="l"><span class="en">Solid propellants, rocket motors, countermeasures; FY26 turnover ₹388.3 cr</span><span class="ta">சாலிட் புரொபெல்லன்ட், ராக்கெட் மோட்டார், கவுன்டர்மெஷர்; FY26 டர்ன்ஓவர் ₹388.3 கோடி</span></td><td class="l"><span class="en">Not consolidated yet (closing targeted in Dec 2026 quarter)</span><span class="ta">இன்னும் சேர்க்கல (டிசம்பர் 2026 காலாண்டுல முடிக்க இலக்கு)</span></td></tr>
+  </tbody></table></div>
+ <div class="card cw" style="margin-top:10px"><div class="ci s"><canvas id="cSplit"></canvas></div></div>
+</section>
+
+<!-- ============ FINANCIALS ============ -->
+<section class="panel" id="fin">
+ <h2><span class="en">Financials — consolidated, ₹ crore</span><span class="ta">நிதிநிலை — கன்சாலிடேட்டட், ₹ கோடி</span></h2>
+ <div class="tw"><table>
+  <thead><tr><th class="l"><span class="en">Metric</span><span class="ta">அளவீடு</span></th><th>Q2 FY26</th><th>Q3 FY26</th><th>Q4 FY26</th><th>Q1 FY27</th><th>Q2 FY27</th><th>YoY</th><th>QoQ</th></tr></thead>
+  <tbody>
+   <tr class="cat"><td colspan="8"><span class="en">Growth &amp; Balance sheet</span><span class="ta">வளர்ச்சி &amp; பேலன்ஸ் ஷீட்</span></td></tr>
+   <tr><td><span class="en">Revenue from operations</span><span class="ta">செயல்பாட்டு வருமானம்</span></td><td>225.26</td><td>252.22</td><td>293.26</td><td>251.29</td><td><b>388.15</b></td><td class="up">+72.3%</td><td class="up">+54.5%</td></tr>
+   <tr><td><span class="en">Standalone revenue</span><span class="ta">ஸ்டாண்ட்அலோன் வருமானம்</span></td><td>≈225</td><td>n/a</td><td>n/a</td><td>≈156</td><td><b>306.29</b></td><td class="up">+36%</td><td class="up">+96%</td></tr>
+   <tr><td><span class="en">Order book (period end)</span><span class="ta">ஆர்டர் புக் (காலம் முடிவில்)</span></td><td>n/a</td><td>n/a</td><td>1,432</td><td>1,704</td><td><b>1,765</b></td><td>—</td><td class="up">+3.6%</td></tr>
+   <tr><td><span class="en">Borrowings (Mar-26 vs Mar-25)</span><span class="ta">கடன் (மார்ச்-26 vs மார்ச்-25)</span></td><td colspan="5" class="l">₹335.4 cr → ₹543.3 cr · <span class="en">D/E ≈ 0.41</span><span class="ta">D/E ≈ 0.41</span></td><td class="dn">+62%</td><td>—</td></tr>
+   <tr class="cat"><td colspan="8"><span class="en">Profitability</span><span class="ta">லாபத்தன்மை</span></td></tr>
+   <tr><td>EBITDA <span class="note">(ex other income)</span></td><td>59.19</td><td>50.39</td><td>67.64</td><td>53.73</td><td><b>111.18</b></td><td class="up">+87.8%</td><td class="up">+107%</td></tr>
+   <tr><td><span class="en">EBITDA margin</span><span class="ta">EBITDA மார்ஜின்</span></td><td>26.3%</td><td>20.0%</td><td>23.1%</td><td>21.4%</td><td><b>28.6%</b></td><td class="up">+230 bps</td><td class="up">+720 bps</td></tr>
+   <tr><td><span class="en">Standalone EBITDA margin</span><span class="ta">ஸ்டாண்ட்அலோன் மார்ஜின்</span></td><td>26.3%</td><td>n/a</td><td>n/a</td><td>≈31%</td><td><b>35.1%</b></td><td class="up">+880 bps</td><td class="up">+400 bps</td></tr>
+   <tr><td><span class="en">Other income</span><span class="ta">பிற வருமானம்</span></td><td>1.31</td><td>0.91</td><td>n/a</td><td>n/a</td><td>3.54</td><td>—</td><td>—</td></tr>
+   <tr><td>PBT</td><td>43.15</td><td>31.57</td><td>54.79</td><td>n/a</td><td><b>92.48</b></td><td class="up">+114.3%</td><td>—</td></tr>
+   <tr><td><span class="en">Tax</span><span class="ta">வரி</span></td><td>13.12</td><td>8.69</td><td>n/a</td><td>n/a</td><td>46.32</td><td class="dn">+253%</td><td>—</td></tr>
+   <tr><td><span class="en">Effective tax rate</span><span class="ta">உண்மை வரி விகிதம்</span></td><td>30.4%</td><td>27.5%</td><td>n/a</td><td>n/a</td><td class="dn">50.1%</td><td class="dn">+19.7 pts</td><td>—</td></tr>
+   <tr><td>PAT</td><td>30.03</td><td>22.88</td><td>36.79</td><td>25.21</td><td><b>46.15</b></td><td class="up">+53.7%</td><td class="up">+83%</td></tr>
+   <tr><td><span class="en">PAT to owners of parent</span><span class="ta">உரிமையாளருக்கான PAT</span></td><td>n/a</td><td>n/a</td><td>n/a</td><td>n/a</td><td>48.43</td><td>—</td><td>—</td></tr>
+   <tr><td><span class="en">PAT margin</span><span class="ta">PAT மார்ஜின்</span></td><td>13.3%</td><td>9.1%</td><td>12.5%</td><td>10.0%</td><td>11.9%</td><td class="dn">−140 bps</td><td class="up">+190 bps</td></tr>
+   <tr><td><span class="en">Basic EPS (₹)</span><span class="ta">அடிப்படை EPS (₹)</span></td><td>0.96</td><td>0.68</td><td>n/a</td><td>n/a</td><td><b>1.32</b></td><td class="up">+37.5%</td><td>—</td></tr>
+   <tr class="cat"><td colspan="8"><span class="en">Efficiency</span><span class="ta">செயல்திறன்</span></td></tr>
+   <tr><td><span class="en">Working-capital days</span><span class="ta">வொர்க்கிங் கேபிடல் நாட்கள்</span></td><td colspan="5" class="l">FY26: 359 → H1 FY27: 353</td><td class="up">−6 <span class="en">days</span><span class="ta">நாள்</span></td><td>—</td></tr>
+   <tr><td><span class="en">R&amp;D spend (share of revenue)</span><span class="ta">R&amp;D செலவு (வருமானத்தில் பங்கு)</span></td><td colspan="5" class="l">≈ 8% <span class="en">(referenced on the concall)</span><span class="ta">(கான்கால்ல சொல்லப்பட்டது)</span></td><td>—</td><td>—</td></tr>
+   <tr><td><span class="en">Execution rate (revenue ÷ opening order book)</span><span class="ta">செயல்படுத்தும் விகிதம் (வருமானம் ÷ தொடக்க ஆர்டர் புக்)</span></td><td>—</td><td>—</td><td>—</td><td>17.5%</td><td><b>22.8%</b></td><td>—</td><td class="up">+5.3 pts</td></tr>
+   <tr class="cat"><td colspan="8"><span class="en">Earnings &amp; cash quality</span><span class="ta">வருமான &amp; கேஷ் தரம்</span></td></tr>
+   <tr><td><span class="en">Subsidiaries' revenue (consol − standalone)</span><span class="ta">சப்சிடியரி வருமானம் (கன்சால் − ஸ்டாண்ட்அலோன்)</span></td><td>≈0</td><td>n/a</td><td>n/a</td><td>≈95</td><td>81.86</td><td>—</td><td>—</td></tr>
+   <tr><td><span class="en">Subsidiaries' EBITDA</span><span class="ta">சப்சிடியரி EBITDA</span></td><td>≈0</td><td>n/a</td><td>n/a</td><td>≈6</td><td>3.62</td><td>—</td><td>—</td></tr>
+   <tr><td><span class="en">H1 CFO ÷ H1 PAT</span><span class="ta">அரையாண்டு CFO ÷ PAT</span></td><td colspan="5" class="l">₹22.44 cr ÷ ₹71.37 cr = 31%</td><td>—</td><td>—</td></tr>
+   <tr><td><span class="en">Auditor's limited-review note</span><span class="ta">ஆடிட்டர் லிமிடெட் ரிவ்யூ குறிப்பு</span></td><td colspan="7" class="l"><span class="en">Material uncertainty on going concern of certain subsidiaries (negative net worth, cash losses, borrowings); conclusion not modified</span><span class="ta">சில சப்சிடியரிகள் தொடர்ந்து இயங்குவதில் மெட்டீரியல் அன்சர்டன்டி (நெகட்டிவ் நெட்வொர்த், கேஷ் நஷ்டம், கடன்); முடிவு மாற்றப்படவில்லை</span></td></tr>
+   <tr class="cat"><td colspan="8"><span class="en">Capital &amp; Liquidity</span><span class="ta">மூலதனம் &amp; லிக்விடிட்டி</span></td></tr>
+   <tr><td><span class="en">Preferential equity</span><span class="ta">ப்ரெஃபரன்ஷியல் ஈக்விட்டி</span></td><td colspan="7" class="l"><span class="en">2,28,30,902 shares at ₹416.60 = ₹951.13 cr (55 non-promoter investors)</span><span class="ta">2,28,30,902 பங்கு ₹416.60-க்கு = ₹951.13 கோடி (55 ப்ரோமோட்டர் அல்லாத முதலீட்டாளர்கள்)</span></td></tr>
+   <tr><td><span class="en">Convertible warrants</span><span class="ta">கன்வெர்டிபிள் வாரண்ட்</span></td><td colspan="7" class="l"><span class="en">5,69,15,380 at ₹416.60 = ₹2,371.09 cr; 25% upfront; promoters ₹1,080 cr; convert within 12 months</span><span class="ta">5,69,15,380 ₹416.60-க்கு = ₹2,371.09 கோடி; 25% முன்பணம்; ப்ரோமோட்டர் ₹1,080 கோடி; 12 மாசத்துக்குள் மாற்றம்</span></td></tr>
+   <tr><td><span class="en">Book value per share / ROE (TTM)</span><span class="ta">பங்குக்கான புத்தக மதிப்பு / ROE (TTM)</span></td><td colspan="7" class="l">≈ ₹38 · ROE ≈ 8.6%</td></tr>
+   <tr class="cat"><td colspan="8"><span class="en">Valuation (27 Oct 2026, 2:34 PM)</span><span class="ta">மதிப்பீடு (27 அக் 2026, மதியம் 2:34)</span></td></tr>
+   <tr><td>P/E (TTM) · P/B</td><td colspan="7" class="l">≈ 116.5× · ≈ 10.1×</td></tr>
+   <tr><td><span class="en">Mcap ÷ TTM revenue · Mcap ÷ TTM EBITDA</span><span class="ta">சந்தை மதிப்பு ÷ TTM வருமானம் · ÷ TTM EBITDA</span></td><td colspan="7" class="l">₹15,856 ÷ ₹1,184.9 = 13.4× · ₹15,856 ÷ ₹282.9 = 56×</td></tr>
+  </tbody></table></div>
+ <p class="note"><span class="en">n/a = not verified from the filings available at the time of writing. "≈" values are derived (e.g. consolidated minus standalone, H1 minus Q2).</span><span class="ta">n/a = எழுதும் நேரத்தில் ஃபைலிங்ல சரிபார்க்க முடியல. "≈" மதிப்புகள் கணக்கிட்டவை (கன்சாலிடேட்டட் − ஸ்டாண்ட்அலோன், அரையாண்டு − Q2).</span></p>
+
+ <div class="grid g2" style="margin-top:12px">
+  <div class="card"><h3 style="margin-top:0"><span class="en">Annual and half-year (₹ cr)</span><span class="ta">வருடம் &amp; அரையாண்டு (₹ கோடி)</span></h3><div class="cw"><div class="ci s"><canvas id="cAnn"></canvas></div></div></div>
+  <div class="card"><h3 style="margin-top:0"><span class="en">PBT vs tax vs PAT — Q2 FY26 vs Q2 FY27</span><span class="ta">PBT vs வரி vs PAT — Q2 FY26 vs Q2 FY27</span></h3><div class="cw"><div class="ci s"><canvas id="cTax"></canvas></div></div></div>
+ </div>
+ <div class="tw" style="margin-top:12px"><table>
+  <thead><tr><th class="l"><span class="en">Year / period</span><span class="ta">வருடம் / காலம்</span></th><th><span class="en">Revenue</span><span class="ta">வருமானம்</span></th><th>EBITDA</th><th><span class="en">Margin</span><span class="ta">மார்ஜின்</span></th><th>PBT</th><th>PAT</th><th>CFO</th></tr></thead>
+  <tbody>
+   <tr><td>FY25</td><td>562.07</td><td>129.21</td><td>23.0%</td><td>82.55</td><td>56.36</td><td class="up">+10.24</td></tr>
+   <tr><td>FY26</td><td>904.32</td><td>218.16</td><td>24.1%</td><td>154.80</td><td>107.38</td><td class="dn">−129.76</td></tr>
+   <tr><td>H1 FY26</td><td>358.85</td><td>≈100</td><td>27.9%</td><td>n/a</td><td>47.71</td><td>n/a</td></tr>
+   <tr><td>H1 FY27</td><td>639.44</td><td>164.91</td><td>25.8%</td><td>n/a</td><td>71.37</td><td class="up">+22.44</td></tr>
+   <tr><td>TTM (Q3 FY26–Q2 FY27)</td><td>1,184.92</td><td>282.94</td><td>23.9%</td><td>—</td><td>131.03</td><td>—</td></tr>
+  </tbody></table></div>
+</section>
+
+<!-- ============ CASH FLOW & WC ============ -->
+<section class="panel" id="cf">
+ <h2><span class="en">Cash flow &amp; working capital</span><span class="ta">பணப்புழக்கம் &amp; வொர்க்கிங் கேபிடல்</span></h2>
+ <div class="grid g6">
+  <div class="card kpi"><div class="l">FY26 CFO</div><div class="v dn">−₹129.8 cr</div><div class="d"><span class="en">vs +₹10.2 cr in FY25</span><span class="ta">FY25-ல +₹10.2 கோடி</span></div></div>
+  <div class="card kpi"><div class="l">H1 FY27 CFO</div><div class="v up">+₹22.4 cr</div><div class="d"><span class="en">31% of H1 PAT</span><span class="ta">அரையாண்டு PAT-ல 31%</span></div></div>
+  <div class="card kpi"><div class="l"><span class="en">WC days</span><span class="ta">WC நாட்கள்</span></div><div class="v">353</div><div class="d"><span class="en">FY26: 359</span><span class="ta">FY26: 359</span></div></div>
+  <div class="card kpi"><div class="l"><span class="en">Borrowings Mar-26</span><span class="ta">கடன் மார்ச்-26</span></div><div class="v">₹543 cr</div><div class="d dn">+₹208 cr YoY</div></div>
+ </div>
+ <div class="grid g2" style="margin-top:12px">
+  <div class="card"><h3 style="margin-top:0"><span class="en">Profit vs operating cash (₹ cr)</span><span class="ta">லாபம் vs ஆபரேட்டிங் கேஷ் (₹ கோடி)</span></h3><div class="cw"><div class="ci s"><canvas id="cCfo"></canvas></div></div></div>
+  <div class="card"><h3 style="margin-top:0"><span class="en">Working-capital components</span><span class="ta">வொர்க்கிங் கேபிடல் கூறுகள்</span></h3>
+   <div class="tw"><table style="min-width:420px">
+    <thead><tr><th class="l"><span class="en">Component</span><span class="ta">கூறு</span></th><th>FY26</th><th>H1 FY27</th></tr></thead>
+    <tbody>
+     <tr><td><span class="en">Inventory days</span><span class="ta">இன்வென்டரி நாட்கள்</span></td><td>n/a</td><td>n/a</td></tr>
+     <tr><td><span class="en">Receivable days</span><span class="ta">ரிசீவபிள் நாட்கள்</span></td><td>n/a</td><td>n/a</td></tr>
+     <tr><td><span class="en">Payable days</span><span class="ta">பேயபிள் நாட்கள்</span></td><td>n/a</td><td>n/a</td></tr>
+     <tr><td><span class="en">Cash conversion cycle</span><span class="ta">கேஷ் கன்வர்ஷன் சைக்கிள்</span></td><td>n/a</td><td>n/a</td></tr>
+     <tr><td><b><span class="en">Net working-capital days (company)</span><span class="ta">நிகர WC நாட்கள் (கம்பெனி)</span></b></td><td><b>359</b></td><td><b>353</b></td></tr>
+    </tbody></table></div>
+   <p class="note"><span class="en">The split into inventory, receivable and payable days was not in the filings available on 27 Oct; it will come with the half-year balance sheet. Only the company's net figure is shown, nothing is estimated.</span><span class="ta">இன்வென்டரி, ரிசீவபிள், பேயபிள் நாள் பிரிவு 27 அக் அன்று கிடைச்ச ஃபைலிங்ல இல்ல; அரையாண்டு பேலன்ஸ் ஷீட்ல வரும். கம்பெனி கொடுத்த நிகர எண் மட்டும் காட்டியிருக்கோம், எதையும் ஊகிக்கல.</span></p>
+  </div>
+ </div>
+ <div class="box r"><b><span class="en">How working capital links to CFO</span><span class="ta">வொர்க்கிங் கேபிடல் CFO-வோட எப்படி இணையுது</span></b>
+  <ul class="t en"><li>At ~353 days, almost a full year of revenue sits in inventory and unpaid bills. When FY26 revenue rose by ₹342 cr, the business had to fund roughly that much more working capital — which is why CFO turned to −₹130 cr even as PAT hit ₹107 cr.</li><li>Defence development orders are billed on milestones and qualification tests, so cash lags; production orders carry advances (MIGM has a 20% advance in its sanction), which shortens the cycle.</li><li>Management guides to positive CFO through FY27 and a meaningful cash-conversion improvement from FY29, when production orders dominate. Until then, growth is partly funded by debt (₹543 cr) and the ₹3,322 cr equity raise.</li><li>What to watch each quarter: CFO ÷ PAT (H1: 31%), WC days (target below 300 would be a real shift), and whether the MIGM advance is received before 31 Mar 2027.</li></ul>
+  <ul class="t ta"><li>~353 நாள்னா, கிட்டத்தட்ட ஒரு வருட வருமானம் இன்வென்டரியிலும் வராத பில்லிலும் மாட்டியிருக்கு. FY26-ல வருமானம் ₹342 கோடி ஏறினப்போ, அதே அளவு கூடுதல் வொர்க்கிங் கேபிடல் போட வேண்டியிருந்துச்சு — அதனால தான் PAT ₹107 கோடி வந்தும் CFO −₹130 கோடி ஆச்சு.</li><li>டிஃபென்ஸ் டெவலப்மென்ட் ஆர்டர்கள் மைல்ஸ்டோன், குவாலிஃபிகேஷன் டெஸ்ட் முடிஞ்சா தான் பில் ஆகும், அதனால கேஷ் தாமதம்; புரொடக்ஷன் ஆர்டர்களுக்கு அட்வான்ஸ் உண்டு (MIGM சான்க்ஷன்ல 20% அட்வான்ஸ்), அது சைக்கிளை குறைக்கும்.</li><li>FY27 முழுக்க CFO பாசிட்டிவா இருக்கும்னு நிர்வாகம் சொல்லுது; உண்மையான கேஷ் கன்வர்ஷன் முன்னேற்றம் FY29-ல இருந்து, அப்போ புரொடக்ஷன் ஆர்டர்கள் அதிகமா இருக்கும். அதுவரை வளர்ச்சிக்கு கடனும் (₹543 கோடி) ₹3,322 கோடி ஈக்விட்டியும் தான் பணம்.</li><li>ஒவ்வொரு காலாண்டும் பார்க்க: CFO ÷ PAT (அரையாண்டு: 31%), WC நாட்கள் (300-க்கு கீழ வந்தா உண்மையான மாற்றம்), 31 மார்ச் 2027-க்கு முன் MIGM அட்வான்ஸ் வருதா.</li></ul>
+ </div>
+</section>
+
+<!-- ============ VALUATION ============ -->
+<section class="panel" id="val">
+ <h2><span class="en">Valuations — what the price already assumes</span><span class="ta">மதிப்பீடு — இந்த விலை ஏற்கனவே என்ன எதிர்பார்க்குது</span></h2>
+ <div class="grid g6">
+  <div class="card kpi"><div class="l">P/E (TTM)</div><div class="v">≈116×</div><div class="d"><span class="en">industry ≈ 45×</span><span class="ta">துறை ≈ 45×</span></div></div>
+  <div class="card kpi"><div class="l">P/B</div><div class="v">≈10×</div><div class="d">ROE ≈ 8.6%</div></div>
+  <div class="card kpi"><div class="l">Mcap / Sales</div><div class="v">13.4×</div><div class="d">TTM</div></div>
+  <div class="card kpi"><div class="l"><span class="en">Order book / Mcap</span><span class="ta">ஆர்டர் புக் / சந்தை மதிப்பு</span></div><div class="v">0.11×</div><div class="d"><span class="en">₹1,765 ÷ ₹15,856 cr</span><span class="ta">₹1,765 ÷ ₹15,856 கோடி</span></div></div>
+ </div>
+ <h3><span class="en">Reverse arithmetic — FY29 profit needed to justify today's price</span><span class="ta">தலைகீழ் கணக்கு — இன்றைய விலைக்கு FY29-ல எவ்வளவு லாபம் வேணும்</span></h3>
+ <div class="tw"><table>
+  <thead><tr><th class="l"><span class="en">Exit P/E in FY29</span><span class="ta">FY29 P/E</span></th><th><span class="en">PAT needed (current shares, Mcap ₹15,856 cr)</span><span class="ta">தேவையான PAT (இப்போதைய பங்கு, ₹15,856 கோடி)</span></th><th><span class="en">PAT needed (fully diluted ≈45.1 cr shares, ≈₹19,240 cr)</span><span class="ta">தேவையான PAT (முழு டைல்யூஷன் ≈45.1 கோடி பங்கு, ≈₹19,240 கோடி)</span></th><th><span class="en">Multiple of TTM PAT (₹131 cr)</span><span class="ta">TTM PAT-ன் மடங்கு (₹131 கோடி)</span></th></tr></thead>
+  <tbody>
+   <tr><td>40×</td><td>₹396 cr</td><td>₹481 cr</td><td>3.0× – 3.7×</td></tr>
+   <tr><td>50×</td><td>₹317 cr</td><td>₹385 cr</td><td>2.4× – 2.9×</td></tr>
+   <tr><td>60×</td><td>₹264 cr</td><td>₹321 cr</td><td>2.0× – 2.4×</td></tr>
+  </tbody></table></div>
+ <p class="note"><span class="en">CB arithmetic for learning, not a target price. Fully diluted count assumes the 2.28 cr preferential shares and 5.69 cr warrants are all allotted/converted; their cash (≈₹3,322 cr) mostly funds the Premier Explosives purchase, whose profit would add to FY29 PAT.</span><span class="ta">இது கற்றலுக்கான CB கணக்கு, டார்கெட் விலை இல்ல. முழு டைல்யூஷன் கணக்கு 2.28 கோடி ப்ரெஃபரன்ஷியல் பங்கும் 5.69 கோடி வாரண்டும் முழுசா மாற்றப்படும்னு எடுத்துக்கிட்டது; அந்த பணம் (≈₹3,322 கோடி) பெரும்பாலும் பிரீமியர் எக்ஸ்ப்ளோசிவ்ஸ் வாங்க போகுது, அதோட லாபம் FY29 PAT-ல சேரும்.</span></p>
+ <div class="box"><b><span class="en">Reading the table</span><span class="ta">இந்த டேபிளை எப்படி படிக்கிறது</span></b>
+  <p class="en" style="margin:6px 0 0">Even at a generous 50× exit multiple, group PAT must reach roughly ₹320–385 cr by FY29 — about 2.4–2.9× today's trailing profit, or ~45–55% a year. Guidance (45–50% revenue growth in FY27, MIGM, Premier, Unit 3) makes that possible, but not certain; the price already leans on it. If FY27 guidance is applied to FY26 revenue (₹904 cr), H2 FY27 must deliver ₹672–717 cr against ₹545 cr in H2 FY26.</p>
+  <p class="ta" style="margin:6px 0 0">தாராளமா 50× P/E கொடுத்தாலும், FY29-க்குள் குழும PAT சுமார் ₹320–385 கோடி வரணும் — இன்றைய லாபத்தை விட 2.4–2.9 மடங்கு, வருஷத்துக்கு ~45–55% வளர்ச்சி. கைடன்ஸ் (FY27-ல 45–50% வருமான வளர்ச்சி, MIGM, பிரீமியர், யூனிட் 3) இதை சாத்தியமாக்குது, ஆனா உறுதி இல்ல; விலை ஏற்கனவே அதை நம்பி நிக்குது. FY27 கைடன்ஸை FY26 வருமானத்துக்கு (₹904 கோடி) போட்டா, H2 FY27-ல ₹672–717 கோடி வரணும்; H2 FY26-ல வந்தது ₹545 கோடி.</p>
+ </div>
+</section>
+
+<!-- ============ MARKET ACTIVITY ============ -->
+<section class="panel" id="mkt">
+ <h2><span class="en">Market activity — reasons behind the share-price moves</span><span class="ta">பங்கு விலை நகர்வு — பின்னால உள்ள காரணங்கள்</span></h2>
+ <div class="card cw"><div class="ci"><canvas id="cPx"></canvas></div></div>
+ <div class="tw" style="margin-top:12px"><table>
+  <thead><tr><th class="l"><span class="en">Date (2026)</span><span class="ta">தேதி (2026)</span></th><th><span class="en">Price (₹)</span><span class="ta">விலை (₹)</span></th><th class="l"><span class="en">What happened</span><span class="ta">என்ன நடந்துச்சு</span></th><th class="l"><span class="en">Why it moved</span><span class="ta">ஏன் நகர்ந்துச்சு</span></th></tr></thead>
+  <tbody id="evRows"></tbody></table></div>
+ <h3><span class="en">Technical levels (26 Oct indicator readings)</span><span class="ta">டெக்னிக்கல் லெவல்கள் (26 அக் இன்டிகேட்டர் படி)</span></h3>
+ <div class="grid g2">
+  <div class="card"><b class="dn"><span class="en">Resistance</span><span class="ta">ரெசிஸ்டன்ஸ்</span></b><ul class="t"><li>₹429–430 (SuperTrend / Bollinger upper) — <span class="en">crossed intraday on 27 Oct</span><span class="ta">27 அக் இன்ட்ராடே தாண்டிச்சு</span></li><li>₹438.85 (16 Oct high)</li><li>₹466.50 (52-week high)</li></ul></div>
+  <div class="card"><b class="up"><span class="en">Support</span><span class="ta">சப்போர்ட்</span></b><ul class="t"><li>₹389 (26 Oct low) · ₹376.7 (Bollinger lower)</li><li>₹363 (23 Oct low) · ₹335 (SuperTrend lower)</li><li><span class="en">50-DMA ≈ ₹398 · 200-DMA ≈ ₹330–346 · 14-day ATR ≈ ₹20 (≈5% daily swings are normal)</span><span class="ta">50-DMA ≈ ₹398 · 200-DMA ≈ ₹330–346 · 14-நாள் ATR ≈ ₹20 (தினசரி ≈5% ஆட்டம் சாதாரணம்)</span></li></ul></div>
+ </div>
+ <h3><span class="en">Who owns the stock (Sep 2026 quarter)</span><span class="ta">யார் கையில பங்கு (செப் 2026 காலாண்டு)</span></h3>
+ <div class="grid g2">
+  <div class="card cw"><div class="ci s" style="min-width:300px"><canvas id="cSh"></canvas></div></div>
+  <div class="card"><ul class="t en"><li>Promoters 49.98% (unchanged QoQ; 51.98% in Mar-26).</li><li>Pledge: 35.57% of promoter holding (30.51% in Jun-26) — rising again.</li><li>FPIs cut from 7.59% to 5.95%, though their number rose from 50 to 54.</li><li>Mutual funds cut from 1.47% to 1.19% (9 → 8 schemes).</li><li>The rally is retail and preferential-investor led; institutional ownership is thin (≈7.5%).</li></ul>
+   <ul class="t ta"><li>ப்ரோமோட்டர் 49.98% (காலாண்டுக்கு மாற்றமில்ல; மார்ச்-26-ல 51.98%).</li><li>அடமானம்: ப்ரோமோட்டர் ஹோல்டிங்ல 35.57% (ஜூன்-26-ல 30.51%) — மறுபடியும் ஏறுது.</li><li>FPI 7.59%-ல இருந்து 5.95%-க்கு குறைச்சாங்க, எண்ணிக்கை மட்டும் 50 → 54.</li><li>மியூச்சுவல் ஃபண்ட் 1.47% → 1.19% (9 → 8 ஸ்கீம்).</li><li>ஏற்றம் ரீடெய்ல், ப்ரெஃபரன்ஷியல் முதலீட்டாளர்களால; இன்ஸ்டிடியூஷனல் பங்கு குறைவு (≈7.5%).</li></ul></div>
+ </div>
+</section>
+
+<!-- ============ TRIGGERS & CYCLE ============ -->
+<section class="panel" id="tc">
+ <h2><span class="en">Triggers &amp; Cycle</span><span class="ta">ட்ரிகர்ஸ் &amp; சைக்கிள்</span></h2>
+ <div class="grid g2">
+  <div class="card"><h3 style="margin-top:0"><span class="en">Cycle clock</span><span class="ta">சைக்கிள் கடிகாரம்</span></h3><svg id="clock" viewBox="0 0 360 356" style="width:100%;max-width:380px;display:block;margin:0 auto"></svg>
+   <p class="note"><span class="en">Sector: Defence = capex / order-book cycle with a structural tail. Pointer = sector phase P3 Expansion; orange dot = stock in Weinstein Stage 2 (price ≈17% above a rising 30-week average).</span><span class="ta">துறை: டிஃபென்ஸ் = கேபெக்ஸ் / ஆர்டர்-புக் சைக்கிள், நீண்ட கால வளர்ச்சியோட. முள் = துறை P3 விரிவாக்கம்; ஆரஞ்சு புள்ளி = பங்கு வெய்ன்ஸ்டீன் ஸ்டேஜ் 2 (ஏறும் 30-வார சராசரியை விட ≈17% மேல).</span></p></div>
+  <div class="card"><h3 style="margin-top:0"><span class="en">Scores</span><span class="ta">ஸ்கோர்கள்</span></h3>
+   <div class="tw"><table style="min-width:360px">
+    <thead><tr><th class="l"><span class="en">Item</span><span class="ta">அம்சம்</span></th><th><span class="en">Score</span><span class="ta">ஸ்கோர்</span></th><th class="l"><span class="en">Reason</span><span class="ta">காரணம்</span></th></tr></thead>
+    <tbody>
+     <tr><td><span class="en">Sector phase</span><span class="ta">துறை நிலை</span></td><td>70</td><td class="l"><span class="en">P3 Expansion: strong budgets and indigenisation, but large-system ordering slower this year (QRSAM split)</span><span class="ta">P3 விரிவாக்கம்: பட்ஜெட், உள்நாட்டு உற்பத்தி ஸ்ட்ராங்; ஆனா பெரிய சிஸ்டம் ஆர்டர்கள் இந்த வருஷம் மெதுவா (QRSAM பிரிப்பு)</span></td></tr>
+     <tr><td><span class="en">Business lifecycle</span><span class="ta">பிசினஸ் வாழ்க்கை சுழற்சி</span></td><td>75</td><td class="l"><span class="en">Re-inventing: subsystems → complete weapons + energetics</span><span class="ta">புதுப்பிக்குது: சப்சிஸ்டம் → முழு ஆயுதம் + எனர்ஜெடிக்ஸ்</span></td></tr>
+     <tr><td><span class="en">Earnings cycle</span><span class="ta">வருமான சுழற்சி</span></td><td>40</td><td class="l"><span class="en">Consolidated margin 28.6% = record high</span><span class="ta">கன்சாலிடேட்டட் மார்ஜின் 28.6% = ரெக்கார்டு உச்சம்</span></td></tr>
+     <tr><td><span class="en">Valuation cycle</span><span class="ta">மதிப்பீட்டு சுழற்சி</span></td><td>55</td><td class="l"><span class="en">P/E ~116× sits inside its own 65–170× band</span><span class="ta">P/E ~116× அதோட 65–170× பேண்டுக்குள்ள</span></td></tr>
+     <tr><td><span class="en">Price stage</span><span class="ta">விலை நிலை</span></td><td>70</td><td class="l"><span class="en">Stage 2 mid — between early (85) and extended (50)</span><span class="ta">ஸ்டேஜ் 2 நடுவில் — ஆரம்பம் (85), நீட்டிப்பு (50) இடையில</span></td></tr>
+     <tr><td><b>CY</b></td><td><b>65</b></td><td class="l">50% × 70 + 50% × 60</td></tr>
+     <tr><td><b>TG</b></td><td><b>43</b></td><td class="l">50 + 8 × 6.90 − 8 × 7.80</td></tr>
+    </tbody></table></div></div>
+ </div>
+ <h3><span class="en">Trigger table</span><span class="ta">ட்ரிகர் டேபிள்</span></h3>
+ <div class="tw"><table>
+  <thead><tr><th class="l"><span class="en">Trigger</span><span class="ta">ட்ரிகர்</span></th><th>+/−</th><th>I</th><th>C</th><th>W</th><th>P</th><th><span class="en">Points</span><span class="ta">புள்ளி</span></th><th class="l"><span class="en">What to watch</span><span class="ta">கவனிக்க வேண்டியது</span></th><th class="l"><span class="en">Source &amp; date</span><span class="ta">ஆதாரம் &amp; தேதி</span></th></tr></thead>
+  <tbody id="trgRows"></tbody></table></div>
+ <p class="note"><span class="en">Points = Impact × Certainty × Timing × Priced-in. Top 3 positives and all negatives count. Already-delivered items (Q2 margin, record revenue) sit in the Earnings lens, not here.</span><span class="ta">புள்ளி = தாக்கம் × உறுதி × நேரம் × விலையில் சேர்ந்தது. முதல் 3 பாசிட்டிவ், எல்லா நெகட்டிவும் கணக்கில். ஏற்கனவே நம்பர்ல வந்தது (Q2 மார்ஜின், ரெக்கார்டு வருமானம்) வருமான லென்ஸ்ல இருக்கு, இங்க இல்ல.</span></p>
+ <h3><span class="en">Trigger timeline</span><span class="ta">ட்ரிகர் காலவரிசை</span></h3>
+ <div class="card"><div class="tl" id="tlRow"></div></div>
+ <div class="box b"><b><span class="en">What would change this view</span><span class="ta">இந்த பார்வையை எது மாற்றும்</span></b>
+  <ul class="t en"><li>MIGM PO signed with the 20% advance received → certainty moves 0.4 → 1.0; TG rises by ~24 points.</li><li>Promoter pledge falls below 20% → the largest negative drops out; TG +~24.</li><li>MIGM slips into FY28 or H2 revenue misses ₹670 cr → earnings and trigger lenses both fall.</li></ul>
+  <ul class="t ta"><li>MIGM PO கையெழுத்தாகி 20% அட்வான்ஸ் வந்தா → உறுதி 0.4 → 1.0; TG சுமார் 24 புள்ளி ஏறும்.</li><li>ப்ரோமோட்டர் அடமானம் 20%-க்கு கீழ போனா → பெரிய நெகட்டிவ் போயிடும்; TG +~24.</li><li>MIGM FY28-க்கு தள்ளிப்போனா அல்லது H2 வருமானம் ₹670 கோடிக்கு கீழ வந்தா → வருமானம், ட்ரிகர் ரெண்டு லென்ஸும் இறங்கும்.</li></ul></div>
+</section>
+
+<!-- ============ SWOT ============ -->
+<section class="panel" id="sw">
+ <h2>SWOT</h2>
+ <div class="grid g2">
+  <div class="sw s"><h3 style="margin-top:0"><span class="en">Strengths</span><span class="ta">பலம்</span></h3>
+   <ul class="t en"><li>Sole electronics &amp; sensor supplier on MIGM; only established source of QRSAM navigation and onboard computer.</li><li>150+ indigenous programmes, 700+ onboard technologies, 60+ DcPP programmes.</li><li>Standalone EBITDA 35%, gross margin ~41% on production orders.</li><li>Licence to manufacture missiles, torpedoes, mines, rockets, aerial bombs, loitering munitions.</li><li>R&amp;D ~8% of revenue; ex-DRDO scientists in a layered R&amp;D team.</li></ul>
+   <ul class="t ta"><li>MIGM-க்கு எலக்ட்ரானிக்ஸ் &amp; சென்சார் சப்ளை செய்யும் ஒரே நிறுவனம்; QRSAM நேவிகேஷன், ஆன்போர்டு கம்ப்யூட்டருக்கு இதுவரை ஒரே ஆதாரம்.</li><li>150+ உள்நாட்டு திட்டங்கள், 700+ தொழில்நுட்பங்கள், 60+ DcPP திட்டங்கள்.</li><li>புரொடக்ஷன் ஆர்டர்களில் ஸ்டாண்ட்அலோன் EBITDA 35%, கிராஸ் மார்ஜின் ~41%.</li><li>மிசைல், டார்பிடோ, மைன், ராக்கெட், ஏரியல் பாம், லாய்ட்டரிங் மியூனிஷன் தயாரிக்க லைசென்ஸ்.</li><li>வருமானத்துல ~8% R&amp;D; முன்னாள் DRDO விஞ்ஞானிகள் உள்ள அடுக்கு R&amp;D டீம்.</li></ul></div>
+  <div class="sw w"><h3 style="margin-top:0"><span class="en">Weaknesses</span><span class="ta">பலவீனம்</span></h3>
+   <ul class="t en"><li>353 working-capital days; FY26 CFO −₹130 cr; borrowings up to ₹543 cr.</li><li>IDL Explosives earns thin margins; subsidiaries carry a going-concern uncertainty note.</li><li>Effective tax ≈50% in Q2 after moving to the 30% slab.</li><li>No order-book breakup by programme; lumpy quarters (margin 21% → 29%).</li><li>Promoter stake below 50% with 35.57% of it pledged.</li></ul>
+   <ul class="t ta"><li>353 நாள் வொர்க்கிங் கேபிடல்; FY26 CFO −₹130 கோடி; கடன் ₹543 கோடி வரை.</li><li>IDL எக்ஸ்ப்ளோசிவ்ஸ் மார்ஜின் குறைவு; சப்சிடியரிகள் பத்தி கோயிங்-கன்சர்ன் குறிப்பு.</li><li>30% ஸ்லாப்புக்கு மாறினதால Q2-ல உண்மை வரி ≈50%.</li><li>திட்டவாரியா ஆர்டர் புக் பிரிவு இல்ல; காலாண்டுக்கு காலாண்டு ஆட்டம் (மார்ஜின் 21% → 29%).</li><li>ப்ரோமோட்டர் பங்கு 50%-க்கு கீழ, அதுல 35.57% அடமானம்.</li></ul></div>
+  <div class="sw o"><h3 style="margin-top:0"><span class="en">Opportunities</span><span class="ta">வாய்ப்புகள்</span></h3>
+   <ul class="t en"><li>MIGM production order could lift the book to ₹4,500–5,000 cr (2.5-year execution).</li><li>Premier Explosives adds propellants and rocket motors — electronics + propulsion under one group for QRSAM-type missiles.</li><li>Pinaka: ~4,000 rockets near-term demand (half export); torpedoes — 30 urgent HWT, ~125 later, Varunastra ~₹100 cr+.</li><li>Exports from FY28 (Middle East, Europe due diligence); Unit 3 gives ~12× capacity.</li><li>Shauryastra for 300–900 km class systems; SAL homing ToT.</li></ul>
+   <ul class="t ta"><li>MIGM புரொடக்ஷன் ஆர்டர் வந்தா புக் ₹4,500–5,000 கோடி வரை போகலாம் (2.5 வருட செயல்படுத்தல்).</li><li>பிரீமியர் எக்ஸ்ப்ளோசிவ்ஸ் புரொபெல்லன்ட், ராக்கெட் மோட்டார் கொண்டு வரும் — QRSAM மாதிரி மிசைலுக்கு எலக்ட்ரானிக்ஸ் + உந்துசக்தி ஒரே குழுமத்துல.</li><li>பினாகா: அருகாமையில் ~4,000 ராக்கெட் தேவை (பாதி ஏற்றுமதி); டார்பிடோ — அவசர 30 HWT, பிறகு ~125, வருணாஸ்திரா ~₹100 கோடி+.</li><li>FY28-ல இருந்து ஏற்றுமதி (மத்திய கிழக்கு, ஐரோப்பா ஆய்வு); யூனிட் 3 ~12 மடங்கு திறன்.</li><li>300–900 கி.மீ வகை சிஸ்டத்துக்கு ஷௌர்யாஸ்திரா; SAL ஹோமிங் ToT.</li></ul></div>
+  <div class="sw t"><h3 style="margin-top:0"><span class="en">Threats</span><span class="ta">அச்சுறுத்தல்</span></h3>
+   <ul class="t en"><li>Order timing: MoD splitting QRSAM between BDL and private players can delay awards.</li><li>Competition: BDL, BEL, Solar Industries, Bharat Forge, MIL; DRDO policy of two vendors per subsystem.</li><li>~21% dilution if all warrants convert; integration risk across IDL, Premier, Shauryastra at once.</li><li>Valuation (~116× P/E) leaves little room for a delayed order or a weak quarter.</li><li>Policy or procurement-rule changes (DAP 2026) can shift timelines either way.</li></ul>
+   <ul class="t ta"><li>ஆர்டர் நேரம்: QRSAM-ஐ BDL-க்கும் தனியாருக்கும் பிரிக்கிறதால ஆர்டர் தாமதமாகலாம்.</li><li>போட்டி: BDL, BEL, சோலார் இண்டஸ்ட்ரீஸ், பாரத் ஃபோர்ஜ், MIL; ஒவ்வொரு சப்சிஸ்டத்துக்கும் ரெண்டு வெண்டர் வேணும்னு DRDO கொள்கை.</li><li>எல்லா வாரண்டும் மாறினா ~21% டைல்யூஷன்; IDL, பிரீமியர், ஷௌர்யாஸ்திரா மூணையும் ஒரே நேரத்துல இணைக்கிற ரிஸ்க்.</li><li>வேல்யூவேஷன் (~116× P/E) — ஒரு ஆர்டர் தாமதம் அல்லது ஒரு மோசமான காலாண்டுக்கு இடமே இல்ல.</li><li>கொள்கை, கொள்முதல் விதி மாற்றம் (DAP 2026) காலக்கெடுவை எந்த பக்கமும் தள்ளலாம்.</li></ul></div>
+ </div>
+</section>
+
+<!-- ============ ANALYSTS ============ -->
+<section class="panel" id="an">
+ <h2><span class="en">Analysts' rating (third-party views, attributed)</span><span class="ta">அனலிஸ்ட் ரேட்டிங் (மூன்றாம் தரப்பு கருத்துகள்)</span></h2>
+ <div class="tw"><table>
+  <thead><tr><th class="l"><span class="en">Brokerage</span><span class="ta">புரோக்கரேஜ்</span></th><th class="l"><span class="en">Rating</span><span class="ta">ரேட்டிங்</span></th><th><span class="en">Target (₹)</span><span class="ta">டார்கெட் (₹)</span></th><th><span class="en">vs ₹426.65</span><span class="ta">₹426.65-உடன்</span></th><th class="l"><span class="en">Date</span><span class="ta">தேதி</span></th><th class="l"><span class="en">Basis</span><span class="ta">அடிப்படை</span></th><th class="l"><span class="en">Sources</span><span class="ta">ஆதாரம்</span></th></tr></thead>
+  <tbody>
+   <tr><td>Systematix</td><td class="l"><span class="pill p">BUY</span> <span class="note">(initiation)</span></td><td>570</td><td class="up">+33.6%</td><td class="l">7 Sep 2026</td><td class="l"><span class="en">Shift to complete weapons (Solar Industries-like path); ~₹12,000 cr orders targeted in 24 months; DAP 2026</span><span class="ta">முழு ஆயுதத்துக்கு மாற்றம் (சோலார் இண்டஸ்ட்ரீஸ் வழி); 24 மாசத்துல ~₹12,000 கோடி ஆர்டர் இலக்கு; DAP 2026</span></td><td class="l">Business Today</td></tr>
+   <tr><td>ICICI Direct</td><td class="l">n/a <span class="note">(12-month target published)</span></td><td>485</td><td class="up">+13.7%</td><td class="l">Q2 FY27 <span class="note">(pre-results)</span></td><td class="l"><span class="en">700+ technologies, 150+ programmes; loitering munitions, UAVs, DEW, hypersonics</span><span class="ta">700+ தொழில்நுட்பம், 150+ திட்டம்; லாய்ட்டரிங் மியூனிஷன், UAV, DEW, ஹைப்பர்சானிக்</span></td><td class="l">Goodreturns</td></tr>
+   <tr><td>HDFC Securities</td><td class="l"><span class="pill p">BUY</span></td><td>400</td><td class="dn">−6.2%</td><td class="l">20 May 2026</td><td class="l"><span class="en">50× FY28E EPS, after Q4 FY26</span><span class="ta">FY28E EPS-க்கு 50×, Q4 FY26-க்கு பிறகு</span></td><td class="l">Business Today</td></tr>
+   <tr><td><span class="en">Consensus (2 analysts)</span><span class="ta">கன்சென்சஸ் (2 அனலிஸ்ட்)</span></td><td class="l"><span class="pill p">STRONG BUY</span></td><td>382.5 <span class="note">(365–400)</span></td><td class="dn">−10.4%</td><td class="l"><span class="en">3-month poll</span><span class="ta">3 மாத கணக்கெடுப்பு</span></td><td class="l"><span class="en">Stale vs price; likely to be revised after Q2</span><span class="ta">விலையை விட பழசு; Q2-க்கு பிறகு மாறலாம்</span></td><td class="l">Investing.com</td></tr>
+  </tbody></table></div>
+ <div class="box"><span class="en">No post-Q2 target revisions were published by 27 Oct 2026. Goldman Sachs, HSBC, HDFC Securities, Systematix and ICICI Securities analysts were on the 26 Oct call; watch for updated notes this week. CB Research does not issue buy/sell/hold views.</span><span class="ta">27 அக் 2026 வரை Q2-க்கு பிறகு டார்கெட் மாற்றம் எதுவும் வெளியாகல. கோல்ட்மேன் சாக்ஸ், HSBC, HDFC செக்யூரிட்டீஸ், சிஸ்டமேட்டிக்ஸ், ICICI செக்யூரிட்டீஸ் அனலிஸ்ட்கள் 26 அக் கால்ல இருந்தாங்க; இந்த வாரம் புது ரிப்போர்ட் வரலாம். CB ரிசர்ச் வாங்க/விற்க/வைச்சிருக்க பரிந்துரை செய்யாது.</span></div>
+ <div class="card cw"><div class="ci s"><canvas id="cTp"></canvas></div></div>
+</section>
+
+<!-- ============ SELF-CHECK ============ -->
+<section class="panel" id="sc">
+ <h2><span class="en">CB Investor Self-check</span><span class="ta">CB முதலீட்டாளர் சுய சோதனை</span></h2>
+ <p class="note"><span class="en">Tick what is true for you. Each line carries Apollo's own data. Ticks are saved on this device only.</span><span class="ta">உங்களுக்கு பொருந்துறதை டிக் பண்ணுங்க. ஒவ்வொரு வரியிலும் அப்போலோவோட சொந்த தரவு இருக்கு. டிக் இந்த டிவைஸ்ல மட்டும் சேமிக்கப்படும்.</span></p>
+ <div class="card"><b><span class="en">Overall</span><span class="ta">மொத்தம்</span></b> <span id="scAll"></span><div class="bar" style="margin-top:6px"><i id="scAllBar"></i></div>
+  <p class="note" style="margin:6px 0 0"><span class="en">This only counts how many of your own conditions line up. It is not a recommendation.</span><span class="ta">இது உங்க சொந்த நிபந்தனைகள் எத்தனை பொருந்துதுன்னு மட்டும் எண்ணுது. இது பரிந்துரை இல்ல.</span></p>
+  <button class="btn o" style="margin-top:8px" onclick="scClear()"><span class="en">Clear</span><span class="ta">அழி</span></button></div>
+ <div id="scBody" style="margin-top:12px"></div>
+</section>
+
+<!-- ============ MANAGEMENT ============ -->
+<section class="panel" id="mg">
+ <h2><span class="en">Management &amp; Board</span><span class="ta">நிர்வாகம் &amp; போர்டு</span></h2>
+ <div class="tw"><table>
+  <thead><tr><th class="l"><span class="en">Name</span><span class="ta">பெயர்</span></th><th class="l"><span class="en">Role</span><span class="ta">பொறுப்பு</span></th><th class="l"><span class="en">What to know</span><span class="ta">தெரிஞ்சுக்க வேண்டியது</span></th></tr></thead>
+  <tbody>
+   <tr><td>Baddam Karunakar Reddy</td><td class="l"><span class="en">Chairman &amp; Managing Director, promoter</span><span class="ta">தலைவர் &amp; நிர்வாக இயக்குநர், ப்ரோமோட்டர்</span></td><td class="l"><span class="en">Sets strategy; aims for a "global OEM" in 5–6 years; group revenue aspiration of ₹25,000 cr tied to capacity, acquisitions and energetics</span><span class="ta">உத்தி வகுக்கிறார்; 5–6 வருஷத்துல "குளோபல் OEM" இலக்கு; ₹25,000 கோடி குழும வருமான கனவு — திறன், கையகப்படுத்தல், எனர்ஜெடிக்ஸோட இணைஞ்சது</span></td></tr>
+   <tr><td>Addepalli Krishna Sai Kumar</td><td class="l"><span class="en">Whole-time Director, Operations</span><span class="ta">முழுநேர இயக்குநர், செயல்பாடுகள்</span></td><td class="l"><span class="en">Gave programme timelines on the call (MIGM RFQ Nov, PO by Feb; HWT Nov; Pinaka by Dec)</span><span class="ta">கால்ல திட்ட காலக்கெடு சொன்னவர் (MIGM RFQ நவம்பர், PO பிப்ரவரிக்குள்; HWT நவம்பர்; பினாகா டிசம்பருக்குள்)</span></td></tr>
+   <tr><td>Sudarshan Chiluveru</td><td class="l"><span class="en">Chief Financial Officer</span><span class="ta">தலைமை நிதி அதிகாரி</span></td><td class="l"><span class="en">Guides on cash flow (positive CFO in FY27, stronger from FY29) and working capital</span><span class="ta">கேஷ் ஃப்ளோ (FY27-ல பாசிட்டிவ் CFO, FY29-ல இருந்து வலுவா), வொர்க்கிங் கேபிடல் பத்தி கைடன்ஸ்</span></td></tr>
+   <tr><td>Mr. Prasad</td><td class="l"><span class="en">Director (Technical)</span><span class="ta">இயக்குநர் (தொழில்நுட்பம்)</span></td><td class="l"><span class="en">Heads R&amp;D with the MD; ~11 department heads below (pyrotechnics, controls, RF…)</span><span class="ta">MD-உடன் R&amp;D தலைமை; கீழ ~11 துறைத் தலைவர்கள் (பைரோடெக்னிக்ஸ், கன்ட்ரோல், RF…)</span></td></tr>
+   <tr><td>Dr V.K. Saraswat</td><td class="l"><span class="en">Leads Shauryastra Defence Systems (34% associate)</span><span class="ta">ஷௌர்யாஸ்திரா டிஃபென்ஸ் சிஸ்டம்ஸ் தலைமை (34% அசோசியேட்)</span></td><td class="l"><span class="en">Former DRDO chief and scientific adviser to the Raksha Mantri; not on Apollo's board</span><span class="ta">முன்னாள் DRDO தலைவர், ரக்‌ஷா மந்திரியின் அறிவியல் ஆலோசகர்; அப்போலோ போர்டில் இல்லை</span></td></tr>
+   <tr><td><span class="en">Independent directors</span><span class="ta">சுயாதீன இயக்குநர்கள்</span></td><td class="l">n/a</td><td class="l"><span class="en">Not verified for this edition — check the latest annual report</span><span class="ta">இந்த பதிப்புக்கு சரிபார்க்கல — சமீபத்திய ஆண்டறிக்கையை பாருங்க</span></td></tr>
+  </tbody></table></div>
+ <div class="grid g2" style="margin-top:12px">
+  <div class="box g"><b><span class="en">Positives</span><span class="ta">நல்லவை</span></b><ul class="t en"><li>Promoters putting ₹1,080 cr into warrants at ₹416.60.</li><li>Specific, dated guidance given on the call — easy to track.</li><li>Board-approved monitoring agency (Acuité) for use of the ₹3,322 cr.</li></ul><ul class="t ta"><li>ப்ரோமோட்டர்கள் ₹416.60-க்கு வாரண்ட்ல ₹1,080 கோடி போடுறாங்க.</li><li>கால்ல தேதியோட தெளிவான கைடன்ஸ் — டிராக் பண்ண சுலபம்.</li><li>₹3,322 கோடி பயன்பாட்டுக்கு கண்காணிப்பு நிறுவனம் (அக்யூட்டே) நியமனம்.</li></ul></div>
+  <div class="box r"><b><span class="en">Watch-points</span><span class="ta">கவனிக்க வேண்டியவை</span></b><ul class="t en"><li>Pledge at 35.57% of promoter holding and rising QoQ.</li><li>Large aspirations (₹25,000 cr, 2,000 more acres) run ahead of disclosed plans.</li><li>Premier guidance withheld until closing (SPA confidentiality).</li></ul><ul class="t ta"><li>ப்ரோமோட்டர் ஹோல்டிங்ல 35.57% அடமானம், காலாண்டுக்கு ஏறுது.</li><li>பெரிய கனவுகள் (₹25,000 கோடி, இன்னும் 2,000 ஏக்கர்) வெளியிட்ட திட்டங்களை விட முன்னாடி.</li><li>டீல் முடியும் வரை பிரீமியர் கைடன்ஸ் இல்ல (SPA ரகசியம்).</li></ul></div>
+ </div>
+</section>
+
+<!-- ============ SOCRATES ============ -->
+<section class="panel" id="so">
+ <h2><span class="en">Cauvery Socrates — think it through</span><span class="ta">காவேரி சாக்ரடீஸ் — யோசிச்சு பாருங்க</span></h2>
+ <div class="card"><b><span class="en">Score</span><span class="ta">மதிப்பெண்</span>: <span id="qScore">0</span> / <span id="qTot">0</span></b></div>
+ <div id="quiz" style="margin-top:12px"></div>
+</section>
+</main>
+
+<div id="cbBadge" title="CB Research" onclick="document.getElementById('cbPop').classList.toggle('on')">CB</div>
+<div id="cbPop"><b>CB Research · Cauvery Business</b><br>
+ <span class="en">Prepared by CB Research (Cauvery Business Research) for financial education only. CB Research is not a SEBI-registered research analyst; nothing here is investment advice or a buy/sell/hold recommendation. Figures are from Apollo Micro Systems' unaudited, limited-reviewed Q2 FY27 results, press releases, the 26 Oct 2026 concall and market data as of 27 Oct 2026, 2:34 PM IST; "n/a" marks items not verified. Third-party ratings are attributed to their authors. Please consult a registered adviser before investing.</span>
+ <span class="ta">இது CB ரிசர்ச் (காவேரி பிசினஸ் ரிசர்ச்) நிதிக் கல்விக்காக மட்டும் தயாரித்தது. CB ரிசர்ச் SEBI பதிவு பெற்ற ரிசர்ச் அனலிஸ்ட் இல்ல; இங்க உள்ளது முதலீட்டு ஆலோசனையோ வாங்க/விற்க/வைச்சிருக்க பரிந்துரையோ இல்ல. எண்கள் அப்போலோ மைக்ரோ சிஸ்டம்ஸோட ஆடிட் ஆகாத, லிமிடெட் ரிவ்யூ ஆன Q2 FY27 ரிசல்ட், பிரஸ் ரிலீஸ், 26 அக் 2026 கான்கால், 27 அக் 2026 மதியம் 2:34 வரையிலான மார்க்கெட் தரவுல இருந்து; "n/a" = சரிபார்க்காதது. மூன்றாம் தரப்பு ரேட்டிங் அவங்களோடது. முதலீடு செய்யுமுன் பதிவு பெற்ற ஆலோசகரை கேளுங்க.</span></div>
+
+<button id="asBtn" onclick="asToggle()">🎙 CB Assist</button>
+<div id="asWin">
+ <div id="asHead"><span>CB Assist · Apollo Micro</span><button onclick="asToggle()" style="background:none;border:0;color:#fff;font-size:18px;cursor:pointer">×</button></div>
+ <div id="asLog"></div>
+ <div class="qs" id="asQs" style="padding:0 8px"></div>
+ <div id="asIn"><input id="asTxt" placeholder="Ask about Apollo…" onkeydown="if(event.key==='Enter')asAsk()"><button id="asMic" onclick="asMic()" title="Voice">🎤</button><button class="btn" onclick="asAsk()">➤</button></div>
+</div>
+
+<script>
+"use strict";
+/* ===== machine-readable company data ===== */
+var CO = {
+ name:"Apollo Micro Systems Ltd", nse:"APOLLO", bse:"540879", quarter:"Q2 FY27", asOf:"2026-10-27 14:34 IST",
+ price:426.65, mcapCr:15856, pe:116.5, pb:10.06,
+ q:{labels:["Q2 FY26","Q3 FY26","Q4 FY26","Q1 FY27","Q2 FY27"],rev:[225.26,252.22,293.26,251.29,388.15],ebitda:[59.19,50.39,67.64,53.73,111.18],pat:[30.03,22.88,36.79,25.21,46.15]},
+ standaloneQ2:{rev:306.29,ebitda:107.56,pat:48},
+ orderBook:{"Q1 FY26":735,"Q4 FY26":1432,"Q1 FY27":1704,"Q2 FY27":1765},
+ annual:{FY25:{rev:562.07,ebitda:129.21,pat:56.36,cfo:10.24},FY26:{rev:904.32,ebitda:218.16,pat:107.38,cfo:-129.76},H1FY27:{rev:639.44,ebitda:164.91,pat:71.37,cfo:22.44}},
+ wcDays:{FY26:359,H1FY27:353}, borrowings:{FY25:335.4,FY26:543.3},
+ shareholding:{promoter:49.98,fpi:5.95,mf:1.19,others:42.88,pledgePctOfPromoter:35.57},
+ cbScore:63, conviction:70, priceConviction:71,
+ cycle:{sectorPhase:"P3",stockStage:"Stage 2 (mid)",cy:65},
+ tg:43
+};
+var LANG="en";
+function L(en,ta){return LANG==="ta"?ta:en;}
+function f(n,d){if(d===undefined)d=2;return Number(n).toLocaleString("en-IN",{minimumFractionDigits:0,maximumFractionDigits:d});}
+var NAVY="#12355b",ORG="#e8710a",GRN="#1e8e3e",AMB="#d99a00",RED="#d93025",BLU="#1a73e8",PUR="#7b3fbf",TEAL="#0f8b8d",GRY="#9aa5b1";
+
+/* ===== tabs & language ===== */
+var charts={},built={};
+document.getElementById("tabs").addEventListener("click",function(e){var b=e.target.closest("button");if(!b)return;showTab(b.dataset.t);});
+function showTab(t){
+ document.querySelectorAll("#tabs button").forEach(function(x){x.classList.toggle("on",x.dataset.t===t);});
+ document.querySelectorAll(".panel").forEach(function(p){p.classList.toggle("on",p.id===t);});
+ buildTab(t); window.scrollTo({top:0,behavior:"smooth"});
+}
+function setLang(l){
+ LANG=l; document.body.classList.toggle("lang-ta",l==="ta");
+ document.getElementById("bEn").classList.toggle("on",l==="en");document.getElementById("bTa").classList.toggle("on",l==="ta");
+ document.documentElement.lang=l==="ta"?"ta":"en";
+ Object.keys(charts).forEach(function(k){charts[k].destroy();});charts={};built={};
+ drawTemple(false);renderPillars();renderConv();drawBM();renderEvents();renderTriggers();renderTimeline();drawClock();renderSC();renderQuiz();asInit();
+ var cur=document.querySelector(".panel.on");if(cur)buildTab(cur.id);
+}
+function buildTab(t){
+ if(built[t])return; built[t]=true;
+ if(t==="ov")chOv();
+ if(t==="bm"){chOb();chSplit();}
+ if(t==="fin"){chAnn();chTax();}
+ if(t==="cf")chCfo();
+ if(t==="mkt"){chPx();chSh();}
+ if(t==="an")chTp();
+}
+
+/* ===== chart helpers ===== */
+if(window.Chart){if(window.ChartDataLabels)Chart.register(ChartDataLabels);Chart.defaults.font.family="Inter, 'Noto Sans Tamil', sans-serif";Chart.defaults.color="#334";}
+function dl(show,fmtFn){return {display:show,anchor:"end",align:"end",offset:2,color:"#1b2430",font:{weight:"700",size:11},formatter:fmtFn||function(v){return f(v,2);}};}
+function mk(id,cfg){var el=document.getElementById(id);if(!el||!window.Chart)return;charts[id]=new Chart(el,cfg);}
+function baseOpts(extra){var o={responsive:true,maintainAspectRatio:false,plugins:{legend:{position:"bottom"},tooltip:{callbacks:{label:function(c){return c.dataset.label+": "+f(c.raw,2);}}}},layout:{padding:{top:22}}};if(extra)for(var k in extra)o[k]=extra[k];return o;}
+
+function chOv(){
+ var m=CO.q.rev.map(function(r,i){return +(CO.q.ebitda[i]/r*100).toFixed(1);});
+ mk("cOv",{data:{labels:CO.q.labels,datasets:[
+  {type:"bar",label:L("Revenue (₹ cr)","வருமானம் (₹ கோடி)"),data:CO.q.rev,backgroundColor:NAVY,yAxisID:"y",datalabels:dl(true)},
+  {type:"bar",label:L("EBITDA (₹ cr)","EBITDA (₹ கோடி)"),data:CO.q.ebitda,backgroundColor:ORG,yAxisID:"y",datalabels:dl(true)},
+  {type:"bar",label:L("PAT (₹ cr)","PAT (₹ கோடி)"),data:CO.q.pat,backgroundColor:GRN,yAxisID:"y",datalabels:dl(true)},
+  {type:"line",label:L("EBITDA margin %","EBITDA மார்ஜின் %"),data:m,borderColor:PUR,backgroundColor:PUR,yAxisID:"y1",tension:.3,datalabels:{display:true,align:"top",color:PUR,font:{weight:"800"},formatter:function(v){return v+"%";}}}
+ ]},options:baseOpts({scales:{y:{beginAtZero:true,title:{display:true,text:"₹ cr"}},y1:{position:"right",min:0,max:40,grid:{display:false},ticks:{callback:function(v){return v+"%";}}}}})});
+}
+function chOb(){
+ var lab=[L("Q1 FY26","Q1 FY26"),"Q4 FY26","Q1 FY27","Q2 FY27",L("Mar-27 guide (ex-MIGM)","மார்ச்-27 கைடன்ஸ் (MIGM இல்லாம)"),L("With MIGM (guide mid)","MIGM-உடன் (கைடன்ஸ் நடு)")];
+ mk("cOb",{type:"bar",data:{labels:lab,datasets:[{label:L("Order book (₹ cr)","ஆர்டர் புக் (₹ கோடி)"),data:[735,1432,1704,1765,2000,4750],backgroundColor:[NAVY,NAVY,NAVY,ORG,"#f6c08f","#fbe0c6"],borderColor:[NAVY,NAVY,NAVY,ORG,ORG,ORG],borderWidth:1.5,datalabels:dl(true,function(v,c){return c.dataIndex===4?">2,000":c.dataIndex===5?"4,500–5,000":f(v,0);})}]},options:baseOpts({plugins:{legend:{display:false}},scales:{y:{beginAtZero:true}}})});
+}
+function chSplit(){
+ mk("cSplit",{type:"bar",data:{labels:[L("Revenue Q2 FY27","வருமானம் Q2 FY27"),L("EBITDA Q2 FY27","EBITDA Q2 FY27")],datasets:[
+  {label:L("Standalone (₹ cr)","ஸ்டாண்ட்அலோன் (₹ கோடி)"),data:[306.29,107.56],backgroundColor:NAVY,datalabels:{display:true,color:"#fff",font:{weight:"800"},formatter:function(v){return f(v,2);}}},
+  {label:L("Subsidiaries (₹ cr)","சப்சிடியரிகள் (₹ கோடி)"),data:[81.86,3.62],backgroundColor:ORG,datalabels:{display:true,anchor:"end",align:"end",color:"#a44c00",font:{weight:"800"},formatter:function(v){return f(v,2);}}}
+ ]},options:baseOpts({indexAxis:"y",scales:{x:{stacked:true,beginAtZero:true},y:{stacked:true}}})});
+}
+function chAnn(){
+ var lab=["FY25","FY26","H1 FY26","H1 FY27","TTM"];
+ mk("cAnn",{type:"bar",data:{labels:lab,datasets:[
+  {label:L("Revenue","வருமானம்"),data:[562.07,904.32,358.85,639.44,1184.92],backgroundColor:NAVY,datalabels:dl(true,function(v){return f(v,0);})},
+  {label:"EBITDA",data:[129.21,218.16,100,164.91,282.94],backgroundColor:ORG,datalabels:dl(true,function(v){return f(v,0);})},
+  {label:"PAT",data:[56.36,107.38,47.71,71.37,131.03],backgroundColor:GRN,datalabels:dl(true,function(v){return f(v,0);})}]},options:baseOpts({scales:{y:{beginAtZero:true}}})});
+}
+function chTax(){
+ mk("cTax",{type:"bar",data:{labels:["PBT",L("Tax","வரி"),"PAT"],datasets:[
+  {label:"Q2 FY26",data:[43.15,13.12,30.03],backgroundColor:GRY,datalabels:dl(true)},
+  {label:"Q2 FY27",data:[92.48,46.32,46.15],backgroundColor:[NAVY,RED,GRN],datalabels:dl(true)}]},options:baseOpts({scales:{y:{beginAtZero:true}}})});
+}
+function chCfo(){
+ mk("cCfo",{type:"bar",data:{labels:["FY25","FY26","H1 FY27"],datasets:[
+  {label:"PAT",data:[56.36,107.38,71.37],backgroundColor:GRN,datalabels:dl(true)},
+  {label:L("Operating cash flow","ஆபரேட்டிங் கேஷ் ஃப்ளோ"),data:[10.24,-129.76,22.44],backgroundColor:[TEAL,RED,TEAL],datalabels:{display:true,anchor:"end",align:function(c){return c.dataset.data[c.dataIndex]<0?"start":"end";},color:"#1b2430",font:{weight:"700"},formatter:function(v){return f(v,2);}}}]},options:baseOpts({scales:{y:{suggestedMin:-150}}})});
+}
+var PX=[["07 May",314.55],["18 May",311.00],["03 Jul",448.30],["06 Jul",424.05],["13 Jul",401.80],["20 Jul",394.05],["04 Aug",398.30],["17 Aug",391.15],["28 Aug",386.60],["07 Sep",403.90],["24 Sep",404.50],["30 Sep",403.45],["16 Oct",429.00],["23 Oct",374.75],["26 Oct",410.90],["27 Oct*",426.65]];
+function chPx(){
+ mk("cPx",{type:"line",data:{labels:PX.map(function(p){return p[0];}),datasets:[{label:L("Share price (₹, NSE) — *27 Oct at 2:34 PM","பங்கு விலை (₹, NSE) — *27 அக் மதியம் 2:34"),data:PX.map(function(p){return p[1];}),borderColor:NAVY,backgroundColor:"rgba(18,53,91,.08)",fill:true,tension:.25,pointRadius:4,pointBackgroundColor:ORG,datalabels:{display:true,align:"top",color:NAVY,font:{size:10,weight:"700"},formatter:function(v){return f(v,0);}}},
+  {label:L("Preferential issue price ₹416.60","ப்ரெஃபரன்ஷியல் விலை ₹416.60"),data:PX.map(function(){return 416.6;}),borderColor:ORG,borderDash:[6,4],pointRadius:0,fill:false,datalabels:{display:false}}]},options:baseOpts({scales:{y:{suggestedMin:280,suggestedMax:480}}})});
+}
+function chSh(){
+ mk("cSh",{type:"doughnut",data:{labels:[L("Promoters","ப்ரோமோட்டர்"),"FPI",L("Mutual funds","மியூச்சுவல் ஃபண்ட்"),L("Public & others","பொதுமக்கள் & பிற")],datasets:[{data:[49.98,5.95,1.19,42.88],backgroundColor:[NAVY,BLU,TEAL,ORG],datalabels:{display:true,color:"#fff",font:{weight:"800"},formatter:function(v){return v>3?v+"%":"";}}}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:"right"}}}});
+}
+function chTp(){
+ mk("cTp",{type:"bar",data:{labels:["HDFC Securities",L("Consensus","கன்சென்சஸ்"),L("Price 27 Oct","விலை 27 அக்"),"ICICI Direct","Systematix"],datasets:[{label:L("Target / price (₹)","டார்கெட் / விலை (₹)"),data:[400,382.5,426.65,485,570],backgroundColor:[GRY,GRY,ORG,BLU,GRN],datalabels:dl(true)}]},options:baseOpts({indexAxis:"y",plugins:{legend:{display:false}},scales:{x:{beginAtZero:true,suggestedMax:640}}})});
+}
+
+/* ===== temple (6 pillars) ===== */
+var PIL=[
+ {k:"g",en:"Growth",ta:"வளர்ச்சி",s:9.0,
+  e:"Revenue +72% YoY, EBITDA +88%, record ₹1,765 cr order book. Caveat: standalone growth was 36% (H1: 29%) against 45–50% full-year guidance, so H2 must accelerate.",
+  t:"வருமானம் +72%, EBITDA +88%, ரெக்கார்டு ₹1,765 கோடி ஆர்டர் புக். ஆனா: ஸ்டாண்ட்அலோன் வளர்ச்சி 36% (அரையாண்டு 29%), முழு வருட கைடன்ஸ் 45–50%; அதனால H2 வேகமெடுக்கணும்."},
+ {k:"m",en:"Margin & Moat",ta:"மார்ஜின் & அகழி",s:8.0,
+  e:"Standalone EBITDA 35%, gross margin ~41%; sole electronics supplier on MIGM and the only established QRSAM navigation source. Consolidated 28.6% is diluted by IDL (~4%).",
+  t:"ஸ்டாண்ட்அலோன் EBITDA 35%, கிராஸ் மார்ஜின் ~41%; MIGM-க்கு ஒரே எலக்ட்ரானிக்ஸ் சப்ளையர், QRSAM நேவிகேஷனுக்கு ஒரே நிறுவப்பட்ட ஆதாரம். IDL (~4%) கன்சாலிடேட்டட் மார்ஜினை 28.6%-க்கு குறைக்குது."},
+ {k:"d",en:"Debt & Cash",ta:"கடன் & கேஷ்",s:4.5,
+  e:"FY26 CFO −₹130 cr; working capital 353 days; borrowings ₹543 cr. H1 CFO +₹22 cr is only 31% of PAT. The ₹3,322 cr raise rebuilds the cushion but is earmarked mainly for Premier.",
+  t:"FY26 CFO −₹130 கோடி; வொர்க்கிங் கேபிடல் 353 நாள்; கடன் ₹543 கோடி. அரையாண்டு CFO +₹22 கோடி, PAT-ல 31% தான். ₹3,322 கோடி நிதி குஷனை தருது, ஆனா பெரும்பாலும் பிரீமியருக்கு."},
+ {k:"v",en:"Valuation",ta:"மதிப்பீடு",s:3.5,
+  e:"~116× trailing P/E, ~10× book, 13× sales. Group PAT must roughly triple by FY29 for the multiple to look ordinary.",
+  t:"~116× P/E, ~10× புக், 13× விற்பனை. FY29-க்குள் குழும PAT கிட்டத்தட்ட மூணு மடங்கு ஆனா தான் இந்த மல்டிபிள் சாதாரணமா தெரியும்."},
+ {k:"t",en:"Triggers & Market",ta:"ட்ரிகர் & மார்க்கெட்",s:8.0,
+  e:"Dated catalysts: Premier closing (Dec qtr), MIGM PO (Feb–Mar 2027), Unit 3 (Mar 2027), torpedo and Pinaka orders. Price above 50- and 200-DMA on heavy volume.",
+  t:"தேதியோட கேடலிஸ்ட்: பிரீமியர் முடிவு (டிசம்பர் காலாண்டு), MIGM PO (பிப்–மார்ச் 2027), யூனிட் 3 (மார்ச் 2027), டார்பிடோ, பினாகா ஆர்டர். அதிக வால்யூமோட 50, 200-DMA-க்கு மேல விலை."},
+ {k:"r",en:"Risk & Governance",ta:"ரிஸ்க் & நிர்வாகம்",s:5.0,
+  e:"Promoter 49.98% with 35.57% pledged (rising); auditor's material-uncertainty note on subsidiaries; ~21% potential dilution; ~50% effective tax in Q2.",
+  t:"ப்ரோமோட்டர் 49.98%, அதுல 35.57% அடமானம் (ஏறுது); சப்சிடியரிகள் பத்தி ஆடிட்டர் குறிப்பு; ~21% டைல்யூஷன் வாய்ப்பு; Q2-ல ~50% வரி."}
+];
+function pc(s){return s>=8?GRN:s>=6?AMB:RED;}
+function drawTemple(anim){
+ var sv=document.getElementById("temple");if(!sv)return;
+ var comp=Math.round(PIL.reduce(function(a,p){return a+p.s;},0)/PIL.length*10);
+ var h='<defs><linearGradient id="roofG" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f59b42"/><stop offset="1" stop-color="#e8710a"/></linearGradient></defs>';
+ h+='<polygon points="40,122 380,18 720,122" fill="url(#roofG)" stroke="#b85a06" stroke-width="2"/>';
+ h+='<text x="380" y="72" text-anchor="middle" font-size="15" font-weight="700" fill="#fff">CB Score</text>';
+ h+='<text x="380" y="108" text-anchor="middle" font-size="34" font-weight="900" fill="#fff">'+comp+'</text>';
+ h+='<rect x="58" y="126" width="644" height="38" rx="4" fill="#12355b"/>';
+ h+='<text x="380" y="151" text-anchor="middle" font-size="15" font-weight="700" fill="#fff">'+L("Apollo Micro Systems · Q2 FY27","அப்போலோ மைக்ரோ சிஸ்டம்ஸ் · Q2 FY27")+'</text>';
+ PIL.forEach(function(p,i){
+  var x=88+i*100,top=172,H=216,col=pc(p.s),fh=H*p.s/10;
+  h+='<g class="col" style="cursor:pointer" onclick="jumpPillar('+i+')">';
+  h+='<rect x="'+x+'" y="'+top+'" width="64" height="'+H+'" rx="3" fill="#f1f3f6" stroke="#cfd6df"/>';
+  h+='<rect class="cf" data-h="'+fh+'" x="'+x+'" y="'+(top+H-(anim?0:fh))+'" width="64" height="'+(anim?0:fh)+'" rx="3" fill="'+col+'" opacity=".85"/>';
+  for(var j=1;j<5;j++)h+='<line x1="'+(x+j*12.8)+'" y1="'+top+'" x2="'+(x+j*12.8)+'" y2="'+(top+H)+'" stroke="rgba(255,255,255,.55)" stroke-width="1.5"/>';
+  h+='<rect x="'+(x-5)+'" y="'+(top-6)+'" width="74" height="8" rx="2" fill="#cfd6df"/>';
+  h+='<circle cx="'+(x+32)+'" cy="'+(top+30)+'" r="20" fill="#fff" stroke="'+col+'" stroke-width="3"/>';
+  h+='<text x="'+(x+32)+'" y="'+(top+36)+'" text-anchor="middle" font-size="15" font-weight="800" fill="'+col+'">'+p.s.toFixed(1)+'</text></g>';
+ });
+ h+='<rect x="48" y="392" width="664" height="14" rx="2" fill="#dfe4ea"/><rect x="30" y="406" width="700" height="14" rx="2" fill="#cfd6df"/>';
+ PIL.forEach(function(p,i){var x=88+i*100+32;var lb=L(p.en,p.ta).split(" & ");h+='<text x="'+x+'" y="'+(lb.length>1?436:444)+'" text-anchor="middle" font-size="'+(LANG==="ta"?11:12)+'" font-weight="700" fill="#12355b">'+esc(lb[0])+(lb.length>1?' &amp;':'')+'</text>';if(lb.length>1)h+='<text x="'+x+'" y="451" text-anchor="middle" font-size="'+(LANG==="ta"?11:12)+'" font-weight="700" fill="#12355b">'+esc(lb[1])+'</text>';});
+ h+='<text x="380" y="468" text-anchor="middle" font-size="11" fill="#5b6675">'+L("Green 8–10 · Amber 6–8 · Red below 6","பச்சை 8–10 · மஞ்சள் 6–8 · சிவப்பு 6-க்கு கீழ்")+'</text>';
+ sv.innerHTML=h;
+ document.getElementById("chipScore").textContent="CB Score "+comp;
+ if(anim){setTimeout(function(){sv.querySelectorAll(".cf").forEach(function(r){var fh=+r.dataset.h,steps=30,k=0;var y0=172+216;var iv=setInterval(function(){k++;var hh=fh*k/steps;r.setAttribute("height",hh);r.setAttribute("y",y0-hh);if(k>=steps)clearInterval(iv);},22);});},250);}
+}
+function renderPillars(){
+ var el=document.getElementById("pillarCards");if(!el)return;
+ el.innerHTML=PIL.map(function(p,i){return '<div class="card pcard" id="pc'+i+'" style="border-left:5px solid '+pc(p.s)+'"><b style="color:'+pc(p.s)+'">'+L(p.en,p.ta)+' · '+p.s.toFixed(1)+'/10</b><div style="font-size:13.5px;margin-top:4px">'+L(p.e,p.t)+'</div></div>';}).join("");
+}
+function jumpPillar(i){var c=document.getElementById("pc"+i);if(!c)return;c.scrollIntoView({behavior:"smooth",block:"center"});c.classList.add("hl");setTimeout(function(){c.classList.remove("hl");},2200);}
+var LENS=[["E",L("Earnings actuals","வருமான உண்மைகள்"),85,25],["F",L("Fundamental / CB Score","அடிப்படை / CB ஸ்கோர்"),63,20],["M",L("Macro","மேக்ரோ"),80,15],["T",L("Market pulse","மார்க்கெட் நாடி"),72,15],["CY",L("Cycle","சைக்கிள்"),65,10],["TG",L("Trigger","ட்ரிகர்"),43,15]];
+function renderConv(){
+ LENS=[["E",L("Earnings actuals","வருமான உண்மைகள்"),85,25],["F",L("Fundamental / CB Score","அடிப்படை / CB ஸ்கோர்"),63,20],["M",L("Macro","மேக்ரோ"),80,15],["T",L("Market pulse","மார்க்கெட் நாடி"),72,15],["CY",L("Cycle","சைக்கிள்"),65,10],["TG",L("Trigger","ட்ரிகர்"),43,15]];
+ var tot=LENS.reduce(function(a,x){return a+x[2]*x[3]/100;},0);
+ var h=LENS.map(function(x){var c=x[2]>=75?GRN:x[2]>=55?AMB:RED;return '<div style="margin:6px 0"><div style="display:flex;justify-content:space-between;font-size:13px"><span><b>'+x[0]+'</b> · '+x[1]+' <span class="note">('+x[3]+'%)</span></span><b style="color:'+c+'">'+x[2]+'</b></div><div class="bar"><i style="width:'+x[2]+'%;background:'+c+'"></i></div></div>';}).join("");
+ h+='<div style="margin-top:8px;font-size:14px"><b>'+L("Weighted Conviction","எடையிட்ட கன்விக்ஷன்")+': '+tot.toFixed(1)+' → '+Math.round(tot)+'</b> · '+L("Price Conviction (near-term)","விலை கன்விக்ஷன் (அருகாமை)")+': 71 · '+L("Gates: none triggered","கேட்கள்: எதுவும் இல்லை")+'</div>';
+ document.getElementById("convBars").innerHTML=h;
+}
+
+/* ===== business model map ===== */
+var BM=[
+ {id:"c1",x:10,y:16,w:170,h:64,c:"#5f6b7a",t:["Armed Forces & MoD","ராணுவம் & MoD"],s:["End user; DAC approvals","இறுதி பயனர்; DAC அனுமதி"],d:["Army, Navy and Air Force decide what is bought; the Defence Acquisition Council cleared MIGM on 3 Jul 2026 and the Navy wants the PO before Feb 2027.","ராணுவம், கடற்படை, விமானப்படை தான் என்ன வாங்கணும்னு முடிவு செய்யும்; DAC 3 ஜூலை 2026 அன்று MIGM-க்கு அனுமதி கொடுத்துச்சு; கடற்படை பிப் 2027-க்கு முன் PO கொடுக்க விரும்புது."]},
+ {id:"c2",x:10,y:96,w:170,h:64,c:"#5f6b7a",t:["DRDO labs","DRDO ஆய்வகங்கள்"],s:["Design partner, ToT","வடிவமைப்பு பார்ட்னர், ToT"],d:["DRDO designs the weapon; Apollo builds the electronics during development. Whoever supplied during development usually stays the production vendor — the base of Apollo's sole-supplier positions.","DRDO ஆயுதத்தை வடிவமைக்கும்; டெவலப்மென்ட் நேரத்துல எலக்ட்ரானிக்ஸ் அப்போலோ செய்யும். டெவலப்மென்ட்ல சப்ளை செஞ்சவங்கதான் பொதுவா புரொடக்ஷனுக்கும் — அப்போலோவோட ஒரே-சப்ளையர் நிலைக்கு இதுதான் அடிப்படை."]},
+ {id:"c3",x:10,y:176,w:170,h:64,c:"#5f6b7a",t:["DPSUs: BDL, BEL, HAL, MIL","DPSU: BDL, BEL, HAL, MIL"],s:["System integrators","சிஸ்டம் ஒருங்கிணைப்பாளர்"],d:["State-owned integrators place sub-system orders on Apollo (e.g. Varunastra torpedo via BDL, expected ~₹100 cr+; Pinaka via MIL).","அரசு நிறுவனங்கள் அப்போலோவுக்கு சப்சிஸ்டம் ஆர்டர் தரும் (உதா: BDL வழியா வருணாஸ்திரா டார்பிடோ ~₹100 கோடி+; MIL வழியா பினாகா)."]},
+ {id:"c4",x:10,y:256,w:170,h:64,c:"#5f6b7a",t:["Private integrators","தனியார் ஒருங்கிணைப்பாளர்"],s:["Solar, Bharat Forge, others","சோலார், பாரத் ஃபோர்ஜ், பிற"],d:["Private primes (Pinaka 80 km vendors include Solar Industries, Bharat Forge and MIL) buy Apollo sub-systems; QRSAM may be split 50:50 between BDL and private players.","தனியார் பெரிய நிறுவனங்கள் (பினாகா 80 கி.மீ-க்கு சோலார், பாரத் ஃபோர்ஜ், MIL) அப்போலோ சப்சிஸ்டம் வாங்கும்; QRSAM-ஐ BDL-க்கும் தனியாருக்கும் 50:50 பிரிக்கலாம்."]},
+ {id:"c5",x:10,y:336,w:170,h:64,c:"#5f6b7a",t:["Coal India subsidiaries","கோல் இந்தியா நிறுவனங்கள்"],s:["IDL bulk explosives","IDL மொத்த வெடிமருந்து"],d:["IDL Explosives supplies bulk explosives under long-term contracts; the new Bolkunda silo near Asansol (9,000 t storage) serves these orders.","IDL எக்ஸ்ப்ளோசிவ்ஸ் நீண்டகால ஒப்பந்தத்துல மொத்த வெடிமருந்து சப்ளை செய்யுது; அசன்சோல் அருகே புது போல்குண்டா சைலோ (9,000 டன்) இதுக்காக."]},
+ {id:"c6",x:10,y:416,w:170,h:64,c:"#5f6b7a",t:["Export customers","ஏற்றுமதி வாடிக்கையாளர்"],s:["From FY28","FY28-ல இருந்து"],d:["Middle-East and European services have done due diligence; management expects export orders from next financial year once Unit 3 is fully live.","மத்திய கிழக்கு, ஐரோப்பிய படைகள் ஆய்வு செஞ்சிருக்காங்க; யூனிட் 3 முழுசா ஓடினதும் அடுத்த நிதியாண்டுல இருந்து ஏற்றுமதி ஆர்டர் வரும்னு நிர்வாகம் எதிர்பார்க்குது."]},
+ {id:"h1",x:205,y:60,w:160,h:76,c:"#1a73e8",t:["Development orders","டெவலப்மென்ட் ஆர்டர்"],s:["DcPP · ToT · prototypes","DcPP · ToT · மாதிரி"],d:["Lower-margin, milestone-billed work that wins the long production tail; 60+ DcPP programmes. Cash comes slowly.","குறைந்த மார்ஜின், மைல்ஸ்டோன் பில்லிங்; ஆனா நீண்ட புரொடக்ஷன் வாய்ப்பை வெல்லும்; 60+ DcPP திட்டங்கள். கேஷ் மெதுவா வரும்."]},
+ {id:"h2",x:205,y:186,w:160,h:76,c:"#1a73e8",t:["Production orders","புரொடக்ஷன் ஆர்டர்"],s:["Proprietary / nomination","சொந்த / நாமினேஷன்"],d:["Higher-margin repeat supply; Q2 was production-heavy, lifting standalone margin to 35%. Large orders carry advances (MIGM: 20%).","அதிக மார்ஜின், தொடர் சப்ளை; Q2-ல புரொடக்ஷன் அதிகம், ஸ்டாண்ட்அலோன் மார்ஜின் 35%. பெரிய ஆர்டருக்கு அட்வான்ஸ் (MIGM: 20%)."]},
+ {id:"h3",x:205,y:336,w:160,h:66,c:"#1a73e8",t:["Bulk explosives deals","மொத்த வெடிமருந்து"],s:["Short-cycle, seasonal","குறுகிய காலம், சீசனல்"],d:["Commercial explosives sell quickly but at thin margins; Q2 (monsoon) is the lean season.","வணிக வெடிமருந்து சீக்கிரம் விற்கும், ஆனா மார்ஜின் குறைவு; Q2 (மழைக்காலம்) மந்தமான சீசன்."]},
+ {id:"co",x:392,y:150,w:178,h:210,c:"#12355b",big:1,t:["Apollo Micro Systems|group","அப்போலோ மைக்ரோ|சிஸ்டம்ஸ் குழுமம்"],s:["Q2 revenue ₹388 cr","Q2 வருமானம் ₹388 கோடி","Order book ₹1,765 cr","ஆர்டர் புக் ₹1,765 கோடி","150+ programmes","150+ திட்டங்கள்","Weapons licence","ஆயுத லைசென்ஸ்"],d:["Hyderabad-based Tier-1/Tier-2 supplier turning OEM: electronics + explosives today, propellants (Premier) and long-range design (Shauryastra) next. Unit 3 adds ~12× capacity by Mar 2027.","ஹைதராபாத் Tier-1/Tier-2 சப்ளையர் இப்போ OEM ஆகுது: இன்று எலக்ட்ரானிக்ஸ் + வெடிமருந்து, அடுத்து புரொபெல்லன்ட் (பிரீமியர்), நீண்ட தூர வடிவமைப்பு (ஷௌர்யாஸ்திரா). மார்ச் 2027-க்குள் யூனிட் 3 ~12 மடங்கு திறன்."]},
+ {id:"sA",x:598,y:14,w:214,h:80,c:"#1e8e3e",t:["A · Defence electronics","A · டிஃபென்ஸ் எலக்ட்ரானிக்ஸ்"],s:["₹306 cr · 79% · +36% YoY","₹306 கோடி · 79% · +36%","EBITDA 35%","EBITDA 35%"],d:["Onboard computers, navigation, control and processing units for missiles (Akash, QRSAM, Pralay, BrahMos-NG), torpedoes, mines and rockets. Standalone EBITDA ₹107.56 cr, PAT ≈ ₹48 cr.","மிசைல் (ஆகாஷ், QRSAM, பிரலே, பிரம்மோஸ்-NG), டார்பிடோ, மைன், ராக்கெட்டுக்கு ஆன்போர்டு கம்ப்யூட்டர், நேவிகேஷன், கன்ட்ரோல் யூனிட். ஸ்டாண்ட்அலோன் EBITDA ₹107.56 கோடி, PAT ≈ ₹48 கோடி."]},
+ {id:"sB",x:598,y:104,w:214,h:80,c:"#e8710a",t:["B · Explosives — IDL","B · வெடிமருந்து — IDL"],s:["≈₹82 cr · 21% · new","≈₹82 கோடி · 21% · புதுசு","EBITDA ≈4% · ADIPL 51%","EBITDA ≈4% · ADIPL 51%"],d:["Acquired for ₹107 cr (completed Nov 2025). Adds revenue but thin margins; restructuring over ~4 quarters toward defence energetics.","₹107 கோடிக்கு வாங்கியது (நவ 2025). வருமானம் சேர்க்குது, மார்ஜின் குறைவு; ~4 காலாண்டுல டிஃபென்ஸ் எனர்ஜெடிக்ஸ் பக்கம் மாற்றம்."]},
+ {id:"sC",x:598,y:194,w:214,h:80,c:"#7b3fbf",t:["C · Complete weapons","C · முழு ஆயுதம்"],s:["MIGM, mines, RGB-60","MIGM, மைன், RGB-60","Order expected FY27","FY27-ல ஆர்டர் எதிர்பார்ப்பு"],d:["MIGM trials complete; RFQ Nov 2026, PO targeted Feb (no later than Mar) 2027 — order book could reach ₹4,500–5,000 cr. Also moored and limpet mines, RGB-60 rockets; shortlisted for complete-missile programmes such as Pralay.","MIGM டிரையல் முடிஞ்சாச்சு; RFQ நவம்பர் 2026, PO பிப் (மார்ச்சுக்கு மேல இல்ல) 2027 — ஆர்டர் புக் ₹4,500–5,000 கோடி வரை போகலாம். மூர்டு, லிம்பெட் மைன், RGB-60 ராக்கெட்டும்; பிரலே மாதிரி முழு மிசைல் திட்டத்துக்கு ஷார்ட்லிஸ்ட்."]},
+ {id:"sD",x:598,y:284,w:214,h:80,c:"#0f8b8d",dash:1,t:["D · Premier Explosives (pending)","D · பிரீமியர் எக்ஸ்ப்ளோசிவ்ஸ் (நிலுவை)"],s:["Up to 67.33% · FY26 ₹388 cr","67.33% வரை · FY26 ₹388 கோடி","Propellants, rocket motors","புரொபெல்லன்ட், ராக்கெட் மோட்டார்"],d:["₹1,550 cr for 41.33% plus open offer for 26% at ₹698 (₹975.66 cr). CCI approval not required; SEBI letter received. Brings missile propulsion in-house — electronics + propulsion under one roof for QRSAM-type programmes.","41.33%-க்கு ₹1,550 கோடி, ₹698-க்கு 26% ஓபன் ஆஃபர் (₹975.66 கோடி). CCI அனுமதி தேவையில்லை; SEBI லெட்டர் வந்தாச்சு. மிசைல் உந்துசக்தி உள்ளுக்குள்ளே — QRSAM மாதிரி திட்டத்துக்கு எலக்ட்ரானிக்ஸ் + புரொபல்ஷன் ஒரே இடத்துல."]},
+ {id:"sE",x:598,y:374,w:214,h:80,c:"#5f6b7a",dash:1,t:["E · Shauryastra (34% assoc.)","E · ஷௌர்யாஸ்திரா (34%)"],s:["Long-range systems design","நீண்ட தூர சிஸ்டம் வடிவமைப்பு","Led by Dr V.K. Saraswat","டாக்டர் V.K. சரஸ்வத் தலைமை"],d:["Targets gaps DRDO is not covering, e.g. 300–900 km rocket ranges. Shauryastra designs, Apollo manufactures; IP held jointly. No revenue yet.","DRDO செய்யாத இடைவெளிகள், உதா 300–900 கி.மீ ராக்கெட். வடிவமைப்பு ஷௌர்யாஸ்திரா, உற்பத்தி அப்போலோ; IP கூட்டு. இன்னும் வருமானம் இல்ல."]},
+ {id:"m1",x:850,y:14,w:210,h:54,c:"#12355b",t:["Revenue ₹388.15 cr","வருமானம் ₹388.15 கோடி"],s:["+72.3% YoY · +54.5% QoQ","+72.3% வருடம் · +54.5% காலாண்டு"],d:["Consolidated revenue from operations; ≈23% of the opening order book executed in the quarter.","கன்சாலிடேட்டட் செயல்பாட்டு வருமானம்; தொடக்க ஆர்டர் புக்ல ≈23% இந்த காலாண்டுல செயல்படுத்தியது."]},
+ {id:"m2",x:850,y:88,w:210,h:54,c:"#d93025",t:["Costs ₹276.97 cr","செலவு ₹276.97 கோடி"],s:["Materials, people, R&D ~8%","மூலப்பொருள், ஊழியர், R&D ~8%"],d:["Operating costs excluding depreciation and interest. Standalone gross margin ~41% on the production-heavy mix.","தேய்மானம், வட்டி தவிர்த்த செலவு. புரொடக்ஷன் கலவையால ஸ்டாண்ட்அலோன் கிராஸ் மார்ஜின் ~41%."]},
+ {id:"m3",x:850,y:162,w:210,h:54,c:"#e8710a",t:["EBITDA ₹111.18 cr","EBITDA ₹111.18 கோடி"],s:["Margin 28.6% (+230 bps)","மார்ஜின் 28.6% (+230 bps)"],d:["Record. Standalone ₹107.56 cr, subsidiaries only ₹3.62 cr.","ரெக்கார்டு. ஸ்டாண்ட்அலோன் ₹107.56 கோடி, சப்சிடியரி ₹3.62 கோடி மட்டும்."]},
+ {id:"m4",x:850,y:236,w:210,h:54,c:"#5f6b7a",t:["D&A + interest ≈ ₹22.2 cr","தேய்மானம் + வட்டி ≈ ₹22.2 கோடி"],s:["Other income +₹3.54 cr","பிற வருமானம் +₹3.54 கோடி"],d:["Rising with Unit 3 capex and higher borrowings (H1 depreciation ₹15.2 cr vs ₹9.2 cr).","யூனிட் 3 கேபெக்ஸ், கூடுதல் கடனால ஏறுது (அரையாண்டு தேய்மானம் ₹15.2 கோடி, முன்பு ₹9.2 கோடி)."]},
+ {id:"m5",x:850,y:310,w:210,h:54,c:"#d93025",t:["Tax ₹46.32 cr","வரி ₹46.32 கோடி"],s:["≈50% of PBT ₹92.48 cr","PBT ₹92.48 கோடியில ≈50%"],d:["Move to the 30% slab plus a larger deferred-tax charge; part is non-cash.","30% ஸ்லாப்புக்கு மாற்றம் + பெரிய டிஃபர்டு வரி; ஒரு பகுதி கேஷ் இல்லாதது."]},
+ {id:"m6",x:850,y:384,w:210,h:54,c:"#1e8e3e",t:["PAT ₹46.15 cr","PAT ₹46.15 கோடி"],s:["Owners ₹48.43 cr · EPS ₹1.32","உரிமையாளர் ₹48.43 கோ · EPS ₹1.32"],d:["+53.7% YoY. EPS rose less (+37.5%) because the share count grew.","வருடத்துக்கு +53.7%. பங்கு எண்ணிக்கை கூடினதால EPS குறைவா (+37.5%) ஏறிச்சு."]},
+ {id:"m7",x:850,y:458,w:210,h:54,c:"#12355b",t:["Shareholders & reinvestment","பங்குதாரர் & மறுமுதலீடு"],s:["Dividend ₹0.25 · capex · M&A","டிவிடெண்ட் ₹0.25 · கேபெக்ஸ் · M&A"],d:["Almost all profit is reinvested (Unit 3, IDL silos, Premier). FY26 dividend ₹0.25/share (yield ~0.06%).","கிட்டத்தட்ட எல்லா லாபமும் மறுமுதலீடு (யூனிட் 3, IDL சைலோ, பிரீமியர்). FY26 டிவிடெண்ட் ₹0.25/பங்கு (~0.06%)."]}
+];
+var BMA=[["c1","h1"],["c1","h2"],["c2","h1"],["c3","h2"],["c4","h2"],["c5","h3"],["c6","h2"],["h1","co"],["h2","co"],["h3","co"],["co","sA"],["co","sB"],["co","sC"],["co","sD",1],["co","sE",1],["sA","m1"],["sB","m1"],["sC","m1",1]];
+var bmSel="co";
+function bx(id){for(var i=0;i<BM.length;i++)if(BM[i].id===id)return BM[i];}
+function esc(s){return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;");}
+function drawBM(){
+ var sv=document.getElementById("bmSvg");if(!sv)return;
+ var li=LANG==="ta"?1:0;
+ var h='<defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#8a96a3"/></marker></defs>';
+ h+='<text x="95" y="508" text-anchor="middle" font-size="12" font-weight="800" fill="#5b6675">'+L("CUSTOMERS","வாடிக்கையாளர்")+'</text>';
+ h+='<text x="285" y="508" text-anchor="middle" font-size="12" font-weight="800" fill="#5b6675">'+L("ORDER CHANNEL","ஆர்டர் வழி")+'</text>';
+ h+='<text x="481" y="508" text-anchor="middle" font-size="12" font-weight="800" fill="#5b6675">'+L("COMPANY","நிறுவனம்")+'</text>';
+ h+='<text x="705" y="478" text-anchor="middle" font-size="12" font-weight="800" fill="#5b6675">'+L("BUSINESS LINES","பிசினஸ் பிரிவுகள்")+'</text>';
+ h+='<text x="955" y="536" text-anchor="middle" font-size="12" font-weight="800" fill="#5b6675">'+L("MONEY FLOW","பண ஓட்டம்")+'</text>';
+ BMA.forEach(function(a){var s=bx(a[0]),t=bx(a[1]);var x1=s.x+s.w,y1=s.y+s.h/2,x2=t.x-2,y2=t.y+t.h/2;var mx=(x1+x2)/2;
+  h+='<path d="M'+x1+','+y1+' C'+mx+','+y1+' '+mx+','+y2+' '+x2+','+y2+'" fill="none" stroke="#9aa5b1" stroke-width="1.6" '+(a[2]?'stroke-dasharray="5,4"':'')+' marker-end="url(#ah)"/>';});
+ for(var i=1;i<=6;i++){var s=bx("m"+i),t=bx("m"+(i+1));h+='<line x1="'+(s.x+s.w/2)+'" y1="'+(s.y+s.h)+'" x2="'+(t.x+t.w/2)+'" y2="'+(t.y-2)+'" stroke="#9aa5b1" stroke-width="1.8" marker-end="url(#ah)"/>';}
+ BM.forEach(function(b){
+  var sel=b.id===bmSel;
+  h+='<g class="bmb'+(sel?' sel':'')+'" onclick="bmPick(\''+b.id+'\')"><rect x="'+b.x+'" y="'+b.y+'" width="'+b.w+'" height="'+b.h+'" rx="10" fill="'+(b.big?b.c:'#fff')+'" stroke="'+b.c+'" stroke-width="'+(sel?3.5:2)+'" '+(b.dash?'stroke-dasharray="6,4"':'')+'/>';
+  if(!b.big)h+='<rect x="'+b.x+'" y="'+b.y+'" width="6" height="'+b.h+'" rx="3" fill="'+b.c+'"/>';
+  var tx=b.big?b.x+b.w/2:b.x+14,anc=b.big?"middle":"start",col=b.big?"#fff":"#1b2430";
+  var y=b.y+(b.big?30:22),ta=LANG==="ta";
+  var tl=b.t[li].split("|");
+  tl.forEach(function(tt,n){h+='<text x="'+tx+'" y="'+(y+n*18)+'" text-anchor="'+anc+'" font-size="'+(b.big?(ta?13:15):(ta?11.5:12.5))+'" font-weight="800" fill="'+(b.big?"#fff":b.c)+'">'+esc(tt)+'</text>';});
+  y+=(tl.length-1)*18;
+  var subs=[];for(var k=li;k<b.s.length;k+=2)subs.push(b.s[k]);
+  subs.forEach(function(sx,n){h+='<text x="'+tx+'" y="'+(y+(b.big?28:17)*(n+1))+'" text-anchor="'+anc+'" font-size="'+(b.big?(ta?12:13):(ta?10.5:11.5))+'" font-weight="'+(b.big?700:500)+'" fill="'+col+'">'+esc(sx)+'</text>';});
+  h+='</g>';
+ });
+ h+='<rect x="10" y="560" width="1060" height="64" rx="10" fill="#fff8f1" stroke="#f7c79b"/>';
+ h+='<text x="24" y="584" font-size="12.5" font-weight="700" fill="#8a3f00">'+L("Solid boxes = consolidated today · dashed = pending deal or associate · arrows show how orders turn into revenue and profit.","முழு கோடு = இன்று கன்சாலிடேட் ஆனது · புள்ளி கோடு = நிலுவை டீல் / அசோசியேட் · அம்புகள் ஆர்டர் எப்படி வருமானம், லாபமா மாறுதுன்னு காட்டுது.")+'</text>';
+ h+='<text x="24" y="608" font-size="12.5" fill="#8a3f00">'+L("Order book ₹1,765 cr ≈ ₹1,300 cr standalone + ≈ ₹465 cr IDL · guidance >₹2,000 cr by Mar 2027 (₹4,500–5,000 cr with MIGM).","ஆர்டர் புக் ₹1,765 கோடி ≈ ₹1,300 கோடி ஸ்டாண்ட்அலோன் + ≈ ₹465 கோடி IDL · மார்ச் 2027-க்குள் ₹2,000 கோடிக்கு மேல் (MIGM-உடன் ₹4,500–5,000 கோடி).")+'</text>';
+ sv.innerHTML=h; bmCard();
+}
+function bmPick(id){bmSel=id;drawBM();}
+function bmCard(){var b=bx(bmSel),li=LANG==="ta"?1:0;document.getElementById("bmCard").innerHTML='<b style="color:'+b.c+'">'+esc(b.t[li].replace("|"," "))+'</b><div style="margin-top:4px">'+esc(b.d[li])+'</div>';}
+
+/* ===== market events ===== */
+var EV=[
+ ["18 May","311.00","Q4 FY26 results; FY26 revenue ₹904 cr, PAT ₹107 cr; ₹0.25 dividend","Q4 FY26 ரிசல்ட்; FY26 வருமானம் ₹904 கோடி, PAT ₹107 கோடி; ₹0.25 டிவிடெண்ட்","+5.6% on record year; ~+24% in three sessions to a record high by 20 May","ரெக்கார்டு வருடத்துக்கு +5.6%; 20 மே வரை மூணு நாள்ல ~+24%, புது உச்சம்"],
+ ["06 Jul","424.05","Board approves ₹3,322 cr preferential shares + warrants at ₹416.60","₹416.60-க்கு ₹3,322 கோடி ப்ரெஃபரன்ஷியல் பங்கு + வாரண்ட் — போர்டு ஒப்புதல்","−5.75%, and ~−6% next day: dilution worry","−5.75%, அடுத்த நாள் ~−6%: டைல்யூஷன் கவலை"],
+ ["09 Jul","—","SPA to buy 41.33% of Premier Explosives for ₹1,550 cr; open offer at ₹698","பிரீமியர் எக்ஸ்ப்ளோசிவ்ஸ் 41.33%-ஐ ₹1,550 கோடிக்கு வாங்க SPA; ₹698-க்கு ஓபன் ஆஃபர்","+~5%: propulsion capability, use of the fresh funds became clear","+~5%: உந்துசக்தி திறன், புது பணம் எங்க போகுதுன்னு தெளிவு"],
+ ["08 Aug","—","Q1 FY27: revenue +88% YoY but −14% QoQ; margin 21.4%","Q1 FY27: வருமானம் வருடத்துக்கு +88%, காலாண்டுக்கு −14%; மார்ஜின் 21.4%","Flat: lumpy quarter offset growth","மாற்றமில்ல: ஆட்டமான காலாண்டு வளர்ச்சியை சமன் செஞ்சுச்சு"],
+ ["17 Aug","391.15","Orders worth ₹80.84 cr from DPSUs, states, private firms","DPSU, மாநிலங்கள், தனியார்ல இருந்து ₹80.84 கோடி ஆர்டர்","−0.4%: small relative to the book; thin post-holiday trade","−0.4%: புக்கோட ஒப்பிட சின்னது; விடுமுறைக்கு பிந்தைய மந்த வர்த்தகம்"],
+ ["07 Sep","403.90","Systematix initiates with Buy, target ₹570","சிஸ்டமேட்டிக்ஸ் Buy, டார்கெட் ₹570-ஓட தொடக்கம்","+3.95%: complete-weapons re-rating thesis","+3.95%: முழு ஆயுத ரீ-ரேட்டிங் கருத்து"],
+ ["24 Sep","404.50","CCI says its approval is not required for the Premier deal","பிரீமியர் டீலுக்கு CCI அனுமதி தேவையில்லைன்னு அறிவிப்பு","Flat: expected step","மாற்றமில்ல: எதிர்பார்த்தது"],
+ ["16 Oct","429.00","Pre-results run-up","ரிசல்டுக்கு முந்தைய ஏற்றம்","Positioning ahead of 24 Oct board meeting","24 அக் போர்டு மீட்டிங்குக்கு முன் வாங்குதல்"],
+ ["23 Oct","374.75","Defence-stock weakness; −6.6% on 21 Oct","டிஃபென்ஸ் பங்குகள் பலவீனம்; 21 அக் −6.6%","−12.6% from 16 Oct: profit-booking before results","16 அக்-ல இருந்து −12.6%: ரிசல்டுக்கு முன் லாப பதிவு"],
+ ["26 Oct","410.90","Q2 FY27 record results (announced 24 Oct, Saturday)","Q2 FY27 ரெக்கார்டு ரிசல்ட் (24 அக் சனிக்கிழமை அறிவிப்பு)","+9.6% (high ₹432, +15% intraday): EBITDA +88%, order book ₹1,765 cr; ~5.3 cr shares traded","+9.6% (உச்சம் ₹432, இன்ட்ராடே +15%): EBITDA +88%, ஆர்டர் புக் ₹1,765 கோடி; ~5.3 கோடி பங்கு வர்த்தகம்"],
+ ["27 Oct","426.65*","Follow-through after concall guidance (MIGM, torpedo, Pinaka timelines)","கான்கால் கைடன்ஸ் (MIGM, டார்பிடோ, பினாகா காலக்கெடு)க்கு பிறகு தொடர் ஏற்றம்","+3.8% at 2:34 PM (high ₹447): crossed the ₹429 resistance intraday","மதியம் 2:34-க்கு +3.8% (உச்சம் ₹447): ₹429 ரெசிஸ்டன்ஸை இன்ட்ராடே தாண்டிச்சு"]
+];
+function renderEvents(){var el=document.getElementById("evRows");if(!el)return;el.innerHTML=EV.map(function(e){return "<tr><td>"+e[0]+"</td><td>"+e[1]+"</td><td class='l'>"+L(e[2],e[3])+"</td><td class='l'>"+L(e[4],e[5])+"</td></tr>";}).join("")+"<tr><td colspan='4' class='l note'>"+L("* 27 Oct price is intraday (2:34 PM IST); the closing price was not yet published when this file was prepared.","* 27 அக் விலை இன்ட்ராடே (மதியம் 2:34); இந்த ஃபைல் தயாரிக்கும்போது க்ளோசிங் விலை வெளியாகல.")+"</td></tr>";}
+
+/* ===== triggers ===== */
+var TR=[
+ ["+",4,0.7,1.0,1.0,1,"Premier Explosives acquisition closes","பிரீமியர் எக்ஸ்ப்ளோசிவ்ஸ் கையகப்படுத்தல் முடிவு","Open-offer tendering dates; closing in Dec 2026 quarter","ஓபன் ஆஃபர் டெண்டர் தேதிகள்; டிசம்பர் 2026 காலாண்டுல முடிவு","SPA 9 Jul 2026; SEBI letter 21 Aug 2026; CCI 24 Sep 2026"],
+ ["+",3,0.7,1.0,1.0,1,"Unit 3 fully live (~12× capacity) + in-house test labs","யூனிட் 3 முழு இயக்கம் (~12×) + சொந்த டெஸ்ட் லேப்","EMI lab in ~1 month; full Unit 3 by Mar 2027","~1 மாசத்துல EMI லேப்; மார்ச் 2027-க்குள் முழு யூனிட் 3","Concall 26 Oct 2026"],
+ ["+",5,0.4,1.0,1.0,1,"MIGM production order (₹2.5–3k cr implied)","MIGM புரொடக்ஷன் ஆர்டர் (~₹2.5–3 ஆயிரம் கோடி)","RFQ Nov 2026; PO by Feb–Mar 2027 with 20% advance","RFQ நவம்பர் 2026; 20% அட்வான்ஸோட பிப்–மார்ச் 2027-க்குள் PO","DAC 3 Jul 2026; concall 26 Oct 2026"],
+ ["+",3,0.4,1.0,1.0,0,"Torpedo, Pinaka, Varunastra orders","டார்பிடோ, பினாகா, வருணாஸ்திரா ஆர்டர்கள்","30 HWT in Nov; Pinaka before Dec; Varunastra ~₹100 cr+","நவம்பர்ல 30 HWT; டிசம்பருக்கு முன் பினாகா; வருணாஸ்திரா ~₹100 கோடி+","Concall 26 Oct 2026"],
+ ["+",3,0.4,0.7,1.0,0,"Export orders begin","ஏற்றுமதி ஆர்டர் தொடக்கம்","From FY28 after Unit 3","யூனிட் 3-க்கு பிறகு FY28-ல இருந்து","Concall 26 Oct 2026"],
+ ["+",2,0.4,0.7,1.0,0,"IDL Explosives turnaround","IDL எக்ஸ்ப்ளோசிவ்ஸ் திருப்பம்","Subsidiary EBITDA above ₹3.6 cr per quarter","சப்சிடியரி EBITDA காலாண்டுக்கு ₹3.6 கோடிக்கு மேல்","Concall 26 Oct 2026"],
+ ["−",3,1.0,1.0,1.0,1,"Promoter pledge rising (30.51% → 35.57% of holding)","ப்ரோமோட்டர் அடமானம் ஏற்றம் (30.51% → 35.57%)","Next shareholding filing; release of pledges","அடுத்த ஷேர்ஹோல்டிங் ஃபைலிங்; அடமான விடுவிப்பு","Shareholding pattern, Sep 2026 quarter"],
+ ["−",2,1.0,1.0,1.0,1,"Equity dilution (2.28 cr shares + 5.69 cr warrants)","ஈக்விட்டி டைல்யூஷன் (2.28 கோடி பங்கு + 5.69 கோடி வாரண்ட்)","Warrant conversion within 12 months","12 மாசத்துக்குள் வாரண்ட் மாற்றம்","Board 6 Jul 2026; EGM 4 Aug 2026"],
+ ["−",2,1.0,1.0,1.0,1,"Auditor material-uncertainty note on subsidiaries","சப்சிடியரிகள் பத்தி ஆடிட்டர் மெட்டீரியல் அன்சர்டன்டி குறிப்பு","Q3 FY27 limited-review report","Q3 FY27 லிமிடெட் ரிவ்யூ","Q2 FY27 results, 24 Oct 2026"],
+ ["−",2,0.4,1.0,1.0,1,"Large-system ordering delays (QRSAM split)","பெரிய சிஸ்டம் ஆர்டர் தாமதம் (QRSAM பிரிப்பு)","MoD decision on BDL / private split","BDL / தனியார் பிரிப்பு பற்றி MoD முடிவு","Concall 26 Oct 2026"]
+];
+function renderTriggers(){var el=document.getElementById("trgRows");if(!el)return;
+ el.innerHTML=TR.map(function(t){var pts=(t[1]*t[2]*t[3]*t[4]).toFixed(2);var pos=t[0]==="+";return "<tr><td class='l'>"+L(t[6],t[7])+(t[5]?"":" <span class='note'>("+L("not counted","கணக்கில் இல்லை")+")</span>")+"</td><td><span class='pill "+(pos?"p":"n")+"'>"+t[0]+"</span></td><td>"+t[1]+"</td><td>"+t[2]+"</td><td>"+t[3]+"</td><td>"+t[4]+"</td><td><b class='"+(pos?"up":"dn")+"'>"+(pos?"+":"−")+pts+"</b></td><td class='l'>"+L(t[8],t[9])+"</td><td class='l'>"+t[10]+"</td></tr>";}).join("");}
+var TLE=[["Nov 2026","MIGM RFQ; 30 heavyweight torpedoes order","MIGM RFQ; 30 ஹெவிவெயிட் டார்பிடோ ஆர்டர்"],["Dec 2026","Pinaka orders; Premier deal closing","பினாகா ஆர்டர்; பிரீமியர் டீல் முடிவு"],["Feb 2027","Q3 FY27 results; MIGM PO target","Q3 FY27 ரிசல்ட்; MIGM PO இலக்கு"],["Mar 2027","MIGM PO latest + 20% advance; Unit 3 full; order book >₹2,000 cr","MIGM PO கடைசி + 20% அட்வான்ஸ்; யூனிட் 3 முழு; ஆர்டர் புக் ₹2,000 கோடிக்கு மேல்"],["~Aug 2027","Warrant conversion window ends (12 months)","வாரண்ட் மாற்ற காலம் முடிவு (12 மாசம்)"],["FY28","Exports begin; ~125 advanced HWT volume order","ஏற்றுமதி தொடக்கம்; ~125 அட்வான்ஸ்டு HWT ஆர்டர்"],["FY29","Production-led cash conversion (management)","புரொடக்ஷன் சார்ந்த கேஷ் கன்வர்ஷன் (நிர்வாகம்)"]];
+function renderTimeline(){var el=document.getElementById("tlRow");if(!el)return;el.innerHTML=TLE.map(function(e){return "<div class='ev'><b>"+e[0]+"</b><span>"+L(e[1],e[2])+"</span></div>";}).join("");}
+function drawClock(){
+ var sv=document.getElementById("clock");if(!sv)return;var cx=180,cy=160,R=120,r=78;
+ var ph=[["P1",L("Trough","அடிமட்டம்"),"#9aa5b1"],["P2",L("Recovery","மீட்சி"),"#7fc490"],["P3",L("Expansion","விரிவாக்கம்"),"#1e8e3e"],["P4",L("Peak","உச்சம்"),"#d99a00"],["P5",L("Downturn","சரிவு"),"#d93025"]];
+ var h="";function pt(a,rr){return [cx+rr*Math.cos(a),cy+rr*Math.sin(a)];}
+ ph.forEach(function(p,i){var a0=-Math.PI/2+i*2*Math.PI/5,a1=a0+2*Math.PI/5;var p0=pt(a0,R),p1=pt(a1,R),q1=pt(a1,r),q0=pt(a0,r);
+  h+='<path d="M'+p0+' A'+R+','+R+' 0 0 1 '+p1+' L'+q1+' A'+r+','+r+' 0 0 0 '+q0+' Z" fill="'+p[2]+'" opacity="'+(i===2?1:.45)+'" stroke="#fff" stroke-width="3"/>';
+  var m=pt((a0+a1)/2,(R+r)/2);h+='<text x="'+m[0]+'" y="'+(m[1]-2)+'" text-anchor="middle" font-size="12" font-weight="800" fill="#fff">'+p[0]+'</text><text x="'+m[0]+'" y="'+(m[1]+12)+'" text-anchor="middle" font-size="9" font-weight="700" fill="#fff">'+p[1]+'</text>';});
+ var a=-Math.PI/2+2.5*2*Math.PI/5;var tip=pt(a,r-6);
+ h+='<line x1="'+cx+'" y1="'+cy+'" x2="'+tip[0]+'" y2="'+tip[1]+'" stroke="#12355b" stroke-width="5" stroke-linecap="round"/><circle cx="'+cx+'" cy="'+cy+'" r="9" fill="#12355b"/>';
+ h+='<text x="180" y="300" text-anchor="middle" font-size="11" font-weight="700" fill="#5b6675">'+L("Weinstein stage","வெய்ன்ஸ்டீன் ஸ்டேஜ்")+'</text>';
+ ["S1","S2","S3","S4"].forEach(function(sx,i){var x=105+i*50,on=i===1;h+='<rect x="'+(x-20)+'" y="306" width="40" height="18" rx="9" fill="'+(on?"#e8710a":"#eef1f5")+'"/><text x="'+x+'" y="319" text-anchor="middle" font-size="11" font-weight="800" fill="'+(on?"#fff":"#5b6675")+'">'+sx+'</text>';});
+ h+='<text x="180" y="346" text-anchor="middle" font-size="12.5" font-weight="700" fill="#12355b">'+L("Sector P3 (70) · Stock Stage 2 · CY 65","துறை P3 (70) · பங்கு ஸ்டேஜ் 2 · CY 65")+'</text>';
+ sv.innerHTML=h;
+}
+
+/* ===== self-check ===== */
+var SC=[
+ {g:["1 · Questions about the stock","1 · பங்கு பற்றிய கேள்விகள்"],i:[
+  ["I can explain what Apollo makes and who pays for it","அப்போலோ என்ன செய்யுது, யார் பணம் தர்றாங்கன்னு என்னால சொல்ல முடியும்","Electronics for 150+ programmes; customers MoD, DRDO, DPSUs, private primes; IDL sells to Coal India subsidiaries","150+ திட்டங்களுக்கு எலக்ட்ரானிக்ஸ்; MoD, DRDO, DPSU, தனியார்; IDL கோல் இந்தியா துணை நிறுவனங்களுக்கு"],
+  ["I know how much growth is organic","எவ்வளவு வளர்ச்சி சொந்தம்னு எனக்கு தெரியும்","Standalone +36% YoY vs consolidated +72.3%","ஸ்டாண்ட்அலோன் +36%, கன்சாலிடேட்டட் +72.3%"],
+  ["I know the order-book cover","ஆர்டர் புக் கவர் எனக்கு தெரியும்","₹1,765 cr ≈ 1.5× TTM revenue of ₹1,185 cr","₹1,765 கோடி ≈ TTM வருமானம் ₹1,185 கோடியின் 1.5×"],
+  ["I have checked the dilution","டைல்யூஷனை சரிபார்த்துட்டேன்","2.28 cr shares + 5.69 cr warrants at ₹416.60 (≈21% more shares)","₹416.60-க்கு 2.28 கோடி பங்கு + 5.69 கோடி வாரண்ட் (≈21% கூடுதல் பங்கு)"]]},
+ {g:["2 · Problems investors face","2 · முதலீட்டாளர் சந்திக்கும் சிக்கல்கள்"],i:[
+  ["I accept lumpy quarters","காலாண்டு ஆட்டத்தை ஏத்துக்கறேன்","EBITDA margin 21.4% in Q1 → 28.6% in Q2","EBITDA மார்ஜின் Q1 21.4% → Q2 28.6%"],
+  ["I accept that cash lags profit","லாபத்துக்கு பின்னால தான் கேஷ் வரும்னு ஏத்துக்கறேன்","H1 CFO ₹22.4 cr vs PAT ₹71.4 cr; WC 353 days","அரையாண்டு CFO ₹22.4 கோடி, PAT ₹71.4 கோடி; WC 353 நாள்"],
+  ["I am comfortable with the valuation","வேல்யூவேஷன் எனக்கு ஓகே","P/E ≈116×, P/B ≈10×","P/E ≈116×, P/B ≈10×"],
+  ["I have factored in the pledge","அடமானத்தை கணக்கில் எடுத்திருக்கேன்","35.57% of promoter holding pledged (Sep 2026)","ப்ரோமோட்டர் ஹோல்டிங்ல 35.57% அடமானம் (செப் 2026)"]]},
+ {g:["3 · Solutions (what I did)","3 · தீர்வுகள் (நான் செய்தது)"],i:[
+  ["I sized my position to survive a sharp fall","கூர்மையான சரிவை தாங்கும் அளவுக்கு தான் போட்டிருக்கேன்","Stock fell 12.6% between 16 and 23 Oct 2026","16–23 அக் 2026 இடையில 12.6% சரிஞ்சுச்சு"],
+  ["I will track CFO every quarter","ஒவ்வொரு காலாண்டும் CFO-வை கவனிப்பேன்","Management expects positive CFO in every FY27 quarter","FY27 ஒவ்வொரு காலாண்டும் CFO பாசிட்டிவ்னு நிர்வாகம்"],
+  ["I read the auditor's limited-review note","ஆடிட்டர் லிமிடெட் ரிவ்யூ குறிப்பை படிச்சேன்","Material uncertainty on certain subsidiaries; conclusion not modified","சில சப்சிடியரிகள் பத்தி மெட்டீரியல் அன்சர்டன்டி; முடிவு மாறல"],
+  ["I have a date to re-check the MIGM order","MIGM ஆர்டரை மீண்டும் பார்க்க தேதி வெச்சிருக்கேன்","PO targeted Feb, no later than Mar 2027","PO பிப், மார்ச் 2027-க்கு மேல இல்ல"]]},
+ {g:["4 · Anchors' and analysts' view","4 · ஆங்கர், அனலிஸ்ட் பார்வை"],i:[
+  ["I have seen the brokers' targets and dates","புரோக்கர் டார்கெட், தேதி பார்த்தேன்","Systematix ₹570 (Sep); ICICI Direct ₹485; HDFC Sec ₹400 (May)","சிஸ்டமேட்டிக்ஸ் ₹570 (செப்); ICICI டைரக்ட் ₹485; HDFC செக் ₹400 (மே)"],
+  ["I know the institutional trend","இன்ஸ்டிடியூஷனல் போக்கு தெரியும்","FPI 7.59% → 5.95%; MF 1.47% → 1.19% in Sep quarter","செப் காலாண்டுல FPI 7.59% → 5.95%; MF 1.47% → 1.19%"],
+  ["I know who bought in the preferential issue","ப்ரெஃபரன்ஷியல்ல யார் வாங்கினாங்கன்னு தெரியும்","₹951 cr from 55 investors; promoters ₹1,080 cr in warrants","55 முதலீட்டாளர்ல இருந்து ₹951 கோடி; ப்ரோமோட்டர் வாரண்ட்ல ₹1,080 கோடி"]]}
+];
+var SUG=[["MIGM PO is signed","MIGM PO கையெழுத்தானது"],["Full-year CFO turns positive","முழு வருட CFO பாசிட்டிவ்"],["Pledge falls below 20%","அடமானம் 20%-க்கு கீழ்"],["Premier deal closed","பிரீமியர் டீல் முடிஞ்சது"],["Price within my own valuation limit","என் வேல்யூவேஷன் வரம்புக்குள் விலை"],["Position ≤ 5% of my portfolio","என் போர்ட்ஃபோலியோவில் ≤ 5%"],["H2 FY27 revenue ≥ ₹670 cr","H2 FY27 வருமானம் ≥ ₹670 கோடி"],["WC days fall below 300","WC நாட்கள் 300-க்கு கீழ்"]];
+var SKEY="cb_selfcheck_APOLLO_Q2FY27";
+function scLoad(){try{return JSON.parse(localStorage.getItem(SKEY))||{t:{},own:[]};}catch(e){return {t:{},own:[]};}}
+function scSave(s){try{localStorage.setItem(SKEY,JSON.stringify(s));}catch(e){}}
+function renderSC(){
+ var el=document.getElementById("scBody");if(!el)return;var s=scLoad(),h="",tot=0,on=0;
+ SC.forEach(function(g,gi){var gt=0,go=0;var rows=g.i.map(function(it,ii){var k=gi+"_"+ii,c=!!s.t[k];gt++;if(c)go++;return '<label class="sci"><input type="checkbox" '+(c?"checked":"")+' onchange="scTick(\''+k+'\',this.checked)"><div><div>'+L(it[0],it[1])+'</div><div class="dt">Data: '+L(it[2],it[3])+'</div></div></label>';}).join("");
+  tot+=gt;on+=go;h+='<div class="card scg"><b>'+L(g.g[0],g.g[1])+'</b> <span class="note">'+go+'/'+gt+'</span><div class="bar" style="margin:6px 0"><i style="width:'+(go/gt*100)+'%"></i></div>'+rows+'</div>';});
+ var own=s.own||[],oo=0;var orow=own.map(function(o,i){if(o.c)oo++;return '<label class="sci"><input type="checkbox" '+(o.c?"checked":"")+' onchange="scOwn('+i+',this.checked)"><div><div>'+esc(o.x)+'</div><div class="dt">Data: '+L("(your own condition)","(உங்க சொந்த நிபந்தனை)")+'</div></div><button class="btn o" style="margin-left:auto;padding:2px 8px" onclick="scDel('+i+');return false">×</button></label>';}).join("");
+ tot+=own.length;on+=oo;
+ h+='<div class="card scg"><b>'+L("5 · My own conditions","5 · என் சொந்த நிபந்தனைகள்")+'</b> <span class="note">'+oo+'/'+own.length+' · '+L("up to 8","8 வரை")+'</span><div class="bar" style="margin:6px 0"><i style="width:'+(own.length?oo/own.length*100:0)+'%"></i></div>'+orow+
+  (own.length<8?'<div style="display:flex;gap:6px;margin-top:8px"><input id="scNew" style="flex:1;border:1px solid #e3e8ef;border-radius:8px;padding:7px" placeholder="'+L("Add a condition…","நிபந்தனை சேர்க்க…")+'"><button class="btn" onclick="scAdd()">+</button></div><div class="sugg" style="margin-top:6px">'+SUG.map(function(x,i){return '<button onclick="scAddS('+i+')">'+L(x[0],x[1])+'</button>';}).join("")+'</div>':'')+'</div>';
+ el.innerHTML=h;
+ document.getElementById("scAll").textContent=" "+on+" / "+tot+" "+L("conditions line up","நிபந்தனைகள் பொருந்துது");
+ document.getElementById("scAllBar").style.width=(tot?on/tot*100:0)+"%";
+}
+function scTick(k,v){var s=scLoad();s.t[k]=v;scSave(s);renderSC();}
+function scOwn(i,v){var s=scLoad();s.own[i].c=v;scSave(s);renderSC();}
+function scDel(i){var s=scLoad();s.own.splice(i,1);scSave(s);renderSC();}
+function scAdd(){var v=document.getElementById("scNew").value.trim();if(!v)return;var s=scLoad();s.own=s.own||[];if(s.own.length>=8)return;s.own.push({x:v,c:false});scSave(s);renderSC();}
+function scAddS(i){var s=scLoad();s.own=s.own||[];if(s.own.length>=8)return;s.own.push({x:L(SUG[i][0],SUG[i][1]),c:false});scSave(s);renderSC();}
+function scClear(){try{localStorage.removeItem(SKEY);}catch(e){}renderSC();}
+
+/* ===== Socrates ===== */
+var QZ=[
+ {q:["Consolidated revenue grew 72% but standalone grew 36%. What explains most of the gap?","கன்சாலிடேட்டட் 72%, ஸ்டாண்ட்அலோன் 36%. இந்த இடைவெளிக்கு முக்கிய காரணம்?"],o:[["A price hike on defence electronics","டிஃபென்ஸ் எலக்ட்ரானிக்ஸ் விலை உயர்வு"],["IDL Explosives being consolidated (not in the group a year ago)","IDL எக்ஸ்ப்ளோசிவ்ஸ் சேர்க்கப்பட்டது (போன வருஷம் குழுமத்துல இல்ல)"],["Premier Explosives revenue","பிரீமியர் எக்ஸ்ப்ளோசிவ்ஸ் வருமானம்"],["Export orders","ஏற்றுமதி ஆர்டர்"]],a:1,x:["IDL was acquired in Nov 2025, so it adds ~₹82 cr this year with no base last year. Premier is not consolidated yet.","IDL நவ 2025-ல வாங்கினது; போன வருஷம் இல்லாததால இந்த வருஷம் ~₹82 கோடி கூடுதலா தெரியுது. பிரீமியர் இன்னும் சேர்க்கல."]},
+ {q:["PBT rose 114% but PAT only 54%. Why?","PBT 114% ஏறிச்சு, PAT 54% தான். ஏன்?"],o:[["Higher interest cost","அதிக வட்டி"],["Tax jumped to ≈50% of PBT","வரி PBT-ல ≈50%-க்கு எகிறிச்சு"],["Minority interest","மைனாரிட்டி இன்டரெஸ்ட்"],["Lower other income","பிற வருமானம் குறைவு"]],a:1,x:["Tax went from ₹13.12 cr to ₹46.32 cr (30% slab plus deferred tax). Minority interest actually helped owners' PAT (₹48.43 cr).","வரி ₹13.12 கோடில இருந்து ₹46.32 கோடி (30% ஸ்லாப் + டிஃபர்டு). மைனாரிட்டி இன்டரெஸ்ட் உண்மையில உரிமையாளர் PAT-ஐ (₹48.43 கோடி) கூட்டிச்சு."]},
+ {q:["Working capital of 353 days means…","353 நாள் வொர்க்கிங் கேபிடல்னா…"],o:[["Customers pay in 353 days","வாடிக்கையாளர் 353 நாள்ல பணம் தருவாங்க"],["Roughly a year of revenue is tied up in inventory and receivables net of payables","சுமார் ஒரு வருட வருமானம் இன்வென்டரி, ரிசீவபிள்ல (பேயபிள் கழிச்சு) மாட்டியிருக்கு"],["The company has 353 days of cash","353 நாளுக்கு கேஷ் இருக்கு"],["Orders take 353 days to arrive","ஆர்டர் வர 353 நாள் ஆகும்"]],a:1,x:["Net working-capital days combine inventory + receivables − payables. That is why FY26 CFO was −₹130 cr despite ₹107 cr profit.","நிகர WC நாட்கள் = இன்வென்டரி + ரிசீவபிள் − பேயபிள். அதனால தான் ₹107 கோடி லாபம் இருந்தும் FY26 CFO −₹130 கோடி."]},
+ {q:["Which single order could take the order book to ₹4,500–5,000 cr?","எந்த ஒரு ஆர்டர் ஆர்டர் புக்கை ₹4,500–5,000 கோடிக்கு கொண்டு போகும்?"],o:[["Varunastra torpedo","வருணாஸ்திரா டார்பிடோ"],["Pinaka rockets","பினாகா ராக்கெட்"],["MIGM (multi-influence ground mine)","MIGM (மல்டி-இன்ஃப்ளுயன்ஸ் கிரவுண்ட் மைன்)"],["IDL coal contracts","IDL நிலக்கரி ஒப்பந்தம்"]],a:2,x:["Management: >₹2,000 cr by March excluding MIGM, ₹4,500–5,000 cr with it; execution over ~2.5 years.","நிர்வாகம்: MIGM இல்லாம மார்ச்சுக்குள் ₹2,000 கோடிக்கு மேல், MIGM-உடன் ₹4,500–5,000 கோடி; ~2.5 வருடத்துல செயல்படுத்தல்."]},
+ {q:["In the CB cycle lens, where is the defence sector placed?","CB சைக்கிள் லென்ஸ்ல டிஃபென்ஸ் துறை எங்க இருக்கு?"],o:[["P1 Trough","P1 அடிமட்டம்"],["P2 Early recovery","P2 ஆரம்ப மீட்சி"],["P3 Expansion","P3 விரிவாக்கம்"],["P5 Downturn","P5 சரிவு"]],a:2,x:["Budgets and indigenisation are strong but large-system ordering slowed this year, so the lower adjacent phase (P3, not P2) is used.","பட்ஜெட், உள்நாட்டு உற்பத்தி ஸ்ட்ராங், ஆனா இந்த வருஷம் பெரிய சிஸ்டம் ஆர்டர் மெதுவா; அதனால P2 இல்ல, P3."]},
+ {q:["Which item is scored as a NEGATIVE trigger?","எது நெகட்டிவ் ட்ரிகரா மதிப்பிடப்பட்டது?"],o:[["Unit 3 capacity","யூனிட் 3 திறன்"],["Promoter pledge rising to 35.57% of holding","ப்ரோமோட்டர் அடமானம் 35.57%-க்கு ஏற்றம்"],["Premier acquisition","பிரீமியர் கையகப்படுத்தல்"],["Export plans","ஏற்றுமதி திட்டம்"]],a:1,x:["Pledge rose from 30.51% to 35.57% in the Sep quarter: I3 × C1.0 × W1.0 × P1.0 = −3.0 points, the largest negative.","செப் காலாண்டுல அடமானம் 30.51% → 35.57%: I3 × C1.0 × W1.0 × P1.0 = −3.0 புள்ளி, மிகப்பெரிய நெகட்டிவ்."]}
+];
+var QF=[
+ {q:["If the MIGM order slips to FY28, what happens to FY27 revenue guidance and to the share price's assumptions?","MIGM ஆர்டர் FY28-க்கு தள்ளிப்போனா, FY27 கைடன்ஸுக்கும் பங்கு விலையோட எதிர்பார்ப்புக்கும் என்ன ஆகும்?"],m:["Management says FY27 revenue rests on the existing book and proprietary repeat orders, so guidance may hold; but the order-book jump, the 20% advance (cash) and the FY29 earnings the price assumes would all move out, putting pressure on a 116× multiple.","FY27 வருமானம் இருக்கிற புக், தொடர் ஆர்டர் மேல தான்னு நிர்வாகம் சொல்லுது, அதனால கைடன்ஸ் நிக்கலாம்; ஆனா ஆர்டர் புக் ஜம்ப், 20% அட்வான்ஸ் (கேஷ்), விலை எதிர்பார்க்கிற FY29 லாபம் — எல்லாம் தள்ளிப்போகும்; 116× மல்டிபிளுக்கு அழுத்தம்."]},
+ {q:["Why can a sole-supplier position on a DRDO programme matter more than one quarter's margin?","DRDO திட்டத்துல ஒரே சப்ளையரா இருக்கிறது ஏன் ஒரு காலாண்டு மார்ஜினை விட முக்கியம்?"],m:["Because whoever qualifies during development normally supplies the whole production run (often 5–10 years); a second vendor needs ToT, samples and trials. That locks in revenue visibility, while a quarter's margin just reflects the production/development mix.","டெவலப்மென்ட்ல தகுதி பெற்றவங்க தான் பொதுவா முழு புரொடக்ஷனுக்கும் (பல நேரம் 5–10 வருஷம்) சப்ளை செய்வாங்க; ரெண்டாவது வெண்டருக்கு ToT, சாம்பிள், டிரையல் எல்லாம் வேணும். அது வருமான தெளிவை உறுதி செய்யுது; ஒரு காலாண்டு மார்ஜின் வெறும் கலவையை காட்டுது."]}
+];
+var qAns={};
+function renderQuiz(){var el=document.getElementById("quiz");if(!el)return;var h="";
+ QZ.forEach(function(q,i){h+='<div class="card q"><b>Q'+(i+1)+'. '+L(q.q[0],q.q[1])+'</b>'+q.o.map(function(o,j){var cls="";if(qAns[i]!==undefined){if(j===q.a)cls="ok";else if(j===qAns[i])cls="bad";}return '<button class="op '+cls+'" onclick="qPick('+i+','+j+')">'+L(o[0],o[1])+'</button>';}).join("")+(qAns[i]!==undefined?'<div class="box '+(qAns[i]===q.a?'g':'r')+'">'+(qAns[i]===q.a?L("Right. ","சரி. "):L("Not quite. ","கொஞ்சம் தவறு. "))+L(q.x[0],q.x[1])+'</div>':'')+'</div>';});
+ QF.forEach(function(q,i){h+='<div class="card q"><b>'+L("Think","யோசி")+' '+(i+1)+'. '+L(q.q[0],q.q[1])+'</b><textarea placeholder="'+L("Write your reasoning…","உங்க காரணத்தை எழுதுங்க…")+'"></textarea><button class="btn o" style="margin-top:6px" onclick="this.nextElementSibling.style.display=\'block\'">'+L("Show a model answer","மாதிரி பதில் காட்டு")+'</button><div class="box b" style="display:none">'+L(q.m[0],q.m[1])+'</div></div>';});
+ el.innerHTML=h;var sc=0;Object.keys(qAns).forEach(function(k){if(qAns[k]===QZ[k].a)sc++;});document.getElementById("qScore").textContent=sc;document.getElementById("qTot").textContent=QZ.length;}
+function qPick(i,j){if(qAns[i]!==undefined)return;qAns[i]=j;renderQuiz();}
+
+/* ===== CB Assist (voice Q&A) ===== */
+var KB=[
+ {k:["buy","sell","hold","invest","should i","வாங்க","விற்க","முதலீடு"],a:["CB Research does not give buy, sell or hold advice. Open the Self-check tab to see how many of your own conditions line up.","CB ரிசர்ச் வாங்க, விற்க, வைச்சிருக்க ஆலோசனை தராது. உங்க சொந்த நிபந்தனைகள் எத்தனை பொருந்துதுன்னு பார்க்க சுய சோதனை டேப்பை திறங்க."],sc:1},
+ {k:["revenue","sales","topline","வருமானம்","விற்பனை"],a:["Q2 FY27 consolidated revenue was ₹388.15 crore, up 72.3% year on year and 54.5% quarter on quarter. Standalone revenue was ₹306.29 crore, up 36%.","Q2 FY27 கன்சாலிடேட்டட் வருமானம் ₹388.15 கோடி, வருடத்துக்கு 72.3%, காலாண்டுக்கு 54.5% ஏற்றம். ஸ்டாண்ட்அலோன் ₹306.29 கோடி, 36% ஏற்றம்."]},
+ {k:["ebitda","margin","operating","மார்ஜின்"],a:["EBITDA was a record ₹111.18 crore, up 87.8%, at a 28.6% margin. Standalone margin was 35.1% because the quarter had more production orders; subsidiaries added only ₹3.62 crore.","EBITDA ரெக்கார்டு ₹111.18 கோடி, 87.8% ஏற்றம், மார்ஜின் 28.6%. புரொடக்ஷன் ஆர்டர் அதிகமா இருந்ததால ஸ்டாண்ட்அலோன் மார்ஜின் 35.1%; சப்சிடியரி ₹3.62 கோடி தான்."]},
+ {k:["profit","pat","net","eps","லாபம்"],a:["Net profit was ₹46.15 crore, up 53.7%; profit to owners ₹48.43 crore; EPS ₹1.32, up 37.5%. Profit grew slower than PBT because tax took about 50%.","நிகர லாபம் ₹46.15 கோடி, 53.7% ஏற்றம்; உரிமையாளருக்கு ₹48.43 கோடி; EPS ₹1.32, 37.5% ஏற்றம். வரி சுமார் 50% எடுத்ததால PBT-ஐ விட லாபம் மெதுவா வளர்ந்துச்சு."]},
+ {k:["tax","வரி"],a:["Tax was ₹46.32 crore on PBT of ₹92.48 crore, about 50%. The company moved to the 30% slab and booked a larger deferred-tax charge, part of which is non-cash.","PBT ₹92.48 கோடிக்கு வரி ₹46.32 கோடி, சுமார் 50%. 30% ஸ்லாப்புக்கு மாறினாங்க, பெரிய டிஃபர்டு வரியும் போட்டாங்க; அதுல ஒரு பகுதி கேஷ் இல்லாதது."]},
+ {k:["order","book","backlog","ஆர்டர்"],a:["The order book is a record ₹1,765 crore — about ₹1,300 crore standalone and the rest IDL. Management guides above ₹2,000 crore by March 2027, and ₹4,500 to 5,000 crore if MIGM is placed.","ஆர்டர் புக் ரெக்கார்டு ₹1,765 கோடி — சுமார் ₹1,300 கோடி ஸ்டாண்ட்அலோன், மீதி IDL. மார்ச் 2027-க்குள் ₹2,000 கோடிக்கு மேல், MIGM வந்தா ₹4,500 முதல் 5,000 கோடி வரைன்னு கைடன்ஸ்."]},
+ {k:["migm","mine","மைன்"],a:["MIGM trials are complete. The RFQ is expected in November 2026 and the purchase order by February, no later than March 2027, with a 20% advance. Apollo is the sole supplier of its electronics and sensors.","MIGM டிரையல் முடிஞ்சாச்சு. RFQ நவம்பர் 2026, PO பிப்ரவரி, மார்ச் 2027-க்கு மேல இல்ல, 20% அட்வான்ஸோட. அதோட எலக்ட்ரானிக்ஸ், சென்சாருக்கு அப்போலோ தான் ஒரே சப்ளையர்."]},
+ {k:["premier","acquisition","open offer","பிரீமியர்"],a:["Apollo is buying 41.33% of Premier Explosives for ₹1,550 crore, plus an open offer for 26% at ₹698 per share worth ₹975.66 crore. CCI approval is not required and SEBI has issued its letter; closing is targeted in the December 2026 quarter.","அப்போலோ பிரீமியர் எக்ஸ்ப்ளோசிவ்ஸ்ல 41.33%-ஐ ₹1,550 கோடிக்கு வாங்குது, கூடவே ₹698-க்கு 26% ஓபன் ஆஃபர், ₹975.66 கோடி. CCI அனுமதி தேவையில்லை, SEBI லெட்டர் வந்தாச்சு; டிசம்பர் 2026 காலாண்டுல முடிக்க இலக்கு."]},
+ {k:["idl","subsidiar","explosive","சப்சிடியரி","வெடிமருந்து"],a:["Subsidiaries, mainly IDL Explosives, added about ₹82 crore of revenue but only ₹3.6 crore of EBITDA. Management expects a turnaround over about four quarters. The auditor flagged a material uncertainty about some subsidiaries.","சப்சிடியரிகள், முக்கியமா IDL, சுமார் ₹82 கோடி வருமானம் சேர்த்தாங்க, EBITDA ₹3.6 கோடி மட்டும். ~4 காலாண்டுல திருப்பம்னு நிர்வாகம். சில சப்சிடியரிகள் பத்தி ஆடிட்டர் மெட்டீரியல் அன்சர்டன்டி குறிப்பிட்டிருக்கார்."]},
+ {k:["cash","cfo","working capital","wc","கேஷ்","பணப்புழக்கம்"],a:["Operating cash flow was ₹22.4 crore in H1 against profit of ₹71.4 crore, and minus ₹130 crore in FY26. Working capital is 353 days. Management expects positive CFO each quarter of FY27 and stronger conversion from FY29.","அரையாண்டு ஆபரேட்டிங் கேஷ் ₹22.4 கோடி, லாபம் ₹71.4 கோடி; FY26-ல மைனஸ் ₹130 கோடி. வொர்க்கிங் கேபிடல் 353 நாள். FY27 ஒவ்வொரு காலாண்டும் CFO பாசிட்டிவ், FY29-ல இருந்து வலுவான கன்வர்ஷன்னு நிர்வாகம்."]},
+ {k:["valuation","pe","p/e","expensive","multiple","மதிப்பீடு","விலை அதிகம்"],a:["At about ₹427 the stock trades near 116 times trailing earnings and 10 times book. At a 50 times exit multiple, group profit must reach roughly ₹320 to 385 crore by FY29, about 2.4 to 2.9 times today.","சுமார் ₹427-ல பங்கு 116 மடங்கு P/E, 10 மடங்கு புக். 50 மடங்கு வெச்சா கூட FY29-க்குள் குழும லாபம் சுமார் ₹320–385 கோடி வரணும், இன்றைய அளவை விட 2.4–2.9 மடங்கு."]},
+ {k:["pledge","promoter","அடமானம்","ப்ரோமோட்டர்"],a:["Promoters hold 49.98%, and 35.57% of that holding is pledged, up from 30.51% in June. Promoters are also putting ₹1,080 crore into warrants at ₹416.60.","ப்ரோமோட்டர் 49.98%, அதுல 35.57% அடமானம், ஜூன்ல 30.51%. ப்ரோமோட்டர்கள் ₹416.60-க்கு வாரண்ட்ல ₹1,080 கோடியும் போடுறாங்க."]},
+ {k:["dilution","warrant","preferential","fund","raise","டைல்யூஷன்","வாரண்ட்"],a:["The ₹3,322 crore raise has 2.28 crore shares and 5.69 crore warrants, both at ₹416.60 — about 21% more shares if all convert. The money mainly funds the Premier acquisition.","₹3,322 கோடி நிதியில 2.28 கோடி பங்கு, 5.69 கோடி வாரண்ட், ரெண்டும் ₹416.60 — எல்லாம் மாறினா சுமார் 21% கூடுதல் பங்கு. பணம் பெரும்பாலும் பிரீமியருக்கு."]},
+ {k:["target","analyst","broker","rating","டார்கெட்","அனலிஸ்ட்"],a:["Third-party views: Systematix Buy with target ₹570 in September, ICICI Direct target ₹485, HDFC Securities Buy at ₹400 in May. No post-Q2 revisions were out by 27 October.","மூன்றாம் தரப்பு: சிஸ்டமேட்டிக்ஸ் Buy, டார்கெட் ₹570 (செப்டம்பர்), ICICI டைரக்ட் ₹485, HDFC செக்யூரிட்டீஸ் Buy ₹400 (மே). 27 அக் வரை Q2-க்கு பிறகு மாற்றம் இல்ல."]},
+ {k:["why","rising","price","jump","rally","share","ஏன்","ஏறுது","விலை"],a:["The share rose 9.6% on 26 October to ₹410.90 and traded at ₹426.65 at 2:34 PM on 27 October on record results, 88% EBITDA growth, the ₹1,765 crore order book and dated guidance on MIGM, torpedo and Pinaka orders. It had fallen 12.6% in the week before results.","ரெக்கார்டு ரிசல்ட், 88% EBITDA வளர்ச்சி, ₹1,765 கோடி ஆர்டர் புக், MIGM, டார்பிடோ, பினாகா ஆர்டருக்கு தேதியோட கைடன்ஸ் — இதனால 26 அக் 9.6% ஏறி ₹410.90, 27 அக் மதியம் 2:34-க்கு ₹426.65. ரிசல்டுக்கு முந்தைய வாரம் 12.6% இறங்கியிருந்துச்சு."]},
+ {k:["risk","concern","worry","ரிஸ்க்","கவலை"],a:["Main risks: weak cash conversion and 353 working-capital days, a 116 times valuation, promoter pledge at 35.57%, about 21% dilution, the auditor's note on subsidiaries, 50% tax and possible delays in large orders like QRSAM.","முக்கிய ரிஸ்க்: குறைந்த கேஷ் கன்வர்ஷன், 353 நாள் WC, 116 மடங்கு வேல்யூவேஷன், 35.57% அடமானம், சுமார் 21% டைல்யூஷன், சப்சிடியரி பத்தி ஆடிட்டர் குறிப்பு, 50% வரி, QRSAM மாதிரி பெரிய ஆர்டர் தாமதம்."]},
+ {k:["trigger","catalyst","ட்ரிகர்"],a:["Top positive triggers: Premier closing, Unit 3 going fully live and the MIGM order. Negatives: the rising pledge, dilution, the auditor's note and order delays. The trigger score is 43.","முக்கிய பாசிட்டிவ் ட்ரிகர்: பிரீமியர் முடிவு, யூனிட் 3 முழு இயக்கம், MIGM ஆர்டர். நெகட்டிவ்: அடமானம் ஏற்றம், டைல்யூஷன், ஆடிட்டர் குறிப்பு, ஆர்டர் தாமதம். ட்ரிகர் ஸ்கோர் 43."]},
+ {k:["cycle","phase","stage","சைக்கிள்"],a:["Defence is placed in phase P3, expansion, scoring 70. The stock is in Weinstein stage 2, about 17% above a rising 30-week average. The cycle score is 65.","டிஃபென்ஸ் P3 விரிவாக்க நிலை, ஸ்கோர் 70. பங்கு வெய்ன்ஸ்டீன் ஸ்டேஜ் 2, ஏறும் 30-வார சராசரியை விட சுமார் 17% மேல. சைக்கிள் ஸ்கோர் 65."]},
+ {k:["conviction","score","cb score","கன்விக்ஷன்","ஸ்கோர்"],a:["The CB Score is 63 out of 100 and CB Conviction is 70, which is High. Earnings and macro are strong; the trigger lens at 43 and valuation hold it back.","CB ஸ்கோர் 100-க்கு 63, CB கன்விக்ஷன் 70, அதாவது ஹை. வருமானம், மேக்ரோ ஸ்ட்ராங்; ட்ரிகர் லென்ஸ் 43, வேல்யூவேஷன் கீழ இழுக்குது."]},
+ {k:["management","md","ceo","reddy","board","நிர்வாகம்"],a:["Baddam Karunakar Reddy is Chairman and Managing Director; Addepalli Krishna Sai Kumar is Whole-time Director for Operations; Sudarshan Chiluveru is CFO. Dr V.K. Saraswat leads the associate Shauryastra.","பத்தம் கருணாகர் ரெட்டி தலைவர், நிர்வாக இயக்குநர்; அத்தேபள்ளி கிருஷ்ண சாய் குமார் முழுநேர இயக்குநர் (செயல்பாடு); சுதர்சன் சிலுவேரு CFO. அசோசியேட் ஷௌர்யாஸ்திராவுக்கு டாக்டர் V.K. சரஸ்வத் தலைமை."]},
+ {k:["guidance","outlook","future","கைடன்ஸ்","எதிர்காலம்"],a:["Guidance: 45 to 50% growth for FY27, 35 to 45% standalone growth in H2, order book above ₹2,000 crore by March, exports from FY28, and Unit 3 fully live by March 2027.","கைடன்ஸ்: FY27-ல 45–50% வளர்ச்சி, H2-ல ஸ்டாண்ட்அலோன் 35–45%, மார்ச்சுக்குள் ₹2,000 கோடிக்கு மேல் ஆர்டர் புக், FY28-ல இருந்து ஏற்றுமதி, மார்ச் 2027-க்குள் யூனிட் 3 முழுசா."]},
+ {k:["what","business","do","make","என்ன","பிசினஸ்"],a:["Apollo makes the electronic brains of missiles, torpedoes, mines and rockets — onboard computers, navigation and control units — for 150-plus Indian defence programmes, and is adding explosives and complete weapons.","அப்போலோ மிசைல், டார்பிடோ, மைன், ராக்கெட்டோட எலக்ட்ரானிக் மூளை — ஆன்போர்டு கம்ப்யூட்டர், நேவிகேஷன், கன்ட்ரோல் யூனிட் — 150-க்கும் மேற்பட்ட இந்திய பாதுகாப்பு திட்டங்களுக்கு செய்யுது; இப்போ வெடிமருந்து, முழு ஆயுதமும் சேர்க்குது."]}
+];
+function asToggle(){var w=document.getElementById("asWin");w.classList.toggle("on");if(w.classList.contains("on")&&!document.getElementById("asLog").children.length)asInit();}
+function asInit(){
+ var log=document.getElementById("asLog");if(!log)return;log.innerHTML="";
+ asMsg("a",L("Ask me about Apollo's Q2 FY27 by typing or tap 🎤 and speak. I answer aloud.","அப்போலோ Q2 FY27 பத்தி டைப் பண்ணி கேளுங்க, இல்ல 🎤 தட்டி பேசுங்க. நான் சத்தமா பதில் சொல்வேன்."),true);
+ var qs=[["Why is the share rising?","பங்கு ஏன் ஏறுது?"],["What is the order book?","ஆர்டர் புக் எவ்வளவு?"],["MIGM status?","MIGM நிலை?"],["Main risks?","முக்கிய ரிஸ்க்?"],["Valuation?","மதிப்பீடு?"],["Should I buy?","நான் வாங்கலாமா?"]];
+ document.getElementById("asQs").innerHTML=qs.map(function(q){return '<button onclick="asAsk(\''+L(q[0],q[1]).replace(/'/g,"")+'\')">'+L(q[0],q[1])+'</button>';}).join("");
+ document.getElementById("asTxt").placeholder=L("Ask about Apollo…","அப்போலோ பத்தி கேளுங்க…");
+}
+function asMsg(who,t,silent,btn){var log=document.getElementById("asLog");var d=document.createElement("div");d.className="m "+who;d.textContent=t;if(btn){var b=document.createElement("button");b.className="btn o";b.style.marginTop="6px";b.textContent=L("Open Self-check","சுய சோதனை திற");b.onclick=function(){showTab("sc");};d.appendChild(document.createElement("br"));d.appendChild(b);}log.appendChild(d);log.scrollTop=log.scrollHeight;if(who==="a"&&!silent)speak(t);}
+function asAnswer(q){
+ var s=q.toLowerCase(),best=null,bs=0;
+ KB.forEach(function(e){var sc=0;e.k.forEach(function(k){if(s.indexOf(k)>=0)sc+=k.length>3?2:1;});if(e.sc&&sc>0)sc+=5;if(sc>bs){bs=sc;best=e;}});
+ if(!best||bs===0)return {t:L("I can answer on revenue, margins, profit, tax, order book, MIGM, Premier, subsidiaries, cash flow, valuation, pledge, dilution, analysts, risks, triggers, cycle, management and guidance.","வருமானம், மார்ஜின், லாபம், வரி, ஆர்டர் புக், MIGM, பிரீமியர், சப்சிடியரி, கேஷ் ஃப்ளோ, மதிப்பீடு, அடமானம், டைல்யூஷன், அனலிஸ்ட், ரிஸ்க், ட்ரிகர், சைக்கிள், நிர்வாகம், கைடன்ஸ் பத்தி பதில் சொல்ல முடியும்.")};
+ return {t:L(best.a[0],best.a[1]),sc:best.sc};
+}
+function asAsk(t){var inp=document.getElementById("asTxt");var q=(t||inp.value).trim();if(!q)return;inp.value="";asMsg("u",q,true);var r=asAnswer(q);setTimeout(function(){asMsg("a",r.t,false,r.sc);},180);}
+function speak(t){try{if(!window.speechSynthesis)return;speechSynthesis.cancel();var u=new SpeechSynthesisUtterance(t.replace(/₹/g,LANG==="ta"?"ரூபாய் ":"rupees "));u.lang=LANG==="ta"?"ta-IN":"en-IN";var vs=speechSynthesis.getVoices();var v=vs.filter(function(x){return x.lang&&x.lang.toLowerCase().indexOf(LANG==="ta"?"ta":"en-in")===0;})[0]||vs.filter(function(x){return x.lang&&x.lang.toLowerCase().indexOf(LANG==="ta"?"ta":"en")===0;})[0];if(v)u.voice=v;u.rate=1;speechSynthesis.speak(u);}catch(e){}}
+var rec=null;
+function asMic(){
+ var SR=window.SpeechRecognition||window.webkitSpeechRecognition;var btn=document.getElementById("asMic");
+ if(!SR){asMsg("a",L("Voice input is not supported in this browser — please type your question.","இந்த பிரவுசர்ல குரல் உள்ளீடு இல்ல — டைப் பண்ணுங்க."),false);return;}
+ if(rec){try{rec.stop();}catch(e){}rec=null;btn.classList.remove("rec");return;}
+ rec=new SR();rec.lang=LANG==="ta"?"ta-IN":"en-IN";rec.interimResults=false;rec.maxAlternatives=1;
+ rec.onresult=function(e){var t=e.results[0][0].transcript;asAsk(t);};
+ rec.onend=function(){btn.classList.remove("rec");rec=null;};
+ rec.onerror=function(){btn.classList.remove("rec");rec=null;};
+ btn.classList.add("rec");try{rec.start();}catch(e){btn.classList.remove("rec");rec=null;}
+}
+
+/* ===== init ===== */
+document.addEventListener("click",function(e){var p=document.getElementById("cbPop");if(p.classList.contains("on")&&!p.contains(e.target)&&e.target.id!=="cbBadge")p.classList.remove("on");});
+drawTemple(true);renderPillars();renderConv();drawBM();renderEvents();renderTriggers();renderTimeline();drawClock();renderSC();renderQuiz();buildTab("ov");
+if(window.speechSynthesis)speechSynthesis.onvoiceschanged=function(){};
+</script>
+</body>
+</html>
