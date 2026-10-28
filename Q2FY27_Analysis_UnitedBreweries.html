@@ -1,0 +1,819 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>United Breweries Q2 FY27</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=Noto+Sans+Tamil:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#fff6ec; --card:#fffdf9; --ink:#2b2118; --mut:#7a6a5c; --line:#f0dcc6;
+  --or:#e8740c; --or2:#ffb066; --orl:#ffe9d3; --grn:#1f9d55; --amb:#e0a100; --red:#d64545;
+  --blu:#2563eb; --pur:#7c3aed; --teal:#0f8b8d;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{background:var(--bg);color:var(--ink);font-family:Inter,"Noto Sans Tamil",system-ui,sans-serif;font-size:15px;line-height:1.5}
+body.ta{font-family:"Noto Sans Tamil",Inter,system-ui,sans-serif}
+.wm{position:fixed;inset:0;pointer-events:none;display:flex;align-items:center;justify-content:center;z-index:0;opacity:.045;font-size:110px;font-weight:800;color:var(--or);transform:rotate(-24deg);white-space:nowrap}
+/* tab bar first */
+#tabbar{position:sticky;top:0;z-index:50;background:#fff1e2;border-bottom:2px solid var(--or2);display:flex;gap:4px;overflow-x:auto;padding:8px 10px;scrollbar-width:thin}
+#tabbar button{flex:0 0 auto;border:1px solid var(--line);background:#fffaf4;color:var(--ink);padding:7px 12px;border-radius:20px;font:inherit;font-size:13px;font-weight:600;cursor:pointer;white-space:nowrap}
+#tabbar button.on{background:var(--or);color:#fff;border-color:var(--or)}
+#langbtn{background:#2b2118!important;color:#fff!important;border-color:#2b2118!important}
+header.hd{position:relative;z-index:1;padding:14px 16px 10px;background:#fff1e2;max-width:1240px;margin:0 auto}
+header.hd h1{margin:0;font-size:22px;line-height:1.25}
+header.hd .sub{color:var(--mut);font-size:13px}
+main{position:relative;z-index:1;max-width:1240px;margin:0 auto;padding:4px 16px 120px}
+section.tab{display:none}
+section.tab.on{display:block;animation:fade .35s}
+@keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+h2{font-size:19px;margin:18px 0 8px;color:#8a3d00}
+h3{font-size:16px;margin:14px 0 6px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px;margin:10px 0;box-shadow:0 1px 3px rgba(150,80,10,.06)}
+.grid{display:grid;gap:10px}
+.g2{grid-template-columns:repeat(auto-fit,minmax(280px,1fr))}
+.g3{grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}
+.g4{grid-template-columns:repeat(auto-fit,minmax(165px,1fr))}
+.kpi{background:#fff;border:1px solid var(--line);border-left:5px solid var(--or);border-radius:12px;padding:10px 12px}
+.kpi .l{font-size:12px;color:var(--mut);font-weight:600}
+.kpi .v{font-size:22px;font-weight:800;margin:2px 0}
+.kpi .d{font-size:12px}
+.up{color:var(--grn);font-weight:700}.dn{color:var(--red);font-weight:700}.nt{color:var(--amb);font-weight:700}
+.blk{border:2px solid var(--or2);border-radius:16px;padding:12px;margin:12px 0;background:#fffaf3}
+.blk>.bh{display:inline-block;background:var(--or);color:#fff;padding:3px 12px;border-radius:14px;font-weight:700;font-size:13px;margin-bottom:8px}
+.blk.sa{border-color:#9cc3ff;background:#f6f9ff}.blk.sa>.bh{background:var(--blu)}
+table{width:100%;border-collapse:collapse;font-size:13.5px}
+.tw{overflow-x:auto}
+th,td{padding:7px 8px;border-bottom:1px solid var(--line);text-align:right;vertical-align:top}
+th:first-child,td:first-child{text-align:left}
+thead th{background:#ffe9d3;position:sticky;top:0}
+tr.cat td{background:#fff1e2;font-weight:800;color:#8a3d00;text-align:left}
+.note{font-size:12.5px;color:var(--mut)}
+.pill{display:inline-block;padding:2px 9px;border-radius:12px;font-size:12px;font-weight:700;margin:2px 3px 2px 0}
+.p-g{background:#dcf5e6;color:#14663a}.p-a{background:#fff1c7;color:#8a6200}.p-r{background:#ffe0e0;color:#a02929}.p-b{background:#e3ecff;color:#1d4ed8}.p-o{background:var(--orl);color:#8a3d00}
+ul.tk{margin:6px 0;padding-left:18px}ul.tk li{margin:4px 0}
+.cw{position:relative;overflow-x:auto}
+.cw .inner{min-width:900px;height:340px}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin:6px 0}
+.chip{background:#fff;border:2px solid var(--or2);border-radius:20px;padding:5px 12px;font-weight:700;font-size:13px}
+/* svg interactive */
+svg text{font-family:inherit}
+.bmbox{cursor:pointer;transition:filter .2s}
+.bmbox:hover{filter:brightness(1.07) drop-shadow(0 2px 4px rgba(0,0,0,.18))}
+.bmbox.sel rect{stroke:#2b2118;stroke-width:3}
+#bmcard,#tlcard{min-height:70px}
+.col{cursor:pointer}
+.pcard{transition:box-shadow .3s,transform .3s}
+.pcard.hi{box-shadow:0 0 0 3px var(--or);transform:scale(1.01)}
+/* timeline */
+.tl{position:relative;margin:10px 0;padding-left:26px}
+.tl:before{content:"";position:absolute;left:10px;top:0;bottom:0;width:3px;background:var(--or2);border-radius:2px}
+.tli{position:relative;margin:0 0 12px;cursor:pointer}
+.tli:before{content:"";position:absolute;left:-22px;top:6px;width:13px;height:13px;border-radius:50%;background:#fff;border:3px solid var(--or)}
+.tli.era2:before{border-color:var(--blu)}.tli.era3:before{border-color:var(--grn)}.tli.era4:before{border-color:var(--red)}
+.tli .y{font-weight:800;color:#8a3d00;margin-right:6px}
+.tli .x{display:none;margin-top:4px;font-size:13.5px;background:#fff;border:1px solid var(--line);border-radius:10px;padding:8px}
+.tli.open .x{display:block}
+/* swot */
+.sw{border-radius:14px;padding:12px;border:1px solid var(--line)}
+.sw.s{background:#eafaf0}.sw.w{background:#fff3e6}.sw.o{background:#eaf2ff}.sw.t{background:#ffecec}
+/* self-check */
+.scg{border:1px solid var(--line);border-radius:12px;padding:10px;margin:10px 0;background:#fff}
+.sci{display:flex;gap:8px;align-items:flex-start;margin:7px 0}
+.sci input{margin-top:4px;transform:scale(1.2)}
+.sci .dt{font-size:12px;color:var(--mut)}
+.bar{height:10px;background:#f3e3d2;border-radius:6px;overflow:hidden}.bar>div{height:100%;background:var(--or);transition:width .4s}
+.btn{border:1px solid var(--or);background:var(--or);color:#fff;border-radius:18px;padding:6px 14px;font:inherit;font-weight:700;font-size:13px;cursor:pointer}
+.btn.ghost{background:#fff;color:var(--or)}
+/* socrates */
+.q{border:1px solid var(--line);border-radius:12px;background:#fff;padding:10px;margin:10px 0}
+.q .opt{display:block;width:100%;text-align:left;margin:5px 0;border:1px solid var(--line);background:#fffaf4;border-radius:10px;padding:7px 10px;font:inherit;cursor:pointer}
+.q .opt.ok{background:#dcf5e6;border-color:var(--grn)}.q .opt.no{background:#ffe0e0;border-color:var(--red)}
+.q textarea{width:100%;min-height:60px;border-radius:10px;border:1px solid var(--line);padding:8px;font:inherit}
+.fb{margin-top:6px;font-size:13.5px}
+/* CB badge + assist */
+#cbBadge{position:fixed;right:16px;bottom:16px;z-index:90;width:58px;height:58px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#ffb066,#e8740c 70%);color:#fff;font-weight:800;font-size:20px;display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 4px 14px rgba(232,116,12,.45);animation:blink 2.2s infinite;border:3px solid #fff}
+@keyframes blink{0%,100%{box-shadow:0 0 0 0 rgba(232,116,12,.55)}50%{box-shadow:0 0 0 12px rgba(232,116,12,0)}}
+#disc{position:fixed;right:16px;bottom:84px;z-index:95;max-width:340px;background:#fff;border:2px solid var(--or);border-radius:14px;padding:12px;font-size:12.5px;display:none;box-shadow:0 8px 24px rgba(0,0,0,.15)}
+#disc.on{display:block}
+#asBtn{position:fixed;right:86px;bottom:22px;z-index:90;background:#2b2118;color:#fff;border:none;border-radius:24px;padding:10px 14px;font:inherit;font-weight:700;font-size:13px;cursor:pointer;box-shadow:0 4px 12px rgba(0,0,0,.25)}
+#asPanel{position:fixed;right:16px;bottom:84px;z-index:96;width:min(380px,calc(100vw - 32px));height:min(520px,70vh);background:#fff;border:2px solid #2b2118;border-radius:16px;display:none;flex-direction:column;overflow:hidden;box-shadow:0 10px 30px rgba(0,0,0,.25)}
+#asPanel.on{display:flex}
+#asHead{background:#2b2118;color:#fff;padding:9px 12px;font-weight:700;display:flex;justify-content:space-between;align-items:center}
+#asLog{flex:1;overflow-y:auto;padding:10px;font-size:13.5px;background:#fffaf4}
+.mU{background:#ffe9d3;border-radius:12px 12px 2px 12px;padding:7px 10px;margin:6px 0 6px 40px}
+.mA{background:#fff;border:1px solid var(--line);border-radius:12px 12px 12px 2px;padding:7px 10px;margin:6px 40px 6px 0}
+#asIn{display:flex;gap:6px;padding:8px;border-top:1px solid var(--line)}
+#asIn input{flex:1;border:1px solid var(--line);border-radius:18px;padding:7px 12px;font:inherit}
+#asIn button{border:none;border-radius:50%;width:38px;height:38px;cursor:pointer;font-size:16px}
+#mic{background:var(--or);color:#fff}#mic.rec{background:var(--red);animation:blink 1s infinite}
+#asSend{background:#2b2118;color:#fff}
+.sugg{display:flex;flex-wrap:wrap;gap:5px;padding:0 8px 8px}
+.sugg button{border:1px solid var(--line);background:#fff;border-radius:14px;font:inherit;font-size:12px;padding:3px 9px;cursor:pointer}
+.flag{color:#a02929;font-weight:700}
+@media(max-width:640px){header.hd h1{font-size:18px}.kpi .v{font-size:19px}main{padding:4px 12px 130px}#asBtn{right:82px;padding:9px 11px}}
+</style>
+</head>
+<body>
+<div class="wm">CB Research</div>
+<header class="hd">
+  <h1 id="ttl"></h1>
+  <div class="sub" id="subttl"></div>
+</header>
+<nav id="tabbar"></nav>
+<main id="main"></main>
+<div id="cbBadge" title="CB Research">CB</div>
+<div id="disc"></div>
+<button id="asBtn">🎙️ CB Assist</button>
+<div id="asPanel">
+  <div id="asHead"><span id="asTitle">CB Assist</span><span style="cursor:pointer" id="asClose">✕</span></div>
+  <div id="asLog"></div>
+  <div class="sugg" id="asSugg"></div>
+  <div id="asIn"><input id="asQ" autocomplete="off"><button id="mic" title="Voice">🎤</button><button id="asSend">➤</button></div>
+</div>
+<script>
+// ===== Machine-readable company object (CB standard) =====
+var CO = {
+  name:"United Breweries Ltd", nse:"UBL", bse:"532478", quarter:"Q2FY27", period:"Jul–Sep 2026",
+  resultsDate:"2026-10-27", parent:"HEINEKEN (promoter 70.84%)",
+  priceRef:1239.75, priceRefTime:"28-Oct-2026 10:05 IST", prevClose:1143.60, dayHigh:1316,
+  shares_cr:26.44, bvps:172, ttmEPS:18.32, ttmSales:9927, ttmEBITDA:906, ttmPAT:484,
+  debt_cr:1119, cash_cr:488.84, dps_FY26:10,
+  consol:{q2fy27:{grossRev:4623.01, netRev:2537, ebitda:259, oi:41.3, int:28, dep:89, pbt:183, pat:134.81, eps:5.12},
+          q2fy26:{grossRev:3737.31, netRev:2052.83, ebitda:130, oi:14.9, int:15, dep:64, pbt:66, pat:46.34, eps:1.76},
+          q1fy27:{grossRev:5919.44, netRev:3067, ebitda:283, oi:51, int:23, dep:86, pbt:224, pat:166.28, eps:6.29}},
+  standalone:{q2fy27:{pbt:183.79, pat:135.93, eps:5.14, ebitdaM:11.9, ebitM:8.4}, q2fy26:{pbt:66.52, pat:46.95, eps:1.78}},
+  ops:{vol:16, premVol:38, hSilver:67, kfUltra:44, gmBps:194, h1Vol:12, h1Sales:14, h1EBIT:35, h1PAT:31},
+  cbScore:6.0, pillars:{g:7.5,m:5.5,d:6.5,v:4.5,t:7.0,r:5.0},
+  cycle:{sectorPhase:"P2 Early recovery", sectorScore:85, stockStage:"Weinstein Stage 4 (turn attempt)", stockScore:60, cy:73},
+  triggers:[
+    {name:"Premiumisation acceleration", sign:"+", I:3, C:1.0, W:1.0, P:1.0, pts:3.00, status:"Executing", date:"2026-10-27"},
+    {name:"New can lines (Nizam, Ellora)", sign:"+", I:2, C:1.0, W:1.0, P:1.0, pts:2.00, status:"Executing", date:"2026-10-27"},
+    {name:"Mid-teens EBITDA margin ambition", sign:"+", I:4, C:0.4, W:0.7, P:1.0, pts:1.12, status:"Announced", date:"2026-09-03"},
+    {name:"More state excise reforms", sign:"+", I:3, C:0.4, W:0.7, P:1.0, pts:0.84, status:"Watch", date:"2026-09-03"},
+    {name:"UP greenfield brewery", sign:"+", I:2, C:0.7, W:0.4, P:1.0, pts:0.56, status:"Approved", date:"2025"},
+    {name:"West Asia input-cost shock", sign:"-", I:4, C:1.0, W:1.0, P:0.4, pts:1.60, status:"Executing", date:"2026-08-04"},
+    {name:"Q3 step-up in commercial spend", sign:"-", I:2, C:0.7, W:1.0, P:1.0, pts:1.40, status:"Announced", date:"2026-10-27"},
+    {name:"Carlsberg India IPO / competition", sign:"-", I:2, C:0.7, W:0.7, P:1.0, pts:0.98, status:"Announced", date:"2026-10-28"},
+    {name:"State excise hikes / price controls", sign:"-", I:3, C:0.4, W:0.7, P:1.0, pts:0.84, status:"Watch", date:"ongoing"},
+    {name:"Tax demand ₹116.25 cr", sign:"-", I:2, C:0.4, W:0.7, P:1.0, pts:0.56, status:"Announced", date:"2026-07"}
+  ],
+  tg:56, conviction:50
+};
+
+// ===== Quarterly (consolidated, ₹ cr) =====
+var QL = ["Sep-23","Dec-23","Mar-24","Jun-24","Sep-24","Dec-24","Mar-25","Jun-25","Sep-25","Dec-25","Mar-26","Jun-26","Sep-26"];
+var QS = [1890,1824,2133,2475,2117,2000,2323,2864,2053,2073,2250,3067,2537];
+var QE = [184,146,143,285,227,141,187,311,130,226,139,283,259];
+var QOI= [12,25,26,7,10,-16,8,11,15,-8,82,51,41];
+var QI = [1,2,2,2,2,3,6,11,15,17,29,23,28];
+var QD = [51,52,58,58,57,61,57,63,64,69,76,86,89];
+var QPBT=[144,117,110,233,178,61,132,248,66,132,116,224,183];
+var QP = [107,86,82,174,132,39,98,184,46,81,102,166,135];
+var QEPS=[4.06,3.23,3.07,6.56,5.00,1.45,3.69,6.95,1.76,3.06,3.85,6.29,5.12];
+
+// ===== Annual (consolidated, ₹ cr) =====
+var YL = ["FY15","FY16","FY17","FY18","FY19","FY20","FY21","FY22","FY23","FY24","FY25","FY26"];
+var YS = [4688,4833,4729,5619,6475,6509,4243,5838,7500,8123,8915,9240];
+var YE = [622,697,642,903,1138,876,381,697,616,696,841,806];
+var YP = [260,299,230,395,563,428,114,366,305,411,442,413];
+var YEPS=[9.83,11.28,8.68,14.91,21.29,16.18,4.28,13.82,11.50,15.51,16.71,15.63];
+var YDP= [10,10,13,13,12,15,12,76,65,64,60,64];
+var YROCE=[16,18,14,22,28,17,5,13,11,13,14,11];
+var CFO=[841,539,544,563,643,508,620,900,-120,70,214,435];
+var CFI=[-329,-245,-234,-197,-430,-402,-152,-160,-121,-148,-238,-408];
+var CFF=[-572,-297,-301,-364,-196,-95,-88,-287,-292,-122,237,92];
+var FCF=[434,296,309,362,206,104,471,727,-274,-121,-45,2];
+var CFOE=[158,100,107,90,91,80,184,148,3,30,48,81];
+var DD=[75,84,100,97,85,76,120,78,68,104,117,116];
+var ID=[283,330,333,271,326,312,561,302,321,298,327,432];
+var PD=[173,200,204,175,186,156,311,206,161,207,296,361];
+var CCC=[184,214,229,193,225,232,370,174,228,196,148,187];
+var WCD=[23,21,34,53,48,50,62,31,49,62,50,25];
+var BL = ["Mar-15","Mar-16","Mar-17","Mar-18","Mar-19","Mar-20","Mar-21","Mar-22","Mar-23","Mar-24","Mar-25","Mar-26","Sep-26"];
+var NW = [1850,2147,2334,2690,3183,3520,3582,3935,3964,4178,4363,4522,4560];
+var BOR= [836,806,594,312,211,252,262,10,16,102,620,1317,1119];
+var CWIP=[90,61,137,72,190,199,129,110,77,173,253,512,520];
+
+// ===== Shareholding (%) =====
+var SHL=["Dec-23","Mar-24","Jun-24","Sep-24","Dec-24","Mar-25","Jun-25","Sep-25","Dec-25","Mar-26","Jun-26","Sep-26"];
+var SH={pro:[70.84,70.84,70.84,70.84,70.84,70.84,70.84,70.84,70.84,70.84,70.84,70.84],
+ fii:[6.71,6.63,6.43,6.26,6.43,6.92,6.73,6.26,5.50,4.94,4.87,5.36],
+ dii:[16.06,16.12,16.38,16.62,16.52,16.17,16.37,16.68,17.45,18.08,17.79,17.27],
+ gov:[1.16,1.16,1.16,1.16,1.16,1.16,1.16,1.16,1.16,1.16,1.16,1.16],
+ pub:[5.22,5.25,5.19,5.13,5.06,4.93,4.92,5.07,5.07,4.99,5.37,5.37],
+ n:[65418,66914,67868,66794,68483,68802,71177,78877,81332,79464,93908,95495]};
+var SHY=["Mar-17","Mar-18","Mar-19","Mar-20","Mar-21","Mar-22","Mar-23","Mar-24","Mar-25","Mar-26","Sep-26"];
+var SHYP=[73.87,73.35,57.72,57.72,57.72,72.71,72.72,70.84,70.84,70.84,70.84];
+var SHYG=[0.09,0.62,16.15,16.15,16.15,1.16,1.16,1.16,1.16,1.16,1.16];
+
+// ===== Selected dated price points (₹) =====
+var PXL=["10-Oct-25","Feb-26","15-Jun-26","5-Aug-26","1-Oct-26","27-Oct-26","28-Oct-26*"];
+var PX=[1781,1621,1349,1253,1150,1144,1240];
+// ===== Bilingual text =====
+var TABS=[
+ ["ov",["Overview","மேலோட்டம்"]],["hist",["History","வரலாறு"]],["bm",["Business Model","பிசினஸ் மாடல்"]],
+ ["fin",["Financials","நிதிநிலை"]],["cf",["Cash Flow & WC","கேஷ் ஃப்ளோ & WC"]],["val",["Valuations","மதிப்பீடு"]],
+ ["mkt",["Market Activity","பங்கு நகர்வு"]],["tc",["Triggers & Cycle","ட்ரிகர் & சைக்கிள்"]],["swot",["SWOT","SWOT"]],
+ ["an",["Analysts' Rating","அனலிஸ்ட் ரேட்டிங்"]],["self",["Self-check","சுய சோதனை"]],["mgmt",["Management & Board","நிர்வாகம் & போர்டு"]],
+ ["soc",["Cauvery Socrates","காவேரி சாக்ரடீஸ்"]]
+];
+var TX={
+ title:["United Breweries Ltd (NSE: UBL · BSE: 532478) — Q2 FY27 Results: Business & Investment Analysis","யுனைடெட் ப்ரூவரீஸ் (NSE: UBL · BSE: 532478) — Q2 FY27 ரிசல்ட்: பிசினஸ் & முதலீட்டு அலசல்"],
+ sub:["Quarter: Jul–Sep 2026 · Results filed 27 Oct 2026 · Prepared 28 Oct 2026, 10:48 IST · Price reference ₹1,239.75 (28 Oct, 10:05 IST) · ₹ crore unless stated","காலாண்டு: ஜூலை–செப் 2026 · ரிசல்ட் 27 அக் 2026 · தயாரித்தது 28 அக் 2026, 10:48 IST · விலை அடிப்படை ₹1,239.75 (28 அக், 10:05 IST) · தொகைகள் ₹ கோடியில்"],
+ disc:["<b>Prepared by CB Research (Cauvery Business Research)</b> for financial education only. CB Research is not a SEBI-registered research analyst or investment adviser. Nothing here is a recommendation to buy, sell or hold any security. Third-party broker views are attributed to those brokers. Figures are from company filings and releases; items marked † could not be verified and should be checked. Please do your own research or consult a registered adviser.","<b>CB Research (காவேரி பிசினஸ் ரிசர்ச்) தயாரித்தது</b> — நிதிக் கல்விக்காக மட்டும். CB Research SEBI-ல பதிவு செய்த அனலிஸ்ட்டோ அட்வைசரோ இல்ல. இதுல எதுவும் வாங்க, விற்க, வச்சிருக்க சொல்ற பரிந்துரை இல்ல. புரோக்கர் கருத்துக்கள் அந்தந்த புரோக்கர்களோடது. எண்கள் கம்பெனி ஃபைலிங்ல இருந்து; † குறி போட்டது சரிபார்க்க முடியல. நீங்களே ஆராய்ஞ்சு முடிவு பண்ணுங்க, இல்லன்னா பதிவு செய்த அட்வைசரை கேளுங்க."],
+ consol:["CONSOLIDATED RESULTS — Q2 FY27","கன்சாலிடேட்டட் ரிசல்ட் — Q2 FY27"],
+ stand:["STANDALONE RESULTS — Q2 FY27","ஸ்டாண்டலோன் ரிசல்ட் — Q2 FY27"],
+ h1:["First half FY27 (Apr–Sep 2026)","FY27 முதல் அரையாண்டு (ஏப்–செப் 2026)"],
+ takeaways:["Key takeaways","முக்கிய பாயிண்ட்ஸ்"],
+ temple:["CB Score — six pillars (CBF26)","CB ஸ்கோர் — ஆறு தூண்கள் (CBF26)"],
+ tapcol:["Tap a column to jump to its explanation.","ஒரு தூணை தொட்டா அதோட விளக்கம் வரும்."],
+ qop:["Quality of profit check","லாபத்தோட தரம் — ஒரு செக்"]
+};
+var TAKE=[
+ ["<b>Volume-led rebound on a weak base.</b> Sell-in volume rose 16% against a monsoon-hit Q2 FY26 (volume −3.4%, PAT −65%), so the YoY jump flatters; still, it is the fastest volume growth in recent quarters.","<b>மழையால அடிபட்ட போன வருஷத்தோட ஒப்பிட்டா பெரிய ஜம்ப்.</b> வால்யூம் 16% ஏறியிருக்கு; போன வருஷம் Q2-ல வால்யூம் −3.4%, லாபம் −65%. அதனால YoY வளர்ச்சி கொஞ்சம் பெருசா தெரியும்; ஆனாலும் சமீபத்திய காலாண்டுகள்ல இதுதான் வேகமான வால்யூம் வளர்ச்சி."],
+ ["<b>Premiumisation is the engine.</b> Premium volume +38% (Q1: +7%), Heineken Silver +67%, Kingfisher Ultra +44%. Net sales +24% vs volume +16% implies roughly +7% price/mix.","<b>பிரீமியம் தான் இன்ஜின்.</b> பிரீமியம் வால்யூம் +38% (Q1-ல +7% தான்), ஹைனகென் சில்வர் +67%, கிங்ஃபிஷர் அல்ட்ரா +44%. சேல்ஸ் +24%, வால்யூம் +16% — அப்போ விலை/மிக்ஸ் மூலமா சுமார் +7%."],
+ ["<b>Margins recovered despite cost inflation.</b> Gross margin +194 bps; company-reported EBITDA margin 11.9% (+480 bps). Computed from the reported P&L, EBITDA ₹259 cr on ₹2,537 cr net revenue = 10.2%.","<b>செலவு ஏறியும் மார்ஜின் மீண்டிருக்கு.</b> கிராஸ் மார்ஜின் +194 bps; கம்பெனி சொல்ற EBITDA மார்ஜின் 11.9% (+480 bps). ரிப்போர்ட்டட் P&L-ல இருந்து கணக்கு போட்டா EBITDA ₹259 கோடி / நெட் ரெவென்யூ ₹2,537 கோடி = 10.2%."],
+ ["<b>Part of the profit jump is one-off.</b> Other income ₹41.3 cr includes ₹36.89 cr interest on income-tax refunds. Excluding it, CB estimates core PAT ≈ ₹108 cr (still ~2.3x last year).","<b>லாப ஜம்ப்ல ஒரு பகுதி ஒருமுறை வருமானம்.</b> மற்ற வருமானம் ₹41.3 கோடில ₹36.89 கோடி இன்கம் டாக்ஸ் ரீஃபண்ட் வட்டி. அதை கழிச்சா கோர் PAT சுமார் ₹108 கோடி (CB மதிப்பீடு) — அப்பவும் போன வருஷத்தை விட ~2.3 மடங்கு."],
+ ["<b>Watch-outs:</b> management will step up commercial spend in Q3; West Asia-linked cost shock (₹350–400 cr for FY27) is still live; P/E ~68x TTM even after a 5-year-low share price.","<b>கவனிக்க வேண்டியது:</b> Q3-ல மார்க்கெட்டிங் செலவை ஏத்தப் போறாங்க; மேற்காசியா போரால செலவு ஷாக் (FY27-க்கு ₹350–400 கோடி) இன்னும் இருக்கு; ஷேர் 5 வருஷ லோவுக்கு வந்தும் P/E இன்னும் ~68x."]
+];
+var PILLARS=[
+ {k:"g",n:["Growth","வளர்ச்சி"],s:7.5,x:["Q2 net sales +24%, volume +16%, H1 net sales +14%; CMD ambition is double-digit net sales growth. But the 10-year sales CAGR is only ~7% and FY26 sales grew just 3.6%, so the score is held below 8 until the pace is sustained.","Q2 சேல்ஸ் +24%, வால்யூம் +16%, H1 சேல்ஸ் +14%; இரட்டை இலக்க வளர்ச்சி தான் அவங்க டார்கெட். ஆனா 10 வருஷ சேல்ஸ் CAGR ~7% தான், FY26-ல 3.6% தான் வளர்ந்தது — அதனால தொடர்ந்து வரணும், அதுவரை 8-க்கு கீழே."]},
+ {k:"m",n:["Margins","மார்ஜின்"],s:5.5,x:["EBITDA margin recovered to 10–12% in Q2, but sits far below the FY19 peak of ~18%. ROE has been 8–10% for three years. The CMD ambition of mid-teens EBITDA margin is not yet visible in the numbers.","Q2-ல EBITDA மார்ஜின் 10–12%-க்கு வந்திருக்கு, ஆனா FY19-ல இருந்த ~18%-ஐ விட ரொம்ப கம்மி. ROE மூணு வருஷமா 8–10% தான். 'மிட்-டீன்ஸ் மார்ஜின்' டார்கெட் இன்னும் எண்கள்ல தெரியல."]},
+ {k:"d",n:["Debt & cash","கடன் & கேஷ்"],s:6.5,x:["Borrowings ₹1,119 cr (Sep-26) vs net worth ₹4,560 cr — debt/equity ~0.25x, down from ₹1,317 cr in Mar-26. Interest cover ~7.5x. Weak spot: free cash flow was negative or near zero from FY23 to FY26 because of working-capital build and capex.","கடன் ₹1,119 கோடி (செப்-26), நெட் வொர்த் ₹4,560 கோடி — D/E ~0.25. மார்ச்-26-ல ₹1,317 கோடி இருந்தது, குறைஞ்சிருக்கு. வட்டி கவர் ~7.5x. பலவீனம்: FY23–FY26 ஃப்ரீ கேஷ் ஃப்ளோ நெகட்டிவ் அல்லது பூஜ்யம் — வொர்க்கிங் கேப்பிட்டல் & கேபெக்ஸ் காரணம்."]},
+ {k:"v",n:["Valuation","மதிப்பீடு"],s:4.5,x:["At ₹1,240: P/E ~68x TTM EPS ₹18.32, P/B ~7.2x, EV/EBITDA ~37x, dividend yield ~0.8%. Cheaper than its own history but still expensive in absolute terms; the price already assumes years of strong earnings growth.","₹1,240-ல: P/E ~68x (TTM EPS ₹18.32), P/B ~7.2x, EV/EBITDA ~37x, டிவிடெண்ட் யீல்ட் ~0.8%. இதோட பழைய வரலாற்றை விட மலிவு, ஆனா நேரடியா பார்த்தா இன்னும் விலை அதிகம்; பல வருஷ வலுவான வளர்ச்சியை விலை ஏற்கனவே எதிர்பார்க்குது."]},
+ {k:"t",n:["Triggers & trend","ட்ரிகர் & போக்கு"],s:7.0,x:["Positive catalysts are executing: premium portfolio, new can lines, state reforms (Karnataka, Maharashtra, Jharkhand). The stock jumped up to 15% on results day but remains in a long downtrend (Stage 4) until it holds above its 30-week average.","நல்ல ட்ரிகர்கள் நடந்துகிட்டிருக்கு: பிரீமியம், புது கேன் லைன்கள், மாநில சீர்திருத்தங்கள் (கர்நாடகா, மகாராஷ்டிரா, ஜார்கண்ட்). ரிசல்ட் நாள்ல 15% வரை ஏறிச்சு, ஆனா 30 வார சராசரிக்கு மேல நிலைக்கிற வரை இன்னும் நீண்ட இறக்கப் போக்குல தான் (ஸ்டேஜ் 4)."]},
+ {k:"r",n:["Risk","ரிஸ்க்"],s:5.0,x:["Beer is taxed and priced state by state: excise changes, price controls and slow payments from state corporations can swing results. Weather (monsoon, summer) drives volumes. Input costs (glass, cans, barley, freight) are inflating. A ₹116.25 cr tax demand is pending.","பீர் விலை, வரி எல்லாம் மாநிலத்துக்கு மாநிலம் மாறும்: எக்சைஸ் மாற்றம், விலைக் கட்டுப்பாடு, மாநில கார்ப்பரேஷன்கள் தாமதமா பணம் தர்றது — இதெல்லாம் ரிசல்ட்டை ஆட்டும். வானிலை (மழை, கோடை) வால்யூமை தீர்மானிக்கும். கண்ணாடி, கேன், பார்லி, சரக்கு செலவு ஏறுது. ₹116.25 கோடி டாக்ஸ் டிமாண்ட் நிலுவையில."]}
+];
+
+// ===== History =====
+var HIST=[
+ {y:"1857",e:1,t:["Brewing roots in South India","தென்னிந்தியாவில் ப்ரூவிங் வேர்கள்"],x:["British-era breweries in the Nilgiris and Bangalore served colonial garrisons. Several of these later became part of United Breweries.","பிரிட்டிஷ் காலத்துல நீலகிரி, பெங்களூர்ல ராணுவ முகாம்களுக்காக பீர் தயாரிச்சாங்க. அதுல சில ப்ரூவரிகள் தான் பின்னாடி யுனைடெட் ப்ரூவரீஸ் ஆச்சு."]},
+ {y:"1915",e:1,t:["United Breweries formed in Madras","மெட்ராஸ்ல யுனைடெட் ப்ரூவரீஸ் உருவாச்சு"],x:["Scottish businessman Thomas Leishman brought five South Indian breweries together under the name United Breweries — the company's name literally means 'breweries united'.","ஸ்காட்லாந்து தொழிலதிபர் தாமஸ் லீஷ்மன் அஞ்சு தென்னிந்திய ப்ரூவரிகளை ஒண்ணா சேர்த்து 'யுனைடெட் ப்ரூவரீஸ்'-னு பேர் வச்சார் — பேருக்கே அர்த்தம் 'ஒண்ணு சேர்ந்த ப்ரூவரிகள்'."]},
+ {y:"1947",e:1,t:["Vittal Mallya takes control","விட்டல் மல்யா கட்டுப்பாட்டை எடுத்தார்"],x:["Around Independence, Vittal Mallya bought into UB and became its first Indian chairman, starting the 'UB Group' era of an Indian-controlled liquor and beverages group.","சுதந்திர காலகட்டத்துல விட்டல் மல்யா UB-ல பங்கு வாங்கி முதல் இந்திய சேர்மன் ஆனார். அங்க இருந்து தான் 'UB குரூப்' சகாப்தம் ஆரம்பம்."]},
+ {y:"1978",e:2,t:["Kingfisher is launched","கிங்ஃபிஷர் அறிமுகம்"],x:["The Kingfisher lager brand was introduced and went on to become India's best-known beer — today the core of UBL's mainstream and premium portfolio (Kingfisher Strong, Premium, Ultra, Ultra Max).","கிங்ஃபிஷர் பிராண்ட் அறிமுகமாகி இந்தியாவோட பிரபலமான பீர் ஆச்சு — இன்னைக்கும் UBL-ஓட மெயின்ஸ்ட்ரீம், பிரீமியம் போர்ட்ஃபோலியோவோட மையம் (ஸ்ட்ராங், பிரீமியம், அல்ட்ரா, அல்ட்ரா மேக்ஸ்)."]},
+ {y:"1983",e:2,t:["Vijay Mallya becomes chairman","விஜய் மல்யா சேர்மன் ஆனார்"],x:["After his father's death, Vijay Mallya took over the UB Group at 28 and expanded it aggressively across spirits, beer and, later, aviation.","அப்பா இறந்த பிறகு 28 வயசுல விஜய் மல்யா UB குரூப்பை எடுத்து, ஸ்பிரிட்ஸ், பீர், அப்புறம் ஏவியேஷன் வரை வேகமா விரிவாக்கினார்."]},
+ {y:"1990s",e:2,t:["Strong beer and No. 1 position","ஸ்ட்ராங் பீர் & நம்பர் 1 இடம்"],x:["Kingfisher Strong rode India's shift towards strong beer; UB became the clear market leader with breweries across many states — a key moat because beer is heavy and costly to move between states.","இந்தியா 'ஸ்ட்ராங் பீர்' பக்கம் மாறினப்போ கிங்ஃபிஷர் ஸ்ட்ராங் பெரிசா வளர்ந்தது; பல மாநிலங்கள்ல ப்ரூவரி இருந்ததால UB நம்பர் 1 ஆச்சு — பீர் கனமானது, மாநிலம் விட்டு மாநிலம் கொண்டு போக செலவு அதிகம், அதனால இது பெரிய பாதுகாப்பு அரண்."]},
+ {y:"1999–2002",e:2,t:["Beer business housed in today's listed UBL; Scottish & Newcastle partner","இன்றைய லிஸ்டட் UBL; ஸ்காட்டிஷ் & நியூகாஸில் பார்ட்னர்"],x:["The group reorganised its beer business into the present listed company (its 27th AGM was held in Aug 2026) and brought in UK brewer Scottish & Newcastle as a strategic partner.","குரூப் தன்னோட பீர் பிசினஸை இப்போ லிஸ்ட் ஆன கம்பெனிக்குள்ள கொண்டு வந்தது (27-வது AGM ஆகஸ்ட் 2026-ல நடந்தது); UK-வோட ஸ்காட்டிஷ் & நியூகாஸில் கம்பெனியை பார்ட்னரா சேர்த்தாங்க."]},
+ {y:"2008",e:3,t:["Heineken arrives via the S&N takeover","S&N டேக்ஓவர் மூலமா ஹைனகென் வருகை"],x:["Heineken and Carlsberg jointly bought Scottish & Newcastle; Heineken inherited the UBL stake and became joint controller alongside the UB Group.","ஹைனகென், கார்ல்ஸ்பர்க் சேர்ந்து ஸ்காட்டிஷ் & நியூகாஸிலை வாங்கினாங்க; UBL பங்கு ஹைனகெனுக்கு வந்தது — UB குரூப்போட சேர்ந்து கூட்டுக் கட்டுப்பாடு."]},
+ {y:"2012–2016",e:4,t:["UB Group crisis; Mallya leaves India","UB குரூப் நெருக்கடி; மல்யா இந்தியாவை விட்டு போனார்"],x:["Kingfisher Airlines collapsed (2012) and banks pursued the group's dues. UBL's brewing business kept running, but the promoter overhang hurt governance perception. Mallya left India in 2016.","கிங்ஃபிஷர் ஏர்லைன்ஸ் 2012-ல மூடப்பட்டது, வங்கிகள் கடன் வசூலுக்கு போனாங்க. UBL பீர் பிசினஸ் ஓடிக்கிட்டு தான் இருந்தது, ஆனா புரமோட்டர் பிரச்சனை நிர்வாக நம்பிக்கையை பாதிச்சது. 2016-ல மல்யா இந்தியாவை விட்டு போனார்."]},
+ {y:"2019",e:4,t:["Attached shares move to the government side","முடக்கப்பட்ட பங்குகள் அரசு பக்கம்"],x:["Shares linked to the erstwhile promoter were attached in recovery proceedings; shareholding data show promoter holding falling from ~73% to 57.7% and a 16.15% 'Government' block appearing (Mar-19 to Mar-21).","பழைய புரமோட்டரோட பங்குகள் கடன் வசூலுக்காக முடக்கப்பட்டது; ஷேர்ஹோல்டிங் டேட்டாவுல புரமோட்டர் பங்கு ~73%-ல இருந்து 57.7%-க்கு இறங்கி, 'அரசு' பங்கு 16.15% வந்தது (மார்ச்-19 முதல் மார்ச்-21 வரை)."]},
+ {y:"Jul 2021",e:3,t:["Heineken takes majority control","ஹைனகென் பெரும்பான்மை கட்டுப்பாடு"],x:["Heineken bought additional shares in June 2021, raising its stake from 46.5% to 61.5%, and UBL became a Heineken subsidiary. The government block was sold down to 1.16%; promoter holding is now 70.84%.","ஜூன் 2021-ல ஹைனகென் கூடுதல் பங்கு வாங்கி 46.5%-ல இருந்து 61.5%-க்கு ஏத்தியது — UBL ஹைனகெனோட சப்சிடியரி ஆச்சு. அரசு பங்கு 1.16%-க்கு குறைஞ்சது; இப்போ புரமோட்டர் பங்கு 70.84%."]},
+ {y:"FY23",e:4,t:["Barley inflation squeezes margins","பார்லி விலை ஏற்றம் — மார்ஜின் நசுக்கம்"],x:["Raw-material inflation and state route-to-market changes cut EBITDA margin to ~8%; cash flow from operations turned negative (−₹120 cr) as receivables and inventory rose.","மூலப்பொருள் விலை ஏற்றம், மாநில விற்பனை முறை மாற்றம் — EBITDA மார்ஜின் ~8%-க்கு இறங்கியது; ரிசீவபிள்ஸ், இன்வென்டரி ஏறினதால ஆபரேட்டிங் கேஷ் ஃப்ளோ நெகட்டிவ் (−₹120 கோடி)."]},
+ {y:"Sep 2023",e:3,t:["Vivek Gupta becomes MD & CEO","விவேக் குப்தா MD & CEO"],x:["An ex-P&G and Udaan executive (IIM Ahmedabad), Gupta started an 'investment-led growth' phase: more brand spend, visi-coolers, premium launches and new capacity.","P&G, Udaan-ல வேலை பார்த்தவர் (IIM அகமதாபாத்). 'முதலீடு மூலமா வளர்ச்சி' கட்டத்தை ஆரம்பிச்சார்: பிராண்ட் செலவு, விசி-கூலர்கள், பிரீமியம் லாஞ்ச், புது கேபாசிட்டி."]},
+ {y:"2024–25",e:3,t:["Heineken Silver, Ultra Max, UP brewery","ஹைனகென் சில்வர், அல்ட்ரா மேக்ஸ், UP ப்ரூவரி"],x:["Premium launches scaled up; a greenfield brewery in Uttar Pradesh (~₹750 cr) was started. Borrowings rose from ₹102 cr (Mar-24) to ₹1,317 cr (Mar-26) to fund capex and working capital.","பிரீமியம் லாஞ்ச்கள் வேகமெடுத்தது; உத்தர பிரதேசத்துல ~₹750 கோடில புது ப்ரூவரி ஆரம்பம். கேபெக்ஸ், வொர்க்கிங் கேப்பிட்டலுக்காக கடன் ₹102 கோடி (மார்ச்-24) → ₹1,317 கோடி (மார்ச்-26)."]},
+ {y:"Q2 FY26",e:4,t:["Monsoon shock: PAT −65%","மழை ஷாக்: PAT −65%"],x:["An unusually heavy monsoon cut volume 3.4% and PAT fell to ₹46 cr — the low base that flatters this quarter's YoY growth.","வழக்கத்துக்கு மாறான கனமழை — வால்யூம் 3.4% குறைஞ்சு, லாபம் ₹46 கோடிக்கு விழுந்தது. இந்த குறைந்த அடிப்படை தான் இந்த காலாண்டோட YoY வளர்ச்சியை பெரிசா காட்டுது."]},
+ {y:"2026",e:4,t:["West Asia cost shock, tax demand, 5-year-low stock","மேற்காசியா செலவு ஷாக், டாக்ஸ் டிமாண்ட், 5 வருஷ லோ"],x:["Packaging and freight costs jumped (estimated FY27 hit ₹350–400 cr after price hikes in 22 states). A ₹116.25 cr tax demand arrived. The share hit a 5-year low around ₹1,128–1,150.","பேக்கேஜிங், சரக்கு செலவு எகிறியது (22 மாநிலங்கள்ல விலை ஏத்தின பிறகும் FY27-க்கு ₹350–400 கோடி பாதிப்பு). ₹116.25 கோடி டாக்ஸ் டிமாண்ட் வந்தது. ஷேர் 5 வருஷ லோ ₹1,128–1,150 வரை போனது."]},
+ {y:"3 Sep 2026",e:3,t:["Capital Markets Day, Goa","கேப்பிட்டல் மார்க்கெட்ஸ் டே, கோவா"],x:["Ambition: double-digit net sales growth, mid-teens EBITDA margin, better ROIC and cash conversion; premium to reach 18–20% of sales by FY30; net-zero Scope 1 & 2 by 2030.","டார்கெட்: இரட்டை இலக்க சேல்ஸ் வளர்ச்சி, மிட்-டீன்ஸ் EBITDA மார்ஜின், சிறந்த ROIC, கேஷ் கன்வர்ஷன்; FY30-க்குள் பிரீமியம் சேல்ஸ்ல 18–20%; 2030-க்குள் Scope 1 & 2 நெட்-ஜீரோ."]},
+ {y:"27 Oct 2026",e:3,t:["Q2 FY27: PAT ~3x, stock +15% intraday","Q2 FY27: லாபம் ~3 மடங்கு, ஷேர் +15%"],x:["Volume +16%, premium +38%, net sales +24%, PAT ₹134.81 cr (consolidated). On 28 Oct the stock touched ₹1,316 (+15%) in a falling market.","வால்யூம் +16%, பிரீமியம் +38%, சேல்ஸ் +24%, PAT ₹134.81 கோடி (கன்சாலிடேட்டட்). 28 அக் அன்னிக்கு மார்க்கெட் இறங்கியும் ஷேர் ₹1,316 (+15%) தொட்டது."]}
+];
+
+// ===== Business model boxes =====
+var BM={
+ cust:{t:["Consumers","நுகர்வோர்"],k:["25 mn+ reach legal drinking age yearly · ~2.5 L/capita vs ~25 L global","வருஷம் 25 மில்லியன்+ புது வயசு வர்றவங்க · தலைக்கு ~2.5 லி vs உலக சராசரி ~25 லி"],x:["India drinks about 2.5 litres of beer per person a year against a global average near 25 litres. More than 25 million young adults enter the legal drinking age every year. This headroom is the long-term volume story.","இந்தியாவுல ஒருத்தர் வருஷத்துக்கு சராசரி 2.5 லிட்டர் பீர் தான்; உலக சராசரி 25 லிட்டர். வருஷம் 25 மில்லியனுக்கு மேல புதுசா சட்டப்படி குடிக்கும் வயசுக்கு வர்றாங்க. இது தான் நீண்டகால வால்யூம் கதை."]},
+ chan:{t:["State-regulated channel","மாநில கட்டுப்பாட்டு சேனல்"],k:["State corporations · licensed retail · bars & on-trade","மாநில கார்ப்பரேஷன்கள் · லைசென்ஸ் கடைகள் · பார்கள்"],x:["Alcohol is a state subject. In many states UBL sells to a state beverage corporation (for example TASMAC in Tamil Nadu), which then supplies retail; in others it sells to licensed distributors. States set excise, sometimes the retail price, and pay on their own timetable — which is why receivable days are high.","மது மாநில சப்ஜெக்ட். பல மாநிலங்கள்ல UBL மாநில கார்ப்பரேஷனுக்கு (உதா: தமிழ்நாட்டுல TASMAC) விக்கும், அவங்க கடைகளுக்கு சப்ளை பண்ணுவாங்க; சில மாநிலங்கள்ல லைசென்ஸ் டிஸ்ட்ரிபியூட்டர்களுக்கு. எக்சைஸ், சில நேரம் விலையும் மாநிலம் தான் தீர்மானிக்கும், பணமும் அவங்க நேரத்துக்கு தான் — அதனால தான் ரிசீவபிள் நாட்கள் அதிகம்."]},
+ ubl:{t:["United Breweries Ltd","யுனைடெட் ப்ரூவரீஸ்"],k:["~207 mn cases (FY26) · 13 brands · 50+ export markets · Heineken 70.84%","~207 மில்லியன் கேஸ் (FY26) · 13 பிராண்ட் · 50+ ஏற்றுமதி நாடுகள் · ஹைனகென் 70.84%"],x:["India's largest brewer, part of HEINEKEN. Owns and contracts breweries across states (local production avoids inter-state taxes and freight). Nearly half of India's beer volume is estimated to be UBL's.","இந்தியாவோட பெரிய ப்ரூவர், ஹைனகென் குரூப்பின் ஒரு பகுதி. பல மாநிலங்கள்ல சொந்த & கான்ட்ராக்ட் ப்ரூவரிகள் (உள்ளூர்லயே தயாரிச்சா மாநிலங்களுக்கு இடையிலான வரி, சரக்கு செலவு மிச்சம்). இந்திய பீர் வால்யூம்ல கிட்டத்தட்ட பாதி UBL-தோடது-னு மதிப்பீடு."]},
+ s1:{t:["Mainstream (strong & mild)","மெயின்ஸ்ட்ரீம் (ஸ்ட்ராங் & மைல்ட்)"],k:["Kingfisher Strong, Kingfisher Premium · bulk of volume","கிங்ஃபிஷர் ஸ்ட்ராங், பிரீமியம் · பெரும்பாலான வால்யூம்"],x:["The volume base. Price is heavily influenced by state excise and, in some states, by government-fixed prices. UBL says it holds share in mainstream while growing premium.","வால்யூமோட அடித்தளம். விலை பெரும்பாலும் மாநில எக்சைஸ், சில மாநிலங்கள்ல அரசு நிர்ணய விலை மேல தான். மெயின்ஸ்ட்ரீம்ல பங்கை தக்க வச்சு, பிரீமியத்துல வளரணும்-ங்கறது அவங்க திட்டம்."]},
+ s2:{t:["Premium","பிரீமியம்"],k:["Q2 volume +38% · Heineken Silver +67% · KF Ultra +44%","Q2 வால்யூம் +38% · ஹைனகென் சில்வர் +67% · KF அல்ட்ரா +44%"],x:["Kingfisher Ultra / Ultra Max, Heineken, Heineken Silver (now in 11 markets), Amstel. Premium grows ~2.8x faster than the category and management says premium margins have turned accretive. Ambition: 18–20% of sales by FY30. Exact current share of volume is not disclosed †.","கிங்ஃபிஷர் அல்ட்ரா / அல்ட்ரா மேக்ஸ், ஹைனகென், ஹைனகென் சில்வர் (இப்போ 11 மாநிலங்கள்), ஆம்ஸ்டெல். பிரீமியம் கேட்டகரியை விட ~2.8 மடங்கு வேகமா வளருது; பிரீமியம் மார்ஜின் இப்போ லாபகரம்-னு நிர்வாகம் சொல்லுது. டார்கெட்: FY30-க்குள் சேல்ஸ்ல 18–20%. இப்போதைய சரியான பங்கு வெளியிடல †."]},
+ s3:{t:["Regional & value","ரீஜனல் & வேல்யூ"],k:["UB Export, London Pilsner, Bullet, Kalyani Black Label","UB எக்ஸ்போர்ட், லண்டன் பில்ஸ்னர், புல்லட், கல்யாணி பிளாக் லேபிள்"],x:["'Local jewels' used state by state to defend share at lower price points. Contract manufacturing for others also sits here and can dilute realisation when its share rises (as in Q4 FY26).","மாநிலத்துக்கு மாநிலம் குறைந்த விலையில பங்கை காப்பாத்த 'லோக்கல் ஜுவல்ஸ்'. மத்தவங்களுக்கு கான்ட்ராக்ட் தயாரிப்பும் இங்க தான் — அது அதிகமானா சராசரி விலை குறையும் (Q4 FY26-ல நடந்த மாதிரி)."]},
+ s4:{t:["Non-alcoholic","மது இல்லாதவை"],k:["Kingfisher water & soda, Heineken 0.0, Amstel Grande water","கிங்ஃபிஷர் வாட்டர் & சோடா, ஹைனகென் 0.0, ஆம்ஸ்டெல் கிராண்டே வாட்டர்"],x:["Small in revenue but important for brand visibility, because direct advertising of alcohol is restricted in India ('surrogate' brand extensions).","வருமானத்துல சின்னது, ஆனா பிராண்ட் விளம்பரத்துக்கு முக்கியம் — இந்தியாவுல மது விளம்பரம் நேரடியா பண்ண தடை ('சரோகேட்' பிராண்ட் விரிவாக்கம்)."]},
+ rev:{t:["Revenue","வருமானம்"],k:["Gross ₹4,623 cr − excise ~₹2,086 cr = net ₹2,537 cr","மொத்தம் ₹4,623 கோடி − எக்சைஸ் ~₹2,086 கோடி = நெட் ₹2,537 கோடி"],x:["About 45% of gross revenue is excise duty collected for state governments. Analysts track net revenue (after excise). Q2 FY27 net revenue +23.6% YoY.","மொத்த வருமானத்துல ~45% மாநில அரசுக்கு போற எக்சைஸ் வரி. அனலிஸ்ட்கள் பார்க்கிறது நெட் ரெவென்யூ (எக்சைஸ் கழிச்சது). Q2 FY27 நெட் ரெவென்யூ +23.6%."]},
+ cost:{t:["Costs","செலவுகள்"],k:["Barley/malt · glass & cans · cartons · freight · brand spend","பார்லி/மால்ட் · கண்ணாடி & கேன் · அட்டைப்பெட்டி · சரக்கு · விளம்பரம்"],x:["Packaging is a large share of cost. In 2026 glass bottle costs rose ~20%, cartons nearly doubled and freight rose ~10%. Returnable bottles, local sourcing (93% domestic procurement) and productivity programmes are the offsets.","செலவுல பேக்கேஜிங் பெரிய பங்கு. 2026-ல கண்ணாடி பாட்டில் ~20% ஏறியது, அட்டைப்பெட்டி கிட்டத்தட்ட இரண்டு மடங்கு, சரக்கு ~10%. திரும்ப வர்ற பாட்டில்கள், உள்ளூர் கொள்முதல் (93% உள்நாடு), உற்பத்தித் திறன் திட்டங்கள் தான் சமாளிப்பு."]},
+ prof:{t:["Profit & shareholders","லாபம் & பங்குதாரர்கள்"],k:["Q2 PAT ₹134.81 cr · FY26 dividend ₹10/share · payout ~64%","Q2 PAT ₹134.81 கோடி · FY26 டிவிடெண்ட் ₹10/ஷேர் · பேஅவுட் ~64%"],x:["UBL pays out most of its profit as dividends (60–76% since FY22). Heineken, holding 70.84%, receives the bulk. ₹109.51 cr of net dividends linked to an erstwhile director are withheld under orders.","UBL லாபத்துல பெரும்பகுதியை டிவிடெண்டா கொடுக்கும் (FY22 முதல் 60–76%). 70.84% வச்சிருக்கிற ஹைனகெனுக்கு தான் பெரும்பகுதி. பழைய டைரக்டர் சம்பந்தமான ₹109.51 கோடி டிவிடெண்ட் உத்தரவுப்படி நிறுத்தி வைக்கப்பட்டிருக்கு."]}
+};
+var ENGINE=[
+ [["Volume (sell-in)","வால்யூம் (செல்-இன்)"],"+16%","+12%",["Category acceleration, state reforms, low base","கேட்டகரி வேகம், மாநில சீர்திருத்தம், குறைந்த அடிப்படை"]],
+ [["Price / mix (implied)","விலை / மிக்ஸ் (கணக்கிட்டது)"],"≈ +7%","≈ +2%",["Structural price increases, premium mix, geographic mix","விலை ஏற்றம், பிரீமியம் மிக்ஸ், மாநில மிக்ஸ்"]],
+ [["Premium volume","பிரீமியம் வால்யூம்"],"+38%","n/a †",["Heineken Silver +67%, Kingfisher Ultra +44%","ஹைனகென் சில்வர் +67%, KF அல்ட்ரா +44%"]],
+ [["Net sales","நெட் சேல்ஸ்"],"+24%","+14%",["Volume × realisation per case","வால்யூம் × ஒரு கேஸுக்கான விலை"]],
+ [["Gross margin","கிராஸ் மார்ஜின்"],"+194 bps","n/a †",["Revenue management, productivity vs packaging inflation","வருவாய் மேலாண்மை, உற்பத்தித்திறன் vs பேக்கேஜிங் விலையேற்றம்"]],
+ [["EBIT","EBIT"],"+161%","+35%",["Operating leverage on fixed brewery costs","நிலையான ப்ரூவரி செலவுல ஆபரேட்டிங் லிவரேஜ்"]]
+];
+
+// ===== SWOT =====
+var SWOT={
+ s:[["No. 1 beer maker; Kingfisher is India's best-known beer brand","நம்பர் 1 பீர் கம்பெனி; கிங்ஃபிஷர் இந்தியாவோட பிரபல பிராண்ட்"],["Pan-India brewery network — a moat in a state-taxed, freight-heavy product","இந்தியா முழுக்க ப்ரூவரி — மாநில வரி, கனமான சரக்குல இது பெரிய அரண்"],["Heineken parentage: global brands (Heineken, Silver, Amstel), know-how, capital","ஹைனகென் பெற்றோர்: உலக பிராண்ட்கள், தொழில்நுட்பம், மூலதனம்"],["Premium portfolio now growing 38% with accretive margins","பிரீமியம் 38% வளர்ச்சி, லாபகரமான மார்ஜினோட"]],
+ w:[["ROE stuck at 8–10%; margins well below FY19 peak","ROE 8–10%-லயே நிக்குது; மார்ஜின் FY19 உச்சத்தை விட ரொம்ப கம்மி"],["Weak free cash flow FY23–FY26; borrowings up from ₹102 cr to ₹1,119 cr","FY23–FY26 ஃப்ரீ கேஷ் ஃப்ளோ பலவீனம்; கடன் ₹102 → ₹1,119 கோடி"],["High receivable days from state corporations (~116 days FY26)","மாநில கார்ப்பரேஷன்கள்கிட்ட ரிசீவபிள் நாட்கள் அதிகம் (~116 நாள்)"],["Seasonal and weather-dependent volumes","சீசன், வானிலையை சார்ந்த வால்யூம்"]],
+ o:[["Under-penetration: ~2.5 L/capita vs ~25 L global","குறைந்த பயன்பாடு: தலைக்கு ~2.5 லி vs உலகம் ~25 லி"],["State reforms: Karnataka +55% in first month, Jharkhand +55%, Maharashtra +35% (H1 FY26)","மாநில சீர்திருத்தம்: கர்நாடகா முதல் மாசம் +55%, ஜார்கண்ட் +55%, மகாராஷ்டிரா +35%"],["Cans, chilled availability (visi-coolers), tier-II towns","கேன்கள், குளிர்ச்சியா கிடைக்கிறது (விசி-கூலர்), டயர்-II நகரங்கள்"],["Productivity, AI and automation to reach mid-teens margin","உற்பத்தித்திறன், AI, ஆட்டோமேஷன் மூலமா மிட்-டீன்ஸ் மார்ஜின்"]],
+ t:[["State excise hikes, price controls, licensing curbs","மாநில எக்சைஸ் உயர்வு, விலைக் கட்டுப்பாடு, லைசென்ஸ் தடைகள்"],["Packaging and freight inflation (West Asia conflict, oil above $115)","பேக்கேஜிங், சரக்கு விலை ஏற்றம் (மேற்காசியா போர், எண்ணெய் $115+)"],["Competition: Carlsberg India IPO, AB InBev, craft brands","போட்டி: கார்ல்ஸ்பர்க் இந்தியா IPO, AB InBev, கிராஃப்ட் பிராண்ட்கள்"],["Spirits gaining share in in-home consumption; tax demand ₹116.25 cr","வீட்டுல குடிக்கிறதுல ஸ்பிரிட்ஸ் பங்கு கூடுது; ₹116.25 கோடி டாக்ஸ் டிமாண்ட்"]]
+};
+// ===== Market activity: reasons for moves =====
+var MOVES=[
+ ["Oct 2025","▼",["Q2 FY26 PAT −65% after an unusually heavy monsoon; volume −3.4%.","கனமழையால Q2 FY26 லாபம் −65%; வால்யூம் −3.4%."]],
+ ["Feb 2026","▼",["Q3 FY26: volume −1% on state excise hikes, affordability pressure and early winter; brokers stayed Neutral on valuation.","Q3 FY26: மாநில எக்சைஸ் உயர்வு, விலை சுமை, சீக்கிர குளிர் — வால்யூம் −1%; விலை அதிகம்-னு புரோக்கர்கள் நியூட்ரல்."]],
+ ["May 2026","▼",["Q4 FY26 revenue −3% despite +4% volume (contract-manufacturing mix); margins weak; West Asia conflict raised packaging and freight costs (FY27 hit first guided at ₹400–500 cr).","Q4 FY26 வால்யூம் +4% இருந்தும் ரெவென்யூ −3% (கான்ட்ராக்ட் தயாரிப்பு மிக்ஸ்); மேற்காசியா போரால பேக்கேஜிங், சரக்கு செலவு ஏற்றம் (FY27 பாதிப்பு முதல்ல ₹400–500 கோடி)."]],
+ ["Jul–Aug 2026","▼",["₹116.25 cr tax demand; Q1 FY27 PAT −9.6% despite +10% revenue; stock hit a 5-year low near ₹1,252.","₹116.25 கோடி டாக்ஸ் டிமாண்ட்; Q1 FY27 ரெவென்யூ +10% இருந்தும் லாபம் −9.6%; ஷேர் 5 வருஷ லோ ~₹1,252."]],
+ ["Sep–Oct 2026","▼",["Broad market weakness (Sensex near 72,800, Brent above $115 on US–Iran tension); stock slid to ₹1,128–1,150 despite the Capital Markets Day.","மொத்த மார்க்கெட் சரிவு (சென்செக்ஸ் ~72,800, US–ஈரான் பதற்றத்தால கச்சா எண்ணெய் $115+); கேப்பிட்டல் மார்க்கெட்ஸ் டே இருந்தும் ஷேர் ₹1,128–1,150."]],
+ ["28 Oct 2026","▲",["Q2 FY27 beat: PAT ~3x, premium +38%, margin +480 bps. Stock hit ₹1,316 (+15.1%) intraday, ₹1,239.75 (+8.4%) at 10:05 IST while the Sensex fell ~1%; ~3.1 mn shares traded by then.","Q2 FY27 சிறப்பு: லாபம் ~3 மடங்கு, பிரீமியம் +38%, மார்ஜின் +480 bps. ஷேர் ₹1,316 (+15.1%) தொட்டது; 10:05-க்கு ₹1,239.75 (+8.4%), சென்செக்ஸ் ~1% இறங்கியபோதும். அதுவரை ~3.1 மில்லியன் ஷேர் கை மாறியது."]]
+];
+
+// ===== Analysts =====
+var AN=[
+ {b:"Consensus (19 analysts)",r:"Hold",tp:1434,d:"1 Oct 2026",n:["Average 12-month target before Q2","Q2-க்கு முன் சராசரி இலக்கு"]},
+ {b:"DAM Capital",r:"Buy",tp:1685,d:"2026 (pre-Q2) †",n:["Category growth, margin agenda, state reforms","கேட்டகரி வளர்ச்சி, மார்ஜின், மாநில சீர்திருத்தம்"]},
+ {b:"Motilal Oswal",r:"Neutral",tp:1400,d:"5 Aug 2026",n:["Post-Q1; models ~9.3% FY27 EBITDA margin","Q1-க்கு பிறகு; FY27 EBITDA மார்ஜின் ~9.3%"]},
+ {b:"Motilal Oswal",r:"Neutral",tp:1700,d:"16 Feb 2026",n:["55x Dec-27E EPS; rich valuation","Dec-27E EPS-க்கு 55x; விலை அதிகம்"]},
+ {b:"Nirmal Bang",r:"Buy",tp:2250,d:"Oct 2025 (stale)",n:["Upgrade on investment-led growth phase","முதலீடு மூலமா வளர்ச்சி — அப்கிரேட்"]},
+ {b:"Nuvama",r:"Buy",tp:2400,d:"Oct 2025 (stale)",n:["Andhra capacity, localisation","ஆந்திரா கேபாசிட்டி, உள்ளூர் தயாரிப்பு"]},
+ {b:"JPMorgan",r:"Overweight",tp:2050,d:"Sep 2025 (stale)",n:["Premiumisation, go-to-market","பிரீமியம், விற்பனை உத்தி"]}
+];
+
+// ===== Management & Board =====
+var MG=[
+ {n:"Anand Kripalu",r:["Chairman (non-executive)","சேர்மன் (நான்-எக்ஸிகியூட்டிவ்)"],x:["Veteran consumer and alcobev executive; chairs the board of the Heineken-controlled company.","நுகர்வோர் & மதுபான துறையில் அனுபவசாலி; ஹைனகென் கட்டுப்பாட்டு கம்பெனியின் போர்டு தலைவர்."]},
+ {n:"Vivek Gupta",r:["MD & CEO (since 25 Sep 2023)","MD & CEO (25 செப் 2023 முதல்)"],x:["Engineer, IIM Ahmedabad; 20+ years at P&G (last MD, Australia & NZ), then Chief Business Officer at Udaan. Leads the premiumisation and 'investment-led growth' agenda.","என்ஜினியர், IIM அகமதாபாத்; P&G-ல 20+ வருஷம் (கடைசியா ஆஸ்திரேலியா & NZ MD), அப்புறம் Udaan-ல CBO. பிரீமியம், 'முதலீடு மூலமா வளர்ச்சி' திட்டத்தை நடத்துறவர்."]},
+ {n:"Jorn Elimar Kersten",r:["CFO & Director (board since 2024)","CFO & டைரக்டர் (2024 முதல் போர்டில்)"],x:["Heineken nominee proposed in May 2024; drives the margin-recovery and free-operating-cash-flow focus.","மே 2024-ல ஹைனகென் பரிந்துரைத்தவர்; மார்ஜின் மீட்பு, ஃப்ரீ ஆபரேட்டிங் கேஷ் ஃப்ளோ கவனம் இவரோடது."]},
+ {n:"Manu Anand",r:["Independent Director","சுயாதீன இயக்குநர்"],x:["Independent oversight on board committees.","போர்டு கமிட்டிகள்ல சுயாதீன கண்காணிப்பு."]},
+ {n:"Geetu Gidwani Verma",r:["Independent Director","சுயாதீன இயக்குநர்"],x:["Consumer and digital brand experience.","நுகர்வோர் & டிஜிட்டல் பிராண்ட் அனுபவம்."]},
+ {n:"Subramaniam Somasundaram",r:["Independent Director","சுயாதீன இயக்குநர்"],x:["Finance and governance experience; committee oversight.","நிதி, நிர்வாக அனுபவம்; கமிட்டி கண்காணிப்பு."]}
+];
+var GOV=[
+ ["Promoter (HEINEKEN group) holds 70.84%, unchanged for 12 quarters. Public float ~29%: DIIs 17.27%, FIIs 5.36%, retail 5.37%, government 1.16%.","புரமோட்டர் (ஹைனகென் குரூப்) 70.84% — 12 காலாண்டா மாற்றமில்ல. பொது பங்கு ~29%: DII 17.27%, FII 5.36%, சில்லறை 5.37%, அரசு 1.16%."],
+ ["₹109.51 cr of net dividends and ₹45 lakh of director fees linked to an erstwhile director are withheld in compliance with orders.","பழைய டைரக்டர் தொடர்பான ₹109.51 கோடி நெட் டிவிடெண்ட், ₹45 லட்சம் டைரக்டர் ஃபீஸ் உத்தரவுப்படி நிறுத்தி வைக்கப்பட்டிருக்கு."],
+ ["Director – Sales Rakesh Kumar resigned (Apr 2026); a further management change was intimated on 1 Jul 2026.","சேல்ஸ் டைரக்டர் ராகேஷ் குமார் ராஜினாமா (ஏப் 2026); 1 ஜூலை 2026-ல இன்னொரு நிர்வாக மாற்றம் அறிவிப்பு."],
+ ["Auditors issued an unqualified limited review on Q2 FY27 results.","Q2 FY27 ரிசல்ட்டுக்கு ஆடிட்டர்கள் குறையில்லா லிமிடெட் ரிவ்யூ கொடுத்திருக்காங்க."],
+ ["A ₹116.25 cr tax demand notice (2026) is under contest; Q2 other income includes ₹36.89 cr interest on income-tax refunds.","₹116.25 கோடி டாக்ஸ் டிமாண்ட் (2026) எதிர்த்து வழக்கு; Q2 மற்ற வருமானத்துல ₹36.89 கோடி டாக்ஸ் ரீஃபண்ட் வட்டி."]
+];
+
+// ===== Self-check =====
+var SC=[
+ {g:["1 · Questions about the stock","1 · இந்த ஷேர் பத்தின கேள்விகள்"],i:[
+  [["I understand that ~45% of gross revenue is excise passed to states","மொத்த வருமானத்துல ~45% மாநிலத்துக்கு போற எக்சைஸ்-னு புரியுது"],["Gross ₹4,623 cr vs net ₹2,537 cr in Q2 FY27","Q2 FY27: மொத்தம் ₹4,623 கோடி vs நெட் ₹2,537 கோடி"]],
+  [["I know how much of Q2 profit was one-off","Q2 லாபத்துல எவ்வளவு ஒருமுறை வருமானம்-னு தெரியும்"],["₹36.89 cr interest on tax refunds inside ₹41.3 cr other income","₹41.3 கோடி மற்ற வருமானத்துல ₹36.89 கோடி டாக்ஸ் ரீஃபண்ட் வட்டி"]],
+  [["I have compared Q2 against a weak base","குறைந்த அடிப்படையோட ஒப்பிட்டு பார்த்தேன்"],["Q2 FY26 PAT was only ₹46.34 cr (monsoon-hit)","Q2 FY26 லாபம் ₹46.34 கோடி தான் (மழை பாதிப்பு)"]]]},
+ {g:["2 · Problems investors face","2 · முதலீட்டாளர்கள் சந்திக்கும் சிக்கல்கள்"],i:[
+  [["I accept that state policy can change results overnight","மாநில கொள்கை ஒரே இரவுல ரிசல்ட்டை மாத்தலாம்-னு ஏத்துக்கிறேன்"],["Excise hikes cut Q3 FY26 volume; reforms lifted Karnataka +55%","எக்சைஸ் உயர்வு Q3 FY26 வால்யூமை குறைச்சது; சீர்திருத்தம் கர்நாடகாவை +55% ஏத்தியது"]],
+  [["I can live with seasonal swings","சீசன் ஏற்ற இறக்கத்தை தாங்க முடியும்"],["PAT ranged ₹39–184 cr per quarter over the last 13 quarters","கடந்த 13 காலாண்டுல லாபம் ₹39–184 கோடி வரை ஆடியது"]],
+  [["I am comfortable with a high P/E","அதிக P/E-யோட எனக்கு பிரச்சனை இல்ல"],["~68x TTM EPS at ₹1,240","₹1,240-ல ~68x TTM EPS"]]]},
+ {g:["3 · Solutions (what I did)","3 · தீர்வுகள் (நான் செய்தது)"],i:[
+  [["I read the Q2 press release / investor presentation myself","Q2 பிரஸ் ரிலீஸ் / பிரசன்டேஷனை நானே படிச்சேன்"],["Filed 27 Oct 2026","27 அக் 2026 அன்று ஃபைல் ஆனது"]],
+  [["I checked cash flow, not just profit","லாபம் மட்டும் இல்லாம கேஷ் ஃப்ளோவையும் பார்த்தேன்"],["FY26 CFO ₹435 cr, FCF ₹2 cr","FY26 CFO ₹435 கோடி, FCF ₹2 கோடி"]],
+  [["I decided my position size and time horizon","எவ்வளவு, எத்தனை வருஷம்-னு முடிவு பண்ணினேன்"],[]]]},
+ {g:["4 · Anchors' and analysts' view","4 · அனலிஸ்ட்கள் கருத்து"],i:[
+  [["I noted the pre-Q2 consensus is Hold","Q2-க்கு முன் கன்சென்சஸ் 'ஹோல்ட்'-னு கவனிச்சேன்"],["19 analysts, average target ₹1,434 (1 Oct 2026)","19 அனலிஸ்ட்கள், சராசரி இலக்கு ₹1,434 (1 அக் 2026)"]],
+  [["I will wait to see post-Q2 broker revisions","Q2-க்கு பிறகான புரோக்கர் மாற்றங்களை பார்ப்பேன்"],["Earnings call on 28 Oct 2026 afternoon","28 அக் 2026 மதியம் ஏர்னிங்ஸ் கால்"]],
+  [["I checked who sells and who buys","யார் விக்கிறாங்க, யார் வாங்கறாங்க-னு பார்த்தேன்"],["FIIs fell 6.92% → 4.87% then rose to 5.36%; DIIs 17.27%","FII 6.92% → 4.87%, அப்புறம் 5.36%; DII 17.27%"]]]}
+];
+var SCSUG=[["Premium share above 15% of volume","பிரீமியம் பங்கு வால்யூம்ல 15%-க்கு மேல"],["Two more quarters of 10%+ EBITDA margin","இன்னும் ரெண்டு காலாண்டு 10%+ EBITDA மார்ஜின்"],["Positive free cash flow for FY27","FY27-ல பாசிட்டிவ் ஃப்ரீ கேஷ் ஃப்ளோ"],["Borrowings below ₹800 cr","கடன் ₹800 கோடிக்கு கீழே"],["Stock above its 30-week average","ஷேர் 30 வார சராசரிக்கு மேல"],["No new state excise hike in my key states","முக்கிய மாநிலங்கள்ல புது எக்சைஸ் உயர்வு இல்ல"]];
+
+// ===== Socrates =====
+var SOQ=[
+ {q:["UBL's Q2 FY27 gross revenue was ₹4,623 cr but net revenue ₹2,537 cr. What is the difference mostly?","UBL Q2 FY27 மொத்த வருமானம் ₹4,623 கோடி, நெட் ₹2,537 கோடி. இந்த வித்தியாசம் பெரும்பாலும் என்ன?"],
+  o:[["Discounts to retailers","கடைகளுக்கு தள்ளுபடி"],["Excise duty collected for states","மாநிலங்களுக்கான எக்சைஸ் வரி"],["Heineken royalty","ஹைனகென் ராயல்டி"],["GST","GST"]],a:1,
+  h:["Ask yourself: who sets the biggest 'price' on beer in India — the company or the state?","யோசிங்க: இந்தியாவுல பீர் விலையில பெரிய பங்கு யாரோடது — கம்பெனியா, மாநிலமா?"]},
+ {q:["Net sales grew 24% and volume 16%. Roughly how much came from price/mix?","சேல்ஸ் 24%, வால்யூம் 16% வளர்ந்தது. விலை/மிக்ஸ் மூலமா சுமார் எவ்வளவு?"],
+  o:[["About 7%","சுமார் 7%"],["About 40%","சுமார் 40%"],["Zero","பூஜ்யம்"],["About 24%","சுமார் 24%"]],a:0,
+  h:["Divide 1.24 by 1.16. What does the remainder tell you about premiumisation?","1.24-ஐ 1.16-ஆல வகுங்க. மிச்சம் பிரீமியம் பத்தி என்ன சொல்லுது?"]},
+ {q:["Why does Q2 FY27 profit growth (~190%) overstate the underlying improvement?","Q2 FY27 லாப வளர்ச்சி (~190%) ஏன் உண்மையான முன்னேற்றத்தை விட பெரிசா தெரியுது?"],
+  o:[["Weak monsoon-hit base and one-off tax-refund interest","மழையால குறைந்த அடிப்படை + ஒருமுறை டாக்ஸ் ரீஃபண்ட் வட்டி"],["Share buyback","ஷேர் பைபேக்"],["Lower tax rate only","வரி குறைவு மட்டும்"],["Acquisition","கையகப்படுத்தல்"]],a:0,
+  h:["Look at Q2 FY26 PAT and at the other-income line.","Q2 FY26 லாபத்தையும் மற்ற வருமான வரியையும் பாருங்க."]},
+ {q:["CB rates the alcobev sector cycle at 'P2 Early recovery'. Which evidence supports that?","CB மதுபான துறை சைக்கிளை 'P2 ஆரம்ப மீட்பு'-னு மதிப்பிடுது. எந்த ஆதாரம்?"],
+  o:[["Record margins everywhere","எல்லா இடத்துலயும் உச்ச மார்ஜின்"],["Volume and margins turning up from a trough","அடிமட்டத்துல இருந்து வால்யூம், மார்ஜின் ஏறுது"],["Falling volumes","வால்யூம் இறக்கம்"],["New capacity glut","அதிக புது கேபாசிட்டி"]],a:1,
+  h:["Compare Q2 FY26 (6.3% EBITDA margin) with Q2 FY27 (10.2%).","Q2 FY26 (6.3% மார்ஜின்) vs Q2 FY27 (10.2%) — ஒப்பிடுங்க."]},
+ {q:["Which negative trigger has the highest certainty and impact right now?","இப்போ அதிக உறுதியும் தாக்கமும் உள்ள நெகட்டிவ் ட்ரிகர் எது?"],
+  o:[["Carlsberg India IPO","கார்ல்ஸ்பர்க் IPO"],["West Asia-linked packaging and freight cost shock","மேற்காசியா தொடர்பான பேக்கேஜிங், சரக்கு செலவு ஷாக்"],["Index exclusion","இண்டெக்ஸ் நீக்கம்"],["Promoter selling","புரமோட்டர் விற்பனை"]],a:1,
+  h:["Which one is already in the numbers (₹350–400 cr guided for FY27)?","எது ஏற்கனவே எண்கள்ல தெரியுது (FY27-க்கு ₹350–400 கோடி)?"]},
+ {free:true,q:["In your own words: if beer is so under-penetrated in India, why has UBL's ROE stayed near 8–10%? Name two reasons.","உங்க வார்த்தைகள்ல: இந்தியாவுல பீர் பயன்பாடு இவ்வளவு குறைவா இருந்தும் UBL-ஓட ROE ஏன் 8–10%-லயே இருக்கு? ரெண்டு காரணம் சொல்லுங்க."],
+  k:["excise","tax","state","margin","working","receivable","inventory","cost","price","regulat","barley","glass","எக்சைஸ்","வரி","மாநில","மார்ஜின்","செலவு","விலை","ரிசீவபிள்"],
+  h:["Think about who controls price, who pays late, and what packaging costs did. Then think about how much capital sits in receivables and breweries.","விலையை யார் கட்டுப்படுத்துறாங்க, யார் தாமதமா பணம் தர்றாங்க, பேக்கேஜிங் செலவு என்ன ஆச்சு — யோசிங்க. அப்புறம் ரிசீவபிள்ஸ், ப்ரூவரிகள்ல எவ்வளவு மூலதனம் முடங்கியிருக்கு-னு பாருங்க."]}
+];
+
+// ===== CB Assist knowledge =====
+var KB=[
+ {k:["profit","pat","net profit","லாபம்","பிஏடி"],a:["Q2 FY27 consolidated PAT was ₹134.81 crore, up about 191% from ₹46.34 crore. Standalone PAT was ₹135.93 crore. About ₹36.89 crore of other income was interest on tax refunds, so core profit was roughly ₹108 crore by CB's estimate.","Q2 FY27 கன்சாலிடேட்டட் லாபம் ₹134.81 கோடி, போன வருஷம் ₹46.34 கோடி — சுமார் 191% ஏற்றம். ஸ்டாண்டலோன் ₹135.93 கோடி. இதுல ₹36.89 கோடி டாக்ஸ் ரீஃபண்ட் வட்டி; அதை கழிச்சா கோர் லாபம் சுமார் ₹108 கோடி."]},
+ {k:["revenue","sales","turnover","வருமானம்","சேல்ஸ்","விற்பனை"],a:["Net revenue was ₹2,537 crore, up 23.6%. Gross revenue including excise was ₹4,623 crore. Volume grew 16% and price-mix about 7%.","நெட் ரெவென்யூ ₹2,537 கோடி, 23.6% ஏற்றம். எக்சைஸ் சேர்த்த மொத்தம் ₹4,623 கோடி. வால்யூம் 16%, விலை-மிக்ஸ் சுமார் 7%."]},
+ {k:["margin","ebitda","மார்ஜின்","இபிட்டா"],a:["EBITDA was ₹259 crore, nearly double last year. On reported numbers the margin is 10.2%; the company's own underlying measure is 11.9%, up 480 basis points. Gross margin rose 194 basis points.","EBITDA ₹259 கோடி, போன வருஷத்தை விட கிட்டத்தட்ட இரண்டு மடங்கு. ரிப்போர்ட்டட் எண்கள்ல மார்ஜின் 10.2%; கம்பெனி கணக்குல 11.9%, 480 பேசிஸ் பாயிண்ட் ஏற்றம். கிராஸ் மார்ஜின் 194 bps ஏறியது."]},
+ {k:["premium","heineken silver","ultra","பிரீமியம்","சில்வர்","அல்ட்ரா"],a:["Premium volume grew 38 percent. Heineken Silver grew 67 percent and Kingfisher Ultra 44 percent. The goal is premium at 18 to 20 percent of sales by FY30.","பிரீமியம் வால்யூம் 38% வளர்ந்தது. ஹைனகென் சில்வர் 67%, கிங்ஃபிஷர் அல்ட்ரா 44%. FY30-க்குள் சேல்ஸ்ல 18–20% பிரீமியம்-ங்கறது இலக்கு."]},
+ {k:["valuation","pe","p/e","expensive","cheap","மதிப்பீடு","விலை அதிகம்","பிஇ"],a:["At about ₹1,240 the stock trades near 68 times trailing earnings, 7.2 times book value and 37 times EV to EBITDA. Dividend yield is about 0.8 percent.","சுமார் ₹1,240-ல P/E ~68 மடங்கு, P/B ~7.2, EV/EBITDA ~37. டிவிடெண்ட் யீல்ட் ~0.8%."]},
+ {k:["debt","borrow","loan","கடன்"],a:["Borrowings were ₹1,119 crore in September 2026, down from ₹1,317 crore in March. Debt to equity is about 0.25. Interest cover is around 7.5 times.","செப் 2026-ல கடன் ₹1,119 கோடி, மார்ச்ல ₹1,317 கோடி இருந்தது. D/E சுமார் 0.25. வட்டி கவர் ~7.5 மடங்கு."]},
+ {k:["cash flow","cfo","fcf","working capital","கேஷ்","வொர்க்கிங்"],a:["FY26 cash from operations was ₹435 crore and free cash flow only ₹2 crore. Receivable days were about 116 and the cash conversion cycle about 187 days. Management says free operating cash flow improved in Q2, but the H1 cash-flow statement figures are not captured here.","FY26 ஆபரேட்டிங் கேஷ் ₹435 கோடி, ஃப்ரீ கேஷ் ஃப்ளோ ₹2 கோடி தான். ரிசீவபிள் ~116 நாள், கேஷ் கன்வர்ஷன் சைக்கிள் ~187 நாள். Q2-ல FOCF மேம்பட்டது-னு நிர்வாகம் சொல்லுது; H1 கேஷ் ஃப்ளோ எண்கள் இங்க இல்ல."]},
+ {k:["history","founded","heineken","mallya","வரலாறு","மல்யா","ஹைனகென்"],a:["United Breweries was formed in 1915 in Madras by Thomas Leishman. The Mallya family led it from 1947, Kingfisher came in 1978, Heineken entered in 2008 and took majority control in 2021. Heineken now holds 70.84 percent.","1915-ல மெட்ராஸ்ல தாமஸ் லீஷ்மன் உருவாக்கினார். 1947 முதல் மல்யா குடும்பம், 1978-ல கிங்ஃபிஷர், 2008-ல ஹைனகென் வருகை, 2021-ல பெரும்பான்மை கட்டுப்பாடு. இப்போ ஹைனகென் 70.84%."]},
+ {k:["trigger","catalyst","cycle","ட்ரிகர்","சைக்கிள்"],a:["CB rates the sector cycle as early recovery and the cycle score at 73. Top positive triggers are premiumisation and new can lines; the biggest risk trigger is the West Asia-linked cost shock. Trigger score is 56.","CB துறை சைக்கிளை 'ஆரம்ப மீட்பு'-னு மதிப்பிடுது, சைக்கிள் ஸ்கோர் 73. முக்கிய நல்ல ட்ரிகர்கள்: பிரீமியம், புது கேன் லைன்கள். பெரிய ரிஸ்க்: மேற்காசியா செலவு ஷாக். ட்ரிகர் ஸ்கோர் 56."]},
+ {k:["analyst","target","broker","அனலிஸ்ட்","இலக்கு","டார்கெட்"],a:["Before Q2, the consensus of 19 analysts was Hold with an average target of ₹1,434. Motilal Oswal was Neutral at ₹1,400 and DAM Capital Buy at ₹1,685. Post-Q2 revisions were awaited when this was prepared.","Q2-க்கு முன் 19 அனலிஸ்ட் கன்சென்சஸ் 'ஹோல்ட்', சராசரி இலக்கு ₹1,434. மோதிலால் ஓஸ்வால் நியூட்ரல் ₹1,400, DAM கேப்பிட்டல் பை ₹1,685. Q2-க்கு பிறகான மாற்றங்கள் இன்னும் வரல."]},
+ {k:["score","cb score","pillar","ஸ்கோர்","தூண்"],a:["The CB Score is 6.0 out of 10. Growth 7.5, Triggers 7, Debt 6.5, Margins 5.5, Risk 5 and Valuation 4.5.","CB ஸ்கோர் 10-க்கு 6.0. வளர்ச்சி 7.5, ட்ரிகர் 7, கடன் 6.5, மார்ஜின் 5.5, ரிஸ்க் 5, மதிப்பீடு 4.5."]},
+ {k:["risk","threat","ரிஸ்க்","ஆபத்து"],a:["Main risks: state excise and price controls, weather, packaging and freight inflation, slow payments from state corporations, competition including the Carlsberg India IPO, and a ₹116 crore tax demand.","முக்கிய ரிஸ்க்: மாநில எக்சைஸ், விலைக் கட்டுப்பாடு, வானிலை, பேக்கேஜிங் & சரக்கு விலையேற்றம், மாநில கார்ப்பரேஷன்கள் தாமத பணம், கார்ல்ஸ்பர்க் IPO உட்பட போட்டி, ₹116 கோடி டாக்ஸ் டிமாண்ட்."]},
+ {k:["ceo","management","board","vivek","நிர்வாகம்","போர்டு"],a:["Vivek Gupta has been MD and CEO since September 2023. Jorn Kersten is CFO. Anand Kripalu is chairman. Heineken holds 70.84 percent.","செப் 2023 முதல் விவேக் குப்தா MD & CEO. ஜோர்ன் கெர்ஸ்டன் CFO. ஆனந்த் கிருபாலு சேர்மன். ஹைனகென் 70.84%."]},
+ {k:["share price","stock","today","ஷேர்","பங்கு விலை"],a:["On 28 October the stock rose as much as 15 percent to ₹1,316 and was at ₹1,239.75 at 10:05 IST, against a previous close of ₹1,143.60.","28 அக் அன்னிக்கு ஷேர் 15% வரை ஏறி ₹1,316 தொட்டது; 10:05 IST-க்கு ₹1,239.75. முந்தைய க்ளோஸ் ₹1,143.60."]}
+];
+var NOADV=["I can't tell you whether to buy, sell or hold — CB Research only explains the business. Try the Self-check tab to line up your own conditions.","வாங்கலாமா, விக்கலாமா-னு என்னால சொல்ல முடியாது — CB Research பிசினஸை மட்டும் விளக்கும். உங்க சொந்த நிபந்தனைகளை 'சுய சோதனை' டேப்ல பாருங்க."];
+var ASUG=[["Profit?","லாபம்?"],["Margin?","மார்ஜின்?"],["Premium growth?","பிரீமியம்?"],["Valuation?","மதிப்பீடு?"],["Cash flow?","கேஷ் ஃப்ளோ?"],["History?","வரலாறு?"],["Triggers?","ட்ரிகர்?"],["Should I buy?","வாங்கலாமா?"]];
+// ===== Core helpers =====
+var LANG='en', CUR='ov', CH={};
+function t(a){return Array.isArray(a)?(LANG==='ta'?a[1]:a[0]):(a==null?'':a);}
+function f(n,d){if(n==null||isNaN(n))return 'n/a';d=(d==null?0:d);return Number(n).toLocaleString('en-IN',{minimumFractionDigits:d,maximumFractionDigits:d});}
+function pc(a,b){return (a/b-1)*100;}
+function sg(v,d,suf){if(v==null||isNaN(v))return '<span class="nt">n/a</span>';d=d==null?1:d;suf=suf||'%';var c=v>0?'up':(v<0?'dn':'nt');return '<span class="'+c+'">'+(v>0?'+':'')+f(v,d)+suf+'</span>';}
+function colS(s){return s>=8?'#1f9d55':(s>=6?'#e0a100':'#d64545');}
+function $(id){return document.getElementById(id);}
+function kill(){for(var k in CH){try{CH[k].destroy();}catch(e){}}CH={};}
+var VAL={id:'vlbl',afterDatasetsDraw:function(c){var x=c.ctx;c.data.datasets.forEach(function(ds,i){if(!ds.lbl)return;var m=c.getDatasetMeta(i);if(m.hidden)return;m.data.forEach(function(el,j){var v=ds.data[j];if(v==null)return;x.save();x.font='600 10.5px Inter, sans-serif';x.fillStyle='#2b2118';x.textAlign='center';x.fillText(f(v,ds.lblD||0)+(ds.lblS||''),el.x,v>=0?el.y-5:el.y+12);x.restore();});});}};
+if(window.Chart){Chart.register(VAL);Chart.defaults.font.family='Inter, "Noto Sans Tamil", sans-serif';Chart.defaults.color='#5c4a3a';}
+function mk(id,cfg){var el=$(id);if(!el||!window.Chart)return;CH[id]=new Chart(el,cfg);}
+function cw(id,h){return '<div class="cw"><div class="inner" style="height:'+(h||340)+'px"><canvas id="'+id+'"></canvas></div></div>';}
+function kpi(l,v,d){return '<div class="kpi"><div class="l">'+l+'</div><div class="v">'+v+'</div><div class="d">'+(d||'')+'</div></div>';}
+function yo(){return LANG==='ta'?' YoY':' YoY';}
+
+// ===== Overview =====
+function rOv(){
+ var c=CO.consol,a=c.q2fy27,b=c.q2fy26,q=c.q1fy27,s=CO.standalone;
+ var mA=a.ebitda/a.netRev*100,mB=b.ebitda/b.netRev*100;
+ var h='';
+ h+='<div class="blk"><span class="bh">'+t(TX.consol)+'</span><div class="grid g4">'+
+  kpi(t(['Net revenue (ex-excise)','நெட் ரெவென்யூ (எக்சைஸ் இல்லாம)']),'₹'+f(a.netRev)+' cr',sg(pc(a.netRev,b.netRev))+yo()+' · '+sg(pc(a.netRev,q.netRev))+' QoQ')+
+  kpi(t(['Gross revenue from operations','மொத்த ஆபரேஷன்ஸ் வருமானம்']),'₹'+f(a.grossRev,0)+' cr',sg(pc(a.grossRev,b.grossRev))+yo())+
+  kpi('EBITDA','₹'+f(a.ebitda)+' cr',sg(pc(a.ebitda,b.ebitda))+yo())+
+  kpi(t(['EBITDA margin (computed)','EBITDA மார்ஜின் (கணக்கிட்டது)']),f(mA,1)+'%',sg((mA-mB)*100,0,' bps')+' · '+t(['company: 11.9%','கம்பெனி: 11.9%']))+
+  kpi('PBT','₹'+f(a.pbt)+' cr',sg(pc(a.pbt,b.pbt))+yo())+
+  kpi('PAT','₹'+f(a.pat,2)+' cr',sg(pc(a.pat,b.pat))+yo()+' · '+sg(pc(a.pat,q.pat))+' QoQ')+
+  kpi('EPS','₹'+f(a.eps,2),t(['vs ₹1.76','vs ₹1.76']))+
+  kpi(t(['Other income','மற்ற வருமானம்']),'₹'+f(a.oi,1)+' cr',t(['incl. ₹36.89 cr tax-refund interest','₹36.89 கோடி டாக்ஸ் ரீஃபண்ட் வட்டி உட்பட']))+
+ '</div></div>';
+ h+='<div class="blk sa"><span class="bh">'+t(TX.stand)+'</span><div class="grid g4">'+
+  kpi(t(['Net sales growth','நெட் சேல்ஸ் வளர்ச்சி']),'+24%',t(['volume +16%, price/mix ≈ +7%','வால்யூம் +16%, விலை/மிக்ஸ் ≈ +7%']))+
+  kpi(t(['EBITDA margin (company)','EBITDA மார்ஜின் (கம்பெனி)']),'11.9%',sg(480,0,' bps')+' · EBITDA '+sg(108,0))+
+  kpi(t(['EBIT margin','EBIT மார்ஜின்']),'8.4%',sg(441,0,' bps')+' · EBIT '+sg(161,0))+
+  kpi(t(['Gross margin','கிராஸ் மார்ஜின்']),'+194 bps',t(['despite cost inflation','செலவு ஏற்றத்துக்கு நடுவிலும்']))+
+  kpi('PBT','₹'+f(s.q2fy27.pbt,2)+' cr',sg(pc(s.q2fy27.pbt,s.q2fy26.pbt))+yo())+
+  kpi('PAT','₹'+f(s.q2fy27.pat,2)+' cr',sg(pc(s.q2fy27.pat,s.q2fy26.pat))+yo()+' (vs ₹46.95 cr)')+
+  kpi('EPS','₹5.14',t(['vs ₹1.78','vs ₹1.78']))+
+  kpi(t(['Premium volume','பிரீமியம் வால்யூம்']),'+38%',t(['H. Silver +67% · KF Ultra +44%','H. சில்வர் +67% · KF அல்ட்ரா +44%']))+
+  '</div><p class="note">'+t(['Standalone net revenue in ₹ crore was not captured from the filing †; company-defined margins (11.9% / 8.4%) are on its own Net Sales base and differ from margins computed on reported revenue.','ஸ்டாண்டலோன் நெட் ரெவென்யூ ₹ கோடி எண் ஃபைலிங்ல இருந்து எடுக்கல †; கம்பெனி மார்ஜின் (11.9% / 8.4%) அவங்க சொந்த நெட் சேல்ஸ் அடிப்படையில — ரிப்போர்ட்டட் ரெவென்யூ கணக்குல இருந்து வேறுபடும்.'])+'</p></div>';
+ h+='<div class="card"><h3>'+t(TX.h1)+'</h3><div class="grid g4">'+kpi(t(['Volume','வால்யூம்']),'+12%','')+kpi(t(['Net sales','நெட் சேல்ஸ்']),'+14%','₹5,604 cr (cons.)')+kpi('EBIT','+35%',t(['underlying margin +129 bps','மார்ஜின் +129 bps']))+kpi('PAT','+31%','₹301 cr (cons.)')+'</div></div>';
+ h+='<div class="card"><h3>'+t(TX.takeaways)+'</h3><ul class="tk">'+TAKE.map(function(x){return '<li>'+t(x)+'</li>';}).join('')+'</ul></div>';
+ h+='<div class="card"><h3>'+t(TX.qop)+'</h3>'+cw('cQop',230)+'<p class="note">'+t(['CB estimate: core PBT = reported PBT ₹183 cr − ₹36.9 cr tax-refund interest = ₹146 cr; at the quarter’s ~26% tax rate, core PAT ≈ ₹108 cr vs ₹46 cr last year.','CB மதிப்பீடு: கோர் PBT = ₹183 − ₹36.9 = ₹146 கோடி; ~26% வரி போட்டா கோர் PAT ≈ ₹108 கோடி (போன வருஷம் ₹46 கோடி).'])+'</p></div>';
+ h+='<h2>'+t(TX.temple)+'</h2><div class="chips"><span class="chip">CB Score '+f(CO.cbScore,1)+'/10</span><span class="chip">CY '+CO.cycle.cy+'</span><span class="chip">TG '+CO.tg+'</span><span class="chip">'+t(['CB Conviction (gated) ','CB கன்விக்ஷன் ('])+CO.conviction+(LANG==='ta'?' கேட்டட்)':'')+'</span></div>';
+ h+='<div class="card" style="overflow-x:auto"><div style="min-width:620px">'+temple()+'</div><p class="note">'+t(TX.tapcol)+'</p></div>';
+ h+='<div class="grid g3">'+PILLARS.map(function(p){return '<div class="card pcard" id="pc-'+p.k+'" style="border-top:5px solid '+colS(p.s)+'"><b>'+t(p.n)+' — <span style="color:'+colS(p.s)+'">'+f(p.s,1)+'/10</span></b><div style="font-size:13.5px;margin-top:4px">'+t(p.x)+'</div></div>';}).join('')+'</div>';
+ return h;
+}
+function pOv(){
+ mk('cQop',{type:'bar',data:{labels:[t(['Reported PBT','ரிப்போர்ட்டட் PBT']),t(['Tax-refund interest','டாக்ஸ் ரீஃபண்ட் வட்டி']),t(['Core PBT','கோர் PBT']),t(['Core PAT (est.)','கோர் PAT (மதிப்பீடு)']),t(['PAT Q2 FY26','PAT Q2 FY26'])],
+  datasets:[{label:'₹ cr',data:[183,-36.9,146.1,108.1,46.3],backgroundColor:['#e8740c','#d64545','#ffb066','#1f9d55','#9aa5b1'],lbl:true,lblD:1}]},
+  options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{y:{beginAtZero:true}}}});
+ animTemple();
+}
+function temple(){
+ var w=700,cols=PILLARS,s='<svg viewBox="0 0 '+w+' 440" width="100%" style="max-width:760px;display:block;margin:auto">';
+ s+='<defs><linearGradient id="roof" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffb066"/><stop offset="1" stop-color="#e8740c"/></linearGradient></defs>';
+ s+='<polygon points="350,14 50,118 650,118" fill="url(#roof)" stroke="#b85a06" stroke-width="2"/>';
+ s+='<text x="350" y="72" text-anchor="middle" font-size="15" fill="#fff" font-weight="700">CB SCORE</text>';
+ s+='<text x="350" y="104" text-anchor="middle" font-size="30" fill="#fff" font-weight="800">'+f(CO.cbScore,1)+' / 10</text>';
+ s+='<rect x="40" y="118" width="620" height="32" fill="#fff1e2" stroke="#b85a06" stroke-width="2"/>';
+ s+='<text x="350" y="139" text-anchor="middle" font-size="14" font-weight="800" fill="#8a3d00">United Breweries · Q2 FY27</text>';
+ for(var i=0;i<cols.length;i++){var p=cols[i],x=80+i*96,c=colS(p.s);
+  s+='<g class="col" data-k="'+p.k+'"><rect x="'+x+'" y="158" width="56" height="200" rx="4" fill="#fbf2e8" stroke="#d9c3ad"/>';
+  s+='<rect class="cfill" data-s="'+p.s+'" x="'+x+'" y="358" width="56" height="0" rx="4" fill="'+c+'" opacity=".85"/>';
+  for(var j=1;j<5;j++)s+='<line x1="'+(x+j*11.2)+'" y1="162" x2="'+(x+j*11.2)+'" y2="354" stroke="#fff" stroke-opacity=".55" stroke-width="2"/>';
+  s+='<rect x="'+(x-6)+'" y="152" width="68" height="8" fill="#e9d6c2"/>';
+  s+='<circle cx="'+(x+28)+'" cy="186" r="19" fill="#fff" stroke="'+c+'" stroke-width="3"/><text x="'+(x+28)+'" y="191" text-anchor="middle" font-size="13" font-weight="800" fill="'+c+'">'+f(p.s,1)+'</text>';
+  s+='<text x="'+(x+28)+'" y="408" text-anchor="middle" font-size="12" font-weight="700" fill="#2b2118">'+t(p.n)+'</text></g>';}
+ s+='<rect x="40" y="358" width="620" height="14" fill="#e9d6c2"/><rect x="24" y="372" width="652" height="16" fill="#dcc4ab"/>';
+ s+='<text x="350" y="432" text-anchor="middle" font-size="11" fill="#7a6a5c">'+t(['green 8–10 · amber 6–8 · red below 6','பச்சை 8–10 · மஞ்சள் 6–8 · சிவப்பு 6-க்கு கீழ்'])+'</text></svg>';
+ return s;
+}
+function animTemple(){
+ var els=document.querySelectorAll('.cfill');els.forEach(function(r){var tgt=parseFloat(r.getAttribute('data-s'))/10*200,st=null;
+  function step(ts){if(!st)st=ts;var k=Math.min(1,(ts-st)/1100),hh=tgt*(1-Math.pow(1-k,3));r.setAttribute('height',hh);r.setAttribute('y',358-hh);if(k<1)requestAnimationFrame(step);}requestAnimationFrame(step);});
+ document.querySelectorAll('.col').forEach(function(g){g.addEventListener('click',function(){var el=$('pc-'+g.getAttribute('data-k'));if(!el)return;document.querySelectorAll('.pcard').forEach(function(x){x.classList.remove('hi');});el.classList.add('hi');el.scrollIntoView({behavior:'smooth',block:'center'});});});
+}
+
+// ===== History =====
+function rHist(){
+ var h='<h2>'+t(['From five breweries to a Heineken company — 1857 to 2026','அஞ்சு ப்ரூவரியில இருந்து ஹைனகென் கம்பெனி வரை — 1857 முதல் 2026'])+'</h2>';
+ h+='<div class="chips"><span class="pill p-o">● '+t(['Founding era','தொடக்க காலம்'])+'</span><span class="pill p-b">● '+t(['UB Group / Mallya era','UB குரூப் / மல்யா காலம்'])+'</span><span class="pill p-g">● '+t(['Heineken era','ஹைனகென் காலம்'])+'</span><span class="pill p-r">● '+t(['Shocks','அதிர்ச்சிகள்'])+'</span></div>';
+ h+='<p class="note">'+t(['Tap any milestone to open it.','எந்த நிகழ்வையும் தொட்டா விரியும்.'])+'</p><div class="tl">'+HIST.map(function(e,i){return '<div class="tli era'+e.e+(i===HIST.length-1?' open':'')+'"><span class="y">'+e.y+'</span><b>'+t(e.t)+'</b><div class="x">'+t(e.x)+'</div></div>';}).join('')+'</div>';
+ h+='<div class="card"><h3>'+t(['12 years of numbers: net sales, EBITDA (₹ cr) and EBITDA margin','12 வருஷ எண்கள்: நெட் சேல்ஸ், EBITDA (₹ கோடி), EBITDA மார்ஜின்'])+'</h3>'+cw('cY1',360)+'<p class="note">'+t(['FY21 is the COVID year (lockdowns closed liquor retail). The FY19 peak margin (~18%) has not been regained since.','FY21 கோவிட் வருஷம் (லாக்டவுன்ல மதுக்கடைகள் மூடல்). FY19 உச்ச மார்ஜின் (~18%) அதுக்கப்புறம் திரும்ப வரல.'])+'</p></div>';
+ h+='<div class="card"><h3>'+t(['Profit, EPS and dividend payout','லாபம், EPS, டிவிடெண்ட் பேஅவுட்'])+'</h3>'+cw('cY2',330)+'</div>';
+ h+='<div class="card"><h3>'+t(['Ownership story: promoter vs government block (%)','உரிமை கதை: புரமோட்டர் vs அரசு பங்கு (%)'])+'</h3>'+cw('cY3',300)+'<p class="note">'+t(['The 2019–21 dip in promoter holding and the 16.15% government block reflect shares attached from the erstwhile promoter; Heineken’s 2021 purchase restored majority control.','2019–21-ல புரமோட்டர் பங்கு குறைஞ்சு, 16.15% அரசு பங்கு வந்தது பழைய புரமோட்டர் பங்குகள் முடக்கப்பட்டதால; 2021-ல ஹைனகென் வாங்கினதும் பெரும்பான்மை திரும்ப வந்தது.'])+'</p></div>';
+ h+='<div class="card"><h3>'+t(['ROCE through the cycle (%)','சைக்கிள் முழுக்க ROCE (%)'])+'</h3>'+cw('cY4',280)+'</div>';
+ return h;
+}
+function pHist(){
+ document.querySelectorAll('.tli').forEach(function(e){e.addEventListener('click',function(){e.classList.toggle('open');});});
+ var om=YS.map(function(v,i){return +(YE[i]/v*100).toFixed(1);});
+ mk('cY1',{data:{labels:YL,datasets:[{type:'bar',label:t(['Net sales','நெட் சேல்ஸ்']),data:YS,backgroundColor:'#ffb066',yAxisID:'y',lbl:true},{type:'bar',label:'EBITDA',data:YE,backgroundColor:'#e8740c',yAxisID:'y',lbl:true},{type:'line',label:t(['EBITDA margin %','EBITDA மார்ஜின் %']),data:om,borderColor:'#2563eb',backgroundColor:'#2563eb',yAxisID:'y1',tension:.3,lbl:true,lblD:1,lblS:'%'}]},options:{responsive:true,maintainAspectRatio:false,scales:{y:{beginAtZero:true,title:{display:true,text:'₹ cr'}},y1:{position:'right',beginAtZero:true,grid:{display:false},title:{display:true,text:'%'}}}}});
+ mk('cY2',{data:{labels:YL,datasets:[{type:'bar',label:'PAT (₹ cr)',data:YP,backgroundColor:'#1f9d55',yAxisID:'y',lbl:true},{type:'line',label:'EPS (₹)',data:YEPS,borderColor:'#7c3aed',yAxisID:'y1',tension:.3,lbl:true,lblD:1},{type:'line',label:t(['Payout %','பேஅவுட் %']),data:YDP,borderColor:'#e0a100',borderDash:[5,4],yAxisID:'y1',tension:.2}]},options:{responsive:true,maintainAspectRatio:false,scales:{y:{beginAtZero:true},y1:{position:'right',beginAtZero:true,grid:{display:false}}}}});
+ mk('cY3',{type:'line',data:{labels:SHY,datasets:[{label:t(['Promoter %','புரமோட்டர் %']),data:SHYP,borderColor:'#e8740c',backgroundColor:'rgba(232,116,12,.15)',fill:true,lbl:true,lblD:1},{label:t(['Government %','அரசு %']),data:SHYG,borderColor:'#d64545',lbl:true,lblD:1}]},options:{responsive:true,maintainAspectRatio:false,scales:{y:{beginAtZero:true,max:80}}}});
+ mk('cY4',{type:'line',data:{labels:YL,datasets:[{label:'ROCE %',data:YROCE,borderColor:'#0f8b8d',backgroundColor:'rgba(15,139,141,.12)',fill:true,tension:.3,lbl:true}]},options:{responsive:true,maintainAspectRatio:false,scales:{y:{beginAtZero:true}}}});
+}
+
+// ===== Business model =====
+function wrap(txt,mx){var w=txt.split(' '),L=[],c='';w.forEach(function(x){if((c+' '+x).trim().length>mx){if(c)L.push(c);c=x;}else c=(c+' '+x).trim();});if(c)L.push(c);return L;}
+function box(id,x,y,w,hh,col,txtcol){var b=BM[id],s='<g class="bmbox" data-id="'+id+'"><rect x="'+x+'" y="'+y+'" width="'+w+'" height="'+hh+'" rx="12" fill="'+col+'" stroke="#00000022"/>';
+ var tl=wrap(t(b.t),Math.floor(w/9)),yy=y+20;tl.forEach(function(l){s+='<text x="'+(x+w/2)+'" y="'+yy+'" text-anchor="middle" font-size="14" font-weight="800" fill="'+txtcol+'">'+l+'</text>';yy+=17;});
+ wrap(t(b.k),Math.floor(w/6.4)).slice(0,4).forEach(function(l){s+='<text x="'+(x+w/2)+'" y="'+(yy+2)+'" text-anchor="middle" font-size="11.5" fill="'+txtcol+'">'+l+'</text>';yy+=14;});
+ return s+'</g>';}
+function arr(x1,y1,x2,y2){return '<line x1="'+x1+'" y1="'+y1+'" x2="'+x2+'" y2="'+y2+'" stroke="#8a3d00" stroke-width="2.2" marker-end="url(#ah)"/>';}
+function rBm(){
+ var s='<svg viewBox="0 0 1000 560" width="100%"><defs><marker id="ah" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#8a3d00"/></marker></defs>';
+ s+=box('cust',20,24,200,112,'#fde7cf','#5a2b00')+box('chan',260,24,210,112,'#e3ecff','#1d3b8a')+box('ubl',515,14,240,132,'#e8740c','#ffffff');
+ s+=arr(220,80,256,80)+arr(470,80,511,80);
+ s+=box('s1',20,196,225,112,'#ffd9b0','#5a2b00')+box('s2',265,196,225,112,'#1f9d55','#ffffff')+box('s3',510,196,225,112,'#c7b6f2','#2e1065')+box('s4',755,196,225,112,'#bfe9ea','#0b4a4b');
+ s+=arr(635,146,132,192)+arr(635,146,377,192)+arr(635,146,622,192)+arr(635,146,867,192);
+ s+=box('rev',60,372,250,112,'#fff1c7','#5a4100')+box('cost',375,372,250,112,'#ffe0e0','#7a1d1d')+box('prof',690,372,270,112,'#dcf5e6','#14532d');
+ s+=arr(500,308,185,368)+arr(310,428,371,428)+arr(625,428,686,428);
+ s+='<text x="500" y="520" text-anchor="middle" font-size="12.5" fill="#7a6a5c">'+t(['Tap any box to read how that part of the business works.','எந்த பெட்டியையும் தொட்டா அந்த பகுதி எப்படி வேலை செய்யுது-னு படிக்கலாம்.'])+'</text></svg>';
+ var h='<h2>'+t(['How United Breweries makes money','யுனைடெட் ப்ரூவரீஸ் எப்படி சம்பாதிக்குது'])+'</h2><div class="card" style="overflow-x:auto"><div style="min-width:760px">'+s+'</div></div><div class="card" id="bmcard"><b>'+t(BM.ubl.t)+'</b><div>'+t(BM.ubl.x)+'</div></div>';
+ h+='<div class="card"><b>'+t(['Revenue formula:','வருமான ஃபார்முலா:'])+'</b> '+t(['Net sales = volume (cases) × net realisation per case; Gross revenue − state excise duty = net sales.','நெட் சேல்ஸ் = வால்யூம் (கேஸ்) × ஒரு கேஸுக்கான நெட் விலை; மொத்த வருமானம் − மாநில எக்சைஸ் = நெட் சேல்ஸ்.'])+'</div>';
+ h+='<div class="card"><h3>'+t(['Revenue engine — Q2 FY27 drivers','ரெவென்யூ இன்ஜின் — Q2 FY27 காரணிகள்'])+'</h3><div class="tw"><table><thead><tr><th>'+t(['Driver','காரணி'])+'</th><th>Q2 FY27</th><th>H1 FY27</th><th>'+t(['What moved it','எது நகர்த்தியது'])+'</th></tr></thead><tbody>'+ENGINE.map(function(r){return '<tr><td>'+t(r[0])+'</td><td>'+r[1]+'</td><td>'+r[2]+'</td><td style="text-align:left">'+t(r[3])+'</td></tr>';}).join('')+'</tbody></table></div><p class="note">'+t(['Price/mix is implied (1.24 ÷ 1.16 ≈ 1.07); the company does not split it. † = not disclosed.','விலை/மிக்ஸ் கணக்கிட்டது (1.24 ÷ 1.16 ≈ 1.07); கம்பெனி தனியா சொல்லல. † = வெளியிடல.'])+'</p></div>';
+ h+='<div class="card"><h3>'+t(['Why state policy matters so much','மாநில கொள்கை ஏன் இவ்வளவு முக்கியம்'])+'</h3><div class="grid g3">'+
+  [[t(['Karnataka','கர்நாடகா']),'+55%',['First month after a beer-friendly excise structure','பீருக்கு சாதகமான எக்சைஸ் மாற்றத்துக்கு பின் முதல் மாசம்']],[t(['Jharkhand','ஜார்கண்ட்']),'+55%',['H1 FY26, after retail availability improved','H1 FY26, கடைகள் அதிகமான பிறகு']],[t(['Maharashtra','மகாராஷ்டிரா']),'+35%',['H1 FY26, after reforms','H1 FY26, சீர்திருத்தங்களுக்கு பிறகு']]].map(function(x){return kpi(x[0],x[1],t(x[2]));}).join('')+'</div><p class="note">'+t(['Category growth figures as presented at the Capital Markets Day (3 Sep 2026).','கேப்பிட்டல் மார்க்கெட்ஸ் டே-ல (3 செப் 2026) சொன்ன கேட்டகரி வளர்ச்சி எண்கள்.'])+'</p></div>';
+ return h;
+}
+function pBm(){document.querySelectorAll('.bmbox').forEach(function(g){g.addEventListener('click',function(){document.querySelectorAll('.bmbox').forEach(function(x){x.classList.remove('sel');});g.classList.add('sel');var b=BM[g.getAttribute('data-id')];$('bmcard').innerHTML='<b>'+t(b.t)+'</b> — <span class="note">'+t(b.k)+'</span><div style="margin-top:6px">'+t(b.x)+'</div>';$('bmcard').scrollIntoView({behavior:'smooth',block:'nearest'});});});}
+
+// ===== Financials =====
+function rFin(){
+ var c=CO.consol,a=c.q2fy27,b=c.q2fy26,q=c.q1fy27;
+ function exc(o){return o.grossRev-o.netRev;}
+ var rows=[
+  [['Gross revenue from operations','மொத்த ஆபரேஷன்ஸ் வருமானம்'],a.grossRev,b.grossRev,q.grossRev,2],
+  [['Less: excise duty (computed)','கழிவு: எக்சைஸ் (கணக்கிட்டது)'],exc(a),exc(b),exc(q),0],
+  [['Net revenue','நெட் ரெவென்யூ'],a.netRev,b.netRev,q.netRev,0],
+  [['Operating expenses','ஆபரேட்டிங் செலவுகள்'],a.netRev-a.ebitda,b.netRev-b.ebitda,q.netRev-q.ebitda,0],
+  [['EBITDA','EBITDA'],a.ebitda,b.ebitda,q.ebitda,0],
+  [['Other income','மற்ற வருமானம்'],a.oi,b.oi,q.oi,1],
+  [['Finance cost','வட்டி செலவு'],a.int,b.int,q.int,0],
+  [['Depreciation','தேய்மானம்'],a.dep,b.dep,q.dep,0],
+  [['PBT','PBT'],a.pbt,b.pbt,q.pbt,0],
+  [['PAT','PAT'],a.pat,b.pat,q.pat,2],
+  [['EPS (₹)','EPS (₹)'],a.eps,b.eps,q.eps,2]];
+ var h='<h2>'+t(['Consolidated P&L — Q2 FY27 vs Q2 FY26 vs Q1 FY27 (₹ cr)','கன்சாலிடேட்டட் P&L — Q2 FY27 vs Q2 FY26 vs Q1 FY27 (₹ கோடி)'])+'</h2><div class="card tw"><table><thead><tr><th>'+t(['Line item','விவரம்'])+'</th><th>Q2 FY27</th><th>Q2 FY26</th><th>YoY</th><th>Q1 FY27</th><th>QoQ</th></tr></thead><tbody>';
+ rows.forEach(function(r){h+='<tr><td>'+t(r[0])+'</td><td><b>'+f(r[1],r[4])+'</b></td><td>'+f(r[2],r[4])+'</td><td>'+sg(pc(r[1],r[2]))+'</td><td>'+f(r[3],r[4])+'</td><td>'+sg(pc(r[1],r[3]))+'</td></tr>';});
+ h+='<tr><td>'+t(['EBITDA margin (computed)','EBITDA மார்ஜின் (கணக்கிட்டது)'])+'</td><td><b>'+f(a.ebitda/a.netRev*100,1)+'%</b></td><td>'+f(b.ebitda/b.netRev*100,1)+'%</td><td>'+sg((a.ebitda/a.netRev-b.ebitda/b.netRev)*1e4,0,' bps')+'</td><td>'+f(q.ebitda/q.netRev*100,1)+'%</td><td>'+sg((a.ebitda/a.netRev-q.ebitda/q.netRev)*1e4,0,' bps')+'</td></tr>';
+ h+='<tr><td>'+t(['Effective tax rate','வரி விகிதம்'])+'</td><td>'+f((1-a.pat/a.pbt)*100,1)+'%</td><td>'+f((1-b.pat/b.pbt)*100,1)+'%</td><td></td><td>'+f((1-q.pat/q.pbt)*100,1)+'%</td><td></td></tr></tbody></table><p class="note">'+t(['Line items are rounded to ₹ crore as published in summary filings; operating expenses are derived as net revenue − EBITDA.','எண்கள் ₹ கோடிக்கு ரவுண்ட் பண்ணது; ஆபரேட்டிங் செலவு = நெட் ரெவென்யூ − EBITDA.'])+'</p></div>';
+ h+='<div class="card"><h3>'+t(['13 quarters: net revenue, EBITDA (₹ cr) and EBITDA margin','13 காலாண்டு: நெட் ரெவென்யூ, EBITDA (₹ கோடி), மார்ஜின்'])+'</h3>'+cw('cQ1',360)+'<p class="note">'+t(['Q1 (Apr–Jun) is the peak summer quarter; Q2 is monsoon-affected — compare a quarter with the same quarter of last year.','Q1 (ஏப்–ஜூன்) கோடை உச்சம்; Q2 மழைக்காலம் — அதே காலாண்டோட தான் ஒப்பிடணும்.'])+'</p></div>';
+ h+='<div class="card"><h3>'+t(['13 quarters: PAT (₹ cr) and EPS','13 காலாண்டு: PAT (₹ கோடி), EPS'])+'</h3>'+cw('cQ2',320)+'</div>';
+ h+='<div class="card"><h3>'+t(['Below EBITDA: interest and depreciation are rising with capex','EBITDA-க்கு கீழே: கேபெக்ஸால வட்டி, தேய்மானம் ஏறுது'])+'</h3>'+cw('cQ3',300)+'</div>';
+ // categorised metrics
+ var M=[
+  {c:['Growth & Balance sheet','வளர்ச்சி & பேலன்ஸ் ஷீட்'],r:[
+   [['Net revenue growth YoY','நெட் ரெவென்யூ வளர்ச்சி'],'+23.6%','−3.0%','+3.6%'],
+   [['Volume growth (sell-in)','வால்யூம் வளர்ச்சி'],'+16%','−3.4%','n/a †'],
+   [['Premium volume growth','பிரீமியம் வால்யூம் வளர்ச்சி'],'+38%','+17%','+21%'],
+   [['Net worth (₹ cr)','நெட் வொர்த் (₹ கோடி)'],'4,560 (Sep-26)','—','4,522'],
+   [['Borrowings (₹ cr)','கடன் (₹ கோடி)'],'1,119 (Sep-26)','—','1,317'],
+   [['Capital work in progress (₹ cr)','நடப்பு கேபெக்ஸ் CWIP (₹ கோடி)'],'520 (Sep-26)','—','512']]},
+  {c:['Profitability','லாபத்தன்மை'],r:[
+   [['EBITDA (₹ cr)','EBITDA (₹ கோடி)'],'259','130','806'],
+   [['EBITDA margin (computed)','EBITDA மார்ஜின் (கணக்கு)'],'10.2%','6.3%','8.7%'],
+   [['EBITDA margin (company)','EBITDA மார்ஜின் (கம்பெனி)'],'11.9%','7.1%','n/a †'],
+   [['PAT margin on net revenue','PAT மார்ஜின்'],'5.3%','2.3%','4.5%'],
+   [['ROE','ROE'],'10.7% (TTM)','—','9.3%'],
+   [['ROCE','ROCE'],'n/a','—','11%']]},
+  {c:['Efficiency','செயல்திறன்'],r:[
+   [['Receivable days','ரிசீவபிள் நாட்கள்'],'n/a †','—','116'],
+   [['Inventory days','இன்வென்டரி நாட்கள்'],t(['below last year','போன வருஷத்தை விட குறைவு']),'—','432'],
+   [['Payable days','பேயபிள் நாட்கள்'],'n/a †','—','361'],
+   [['Cash conversion cycle (days)','கேஷ் கன்வர்ஷன் சைக்கிள் (நாள்)'],'n/a †','—','187'],
+   [['Asset turnover (x)','அசெட் டர்ன்ஓவர் (x)'],'—','—','1.03']]},
+  {c:['Capital & Liquidity','மூலதனம் & பணப்புழக்கம்'],r:[
+   [['Debt / equity (x)','கடன் / ஈக்விட்டி (x)'],'0.25','—','0.29'],
+   [['Net debt (₹ cr)','நெட் கடன் (₹ கோடி)'],'≈ 630','—','n/a'],
+   [['Interest cover (EBIT/interest, x)','வட்டி கவர் (x)'],'7.5','5.4','n/a'],
+   [['Cash & equivalents (₹ cr)','கேஷ் (₹ கோடி)'],'488.84','—','n/a'],
+   [['Dividend payout','டிவிடெண்ட் பேஅவுட்'],'—','—','64%']]},
+  {c:['Valuation (at ₹1,239.75)','மதிப்பீடு (₹1,239.75-ல)'],r:[
+   [['Market cap (₹ cr)','மார்க்கெட் கேப் (₹ கோடி)'],'≈ 32,780','—','—'],
+   [['P/E (TTM EPS ₹18.32)','P/E (TTM EPS ₹18.32)'],'67.7x','—','—'],
+   [['P/B (BVPS ₹172)','P/B (BVPS ₹172)'],'7.2x','—','—'],
+   [['EV / EBITDA (TTM)','EV / EBITDA (TTM)'],'36.9x','—','—'],
+   [['Dividend yield (₹10)','டிவிடெண்ட் யீல்ட் (₹10)'],'0.81%','—','—']]}];
+ h+='<h2>'+t(['Key metrics by category','வகைவாரியான முக்கிய அளவீடுகள்'])+'</h2><div class="card tw"><table><thead><tr><th>'+t(['Metric','அளவீடு'])+'</th><th>Q2 FY27</th><th>Q2 FY26</th><th>FY26</th></tr></thead><tbody>';
+ M.forEach(function(g){h+='<tr class="cat"><td colspan="4">'+t(g.c)+'</td></tr>';g.r.forEach(function(r){h+='<tr><td>'+t(r[0])+'</td><td><b>'+r[1]+'</b></td><td>'+r[2]+'</td><td>'+r[3]+'</td></tr>';});});
+ h+='</tbody></table><p class="note">'+t(['Consolidated unless stated. FY26 premium growth (+21%) as reported by Motilal Oswal; company EBITDA margin for Q2 FY26 derived as 11.9% − 4.8 pp. † = not disclosed or not captured.','வேறு சொல்லாவிட்டால் கன்சாலிடேட்டட். FY26 பிரீமியம் வளர்ச்சி (+21%) மோதிலால் ஓஸ்வால் சொன்னது; Q2 FY26 கம்பெனி மார்ஜின் = 11.9% − 4.8. † = வெளியிடல / எடுக்கல.'])+'</p></div>';
+ return h;
+}
+function pFin(){
+ var om=QS.map(function(v,i){return +(QE[i]/v*100).toFixed(1);});
+ mk('cQ1',{data:{labels:QL,datasets:[{type:'bar',label:t(['Net revenue','நெட் ரெவென்யூ']),data:QS,backgroundColor:'#ffb066',yAxisID:'y',lbl:true},{type:'bar',label:'EBITDA',data:QE,backgroundColor:'#e8740c',yAxisID:'y',lbl:true},{type:'line',label:t(['EBITDA margin %','EBITDA மார்ஜின் %']),data:om,borderColor:'#2563eb',yAxisID:'y1',tension:.3,lbl:true,lblD:1,lblS:'%'}]},options:{responsive:true,maintainAspectRatio:false,scales:{y:{beginAtZero:true,title:{display:true,text:'₹ cr'}},y1:{position:'right',beginAtZero:true,grid:{display:false}}}}});
+ mk('cQ2',{data:{labels:QL,datasets:[{type:'bar',label:'PAT (₹ cr)',data:QP,backgroundColor:QP.map(function(v,i){return i===12?'#1f9d55':'#86d0a4';}),yAxisID:'y',lbl:true},{type:'line',label:'EPS (₹)',data:QEPS,borderColor:'#7c3aed',yAxisID:'y1',tension:.3,lbl:true,lblD:2}]},options:{responsive:true,maintainAspectRatio:false,scales:{y:{beginAtZero:true},y1:{position:'right',beginAtZero:true,grid:{display:false}}}}});
+ mk('cQ3',{type:'bar',data:{labels:QL,datasets:[{label:t(['Depreciation','தேய்மானம்']),data:QD,backgroundColor:'#9aa5b1',lbl:true},{label:t(['Finance cost','வட்டி']),data:QI,backgroundColor:'#d64545',lbl:true},{label:t(['Other income','மற்ற வருமானம்']),data:QOI,backgroundColor:'#0f8b8d',lbl:true}]},options:{responsive:true,maintainAspectRatio:false}});
+}
+
+// ===== Cash flow & WC =====
+function rCf(){
+ var h='<h2>'+t(['Cash flow: where the money came from and went (₹ cr)','கேஷ் ஃப்ளோ: பணம் எங்கிருந்து வந்தது, எங்க போனது (₹ கோடி)'])+'</h2>';
+ h+='<div class="card">'+cw('cC1',360)+'<p class="note">'+t(['Operating cash (CFO) collapsed in FY23 (−₹120 cr) as receivables and inventory ballooned; it has recovered to ₹435 cr in FY26, but capex (UP brewery, can lines) absorbed almost all of it — free cash flow was just ₹2 cr. Financing turned positive in FY25–26 as borrowings rose.','FY23-ல ரிசீவபிள்ஸ், இன்வென்டரி பெருகினதால CFO −₹120 கோடிக்கு விழுந்தது; FY26-ல ₹435 கோடிக்கு மீண்டது, ஆனா கேபெக்ஸ் (UP ப்ரூவரி, கேன் லைன்) கிட்டத்தட்ட எல்லாத்தையும் எடுத்துக்கிச்சு — FCF ₹2 கோடி தான். கடன் ஏறினதால FY25–26 ஃபைனான்சிங் பாசிட்டிவ்.'])+'</p></div>';
+ h+='<div class="card"><h3>'+t(['How much of EBITDA turns into cash? (CFO ÷ EBITDA, %)','EBITDA-ல எவ்வளவு கேஷா மாறுது? (CFO ÷ EBITDA, %)'])+'</h3>'+cw('cC2',280)+'</div>';
+ h+='<h2>'+t(['Working capital and its link to cash','வொர்க்கிங் கேப்பிட்டல் & கேஷுடன் தொடர்பு'])+'</h2>';
+ h+='<div class="card" style="overflow-x:auto"><div style="min-width:720px">'+wcSvg()+'</div><div id="wccard" class="note" style="font-size:13.5px;margin-top:6px">'+t(['Tap a box to see why it matters.','ஒரு பெட்டியை தொடுங்க.'])+'</div></div>';
+ h+='<div class="card"><h3>'+t(['Working-capital days, FY15–FY26','வொர்க்கிங் கேப்பிட்டல் நாட்கள், FY15–FY26'])+'</h3>'+cw('cC3',340)+'<p class="note">'+t(['Days are computed by a data provider on its own cost base, so inventory and payable days look high; read the trend, not the level. FY21 is distorted by COVID.','இந்த நாட்கள் டேட்டா நிறுவனத்தோட கணக்கு முறையில; அளவை விட போக்கை பாருங்க. FY21 கோவிட்டால் சிதைவு.'])+'</p></div>';
+ h+='<div class="card"><h3>'+t(['What changed in FY27 so far','FY27-ல இதுவரை என்ன மாறியது'])+'</h3><ul class="tk"><li>'+t(['Q1 FY27: inventory deliberately cut by ~20% to release cash (sell-in +9% vs sell-out +13%).','Q1 FY27: கேஷ் விடுவிக்க இன்வென்டரி ~20% வேண்டுமென்றே குறைப்பு (செல்-இன் +9% vs செல்-அவுட் +13%).'])+'</li><li>'+t(['Q2 FY27: trade inventory stayed below last year; management reports continued improvement in free operating cash flow.','Q2 FY27: டிரேட் இன்வென்டரி போன வருஷத்தை விட குறைவு; ஃப்ரீ ஆபரேட்டிங் கேஷ் ஃப்ளோ தொடர்ந்து மேம்பட்டது-னு நிர்வாகம்.'])+'</li><li>'+t(['Borrowings fell from ₹1,317 cr (Mar-26) to ₹1,119 cr (Sep-26) — about ₹198 cr repaid in six months, consistent with better cash generation.','கடன் ₹1,317 கோடி (மார்ச்-26) → ₹1,119 கோடி (செப்-26) — ஆறு மாசத்துல ~₹198 கோடி திருப்பி கட்டினாங்க; கேஷ் உற்பத்தி மேம்பட்டதுக்கு ஏத்த மாதிரி.'])+'</li><li class="flag">'+t(['H1 FY27 cash-flow statement figures (CFO, capex) were not captured for this file †.','H1 FY27 கேஷ் ஃப்ளோ எண்கள் (CFO, கேபெக்ஸ்) இந்த ஃபைல்ல இல்ல †.'])+'</li></ul></div>';
+ h+='<div class="card"><h3>'+t(['Capex build-up: capital work in progress and borrowings (₹ cr)','கேபெக்ஸ்: CWIP & கடன் (₹ கோடி)'])+'</h3>'+cw('cC4',300)+'</div>';
+ return h;
+}
+var WCX={inv:['Inventory days (FY26: 432) — malt, packaging and finished beer stocked ahead of peak summer. Cutting inventory by 20% in Q1 FY27 released cash.','இன்வென்டரி நாட்கள் (FY26: 432) — கோடைக்கு முன்னாடியே மால்ட், பேக்கேஜிங், பீர் ஸ்டாக். Q1 FY27-ல 20% குறைச்சது கேஷ் விடுவிச்சது.'],
+ rec:['Receivable days (FY26: 116) — state beverage corporations often pay late. This is the single biggest reason profit does not turn into cash quickly.','ரிசீவபிள் நாட்கள் (FY26: 116) — மாநில கார்ப்பரேஷன்கள் தாமதமா பணம் தருவாங்க. லாபம் உடனே கேஷா மாறாததுக்கு இது தான் பெரிய காரணம்.'],
+ pay:['Payable days (FY26: 361) — UBL pays its suppliers slowly; payables rose from 207 days (FY24) to 361, which offsets inventory and receivables. If suppliers tighten terms, cash flow suffers.','பேயபிள் நாட்கள் (FY26: 361) — சப்ளையர்களுக்கு மெதுவா பணம் தருது; 207 (FY24) → 361. இது இன்வென்டரி, ரிசீவபிளை ஈடு செய்யுது. சப்ளையர்கள் கடுமையானா கேஷ் ஃப்ளோ பாதிக்கும்.'],
+ ccc:['Cash conversion cycle = inventory + receivable − payable days (FY26: 187). Fewer days = cash comes back faster.','கேஷ் கன்வர்ஷன் சைக்கிள் = இன்வென்டரி + ரிசீவபிள் − பேயபிள் (FY26: 187). நாட்கள் குறைஞ்சா கேஷ் சீக்கிரம் திரும்பும்.'],
+ cfo:['CFO ÷ EBITDA (FY26: 81%) — when the cycle shortens, more of EBITDA becomes cash. It was just 3% in FY23 when receivables and inventory swelled.','CFO ÷ EBITDA (FY26: 81%) — சைக்கிள் குறைஞ்சா EBITDA-ல அதிகம் கேஷா மாறும். FY23-ல 3% தான்.']};
+function wcSvg(){
+ function b(k,x,y,w,c,l1,l2){return '<g class="bmbox wcb" data-k="'+k+'"><rect x="'+x+'" y="'+y+'" width="'+w+'" height="70" rx="12" fill="'+c+'"/><text x="'+(x+w/2)+'" y="'+(y+28)+'" text-anchor="middle" font-size="13" font-weight="800" fill="#2b2118">'+l1+'</text><text x="'+(x+w/2)+'" y="'+(y+50)+'" text-anchor="middle" font-size="16" font-weight="800" fill="#8a3d00">'+l2+'</text></g>';}
+ var s='<svg viewBox="0 0 900 200" width="100%"><defs><marker id="ah2" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#8a3d00"/></marker></defs>';
+ s+=b('inv',10,20,150,'#fde7cf',t(['Inventory days','இன்வென்டரி']),'432')+'<text x="172" y="62" font-size="24" font-weight="800">+</text>';
+ s+=b('rec',190,20,150,'#ffe0e0',t(['Receivable days','ரிசீவபிள்']),'116')+'<text x="352" y="62" font-size="24" font-weight="800">−</text>';
+ s+=b('pay',370,20,150,'#dcf5e6',t(['Payable days','பேயபிள்']),'361')+'<text x="532" y="62" font-size="24" font-weight="800">=</text>';
+ s+=b('ccc',555,20,150,'#e3ecff',t(['Cash cycle','கேஷ் சைக்கிள்']),'187 '+t(['days','நாள்']));
+ s+='<line x1="705" y1="55" x2="738" y2="55" stroke="#8a3d00" stroke-width="2.2" marker-end="url(#ah2)"/>';
+ s+=b('cfo',742,20,150,'#fff1c7','CFO ÷ EBITDA','81%');
+ s+='<text x="450" y="130" text-anchor="middle" font-size="12.5" fill="#7a6a5c">FY26 · '+t(['shorter cycle → more of EBITDA becomes operating cash (CFO) → room for capex and dividends without borrowing','சைக்கிள் குறைஞ்சா → EBITDA-ல அதிகம் CFO-வா மாறும் → கடன் இல்லாம கேபெக்ஸ், டிவிடெண்ட்'])+'</text>';
+ s+='<text x="450" y="160" text-anchor="middle" font-size="12.5" fill="#7a6a5c">FY23: CCC 228 '+t(['days','நாள்'])+' → CFO/EBITDA 3% · FY25: 148 → 48% · FY26: 187 → 81%</text></svg>';
+ return s;
+}
+function pCf(){
+ document.querySelectorAll('.wcb').forEach(function(g){g.addEventListener('click',function(){$('wccard').innerHTML=t(WCX[g.getAttribute('data-k')]);});});
+ mk('cC1',{data:{labels:YL,datasets:[{type:'bar',label:'CFO',data:CFO,backgroundColor:'#1f9d55',lbl:true},{type:'bar',label:'CFI',data:CFI,backgroundColor:'#d64545',lbl:true},{type:'bar',label:'CFF',data:CFF,backgroundColor:'#9aa5b1',lbl:true},{type:'line',label:'FCF',data:FCF,borderColor:'#e8740c',borderWidth:3,tension:.3}]},options:{responsive:true,maintainAspectRatio:false}});
+ mk('cC2',{type:'bar',data:{labels:YL,datasets:[{label:'CFO/EBITDA %',data:CFOE,backgroundColor:CFOE.map(function(v){return v>=80?'#1f9d55':(v>=40?'#e0a100':'#d64545');}),lbl:true,lblS:'%'}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}}}});
+ mk('cC3',{type:'line',data:{labels:YL,datasets:[{label:t(['Receivable days','ரிசீவபிள்']),data:DD,borderColor:'#d64545',tension:.3},{label:t(['Inventory days','இன்வென்டரி']),data:ID,borderColor:'#e8740c',tension:.3},{label:t(['Payable days','பேயபிள்']),data:PD,borderColor:'#1f9d55',tension:.3},{label:'CCC',data:CCC,borderColor:'#2563eb',borderWidth:3,tension:.3,lbl:true},{label:t(['WC days','WC நாட்கள்']),data:WCD,borderColor:'#7c3aed',borderDash:[5,4],tension:.3}]},options:{responsive:true,maintainAspectRatio:false}});
+ mk('cC4',{type:'bar',data:{labels:BL,datasets:[{label:'CWIP',data:CWIP,backgroundColor:'#ffb066',lbl:true},{label:t(['Borrowings','கடன்']),data:BOR,backgroundColor:'#d64545',lbl:true}]},options:{responsive:true,maintainAspectRatio:false}});
+}
+
+// ===== Valuations =====
+function rVal(){
+ var P=CO.priceRef,mc=P*CO.shares_cr,ev=mc+CO.debt_cr-CO.cash_cr;
+ var h='<h2>'+t(['Valuation snapshot at ₹1,239.75 (28 Oct 2026, 10:05 IST)','₹1,239.75-ல மதிப்பீடு (28 அக் 2026, 10:05 IST)'])+'</h2><div class="grid g4">'+
+  kpi(t(['Market cap','மார்க்கெட் கேப்']),'₹'+f(mc)+' cr',t(['26.44 cr shares','26.44 கோடி ஷேர்']))+
+  kpi('P/E (TTM)',f(P/CO.ttmEPS,1)+'x','TTM EPS ₹'+f(CO.ttmEPS,2))+
+  kpi('P/B',f(P/CO.bvps,1)+'x','BVPS ₹'+CO.bvps)+
+  kpi('EV / EBITDA',f(ev/CO.ttmEBITDA,1)+'x','EV ₹'+f(ev)+' cr')+
+  kpi('EV / Sales',f(ev/CO.ttmSales,2)+'x','TTM ₹'+f(CO.ttmSales)+' cr')+
+  kpi(t(['Earnings yield','ஏர்னிங்ஸ் யீல்ட்']),f(CO.ttmEPS/P*100,2)+'%',t(['vs 10-yr G-sec ~6–7%','10 வருஷ G-sec ~6–7%']))+
+  kpi(t(['Dividend yield','டிவிடெண்ட் யீல்ட்']),f(CO.dps_FY26/P*100,2)+'%','FY26 ₹10')+
+  kpi(t(['52-week range','52 வார வரம்பு']),'₹1,128 – ₹1,846',t(['near the low end','கீழ் முனைக்கு அருகில்']))+'</div>';
+ h+='<div class="card"><h3>'+t(['What is already priced in? (education tool)','விலையில ஏற்கனவே என்ன இருக்கு? (கல்விக் கருவி)'])+'</h3><p class="note">'+t(['Pick the P/E you think is fair after N years and see what EPS — and what yearly EPS growth from today’s ₹18.32 — the current price needs. This is arithmetic, not a forecast or advice.','N வருஷம் கழிச்சு நியாயமான P/E-னு நீங்க நினைக்கிறதை தேர்ந்தெடுங்க — இன்னைக்கு விலைக்கு எவ்வளவு EPS, ₹18.32-ல இருந்து வருஷத்துக்கு எவ்வளவு வளர்ச்சி தேவை-னு பாருங்க. இது கணக்கு மட்டும், கணிப்போ ஆலோசனையோ இல்ல.'])+'</p>'+
+  '<div class="grid g3"><label>'+t(['Price (₹)','விலை (₹)'])+' <b id="vP">1,240</b><input type="range" id="sP" min="900" max="2000" step="10" value="1240" style="width:100%"></label>'+
+  '<label>'+t(['Exit P/E','இறுதி P/E'])+' <b id="vE">40</b>x<input type="range" id="sE" min="20" max="80" step="1" value="40" style="width:100%"></label>'+
+  '<label>'+t(['Years','வருஷம்'])+' <b id="vN">4</b><input type="range" id="sN" min="2" max="8" step="1" value="4" style="width:100%"></label></div><div id="vOut" class="kpi" style="margin-top:8px"></div></div>';
+ h+='<div class="card"><h3>'+t(['Margin sensitivity (rule of thumb)','மார்ஜின் உணர்திறன் (தோராய கணக்கு)'])+'</h3><p>'+t(['On TTM net revenue of ~₹9,900 cr, each 1 percentage point of EBITDA margin ≈ ₹99 cr EBITDA ≈ ₹73 cr PAT ≈ ₹2.8 EPS (at 26% tax). Moving from ~9% to the mid-teens ambition (~14%) would add roughly ₹14 EPS — which is why the market reacts so strongly to margin news.','TTM நெட் ரெவென்யூ ~₹9,900 கோடில, ஒவ்வொரு 1% EBITDA மார்ஜினும் ≈ ₹99 கோடி EBITDA ≈ ₹73 கோடி PAT ≈ ₹2.8 EPS (26% வரி). ~9%-ல இருந்து ~14%-க்கு போனா சுமார் ₹14 EPS கூடும் — அதனால தான் மார்ஜின் செய்திக்கு மார்க்கெட் இவ்வளவு ரியாக்ட் பண்ணுது.'])+'</p>'+cw('cV1',280)+'</div>';
+ return h;
+}
+function calcV(){var P=+$('sP').value,E=+$('sE').value,N=+$('sN').value,eps=P/E,g=(Math.pow(eps/CO.ttmEPS,1/N)-1)*100;
+ $('vP').textContent=f(P);$('vE').textContent=E;$('vN').textContent=N;
+ $('vOut').innerHTML=t(['Required EPS in year ','தேவையான EPS — வருஷம் '])+N+': <b>₹'+f(eps,1)+'</b> · '+t(['implied EPS growth per year','வருஷாந்திர EPS வளர்ச்சி'])+': <b>'+f(g,1)+'%</b> '+t(['(no return assumed; price simply holds)','(லாபம் எதுவும் கணக்கில்ல; விலை அப்படியே இருக்கும்னு வச்சு)']);}
+function pVal(){['sP','sE','sN'].forEach(function(i){$(i).addEventListener('input',calcV);});calcV();
+ var m=[8,9,10,11,12,13,14,15],eps=m.map(function(x){return +((9900*x/100-320-97+120)*0.74/26.44).toFixed(1);});
+ mk('cV1',{type:'bar',data:{labels:m.map(function(x){return x+'%';}),datasets:[{label:t(['Illustrative EPS (₹) at each EBITDA margin','ஒவ்வொரு மார்ஜினுக்கும் EPS (₹) — உதாரணம்']),data:eps,backgroundColor:m.map(function(x){return x>=14?'#1f9d55':(x>=11?'#e0a100':'#ffb066');}),lbl:true,lblD:1}]},options:{responsive:true,maintainAspectRatio:false}});}
+
+// ===== Market activity =====
+function rMkt(){
+ var h='<h2>'+t(['Share price: selected dated points (₹)','ஷேர் விலை: தேர்ந்தெடுத்த தேதிகள் (₹)'])+'</h2><div class="card">'+cw('cM1',300)+'<p class="note">'+t(['* 28-Oct-26 is the 10:05 IST price; intraday high was ₹1,316. 52-week range ₹1,128–₹1,846. Points are not a continuous series.','* 28-அக்-26 என்பது 10:05 IST விலை; அன்றைய உச்சம் ₹1,316. 52 வார வரம்பு ₹1,128–₹1,846. இது தொடர் விலை இல்ல, சில புள்ளிகள் மட்டும்.'])+'</p></div>';
+ h+='<h2>'+t(['Reasons for share-price moves','ஷேர் விலை நகர்வுக்கான காரணங்கள்'])+'</h2><div class="card tw"><table><thead><tr><th>'+t(['When','எப்போ'])+'</th><th>'+t(['Move','நகர்வு'])+'</th><th style="text-align:left">'+t(['Why','ஏன்'])+'</th></tr></thead><tbody>'+MOVES.map(function(m){return '<tr><td>'+m[0]+'</td><td class="'+(m[1]==='▲'?'up':'dn')+'">'+m[1]+'</td><td style="text-align:left">'+t(m[2])+'</td></tr>';}).join('')+'</tbody></table></div>';
+ h+='<h2>'+t(['Who owns the stock (%)','யாரிடம் ஷேர் இருக்கு (%)'])+'</h2><div class="card">'+cw('cM2',320)+'</div><div class="card">'+cw('cM3',260)+'<p class="note">'+t(['Shareholder count rose from 65,418 to 95,495 in three years while FIIs trimmed — retail and domestic funds bought the fall.','மூணு வருஷத்துல பங்குதாரர் எண்ணிக்கை 65,418 → 95,495; FII குறைச்சாங்க — சில்லறை, உள்நாட்டு நிதிகள் இறக்கத்துல வாங்கினாங்க.'])+'</p></div>';
+ return h;
+}
+function pMkt(){
+ mk('cM1',{type:'line',data:{labels:PXL,datasets:[{label:'₹',data:PX,borderColor:'#e8740c',backgroundColor:'rgba(232,116,12,.12)',fill:true,tension:.25,pointRadius:5,lbl:true}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{y:{min:1000}}}});
+ mk('cM2',{type:'bar',data:{labels:SHL,datasets:[{label:t(['Promoter','புரமோட்டர்']),data:SH.pro,backgroundColor:'#e8740c'},{label:'DII',data:SH.dii,backgroundColor:'#2563eb'},{label:'FII',data:SH.fii,backgroundColor:'#7c3aed'},{label:t(['Public','பொது']),data:SH.pub,backgroundColor:'#1f9d55'},{label:t(['Govt','அரசு']),data:SH.gov,backgroundColor:'#9aa5b1'}]},options:{responsive:true,maintainAspectRatio:false,scales:{x:{stacked:true},y:{stacked:true,max:100}}}});
+ mk('cM3',{type:'line',data:{labels:SHL,datasets:[{label:t(['No. of shareholders','பங்குதாரர் எண்ணிக்கை']),data:SH.n,borderColor:'#0f8b8d',tension:.3,lbl:true}]},options:{responsive:true,maintainAspectRatio:false}});
+}
+
+// ===== Triggers & Cycle =====
+function clock(){
+ var ph=[['P1 Trough','P1 அடிமட்டம்'],['P2 Early recovery','P2 ஆரம்ப மீட்பு'],['P3 Expansion','P3 விரிவாக்கம்'],['P4 Late / peak','P4 உச்சம்'],['P5 Downturn','P5 இறக்கம்']],cols=['#9aa5b1','#1f9d55','#86d0a4','#e0a100','#d64545'];
+ var cx=200,cy=190,R=150,r=78,s='<svg viewBox="0 0 400 390" width="100%" style="max-width:420px;display:block;margin:auto">';
+ for(var i=0;i<5;i++){var a0=(-90+i*72)*Math.PI/180,a1=(-90+(i+1)*72)*Math.PI/180;
+  var p=[cx+R*Math.cos(a0),cy+R*Math.sin(a0),cx+R*Math.cos(a1),cy+R*Math.sin(a1),cx+r*Math.cos(a1),cy+r*Math.sin(a1),cx+r*Math.cos(a0),cy+r*Math.sin(a0)];
+  s+='<path d="M'+p[0]+','+p[1]+' A'+R+','+R+' 0 0 1 '+p[2]+','+p[3]+' L'+p[4]+','+p[5]+' A'+r+','+r+' 0 0 0 '+p[6]+','+p[7]+' Z" fill="'+cols[i]+'" opacity="'+(i===1?1:.55)+'" stroke="#fff" stroke-width="3"/>';
+  var am=(-90+i*72+36)*Math.PI/180,tx=cx+(R+r)/2*Math.cos(am),ty=cy+(R+r)/2*Math.sin(am),lb=t(ph[i]).split(' ');
+  s+='<text x="'+tx+'" y="'+(ty-4)+'" text-anchor="middle" font-size="11" font-weight="800" fill="#fff">'+lb[0]+'</text><text x="'+tx+'" y="'+(ty+10)+'" text-anchor="middle" font-size="9.5" fill="#fff">'+lb.slice(1).join(' ')+'</text>';}
+ var ap=(-90+72+36)*Math.PI/180;
+ s+='<line x1="'+cx+'" y1="'+cy+'" x2="'+(cx+(r-8)*Math.cos(ap))+'" y2="'+(cy+(r-8)*Math.sin(ap))+'" stroke="#2b2118" stroke-width="5" stroke-linecap="round"/><circle cx="'+cx+'" cy="'+cy+'" r="10" fill="#2b2118"/>';
+ var as=(-90+4*72+20)*Math.PI/180;s+='<circle cx="'+(cx+(R+14)*Math.cos(as))+'" cy="'+(cy+(R+14)*Math.sin(as))+'" r="11" fill="#fff" stroke="#d64545" stroke-width="4"/>';
+ 
+ s+='<text x="200" y="362" text-anchor="middle" font-size="11.5" fill="#7a6a5c">'+t(['Hand = alcobev sector (P2 Early recovery)','முள் = மதுபான துறை (P2 ஆரம்ப மீட்பு)'])+'</text><text x="200" y="380" text-anchor="middle" font-size="11.5" fill="#7a6a5c">'+t(['Red ring = UBL price stage (Weinstein Stage 4, turn attempt)','சிவப்பு வளையம் = UBL விலை நிலை (ஸ்டேஜ் 4, திரும்ப முயற்சி)'])+'</text></svg>';
+ return s;
+}
+var TGT={"Premiumisation acceleration":["Premiumisation acceleration","பிரீமியம் வேகம்"],"New can lines (Nizam, Ellora)":["New can lines (Nizam, Ellora)","புது கேன் லைன்கள் (நிஜாம், எல்லோரா)"],"Mid-teens EBITDA margin ambition":["Mid-teens EBITDA margin ambition","மிட்-டீன்ஸ் EBITDA மார்ஜின் இலக்கு"],"More state excise reforms":["More state excise reforms","இன்னும் மாநில எக்சைஸ் சீர்திருத்தம்"],"UP greenfield brewery":["UP greenfield brewery","UP புது ப்ரூவரி"],"West Asia input-cost shock":["West Asia input-cost shock","மேற்காசியா செலவு ஷாக்"],"Q3 step-up in commercial spend":["Q3 step-up in commercial spend","Q3-ல அதிக மார்க்கெட்டிங் செலவு"],"Carlsberg India IPO / competition":["Carlsberg India IPO / competition","கார்ல்ஸ்பர்க் IPO / போட்டி"],"State excise hikes / price controls":["State excise hikes / price controls","மாநில எக்சைஸ் உயர்வு / விலைக் கட்டுப்பாடு"],"Tax demand ₹116.25 cr":["Tax demand ₹116.25 cr","₹116.25 கோடி டாக்ஸ் டிமாண்ட்"]};
+var TGW={"Premiumisation acceleration":["Premium share of volume; Heineken Silver roll-out beyond 11 markets","பிரீமியம் பங்கு; 11 மாநிலங்களை தாண்டி சில்வர்"],"New can lines (Nizam, Ellora)":["Can mix in Telangana and Maharashtra; summer 2027 fill rates","தெலங்கானா, மகாராஷ்டிராவில் கேன் மிக்ஸ்"],"Mid-teens EBITDA margin ambition":["Quarterly EBITDA margin staying above 10%","காலாண்டு மார்ஜின் 10%-க்கு மேல"],"More state excise reforms":["State budgets Feb–Mar 2027","மாநில பட்ஜெட்கள் பிப்–மார்ச் 2027"],"UP greenfield brewery":["Commissioning date †","தொடக்க தேதி †"],"West Asia input-cost shock":["Brent (>$115), glass and carton prices","கச்சா எண்ணெய் ($115+), கண்ணாடி, அட்டை விலை"],"Q3 step-up in commercial spend":["Q3 FY27 A&P to sales","Q3 விளம்பர செலவு / சேல்ஸ்"],"Carlsberg India IPO / competition":["IPO pricing, discounting in key states","IPO விலை, முக்கிய மாநிலங்களில் தள்ளுபடி"],"State excise hikes / price controls":["Budget-season excise notifications","பட்ஜெட் கால எக்சைஸ் அறிவிப்புகள்"],"Tax demand ₹116.25 cr":["Appeal outcome","மேல்முறையீட்டு முடிவு"]};
+var TGB={"Premiumisation acceleration":"Q2 release · 27-Oct-26","New can lines (Nizam, Ellora)":"Q2 release · 27-Oct-26","Mid-teens EBITDA margin ambition":"CMD · 3-Sep-26","More state excise reforms":"CMD · 3-Sep-26","UP greenfield brewery":"Lease registration · 2025","West Asia input-cost shock":"Q1 call · 5-Aug-26","Q3 step-up in commercial spend":"Q2 release · 27-Oct-26","Carlsberg India IPO / competition":"Updated prospectus · 28-Oct-26","State excise hikes / price controls":"Q3 FY26 · Feb-26","Tax demand ₹116.25 cr":"Exchange filing · Jul-26"};
+function rTc(){
+ var h='<h2>'+t(['Cycle and trigger lenses','சைக்கிள் & ட்ரிகர் பார்வை'])+'</h2><div class="chips"><span class="chip">CY '+CO.cycle.cy+'/100</span><span class="chip">TG '+CO.tg+'/100</span><span class="chip">'+t(['Conviction ','கன்விக்ஷன் '])+CO.conviction+'/100 ('+t(['gated','வரம்பிட்டது'])+')</span></div>';
+ h+='<div class="grid g2"><div class="card">'+clock()+'</div><div class="card"><h3>'+t(['Cycle score breakdown','சைக்கிள் ஸ்கோர் விவரம்'])+'</h3><table><tbody>'+
+  '<tr><td>'+t(['Sector: consumption cycle — P2 Early recovery','துறை: நுகர்வு சைக்கிள் — P2 ஆரம்ப மீட்பு'])+'</td><td><b>85</b></td></tr>'+
+  '<tr><td>'+t(['Business lifecycle: mature','பிசினஸ் நிலை: முதிர்ந்தது'])+'</td><td>55</td></tr>'+
+  '<tr><td>'+t(['Earnings cycle: margin rising from bottom third of 5-yr range','லாப சைக்கிள்: 5 வருஷ வரம்பின் கீழ் பகுதியில இருந்து ஏற்றம்'])+'</td><td>85</td></tr>'+
+  '<tr><td>'+t(['Valuation cycle: P/E below its own 5-yr band, earnings rising','மதிப்பீட்டு சைக்கிள்: P/E தன் 5 வருஷ வரம்புக்கு கீழ், லாபம் ஏறுது'])+'</td><td>85</td></tr>'+
+  '<tr><td>'+t(['Price stage: Weinstein Stage 4 (below a falling 30-week average)','விலை நிலை: ஸ்டேஜ் 4 (இறங்கும் 30 வார சராசரிக்கு கீழ்)'])+'</td><td>15</td></tr>'+
+  '<tr><td><b>'+t(['Stock cycle (average)','ஷேர் சைக்கிள் (சராசரி)'])+'</b></td><td><b>60</b></td></tr>'+
+  '<tr class="cat"><td>CY = 50% × 85 + 50% × 60</td><td>73</td></tr></tbody></table>'+
+  '<p class="note">'+t(['Evidence for P2: industry volume +13% in Q1 FY27; UBL volume +16% in Q2; EBITDA margin 6.3% → 10.2% YoY; state reforms widening. Counter-signal: input-cost inflation is still running.','P2-க்கு ஆதாரம்: Q1 FY27 துறை வால்யூம் +13%; Q2-ல UBL +16%; மார்ஜின் 6.3% → 10.2%; மாநில சீர்திருத்தம் விரிவடையுது. எதிர் சிக்னல்: செலவு ஏற்றம் இன்னும் தொடருது.'])+'</p></div></div>';
+ h+='<div class="card tw"><h3>'+t(['Trigger table (points = Impact × Certainty × Timing × Priced-in)','ட்ரிகர் அட்டவணை (புள்ளி = தாக்கம் × உறுதி × நேரம் × விலையில் உள்ளது)'])+'</h3><table><thead><tr><th>'+t(['Trigger','ட்ரிகர்'])+'</th><th>±</th><th>I</th><th>C</th><th>W</th><th>P</th><th>'+t(['Points','புள்ளி'])+'</th><th>'+t(['Status','நிலை'])+'</th><th style="text-align:left">'+t(['What to watch','கவனிக்க வேண்டியது'])+'</th><th style="text-align:left">'+t(['Basis & date','அடிப்படை & தேதி'])+'</th></tr></thead><tbody>'+
+  CO.triggers.map(function(g){return '<tr><td>'+t(TGT[g.name])+'</td><td class="'+(g.sign==='+'?'up':'dn')+'">'+g.sign+'</td><td>'+g.I+'</td><td>'+g.C+'</td><td>'+g.W+'</td><td>'+g.P+'</td><td><b>'+f(g.pts,2)+'</b></td><td>'+g.status+'</td><td style="text-align:left">'+t(TGW[g.name])+'</td><td style="text-align:left" class="note">'+TGB[g.name]+'</td></tr>';}).join('')+
+  '</tbody></table><p class="note">TG = 50 + 8 × (3.00 + 2.00 + 1.12) − 8 × (1.60 + 1.40 + 0.98 + 0.84 + 0.56) = 50 + 48.96 − 43.04 ≈ <b>56</b>. '+t(['Gates: Weinstein Stage 4 caps Conviction at 55; a negative trigger with I ≥ 4 and C ≥ 0.7 (West Asia cost shock) caps it at 50. Indicative lens inputs: Earnings 80, Fundamental 60, Macro 45, Market 55 → weighted ~63 before gates.','வரம்புகள்: ஸ்டேஜ் 4 இருந்தா கன்விக்ஷன் 55 தாண்டாது; I ≥ 4, C ≥ 0.7 உள்ள நெகட்டிவ் ட்ரிகர் (மேற்காசியா செலவு) இருந்தா 50. மற்ற லென்ஸ்: லாபம் 80, அடிப்படை 60, மேக்ரோ 45, மார்க்கெட் 55 → வரம்புக்கு முன் ~63.'])+'</p></div>';
+ var EV=[["28 Oct 2026",["Q2 FY27 earnings call (afternoon)","Q2 FY27 ஏர்னிங்ஸ் கால் (மதியம்)"]],["Nov 2026",["Post-Q2 broker revisions","Q2-க்கு பிறகான புரோக்கர் மாற்றங்கள்"]],["Oct–Dec 2026",["Q3: stepped-up commercial investment; Carlsberg India IPO timing","Q3: அதிக மார்க்கெட்டிங் செலவு; கார்ல்ஸ்பர்க் IPO"]],["Feb 2027 (est.)",["Q3 FY27 results","Q3 FY27 ரிசல்ட்"]],["Feb–Mar 2027",["State budgets: excise changes","மாநில பட்ஜெட்: எக்சைஸ் மாற்றங்கள்"]],["Apr–Jun 2027",["Peak summer (Q1 FY28) — new can lines tested","கோடை உச்சம் (Q1 FY28) — புது கேன் லைன் சோதனை"]],["2027–28 †",["UP greenfield brewery commissioning","UP புது ப்ரூவரி தொடக்கம்"]]];
+ h+='<div class="card"><h3>'+t(['Trigger timeline','ட்ரிகர் காலவரிசை'])+'</h3><div style="overflow-x:auto"><div style="display:flex;gap:10px;min-width:900px;padding:6px 0">'+EV.map(function(e,i){return '<div style="flex:1;border-top:5px solid '+(i===0?'#e8740c':'#ffb066')+';background:#fff;border-radius:10px;padding:8px;font-size:13px"><b>'+e[0]+'</b><br>'+t(e[1])+'</div>';}).join('')+'</div></div></div>';
+ h+='<div class="card"><h3>'+t(['What would change this view','இந்த பார்வையை எது மாற்றும்'])+'</h3><ul class="tk"><li>'+t(['Upside: Q3 and Q4 EBITDA margin hold above 10% even with higher brand spend, and the stock holds above its 30-week average (exits Stage 4).','மேல்: அதிக பிராண்ட் செலவிலும் Q3, Q4 மார்ஜின் 10%-க்கு மேல நின்னு, ஷேர் 30 வார சராசரிக்கு மேல நிலைச்சா (ஸ்டேஜ் 4 முடிவு).'])+'</li><li>'+t(['Downside: a large excise hike in Karnataka, Telangana or Maharashtra, or packaging costs rising again with crude.','கீழ்: கர்நாடகா, தெலங்கானா, மகாராஷ்டிராவுல பெரிய எக்சைஸ் உயர்வு, அல்லது எண்ணெயோட சேர்ந்து பேக்கேஜிங் செலவு மறுபடி ஏறினா.'])+'</li><li>'+t(['Cash test: positive free cash flow for FY27 and borrowings continuing to fall.','கேஷ் சோதனை: FY27-ல பாசிட்டிவ் FCF, கடன் தொடர்ந்து குறையணும்.'])+'</li></ul></div>';
+ return h;
+}
+
+// ===== SWOT =====
+function rSwot(){
+ function q(cls,ttl,arr){return '<div class="sw '+cls+'"><h3 style="margin-top:0">'+ttl+'</h3><ul class="tk">'+arr.map(function(x){return '<li>'+t(x)+'</li>';}).join('')+'</ul></div>';}
+ return '<h2>SWOT</h2><div class="grid g2">'+q('s',t(['Strengths','பலம்']),SWOT.s)+q('w',t(['Weaknesses','பலவீனம்']),SWOT.w)+q('o',t(['Opportunities','வாய்ப்புகள்']),SWOT.o)+q('t',t(['Threats','அச்சுறுத்தல்']),SWOT.t)+'</div>';
+}
+
+// ===== Analysts =====
+function rAn(){
+ var h='<h2>'+t(['Analysts’ rating — third-party views (not CB Research)','அனலிஸ்ட் ரேட்டிங் — மூன்றாம் தரப்பு கருத்துக்கள் (CB Research இல்ல)'])+'</h2>';
+ h+='<div class="card flag">'+t(['Post-Q2 broker updates were not yet published at the time of preparation (28 Oct 2026, 10:48 IST). The table shows the latest available views; older ones are marked stale.','தயாரித்த நேரத்துல (28 அக் 2026, 10:48 IST) Q2-க்கு பிறகான புரோக்கர் ரிப்போர்ட்கள் வரல. கிடைச்ச சமீபத்திய கருத்துக்கள் கீழே; பழையவை "stale" குறி.'])+'</div>';
+ h+='<div class="card tw"><table><thead><tr><th>'+t(['Broker','புரோக்கர்'])+'</th><th>'+t(['Rating','ரேட்டிங்'])+'</th><th>'+t(['Target (₹)','இலக்கு (₹)'])+'</th><th>'+t(['vs ₹1,240','₹1,240-ஓட ஒப்பிட'])+'</th><th>'+t(['Date','தேதி'])+'</th><th style="text-align:left">'+t(['Key reasoning','முக்கிய காரணம்'])+'</th></tr></thead><tbody>'+
+  AN.map(function(a){var cls=/Buy|Overweight/.test(a.r)?'p-g':(/Sell|Under/.test(a.r)?'p-r':'p-a');return '<tr><td>'+a.b+'</td><td><span class="pill '+cls+'">'+a.r+'</span></td><td><b>'+f(a.tp)+'</b></td><td>'+sg(pc(a.tp,CO.priceRef))+'</td><td>'+a.d+'</td><td style="text-align:left">'+t(a.n)+'</td></tr>';}).join('')+'</tbody></table></div>';
+ h+='<div class="card">'+cw('cA1',300)+'</div>';
+ h+='<div class="card"><b>'+t(['Technical view (28 Oct):','டெக்னிக்கல் பார்வை (28 அக்):'])+'</b> '+t(['Prithvi Finmart’s technical head said the jump took the stock above its short-term falling trendline with oversold RSI showing positive divergence; levels of ₹1,300 then ₹1,400 were cited if the recovery holds, while cautioning that the broader trend remains weak.','பிருத்வி ஃபின்மார்ட் டெக்னிக்கல் தலைவர்: இந்த ஏற்றம் குறுகியகால இறக்கக் கோட்டை தாண்டியது, RSI பாசிட்டிவ் டைவர்ஜன்ஸ்; மீட்பு நிலைச்சா ₹1,300, அப்புறம் ₹1,400 — ஆனா மொத்த போக்கு இன்னும் பலவீனம்-னு எச்சரிக்கை.'])+'</div>';
+ return h;
+}
+function pAn(){var L=AN.map(function(a){return a.b+' ('+a.d.split(' ').slice(0,2).join(' ')+')';});
+ mk('cA1',{data:{labels:L,datasets:[{type:'bar',label:t(['Target price (₹)','இலக்கு விலை (₹)']),data:AN.map(function(a){return a.tp;}),backgroundColor:AN.map(function(a){return /Buy|Overweight/.test(a.r)?'#1f9d55':'#e0a100';}),lbl:true},{type:'line',label:t(['Price ₹1,239.75','விலை ₹1,239.75']),data:AN.map(function(){return CO.priceRef;}),borderColor:'#d64545',borderDash:[6,4],pointRadius:0}]},options:{responsive:true,maintainAspectRatio:false,scales:{y:{beginAtZero:true}}}});}
+
+// ===== Self-check =====
+var SKEY='cb_selfcheck_UBL_Q2FY27';
+function scLoad(){try{return JSON.parse(localStorage.getItem(SKEY))||{t:{},own:[]};}catch(e){return {t:{},own:[]};}}
+function scSave(o){try{localStorage.setItem(SKEY,JSON.stringify(o));}catch(e){}}
+function rSelf(){
+ var o=scLoad(),h='<h2>'+t(['CB Investor Self-check','CB முதலீட்டாளர் சுய சோதனை'])+'</h2><p class="note">'+t(['Tick what is true for you. This only counts how many of your own conditions line up. It is not a recommendation.','உங்களுக்கு பொருந்துறதை டிக் பண்ணுங்க. உங்க சொந்த நிபந்தனைகள்ல எத்தனை பொருந்துது-னு மட்டும் எண்ணும். இது பரிந்துரை இல்ல.'])+'</p>';
+ h+='<div class="card"><b>'+t(['Overall','மொத்தம்'])+'</b> <span id="scAll"></span><div class="bar"><div id="scAllB" style="width:0"></div></div></div>';
+ SC.forEach(function(g,gi){h+='<div class="scg"><b>'+t(g.g)+'</b> <span class="note" id="scG'+gi+'"></span><div class="bar"><div id="scGB'+gi+'"></div></div>';
+  g.i.forEach(function(it,ii){var id='g'+gi+'_'+ii;h+='<label class="sci"><input type="checkbox" data-id="'+id+'" '+(o.t[id]?'checked':'')+'><span>'+t(it[0])+(it[1].length?'<div class="dt">Data: '+t(it[1])+'</div>':'')+'</span></label>';});h+='</div>';});
+ h+='<div class="scg"><b>'+t(['5 · My own conditions (up to 8)','5 · என் சொந்த நிபந்தனைகள் (8 வரை)'])+'</b> <span class="note" id="scG4"></span><div class="bar"><div id="scGB4"></div></div><div id="scOwn"></div><div style="display:flex;gap:6px;margin-top:6px"><input id="scIn" style="flex:1;border:1px solid var(--line);border-radius:14px;padding:6px 10px;font:inherit" placeholder="'+t(['Add a condition…','நிபந்தனை சேர்க்க…'])+'"><button class="btn" id="scAdd">+</button></div><div class="chips" id="scSug">'+SCSUG.map(function(s,i){return '<button class="btn ghost" data-i="'+i+'">'+t(s)+'</button>';}).join('')+'</div></div>';
+ h+='<button class="btn ghost" id="scClr">'+t(['Clear all ticks','எல்லாத்தையும் அழி'])+'</button>';
+ return h;
+}
+function scUpd(){var o=scLoad(),tot=0,on=0;SC.forEach(function(g,gi){var n=g.i.length,k=0;g.i.forEach(function(it,ii){if(o.t['g'+gi+'_'+ii])k++;});tot+=n;on+=k;$('scG'+gi).textContent=k+' / '+n;$('scGB'+gi).style.width=(k/n*100)+'%';});
+ var n4=o.own.length,k4=o.own.filter(function(x){return x.c;}).length;tot+=n4;on+=k4;$('scG4').textContent=k4+' / '+n4;$('scGB4').style.width=(n4?k4/n4*100:0)+'%';
+ $('scAll').textContent=on+' / '+tot+' — '+t(['conditions line up','நிபந்தனைகள் பொருந்துது']);$('scAllB').style.width=(tot?on/tot*100:0)+'%';
+ $('scOwn').innerHTML=o.own.map(function(x,i){return '<label class="sci"><input type="checkbox" data-own="'+i+'" '+(x.c?'checked':'')+'><span>'+x.s.replace(/</g,'&lt;')+'</span></label>';}).join('');
+ document.querySelectorAll('[data-own]').forEach(function(cb){cb.onchange=function(){var o2=scLoad();o2.own[+cb.getAttribute('data-own')].c=cb.checked;scSave(o2);scUpd();};});}
+function pSelf(){
+ document.querySelectorAll('.scg input[data-id]').forEach(function(cb){cb.onchange=function(){var o=scLoad();o.t[cb.getAttribute('data-id')]=cb.checked;scSave(o);scUpd();};});
+ function add(s){s=(s||'').trim();if(!s)return;var o=scLoad();if(o.own.length>=8)return;o.own.push({s:s,c:false});scSave(o);scUpd();}
+ $('scAdd').onclick=function(){add($('scIn').value);$('scIn').value='';};
+ document.querySelectorAll('#scSug button').forEach(function(b){b.onclick=function(){add(t(SCSUG[+b.getAttribute('data-i')]));};});
+ $('scClr').onclick=function(){scSave({t:{},own:[]});render();};
+ scUpd();
+}
+
+// ===== Management =====
+function rMgmt(){
+ var h='<h2>'+t(['Management & Board','நிர்வாகம் & போர்டு'])+'</h2><div class="grid g3">'+MG.map(function(m){return '<div class="card"><b>'+m.n+'</b><div class="pill p-o">'+t(m.r)+'</div><div style="font-size:13.5px;margin-top:4px">'+t(m.x)+'</div></div>';}).join('')+'</div>';
+ h+='<p class="note">'+t(['Other Heineken nominee directors are on the board; their names were not captured for this file †.','மற்ற ஹைனகென் நாமினி டைரக்டர்களும் போர்டில் இருக்காங்க; பெயர்கள் இங்க சேர்க்கல †.'])+'</p>';
+ h+='<div class="grid g2"><div class="card"><h3>'+t(['Ownership (Sep 2026)','உரிமை (செப் 2026)'])+'</h3>'+'<div style="height:260px"><canvas id="cG1"></canvas></div></div><div class="card"><h3>'+t(['Governance notes','நிர்வாக குறிப்புகள்'])+'</h3><ul class="tk">'+GOV.map(function(g){return '<li>'+t(g)+'</li>';}).join('')+'</ul></div></div>';
+ return h;
+}
+function pMgmt(){var i=SH.pro.length-1;mk('cG1',{type:'doughnut',data:{labels:[t(['Promoter (Heineken)','புரமோட்டர் (ஹைனகென்)']),'DII','FII',t(['Public','பொது']),t(['Govt','அரசு'])],datasets:[{data:[SH.pro[i],SH.dii[i],SH.fii[i],SH.pub[i],SH.gov[i]],backgroundColor:['#e8740c','#2563eb','#7c3aed','#1f9d55','#9aa5b1']}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'right'}}}});}
+
+// ===== Socrates =====
+function rSoc(){
+ var h='<h2>'+t(['Cauvery Socrates — think it through','காவேரி சாக்ரடீஸ் — யோசிச்சு பாருங்க'])+'</h2><p class="note">'+t(['Each question gives a hint first. Try before you look.','ஒவ்வொரு கேள்விக்கும் முதல்ல ஒரு குறிப்பு. பதிலை பார்க்கும் முன் முயற்சி பண்ணுங்க.'])+'</p>';
+ SOQ.forEach(function(q,i){h+='<div class="q"><b>Q'+(i+1)+'. '+t(q.q)+'</b>';
+  if(q.free){h+='<textarea id="sf'+i+'"></textarea><button class="btn" data-free="'+i+'">'+t(['Check my thinking','என் யோசனையை சோதி'])+'</button>';}
+  else{q.o.forEach(function(o,j){h+='<button class="opt" data-q="'+i+'" data-o="'+j+'">'+String.fromCharCode(65+j)+'. '+t(o)+'</button>';});}
+  h+='<div class="fb note">💡 '+t(q.h)+'</div><div class="fb" id="sfb'+i+'"></div></div>';});
+ return h;
+}
+function pSoc(){
+ document.querySelectorAll('.opt').forEach(function(b){b.onclick=function(){var i=+b.getAttribute('data-q'),j=+b.getAttribute('data-o'),q=SOQ[i];
+  document.querySelectorAll('.opt[data-q="'+i+'"]').forEach(function(x){x.classList.remove('ok','no');});
+  b.classList.add(j===q.a?'ok':'no');$('sfb'+i).innerHTML=j===q.a?'<span class="up">✔ '+t(['Right. Now ask: what would make this change next quarter?','சரி. அடுத்த காலாண்டுல இது எப்படி மாறலாம்-னு யோசிங்க.'])+'</span>':'<span class="dn">✘ '+t(['Not quite — re-read the hint and try again.','இல்ல — குறிப்பை மறுபடி படிச்சு முயற்சி பண்ணுங்க.'])+'</span>';};});
+ document.querySelectorAll('[data-free]').forEach(function(b){b.onclick=function(){var i=+b.getAttribute('data-free'),v=($('sf'+i).value||'').toLowerCase(),q=SOQ[i],hit=q.k.filter(function(k){return v.indexOf(k)>=0;});
+  $('sfb'+i).innerHTML=hit.length>=2?'<span class="up">'+t(['Good — you touched ','நல்லது — நீங்க தொட்டது: '])+hit.slice(0,4).join(', ')+'. '+t(['Now quantify one: e.g. receivable days 116, EBITDA margin ~9–10%.','இப்போ ஒண்ணை எண்ணால சொல்லுங்க: ரிசீவபிள் 116 நாள், மார்ஜின் ~9–10%.'])+'</span>':'<span class="nt">'+t(['Think about who sets the price and who pays late. What does that do to margin and to capital tied up?','விலையை யார் நிர்ணயிக்கிறாங்க, யார் தாமதமா பணம் தர்றாங்க — அது மார்ஜினையும் முடங்கும் மூலதனத்தையும் என்ன பண்ணும்?'])+'</span>';};});
+}
+
+// ===== Render engine =====
+var R={ov:[rOv,pOv],hist:[rHist,pHist],bm:[rBm,pBm],fin:[rFin,pFin],cf:[rCf,pCf],val:[rVal,pVal],mkt:[rMkt,pMkt],tc:[rTc,null],swot:[rSwot,null],an:[rAn,pAn],self:[rSelf,pSelf],mgmt:[rMgmt,pMgmt],soc:[rSoc,pSoc]};
+function bar(){var b=TABS.map(function(x){return '<button data-t="'+x[0]+'" class="'+(x[0]===CUR?'on':'')+'">'+t(x[1])+'</button>';}).join('')+'<button id="langbtn">'+(LANG==='en'?'தமிழ்':'English')+'</button>';
+ $('tabbar').innerHTML=b;document.querySelectorAll('#tabbar button[data-t]').forEach(function(x){x.onclick=function(){go(x.getAttribute('data-t'));};});$('langbtn').onclick=function(){LANG=LANG==='en'?'ta':'en';document.body.classList.toggle('ta',LANG==='ta');document.documentElement.lang=LANG;render();asInit();};}
+function go(k){CUR=k;render();window.scrollTo({top:0,behavior:'smooth'});var b=document.querySelector('#tabbar button.on');if(b&&b.scrollIntoView)b.scrollIntoView({inline:'center',block:'nearest'});}
+function render(){kill();bar();$('ttl').textContent=t(TX.title);$('subttl').textContent=t(TX.sub);$('disc').innerHTML=t(TX.disc);
+ $('main').innerHTML='<section class="tab on">'+R[CUR][0]()+'</section>';if(R[CUR][1])R[CUR][1]();}
+
+// ===== CB badge =====
+$('cbBadge').onclick=function(e){e.stopPropagation();$('disc').classList.toggle('on');$('asPanel').classList.remove('on');};
+document.addEventListener('click',function(e){if(!$('disc').contains(e.target)&&e.target!==$('cbBadge'))$('disc').classList.remove('on');});
+
+// ===== CB Assist (voice Q&A) =====
+var REC=null;
+function asInit(){$('asTitle').textContent=t(['CB Assist — ask by voice or text','CB அசிஸ்ட் — குரல் அல்லது எழுத்தில் கேளுங்க']);$('asQ').placeholder=t(['e.g. What was the profit?','உதா: லாபம் எவ்வளவு?']);
+ $('asSugg').innerHTML=ASUG.map(function(s){return '<button>'+t(s)+'</button>';}).join('');document.querySelectorAll('#asSugg button').forEach(function(b){b.onclick=function(){ask(b.textContent);};});
+ if(!$('asLog').innerHTML)say(t(['Hello! Ask me about United Breweries’ Q2 FY27 results — profit, margins, premium brands, cash flow, valuation, history or triggers.','வணக்கம்! யுனைடெட் ப்ரூவரீஸ் Q2 FY27 பத்தி கேளுங்க — லாபம், மார்ஜின், பிரீமியம், கேஷ் ஃப்ளோ, மதிப்பீடு, வரலாறு, ட்ரிகர்.']),false);}
+function say(txt,speak,extra){var d=document.createElement('div');d.className='mA';d.innerHTML=txt+(extra||'');$('asLog').appendChild(d);$('asLog').scrollTop=1e6;
+ if(speak&&window.speechSynthesis){try{speechSynthesis.cancel();var u=new SpeechSynthesisUtterance(d.textContent);u.lang=LANG==='ta'?'ta-IN':'en-IN';var vs=speechSynthesis.getVoices().filter(function(v){return v.lang&&v.lang.indexOf(LANG==='ta'?'ta':'en-IN')===0;});if(vs[0])u.voice=vs[0];u.rate=1;speechSynthesis.speak(u);}catch(e){}}}
+function ask(q){q=(q||'').trim();if(!q)return;var u=document.createElement('div');u.className='mU';u.textContent=q;$('asLog').appendChild(u);var lq=q.toLowerCase();
+ if(/\b(buy|sell|hold|invest now|should i)\b/.test(lq)||/வாங்க|விக்க|விற்க|முதலீடு பண்ண/.test(q)){say(t(NOADV),true,' <button class="btn ghost" id="toSelf" style="margin-top:6px">'+t(['Open Self-check','சுய சோதனையை திற'])+'</button>');var b=$('toSelf');b.id='';b.onclick=function(){go('self');$('asPanel').classList.remove('on');};return;}
+ var best=null,bs=0;KB.forEach(function(k){var s=0;k.k.forEach(function(w){if(lq.indexOf(w)>=0)s+=w.length>4?2:1;});if(s>bs){bs=s;best=k;}});
+ if(best)say(t(best.a),true);else say(t(['I can answer on: profit, revenue, margin, premium, valuation, debt, cash flow, history, triggers, analysts, CB score, risks and management.','என்னால பதில் சொல்ல முடிஞ்சது: லாபம், வருமானம், மார்ஜின், பிரீமியம், மதிப்பீடு, கடன், கேஷ் ஃப்ளோ, வரலாறு, ட்ரிகர், அனலிஸ்ட், CB ஸ்கோர், ரிஸ்க், நிர்வாகம்.']),true);}
+$('asBtn').onclick=function(){$('asPanel').classList.toggle('on');$('disc').classList.remove('on');};
+$('asClose').onclick=function(){$('asPanel').classList.remove('on');};
+$('asSend').onclick=function(){ask($('asQ').value);$('asQ').value='';};
+$('asQ').addEventListener('keydown',function(e){if(e.key==='Enter'){ask($('asQ').value);$('asQ').value='';}});
+$('mic').onclick=function(){var SR=window.SpeechRecognition||window.webkitSpeechRecognition;if(!SR){say(t(['Voice input is not supported in this browser — please type your question.','இந்த பிரவுசர்ல குரல் வசதி இல்ல — டைப் பண்ணுங்க.']),false);return;}
+ if(REC){try{REC.stop();}catch(e){}return;}REC=new SR();REC.lang=LANG==='ta'?'ta-IN':'en-IN';REC.interimResults=false;REC.maxAlternatives=1;$('mic').classList.add('rec');
+ REC.onresult=function(ev){ask(ev.results[0][0].transcript);};REC.onend=function(){$('mic').classList.remove('rec');REC=null;};REC.onerror=function(){$('mic').classList.remove('rec');REC=null;};REC.start();};
+
+render();asInit();
+
+</script>
+</body>
+</html>
