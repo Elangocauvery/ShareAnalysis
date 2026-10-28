@@ -1,0 +1,762 @@
+<title>Vedanta Group Q2 FY27</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&family=Inter:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@500;600&family=Noto+Sans+Tamil:wght@400;600;700&display=swap">
+<style>
+/* Layout: sticky masthead + scrolling tab rail, company sub-tab chips, one content column of panels. Single light-orange look by the house brief. */
+:root{
+  --bg:#FFF4E8;        /* very light orange page */
+  --panel:#FFFBF6;     /* panel paper */
+  --soft:#FDE6CC;      /* light orange fill */
+  --line:#EFCFA8;      /* hairlines */
+  --acc:#F28C28;       /* house accent */
+  --accInk:#9A4E00;    /* accent text on light */
+  --ink:#170F07;       /* bold body text */
+  --ink2:#45311D;      /* secondary text */
+  --hzl:#1D5C8A;       /* Hindustan Zinc: zinc blue */
+  --hzlSoft:#DCEAF5;
+  --visl:#A3361F;      /* Vedanta Iron & Steel: oxide red */
+  --vislSoft:#F8DED6;
+  --good:#17703F; --goodSoft:#DBF1E3;
+  --warn:#9C5B00; --warnSoft:#FCEBC8;
+  --bad:#B0241B;  --badSoft:#F9DCD9;
+  --pend:#6B5B4B; --pendSoft:#EFE6DB;
+  --f-display:"Playfair Display",Georgia,"Times New Roman",serif;
+  --f-body:"Inter","Noto Sans Tamil",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+html,body{background:var(--bg)}
+body{color:var(--ink);font-family:var(--f-body);font-size:15px;line-height:1.5;font-weight:500;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:0 120px}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bg)}
+.wrap{max-width:1180px;margin:0 auto}
+h1,h2,h3{font-family:var(--f-display);text-wrap:balance;margin:0;color:var(--ink)}
+h1{font-size:clamp(1.5rem,3.6vw,2.3rem);line-height:1.1;font-weight:800}
+h2{font-size:1.35rem;font-weight:800}
+h3{font-size:1.05rem;font-weight:700;font-family:var(--f-body)}
+.mono,.num{font-family:var(--f-mono);font-variant-numeric:tabular-nums}
+button{font:inherit;cursor:pointer}
+:focus-visible{outline:3px solid var(--acc);outline-offset:2px}
+
+/* masthead */
+.mast{position:sticky;top:env(safe-area-inset-top,0px);z-index:9;background:var(--bg);padding-block:12px 6px;border-bottom:2px solid var(--line)}
+.mrow{display:flex;gap:12px;align-items:flex-end;justify-content:space-between;flex-wrap:wrap}
+.brand{display:flex;flex-direction:column;gap:2px;min-width:0}
+.eyebrow{font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;font-weight:800;color:var(--accInk)}
+.slogan{font-weight:700;color:var(--ink2);font-size:.9rem}
+.ctrls{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.btn{border:2px solid var(--ink);background:var(--panel);color:var(--ink);border-radius:999px;padding:6px 14px;font-weight:800;font-size:.85rem}
+.btn.on{background:var(--acc);border-color:var(--acc);color:var(--ink)}
+.btn.ghost{border-color:var(--line)}
+.seg{display:inline-flex;border:2px solid var(--ink);border-radius:999px;overflow:hidden}
+.seg button{border:0;background:var(--panel);padding:6px 12px;font-weight:800;color:var(--ink)}
+.seg button.on{background:var(--acc)}
+.tabs{display:flex;gap:6px;overflow-x:auto;padding-block:10px 4px;scrollbar-width:thin}
+.tab{flex:0 0 auto;border:2px solid var(--line);background:var(--panel);color:var(--ink);border-radius:10px;padding:7px 12px;font-weight:800;font-size:.84rem;white-space:nowrap}
+.tab.on{background:var(--acc);border-color:var(--acc)}
+.subs{display:flex;gap:6px;flex-wrap:wrap;padding-block:12px 4px;align-items:center}
+.chip{border:2px solid var(--line);background:var(--panel);border-radius:999px;padding:5px 12px;font-weight:800;font-size:.83rem;color:var(--ink);display:inline-flex;gap:6px;align-items:center}
+.chip .dot{width:10px;height:10px;border-radius:50%}
+.chip.on.hzl{background:var(--hzlSoft);border-color:var(--hzl)}
+.chip.on.visl{background:var(--vislSoft);border-color:var(--visl)}
+.chip.on.cmp{background:var(--soft);border-color:var(--acc)}
+.chip.pend{border-style:dashed;color:var(--ink2);font-weight:700}
+.chip.pend.on{background:var(--pendSoft);border-color:var(--pend);color:var(--ink)}
+.subs .lbl{font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;font-weight:800;color:var(--ink2);margin-right:4px}
+
+/* content */
+main{padding-block:14px}
+.grid{display:grid;gap:14px}
+.g2{grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr))}
+.g3{grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr))}
+.g4{grid-template-columns:repeat(auto-fit,minmax(min(100%,190px),1fr))}
+.panel{background:var(--panel);border:2px solid var(--line);border-radius:14px;padding:16px;min-width:0}
+.panel.hzl{border-top:6px solid var(--hzl)}
+.panel.visl{border-top:6px solid var(--visl)}
+.panel h2{margin-bottom:8px}
+.ptitle{display:flex;justify-content:space-between;gap:10px;align-items:baseline;flex-wrap:wrap;margin-bottom:8px}
+.note{font-size:.8rem;color:var(--ink2);font-weight:600}
+ul.b{margin:6px 0 0;padding-left:18px;display:grid;gap:5px}
+ul.b li{font-weight:600}
+ul.b li b{font-weight:800}
+.kpi{border:2px solid var(--line);border-radius:12px;padding:10px 12px;background:var(--bg);min-width:0}
+.kpi .k{font-size:.74rem;text-transform:uppercase;letter-spacing:.08em;font-weight:800;color:var(--ink2)}
+.kpi .v{font-family:var(--f-mono);font-size:1.35rem;font-weight:600;color:var(--ink)}
+.kpi .d{font-size:.8rem;font-weight:800}
+.up{color:var(--good)} .dn{color:var(--bad)} .wa{color:var(--warn)}
+.pill{font-family:var(--f-body);display:inline-block;border-radius:999px;padding:2px 9px;font-size:.74rem;font-weight:800;border:1.5px solid currentColor}
+.pill.good{color:var(--good);background:var(--goodSoft)} .pill.bad{color:var(--bad);background:var(--badSoft)} .pill.warn{color:var(--warn);background:var(--warnSoft)} .pill.pend{color:var(--pend);background:var(--pendSoft)}
+.tscroll{overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-size:.88rem}
+th,td{padding:7px 8px;border-bottom:1.5px solid var(--line);text-align:right;white-space:nowrap}
+th{font-size:.74rem;text-transform:uppercase;letter-spacing:.06em;color:var(--ink2);font-weight:800;background:var(--soft)}
+td:first-child,th:first-child{text-align:left;white-space:normal;min-width:150px}
+td{font-family:var(--f-mono);font-variant-numeric:tabular-nums;font-weight:600}
+td:first-child{font-family:var(--f-body);font-weight:700}
+tr.sub td{color:var(--ink2);font-size:.82rem}
+svg text{font-family:var(--f-body);fill:var(--ink);font-weight:700}
+svg .m{font-family:var(--f-mono)}
+.chart{width:100%;height:auto;display:block}
+.cwrap{overflow-x:auto}
+.legend{display:flex;gap:12px;flex-wrap:wrap;font-size:.8rem;font-weight:800;margin-top:6px}
+.legend i{display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:5px;vertical-align:-1px}
+
+/* flow map */
+.flow{display:grid;grid-template-columns:1fr auto 1.3fr auto 1fr;gap:10px;align-items:stretch}
+.fcol{display:grid;gap:10px;min-width:0}
+.fbox{border:2px solid var(--line);border-radius:12px;background:var(--bg);padding:10px;text-align:left;color:var(--ink);min-width:0}
+.fbox:hover,.fbox.on{border-color:var(--acc);background:var(--soft)}
+.fbox .t{font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;font-weight:800;color:var(--ink2)}
+.fbox .n{font-weight:800}
+.fbox.hub{border-width:3px}
+.arr{align-self:center;font-weight:800;font-size:1.4rem;color:var(--accInk)}
+.mflow{display:flex;gap:6px;align-items:stretch;flex-wrap:wrap;margin-top:10px}
+.mflow .fbox{flex:1 1 120px}
+.formula{margin-top:10px;border:2px dashed var(--acc);border-radius:10px;padding:8px 12px;font-weight:800;background:var(--panel)}
+.detail{margin-top:10px;border-left:5px solid var(--acc);background:var(--soft);padding:10px 12px;border-radius:0 10px 10px 0;font-weight:600}
+@media (max-width:760px){.flow{grid-template-columns:1fr}.arr{transform:rotate(90deg);justify-self:center}}
+
+/* swot */
+.swot{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.swot>div{border-radius:12px;padding:12px;border:2px solid}
+.sw-s{background:var(--goodSoft);border-color:var(--good)} .sw-w{background:var(--badSoft);border-color:var(--bad)}
+.sw-o{background:var(--hzlSoft);border-color:var(--hzl)} .sw-t{background:var(--warnSoft);border-color:var(--warn)}
+@media (max-width:560px){.swot{grid-template-columns:1fr}}
+
+/* takeaways */
+.steps{display:grid;gap:10px;position:relative}
+.step{display:grid;grid-template-columns:44px 1fr;gap:12px;align-items:start}
+.step .c{width:44px;height:44px;border-radius:50%;display:grid;place-items:center;font-family:var(--f-display);font-weight:800;font-size:1.2rem;border:3px solid var(--ink);background:var(--panel)}
+.step .c.good{border-color:var(--good);background:var(--goodSoft)} .step .c.bad{border-color:var(--bad);background:var(--badSoft)} .step .c.warn{border-color:var(--warn);background:var(--warnSoft)}
+
+/* self check */
+.ck{display:grid;grid-template-columns:24px 1fr;gap:8px;padding:8px 0;border-bottom:1.5px dashed var(--line)}
+.ck input{width:20px;height:20px;accent-color:var(--acc);margin-top:2px}
+.ck .dl{font-size:.8rem;color:var(--ink2);font-weight:600}
+.ck .dl b{color:var(--ink)}
+.addrow{display:flex;gap:8px;margin-top:8px;flex-wrap:wrap}
+.addrow input{flex:1 1 200px;border:2px solid var(--line);border-radius:10px;padding:8px;font:inherit;background:var(--panel);color:var(--ink)}
+.x{border:0;background:none;color:var(--bad);font-weight:800}
+
+/* quiz */
+.qopt{display:block;width:100%;text-align:left;border:2px solid var(--line);background:var(--bg);border-radius:10px;padding:10px;margin-top:8px;font-weight:700;color:var(--ink)}
+.qopt.right{border-color:var(--good);background:var(--goodSoft)} .qopt.wrong{border-color:var(--bad);background:var(--badSoft)}
+
+/* assist */
+.as-head{display:flex;gap:10px;align-items:center;justify-content:space-between;flex-wrap:wrap}
+.as-log{border:2px solid var(--line);border-radius:12px;background:var(--bg);padding:10px;height:340px;overflow-y:auto;display:flex;flex-direction:column;gap:8px}
+.msg{max-width:88%;border-radius:12px;padding:8px 11px;font-weight:600}
+.msg.u{align-self:flex-end;background:var(--soft);border:2px solid var(--acc)}
+.msg.a{align-self:flex-start;background:var(--panel);border:2px solid var(--line)}
+.msg details{margin-top:4px;font-size:.85rem}
+.msg summary{cursor:pointer;color:var(--accInk);font-weight:800}
+.as-in{display:flex;gap:8px;margin-top:8px;flex-wrap:wrap}
+.as-in input{flex:1 1 220px;border:2px solid var(--ink);border-radius:10px;padding:9px;font:inherit;background:var(--panel);color:var(--ink)}
+.sugs{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
+.sugs button{border:1.5px solid var(--line);background:var(--panel);border-radius:999px;padding:4px 10px;font-weight:700;font-size:.8rem;color:var(--ink)}
+.vbar{height:6px;background:var(--line);border-radius:3px;overflow:hidden;margin-top:6px}
+.vbar i{display:block;height:100%;background:var(--acc);width:0}
+.as-set{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:8px;font-size:.82rem;font-weight:700}
+.as-set select,.as-set input[type=range]{accent-color:var(--acc)}
+.as-set select{border:1.5px solid var(--line);border-radius:8px;padding:3px;background:var(--panel);color:var(--ink);font:inherit}
+
+/* floating */
+.cb{position:fixed;right:calc(14px + env(safe-area-inset-right,0px));bottom:calc(14px + env(safe-area-inset-bottom,0px));z-index:20}
+.cb .badge{width:46px;height:46px;border-radius:50%;background:var(--acc);border:3px solid var(--ink);color:var(--ink);font-family:var(--f-display);font-weight:800;font-size:1.05rem;display:grid;place-items:center;animation:blink 2.2s ease-in-out infinite}
+.cb .tip{position:absolute;right:0;bottom:56px;width:min(320px,80vw);background:var(--panel);border:2px solid var(--ink);border-radius:12px;padding:10px 12px;font-size:.8rem;font-weight:600;display:none}
+.cb:hover .tip,.cb.open .tip{display:block}
+.vbub{position:fixed;right:calc(10px + env(safe-area-inset-right,0px));bottom:calc(72px + env(safe-area-inset-bottom,0px));z-index:20;border:3px solid var(--ink);background:var(--panel);color:var(--ink);border-radius:999px;padding:7px 12px;font-weight:800;font-size:.8rem;box-shadow:0 3px 0 var(--ink)}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.45}}
+@media (prefers-reduced-motion:reduce){.cb .badge{animation:none}}
+main>*+*{margin-top:14px}
+@media (max-width:700px){.mast{position:static}}
+.pending{border:2px dashed var(--pend);background:var(--pendSoft);border-radius:14px;padding:16px}
+</style>
+
+<div class="wrap">
+  <header class="mast">
+    <div class="mrow">
+      <div class="brand">
+        <span class="eyebrow" id="eyebrow">CB Research · Q2 FY27 · Vedanta Group</span>
+        <h1 id="htitle">Vedanta Group — Q2 FY27 results, company by company</h1>
+        <span class="slogan" id="slogan">Know before you own</span>
+      </div>
+      <div class="ctrls">
+        <div class="seg" role="group" aria-label="Language">
+          <button id="lenB" class="on">EN</button><button id="ltaB">தமிழ்</button>
+        </div>
+        <button class="btn ghost" id="readB">🔊 Read this tab</button>
+      </div>
+    </div>
+    <nav class="tabs" id="tabs" aria-label="Sections"></nav>
+  </header>
+  <div class="subs" id="subs"></div>
+  <main id="content"></main>
+</div>
+
+<button class="vbub" id="vbub">🎙️ Voice Assist</button>
+<div class="cb" id="cb"><div class="badge" tabindex="0" aria-label="Disclaimer">CB</div><div class="tip" id="cbtip"></div></div>
+
+<script>
+/* ============ language helpers ============ */
+var lang="en";
+function A(e,t){return {en:e,ta:t};}
+function T(o){if(o==null)return "";if(typeof o==="string"||typeof o==="number")return String(o);return lang==="ta"?(o.ta||o.en):o.en;}
+function L(e,t){return lang==="ta"?t:e;}
+function safeGet(k){try{return localStorage.getItem(k);}catch(e){return null;}}
+function safeSet(k,v){try{localStorage.setItem(k,v);}catch(e){}}
+function esc(s){return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");}
+function f(n,d){if(n==null||isNaN(n))return "—";var s=Math.abs(n).toLocaleString("en-IN",{maximumFractionDigits:d==null?0:d,minimumFractionDigits:d==null?0:d});return (n<0?"−":"")+s;}
+function cr(n){return n==null?"—":"₹"+f(n)+" cr";}
+
+/* ============ DATA ============ */
+var Q=["Q2 FY27","Q1 FY27","Q2 FY26"];
+var CO={
+ hzl:{id:"hzl",name:"Hindustan Zinc",short:"HZL",col:"var(--hzl)",soft:"var(--hzlSoft)",
+  price:492,mcap:207804,pe:10.1,pb:7.0,ev:196536,evx:6.4,dy:2.2,lo:454,hi:733,bv:70.2,
+  fin:[
+   {k:A("Revenue from operations","Revenue"),v:[15093,13747,8549],u:"cr"},
+   {k:A("EBITDA","EBITDA"),v:[9285,8074,4467],u:"cr",note:"q1"},
+   {k:A("EBITDA margin","EBITDA margin"),v:[61.5,58.7,52.3],u:"pct"},
+   {k:A("Other income","Other income"),v:[374,316,238],u:"cr",sub:1},
+   {k:A("Profit before tax","PBT"),v:[8572,null,3542],u:"cr"},
+   {k:A("Tax","Tax"),v:[2160,null,893],u:"cr",sub:1},
+   {k:A("Net profit (PAT)","Net profit (PAT)"),v:[6412,5469,2649],u:"cr"},
+   {k:A("PAT margin","PAT margin"),v:[42.5,39.8,31.0],u:"pct"},
+   {k:A("EPS (₹)","EPS (₹)"),v:[15.17,12.94,6.27],u:"rs"}],
+  ops:[
+   {k:A("Mined metal (kt)","Mined metal (kt)"),v:[271,268,258],u:"n"},
+   {k:A("Refined metal (kt)","Refined metal (kt)"),v:[264,null,246],u:"n"},
+   {k:A("Silver produced (tonnes)","Silver (tonnes)"),v:[173,149,144],u:"n"},
+   {k:A("Zinc cost ex-royalty ($/t) — lower is better","Zinc cost ex-royalty ($/t) — குறைஞ்சா நல்லது"),v:[703,851,994],u:"n",lower:1}],
+  seg:{names:[A("Zinc","Zinc"),A("Lead","Lead"),A("Silver","Silver"),A("Others","Others")],cols:["#1D5C8A","#6E8FA8","#8C96A3","#E3A15B"],
+   v:[[8224,7304,5340],[1130,1086,840],[4111,3839,1706],[1628,1518,663]]},
+  sh:[["Vedanta Ltd (promoter)",60.71],["Govt of India",27.92],["DIIs",4.84],["FIIs",2.37],["Public",4.15]]
+ },
+ visl:{id:"visl",name:"Vedanta Iron & Steel",short:"VISL",col:"var(--visl)",soft:"var(--vislSoft)",
+  price:28.0,mcap:10930,pe:null,pb:1.9,ev:13693,evx:11.4,dy:0,lo:19.1,hi:44.8,bv:14.9,
+  fin:[
+   {k:A("Revenue from operations","Revenue"),v:[2788,3662,2858],u:"cr"},
+   {k:A("EBITDA (company-reported)","EBITDA (company சொன்னது)"),v:[83,515,54],u:"cr"},
+   {k:A("EBITDA margin","EBITDA margin"),v:[3.0,14.1,1.9],u:"pct"},
+   {k:A("Other income","Other income"),v:[30,99,174],u:"cr",sub:1},
+   {k:A("Interest cost","Interest cost"),v:[171,207,431],u:"cr",sub:1,lower:1},
+   {k:A("Depreciation","Depreciation"),v:[218,225,204],u:"cr",sub:1},
+   {k:A("Profit / loss before tax","PBT"),v:[-311,175,-426],u:"cr"},
+   {k:A("Net profit / loss (PAT)","Net profit / loss"),v:[-324,121,-477],u:"cr"},
+   {k:A("EPS (₹)","EPS (₹)"),v:[-0.80,0.31,null],u:"rs"}],
+  ops:[
+   {k:A("Saleable steel (kt)","Saleable steel (kt)"),v:[532,582,512],u:"n"},
+   {k:A("Iron ore produced (Mn DMT)","Iron ore (Mn DMT)"),v:[1.52,2.68,1.75],u:"d2"},
+   {k:A("Steel EBITDA per tonne (₹)","Steel EBITDA / tonne (₹)"),v:[1381,5864,null],u:"n"}],
+  seg:{names:[A("Iron ore revenue","Iron ore revenue")],cols:["#A3361F"],v:[[638,1190,null]]},
+  sh:[["Promoter group",56.38],["DIIs",9.24],["FIIs",4.11],["Public & others",30.25]]
+ }
+};
+var PEND=[
+ {id:"vedl",name:"Vedanta Ltd",due:A("Results today, 28 Oct · call 4:30 PM","இன்னிக்கு 28 Oct · call 4:30 PM"),day:28,
+  pts:[A("Zinc India refined zinc 212 kt; lead 51 kt (+14% YoY); silver 173 t (+20%)","Zinc India refined zinc 212 kt; lead 51 kt (+14%); silver 173 t (+20%)"),
+       A("Zinc International: Gamsberg Phase 2 commissioned, output from Oct 2026","Gamsberg Phase 2 commission ஆயிடுச்சு, Oct 2026-ல இருந்து output"),
+       A("Copper (Silvassa) sales 52 kt, +16% YoY","Copper sales 52 kt, +16%"),
+       A("Ports: record first-half cargo, discharge +32% YoY","Ports: H1 cargo record, discharge +32%"),
+       A("Q1 FY27: PAT ₹5,294 cr; ₹5 interim dividend paid in Oct","Q1 FY27 PAT ₹5,294 cr; Oct-ல ₹5 interim dividend")]},
+ {id:"vaml",name:"Vedanta Aluminium Metal",due:A("Results today, 28 Oct · call 5:00 PM","இன்னிக்கு 28 Oct · call 5:00 PM"),day:28,
+  pts:[A("Aluminium 649 kt, +5% YoY — highest ever quarter","Aluminium 649 kt, +5% — இதுவரை best quarter"),
+       A("Alumina 895 kt, +37% YoY — record, on expansion ramp-up","Alumina 895 kt, +37% — record, expansion ramp-up"),
+       A("H1 aluminium 1.28 Mt (+5%); listed at ₹527 on 15 Jun","H1 aluminium 1.28 Mt (+5%); 15 Jun ₹527-க்கு list ஆச்சு")]},
+ {id:"vogl",name:"Vedanta Oil & Gas",due:A("Results tomorrow, 29 Oct","நாளைக்கு 29 Oct results"),day:29,
+  pts:[A("Gross production 72.2 kboepd, −19% YoY, −7% QoQ","Gross production 72.2 kboepd, −19% YoY, −7% QoQ"),
+       A("Rajasthan 59.9 kboepd (−15% YoY) on natural decline","Rajasthan 59.9 kboepd (−15%) — natural decline"),
+       A("Cambay operations went to ONGC from 24 Jul 2026","24 Jul 2026-ல இருந்து Cambay ONGC கைக்கு போயிடுச்சு"),
+       A("Q1 FY27 revenue ₹2,507 cr","Q1 FY27 revenue ₹2,507 cr")]},
+ {id:"vpl",name:"Vedanta Power",due:A("Results tomorrow, 29 Oct","நாளைக்கு 29 Oct results"),day:29,
+  pts:[A("Power sales 5,593 MU, +26% YoY; H1 10,817 MU (+32%)","Power sales 5,593 MU, +26%; H1 10,817 MU (+32%)"),
+       A("Meenakshi +111%, Jharsuguda +186%; Sakti −53% after boiler incident","Meenakshi +111%, Jharsuguda +186%; Sakti boiler incident-னால −53%"),
+       A("Q1 FY27: revenue ₹2,616 cr, loss before tax ₹608 cr","Q1 FY27: revenue ₹2,616 cr, PBT loss ₹608 cr")]}
+];
+
+/* ============ state ============ */
+var TABS=[
+ {id:"dash",en:"Dashboard",ta:"Dashboard"},
+ {id:"bm",en:"Business Model",ta:"Business Model"},
+ {id:"seg",en:"Segments",ta:"Segments"},
+ {id:"fin",en:"Financials",ta:"Financials"},
+ {id:"cf",en:"Cash Flow & Ratios",ta:"Cash Flow & Ratios"},
+ {id:"val",en:"Valuations",ta:"Valuations"},
+ {id:"kt",en:"5 Key Takeaways",ta:"5 முக்கிய பாயிண்ட்"},
+ {id:"why",en:"Share Price Moves",ta:"Share விலை ஏன் நகருது"},
+ {id:"tc",en:"Triggers & Cycle",ta:"Triggers & Cycle"},
+ {id:"pil",en:"6 Pillars",ta:"6 தூண்கள்"},
+ {id:"bet",en:"Big Bet",ta:"பெரிய Bet"},
+ {id:"vc",en:"Sector & Value Chain",ta:"Sector & Value Chain"},
+ {id:"swot",en:"SWOT",ta:"SWOT"},
+ {id:"sc",en:"Investor Self-Check",ta:"Investor Self-Check"},
+ {id:"as",en:"Cauvery Assist",ta:"Cauvery Assist"},
+ {id:"soc",en:"Cauvery Socrates",ta:"Cauvery Socrates"},
+ {id:"av",en:"Analyst View",ta:"Analyst View"}
+];
+var NOSUB={dash:1,as:1,soc:1};
+var cur={tab:safeGet("cbv_tab")||"dash",sub:{}};
+if(!TABS.some(function(t){return t.id===cur.tab;}))cur.tab="dash";
+function subOf(tab){return cur.sub[tab]||"hzl";}
+
+/* ============ chart helpers ============ */
+function barChart(cats,series,o){
+  o=o||{};var W=o.w||560,H=o.h||230,pl=58,pr=12,pt=22,pb=34;
+  var all=[];series.forEach(function(s){s.vals.forEach(function(v){if(v!=null)all.push(v);});});
+  var mx=Math.max.apply(null,all.concat([0])),mn=Math.min.apply(null,all.concat([0]));
+  var span=(mx-mn)||1;mx+=span*0.12;if(mn<0)mn-=span*0.12;span=mx-mn;
+  var y=function(v){return pt+(H-pt-pb)*(1-(v-mn)/span);};
+  var gw=(W-pl-pr)/cats.length,bw=Math.min(46,(gw-14)/series.length);
+  var s='<svg class="chart" viewBox="0 0 '+W+' '+H+'" role="img">';
+  var ticks=4;for(var i=0;i<=ticks;i++){var tv=mn+span*i/ticks;var ty=y(tv);
+    s+='<line x1="'+pl+'" x2="'+(W-pr)+'" y1="'+ty+'" y2="'+ty+'" stroke="#EFCFA8" stroke-width="1"/>';
+    s+='<text x="'+(pl-6)+'" y="'+(ty+4)+'" text-anchor="end" font-size="10" class="m">'+f(tv)+'</text>';}
+  s+='<line x1="'+pl+'" x2="'+(W-pr)+'" y1="'+y(0)+'" y2="'+y(0)+'" stroke="#170F07" stroke-width="1.5"/>';
+  cats.forEach(function(c,ci){var gx=pl+gw*ci+(gw-bw*series.length)/2;
+    series.forEach(function(se,si){var v=se.vals[ci];if(v==null){s+='<text x="'+(gx+bw*si+bw/2)+'" y="'+(y(0)-4)+'" text-anchor="middle" font-size="10">n.a.</text>';return;}
+      var y0=y(0),yv=y(v),top=Math.min(y0,yv),h=Math.max(1.5,Math.abs(y0-yv));
+      s+='<rect x="'+(gx+bw*si+2)+'" y="'+top+'" width="'+(bw-4)+'" height="'+h+'" rx="3" fill="'+se.col+'"/>';
+      s+='<text x="'+(gx+bw*si+bw/2)+'" y="'+(v>=0?top-4:top+h+12)+'" text-anchor="middle" font-size="10" class="m">'+f(v,o.d)+'</text>';});
+    s+='<text x="'+(pl+gw*ci+gw/2)+'" y="'+(H-10)+'" text-anchor="middle" font-size="11">'+esc(c)+'</text>';});
+  return '<div class="cwrap">'+s+'</svg></div>'+legend(series);
+}
+function legend(series){return '<div class="legend">'+series.map(function(s){return '<span><i style="background:'+s.col+'"></i>'+esc(s.name)+'</span>';}).join("")+'</div>';}
+function hbars(items,o){o=o||{};var W=560,rh=30,H=items.length*rh+16,lw=o.lw||170;var mx=o.max||Math.max.apply(null,items.map(function(i){return Math.abs(i.v);}))*1.15;
+  var s='<div class="cwrap"><svg class="chart" viewBox="0 0 '+W+' '+H+'">';
+  items.forEach(function(it,i){var yy=8+i*rh,w=Math.max(2,(W-lw-70)*Math.abs(it.v)/mx);
+    s+='<text x="'+(lw-8)+'" y="'+(yy+15)+'" text-anchor="end" font-size="11">'+esc(it.l)+'</text>';
+    s+='<rect x="'+lw+'" y="'+(yy+3)+'" width="'+w+'" height="18" rx="4" fill="'+(it.c||"#F28C28")+'"/>';
+    s+='<text x="'+(lw+w+6)+'" y="'+(yy+16)+'" font-size="11" class="m">'+esc(it.t!=null?it.t:f(it.v,o.d))+'</text>';});
+  return s+'</svg></div>';}
+function donut(parts,cols,center){var W=220,R=80,r=48,cx=110,cy=110,tot=parts.reduce(function(a,b){return a+b;},0),a0=-Math.PI/2,s='<svg class="chart" viewBox="0 0 220 220" style="max-width:240px;margin:auto">';
+  parts.forEach(function(p,i){var a1=a0+2*Math.PI*p/tot,lg=(a1-a0)>Math.PI?1:0;
+    s+='<path d="M'+(cx+R*Math.cos(a0))+' '+(cy+R*Math.sin(a0))+' A'+R+' '+R+' 0 '+lg+' 1 '+(cx+R*Math.cos(a1))+' '+(cy+R*Math.sin(a1))+' L'+(cx+r*Math.cos(a1))+' '+(cy+r*Math.sin(a1))+' A'+r+' '+r+' 0 '+lg+' 0 '+(cx+r*Math.cos(a0))+' '+(cy+r*Math.sin(a0))+' Z" fill="'+cols[i]+'" stroke="#FFFBF6" stroke-width="2"/>';
+    var am=(a0+a1)/2;if(p/tot>0.06)s+='<text x="'+(cx+(R+r)/2*Math.cos(am))+'" y="'+(cy+(R+r)/2*Math.sin(am)+4)+'" text-anchor="middle" font-size="11" class="m">'+Math.round(p/tot*100)+'%</text>';a0=a1;});
+  return s+'<text x="110" y="106" text-anchor="middle" font-size="11">'+esc(center[0])+'</text><text x="110" y="124" text-anchor="middle" font-size="13" class="m">'+esc(center[1])+'</text></svg>';}
+function ring(pct,label,col){var r=26,c=2*Math.PI*r,o=c*(1-pct);return '<svg viewBox="0 0 70 70" width="62" height="62"><circle cx="35" cy="35" r="'+r+'" fill="none" stroke="#EFCFA8" stroke-width="8"/><circle cx="35" cy="35" r="'+r+'" fill="none" stroke="'+(col||"#F28C28")+'" stroke-width="8" stroke-dasharray="'+c+'" stroke-dashoffset="'+o+'" transform="rotate(-90 35 35)" stroke-linecap="round"/><text x="35" y="39" text-anchor="middle" font-size="12" class="m">'+label+'</text></svg>';}
+function rangeBar(lo,hi,marks,col){var W=560,H=78,x=function(v){return 30+(W-60)*(v-lo)/(hi-lo);};var s='<div class="cwrap"><svg class="chart" viewBox="0 0 '+W+' '+H+'"><rect x="30" y="32" width="'+(W-60)+'" height="12" rx="6" fill="#FDE6CC" stroke="#EFCFA8"/>';
+  s+='<text x="30" y="64" font-size="11" class="m">₹'+lo+'</text><text x="'+(W-30)+'" y="64" text-anchor="end" font-size="11" class="m">₹'+hi+'</text>';
+  marks.forEach(function(m,i){var xx=x(m.v);s+='<line x1="'+xx+'" x2="'+xx+'" y1="'+(m.top?14:28)+'" y2="48" stroke="'+(m.c||col)+'" stroke-width="3"/><circle cx="'+xx+'" cy="38" r="7" fill="'+(m.c||col)+'"/><text x="'+xx+'" y="'+(m.top?11:62+(i%2)*12)+'" text-anchor="middle" font-size="11">'+esc(m.l)+'</text>';});
+  return s+'</svg></div>';}
+
+/* ============ generic pieces ============ */
+function g(a,b){if(a==null||b==null)return "—";if(a<0||b<=0){if(a<0&&b<0)return a>b?L("loss narrowed","loss குறைஞ்சது"):L("loss widened","loss கூடிச்சு");if(a<0&&b>0)return L("to loss","loss-க்கு போச்சு");if(a>0&&b<0)return L("to profit","profit-க்கு வந்துச்சு");return "n.m.";}
+  var p=(a/b-1)*100;return (p>=0?"+":"−")+Math.abs(p).toFixed(1)+"%";}
+function gp(a,b){if(a==null||b==null)return "—";var d=Math.round((a-b)*100);return (d>=0?"+":"−")+Math.abs(d)+" bps";}
+function cls(txt,lower){if(txt.indexOf("+")===0||txt.indexOf("profit")>-1||txt.indexOf("narrowed")>-1||txt.indexOf("குறைஞ்சது")>-1||txt.indexOf("வந்துச்சு")>-1)return lower?"dn":"up";if(txt.indexOf("−")===0||txt.indexOf("loss")>-1)return lower?"up":"dn";return "";}
+function valFmt(v,u){if(v==null)return "—";if(u==="pct")return f(v,1)+"%";if(u==="rs")return f(v,2);if(u==="d2")return f(v,2);return f(v);}
+function finTable(rows){var h='<div class="tscroll"><table><thead><tr><th>'+L("Item","விவரம்")+'</th><th>'+Q[0]+'</th><th>'+Q[1]+'</th><th>'+Q[2]+'</th><th>QoQ</th><th>YoY</th></tr></thead><tbody>';
+  rows.forEach(function(r){var q=r.u==="pct"?gp(r.v[0],r.v[1]):g(r.v[0],r.v[1]),y=r.u==="pct"?gp(r.v[0],r.v[2]):g(r.v[0],r.v[2]);
+    h+='<tr class="'+(r.sub?"sub":"")+'"><td>'+T(r.k)+'</td><td>'+valFmt(r.v[0],r.u)+'</td><td>'+valFmt(r.v[1],r.u)+'</td><td>'+valFmt(r.v[2],r.u)+'</td><td class="'+cls(q,r.lower)+'">'+q+'</td><td class="'+cls(y,r.lower)+'">'+y+'</td></tr>';});
+  return h+'</tbody></table></div>';}
+function ul(arr){return '<ul class="b">'+arr.map(function(x){return '<li>'+T(x)+'</li>';}).join("")+'</ul>';}
+function panel(title,body,c,extra){return '<section class="panel '+(c||"")+'"><div class="ptitle"><h2>'+title+'</h2>'+(extra||"")+'</div>'+body+'</section>';}
+function kpi(k,v,d,dc){return '<div class="kpi"><div class="k">'+k+'</div><div class="v">'+v+'</div>'+(d?'<div class="d '+(dc||"")+'">'+d+'</div>':"")+'</div>';}
+function coTitle(c){return '<span class="pill" style="color:'+c.col+';background:'+c.soft+'">'+c.name+'</span>';}
+
+/* ============ pending card ============ */
+function pendingCard(p){return '<div class="pending"><div class="ptitle"><h2>'+p.name+'</h2><span class="pill pend">⏳ '+T(p.due)+'</span></div>'+
+  '<p style="font-weight:700;margin:4px 0 8px">'+L("Q2 results not out yet. This sub-tab fills in once the board approves them. What the September-quarter production update already shows:","Q2 results இன்னும் வரல. Board approve பண்ணதும் இந்த sub-tab நிரம்பும். September quarter production update-ல ஏற்கனவே தெரிஞ்சது:")+'</p>'+ul(p.pts)+'</div>';}
+
+/* ============ subtab bar ============ */
+function renderSubs(){var el=document.getElementById("subs");if(NOSUB[cur.tab]){el.innerHTML="";return;}
+  var s=subOf(cur.tab);var h='<span class="lbl">'+L("Company","Company")+'</span>';
+  [["hzl","Hindustan Zinc","#1D5C8A"],["visl","Vedanta Iron & Steel","#A3361F"],["cmp",L("Compare","ஒப்பீடு"),"#F28C28"]].forEach(function(c){
+    h+='<button class="chip '+c[0]+(s===c[0]?" on":"")+'" data-sub="'+c[0]+'"><span class="dot" style="background:'+c[2]+'"></span>'+c[1]+'</button>';});
+  PEND.forEach(function(p){h+='<button class="chip pend'+(s===p.id?" on":"")+'" data-sub="'+p.id+'">⏳ '+p.name+' · '+p.day+' Oct</button>';});
+  el.innerHTML=h;
+  el.querySelectorAll("[data-sub]").forEach(function(b){b.onclick=function(){cur.sub[cur.tab]=b.getAttribute("data-sub");renderSubs();renderBody();};});}
+
+/* ============ TAB: Dashboard ============ */
+function groupMap(){var W=760,H=300;var s='<div class="cwrap"><svg class="chart" viewBox="0 0 '+W+' '+H+'" style="min-width:600px">';
+  function box(x,y,w,h,t1,t2,st,col){var fill=st==="done"?"#DBF1E3":st==="today"?"#FCEBC8":st==="tom"?"#EFE6DB":"#FFFBF6";var stroke=col||(st==="done"?"#17703F":st==="today"?"#9C5B00":st==="tom"?"#6B5B4B":"#170F07");
+    return '<rect x="'+x+'" y="'+y+'" width="'+w+'" height="'+h+'" rx="10" fill="'+fill+'" stroke="'+stroke+'" stroke-width="2.5"/><text x="'+(x+w/2)+'" y="'+(y+22)+'" text-anchor="middle" font-size="13">'+esc(t1)+'</text><text x="'+(x+w/2)+'" y="'+(y+40)+'" text-anchor="middle" font-size="11" class="m">'+esc(t2)+'</text>';}
+  s+=box(280,8,200,50,"Vedanta Resources",L("parent (UK)","parent (UK)"),"",null);
+  s+='<line x1="380" y1="58" x2="380" y2="86" stroke="#170F07" stroke-width="2"/>';
+  s+=box(270,86,220,52,"Vedanta Ltd",L("⏳ today 28 Oct","⏳ இன்னிக்கு 28 Oct"),"today");
+  s+='<line x1="380" y1="138" x2="380" y2="160" stroke="#170F07" stroke-width="2"/><line x1="90" y1="160" x2="680" y2="160" stroke="#170F07" stroke-width="2"/>';
+  s+='<text x="560" y="152" font-size="10">'+esc(L("1:1 demerger · listed 15 Jun 2026","1:1 demerger · 15 Jun 2026 listing"))+'</text>';
+  var kids=[["Hindustan Zinc",L("✓ 19 Oct · 60.7%","✓ 19 Oct · 60.7%"),"done",10,"#1D5C8A"],["VISL (Iron & Steel)",L("✓ 27 Oct","✓ 27 Oct"),"done",165,"#A3361F"],["Aluminium (VAML)",L("⏳ today 28 Oct","⏳ இன்னிக்கு 28 Oct"),"today",320,null],["Oil & Gas (VOGL)",L("⏳ tomorrow 29 Oct","⏳ நாளை 29 Oct"),"tom",475,null],["Vedanta Power",L("⏳ tomorrow 29 Oct","⏳ நாளை 29 Oct"),"tom",615,null]];
+  kids.forEach(function(k){var cx=k[3]+70;s+='<line x1="'+cx+'" y1="160" x2="'+cx+'" y2="186" stroke="#170F07" stroke-width="2"/>'+box(k[3],186,140,56,k[0],k[1],k[2],k[4]);});
+  s+='<text x="10" y="276" font-size="11">'+esc(L("HZL is a subsidiary of Vedanta Ltd (not demerged). The other four were split out 1:1 on 1 May 2026.","HZL Vedanta Ltd-ஓட subsidiary (demerge ஆகல). மீதி நாலும் 1 May 2026-ல 1:1 பிரிஞ்சது."))+'</text>';
+  return s+'</svg></div><div class="legend"><span><i style="background:#DBF1E3;border:2px solid #17703F"></i>'+L("Reported","Results வந்தாச்சு")+'</span><span><i style="background:#FCEBC8;border:2px solid #9C5B00"></i>'+L("Due today","இன்னிக்கு")+'</span><span><i style="background:#EFE6DB;border:2px solid #6B5B4B"></i>'+L("Due tomorrow","நாளைக்கு")+'</span></div>';}
+function tabDash(){var h=L("Vanakam! Two of six Vedanta group companies have reported Q2 FY27. The other four slot in as their results arrive.","வணக்கம்! Vedanta group-ல ஆறுல ரெண்டு company Q2 FY27 results கொடுத்துருக்காங்க. மீதி நாலும் results வர வர சேர்ந்துடும்.");
+  var o='<p style="font-weight:700;margin:0 0 12px">'+h+'</p>';
+  o+=panel(L("Group map — who reported","Group map — யார் results கொடுத்தாங்க"),groupMap());
+  var z=CO.hzl,v=CO.visl;
+  o+='<div class="grid g2" style="margin-top:14px">';
+  o+=panel(coTitle(z)+' <span style="font-size:.9rem">'+L("Record quarter","Record quarter")+'</span>','<div class="grid g4">'+kpi(L("Revenue","Revenue"),cr(15093),"+76.5% YoY","up")+kpi("EBITDA",cr(9285),L("61.5% margin","61.5% margin"),"up")+kpi(L("Net profit","Net profit"),cr(6412),"+142% YoY","up")+kpi(L("Zinc cost","Zinc cost"),"$703/t",L("−29% YoY","−29% YoY"),"up")+'</div>'+
+    ul([A("Profit up 2.4x YoY on higher metal prices, more silver and the lowest zinc cost in years","Metal விலை, silver அதிகம், zinc cost ரொம்ப குறைவு — profit 2.4 மடங்கு"),
+        A("Net cash ₹11,268 cr vs net debt ₹2,547 cr a year ago","Net cash ₹11,268 cr — போன வருஷம் net debt ₹2,547 cr"),
+        A("Watch: silver fell to about $54/oz on 23 Oct, near a one-year low","கவனிங்க: 23 Oct silver ~$54/oz — ஒரு வருஷ low பக்கம்")]),"hzl");
+  o+=panel(coTitle(v)+' <span style="font-size:.9rem">'+L("Tough quarter","கஷ்டமான quarter")+'</span>','<div class="grid g4">'+kpi(L("Revenue","Revenue"),cr(2788),"−24% QoQ","dn")+kpi("EBITDA",cr(83),L("3.0% margin","3.0% margin"),"dn")+kpi(L("Net loss","Net loss"),"₹−324 cr",L("Q1: +₹121 cr","Q1: +₹121 cr"),"dn")+kpi(L("Ext. net debt","Ext. net debt"),cr(1790),L("Mar 26: ₹2,862 cr","Mar 26: ₹2,862 cr"),"up")+'</div>'+
+    ul([A("Planned shutdowns at Bokaro and Goa plus weak steel prices cut EBITDA 84% QoQ","Bokaro, Goa planned shutdown + steel விலை குறைவு — EBITDA 84% QoQ இறங்குச்சு"),
+        A("Loss is smaller than a year ago (₹477 cr) as interest cost fell to ₹171 cr","போன வருஷம் loss ₹477 cr — interest ₹171 cr-க்கு குறைஞ்சதால loss குறைஞ்சிருக்கு"),
+        A("H1 is better: EBITDA ₹598 cr, +54% YoY","H1 better: EBITDA ₹598 cr, +54% YoY")]),"visl");
+  o+='</div>';
+  o+=panel(L("Coming next","அடுத்து வருது"),'<div class="grid g4">'+PEND.map(function(p){return '<div class="kpi"><div class="k">'+p.name+'</div><div class="d" style="color:var(--pend)">⏳ '+T(p.due)+'</div><div style="font-size:.82rem;font-weight:600;margin-top:4px">'+T(p.pts[0])+'</div></div>';}).join("")+'</div>');
+  return o;}
+
+/* ============ TAB: Business model ============ */
+var BM={
+ hzl:{cust:[A("Customers","Customers"),A("Galvanisers & steel makers, battery makers, silver users (solar, electronics, jewellery)","Galvanising & steel company-கள், battery makers, silver users (solar, electronics, jewellery)"),A("Zinc coats steel against rust — that is its biggest use. Lead goes into batteries. Silver goes into solar paste, electronics and jewellery.","Zinc steel-ல துரு பிடிக்காம coating — இதுதான் பெரிய use. Lead battery-க்கு. Silver solar paste, electronics, jewellery-க்கு.")],
+  chan:[A("Channels","Channels"),A("Direct sales in India + exports; prices linked to LME (zinc, lead) and LBMA (silver)","India-ல direct sales + exports; விலை LME, LBMA-ஓட link"),A("HZL does not set its price. It earns the global metal price plus a local premium, converted at USD/INR.","HZL விலையை தானா fix பண்ணாது. Global metal விலை + local premium, USD/INR-ல convert.")],
+  hub:[A("Hindustan Zinc hub","Hindustan Zinc hub"),A("Underground mines + smelters in Rajasthan · Q2: 271 kt mined, 264 kt refined, 173 t silver","Rajasthan underground mines + smelters · Q2: 271 kt mined, 264 kt refined, 173 t silver"),A("World's largest integrated zinc producer: it owns the mines and the smelters, so ore never has to be bought.","உலகத்துலயே பெரிய integrated zinc producer: mine-உம் smelter-உம் சொந்தம், ore வாங்க வேண்டியதில்ல.")],
+  inp:[A("Inputs","Inputs"),A("Own ore · coal & power (27% renewable) · royalty to govt","சொந்த ore · coal & power (27% renewable) · Govt-க்கு royalty"),A("Main costs are power, mining and royalty. Better ore grades and more renewable power cut zinc cost to $703/t.","முக்கிய cost: power, mining, royalty. நல்ல ore grade, renewable power — zinc cost $703/t-க்கு இறங்குச்சு.")],
+  prod:[["Zinc","₹8,224 cr"],["Silver","₹4,111 cr"],["Lead","₹1,130 cr"],["Others","₹1,628 cr"]],
+  money:[["Revenue","₹15,093"],["Costs","−₹5,808"],["EBITDA","₹9,285"],["D&A+interest","−₹1,087"],["Other inc.","+₹374"],["Tax","−₹2,160"],["PAT","₹6,412"]],
+  formula:A("Revenue ≈ tonnes of zinc, lead & silver × LME/LBMA price × USD/INR (+ premium)","Revenue ≈ zinc, lead, silver tonne × LME/LBMA விலை × USD/INR (+ premium)")},
+ visl:{cust:[A("Customers","Customers"),A("Builders, infra contractors, water-pipeline projects, foundries, steel mills (for ore)","Builders, infra contractors, water pipeline projects, foundries, ore வாங்குற steel mills"),A("Long steel (TMT, wire rods) goes into buildings; DI pipes carry drinking water; pig iron goes to foundries.","Long steel (TMT, wire rods) கட்டிடத்துக்கு; DI pipe குடிநீருக்கு; pig iron foundry-க்கு.")],
+  chan:[A("Channels","Channels"),A("Dealers & distributors, project tenders, direct ore sales","Dealers, distributors, project tenders, direct ore sales"),A("Steel is sold at market prices that change month to month. Ore follows an iron ore index.","Steel விலை மாசா மாசம் மாறும். Ore விலை iron ore index-ஓட போகும்.")],
+  hub:[A("VISL hub","VISL hub"),A("Bokaro (ESL) blast furnace 1.7 Mtpa hot metal · Goa pig iron & met coke · DI pipes · Q2: 532 kt steel, 1.52 Mn DMT ore","Bokaro (ESL) blast furnace 1.7 Mtpa hot metal · Goa pig iron, met coke · DI pipe · Q2: 532 kt steel, 1.52 Mn DMT ore"),A("An integrated long-steel maker with its own ore mines in Goa, Karnataka and Odisha. It does not make flat steel.","Goa, Karnataka, Odisha-ல சொந்த ore mine இருக்குற long-steel maker. Flat steel பண்ணல.")],
+  inp:[A("Inputs","Inputs"),A("Own iron ore · imported coking coal · power & fuel","சொந்த iron ore · import coking coal · power, fuel"),A("Coking coal is bought at global prices, so a coal or fuel spike hits margin straight away. That happened in Q2.","Coking coal global விலைக்கு வாங்கணும் — coal, fuel விலை ஏறுனா உடனே margin அடிக்கும். Q2-ல அதுதான் நடந்துச்சு.")],
+  prod:[["TMT & wire rods","—"],["Pig iron & billets","—"],["DI pipes","—"],["Iron ore","₹638 cr"]],
+  money:[["Revenue","₹2,788"],["Costs","−₹2,705"],["EBITDA","₹83"],["D&A","−₹218"],["Interest","−₹171"],["Other (net)","−₹5"],["Tax","−₹13"],["PAT","−₹324"]],
+  formula:A("Revenue ≈ steel tonnes × realisation per tonne + ore tonnes × ore price","Revenue ≈ steel tonne × ஒரு tonne விலை + ore tonne × ore விலை")}
+};
+var bmSel={};
+function flowMap(id){var b=BM[id],c=CO[id];var sel=bmSel[id]||"hub";
+  function bx(key,arr,hub){return '<button class="fbox'+(hub?" hub":"")+(sel===key?" on":"")+'" data-bm="'+key+'" style="'+(hub?"border-color:"+c.col:"")+'"><div class="t">'+T(arr[0])+'</div><div class="n">'+T(arr[1])+'</div></button>';}
+  var o='<div class="flow"><div class="fcol">'+bx("cust",b.cust)+bx("chan",b.chan)+'</div><div class="arr">←</div><div class="fcol">'+bx("hub",b.hub,1)+'</div><div class="arr">←</div><div class="fcol">'+bx("inp",b.inp)+'</div></div>';
+  o+='<div class="mflow">'+b.prod.map(function(p){return '<div class="fbox" style="border-color:'+c.col+'"><div class="t">'+L("Product","Product")+'</div><div class="n">'+p[0]+'</div><div class="mono">'+p[1]+'</div></div>';}).join("")+'</div>';
+  o+='<div class="mflow">'+b.money.map(function(m,i){return (i?'<div class="arr" style="font-size:1rem">→</div>':"")+'<div class="fbox" style="flex:1 1 90px"><div class="t">'+m[0]+'</div><div class="n mono">'+m[1]+'</div></div>';}).join("")+'</div>';
+  o+='<div class="note" style="margin-top:4px">'+L("Money flow for Q2 FY27, ₹ crore","Q2 FY27 money flow, ₹ crore")+'</div>';
+  o+='<div class="formula">'+T(b.formula)+'</div>';
+  o+='<div class="detail" id="bmd">'+T(b[sel][2])+'</div>';
+  return o;}
+function tabBM(s){if(s==="cmp"){return '<div class="grid g2">'+panel(coTitle(CO.hzl),flowMap("hzl"),"hzl")+panel(coTitle(CO.visl),flowMap("visl"),"visl")+'</div>'+
+  panel(L("How the two models differ","ரெண்டு model-உம் எப்படி வேற"),ul([A("<b>Price taker, low cost:</b> HZL sells at global prices and wins on cost. VISL also sells at market prices but buys coking coal at global prices, so it gets squeezed from both sides.","<b>Price taker, low cost:</b> HZL global விலைக்கு விக்கும், cost-ல ஜெயிக்கும். VISL-உம் market விலைக்கு தான் விக்கும், ஆனா coking coal global விலைக்கு வாங்கணும் — ரெண்டு பக்கமும் அழுத்தம்."),A("<b>By-product cushion:</b> silver gives HZL about 45% of H1 profit. VISL has no such cushion.","<b>By-product cushion:</b> H1 profit-ல ~45% silver-ல இருந்து. VISL-க்கு அப்படி cushion இல்ல."),A("<b>Scale:</b> HZL Q2 revenue is about 5.4x VISL's.","<b>Scale:</b> HZL Q2 revenue VISL-ஐ விட ~5.4 மடங்கு.")]))}
+  var c=CO[s];return panel(L("From mine to customer — ","Mine-ல இருந்து customer வரை — ")+c.name,'<p class="note" style="margin:0 0 8px">'+L("Tap any box to see what it means.","எந்த box-ஐ tap பண்ணாலும் விளக்கம் வரும்.")+'</p>'+flowMap(s),s);}
+
+/* ============ TAB: Segments ============ */
+function tabSeg(s){var z=CO.hzl;
+  function hzlSeg(){var series=z.seg.names.map(function(n,i){return {name:T(n),col:z.seg.cols[i],vals:[z.seg.v[i][2],z.seg.v[i][1],z.seg.v[i][0]]};});
+    var t='<div class="tscroll"><table><thead><tr><th>'+L("Segment revenue","Segment revenue")+'</th><th>'+Q[0]+'</th><th>'+Q[1]+'</th><th>'+Q[2]+'</th><th>QoQ</th><th>YoY</th></tr></thead><tbody>';
+    z.seg.names.forEach(function(n,i){var r=z.seg.v[i],q=g(r[0],r[1]),y=g(r[0],r[2]);t+='<tr><td>'+T(n)+'</td><td>'+f(r[0])+'</td><td>'+f(r[1])+'</td><td>'+(i===0||i===3?"≈":"")+f(r[2])+'</td><td class="'+cls(q)+'">'+q+'</td><td class="'+cls(y)+'">'+y+'</td></tr>';});
+    t+='</tbody></table></div><p class="note">'+L("₹ crore. ≈ = derived from reported YoY growth.","₹ crore. ≈ = YoY growth-ல இருந்து கணக்கு போட்டது.")+'</p>';
+    return '<div class="grid g2">'+panel(L("Revenue mix — Q2 FY27","Revenue mix — Q2 FY27"),donut(z.seg.v.map(function(r){return r[0];}),z.seg.cols,["Q2 FY27","₹15,093 cr"])+legend(series),"hzl")+
+      panel(L("Segment revenue across three quarters","மூணு quarter segment revenue"),barChart([Q[2],Q[1],Q[0]],series,{h:250}),"hzl")+'</div>'+panel(L("Segment table","Segment table"),t+ul([A("<b>Silver</b> revenue up 2.4x YoY to ₹4,111 cr on 20% more output and much higher prices","<b>Silver</b> revenue 2.4 மடங்கு — ₹4,111 cr; output 20% அதிகம், விலையும் அதிகம்"),A("<b>Zinc</b> revenue +54% YoY to ₹8,224 cr","<b>Zinc</b> revenue +54% — ₹8,224 cr"),A("Silver earned about 45% of H1 profit, so the silver price now matters almost as much as zinc","H1 profit-ல ~45% silver — இப்போ silver விலை zinc அளவுக்கு முக்கியம்")]),"hzl");}
+  function vislSeg(){var t='<div class="tscroll"><table><thead><tr><th>'+L("H1 FY27 segment","H1 FY27 segment")+'</th><th>'+L("Revenue","Revenue")+'</th><th>EBITDA</th><th>'+L("H1 FY26 EBITDA","H1 FY26 EBITDA")+'</th><th>YoY</th></tr></thead><tbody><tr><td>Steel</td><td>5,327</td><td>409</td><td>134</td><td class="up">'+g(409,134)+'</td></tr><tr><td>'+L("Iron ore (net)","Iron ore (net)")+'</td><td>1,027</td><td>189</td><td>255</td><td class="dn">'+g(189,255)+'</td></tr></tbody></table></div><p class="note">'+L("₹ crore. Company reports segment detail for the half year.","₹ crore. Segment விவரம் half year-க்கு தான் கொடுத்துருக்காங்க.")+'</p>';
+    return '<div class="grid g2">'+panel(L("Steel EBITDA per tonne","Steel EBITDA / tonne"),hbars([{l:"Q1 FY27",v:5864,c:"#E3A15B",t:"₹5,864"},{l:"Q2 FY27",v:1381,c:"#A3361F",t:"₹1,381"}],{lw:90})+ul([A("Margin per tonne fell 76% in one quarter: weaker steel prices, costlier coking coal and fuel, plus shutdowns","ஒரு quarter-ல tonne margin 76% இறங்குச்சு: steel விலை குறைவு, coal, fuel விலை அதிகம், shutdown")]),"visl")+
+      panel(L("Iron ore revenue, Q1 vs Q2","Iron ore revenue, Q1 vs Q2"),barChart(["Q1 FY27","Q2 FY27"],[{name:L("Iron ore revenue ₹ cr","Iron ore revenue ₹ cr"),col:"#A3361F",vals:[1190,638]}],{h:220})+ul([A("Monsoon season plus a Karnataka dispatch hold-up after the demerger name change; dispatches resumed in September","Monsoon + demerger பெயர் மாற்றத்தால Karnataka dispatch நின்னுச்சு; September-ல மறுபடி ஆரம்பிச்சது"),A("Karnataka ore output −49% YoY; Goa +22%, Odisha +34%","Karnataka ore −49%; Goa +22%, Odisha +34%")]),"visl")+'</div>'+
+      panel(L("Half-year segment view","Half-year segment view"),t+ul([A("<b>Steel</b> carried H1: EBITDA ₹409 cr vs ₹134 cr a year ago","<b>Steel</b> தான் H1-ஐ தூக்குச்சு: EBITDA ₹409 cr vs ₹134 cr"),A("<b>Iron ore</b> EBITDA fell 26% on a lower ore index and fewer sales","<b>Iron ore</b> EBITDA −26%: ore index குறைவு, sales குறைவு"),A("Volumes: saleable steel 532 kt (+4% YoY); TMT +12%, DI pipes +225% YoY","Volume: steel 532 kt (+4%); TMT +12%, DI pipe +225%")]),"visl");}
+  if(s==="hzl")return hzlSeg();if(s==="visl")return vislSeg();
+  return panel(L("Where the profit comes from","Profit எங்க இருந்து வருது"),'<div class="grid g2"><div>'+hbars([{l:"HZL zinc+lead+silver",v:9285,c:"#1D5C8A",t:"EBITDA ₹9,285 cr"},{l:"VISL steel+ore",v:83,c:"#A3361F",t:"EBITDA ₹83 cr"}],{lw:170})+'</div><div>'+ul([A("HZL's quarterly EBITDA is about 112x VISL's","HZL quarterly EBITDA, VISL-ஐ விட ~112 மடங்கு"),A("HZL leans on two metals (zinc + silver); VISL on one cycle (steel), with ore as a smaller support","HZL ரெண்டு metal-ல (zinc + silver) நிக்குது; VISL ஒரே cycle (steel), ore சின்ன support"),A("Both are price takers: neither sets its selling price","ரெண்டுமே price takers: விற்பனை விலையை யாருமே fix பண்ண முடியாது")])+'</div></div>');}
+
+/* ============ TAB: Financials ============ */
+function tabFin(s){if(s==="hzl"||s==="visl"){var c=CO[s];
+  var ch=barChart(Q.slice().reverse(),[{name:L("Revenue","Revenue"),col:s==="hzl"?"#9FC1DD":"#E9B3A6",vals:c.fin[0].v.slice().reverse()},{name:"EBITDA",col:c.col.indexOf("hzl")>-1?"#1D5C8A":"#A3361F",vals:c.fin[1].v.slice().reverse()},{name:"PAT",col:"#F28C28",vals:c.fin[s==="hzl"?6:7].v.slice().reverse()}],{h:260});
+  var notes=s==="hzl"?[A("Revenue +76.5% YoY, +9.8% QoQ — a record quarter","Revenue +76.5% YoY, +9.8% QoQ — record quarter"),A("EBITDA margin 61.5%, up about 920 bps YoY","EBITDA margin 61.5% — ~920 bps ஏற்றம்"),A("Q1 FY27 EBITDA (₹8,074 cr) is H1 minus Q2","Q1 FY27 EBITDA (₹8,074 cr) = H1 − Q2"),A("Q1 FY27 PBT and tax were not in the public release, shown as —","Q1 FY27 PBT, tax public release-ல இல்ல — '—' போட்டுருக்கோம்")]:
+   [A("Revenue −24% QoQ, −2.5% YoY","Revenue −24% QoQ, −2.5% YoY"),A("Loss of ₹324 cr after a ₹121 cr Q1 profit","Q1-ல ₹121 cr profit, Q2-ல ₹324 cr loss"),A("Interest cost down 60% YoY to ₹171 cr after the ₹13,138 cr Bloom Fountain debt write-back","₹13,138 cr Bloom Fountain debt write-back-க்கு அப்புறம் interest 60% குறைஞ்சு ₹171 cr"),A("Exceptional cost ₹28 cr (stamp duty on asset transfers)","Exceptional ₹28 cr (asset transfer stamp duty)")];
+  return '<div class="grid g2">'+panel(L("Results: three quarters side by side","Results: மூணு quarter பக்கத்துல பக்கத்துல"),finTable(c.fin)+'<p class="note">'+L("₹ crore, consolidated.","₹ crore, consolidated.")+'</p>',s)+panel(L("Revenue, EBITDA, PAT","Revenue, EBITDA, PAT"),ch+ul(notes),s)+'</div>'+panel(L("Operating numbers","Operating numbers"),finTable(c.ops),s);}
+ var r=[["Revenue (₹ cr)",15093,2788],["EBITDA (₹ cr)",9285,83],["EBITDA margin",61.5,3.0],["PAT (₹ cr)",6412,-324],["PAT YoY",L("+142%","+142%"),L("loss narrowed","loss குறைஞ்சது")],["EBITDA QoQ","+15.0%","−83.9%"]];
+ return panel(L("Q2 FY27 side by side","Q2 FY27 பக்கத்துல பக்கத்துல"),'<div class="tscroll"><table><thead><tr><th>'+L("Item","விவரம்")+'</th><th>Hindustan Zinc</th><th>VISL</th></tr></thead><tbody>'+r.map(function(x){return '<tr><td>'+x[0]+'</td><td>'+(typeof x[1]==="number"?(x[0].indexOf("margin")>-1?f(x[1],1)+"%":f(x[1])):x[1])+'</td><td>'+(typeof x[2]==="number"?(x[0].indexOf("margin")>-1?f(x[2],1)+"%":f(x[2])):x[2])+'</td></tr>';}).join("")+'</tbody></table></div>'+
+  barChart(["Q2 FY26","Q1 FY27","Q2 FY27"],[{name:"HZL EBITDA margin %",col:"#1D5C8A",vals:[52.3,58.7,61.5]},{name:"VISL EBITDA margin %",col:"#A3361F",vals:[1.9,14.1,3.0]}],{h:230,d:1}));}
+
+/* ============ TAB: Cash flow & ratios ============ */
+function tabCF(s){if(s==="hzl"){return '<div class="grid g2">'+panel(L("Annual cash flow","வருஷ cash flow"),barChart(["FY24","FY25","FY26"],[{name:"CFO",col:"#1D5C8A",vals:[13343,14127,16857]},{name:"CFI",col:"#9FC1DD",vals:[-3405,-2658,-8760]},{name:"CFF",col:"#F28C28",vals:[-9946,-11426,-7899]}],{h:250})+ul([A("Operating cash rose every year to ₹16,857 cr in FY26","Operating cash ஒவ்வொரு வருஷமும் ஏறி FY26-ல ₹16,857 cr"),A("Financing outflow is mostly dividends to Vedanta and the government","Financing outflow பெரும்பாலும் Vedanta-க்கும் Govt-க்கும் dividend")]),"hzl")+
+  panel(L("Q2 FY27 cash picture","Q2 FY27 cash"),hbars([{l:L("EBITDA","EBITDA"),v:9285,c:"#1D5C8A"},{l:L("Free cash pre-growth","Free cash (growth முன்)"),v:6389,c:"#6E8FA8"},{l:L("Sustaining capex","Sustaining capex"),v:1200,c:"#E3A15B"},{l:L("Growth capex","Growth capex"),v:700,c:"#F28C28"},{l:L("Net cash, 30 Sep","Net cash, 30 Sep"),v:11268,c:"#17703F"}],{lw:160})+ul([A("H1 free cash before growth capex: ₹11,642 cr","H1 free cash (growth capex முன்): ₹11,642 cr"),A("Cash & investments ₹17,439 cr vs borrowings ₹6,171 cr","Cash + investments ₹17,439 cr vs borrowings ₹6,171 cr"),A("FY27 capex plan about ₹5,000 cr","FY27 capex ~₹5,000 cr")]),"hzl")+'</div>'+
+  panel(L("Key ratios & working capital days","Key ratios & working capital days"),'<div class="grid g4">'+kpi("ROCE (FY26)","69%")+kpi("ROE","76%")+kpi(L("Interest cover FY26","Interest cover FY26"),"≈25x")+kpi(L("Debtor days","Debtor days"),"4")+kpi(L("Working capital days","Working capital days"),"−75",L("suppliers fund it","supplier பணத்துல ஓடுது"),"up")+kpi(L("Net cash","Net cash"),cr(11268),L("was net debt ₹2,547 cr","முன்னாடி net debt ₹2,547 cr"),"up")+'</div>'+ul([A("Negative working capital days: customers pay in days, while payables and advances fund operations","Negative working capital days: customer சீக்கிரம் பணம் கொடுப்பாங்க, payables operations-ஐ fund பண்ணுது"),A("Inventory and payable days are not published separately","Inventory, payable days தனியா கொடுக்கல")]),"hzl");}
+ if(s==="visl"){return '<div class="grid g2">'+panel(L("Debt is coming down","Debt குறையுது"),barChart(["Mar 2026","Sep 2026"],[{name:L("External net debt ₹ cr","External net debt ₹ cr"),col:"#A3361F",vals:[2862,1790]}],{h:220})+ul([A("Borrowings fell from ₹15,217 cr to ₹4,663 cr after ₹13,138 cr of group debt at Bloom Fountain was waived into capital reserve","Bloom Fountain ₹13,138 cr group debt waive ஆகி capital reserve-க்கு போச்சு — borrowings ₹15,217 cr-ல இருந்து ₹4,663 cr"),A("Net debt including ₹973 cr inter-company loans: ₹2,763 cr (Jun: ₹2,733 cr)","Inter-company loan ₹973 cr சேர்த்து net debt ₹2,763 cr (Jun: ₹2,733 cr)")]),"visl")+
+  panel(L("Interest cost & cover","Interest cost & cover"),barChart(["Q2 FY26","Q1 FY27","Q2 FY27"],[{name:L("Interest ₹ cr","Interest ₹ cr"),col:"#E3A15B",vals:[431,207,171]},{name:"EBITDA ₹ cr",col:"#A3361F",vals:[54,515,83]}],{h:230})+ul([A("Q2 interest cover: 0.5x (EBITDA did not cover interest); H1: 1.6x","Q2 interest cover 0.5x (EBITDA interest-ஐ கூட cover பண்ணல); H1: 1.6x"),A("Q2 operating cash ₹92 cr; working capital absorbed ₹191 cr","Q2 operating cash ₹92 cr; working capital ₹191 cr எடுத்துக்குச்சு")]),"visl")+'</div>'+
+  panel(L("Working capital days (FY26)","Working capital days (FY26)"),hbars([{l:L("Debtor days","Debtor days"),v:8,c:"#E3A15B"},{l:L("Inventory days","Inventory days"),v:103,c:"#A3361F"},{l:L("Payable days","Payable days"),v:178,c:"#6B5B4B"},{l:L("Cash conversion cycle","Cash conversion cycle"),v:-67,c:"#17703F",t:"−67"}],{lw:170})+ul([A("Inventory sits for about 103 days (ore, coal, coke), but suppliers wait about 178 days","Inventory ~103 நாள் (ore, coal, coke); ஆனா supplier-க்கு ~178 நாள் கழிச்சு தான் பணம்"),A("Long payables can reverse if credit tightens, so watch this after the demerger","Credit tight ஆனா payables reverse ஆகலாம் — demerger-க்கு அப்புறம் கவனிக்கணும்"),A("Reported working capital days (−466) are distorted by the restructuring","Reported working capital days (−466) restructuring-னால distort ஆகியிருக்கு")]),"visl");}
+ return panel(L("Balance sheet strength, side by side","Balance sheet பலம்"),'<div class="tscroll"><table><thead><tr><th>'+L("Item","விவரம்")+'</th><th>HZL</th><th>VISL</th></tr></thead><tbody><tr><td>'+L("Net debt (−) / net cash (+)","Net debt / cash")+'</td><td class="up">+₹11,268 cr</td><td class="dn">−₹1,790 cr ext.</td></tr><tr><td>'+L("Interest cover","Interest cover")+'</td><td>≈25x (FY26)</td><td>0.5x (Q2) · 1.6x (H1)</td></tr><tr><td>ROCE</td><td>69%</td><td>'+L("low (loss)","குறைவு (loss)")+'</td></tr><tr><td>'+L("Cash conversion cycle","Cash conversion cycle")+'</td><td>4 '+L("days (debtors)","நாள் (debtors)")+'</td><td>−67 '+L("days","நாள்")+'</td></tr><tr><td>'+L("Credit rating","Credit rating")+'</td><td>CRISIL AAA</td><td>CRISIL AA/Stable</td></tr></tbody></table></div>'+
+  hbars([{l:"HZL net cash",v:11268,c:"#1D5C8A",t:"+₹11,268 cr"},{l:"VISL ext. net debt",v:1790,c:"#A3361F",t:"−₹1,790 cr"}],{lw:150}));}
+
+/* ============ TAB: Valuations ============ */
+function tabVal(s){if(s==="hzl"||s==="visl"){var c=CO[s];
+  var k='<div class="grid g4">'+kpi(L("Price (27 Oct)","விலை (27 Oct)"),"₹"+f(c.price,s==="visl"?2:0))+kpi(L("Market cap","Market cap"),cr(c.mcap))+kpi("P/E",c.pe?f(c.pe,1)+"x":L("n.m. (loss)","n.m. (loss)"))+kpi("P/B",f(c.pb,1)+"x")+kpi("EV/EBITDA","≈"+f(c.evx,1)+"x",s==="hzl"?L("TTM","TTM"):L("H1 annualised","H1 × 2"))+kpi(L("Dividend yield","Dividend yield"),f(c.dy,1)+"%")+'</div>';
+  var rb=s==="hzl"?rangeBar(454,733,[{v:492,l:L("now ₹492","இப்போ ₹492"),top:1},{v:540,l:L("pre-results ₹540","results முன் ₹540")}],"#1D5C8A"):rangeBar(19.1,44.8,[{v:28.0,l:L("now ₹28.0","இப்போ ₹28.0"),top:1},{v:22.25,l:L("listing ₹22.25","listing ₹22.25")}],"#A3361F");
+  var b=s==="hzl"?[A("P/E of about 10x looks cheap, but it sits on peak margins (61.5%) and peak silver earnings — the classic cyclical P/E trap","P/E ~10x மலிவா தெரியும், ஆனா peak margin (61.5%), peak silver earnings மேல — cyclical P/E trap"),A("P/B of 7x reflects a 69% ROCE business that pays out most of its profit","P/B 7x — 69% ROCE business, profit-ல பெரும்பகுதி dividend"),A("Stock is 33% below its 52-week high of ₹733","52-week high ₹733-ல இருந்து 33% கீழ"),A("Sensitivity (estimate): $1/oz silver ≈ ₹200–225 cr EBITDA a year; $100/t zinc ≈ ₹725–750 cr","Sensitivity (estimate): silver $1/oz ≈ ₹200–225 cr EBITDA; zinc $100/t ≈ ₹725–750 cr")]:
+   [A("No P/E: the company is loss-making this quarter","P/E இல்ல: இந்த quarter loss"),A("P/B 1.9x on book value of ₹14.9 per share (rebuilt after the debt write-back)","Book value ₹14.9 (debt write-back-க்கு அப்புறம்) மேல P/B 1.9x"),A("EV/EBITDA about 11x on H1 annualised — not cheap for a cyclical steel maker","H1 × 2 basis-ல EV/EBITDA ~11x — cyclical steel-க்கு மலிவு இல்ல"),A("Stock is 37% below its post-listing high of ₹44.8, still 26% above listing","Listing-க்கு அப்புறம் high ₹44.8-ல இருந்து 37% கீழ, listing-ஐ விட 26% மேல")];
+  return panel(L("Valuation snapshot","Valuation snapshot"),k+'<h3 style="margin-top:12px">'+L("Where the price sits in its range","Range-ல விலை எங்க இருக்கு")+'</h3>'+rb+ul(b),s);}
+ return panel(L("Valuation, side by side","Valuation ஒப்பீடு"),'<div class="grid g2"><div>'+hbars([{l:"HZL P/B",v:7.0,c:"#1D5C8A",t:"7.0x"},{l:"VISL P/B",v:1.9,c:"#A3361F",t:"1.9x"},{l:"HZL EV/EBITDA",v:6.4,c:"#1D5C8A",t:"≈6.4x"},{l:"VISL EV/EBITDA",v:11.4,c:"#A3361F",t:"≈11.4x"},{l:"HZL P/E",v:10.1,c:"#1D5C8A",t:"10.1x"}],{lw:140,d:1})+'</div><div>'+ul([A("On EV/EBITDA, HZL is cheaper than VISL despite far better quality","EV/EBITDA-ல HZL தான் மலிவு — quality-உம் ரொம்ப better"),A("VISL trades on recovery hopes and the Bokaro expansion, not on current earnings","VISL இப்போ earnings மேல இல்ல — recovery, Bokaro expansion நம்பிக்கை மேல"),A("HZL's risk is that earnings fall from a peak; VISL's is that the recovery comes late","HZL risk: peak-ல இருந்து earnings இறங்கலாம்; VISL risk: recovery லேட் ஆகலாம்")])+'</div></div>');}
+
+/* ============ TAB: Key takeaways ============ */
+var KT={hzl:[["good",A("Record quarter: PAT ₹6,412 cr (+142% YoY), EBITDA margin 61.5%","Record quarter: PAT ₹6,412 cr (+142%), EBITDA margin 61.5%")],["good",A("Cost is the real story: zinc cost $703/t, −29% YoY; FY27 guidance cut to $825–850/t","உண்மையான story cost தான்: zinc cost $703/t, −29%; FY27 guidance $825–850/t-க்கு குறைச்சாங்க")],["good",A("Balance sheet flipped to ₹11,268 cr net cash","Balance sheet ₹11,268 cr net cash-க்கு மாறிடுச்சு")],["bad",A("Silver has fallen about 55% from its January peak to about $54/oz; it earned ~45% of H1 profit","Silver January peak-ல இருந்து ~55% இறங்கி ~$54/oz; H1 profit-ல ~45% silver")],["warn",A("H2 cost will be higher than Q2 (guidance implies roughly $875–925/t)","H2 cost Q2-ஐ விட அதிகம் (guidance படி ~$875–925/t)")]],
+ visl:[["bad",A("Q2 swung to a ₹324 cr loss; EBITDA fell 84% QoQ to ₹83 cr","Q2 ₹324 cr loss; EBITDA 84% QoQ இறங்கி ₹83 cr")],["warn",A("Causes were mostly temporary: planned shutdowns, monsoon, and a post-demerger dispatch hold-up","காரணங்கள் பெரும்பாலும் தற்காலிகம்: planned shutdown, monsoon, demerger dispatch தடை")],["bad",A("Coking coal and fuel costs rose as crude crossed $115","Crude $115 தாண்டுனதால coking coal, fuel cost ஏறுச்சு")],["good",A("Debt reset: external net debt ₹1,790 cr; interest down 60% YoY","Debt reset: ext. net debt ₹1,790 cr; interest 60% குறைவு")],["good",A("Bokaro hot metal 1.7 → 3.2 Mtpa is due in FY27; 76% of project capex already spent","Bokaro hot metal 1.7 → 3.2 Mtpa FY27-ல; project capex-ல 76% ஏற்கனவே செலவாச்சு")]],
+ cmp:[["good",A("Two very different quarters: HZL at a record, VISL at a low","ரெண்டு வித quarter: HZL record, VISL low")],["warn",A("Both are commodity price takers; prices drove both results","ரெண்டுமே price takers; ரெண்டு result-ஐயும் விலை தான் decide பண்ணுச்சு")],["good",A("HZL funds itself; VISL relies on the group's debt reset","HZL தானே fund பண்ணிக்கும்; VISL group debt reset-ஐ நம்பியிருக்கு")],["bad",A("HZL's near-term risk is the silver slide; VISL's is input costs","HZL-க்கு உடனடி risk silver சரிவு; VISL-க்கு input cost")],["warn",A("Four more group results land 28–29 Oct and will complete the picture","இன்னும் நாலு group results 28–29 Oct வருது — full picture அப்போ தான்")]]};
+function tabKT(s){var arr=KT[s];var col=s==="hzl"?"hzl":s==="visl"?"visl":"";
+  return panel(L("5 key takeaways","5 முக்கிய பாயிண்ட்"),'<div class="steps">'+arr.map(function(a,i){return '<div class="step"><div class="c '+a[0]+'">'+(i+1)+'</div><div style="font-weight:700;padding-top:9px">'+T(a[1])+'</div></div>';}).join("")+'</div><div class="legend" style="margin-top:12px"><span><i style="background:var(--goodSoft);border:2px solid var(--good)"></i>'+L("Positive","Positive")+'</span><span><i style="background:var(--warnSoft);border:2px solid var(--warn)"></i>'+L("Watch","கவனிங்க")+'</span><span><i style="background:var(--badSoft);border:2px solid var(--bad)"></i>'+L("Negative","Negative")+'</span></div>',col);}
+
+/* ============ TAB: Share price moves ============ */
+function priceLine(){var pts=[["16 Oct",540],["19 Oct",537.85],["20 Oct",538.4],["21 Oct",524.8],["22 Oct",516.25],["23 Oct",497],["27 Oct",492]];var W=600,H=240,pl=50,pr=20,pt=30,pb=40,mn=480,mx=570;
+  var x=function(i){return pl+(W-pl-pr)*i/(pts.length-1);},y=function(v){return pt+(H-pt-pb)*(1-(v-mn)/(mx-mn));};
+  var s='<div class="cwrap"><svg class="chart" viewBox="0 0 '+W+' '+H+'">';[480,510,540,570].forEach(function(t){s+='<line x1="'+pl+'" x2="'+(W-pr)+'" y1="'+y(t)+'" y2="'+y(t)+'" stroke="#EFCFA8"/><text x="'+(pl-6)+'" y="'+(y(t)+4)+'" text-anchor="end" font-size="10" class="m">₹'+t+'</text>';});
+  var d=pts.map(function(p,i){return (i?"L":"M")+x(i)+" "+y(p[1]);}).join(" ");
+  s+='<path d="'+d+' L'+x(pts.length-1)+' '+y(mn)+' L'+x(0)+' '+y(mn)+' Z" fill="#DCEAF5"/><path d="'+d+'" fill="none" stroke="#1D5C8A" stroke-width="3"/>';
+  pts.forEach(function(p,i){s+='<circle cx="'+x(i)+'" cy="'+y(p[1])+'" r="'+(i===pts.length-1?6:4)+'" fill="#1D5C8A"/><text x="'+x(i)+'" y="'+(H-14)+'" text-anchor="middle" font-size="10">'+p[0]+'</text>';});
+  s+='<line x1="'+x(1)+'" x2="'+x(1)+'" y1="'+pt+'" y2="'+(H-pb)+'" stroke="#F28C28" stroke-dasharray="4 3" stroke-width="2"/><text x="'+(x(1)+4)+'" y="'+(pt-8)+'" font-size="10">'+esc(L("results after market","market முடிஞ்சதும் results"))+'</text>';
+  s+='<text x="'+x(2)+'" y="'+(y(561.95)+2)+'" font-size="10" text-anchor="middle">'+esc(L("21 Oct high ₹561.95","21 Oct high ₹561.95"))+'</text>';
+  s+='<text x="'+(x(5)-6)+'" y="'+(y(497)+20)+'" font-size="10" text-anchor="end">'+esc(L("silver ~$54","silver ~$54"))+'</text>';
+  return s+'</svg></div>';}
+function tabWhy(s){if(s==="hzl"){return '<div class="grid g2">'+panel(L("HZL closing price around results","Results சுத்தி HZL closing விலை"),priceLine()+'<p class="note">'+L("26 Oct close not shown.","26 Oct close காட்டல.")+'</p>',"hzl")+
+  panel(L("Why the stock fell after a record quarter","Record quarter-க்கு அப்புறமும் ஏன் இறங்குச்சு"),ul([A("<b>21 Oct:</b> opened 4.5% higher on results, hit ₹561.95, then sold off to close ₹524.80","<b>21 Oct:</b> results-னால 4.5% மேல open, ₹561.95 தொட்டு, அப்புறம் ₹524.80-க்கு இறங்குச்சு"),A("<b>23 Oct:</b> −3.7% to ₹497 as silver hit its lowest level since Nov 2025 (~$54) and LME zinc fell 2.3% to $3,671/t","<b>23 Oct:</b> −3.7%, ₹497 — silver Nov 2025-க்கு அப்புறம் lowest (~$54), LME zinc 2.3% இறங்கி $3,671/t"),A("Oil above $115 on Middle East tension raised inflation and rate-hike fears, hitting metals","Middle East tension-னால oil $115 மேல — inflation, rate hike பயம், metals அடி"),A("Non-ferrous metals sector fell 3.4% the same day; HZL lost 7.96% in the week","அதே நாள் non-ferrous sector −3.4%; வாரத்துல HZL −7.96%"),A("Markets price the next quarters: Q3 hedges cover only 8 t of silver at $68/oz","Market அடுத்த quarter-ஐ பாக்குது: Q3-க்கு 8 t silver மட்டும் $68/oz-ல hedge")])+
+  hbars([{l:L("Silver Jan peak","Silver Jan peak"),v:120,c:"#8C96A3",t:"$120+"},{l:L("Silver 23 Oct","Silver 23 Oct"),v:54,c:"#B0241B",t:"≈$54"}],{lw:130}),"hzl")+'</div>';}
+ if(s==="visl"){return '<div class="grid g2">'+panel(L("VISL price since listing","Listing-ல இருந்து VISL விலை"),rangeBar(19.1,44.8,[{v:22.25,l:L("listed ₹22.25 (15 Jun)","listing ₹22.25 (15 Jun)")},{v:28.0,l:L("27 Oct ₹28.0","27 Oct ₹28.0"),top:1},{v:44.8,l:L("high ₹44.8","high ₹44.8"),c:"#17703F"}],"#A3361F")+hbars([{l:L("FII holding Jun→Sep","FII Jun→Sep"),v:-1.27,c:"#B0241B",t:"5.38% → 4.11%"},{l:L("DII holding Jun→Sep","DII Jun→Sep"),v:-2.85,c:"#B0241B",t:"12.09% → 9.24%"},{l:L("Public holding","Public"),v:4.11,c:"#E3A15B",t:"25.92% → 30.03%"}],{lw:150,max:5}),"visl")+
+  panel(L("What moved the stock","Stock-ஐ நகர்த்துனது"),ul([A("Closed +5% at ₹28.0 on 27 Oct, before results came out after market hours","27 Oct +5%, ₹28.0 — results market முடிஞ்ச அப்புறம் தான் வந்துச்சு"),A("Down 14.7% over the past month and 7.9% over three months","ஒரு மாசத்துல −14.7%, மூணு மாசத்துல −7.9%"),A("Funds trimmed in the Sep quarter: DIIs 12.1% → 9.2%, FIIs 5.4% → 4.1%","Sep quarter-ல funds குறைச்சாங்க: DII 12.1% → 9.2%, FII 5.4% → 4.1%"),A("The market will judge the loss quarter on 28 Oct, the first session after results","Loss quarter-க்கு market reaction 28 Oct தான் — results-க்கு அப்புறம் முதல் session"),A("Shares traded in the trade-for-trade segment right after listing, which limited early trading","Listing ஆனதும் trade-for-trade segment-ல இருந்துச்சு — ஆரம்ப trading குறைவு")]),"visl")+'</div>';}
+ return panel(L("Common thread","பொதுவான காரணம்"),ul([A("Both stocks are moving with commodity prices more than with their own results","ரெண்டு stock-உம் results-ஐ விட commodity விலையோட தான் நகருது"),A("HZL: silver & zinc slide in the week after results","HZL: results வாரத்துல silver, zinc சரிவு"),A("VISL: steel price softness and coking coal costs, plus fund selling","VISL: steel விலை மந்தம், coking coal cost, fund selling"),A("Group sentiment will also react to Vedanta Ltd and Aluminium results tonight","இன்னிக்கு ராத்திரி Vedanta Ltd, Aluminium results-க்கும் group sentiment react பண்ணும்")])+hbars([{l:"HZL vs 52w high",v:-32.9,c:"#1D5C8A",t:"−32.9%"},{l:"VISL vs post-listing high",v:-37.5,c:"#A3361F",t:"−37.5%"}],{lw:170,max:45}));}
+
+/* ============ TAB: Triggers & Cycle ============ */
+var TC={hzl:{type:A("Commodity (zinc, silver)","Commodity (zinc, silver)"),phase:4,phaseTxt:A("P4 Late cycle / peak","P4 Late cycle / peak"),sector:35,
+  ev:[A("Record 61.5% margin, near a 5-year high","Record 61.5% margin — 5 வருஷ high பக்கம்"),A("Silver ~$54 on 23 Oct, down ~55% from January's $120 peak","23 Oct silver ~$54 — January $120 peak-ல இருந்து ~55% கீழ"),A("LME zinc −2.3% to $3,671/t on 23 Oct","23 Oct LME zinc −2.3%, $3,671/t")],
+  stock:[["Lifecycle: mature",55],["Earnings: margin at 5-yr high",40],["Valuation: P/E trap cap",30],["Price: Stage 4 (below falling MA)",15]],cy:35,
+  trig:[["+",A("FY27 zinc cost guidance cut to $825–850/t","FY27 zinc cost guidance $825–850/t"),2,1.0,1.0,1.0,A("Q3 cost vs guidance","Q3 cost vs guidance")],
+   ["+",A("Debari 250 ktpa integrated zinc (₹12,000 cr), Q2 FY29","Debari 250 ktpa zinc (₹12,000 cr), Q2 FY29"),3,0.7,0.4,1.0,A("Mine development pace","Mine development வேகம்")],
+   ["+",A("10 Mtpa tailings plant (₹3,823 cr), Q4 FY28","10 Mtpa tailings plant (₹3,823 cr), Q4 FY28"),2,0.7,0.4,1.0,A("Construction milestones","Construction milestones")],
+   ["−",A("Silver price slide (~45% of H1 profit)","Silver விலை சரிவு (H1 profit-ல ~45%)"),4,1.0,1.0,0.7,A("Silver vs $68 hedge","Silver vs $68 hedge")],
+   ["−",A("Possible govt stake sale (~1.5%), unconfirmed","Govt stake sale (~1.5%) வாய்ப்பு — confirm ஆகல"),2,0.2,0.7,1.0,A("DIPAM notices","DIPAM notice")],
+   ["−",A("Parent pledge on HZL shares (~47%)","HZL shares-ல parent pledge (~47%)"),2,0.4,0.7,1.0,A("Pledge % each quarter","ஒவ்வொரு quarter pledge %")]],tg:48,
+  gates:A("Gates: Stage 4 caps conviction at 55; the silver trigger (I4, C1.0) caps it at 50.","Gates: Stage 4 — conviction max 55; silver trigger (I4, C1.0) — max 50.")},
+ visl:{type:A("Commodity (steel spread)","Commodity (steel spread)"),phase:3,phaseTxt:A("P3 Expansion","P3 Expansion"),sector:70,
+  ev:[A("Indian steel prices up 21–29% YoY; mills raised prices in Sep and Oct","Indian steel விலை YoY 21–29% ஏற்றம்; Sep, Oct-ல mills விலை ஏத்துனாங்க"),A("Safeguard duty held at 11.5%; anti-dumping probe on HRC opened 25 Jun","Safeguard duty 11.5%-ல தொடருது; HRC anti-dumping probe 25 Jun ஆரம்பம்"),A("But imports +29.5% (Apr–Aug) and Q2 realisations dipped, so P2 is ruled out","ஆனா imports +29.5% (Apr–Aug), Q2 realisation இறங்குச்சு — P2 இல்ல")],
+  stock:[["Lifecycle: re-inventing (expansion)",75],["Earnings: margin falling",25],["Valuation: no 5-yr band (new listing)",55],["Price: Stage 3 (short history)",35]],cy:59,
+  trig:[["+",A("Bokaro hot metal 1.7 → 3.2 Mtpa + 0.5 Mtpa coke oven, FY27","Bokaro hot metal 1.7 → 3.2 Mtpa + 0.5 Mtpa coke oven, FY27"),4,0.7,0.7,1.0,A("Commissioning date","Commissioning தேதி")],
+   ["+",A("Safeguard duty in force (indirect for long steel)","Safeguard duty அமல்ல (long steel-க்கு மறைமுகம்)"),1,1.0,1.0,1.0,A("Duty changes","Duty மாற்றம்")],
+   ["+",A("Ore ramp-up: Bicholim 3.6 Mtpa, Cudnem 0.5 Mtpa (FY27)","Ore ramp-up: Bicholim 3.6 Mtpa, Cudnem 0.5 Mtpa (FY27)"),2,0.7,0.7,1.0,A("Permits & dispatches","Permit, dispatch")],
+   ["−",A("Coking coal & fuel cost spike (crude >$115)","Coking coal, fuel cost ஏற்றம் (crude >$115)"),3,1.0,1.0,1.0,A("Coal price, EBITDA/t","Coal விலை, EBITDA/t")],
+   ["−",A("Karnataka dispatch & seasonal mining hit","Karnataka dispatch, seasonal mining பாதிப்பு"),2,0.4,1.0,1.0,A("Q3 ore sales","Q3 ore sales")],
+   ["−",A("GST show-cause notice ₹11.77 cr (FY22–24)","GST show-cause notice ₹11.77 cr (FY22–24)"),1,0.4,0.7,1.0,A("Order outcome","Order முடிவு")]],tg:49,
+  gates:A("Gates: no cap triggered; no negative trigger is both I≥4 and C≥0.7.","Gates: cap இல்ல; I≥4, C≥0.7 negative trigger இல்ல.")}};
+function cycleClock(ph,col,stageTxt){var cx=150,cy=140,R=105,names=["P1 Trough","P2 Early recovery","P3 Expansion","P4 Late / peak","P5 Downturn"],colors=["#DCEAF5","#DBF1E3","#BFE5CC","#FCEBC8","#F9DCD9"];
+  var s='<svg class="chart" viewBox="0 0 300 300" style="max-width:320px;margin:auto">';
+  for(var i=0;i<5;i++){var a0=-Math.PI/2+i*2*Math.PI/5,a1=a0+2*Math.PI/5;s+='<path d="M'+cx+' '+cy+' L'+(cx+R*Math.cos(a0))+' '+(cy+R*Math.sin(a0))+' A'+R+' '+R+' 0 0 1 '+(cx+R*Math.cos(a1))+' '+(cy+R*Math.sin(a1))+' Z" fill="'+colors[i]+'" stroke="#170F07" stroke-width="'+(i+1===ph?3:1)+'"/>';
+    var am=(a0+a1)/2;s+='<text x="'+(cx+(R*0.66)*Math.cos(am))+'" y="'+(cy+(R*0.66)*Math.sin(am))+'" text-anchor="middle" font-size="10">'+names[i].split(" ")[0]+'</text><text x="'+(cx+(R*0.66)*Math.cos(am))+'" y="'+(cy+(R*0.66)*Math.sin(am)+12)+'" text-anchor="middle" font-size="8.5">'+names[i].split(" ").slice(1).join(" ")+'</text>';}
+  var ap=-Math.PI/2+(ph-0.5)*2*Math.PI/5;s+='<line x1="'+cx+'" y1="'+cy+'" x2="'+(cx+(R-10)*Math.cos(ap))+'" y2="'+(cy+(R-10)*Math.sin(ap))+'" stroke="'+col+'" stroke-width="5" stroke-linecap="round"/><circle cx="'+cx+'" cy="'+cy+'" r="9" fill="'+col+'"/>';
+  s+='<text x="150" y="268" text-anchor="middle" font-size="11">'+esc(L("Pointer = sector phase","Pointer = sector phase"))+'</text><text x="150" y="284" text-anchor="middle" font-size="11">'+esc(stageTxt)+'</text>';return s+'</svg>';}
+function timeline(evts){var W=760,H=150,n=evts.length,s='<div class="cwrap"><svg class="chart" viewBox="0 0 '+W+' '+H+'" style="min-width:620px"><line x1="20" x2="'+(W-20)+'" y1="60" y2="60" stroke="#170F07" stroke-width="2"/>';
+  evts.forEach(function(e,i){var x=40+(W-80)*i/(n-1);var c=e[2]==="done"?"#17703F":e[2]==="soon"?"#F28C28":"#6B5B4B";s+='<circle cx="'+x+'" cy="60" r="9" fill="'+(e[2]==="done"?c:"#FFFBF6")+'" stroke="'+c+'" stroke-width="3"/><text x="'+x+'" y="'+(i%2?96:38)+'" text-anchor="middle" font-size="11" class="m">'+esc(e[0])+'</text><text x="'+x+'" y="'+(i%2?112:22)+'" text-anchor="middle" font-size="10.5">'+esc(T(e[1]))+'</text>';});
+  return s+'</svg></div><div class="legend"><span><i style="background:#17703F"></i>'+L("Done","முடிஞ்சது")+'</span><span><i style="background:#F28C28"></i>'+L("Due soon","சீக்கிரம்")+'</span><span><i style="background:#FFFBF6;border:2px solid #6B5B4B"></i>'+L("Guided","Guided")+'</span></div>';}
+var TL=[["19–27 Oct",A("HZL, VISL results","HZL, VISL results"),"done"],["28 Oct",A("Vedanta Ltd, VAML","Vedanta Ltd, VAML"),"soon"],["29 Oct",A("VOGL, Vedanta Power","VOGL, Vedanta Power"),"soon"],["Dec 2026",A("US Fed meeting","US Fed meeting"),"g"],["Jan 2027",A("Q3 FY27 results","Q3 FY27 results"),"g"],["FY27",A("Bokaro 3.2 Mtpa","Bokaro 3.2 Mtpa"),"g"],["Q4 FY28",A("HZL tailings plant","HZL tailings plant"),"g"],["Q2 FY29",A("Debari 250 ktpa","Debari 250 ktpa"),"g"]];
+function trigTable(t){var pos=0,neg=0;var h='<div class="tscroll"><table><thead><tr><th>'+L("Trigger","Trigger")+'</th><th>+/−</th><th>I</th><th>C</th><th>W</th><th>P</th><th>'+L("Points","Points")+'</th><th>'+L("What to watch","என்ன கவனிக்கணும்")+'</th></tr></thead><tbody>';
+  t.forEach(function(r){var p=r[2]*r[3]*r[4]*r[5];h+='<tr><td>'+T(r[1])+'</td><td class="'+(r[0]==="+"?"up":"dn")+'">'+r[0]+'</td><td>'+r[2]+'</td><td>'+r[3]+'</td><td>'+r[4]+'</td><td>'+r[5]+'</td><td class="'+(r[0]==="+"?"up":"dn")+'">'+p.toFixed(2)+'</td><td style="font-family:var(--f-body);white-space:normal">'+T(r[6])+'</td></tr>';});
+  return h+'</tbody></table></div>';}
+function tcFor(id){var t=TC[id],c=CO[id];var stage=t.stock[3][0];
+  return '<div class="grid g2">'+panel(L("Cycle clock","Cycle clock")+' · '+T(t.phaseTxt),cycleClock(t.phase,id==="hzl"?"#1D5C8A":"#A3361F",L("Stock: ","Stock: ")+stage.replace("Price: ",""))+'<div class="grid g4">'+kpi(L("Cycle type","Cycle type"),'<span style="font-size:.9rem;font-family:var(--f-body)">'+T(t.type)+'</span>')+kpi(L("Sector score","Sector score"),t.sector)+kpi("CY",t.cy,"","")+kpi("TG",t.tg)+'</div>'+ul(t.ev),id)+
+   panel(L("Stock cycle sub-scores","Stock cycle sub-scores"),hbars(t.stock.map(function(s){return {l:s[0],v:s[1],c:id==="hzl"?"#1D5C8A":"#A3361F"};}),{lw:250,max:100})+'<p class="note">'+L("CY = 50% sector + 50% stock average. ","CY = 50% sector + 50% stock average. ")+(id==="hzl"?L("Cyclical P/E trap flagged: P4 sector, margin at 5-year high, low P/E.","Cyclical P/E trap: P4 sector, 5-வருஷ high margin, குறைந்த P/E."):L("Only 4.5 months of trading history, so price-stage reading is tentative.","Trading history 4.5 மாசம் தான் — price stage reading உறுதியில்ல."))+'</p>',id)+'</div>'+
+   panel(L("Trigger table","Trigger table")+' · TG '+t.tg,trigTable(t.trig)+'<p class="note">'+L("Points = Impact × Certainty × Timing × Priced-in. TG = 50 + 8 × (top-3 positives) − 8 × (all negatives). ","Points = Impact × Certainty × Timing × Priced-in. TG = 50 + 8 × (top-3 positive) − 8 × (எல்லா negative). ")+T(t.gates)+'</p>',id)+
+   panel(L("What would change this view","இந்த view-ஐ எது மாத்தும்"),ul(id==="hzl"?[A("Silver recovering above the $68 hedge level","Silver $68 hedge level-க்கு மேல மீண்டா"),A("Q3 zinc cost staying near $750/t instead of rising toward guidance","Q3 zinc cost guidance-க்கு ஏறாம ~$750/t-ல இருந்தா"),A("A confirmed government stake sale (adds supply)","Govt stake sale confirm ஆனா (supply கூடும்)")]:[A("Bokaro 3.2 Mtpa commissioned on time in FY27","Bokaro 3.2 Mtpa FY27-ல நேரத்துக்கு commission ஆனா"),A("Steel EBITDA/t back above ₹4,000 in Q3","Q3-ல steel EBITDA/t ₹4,000 மேல வந்தா"),A("Coking coal easing as crude cools","Crude குறைஞ்சு coking coal இறங்குனா")]),id);}
+function tabTC(s){if(s==="hzl"||s==="visl")return tcFor(s);
+  return panel(L("Upcoming dated events","வரப்போகும் தேதிகள்"),timeline(TL))+'<div class="grid g2" style="margin-top:14px">'+panel(L("Scores side by side","Scores ஒப்பீடு"),hbars([{l:"HZL CY",v:35,c:"#1D5C8A"},{l:"VISL CY",v:59,c:"#A3361F"},{l:"HZL TG",v:48,c:"#1D5C8A"},{l:"VISL TG",v:49,c:"#A3361F"}],{lw:90,max:100}))+panel(L("Read-out","சுருக்கம்"),ul([A("HZL: strong business, late in its cycle; silver is the swing factor","HZL: பலமான business, cycle-ல late; silver தான் swing factor"),A("VISL: weak quarter, but the sector cycle is still supportive and a large expansion is close","VISL: மோசமான quarter, ஆனா sector cycle support, பெரிய expansion பக்கத்துல"),A("Both TG scores sit near neutral (48–49)","ரெண்டு TG-உம் neutral பக்கம் (48–49)")]))+'</div>';}
+
+/* ============ TAB: 6 pillars ============ */
+var PIL={hzl:[[9,A("Business quality","Business quality"),A("62% EBITDA margin, 69% ROCE, integrated mine-to-metal","62% margin, 69% ROCE, mine-to-metal integrated")],[9,A("Competitive advantage","Competitive advantage"),A("Zinc cost $703/t; own mines; silver by-product","Zinc cost $703/t; சொந்த mine; silver by-product")],[7,A("Growth opportunity","Growth opportunity"),A("250 ktpa Debari (Q2 FY29), tailings plant; critical minerals still exploration-stage","250 ktpa Debari (Q2 FY29), tailings plant; critical minerals இன்னும் exploration")],[9,A("Financial strength","Financial strength"),A("₹11,268 cr net cash, CRISIL AAA","₹11,268 cr net cash, CRISIL AAA")],[6,A("Valuation","Valuation"),A("P/E ~10 and EV/EBITDA ~6 look low, but on peak earnings","P/E ~10, EV/EBITDA ~6 — ஆனா peak earnings மேல")],[5,A("Risk & reward","Risk & reward"),A("Silver −55% from peak; govt stake sale overhang; parent pledge","Silver peak-ல இருந்து −55%; govt stake sale; parent pledge")]],
+ visl:[[5,A("Business quality","Business quality"),A("Integrated ore + long steel, but small scale and thin margins","Ore + long steel integrated, ஆனா சின்ன scale, மெல்லிய margin")],[5,A("Competitive advantage","Competitive advantage"),A("Captive iron ore helps; coking coal is bought at global prices","Captive ore உதவும்; coking coal global விலைக்கு வாங்கணும்")],[7,A("Growth opportunity","Growth opportunity"),A("Hot metal 1.7 → 3.2 Mtpa, DI pipe plants, ore ramp-up","Hot metal 1.7 → 3.2 Mtpa, DI pipe plants, ore ramp-up")],[5,A("Financial strength","Financial strength"),A("Debt reset, AA rating; but Q2 interest cover 0.5x","Debt reset, AA rating; ஆனா Q2 interest cover 0.5x")],[4,A("Valuation","Valuation"),A("EV/EBITDA ~11x on H1 annualised; no earnings yet","H1 × 2 basis-ல EV/EBITDA ~11x; earnings இன்னும் இல்ல")],[4,A("Risk & reward","Risk & reward"),A("Steel cycle, coal costs, execution, dispatch issues","Steel cycle, coal cost, execution, dispatch பிரச்சனை")]]};
+function temple(sc,col){var W=560,H=330,s='<div class="cwrap"><svg class="chart" viewBox="0 0 '+W+' '+H+'">';var tot=sc.reduce(function(a,b){return a+b[0];},0);
+  s+='<polygon points="40,78 280,12 520,78" fill="#FDE6CC" stroke="#170F07" stroke-width="2.5"/><text x="280" y="58" text-anchor="middle" font-size="22" class="m">'+tot+' / 60</text>';
+  s+='<rect x="34" y="78" width="492" height="18" fill="#EFCFA8" stroke="#170F07" stroke-width="2"/>';
+  sc.forEach(function(p,i){var x=58+i*78,top=96,h=170,fh=h*p[0]/10;s+='<rect x="'+x+'" y="'+top+'" width="42" height="'+h+'" fill="#FFFBF6" stroke="#170F07" stroke-width="2"/><rect x="'+x+'" y="'+(top+h-fh)+'" width="42" height="'+fh+'" fill="'+col+'" opacity=".85"/><text x="'+(x+21)+'" y="'+(top+h-fh-6>top+14?top+h-fh-6:top+16)+'" text-anchor="middle" font-size="14" class="m" fill="#170F07">'+p[0]+'</text>';
+    var words=T(p[1]).split(" ");s+='<text x="'+(x+21)+'" y="'+(top+h+42)+'" text-anchor="middle" font-size="10.5">'+esc(words[0])+'</text><text x="'+(x+21)+'" y="'+(top+h+55)+'" text-anchor="middle" font-size="10.5">'+esc(words.slice(1).join(" "))+'</text>';});
+  s+='<rect x="24" y="266" width="512" height="14" fill="#EFCFA8" stroke="#170F07" stroke-width="2"/><rect x="14" y="280" width="532" height="12" fill="#FDE6CC" stroke="#170F07" stroke-width="2"/>';
+  return s+'</svg></div>';}
+function tabPil(s){if(s==="hzl"||s==="visl"){var p=PIL[s];return '<div class="grid g2">'+panel(L("6 Pillars temple","6 தூண் கோவில்"),temple(p,s==="hzl"?"#1D5C8A":"#A3361F")+'<p class="note">'+L("Filled height = score out of 10.","நிரம்புன உயரம் = 10-க்கு score.")+'</p>',s)+
+  panel(L("Evidence behind each score","ஒவ்வொரு score-க்கும் ஆதாரம்"),'<div class="tscroll"><table><thead><tr><th>'+L("Pillar","தூண்")+'</th><th>'+L("Score","Score")+'</th><th style="text-align:left">'+L("Evidence","ஆதாரம்")+'</th></tr></thead><tbody>'+p.map(function(r){return '<tr><td>'+T(r[1])+'</td><td>'+r[0]+'/10</td><td style="text-align:left;white-space:normal;font-family:var(--f-body)">'+T(r[2])+'</td></tr>';}).join("")+'</tbody></table></div>'+ul([A("How graded: 9–10 best-in-class with numbers to show it; 7–8 strong; 5–6 average or mixed; 3–4 weak; 1–2 broken. Valuation and risk are scored for today's price and cycle position.","எப்படி score: 9–10 best-in-class, numbers ஆதாரம்; 7–8 strong; 5–6 average/mixed; 3–4 weak; 1–2 broken. Valuation, risk இன்னிக்கு விலை, cycle நிலைக்கு.")]),s)+'</div>';}
+ return panel(L("Pillars compared","தூண்கள் ஒப்பீடு"),barChart(PIL.hzl.map(function(r){return T(r[1]).split(" ")[0];}),[{name:"HZL",col:"#1D5C8A",vals:PIL.hzl.map(function(r){return r[0];})},{name:"VISL",col:"#A3361F",vals:PIL.visl.map(function(r){return r[0];})}],{h:240})+ul([A("Totals: HZL 45/60, VISL 30/60","Total: HZL 45/60, VISL 30/60"),A("VISL matches HZL only on growth; the gap is widest on quality and finances","Growth-ல மட்டும் VISL, HZL-க்கு சமம்; quality, finance-ல பெரிய gap")]));}
+
+/* ============ TAB: Big bet ============ */
+function tabBet(s){if(s==="hzl"){return panel(L("Big bet: more zinc from the same ground, plus critical minerals","பெரிய bet: அதே மண்ணுல இருந்து அதிக zinc + critical minerals"),timeline([["Q2 FY27",A("Extra roaster commissioned","Extra roaster commission"),"done"],["Q2 FY27",A("Debari E&P almost done","Debari E&P கிட்டத்தட்ட முடிஞ்சது"),"done"],["FY27",A("Rare-earth lease executed","Rare-earth lease sign"),"done"],["FY27",A("Mine development","Mine development"),"soon"],["Q4 FY28",A("Tailings plant 10 Mtpa","Tailings plant 10 Mtpa"),"g"],["Q2 FY29",A("Debari 250 ktpa","Debari 250 ktpa"),"g"],["Q3 FY29",A("Critical-mineral exploration ends","Critical mineral exploration முடிவு"),"g"]])+
+  '<div class="grid g2" style="margin-top:10px"><div>'+ul([A("<b>Debari 250 ktpa</b>: integrated refined zinc expansion, ₹12,000 cr — a commercial plant under construction, not yet producing","<b>Debari 250 ktpa</b>: integrated refined zinc expansion, ₹12,000 cr — commercial plant கட்டுமானத்துல, production இன்னும் இல்ல"),A("<b>Tailings reprocessing</b>: 10 Mtpa, ₹3,823 cr — recovers metal from old waste","<b>Tailings reprocessing</b>: 10 Mtpa, ₹3,823 cr — பழைய waste-ல இருந்து metal"),A("<b>Critical minerals</b>: 4 blocks, 3 in exploration; Gundlupet rare-earth & yttrium lease signed, business plan in 2–3 years — exploration stage only","<b>Critical minerals</b>: 4 blocks, 3 exploration; Gundlupet rare-earth lease sign ஆச்சு, business plan 2–3 வருஷம் — exploration மட்டும்")])+'</div><div class="detail"><b>'+L("How HZL got there","HZL இங்க எப்படி வந்துச்சு")+'</b>'+ul([A("2002: the government sold control to Sterlite (Vedanta group)","2002: Govt control-ஐ Sterlite (Vedanta)-க்கு விற்றது"),A("Moved its big mines from open-pit to underground to reach deeper ore","பெரிய mines open-pit-ல இருந்து underground-க்கு மாறிச்சு"),A("Treated silver as a second product, now ~45% of profit","Silver-ஐ second product ஆக்குச்சு — இப்போ profit-ல ~45%"),A("Kept cutting cost: $994/t a year ago, $703/t now","Cost-ஐ குறைச்சுட்டே வந்துச்சு: போன வருஷம் $994/t, இப்போ $703/t")])+'</div></div>',"hzl");}
+ if(s==="visl"){var pct=Math.round(2796/3697*100);return panel(L("Big bet: nearly double hot metal at Bokaro","பெரிய bet: Bokaro hot metal கிட்டத்தட்ட இரட்டிப்பு"),timeline([["1 May 26",A("Demerger effective","Demerger effective"),"done"],["15 Jun 26",A("Listed on NSE/BSE","NSE/BSE listing"),"done"],["H1 FY27",A("₹13,138 cr debt write-back","₹13,138 cr debt write-back"),"done"],["FY27",A("Coke oven 0.5 Mtpa","Coke oven 0.5 Mtpa"),"soon"],["FY27",A("Hot metal 3.2 Mtpa","Hot metal 3.2 Mtpa"),"soon"],["FY27",A("Goa DI pipe 0.42 Mtpa*","Goa DI pipe 0.42 Mtpa*"),"g"],["FY28",A("Bokaro DI pipe 0.2 Mtpa","Bokaro DI pipe 0.2 Mtpa"),"g"]])+
+  '<p class="note">'+L("* subject to statutory permissions","* statutory permission-க்கு உட்பட்டு")+'</p><h3>'+L("Project capex spent","Project capex செலவு")+': '+pct+'%</h3><div class="vbar" style="height:14px"><i style="width:'+pct+'%;background:#A3361F"></i></div><p class="note">₹2,796 cr '+L("of","/")+' ₹3,697 cr; ₹901 cr '+L("left","மீதி")+'</p>'+
+  '<div class="grid g2" style="margin-top:10px"><div>'+ul([A("<b>ESL Phase 1A</b> (₹2,975 cr): Bokaro hot metal 1.7 → 3.2 Mtpa plus a 0.5 Mtpa coke oven — under construction, guided for FY27","<b>ESL Phase 1A</b> (₹2,975 cr): Bokaro hot metal 1.7 → 3.2 Mtpa + 0.5 Mtpa coke oven — கட்டுமானத்துல, FY27 guided"),A("Own coke oven cuts dependence on bought coke","சொந்த coke oven — வெளி coke-ஐ நம்புறது குறையும்"),A("Ore: Bicholim 3 → 3.6 Mtpa, Cudnem 0.5 Mtpa (FY27), Jantahkal (FY28)","Ore: Bicholim 3 → 3.6 Mtpa, Cudnem 0.5 Mtpa (FY27), Jantahkal (FY28)")])+'</div><div class="detail"><b>'+L("How VISL got here","VISL இங்க எப்படி வந்துச்சு")+'</b>'+ul([A("Goa iron ore roots from Sesa Goa","Sesa Goa-ல இருந்து Goa iron ore வேர்"),A("2018: Vedanta bought Electrosteel Steels (Bokaro) through insolvency","2018: insolvency வழியா Vedanta, Electrosteel Steels (Bokaro)-ஐ வாங்குச்சு"),A("2026: split out as its own listed company with a cleaned-up balance sheet","2026: சுத்தமான balance sheet-ஓட தனி listed company")])+'</div></div>',"visl");}
+ return panel(L("Who is ahead","யார் முன்னாடி"),hbars([{l:L("HZL Debari (Q2 FY29)","HZL Debari (Q2 FY29)"),v:23,c:"#1D5C8A",t:L("≈23 months away","≈23 மாசம்")},{l:L("VISL Phase 1A (FY27)","VISL Phase 1A (FY27)"),v:5,c:"#A3361F",t:L("≤5 months away · 76% spent","≤5 மாசம் · 76% செலவு")}],{lw:190,max:30})+ul([A("VISL's bet is closer to completion and matters more to it: hot metal nearly doubles","VISL bet முடிவுக்கு பக்கத்துல, அதுக்கு ரொம்ப முக்கியம்: hot metal கிட்டத்தட்ட இரட்டிப்பு"),A("HZL's bet is bigger in rupees but funded from cash, and adds about 23% to a 1.1 Mt base","HZL bet ரூபாய்ல பெருசு, ஆனா cash-ல fund; 1.1 Mt base-க்கு ~23% கூடுதல்"),A("Bars show months from now to the guided completion date","Bars = guided completion தேதி வரை மாசம்")]));}
+
+/* ============ TAB: Value chain ============ */
+function chain(steps,plays,col){return '<div class="mflow">'+steps.map(function(st,i){var on=plays.indexOf(i)>-1;return (i?'<div class="arr" style="font-size:1rem">→</div>':"")+'<div class="fbox" style="flex:1 1 110px;'+(on?"border-color:"+col+";border-width:3px;background:var(--panel)":"opacity:.75")+'"><div class="t">'+(on?L("✓ plays here","✓ இங்க இருக்கு"):L("not here","இல்ல"))+'</div><div class="n">'+T(st)+'</div></div>';}).join("")+'</div>';}
+function tabVC(s){var hz=[A("Exploration","Exploration"),A("Mining (underground)","Mining (underground)"),A("Concentrate","Concentrate"),A("Smelting & refining","Smelting & refining"),A("Zinc, lead, silver metal","Zinc, lead, silver metal"),A("Galvanising, batteries, solar paste","Galvanising, battery, solar paste"),A("Steel, autos, power, electronics","Steel, auto, power, electronics")];
+ var vs=[A("Iron ore mining","Iron ore mining"),A("Coking coal (imported)","Coking coal (import)"),A("Met coke","Met coke"),A("Blast furnace hot metal","Blast furnace hot metal"),A("Pig iron & billets","Pig iron, billets"),A("TMT, wire rods, DI pipes","TMT, wire rods, DI pipes"),A("Flat steel (HRC, CRC)","Flat steel (HRC, CRC)"),A("Construction, water, infra","Construction, water, infra")];
+ if(s==="hzl")return panel(L("Zinc–silver value chain","Zinc–silver value chain"),chain(hz,[0,1,2,3,4],"#1D5C8A")+ul([A("HZL owns every step from mine to refined metal; it does not make galvanised steel or batteries","Mine-ல இருந்து refined metal வரை எல்லாம் HZL; galvanised steel, battery பண்ணல"),A("Sector need: every tonne of new steel for roads, rail and power needs a zinc coat","Sector need: road, rail, power-க்கு வர்ற ஒவ்வொரு tonne steel-க்கும் zinc coat வேணும்"),A("Silver demand now leans on solar panels and electronics, so it moves with industry as well as with investors","Silver demand இப்போ solar, electronics-ஐ நம்பியிருக்கு — industry-யோட, investors-ஓடவும் நகரும்")]),"hzl");
+ if(s==="visl")return panel(L("Iron-ore-to-steel value chain","Iron ore → steel value chain"),chain(vs,[0,2,3,4,5],"#A3361F")+ul([A("VISL mines ore and makes coke, hot metal and long products; it buys coking coal and makes no flat steel","VISL ore, coke, hot metal, long products பண்ணும்; coking coal வாங்கும், flat steel பண்ணல"),A("Sector need: India was a net importer of finished steel in Apr–Aug 2026 (imports +29.5%), with China ~32% of them","Sector need: Apr–Aug 2026 India finished steel net importer (imports +29.5%), அதுல China ~32%"),A("DI pipes ride on piped drinking-water projects; TMT rides on housing and infra","DI pipe — குடிநீர் pipe projects; TMT — housing, infra")]),"visl");
+ return panel(L("How the two chains meet","ரெண்டு chain-உம் எங்க சந்திக்குது"),'<div class="mflow"><div class="fbox" style="border-color:#A3361F;border-width:3px"><div class="t">VISL</div><div class="n">'+L("Long steel, DI pipes","Long steel, DI pipe")+'</div></div><div class="arr">→</div><div class="fbox"><div class="t">'+L("Galvanising","Galvanising")+'</div><div class="n">'+L("Steel gets a zinc coat","Steel-க்கு zinc coat")+'</div></div><div class="arr">←</div><div class="fbox" style="border-color:#1D5C8A;border-width:3px"><div class="t">HZL</div><div class="n">'+L("Refined zinc","Refined zinc")+'</div></div></div>'+ul([A("Steel demand pulls zinc demand, so a steel up-cycle helps both","Steel demand-ஓட zinc demand-உம் வரும் — steel up-cycle ரெண்டுக்கும் நல்லது"),A("But silver gives HZL a second driver that VISL does not have","ஆனா HZL-க்கு silver ரெண்டாவது driver — VISL-க்கு இல்ல")]));}
+
+/* ============ TAB: SWOT ============ */
+var SW={hzl:[[A("62% margin; $703/t cost","62% margin; $703/t cost"),A("₹11,268 cr net cash, AAA","₹11,268 cr net cash, AAA"),A("Silver as a second engine","Silver second engine")],[A("~45% of profit tied to volatile silver","Profit-ல ~45% volatile silver"),A("Royalty and govt payouts are large","Royalty, govt payout பெருசு"),A("Parent pledge on shares","Shares-ல parent pledge")],[A("Debari 250 ktpa, tailings plant","Debari 250 ktpa, tailings plant"),A("Critical minerals & rare earths (exploration)","Critical minerals, rare earth (exploration)"),A("More renewables (27% → 35%)","Renewables 27% → 35%")],[A("Silver near one-year low","Silver ஒரு வருஷ low பக்கம்"),A("Govt stake sale overhang","Govt stake sale overhang"),A("Rate-hike fears hit metals","Rate hike பயம் metals-ஐ அடிக்குது")]],
+ visl:[[A("Captive ore in three states","மூணு state-ல captive ore"),A("Debt reset; AA rating","Debt reset; AA rating"),A("Steel volumes still growing (+4%)","Steel volume இன்னும் ஏறுது (+4%)")],[A("Thin, volatile margins (3% in Q2)","மெல்லிய margin (Q2 3%)"),A("Buys coking coal at global prices","Coking coal global விலைக்கு"),A("Small scale vs large steel peers","பெரிய steel peers விட சின்ன scale")],[A("Hot metal 1.7 → 3.2 Mtpa","Hot metal 1.7 → 3.2 Mtpa"),A("DI pipes for water projects","Water projects-க்கு DI pipe"),A("Safeguard duty supports Indian prices","Safeguard duty இந்திய விலைக்கு support")],[A("Crude & coal cost spikes","Crude, coal cost ஏற்றம்"),A("Cheap steel imports (+29.5%)","மலிவு steel imports (+29.5%)"),A("Project delays, permit risk","Project delay, permit risk")]]};
+function swot(d){var hd=[[L("Strengths","பலம்"),"sw-s"],[L("Weaknesses","பலவீனம்"),"sw-w"],[L("Opportunities","வாய்ப்பு"),"sw-o"],[L("Threats","அச்சுறுத்தல்"),"sw-t"]];return '<div class="swot">'+d.map(function(x,i){return '<div class="'+hd[i][1]+'"><h3>'+hd[i][0]+'</h3>'+ul(x)+'</div>';}).join("")+'</div>';}
+function tabSWOT(s){if(s==="hzl"||s==="visl")return panel("SWOT — "+CO[s].name,swot(SW[s]),s);return '<div class="grid g2">'+panel("SWOT — Hindustan Zinc",swot(SW.hzl),"hzl")+panel("SWOT — VISL",swot(SW.visl),"visl")+'</div>';}
+
+/* ============ TAB: Investor self-check ============ */
+var SCG=[
+ {t:A("1 · Questions about the stock","1 · Stock பத்தின கேள்விகள்"),items:[
+  ["s1",A("I know the company's size and where the price sits in its range","Company size, range-ல விலை எங்க இருக்குனு தெரியும்"),{hzl:A("Mcap ₹2.08 lakh cr; ₹492 vs 52-wk ₹454–733","Mcap ₹2.08 lakh cr; ₹492, 52-wk ₹454–733"),visl:A("Mcap ₹10,930 cr; ₹28 vs listing ₹22.25, high ₹44.8","Mcap ₹10,930 cr; ₹28, listing ₹22.25, high ₹44.8")}],
+  ["s2",A("I know where the company spends its money","Company பணத்தை எங்க செலவு பண்ணுதுனு தெரியும்"),{hzl:A("FY27 capex ~₹5,000 cr; Debari ₹12,000 cr; H1 dividend ₹11/share","FY27 capex ~₹5,000 cr; Debari ₹12,000 cr; H1 dividend ₹11/share"),visl:A("₹3,697 cr projects, ₹901 cr left; no dividend","₹3,697 cr projects, ₹901 cr மீதி; dividend இல்ல")}],
+  ["s3",A("I checked who is buying and selling","யார் வாங்குறாங்க, விக்குறாங்கனு பார்த்தேன்"),{hzl:A("FII 2.37%, DII 4.84% (Sep); govt holds 27.92%","FII 2.37%, DII 4.84% (Sep); govt 27.92%"),visl:A("DIIs 12.09% → 9.24%, FIIs 5.38% → 4.11% in Sep quarter","DII 12.09% → 9.24%, FII 5.38% → 4.11% Sep quarter")}],
+  ["s4",A("I know of any share-supply overhang","Share supply overhang இருக்கானு தெரியும்"),{hzl:A("Possible govt stake sale (unconfirmed); ~47% of shares pledged by parent","Govt stake sale வாய்ப்பு (confirm ஆகல); ~47% shares parent pledge"),visl:A("Promoter 56.38%; new listing, so holder base still settling","Promoter 56.38%; புது listing, holders இன்னும் settle ஆகல")}]]},
+ {t:A("2 · Problems investors face","2 · Investors-க்கு வர்ற பிரச்சனைகள்"),items:[
+  ["p1",A("I can explain how it makes money in one line","ஒரு வரியில எப்படி பணம் சம்பாதிக்குதுனு சொல்ல முடியும்"),{hzl:A("Metal tonnes × LME/LBMA price × USD/INR, minus a very low cost","Metal tonne × LME/LBMA விலை × USD/INR, ரொம்ப குறைந்த cost போக"),visl:A("Steel tonnes × realisation, minus coal, ore and power cost","Steel tonne × realisation, coal, ore, power cost போக")}],
+  ["p2",A("I understand that earnings swing with commodity prices","Earnings commodity விலையோட ஆடும்னு புரியும்"),{hzl:A("PAT went from ₹2,649 cr to ₹6,412 cr in a year","ஒரு வருஷத்துல PAT ₹2,649 → ₹6,412 cr"),visl:A("Q1 profit ₹121 cr became a ₹324 cr loss in one quarter","Q1 ₹121 cr profit → Q2 ₹324 cr loss")}],
+  ["p3",A("I know the top risk","முக்கிய risk தெரியும்"),{hzl:A("Silver ~$54, down ~55% from January peak","Silver ~$54, January peak-ல இருந்து ~55% கீழ"),visl:A("Coking coal & fuel cost; steel price swings","Coking coal, fuel cost; steel விலை ஆட்டம்")}]]},
+ {t:A("3 · What I did about it","3 · நான் என்ன பண்ணேன்"),items:[
+  ["d1",A("I read the results release and the business and risk pages of the annual report","Results release, annual report business, risk pages படிச்சேன்"),{hzl:A("Q2 release: 19 Oct; earnings call same day","Q2 release: 19 Oct; அதே நாள் call"),visl:A("Q2 release: 27 Oct; first results as a listed company with full quarter","Q2 release: 27 Oct")}],
+  ["d2",A("I compared it with a listed peer","ஒரு listed peer-ஓட compare பண்ணேன்"),{hzl:A("Compare margin and cost with another metals company","வேற metals company-யோட margin, cost compare"),visl:A("Compare EBITDA/t with a larger steel maker","பெரிய steel maker-ஓட EBITDA/t compare")}],
+  ["d3",A("I kept the amount small enough to hold through a bad quarter","ஒரு மோசமான quarter-ஐ தாங்குற அளவு சின்ன amount தான்"),{hzl:A("A silver slide could cut H2 profit","Silver சரிவு H2 profit-ஐ குறைக்கலாம்"),visl:A("Q2 showed how fast a profit can turn to a loss","Profit எவ்வளவு சீக்கிரம் loss ஆகும்னு Q2 காட்டுச்சு")}],
+  ["d4",A("I fixed a horizon and a review date","Horizon, review தேதி fix பண்ணேன்"),{hzl:A("Next review: Q3 results, Jan 2027","அடுத்த review: Q3 results, Jan 2027"),visl:A("Next review: Bokaro 3.2 Mtpa start-up (FY27)","அடுத்த review: Bokaro 3.2 Mtpa start (FY27)")}]]},
+ {t:A("4 · Anchors' and analysts' view","4 · Anchors, analysts view"),items:[
+  ["a1",A("I checked long-term fund holding","Long-term fund holding பார்த்தேன்"),{hzl:A("DIIs 4.84%; small fund float","DII 4.84%; fund float குறைவு"),visl:A("DIIs cut to 9.24% from 12.09%","DII 12.09% → 9.24%")}],
+  ["a2",A("I read at least one independent analyst review","ஒரு independent analyst review படிச்சேன்"),{hzl:A("Ratings trackers turned cautious on valuation after results","Results-க்கு அப்புறம் valuation-ல cautious"),visl:A("CRISIL AA/Stable rating","CRISIL AA/Stable")}],
+  ["a3",A("I noted the CB cycle & trigger view","CB cycle, trigger view குறிச்சுக்கிட்டேன்"),{hzl:A("CY 35 (P4 late cycle), TG 48","CY 35 (P4 late cycle), TG 48"),visl:A("CY 59 (P3 expansion), TG 49","CY 59 (P3 expansion), TG 49")}],
+  ["a4",A("I checked the market mood","Market mood பார்த்தேன்"),{hzl:A("Metals sector −3.4% on 23 Oct; oil >$115","23 Oct metals −3.4%; oil >$115"),visl:A("Stock −14.7% in a month before results","Results முன் ஒரு மாசத்துல −14.7%")}]]},
+ {t:A("5 · My own conditions","5 · என் சொந்த conditions"),custom:true,items:[]}
+];
+var scState={};(function(){try{var x=safeGet("cbv_sc");if(x)scState=JSON.parse(x)||{};}catch(e){scState={};}})();
+function scGet(co){if(!scState[co])scState[co]={c:{},own:[{id:"o1",t:"I will not add more if it falls 20% before the next results"},{id:"o2",t:"I can hold for at least two years"}]};return scState[co];}
+function scSave(){safeSet("cbv_sc",JSON.stringify(scState));}
+function tabSC(s){if(s==="cmp")s="hzl";var st=scGet(s),c=CO[s];var total=0,done=0,o="";
+  SCG.forEach(function(gr,gi){var items=gr.custom?st.own.map(function(x){return [x.id,{en:x.t,ta:x.t},null];}):gr.items;var gd=0;items.forEach(function(it){if(st.c[it[0]])gd++;});total+=items.length;done+=gd;
+    var body=items.map(function(it){var dl=it[2]?'<div class="dl"><b>'+L("Data: ","Data: ")+'</b>'+T(it[2][s])+'</div>':"";return '<label class="ck"><input type="checkbox" data-ck="'+it[0]+'"'+(st.c[it[0]]?" checked":"")+'><span><span style="font-weight:700">'+esc(T(it[1]))+'</span>'+(gr.custom?' <button class="x" data-del="'+it[0]+'" aria-label="remove">✕</button>':"")+dl+'</span></label>';}).join("");
+    if(gr.custom)body+='<div class="addrow"><input id="scadd" placeholder="'+L("Add your own condition","உங்க condition சேருங்க")+'"><button class="btn" id="scaddB">'+L("Add","சேர்")+'</button></div>';
+    o+=panel(T(gr.t),'<div style="display:flex;gap:12px;align-items:flex-start"><div>'+ring(items.length?gd/items.length:0,gd+"/"+items.length,s==="hzl"?"#1D5C8A":"#A3361F")+'</div><div style="flex:1;min-width:0">'+body+'</div></div>',s);});
+  return panel(L("Your self-check for ","உங்க self-check — ")+c.name,'<div style="display:flex;gap:14px;align-items:center;flex-wrap:wrap">'+ring(total?done/total:0,done+"/"+total,"#F28C28")+'<div style="flex:1;min-width:220px;font-weight:700">'+L("This only counts the conditions you set for yourself. It is not a recommendation to buy, sell or hold.","இது நீங்களே வச்ச conditions-ஐ மட்டும் எண்ணுது. Buy, sell, hold recommendation இல்ல.")+'</div></div>')+'<div class="grid g2" style="margin-top:14px">'+o+'</div>';}
+function bindSC(){var s=subOf("sc");if(s==="cmp")s="hzl";var st=scGet(s);
+  document.querySelectorAll("[data-ck]").forEach(function(b){b.onchange=function(){st.c[b.getAttribute("data-ck")]=b.checked;scSave();renderBody();};});
+  document.querySelectorAll("[data-del]").forEach(function(b){b.onclick=function(e){e.preventDefault();var id=b.getAttribute("data-del");st.own=st.own.filter(function(x){return x.id!==id;});delete st.c[id];scSave();renderBody();};});
+  var ab=document.getElementById("scaddB");if(ab)ab.onclick=function(){var i=document.getElementById("scadd");var v=(i.value||"").trim();if(!v)return;st.own.push({id:"o"+Date.now(),t:v});scSave();renderBody();};}
+
+/* ============ TAB: Socrates quiz ============ */
+var QZ=[
+ [A("What drove most of HZL's Q2 profit jump besides prices?","Price தவிர HZL Q2 profit ஏற்றத்துக்கு முக்கிய காரணம்?"),[A("Lower zinc cost ($703/t)","Zinc cost குறைவு ($703/t)"),A("A one-time tax refund","ஒரு முறை tax refund"),A("A new acquisition","புது acquisition")],0,A("Zinc cost fell 29% YoY to $703/t on better grades, more output and renewables.","நல்ல grade, அதிக output, renewables — zinc cost 29% குறைஞ்சு $703/t.")],
+ [A("Roughly what share of HZL's H1 profit came from silver?","HZL H1 profit-ல silver பங்கு சுமார் எவ்வளவு?"),[A("About 10%","~10%"),A("About 45%","~45%"),A("About 80%","~80%")],1,A("Silver earned about 45% of H1 profit, so its price slide matters a lot.","H1 profit-ல ~45% silver — அதனால விலை சரிவு ரொம்ப முக்கியம்.")],
+ [A("Why did VISL post a Q2 loss?","VISL Q2-ல ஏன் loss?"),[A("Planned shutdowns, weak steel prices, costlier coal","Planned shutdown, steel விலை குறைவு, coal விலை அதிகம்"),A("A big fraud write-off","பெரிய fraud write-off"),A("Higher interest after new borrowing","புது கடனால interest அதிகம்")],0,A("EBITDA fell 84% QoQ on shutdowns at Bokaro/Goa, lower realisations and higher coking coal and fuel cost. Interest actually fell.","Bokaro/Goa shutdown, realisation குறைவு, coal/fuel அதிகம் — EBITDA 84% இறங்குச்சு. Interest குறைஞ்சுதான் இருக்கு.")],
+ [A("HZL's P/E is about 10x. Why might that still not be cheap?","HZL P/E ~10x. இருந்தும் ஏன் மலிவு இல்லாம இருக்கலாம்?"),[A("Because it is calculated on peak-cycle earnings","Peak-cycle earnings மேல கணக்கு போட்டதால"),A("Because the company has debt","Company-க்கு கடன் இருக்குறதால"),A("Because dividends are zero","Dividend இல்லாததால")],0,A("A low P/E on peak margins is the cyclical P/E trap: if earnings fall, the P/E rises.","Peak margin-ல குறைந்த P/E = cyclical P/E trap: earnings இறங்குனா P/E ஏறும்.")],
+ [A("What is VISL's main growth project?","VISL-ஓட முக்கிய growth project?"),[A("Flat steel mill in Odisha","Odisha-ல flat steel mill"),A("Bokaro hot metal 1.7 → 3.2 Mtpa","Bokaro hot metal 1.7 → 3.2 Mtpa"),A("Zinc smelter","Zinc smelter")],1,A("ESL Phase 1A nearly doubles hot metal and adds a 0.5 Mtpa coke oven, guided for FY27.","ESL Phase 1A hot metal-ஐ கிட்டத்தட்ட இரட்டிப்பாக்கும் + 0.5 Mtpa coke oven, FY27.")],
+ [A("Where is HZL in the CB cycle clock?","CB cycle clock-ல HZL எங்க?"),[A("P2 Early recovery","P2 Early recovery"),A("P4 Late cycle / peak","P4 Late cycle / peak"),A("P1 Trough","P1 Trough")],1,A("Record margins plus a sliding silver price point to late cycle (P4).","Record margin + silver சரிவு = late cycle (P4).")],
+ [A("How did VISL's borrowings fall from ₹15,217 cr to ₹4,663 cr?","VISL borrowings ₹15,217 → ₹4,663 cr எப்படி குறைஞ்சது?"),[A("Repaid from profits","Profit-ல இருந்து கட்டினாங்க"),A("₹13,138 cr of group debt was waived into capital reserve","₹13,138 cr group debt waive ஆகி capital reserve"),A("Raised equity through a QIP","QIP வழியா equity")],1,A("The Bloom Fountain inter-group debt was waived as part of the restructuring.","Restructuring-ல Bloom Fountain inter-group debt waive பண்ணாங்க.")],
+ [A("Which Vedanta group company reports Q2 tomorrow, 29 Oct?","நாளைக்கு 29 Oct எந்த Vedanta company Q2 results?"),[A("Vedanta Aluminium Metal","Vedanta Aluminium Metal"),A("Vedanta Oil & Gas","Vedanta Oil & Gas"),A("Hindustan Zinc","Hindustan Zinc")],1,A("Vedanta Oil & Gas and Vedanta Power report on 29 Oct; Vedanta Ltd and Aluminium report on 28 Oct.","VOGL, Vedanta Power — 29 Oct; Vedanta Ltd, Aluminium — 28 Oct.")]];
+var qz={i:0,score:0,ans:null};
+function tabSoc(){if(qz.i>=QZ.length){return panel("Cauvery Socrates",'<div style="display:flex;gap:14px;align-items:center">'+ring(qz.score/QZ.length,qz.score+"/"+QZ.length,"#17703F")+'<div style="font-weight:800;font-size:1.1rem">'+L("Done! You got ","முடிஞ்சது! நீங்க ")+qz.score+L(" right."," சரியா சொன்னீங்க.")+'</div></div><button class="btn" id="qrst" style="margin-top:12px">'+L("Start again","மறுபடி ஆரம்பிங்க")+'</button>');}
+  var q=QZ[qz.i];var opts=q[1].map(function(o,i){var c="qopt";if(qz.ans!=null){if(i===q[2])c+=" right";else if(i===qz.ans)c+=" wrong";}return '<button class="'+c+'" data-q="'+i+'"'+(qz.ans!=null?" disabled":"")+'>'+T(o)+'</button>';}).join("");
+  var fb=qz.ans!=null?'<div class="detail">'+(qz.ans===q[2]?"<b>"+L("Right.","சரி!")+"</b> ":"<b>"+L("Not quite.","கொஞ்சம் தப்பு.")+"</b> ")+T(q[3])+'</div><button class="btn on" id="qnext" style="margin-top:10px">'+L("Next question","அடுத்த கேள்வி")+'</button>':"";
+  return panel("Cauvery Socrates",'<div style="display:flex;gap:14px;align-items:center;margin-bottom:8px">'+ring(qz.i/QZ.length,(qz.i+1)+"/"+QZ.length,"#F28C28")+'<div class="note">'+L("Score so far: ","இதுவரை score: ")+qz.score+'</div></div><h3>'+T(q[0])+'</h3>'+opts+fb);}
+function bindSoc(){document.querySelectorAll("[data-q]").forEach(function(b){b.onclick=function(){qz.ans=+b.getAttribute("data-q");if(qz.ans===QZ[qz.i][2])qz.score++;renderBody();};});
+  var n=document.getElementById("qnext");if(n)n.onclick=function(){qz.i++;qz.ans=null;renderBody();};var r=document.getElementById("qrst");if(r)r.onclick=function(){qz={i:0,score:0,ans:null};renderBody();};}
+
+/* ============ TAB: Analyst view ============ */
+function tabAV(s){var cards={hzl:[A("<b>Cycle:</b> late cycle (P4), stock in a Stage 4 decline; CY 35","<b>Cycle:</b> late cycle (P4), stock Stage 4 decline; CY 35"),A("<b>Top positives:</b> cost guidance cut to $825–850/t; Debari 250 ktpa","<b>Top positives:</b> cost guidance $825–850/t; Debari 250 ktpa"),A("<b>Top risk:</b> silver slide below the $68 hedge level","<b>Top risk:</b> silver $68 hedge-க்கு கீழ சரிவு"),A("<b>Read:</b> a best-in-class business reporting near-peak earnings; the next two quarters depend more on silver than on execution","<b>Read:</b> best-in-class business, near-peak earnings; அடுத்த ரெண்டு quarter execution-ஐ விட silver-ஐ தான் நம்பியிருக்கு")],
+ visl:[A("<b>Cycle:</b> steel in expansion (P3), stock history too short to call a stage; CY 59","<b>Cycle:</b> steel expansion (P3), stock history ரொம்ப குறைவு; CY 59"),A("<b>Top positives:</b> Bokaro 3.2 Mtpa in FY27; ore ramp-up","<b>Top positives:</b> FY27 Bokaro 3.2 Mtpa; ore ramp-up"),A("<b>Top risk:</b> coking coal and fuel costs with crude above $115","<b>Top risk:</b> crude $115 மேல — coking coal, fuel cost"),A("<b>Read:</b> Q2 was hit by mostly one-off factors, but the business needs Phase 1A on time to earn above its interest bill","<b>Read:</b> Q2 பெரும்பாலும் one-off காரணங்கள், ஆனா interest-ஐ தாண்டி சம்பாதிக்க Phase 1A நேரத்துக்கு வரணும்")]};
+ function sc(id){var p=PIL[id].reduce(function(a,b){return a+b[0];},0);return hbars([{l:"6 Pillars (/60→/100)",v:Math.round(p/60*100),c:id==="hzl"?"#1D5C8A":"#A3361F",t:p+"/60"},{l:"CY",v:TC[id].cy,c:"#E3A15B"},{l:"TG",v:TC[id].tg,c:"#F28C28"}],{lw:150,max:100});}
+ if(s==="hzl"||s==="visl")return panel(L("CB Analyst View — ","CB Analyst View — ")+CO[s].name,sc(s)+ul(cards[s])+'<p class="note">'+L("Education only. Not a buy, sell or hold call.","Education மட்டும். Buy/sell/hold call இல்ல.")+'</p>',s);
+ return '<div class="grid g2">'+panel("Hindustan Zinc",sc("hzl")+ul(cards.hzl),"hzl")+panel("VISL",sc("visl")+ul(cards.visl),"visl")+'</div>'+panel(L("Group view so far","இதுவரை group view"),ul([A("Of the two reported, HZL carries the group's earnings; VISL is a recovery-and-expansion story","Report ஆன ரெண்டுல HZL தான் group earnings-ஐ தூக்குது; VISL recovery + expansion story"),A("Tonight's Vedanta Ltd results will show how much of HZL's record flows to the parent (60.7% stake)","HZL record-ல எவ்வளவு parent-க்கு (60.7% stake) போகுதுனு இன்னிக்கு Vedanta Ltd results காட்டும்"),A("Watch Aluminium (record output) and Oil & Gas (output −19%) for the full picture","Full picture-க்கு Aluminium (record output), Oil & Gas (output −19%) கவனிங்க")]));}
+
+/* ============ TAB: Cauvery Assist (stand-in widget) ============ */
+var CLIPS={greeting:{en:"clips/cb_greeting_en.mp3",ta:"clips/cb_greeting_ta.mp3"},noAdvice:{en:"clips/cb_noadvice_en.mp3",ta:"clips/cb_noadvice_ta.mp3"},fallback:{en:"clips/cb_notonpage_en.mp3",ta:"clips/cb_notonpage_ta.mp3"}};
+var AS={log:[],last:null,rate:parseFloat(safeGet("cba_vg_rate"))||0.8,wait:parseInt(safeGet("cba_vg_wait")||"3",10),voice:safeGet("cba_vg_voice")||"",listening:false};
+var NOADV=A("I can't tell you to buy or sell. CB Research is an education platform and is not SEBI-registered. Use the Self-Check tab to test your own conditions.","Buy பண்ணுங்க, sell பண்ணுங்கனு நான் சொல்ல முடியாது. CB Research education platform, SEBI-registered இல்ல. Self-Check tab-ல உங்க conditions-ஐ check பண்ணுங்க.");
+var FALLBACK=A("That isn't on this page. Try asking about revenue, profit, margin, silver, debt, valuation or upcoming results.","அது இந்த page-ல இல்ல. Revenue, profit, margin, silver, debt, valuation, upcoming results பத்தி கேளுங்க.");
+var ENT=[{id:"hzl",kw:["hindustan zinc","hzl","hind zinc","hindzinc","zinc company","ஹிந்துஸ்தான்","ஹெச்இசட்எல்","ஜிங்க்"]},{id:"visl",kw:["vedanta iron","iron and steel","iron & steel","visl","steel","விஐஎஸ்எல்","ஸ்டீல்","அயர்ன்"]}];
+var MET=[
+ {k:"rev",kw:["revenue","sales","topline","ரெவின்யூ","வருமானம்","வருவாய்"],l:A("Q2 revenue","Q2 revenue"),v:{hzl:15093,visl:2788},fmt:cr,ex:{hzl:A("up 76.5% YoY","YoY 76.5% ஏற்றம்"),visl:A("down 24% QoQ","QoQ 24% இறக்கம்")}},
+ {k:"margin",kw:["margin","மார்ஜின்"],l:A("Q2 EBITDA margin","Q2 EBITDA margin"),v:{hzl:61.5,visl:3.0},fmt:function(v){return f(v,1)+"%";},ex:{hzl:A("up about 920 bps YoY","~920 bps ஏற்றம்"),visl:A("down from 14.1% in Q1","Q1 14.1%-ல இருந்து இறக்கம்")}},
+ {k:"ebitda",kw:["ebitda","operating profit","இபிட்டா"],l:A("Q2 EBITDA","Q2 EBITDA"),v:{hzl:9285,visl:83},fmt:cr,ex:{hzl:A("a record, +108% YoY","record, +108% YoY"),visl:A("down 84% QoQ","QoQ 84% இறக்கம்")}},
+ {k:"pat",kw:["profit","pat","net profit","loss","earning","லாபம்","ப்ராஃபிட்","நஷ்டம்","லாஸ்"],l:A("Q2 net profit","Q2 net profit"),v:{hzl:6412,visl:-324},fmt:cr,ex:{hzl:A("up 142% YoY","YoY 142% ஏற்றம்"),visl:A("a loss, after ₹121 cr profit in Q1","loss — Q1-ல ₹121 cr profit")}},
+ {k:"debt",kw:["debt","cash","borrow","கடன்","டெப்ட்","கேஷ்"],l:A("net debt / cash","net debt / cash"),v:{hzl:11268,visl:-1790},fmt:function(v){return v>=0?L("net cash ","net cash ")+cr(v):L("external net debt ","external net debt ")+cr(-v);},ex:{hzl:A("vs net debt ₹2,547 cr a year ago","போன வருஷம் net debt ₹2,547 cr"),visl:A("down from ₹2,862 cr in March","March ₹2,862 cr-ல இருந்து குறைவு")}},
+ {k:"pe",kw:["p/e","pe ratio","valuation","pe ","பிஇ","வேல்யூவேஷன்"],l:A("P/E","P/E"),v:{hzl:10.1,visl:null},fmt:function(v){return v==null?L("not meaningful (loss)","n.m. (loss)"):f(v,1)+"x";},ex:{hzl:A("on peak-cycle earnings","peak-cycle earnings மேல"),visl:A("P/B is 1.9x instead","P/B 1.9x")}},
+ {k:"pb",kw:["p/b","price to book","book value","பிபி"],l:A("P/B","P/B"),v:{hzl:7.0,visl:1.9},fmt:function(v){return f(v,1)+"x";}},
+ {k:"price",kw:["price","share price","விலை"],l:A("share price (27 Oct close)","share விலை (27 Oct close)"),v:{hzl:492,visl:28},fmt:function(v){return "₹"+f(v,v<100?2:0);}},
+ {k:"cy",kw:["cycle","சைக்கிள்"],l:A("CB cycle score","CB cycle score"),v:{hzl:35,visl:59},fmt:function(v){return String(v);},ex:{hzl:A("late cycle (P4)","late cycle (P4)"),visl:A("expansion (P3)","expansion (P3)")}},
+ {k:"pil",kw:["pillar","தூண்","score"],l:A("6 Pillars total","6 Pillars total"),v:{hzl:45,visl:30},fmt:function(v){return v+"/60";}}];
+var KB=[
+ {k:["silver","சில்வர்","வெள்ளி"],pre:1,a:A("Silver gave HZL about 45% of H1 profit, and its price slid to about $54/oz on 23 Oct, down ~55% from January.","H1 HZL profit-ல ~45% silver; 23 Oct அன்னிக்கு silver ~$54/oz — January-ல இருந்து ~55% கீழ."),d:A("Q2 silver output 173 t (+20%). Q3 hedge: only 8 t at $68/oz.","Q2 silver 173 t (+20%). Q3 hedge: 8 t மட்டும் $68/oz."),tab:"why"},
+ {k:["cost","cop","செலவு","காஸ்ட்"],a:A("HZL's zinc cost was $703/t in Q2, 29% lower than a year ago; FY27 guidance is now $825–850/t.","Q2 HZL zinc cost $703/t — போன வருஷத்தை விட 29% குறைவு; FY27 guidance $825–850/t."),tab:"fin"},
+ {k:["why loss","why did visl","shutdown","ஏன் லாஸ்","ஏன் நஷ்டம்"],pre:1,a:A("VISL lost ₹324 cr because of planned shutdowns at Bokaro and Goa, weaker steel prices and costlier coking coal and fuel.","Bokaro, Goa planned shutdown, steel விலை குறைவு, coal, fuel விலை அதிகம் — அதனால VISL ₹324 cr loss."),tab:"fin"},
+ {k:["fall","fell","why share","இறங்கு","விழுந்த"],a:A("HZL fell about 8% in the week after results as silver and zinc slid; VISL was down 14.7% in the month before its results.","Results வாரத்துல HZL ~8% இறங்குச்சு — silver, zinc சரிவு; VISL results முன் ஒரு மாசத்துல 14.7% இறங்குச்சு."),tab:"why"},
+ {k:["demerger","split","டிமெர்ஜர்","பிரிப்பு"],a:A("Vedanta split into five listed companies on 1 May 2026, 1:1; the four new ones listed on 15 June. HZL stays a Vedanta Ltd subsidiary.","1 May 2026-ல Vedanta 1:1 அஞ்சு listed company-யா பிரிஞ்சது; புது நாலும் 15 June list ஆச்சு. HZL Vedanta Ltd subsidiary-ஆவே இருக்கு."),tab:"dash"},
+ {k:["when","results date","today","tomorrow","pending","aluminium","oil","power","vedanta ltd","எப்போ","இன்னிக்கு","நாளைக்கு"],pre:1,a:A("Vedanta Ltd and Vedanta Aluminium report today, 28 Oct; Vedanta Oil & Gas and Vedanta Power report tomorrow, 29 Oct.","Vedanta Ltd, Aluminium இன்னிக்கு 28 Oct; Oil & Gas, Power நாளைக்கு 29 Oct."),tab:"dash"},
+ {k:["expansion","debari","project","bokaro","growth","எக்ஸ்பான்ஷன்","ப்ராஜெக்ட்"],a:A("HZL is building a 250 ktpa zinc expansion at Debari for Q2 FY29; VISL is taking Bokaro hot metal from 1.7 to 3.2 Mtpa in FY27.","HZL Debari-ல 250 ktpa zinc expansion (Q2 FY29); VISL Bokaro hot metal 1.7 → 3.2 Mtpa (FY27)."),tab:"bet"},
+ {k:["dividend","டிவிடெண்ட்"],a:A("HZL paid ₹11 per share in H1 FY27; VISL pays no dividend yet.","HZL H1 FY27-ல ₹11/share dividend; VISL இன்னும் dividend இல்ல."),tab:"val"},
+ {k:["what is ebitda","ebitda meaning","இபிட்டானா"],pre:1,a:A("EBITDA is profit before interest, tax, depreciation and amortisation — the cash a business earns from operations.","EBITDA = interest, tax, depreciation-க்கு முன்னாடி profit — operations-ல வர்ற cash."),tab:"fin"},
+ {k:["pledge","பிளெட்ஜ்"],a:A("About 47% of HZL's shares are pledged by the parent group to raise funds; it's a risk to watch, not a company debt.","HZL shares-ல ~47% parent group pledge பண்ணியிருக்காங்க — கவனிக்க வேண்டிய risk, company கடன் இல்ல."),tab:"tc"},
+ {k:["safeguard","import","duty","டியூட்டி"],a:A("India's steel safeguard duty stays at 11.5%; steel imports were still up 29.5% in Apr–Aug 2026.","Steel safeguard duty 11.5%-லயே இருக்கு; Apr–Aug 2026 steel imports இன்னும் +29.5%."),tab:"vc"}];
+var BUY=["buy","sell","invest","should i","target","hold","accumulate","வாங்கலாமா","வாங்க","விக்கலாமா","விற்க","இன்வெஸ்ட்"];
+function has(q,arr){return arr.some(function(w){return q.indexOf(w)>-1;});}
+function answer(raw){var q=" "+raw.toLowerCase()+" ";
+  if(has(q,BUY))return {a:T(NOADV),clip:"noAdvice"};
+  var kbHit=null;KB.forEach(function(k){if(!kbHit&&k.pre&&has(q,k.k))kbHit=k;});if(kbHit)return {a:T(kbHit.a),d:kbHit.d?T(kbHit.d):null,tab:kbHit.tab};
+  var ents=ENT.filter(function(e){return has(q,e.kw);}).map(function(e){return e.id;});
+  var met=null;MET.forEach(function(m){if(!met&&has(q,m.kw))met=m;});
+  var cmpQ=has(q,["highest","more","better","which","higher","lowest","less","vs","compare","அதிகம்","எது","எந்த","குறைவு","ஒப்பீடு"]);
+  if(!ents.length&&AS.last&&has(q,["its","it ","அதோட","அதுக்கு"]))ents=[AS.last];
+  if(met&&(ents.length===2||ents.length===0)){if(met.k==="debt")return {a:L("Hindustan Zinc is far stronger: it has net cash of ₹11,268 cr, while Vedanta Iron & Steel has external net debt of ₹1,790 cr.","Hindustan Zinc ரொம்ப பலம்: ₹11,268 cr net cash; Vedanta Iron & Steel-க்கு ₹1,790 cr external net debt."),tab:"cf"};var a=met.v.hzl,b=met.v.visl;var low=has(q,["lowest","lower","less","குறைவு"]);var hi=(a==null?-1e9:a)>=(b==null?-1e9:b);var w=low?(hi?"visl":"hzl"):(hi?"hzl":"visl");var o=w==="hzl"?"visl":"hzl";
+    return {a:L(CO[w].name+" has the "+(low?"lower":"higher")+" "+T(met.l)+": "+met.fmt(met.v[w])+", vs "+met.fmt(met.v[o])+" for "+CO[o].name+".",CO[w].name+"-க்கு தான் "+T(met.l)+" "+(low?"குறைவு":"அதிகம்")+": "+met.fmt(met.v[w])+". "+CO[o].name+" "+met.fmt(met.v[o])+".")};}
+  if(met&&ents.length===1){var e=ents[0];AS.last=e;var ex=met.ex&&met.ex[e]?" — "+T(met.ex[e]):"";return {a:L(CO[e].name+"'s "+T(met.l)+" is "+met.fmt(met.v[e])+ex+".",CO[e].name+" "+T(met.l)+" "+met.fmt(met.v[e])+ex+".")};}
+  for(var i=0;i<KB.length;i++){if(has(q,KB[i].k))return {a:T(KB[i].a),d:KB[i].d?T(KB[i].d):null,tab:KB[i].tab};}
+  if(ents.length===1){var e2=ents[0];AS.last=e2;return {a:e2==="hzl"?L("Hindustan Zinc had a record Q2: net profit ₹6,412 cr, up 142% YoY, on a 61.5% EBITDA margin.","Hindustan Zinc Q2 record: net profit ₹6,412 cr, +142% YoY, EBITDA margin 61.5%."):L("Vedanta Iron & Steel lost ₹324 cr in Q2 after shutdowns and weak steel prices, though debt is down to ₹1,790 cr.","Vedanta Iron & Steel Q2-ல ₹324 cr loss — shutdown, steel விலை குறைவு; ஆனா debt ₹1,790 cr-க்கு குறைஞ்சிருக்கு."),tab:"kt"};}
+  return {a:T(FALLBACK),clip:"fallback"};}
+/* speech */
+var synth=window.speechSynthesis||null,voices=[];
+function loadVoices(){if(!synth)return;voices=synth.getVoices().slice().sort(function(a,b){var ai=/IN/.test(a.lang)?0:1,bi=/IN/.test(b.lang)?0:1;return ai-bi;});}
+if(synth){loadVoices();synth.onvoiceschanged=function(){loadVoices();if(cur.tab==="as")renderBody();};}
+function pickVoice(){if(AS.voice){var v=voices.find(function(x){return x.name===AS.voice;});if(v)return v;}var want=lang==="ta"?"ta":"en-IN";return voices.find(function(x){return x.lang.indexOf(want)===0;})||voices.find(function(x){return x.lang.indexOf(lang==="ta"?"ta":"en")===0;})||null;}
+function speak(text){if(!synth)return;synth.cancel();var parts=(String(text).replace(/<[^>]+>/g," ").match(/[^.!?।]+[.!?।]*/g)||[]).filter(function(x){return x.trim();});var v=pickVoice();
+  parts.forEach(function(p){var u=new SpeechSynthesisUtterance(p);u.rate=AS.rate;if(v)u.voice=v;u.lang=v?v.lang:(lang==="ta"?"ta-IN":"en-IN");synth.speak(u);});}
+function playClipOr(key,text){var c=CLIPS[key];if(!c){speak(text);return;}try{var au=new Audio(c[lang]);au.playbackRate=AS.rate<0.9?0.95:1;au.onerror=function(){speak(text);};var p=au.play();if(p&&p.catch)p.catch(function(){speak(text);});}catch(e){speak(text);}}
+function ask(qt){if(!qt||!qt.trim())return;var r=answer(qt.trim());AS.log.push({u:qt.trim()},{a:r.a,d:r.d,tab:r.tab});renderBody();var lg=document.getElementById("aslog");if(lg)lg.scrollTop=lg.scrollHeight;if(r.clip)playClipOr(r.clip,r.a);else speak(r.a);}
+var rec=null,silT=null,cdT=null;
+function startMic(){var SR=window.SpeechRecognition||window.webkitSpeechRecognition;var nt=document.getElementById("asnote");
+  if(!SR){if(nt)nt.textContent=L("Voice input is not available here. It works on the GitHub Pages copy in Chrome or Edge. Read-aloud works everywhere.","இங்க voice input வேலை செய்யாது. GitHub Pages copy-ல Chrome/Edge-ல வேலை செய்யும். Read-aloud எல்லா இடத்திலும் வேலை செய்யும்.");return;}
+  try{rec=new SR();}catch(e){return;}rec.lang=lang==="ta"?"ta-IN":"en-IN";rec.continuous=true;rec.interimResults=true;var finalT="";AS.listening=true;
+  var inp=document.getElementById("asq");var bar=document.getElementById("asbar");
+  function arm(){clearTimeout(silT);clearInterval(cdT);if(AS.wait===0)return;var t0=Date.now(),ms=AS.wait*1000;cdT=setInterval(function(){if(bar)bar.style.width=Math.min(100,(Date.now()-t0)/ms*100)+"%";},100);silT=setTimeout(function(){stopMic(true);},ms);}
+  rec.onresult=function(e){var interim="";for(var i=e.resultIndex;i<e.results.length;i++){if(e.results[i].isFinal)finalT+=e.results[i][0].transcript+" ";else interim+=e.results[i][0].transcript;}if(inp)inp.value=(finalT+interim).trim();arm();};
+  rec.onerror=function(e){if(nt)nt.textContent=L("Microphone blocked here. Open the GitHub Pages copy in Chrome or Edge to talk; you can still type.","இங்க mic block. பேச GitHub Pages copy-ஐ Chrome/Edge-ல திறங்க; type பண்ணலாம்.");AS.listening=false;};
+  rec.onend=function(){if(AS.listening){try{rec.start();}catch(e){}}};
+  try{rec.start();if(nt)nt.textContent=L("Listening… I'll answer after you pause.","கேக்குறேன்… நீங்க நிறுத்துனதும் பதில் சொல்றேன்.");}catch(e){}}
+function stopMic(send){AS.listening=false;clearTimeout(silT);clearInterval(cdT);try{rec&&rec.stop();}catch(e){}var inp=document.getElementById("asq");if(send&&inp&&inp.value.trim()){var v=inp.value;inp.value="";ask(v);}}
+function tabAS(){var sug=[["Which company has the higher margin?","எந்த company-க்கு margin அதிகம்?"],["Why did VISL post a loss?","VISL ஏன் loss?"],["What about its debt?","அதோட debt என்ன?"],["How much of HZL's profit is silver?","HZL profit-ல silver எவ்வளவு?"],["When do the other results come?","மீதி results எப்போ?"],["Should I buy HZL?","HZL வாங்கலாமா?"]];
+  if(!AS.log.length)AS.log.push({a:L("Vanakam! Ask me about Hindustan Zinc or Vedanta Iron & Steel's Q2 FY27 results. I answer in one line first.","வணக்கம்! Hindustan Zinc, Vedanta Iron & Steel Q2 FY27 results பத்தி கேளுங்க. முதல்ல ஒரு வரியில பதில் சொல்றேன்.")});
+  var vopts='<option value="">'+L("Auto (Indian voice first)","Auto (Indian voice முதல்ல)")+'</option>'+voices.map(function(v){return '<option'+(AS.voice===v.name?" selected":"")+'>'+esc(v.name)+'</option>';}).join("");
+  var tav=voices.some(function(v){return v.lang.indexOf("ta")===0;});
+  var log=AS.log.map(function(m){if(m.u)return '<div class="msg u">'+esc(m.u)+'</div>';return '<div class="msg a">'+esc(m.a)+(m.d?'<details><summary>'+L("More details","மேலும் விவரம்")+'</summary>'+esc(m.d)+'</details>':"")+(m.tab?' <button class="sugs" style="border:0;background:none;color:var(--accInk);font-weight:800;padding:0" data-open="'+m.tab+'">↗ '+L("Open related tab","Related tab திறங்க")+'</button>':"")+'</div>';}).join("");
+  var wave='<svg viewBox="0 0 120 30" width="96" height="24" aria-hidden="true">'+[6,14,22,10,26,16,8,20,12,24,9,18].map(function(h,i){return '<rect x="'+(i*10)+'" y="'+(15-h/2)+'" width="6" height="'+h+'" rx="3" fill="#F28C28"/>';}).join("")+'</svg>';
+  return panel('Cauvery Assist '+wave,'<div class="as-head"><div class="note">'+L("Direct answers from this dashboard's numbers. No buy/sell advice.","இந்த dashboard numbers-ல இருந்து நேரடி பதில். Buy/sell advice இல்ல.")+'</div><div class="ctrls"><button class="btn ghost" id="aspause">⏯ '+L("Pause/Resume","Pause/Resume")+'</button><button class="btn ghost" id="asstop">⏹ '+L("Stop","Stop")+'</button></div></div>'+
+   '<div class="as-log" id="aslog" style="margin-top:8px">'+log+'</div>'+
+   '<div class="as-in"><input id="asq" placeholder="'+L("Ask: Which company has the higher margin?","கேளுங்க: எந்த company-க்கு margin அதிகம்?")+'"><button class="btn" id="asmic">🎙️ '+(AS.listening?L("Done","முடிஞ்சது"):L("Talk","பேசுங்க"))+'</button><button class="btn on" id="asgo">'+L("Ask","கேளுங்க")+'</button></div><div class="vbar"><i id="asbar"></i></div><div class="note" id="asnote" style="margin-top:4px"></div>'+
+   '<div class="sugs">'+sug.map(function(s){return '<button data-sug="'+esc(L(s[0],s[1]))+'">'+esc(L(s[0],s[1]))+'</button>';}).join("")+'</div>'+
+   '<div class="as-set"><span>'+L("Speed","Speed")+'</span>'+[["0.6",L("Slow","மெதுவா")],["0.8",L("Relaxed","Relaxed")],["1",L("Normal","Normal")],["1.2",L("Fast","வேகமா")]].map(function(p){return '<button class="chip'+(Math.abs(AS.rate-p[0])<0.01?" on cmp":"")+'" data-rate="'+p[0]+'">'+p[1]+'</button>';}).join("")+
+   '<label for="asrate" class="mono">'+AS.rate.toFixed(2)+'×</label><input type="range" id="asrate" min="0.5" max="1.5" step="0.05" value="'+AS.rate+'">'+
+   '<label for="aswait">'+L("Wait after I stop talking","பேசி முடிச்சதும் wait")+'</label><select id="aswait">'+[[2,"2s"],[3,"3s"],[5,"5s"],[0,L("Only when I tap Done","Done tap பண்ணும்போது மட்டும்")]].map(function(w){return '<option value="'+w[0]+'"'+(AS.wait===w[0]?" selected":"")+'>'+w[1]+'</option>';}).join("")+'</select>'+
+   '<label for="asvoice">'+L("Voice","Voice")+'</label><select id="asvoice">'+vopts+'</select></div>'+
+   (lang==="ta"&&!tav&&synth?'<p class="note">'+L("","இந்த device-ல Tamil voice இல்ல — English voice-ல படிக்கும்.")+'</p>':"")+
+   '<p class="note">'+L("Common clips (greeting, no-advice, not-on-page) play in Elangovan's recorded voice when the clip files sit next to this page; otherwise the device voice reads them.","Common clips (greeting, no-advice, not-on-page) clip files இந்த page பக்கத்துல இருந்தா Elangovan குரல்ல play ஆகும்; இல்லனா device voice படிக்கும்.")+'</p>');}
+function bindAS(){var go=function(){var i=document.getElementById("asq");var v=i.value;i.value="";ask(v);};
+  document.getElementById("asgo").onclick=go;document.getElementById("asq").onkeydown=function(e){if(e.key==="Enter")go();};
+  document.getElementById("asmic").onclick=function(){if(AS.listening){stopMic(true);renderBody();}else{startMic();var b=document.getElementById("asmic");if(b)b.textContent="🎙️ "+L("Done","முடிஞ்சது");}};
+  document.querySelectorAll("[data-sug]").forEach(function(b){b.onclick=function(){ask(b.getAttribute("data-sug"));};});
+  document.querySelectorAll("[data-open]").forEach(function(b){b.onclick=function(){goTab(b.getAttribute("data-open"));};});
+  document.querySelectorAll("[data-rate]").forEach(function(b){b.onclick=function(){AS.rate=parseFloat(b.getAttribute("data-rate"));safeSet("cba_vg_rate",AS.rate);renderBody();};});
+  document.getElementById("asrate").oninput=function(e){AS.rate=parseFloat(e.target.value);safeSet("cba_vg_rate",AS.rate);var l=document.querySelector('label[for="asrate"]');if(l)l.textContent=AS.rate.toFixed(2)+"×";};
+  document.getElementById("aswait").onchange=function(e){AS.wait=parseInt(e.target.value,10);safeSet("cba_vg_wait",AS.wait);};
+  document.getElementById("asvoice").onchange=function(e){AS.voice=e.target.value;safeSet("cba_vg_voice",AS.voice);};
+  document.getElementById("aspause").onclick=function(){if(!synth)return;if(synth.paused)synth.resume();else synth.pause();};
+  document.getElementById("asstop").onclick=function(){if(synth)synth.cancel();};
+  var lg=document.getElementById("aslog");if(lg)lg.scrollTop=lg.scrollHeight;}
+
+/* ============ render ============ */
+var RENDER={dash:tabDash,bm:tabBM,seg:tabSeg,fin:tabFin,cf:tabCF,val:tabVal,kt:tabKT,why:tabWhy,tc:tabTC,pil:tabPil,bet:tabBet,vc:tabVC,swot:tabSWOT,sc:tabSC,as:tabAS,soc:tabSoc,av:tabAV};
+function renderTabs(){var el=document.getElementById("tabs");el.innerHTML=TABS.map(function(t){return '<button class="tab'+(cur.tab===t.id?" on":"")+'" data-tab="'+t.id+'">'+(lang==="ta"?t.ta:t.en)+'</button>';}).join("");
+  el.querySelectorAll("[data-tab]").forEach(function(b){b.onclick=function(){goTab(b.getAttribute("data-tab"));};});
+  var on=el.querySelector(".tab.on");if(on&&on.scrollIntoView)on.scrollIntoView({block:"nearest",inline:"nearest"});}
+function renderBody(){var el=document.getElementById("content");var s=subOf(cur.tab);var p=PEND.find(function(x){return x.id===s;});
+  if(!NOSUB[cur.tab]&&p){el.innerHTML=pendingCard(p);return;}
+  el.innerHTML=RENDER[cur.tab](s);
+  el.querySelectorAll("[data-bm]").forEach(function(b){b.onclick=function(){var id=cur.tab==="bm"&&subOf("bm")!=="cmp"?subOf("bm"):(b.closest(".panel").classList.contains("visl")?"visl":"hzl");bmSel[id]=b.getAttribute("data-bm");renderBody();};});
+  if(cur.tab==="sc")bindSC();if(cur.tab==="soc")bindSoc();if(cur.tab==="as")bindAS();}
+function goTab(id){cur.tab=id;safeSet("cbv_tab",id);renderTabs();renderSubs();renderBody();window.scrollTo({top:0,behavior:"smooth"});}
+function renderStatic(){document.getElementById("eyebrow").textContent=L("CB Research · Q2 FY27 · Vedanta Group","CB Research · Q2 FY27 · Vedanta Group");
+  document.getElementById("htitle").textContent=L("Vedanta Group — Q2 FY27 results, company by company","Vedanta Group — Q2 FY27 results, ஒவ்வொரு company-யா");
+  document.getElementById("slogan").textContent=L("Know before you own · prices as of 27 Oct 2026 close","புரிஞ்சு வாங்குங்க! · விலை 27 Oct 2026 close");
+  document.getElementById("readB").textContent="🔊 "+L("Read this tab","இந்த tab-ஐ படிங்க");
+  document.getElementById("vbub").textContent="🎙️ "+L("Voice Assist","Voice Assist");
+  document.getElementById("cbtip").innerHTML="<b>CB Research</b> — "+L("Education only. Not SEBI-registered; nothing here is a buy, sell or hold recommendation. Figures from company results and exchange filings up to 27 Oct 2026; ≈ marks derived numbers. Commodity prices change daily.","Education மட்டும். SEBI-registered இல்ல; buy, sell, hold recommendation எதுவும் இல்ல. 27 Oct 2026 வரை company results, exchange filings-ல இருந்து numbers; ≈ = கணக்கு போட்டது. Commodity விலை தினமும் மாறும்.");
+  document.getElementById("lenB").className=lang==="en"?"on":"";document.getElementById("ltaB").className=lang==="ta"?"on":"";document.documentElement.lang=lang==="ta"?"ta":"en";}
+function setLang(l){lang=l;safeSet("cbv_lang",l);renderStatic();renderTabs();renderSubs();renderBody();}
+document.getElementById("lenB").onclick=function(){setLang("en");};
+document.getElementById("ltaB").onclick=function(){setLang("ta");};
+document.getElementById("readB").onclick=function(){var t=document.getElementById("content").innerText||"";speak(t.slice(0,4000));};
+document.getElementById("vbub").onclick=function(){goTab("as");setTimeout(function(){var i=document.getElementById("asq");if(i)i.focus();},300);};
+var cbEl=document.getElementById("cb");cbEl.querySelector(".badge").onclick=function(){cbEl.classList.toggle("open");};
+lang=safeGet("cbv_lang")==="ta"?"ta":"en";
+renderStatic();renderTabs();renderSubs();renderBody();
+</script>
