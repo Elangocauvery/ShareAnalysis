@@ -1,0 +1,882 @@
+<title>Indian Oil Q2 FY27 Dashboard</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;600&family=Noto+Sans+Tamil:wght@400;600;700&display=swap">
+<style>
+/* Layout: refinery control-room sheet — sticky tab rail, one column of instrument panels, white ground only */
+:root{
+  --bg:#fff6ec; --panel:#ffffff; --line:#ecdcca; --ink:#14232e; --muted:#5b6b76;
+  --flame:#e8620c; --crude:#7a4b12; --steel:#1f5f7a; --good:#1d7f4e; --warn:#b77a00; --bad:#c0392b;
+  --f-disp:"Archivo","Arial Narrow",system-ui,sans-serif;
+  --f-body:"IBM Plex Sans","Noto Sans Tamil",system-ui,sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:15px;line-height:1.55;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:0 90px}
+body.ta{font-family:"Noto Sans Tamil","IBM Plex Sans",system-ui,sans-serif}
+body:not(.ta) .ta{display:none!important} body.ta .en{display:none!important}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bg)}
+.wrap{max-width:1120px;margin:0 auto}
+header.top{padding-block:22px 10px;display:flex;flex-wrap:wrap;gap:12px 24px;align-items:flex-end;justify-content:space-between;border-bottom:3px solid var(--ink)}
+.brand small{font-family:var(--f-mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--flame)}
+h1{font-family:var(--f-disp);font-weight:800;font-size:clamp(26px,4.4vw,42px);line-height:1.05;margin:4px 0 2px;text-wrap:balance;letter-spacing:-.01em}
+h1 span.qq{color:var(--flame)}
+[hidden]{display:none!important}
+.sub{color:var(--muted);font-size:13.5px}
+.ctrl{display:flex;gap:8px;align-items:center}
+.btn{font:600 13px var(--f-body);border:1.5px solid var(--ink);background:var(--bg);color:var(--ink);padding:7px 12px;border-radius:4px;cursor:pointer}
+.btn.on,.btn:hover{background:var(--ink);color:#fff}
+.btn:focus-visible,.tab:focus-visible,button:focus-visible{outline:3px solid var(--flame);outline-offset:2px}
+nav.tabs{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);display:flex;gap:2px;overflow-x:auto;padding-block:8px;border-bottom:1px solid var(--line);scrollbar-width:thin}
+.tab{flex:0 0 auto;font:600 13px var(--f-body);color:var(--muted);background:transparent;border:0;border-bottom:3px solid transparent;padding:8px 10px;cursor:pointer;white-space:nowrap}
+.tab.on{color:var(--ink);border-bottom-color:var(--flame)}
+section.pane{display:none;padding-block:22px 10px}
+section.pane.on{display:block}
+h2{font-family:var(--f-disp);font-weight:700;font-size:24px;margin:0 0 6px;text-wrap:balance}
+h3{font-family:var(--f-disp);font-weight:700;font-size:17px;margin:22px 0 8px;text-wrap:balance}
+.lede{max-width:70ch;color:var(--muted);margin:0 0 16px}
+p{max-width:72ch;margin:0 0 10px}
+.grid{display:grid;gap:12px}
+.g4{grid-template-columns:repeat(auto-fit,minmax(min(100%,230px),1fr))}
+.g3{grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
+.g2{grid-template-columns:repeat(auto-fit,minmax(320px,1fr))}
+.grid>*{min-width:0}
+.kpi{border:1px solid var(--line);border-top:4px solid var(--steel);padding:12px 14px;background:#fff}
+.kpi .l{font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:600}
+.kpi .v{font-family:var(--f-disp);font-weight:800;font-size:28px;line-height:1.1;font-variant-numeric:tabular-nums}
+.kpi .d{font-family:var(--f-mono);font-size:12px;color:var(--muted)}
+.kpi.fl{border-top-color:var(--flame)} .kpi.cr{border-top-color:var(--crude)}
+.up{color:var(--good)} .dn{color:var(--bad)}
+.card{background:var(--panel);border:1px solid var(--line);padding:14px 16px}
+.card h4{margin:0 0 6px;font-family:var(--f-disp);font-size:15.5px}
+.card p:last-child{margin-bottom:0}
+.call{border-left:5px solid var(--flame);background:#ffe9d6;padding:12px 16px;margin:12px 0}
+.call.steel{border-left-color:var(--steel);background:#eef5f8}
+.call.crude{border-left-color:var(--crude);background:#faf4ec}
+.tbl{overflow-x:auto;border:1px solid var(--line);margin:8px 0 14px;background:#fff}
+table{border-collapse:collapse;width:100%;font-size:13.5px;min-width:560px}
+th,td{padding:7px 10px;border-bottom:1px solid var(--line);text-align:right;font-variant-numeric:tabular-nums;vertical-align:top}
+th:first-child,td:first-child{text-align:left}
+thead th{background:var(--ink);color:#fff;font-weight:600;font-size:12.5px}
+tr.cat td{background:#fbeee0;font-weight:700;text-align:left;color:var(--steel);letter-spacing:.04em;font-size:12.5px;text-transform:uppercase}
+td.n{font-family:var(--f-mono);font-size:13px}
+.chip{display:inline-block;font:600 11.5px var(--f-mono);padding:2px 7px;border-radius:3px;border:1px solid currentColor}
+.chip.g{color:var(--good)} .chip.a{color:var(--warn)} .chip.r{color:var(--bad)} .chip.s{color:var(--steel)}
+.chartbox{overflow-x:auto;border:1px solid var(--line);padding:10px;background:#fff;margin:8px 0 14px}
+.chartbox .inner{min-width:640px;height:300px;position:relative}
+.note{font-size:12.5px;color:var(--muted)}
+.dag{color:var(--flame);font-weight:700}
+svg text{font-family:var(--f-body)}
+.svgbox{overflow-x:auto;border:1px solid var(--line);background:#fff;margin:8px 0}
+.svgbox svg{display:block;min-width:760px;width:100%;height:auto}
+.node{cursor:pointer}
+.node rect{transition:stroke-width .15s}
+.node:hover rect,.node.sel rect{stroke-width:3}
+#bmExplain,#schoolCard,#oddCard{min-height:64px}
+ul.tight{margin:0 0 10px;padding-left:20px} ul.tight li{margin:3px 0}
+/* temple */
+.temple{max-width:620px;margin:0 auto}
+.col-hit{cursor:pointer}
+.pill-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:8px}
+.pcard{border:1px solid var(--line);padding:10px 12px;border-left:5px solid var(--steel);transition:box-shadow .2s}
+.pcard.hl{box-shadow:0 0 0 3px var(--flame)}
+/* school */
+.sl{display:grid;grid-template-columns:150px 1fr 70px;gap:8px;align-items:center;font-size:13.5px;margin:5px 0}
+.sl input{width:100%}
+.sl output{font-family:var(--f-mono);text-align:right}
+.scen{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0}
+.gauge{font-family:var(--f-disp);font-weight:800;font-size:34px;font-variant-numeric:tabular-nums}
+/* self-check */
+.grpbox{border:1px solid var(--line);margin:10px 0;padding:10px 14px}
+.grpbox h4{margin:0 0 6px;font-family:var(--f-disp)}
+.ck{display:flex;gap:10px;padding:6px 0;border-bottom:1px dashed var(--line)}
+.ck:last-child{border-bottom:0}
+.ck input{margin-top:4px;width:18px;height:18px;flex:0 0 auto}
+.ck .data{font-size:12.5px;color:var(--muted)}
+.bar{height:8px;background:#e8ecef;border-radius:4px;overflow:hidden;margin:6px 0}
+.bar i{display:block;height:100%;background:var(--steel);width:0;transition:width .3s}
+/* quiz */
+.q{border:1px solid var(--line);padding:12px 14px;margin:10px 0}
+.q button.opt{display:block;width:100%;text-align:left;margin:5px 0;padding:8px 10px;border:1px solid var(--line);background:var(--bg);cursor:pointer;font:14px var(--f-body);color:var(--ink)}
+.q button.opt.ok{border-color:var(--good);background:#e9f6ef}
+.q button.opt.no{border-color:var(--bad);background:#fbecea}
+.q .fb{font-size:13.5px;margin-top:6px}
+textarea,input[type=text]{width:100%;font:14px var(--f-body);padding:8px;border:1px solid var(--line);color:var(--ink);background:var(--bg)}
+/* CB badge + assist */
+#cbBadge{position:fixed;right:calc(14px + env(safe-area-inset-right,0px));bottom:calc(14px + env(safe-area-inset-bottom,0px));z-index:30;width:52px;height:52px;border-radius:50%;background:var(--flame);color:#fff;font:800 18px var(--f-disp);border:3px solid #fff;box-shadow:0 2px 10px rgba(0,0,0,.25);cursor:pointer;animation:blink 2.4s infinite}
+@keyframes blink{0%,100%{box-shadow:0 0 0 0 rgba(232,98,12,.55)}50%{box-shadow:0 0 0 10px rgba(232,98,12,0)}}
+#disc{position:fixed;right:calc(14px + env(safe-area-inset-right,0px));bottom:calc(76px + env(safe-area-inset-bottom,0px));z-index:31;max-width:min(360px,calc(100vw - 32px));background:var(--bg);border:2px solid var(--flame);padding:12px 14px;font-size:13px;box-shadow:0 6px 24px rgba(0,0,0,.18)}
+#asBtn{position:fixed;right:calc(76px + env(safe-area-inset-right,0px));bottom:calc(18px + env(safe-area-inset-bottom,0px));z-index:30;background:var(--ink);color:#fff;border:0;border-radius:22px;padding:11px 16px;font:600 13.5px var(--f-body);cursor:pointer;box-shadow:0 2px 10px rgba(0,0,0,.2)}
+#assist{position:fixed;right:calc(14px + env(safe-area-inset-right,0px));bottom:calc(76px + env(safe-area-inset-bottom,0px));z-index:32;width:min(400px,calc(100vw - 28px));max-height:min(560px,70vh);display:flex;flex-direction:column;background:var(--bg);border:2px solid var(--ink);box-shadow:0 8px 30px rgba(0,0,0,.2)}
+#assist header{background:var(--ink);color:#fff;padding:8px 12px;display:flex;justify-content:space-between;align-items:center;font:700 14px var(--f-disp)}
+#assist header button{background:transparent;color:#fff;border:0;font-size:18px;cursor:pointer}
+#asLog{flex:1;overflow-y:auto;padding:10px 12px;font-size:13.5px}
+.msg{margin:6px 0;padding:8px 10px;border-radius:6px;max-width:92%}
+.msg.u{background:#eef5f8;margin-left:auto}
+.msg.b{background:var(--panel);border:1px solid var(--line)}
+#asSug{display:flex;flex-wrap:wrap;gap:5px;padding:0 12px 6px}
+#asSug button{font:12px var(--f-body);border:1px solid var(--line);background:var(--bg);color:var(--ink);padding:4px 8px;border-radius:12px;cursor:pointer}
+#asForm{display:flex;gap:6px;padding:8px 12px;border-top:1px solid var(--line)}
+#asForm input{flex:1}
+#asMic{min-width:42px}
+#asMic.rec{background:var(--bad);color:#fff;border-color:var(--bad)}
+.wm{position:fixed;left:50%;top:55%;transform:translate(-50%,-50%) rotate(-24deg);font:800 70px var(--f-disp);color:rgba(20,35,46,.035);pointer-events:none;white-space:nowrap;z-index:0}
+@media (max-width:560px){.sl{grid-template-columns:110px 1fr 56px}.kpi .v{font-size:24px}#asBtn span.lbl{display:none}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+.blk{border:1px solid var(--line);background:#fff;padding:12px 14px 14px;margin:12px 0}
+.blk>h3{margin:0 0 10px;display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.tag{font:600 11px var(--f-mono);letter-spacing:.08em;text-transform:uppercase;padding:2px 8px;border-radius:3px;background:var(--ink);color:#fff}
+.tag.alt{background:var(--steel)}
+.verdict{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr));gap:12px;margin:12px 0}
+.verdict .v1{border:2px solid var(--ink);background:#fff;padding:12px 14px}
+.verdict .v1 b.big{font:800 22px var(--f-disp);display:block;margin-bottom:4px}
+</style>
+<div class="wm">CB RESEARCH</div>
+<div class="wrap">
+<header class="top">
+  <div class="brand">
+    <small>CB Research · Q2 FY27 · Results Analysis</small>
+    <h1>Indian Oil Corporation <span class="qq">(IOC)</span></h1>
+    <div class="sub"><span class="en">Quarter ended 30 Sep 2026 · Results declared 30 Oct 2026 · NSE: IOC · BSE: 530965 · Parent of CPCL</span><span class="ta">30 செப் 2026 காலாண்டு · முடிவு 30 அக் 2026 · NSE: IOC · BSE: 530965 · CPCL-ஓட தாய் நிறுவனம்</span></div>
+  </div>
+  <div class="ctrl" role="group" aria-label="Language">
+    <button class="btn on" id="lnEN" type="button">English</button>
+    <button class="btn" id="lnTA" type="button">தமிழ்</button>
+  </div>
+</header>
+
+<nav class="tabs" id="tabs" aria-label="Sections">
+  <button class="tab on" data-t="ov"><span class="en">Overview</span><span class="ta">சுருக்கம்</span></button>
+  <button class="tab" data-t="drv"><span class="en">Why the profit?</span><span class="ta">லாபம் ஏன்?</span></button>
+  <button class="tab" data-t="bm"><span class="en">Business model</span><span class="ta">வணிக மாடல்</span></button>
+  <button class="tab" data-t="cpcl"><span class="en">IOC &amp; CPCL</span><span class="ta">IOC &amp; CPCL</span></button>
+  <button class="tab" data-t="fin"><span class="en">Financials</span><span class="ta">நிதி நிலை</span></button>
+  <button class="tab" data-t="cf"><span class="en">Cash flow &amp; WC</span><span class="ta">பணப்புழக்கம்</span></button>
+  <button class="tab" data-t="val"><span class="en">Valuation &amp; market</span><span class="ta">மதிப்பீடு &amp; பங்குச்சந்தை</span></button>
+  <button class="tab" data-t="tc"><span class="en">Triggers &amp; cycle</span><span class="ta">தூண்டிகள் &amp; சுழற்சி</span></button>
+  <button class="tab" data-t="swot"><span class="en">SWOT</span><span class="ta">SWOT</span></button>
+  <button class="tab" data-t="an"><span class="en">Analysts' rating</span><span class="ta">ஆய்வாளர் மதிப்பீடு</span></button>
+  <button class="tab" data-t="self"><span class="en">Self-check</span><span class="ta">சுய சோதனை</span></button>
+  <button class="tab" data-t="mgmt"><span class="en">Management &amp; Board</span><span class="ta">நிர்வாகம்</span></button>
+  <button class="tab" data-t="soc"><span class="en">Cauvery Socrates</span><span class="ta">காவேரி சாக்ரடீஸ்</span></button>
+</nav>
+
+<!-- ================= OVERVIEW ================= -->
+<section class="pane on" id="ov">
+  <h2><span class="en">Record quarter, built on a marketing turnaround</span><span class="ta">சாதனை காலாண்டு — மார்க்கெட்டிங் மீட்சியில் கட்டப்பட்டது</span></h2>
+  <p class="lede"><span class="en">India's largest refiner-marketer swung from a ₹2,661 crore loss in Q1 to its highest-ever quarterly profit. Revenue fell 4.7% from Q1; the profit came from margins, not volumes.</span><span class="ta">இந்தியாவோட மிகப் பெரிய ரிஃபைனர்-மார்க்கெட்டர், Q1-ல ₹2,661 கோடி நஷ்டத்துல இருந்து, வரலாற்றிலேயே அதிகமான காலாண்டு லாபத்துக்கு வந்திருக்கு. வருவாய் Q1-ஐ விட 4.7% குறைவு; லாபம் மார்ஜினால வந்தது, அளவால இல்ல.</span></p>
+
+  <div class="blk">
+    <h3><span class="tag">Standalone</span><span class="en">IOC company accounts</span><span class="ta">IOC நிறுவனக் கணக்கு</span></h3>
+    <div class="grid g4">
+      <div class="kpi fl"><div class="l"><span class="en">Net profit</span><span class="ta">நிகர லாபம்</span></div><div class="v">₹21,630 cr</div><div class="d"><span class="up">+184% YoY</span> · Q1 <span class="dn">−₹2,661 cr</span></div></div>
+      <div class="kpi"><div class="l"><span class="en">Revenue from operations</span><span class="ta">இயக்க வருவாய்</span></div><div class="v">₹2,62,936 cr</div><div class="d"><span class="up">+29.5% YoY</span> · <span class="dn">−4.7% QoQ</span></div></div>
+      <div class="kpi"><div class="l"><span class="en">EBITDA contribution</span><span class="ta">EBITDA</span></div><div class="v">₹32,998 cr</div><div class="d"><span class="en">margin 12.5% · Q1 ₹2,332 cr</span><span class="ta">மார்ஜின் 12.5% · Q1 ₹2,332 கோடி</span></div></div>
+      <div class="kpi"><div class="l"><span class="en">Profit before tax</span><span class="ta">வரிக்கு முந்தைய லாபம்</span></div><div class="v">₹26,617 cr</div><div class="d"><span class="up">+164% YoY</span> · Q1 <span class="dn">−₹3,274 cr</span></div></div>
+      <div class="kpi fl"><div class="l"><span class="en">GRM, net of SAED ($/bbl)</span><span class="ta">GRM, SAED கழித்து</span></div><div class="v">18.52</div><div class="d">Q1 15.59 · Q2FY26 10.7</div></div>
+      <div class="kpi"><div class="l">EPS (₹)</div><div class="v">15.71</div><div class="d">Q2FY26 5.53 · H1 13.77</div></div>
+      <div class="kpi cr"><div class="l"><span class="en">Refinery throughput</span><span class="ta">சுத்திகரிப்பு அளவு</span></div><div class="v">18.11 MMT</div><div class="d"><span class="en">102.3% utilisation · +2.8% YoY</span><span class="ta">102.3% பயன்பாடு · +2.8% YoY</span></div></div>
+      <div class="kpi cr"><div class="l"><span class="en">Domestic sales</span><span class="ta">உள்நாட்டு விற்பனை</span></div><div class="v">23.98 MMT</div><div class="d"><span class="up">+4.9% YoY</span> · <span class="en">exports</span><span class="ta">ஏற்றுமதி</span> <span class="dn">−11.3%</span></div></div>
+    </div>
+  </div>
+
+  <div class="blk">
+    <h3><span class="tag alt">Consolidated</span><span class="en">Group, including CPCL and other subsidiaries and joint ventures</span><span class="ta">குழுமம் — CPCL, பிற துணை நிறுவனங்கள், கூட்டு நிறுவனங்கள் சேர்த்து</span></h3>
+    <div class="grid g4">
+      <div class="kpi fl"><div class="l"><span class="en">Net profit (total)</span><span class="ta">நிகர லாபம் (மொத்தம்)</span></div><div class="v">₹22,503 cr</div><div class="d"><span class="up">+174.7% YoY</span> (₹8,191 cr)</div></div>
+      <div class="kpi"><div class="l"><span class="en">Attributable to IOC shareholders</span><span class="ta">IOC பங்குதாரர்களுக்கு</span></div><div class="v">₹21,408 cr</div><div class="d">Q2FY26 ₹7,818 cr</div></div>
+      <div class="kpi"><div class="l"><span class="en">Revenue from operations</span><span class="ta">இயக்க வருவாய்</span></div><div class="v">₹2,68,039 cr</div><div class="d"><span class="up">+29.8% YoY</span></div></div>
+      <div class="kpi"><div class="l"><span class="en">Profit before tax</span><span class="ta">வரிக்கு முந்தைய லாபம்</span></div><div class="v">₹28,191 cr</div><div class="d"><span class="up">+153.9% YoY</span></div></div>
+      <div class="kpi"><div class="l">EPS (₹)</div><div class="v">15.54</div><div class="d">Q2FY26 5.68</div></div>
+      <div class="kpi"><div class="l"><span class="en">H1 FY27 net profit</span><span class="ta">H1 நிகர லாபம்</span></div><div class="v">₹21,362 cr</div><div class="d"><span class="up">+42.4% YoY</span></div></div>
+      <div class="kpi"><div class="l"><span class="en">Q1 FY27 net profit</span><span class="ta">Q1 நிகர லாபம்</span></div><div class="v dn" style="font-size:22px">−₹1,141 / −1,241 cr<span class="dag">†</span></div><div class="d"><span class="en">sources differ</span><span class="ta">ஆதாரங்கள் வேறுபடுது</span></div></div>
+      <div class="kpi"><div class="l"><span class="en">Consolidated − standalone PAT</span><span class="ta">குழுமம் − நிறுவனம்</span></div><div class="v">₹873 cr</div><div class="d"><span class="en">CPCL, others, JVs, minorities</span><span class="ta">CPCL, பிற, கூட்டு நிறுவனங்கள்</span></div></div>
+    </div>
+  </div>
+
+  <div class="call">
+    <strong><span class="en">Is it a base effect? Short answer</span><span class="ta">"Base effect"-ஆ? சுருக்கமான பதில்</span></strong>
+    <p class="en"><b>Against last year, no.</b> Q2 FY26 profit of ₹7,610 crore was a normal quarter (GRM $10.7, marketing margin about ₹7.1/litre), not a weak base. The +184% comes from a much wider refining spread, LPG compensation that did not exist a year ago, and better gas and petrochemical margins. <b>Against Q1, partly.</b> Q1 was a loss made by frozen pump prices during the war spike. About nine-tenths of the ₹29,891 crore swing in pre-tax profit came from marketing losses shrinking and inventory timing (crude dipped mid-June to mid-August, then rose to about $120 by end-September), not from refining. IOC itself warns that falling crude could bring inventory losses in coming quarters.</p>
+    <p class="ta"><b>போன வருஷத்தோட ஒப்பிட்டா, இல்ல.</b> Q2 FY26 லாபம் ₹7,610 கோடி ஒரு சாதாரண காலாண்டு (GRM $10.7, மார்க்கெட்டிங் மார்ஜின் லிட்டருக்கு ~₹7.1). +184% வளர்ச்சிக்கு காரணம்: ரொம்ப அதிகமான சுத்திகரிப்பு இடைவெளி, போன வருஷம் இல்லாத LPG இழப்பீடு, gas &amp; petrochemical மார்ஜின். <b>Q1-ஓட ஒப்பிட்டா, ஓரளவு.</b> போர் உச்சத்துல பங்க் விலை நிறுத்தப்பட்டதால Q1 நஷ்டம். வரிக்கு முந்தைய லாபத்துல வந்த ₹29,891 கோடி மாற்றத்துல சுமார் பத்துல ஒன்பது பங்கு மார்க்கெட்டிங் நஷ்டம் குறைஞ்சதாலும் இருப்பு நேரத்தாலும் வந்தது (ஜூன் நடுவிலிருந்து ஆகஸ்ட் நடு வரை கச்சா இறங்கி, செப்டம்பர் இறுதியில ~$120-க்கு ஏறுச்சு). கச்சா இறங்கினா இனி வர்ற காலாண்டுகள்ல இருப்பு நஷ்டம் வரலாம்னு IOC-யே எச்சரிக்குது.</p>
+  </div>
+
+  <h3><span class="en">Six quarters at a glance (standalone)</span><span class="ta">ஆறு காலாண்டு பார்வை (நிறுவனம்)</span></h3>
+  <div class="chartbox"><div class="inner"><canvas id="chOv"></canvas></div></div>
+  <p class="note"><span class="en">Bars: standalone PAT and EBITDA (₹ crore). Line: GRM net of SAED ($/bbl). Q1 FY26 and Q4 FY26 PAT derived from half-year and full-year totals; EBITDA and GRM for Q3–Q4 FY26 not available.</span><span class="ta">பட்டைகள்: நிகர லாபம், EBITDA (₹ கோடி). கோடு: GRM ($/பேரல்). Q1 FY26, Q4 FY26 லாபம் அரையாண்டு/ஆண்டு மொத்தத்திலிருந்து கணக்கிட்டது.</span></p>
+
+  <h3><span class="en">CB Score — six pillars</span><span class="ta">CB மதிப்பெண் — ஆறு தூண்கள்</span></h3>
+  <div class="temple"><svg id="temple" viewBox="0 0 620 400" role="img" aria-label="CB Score temple"></svg></div>
+  <div class="pill-grid" id="pillCards"></div>
+  <p class="note"><span class="en">Green 8–10 · amber 6–8 · red below 6. Tap a column to jump to its card.</span><span class="ta">பச்சை 8–10 · மஞ்சள் 6–8 · சிவப்பு 6-க்குக் கீழ். தூணைத் தொட்டா விளக்கம் வரும்.</span></p>
+</section>
+
+<!-- ================= PROFIT DRIVERS ================= -->
+<section class="pane" id="drv">
+  <h2><span class="en">Where did ₹21,630 crore come from?</span><span class="ta">₹21,630 கோடி எங்கிருந்து வந்தது?</span></h2>
+  <p class="lede"><span class="en">Pre-tax profit bridges, standalone. Refining, LPG, gas and petrochemical bars are built from disclosed numbers; the last bar is the balance, and contains marketing margin and inventory gains or losses, which IOC does not disclose separately.</span><span class="ta">வரிக்கு முந்தைய லாபப் பாலம் (நிறுவனம்). சுத்திகரிப்பு, LPG, gas, petrochemical பட்டைகள் வெளியிட்ட எண்களிலிருந்து; கடைசி பட்டை மீதி — அதுல மார்க்கெட்டிங் மார்ஜினும் இருப்பு லாப/நஷ்டமும் அடங்கும். IOC இவற்றைத் தனியா வெளியிடல.</span></p>
+  <div class="scen" id="brBtns">
+    <button class="btn on" type="button" data-b="yoy"><span class="en">vs Q2 FY26 (year on year)</span><span class="ta">போன வருஷ Q2-உடன்</span></button>
+    <button class="btn" type="button" data-b="qoq"><span class="en">vs Q1 FY27 (quarter on quarter)</span><span class="ta">Q1-உடன்</span></button>
+  </div>
+  <div class="chartbox"><div class="inner" style="height:340px"><canvas id="chBridge"></canvas></div></div>
+  <div class="call steel" id="brCard"></div>
+
+  <div class="verdict">
+    <div class="v1"><b class="big"><span class="en">Year on year: not base effect</span><span class="ta">ஆண்டுக்கு ஆண்டு: base effect இல்ல</span></b><span class="en">The base quarter earned a normal GRM and a healthy marketing margin. Refining spread explains roughly 57% of the rise in pre-tax profit and LPG compensation about 22%.</span><span class="ta">அடிப்படைக் காலாண்டு சாதாரண GRM, நல்ல மார்க்கெட்டிங் மார்ஜின் சம்பாதிச்சுது. வரிக்கு முந்தைய லாப உயர்வுல ~57% சுத்திகரிப்பு இடைவெளி, ~22% LPG இழப்பீடு.</span></div>
+    <div class="v1"><b class="big"><span class="en">Quarter on quarter: mostly timing</span><span class="ta">காலாண்டுக்கு காலாண்டு: பெரும்பாலும் நேரம்</span></b><span class="en">Refining added only about ₹2,360 crore. LPG compensation was the same in both quarters. Around ₹27,500 crore came from the marketing book and inventory: the May pump-price hike for a full quarter, the crude dip from mid-June to mid-August, and a crude rally into end-September.</span><span class="ta">சுத்திகரிப்பு சுமார் ₹2,360 கோடி மட்டும். LPG இழப்பீடு ரெண்டு காலாண்டுலயும் ஒண்ணுதான். சுமார் ₹27,500 கோடி மார்க்கெட்டிங் &amp; இருப்பிலிருந்து: மே பங்க் விலை ஏற்றம் முழு காலாண்டுக்கும், ஜூன்–ஆகஸ்ட் கச்சா இறக்கம், செப்டம்பர் இறுதி கச்சா ஏற்றம்.</span></div>
+    <div class="v1"><b class="big"><span class="en">Is it repeatable? Not fully</span><span class="ta">மீண்டும் வருமா? முழுசா இல்ல</span></b><span class="en">Inventory gains reverse if crude falls; management has already warned of this. LPG under-recoveries continue: the unrecovered buffer grew from ₹23,102 crore (Mar 2026) to ₹32,506 crore (Sep 2026) even after compensation.</span><span class="ta">கச்சா இறங்கினா இருப்பு லாபம் திரும்பி நஷ்டமாகும்; நிர்வாகமே எச்சரிச்சிருக்கு. LPG நஷ்டம் தொடருது: இழப்பீட்டுக்குப் பிறகும் நிலுவை ₹23,102 கோடியிலிருந்து (மார்ச் 2026) ₹32,506 கோடிக்கு (செப் 2026) ஏறியிருக்கு.</span></div>
+  </div>
+
+  <h3><span class="en">Driver table</span><span class="ta">இயக்கிகள் அட்டவணை</span></h3>
+  <div class="tbl"><table>
+    <thead><tr><th><span class="en">Driver</span><span class="ta">இயக்கி</span></th><th>Q2 FY26</th><th>Q1 FY27</th><th>Q2 FY27</th><th><span class="en">Read</span><span class="ta">பொருள்</span></th></tr></thead>
+    <tbody>
+      <tr class="cat"><td colspan="5"><span class="en">Refining</span><span class="ta">சுத்திகரிப்பு</span></td></tr>
+      <tr><td><span class="en">GRM ($/bbl)</span><span class="ta">GRM ($/பேரல்)</span></td><td class="n">10.7 <small>(reported)</small></td><td class="n">15.59 <small>(net SAED)</small></td><td class="n">18.52 <small>(net SAED)</small></td><td style="text-align:left"><span class="en">Gross GRM before SAED was about $36 in Q1, per management</span><span class="ta">Q1-ல SAED-க்கு முன் ~$36 என நிர்வாகம்</span></td></tr>
+      <tr><td><span class="en">Throughput (MMT)</span><span class="ta">சுத்திகரிப்பு (MMT)</span></td><td class="n">17.609</td><td class="n">19.165</td><td class="n">18.108</td><td style="text-align:left"><span class="en">Q1 derived from H1 total 37.273</span><span class="ta">Q1 = H1 − Q2</span></td></tr>
+      <tr><td><span class="en">Refining gross margin (₹ cr, derived)</span><span class="ta">சுத்திகரிப்பு மொத்த மார்ஜின்</span></td><td class="n">12,153</td><td class="n">19,273</td><td class="n">21,632</td><td style="text-align:left"><span class="en">GRM × barrels × ₹88/$</span><span class="ta">GRM × பேரல் × ₹88</span><span class="dag">†</span></td></tr>
+      <tr class="cat"><td colspan="5"><span class="en">Marketing</span><span class="ta">மார்க்கெட்டிங்</span></td></tr>
+      <tr><td><span class="en">Petrol margin (₹/litre, Emkay)</span><span class="ta">பெட்ரோல் மார்ஜின்</span></td><td class="n">n/a</td><td class="n dn">≈ −12</td><td class="n up">≈ +2.9</td><td style="text-align:left"><span class="en">Quarter averages, broker estimates</span><span class="ta">புரோக்கர் மதிப்பீடு</span></td></tr>
+      <tr><td><span class="en">Diesel margin (₹/litre, Emkay)</span><span class="ta">டீசல் மார்ஜின்</span></td><td class="n">n/a</td><td class="n dn">≈ −32</td><td class="n dn">≈ −16.7</td><td style="text-align:left"><span class="en">Still negative, but losses halved</span><span class="ta">இன்னும் மைனஸ், ஆனா பாதி குறைஞ்சது</span></td></tr>
+      <tr><td><span class="en">Implied marketing margin (PL, ₹/litre)</span><span class="ta">மொத்த மார்க்கெட்டிங் மார்ஜின்</span></td><td class="n up">+7.1</td><td class="n">n/a</td><td class="n">n/a</td><td style="text-align:left"><span class="en">Normal base a year ago</span><span class="ta">போன வருஷம் சாதாரண நிலை</span></td></tr>
+      <tr><td><span class="en">LPG under-recovery (₹/cylinder)</span><span class="ta">LPG இழப்பு (சிலிண்டருக்கு)</span></td><td class="n">n/a</td><td class="n dn">≈ 510</td><td class="n dn">≈ 290</td><td style="text-align:left"><span class="en">Jul ₹490 · Aug ₹180 · Sep ₹200</span><span class="ta">ஜூலை ₹490 · ஆக ₹180 · செப் ₹200</span></td></tr>
+      <tr><td><span class="en">LPG compensation booked (₹ cr)</span><span class="ta">LPG இழப்பீடு (₹ கோடி)</span></td><td class="n">0</td><td class="n">≈ 3,621<span class="dag">†</span></td><td class="n">≈ 3,621<span class="dag">†</span></td><td style="text-align:left"><span class="en">₹7,243 cr for Apr–Sep: 6 equal monthly instalments of the ₹14,486 cr package</span><span class="ta">ஏப்–செப் ₹7,243 கோடி: ₹14,486 கோடி தொகுப்பின் 6 மாத தவணை</span></td></tr>
+      <tr class="cat"><td colspan="5"><span class="en">Other segments (segment result, ₹ cr)</span><span class="ta">பிற பிரிவுகள் (₹ கோடி)</span></td></tr>
+      <tr><td><span class="en">Petroleum products</span><span class="ta">பெட்ரோலியப் பொருட்கள்</span></td><td class="n">11,269</td><td class="n">n/a</td><td class="n">24,935</td><td style="text-align:left">+121% YoY</td></tr>
+      <tr><td><span class="en">Gas</span><span class="ta">எரிவாயு</span></td><td class="n">243</td><td class="n">n/a</td><td class="n">1,238</td><td style="text-align:left"><span class="en">5× YoY</span><span class="ta">5 மடங்கு</span></td></tr>
+      <tr><td><span class="en">Petrochemicals</span><span class="ta">பெட்ரோகெமிக்கல்</span></td><td class="n">≈ 180<span class="dag">†</span></td><td class="n">n/a</td><td class="n">528</td><td style="text-align:left"><span class="en">"Nearly triple" YoY</span><span class="ta">கிட்டத்தட்ட மூணு மடங்கு</span></td></tr>
+      <tr class="cat"><td colspan="5"><span class="en">Crude price path</span><span class="ta">கச்சா விலை பாதை</span></td></tr>
+      <tr><td><span class="en">Brent, approx. ($/bbl)</span><span class="ta">பிரென்ட் ($/பேரல்)</span></td><td class="n">≈ 66–68</td><td class="n">avg ≈ 104</td><td class="n">avg ≈ 97</td><td style="text-align:left"><span class="en">Q2: ~$72 → lows ~$68 → ~$98 early Sep → ~$120 end Sep</span><span class="ta">Q2: ~$72 → ~$68 → ~$98 → ~$120</span></td></tr>
+    </tbody></table></div>
+  <p class="note"><span class="dag">†</span> <span class="en">CB Research estimates. Refining margin uses an assumed ₹88/$ and 7.33 bbl/tonne. LPG split assumes equal monthly instalments. Petrochemical base derived from "nearly triple". Inventory gain or loss for Q2 FY27 was not disclosed in the material reviewed.</span><span class="ta">CB Research மதிப்பீடுகள்; Q2 FY27 இருப்பு லாப/நஷ்டம் வெளியிடப்படவில்லை.</span></p>
+</section>
+
+<!-- ================= BUSINESS MODEL ================= -->
+<section class="pane" id="bm">
+  <h2><span class="en">From crude to customer: one integrated chain</span><span class="ta">கச்சாவிலிருந்து நுகர்வோர் வரை: ஒரே ஒருங்கிணைந்த சங்கிலி</span></h2>
+  <p class="lede"><span class="en">Tap any box for the explanation. Figures are Q2 FY27 standalone unless marked.</span><span class="ta">எந்த பெட்டியையும் தொட்டு விளக்கம் பாருங்க. எண்கள் Q2 FY27.</span></p>
+  <div class="svgbox"><svg id="bmSvg" viewBox="0 0 1000 560" role="img" aria-label="IOC business model flow map"></svg></div>
+  <div class="call steel" id="bmExplain"><span class="en">Tap a box above.</span><span class="ta">மேல உள்ள பெட்டியைத் தொடுங்க.</span></div>
+  <p class="note"><strong><span class="en">Profit formula:</span><span class="ta">லாப சூத்திரம்:</span></strong> <span class="en">Profit ≈ GRM × barrels refined + marketing margin × litres sold + LPG compensation + gas &amp; petrochemical margins ± inventory gain/loss − interest − depreciation − tax. For IOC the refining and marketing terms usually move in opposite directions when crude moves fast.</span><span class="ta">லாபம் ≈ GRM × பேரல் + மார்க்கெட்டிங் மார்ஜின் × லிட்டர் + LPG இழப்பீடு + gas/petchem ± இருப்பு − வட்டி − தேய்மானம் − வரி. கச்சா வேகமா மாறும்போது சுத்திகரிப்பும் மார்க்கெட்டிங்கும் பொதுவா எதிர் திசையில போகும்.</span></p>
+  <h3><span class="en">Revenue engine — segments</span><span class="ta">வருவாய் இயந்திரம் — பிரிவுகள்</span></h3>
+  <div class="tbl"><table>
+    <thead><tr><th><span class="en">Segment</span><span class="ta">பிரிவு</span></th><th><span class="en">Revenue Q2 FY27 (₹ cr)</span><span class="ta">வருவாய் (₹ கோடி)</span></th><th><span class="en">Revenue growth YoY</span><span class="ta">வருவாய் வளர்ச்சி</span></th><th><span class="en">Segment result (₹ cr)</span><span class="ta">பிரிவு லாபம் (₹ கோடி)</span></th><th><span class="en">Share of segment profit</span><span class="ta">லாபப் பங்கு</span></th></tr></thead>
+    <tbody>
+      <tr><td><span class="en">Petroleum products (refining + marketing + pipelines)</span><span class="ta">பெட்ரோலியப் பொருட்கள்</span></td><td class="n">2,45,996</td><td class="n up">+27.9%</td><td class="n">24,935</td><td class="n">93.4%</td></tr>
+      <tr><td><span class="en">Gas</span><span class="ta">எரிவாயு</span></td><td class="n">n/a</td><td class="n up">+50.4%</td><td class="n">1,238</td><td class="n">4.6%</td></tr>
+      <tr><td><span class="en">Petrochemicals</span><span class="ta">பெட்ரோகெமிக்கல்</span></td><td class="n">n/a</td><td class="n up">+57%</td><td class="n">528</td><td class="n">2.0%</td></tr>
+    </tbody></table></div>
+  <p class="note"><span class="en">Share computed over the three listed segments only; "other businesses" not reported in the material reviewed.</span><span class="ta">மூணு பிரிவுகளின் மொத்தத்தில் மட்டும் கணக்கிட்டது.</span></p>
+</section>
+
+<!-- ================= IOC & CPCL ================= -->
+<section class="pane" id="cpcl">
+  <h2><span class="en">Yes — IOC is CPCL's parent and its marketing arm</span><span class="ta">ஆமாம் — IOC தான் CPCL-ஓட தாய் நிறுவனமும் மார்க்கெட்டிங் பிரிவும்</span></h2>
+  <p class="lede"><span class="en">IOC owns 51.89% of CPCL, buys most of its fuels at the refinery gate, and sells them through its own pumps and LPG network. The two companies sit on opposite sides of the same transfer price.</span><span class="ta">CPCL-ல IOC 51.89% வச்சிருக்கு; அதோட எரிபொருளில் பெரும்பகுதியை ரிஃபைனரி வாசல்லயே வாங்கி, தன் பங்க், LPG நெட்வொர்க் மூலம் விக்குது. ரெண்டு நிறுவனமும் ஒரே விலையோட ரெண்டு பக்கத்துல நிக்குது.</span></p>
+  <div class="svgbox"><svg id="linkSvg" viewBox="0 0 1000 300" role="img" aria-label="IOC CPCL link"></svg></div>
+  <div class="tbl"><table>
+    <thead><tr><th></th><th>IOC Q1</th><th>IOC Q2</th><th>CPCL Q1</th><th>CPCL Q2</th></tr></thead>
+    <tbody>
+      <tr><td><span class="en">Runs pumps / LPG?</span><span class="ta">பங்க் / LPG?</span></td><td colspan="2" style="text-align:center"><span class="en">Yes, largest in India</span><span class="ta">ஆம், இந்தியாவில் மிகப் பெரியது</span></td><td colspan="2" style="text-align:center"><span class="en">No (pilot outlet only)</span><span class="ta">இல்லை (ஒரு சோதனை பங்க்)</span></td></tr>
+      <tr><td>GRM ($/bbl)</td><td class="n">15.59</td><td class="n">18.52</td><td class="n">8.78</td><td class="n">20.41</td></tr>
+      <tr><td><span class="en">Standalone PAT (₹ cr)</span><span class="ta">நிகர லாபம் (₹ கோடி)</span></td><td class="n dn">−2,661</td><td class="n up">21,630</td><td class="n up">1,017</td><td class="n up">2,271</td></tr>
+      <tr><td><span class="en">PAT per tonne refined (₹)</span><span class="ta">டன்னுக்கு லாபம் (₹)</span></td><td class="n dn">−1,389</td><td class="n up">11,945</td><td class="n up">3,570</td><td class="n up">8,769</td></tr>
+    </tbody></table></div>
+  <div class="grid g3">
+    <div class="card"><h4><span class="en">Q1: mirror images</span><span class="ta">Q1: கண்ணாடி பிம்பம்</span></h4><p class="en">With pump prices frozen, IOC's marketing book bled and the company lost ₹2,661 crore. CPCL, which stops at the refinery gate, made ₹1,017 crore. From 16 March IOC and the other OMCs also paid refiners below trade parity, which moved part of the loss back onto CPCL and kept its Q1 GRM low.</p><p class="ta">பங்க் விலை நிறுத்தத்தால IOC மார்க்கெட்டிங் நஷ்டம், ₹2,661 கோடி நஷ்டம். ரிஃபைனரி வாசல்லயே முடியற CPCL ₹1,017 கோடி லாபம். 16 மார்ச் முதல் OMC-கள் trade parity-க்கு கீழ விலை கொடுத்ததால, நஷ்டத்துல ஒரு பகுதி CPCL மேலயும் விழுந்துச்சு.</p></div>
+    <div class="card"><h4><span class="en">Q2: both profitable</span><span class="ta">Q2: ரெண்டுக்கும் லாபம்</span></h4><p class="en">Marketing losses shrank, so IOC no longer needed to squeeze its refiners as hard. CPCL's GRM jumped to $20.41, above IOC's own net-of-SAED $18.52. IOC earned more per tonne because it collects both refining and marketing margins when both are positive.</p><p class="ta">மார்க்கெட்டிங் நஷ்டம் குறைஞ்சதால IOC ரிஃபைனரிகளை அவ்வளவு அழுத்த வேண்டியதில்ல. CPCL GRM $20.41, IOC-யோட $18.52-ஐ விட அதிகம். ரெண்டும் நேர்மறையா இருக்கும்போது IOC-க்கு ரெண்டு மார்ஜினும் கிடைக்கறதால டன்னுக்கு அதிக லாபம்.</p></div>
+    <div class="card"><h4><span class="en">What CPCL adds to IOC</span><span class="ta">CPCL IOC-க்கு தருவது</span></h4><p class="en">IOC's 51.89% share of CPCL's Q2 consolidated profit (₹2,247 cr) is about ₹1,166 crore, which flows into IOC's consolidated results. CPCL's ₹25 interim dividend pays IOC about ₹193 crore in cash (7.73 crore shares). The Cauvery Basin project is IOC 75%, CPCL 25%.</p><p class="ta">CPCL Q2 லாபம் ₹2,247 கோடியில IOC பங்கு ~₹1,166 கோடி, IOC குழுமக் கணக்குல சேருது. CPCL ₹25 இடைக்கால ஈவு மூலம் IOC-க்கு ~₹193 கோடி பணம். காவேரி படுகை திட்டம்: IOC 75%, CPCL 25%.</p></div>
+  </div>
+  <div class="call steel"><p class="en"><strong>Group view.</strong> Inside the group, the refinery transfer price only moves profit from one pocket to another. That is why IOC's consolidated profit (₹22,503 cr) is the better measure of what the whole chain earned. For an outside CPCL shareholder it is different: every rupee of discount IOC takes on the transfer price is a rupee that CPCL's minority holders (32.71% public, 15.40% Naftiran) do not get.</p><p class="ta"><strong>குழுமப் பார்வை.</strong> குழுமத்துக்குள்ள, விற்பனை விலை லாபத்தை ஒரு பையிலிருந்து இன்னொரு பைக்கு மாற்றுது. அதனால முழு சங்கிலியோட வருமானத்துக்கு IOC குழும லாபம் (₹22,503 கோடி) தான் சரியான அளவு. ஆனா CPCL-ல வெளிப் பங்குதாரருக்கு, IOC எடுக்கற ஒவ்வொரு ரூபாய் தள்ளுபடியும் CPCL சிறுபான்மைப் பங்குதாரர்களுக்கு (பொது 32.71%, நஃப்டிரான் 15.40%) கிடைக்காத ரூபாய்.</p></div>
+</section>
+
+<!-- ================= FINANCIALS ================= -->
+<section class="pane" id="fin">
+  <h2><span class="en">Financials by category</span><span class="ta">வகைவாரியான நிதி அளவீடுகள்</span></h2>
+  <p class="lede"><span class="en">Standalone, ₹ crore, unless marked.</span><span class="ta">குறிப்பிடாவிட்டால் நிறுவன எண்கள், ₹ கோடி.</span></p>
+  <div class="tbl"><table>
+    <thead><tr><th><span class="en">Metric</span><span class="ta">அளவீடு</span></th><th>Q2 FY27</th><th>Q1 FY27</th><th>Q2 FY26</th><th>QoQ</th><th>YoY</th></tr></thead>
+    <tbody>
+      <tr class="cat"><td colspan="6"><span class="en">Growth &amp; scale</span><span class="ta">வளர்ச்சி &amp; அளவு</span></td></tr>
+      <tr><td><span class="en">Revenue from operations</span><span class="ta">இயக்க வருவாய்</span></td><td class="n">2,62,936</td><td class="n">2,75,972</td><td class="n">2,02,992</td><td class="n dn">−4.7%</td><td class="n up">+29.5%</td></tr>
+      <tr><td><span class="en">Refinery throughput (MMT)</span><span class="ta">சுத்திகரிப்பு (MMT)</span></td><td class="n">18.108</td><td class="n">19.165</td><td class="n">17.609</td><td class="n dn">−5.5%</td><td class="n up">+2.8%</td></tr>
+      <tr><td><span class="en">Domestic sales (MMT)</span><span class="ta">உள்நாட்டு விற்பனை</span></td><td class="n">23.977</td><td class="n">n/a</td><td class="n">22.851</td><td class="n">—</td><td class="n up">+4.9%</td></tr>
+      <tr><td><span class="en">Export sales (MMT)</span><span class="ta">ஏற்றுமதி</span></td><td class="n">1.251</td><td class="n">n/a</td><td class="n">1.411</td><td class="n">—</td><td class="n dn">−11.3%</td></tr>
+      <tr><td><span class="en">Pipeline throughput (MMT)</span><span class="ta">குழாய் அளவு</span></td><td class="n">25.348</td><td class="n">28.548</td><td class="n">24.087</td><td class="n dn">−11.2%</td><td class="n up">+5.2%</td></tr>
+      <tr class="cat"><td colspan="6"><span class="en">Profitability</span><span class="ta">லாபத்தன்மை</span></td></tr>
+      <tr><td>GRM ($/bbl)</td><td class="n">18.52</td><td class="n">15.59</td><td class="n">10.7</td><td class="n up">+2.93</td><td class="n up">+7.82</td></tr>
+      <tr><td><span class="en">EBITDA contribution</span><span class="ta">EBITDA</span></td><td class="n">32,998</td><td class="n">2,332</td><td class="n">14,580</td><td class="n up">14×</td><td class="n up">+126%</td></tr>
+      <tr><td><span class="en">EBITDA margin</span><span class="ta">EBITDA மார்ஜின்</span></td><td class="n">12.5%</td><td class="n">0.8%</td><td class="n">7.2%</td><td class="n up">+11.7 pp</td><td class="n up">+5.4 pp</td></tr>
+      <tr><td><span class="en">Profit before tax</span><span class="ta">வரிக்கு முந்தைய லாபம்</span></td><td class="n">26,617</td><td class="n dn">−3,274</td><td class="n">10,066</td><td class="n">—</td><td class="n up">+164%</td></tr>
+      <tr><td><span class="en">PAT (standalone)</span><span class="ta">நிகர லாபம்</span></td><td class="n">21,630</td><td class="n dn">−2,661</td><td class="n">7,610</td><td class="n">—</td><td class="n up">+184%</td></tr>
+      <tr><td><span class="en">PAT (consolidated, total)</span><span class="ta">குழும லாபம்</span></td><td class="n">22,503</td><td class="n dn">−1,141 / −1,241<span class="dag">†</span></td><td class="n">8,191</td><td class="n">—</td><td class="n up">+175%</td></tr>
+      <tr><td>EPS (₹)</td><td class="n">15.71</td><td class="n dn">−1.88</td><td class="n">5.53</td><td class="n">—</td><td class="n up">+184%</td></tr>
+      <tr class="cat"><td colspan="6"><span class="en">Efficiency</span><span class="ta">செயல்திறன்</span></td></tr>
+      <tr><td><span class="en">Refinery utilisation</span><span class="ta">ரிஃபைனரி பயன்பாடு</span></td><td class="n">102.3%</td><td class="n">≈109%<span class="dag">†</span></td><td class="n">n/a</td><td class="n">—</td><td class="n">—</td></tr>
+      <tr><td><span class="en">Pipeline utilisation</span><span class="ta">குழாய் பயன்பாடு</span></td><td class="n">64.3%</td><td class="n">n/a</td><td class="n">n/a</td><td class="n">—</td><td class="n">—</td></tr>
+      <tr><td><span class="en">PAT per tonne refined (₹)</span><span class="ta">டன்னுக்கு லாபம் (₹)</span></td><td class="n">11,945</td><td class="n dn">−1,389</td><td class="n">4,322</td><td class="n">—</td><td class="n up">+176%</td></tr>
+      <tr class="cat"><td colspan="6"><span class="en">Balance sheet &amp; capital</span><span class="ta">இருப்புநிலை &amp; மூலதனம்</span></td></tr>
+      <tr><td><span class="en">Borrowings, quarter end</span><span class="ta">கடன் (காலாண்டு இறுதி)</span></td><td class="n">1,16,578</td><td class="n">1,41,453</td><td class="n">n/a</td><td class="n up">−₹24,875 cr</td><td class="n">—</td></tr>
+      <tr><td><span class="en">Debt / equity</span><span class="ta">கடன் / பங்கு</span></td><td class="n">0.53×</td><td class="n">n/a</td><td class="n">n/a</td><td class="n">—</td><td class="n">—</td></tr>
+      <tr><td><span class="en">Interest expense</span><span class="ta">வட்டிச் செலவு</span></td><td class="n">2,364</td><td class="n">1,610</td><td class="n">n/a</td><td class="n dn">+47%</td><td class="n">—</td></tr>
+      <tr><td><span class="en">Capex H1 vs FY27 target</span><span class="ta">மூலதனச் செலவு</span></td><td class="n" colspan="3">12,162 of 32,700 (37%)</td><td class="n" colspan="2">—</td></tr>
+      <tr class="cat"><td colspan="6"><span class="en">Cash &amp; liquidity</span><span class="ta">பணம் &amp; திரவத்தன்மை</span></td></tr>
+      <tr><td><span class="en">LPG unrecovered buffer (cumulative)</span><span class="ta">LPG நிலுவை (மொத்தம்)</span></td><td class="n">32,506</td><td class="n">n/a</td><td class="n">n/a</td><td class="n" colspan="2"><span class="en">Mar 2026: 23,102</span><span class="ta">மார்ச் 2026: 23,102</span></td></tr>
+      <tr><td><span class="en">FX loss (crude + other liabilities)</span><span class="ta">அந்நியச் செலாவணி நஷ்டம்</span></td><td class="n">666</td><td class="n">101</td><td class="n">n/a</td><td class="n">—</td><td class="n">—</td></tr>
+      <tr class="cat"><td colspan="6"><span class="en">Valuation</span><span class="ta">மதிப்பீடு</span></td></tr>
+      <tr><td><span class="en">Trailing P/E · P/B (approx.)</span><span class="ta">P/E · P/B</span></td><td class="n" colspan="3">~4.3× · ~0.81×<span class="dag">†</span></td><td class="n" colspan="2">—</td></tr>
+      <tr><td><span class="en">Dividend FY26 · yield</span><span class="ta">ஈவு FY26 · வருமானம்</span></td><td class="n" colspan="3">₹8.25 · ~6.3%</td><td class="n" colspan="2">—</td></tr>
+    </tbody></table></div>
+  <p class="note"><span class="dag">†</span> <span class="en">Q1 consolidated loss is reported differently by sources. Q1 utilisation derived from the H1 average of 105.8%. P/E on trailing four-quarter standalone PAT (₹42,473 cr); P/B on March 2026 consolidated book (₹159.7/share). No interim dividend was reported with Q2 in the material reviewed.</span><span class="ta">Q1 குழும நஷ்டம் ஆதாரங்களில் வேறுபடுது. P/E கடந்த 4 காலாண்டு லாபத்தில்; P/B மார்ச் 2026 புத்தக மதிப்பில்.</span></p>
+  <h3><span class="en">Five-year view (consolidated)</span><span class="ta">ஐந்து வருஷப் பார்வை (குழுமம்)</span></h3>
+  <div class="chartbox"><div class="inner"><canvas id="chAnn"></canvas></div></div>
+  <p class="note"><span class="en">Earnings swing with the crude cycle: FY23 and FY25 were the weak years (owners' PAT ₹9,792 cr and ₹13,598 cr), FY24 and FY26 the strong ones (₹41,730 cr and ₹42,096 cr).</span><span class="ta">லாபம் கச்சா சுழற்சியோட மாறுது: FY23, FY25 பலவீனம்; FY24, FY26 பலம்.</span></p>
+</section>
+
+<!-- ================= CASH FLOW ================= -->
+<section class="pane" id="cf">
+  <h2><span class="en">Cash flow and working capital</span><span class="ta">பணப்புழக்கம் &amp; நடைமுறை மூலதனம்</span></h2>
+  <p class="lede"><span class="en">Consolidated, ₹ crore. H1 FY27 cash flow was not in the material reviewed.</span><span class="ta">குழும எண்கள், ₹ கோடி. H1 FY27 பணப்புழக்கம் கிடைக்கல.</span></p>
+  <div class="chartbox"><div class="inner"><canvas id="chCF"></canvas></div></div>
+  <div class="tbl"><table>
+    <thead><tr><th></th><th>FY22</th><th>FY23</th><th>FY24</th><th>FY25</th><th>FY26</th><th>H1 FY27</th></tr></thead>
+    <tbody>
+      <tr class="cat"><td colspan="7"><span class="en">Cash flows</span><span class="ta">பணப்புழக்கம்</span></td></tr>
+      <tr><td><span class="en">Operating (CFO)</span><span class="ta">இயக்கம்</span></td><td class="n">24,570</td><td class="n">29,644</td><td class="n">71,099</td><td class="n">34,699</td><td class="n">76,142</td><td class="n">n/a</td></tr>
+      <tr><td><span class="en">Investing</span><span class="ta">முதலீடு</span></td><td class="n">−21,178</td><td class="n">−28,030</td><td class="n">−31,464</td><td class="n">−31,848</td><td class="n">−22,274</td><td class="n">n/a</td></tr>
+      <tr><td><span class="en">Financing</span><span class="ta">நிதியளிப்பு</span></td><td class="n">−2,997</td><td class="n">−1,794</td><td class="n">−39,385</td><td class="n">−3,425</td><td class="n">−52,672</td><td class="n">n/a</td></tr>
+      <tr><td><span class="en">Free cash flow</span><span class="ta">இலவசப் பணம்</span></td><td class="n">1,767</td><td class="n">−2,956</td><td class="n">33,923</td><td class="n">−151</td><td class="n">47,779</td><td class="n">n/a</td></tr>
+      <tr><td>CFO / EBITDA</td><td class="n">51%</td><td class="n">97%</td><td class="n">94%</td><td class="n">96%</td><td class="n">99%</td><td class="n">n/a</td></tr>
+      <tr class="cat"><td colspan="7"><span class="en">Working capital days (approx.)</span><span class="ta">நடைமுறை மூலதன நாட்கள்</span><span class="dag">†</span></td></tr>
+      <tr><td><span class="en">Inventory days</span><span class="ta">இருப்பு நாட்கள்</span></td><td class="n">55</td><td class="n">47</td><td class="n">50</td><td class="n">48</td><td class="n">47</td><td class="n">n/a</td></tr>
+      <tr><td><span class="en">Receivable days</span><span class="ta">வரவு நாட்கள்</span></td><td class="n">9</td><td class="n">6</td><td class="n">6</td><td class="n">8</td><td class="n">6</td><td class="n">n/a</td></tr>
+      <tr><td><span class="en">Payable days</span><span class="ta">செலுத்தும் நாட்கள்</span></td><td class="n">24</td><td class="n">21</td><td class="n">25</td><td class="n">26</td><td class="n">23</td><td class="n">n/a</td></tr>
+      <tr><td><strong><span class="en">Cash conversion cycle</span><span class="ta">பண மாற்று சுழற்சி</span></strong></td><td class="n">40</td><td class="n">32</td><td class="n">31</td><td class="n">30</td><td class="n">30</td><td class="n">n/a</td></tr>
+      <tr class="cat"><td colspan="7"><span class="en">Debt</span><span class="ta">கடன்</span></td></tr>
+      <tr><td><span class="en">Borrowings, year end</span><span class="ta">ஆண்டு இறுதி கடன்</span></td><td class="n">1,32,020</td><td class="n">1,48,977</td><td class="n">1,32,628</td><td class="n">1,52,271</td><td class="n">1,31,822</td><td class="n">1,16,578 <small>(SA)</small></td></tr>
+      <tr><td><span class="en">Debt / equity</span><span class="ta">கடன் / பங்கு</span></td><td class="n">0.98</td><td class="n">1.04</td><td class="n">0.70</td><td class="n">0.80</td><td class="n">0.58</td><td class="n">0.53</td></tr>
+    </tbody></table></div>
+  <p class="note"><span class="dag">†</span> <span class="en">Days estimated on revenue from balance-sheet inventory, receivables and payables; on cost of goods the inventory and payable days would be a little higher.</span><span class="ta">வருவாய் அடிப்படையில் மதிப்பிட்டது.</span></p>
+  <div class="grid g3">
+    <div class="card"><h4><span class="en">Inventory is the swing item</span><span class="ta">இருப்புதான் மாறும் அம்சம்</span></h4><p class="en">About 47 days of inventory on a ₹9 lakh crore revenue base is roughly ₹1.1–1.2 lakh crore of stock. A $10/bbl move in crude changes its value by thousands of crores. That is the "inventory gain" in a rising quarter and the loss management is warning about if crude falls.</p><p class="ta">₹9 லட்சம் கோடி வருவாயில ~47 நாள் இருப்பு என்றால் ~₹1.1–1.2 லட்சம் கோடி சரக்கு. கச்சா $10 மாறினா அதன் மதிப்பு ஆயிரக்கணக்கான கோடி மாறும். ஏறும் காலாண்டில அது "இருப்பு லாபம்"; இறங்கினா நிர்வாகம் எச்சரிக்கும் நஷ்டம்.</p></div>
+    <div class="card"><h4><span class="en">Cash conversion is strong</span><span class="ta">பண மாற்றம் வலுவானது</span></h4><p class="en">CFO has been 94–99% of EBITDA for three years. Receivables are short (about a week) because fuel is sold for cash or near-cash through dealers.</p><p class="ta">மூணு வருஷமா CFO EBITDA-ல 94–99%. எரிபொருள் டீலர்கள் வழியா கிட்டத்தட்ட ரொக்கமா விக்கப்படறதால வரவு சுமார் ஒரு வாரம்தான்.</p></div>
+    <div class="card"><h4><span class="en">Q2 debt fell ₹24,875 crore</span><span class="ta">Q2-ல கடன் ₹24,875 கோடி குறைவு</span></h4><p class="en">Borrowings dropped from ₹1,41,453 cr (Jun) to ₹1,16,578 cr (Sep) as marketing losses eased. Q1 debt had been pushed up by working capital during the crude spike. Capex of ₹32,700 cr in FY27 will absorb a large part of the cash.</p><p class="ta">மார்க்கெட்டிங் நஷ்டம் குறைஞ்சதால கடன் ₹1,41,453 கோடியிலிருந்து (ஜூன்) ₹1,16,578 கோடிக்கு (செப்) குறைஞ்சுது. FY27 மூலதனச் செலவு ₹32,700 கோடி பணத்தில் பெரும்பகுதியை எடுக்கும்.</p></div>
+  </div>
+</section>
+
+<!-- ================= VALUATION & MARKET ================= -->
+<section class="pane" id="val">
+  <h2><span class="en">Valuation and share-price activity</span><span class="ta">மதிப்பீடு &amp; பங்கு விலை</span></h2>
+  <div class="grid g4">
+    <div class="kpi"><div class="l"><span class="en">Price (30 Oct close)</span><span class="ta">விலை (30 அக்)</span></div><div class="v">~₹130</div><div class="d"><span class="en">YTD −21.5% · 1 yr −20%</span><span class="ta">இந்த ஆண்டு −21.5% · 1 வருஷம் −20%</span></div></div>
+    <div class="kpi"><div class="l"><span class="en">Market cap</span><span class="ta">சந்தை மதிப்பு</span></div><div class="v">~₹1.83 lakh cr</div><div class="d"><span class="en">1,412 crore shares</span><span class="ta">1,412 கோடி பங்குகள்</span></div></div>
+    <div class="kpi"><div class="l">P/E · P/B</div><div class="v">~4.3× · 0.81×</div><div class="d"><span class="en">trailing, approx.</span><span class="ta">தோராயமாக</span></div></div>
+    <div class="kpi"><div class="l"><span class="en">Dividend yield (FY26 ₹8.25)</span><span class="ta">ஈவு வருமானம்</span></div><div class="v">~6.3%</div><div class="d"><span class="en">₹7 interim + ₹1.25 final</span><span class="ta">₹7 இடைக்கால + ₹1.25 இறுதி</span></div></div>
+  </div>
+  <div class="call"><strong><span class="en">Why a record profit did not lift the stock</span><span class="ta">சாதனை லாபம் ஏன் பங்கை உயர்த்தல</span></strong><p class="en">The share closed 0.8% lower on result day. The market had already seen HPCL and BPCL; it treats this quarter's profit as partly timing (inventory, crude dip) and sees Q3 risks: crude back near $117–120 with pump prices unchanged, a growing LPG buffer, and a warned inventory loss when crude normalises. At under 1× book, the price already discounts volatile earnings.</p><p class="ta">முடிவு நாளில பங்கு 0.8% குறைஞ்சுது. HPCL, BPCL முடிவுகளை சந்தை ஏற்கனவே பார்த்துடுச்சு; இந்த லாபத்தை ஓரளவு நேரம் சார்ந்ததா (இருப்பு, கச்சா இறக்கம்) பார்க்குது. Q3 ரிஸ்க்: கச்சா மீண்டும் $117–120, பங்க் விலை மாறல, LPG நிலுவை அதிகரிப்பு, இருப்பு நஷ்ட எச்சரிக்கை. புத்தக மதிப்புக்குக் கீழ விலை இருக்கறது, லாபம் நிலையில்லாததைக் காட்டுது.</p></div>
+  <h3><span class="en">Peer snapshot, Q2 FY27</span><span class="ta">போட்டியாளர் ஒப்பீடு, Q2 FY27</span></h3>
+  <div class="tbl"><table>
+    <thead><tr><th></th><th>IOC</th><th>BPCL</th><th>HPCL</th><th>CPCL</th></tr></thead>
+    <tbody>
+      <tr><td><span class="en">GRM, net of SAED ($/bbl)</span><span class="ta">GRM (SAED கழித்து)</span></td><td class="n">18.52</td><td class="n">14.0</td><td class="n">n/a</td><td class="n">20.41 <small>(reported)</small></td></tr>
+      <tr><td><span class="en">GRM, before SAED ($/bbl)</span><span class="ta">GRM (SAED முன்)</span></td><td class="n">n/a</td><td class="n">32.5</td><td class="n">32.15</td><td class="n">—</td></tr>
+      <tr><td><span class="en">Marketing margin (₹/litre, implied)</span><span class="ta">மார்க்கெட்டிங் மார்ஜின்</span></td><td class="n">n/a</td><td class="n up">+5.5</td><td class="n">n/a</td><td class="n">—</td></tr>
+      <tr><td><span class="en">Q2 PAT (₹ cr)</span><span class="ta">Q2 லாபம்</span></td><td class="n">21,630 <small>(SA)</small></td><td class="n">4,863 / 4,993<span class="dag">†</span></td><td class="n">3,625 <small>(consol.)</small></td><td class="n">2,271</td></tr>
+      <tr><td><span class="en">Q1 PAT (₹ cr)</span><span class="ta">Q1 லாபம்</span></td><td class="n dn">−2,661</td><td class="n dn">−3,962</td><td class="n dn">−11,526</td><td class="n up">1,017</td></tr>
+    </tbody></table></div>
+  <p class="note"><span class="dag">†</span> <span class="en">BPCL standalone and consolidated figures as reported by different sources.</span><span class="ta">BPCL எண்கள் ஆதாரத்துக்கு ஏற்ப.</span></p>
+  <h3><span class="en">Why the share price moved</span><span class="ta">பங்கு விலை ஏன் மாறியது</span></h3>
+  <div class="tbl"><table>
+    <thead><tr><th><span class="en">Date</span><span class="ta">தேதி</span></th><th><span class="en">Event</span><span class="ta">நிகழ்வு</span></th><th><span class="en">Move</span><span class="ta">மாற்றம்</span></th></tr></thead>
+    <tbody>
+      <tr><td>Feb 2026</td><td style="text-align:left"><span class="en">Q3 FY26 profit ₹12,126 cr; Nomura and Jefferies raise targets to ₹190</span><span class="ta">Q3 லாபம் ₹12,126 கோடி; இலக்குகள் ₹190</span></td><td><span class="chip g">▲</span></td></tr>
+      <tr><td>Mar 2026</td><td style="text-align:left"><span class="en">US–Iran war; crude from ~$73 to above $100; pump prices held; downgrades begin</span><span class="ta">போர்; கச்சா $100+; பங்க் விலை நிறுத்தம்; தரக்குறைப்பு</span></td><td><span class="chip r">▼</span></td></tr>
+      <tr><td>Apr–Jun 2026</td><td style="text-align:left"><span class="en">Emkay, Avendus, Dolat, PL cut ratings; Nomura, Jefferies cut targets</span><span class="ta">பல புரோக்கர்கள் மதிப்பீடு குறைப்பு</span></td><td><span class="chip r">▼</span></td></tr>
+      <tr><td>May 2026</td><td style="text-align:left"><span class="en">Petrol and diesel raised ~₹7–7.5/litre; FY26 profit ₹36,802 cr, final dividend ₹1.25</span><span class="ta">பங்க் விலை ~₹7.5 ஏற்றம்; FY26 லாபம் ₹36,802 கோடி</span></td><td><span class="chip s">±</span></td></tr>
+      <tr><td>Jul–Aug 2026</td><td style="text-align:left"><span class="en">Q1 loss ₹2,661 cr, far smaller than feared; PL upgrades to Accumulate (₹147)</span><span class="ta">Q1 நஷ்டம் எதிர்பார்த்ததை விடக் குறைவு; PL உயர்வு</span></td><td><span class="chip g">▲</span></td></tr>
+      <tr><td>Sep 2026</td><td style="text-align:left"><span class="en">Crude back near $117–120; ICRA estimates OMC losses ~₹530 cr/day</span><span class="ta">கச்சா மீண்டும் $117–120; தினசரி நஷ்டம் ~₹530 கோடி</span></td><td><span class="chip r">▼</span></td></tr>
+      <tr><td>30 Oct 2026</td><td style="text-align:left"><span class="en">Record Q2 profit; stock −0.8% to ~₹129–130</span><span class="ta">சாதனை Q2 லாபம்; பங்கு −0.8%</span></td><td><span class="chip s">−0.8%</span></td></tr>
+    </tbody></table></div>
+  <h3><span class="en">Shareholding, Sep 2026</span><span class="ta">பங்குதாரர் அமைப்பு, செப் 2026</span></h3>
+  <div class="chartbox"><div class="inner" style="min-width:0;height:260px"><canvas id="chShp"></canvas></div></div>
+  <p class="note"><span class="en">ONGC and Oil India together hold about 19.5% — so ONGC is a shareholder of IOC, while IOC is the parent of CPCL.</span><span class="ta">ONGC, Oil India சேர்ந்து ~19.5% வச்சிருக்காங்க — அதாவது ONGC, IOC-ல பங்குதாரர்; IOC, CPCL-ஓட தாய்.</span></p>
+</section>
+
+<!-- ================= TRIGGERS & CYCLE ================= -->
+<section class="pane" id="tc">
+  <h2><span class="en">Triggers and cycle</span><span class="ta">தூண்டிகள் &amp; சுழற்சி</span></h2>
+  <div class="grid g4">
+    <div class="kpi"><div class="l"><span class="en">Cycle type</span><span class="ta">சுழற்சி வகை</span></div><div class="v" style="font-size:19px"><span class="en">Policy + commodity spread</span><span class="ta">கொள்கை + இடைவெளி</span></div><div class="d"><span class="en">pump prices set by policy, cracks by market</span><span class="ta">பங்க் விலை அரசு, கிராக் சந்தை</span></div></div>
+    <div class="kpi fl"><div class="l"><span class="en">Sector phase</span><span class="ta">துறை நிலை</span></div><div class="v" style="font-size:20px">P4 <span class="en">Late cycle</span><span class="ta">உச்சம்</span></div><div class="d"><span class="en">score 35</span><span class="ta">மதிப்பு 35</span></div></div>
+    <div class="kpi"><div class="l">CY</div><div class="v">35</div><div class="d"><span class="en">sector 35 · stock 35</span><span class="ta">துறை 35 · பங்கு 35</span></div></div>
+    <div class="kpi"><div class="l">TG</div><div class="v">30</div><div class="d"><span class="en">risks outweigh catalysts</span><span class="ta">ரிஸ்க் அதிகம்</span></div></div>
+  </div>
+  <div class="call"><strong><span class="en">Conviction gates triggered</span><span class="ta">கட்டுப்பாடுகள்</span></strong><p class="en">Inventory-loss risk is an I4, C 0.7 negative trigger, so CB Conviction is capped at 50. The stock is in a Stage 4 downtrend (−21.5% this year), so a 55 cap would also apply. The cyclical P/E trap check is on: record margins with a P/E near 4×.</p><p class="ta">இருப்பு நஷ்ட ரிஸ்க் (I4, C 0.7) — CB Conviction 50-க்குள். பங்கு நிலை 4 இறக்கத்தில் (−21.5%). சாதனை மார்ஜினில் ~4× P/E — சுழற்சி P/E பொறி.</p></div>
+  <div class="grid g2" style="margin-top:12px">
+    <div class="svgbox" style="margin:0"><svg id="clock" viewBox="0 0 360 330" style="min-width:0" role="img" aria-label="Cycle clock"></svg></div>
+    <div class="card">
+      <h4><span class="en">Evidence for P4</span><span class="ta">P4-க்கு சான்று</span></h4>
+      <ul class="tight en"><li>Record IOC quarterly profit; peers' GRMs $14–32 vs $4–11 in FY25–26.</li><li>Crude near $117–120 at end-September with pump prices frozen since late May.</li><li>Windfall export duty in place since March; refiners paid below trade parity.</li><li>Large new capacity arriving: Panipat, Gujarat, Barauni expansions 90–95% complete, due by Dec 2026.</li></ul>
+      <ul class="tight ta"><li>IOC சாதனை லாபம்; போட்டியாளர் GRM $14–32.</li><li>செப் இறுதியில் கச்சா $117–120, பங்க் விலை நிறுத்தம்.</li><li>மார்ச் முதல் ஏற்றுமதி வரி; ரிஃபைனரிகளுக்கு குறைந்த விலை.</li><li>புது திறன்: பானிபட், குஜராத், பரௌனி விரிவாக்கங்கள் 90–95%.</li></ul>
+      <h4><span class="en">Stock cycle (35)</span><span class="ta">பங்கு சுழற்சி (35)</span></h4>
+      <p class="note en">Lifecycle mature 55 · earnings at 5-yr high 40 · valuation 30 (capped: P/E trap) · price Stage 4 decline 15.</p>
+      <p class="note ta">வாழ்க்கைச் சுழற்சி 55 · லாபம் உச்சம் 40 · மதிப்பீடு 30 · விலை நிலை 4, 15.</p>
+    </div>
+  </div>
+  <h3><span class="en">Trigger table</span><span class="ta">தூண்டி அட்டவணை</span></h3>
+  <div class="tbl"><table>
+    <thead><tr><th><span class="en">Trigger</span><span class="ta">தூண்டி</span></th><th>±</th><th>I</th><th>C</th><th>W</th><th>P</th><th><span class="en">Points</span><span class="ta">புள்ளி</span></th><th><span class="en">What to watch</span><span class="ta">கவனிக்க</span></th></tr></thead>
+    <tbody>
+      <tr><td><span class="en">Panipat, Gujarat, Barauni expansions commission; throughput 77 → ~85 MMT</span><span class="ta">விரிவாக்கங்கள் தொடக்கம்; அளவு 77 → ~85 MMT</span></td><td><span class="chip g">+</span></td><td class="n">3</td><td class="n">0.7</td><td class="n">0.7</td><td class="n">1.0</td><td class="n">1.47</td><td><span class="en">Commissioning notices, Q4 throughput</span><span class="ta">தொடக்க அறிவிப்பு</span></td></tr>
+      <tr><td><span class="en">Marketing margins turn positive as crude eases with sticky pump prices</span><span class="ta">கச்சா இறங்கி, பங்க் விலை அப்படியே — மார்ஜின் நேர்மறை</span></td><td><span class="chip g">+</span></td><td class="n">5</td><td class="n">0.4</td><td class="n">0.7</td><td class="n">1.0</td><td class="n">1.40</td><td><span class="en">Brent, pump-price notices</span><span class="ta">பிரென்ட், பங்க் விலை</span></td></tr>
+      <tr><td><span class="en">Fresh LPG compensation for the ₹32,506 cr buffer</span><span class="ta">₹32,506 கோடி LPG நிலுவைக்கு புதிய இழப்பீடு</span></td><td><span class="chip g">+</span></td><td class="n">3</td><td class="n">0.4</td><td class="n">0.7</td><td class="n">1.0</td><td class="n">0.84</td><td><span class="en">Cabinet decisions</span><span class="ta">அமைச்சரவை முடிவு</span></td></tr>
+      <tr><td><span class="en">Inventory losses when crude falls (management warning)</span><span class="ta">கச்சா இறங்கினா இருப்பு நஷ்டம் (நிர்வாக எச்சரிக்கை)</span></td><td><span class="chip r">−</span></td><td class="n">4</td><td class="n">0.7</td><td class="n">1.0</td><td class="n">1.0</td><td class="n">2.80</td><td><span class="en">Brent path, Q3 results</span><span class="ta">பிரென்ட், Q3</span></td></tr>
+      <tr><td><span class="en">Crude stays $115+ with pump prices frozen</span><span class="ta">கச்சா $115+, பங்க் விலை நிறுத்தம்</span></td><td><span class="chip r">−</span></td><td class="n">5</td><td class="n">0.4</td><td class="n">1.0</td><td class="n">0.7</td><td class="n">1.40</td><td><span class="en">Daily under-recovery estimates</span><span class="ta">தினசரி நஷ்டம்</span></td></tr>
+      <tr><td><span class="en">Governance: no independent directors; Audit Committee discontinued</span><span class="ta">சுயாதீன இயக்குநர் இல்ல; ஆடிட் குழு நிறுத்தம்</span></td><td><span class="chip r">−</span></td><td class="n">2</td><td class="n">1.0</td><td class="n">1.0</td><td class="n">1.0</td><td class="n">2.00</td><td><span class="en">Board appointments</span><span class="ta">இயக்குநர் நியமனம்</span></td></tr>
+    </tbody></table></div>
+  <p class="note">TG = 50 + 8 × (1.47 + 1.40 + 0.84) − 8 × (2.80 + 1.40 + 2.00) = 30</p>
+  <h3><span class="en">Dated events</span><span class="ta">தேதி நிகழ்வுகள்</span></h3>
+  <div class="svgbox"><svg id="timeline" viewBox="0 0 1000 130" role="img" aria-label="Upcoming events"></svg></div>
+  <div class="call steel"><strong><span class="en">What would change this view</span><span class="ta">பார்வையை மாற்றக்கூடியவை</span></strong>
+    <ul class="tight en"><li>A ceasefire with a gradual crude fall and no pump-price cut: marketing margins widen and inventory losses stay small, TG rises.</li><li>Independent directors appointed and the Audit Committee restored: governance negative drops out.</li><li>A sudden crude crash: inventory losses and lower GRMs together, phase moves to P5.</li></ul>
+    <ul class="tight ta"><li>படிப்படியான கச்சா இறக்கம், பங்க் விலை குறைப்பு இல்ல: மார்ஜின் உயர்வு, TG உயர்வு.</li><li>சுயாதீன இயக்குநர் நியமனம், ஆடிட் குழு மீண்டும்: நிர்வாக எதிர்மறை நீங்கும்.</li><li>திடீர் கச்சா சரிவு: இருப்பு நஷ்டம் + GRM குறைவு, P5.</li></ul></div>
+</section>
+
+<!-- ================= SWOT ================= -->
+<section class="pane" id="swot">
+  <h2>SWOT</h2>
+  <div class="grid g2">
+    <div class="card" style="border-top:4px solid var(--good)"><h4><span class="en">Strengths</span><span class="ta">பலங்கள்</span></h4>
+      <ul class="tight en"><li>Largest refiner and fuel marketer; domestic market share 42.7% (H1)</li><li>Record H1 throughput 37.27 MMT at 105.8% utilisation</li><li>Pipeline network (25.3 MMT a quarter) and LPG reach</li><li>CFO 94–99% of EBITDA; debt cut ₹24,875 cr in Q2</li></ul>
+      <ul class="tight ta"><li>மிகப் பெரிய ரிஃபைனர் &amp; விற்பனையாளர்; சந்தைப் பங்கு 42.7%</li><li>H1 சாதனை சுத்திகரிப்பு 37.27 MMT</li><li>குழாய் நெட்வொர்க், LPG வலை</li><li>வலுவான பண மாற்றம்; Q2-ல கடன் ₹24,875 கோடி குறைவு</li></ul></div>
+    <div class="card" style="border-top:4px solid var(--bad)"><h4><span class="en">Weaknesses</span><span class="ta">பலவீனங்கள்</span></h4>
+      <ul class="tight en"><li>Pump prices set by policy, not by IOC</li><li>LPG buffer of ₹32,506 cr still unrecovered</li><li>Long inventory cycle magnifies crude swings</li><li>Board without independent directors; Audit Committee discontinued</li></ul>
+      <ul class="tight ta"><li>பங்க் விலையை IOC தீர்மானிக்கல</li><li>LPG நிலுவை ₹32,506 கோடி</li><li>நீண்ட இருப்புச் சுழற்சி</li><li>சுயாதீன இயக்குநர் இல்லாத குழு</li></ul></div>
+    <div class="card" style="border-top:4px solid var(--steel)"><h4><span class="en">Opportunities</span><span class="ta">வாய்ப்புகள்</span></h4>
+      <ul class="tight en"><li>Throughput to ~85 MMT (FY28) and ~90 MMT (FY29) as expansions start</li><li>Gas and petrochemicals: segment profit up 5× and ~3× YoY</li><li>Marketing margin recovery if crude eases</li><li>Group refining via CPCL and Cauvery Basin (75%)</li></ul>
+      <ul class="tight ta"><li>விரிவாக்கத்தால் ~85–90 MMT</li><li>Gas, petrochem வளர்ச்சி</li><li>கச்சா இறங்கினா மார்ஜின் மீட்சி</li><li>CPCL, காவேரி படுகை (75%)</li></ul></div>
+    <div class="card" style="border-top:4px solid var(--warn)"><h4><span class="en">Threats</span><span class="ta">அச்சுறுத்தல்கள்</span></h4>
+      <ul class="tight en"><li>Inventory losses as the Middle East normalises</li><li>Renewed crude spike with frozen pump prices</li><li>Windfall export duty and policy-driven pricing</li><li>EV adoption over the long term</li></ul>
+      <ul class="tight ta"><li>மத்திய கிழக்கு சீரானா இருப்பு நஷ்டம்</li><li>மீண்டும் கச்சா உயர்வு</li><li>விண்ட்ஃபால் வரி, கொள்கை விலை</li><li>நீண்டகால EV மாற்றம்</li></ul></div>
+  </div>
+</section>
+
+<!-- ================= ANALYSTS ================= -->
+<section class="pane" id="an">
+  <h2><span class="en">Analysts' rating</span><span class="ta">ஆய்வாளர் மதிப்பீடு</span></h2>
+  <p class="lede"><span class="en">Third-party views only. CB Research makes no recommendation. Post-Q2 broker notes were not yet published at the time of writing.</span><span class="ta">மூன்றாம் தரப்பு கருத்துகள் மட்டும். CB Research பரிந்துரை செய்யாது. Q2-க்குப் பிந்தைய அறிக்கைகள் இன்னும் வரல.</span></p>
+  <div class="grid g4">
+    <div class="kpi"><div class="l"><span class="en">Consensus (31 analysts)</span><span class="ta">ஒருமித்த கருத்து (31)</span></div><div class="v" style="font-size:22px">Outperform</div><div class="d">30 Oct 2026</div></div>
+    <div class="kpi"><div class="l"><span class="en">Average target</span><span class="ta">சராசரி இலக்கு</span></div><div class="v">₹158.84</div><div class="d"><span class="up">+22% vs ₹130</span></div></div>
+    <div class="kpi"><div class="l"><span class="en">High / low target</span><span class="ta">உயர் / குறைந்த இலக்கு</span></div><div class="v">₹230 / ₹105</div><div class="d">+77% / −19%</div></div>
+  </div>
+  <div class="tbl"><table>
+    <thead><tr><th><span class="en">Broker</span><span class="ta">புரோக்கர்</span></th><th><span class="en">Rating</span><span class="ta">மதிப்பீடு</span></th><th><span class="en">Target (₹)</span><span class="ta">இலக்கு (₹)</span></th><th><span class="en">Date</span><span class="ta">தேதி</span></th><th><span class="en">vs ~₹130</span><span class="ta">தற்போதைய விலையுடன்</span></th></tr></thead>
+    <tbody>
+      <tr><td>PL Capital</td><td><span class="chip g">Accumulate</span></td><td class="n">147</td><td>2 Aug 2026</td><td class="n up">+13%</td></tr>
+      <tr><td>Kotak Securities</td><td><span class="chip r">Reduce</span></td><td class="n">150</td><td>22 Jun 2026<span class="dag">†</span></td><td class="n up">+15%</td></tr>
+      <tr><td>Nomura</td><td><span class="chip g">Buy</span></td><td class="n">180</td><td>20 May 2026<span class="dag">†</span></td><td class="n up">+38%</td></tr>
+      <tr><td>Jefferies</td><td><span class="chip g">Buy</span></td><td class="n">175</td><td>20 May 2026<span class="dag">†</span></td><td class="n up">+35%</td></tr>
+      <tr><td>Emkay Global</td><td><span class="chip a">Add</span></td><td class="n">160</td><td>24 Apr 2026<span class="dag">†</span></td><td class="n up">+23%</td></tr>
+      <tr><td>Dolat Capital</td><td><span class="chip r">Reduce</span></td><td class="n">142</td><td>2 Apr 2026<span class="dag">†</span></td><td class="n up">+9%</td></tr>
+      <tr><td>UBS</td><td><span class="chip a">Neutral</span></td><td class="n">175</td><td>9 Mar 2026<span class="dag">†</span></td><td class="n up">+35%</td></tr>
+    </tbody></table></div>
+  <p class="note"><span class="dag">†</span> <span class="en">Day and month as listed by the aggregator; year inferred from the sequence of rating changes.</span><span class="ta">ஆண்டு வரிசையிலிருந்து ஊகிக்கப்பட்டது.</span></p>
+  <div class="call steel"><p class="en"><strong>Read-out.</strong> Brokers split between those who see IOC as cheap on book value and those worried about policy-driven marketing losses. Most targets were set after the war began, so they already assume weak marketing margins. Cycle phase: P4. Top positive triggers: capacity additions, marketing recovery if crude eases. Top risk: inventory losses when crude falls.</p><p class="ta"><strong>சுருக்கம்.</strong> புத்தக மதிப்பில் மலிவுன்னு பார்க்கறவங்க ஒரு பக்கம்; கொள்கை சார்ந்த மார்க்கெட்டிங் நஷ்டம் பற்றி கவலைப்படறவங்க ஒரு பக்கம். பெரும்பாலான இலக்குகள் போருக்குப் பிறகு நிர்ணயிக்கப்பட்டவை. சுழற்சி: P4. முக்கிய ரிஸ்க்: கச்சா இறங்கும்போது இருப்பு நஷ்டம்.</p></div>
+</section>
+
+<!-- ================= SELF-CHECK ================= -->
+<section class="pane" id="self">
+  <h2><span class="en">CB Investor Self-check</span><span class="ta">CB முதலீட்டாளர் சுய சோதனை</span></h2>
+  <p class="lede"><span class="en">Tick what is true for you. Each line shows IOC's own data. This only counts how many of your own conditions line up. It is not a recommendation.</span><span class="ta">உங்களுக்குப் பொருந்துவதை டிக் செய்யுங்க. ஒவ்வொரு வரியிலும் IOC-ஓட சொந்த தகவல். இது உங்க நிபந்தனைகள் எத்தனை பொருந்துதுன்னு மட்டும் எண்ணுது. இது பரிந்துரை இல்ல.</span></p>
+  <div class="card"><div><strong><span class="en">Overall</span><span class="ta">மொத்தம்</span></strong> <span id="scAll" class="n">0/0</span></div><div class="bar"><i id="scAllBar"></i></div><div class="note" id="scMsg"></div>
+    <button class="btn" id="scClear" type="button" style="margin-top:6px"><span class="en">Clear my ticks</span><span class="ta">டிக்குகளை அழி</span></button></div>
+  <div id="scGroups"></div>
+</section>
+
+<!-- ================= MANAGEMENT ================= -->
+<section class="pane" id="mgmt">
+  <h2><span class="en">Management &amp; Board</span><span class="ta">நிர்வாகம் &amp; இயக்குநர் குழு</span></h2>
+  <div class="tbl"><table>
+    <thead><tr><th><span class="en">Role</span><span class="ta">பதவி</span></th><th><span class="en">Name</span><span class="ta">பெயர்</span></th><th><span class="en">Note</span><span class="ta">குறிப்பு</span></th></tr></thead>
+    <tbody>
+      <tr><td><span class="en">Chairman</span><span class="ta">தலைவர்</span></td><td style="text-align:left">Arvinder Singh Sahney</td><td style="text-align:left"><span class="en">Also chairs CPCL's board ex officio</span><span class="ta">CPCL குழுவுக்கும் பதவி வழி தலைவர்</span></td></tr>
+      <tr><td><span class="en">Director (Finance)</span><span class="ta">இயக்குநர் (நிதி)</span></td><td style="text-align:left">n/a</td><td style="text-align:left">—</td></tr>
+      <tr><td><span class="en">Director (Refineries)</span><span class="ta">இயக்குநர் (ரிஃபைனரி)</span></td><td style="text-align:left">n/a</td><td style="text-align:left">—</td></tr>
+      <tr><td><span class="en">Director (Marketing)</span><span class="ta">இயக்குநர் (மார்க்கெட்டிங்)</span></td><td style="text-align:left">n/a</td><td style="text-align:left">—</td></tr>
+      <tr><td><span class="en">Company Secretary</span><span class="ta">நிறுவனச் செயலர்</span></td><td style="text-align:left">Kamal Kumar Gwalani</td><td style="text-align:left"><span class="en">Signed the Q2 board-meeting intimation</span><span class="ta">Q2 அறிவிப்பில் கையெழுத்து</span></td></tr>
+    </tbody></table></div>
+  <div class="grid g2">
+    <div class="card"><h4><span class="en">Governance points</span><span class="ta">நிர்வாகக் குறிப்புகள்</span></h4>
+      <ul class="tight en"><li>Auditors' Q2 review notes that IOC lacks the prescribed number of independent and non-executive directors.</li><li>The Audit Committee and other mandatory committees have been discontinued since 28 March 2026; the full Board approved the results.</li><li>Limited-review conclusion unmodified.</li><li>Maharatna PSU under the Ministry of Petroleum and Natural Gas; government holds 51.50%.</li></ul>
+      <ul class="tight ta"><li>போதிய சுயாதீன இயக்குநர்கள் இல்லைன்னு ஆடிட்டர் குறிப்பு.</li><li>28 மார்ச் 2026 முதல் ஆடிட் குழு நிறுத்தம்; முழு குழுவே முடிவுகளை அங்கீகரிச்சுது.</li><li>மாற்றமில்லாத ஆய்வு முடிவு.</li><li>மகாரத்னா PSU; அரசு 51.50%.</li></ul></div>
+    <div class="card"><h4><span class="en">Group companies (selected)</span><span class="ta">குழும நிறுவனங்கள்</span></h4>
+      <ul class="tight en"><li>Chennai Petroleum (CPCL) — 51.89%, subsidiary; Q2 PAT ₹2,247 cr (consol.)</li><li>Cauvery Basin refinery/petrochemical JV — 75% (CPCL 25%)</li><li>Other subsidiaries and JVs: details n/a in the material reviewed</li></ul>
+      <ul class="tight ta"><li>CPCL — 51.89%; Q2 லாபம் ₹2,247 கோடி</li><li>காவேரி படுகை JV — 75% (CPCL 25%)</li><li>பிற துணை நிறுவனங்கள்: விவரம் n/a</li></ul></div>
+  </div>
+</section>
+
+<!-- ================= SOCRATES ================= -->
+<section class="pane" id="soc">
+  <h2><span class="en">Cauvery Socrates</span><span class="ta">காவேரி சாக்ரடீஸ்</span></h2>
+  <p class="lede"><span class="en">Answer, then read why. The point is to reason, not to score.</span><span class="ta">பதில் சொல்லுங்க, பிறகு காரணத்தைப் படிங்க.</span></p>
+  <div id="quiz"></div>
+  <div class="q"><strong><span class="en">Open question</span><span class="ta">திறந்த கேள்வி</span></strong>
+    <p class="en">IOC says coming quarters may see inventory losses. If Q3 profit halves, how would you tell whether the business got worse or only the timing reversed?</p>
+    <p class="ta">இனி இருப்பு நஷ்டம் வரலாம்னு IOC சொல்லுது. Q3 லாபம் பாதியானா, வணிகம் மோசமானதா இல்ல நேரம் மட்டும் திரும்பியதான்னு எப்படிக் கண்டுபிடிப்பீங்க?</p>
+    <label for="socFree" class="note"><span class="en">Your answer</span><span class="ta">உங்க பதில்</span></label>
+    <textarea id="socFree" rows="3"></textarea>
+    <button class="btn" id="socBtn" type="button" style="margin-top:6px"><span class="en">Compare with a model answer</span><span class="ta">மாதிரி பதிலுடன் ஒப்பிடு</span></button>
+    <div class="fb" id="socFb"></div></div>
+</section>
+
+</div><!-- /wrap -->
+
+<button id="cbBadge" type="button" aria-label="CB Research disclaimer">CB</button>
+<div id="disc" hidden><strong>CB Research</strong><p class="en" style="margin:4px 0 0">Prepared by CB Research (Cauvery Business) for education only. Not a SEBI-registered research analyst or adviser. Not investment advice or a recommendation to buy, sell or hold. Figures come from company filings and published coverage as of 31 Oct 2026; items marked n/a or † are unverified or estimated. Do your own research.</p><p class="ta" style="margin:4px 0 0">CB Research (காவேரி பிசினஸ்) கல்வி நோக்கில் தயாரித்தது. SEBI பதிவு பெற்ற ஆய்வாளர் அல்ல. இது முதலீட்டு ஆலோசனை அல்ல; வாங்க, விற்க, வைத்திருக்க பரிந்துரை அல்ல. 31 அக் 2026 வரையிலான நிறுவனத் தாக்கல்கள் மற்றும் செய்திகள் அடிப்படையில். n/a அல்லது † குறியிட்டவை சரிபார்க்கப்படாதவை/மதிப்பீடுகள். நீங்களே ஆய்வு செய்யுங்க.</p></div>
+<button id="asBtn" type="button" aria-label="Open CB Assist">🎙 <span class="lbl">CB Assist</span></button>
+<div id="assist" hidden role="dialog" aria-label="CB Assist">
+  <header><span>CB Assist · IOC</span><button type="button" id="asClose" aria-label="Close">×</button></header>
+  <div id="asLog"></div>
+  <div id="asSug"></div>
+  <form id="asForm"><input type="text" id="asIn" autocomplete="off" placeholder="Ask about IOC…"><button class="btn" id="asMic" type="button" aria-label="Ask by voice">🎤</button><button class="btn" type="submit">Ask</button></form>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<script>
+var CO = {
+  name:"Indian Oil Corporation Ltd", ticker:"IOC", bse:"530965", quarter:"Q2FY27", resultDate:"2026-10-30",
+  promoter:{name:"President of India", stake:51.50}, otherGovtCos:{name:"ONGC + Oil India", stake:19.47},
+  subsidiaries:[{name:"Chennai Petroleum (CPCL)", stake:51.89}], sharesCr:1412.12,
+  standalone:{rev:262935.58, pbt:26616.62, pat:21630.03, eps:15.71, ebitda:32998, grmNetSAED:18.52, throughput:18.108, domesticSales:23.977, exports:1.251, pipeline:25.348, borrowings:116578, de:0.53},
+  consolidated:{rev:268039.38, pbt:28191, pat:22502.62, patOwners:21407.87, eps:15.54, h1Pat:21361.53},
+  q:{labels:["Q1FY26","Q2FY26","Q3FY26","Q4FY26","Q1FY27","Q2FY27"], patSA:[5689,7610,12126,11378,-2661,21630], ebitdaSA:[12610,14580,null,null,2332,32998], grm:[2.15,10.7,null,null,15.59,18.52]},
+  annual:{labels:["FY22","FY23","FY24","FY25","FY26"], rev:[736731,951410,881235,859363,901453], ebitda:[47742,30699,75591,35991,77062], patOwners:[25102,9792,41730,13598,42096],
+    cfo:[24570,29644,71099,34699,76142], cfi:[-21178,-28030,-31464,-31848,-22274], cff:[-2997,-1794,-39385,-3425,-52672], fcf:[1767,-2956,33923,-151,47779], debt:[132020,148977,132628,152271,131822], equity:[135127,143214,188163,191025,225547]},
+  bridge:{yoy:{start:10066,refining:9479,lpg:3621,gas:994,petchem:348,balance:2109,end:26617}, qoq:{start:-3274,refining:2359,lpg:0,balance:27532,end:26617}},
+  lpg:{compH1:7243.02, bufferSep26:32505.69, bufferMar26:23101.56},
+  valuation:{price:130, mcapCr:183600, pe:4.3, pb:0.81, divYield:6.3},
+  cycle:{sectorPhase:"P4", stockStage:"Stage 4", cy:35},
+  triggers:[
+    {name:"Panipat/Gujarat/Barauni expansions commission",sign:"+",I:3,C:0.7,W:0.7,P:1.0,pts:1.47,status:"Approved"},
+    {name:"Marketing margins turn positive as crude eases",sign:"+",I:5,C:0.4,W:0.7,P:1.0,pts:1.40,status:"Watch"},
+    {name:"Fresh LPG compensation",sign:"+",I:3,C:0.4,W:0.7,P:1.0,pts:0.84,status:"Watch"},
+    {name:"Inventory losses when crude falls",sign:"-",I:4,C:0.7,W:1.0,P:1.0,pts:2.80,status:"Announced"},
+    {name:"Crude stays $115+ with frozen pump prices",sign:"-",I:5,C:0.4,W:1.0,P:0.7,pts:1.40,status:"Watch"},
+    {name:"No independent directors / Audit Committee discontinued",sign:"-",I:2,C:1.0,W:1.0,P:1.0,pts:2.00,status:"Executing"}],
+  tg:30,
+  cbScore:{g:7.5,m:7.0,d:6.5,v:8.0,t:4.5,r:4.5,composite:6.3},
+  analysts:{consensus:"Outperform",n:31,avgTP:158.84,high:230,low:105}
+};
+
+var LANG='en';
+function L(en,ta){return LANG==='ta'?ta:en}
+function fmt(n,d){return Number(n).toLocaleString('en-IN',{maximumFractionDigits:d==null?0:d,minimumFractionDigits:d==null?0:d})}
+var C={ink:'#14232e',muted:'#5b6b76',flame:'#e8620c',crude:'#7a4b12',steel:'#1f5f7a',good:'#1d7f4e',warn:'#b77a00',bad:'#c0392b',line:'#ecdcca',panel:'#fff7ef'};
+var NS='http://www.w3.org/2000/svg';
+function el(tag,attrs,parent,text){var e=document.createElementNS(NS,tag);for(var k in attrs)e.setAttribute(k,attrs[k]);if(text!=null)e.textContent=text;if(parent)parent.appendChild(e);return e}
+function stor(k,v){try{if(v===undefined)return localStorage.getItem(k);localStorage.setItem(k,v)}catch(e){return null}}
+
+/* ---------- language & tabs ---------- */
+function setLang(l){LANG=l;document.body.classList.toggle('ta',l==='ta');document.documentElement.lang=l==='ta'?'ta':'en';
+  document.getElementById('lnEN').classList.toggle('on',l==='en');document.getElementById('lnTA').classList.toggle('on',l==='ta');
+  document.getElementById('asIn').placeholder=L('Ask about IOC…','IOC பற்றி கேளுங்க…');
+  stor('ioc_lang',l);renderBridgeCard();renderSelf();renderSug();rebuildCharts();}
+document.getElementById('lnEN').onclick=function(){setLang('en')};
+document.getElementById('lnTA').onclick=function(){setLang('ta')};
+var tabs=document.querySelectorAll('.tab');
+function openTab(id){var ok=false;tabs.forEach(function(t){var on=t.dataset.t===id;t.classList.toggle('on',on);if(on)ok=true});
+  if(!ok)return;document.querySelectorAll('.pane').forEach(function(p){p.classList.toggle('on',p.id===id)});
+  try{history.replaceState(null,'','#'+id)}catch(e){} window.scrollTo({top:0});}
+tabs.forEach(function(t){t.addEventListener('click',function(){openTab(t.dataset.t)})});
+
+/* ---------- charts ---------- */
+var valPlugin={id:'vals',afterDatasetsDraw:function(ch){var ctx=ch.ctx;ctx.save();ctx.font='600 11px "IBM Plex Mono",monospace';ctx.fillStyle=C.ink;ctx.textAlign='center';
+  ch.data.datasets.forEach(function(ds,i){if((ds.type||ch.config.type)!=='bar'||ds.noLabel)return;var m=ch.getDatasetMeta(i);if(m.hidden)return;
+    m.data.forEach(function(b,j){var v=ds.data[j];if(v==null)return;var txt,y;
+      if(Array.isArray(v)){txt=ds.txt?ds.txt[j]:fmt(v[1]-v[0]);y=Math.min(b.y,b.base)-6}else{txt=fmt(v,ds.dec||0);y=v>=0?b.y-5:b.y+13}
+      ctx.fillText(txt,b.x,y)})});ctx.restore()}};
+if(window.Chart){Chart.register(valPlugin);Chart.defaults.font.family='"IBM Plex Sans","Noto Sans Tamil",sans-serif';Chart.defaults.color=C.muted;Chart.defaults.borderColor='#eadfd2';Chart.defaults.maintainAspectRatio=false}
+var charts={};
+function mk(id,cfg){if(!window.Chart)return;if(charts[id])charts[id].destroy();var c=document.getElementById(id);if(!c)return;charts[id]=new Chart(c,cfg)}
+var curBr='yoy';
+function bridgeCfg(k){var b=CO.bridge[k],labels,steps;
+  if(k==='yoy'){labels=[L('Q2 FY26 PBT','Q2 FY26 PBT'),L('Refining spread','சுத்திகரிப்பு இடைவெளி'),L('LPG compensation','LPG இழப்பீடு'),L('Gas','எரிவாயு'),L('Petrochemicals','பெட்ரோகெமிக்கல்'),L('Marketing, inventory & other','மார்க்கெட்டிங், இருப்பு & பிற'),L('Q2 FY27 PBT','Q2 FY27 PBT')];steps=[b.refining,b.lpg,b.gas,b.petchem,b.balance]}
+  else{labels=[L('Q1 FY27 PBT','Q1 FY27 PBT'),L('Refining spread','சுத்திகரிப்பு இடைவெளி'),L('LPG compensation','LPG இழப்பீடு'),L('Marketing, inventory & other','மார்க்கெட்டிங், இருப்பு & பிற'),L('Q2 FY27 PBT','Q2 FY27 PBT')];steps=[b.refining,b.lpg,b.balance]}
+  var data=[[0,b.start]],cols=[b.start>=0?C.steel:C.bad],txt=[fmt(b.start)],run=b.start;
+  steps.forEach(function(s,i){data.push([run,run+s]);run+=s;cols.push(i===steps.length-1?C.flame:(s>=0?C.good:C.bad));txt.push((s>=0?'+':'')+fmt(s))});
+  data.push([0,b.end]);cols.push(C.ink);txt.push(fmt(b.end));
+  return {type:'bar',data:{labels:labels,datasets:[{label:'₹ cr',data:data,backgroundColor:cols,txt:txt,borderSkipped:false}]},
+    options:{layout:{padding:{top:22}},plugins:{legend:{display:false},title:{display:true,text:L('Pre-tax profit bridge, standalone (₹ crore)','வரிக்கு முந்தைய லாபப் பாலம் (₹ கோடி)')},tooltip:{callbacks:{label:function(c){return txt[c.dataIndex]}}}},
+      scales:{y:{ticks:{callback:function(v){return fmt(v)}}},x:{ticks:{autoSkip:false,maxRotation:0,callback:function(v,i){var s=this.getLabelForValue(v);return s.length>16?s.split(/ (?=[^ ]+$)|, /):s}}}}}}}
+function rebuildCharts(){
+  var q=CO.q;
+  mk('chOv',{type:'bar',data:{labels:q.labels,datasets:[
+    {label:'EBITDA (₹ cr)',data:q.ebitdaSA,backgroundColor:'rgba(31,95,122,.30)',borderColor:C.steel,borderWidth:1,yAxisID:'y'},
+    {label:L('PAT (₹ cr)','நிகர லாபம் (₹ கோடி)'),data:q.patSA,backgroundColor:q.patSA.map(function(v){return v>=0?C.steel:C.bad}),yAxisID:'y'},
+    {type:'line',label:L('GRM net of SAED ($/bbl)','GRM ($/பேரல்)'),data:q.grm,borderColor:C.flame,backgroundColor:C.flame,borderWidth:3,pointRadius:5,yAxisID:'y2',spanGaps:false,tension:.25}]},
+    options:{layout:{padding:{top:18}},plugins:{legend:{position:'bottom'}},scales:{y:{title:{display:true,text:'₹ cr'},ticks:{callback:function(v){return fmt(v)}}},y2:{position:'right',grid:{display:false},title:{display:true,text:'$/bbl'},min:0}}}});
+  mk('chBridge',bridgeCfg(curBr));
+  var a=CO.annual;
+  mk('chAnn',{type:'bar',data:{labels:a.labels,datasets:[
+    {label:'EBITDA (₹ cr)',data:a.ebitda,backgroundColor:'rgba(31,95,122,.30)',borderColor:C.steel,borderWidth:1},
+    {label:L("PAT, owners (₹ cr)",'நிகர லாபம் (₹ கோடி)'),data:a.patOwners,backgroundColor:C.steel},
+    {type:'line',label:L('Revenue (₹ cr, right)','வருவாய் (வலது)'),data:a.rev,borderColor:C.crude,backgroundColor:C.crude,yAxisID:'y2',tension:.2}]},
+    options:{layout:{padding:{top:18}},plugins:{legend:{position:'bottom'}},scales:{y:{ticks:{callback:function(v){return fmt(v)}}},y2:{position:'right',grid:{display:false},ticks:{callback:function(v){return fmt(v)}}}}}});
+  mk('chCF',{type:'bar',data:{labels:a.labels,datasets:[
+    {label:L('Operating','இயக்கம்'),data:a.cfo,backgroundColor:C.good},
+    {label:L('Investing','முதலீடு'),data:a.cfi,backgroundColor:C.warn},
+    {label:L('Financing','நிதியளிப்பு'),data:a.cff,backgroundColor:C.muted},
+    {type:'line',label:'EBITDA',data:a.ebitda,borderColor:C.flame,backgroundColor:C.flame,tension:.2}]},
+    options:{layout:{padding:{top:18}},plugins:{legend:{position:'bottom'}},scales:{y:{ticks:{callback:function(v){return fmt(v)}}}}}});
+  mk('chShp',{type:'doughnut',data:{labels:[L('President of India','இந்திய அரசு'),L('ONGC + Oil India','ONGC + Oil India'),'DII','FII',L('Public','பொது')],datasets:[{data:[51.50,19.47,10.05,8.61,10.37],backgroundColor:[C.flame,C.steel,C.good,'#6a8ea0','#b9a796']}]},
+    options:{plugins:{legend:{position:'bottom'},title:{display:true,text:L('Shareholding, Sep 2026 (%)','பங்குதாரர் அமைப்பு, செப் 2026 (%)')}}}});
+}
+var BRC={yoy:{en:'Year on year, pre-tax profit rose ₹16,551 crore. The refining spread alone added about ₹9,479 crore (GRM $10.7 → $18.52 on slightly more crude). LPG compensation instalments, which began only in November 2025, added about ₹3,621 crore. Gas (+₹994 cr) and petrochemicals (+~₹348 cr) added more. The residual of about ₹2,109 crore is marketing, inventory and costs together, small and positive: marketing was weaker than a year ago, so inventory gains probably filled the gap. A year-ago base with GRM $10.7 and a ₹7.1/litre marketing margin is a normal base, so this is not a base effect.',ta:'ஆண்டுக்கு ஆண்டு வரிக்கு முந்தைய லாபம் ₹16,551 கோடி உயர்வு. சுத்திகரிப்பு இடைவெளி மட்டும் ~₹9,479 கோடி (GRM $10.7 → $18.52). நவம்பர் 2025-ல தான் தொடங்கின LPG இழப்பீட்டுத் தவணை ~₹3,621 கோடி. Gas (+₹994), petrochem (+~₹348). மீதி ~₹2,109 கோடி — மார்க்கெட்டிங், இருப்பு, செலவுகள் சேர்ந்தது. மார்க்கெட்டிங் போன வருஷத்தை விட பலவீனம், அதனால இருப்பு லாபம் அந்த இடைவெளியை நிரப்பியிருக்கலாம். GRM $10.7, மார்க்கெட்டிங் ₹7.1/லிட்டர் என்ற அடிப்படை சாதாரணமானது — அதனால இது base effect இல்ல.'},
+ qoq:{en:'Quarter on quarter, pre-tax profit swung ₹29,891 crore. Refining contributed only about ₹2,359 crore: GRM rose $2.93 but throughput fell 1.06 MMT. LPG compensation was the same in both quarters (six equal monthly instalments of the ₹14,486 crore package). So roughly ₹27,532 crore — over 90% — came from the marketing book and inventory: the May pump-price hike working for a full quarter, crude dipping from mid-June to mid-August while pump prices held, and crude rallying to about $120 by end-September, which lifts the value of stock on hand. Broker per-litre estimates (petrol −₹12 → +₹2.9, diesel −₹32 → −₹16.7, LPG loss ₹510 → ₹290 per cylinder) point to a marketing improvement of the same order.',ta:'காலாண்டுக்கு காலாண்டு வரிக்கு முந்தைய லாபம் ₹29,891 கோடி மாறியது. சுத்திகரிப்பு ~₹2,359 கோடி மட்டும்: GRM $2.93 ஏறினாலும் அளவு 1.06 MMT குறைஞ்சுது. LPG இழப்பீடு ரெண்டு காலாண்டுலயும் ஒண்ணு. அதனால ~₹27,532 கோடி — 90%-க்கு மேல் — மார்க்கெட்டிங் &amp; இருப்பிலிருந்து: மே விலை ஏற்றம் முழு காலாண்டு, ஜூன்–ஆகஸ்ட் கச்சா இறக்கம், செப்டம்பர் இறுதி ~$120 ஏற்றம் (இருப்பு மதிப்பு உயர்வு). புரோக்கர் மதிப்பீடுகள் (பெட்ரோல் −₹12 → +₹2.9, டீசல் −₹32 → −₹16.7, LPG நஷ்டம் ₹510 → ₹290) இதே அளவு முன்னேற்றத்தைக் காட்டுது.'}};
+function renderBridgeCard(){var t=BRC[curBr];document.getElementById('brCard').innerHTML='<span class="en">'+t.en+'</span><span class="ta">'+t.ta+'</span>';
+  document.querySelectorAll('#brBtns .btn').forEach(function(b){b.classList.toggle('on',b.dataset.b===curBr)})}
+document.querySelectorAll('#brBtns .btn').forEach(function(b){b.onclick=function(){curBr=b.dataset.b;renderBridgeCard();mk('chBridge',bridgeCfg(curBr))}});
+
+/* ---------- temple ---------- */
+var PIL=[
+ {k:'g',en:'Growth',ta:'வளர்ச்சி',s:CO.cbScore.g,den:'PAT +184% YoY, revenue +29.5%, domestic sales +4.9%, market share up to 42.7%. Revenue growth is mostly price, not volume.',dta:'லாபம் +184%, வருவாய் +29.5%, விற்பனை +4.9%, சந்தைப் பங்கு 42.7%. வருவாய் வளர்ச்சி பெரும்பாலும் விலையால.'},
+ {k:'m',en:'Profitability',ta:'லாபத்தன்மை',s:CO.cbScore.m,den:'EBITDA margin 12.5% and GRM $18.52 are strong, but about 90% of the QoQ swing came from marketing and inventory timing.',dta:'EBITDA மார்ஜின் 12.5%, GRM $18.52 வலுவானது; ஆனா காலாண்டு மாற்றத்துல ~90% மார்க்கெட்டிங் &amp; இருப்பு நேரத்தால.'},
+ {k:'d',en:'Balance sheet',ta:'இருப்புநிலை',s:CO.cbScore.d,den:'Borrowings ₹1,16,578 cr, debt/equity 0.53×, down ₹24,875 cr in the quarter. LPG buffer of ₹32,506 cr still unrecovered.',dta:'கடன் ₹1,16,578 கோடி, கடன்/பங்கு 0.53×. LPG நிலுவை ₹32,506 கோடி.'},
+ {k:'v',en:'Valuation',ta:'மதிப்பீடு',s:CO.cbScore.v,den:'About 0.81× book and 4.3× trailing earnings, 6.3% dividend yield. Kept below 9 for the cyclical P/E trap.',dta:'புத்தக மதிப்பில் ~0.81×, P/E ~4.3×, ஈவு 6.3%. P/E பொறிக்காக 9-க்குக் கீழ்.'},
+ {k:'t',en:'Market & triggers',ta:'சந்தை & தூண்டிகள்',s:CO.cbScore.t,den:'Stock −21.5% this year and fell on result day; TG 30 with an inventory-loss warning in force.',dta:'இந்த ஆண்டு −21.5%; முடிவு நாளில சரிவு; TG 30.'},
+ {k:'r',en:'Risk',ta:'ரிஸ்க்',s:CO.cbScore.r,den:'Policy-set pump prices, LPG losses, inventory swings and a board without independent directors.',dta:'அரசு நிர்ணயிக்கும் பங்க் விலை, LPG நஷ்டம், இருப்பு மாற்றம், சுயாதீன இயக்குநர் இல்லாத குழு.'}];
+function sc(s){return s>=8?C.good:(s>=6?C.warn:C.bad)}
+function drawTemple(){var s=document.getElementById('temple');s.innerHTML='';
+  el('polygon',{points:'310,14 30,112 590,112',fill:C.flame},s);
+  el('text',{x:310,y:72,'text-anchor':'middle',fill:'#fff','font-size':34,'font-weight':800,'font-family':'Archivo,sans-serif'},s,CO.cbScore.composite.toFixed(1));
+  el('text',{x:310,y:96,'text-anchor':'middle',fill:'#fff','font-size':12,'font-weight':600},s,'CB SCORE / 10');
+  el('rect',{x:40,y:112,width:540,height:30,fill:C.ink},s);
+  el('text',{x:310,y:132,'text-anchor':'middle',fill:'#fff','font-size':14,'font-weight':700,'letter-spacing':'2'},s,'INDIAN OIL · Q2 FY27');
+  var top=150,h=176;
+  PIL.forEach(function(p,i){var x=62+i*88,w=56;var g=el('g',{class:'col-hit',tabindex:0,role:'button','aria-label':p.en+' '+p.s},s);
+    el('rect',{x:x,y:top,width:w,height:h,fill:'#fff',stroke:C.line},g);
+    for(var f=1;f<4;f++)el('line',{x1:x+f*w/4,y1:top,x2:x+f*w/4,y2:top+h,stroke:C.line},g);
+    var fh=h*p.s/10;var fr=el('rect',{x:x+3,y:top+h,width:w-6,height:0,fill:sc(p.s),opacity:.85},g);
+    fr.style.transition='y .9s ease, height .9s ease';
+    setTimeout(function(){fr.setAttribute('y',top+h-fh);fr.setAttribute('height',fh)},120+i*90);
+    var cy=top+h-fh-2>top+18?top+h-fh-2:top+18;
+    el('circle',{cx:x+w/2,cy:cy,r:17,fill:'#fff',stroke:sc(p.s),'stroke-width':3},g);
+    el('text',{x:x+w/2,y:cy+5,'text-anchor':'middle','font-size':13,'font-weight':700,fill:C.ink},g,p.s.toFixed(1));
+    el('text',{x:x+w/2,y:384,'text-anchor':'middle','font-size':11.5,'font-weight':600,fill:C.ink,class:'en'},s,p.en);
+    el('text',{x:x+w/2,y:384,'text-anchor':'middle','font-size':11.5,'font-weight':600,fill:C.ink,class:'ta'},s,p.ta);
+    function go(){var c=document.getElementById('pc_'+p.k);document.querySelectorAll('.pcard').forEach(function(x){x.classList.remove('hl')});c.classList.add('hl');c.scrollIntoView({behavior:'smooth',block:'nearest'})}
+    g.addEventListener('click',go);g.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();go()}});});
+  el('rect',{x:30,y:330,width:560,height:12,fill:'#e8d9c8'},s);el('rect',{x:16,y:342,width:588,height:12,fill:'#d6c3ae'},s);
+  var pc=document.getElementById('pillCards');pc.innerHTML='';
+  PIL.forEach(function(p){var d=document.createElement('div');d.className='pcard';d.id='pc_'+p.k;d.style.borderLeftColor=sc(p.s);d.style.background='#fff';
+    d.innerHTML='<strong><span class="en">'+p.en+'</span><span class="ta">'+p.ta+'</span> · '+p.s.toFixed(1)+'</strong><div class="note"><span class="en">'+p.den+'</span><span class="ta">'+p.dta+'</span></div>';pc.appendChild(d)});}
+
+/* ---------- business model ---------- */
+var BM={
+ imp:{en:'Imported crude from the Middle East, Russia, West Africa and the Americas makes up most of the feed. Crude prices averaged about $97 in Q2 after about $104 in Q1.',ta:'மத்திய கிழக்கு, ரஷ்யா, மேற்கு ஆப்பிரிக்கா, அமெரிக்காவிலிருந்து இறக்குமதி கச்சா தான் பெரும்பகுதி. Q2 சராசரி ~$97; Q1-ல ~$104.'},
+ dom:{en:'Domestic crude from ONGC and Oil India feeds IOC\'s north-east refineries (Digboi, Guwahati, Bongaigaon). Unlike CPCL, IOC does use some domestic crude. The share is not disclosed here.',ta:'ONGC, Oil India உள்நாட்டுக் கச்சா IOC-ஓட வடகிழக்கு ரிஃபைனரிகளுக்குப் போகுது (டிக்பாய், குவாஹாட்டி, பொங்கைகாவ்ன்). CPCL போல இல்லாம IOC கொஞ்சம் உள்நாட்டுக் கச்சாவையும் பயன்படுத்துது.'},
+ ref:{en:'Nine IOC refineries processed 18.108 MMT in Q2 at 102.3% utilisation; GRM net of export duty $18.52/bbl. H1 throughput 37.273 MMT was a record. Expansions at Panipat, Gujarat and Barauni are 90–95% complete.',ta:'ஒன்பது IOC ரிஃபைனரிகள் Q2-ல 18.108 MMT, 102.3% பயன்பாடு; GRM $18.52. H1 37.273 MMT சாதனை. பானிபட், குஜராத், பரௌனி விரிவாக்கம் 90–95%.'},
+ cpcl:{en:'Chennai Petroleum (51.89% subsidiary) refines at Manali and sells most output to IOC at the refinery transfer price. Its Q2 consolidated profit of ₹2,247 cr flows into IOC\'s group results.',ta:'CPCL (51.89% துணை நிறுவனம்) மணலியில சுத்திகரிச்சு, பெரும்பகுதியை IOC-க்கு விக்குது. அதன் Q2 லாபம் ₹2,247 கோடி IOC குழுமக் கணக்குல சேருது.'},
+ pipe:{en:'Crude and product pipelines carried 25.348 MMT in Q2 at 64.3% utilisation. Pipelines cut logistics cost and earn tariffs; they sit inside the petroleum segment.',ta:'குழாய்கள் Q2-ல 25.348 MMT, 64.3% பயன்பாடு. போக்குவரத்து செலவைக் குறைக்குது.'},
+ retail:{en:'Petrol and diesel through IOC\'s pump network. Pump prices were raised about ₹7–7.5/litre in May and then held. Broker estimates for Q2: petrol about +₹2.9/litre, diesel about −₹16.7/litre, much better than Q1.',ta:'பெட்ரோல், டீசல் பங்க் வழியா. மே-ல ~₹7–7.5 ஏற்றம், பிறகு நிறுத்தம். Q2: பெட்ரோல் ~+₹2.9, டீசல் ~−₹16.7 — Q1-ஐ விட நல்லா.'},
+ lpg:{en:'Indane LPG. Domestic cylinders are sold below cost; under-recovery fell from about ₹510 to about ₹290 per cylinder. Government compensation of ₹7,243 cr was booked for Apr–Sep, yet the unrecovered buffer rose to ₹32,506 cr.',ta:'இண்டேன் LPG. சிலிண்டர் நஷ்டம் ~₹510-லிருந்து ~₹290-க்கு. ஏப்–செப் ₹7,243 கோடி இழப்பீடு; ஆனாலும் நிலுவை ₹32,506 கோடிக்கு ஏறுச்சு.'},
+ bulk:{en:'ATF, bulk and industrial fuels, lubricants (Servo). Total marketing sales were 25.228 MMT, of which domestic 23.977 MMT.',ta:'ATF, மொத்த/தொழிற்சாலை எரிபொருள், சர்வோ லூப். மொத்த விற்பனை 25.228 MMT; உள்நாடு 23.977.'},
+ exp:{en:'Exports of 1.251 MMT, down 11.3%. Exports of diesel, ATF and petrol carry the fortnightly windfall duty (SAED), which is why IOC reports GRM net of SAED.',ta:'ஏற்றுமதி 1.251 MMT, −11.3%. ஏற்றுமதிக்கு SAED வரி; அதனால GRM வரி கழிச்சு சொல்லப்படுது.'},
+ gas:{en:'Gas segment: LNG and natural gas marketing. Segment result ₹1,238 cr, five times last year\'s ₹243 cr; revenue +50.4%.',ta:'எரிவாயு பிரிவு லாபம் ₹1,238 கோடி, போன வருஷத்தோட 5 மடங்கு.'},
+ pet:{en:'Petrochemicals: polymers and chemicals from Panipat and Paradip. Segment result ₹528 cr, nearly triple last year; revenue +57%.',ta:'பெட்ரோகெமிக்கல் லாபம் ₹528 கோடி, கிட்டத்தட்ட மூணு மடங்கு.'},
+ gov:{en:'Government of India: LPG compensation of ₹14,486 cr approved in Oct 2025, paid in 12 monthly instalments from November 2025. About ₹3,621 cr lands in each quarter of H1 FY27.',ta:'அரசு: ₹14,486 கோடி LPG இழப்பீடு, நவம்பர் 2025 முதல் 12 மாதத் தவணை. H1 ஒவ்வொரு காலாண்டிலும் ~₹3,621 கோடி.'},
+ rev:{en:'Revenue from operations ₹2,62,936 cr, +29.5% YoY but −4.7% QoQ. Revenue follows crude and product prices.',ta:'இயக்க வருவாய் ₹2,62,936 கோடி; ஆண்டுக்கு +29.5%, காலாண்டுக்கு −4.7%.'},
+ cost:{en:'Crude purchase is the largest cost, followed by product purchases (including from CPCL), excise and duties, freight, staff and refinery fuel. FX loss was ₹666 cr in Q2.',ta:'கச்சா கொள்முதல் மிகப் பெரிய செலவு; பிறகு பொருள் கொள்முதல் (CPCL உட்பட), வரி, சரக்கு. FX நஷ்டம் ₹666 கோடி.'},
+ ebitda:{en:'EBITDA contribution ₹32,998 cr against ₹2,332 cr in Q1. Margin 12.5%.',ta:'EBITDA ₹32,998 கோடி; Q1-ல ₹2,332. மார்ஜின் 12.5%.'},
+ pat:{en:'Standalone PAT ₹21,630 cr, the highest quarterly profit in IOC\'s history; consolidated ₹22,503 cr.',ta:'நிறுவன லாபம் ₹21,630 கோடி — வரலாற்றிலேயே அதிகம்; குழுமம் ₹22,503 கோடி.'},
+ sh:{en:'Shareholders: President of India 51.50%, ONGC and Oil India about 19.5%, institutions and public the rest. FY26 dividend ₹8.25 per share.',ta:'அரசு 51.50%, ONGC + Oil India ~19.5%, மீதி நிறுவனங்கள் &amp; பொது. FY26 ஈவு ₹8.25.'}
+};
+function drawBM(){var s=document.getElementById('bmSvg');s.innerHTML='';
+  var defs=el('defs',{},s);var m=el('marker',{id:'ar',viewBox:'0 0 10 10',refX:9,refY:5,markerWidth:7,markerHeight:7,orient:'auto-start-reverse'},defs);el('path',{d:'M0,0L10,5L0,10z',fill:C.muted},m);
+  var ag=el('g',{},s);
+  function arrow(x1,y1,x2,y2,dash){el('path',{d:'M'+x1+','+y1+' C'+(x1+(x2-x1)/2)+','+y1+' '+(x1+(x2-x1)/2)+','+y2+' '+x2+','+y2,fill:'none',stroke:C.muted,'stroke-width':1.6,'marker-end':'url(#ar)','stroke-dasharray':dash?'5 4':'none'},ag)}
+  function box(k,x,y,w,h,fill,stroke,en,ta,dark){var g=el('g',{class:'node',tabindex:0,role:'button','data-k':k},s);
+    el('rect',{x:x,y:y,width:w,height:h,rx:4,fill:fill,stroke:stroke,'stroke-width':1.5},g);
+    [['en',en],['ta',ta]].forEach(function(pr){pr[1].forEach(function(line,i){el('text',{x:x+w/2,y:y+20+i*16,'text-anchor':'middle','font-size':i===0?13:11.5,'font-weight':i===0?700:400,fill:dark?'#fff':C.ink,class:pr[0]},g,line)})});
+    function pick(){document.querySelectorAll('#bmSvg .node').forEach(function(n){n.classList.remove('sel')});g.classList.add('sel');var b=BM[k];document.getElementById('bmExplain').innerHTML='<span class="en">'+b.en+'</span><span class="ta">'+b.ta+'</span>'}
+    g.addEventListener('click',pick);g.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();pick()}});}
+  [['CRUDE',100],['REFINING',300],['IOC',495],['MARKETING',710],['OTHER SEGMENTS',905]].forEach(function(h){el('text',{x:h[1],y:18,'text-anchor':'middle','font-size':11,fill:C.muted,'letter-spacing':1.5},s,h[0])});
+  box('imp',15,34,170,74,'#f6eee3',C.crude,['Imported crude','Middle East · Russia','W. Africa · Americas'],['இறக்குமதி கச்சா','மத்திய கிழக்கு · ரஷ்யா','ஆப்பிரிக்கா · அமெரிக்கா']);
+  box('dom',15,124,170,64,'#f6eee3',C.crude,['Domestic crude','ONGC · Oil India','NE refineries'],['உள்நாட்டுக் கச்சா','ONGC · Oil India','வடகிழக்கு']);
+  box('ref',215,34,170,92,'#eef5f8',C.steel,['9 IOC refineries','18.11 MMT · 102.3%','GRM $18.52 net SAED','expansions 90–95%'],['9 IOC ரிஃபைனரிகள்','18.11 MMT · 102.3%','GRM $18.52','விரிவாக்கம் 90–95%']);
+  box('cpcl',215,142,170,64,'#fdeee3',C.flame,['CPCL (51.89%)','Manali · sells to IOC','Q2 PAT ₹2,247 cr'],['CPCL (51.89%)','மணலி · IOC-க்கு விற்பனை','Q2 லாபம் ₹2,247 கோடி']);
+  box('pipe',215,222,170,58,'#eef5f8',C.steel,['Pipelines','25.35 MMT · 64.3%'],['குழாய்கள்','25.35 MMT · 64.3%']);
+  box('core',410,54,170,190,C.ink,C.ink,['Indian Oil','standalone Q2','revenue ₹2.63 lakh cr','EBITDA ₹32,998 cr','PAT ₹21,630 cr','market share 42.7%'],['இந்தியன் ஆயில்','Q2','வருவாய் ₹2.63 லட்சம் கோடி','EBITDA ₹32,998 கோடி','லாபம் ₹21,630 கோடி','சந்தைப் பங்கு 42.7%'],true);
+  box('retail',610,30,200,62,'#fdeee3',C.flame,['Petrol & diesel pumps','petrol ≈ +₹2.9/l','diesel ≈ −₹16.7/l'],['பெட்ரோல் & டீசல் பங்க்','பெட்ரோல் ≈ +₹2.9','டீசல் ≈ −₹16.7']);
+  box('lpg',610,102,200,62,'#fdeee3',C.flame,['Indane LPG','loss ≈ ₹290/cylinder','buffer ₹32,506 cr'],['இண்டேன் LPG','நஷ்டம் ≈ ₹290/சிலிண்டர்','நிலுவை ₹32,506 கோடி']);
+  box('bulk',610,174,200,52,'#fdeee3',C.flame,['ATF · bulk · Servo lubes','sales 25.23 MMT'],['ATF · மொத்தம் · சர்வோ','விற்பனை 25.23 MMT']);
+  box('exp',610,236,200,48,'#fdeee3',C.flame,['Exports 1.25 MMT','−11.3% · SAED'],['ஏற்றுமதி 1.25 MMT','−11.3% · SAED']);
+  box('gas',835,40,150,62,'#e9f6ef',C.good,['Gas','result ₹1,238 cr','5× YoY'],['எரிவாயு','₹1,238 கோடி','5 மடங்கு']);
+  box('pet',835,118,150,62,'#e9f6ef',C.good,['Petrochemicals','result ₹528 cr','~3× YoY'],['பெட்ரோகெமிக்கல்','₹528 கோடி','~3 மடங்கு']);
+  box('gov',835,196,150,82,'#ffffff',C.muted,['Government','LPG compensation','₹7,243 cr (H1)','₹3,621 cr/quarter'],['அரசு','LPG இழப்பீடு','₹7,243 கோடி (H1)','₹3,621/காலாண்டு']);
+  arrow(185,70,215,80);arrow(185,156,215,100);arrow(385,80,410,110);arrow(385,174,410,160);arrow(385,250,410,200);
+  [61,133,200,260].forEach(function(y){arrow(580,150,610,y)});arrow(580,60,835,71,true);arrow(580,236,835,149,true);arrow(835,270,580,236,true);
+  var by=356;
+  box('rev',20,by,170,80,'#e9f6ef',C.good,['Revenue','₹2,62,936 cr','+29.5% YoY · −4.7% QoQ'],['வருவாய்','₹2,62,936 கோடி','+29.5% · −4.7%']);
+  box('cost',215,by,170,80,'#fbecea',C.bad,['Costs','crude · product buys','duties · freight · FX'],['செலவுகள்','கச்சா · பொருள் கொள்முதல்','வரி · சரக்கு · FX']);
+  box('ebitda',410,by,170,80,'#e9f6ef',C.good,['EBITDA','₹32,998 cr','margin 12.5%'],['EBITDA','₹32,998 கோடி','மார்ஜின் 12.5%']);
+  box('pat',605,by,170,80,'#e9f6ef',C.good,['PAT','₹21,630 cr','EPS ₹15.71'],['நிகர லாபம்','₹21,630 கோடி','EPS ₹15.71']);
+  box('sh',800,by,185,80,'#fdeee3',C.flame,['Shareholders','GoI 51.50 · ONGC+OIL 19.47','FY26 dividend ₹8.25'],['பங்குதாரர்கள்','அரசு 51.50 · ONGC+OIL 19.47','FY26 ஈவு ₹8.25']);
+  arrow(710,284,105,by);
+  arrow(190,396,215,396);arrow(385,396,410,396);arrow(580,396,605,396);arrow(775,396,800,396);
+  el('text',{x:500,y:470,'text-anchor':'middle','font-size':12,fill:C.muted,class:'en'},s,'Dashed lines: segments and government flows outside the core fuel chain');
+  el('text',{x:500,y:470,'text-anchor':'middle','font-size':12,fill:C.muted,class:'ta'},s,'புள்ளிக்கோடு: முக்கிய எரிபொருள் சங்கிலிக்கு வெளியே உள்ள ஓட்டங்கள்');
+}
+
+/* ---------- IOC-CPCL link ---------- */
+function drawLink(){var s=document.getElementById('linkSvg');s.innerHTML='';
+  var defs=el('defs',{},s);var m=el('marker',{id:'ar2',viewBox:'0 0 10 10',refX:9,refY:5,markerWidth:7,markerHeight:7,orient:'auto-start-reverse'},defs);el('path',{d:'M0,0L10,5L0,10z',fill:C.ink},m);
+  function nb(x,y,w,h,fill,stroke,en,ta,dark){el('rect',{x:x,y:y,width:w,height:h,rx:6,fill:fill,stroke:stroke,'stroke-width':2.5},s);
+    [['en',en],['ta',ta]].forEach(function(p){p[1].forEach(function(t,i){el('text',{x:x+w/2,y:y+24+i*17,'text-anchor':'middle','font-size':i?12:14.5,'font-weight':i?400:700,fill:dark?'#fff':C.ink,class:p[0]},s,t)})})}
+  function ar(x1,y1,x2,y2,col,lab,lta,dy){el('line',{x1:x1,y1:y1,x2:x2,y2:y2,stroke:col,'stroke-width':2.5,'marker-end':'url(#ar2)'},s);
+    el('text',{x:(x1+x2)/2,y:(y1+y2)/2+(dy||-8),'text-anchor':'middle','font-size':12,'font-weight':700,fill:col,class:'en'},s,lab);el('text',{x:(x1+x2)/2,y:(y1+y2)/2+(dy||-8),'text-anchor':'middle','font-size':11.5,'font-weight':700,fill:col,class:'ta'},s,lta)}
+  nb(20,90,220,96,'#fdeee3',C.flame,['CPCL refinery','Manali · 2.59 MMT in Q2','GRM $20.41'],['CPCL ரிஃபைனரி','மணலி · Q2 2.59 MMT','GRM $20.41']);
+  nb(390,70,230,136,C.ink,C.ink,['Indian Oil','own 9 refineries','+ pumps, LPG, ATF','marketing arm'],['இந்தியன் ஆயில்','சொந்த 9 ரிஃபைனரி','+ பங்க், LPG, ATF','மார்க்கெட்டிங் பிரிவு'],true);
+  nb(770,90,210,96,'#eef5f8',C.steel,['Consumers','pump price set','by policy'],['நுகர்வோர்','பங்க் விலை','அரசு கொள்கை']);
+  ar(240,120,388,120,C.flame,'fuels at RTP','RTP விலையில் எரிபொருள்');
+  el('text',{x:314,y:142,'text-anchor':'middle','font-size':11,fill:C.muted,class:'en'},s,'trade parity − war discount');
+  el('text',{x:314,y:142,'text-anchor':'middle','font-size':11,fill:C.muted,class:'ta'},s,'trade parity − போர் தள்ளுபடி');
+  ar(620,138,768,138,C.steel,'retail sale','சில்லறை விற்பனை');
+  el('path',{d:'M505,206 C505,270 130,270 130,190',fill:'none',stroke:C.good,'stroke-width':2.5,'marker-end':'url(#ar2)'},s);
+  el('text',{x:318,y:262,'text-anchor':'middle','font-size':12,'font-weight':700,fill:C.good,class:'en'},s,'owns 51.89% · chairs the board');
+  el('text',{x:318,y:262,'text-anchor':'middle','font-size':11.5,'font-weight':700,fill:C.good,class:'ta'},s,'51.89% உரிமை · குழுத் தலைமை');
+  el('path',{d:'M130,90 C130,24 505,24 505,68',fill:'none',stroke:C.crude,'stroke-width':2.5,'marker-end':'url(#ar2)','stroke-dasharray':'6 4'},s);
+  el('text',{x:318,y:30,'text-anchor':'middle','font-size':12,'font-weight':700,fill:C.crude,class:'en'},s,'profit share ≈ ₹1,166 cr · dividend ≈ ₹193 cr');
+  el('text',{x:318,y:30,'text-anchor':'middle','font-size':11.5,'font-weight':700,fill:C.crude,class:'ta'},s,'லாபப் பங்கு ≈ ₹1,166 கோடி · ஈவு ≈ ₹193 கோடி');}
+
+/* ---------- clock & timeline ---------- */
+function drawClock(){var s=document.getElementById('clock');s.innerHTML='';var cx=180,cy=160,r=120;
+  var ph=[['P1','Trough','அடி'],['P2','Early recovery','மீட்சி'],['P3','Expansion','விரிவு'],['P4','Late / peak','உச்சம்'],['P5','Downturn','சரிவு']];
+  var cols=['#9aa8b1',C.good,C.steel,C.flame,C.bad];
+  function pt(a,rr){var t=(a-90)*Math.PI/180;return [cx+rr*Math.cos(t),cy+rr*Math.sin(t)]}
+  ph.forEach(function(p,i){var a0=i*72,a1=a0+72,p0=pt(a0,r),p1=pt(a1,r),q0=pt(a1,r-34),q1=pt(a0,r-34);
+    el('path',{d:'M'+p0+' A'+r+','+r+' 0 0 1 '+p1+' L'+q0+' A'+(r-34)+','+(r-34)+' 0 0 0 '+q1+' Z',fill:cols[i],opacity:i===3?1:.35,stroke:'#fff','stroke-width':2},s);
+    var mm=pt(a0+36,r-17);el('text',{x:mm[0],y:mm[1]+4,'text-anchor':'middle','font-size':12,'font-weight':700,fill:i===3?'#fff':C.ink},s,p[0]);
+    var o=pt(a0+36,r+16);el('text',{x:o[0],y:o[1]+4,'text-anchor':'middle','font-size':10.5,fill:C.muted,class:'en'},s,p[1]);el('text',{x:o[0],y:o[1]+4,'text-anchor':'middle','font-size':10.5,fill:C.muted,class:'ta'},s,p[2])});
+  var tip=pt(255,r-40);el('line',{x1:cx,y1:cy,x2:tip[0],y2:tip[1],stroke:C.ink,'stroke-width':4,'stroke-linecap':'round'},s);el('circle',{cx:cx,cy:cy,r:7,fill:C.ink},s);
+  var sm=pt(300,r-52);el('circle',{cx:sm[0],cy:sm[1],r:9,fill:'#fff',stroke:C.bad,'stroke-width':3},s);
+  el('text',{x:cx,y:cy+40,'text-anchor':'middle','font-size':12,fill:C.ink,'font-weight':600,class:'en'},s,'Sector P4 · Stock Stage 4');
+  el('text',{x:cx,y:cy+40,'text-anchor':'middle','font-size':12,fill:C.ink,'font-weight':600,class:'ta'},s,'துறை P4 · பங்கு நிலை 4');}
+function drawTimeline(){var s=document.getElementById('timeline');s.innerHTML='';el('line',{x1:30,y1:60,x2:970,y2:60,stroke:C.ink,'stroke-width':2},s);
+  var ev=[[60,'31 Oct','Analyst call','ஆய்வாளர் அழைப்பு'],[230,'1 Nov','SAED review','SAED மாற்றம்'],[390,'16 Nov','SAED review','SAED மாற்றம்'],[560,'Dec 2026','Expansions due','விரிவாக்கம் நிறைவு'],[740,'~Feb 2027','Q3 FY27 results (est.)','Q3 முடிவுகள் (மதிப்பீடு)'],[910,'n/a','LPG compensation','LPG இழப்பீடு']];
+  ev.forEach(function(e,i){el('circle',{cx:e[0],cy:60,r:7,fill:i===5?'#fff':C.flame,stroke:C.flame,'stroke-width':2},s);
+    el('text',{x:e[0],y:40,'text-anchor':'middle','font-size':12.5,'font-weight':700,fill:C.ink,'font-family':'IBM Plex Mono,monospace'},s,e[1]);
+    el('text',{x:e[0],y:86,'text-anchor':'middle','font-size':12,fill:C.muted,class:'en'},s,e[2]);el('text',{x:e[0],y:86,'text-anchor':'middle','font-size':12,fill:C.muted,class:'ta'},s,e[3])});}
+
+/* ---------- self-check ---------- */
+var SC=[
+ {g:{en:'1 · Questions about the stock',ta:'1 · பங்கு பற்றிய கேள்விகள்'},items:[
+  {id:'a1',en:'I understand IOC earns from both refining and marketing, and they often move in opposite directions',ta:'சுத்திகரிப்பு, மார்க்கெட்டிங் ரெண்டும் எதிர் திசையில் போகலாம்னு புரியுது',den:'Q1: GRM $15.59 but PAT −₹2,661 cr; Q2: GRM $18.52 and PAT ₹21,630 cr',dta:'Q1: GRM $15.59, நஷ்டம் ₹2,661 கோடி; Q2: GRM $18.52, லாபம் ₹21,630 கோடி'},
+  {id:'a2',en:'I know how much of this quarter came from timing rather than the core business',ta:'இந்த காலாண்டுல எவ்வளவு நேரம் சார்ந்ததுன்னு தெரியும்',den:'~₹27,500 cr of the ₹29,891 cr QoQ pre-tax swing came from marketing and inventory',dta:'₹29,891 கோடியில் ~₹27,500 கோடி மார்க்கெட்டிங் & இருப்பு'},
+  {id:'a3',en:'I know the LPG compensation is a fixed package, not recurring revenue',ta:'LPG இழப்பீடு நிலையான தொகுப்பு, தொடர் வருவாய் இல்லன்னு தெரியும்',den:'₹14,486 cr in 12 instalments from Nov 2025; ₹7,243 cr booked in H1 FY27',dta:'₹14,486 கோடி, 12 தவணை; H1-ல ₹7,243 கோடி'}]},
+ {g:{en:'2 · Problems investors face',ta:'2 · முதலீட்டாளர் சிக்கல்கள்'},items:[
+  {id:'b1',en:'I accept that pump prices are set by policy',ta:'பங்க் விலை அரசு கொள்கையால் தீர்மானிக்கப்படும்னு ஏற்கிறேன்',den:'Pump prices held since late May while crude rose back to ~$120',dta:'மே இறுதி முதல் பங்க் விலை நிறுத்தம்; கச்சா ~$120'},
+  {id:'b2',en:'I have allowed for inventory losses if crude falls',ta:'கச்சா இறங்கினா இருப்பு நஷ்டத்தைக் கணக்கில் எடுத்தேன்',den:'Management has warned of inventory losses as the Middle East normalises',dta:'நிர்வாகம் எச்சரிச்சிருக்கு'},
+  {id:'b3',en:'I am comfortable with the board-governance gap',ta:'நிர்வாகக் குழு குறைபாட்டை ஏற்கிறேன்',den:'No prescribed independent directors; Audit Committee discontinued since 28 Mar 2026',dta:'சுயாதீன இயக்குநர் இல்ல; ஆடிட் குழு நிறுத்தம்'}]},
+ {g:{en:'3 · Solutions (what I did)',ta:'3 · தீர்வுகள் (நான் செய்தது)'},items:[
+  {id:'c1',en:'I valued IOC on book value, not on one quarter\'s profit',ta:'ஒரு காலாண்டு லாபத்தை வச்சு இல்லாம புத்தக மதிப்பில் மதிப்பிட்டேன்',den:'~0.81× March 2026 book of ₹159.7/share',dta:'~0.81× புத்தக மதிப்பு ₹159.7'},
+  {id:'c2',en:'I counted dividends as part of my expected return',ta:'ஈவுத்தொகையை வருமானத்தில் சேர்த்தேன்',den:'FY26 ₹8.25/share, yield ~6.3% at ₹130',dta:'FY26 ₹8.25, ~6.3%'}]},
+ {g:{en:"4 · Anchors' and analysts' view",ta:'4 · ஆய்வாளர் பார்வை'},items:[
+  {id:'d1',en:'I have read the spread of broker targets',ta:'புரோக்கர் இலக்கு வரம்பைப் படித்தேன்',den:'31 analysts: average ₹158.84, high ₹230, low ₹105',dta:'31 ஆய்வாளர்: சராசரி ₹158.84, ₹105–₹230'},
+  {id:'d2',en:'I have compared IOC with BPCL and HPCL this quarter',ta:'BPCL, HPCL-உடன் ஒப்பிட்டேன்',den:'GRM net SAED: IOC $18.52, BPCL $14.0; HPCL pre-cess $32.15',dta:'IOC $18.52, BPCL $14.0, HPCL $32.15'}]}
+];
+var SUG=[{en:'Q3 marketing margin positive',ta:'Q3 மார்க்கெட்டிங் மார்ஜின் நேர்மறை'},{en:'Independent directors appointed',ta:'சுயாதீன இயக்குநர் நியமனம்'},{en:'Price below 1× book',ta:'விலை புத்தக மதிப்புக்குக் கீழ்'},{en:'New LPG compensation approved',ta:'புதிய LPG இழப்பீடு'}];
+var scState={},myConds=[];
+try{scState=JSON.parse(stor('ioc_sc')||'{}')||{};myConds=JSON.parse(stor('ioc_sc_my')||'[]')||[]}catch(e){scState={};myConds=[]}
+function saveSC(){stor('ioc_sc',JSON.stringify(scState));stor('ioc_sc_my',JSON.stringify(myConds))}
+function renderSelf(){var box=document.getElementById('scGroups');box.innerHTML='';var tot=0,on=0;
+  SC.forEach(function(g,gi){var d=document.createElement('div');d.className='grpbox';d.style.background='#fff';var gt=0,go=0;d.innerHTML='<h4>'+L(g.g.en,g.g.ta)+'</h4><div class="bar"><i id="gb'+gi+'"></i></div>';
+    g.items.forEach(function(it){gt++;if(scState[it.id])go++;var r=document.createElement('label');r.className='ck';
+      r.innerHTML='<input type="checkbox" id="ck_'+it.id+'"'+(scState[it.id]?' checked':'')+'><span>'+L(it.en,it.ta)+'<div class="data">'+L('Data: ','தகவல்: ')+L(it.den,it.dta)+'</div></span>';
+      r.querySelector('input').addEventListener('change',function(e){scState[it.id]=e.target.checked;saveSC();renderSelf()});d.appendChild(r)});
+    tot+=gt;on+=go;box.appendChild(d);var pct=gt?go/gt*100:0;setTimeout(function(){var b=document.getElementById('gb'+gi);if(b)b.style.width=pct+'%'},10)});
+  var d5=document.createElement('div');d5.className='grpbox';d5.style.background='#fff';var mo=myConds.filter(function(c){return c.on}).length;
+  d5.innerHTML='<h4>'+L('5 · My own conditions (up to 8)','5 · என் சொந்த நிபந்தனைகள் (8 வரை)')+'</h4><div class="bar"><i style="width:'+(myConds.length?mo/myConds.length*100:0)+'%"></i></div>';
+  myConds.forEach(function(c,i){var r=document.createElement('label');r.className='ck';r.innerHTML='<input type="checkbox" id="my_'+i+'"'+(c.on?' checked':'')+'><span>'+c.t.replace(/</g,'&lt;')+'<div class="data">'+L('Data: ','தகவல்: ')+'</div></span>';
+    r.querySelector('input').addEventListener('change',function(e){c.on=e.target.checked;saveSC();renderSelf()});d5.appendChild(r)});
+  if(myConds.length<8){var f=document.createElement('div');f.style.cssText='display:flex;gap:6px;margin-top:6px;flex-wrap:wrap';
+    f.innerHTML='<input type="text" id="myIn" style="flex:1;min-width:180px" placeholder="'+L('Add a condition','நிபந்தனை சேர்')+'"><button class="btn" type="button" id="myAdd">'+L('Add','சேர்')+'</button>';d5.appendChild(f);
+    var sg=document.createElement('div');sg.className='scen';SUG.forEach(function(x){var b=document.createElement('button');b.type='button';b.className='btn';b.style.fontSize='12px';b.textContent='+ '+L(x.en,x.ta);b.onclick=function(){addCond(L(x.en,x.ta))};sg.appendChild(b)});d5.appendChild(sg)}
+  box.appendChild(d5);
+  var ma=document.getElementById('myAdd');if(ma)ma.onclick=function(){var v=document.getElementById('myIn').value.trim();if(v)addCond(v)};
+  tot+=myConds.length;on+=mo;document.getElementById('scAll').textContent=on+'/'+tot;document.getElementById('scAllBar').style.width=(tot?on/tot*100:0)+'%';
+  document.getElementById('scMsg').textContent=L(on+' of '+tot+' of your conditions line up. This only counts how many of your own conditions line up. It is not a recommendation.',tot+'-ல '+on+' நிபந்தனைகள் பொருந்துது. இது உங்க நிபந்தனைகளை மட்டும் எண்ணுது. இது பரிந்துரை இல்ல.');}
+function addCond(t){if(myConds.length>=8)return;myConds.push({t:t.slice(0,140),on:false});saveSC();renderSelf()}
+document.getElementById('scClear').onclick=function(){scState={};myConds.forEach(function(c){c.on=false});saveSC();renderSelf()};
+
+/* ---------- quiz ---------- */
+var QZ=[
+ {q:{en:'IOC\'s Q2 profit rose 184% year on year. Is that mainly a base effect?',ta:'IOC Q2 லாபம் ஆண்டுக்கு 184% உயர்வு. இது முக்கியமா base effect-ஆ?'},o:[{en:'Yes, Q2 FY26 was a loss',ta:'ஆம், Q2 FY26 நஷ்டம்'},{en:'No, Q2 FY26 was a normal profitable quarter; the rise came from refining spread, LPG compensation and gas',ta:'இல்ல, Q2 FY26 சாதாரண லாபக் காலாண்டு; உயர்வு சுத்திகரிப்பு, LPG இழப்பீடு, gas-ஆல்'},{en:'Yes, revenue doubled',ta:'ஆம், வருவாய் இரட்டிப்பு'},{en:'No, it came from higher volumes',ta:'இல்ல, அதிக அளவால'}],a:1,w:{en:'Q2 FY26 earned ₹7,610 cr on a $10.7 GRM. Volumes grew only ~3–5%.',ta:'Q2 FY26 ₹7,610 கோடி, GRM $10.7. அளவு வளர்ச்சி ~3–5% தான்.'}},
+ {q:{en:'Quarter on quarter, what explains most of the ₹29,891 cr pre-tax swing?',ta:'காலாண்டுக்கு காலாண்டு ₹29,891 கோடி மாற்றத்துக்கு பெரும் காரணம்?'},o:[{en:'Higher GRM',ta:'அதிக GRM'},{en:'LPG compensation',ta:'LPG இழப்பீடு'},{en:'Marketing losses shrinking plus inventory timing',ta:'மார்க்கெட்டிங் நஷ்டம் குறைவு + இருப்பு நேரம்'},{en:'Higher throughput',ta:'அதிக சுத்திகரிப்பு'}],a:2,w:{en:'Refining added ~₹2,359 cr, LPG compensation was flat, throughput fell. Over 90% came from marketing and inventory.',ta:'சுத்திகரிப்பு ~₹2,359 கோடி, LPG மாறல, அளவு குறைஞ்சுது. 90%-க்கு மேல் மார்க்கெட்டிங் & இருப்பு.'}},
+ {q:{en:'What is IOC\'s relationship to CPCL?',ta:'CPCL-உடன் IOC-ஓட உறவு என்ன?'},o:[{en:'A competitor',ta:'போட்டியாளர்'},{en:'Parent (51.89%) and main buyer/marketer of its fuels',ta:'தாய் (51.89%), முக்கிய வாங்குபவர்/விற்பனையாளர்'},{en:'A minority investor only',ta:'சிறுபான்மை முதலீட்டாளர் மட்டும்'},{en:'No relationship',ta:'உறவு இல்ல'}],a:1,w:{en:'IOC owns 51.89%, chairs the board and markets most CPCL output.',ta:'IOC 51.89%, குழுத் தலைமை, CPCL உற்பத்தியின் பெரும்பகுதியை விக்குது.'}},
+ {q:{en:'Why did IOC lose money in Q1 while CPCL made a profit?',ta:'Q1-ல IOC நஷ்டம், CPCL லாபம் — ஏன்?'},o:[{en:'CPCL had a higher GRM',ta:'CPCL GRM அதிகம்'},{en:'IOC carries the marketing loss from frozen pump prices; CPCL stops at the refinery gate',ta:'பங்க் விலை நிறுத்த நஷ்டம் IOC-க்கு; CPCL ரிஃபைனரி வாசல்லயே முடியுது'},{en:'IOC had a fire',ta:'IOC-ல தீ விபத்து'},{en:'CPCL used domestic crude',ta:'CPCL உள்நாட்டுக் கச்சா'}],a:1,w:{en:'CPCL\'s Q1 GRM was actually lower ($8.78 vs $15.59).',ta:'CPCL Q1 GRM உண்மையில் குறைவு ($8.78 vs $15.59).'}},
+ {q:{en:'Why does IOC report GRM "net of SAED"?',ta:'IOC ஏன் GRM-ஐ "SAED கழித்து" சொல்லுது?'},o:[{en:'SAED is a windfall export duty that reduces export realisations',ta:'SAED ஏற்றுமதி மீதான விண்ட்ஃபால் வரி'},{en:'SAED is a crude discount',ta:'SAED கச்சா தள்ளுபடி'},{en:'SAED is the LPG subsidy',ta:'SAED LPG மானியம்'},{en:'SAED is a state tax on pumps',ta:'SAED மாநில வரி'}],a:0,w:{en:'Reintroduced in March 2026 and reset fortnightly. Management said Q1 GRM before SAED would have been about $36.',ta:'மார்ச் 2026-ல மீண்டும்; Q1 SAED-க்கு முன் ~$36.'}},
+ {q:{en:'Which shareholder links ONGC to IOC?',ta:'ONGC-ஐ IOC-உடன் இணைக்கும் பங்குதாரர் உறவு?'},o:[{en:'ONGC is IOC\'s parent',ta:'ONGC, IOC-ஓட தாய்'},{en:'ONGC and Oil India together hold about 19.5% of IOC',ta:'ONGC, Oil India சேர்ந்து IOC-ல ~19.5%'},{en:'IOC owns ONGC',ta:'IOC, ONGC-ஐ வச்சிருக்கு'},{en:'None',ta:'இல்ல'}],a:1,w:{en:'The government holds 51.50% directly; ONGC is a large minority holder. ONGC is the parent of HPCL and MRPL.',ta:'அரசு நேரடியா 51.50%; ONGC பெரிய சிறுபான்மை. ONGC, HPCL & MRPL-ஓட தாய்.'}}];
+function renderQuiz(){var b=document.getElementById('quiz');b.innerHTML='';
+  QZ.forEach(function(q,qi){var d=document.createElement('div');d.className='q';d.style.background='#fff';d.innerHTML='<strong>'+(qi+1)+'. <span class="en">'+q.q.en+'</span><span class="ta">'+q.q.ta+'</span></strong>';
+    var fb=document.createElement('div');fb.className='fb';
+    q.o.forEach(function(o,oi){var bt=document.createElement('button');bt.type='button';bt.className='opt';bt.innerHTML='<span class="en">'+o.en+'</span><span class="ta">'+o.ta+'</span>';
+      bt.onclick=function(){d.querySelectorAll('.opt').forEach(function(x,xi){x.classList.remove('ok','no');if(xi===q.a)x.classList.add('ok')});if(oi!==q.a)bt.classList.add('no');
+        fb.innerHTML=(oi===q.a?'<strong class="up">✓</strong> ':'<strong class="dn">✗</strong> ')+'<span class="en">'+q.w.en+'</span><span class="ta">'+q.w.ta+'</span>'};d.appendChild(bt)});
+    d.appendChild(fb);b.appendChild(d)});}
+document.getElementById('socBtn').onclick=function(){var v=document.getElementById('socFree').value.toLowerCase();var hits=['grm','marketing','inventory','core','volume','throughput','lpg','மார்க்கெட்டிங்','இருப்பு'].filter(function(k){return v.indexOf(k)>=0}).length;
+  document.getElementById('socFb').innerHTML='<p class="en"><strong>Model answer.</strong> Split the change into parts. Check core GRM (reported GRM minus inventory effect) and throughput for the refinery. Check per-litre marketing margins and LPG under-recovery for the pump business. Then look at the inventory line separately. If core GRM, volumes and marketing margins held up and only the inventory line turned negative, the business did not get worse; the timing reversed. '+(hits>=2?'Your answer covers several of these.':'Try naming GRM, marketing margin and inventory separately.')+'</p><p class="ta"><strong>மாதிரி பதில்.</strong> மாற்றத்தைப் பிரிச்சுப் பாருங்க: core GRM, சுத்திகரிப்பு அளவு; லிட்டருக்கு மார்க்கெட்டிங் மார்ஜின், LPG நஷ்டம்; பிறகு இருப்பு தனியா. Core GRM, அளவு, மார்ஜின் நிலைச்சு, இருப்பு மட்டும் மைனஸ் ஆனா — வணிகம் மோசமாகல, நேரம் தான் திரும்பியது. '+(hits>=2?'உங்க பதில் பல அம்சங்களைத் தொடுது.':'GRM, மார்க்கெட்டிங், இருப்பு — தனித்தனியா குறிப்பிடுங்க.')+'</p>'};
+
+/* ---------- CB Assist ---------- */
+var KB=[
+ {k:['base','base effect','why profit','reason','how profit','ஏன்','காரணம்'],en:'Not a base effect against last year: Q2 FY26 earned ₹7,610 cr on a $10.7 GRM. Year on year, the refining spread added about ₹9,479 cr of pre-tax profit, LPG compensation about ₹3,621 cr and gas about ₹994 cr. Against Q1, it is mostly timing: over 90% of the ₹29,891 cr swing came from marketing losses shrinking and inventory effects, as crude dipped mid-June to mid-August and then rose to about $120.',ta:'போன வருஷத்தோட base effect இல்ல: Q2 FY26 ₹7,610 கோடி, GRM $10.7. ஆண்டுக்கு: சுத்திகரிப்பு ~₹9,479 கோடி, LPG ~₹3,621, gas ~₹994. Q1-ஓட: பெரும்பாலும் நேரம் — ₹29,891 கோடியில 90%-க்கு மேல் மார்க்கெட்டிங் நஷ்டம் குறைவு & இருப்பு.'},
+ {k:['cpcl','chennai','subsidiary','marketing agent','துணை'],en:'Yes. IOC owns 51.89% of CPCL, chairs its board and buys and markets most of its fuels at the refinery transfer price. CPCL\'s Q2 profit of ₹2,247 cr adds about ₹1,166 cr to IOC\'s consolidated profit, and its ₹25 dividend pays IOC about ₹193 cr.',ta:'ஆமாம். IOC, CPCL-ல 51.89%; குழுத் தலைமை; பெரும்பாலான எரிபொருளை வாங்கி விக்குது. CPCL லாபம் ₹2,247 கோடியில IOC பங்கு ~₹1,166 கோடி; ஈவு ~₹193 கோடி.'},
+ {k:['profit','pat','net profit','லாபம்'],en:'Standalone PAT ₹21,630 cr, IOC\'s highest ever, against a ₹2,661 cr loss in Q1 and ₹7,610 cr a year ago. Consolidated PAT ₹22,503 cr (₹21,408 cr to IOC shareholders).',ta:'நிறுவன லாபம் ₹21,630 கோடி — வரலாற்றிலேயே அதிகம்; Q1 நஷ்டம் ₹2,661 கோடி; போன வருஷம் ₹7,610. குழுமம் ₹22,503 கோடி.'},
+ {k:['grm','refining','margin','சுத்திகரிப்பு'],en:'GRM net of the windfall export duty was $18.52/bbl in Q2, against $15.59 in Q1 and $10.7 a year ago. Throughput 18.108 MMT at 102.3% utilisation.',ta:'GRM (SAED கழித்து) $18.52; Q1 $15.59; போன வருஷம் $10.7. சுத்திகரிப்பு 18.108 MMT, 102.3%.'},
+ {k:['marketing','gmm','pump','petrol','diesel','பங்க்','மார்க்கெட்டிங்'],en:'IOC does not publish per-litre margins. Broker estimates for Q2: petrol about +₹2.9/litre, diesel about −₹16.7/litre, against about −₹12 and −₹32 in Q1. Pump prices were raised about ₹7–7.5 in May and then held.',ta:'லிட்டருக்கு மார்ஜின் வெளியிடல. புரோக்கர்: பெட்ரோல் ~+₹2.9, டீசல் ~−₹16.7; Q1-ல ~−₹12, −₹32. மே-ல ~₹7.5 ஏற்றம்.'},
+ {k:['lpg','compensation','cylinder','இழப்பீடு','சிலிண்டர்'],en:'IOC booked ₹7,243 cr of LPG compensation for April–September, from the ₹14,486 cr package paid in 12 monthly instalments since November 2025 — about ₹3,621 cr per quarter, so it did not drive the jump from Q1. The unrecovered LPG buffer still rose to ₹32,506 cr.',ta:'ஏப்–செப் ₹7,243 கோடி LPG இழப்பீடு — காலாண்டுக்கு ~₹3,621 கோடி; Q1-லயும் அதே அளவு. நிலுவை ₹32,506 கோடிக்கு ஏறுச்சு.'},
+ {k:['inventory','இருப்பு'],en:'IOC did not disclose its Q2 inventory gain. Crude fell to about $68 then rose to about $120 by end-September, which typically produces inventory gains at quarter end. Management warned of inventory losses if crude falls as the Middle East normalises.',ta:'Q2 இருப்பு லாபம் வெளியிடல. கச்சா ~$68-க்கு இறங்கி செப் இறுதி ~$120-க்கு ஏறுச்சு — இருப்பு லாபம் வரும். கச்சா இறங்கினா இருப்பு நஷ்டம்னு நிர்வாக எச்சரிக்கை.'},
+ {k:['segment','gas','petrochemical','petchem','பிரிவு'],en:'Segment results: petroleum products ₹24,935 cr (₹11,269 cr a year ago), gas ₹1,238 cr (₹243 cr), petrochemicals ₹528 cr (nearly triple).',ta:'பெட்ரோலியம் ₹24,935 கோடி, gas ₹1,238 கோடி, petrochem ₹528 கோடி.'},
+ {k:['debt','borrowing','கடன்'],en:'Borrowings fell to ₹1,16,578 cr at end-September from ₹1,41,453 cr in June; debt/equity 0.53×. FY27 capex target ₹32,700 cr, ₹12,162 cr spent in H1.',ta:'கடன் ₹1,41,453-லிருந்து ₹1,16,578 கோடிக்கு; கடன்/பங்கு 0.53×. FY27 மூலதனச் செலவு ₹32,700 கோடி.'},
+ {k:['valuation','pe','p/e','book','cheap','price','மதிப்பீடு','விலை'],en:'At about ₹130: market cap ~₹1.83 lakh cr, trailing P/E ~4.3×, ~0.81× March 2026 book, dividend yield ~6.3%. The stock is down 21.5% this year.',ta:'~₹130-ல: சந்தை மதிப்பு ~₹1.83 லட்சம் கோடி, P/E ~4.3×, புத்தக மதிப்பில் ~0.81×, ஈவு ~6.3%. இந்த ஆண்டு −21.5%.'},
+ {k:['analyst','target','broker','rating','ஆய்வாளர்','இலக்கு'],en:'31 analysts, consensus Outperform, average target ₹158.84 (high ₹230, low ₹105). Recent: PL Accumulate ₹147, Nomura Buy ₹180, Jefferies Buy ₹175, Kotak Reduce ₹150. Post-Q2 notes were not yet out.',ta:'31 ஆய்வாளர், சராசரி இலக்கு ₹158.84 (₹105–₹230). PL ₹147, Nomura ₹180, Jefferies ₹175, Kotak ₹150.'},
+ {k:['risk','threat','ரிஸ்க்'],en:'Main risks: inventory losses when crude falls, crude staying above $115 with frozen pump prices, the growing LPG buffer, windfall duty changes, and a board without independent directors.',ta:'ரிஸ்க்: இருப்பு நஷ்டம், $115-க்கு மேல் கச்சா, LPG நிலுவை, SAED, சுயாதீன இயக்குநர் இல்லாமை.'},
+ {k:['trigger','cycle','phase','தூண்டி','சுழற்சி'],en:'Sector cycle P4 (late), stock in a Stage 4 downtrend. CY 35, TG 30. The inventory-loss warning caps CB Conviction at 50.',ta:'துறை P4, பங்கு நிலை 4. CY 35, TG 30. இருப்பு நஷ்ட எச்சரிக்கையால் Conviction 50-க்குள்.'},
+ {k:['ongc','shareholding','owner','government','பங்குதாரர்','அரசு'],en:'President of India 51.50%, ONGC and Oil India about 19.47%, DII 10.05%, FII 8.61%, public 10.37% (Sep 2026).',ta:'அரசு 51.50%, ONGC + Oil India ~19.47%, DII 10.05%, FII 8.61%, பொது 10.37%.'},
+ {k:['peer','bpcl','hpcl','compare','rank','ஒப்பிடு','போட்டி'],en:'Q2 FY27: IOC PAT ₹21,630 cr (standalone), HPCL ₹3,625 cr (consolidated), BPCL about ₹4,900 cr, CPCL ₹2,271 cr. GRM net of SAED: IOC $18.52, BPCL $14.0; HPCL $32.15 before cess; CPCL $20.41.',ta:'Q2: IOC ₹21,630, HPCL ₹3,625, BPCL ~₹4,900, CPCL ₹2,271 கோடி. GRM: IOC $18.52, BPCL $14.0, HPCL $32.15, CPCL $20.41.'},
+ {k:['cash','working capital','cfo','பணம்'],en:'FY26 consolidated CFO ₹76,142 cr (99% of EBITDA), FCF ₹47,779 cr. Cash conversion cycle about 30 days: inventory ~47, receivables ~6, payables ~23 days.',ta:'FY26 CFO ₹76,142 கோடி (EBITDA-ல 99%), FCF ₹47,779. பண மாற்று சுழற்சி ~30 நாள்.'},
+ {k:['management','board','chairman','director','நிர்வாக','தலைவர்'],en:'Chairman Arvinder Singh Sahney. Auditors note IOC lacks the prescribed independent directors, and the Audit Committee has been discontinued since 28 March 2026.',ta:'தலைவர் அர்விந்தர் சிங் சாஹ்னி. சுயாதீன இயக்குநர்கள் இல்லை; 28 மார்ச் 2026 முதல் ஆடிட் குழு நிறுத்தம்.'},
+ {k:['dividend','ஈவு'],en:'No interim dividend was reported with Q2 in the material reviewed. FY26 dividend was ₹8.25 per share (₹7 interim + ₹1.25 final).',ta:'Q2-உடன் இடைக்கால ஈவு அறிவிப்பு இல்ல. FY26 ₹8.25.'},
+ {k:['score','cb score','pillar','மதிப்பெண்'],en:'CB Score 6.3/10: Growth 7.5, Profitability 7.0, Balance sheet 6.5, Valuation 8.0, Market & triggers 4.5, Risk 4.5.',ta:'CB மதிப்பெண் 6.3/10.'}
+];
+var NOADV={en:'I can\'t tell you whether to buy, sell or hold. CB Research is education only. The Self-check tab lets you test the facts against your own conditions.',ta:'வாங்கலாமா, விற்கலாமான்னு சொல்ல முடியாது. CB Research கல்வி நோக்கம் மட்டும். சுய சோதனை தாவலில் சோதிச்சுப் பாருங்க.'};
+var asLog=document.getElementById('asLog');
+function addMsg(t,who,btn){var d=document.createElement('div');d.className='msg '+who;d.textContent=t;if(btn){var b=document.createElement('button');b.className='btn';b.type='button';b.style.cssText='display:block;margin-top:6px;font-size:12px';b.textContent=L('Open Self-check','சுய சோதனை திற');b.onclick=function(){openTab('self');document.getElementById('assist').hidden=true};d.appendChild(b)}asLog.appendChild(d);asLog.scrollTop=asLog.scrollHeight}
+function speak(t){try{if(!window.speechSynthesis)return;speechSynthesis.cancel();var u=new SpeechSynthesisUtterance(t);u.lang=LANG==='ta'?'ta-IN':'en-IN';speechSynthesis.speak(u)}catch(e){}}
+function answer(q){var s=q.toLowerCase();
+  if(/\b(buy|sell|hold|invest|should i)\b/.test(s)||/வாங்க|விற்க/.test(s)){var t0=L(NOADV.en,NOADV.ta);addMsg(t0,'b',true);speak(t0);return}
+  var best=null,bs=0;KB.forEach(function(e){var sc_=0;e.k.forEach(function(k){if(s.indexOf(k)>=0)sc_+=k.length>4?2:1});if(sc_>bs){bs=sc_;best=e}});
+  var t=best?L(best.en,best.ta):L('I can answer about profit, the base-effect question, CPCL, GRM, marketing margins, LPG, inventory, segments, debt, valuation, analysts, peers, risks and triggers.','லாபம், base effect, CPCL, GRM, மார்க்கெட்டிங், LPG, இருப்பு, பிரிவுகள், கடன், மதிப்பீடு, ஆய்வாளர், போட்டியாளர், ரிஸ்க் — கேளுங்க.');
+  addMsg(t,'b');speak(t)}
+function renderSug(){var b=document.getElementById('asSug');b.innerHTML='';
+  [['Is it a base effect?','இது base effect-ஆ?'],['Is IOC CPCL\'s marketing agent?','IOC, CPCL-ஓட மார்க்கெட்டிங் ஏஜென்டா?'],['What about LPG compensation?','LPG இழப்பீடு?'],['Compare peers','போட்டியாளர் ஒப்பீடு'],['Inventory gain?','இருப்பு லாபம்?']].forEach(function(p){var x=document.createElement('button');x.type='button';x.textContent=L(p[0],p[1]);x.onclick=function(){addMsg(x.textContent,'u');answer(x.textContent)};b.appendChild(x)})}
+document.getElementById('asForm').addEventListener('submit',function(e){e.preventDefault();var i=document.getElementById('asIn');var v=i.value.trim();if(!v)return;addMsg(v,'u');i.value='';answer(v)});
+document.getElementById('asBtn').onclick=function(){var a=document.getElementById('assist');a.hidden=!a.hidden;document.getElementById('disc').hidden=true;if(!a.hidden&&!asLog.children.length)addMsg(L('Ask me about IOC\'s Q2 FY27 results by typing or with the mic. Answers are spoken aloud.','IOC Q2 FY27 பற்றி டைப் செய்தோ மைக் மூலமோ கேளுங்க. பதில் குரலில் வரும்.'),'b')};
+document.getElementById('asClose').onclick=function(){document.getElementById('assist').hidden=true;try{speechSynthesis.cancel()}catch(e){}};
+var REC=null;
+document.getElementById('asMic').onclick=function(){var SR=window.SpeechRecognition||window.webkitSpeechRecognition;var m=document.getElementById('asMic');
+  if(!SR){addMsg(L('Voice input is not available in this browser view. Type your question; answers will still be spoken.','இந்த உலாவியில் குரல் உள்ளீடு இல்ல. டைப் செய்யுங்க; பதில் குரலில் வரும்.'),'b');return}
+  try{if(REC){REC.stop();return}REC=new SR();REC.lang=LANG==='ta'?'ta-IN':'en-IN';REC.interimResults=false;m.classList.add('rec');
+    REC.onresult=function(e){var t=e.results[0][0].transcript;addMsg(t,'u');answer(t)};
+    REC.onerror=function(){addMsg(L('Microphone access was not allowed here. Type your question instead.','இங்கே மைக் அனுமதி இல்ல. டைப் செய்யுங்க.'),'b')};
+    REC.onend=function(){m.classList.remove('rec');REC=null};REC.start()}catch(e){m.classList.remove('rec');REC=null;addMsg(L('Voice input could not start. Type your question instead.','குரல் உள்ளீடு தொடங்கல. டைப் செய்யுங்க.'),'b')}};
+document.getElementById('cbBadge').onclick=function(){var d=document.getElementById('disc');d.hidden=!d.hidden;document.getElementById('assist').hidden=true};
+
+/* ---------- init ---------- */
+drawTemple();drawBM();drawLink();drawClock();drawTimeline();renderQuiz();
+var saved=stor('ioc_lang');setLang(saved==='ta'?'ta':'en');
+var h=(location.hash||'').replace('#','');if(h)openTab(h);
+</script>
