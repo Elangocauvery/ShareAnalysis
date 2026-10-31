@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jio Platforms · Q2 FY27 Results Dashboard · CB Research</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<style>
+
+:root{--bg:#fff6ec;--card:#fffdf9;--ink:#2b2118;--mut:#7a6656;--or:#e8730c;--or2:#ffb168;--orl:#ffe6cc;--gr:#1f9d55;--am:#d99a00;--rd:#d0372d;--bl:#2463a6;--pu:#7b4bb7;--line:#f0d9c0}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI",Roboto,"Noto Sans Tamil",Arial,sans-serif;background:var(--bg);color:var(--ink);font-size:15px;line-height:1.5}
+body:before{content:"CB Research";position:fixed;top:45%;left:50%;transform:translate(-50%,-50%) rotate(-28deg);font-size:110px;font-weight:800;color:rgba(232,115,12,.045);pointer-events:none;z-index:0;white-space:nowrap}
+header{background:linear-gradient(135deg,#fff1e0,#ffe2c2);padding:14px 16px 10px;border-bottom:2px solid var(--or2);position:relative;z-index:2}
+header h1{margin:0;font-size:22px;color:#7a3a00}
+header .sub{color:var(--mut);font-size:13px}
+.langbtn{position:absolute;right:14px;top:14px;background:var(--or);color:#fff;border:0;border-radius:18px;padding:6px 12px;font-weight:600;cursor:pointer}
+nav{position:sticky;top:0;z-index:5;background:#fff3e4;border-bottom:1px solid var(--line);display:flex;overflow-x:auto;gap:4px;padding:6px 8px}
+nav button{flex:0 0 auto;border:1px solid var(--line);background:#fffaf4;color:#6b3a10;border-radius:16px;padding:6px 12px;font-size:13px;cursor:pointer;white-space:nowrap}
+nav button.on{background:var(--or);color:#fff;border-color:var(--or)}
+main{max-width:1180px;margin:0 auto;padding:14px;position:relative;z-index:1}
+.tab{display:none}.tab.on{display:block}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px;margin:0 0 14px;box-shadow:0 1px 3px rgba(150,80,10,.06)}
+h2{font-size:19px;margin:4px 0 10px;color:#7a3a00}
+h3{font-size:16px;margin:4px 0 8px;color:#8a4a10}
+.grid{display:grid;gap:12px}.g2{grid-template-columns:repeat(auto-fit,minmax(300px,1fr))}.g3{grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}.g4{grid-template-columns:repeat(auto-fit,minmax(160px,1fr))}
+.kpi{background:#fff;border:1px solid var(--line);border-radius:12px;padding:10px}
+.kpi .l{font-size:12px;color:var(--mut)}.kpi .v{font-size:21px;font-weight:700}.kpi .c{font-size:12px}
+.up{color:var(--gr);font-weight:600}.dn{color:var(--rd);font-weight:600}.fl{color:var(--am);font-weight:600}
+table{width:100%;border-collapse:collapse;font-size:13.5px;background:#fff}
+th,td{border-bottom:1px solid #f3e3d0;padding:6px 7px;text-align:right;white-space:nowrap}
+
+th:first-child,td:first-child{text-align:left;white-space:normal}
+.tl td,.tl th{text-align:left;white-space:normal;min-width:90px}
+th{background:#fff0de;color:#6b3a10;font-weight:600}
+tr.cat td{background:#ffe9d1;font-weight:700;color:#7a3a00;text-align:left}
+.tw{overflow-x:auto}
+.chip{display:inline-block;border-radius:12px;padding:2px 9px;font-size:12px;font-weight:600;margin:2px;background:var(--orl);color:#7a3a00}
+.chip.g{background:#ddf4e6;color:#11643a}.chip.r{background:#fde0dd;color:#8f2019}.chip.a{background:#fff1c7;color:#7a5600}
+.note{font-size:12px;color:var(--mut)}
+.cw{overflow-x:auto}.cw>div{min-width:640px;height:300px;position:relative}
+ul{margin:6px 0;padding-left:20px}li{margin:3px 0}
+.hl{background:#fff4e3;border-left:4px solid var(--or);padding:8px 10px;border-radius:8px;margin:8px 0}
+.explain{background:#fff7ee;border:1px dashed var(--or2);border-radius:10px;padding:10px;margin-top:8px;min-height:60px}
+svg text{font-family:inherit}
+.mbox{cursor:pointer}.mbox:hover rect{stroke-width:3}
+.col{cursor:pointer}
+.pill{display:inline-block;padding:3px 10px;border-radius:14px;background:#fff;border:1px solid var(--line);margin:3px;cursor:pointer;font-size:13px}
+.pill.on{background:var(--or);color:#fff;border-color:var(--or)}
+input[type=range]{width:100%;accent-color:var(--or)}
+.big{font-size:26px;font-weight:800;color:#7a3a00}
+.pcard{border-left:5px solid var(--or)}.pcard.hit{box-shadow:0 0 0 3px var(--or2)}
+.lang-ta .en{display:none!important}body:not(.lang-ta) .ta{display:none!important}
+#cbbadge{position:fixed;right:16px;bottom:16px;width:58px;height:58px;border-radius:50%;background:radial-gradient(circle at 35% 35%,#ffa142,#e8730c);color:#fff;font-weight:900;font-size:21px;display:flex;align-items:center;justify-content:center;box-shadow:0 3px 10px rgba(200,90,0,.4);cursor:pointer;z-index:20;animation:blink 2.2s infinite}
+@keyframes blink{0%,100%{box-shadow:0 0 0 0 rgba(232,115,12,.55)}50%{box-shadow:0 0 0 12px rgba(232,115,12,0)}}
+#disc{display:none;position:fixed;right:16px;bottom:84px;max-width:330px;background:#fff;border:2px solid var(--or);border-radius:12px;padding:12px;font-size:12.5px;z-index:21;box-shadow:0 4px 18px rgba(0,0,0,.15)}
+#asstbtn{position:fixed;right:84px;bottom:22px;background:#7a3a00;color:#fff;border:0;border-radius:22px;padding:9px 14px;font-weight:700;cursor:pointer;z-index:20}
+#asst{display:none;position:fixed;right:16px;bottom:84px;width:min(380px,94vw);height:470px;background:#fff;border:2px solid var(--or);border-radius:14px;z-index:22;flex-direction:column;box-shadow:0 6px 24px rgba(0,0,0,.18)}
+#asst .hd{background:var(--or);color:#fff;padding:8px 12px;border-radius:11px 11px 0 0;font-weight:700;display:flex;justify-content:space-between}
+#alog{flex:1;overflow-y:auto;padding:10px;font-size:13.5px}
+#alog .q{background:#ffe9d1;padding:6px 9px;border-radius:10px;margin:5px 0 5px 40px}
+#alog .a{background:#f6f1ea;padding:6px 9px;border-radius:10px;margin:5px 40px 5px 0}
+#asst .ft{display:flex;gap:5px;padding:8px;border-top:1px solid var(--line)}
+#asst input{flex:1;border:1px solid var(--line);border-radius:18px;padding:7px 11px}
+#asst button{border:0;border-radius:18px;background:var(--or);color:#fff;padding:6px 11px;cursor:pointer}
+.mic.rec{background:var(--rd)!important}
+.chk{display:flex;gap:8px;align-items:flex-start;padding:6px 0;border-bottom:1px dashed #f0dcc4}
+.chk input{margin-top:4px;transform:scale(1.2);accent-color:var(--or)}
+.bar{height:10px;background:#f6e2cc;border-radius:6px;overflow:hidden}.bar>i{display:block;height:100%;background:var(--or);width:0;transition:width .4s}
+.q-opt{display:block;width:100%;text-align:left;margin:4px 0;padding:7px 10px;border:1px solid var(--line);border-radius:9px;background:#fff;cursor:pointer}
+.q-opt.ok{background:#ddf4e6;border-color:var(--gr)}.q-opt.no{background:#fde0dd;border-color:var(--rd)}
+.dag{color:var(--pu);font-weight:700}
+@media(max-width:600px){header h1{font-size:18px}.kpi .v{font-size:18px}body:before{font-size:60px}}
+
+.rank1{background:#fff4e3}.jiorow td{background:#ffe2c2!important;font-weight:700}
+</style>
+</head>
+<body>
+<header>
+  <h1>Jio Platforms Ltd <span style="font-weight:400;font-size:15px">(NSE: JPL · BSE: 545004)</span></h1>
+  <div class="sub"><span class="en">Q2 FY27 (Jul–Sep 2026) results · first results after listing (28 Oct 2026) · announced 30 Oct 2026</span><span class="ta">Q2 FY27 (ஜூலை–செப் 2026) ரிசல்ட் · லிஸ்டிங்குக்கு (28 அக் 2026) அப்புறம் முதல் ரிசல்ட் · 30 அக் 2026</span></div>
+  <button class="langbtn" onclick="toggleLang()" id="lb">தமிழ்</button>
+</header>
+<nav id="nav"></nav>
+<main>
+
+<!-- OVERVIEW -->
+<section class="tab on" id="t-overview">
+ <div class="card">
+  <h2><span class="en">Q2 FY27 at a glance</span><span class="ta">Q2 FY27 – ஒரே பார்வையில்</span></h2>
+  <div class="hl"><span class="en"><b>Profit grew faster than revenue, and EBITDA faster still.</b> Operating revenue +11.4%, EBITDA +16.6%, EBITDA margin a record 54.1% (+250 bps). PAT +13.7% – slower than EBITDA because 5G assets capitalised in March 2026 now carry depreciation and interest. Jio is now the <b>world's 5th most valuable listed telecom company</b> (~$137 bn).</span><span class="ta"><b>வருமானத்த விட லாபம் வேகமா, EBITDA இன்னும் வேகமா வளர்ந்தது.</b> ஆபரேஷன் வருமானம் +11.4%, EBITDA +16.6%, மார்ஜின் சாதனை 54.1% (+250 bps). PAT +13.7% – மார்ச் 2026-ல 5G சொத்து கணக்குல சேர்ந்ததால டிப்ரிசியேஷன், வட்டி ஏறிச்சு. ஜியோ இப்போ <b>உலகத்துலயே மதிப்புல 5-வது பெரிய லிஸ்டட் டெலிகாம் கம்பெனி</b> (~$137 பில்லியன்).</span></div>
+  <div class="grid g4" id="kpis"></div>
+  <div style="margin-top:8px"><span class="chip">CB Score 7.1 / 10</span><span class="chip a">CY 63</span><span class="chip g">TG 66</span><span class="chip"><span class="en">#5 telco worldwide</span><span class="ta">உலக டெலிகாம் #5</span></span><span class="chip a"><span class="en">Price stage: too new to rate</span><span class="ta">விலை நிலை: இன்னும் மதிப்பிட முடியாது</span></span></div>
+ </div>
+ <div class="grid g2">
+  <div class="card">
+   <h3><span class="en">Consolidated results (₹ crore)</span><span class="ta">கன்சாலிடேட்டட் ரிசல்ட் (₹ கோடி)</span></h3>
+   <div class="tw"><table id="consTbl"></table></div>
+   <div class="note"><span class="en">Margins on revenue from operations (Jio's own basis). <span class="dag">†</span> PBT/tax derived as EBITDA − D&amp;A − finance cost; EPS on 920.9 cr post-issue shares.</span><span class="ta">மார்ஜின் – ஆபரேஷன் வருமானத்து மேல. <span class="dag">†</span> PBT/வரி – CB கணக்கீடு; EPS – 920.9 கோடி ஷேர்ஸ்.</span></div>
+  </div>
+  <div class="card">
+   <h3><span class="en">Standalone results</span><span class="ta">ஸ்டாண்ட்அலோன் ரிசல்ட்</span></h3>
+   <div class="hl"><span class="en">Jio Platforms Ltd is a <b>holding company</b>. Almost all the business sits in its subsidiary Reliance Jio Infocomm (RJIL) and the digital companies, so the standalone statement shows mainly investment income and holding costs. The standalone figures were not available in the material reviewed; the consolidated numbers are the ones that describe the business.</span><span class="ta">ஜியோ பிளாட்ஃபார்ம்ஸ் ஒரு <b>ஹோல்டிங் கம்பெனி</b>. பிசினஸ் முழுசும் சப்சிடியரி ரிலையன்ஸ் ஜியோ இன்ஃபோகாம் (RJIL), டிஜிட்டல் கம்பெனிகள்ல தான் இருக்கு. ஸ்டாண்ட்அலோன் நம்பர்ஸ் கிடைக்கல; பிசினஸ புரிஞ்சுக்க கன்சாலிடேட்டட் நம்பர்ஸ் தான் சரி.</span></div>
+   <div class="tw"><table>
+    <tr><th>₹ cr</th><th>Q2 FY27</th><th>Q1 FY27</th><th>Q2 FY26</th></tr>
+    <tr><td><span class="en">Revenue</span><span class="ta">வருமானம்</span></td><td>n/a</td><td>n/a</td><td>n/a</td></tr>
+    <tr><td>PAT</td><td>n/a</td><td>n/a</td><td>n/a</td></tr>
+    <tr><td><span class="en">Net worth (consolidated, Jun 2026)</span><span class="ta">நிகர மதிப்பு (ஜூன் 2026)</span></td><td colspan=3>₹3,41,779 cr <span class="note">+ ~₹30,188 cr IPO</span></td></tr>
+   </table></div>
+  </div>
+ </div>
+ <div class="card">
+  <h3><span class="en">Key takeaways</span><span class="ta">முக்கியமான விஷயங்கள்</span></h3>
+  <ul class="en">
+   <li><b>Revenue from operations ₹40,475 cr (+11.4% YoY, +3.3% QoQ)</b>; gross revenue ₹47,485 cr. Connectivity +11%, Digital services +16%.</li>
+   <li><b>EBITDA ₹21,879 cr (+16.6%); margin 54.1%</b> vs 51.6% a year ago and 53.3% in Q1 – operating leverage: operating costs grew only ~5.8%.</li>
+   <li><b>PAT ₹8,387 cr (+13.7% YoY, +8.0% QoQ).</b> D&amp;A ₹7,611 cr and finance cost ₹3,009 cr absorb ~49% of EBITDA.</li>
+   <li><b>ARPU ₹218.8</b> (+3.5% YoY) · <b>542.4 mn customers</b> (+9.1 mn) · churn 1.6% (1.9% LY) · <b>300 mn on 5G</b> · <b>30 mn fixed broadband</b> (AirFiber 15.1 mn).</li>
+   <li><b>H1 free cash flow ₹32,130 cr, +98%</b> – the 5G build is done and cash capex has halved.</li>
+   <li>IPO money: ₹27,500 cr to prepay RJIL's foreign borrowings → interest cost should fall from Q3.</li>
+  </ul>
+  <ul class="ta">
+   <li><b>ஆபரேஷன் வருமானம் ₹40,475 கோடி (+11.4%, QoQ +3.3%)</b>; மொத்தம் ₹47,485 கோடி. கனெக்டிவிட்டி +11%, டிஜிட்டல் +16%.</li>
+   <li><b>EBITDA ₹21,879 கோடி (+16.6%); மார்ஜின் 54.1%</b> – செலவு ~5.8% தான் ஏறிச்சு (ஆபரேட்டிங் லீவரேஜ்).</li>
+   <li><b>PAT ₹8,387 கோடி (+13.7%, QoQ +8%).</b> D&amp;A ₹7,611 கோடி, வட்டி ₹3,009 கோடி – EBITDA-ல ~49%.</li>
+   <li><b>ARPU ₹218.8</b> (+3.5%) · <b>54.24 கோடி கஸ்டமர்ஸ்</b> (+91 லட்சம்) · சர்ன் 1.6% · <b>30 கோடி 5G</b> · <b>3 கோடி பிராட்பேண்ட்</b> (AirFiber 1.51 கோடி).</li>
+   <li><b>அரை வருஷ ஃப்ரீ கேஷ் ஃப்ளோ ₹32,130 கோடி, +98%</b> – 5G கட்டுமானம் முடிஞ்சது, கேபெக்ஸ் பாதியாச்சு.</li>
+   <li>IPO பணம்: ₹27,500 கோடி RJIL வெளிநாட்டுக் கடன் அடைப்புக்கு → Q3-லிருந்து வட்டி குறையும்.</li>
+  </ul>
+ </div>
+ <div class="card">
+  <h3><span class="en">CB 6-pillar temple</span><span class="ta">CB 6-தூண் கோயில்</span></h3>
+  <div style="overflow-x:auto"><svg id="temple" viewBox="0 0 640 380" style="width:100%;min-width:520px;max-width:760px"></svg></div>
+  <div class="grid g3" id="pillarCards"></div>
+ </div>
+</section>
+
+<!-- GROWTH & MARGINS -->
+<section class="tab" id="t-gm">
+ <div class="card">
+  <h2><span class="en">Growth &amp; margins – every layer</span><span class="ta">வளர்ச்சி &amp; மார்ஜின் – ஒவ்வொரு அடுக்கும்</span></h2>
+  <div class="tw"><table id="gmTbl"></table></div>
+ </div>
+ <div class="grid g2">
+  <div class="card"><h3><span class="en">Margin ladder (% of revenue from operations)</span><span class="ta">மார்ஜின் ஏணி (% ஆபரேஷன் வருமானம்)</span></h3><div class="cw"><div><canvas id="cLad"></canvas></div></div><div class="note"><span class="en">Q2 FY26/Q1 FY27 EBIT &amp; PBT not disclosed in the material reviewed.</span><span class="ta">Q2 FY26/Q1 FY27 EBIT, PBT கிடைக்கல.</span></div></div>
+  <div class="card"><h3><span class="en">Growth: YoY vs QoQ</span><span class="ta">வளர்ச்சி: வருஷம் vs க்வார்ட்டர்</span></h3><div class="cw"><div><canvas id="cGr"></canvas></div></div></div>
+ </div>
+ <div class="card">
+  <h3><span class="en">Where the 11.4% revenue growth came from</span><span class="ta">11.4% வருமான வளர்ச்சி எங்கிருந்து வந்தது</span></h3>
+  <div class="grid g4">
+   <div class="kpi"><div class="l"><span class="en">Customers</span><span class="ta">கஸ்டமர்ஸ்</span></div><div class="v up">+7.1%</div><div class="c note">506.4 → 542.4 mn</div></div>
+   <div class="kpi"><div class="l">ARPU</div><div class="v up">+3.5%</div><div class="c note">₹211.4 → ₹218.8</div></div>
+   <div class="kpi"><div class="l"><span class="en">Subs × ARPU (approx.)</span><span class="ta">கஸ்டமர் × ARPU</span></div><div class="v">≈ +10.8%</div><div class="c note">1.071 × 1.035 <span class="dag">†</span></div></div>
+   <div class="kpi"><div class="l"><span class="en">Digital services</span><span class="ta">டிஜிட்டல் சேவைகள்</span></div><div class="v up">+16%</div><div class="c note"><span class="en">lifts the mix</span><span class="ta">மிக்ஸை உயர்த்துது</span></div></div>
+  </div>
+  <div class="hl"><span class="en"><b>Operating leverage:</b> revenue from operations rose ₹4,143 cr; EBITDA rose ₹3,122 cr – so ~75% of every extra rupee of revenue reached EBITDA. Operating costs grew only ~5.8% (₹17,575 → ₹18,596 cr <span class="dag">†</span>). This is why margin hit 54.1%.</span><span class="ta"><b>ஆபரேட்டிங் லீவரேஜ்:</b> வருமானம் ₹4,143 கோடி ஏறிச்சு; EBITDA ₹3,122 கோடி ஏறிச்சு – கூடுதல் ஒவ்வொரு ரூபாய்லயும் ~75 பைசா EBITDA-க்கு போச்சு. செலவு ~5.8% தான் ஏறிச்சு. அதனால தான் மார்ஜின் 54.1%.</span></div>
+ </div>
+ <div class="card">
+  <h3><span class="en">Interactive: tariff-hike calculator</span><span class="ta">இன்டராக்டிவ்: கட்டண உயர்வு கணக்கி</span></h3>
+  <label><span class="en">Tariff hike passed through to ARPU:</span><span class="ta">ARPU-ல சேரும் கட்டண உயர்வு:</span> <b id="thv">15%</b></label><input type="range" id="th" min="0" max="25" value="15" oninput="calcTar()">
+  <label><span class="en">Share of the hike that sticks (after down-trading/SIM consolidation):</span><span class="ta">உயர்வுல எவ்வளவு நிலைக்கும் (சிம் குறைப்புக்கு பிறகு):</span> <b id="tsv">70%</b></label><input type="range" id="ts" min="30" max="100" value="70" oninput="calcTar()">
+  <div class="grid g3" style="margin-top:8px">
+   <div class="kpi"><div class="l"><span class="en">New ARPU</span><span class="ta">புது ARPU</span></div><div class="v" id="to1"></div></div>
+   <div class="kpi"><div class="l"><span class="en">Extra quarterly EBITDA</span><span class="ta">கூடுதல் க்வார்ட்டர் EBITDA</span></div><div class="v" id="to2"></div></div>
+   <div class="kpi"><div class="l"><span class="en">Annualised PAT → P/E at ₹1,410</span><span class="ta">வருஷ PAT → ₹1,410-ல P/E</span></div><div class="v" id="to3"></div></div>
+  </div>
+  <div class="note"><span class="en"><span class="dag">†</span> Mobility revenue ≈ 542.4 mn × ARPU × 3. Assumes ~90% of the extra revenue drops to EBITDA (network cost is fixed) and a 25% tax rate. Nomura expects an industry tariff hike of ~15% in Nov–Dec 2026. Illustration, not a forecast.</span><span class="ta"><span class="dag">†</span> மொபிலிட்டி வருமானம் ≈ 54.24 கோடி × ARPU × 3. கூடுதல் வருமானத்துல ~90% EBITDA-க்கு, 25% வரி. நவ–டிச 2026-ல ~15% உயர்வு வரலாம்னு நோமுரா சொல்லுது. விளக்கத்துக்கு மட்டும்.</span></div>
+ </div>
+</section>
+
+<!-- BUSINESS MODEL -->
+<section class="tab" id="t-model">
+ <div class="card">
+  <h2><span class="en">How Jio makes money – tap any box</span><span class="ta">ஜியோ எப்படி சம்பாதிக்குது – பெட்டியை தொடுங்க</span></h2>
+  <div style="overflow-x:auto"><svg id="bm" viewBox="0 0 1000 520" style="width:100%;min-width:760px"></svg></div>
+  <div class="explain" id="bmx"><span class="en">Tap a box to see what it does and the latest numbers.</span><span class="ta">பெட்டியை தொட்டா விளக்கம், நம்பர்ஸ் காட்டும்.</span></div>
+  <div class="hl"><span class="en"><b>Revenue formula:</b> Revenue ≈ (mobile customers × ARPU × 3 months) + (homes × home ARPU) + enterprise contracts + digital services (apps, cloud, AI, devices, licensing). Costs are mostly fixed network, spectrum and licence fees – so extra ARPU flows almost straight to EBITDA.</span><span class="ta"><b>வருமான ஃபார்முலா:</b> வருமானம் ≈ (மொபைல் கஸ்டமர் × ARPU × 3 மாசம்) + (வீடுகள் × ஹோம் ARPU) + என்டர்பிரைஸ் + டிஜிட்டல் சேவைகள். செலவு பெரும்பாலும் நிலையானது (நெட்வொர்க், ஸ்பெக்ட்ரம், லைசென்ஸ்) – அதனால கூடுதல் ARPU நேரா EBITDA-க்கு போகும்.</span></div>
+ </div>
+ <div class="card">
+  <h3><span class="en">Revenue engine</span><span class="ta">வருமான இன்ஜின்</span></h3>
+  <div class="tw"><table class="tl">
+   <tr><th><span class="en">Engine</span><span class="ta">இன்ஜின்</span></th><th><span class="en">Driver</span><span class="ta">டிரைவர்</span></th><th><span class="en">Q2 FY27 reading</span><span class="ta">Q2 FY27 நிலை</span></th><th><span class="en">Growth</span><span class="ta">வளர்ச்சி</span></th></tr>
+   <tr><td><span class="en">Mobility</span><span class="ta">மொபிலிட்டி</span></td><td><span class="en">Subscribers × ARPU, 4G→5G upgrade</span><span class="ta">கஸ்டமர் × ARPU, 4G→5G</span></td><td>542.4 mn · ₹218.8 · 300 mn 5G</td><td class="up">+7.1% subs · +3.5% ARPU</td></tr>
+   <tr><td><span class="en">Homes</span><span class="ta">வீடுகள்</span></td><td><span class="en">JioFiber + AirFiber (5G fixed wireless)</span><span class="ta">JioFiber + AirFiber</span></td><td><span class="en">30 mn homes; AirFiber 15.1 mn</span><span class="ta">3 கோடி வீடுகள்; AirFiber 1.51 கோடி</span></td><td class="up">+7.3 mn YoY</td></tr>
+   <tr><td><span class="en">Enterprise</span><span class="ta">என்டர்பிரைஸ்</span></td><td><span class="en">Connectivity, cloud, IoT, security</span><span class="ta">கனெக்டிவிட்டி, கிளவுட், IoT</span></td><td><span class="en">Inside connectivity +11%</span><span class="ta">கனெக்டிவிட்டி +11%-க்குள்</span></td><td class="fl">n.d.</td></tr>
+   <tr><td><span class="en">Digital services</span><span class="ta">டிஜிட்டல் சேவைகள்</span></td><td><span class="en">Apps, AI, platforms, tech licensing</span><span class="ta">ஆப்ஸ், AI, பிளாட்ஃபார்ம், லைசென்சிங்</span></td><td><span class="en">Fastest-growing line</span><span class="ta">வேகமா வளர்றது</span></td><td class="up">+16%</td></tr>
+   <tr><td><span class="en">Future</span><span class="ta">எதிர்காலம்</span></td><td><span class="en">Satellite comms, 6G IP, AI in core services</span><span class="ta">சாட்டிலைட், 6G, AI</span></td><td><span class="en">Management priority</span><span class="ta">நிர்வாக முன்னுரிமை</span></td><td class="fl">—</td></tr>
+  </table></div>
+ </div>
+</section>
+
+<!-- OPERATING KPIs -->
+<section class="tab" id="t-kpi">
+ <div class="card">
+  <h2><span class="en">Operating metrics</span><span class="ta">செயல்பாட்டு அளவுகள்</span></h2>
+  <div class="tw"><table id="kpiTbl"></table></div>
+ </div>
+ <div class="grid g2">
+  <div class="card"><h3><span class="en">ARPU trend (₹/month)</span><span class="ta">ARPU போக்கு (₹/மாசம்)</span></h3><div class="cw"><div><canvas id="cArpu"></canvas></div></div></div>
+  <div class="card"><h3><span class="en">Customers &amp; data traffic</span><span class="ta">கஸ்டமர்ஸ் &amp; டேட்டா</span></h3><div class="cw"><div><canvas id="cSub"></canvas></div></div></div>
+ </div>
+ <div class="card">
+  <h3><span class="en">Market position in India</span><span class="ta">இந்தியாவுல நிலை</span></h3>
+  <div class="grid g3">
+   <div class="kpi"><div class="l"><span class="en">Wireless subscriber share (TRAI, Aug 2026)</span><span class="ta">வயர்லெஸ் பங்கு (TRAI, ஆக 2026)</span></div><div class="v">41.7%</div></div>
+   <div class="kpi"><div class="l"><span class="en">Share of India's data traffic</span><span class="ta">இந்திய டேட்டா போக்குவரத்துல பங்கு</span></div><div class="v">~60%</div></div>
+   <div class="kpi"><div class="l"><span class="en">Home broadband share</span><span class="ta">ஹோம் பிராட்பேண்ட் பங்கு</span></div><div class="v">~43%</div></div>
+  </div>
+  <div class="note"><span class="en">Company describes its 5G base as the largest in the world outside China; 5G now carries ~56% of its wireless traffic.</span><span class="ta">சீனா தவிர உலகத்துலயே பெரிய 5G பேஸ்னு கம்பெனி சொல்லுது; வயர்லெஸ் டிராஃபிக்ல ~56% 5G.</span></div>
+ </div>
+</section>
+
+<!-- GLOBAL RANK -->
+<section class="tab" id="t-global">
+ <div class="card">
+  <h2><span class="en">World's largest listed telecom companies – Jio is #5</span><span class="ta">உலகின் பெரிய லிஸ்டட் டெலிகாம் கம்பெனிகள் – ஜியோ #5</span></h2>
+  <div class="hl"><span class="en">After its 28 Oct 2026 debut, Jio's market value of <b>~$137.3 bn (₹13.1 lakh cr)</b> placed it <b>fifth</b> among listed telcos worldwide – behind China Mobile, Verizon, T-Mobile US and AT&amp;T, and just ahead of Deutsche Telekom. It is <b>Asia's #2</b> after China Mobile and <b>India's #2 company</b> after Reliance, and is now bigger than Bharti Airtel.</span><span class="ta">28 அக் 2026 லிஸ்டிங்குக்கு அப்புறம் ஜியோவோட மதிப்பு <b>~$137.3 பில்லியன் (₹13.1 லட்சம் கோடி)</b> – உலக லிஸ்டட் டெலிகாம்ல <b>5-வது</b>. சைனா மொபைல், வெரைசன், டி-மொபைல், AT&amp;T-க்கு அடுத்து, டாய்ச் டெலிகாமுக்கு முன்னாடி. <b>ஆசியாவுல #2</b>, <b>இந்தியாவுல #2 கம்பெனி</b> (ரிலையன்ஸுக்கு அடுத்து), ஏர்டெல்லை விட பெருசு.</span></div>
+  <div class="cw"><div style="height:340px"><canvas id="cGlob"></canvas></div></div>
+  <div class="tw"><table id="globTbl" class="tl"></table></div>
+  <div class="note"><span class="en">Market-cap snapshot (Bloomberg data) after the 28 Oct close; Airtel converted at the same ~₹95.4/$ <span class="dag">†</span>. Ranks move with prices and currencies – the gap between #4, #5 and #6 is under $6 bn, and one report put Jio 6th at ~$131 bn intraday. At ₹12.98 lakh cr (30 Oct) Jio is ~$136 bn, still marginally ahead of Deutsche Telekom.</span><span class="ta">28 அக் மார்க்கெட் கேப் ஸ்னாப்ஷாட் (ப்ளூம்பெர்க்); ஏர்டெல் ~₹95.4/$-ல மாத்தியது <span class="dag">†</span>. விலை, கரன்சி மாறினா ரேங்க் மாறும் – #4, #5, #6 இடைவெளி $6 பில்லியனுக்குக் குறைவு.</span></div>
+ </div>
+ <div class="grid g2">
+  <div class="card">
+   <h3><span class="en">Why Jio is valued so differently</span><span class="ta">ஜியோ மதிப்பு ஏன் இவ்வளவு வித்தியாசம்</span></h3>
+   <div class="grid g3">
+    <div class="kpi"><div class="l"><span class="en">Global top-telco P/E</span><span class="ta">உலக டெலிகாம் P/E</span></div><div class="v">8–14×</div></div>
+    <div class="kpi"><div class="l"><span class="en">Bharti Airtel P/E</span><span class="ta">ஏர்டெல் P/E</span></div><div class="v">~41–46×</div></div>
+    <div class="kpi"><div class="l"><span class="en">Jio P/E</span><span class="ta">ஜியோ P/E</span></div><div class="v">~39–42×</div></div>
+   </div>
+   <ul class="en"><li>Global giants are mature, slow-growing, high-dividend utilities in saturated markets.</li><li>India still has under-monetised data users, low ARPU (~$2.3/month) and room for tariff hikes.</li><li>Jio grows EBITDA mid-teens with margins above 54% – closer to a growth stock than a utility.</li><li>The premium is the market paying for India's ARPU runway; it also means expectations are high.</li></ul>
+   <ul class="ta"><li>உலக பெரிய டெலிகாம்கள் – வளர்ச்சி குறைஞ்ச, டிவிடெண்ட் தர்ற முதிர்ந்த கம்பெனிகள்.</li><li>இந்தியாவுல ARPU இன்னும் குறைவு (~$2.3/மாசம்), கட்டணம் ஏற இடம் இருக்கு.</li><li>ஜியோ EBITDA 15%+ வளருது, மார்ஜின் 54%+ – யூட்டிலிட்டி இல்ல, வளர்ச்சி ஸ்டாக் மாதிரி.</li><li>இந்த பிரீமியம் ARPU வளர்ச்சிக்கு மார்க்கெட் கொடுக்குற விலை; எதிர்பார்ப்பும் அதிகம்.</li></ul>
+  </div>
+  <div class="card">
+   <h3><span class="en">Jio vs Bharti Airtel (latest reported quarters)</span><span class="ta">ஜியோ vs ஏர்டெல் (லேட்டஸ்ட் க்வார்ட்டர்)</span></h3>
+   <div class="tw"><table>
+    <tr><th><span class="en">Metric</span><span class="ta">அளவு</span></th><th>Jio Q2 FY27</th><th>Airtel Q1 FY27</th></tr>
+    <tr><td><span class="en">Mobile ARPU (₹)</span><span class="ta">மொபைல் ARPU (₹)</span></td><td>218.8</td><td>264</td></tr>
+    <tr><td><span class="en">India EBITDA margin</span><span class="ta">இந்தியா EBITDA மார்ஜின்</span></td><td>54.1%</td><td>60.1%</td></tr>
+    <tr><td><span class="en">India revenue (₹ cr)</span><span class="ta">இந்தியா வருமானம்</span></td><td>40,475</td><td>41,214</td></tr>
+    <tr><td><span class="en">India EBITDA (₹ cr)</span><span class="ta">இந்தியா EBITDA</span></td><td>21,879</td><td>24,781</td></tr>
+    <tr><td><span class="en">Market cap (28 Oct, ₹ L cr)</span><span class="ta">மார்க்கெட் கேப் (₹ லட்சம் கோடி)</span></td><td>13.05</td><td>12.16</td></tr>
+   </table></div>
+   <div class="note"><span class="en">Airtel's Q2 FY27 results were not yet out; its India business is compared with Jio (Airtel also owns Africa, so group values differ). Jio has ~17% lower ARPU – the gap is the tariff opportunity.</span><span class="ta">ஏர்டெல் Q2 FY27 இன்னும் வரல; இந்தியா பிசினஸ் மட்டும் ஒப்பீடு. ஜியோ ARPU ~17% குறைவு – அது தான் கட்டண உயர்வு வாய்ப்பு.</span></div>
+  </div>
+ </div>
+</section>
+
+<!-- IPO & LISTING -->
+<section class="tab" id="t-ipo">
+ <div class="card">
+  <h2><span class="en">IPO &amp; listing – India's largest IPO</span><span class="ta">IPO &amp; லிஸ்டிங் – இந்தியாவோட பெரிய IPO</span></h2>
+  <div class="grid g4">
+   <div class="kpi"><div class="l"><span class="en">Issue size (fresh issue only)</span><span class="ta">இஷ்யூ அளவு (புது ஷேர்ஸ் மட்டும்)</span></div><div class="v">₹30,188 cr</div><div class="c note">27 cr shares · ~2.9%</div></div>
+   <div class="kpi"><div class="l"><span class="en">Price band / issue price</span><span class="ta">விலை வரம்பு / இஷ்யூ விலை</span></div><div class="v">₹1,119</div><div class="c note">₹1,065–1,119</div></div>
+   <div class="kpi"><div class="l"><span class="en">Listing (28 Oct)</span><span class="ta">லிஸ்டிங் (28 அக்)</span></div><div class="v up">₹1,358</div><div class="c up">+21.4%</div></div>
+   <div class="kpi"><div class="l"><span class="en">Day-1 close</span><span class="ta">முதல் நாள் முடிவு</span></div><div class="v up">₹1,417.5</div><div class="c up">+26.7%</div></div>
+  </div>
+ </div>
+ <div class="grid g2">
+  <div class="card"><h3><span class="en">Subscription (times)</span><span class="ta">சப்ஸ்க்ரிப்ஷன் (மடங்கு)</span></h3><div class="cw"><div style="height:260px"><canvas id="cSubn"></canvas></div></div><div class="note"><span class="en">Anchor book ₹8,110 cr from 212 anchors (19 Oct). ₹2,500 cr reserved for RIL shareholders; ₹54 employee discount.</span><span class="ta">ஆங்கர் ₹8,110 கோடி, 212 பேர் (19 அக்). RIL ஷேர்ஹோல்டர்களுக்கு ₹2,500 கோடி ஒதுக்கீடு.</span></div></div>
+  <div class="card"><h3><span class="en">Shareholding – before and after (%) <span class="dag">†</span></span><span class="ta">ஷேர்ஹோல்டிங் – முன்/பின் (%) <span class="dag">†</span></span></h3><div class="cw"><div style="height:260px"><canvas id="cShp"></canvas></div></div><div class="note"><span class="en">Pre-IPO per DRHP (RIL 66.43, Meta 9.98, Google 7.73, PIF/KKR/Vista ~2.3 each, others). Post-issue derived by diluting for 27 cr new shares.</span><span class="ta">IPO முன் – DRHP படி. பின் – 27 கோடி புது ஷேர்ஸால கணக்கிட்டது.</span></div></div>
+ </div>
+ <div class="card">
+  <h3><span class="en">Use of proceeds &amp; dates to watch</span><span class="ta">பணம் எதுக்கு &amp; கவனிக்க வேண்டிய தேதிகள்</span></h3>
+  <div class="tw"><table class="tl">
+   <tr><th><span class="en">Item</span><span class="ta">விஷயம்</span></th><th><span class="en">Detail</span><span class="ta">விவரம்</span></th></tr>
+   <tr><td><span class="en">Debt prepayment</span><span class="ta">கடன் அடைப்பு</span></td><td><span class="en">₹27,500 cr – external commercial borrowings of Reliance Jio Infocomm</span><span class="ta">₹27,500 கோடி – RJIL வெளிநாட்டுக் கடன்</span></td></tr>
+   <tr><td><span class="en">General corporate purposes</span><span class="ta">பொது நோக்கம்</span></td><td><span class="en">Balance (~₹2,200 cr)</span><span class="ta">மீதி (~₹2,200 கோடி)</span></td></tr>
+   <tr><td><span class="en">Anchor lock-in (50%)</span><span class="ta">ஆங்கர் லாக்-இன் (50%)</span></td><td>25 Nov 2026 <span class="note">(est.)</span></td></tr>
+   <tr><td><span class="en">Anchor lock-in (balance)</span><span class="ta">ஆங்கர் லாக்-இன் (மீதி)</span></td><td>24 Jan 2027 <span class="note">(est.)</span></td></tr>
+   <tr><td><span class="en">Promoter lock-in</span><span class="ta">புரமோட்டர் லாக்-இன்</span></td><td><span class="en">18 months from allotment (est. Apr 2028)</span><span class="ta">அலாட்மென்ட்டிலிருந்து 18 மாசம் (தோராயம் ஏப் 2028)</span></td></tr>
+  </table></div>
+ </div>
+</section>
+
+<!-- FINANCIALS -->
+<section class="tab" id="t-fin">
+ <div class="card">
+  <h2><span class="en">Financial metrics – by category</span><span class="ta">நிதி அளவுகள் – வகை வாரியா</span></h2>
+  <div class="tw"><table id="metTbl"></table></div>
+ </div>
+ <div class="grid g2">
+  <div class="card"><h3><span class="en">Revenue, EBITDA &amp; PAT – 3 quarters</span><span class="ta">வருமானம், EBITDA, PAT – 3 க்வார்ட்டர்</span></h3><div class="cw"><div><canvas id="cTr"></canvas></div></div></div>
+  <div class="card"><h3><span class="en">EBITDA → PAT bridge, Q2 FY27 (₹ cr)</span><span class="ta">EBITDA → PAT பாலம் (₹ கோடி)</span></h3><div class="cw"><div><canvas id="cBr"></canvas></div></div></div>
+ </div>
+ <div class="card">
+  <h3><span class="en">Half-year (H1 FY27 vs H1 FY26)</span><span class="ta">அரை வருஷம் (H1 FY27 vs H1 FY26)</span></h3>
+  <div class="grid g4">
+   <div class="kpi"><div class="l"><span class="en">Revenue from ops</span><span class="ta">ஆபரேஷன் வருமானம்</span></div><div class="v">₹79,648 cr</div><div class="c up">+11.6%</div></div>
+   <div class="kpi"><div class="l">EBITDA</div><div class="v">₹42,744 cr</div><div class="c up">+15.9% · 53.7%</div></div>
+   <div class="kpi"><div class="l">PAT</div><div class="v">₹16,151 cr</div><div class="c up">+11.5%</div></div>
+   <div class="kpi"><div class="l">FCF (EBITDA − cash capex)</div><div class="v">₹32,130 cr</div><div class="c up">+98%</div></div>
+  </div>
+ </div>
+</section>
+
+<!-- CASH FLOW -->
+<section class="tab" id="t-cash">
+ <div class="card">
+  <h2><span class="en">Cash flow, capex &amp; working capital</span><span class="ta">கேஷ் ஃப்ளோ, கேபெக்ஸ் &amp; வொர்க்கிங் கேப்பிட்டல்</span></h2>
+  <div class="grid g4">
+   <div class="kpi"><div class="l"><span class="en">H1 FY27 cash capex <span class="dag">†</span></span><span class="ta">H1 கேபெக்ஸ் <span class="dag">†</span></span></div><div class="v">~₹10,614 cr</div><div class="c up"><span class="en">vs ~₹20,665 cr H1 FY26 (−49%)</span><span class="ta">H1 FY26 ~₹20,665 கோடி (−49%)</span></div></div>
+   <div class="kpi"><div class="l"><span class="en">FCF / EBITDA (H1)</span><span class="ta">FCF / EBITDA</span></div><div class="v">75%</div><div class="c up"><span class="en">vs 44% LY</span><span class="ta">போன வருஷம் 44%</span></div></div>
+   <div class="kpi"><div class="l"><span class="en">Debt to be prepaid</span><span class="ta">அடைக்கப்படும் கடன்</span></div><div class="v">₹27,500 cr</div></div>
+   <div class="kpi"><div class="l"><span class="en">Annual interest saving <span class="dag">†</span></span><span class="ta">வருஷ வட்டி சேமிப்பு <span class="dag">†</span></span></div><div class="v">~₹2,000 cr</div><div class="c note">@ ~7–7.5%</div></div>
+  </div>
+  <div class="cw" style="margin-top:10px"><div><canvas id="cCap"></canvas></div></div>
+ </div>
+ <div class="card">
+  <h3><span class="en">Working capital – how a telco is funded</span><span class="ta">வொர்க்கிங் கேப்பிட்டல் – டெலிகாம் எப்படி நிதியளிக்கப்படுது</span></h3>
+  <div class="tw"><table class="tl">
+   <tr><th><span class="en">Item</span><span class="ta">விஷயம்</span></th><th><span class="en">Jio's position</span><span class="ta">ஜியோ நிலை</span></th><th><span class="en">Effect on CFO</span><span class="ta">CFO பாதிப்பு</span></th></tr>
+   <tr><td><span class="en">Inventory days</span><span class="ta">இன்வென்டரி</span></td><td><span class="en">Negligible (devices/SIMs only)</span><span class="ta">கிட்டத்தட்ட இல்ல</span></td><td class="up">+</td></tr>
+   <tr><td><span class="en">Receivable days</span><span class="ta">ரிசீவபிள்</span></td><td><span class="en">Very low – ~90%+ prepaid mobile, cash upfront; enterprise has longer credit</span><span class="ta">ரொம்பக் குறைவு – பெரும்பாலும் ப்ரீபெய்டு, முன்கூட்டியே பணம்</span></td><td class="up">+</td></tr>
+   <tr><td><span class="en">Payables &amp; deferred revenue</span><span class="ta">பேயபிள்ஸ் &amp; முன்பண வருமானம்</span></td><td><span class="en">Vendor credit on network equipment; unexpired prepaid recharges sit as customer advances</span><span class="ta">நெட்வொர்க் சப்ளையர் கடன்; ரீசார்ஜ் முன்பணம்</span></td><td class="up">+</td></tr>
+   <tr><td><b><span class="en">Cash conversion cycle</span><span class="ta">கேஷ் கன்வர்ஷன் சைக்கிள்</span></b></td><td><span class="en">Structurally negative <span class="dag">†</span> (exact days not disclosed)</span><span class="ta">அமைப்பு ரீதியா மைனஸ் <span class="dag">†</span></span></td><td class="up"><span class="en">EBITDA converts almost fully to operating cash</span><span class="ta">EBITDA கிட்டத்தட்ட முழுசா கேஷா மாறும்</span></td></tr>
+  </table></div>
+  <div class="hl"><span class="en"><b>Link to CFO:</b> a tariff hike collected upfront on prepaid plans raises cash immediately – before it is even recognised as revenue. Watch for vendor-credit (capex creditor) run-down as 5G spending slows; that can temporarily reduce CFO even as EBITDA grows.</span><span class="ta"><b>CFO தொடர்பு:</b> ப்ரீபெய்டு கட்டண உயர்வு உடனே கேஷா வரும் – வருமானமா பதிவாகுறதுக்கு முன்னாடியே. 5G செலவு குறையுறப்போ சப்ளையர் கடன் அடைக்கப்படும் – EBITDA ஏறினாலும் CFO தற்காலிகமா குறையலாம்.</span></div>
+ </div>
+</section>
+
+<!-- VALUATIONS -->
+<section class="tab" id="t-val">
+ <div class="card">
+  <h2><span class="en">Valuation</span><span class="ta">மதிப்பீடு</span></h2>
+  <div class="grid g4">
+   <div class="kpi"><div class="l"><span class="en">Share price (30 Oct, approx.) <span class="dag">†</span></span><span class="ta">விலை (30 அக், தோராயம்) <span class="dag">†</span></span></div><div class="v">~₹1,410</div><div class="c note">M-cap ₹12.98 L cr</div></div>
+   <div class="kpi"><div class="l">P/E (Q2 × 4)</div><div class="v">~38.7×</div></div>
+   <div class="kpi"><div class="l">P/E (TTM) <span class="dag">†</span></div><div class="v">~40.9×</div><div class="c note">TTM PAT ₹31,715 cr</div></div>
+   <div class="kpi"><div class="l">M-cap / EBITDA (Q2 × 4)</div><div class="v">~14.8×</div><div class="c note"><span class="en">ex net debt (not disclosed)</span><span class="ta">நெட் டெப்ட் சேர்க்கல</span></div></div>
+   <div class="kpi"><div class="l">P/BV <span class="dag">†</span></div><div class="v">~3.5×</div><div class="c note"><span class="en">net worth ~₹3.72 L cr post-IPO</span><span class="ta">நிகர மதிப்பு ~₹3.72 லட்சம் கோடி</span></div></div>
+   <div class="kpi"><div class="l"><span class="en">ROE (annualised) <span class="dag">†</span></span><span class="ta">ROE <span class="dag">†</span></span></div><div class="v">~9.0%</div><div class="c note"><span class="en">large goodwill/spectrum base</span><span class="ta">பெரிய ஸ்பெக்ட்ரம் சொத்து</span></div></div>
+   <div class="kpi"><div class="l"><span class="en">Market cap in $</span><span class="ta">$ மதிப்பு</span></div><div class="v">~$136 bn</div></div>
+   <div class="kpi"><div class="l"><span class="en">Avg broker target</span><span class="ta">சராசரி டார்கெட்</span></div><div class="v dn">₹1,352</div><div class="c dn"><span class="en">below price</span><span class="ta">விலைக்குக் கீழ</span></div></div>
+  </div>
+  <div class="hl"><span class="en"><b>Read:</b> on day 1 the stock passed all three initiating targets. At ~39–41× earnings it prices in sustained ARPU growth (tariff hikes) and falling capex. The tariff-hike calculator on the Growth tab shows how a 15% hike would pull the P/E down toward ~30×.</span><span class="ta"><b>பார்வை:</b> முதல் நாளே மூணு ப்ரோக்கர் டார்கெட்டையும் தாண்டிடுச்சு. ~39–41× P/E – தொடர் ARPU ஏற்றம், குறையும் கேபெக்ஸ் எல்லாம் விலையில இருக்கு. 15% கட்டண உயர்வு வந்தா P/E ~30× நோக்கி வரும் – வளர்ச்சி டேப்ல கணக்கி பாருங்க.</span></div>
+ </div>
+</section>
+
+<!-- MARKET ACTIVITY -->
+<section class="tab" id="t-mkt">
+ <div class="card">
+  <h2><span class="en">Market activity – first three sessions</span><span class="ta">மார்க்கெட் நடவடிக்கை – முதல் மூணு நாள்</span></h2>
+  <div class="cw"><div style="height:260px"><canvas id="cPx"></canvas></div></div>
+  <div class="tw"><table class="tl">
+   <tr><th><span class="en">Date</span><span class="ta">தேதி</span></th><th><span class="en">Move</span><span class="ta">நகர்வு</span></th><th><span class="en">Reason</span><span class="ta">காரணம்</span></th></tr>
+   <tr><td>28 Oct</td><td class="up"><span class="en">List ₹1,358 → close ₹1,417.5 (+26.7% vs issue)</span><span class="ta">லிஸ்ட் ₹1,358 → முடிவு ₹1,417.5</span></td><td><span class="en">22× subscription, QIB 70.6×; scarcity of a large-cap telecom growth stock; GMP had signalled ~₹1,364</span><span class="ta">22 மடங்கு சப்ஸ்க்ரிப்ஷன், QIB 70.6×; GMP ~₹1,364 சொல்லிச்சு</span></td></tr>
+   <tr><td>29 Oct</td><td class="up"><span class="en">+4% early trade</span><span class="ta">காலை +4%</span></td><td><span class="en">Global top-5 ranking headlines; fund buying</span><span class="ta">உலக டாப்-5 செய்தி; ஃபண்ட் வாங்குதல்</span></td></tr>
+   <tr><td>30 Oct</td><td class="dn"><span class="en">M-cap slipped below ₹13 L cr (₹12.98 L cr)</span><span class="ta">₹13 லட்சம் கோடிக்கு கீழ</span></td><td><span class="en">Profit-taking ahead of results; price above all broker targets</span><span class="ta">ரிசல்ட் முன் லாப எடுப்பு; டார்கெட்டுக்கு மேல விலை</span></td></tr>
+   <tr><td>2 Nov</td><td class="fl"><span class="en">First reaction to results</span><span class="ta">ரிசல்ட்டுக்கு முதல் ரியாக்ஷன்</span></td><td><span class="en">Results came after market on 30 Oct; insider trading window reopens 1 Nov</span><span class="ta">30 அக் மார்க்கெட் முடிஞ்சதும் ரிசல்ட்</span></td></tr>
+  </table></div>
+ </div>
+</section>
+
+<!-- TRIGGERS & CYCLE -->
+<section class="tab" id="t-tc">
+ <div class="card">
+  <h2><span class="en">Triggers &amp; cycle</span><span class="ta">ட்ரிகர்ஸ் &amp; சைக்கிள்</span></h2>
+  <div class="grid g2">
+   <div style="overflow-x:auto"><svg id="clock" viewBox="0 0 360 340" style="width:100%;max-width:420px"></svg></div>
+   <div>
+    <div class="big">CY 63 · TG 66</div>
+    <ul class="en">
+     <li><b>Sector cycle 70 – Policy/regulated, P3 Expansion:</b> 3-player market, ARPU up-cycle (Jio +3.5%, Airtel ~+10% YoY), a ~15% industry tariff hike expected Nov–Dec 2026, 5G capex past its peak.</li>
+     <li><b>Stock cycle 56:</b> scaling (5G, homes, digital) 80 · margin at record 54.1% = near its high 40 · valuation – no history yet, in line with Airtel 55 · price stage – listed 3 days, no 30-week average → neutral 50.</li>
+     <li>No gate applies (no Stage 4, no cyclical P/E trap).</li>
+    </ul>
+    <ul class="ta">
+     <li><b>செக்டார் சைக்கிள் 70 – P3 விரிவாக்கம்:</b> 3 பேர் மார்க்கெட், ARPU ஏற்ற சைக்கிள், நவ–டிச 2026-ல ~15% கட்டண உயர்வு எதிர்பார்ப்பு, 5G கேபெக்ஸ் உச்சம் தாண்டிடுச்சு.</li>
+     <li><b>ஸ்டாக் சைக்கிள் 56:</b> விரிவடையுது 80 · மார்ஜின் சாதனை உச்சம் 40 · மதிப்பீடு – வரலாறு இல்ல 55 · விலை நிலை – 3 நாள் தான், நடுநிலை 50.</li>
+     <li>எந்த கேட்டும் இல்ல.</li>
+    </ul>
+   </div>
+  </div>
+ </div>
+ <div class="card">
+  <h3><span class="en">Trigger table (points = I × C × W × P)</span><span class="ta">ட்ரிகர் அட்டவணை</span></h3>
+  <div class="tw"><table id="trgTbl" class="tl"></table></div>
+  <div class="note"><span class="en">TG = 50 + 8 × (top-3 positives 5.50) − 8 × (negatives 3.56) = 66.</span><span class="ta">TG = 50 + 8 × 5.50 − 8 × 3.56 = 66.</span></div>
+ </div>
+ <div class="card"><h3><span class="en">Trigger timeline</span><span class="ta">ட்ரிகர் காலவரிசை</span></h3><div style="overflow-x:auto"><svg id="tline" viewBox="0 0 900 150" style="width:100%;min-width:700px"></svg></div></div>
+ <div class="card">
+  <h3><span class="en">What would change this view</span><span class="ta">இந்த பார்வையை எது மாத்தும்</span></h3>
+  <ul class="en"><li>No tariff hike by early 2027, or a hike that competitors don't follow.</li><li>Heavy selling at anchor lock-in expiry (25 Nov 2026, 24 Jan 2027).</li><li>A new capex cycle (6G, satellite, AI data centres) that reverses the free-cash-flow gains.</li></ul>
+  <ul class="ta"><li>2027 தொடக்கம் வரை கட்டண உயர்வு இல்லைன்னா, அல்லது போட்டியாளர்கள் பின்பற்றலைன்னா.</li><li>ஆங்கர் லாக்-இன் முடியும்போது (25 நவ, 24 ஜன) பெரிய விற்பனை.</li><li>6G, சாட்டிலைட், AI டேட்டா சென்டர் – புது கேபெக்ஸ் சைக்கிள் FCF-ஐ குறைச்சா.</li></ul>
+ </div>
+</section>
+
+<!-- SWOT -->
+<section class="tab" id="t-swot">
+ <div class="card"><h2>SWOT</h2><div class="grid g2">
+  <div class="card" style="border-left:5px solid var(--gr)"><h3><span class="en">Strengths</span><span class="ta">பலங்கள்</span></h3>
+   <ul class="en"><li>India's #1 operator: 542 mn customers, ~42% wireless share, ~60% of data traffic</li><li>Record 54.1% EBITDA margin; low 1.6% churn</li><li>Largest 5G base outside China; own indigenous network stack</li><li>FCF nearly doubled; IPO cash cuts debt</li></ul>
+   <ul class="ta"><li>இந்தியாவுல நம்பர் 1: 54 கோடி கஸ்டமர்ஸ், ~42% பங்கு, ~60% டேட்டா</li><li>சாதனை 54.1% மார்ஜின்; சர்ன் 1.6%</li><li>சீனா தவிர பெரிய 5G நெட்வொர்க்; சொந்த தொழில்நுட்பம்</li><li>FCF இரட்டிப்பு; IPO பணத்தால கடன் குறைவு</li></ul></div>
+  <div class="card" style="border-left:5px solid var(--rd)"><h3><span class="en">Weaknesses</span><span class="ta">பலவீனங்கள்</span></h3>
+   <ul class="en"><li>ARPU ~17% below Airtel</li><li>Higher D&amp;A and interest after 5G capitalisation slow PAT growth</li><li>Fixed-broadband promotions dilute ARPU</li><li>Tiny free float (~3%) – liquidity and index-weight limits</li></ul>
+   <ul class="ta"><li>ARPU ஏர்டெல்லை விட ~17% குறைவு</li><li>5G-க்கு அப்புறம் D&amp;A, வட்டி ஏறி PAT வளர்ச்சி மெதுவு</li><li>பிராட்பேண்ட் சலுகைகள் ARPU-ஐ குறைக்குது</li><li>ஃப்ரீ ஃப்ளோட் ~3% தான்</li></ul></div>
+  <div class="card" style="border-left:5px solid var(--bl)"><h3><span class="en">Opportunities</span><span class="ta">வாய்ப்புகள்</span></h3>
+   <ul class="en"><li>Industry tariff hikes (~15% expected Nov–Dec 2026)</li><li>Home broadband (AirFiber) – India's under-penetrated homes</li><li>Enterprise, cloud, AI services, tech licensing abroad</li><li>Satellite communications and 6G IP</li></ul>
+   <ul class="ta"><li>கட்டண உயர்வு (~15%, நவ–டிச 2026)</li><li>ஹோம் பிராட்பேண்ட் – இன்னும் நிறைய வீடுகள்</li><li>என்டர்பிரைஸ், கிளவுட், AI, வெளிநாட்டு லைசென்சிங்</li><li>சாட்டிலைட், 6G</li></ul></div>
+  <div class="card" style="border-left:5px solid var(--am)"><h3><span class="en">Threats</span><span class="ta">அச்சுறுத்தல்கள்</span></h3>
+   <ul class="en"><li>Regulatory action (spectrum pricing, tariffs, AGR-type dues)</li><li>Satellite broadband entrants</li><li>Valuation already 3–5× global telco multiples</li><li>Lock-in expiries; related-party dealings with RIL now scrutinised by minorities</li></ul>
+   <ul class="ta"><li>ஒழுங்குமுறை நடவடிக்கை (ஸ்பெக்ட்ரம், கட்டணம்)</li><li>சாட்டிலைட் பிராட்பேண்ட் போட்டி</li><li>உலக டெலிகாம் மதிப்பை விட 3–5 மடங்கு</li><li>லாக்-இன் முடிவு; RIL-ஓட டீலிங்ஸ் மேல கவனம்</li></ul></div>
+ </div></div>
+</section>
+
+<!-- ANALYSTS -->
+<section class="tab" id="t-ana">
+ <div class="card">
+  <h2><span class="en">Analysts' rating (third-party views)</span><span class="ta">அனலிஸ்ட் ரேட்டிங் (வெளி நிறுவனங்கள்)</span></h2>
+  <div class="hl"><span class="en">Initiations on listing day (28 Oct 2026). Post-results notes awaited. All three targets are below the current ~₹1,410. Nomura, while positive on Jio, prefers Bharti Airtel. CB Research does not issue ratings.</span><span class="ta">லிஸ்டிங் நாள் (28 அக்) கவரேஜ். ரிசல்ட் பின் ரிப்போர்ட் இன்னும் வரல. மூணு டார்கெட்டும் ~₹1,410-க்கு கீழ. நோமுரா ஏர்டெல்லை விரும்புது. CB Research ரேட்டிங் தராது.</span></div>
+  <div class="tw"><table id="anaTbl"></table></div>
+  <div class="note"><span class="en">ICICI Securities had earlier pegged Jio's value at ~$148 bn by 2027 (pre-IPO).</span><span class="ta">ICICI Securities முன்னாடி 2027-க்குள் ~$148 பில்லியன்னு மதிப்பிட்டது.</span></div>
+ </div>
+</section>
+
+<!-- SELF-CHECK -->
+<section class="tab" id="t-self">
+ <div class="card">
+  <h2><span class="en">CB Investor Self-check</span><span class="ta">CB முதலீட்டாளர் சுய சோதனை</span></h2>
+  <div class="note"><span class="en">This only counts how many of your own conditions line up. It is not a recommendation.</span><span class="ta">உங்க சொந்த நிபந்தனைகள்ல எத்தனை பொருந்துதுன்னு மட்டும் எண்ணுது. இது பரிந்துரை இல்ல.</span></div>
+  <div style="margin:8px 0"><div class="bar"><i id="scAll"></i></div><div class="note" id="scAllT"></div></div>
+  <div id="scBox"></div>
+  <button class="pill" onclick="scClear()"><span class="en">Clear</span><span class="ta">அழி</span></button>
+ </div>
+</section>
+
+<!-- MANAGEMENT -->
+<section class="tab" id="t-mgmt">
+ <div class="card">
+  <h2><span class="en">Management &amp; Board</span><span class="ta">நிர்வாகம் &amp; போர்டு</span></h2>
+  <div class="tw"><table class="tl">
+   <tr><th><span class="en">Name</span><span class="ta">பெயர்</span></th><th><span class="en">Role</span><span class="ta">பொறுப்பு</span></th></tr>
+   <tr><td>Mukesh D. Ambani</td><td><span class="en">Chairman, Non-executive Director</span><span class="ta">சேர்மன், நான்-எக்ஸிகியூட்டிவ் டைரக்டர்</span></td></tr>
+   <tr><td>Akash M. Ambani</td><td><span class="en">Managing Director (5 years from 9 Apr 2026); Chairman, RJIL since 2022</span><span class="ta">மேனேஜிங் டைரக்டர் (9 ஏப் 2026 முதல் 5 வருஷம்)</span></td></tr>
+   <tr><td>Isha M. Ambani · Anant M. Ambani · Manoj H. Modi</td><td><span class="en">Non-executive Directors</span><span class="ta">நான்-எக்ஸிகியூட்டிவ் டைரக்டர்ஸ்</span></td></tr>
+   <tr><td>Zia J. Mody</td><td><span class="en">Independent Director (co-founder, AZB &amp; Partners)</span><span class="ta">இண்டிபெண்டென்ட் டைரக்டர்</span></td></tr>
+   <tr><td>Pankaj M. Pawar</td><td><span class="en">CEO (since 24 Mar 2026); MD, Reliance Jio Infocomm</span><span class="ta">CEO (24 மார் 2026 முதல்); MD, RJIL</span></td></tr>
+  </table></div>
+  <div class="note"><span class="en"><span class="dag">†</span> Board of 10 per DRHP/May 2026 disclosures; other independent directors per the prospectus. Former CEO Kiran Thomas stepped down on 23 Mar 2026.</span><span class="ta"><span class="dag">†</span> DRHP படி 10 பேர் போர்டு. முன்னாள் CEO கிரண் தாமஸ் 23 மார் 2026 விலகினார்.</span></div>
+  <div class="hl"><span class="en"><b>Governance read:</b> promoter RIL ~64.5%; Meta and Google are strategic shareholders (~17%). As a new listed company Jio must now balance minority interests in its dealings with RIL (retail, JioStar content, spectrum and network sharing).</span><span class="ta"><b>நிர்வாகப் பார்வை:</b> RIL ~64.5%; மெட்டா, கூகுள் ~17%. புது லிஸ்டட் கம்பெனியா, RIL-ஓட டீலிங்ஸ்ல மைனாரிட்டி நலனையும் பார்க்கணும்.</span></div>
+ </div>
+</section>
+
+<!-- SOCRATES -->
+<section class="tab" id="t-soc">
+ <div class="card">
+  <h2><span class="en">Cauvery Socrates – test your understanding</span><span class="ta">காவேரி சாக்ரடீஸ் – உங்க புரிதலை சோதிங்க</span></h2>
+  <div id="socBox"></div><div class="big" id="socScore"></div>
+  <h3 style="margin-top:12px"><span class="en">Think it through</span><span class="ta">யோசிங்க</span></h3>
+  <p class="en">Jio trades at ~40× earnings while AT&amp;T and Verizon trade at 8–14×. What has to happen over the next three years for that premium to be justified?</p>
+  <p class="ta">ஜியோ ~40× P/E-ல, AT&amp;T, வெரைசன் 8–14×-ல. அந்த பிரீமியம் நியாயமாக அடுத்த மூணு வருஷத்துல என்ன நடக்கணும்?</p>
+  <textarea id="socFree" style="width:100%;min-height:80px;border:1px solid var(--line);border-radius:9px;padding:8px"></textarea>
+  <button class="pill" onclick="socFree()"><span class="en">Get a nudge</span><span class="ta">ஒரு குறிப்பு</span></button>
+  <div class="explain" id="socHint"></div>
+ </div>
+</section>
+</main>
+
+<div id="cbbadge" onclick="var d=document.getElementById('disc');d.style.display=d.style.display=='block'?'none':'block'">CB</div>
+<div id="disc"><b>CB Research · Cauvery Business Research</b><br><span class="en">Prepared by CB Research for educational purposes only. CB Research is not a SEBI-registered research analyst or investment adviser; nothing here is a recommendation to buy, sell, hold or apply. Figures are from company disclosures of 30 Oct 2026, the IPO documents and exchange data; items marked † are CB derivations or estimates. Global rankings are market-cap snapshots and change daily. Broker ratings are third-party views.</span><span class="ta">CB Research கல்வி நோக்கத்துக்காக மட்டும். SEBI பதிவு பெற்ற அனலிஸ்ட்/அட்வைசர் இல்ல; வாங்க/விக்க பரிந்துரை இல்ல. நம்பர்ஸ் – 30 அக் 2026 கம்பெனி வெளியீடு, IPO ஆவணங்கள்; † – CB கணக்கீடு. உலக ரேங்க் தினமும் மாறும்.</span></div>
+<button id="asstbtn" onclick="toggleAsst()">🎙 CB Assist</button>
+<div id="asst">
+ <div class="hd"><span>CB Assist · Jio Q2 FY27</span><span style="cursor:pointer" onclick="toggleAsst()">✕</span></div>
+ <div id="alog"></div>
+ <div class="ft"><button class="mic" id="micb" onclick="mic()">🎙</button><input id="ain" placeholder="Ask… e.g. global rank, ARPU" onkeydown="if(event.key=='Enter')ask()"><button onclick="ask()">➤</button></div>
+</div>
+
+<script>
+var CO={name:"Jio Platforms Ltd",nse:"JPL",bse:"545004",quarter:"Q2FY27",resultDate:"2026-10-30",listDate:"2026-10-28",
+ q:{q2fy27:{gross:47485,ops:40475,ebitda:21879,da:7611,fin:3009,pat:8387},q1fy27:{gross:45961,ops:39173,ebitda:20865,da:null,fin:null,pat:7764},q2fy26:{gross:42652,ops:36332,ebitda:18757,da:null,fin:null,pat:7379}},
+ h1:{fy27:{ops:79648,ebitda:42744,pat:16151,fcf:32130},fy26:{ops:71364,ebitda:36892,pat:14485,fcf:16227}},
+ kpi:{subs:[542.4,533.3,506.4],arpu:[218.8,215.6,211.4],churn:[1.6,1.6,1.9],data:[71.3,69.4,58.4],gbpu:[44.2,null,38.7],g5:[300,285,234],fbb:[30,28.6,22.7],airfiber:15.1},
+ shares:920.9,price:1410,mcap:1298335,usd:95.4,
+ global:[["China Mobile","China",220.3],["Verizon","USA",182.1],["T-Mobile US","USA",157.5],["AT&T","USA",141.1],["Jio Platforms","India",137.3],["Deutsche Telekom","Germany",135.5],["Bharti Airtel","India",127.5]],
+ cycle:{sectorPhase:"Telecom P3 Expansion",stockStage:"Too new (n/a)",sector:70,stock:56,cy:63},
+ triggers:[
+  {name:"FCF up as 5G capex falls (H1 FCF +98%)",sign:"+",I:3,C:1.0,W:1.0,P:0.7,pts:2.10,status:"Executing",date:"2026-10-30"},
+  {name:"₹27,500 cr debt prepayment from IPO",sign:"+",I:2,C:1.0,W:1.0,P:1.0,pts:2.00,status:"Approved",date:"2026-10-28"},
+  {name:"Home broadband / AirFiber scale-up",sign:"+",I:2,C:1.0,W:0.7,P:1.0,pts:1.40,status:"Executing",date:"2026-10-30"},
+  {name:"Industry tariff hike ~15% (Nov–Dec 2026, Nomura view)",sign:"+",I:4,C:0.4,W:1.0,P:0.7,pts:1.12,status:"Watch",date:"2026-10-28"},
+  {name:"Index inclusion (Nifty/MSCI) after listing",sign:"+",I:2,C:0.4,W:1.0,P:1.0,pts:0.80,status:"Watch",date:"—"},
+  {name:"Anchor lock-in expiries (25 Nov 2026, 24 Jan 2027)",sign:"-",I:2,C:1.0,W:1.0,P:1.0,pts:2.00,status:"Announced",date:"2026-11-25"},
+  {name:"Fixed-broadband promotions diluting ARPU",sign:"-",I:1,C:1.0,W:1.0,P:1.0,pts:1.00,status:"Executing",date:"2026-10-30"},
+  {name:"Regulatory / satellite competition",sign:"-",I:2,C:0.4,W:0.7,P:1.0,pts:0.56,status:"Watch",date:"—"}],
+ tg:66,cbScore:7.1};
+var LANG='en';
+function L(e,t){return LANG=='ta'?t:e}
+function f(n){return n==null?'n.d.':Number(n).toLocaleString('en-IN')}
+function pct(a,b){if(a==null||b==null)return null;return (a/b-1)*100}
+function pc(v){if(v==null)return '<span class="note">n.d.</span>';return '<span class="'+(v>=0?'up':'dn')+'">'+(v>=0?'+':'')+v.toFixed(1)+'%</span>'}
+var TABS=[["overview","Overview","கண்ணோட்டம்"],["gm","Growth & Margins","வளர்ச்சி & மார்ஜின்"],["model","Business Model","பிசினஸ் மாடல்"],["kpi","Operating KPIs","செயல்பாட்டு அளவு"],["global","Global Rank #5","உலக ரேங்க் #5"],["ipo","IPO & Listing","IPO & லிஸ்டிங்"],["fin","Financials","நிதி"],["cash","Cash Flow & WC","கேஷ் ஃப்ளோ"],["val","Valuations","மதிப்பீடு"],["mkt","Market Activity","மார்க்கெட்"],["tc","Triggers & Cycle","ட்ரிகர் & சைக்கிள்"],["swot","SWOT","SWOT"],["ana","Analysts' Rating","அனலிஸ்ட்"],["self","Self-check","சுய சோதனை"],["mgmt","Management & Board","நிர்வாகம்"],["soc","Cauvery Socrates","சாக்ரடீஸ்"]];
+function buildNav(){var n=document.getElementById('nav');n.innerHTML='';TABS.forEach(function(t){var b=document.createElement('button');b.textContent=L(t[1],t[2]);b.id='nb-'+t[0];if(document.getElementById('t-'+t[0]).classList.contains('on'))b.classList.add('on');b.onclick=function(){show(t[0])};n.appendChild(b)})}
+function show(id){document.querySelectorAll('.tab').forEach(function(s){s.classList.remove('on')});document.getElementById('t-'+id).classList.add('on');document.querySelectorAll('nav button').forEach(function(b){b.classList.remove('on')});document.getElementById('nb-'+id).classList.add('on');window.scrollTo(0,0);if(id=='overview')animTemple()}
+function toggleLang(){LANG=LANG=='en'?'ta':'en';document.body.classList.toggle('lang-ta',LANG=='ta');document.getElementById('lb').textContent=LANG=='en'?'தமிழ்':'English';renderAll()}
+
+function renderKpis(){var a=CO.q.q2fy27,q=CO.q.q1fy27,p=CO.q.q2fy26;var K=[[L('Revenue from operations','ஆபரேஷன் வருமானம்'),a.ops,pct(a.ops,p.ops),pct(a.ops,q.ops),''],['EBITDA',a.ebitda,pct(a.ebitda,p.ebitda),pct(a.ebitda,q.ebitda),L('margin ','மார்ஜின் ')+'54.1%'],['PAT',a.pat,pct(a.pat,p.pat),pct(a.pat,q.pat),L('margin ','மார்ஜின் ')+(a.pat/a.ops*100).toFixed(1)+'%'],['ARPU',null,3.5,1.5,'₹218.8']];
+ document.getElementById('kpis').innerHTML=K.map(function(k){return '<div class="kpi"><div class="l">'+k[0]+'</div><div class="v">'+(k[1]!=null?'₹'+f(k[1])+' cr':k[4])+'</div><div class="c">YoY '+pc(k[2])+' · QoQ '+pc(k[3])+(k[1]!=null&&k[4]?' · '+k[4]:'')+'</div></div>'}).join('')}
+function renderCons(){var a=CO.q.q2fy27,q=CO.q.q1fy27,p=CO.q.q2fy26;var pbt=a.ebitda-a.da-a.fin,tax=pbt-a.pat;
+ var R=[[L('Gross revenue','மொத்த வருமானம்'),'gross'],[L('Revenue from operations','ஆபரேஷன் வருமானம்'),'ops'],['EBITDA','ebitda'],[L('Depreciation & amortisation','டிப்ரிசியேஷன்'),'da'],[L('Finance cost','வட்டி'),'fin']];
+ var h='<tr><th>₹ cr</th><th>Q2 FY27</th><th>Q1 FY27</th><th>Q2 FY26</th><th>YoY</th><th>QoQ</th></tr>';
+ R.forEach(function(r){h+='<tr><td>'+r[0]+'</td><td><b>'+f(a[r[1]])+'</b></td><td>'+f(q[r[1]])+'</td><td>'+f(p[r[1]])+'</td><td>'+pc(pct(a[r[1]],p[r[1]]))+'</td><td>'+pc(pct(a[r[1]],q[r[1]]))+'</td></tr>'});
+ h+='<tr><td>PBT †</td><td><b>'+f(pbt)+'</b></td><td>n.d.</td><td>n.d.</td><td></td><td></td></tr><tr><td>'+L('Tax †','வரி †')+'</td><td><b>'+f(tax)+'</b></td><td>n.d.</td><td>n.d.</td><td></td><td></td></tr>';
+ h+='<tr><td>PAT</td><td><b>'+f(a.pat)+'</b></td><td>'+f(q.pat)+'</td><td>'+f(p.pat)+'</td><td>'+pc(pct(a.pat,p.pat))+'</td><td>'+pc(pct(a.pat,q.pat))+'</td></tr>';
+ h+='<tr><td>'+L('EBITDA margin','EBITDA மார்ஜின்')+'</td><td><b>54.1%</b></td><td>53.3%</td><td>51.6%</td><td colspan=2 class="up">+250 bps YoY</td></tr>';
+ h+='<tr><td>'+L('PAT margin','PAT மார்ஜின்')+'</td><td><b>'+(a.pat/a.ops*100).toFixed(1)+'%</b></td><td>'+(q.pat/q.ops*100).toFixed(1)+'%</td><td>'+(p.pat/p.ops*100).toFixed(1)+'%</td><td colspan=2 class="up">+40 bps YoY</td></tr>';
+ h+='<tr><td>EPS (₹) †</td><td><b>'+(a.pat/CO.shares).toFixed(2)+'</b></td><td>'+(q.pat/CO.shares).toFixed(2)+'</td><td>'+(p.pat/CO.shares).toFixed(2)+'</td><td>'+pc(pct(a.pat,p.pat))+'</td><td>'+pc(pct(a.pat,q.pat))+'</td></tr>';
+ document.getElementById('consTbl').innerHTML=h}
+
+var PIL=[{k:"Growth",ta:"வளர்ச்சி",s:7.5,en:"Operating revenue +11.4%, EBITDA +16.6%, PAT +13.7%; customers +7.1%, ARPU +3.5%, digital +16%.",tx:"வருமானம் +11.4%, EBITDA +16.6%, PAT +13.7%; கஸ்டமர் +7.1%, ARPU +3.5%."},
+ {k:"Margins",ta:"மார்ஜின்",s:9.0,en:"Record 54.1% EBITDA margin (+250 bps); ~75% incremental margin; PAT margin 20.7%.",tx:"சாதனை 54.1% மார்ஜின்; கூடுதல் வருமானத்துல ~75% EBITDA."},
+ {k:"Debt",ta:"கடன்",s:8.0,en:"H1 FCF ₹32,130 cr (+98%); ₹27,500 cr IPO debt prepayment; interest cover ~7×.",tx:"H1 FCF ₹32,130 கோடி (+98%); ₹27,500 கோடி கடன் அடைப்பு."},
+ {k:"Valuation",ta:"மதிப்பீடு",s:4.5,en:"~39–41× P/E vs 8–14× for global telcos and ~41–46× for Airtel; above all three broker targets.",tx:"~39–41× P/E; உலக டெலிகாம் 8–14×; மூணு டார்கெட்டுக்கும் மேல விலை."},
+ {k:"Triggers",ta:"ட்ரிகர்ஸ்",s:6.5,en:"CY 63 / TG 66 – FCF, deleveraging, possible tariff hike vs lock-in expiries.",tx:"CY 63 / TG 66 – FCF, கடன் குறைப்பு, கட்டண உயர்வு vs லாக்-இன்."},
+ {k:"Risk",ta:"ரிஸ்க்",s:7.0,en:"Domestic, subscription-led and insulated from commodity cycles; regulatory and competition risks remain.",tx:"உள்நாட்டு சப்ஸ்க்ரிப்ஷன் – கமாடிட்டி பாதிப்பில்ல; ஒழுங்குமுறை ரிஸ்க் இருக்கு."}];
+function colr(s){return s>=8?'#1f9d55':s>=6?'#d99a00':'#d0372d'}
+function drawTemple(){var avg=(PIL.reduce(function(a,p){return a+p.s},0)/6).toFixed(1);var h='<polygon points="320,10 40,95 600,95" fill="#e8730c"/><text x="320" y="58" text-anchor="middle" fill="#fff" font-size="15" font-weight="700">CB SCORE</text><text x="320" y="84" text-anchor="middle" fill="#fff" font-size="24" font-weight="800">'+avg+' / 10</text><rect x="40" y="95" width="560" height="28" fill="#ffd2a6"/><text x="320" y="114" text-anchor="middle" font-size="14" font-weight="700" fill="#7a3a00">Jio Platforms · Q2 FY27</text>';
+ PIL.forEach(function(p,i){var x=62+i*90;h+='<g class="col" onclick="pilHit('+i+')"><rect x="'+x+'" y="128" width="46" height="190" rx="6" fill="#fff4e6" stroke="#e7c9a6"/>';for(var j=1;j<4;j++)h+='<line x1="'+(x+j*11.5)+'" y1="130" x2="'+(x+j*11.5)+'" y2="316" stroke="#f1dcc2"/>';h+='<rect class="fill" data-s="'+p.s+'" x="'+(x+3)+'" y="316" width="40" height="0" rx="4" fill="'+colr(p.s)+'" opacity=".85"/><circle cx="'+(x+23)+'" cy="150" r="16" fill="#fff" stroke="'+colr(p.s)+'" stroke-width="3"/><text x="'+(x+23)+'" y="155" text-anchor="middle" font-size="12" font-weight="700">'+p.s+'</text></g><text x="'+(x+23)+'" y="365" text-anchor="middle" font-size="12.5" font-weight="600" fill="#6b3a10">'+L(p.k,p.ta)+'</text>'});
+ h+='<rect x="30" y="320" width="580" height="12" fill="#f0c99c"/><rect x="18" y="332" width="604" height="12" fill="#e7b582"/>';document.getElementById('temple').innerHTML=h;
+ document.getElementById('pillarCards').innerHTML=PIL.map(function(p,i){return '<div class="card pcard" id="pc'+i+'" style="border-left-color:'+colr(p.s)+'"><b>'+L(p.k,p.ta)+' – '+p.s+'/10</b><div>'+L(p.en,p.tx)+'</div></div>'}).join('');animTemple()}
+function animTemple(){document.querySelectorAll('#temple .fill').forEach(function(r){var s=+r.dataset.s,t=0;var iv=setInterval(function(){t+=0.05;var hh=Math.min(t,1)*s/10*184;r.setAttribute('height',hh);r.setAttribute('y',316-hh);if(t>=1)clearInterval(iv)},25)})}
+function pilHit(i){document.querySelectorAll('.pcard').forEach(function(c){c.classList.remove('hit')});var c=document.getElementById('pc'+i);c.classList.add('hit');c.scrollIntoView({behavior:'smooth',block:'center'})}
+
+function renderGM(){var a=CO.q.q2fy27,q=CO.q.q1fy27,p=CO.q.q2fy26;var ebit=a.ebitda-a.da,pbt=ebit-a.fin;
+ var rows=[[L('Revenue from operations','ஆபரேஷன் வருமானம்'),f(a.ops),pc(pct(a.ops,p.ops)),pc(pct(a.ops,q.ops)),'+11.6%','—'],
+  [L('Gross revenue','மொத்த வருமானம்'),f(a.gross),pc(pct(a.gross,p.gross)),pc(pct(a.gross,q.gross)),'—','—'],
+  [L('Operating costs †','செலவு †'),f(a.ops-a.ebitda),pc(pct(a.ops-a.ebitda,p.ops-p.ebitda)),pc(pct(a.ops-a.ebitda,q.ops-q.ebitda)),'—',((a.ops-a.ebitda)/a.ops*100).toFixed(1)+'%'],
+  ['EBITDA',f(a.ebitda),pc(pct(a.ebitda,p.ebitda)),pc(pct(a.ebitda,q.ebitda)),'+15.9%','<b>54.1%</b> <span class="note">(51.6 · 53.3)</span>'],
+  [L('EBITDA on gross revenue','மொத்த வருமானத்துல EBITDA'),'—','—','—','—',(a.ebitda/a.gross*100).toFixed(1)+'% <span class="note">('+(p.ebitda/p.gross*100).toFixed(1)+')</span>'],
+  ['EBIT †',f(ebit),'n.d.','n.d.','—','<b>'+(ebit/a.ops*100).toFixed(1)+'%</b>'],
+  ['PBT †',f(pbt),'n.d.','n.d.','—','<b>'+(pbt/a.ops*100).toFixed(1)+'%</b>'],
+  ['PAT',f(a.pat),pc(pct(a.pat,p.pat)),pc(pct(a.pat,q.pat)),'+11.5%','<b>'+(a.pat/a.ops*100).toFixed(1)+'%</b> <span class="note">('+(p.pat/p.ops*100).toFixed(1)+' · '+(q.pat/q.ops*100).toFixed(1)+')</span>'],
+  [L('D&A + interest as % of EBITDA','D&A + வட்டி / EBITDA'),'—','—','—','—',((a.da+a.fin)/a.ebitda*100).toFixed(1)+'%'],
+  [L('Effective tax rate †','வரி விகிதம் †'),'—','—','—','—',((pbt-a.pat)/pbt*100).toFixed(1)+'%']];
+ var h='<tr><th>₹ cr</th><th>Q2 FY27</th><th>YoY</th><th>QoQ</th><th>H1 YoY</th><th>'+L('Margin (Q2 FY26 · Q1 FY27)','மார்ஜின் (Q2 FY26 · Q1 FY27)')+'</th></tr>';
+ rows.forEach(function(r){h+='<tr><td>'+r[0]+'</td><td><b>'+r[1]+'</b></td><td>'+r[2]+'</td><td>'+r[3]+'</td><td>'+r[4]+'</td><td>'+r[5]+'</td></tr>'});
+ document.getElementById('gmTbl').innerHTML=h}
+
+var BM={cust:["Customers","வாடிக்கையாளர்கள்","542.4 mn mobile customers (300 mn on 5G), 30 mn homes, enterprises and small businesses across India.","54.24 கோடி மொபைல் (30 கோடி 5G), 3 கோடி வீடுகள், என்டர்பிரைஸ்."],
+ chan:["Channels","வழிகள்","Retail recharge network, MyJio app, Reliance Retail/JioMart stores, enterprise sales force, device bundles (JioBharat).","ரீசார்ஜ் கடைகள், MyJio ஆப், ரிலையன்ஸ் ரீடெயில் ஸ்டோர்கள், என்டர்பிரைஸ் விற்பனை."],
+ jpl:["Jio Platforms","ஜியோ பிளாட்ஃபார்ம்ஸ்","Listed holding company (RIL ~64.5%, Meta ~9.7%, Google ~7.5%). Owns Reliance Jio Infocomm and digital, AI, satellite and app businesses.","லிஸ்டட் ஹோல்டிங் கம்பெனி (RIL ~64.5%, மெட்டா ~9.7%, கூகுள் ~7.5%). RJIL, டிஜிட்டல், AI, சாட்டிலைட்."],
+ mob:["Mobility (4G/5G)","மொபிலிட்டி","Core engine: 542.4 mn × ₹218.8 ARPU. 9.1 mn net adds; churn 1.6%; 44.2 GB per user per month; 5G carries ~56% of traffic.","முக்கிய இன்ஜின்: 54.24 கோடி × ₹218.8. மாசம் 44.2 GB/யூஸர்; சர்ன் 1.6%."],
+ home:["Homes – JioFiber/AirFiber","வீடுகள்","30 mn fixed broadband homes (+7.3 mn YoY); AirFiber 15.1 mn and >75% of additions. Promotions currently dilute ARPU.","3 கோடி வீடுகள் (+73 லட்சம்); AirFiber 1.51 கோடி. சலுகைகள் ARPU-ஐ குறைக்குது."],
+ ent:["Enterprise","என்டர்பிரைஸ்","Connectivity, cloud, IoT and security for businesses and government; part of connectivity revenue (+11%).","நிறுவனங்களுக்கு கனெக்டிவிட்டி, கிளவுட், IoT."],
+ dig:["Digital services","டிஜிட்டல் சேவைகள்","Apps, platforms, AI services and technology licensing; revenue +16% YoY – the fastest-growing line.","ஆப்ஸ், AI, தொழில்நுட்ப லைசென்சிங்; +16%."],
+ fut:["Satellite · 6G · AI","சாட்டிலைட் · 6G · AI","Management priorities: satellite communications, 6G intellectual property and AI embedded in voice and data services.","நிர்வாக முன்னுரிமை: சாட்டிலைட், 6G, AI."],
+ rev:["Revenue","வருமானம்","Q2 revenue from operations ₹40,475 cr (+11.4%); gross ₹47,485 cr (+11.3%).","ஆபரேஷன் வருமானம் ₹40,475 கோடி (+11.4%)."],
+ cost:["Costs","செலவுகள்","Network operations, licence fee &amp; spectrum charges, interconnect, staff, marketing ≈ ₹18,596 cr; then D&amp;A ₹7,611 cr and interest ₹3,009 cr.","நெட்வொர்க், லைசென்ஸ், ஸ்பெக்ட்ரம், ஊழியர் ≈ ₹18,596 கோடி; D&amp;A ₹7,611, வட்டி ₹3,009."],
+ prof:["Profit ₹8,387 cr","லாபம் ₹8,387 கோடி","PAT margin 20.7%. Shared by RIL (~64.5%), Meta, Google, PE/sovereign funds and new public shareholders.","PAT மார்ஜின் 20.7%. RIL, மெட்டா, கூகுள், ஃபண்டுகள், புது பொதுமக்கள்."]};
+function box(id,x,y,w,h,fill,lab){return '<g class="mbox" onclick="bmTap(\''+id+'\')"><rect x="'+x+'" y="'+y+'" width="'+w+'" height="'+h+'" rx="10" fill="'+fill+'" stroke="#7a3a00" stroke-width="1.2"/><text x="'+(x+w/2)+'" y="'+(y+h/2+5)+'" text-anchor="middle" font-size="13" font-weight="700" fill="#2b2118">'+lab+'</text></g>'}
+function arr(x1,y1,x2,y2){return '<line x1="'+x1+'" y1="'+y1+'" x2="'+x2+'" y2="'+y2+'" stroke="#c48a55" stroke-width="2" marker-end="url(#ah)"/>'}
+function drawBM(){var g=function(k){return L(BM[k][0],BM[k][1])};var h='<defs><marker id="ah" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#c48a55"/></marker></defs>';
+ h+=box('cust',20,230,140,60,'#fff1c7',g('cust'))+arr(160,260,190,260)+box('chan',190,230,140,60,'#ffe6cc',g('chan'))+arr(330,260,370,260)+box('jpl',370,220,170,80,'#ffb168',g('jpl'));
+ var segs=[['mob',30,'#cfe0f5',L('Mobility · 542 mn','மொபிலிட்டி · 54 கோடி')],['home',115,'#d6f0df',L('Homes · 30 mn','வீடுகள் · 3 கோடி')],['ent',200,'#e6dbf4',g('ent')],['dig',285,'#fff1c7',L('Digital · +16%','டிஜிட்டல் · +16%')],['fut',370,'#d3f0ef',g('fut')]];
+ segs.forEach(function(s){h+=arr(540,260,580,s[1]+30)+box(s[0],580,s[1],240,60,s[2],s[3])+arr(820,s[1]+30,850,260)});
+ h+=box('rev',850,130,140,60,'#ffe6cc',g('rev'))+box('cost',850,230,140,60,'#fde0dd',g('cost'))+box('prof',850,330,140,60,'#ddf4e6',L('Profit','லாபம்'))+arr(920,190,920,230)+arr(920,290,920,330);
+ h+='<text x="500" y="470" text-anchor="middle" font-size="13" fill="#7a3a00">'+L('EBITDA margin 54.1% · PAT margin 20.7% · ARPU ₹218.8','EBITDA மார்ஜின் 54.1% · PAT மார்ஜின் 20.7% · ARPU ₹218.8')+'</text>';
+ document.getElementById('bm').innerHTML=h}
+function bmTap(k){document.getElementById('bmx').innerHTML='<b>'+L(BM[k][0],BM[k][1])+'</b><br>'+L(BM[k][2],BM[k][3])}
+
+function renderKpiTbl(){var k=CO.kpi;var R=[[L('Customers (mn)','கஸ்டமர்ஸ் (மில்லியன்)'),k.subs],[L('ARPU (₹/month)','ARPU (₹/மாசம்)'),k.arpu],[L('Monthly churn (%)','மாத சர்ன் (%)'),k.churn],[L('Data traffic (bn GB)','டேட்டா (பில்லியன் GB)'),k.data],[L('Data per user (GB/month)','ஒரு யூஸர் டேட்டா (GB/மாசம்)'),k.gbpu],[L('5G customers (mn) †','5G (மில்லியன்) †'),k.g5],[L('Fixed broadband homes (mn) †','பிராட்பேண்ட் வீடுகள் (மில்லியன்) †'),k.fbb]];
+ var h='<tr><th>'+L('Metric','அளவு')+'</th><th>Q2 FY27</th><th>Q1 FY27</th><th>Q2 FY26</th><th>YoY</th></tr>';R.forEach(function(r){var v=r[1];h+='<tr><td>'+r[0]+'</td><td><b>'+v[0]+'</b></td><td>'+(v[1]==null?'n.d.':v[1])+'</td><td>'+(v[2]==null?'n.d.':v[2])+'</td><td>'+(r[0].indexOf('hurn')>0||r[0].indexOf('சர்ன்')>=0?'<span class="up">−30 bps</span>':pc(pct(v[0],v[2])))+'</td></tr>'});
+ h+='<tr><td>'+L('AirFiber customers (mn)','AirFiber (மில்லியன்)')+'</td><td><b>15.1</b></td><td>n.d.</td><td>n.d.</td><td></td></tr>';
+ h+='<tr><td colspan=5 class="note">† '+L('5G and broadband prior-period values derived from reported increments (300 mn = +66 mn YoY; 30 mn = +7.3 mn YoY); Q1 per Q1 disclosures.','முந்தைய மதிப்புகள் அறிவிக்கப்பட்ட அதிகரிப்பிலிருந்து கணக்கிடப்பட்டது.')+'</td></tr>';document.getElementById('kpiTbl').innerHTML=h}
+
+var CH={};
+var valPlug={id:'vals',afterDatasetsDraw:function(c){var x=c.ctx;x.save();x.font='600 10.5px Segoe UI';x.fillStyle='#4a3020';x.textAlign='center';c.data.datasets.forEach(function(d,i){var m=c.getDatasetMeta(i);if(m.hidden||m.type!='bar'||d.noLab)return;m.data.forEach(function(b,j){var v=d.data[j];if(v==null)return;var s=Array.isArray(v)?v[1]-v[0]:v;var lab=d.pctLab?s.toFixed(1)+'%':(d.dec?s.toFixed(d.dec):Math.round(s).toLocaleString('en-IN'));if(c.options.indexAxis=='y'){x.textAlign='left';x.fillText(lab,b.x+4,b.y+4)}else x.fillText(lab,b.x,Math.min(b.y,b.base)-4)})});x.restore()}};
+function mk(id,cfg){if(CH[id])CH[id].destroy();cfg.options=Object.assign({responsive:true,maintainAspectRatio:false,plugins:{legend:{labels:{boxWidth:12}}}},cfg.options||{});cfg.plugins=[valPlug];CH[id]=new Chart(document.getElementById(id),cfg)}
+function yf(v){return v.toLocaleString('en-IN')}
+function renderCharts(){if(typeof Chart=='undefined')return;var a=CO.q.q2fy27,q=CO.q.q1fy27,p=CO.q.q2fy26;var Q=['Q2 FY26','Q1 FY27','Q2 FY27'];
+ mk('cLad',{type:'bar',data:{labels:['EBITDA','EBIT †','PBT †','PAT'],datasets:[{label:'Q2 FY26',data:[51.6,null,null,+(p.pat/p.ops*100).toFixed(1)],backgroundColor:'#f6c99a',pctLab:1},{label:'Q1 FY27',data:[53.3,null,null,+(q.pat/q.ops*100).toFixed(1)],backgroundColor:'#f0a35c',pctLab:1},{label:'Q2 FY27',data:[54.1,+((a.ebitda-a.da)/a.ops*100).toFixed(1),+((a.ebitda-a.da-a.fin)/a.ops*100).toFixed(1),+(a.pat/a.ops*100).toFixed(1)],backgroundColor:'#e8730c',pctLab:1}]},options:{scales:{y:{ticks:{callback:function(v){return v+'%'}}}}}});
+ mk('cGr',{type:'bar',data:{labels:[L('Revenue (ops)','வருமானம்'),'EBITDA','PAT','ARPU',L('Customers','கஸ்டமர்ஸ்'),L('Data traffic','டேட்டா')],datasets:[{label:'YoY',data:[11.4,16.6,13.7,3.5,7.1,22.1],backgroundColor:'#2463a6',pctLab:1},{label:'QoQ',data:[3.3,4.9,8.0,1.5,1.7,2.7],backgroundColor:'#9cc3ea',pctLab:1}]},options:{scales:{y:{ticks:{callback:function(v){return v+'%'}}}}}});
+ mk('cArpu',{type:'bar',data:{labels:['Q2 FY26','Q4 FY26','Q1 FY27','Q2 FY27'],datasets:[{label:'ARPU ₹',data:[211.4,214.0,215.6,218.8],backgroundColor:'#e8730c',dec:1}]},options:{plugins:{legend:{display:false}},scales:{y:{min:190}}}});
+ mk('cSub',{type:'bar',data:{labels:Q,datasets:[{type:'bar',label:L('Customers (mn)','கஸ்டமர்ஸ் (மில்லியன்)'),data:[506.4,533.3,542.4],backgroundColor:'#f6c99a',yAxisID:'y',dec:1},{type:'line',label:L('Data (bn GB)','டேட்டா (பில்லியன் GB)'),data:[58.4,69.4,71.3],borderColor:'#2463a6',yAxisID:'y1'}]},options:{scales:{y:{min:400},y1:{position:'right',grid:{display:false}}}}});
+ var G=CO.global;mk('cGlob',{type:'bar',data:{labels:G.map(function(g){return g[0]}),datasets:[{label:L('Market cap (US$ bn)','மார்க்கெட் கேப் ($ பில்லியன்)'),data:G.map(function(g){return g[2]}),backgroundColor:G.map(function(g){return g[0]=='Jio Platforms'?'#e8730c':(g[1]=='India'?'#f6c99a':'#9cc3ea')}),dec:1}]},options:{indexAxis:'y',plugins:{legend:{display:false}},scales:{x:{min:0,max:250}}}});
+ mk('cSubn',{type:'bar',data:{labels:['QIB',L('Retail','ரீடெயில்'),L('Overall','மொத்தம்')],datasets:[{label:'×',data:[70.55,2.72,22.19],backgroundColor:['#2463a6','#1f9d55','#e8730c'],dec:2}]},options:{plugins:{legend:{display:false}}}});
+ mk('cShp',{type:'bar',data:{labels:['RIL','Meta','Google',L('PE/sovereign & others','PE/மற்றவை'),L('IPO public','IPO பொதுமக்கள்')],datasets:[{label:L('Pre-IPO','IPO முன்'),data:[66.43,9.98,7.73,15.86,0],backgroundColor:'#f6c99a',pctLab:1},{label:L('Post-IPO †','IPO பின் †'),data:[64.48,9.69,7.50,15.39,2.93],backgroundColor:'#e8730c',pctLab:1}]},options:{scales:{y:{ticks:{callback:function(v){return v+'%'}}}}}});
+ mk('cTr',{type:'bar',data:{labels:Q,datasets:[{label:L('Revenue (ops)','வருமானம்'),data:[p.ops,q.ops,a.ops],backgroundColor:'#f6c99a'},{label:'EBITDA',data:[p.ebitda,q.ebitda,a.ebitda],backgroundColor:'#e8730c'},{label:'PAT',data:[p.pat,q.pat,a.pat],backgroundColor:'#7a3a00'}]},options:{scales:{y:{ticks:{callback:yf}}}}});
+ var pbt=a.ebitda-a.da-a.fin;mk('cBr',{type:'bar',data:{labels:['EBITDA','D&A',L('Interest','வட்டி'),'PBT †',L('Tax †','வரி †'),'PAT'],datasets:[{label:'₹ cr',data:[[0,a.ebitda],[a.ebitda-a.da,a.ebitda],[pbt,a.ebitda-a.da],[0,pbt],[a.pat,pbt],[0,a.pat]],backgroundColor:['#e8730c','#d0372d','#d0372d','#2463a6','#d0372d','#1f9d55']}]},options:{plugins:{legend:{display:false}},scales:{y:{ticks:{callback:yf}}}}});
+ mk('cCap',{type:'bar',data:{labels:['H1 FY26','H1 FY27'],datasets:[{label:'EBITDA',data:[36892,42744],backgroundColor:'#e8730c'},{label:L('Cash capex †','கேபெக்ஸ் †'),data:[20665,10614],backgroundColor:'#d0372d'},{label:'FCF',data:[16227,32130],backgroundColor:'#1f9d55'}]},options:{scales:{y:{ticks:{callback:yf}}}}});
+ mk('cPx',{type:'line',data:{labels:[L('Issue','இஷ்யூ'),'28 Oct open','28 Oct close','30 Oct ~'],datasets:[{label:'₹',data:[1119,1358,1417.5,1410],borderColor:'#e8730c',backgroundColor:'#e8730c',tension:.2},{label:L('Avg broker target','சராசரி டார்கெட்'),data:[1352,1352,1352,1352],borderColor:'#2463a6',borderDash:[5,4],pointRadius:0}]},options:{scales:{y:{min:1050}}}});
+}
+function renderGlob(){var h='<tr><th>#</th><th>'+L('Company','கம்பெனி')+'</th><th>'+L('Country','நாடு')+'</th><th>'+L('Market cap (US$ bn)','மார்க்கெட் கேப் ($ பில்லியன்)')+'</th><th>'+L('vs Jio','ஜியோவோட ஒப்பீடு')+'</th></tr>';CO.global.forEach(function(g,i){var j=g[0]=='Jio Platforms';h+='<tr class="'+(j?'jiorow':'')+'"><td>'+(i+1)+'</td><td>'+g[0]+(g[0]=='Bharti Airtel'?' †':'')+'</td><td>'+g[1]+'</td><td>'+g[2].toFixed(1)+'</td><td>'+(j?'—':((g[2]/137.3-1)*100>0?'+':'')+((g[2]/137.3-1)*100).toFixed(0)+'%')+'</td></tr>'});document.getElementById('globTbl').innerHTML=h}
+function renderMet(){var a=CO.q.q2fy27,q=CO.q.q1fy27,p=CO.q.q2fy26;var C=[[L('Growth & Balance sheet','வளர்ச்சி & பேலன்ஸ் ஷீட்'),[[L('Revenue (ops) YoY','வருமான வளர்ச்சி'),'+11.4%','+11.8%','—'],[L('EBITDA YoY','EBITDA வளர்ச்சி'),'+16.6%','+15.1%','+17.7%'],[L('PAT YoY','PAT வளர்ச்சி'),'+13.7%','~+9%','+12.8%'],[L('Net worth ₹ cr','நிகர மதிப்பு'),'~3,71,967 †','3,41,779','n.d.']]],
+ [L('Profitability','லாபத்தன்மை'),[[L('EBITDA margin (ops)','EBITDA மார்ஜின்'),'54.1%','53.3%','51.6%'],[L('PAT margin (ops)','PAT மார்ஜின்'),(a.pat/a.ops*100).toFixed(1)+'%',(q.pat/q.ops*100).toFixed(1)+'%',(p.pat/p.ops*100).toFixed(1)+'%'],['ROE (annualised) †','~9.0%','~9.1%','n.d.']]],
+ [L('Efficiency','திறன்'),['ARPU ₹','218.8','215.6','211.4'].length?[[ 'ARPU ₹','218.8','215.6','211.4'],[L('Churn (monthly)','சர்ன்'),'1.6%','1.6%','1.9%'],[L('Opex / revenue †','செலவு / வருமானம் †'),((a.ops-a.ebitda)/a.ops*100).toFixed(1)+'%',((q.ops-q.ebitda)/q.ops*100).toFixed(1)+'%',((p.ops-p.ebitda)/p.ops*100).toFixed(1)+'%'],[L('Data per user (GB)','யூஸர் டேட்டா'),'44.2','n.d.','38.7']]:[]],
+ [L('Capital & Liquidity','மூலதனம் & பணப்புழக்கம்'),[[L('Finance cost ₹ cr','வட்டி'),f(a.fin),'n.d.','n.d.'],[L('Interest cover (EBITDA/interest)','வட்டி கவர்'),(a.ebitda/a.fin).toFixed(1)+'×','n.d.','n.d.'],[L('H1 FCF ₹ cr','H1 FCF'),'32,130','—','16,227 †'],[L('IPO debt prepayment','IPO கடன் அடைப்பு'),'₹27,500 cr','—','—']]],
+ [L('Valuation','மதிப்பீடு'),[[L('Price ₹ (30 Oct, approx.)','விலை ₹'),'~1,410','—','—'],['P/E (Q2×4 / TTM) †','38.7× / 40.9×','—','—'],['M-cap/EBITDA †','~14.8×','—','—'],['P/BV †','~3.5×','—','—']]]];
+ var h='<tr><th>'+L('Metric','அளவு')+'</th><th>Q2 FY27</th><th>Q1 FY27</th><th>Q2 FY26</th></tr>';C.forEach(function(c){h+='<tr class="cat"><td colspan=4>'+c[0]+'</td></tr>';c[1].forEach(function(r){h+='<tr><td>'+r[0]+'</td><td><b>'+r[1]+'</b></td><td>'+r[2]+'</td><td>'+r[3]+'</td></tr>'})});document.getElementById('metTbl').innerHTML=h}
+function calcTar(){var t=+document.getElementById('th').value,s=+document.getElementById('ts').value;document.getElementById('thv').textContent=t+'%';document.getElementById('tsv').textContent=s+'%';var eff=t*s/100;var na=218.8*(1+eff/100);var extraRev=542.4e6*218.8*eff/100*3/1e7;var extraE=extraRev*0.9;var pat=(8387+extraE*0.75)*4;var pe=CO.mcap/pat;
+ document.getElementById('to1').textContent='₹'+na.toFixed(1);document.getElementById('to2').innerHTML='<span class="up">+₹'+Math.round(extraE).toLocaleString('en-IN')+' cr</span>';document.getElementById('to3').textContent='₹'+Math.round(pat).toLocaleString('en-IN')+' cr → '+pe.toFixed(1)+'×'}
+function renderTrg(){var W=[L('Q3 capex, FCF','Q3 கேபெக்ஸ், FCF'),L('Q3 finance cost','Q3 வட்டி'),L('Home adds, home ARPU','வீடு சேர்க்கை'),L('Tariff announcements','கட்டண அறிவிப்பு'),L('Index rebalancing','இண்டெக்ஸ் மாற்றம்'),L('Block deals near dates','பிளாக் டீல்ஸ்'),L('Blended ARPU','ARPU'),L('DoT/TRAI orders','DoT/TRAI உத்தரவு')];
+ var h='<tr><th>'+L('Trigger','ட்ரிகர்')+'</th><th>+/−</th><th>I</th><th>C</th><th>W</th><th>P</th><th>'+L('Points','புள்ளி')+'</th><th>'+L('Status','நிலை')+'</th><th>'+L('What to watch','கவனிக்க')+'</th></tr>';CO.triggers.forEach(function(t,i){h+='<tr><td>'+t.name+'</td><td class="'+(t.sign=='+'?'up':'dn')+'">'+t.sign+'</td><td>'+t.I+'</td><td>'+t.C+'</td><td>'+t.W+'</td><td>'+t.P+'</td><td><b>'+t.pts.toFixed(2)+'</b></td><td>'+t.status+'</td><td>'+W[i]+'</td></tr>'});document.getElementById('trgTbl').innerHTML=h}
+function drawClock(){var cx=180,cy=165,r=120;var ph=[['P1',L('Trough','அடி')],['P2',L('Early recovery','மீட்சி')],['P3',L('Expansion','விரிவாக்கம்')],['P4',L('Late / peak','உச்சம்')],['P5',L('Downturn','இறக்கம்')]];var h='';
+ ph.forEach(function(p,i){var a0=(-90+i*72)*Math.PI/180,a1=(-90+(i+1)*72)*Math.PI/180;var col=['#9cc3ea','#1f9d55','#8fd3a8','#f6c99a','#f3a29b'][i];h+='<path d="M'+cx+','+cy+' L'+(cx+r*Math.cos(a0))+','+(cy+r*Math.sin(a0))+' A'+r+','+r+' 0 0,1 '+(cx+r*Math.cos(a1))+','+(cy+r*Math.sin(a1))+' z" fill="'+col+'" stroke="#fff" stroke-width="2"/>';var am=(-90+i*72+36)*Math.PI/180;h+='<text x="'+(cx+(r-40)*Math.cos(am))+'" y="'+(cy+(r-40)*Math.sin(am))+'" text-anchor="middle" font-size="12" font-weight="700">'+p[0]+'</text><text x="'+(cx+(r-40)*Math.cos(am))+'" y="'+(cy+(r-40)*Math.sin(am)+14)+'" text-anchor="middle" font-size="10">'+p[1]+'</text>'});
+ var a=(-90+2*72+50)*Math.PI/180;h+='<line x1="'+cx+'" y1="'+cy+'" x2="'+(cx+(r+8)*Math.cos(a))+'" y2="'+(cy+(r+8)*Math.sin(a))+'" stroke="#2463a6" stroke-width="4"/><text x="'+(cx+(r+22)*Math.cos(a))+'" y="'+(cy+(r+22)*Math.sin(a))+'" text-anchor="middle" font-size="11" font-weight="700" fill="#2463a6">'+L('Indian telecom','இந்திய டெலிகாம்')+'</text>';
+ h+='<circle cx="'+cx+'" cy="'+cy+'" r="30" fill="#fff" stroke="#7a3a00" stroke-width="2"/><text x="'+cx+'" y="'+(cy-2)+'" text-anchor="middle" font-size="10" font-weight="700">'+L('Stock','ஸ்டாக்')+'</text><text x="'+cx+'" y="'+(cy+12)+'" text-anchor="middle" font-size="10" fill="#d99a00" font-weight="700">'+L('New listing','புது லிஸ்டிங்')+'</text>';document.getElementById('clock').innerHTML=h}
+function drawTL(){var ev=[['2 Nov 26',L('First trade after results','ரிசல்ட் பின் முதல் டிரேட்')],['Nov–Dec 26',L('Possible industry tariff hike','கட்டண உயர்வு வாய்ப்பு')],['25 Nov 26',L('50% anchor lock-in ends','50% ஆங்கர் லாக்-இன் முடிவு')],['Jan 27',L('Q3 FY27 – first quarter with lower interest','Q3 FY27 – குறைஞ்ச வட்டி')],['24 Jan 27',L('Balance anchor lock-in ends','மீதி ஆங்கர் லாக்-இன்')],[L('2027','2027'),L('Index inclusion reviews','இண்டெக்ஸ் சேர்ப்பு')]];var h='<line x1="30" y1="60" x2="870" y2="60" stroke="#e8730c" stroke-width="3"/>';ev.forEach(function(e,i){var x=60+i*160;h+='<circle cx="'+x+'" cy="60" r="8" fill="#e8730c"/><text x="'+x+'" y="40" text-anchor="middle" font-size="12" font-weight="700" fill="#7a3a00">'+e[0]+'</text><foreignObject x="'+(x-75)+'" y="74" width="150" height="70"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:11px;text-align:center;line-height:1.25">'+e[1]+'</div></foreignObject>'});document.getElementById('tline').innerHTML=h}
+var ANA=[['Elara Capital','Buy',1367,L('Digital services upside','டிஜிட்டல் வளர்ச்சி')],['Motilal Oswal','Buy',1350,L('DCF; 11.5× FY29E EBITDA','DCF; 11.5× FY29 EBITDA')],['Nomura','Buy',1340,L('Tariff hike ~15% Nov–Dec 2026; prefers Airtel','~15% கட்டண உயர்வு; ஏர்டெல் விருப்பம்')]];
+function renderAna(){var h='<tr><th>'+L('Brokerage','ப்ரோக்கரேஜ்')+'</th><th>'+L('Rating','ரேட்டிங்')+'</th><th>'+L('Target ₹','டார்கெட் ₹')+'</th><th>'+L('vs issue ₹1,119','இஷ்யூ ₹1,119-லிருந்து')+'</th><th>'+L('vs ~₹1,410','~₹1,410-லிருந்து')+'</th><th style="text-align:left">'+L('Basis / view','அடிப்படை')+'</th></tr>';ANA.forEach(function(a){h+='<tr><td>'+a[0]+'</td><td>'+a[1]+'</td><td>'+a[2].toLocaleString('en-IN')+'</td><td class="up">+'+((a[2]/1119-1)*100).toFixed(1)+'%</td><td class="dn">'+((a[2]/1410-1)*100).toFixed(1)+'%</td><td style="text-align:left;white-space:normal">'+a[3]+'</td></tr>'});document.getElementById('anaTbl').innerHTML=h}
+var SC=[[L('1 · Questions about the stock','1 · ஸ்டாக் பற்றிய கேள்விகள்'),[[L('I know what drove EBITDA growth','EBITDA வளர்ச்சிக்கு காரணம் தெரியும்'),'Revenue +11.4%, EBITDA +16.6%, margin 54.1%'],[L('I know Jio\'s global rank and what it means','உலக ரேங்க், அதன் அர்த்தம் தெரியும்'),'#5 telco by m-cap, ~$137 bn'],[L('I understand why PAT grew slower than EBITDA','PAT ஏன் மெதுவா வளர்ந்ததுன்னு தெரியும்'),'D&A ₹7,611 cr, interest ₹3,009 cr']]],
+ [L('2 · Problems investors face','2 · சிக்கல்கள்'),[[L('Valuation far above global peers','உலக ஒப்பீட்டை விட அதிக மதிப்பு'),'P/E ~40× vs 8–14×'],[L('Price above all broker targets','டார்கெட்டுக்கு மேல விலை'),'Avg target ₹1,352 vs ~₹1,410'],[L('Lock-in supply ahead','லாக்-இன் விற்பனை வரலாம்'),'25 Nov 2026, 24 Jan 2027 (est.)']]],
+ [L('3 · Solutions (what I did)','3 · தீர்வுகள்'),[[L('I compared Jio with owning it through RIL','RIL மூலமா வச்சிருக்கறதோட ஒப்பிட்டேன்'),'RIL stake ~64.5%'],[L('I ran the tariff calculator','கட்டண கணக்கியை ஓட்டினேன்'),'15% hike → P/E ~30× (illustrative)'],[L('I decided my holding period around lock-in dates','லாக்-இன் தேதிகளை வச்சு காலம் முடிவு செஞ்சேன்'),'']]],
+ [L("4 · Anchors' and analysts' view","4 · ஆங்கர் & அனலிஸ்ட்"),[[L('I read the three initiations','மூணு கவரேஜும் படிச்சேன்'),'Nomura 1,340 · MOSL 1,350 · Elara 1,367'],[L('I noted QIB vs retail demand','QIB vs ரீடெயில் டிமாண்ட் பார்த்தேன்'),'QIB 70.55× · Retail 2.72×']]],
+ [L('5 · My own conditions','5 · என் சொந்த நிபந்தனைகள்'),[]]];
+var SCK='cb_sc_jio_q2fy27',scState={},scOwn=[];
+function scLoad(){try{var s=JSON.parse(localStorage.getItem(SCK)||'{}');scState=s.t||{};scOwn=s.o||[]}catch(e){}}
+function scSave(){try{localStorage.setItem(SCK,JSON.stringify({t:scState,o:scOwn}))}catch(e){}}
+function renderSC(){var h='',tot=0,on=0;SC.forEach(function(g,gi){var items=gi==4?scOwn.map(function(o){return [o,'']}):g[1];var gon=0,body='';items.forEach(function(it,ii){var k=gi+'_'+ii;tot++;if(scState[k]){on++;gon++}body+='<label class="chk"><input type="checkbox" '+(scState[k]?'checked':'')+' onchange="scState[\''+k+'\']=this.checked;scSave();renderSC()"><span>'+it[0]+'<br><span class="note">Data: '+it[1]+'</span></span></label>'});
+ if(gi==4){body+='<div style="margin-top:6px"><input id="scIn" style="border:1px solid var(--line);border-radius:8px;padding:5px;width:70%" placeholder="'+L('Add a condition (max 8)','நிபந்தனை சேர் (8 வரை)')+'"><button class="pill" onclick="scAdd()">+</button></div><div>'+[L('Tariff hike announced','கட்டண உயர்வு அறிவிப்பு'),L('Price below avg broker target','விலை சராசரி டார்கெட்டுக்கு கீழ'),L('After anchor lock-in expiry','ஆங்கர் லாக்-இன் முடிஞ்ச பிறகு')].map(function(s){return '<span class="pill" onclick="scAddT(this.textContent)">'+s+'</span>'}).join('')+'</div>'}
+ var n=items.length;h+='<div class="card"><h3>'+g[0]+'</h3><div class="bar"><i style="width:'+(n?gon/n*100:0)+'%"></i></div><div class="note">'+gon+' / '+n+'</div>'+body+'</div>'});document.getElementById('scBox').innerHTML=h;document.getElementById('scAll').style.width=(tot?on/tot*100:0)+'%';document.getElementById('scAllT').textContent=on+' / '+tot+' '+L('of your conditions line up.','நிபந்தனைகள் பொருந்துது.')}
+function scAdd(){var v=document.getElementById('scIn').value.trim();if(v)scAddT(v)}
+function scAddT(v){if(scOwn.length>=8)return;scOwn.push(v);scSave();renderSC()}
+function scClear(){scState={};scOwn=[];scSave();renderSC()}
+var SQ=[{q:["Jio's EBITDA grew 16.6% on 11.4% revenue growth. What is this called?","வருமானம் 11.4%, EBITDA 16.6% – இதுக்கு என்ன பெயர்?"],o:[["Operating leverage","ஆபரேட்டிங் லீவரேஜ்"],["Financial leverage","ஃபைனான்ஷியல் லீவரேஜ்"],["Dilution","டைல்யூஷன்"],["Churn","சர்ன்"]],a:0,e:["Costs are largely fixed, so extra revenue flows to EBITDA.","செலவு நிலையானது; கூடுதல் வருமானம் EBITDA-க்கு போகுது."]},
+ {q:["Why did PAT grow slower (13.7%) than EBITDA (16.6%)?","PAT ஏன் EBITDA-வ விட மெதுவா வளர்ந்தது?"],o:[["Higher tax rate only","வரி மட்டும்"],["5G assets capitalised – more depreciation and interest","5G சொத்து – அதிக டிப்ரிசியேஷன், வட்டி"],["Lower ARPU","குறைஞ்ச ARPU"],["IPO expenses","IPO செலவு"]],a:1,e:["Capitalisation in Mar 2026 moved 5G costs into D&A and finance cost.","மார்ச் 2026-ல 5G சொத்தா மாறினதால D&A, வட்டி ஏறிச்சு."]},
+ {q:["Where does Jio rank among listed telcos worldwide by market cap?","உலக லிஸ்டட் டெலிகாம்ல ஜியோ ரேங்க்?"],o:[["1st","1"],["3rd","3"],["5th","5"],["10th","10"]],a:2,e:["~$137 bn – behind China Mobile, Verizon, T-Mobile US, AT&T.","~$137 பில்லியன் – 5-வது."]},
+ {q:["Which number best explains Jio's free-cash-flow jump?","FCF ஏற்றத்தை எது சிறப்பா விளக்குது?"],o:[["Customers +7%","கஸ்டமர் +7%"],["Cash capex roughly halved","கேபெக்ஸ் பாதியானது"],["Tax lower","வரி குறைவு"],["Higher churn","அதிக சர்ன்"]],a:1,e:["H1 cash capex ~₹10.6k cr vs ~₹20.7k cr – FCF +98%.","H1 கேபெக்ஸ் ~₹10.6 ஆயிரம் கோடி vs ~₹20.7 ஆயிரம் கோடி."]},
+ {q:["Jio's ARPU is ₹218.8; Airtel's is ₹264. What does the gap suggest?","ஜியோ ₹218.8, ஏர்டெல் ₹264 – இடைவெளி என்ன சொல்லுது?"],o:[["Jio is losing customers","ஜியோ கஸ்டமர் இழக்குது"],["Room for ARPU growth via mix and tariffs","மிக்ஸ், கட்டணத்தால ARPU ஏற இடம்"],["Jio has higher costs","ஜியோ செலவு அதிகம்"],["Nothing","ஒண்ணுமில்ல"]],a:1,e:["Tariff hikes and premiumisation can close part of the gap.","கட்டண உயர்வு இடைவெளியை குறைக்கலாம்."]},
+ {q:["The IPO was a fresh issue. Where did the money go?","IPO புது ஷேர்ஸ் – பணம் எங்கே போச்சு?"],o:[["To RIL","RIL-க்கு"],["To Meta & Google","மெட்டா & கூகுளுக்கு"],["Into Jio – mainly to prepay ₹27,500 cr debt","ஜியோக்கு – ₹27,500 கோடி கடன் அடைப்பு"],["Dividends","டிவிடெண்ட்"]],a:2,e:["No OFS – existing holders sold nothing.","OFS இல்ல – யாரும் விக்கல."]}];
+var sAns={};
+function renderSoc(){var h='';SQ.forEach(function(q,i){h+='<div class="card"><b>'+(i+1)+'. '+L(q.q[0],q.q[1])+'</b>';q.o.forEach(function(o,j){var cls=sAns[i]!=null?(j==q.a?'ok':(sAns[i]==j?'no':'')):'';h+='<button class="q-opt '+cls+'" onclick="socA('+i+','+j+')">'+L(o[0],o[1])+'</button>'});if(sAns[i]!=null)h+='<div class="note">'+L(q.e[0],q.e[1])+'</div>';h+='</div>'});document.getElementById('socBox').innerHTML=h;var c=0,n=0;for(var k in sAns){n++;if(sAns[k]==SQ[k].a)c++}document.getElementById('socScore').textContent=n?L('Score: ','மதிப்பெண்: ')+c+' / '+SQ.length:''}
+function socA(i,j){if(sAns[i]!=null)return;sAns[i]=j;renderSoc()}
+function socFree(){var t=document.getElementById('socFree').value.toLowerCase();var h=L('Think about three levers: ARPU growth (tariffs), capex falling (FCF), and new revenue lines (homes, enterprise, AI). Which of these do global telcos no longer have?','மூணு விஷயம்: ARPU ஏற்றம், கேபெக்ஸ் குறைவு, புது வருமானம். உலக டெலிகாம்களுக்கு இதுல எது இல்ல?');if(t.indexOf('tariff')>=0||t.indexOf('arpu')>=0||t.indexOf('கட்டண')>=0)h=L('Good – ARPU is the key. Now: how many years of ~10% ARPU growth does a 40× P/E already assume?','சரி – ARPU தான் முக்கியம். 40× P/E எத்தனை வருஷ ARPU வளர்ச்சியை ஏற்கனவே எடுத்துக்குது?');document.getElementById('socHint').textContent=h}
+var KB=[[['rank','global','world','fifth','5th','உலக','ரேங்க்'],'Jio is the world\'s 5th most valuable listed telecom company at ~$137.3 bn (₹13.1 lakh cr) – behind China Mobile ($220.3 bn), Verizon ($182.1 bn), T-Mobile US ($157.5 bn) and AT&T ($141.1 bn), just ahead of Deutsche Telekom ($135.5 bn). It is Asia\'s #2 telco and India\'s #2 company.','ஜியோ உலகின் 5-வது பெரிய லிஸ்டட் டெலிகாம் – ~$137.3 பில்லியன். சைனா மொபைல், வெரைசன், டி-மொபைல், AT&T-க்கு அடுத்து.'],
+ [['margin','மார்ஜின்'],'EBITDA margin 54.1% (51.6% LY, 53.3% Q1); EBIT ~35.3%; PBT ~27.8%; PAT margin 20.7% (20.3% LY). All on revenue from operations.','EBITDA மார்ஜின் 54.1%; EBIT ~35.3%; PBT ~27.8%; PAT 20.7%.'],
+ [['profit','pat','லாபம்'],'PAT ₹8,387 cr, +13.7% YoY and +8.0% QoQ. H1 PAT ₹16,151 cr (+11.5%).','PAT ₹8,387 கோடி, +13.7%.'],
+ [['revenue','வருமானம்'],'Revenue from operations ₹40,475 cr (+11.4% YoY, +3.3% QoQ); gross ₹47,485 cr. Connectivity +11%, digital services +16%.','ஆபரேஷன் வருமானம் ₹40,475 கோடி (+11.4%).'],
+ [['ebitda'],'EBITDA ₹21,879 cr, +16.6% YoY, +4.9% QoQ – operating leverage.','EBITDA ₹21,879 கோடி, +16.6%.'],
+ [['arpu'],'ARPU ₹218.8 (+3.5% YoY, +1.5% QoQ). Airtel\'s is ₹264 – the gap is the tariff opportunity.','ARPU ₹218.8; ஏர்டெல் ₹264.'],
+ [['subscriber','customer','5g','கஸ்டமர்'],'542.4 mn customers (+9.1 mn in the quarter, +7.1% YoY); 300 mn on 5G; 30 mn broadband homes; churn 1.6%.','54.24 கோடி கஸ்டமர்ஸ்; 30 கோடி 5G; சர்ன் 1.6%.'],
+ [['ipo','listing','லிஸ்டிங்'],'₹30,188 cr fresh issue at ₹1,119, subscribed 22.19× (QIB 70.55×). Listed 28 Oct at ₹1,358 (+21.4%), closed day 1 at ₹1,417.5. ₹27,500 cr goes to prepay RJIL debt.','₹30,188 கோடி IPO, ₹1,119; 22.19×; ₹1,358-ல லிஸ்ட்.'],
+ [['valuation','pe','p/e','மதிப்பீடு'],'~₹1,410 → P/E ~38.7× (Q2 annualised), ~40.9× TTM; global top telcos trade at 8–14×, Airtel ~41–46×.','P/E ~39–41×; உலக டெலிகாம் 8–14×.'],
+ [['target','analyst','broker','டார்கெட்'],'Initiations: Elara Buy ₹1,367, Motilal Oswal Buy ₹1,350, Nomura Buy ₹1,340 – all below ~₹1,410.','எலாரா ₹1,367, MOSL ₹1,350, நோமுரா ₹1,340.'],
+ [['cash','fcf','capex','கேஷ்'],'H1 FCF ₹32,130 cr, +98%; cash capex roughly halved as the 5G build ended.','H1 FCF ₹32,130 கோடி, +98%.'],
+ [['tariff','hike','கட்டண'],'Nomura expects a ~15% industry tariff hike in Nov–Dec 2026. Try the calculator on the Growth & Margins tab.','நவ–டிச 2026-ல ~15% உயர்வு எதிர்பார்ப்பு.'],
+ [['buy','sell','apply','வாங்க'],'CB Research does not give buy/sell advice. Open the Self-check tab to see how many of your own conditions line up.','CB Research ஆலோசனை தராது. சுய சோதனை டேப பாருங்க.']];
+function answer(q){q=q.toLowerCase();for(var i=0;i<KB.length;i++)for(var j=0;j<KB[i][0].length;j++)if(q.indexOf(KB[i][0][j])>=0)return KB[i];return null}
+function addMsg(t,c){var d=document.createElement('div');d.className=c;d.innerHTML=t;var l=document.getElementById('alog');l.appendChild(d);l.scrollTop=l.scrollHeight}
+function ask(){var i=document.getElementById('ain');var q=i.value.trim();if(!q)return;i.value='';addMsg(q,'q');var a=answer(q);var t=a?L(a[1],a[2]):L('Try: global rank, margins, profit, ARPU, subscribers, IPO, valuation, targets, FCF, tariff.','முயற்சி: உலக ரேங்க், மார்ஜின், லாபம், ARPU, IPO.');if(a&&a[0][0]=='buy')t+=' <button class="pill" onclick="show(\'self\');toggleAsst()">'+L('Open Self-check','சுய சோதனை')+'</button>';addMsg(t,'a');speak(t.replace(/<[^>]+>/g,''))}
+function speak(t){try{var u=new SpeechSynthesisUtterance(t);u.lang=LANG=='ta'?'ta-IN':'en-IN';speechSynthesis.cancel();speechSynthesis.speak(u)}catch(e){}}
+function mic(){var R=window.SpeechRecognition||window.webkitSpeechRecognition;if(!R){addMsg(L('Voice input is not supported in this browser.','இந்த பிரவுசர்ல குரல் உள்ளீடு இல்ல.'),'a');return}var r=new R();r.lang=LANG=='ta'?'ta-IN':'en-IN';var b=document.getElementById('micb');b.classList.add('rec');r.onresult=function(e){document.getElementById('ain').value=e.results[0][0].transcript;ask()};r.onend=function(){b.classList.remove('rec')};r.onerror=function(){b.classList.remove('rec')};r.start()}
+function toggleAsst(){var a=document.getElementById('asst');var o=a.style.display=='flex';a.style.display=o?'none':'flex';if(!o&&!document.getElementById('alog').children.length)addMsg(L('Hi! Ask by voice or text – e.g. "Where does Jio rank globally?" or "What are the margins?"','வணக்கம்! கேளுங்க – "ஜியோ உலக ரேங்க்?" "மார்ஜின் என்ன?"'),'a')}
+function renderAll(){buildNav();renderKpis();renderCons();drawTemple();renderGM();drawBM();renderKpiTbl();renderGlob();renderMet();calcTar();renderTrg();drawClock();drawTL();renderAna();renderSC();renderSoc();renderCharts()}
+scLoad();window.addEventListener('load',renderAll);
+</script>
+</body>
+</html>
