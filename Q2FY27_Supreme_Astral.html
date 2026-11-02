@@ -1,0 +1,727 @@
+<title>Supreme vs Astral Q2 FY27</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;600;700;800;900&family=Noto+Sans+Tamil:wght@400;600;700;800&family=IBM+Plex+Mono:wght@500;700&display=swap">
+<style>
+/* Layout: sticky header + scrollable tab rail; each tab = panel with company sub-tabs; graphics lead, bullets support. Single light-orange look (house style). */
+:root{
+  --bg:#FFF4E8; --card:#FFFAF3; --line:#F1C99B; --acc:#F28C28; --acc-soft:#FFE2C2;
+  --ink:#1B130B; --ink2:#4A3A2A; --sup:#1D4EA8; --sup-soft:#DCE6FA; --ast:#0B7A62; --ast-soft:#D4F0E7;
+  --good:#18773A; --bad:#B3261E; --wait:#8A5A00; --wait-soft:#FFF0C7;
+  --f-disp:"Archivo","Noto Sans Tamil",system-ui,sans-serif;
+  --f-body:"Archivo","Noto Sans Tamil",system-ui,sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,monospace;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+html{background:var(--bg)}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:15px;line-height:1.5;margin:0;font-weight:500}
+html.ta body{font-size:14.5px}
+html:not(.ta) .ta{display:none!important}
+html.ta .en{display:none!important}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:30;background:var(--bg)}
+.wrap{padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));max-width:1180px;margin:0 auto}
+header.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:var(--bg);border-bottom:2px solid var(--line)}
+.hrow{display:flex;flex-wrap:wrap;align-items:center;gap:10px 16px;padding-block:10px 6px}
+.brand{display:flex;flex-direction:column;min-width:0;flex:1 1 300px}
+.brand h1{font-family:var(--f-disp);font-weight:900;font-size:clamp(19px,3.2vw,27px);margin:0;letter-spacing:-.01em;text-wrap:balance;line-height:1.15}
+.brand h1 .s{color:var(--sup)} .brand h1 .a{color:var(--ast)}
+.slogan{font-weight:800;color:var(--acc);font-size:13px;letter-spacing:.04em}
+.sub{font-size:12.5px;color:var(--ink2);font-weight:600}
+.ctrls{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+button{font:inherit;cursor:pointer}
+.btn{border:2px solid var(--ink);background:var(--card);color:var(--ink);border-radius:999px;padding:6px 14px;font-weight:800;font-size:13px}
+.btn:hover{background:var(--acc-soft)}
+.btn:focus-visible,.tab:focus-visible,.stab:focus-visible{outline:3px solid var(--acc);outline-offset:2px}
+.btn.on{background:var(--acc);border-color:var(--acc);color:var(--ink)}
+.tabs{display:flex;gap:6px;overflow-x:auto;padding-block:6px 10px;scrollbar-width:thin}
+.tab{flex:0 0 auto;border:2px solid var(--line);background:var(--card);border-radius:10px;padding:7px 12px;font-weight:800;font-size:13px;color:var(--ink);white-space:nowrap}
+.tab.on{background:var(--acc);border-color:var(--acc)}
+main{padding-block:18px 120px}
+.panel h2{font-family:var(--f-disp);font-weight:900;font-size:clamp(20px,3vw,26px);margin:0 0 4px;text-wrap:balance}
+.panel .lede{color:var(--ink2);font-weight:600;margin:0 0 14px;max-width:70ch}
+.stabs{display:flex;gap:6px;flex-wrap:wrap;margin:6px 0 14px}
+.stab{border:2px solid var(--ink);background:var(--card);border-radius:8px;padding:5px 12px;font-weight:800;font-size:13px;color:var(--ink)}
+.stab.on.s{background:var(--sup-soft);border-color:var(--sup);color:var(--sup)}
+.stab.on.a{background:var(--ast-soft);border-color:var(--ast);color:var(--ast)}
+.stab.on.c{background:var(--acc-soft);border-color:var(--acc)}
+.grid{display:grid;gap:14px}
+.g2{grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr))}
+.g3{grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr))}
+.g4{grid-template-columns:repeat(auto-fit,minmax(min(100%,200px),1fr))}
+.card{background:var(--card);border:2px solid var(--line);border-radius:14px;padding:14px;min-width:0}
+.card h3{font-family:var(--f-disp);font-weight:900;font-size:17px;margin:0 0 8px}
+.card.s{border-color:var(--sup)} .card.a{border-color:var(--ast)}
+.kpi{display:flex;flex-direction:column;gap:2px}
+.kpi .k{font-size:12px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;color:var(--ink2)}
+.kpi .v{font-family:var(--f-mono);font-weight:700;font-size:24px;font-variant-numeric:tabular-nums}
+.kpi .d{font-size:13px;font-weight:700}
+.up{color:var(--good)} .dn{color:var(--bad)} .wt{color:var(--wait)}
+ul.b{margin:6px 0 0;padding-left:18px} ul.b li{margin:3px 0;font-weight:600}
+.tbl{overflow-x:auto;border:2px solid var(--line);border-radius:12px;background:var(--card)}
+table{border-collapse:collapse;width:100%;font-size:13.5px;min-width:560px}
+th,td{padding:7px 10px;border-bottom:1px solid var(--line);text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+th:first-child,td:first-child{text-align:left;white-space:normal}
+thead th{background:var(--acc-soft);font-weight:900;font-size:12.5px}
+td{font-weight:600} td.n{font-family:var(--f-mono)}
+tr.hl td{background:#FFF0DD;font-weight:800}
+.pend{background:var(--wait-soft);color:var(--wait);font-weight:800}
+.chip{display:inline-block;border-radius:999px;padding:2px 10px;font-size:12px;font-weight:800;border:2px solid currentColor}
+.chip.s{color:var(--sup)} .chip.a{color:var(--ast)} .chip.w{color:var(--wait);background:var(--wait-soft)}
+.svgbox{overflow-x:auto}
+.svgbox svg{display:block;width:100%;height:auto}
+.svgbox.wide svg{min-width:760px}
+svg text{font-family:var(--f-body);fill:var(--ink)}
+svg .mono{font-family:var(--f-mono)}
+.fm-box{cursor:pointer}
+.fm-box:hover rect{stroke-width:3.5}
+.detail{margin-top:10px;border:2px dashed var(--acc);border-radius:12px;padding:10px 12px;background:var(--acc-soft);font-weight:700;min-height:44px}
+.formula{margin-top:10px;font-family:var(--f-mono);font-weight:700;font-size:13.5px;background:var(--card);border:2px solid var(--line);border-radius:10px;padding:8px 12px;overflow-x:auto}
+.note{font-size:12.5px;color:var(--ink2);font-weight:600;margin-top:8px}
+.pic{display:flex;gap:12px;align-items:flex-start}
+.pic>svg{flex:0 0 auto;width:clamp(52px,16vw,96px);height:auto}
+main svg{max-width:100%;height:auto}
+.card>svg{display:block;width:100%}
+.pic>div{min-width:0}
+/* self-check */
+.sc-g{border:2px solid var(--line);border-radius:12px;padding:12px;background:var(--card)}
+.sc-g h3{display:flex;justify-content:space-between;gap:8px;align-items:center}
+.sc-i{display:flex;gap:10px;align-items:flex-start;padding:8px 0;border-bottom:1px dashed var(--line)}
+.sc-i input{width:20px;height:20px;accent-color:var(--acc);flex:0 0 auto;margin-top:2px}
+.sc-i .dt{font-size:12.5px;color:var(--ink2);font-weight:600}
+.sc-add{display:flex;gap:6px;margin-top:8px;flex-wrap:wrap}
+.sc-add input{flex:1 1 180px;border:2px solid var(--line);border-radius:8px;padding:6px 8px;font:inherit;background:var(--bg);color:var(--ink)}
+/* quiz */
+.q{border:2px solid var(--line);border-radius:12px;padding:12px;background:var(--card);margin-bottom:10px}
+.q .opts{display:grid;gap:6px;margin-top:8px}
+.q .opt{text-align:left;border:2px solid var(--line);background:var(--bg);border-radius:8px;padding:7px 10px;font-weight:700;color:var(--ink)}
+.q .opt.ok{border-color:var(--good);background:#DDF3E3}
+.q .opt.no{border-color:var(--bad);background:#FBE0DD}
+.q .ex{margin-top:6px;font-weight:700;font-size:13.5px}
+/* assist */
+.as{border:2px solid var(--acc);border-radius:14px;background:var(--card);overflow:hidden}
+.as-h{display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:space-between;padding:10px 12px;background:var(--acc-soft);border-bottom:2px solid var(--acc)}
+.as-log{height:340px;overflow-y:auto;padding:12px;display:flex;flex-direction:column;gap:8px}
+.msg{max-width:88%;border-radius:12px;padding:8px 11px;font-weight:700;font-size:14px}
+.msg.u{align-self:flex-end;background:var(--sup-soft);border:2px solid var(--sup)}
+.msg.b{align-self:flex-start;background:var(--bg);border:2px solid var(--line)}
+.msg details{margin-top:4px;font-weight:600;font-size:13px}
+.as-in{display:flex;gap:6px;padding:10px;border-top:2px solid var(--line);flex-wrap:wrap}
+.as-in input{flex:1 1 200px;border:2px solid var(--line);border-radius:999px;padding:8px 12px;font:inherit;background:var(--bg);color:var(--ink)}
+.sugg{display:flex;gap:6px;flex-wrap:wrap;padding:0 10px 10px}
+.sugg button{border:2px solid var(--line);background:var(--bg);border-radius:999px;padding:4px 10px;font-size:12.5px;font-weight:700;color:var(--ink)}
+.cd{height:5px;background:var(--acc);width:0;transition:width .1s linear}
+.as-set{display:flex;gap:8px;flex-wrap:wrap;align-items:center;font-size:12.5px;font-weight:700}
+.as-set select,.as-set input[type=range]{font:inherit;accent-color:var(--acc)}
+/* floating */
+#cbBadge{position:fixed;right:calc(14px + env(safe-area-inset-right,0px));bottom:calc(14px + env(safe-area-inset-bottom,0px));z-index:40}
+#cbBadge .logo{width:46px;height:46px;border-radius:50%;background:var(--acc);border:3px solid var(--ink);display:grid;place-items:center;font-family:var(--f-disp);font-weight:900;color:var(--ink);font-size:16px;animation:blink 1.6s ease-in-out infinite;cursor:pointer}
+@keyframes blink{50%{box-shadow:0 0 0 7px rgba(242,140,40,.35)}}
+#cbBadge .disc{position:absolute;right:0;bottom:56px;width:min(300px,80vw);background:var(--card);border:2px solid var(--ink);border-radius:12px;padding:10px;font-size:12.5px;font-weight:700;display:none}
+#cbBadge:hover .disc,#cbBadge.open .disc{display:block}
+#vaBubble{position:fixed;right:calc(14px + env(safe-area-inset-right,0px));bottom:calc(70px + env(safe-area-inset-bottom,0px));z-index:40;background:var(--sup);color:#FFFFFF;border:3px solid var(--ink);border-radius:999px;padding:8px 14px;font-weight:900;font-size:13px}
+@media (prefers-reduced-motion:reduce){#cbBadge .logo{animation:none}}
+@media (max-width:560px){.as-log{height:300px}.kpi .v{font-size:20px}}
+</style>
+<header class="top">
+  <div class="wrap">
+    <div class="hrow">
+      <div class="brand">
+        <span class="slogan"><span class="en">CB RESEARCH · KNOW BEFORE YOU OWN</span><span class="ta">CB RESEARCH · புரிஞ்சு வாங்குங்க!</span></span>
+        <h1><span class="s">Supreme Industries</span> <span style="color:var(--acc)">vs</span> <span class="a">Astral</span> · Q2 FY27</h1>
+        <span class="sub"><span class="en">Plastic pipes &amp; building products · Supreme Q2 FY27 actuals (26 Oct 2026) · Astral Q2 FY27 due 5 Nov 2026 — latest Q1 FY27 shown</span><span class="ta">Plastic pipes &amp; building products · Supreme Q2 FY27 ரிசல்ட் வந்தாச்சு (26 Oct) · Astral Q2 FY27 ரிசல்ட் 5 Nov-ல வரும் — இப்போ Q1 FY27 data</span></span>
+      </div>
+      <div class="ctrls">
+        <button class="btn on" id="bEN" type="button">English</button>
+        <button class="btn" id="bTA" type="button">தமிழ்</button>
+        <button class="btn" id="bRead" type="button"><span class="en">🔊 Read this tab</span><span class="ta">🔊 இந்த tab-ஐ படி</span></button>
+      </div>
+    </div>
+    <nav class="tabs" id="tabs" aria-label="Sections"></nav>
+  </div>
+</header>
+<main class="wrap" id="main"></main>
+<button id="vaBubble" type="button"><span class="en">🎙 Voice Assist</span><span class="ta">🎙 Voice Assist</span></button>
+<div id="cbBadge"><div class="logo" tabindex="0" role="button" aria-label="Disclaimer">CB</div>
+<div class="disc"><span class="en">CB Research (Cauvery Business Research) is an education platform and is not SEBI-registered. Nothing here is a buy, sell or hold recommendation. Figures are from company filings, presentations and concalls; prices are approximate (late Oct 2026). Astral Q2 FY27 numbers are pending (results on 5 Nov 2026). Please do your own research.</span><span class="ta">CB Research ஒரு education platform — SEBI-registered இல்ல. இங்க இருக்கிறது buy / sell / hold advice இல்ல. Numbers company filings, presentation, concall-ல இருந்து எடுத்தது; price approx (Oct 2026 கடைசி). Astral Q2 FY27 numbers இன்னும் வரல (5 Nov). நீங்களே research பண்ணுங்க.</span></div></div>
+<script>
+/* ===== helpers ===== */
+var C={sup:"#1D4EA8",ast:"#0B7A62",acc:"#F28C28",ink:"#1B130B",ink2:"#4A3A2A",line:"#F1C99B",good:"#18773A",bad:"#B3261E",wait:"#8A5A00",soft:"#FFE2C2",card:"#FFFAF3",ssoft:"#DCE6FA",asoft:"#D4F0E7",wsoft:"#FFF0C7",bg:"#FFF4E8"};
+function L(en,ta){return '<span class="en">'+en+'</span><span class="ta">'+(ta==null?en:ta)+'</span>';}
+function TS(en,ta){return '<tspan class="en">'+en+'</tspan><tspan class="ta">'+(ta==null?en:ta)+'</tspan>';}
+function tx(x,y,en,ta,a){return '<text x="'+x+'" y="'+y+'" '+(a||'')+'>'+TS(en,ta)+'</text>';}
+function t1(x,y,s,a){return '<text x="'+x+'" y="'+y+'" '+(a||'')+'>'+s+'</text>';}
+function f0(v){return v==null?'—':Math.round(v).toLocaleString('en-IN');}
+function f1(v){return v==null?'—':(Math.round(v*10)/10).toLocaleString('en-IN',{minimumFractionDigits:1,maximumFractionDigits:1});}
+function pc(a,b){if(a==null||b==null||b===0)return null;return (a/b-1)*100;}
+function gr(v){if(v==null)return '<span class="wt">—</span>';var c=v>=0?'up':'dn';return '<span class="'+c+'">'+(v>=0?'▲ +':'▼ ')+f1(v)+'%</span>';}
+function bl(arr){return '<ul class="b">'+arr.map(function(p){return '<li>'+L(p[0],p[1])+'</li>';}).join('')+'</ul>';}
+function card(cls,h,body){return '<div class="card '+(cls||'')+'">'+(h?'<h3>'+h+'</h3>':'')+body+'</div>';}
+function box(svg,wide){return '<div class="svgbox'+(wide?' wide':'')+'">'+svg+'</div>';}
+function svg(w,h,inner,label){return '<svg viewBox="0 0 '+w+' '+h+'" style="max-width:'+Math.round(w*1.3)+'px;margin-inline:auto" role="img" aria-label="'+(label||'chart')+'" xmlns="http://www.w3.org/2000/svg">'+inner+'</svg>';}
+var SUBN=0;
+function subtabs(list){var id='st'+(SUBN++);var h='<div class="stabs" data-g="'+id+'">';
+ list.forEach(function(s,i){h+='<button type="button" class="stab '+s.k+(i===0?' on':'')+'" data-t="'+id+'_'+i+'">'+L(s.en,s.ta)+'</button>';});
+ h+='</div>';list.forEach(function(s,i){h+='<div class="spanel" id="'+id+'_'+i+'"'+(i===0?'':' hidden')+'>'+s.html+'</div>';});return h;}
+function three(s,a,c){return subtabs([{k:'s',en:'Supreme',ta:'Supreme',html:s},{k:'a',en:'Astral',ta:'Astral',html:a},{k:'c',en:'Compare',ta:'Compare',html:c}]);}
+
+/* ===== icons (pictograms, 40x40 drawn at x,y with scale) ===== */
+function ic(name,x,y,s,col){s=s||1;col=col||C.ink;var g='<g transform="translate('+x+','+y+') scale('+s+')" fill="none" stroke="'+col+'" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">';var p='';
+ switch(name){
+ case'pipe':p='<rect x="4" y="14" width="26" height="12" rx="2" fill="'+col+'" fill-opacity=".18"/><rect x="30" y="11" width="6" height="18" rx="1.5" fill="'+col+'" fill-opacity=".35"/><line x1="10" y1="14" x2="10" y2="26"/>';break;
+ case'resin':p='<circle cx="11" cy="26" r="5" fill="'+col+'" fill-opacity=".3"/><circle cx="22" cy="28" r="5" fill="'+col+'" fill-opacity=".3"/><circle cx="17" cy="18" r="5" fill="'+col+'" fill-opacity=".3"/><circle cx="29" cy="20" r="5" fill="'+col+'" fill-opacity=".3"/>';break;
+ case'factory':p='<path d="M4 34V18l9 6v-6l9 6v-6l9 6V8h5v26z" fill="'+col+'" fill-opacity=".18"/><line x1="4" y1="34" x2="36" y2="34"/>';break;
+ case'truck':p='<rect x="3" y="12" width="20" height="14" fill="'+col+'" fill-opacity=".18"/><path d="M23 16h7l5 6v4H23z"/><circle cx="10" cy="29" r="3.5"/><circle cx="29" cy="29" r="3.5"/>';break;
+ case'house':p='<path d="M5 19L20 6l15 13"/><path d="M9 17v17h22V17" fill="'+col+'" fill-opacity=".18"/><rect x="17" y="24" width="6" height="10"/>';break;
+ case'farm':p='<path d="M4 32h32"/><path d="M12 32V20M12 22c-5 0-6-5-6-5 5 0 6 5 6 5zm0 0c5 0 6-5 6-5-5 0-6 5-6 5"/><path d="M27 32V18M27 20c-5 0-6-5-6-5 5 0 6 5 6 5zm0 0c5 0 6-5 6-5-5 0-6 5-6 5"/>';break;
+ case'drop':p='<path d="M20 5C14 14 10 19 10 25a10 10 0 0 0 20 0c0-6-4-11-10-20z" fill="'+col+'" fill-opacity=".2"/>';break;
+ case'paint':p='<path d="M8 14h22v18a3 3 0 0 1-3 3H11a3 3 0 0 1-3-3z" fill="'+col+'" fill-opacity=".2"/><path d="M8 14c0-4 22-4 22 0"/><path d="M30 18c4 0 5 3 5 6v6"/><circle cx="35" cy="32" r="1.6" fill="'+col+'"/>';break;
+ case'glue':p='<path d="M10 12h16l3 20H7z" fill="'+col+'" fill-opacity=".2"/><path d="M14 12V7h8v5"/><path d="M18 7V3"/>';break;
+ case'bath':p='<path d="M4 20h32v4a8 8 0 0 1-8 8H12a8 8 0 0 1-8-8z" fill="'+col+'" fill-opacity=".2"/><path d="M9 20V9a4 4 0 0 1 8 0"/><path d="M11 32l-2 4M29 32l2 4"/>';break;
+ case'rupee':p='<circle cx="20" cy="20" r="15" fill="'+col+'" fill-opacity=".14"/><path d="M14 12h12M14 17h12M15 12c8 0 8 10 0 10l9 8"/>';break;
+ case'box':p='<path d="M6 13l14-7 14 7v15l-14 7-14-7z" fill="'+col+'" fill-opacity=".18"/><path d="M6 13l14 7 14-7M20 20v15"/>';break;
+ case'people':p='<circle cx="13" cy="13" r="5"/><circle cx="27" cy="13" r="5"/><path d="M4 33c0-7 4-11 9-11s9 4 9 11M18 33c0-7 4-11 9-11s9 4 9 11"/>';break;
+ case'globe':p='<circle cx="20" cy="20" r="14" fill="'+col+'" fill-opacity=".14"/><path d="M6 20h28M20 6c-6 6-6 22 0 28M20 6c6 6 6 22 0 28"/>';break;
+ case'gear':p='<circle cx="20" cy="20" r="6"/><path d="M20 4v6M20 30v6M4 20h6M30 20h6M8.7 8.7l4.2 4.2M27.1 27.1l4.2 4.2M8.7 31.3l4.2-4.2M27.1 12.9l4.2-4.2"/>';break;
+ case'flask':p='<path d="M15 5h10M17 5v10L7 33a2 2 0 0 0 2 3h22a2 2 0 0 0 2-3L23 15V5" fill="'+col+'" fill-opacity=".16"/>';break;
+ case'bolt':p='<path d="M22 4L8 22h11l-3 14 15-19H20z" fill="'+col+'" fill-opacity=".2"/>';break;
+ case'chair':p='<path d="M11 5v17h18V5"/><path d="M8 22h24v4H8z" fill="'+col+'" fill-opacity=".2"/><path d="M11 26v9M29 26v9"/>';break;
+ case'car':p='<path d="M5 26v-6l5-8h20l5 8v6z" fill="'+col+'" fill-opacity=".18"/><circle cx="12" cy="28" r="4"/><circle cx="28" cy="28" r="4"/>';break;
+ case'tank':p='<rect x="9" y="8" width="22" height="26" rx="5" fill="'+col+'" fill-opacity=".18"/><path d="M9 15h22M16 4h8v4"/>';break;
+ case'hourglass':p='<path d="M10 4h20M10 36h20M12 4c0 10 16 10 16 16S12 26 12 36M28 4c0 10-16 10-16 16s16 6 16 16"/><path d="M15 33h10l-5-6z" fill="'+col+'" fill-opacity=".5"/>';break;
+ case'shield':p='<path d="M20 4l13 5v10c0 9-6 14-13 17C13 33 7 28 7 19V9z" fill="'+col+'" fill-opacity=".18"/><path d="M14 20l4 4 8-8"/>';break;
+ case'warn':p='<path d="M20 5l16 29H4z" fill="'+col+'" fill-opacity=".18"/><path d="M20 15v9M20 29v.5"/>';break;
+ case'up':p='<path d="M5 30l10-10 6 6 13-14"/><path d="M26 12h8v8"/>';break;
+ case'down':p='<path d="M5 10l10 10 6-6 13 14"/><path d="M26 28h8v-8"/>';break;
+ case'target':p='<circle cx="20" cy="20" r="14"/><circle cx="20" cy="20" r="8"/><circle cx="20" cy="20" r="2" fill="'+col+'"/>';break;
+ case'cal':p='<rect x="5" y="8" width="30" height="27" rx="3" fill="'+col+'" fill-opacity=".14"/><path d="M5 15h30M12 4v7M28 4v7"/>';break;
+ case'scale':p='<path d="M20 5v29M8 34h24M7 12h26M7 12l-5 11h10zM33 12l-5 11h10z"/>';break;
+ case'brain':p='<circle cx="20" cy="20" r="14" fill="'+col+'" fill-opacity=".14"/><path d="M15 14h10M13 20h14M15 26h10"/>';break;
+ case'cash':p='<rect x="3" y="11" width="34" height="18" rx="2" fill="'+col+'" fill-opacity=".18"/><circle cx="20" cy="20" r="4.5"/>';break;
+ default:p='<circle cx="20" cy="20" r="12"/>';}
+ return g+p+'</g>';}
+
+/* ===== charts ===== */
+function bars(o){var W=o.w||640,H=o.h||270,l=46,r=12,t=40,b=52;var cats=o.cats,S=o.series;var mx=0;S.forEach(function(s){s.vals.forEach(function(v){if(v!=null&&v>mx)mx=v;});});mx=mx*1.15||1;
+ var iw=W-l-r,ih=H-t-b,gw=iw/cats.length,bw=Math.min(46,gw*0.72/S.length);var h='';
+ for(var i=0;i<=4;i++){var yy=t+ih-ih*i/4;h+='<line x1="'+l+'" x2="'+(W-r)+'" y1="'+yy+'" y2="'+yy+'" stroke="'+C.line+'" stroke-width="1"/>';h+=t1(l-6,yy+4,(o.fmt||f0)(mx*i/4),'text-anchor="end" font-size="11" class="mono"');}
+ cats.forEach(function(c,ci){var x0=l+gw*ci+(gw-bw*S.length)/2;S.forEach(function(s,si){var v=s.vals[ci],x=x0+si*bw;
+  if(v==null){h+='<rect x="'+(x+2)+'" y="'+(t+ih*0.45)+'" width="'+(bw-4)+'" height="'+(ih*0.55)+'" fill="'+C.wsoft+'" stroke="'+C.wait+'" stroke-dasharray="4 3" stroke-width="2"/>'+tx(x+bw/2,t+ih*0.42,'5 Nov','5 Nov','text-anchor="middle" font-size="11" font-weight="800" fill="'+C.wait+'"');return;}
+  var bh=ih*v/mx;h+='<rect x="'+(x+2)+'" y="'+(t+ih-bh)+'" width="'+(bw-4)+'" height="'+bh+'" rx="3" fill="'+s.color+'"/>';
+  h+=t1(x+bw/2,t+ih-bh-5,(o.vfmt||o.fmt||f0)(v),'text-anchor="middle" font-size="11" font-weight="800" class="mono"');});
+  h+=tx(l+gw*ci+gw/2,H-b+18,c[0],c[1],'text-anchor="middle" font-size="12" font-weight="800"');});
+ var lx=l;S.forEach(function(s){h+='<rect x="'+lx+'" y="10" width="14" height="14" rx="3" fill="'+s.color+'"/>'+tx(lx+19,22,s.n[0],s.n[1],'font-size="12" font-weight="800"');lx+=Math.max(120,(s.n[0].length*7.5)+40);});
+ if(o.unit)h+=tx(W-r,22,o.unit[0],o.unit[1],'text-anchor="end" font-size="11" font-weight="700" fill="'+C.ink2+'"');
+ return svg(W,H,h,o.label);}
+function hbars(o){var W=o.w||620,rowH=o.rh||34,l=o.l||170,r=70,t=10;var it=o.items,H=t+it.length*rowH+10;var mx=0;it.forEach(function(x){if(Math.abs(x.v)>mx)mx=Math.abs(x.v);});mx=mx||1;var hasNeg=it.some(function(x){return x.v<0;});var zero=hasNeg?l+(W-l-r)/2:l;var span=hasNeg?(W-l-r)/2:(W-l-r);var h='';
+ it.forEach(function(x,i){var y=t+i*rowH;var w=span*Math.abs(x.v)/mx;var x0=x.v>=0?zero:zero-w;
+  h+=tx(8,y+rowH/2+4,x.lab[0],x.lab[1],'font-size="12.5" font-weight="800"');
+  h+='<rect x="'+x0+'" y="'+(y+6)+'" width="'+Math.max(w,2)+'" height="'+(rowH-12)+'" rx="4" fill="'+(x.c||C.acc)+'"/>';
+  h+=t1(x.v>=0?x0+w+6:x0-6,y+rowH/2+4,x.txt||(f1(x.v)+(o.suf||'')),'font-size="12" font-weight="800" class="mono" '+(x.v>=0?'':'text-anchor="end"'));});
+ if(hasNeg)h+='<line x1="'+zero+'" x2="'+zero+'" y1="'+t+'" y2="'+(H-6)+'" stroke="'+C.ink+'" stroke-width="1.5"/>';
+ return svg(W,H,h,o.label);}
+function donut(parts,cen,o){o=o||{};var W=o.w||300,H=o.h||220,cx=110,cy=110,R=90,rr=55;var tot=parts.reduce(function(a,p){return a+p.v;},0);var a0=-Math.PI/2,h='';
+ parts.forEach(function(p){var a1=a0+2*Math.PI*p.v/tot;var lg=(a1-a0)>Math.PI?1:0;
+  h+='<path d="M'+(cx+R*Math.cos(a0))+' '+(cy+R*Math.sin(a0))+' A'+R+' '+R+' 0 '+lg+' 1 '+(cx+R*Math.cos(a1))+' '+(cy+R*Math.sin(a1))+' L'+(cx+rr*Math.cos(a1))+' '+(cy+rr*Math.sin(a1))+' A'+rr+' '+rr+' 0 '+lg+' 0 '+(cx+rr*Math.cos(a0))+' '+(cy+rr*Math.sin(a0))+'Z" fill="'+p.c+'" stroke="'+C.card+'" stroke-width="2"/>';a0=a1;});
+ h+=tx(cx,cy-2,cen[0],cen[1],'text-anchor="middle" font-size="15" font-weight="900"');if(cen[2])h+=t1(cx,cy+16,cen[2],'text-anchor="middle" font-size="11" font-weight="700"');
+ var ly=20;parts.forEach(function(p){h+='<rect x="215" y="'+(ly-10)+'" width="12" height="12" rx="2" fill="'+p.c+'"/>'+tx(232,ly,p.lab[0],p.lab[1],'font-size="11.5" font-weight="800"')+t1(232,ly+14,Math.round(p.v/tot*100)+'% · '+(p.t||f0(p.v)),'font-size="11" class="mono" font-weight="700"');ly+=36;});
+ return svg(Math.max(W,400),H,h,o.label);}
+function lines(o){var W=o.w||620,H=o.h||250,l=46,r=20,t=36,b=40;var mx=-1e9,mn=1e9;o.series.forEach(function(s){s.vals.forEach(function(v){if(v!=null){mx=Math.max(mx,v);mn=Math.min(mn,v);}});});var pad=(mx-mn)*0.2||1;mx+=pad;mn=Math.max(o.min!=null?o.min:-1e9,mn-pad);
+ var iw=W-l-r,ih=H-t-b,n=o.cats.length;function X(i){return l+iw*(n===1?0.5:i/(n-1));}function Y(v){return t+ih-(v-mn)/(mx-mn)*ih;}var h='';
+ for(var i=0;i<=4;i++){var v=mn+(mx-mn)*i/4,yy=Y(v);h+='<line x1="'+l+'" x2="'+(W-r)+'" y1="'+yy+'" y2="'+yy+'" stroke="'+C.line+'"/>'+t1(l-6,yy+4,f1(v),'text-anchor="end" font-size="11" class="mono"');}
+ o.cats.forEach(function(c,i){h+=tx(X(i),H-b+18,c[0],c[1],'text-anchor="middle" font-size="11.5" font-weight="800"');});
+ o.series.forEach(function(s){var d='';s.vals.forEach(function(v,i){if(v==null)return;d+=(d?'L':'M')+X(i)+' '+Y(v);});h+='<path d="'+d+'" fill="none" stroke="'+s.color+'" stroke-width="3"/>';
+  s.vals.forEach(function(v,i){if(v==null)return;h+='<circle cx="'+X(i)+'" cy="'+Y(v)+'" r="5" fill="'+s.color+'"/>'+t1(X(i),Y(v)-9,f1(v)+(o.suf||''),'text-anchor="middle" font-size="11" font-weight="800" class="mono"');});});
+ var lx=l;o.series.forEach(function(s){h+='<rect x="'+lx+'" y="8" width="14" height="14" rx="3" fill="'+s.color+'"/>'+tx(lx+19,20,s.n[0],s.n[1],'font-size="12" font-weight="800"');lx+=150;});
+ return svg(W,H,h,o.label);}
+function gauge(v,max,lab,col,o){o=o||{};var W=220,H=140,cx=110,cy=115,R=88;var f=Math.max(0,Math.min(1,v/max));function P(a){return [cx+R*Math.cos(Math.PI+a*Math.PI),cy+R*Math.sin(Math.PI+a*Math.PI)];}
+ var p1=P(0),p2=P(1),pv=P(f);var h='<path d="M'+p1[0]+' '+p1[1]+' A'+R+' '+R+' 0 0 1 '+p2[0]+' '+p2[1]+'" stroke="'+C.line+'" stroke-width="18" fill="none"/>';
+ h+='<path d="M'+p1[0]+' '+p1[1]+' A'+R+' '+R+' 0 0 1 '+pv[0]+' '+pv[1]+'" stroke="'+col+'" stroke-width="18" fill="none"/>';
+ h+='<line x1="'+cx+'" y1="'+cy+'" x2="'+pv[0]+'" y2="'+pv[1]+'" stroke="'+C.ink+'" stroke-width="3"/><circle cx="'+cx+'" cy="'+cy+'" r="6" fill="'+C.ink+'"/>';
+ h+=t1(cx,cy-30,(o.txt||f0(v)),'text-anchor="middle" font-size="22" font-weight="900" class="mono"')+tx(cx,cy+20,lab[0],lab[1],'text-anchor="middle" font-size="12" font-weight="800"');
+ return svg(W,H+10,h,'gauge');}
+function range52(lo,hi,cur,col,lab){var W=560,H=92,l=30,r=30;var x=l+(W-l-r)*(cur-lo)/(hi-lo);var h='<rect x="'+l+'" y="38" width="'+(W-l-r)+'" height="14" rx="7" fill="'+C.soft+'" stroke="'+C.line+'"/>';
+ h+='<rect x="'+l+'" y="38" width="'+(x-l)+'" height="14" rx="7" fill="'+col+'" fill-opacity=".45"/>';
+ h+='<path d="M'+x+' 34 l-8 -12 h16z" fill="'+col+'"/>'+t1(x,16,'₹'+f0(cur),'text-anchor="middle" font-size="13" font-weight="900" class="mono"');
+ h+=t1(l,72,'₹'+f0(lo),'font-size="12" font-weight="800" class="mono"')+t1(W-r,72,'₹'+f0(hi),'text-anchor="end" font-size="12" font-weight="800" class="mono"');
+ h+=tx(l,88,'52-week low','52-week low','font-size="11" font-weight="700"')+tx(W-r,88,'52-week high','52-week high','text-anchor="end" font-size="11" font-weight="700"');
+ h+=tx(W/2,88,lab[0],lab[1],'text-anchor="middle" font-size="11.5" font-weight="900"');return svg(W,H+6,h,'52 week range');}
+function band(o){/* P/E vs history strip */var W=560,H=86,l=30,r=30,mn=o.min,mx=o.max;function X(v){return l+(W-l-r)*(v-mn)/(mx-mn);}
+ var h='<rect x="'+l+'" y="36" width="'+(W-l-r)+'" height="12" rx="6" fill="'+C.soft+'"/>';
+ h+='<rect x="'+X(o.blo)+'" y="32" width="'+(X(o.bhi)-X(o.blo))+'" height="20" rx="6" fill="'+o.col+'" fill-opacity=".25" stroke="'+o.col+'" stroke-width="2"/>';
+ h+=tx((X(o.blo)+X(o.bhi))/2,72,'usual range '+o.blo+'–'+o.bhi+'x','வழக்கமான range '+o.blo+'–'+o.bhi+'x','text-anchor="middle" font-size="11.5" font-weight="800"');
+ h+='<circle cx="'+X(o.cur)+'" cy="42" r="9" fill="'+o.col+'" stroke="'+C.ink+'" stroke-width="2"/>'+tx(X(o.cur),20,'now '+f1(o.cur)+'x','இப்போ '+f1(o.cur)+'x','text-anchor="middle" font-size="12.5" font-weight="900"');
+ h+=t1(l,72,mn+'x','font-size="11" class="mono"')+t1(W-r,72,mx+'x','text-anchor="end" font-size="11" class="mono"');return svg(W,H,h,'P/E band');}
+function waterfall(steps,o){o=o||{};var W=o.w||640,H=o.h||260,l=40,r=10,t=24,b=56;var run=0,mx=0;steps.forEach(function(s){if(s.type==='total'){mx=Math.max(mx,s.v);}else{run+=s.v;mx=Math.max(mx,run);}});mx*=1.12;
+ var iw=W-l-r,ih=H-t-b,gw=iw/steps.length,bw=gw*0.62;function Y(v){return t+ih-ih*v/mx;}var h='',cur=0;
+ steps.forEach(function(s,i){var x=l+gw*i+(gw-bw)/2,y1,y2,col;if(s.type==='total'){y1=Y(s.v);y2=Y(0);col=s.c||C.acc;cur=s.v;}else{var nv=cur+s.v;y1=Y(Math.max(cur,nv));y2=Y(Math.min(cur,nv));col=s.v>=0?C.good:C.bad;cur=nv;}
+  h+='<rect x="'+x+'" y="'+y1+'" width="'+bw+'" height="'+Math.max(2,y2-y1)+'" rx="3" fill="'+col+'"/>'+t1(x+bw/2,y1-5,(s.type==='total'?'':(s.v>=0?'+':''))+f0(s.v),'text-anchor="middle" font-size="11" font-weight="800" class="mono"');
+  h+=tx(x+bw/2,H-b+16,s.lab[0],s.lab[1],'text-anchor="middle" font-size="11" font-weight="800"');if(s.lab2)h+=tx(x+bw/2,H-b+30,s.lab2[0],s.lab2[1],'text-anchor="middle" font-size="10.5" font-weight="700" fill="'+C.ink2+'"');});
+ h+='<line x1="'+l+'" x2="'+(W-r)+'" y1="'+Y(0)+'" y2="'+Y(0)+'" stroke="'+C.ink+'"/>';return svg(W,H,h,o.label||'waterfall');}
+function ring(done,total,lab){var R=46,c=2*Math.PI*R,f=total?done/total:0;return svg(130,130,'<circle cx="65" cy="65" r="'+R+'" stroke="'+C.line+'" stroke-width="13" fill="none"/><circle cx="65" cy="65" r="'+R+'" stroke="'+C.acc+'" stroke-width="13" fill="none" stroke-dasharray="'+(c*f)+' '+c+'" transform="rotate(-90 65 65)" stroke-linecap="round"/>'+t1(65,66,done+'/'+total,'text-anchor="middle" font-size="20" font-weight="900" class="mono"')+tx(65,86,lab[0],lab[1],'text-anchor="middle" font-size="10.5" font-weight="800"'),'progress');}
+function timeline(ev,o){o=o||{};var n=ev.length,W=o.w||Math.max(700,n*150),H=210,l=40,r=40;var gap=(W-l-r)/(n-1||1);var h='<line x1="'+l+'" x2="'+(W-r)+'" y1="100" y2="100" stroke="'+C.ink+'" stroke-width="3"/>';
+ ev.forEach(function(e,i){var x=l+gap*i,up=i%2===0,col=e.done?(e.c||C.good):C.wait;
+  h+='<circle cx="'+x+'" cy="100" r="11" fill="'+(e.done?col:C.wsoft)+'" stroke="'+col+'" stroke-width="3"'+(e.done?'':' stroke-dasharray="3 2"')+'/>';
+  if(e.done)h+='<path d="M'+(x-5)+' 100 l4 4 7 -8" stroke="#FFFFFF" stroke-width="2.6" fill="none"/>';
+  var y=up?62:140;h+=t1(x,up?40:132+28-8,'','');
+  h+=t1(x,up?44:128,e.d,'text-anchor="middle" font-size="12" font-weight="900" class="mono" fill="'+col+'"');
+  var tE=e.en,tT=e.ta;h+=wrapT(x,up?60:144,tE,tT,18,'text-anchor="middle" font-size="11.5" font-weight="700"');
+  h+=t1(x,up?28:180,e.done?'✔':'…','text-anchor="middle" font-size="12" font-weight="900" fill="'+col+'"');});
+ return svg(W,H+8,h,'timeline');}
+function wrapT(x,y,en,ta,max,a){function lines(s){var w=s.split(' '),out=[],cur='';w.forEach(function(x){if((cur+' '+x).trim().length>max){if(cur)out.push(cur);cur=x;}else cur=(cur+' '+x).trim();});if(cur)out.push(cur);return out;}
+ var le=lines(en),lt=lines(ta==null?en:ta),h='';h+='<text class="en" '+a+'>'+le.map(function(s,i){return '<tspan x="'+x+'" y="'+(y+i*14)+'">'+s+'</tspan>';}).join('')+'</text>';
+ h+='<text class="ta" '+a+'>'+lt.map(function(s,i){return '<tspan x="'+x+'" y="'+(y+i*14)+'">'+s+'</tspan>';}).join('')+'</text>';return h;}
+/* ===== DATA (₹ crore unless stated) ===== */
+var SI={ // Supreme: Q2FY27, Q1FY27, Q2FY26
+ vol:[184455,157536,154431], rev:[3361.27,2717.66,2393.87], rm:[2359.82,1783.42,1586.99], emp:[167.75,163.00,134.23], oth:[402.59,373.20,375.24],
+ ebitda:[431.11,398.04,297.41], dep:[122.30,122.33,104.35], oi:[54.99,9.13,58.95], fin:[3.08,4.16,5.83], pbt:[360.72,280.68,246.18], tax:[81.47,72.92,52.89],
+ patS:[279.25,207.76,193.29], patC:[262.44,280.72,164.74], vap:[1476,1142,1072],
+ seg:{pipe:{rev:[2274,1791,1602],ebit:[241,205,127],vol:[148157,125812,119860]},ind:{rev:[420,373,283],ebit:[25,23,12],vol:[15693,13803,13927]},pack:{rev:[481,438,394],ebit:[46,54,48],vol:[16790,14627,16263]},cons:{rev:[105,88,103],ebit:[13,10,14],vol:[3749,3265,4381]}},
+ hist:{q:['Q2 FY23','Q2 FY24','Q2 FY25','Q2 FY26','Q2 FY27'],vol:[111803,137763,138077,154431,184455],rev:[2087,2309,2273,2394,3361],ebitda:[147,357,319,297,431]},
+ fy26:{rev:11217.67,ebitda:1553.87,pat:911.29,vol:753907,cfo:1225,capex:815,fcf:410,div:445,cfo25:1004,capex25:890,fcf25:113},
+ bs:{inv:[1732.73,1618.55],rec:[525.13,487.48],pay:[1013.23,1025.86],cash:[685.27,648.45],eq:[5621.14,5452.01]},
+ price:3250, mcap:41300, eps:89.0, pe:36.5, pb:7.4, evE:23, yld:1.1, lo:3140, hi:4665, roce:21, roe:16, div:36
+};
+var AS={ // Astral: Q2FY27 pending, Q1FY27, Q2FY26, Q1FY26, Q4FY26
+ rev:[null,1578.0,1577.4,1361.2,2088.5], ebitda:[null,244.0,257.0,194.0,400.2], pat:[null,120.2,134.8,79.2,213.0],
+ pRev:[null,1050.5,1118.6,953.9,1534.2], pEb:[null,198.3,212.9,156.5,351.9], pVol:[null,56146,61224,56090,84041],
+ paRev:[null,527.5,458.8,407.3,554.0], paEb:[null,45.7,null,37.5,48.0],
+ sub:{adhIn:326,adhUK:121,paint:74.5,bath:28.7,dss:6.7},
+ fy26:{rev:6568.6,ebitda:1109.2,pat:534.7,pRev:4678.7,pEb:916.6,paRev:1889.9,paEb:192.6,cfo:1030,capex:373,fcf:660,div:107,cfo25:800,fcf25:90},
+ wc:{fy25:[109,27,92,44],fy26:[103,26,93,36]},
+ cash:{mar26:943,jun26:470},
+ price:1350, mcap:36300, eps:21.4, pe:63, pb:8.8, evE:31, yld:0.3, lo:1311.6, hi:1768.7, roce:20, roe:16, div:4
+};
+var Q3=[['Q2 FY27','Q2 FY27'],['Q1 FY27','Q1 FY27'],['Q2 FY26','Q2 FY26']];
+function siPerKg(i){return SI.rev[i]*1e7/(SI.vol[i]*1e3);}
+function siEbKg(i){return SI.ebitda[i]*1e7/(SI.vol[i]*1e3);}
+function asPerKg(i){return AS.pRev[i]==null?null:AS.pRev[i]*1e7/(AS.pVol[i]*1e3);}
+function asEbKg(i){return AS.pEb[i]==null?null:AS.pEb[i]*1e7/(AS.pVol[i]*1e3);}
+/* working-capital days (COGS basis for inventory/payables, sales basis for receivables) */
+var SIWC={mar26:[78,16,50,44],sep26:[76,16,45,47]};
+
+var TABS=[['dash','Dashboard','டாஷ்போர்டு'],['bm','Business Model','பிசினஸ் மாடல்'],['seg','Segments','செக்மென்ட்ஸ்'],['fin','Financials','ரிசல்ட்ஸ்'],['met','Metrics','மெட்ரிக்ஸ்'],['cf','Cash Flow & Ratios','கேஷ் ஃப்ளோ & ரேஷியோ'],['val','Valuations','வேல்யூவேஷன்'],['kt','5 Key Takeaways','5 முக்கிய பாயிண்ட்ஸ்'],['mv','Share Moves','ஷேர் ஏன் நகருது'],['tc','Triggers & Cycle','Triggers & Cycle'],['p6','6 Pillars','6 தூண்கள்'],['bet','Big Bets','பெரிய பந்தயம்'],['vc','Value Chain','வேல்யூ செயின்'],['swot','SWOT','SWOT'],['sc','Self-Check','சுய சோதனை'],['ask','Cauvery Assist','Cauvery Assist'],['quiz','Cauvery Socrates','Cauvery Socrates'],['av','Analyst View','அனலிஸ்ட் பார்வை']];
+var P={};
+function head(en,ta,len,lta){return '<h2>'+L(en,ta)+'</h2>'+(len?'<p class="lede">'+L(len,lta)+'</p>':'');}
+
+/* ===== DASHBOARD ===== */
+P.dash=function(){
+ var kS=[['Revenue','₹'+f0(SI.rev[0])+' cr',pc(SI.rev[0],SI.rev[2]),'YoY'],['EBITDA','₹'+f0(SI.ebitda[0])+' cr',pc(SI.ebitda[0],SI.ebitda[2]),'YoY'],['PAT (consol.)','₹'+f0(SI.patC[0])+' cr',pc(SI.patC[0],SI.patC[2]),'YoY'],['Volume','1.84 lakh t',pc(SI.vol[0],SI.vol[2]),'YoY']];
+ var kA=[['Revenue (Q1)','₹'+f0(AS.rev[1])+' cr',pc(AS.rev[1],AS.rev[3]),'YoY'],['EBITDA (Q1)','₹'+f0(AS.ebitda[1])+' cr',pc(AS.ebitda[1],AS.ebitda[3]),'YoY'],['PAT (Q1)','₹'+f0(AS.pat[1])+' cr',pc(AS.pat[1],AS.pat[3]),'YoY'],['Pipe volume (Q1)','56,146 t',0.1,'YoY']];
+ function tiles(k,cls){return '<div class="grid g4">'+k.map(function(x){return '<div class="card '+cls+'"><div class="kpi"><span class="k">'+x[0]+'</span><span class="v">'+x[1]+'</span><span class="d">'+gr(x[2])+' '+x[3]+'</span></div></div>';}).join('')+'</div>';}
+ var sup='<div class="pic">'+svg(120,120,ic('shield',10,10,2.5,C.sup),'shield')+'<div><h3>'+L('What makes Supreme “supreme”?','Supreme-ஐ “supreme”-ஆ ஆக்குறது என்ன?')+'</h3>'+bl([
+  ['India’s largest plastics processor: 7.5 lakh tonnes sold in FY26','இந்தியாவின் biggest plastics processor: FY26-ல 7.5 லட்சம் tonne'],
+  ['35 plants across India: short freight, local supply','இந்தியா முழுக்க 35 plants: freight குறைவு, பக்கத்துலயே supply'],
+  ['9 business verticals: pipes, packaging, furniture, industrial parts','9 business verticals: pipes, packaging, furniture, industrial parts'],
+  ['Debt-free with ₹685 cr cash; pays out ~48% as dividend','Debt இல்ல, ₹685 cr cash; ~48% dividend-ஆ கொடுக்குறாங்க'],
+  ['Bulk resin buying power + 7,000+ distributors','பெரிய அளவுல resin வாங்குற power + 7,000+ distributors']])+'</div></div>';
+ var ast='<div class="pic">'+svg(120,120,ic('drop',10,10,2.5,C.ast),'drop')+'<div><h3>'+L('Why Astral is great too','Astral-உம் ஏன் சூப்பர்')+'</h3>'+bl([
+  ['Pioneer of CPVC hot/cold water pipes in India','இந்தியாவுல CPVC hot/cold water pipes-க்கு pioneer'],
+  ['Highest margin per kg in pipes (~₹35/kg EBITDA)','Pipes-ல per kg margin அதிகம் (~₹35/kg EBITDA)'],
+  ['Second engine: adhesives (Resinova, UK Seal It)','இரண்டாவது engine: adhesives (Resinova, UK Seal It)'],
+  ['Third engine: paints, from buying Gem Paints (now 100%)','மூணாவது engine: paints — Gem Paints வாங்கினது (இப்போ 100%)'],
+  ['Own CPVC resin plant (40,000 t) due Dec 2026','சொந்த CPVC resin plant (40,000 t) Dec 2026-ல ready']])+'</div></div>';
+ var scale=bars({cats:[['Revenue ₹ cr','Revenue ₹ cr'],['EBITDA ₹ cr','EBITDA ₹ cr'],['PAT ₹ cr','PAT ₹ cr']],series:[{n:['Supreme Q2 FY27','Supreme Q2 FY27'],color:C.sup,vals:[SI.rev[0],SI.ebitda[0],SI.patC[0]]},{n:['Astral Q1 FY27','Astral Q1 FY27'],color:C.ast,vals:[AS.rev[1],AS.ebitda[1],AS.pat[1]]},{n:['Astral Q2 FY27','Astral Q2 FY27'],color:C.wait,vals:[null,null,null]}],h:280,label:'scale compare'});
+ var chips='<div class="grid g4">'+[['CY · Supreme','71','Cycle score'],['TG · Supreme','65','Trigger score'],['CY · Astral','67','Cycle score'],['TG · Astral','59','Trigger score']].map(function(x,i){return '<div class="card '+(i<2?'s':'a')+'">'+gauge(+x[1],100,[x[0],x[0]],i<2?C.sup:C.ast)+'</div>';}).join('')+'</div>';
+ return head('At a glance','ஒரே பார்வையில்','Supreme reported Q2 FY27 on 26 Oct. Astral reports on 5 Nov — its tiles show Q1 FY27, the latest actuals.','Supreme Q2 FY27 ரிசல்ட் 26 Oct-ல வந்துச்சு. Astral 5 Nov-ல — அதுவரை Q1 FY27 numbers.')+
+ '<div class="grid g2"><div>'+'<h3 style="color:var(--sup);margin:0 0 6px">Supreme · Q2 FY27</h3>'+tiles(kS,'s')+'</div><div><h3 style="color:var(--ast);margin:0 0 6px">Astral · Q1 FY27 <span class="chip w">'+L('Q2 due 5 Nov','Q2 5 Nov')+'</span></h3>'+tiles(kA,'a')+'</div></div>'+
+ '<div class="grid g2" style="margin-top:14px">'+card('s','',sup)+card('a','',ast)+'</div>'+
+ '<div class="card" style="margin-top:14px"><h3>'+L('Size check: Supreme is about 2x Astral in revenue, 3x in tonnes','Size: revenue-ல Supreme Astral-ஐ விட ~2 மடங்கு, tonnes-ல ~3 மடங்கு')+'</h3>'+box(scale)+'</div>'+
+ '<h3 style="margin:16px 0 6px">'+L('CB Cycle (CY) and Trigger (TG) scores','CB Cycle (CY) & Trigger (TG) scores')+'</h3>'+chips;
+};
+
+/* ===== BUSINESS MODEL flow maps ===== */
+var FM={};
+function flowMap(id,col,soft,cfg){FM[id]=cfg.detail;var W=1000,H=600,h='';
+ h+='<defs><marker id="ar'+id+'" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="'+C.ink+'"/></marker></defs>';
+ function bx(k,x,y,w,hh,icon,t,ta,num,fill,stroke){return '<g class="fm-box" data-fm="'+id+'" data-k="'+k+'" tabindex="0"><rect x="'+x+'" y="'+y+'" width="'+w+'" height="'+hh+'" rx="10" fill="'+(fill||C.card)+'" stroke="'+(stroke||C.line)+'" stroke-width="2.5"/>'+ic(icon,x+6,y+(hh-34)/2,0.85,stroke&&stroke!==C.line?stroke:C.ink)+tx(x+44,y+hh/2-3,t,ta,'font-size="13" font-weight="900"')+t1(x+44,y+hh/2+14,num,'font-size="11.5" font-weight="700" class="mono"')+'</g>';}
+ function arr(x1,y1,x2,y2,dash){return '<line x1="'+x1+'" y1="'+y1+'" x2="'+x2+'" y2="'+y2+'" stroke="'+C.ink+'" stroke-width="2" marker-end="url(#ar'+id+')"'+(dash?' stroke-dasharray="6 4"':'')+'/>';}
+ h+=tx(20,24,'INPUTS','INPUTS','font-size="12" font-weight="900" letter-spacing="1.5" fill="'+C.ink2+'"')+tx(290,24,'THE COMPANY','COMPANY','font-size="12" font-weight="900" letter-spacing="1.5" fill="'+C.ink2+'"')+tx(560,24,'PRODUCTS','PRODUCTS','font-size="12" font-weight="900" letter-spacing="1.5" fill="'+C.ink2+'"')+tx(790,24,'CHANNELS → CUSTOMERS','CHANNELS → CUSTOMERS','font-size="12" font-weight="900" letter-spacing="1.5" fill="'+C.ink2+'"');
+ cfg.inp.forEach(function(b,i){var y=38+i*86;h+=bx('i'+i,10,y,215,66,b[0],b[1],b[2],b[3]);h+=arr(225,y+33,282,170+i*20);});
+ // hub
+ h+='<g class="fm-box" data-fm="'+id+'" data-k="hub" tabindex="0"><rect x="285" y="60" width="230" height="300" rx="14" fill="'+soft+'" stroke="'+col+'" stroke-width="3.5"/>'+ic('factory',375,74,1.3,col)+tx(400,146,cfg.hub[0],cfg.hub[0],'text-anchor="middle" font-size="17" font-weight="900" fill="'+col+'"');
+ cfg.hub[1].forEach(function(l,i){h+=tx(400,174+i*24,l[0],l[1],'text-anchor="middle" font-size="12.5" font-weight="800"');});h+='</g>';
+ cfg.prod.forEach(function(b,i){var y=38+i*86;h+=arr(515,170+i*20,553,y+33);h+=bx('p'+i,555,y,210,66,b[0],b[1],b[2],b[3]);h+=arr(765,y+33,783,y+33);});
+ cfg.cust.forEach(function(b,i){var y=38+i*86;h+=bx('c'+i,785,y,205,66,b[0],b[1],b[2],b[3]);});
+ // cash back
+ h+='<path d="M890 384 C890 430, 600 420, 560 452" fill="none" stroke="'+C.acc+'" stroke-width="3" stroke-dasharray="8 5" marker-end="url(#ar'+id+')"/>'+tx(760,428,'cash comes back','பணம் திரும்ப வருது','font-size="12.5" font-weight="900" fill="'+C.acc+'"');
+ var m=cfg.money,mw=180,gap=15;m.forEach(function(b,i){var x=20+i*(mw+gap+5);h+='<g class="fm-box" data-fm="'+id+'" data-k="m'+i+'" tabindex="0"><rect x="'+x+'" y="462" width="'+mw+'" height="74" rx="10" fill="'+(i===0?C.soft:C.card)+'" stroke="'+(i===m.length-1?col:C.acc)+'" stroke-width="2.5"/>'+tx(x+mw/2,488,b[0],b[1],'text-anchor="middle" font-size="13" font-weight="900"')+t1(x+mw/2,512,b[2],'text-anchor="middle" font-size="15" font-weight="900" class="mono"')+(b[3]?tx(x+mw/2,528,b[3],b[4],'text-anchor="middle" font-size="10.5" font-weight="700" fill="'+C.ink2+'"'):'')+'</g>';if(i<m.length-1)h+=arr(x+mw,499,x+mw+gap+3,499);});
+ h+=tx(20,575,'Tap any box to see what it means','எந்த box-ஐ tap பண்ணினாலும் விளக்கம் வரும்','font-size="12" font-weight="800" fill="'+C.ink2+'"');
+ return '<div class="card">'+box(svg(W,H,h,'business model flow map'),true)+'<div class="detail" id="fmd_'+id+'">'+L('👆 Tap a box above.','👆 மேல ஒரு box-ஐ tap பண்ணுங்க.')+'</div><div class="formula">'+L(cfg.f[0],cfg.f[1])+'</div></div>';}
+P.bm=function(){
+ var s=flowMap('s',C.sup,C.ssoft,{
+  inp:[['resin','PVC resin','PVC resin','~70% of sales'],['flask','PP / PE / PS','PP / PE / PS','9 verticals'],['pipe','CPVC compound','CPVC compound','hot-water pipes'],['bolt','Power & people','Power & people','29% renewable']],
+  hub:['Supreme Industries',[['35 plants · 9 verticals','35 plants · 9 verticals'],['Q2 sold 1.84 lakh t','Q2 விற்பனை 1.84 லட்சம் t'],['₹182 per kg realised','ஒரு kg-க்கு ₹182'],['Pipes capacity ~10 lakh t','Pipes capacity ~10 லட்சம் t'],['Debt-free · ₹685 cr cash','Debt இல்ல · ₹685 cr cash'],['30.8% of Supreme Petrochem','Supreme Petrochem-ல 30.8%']]],
+  prod:[['pipe','Piping','Piping','₹2,274 cr · 68%'],['box','Packaging','Packaging','₹481 cr'],['gear','Industrial','Industrial','₹420 cr'],['chair','Consumer (furniture)','Consumer (furniture)','₹105 cr']],
+  cust:[['house','Homes & builders','வீடு & builders','via plumbers'],['farm','Farmers','விவசாயிகள்','agri pipes'],['car','OEMs','OEMs','auto, appliance'],['globe','Exports','Exports','55 countries']],
+  money:[['Revenue','Revenue','₹3,361 cr','+40% YoY','+40% YoY'],['Gross profit','Gross profit','₹1,001 cr','after raw material','raw material போக'],['EBITDA','EBITDA','₹431 cr','12.8% margin','12.8% margin'],['PBT','PBT','₹361 cr','standalone','standalone'],['PAT','PAT','₹262 cr','consolidated','consolidated']],
+  f:['Revenue = tonnes sold × price per kg → 1.84 lakh t × ₹182/kg ≈ ₹3,361 cr','Revenue = விற்ற tonnes × kg விலை → 1.84 லட்சம் t × ₹182/kg ≈ ₹3,361 cr'],
+  detail:{i0:['PVC resin is the main raw material. Raw material cost was ₹2,360 cr in Q2, about 70% of sales. When PVC prices rise, Supreme raises pipe prices within 10–15 days.','PVC resin தான் main raw material. Q2-ல raw material செலவு ₹2,360 cr — sales-ல ~70%. PVC விலை ஏறுனா 10–15 நாள்ல pipe விலையும் ஏத்துவாங்க.'],
+   i1:['Other polymers (PP, PE, PS) feed packaging, furniture and industrial parts. Using many plastics spreads the risk.','PP, PE, PS மாதிரி மற்ற polymers packaging, furniture, industrial parts-க்கு. பல plastics use பண்றதால risk பிரியுது.'],
+   i2:['CPVC compound is bought from outside for hot-water pipes. CPVC prices were raised 3–7% after Q2.','Hot-water pipes-க்கு CPVC compound வெளியே வாங்குறாங்க. Q2-க்கு அப்புறம் CPVC விலை 3–7% ஏத்தினாங்க.'],
+   i3:['33 units run partly on solar/wind; renewable share was 29% in FY26 (target 35%).','33 units solar/wind-ல ஓடுது; FY26-ல renewable share 29% (target 35%).'],
+   hub:['Supreme is India’s largest plastics processor: 35 plants, 9 verticals, 7,000+ distributors, debt-free. It also owns 30.8% of Supreme Petrochem (polystyrene maker), which adds profit share and dividends.','Supreme இந்தியாவின் biggest plastics processor: 35 plants, 9 verticals, 7,000+ distributors, debt இல்ல. Supreme Petrochem-ல 30.8% பங்கு — அதுல இருந்து profit share & dividend வருது.'],
+   p0:['Piping is 68% of sales. Q2 piping volume grew 24% YoY to 1.48 lakh t; EBIT ₹241 cr (10.6% margin).','Piping தான் sales-ல 68%. Q2-ல piping volume 24% ஏறி 1.48 லட்சம் t; EBIT ₹241 cr (10.6% margin).'],
+   p1:['Packaging: films, protective packaging. Q2 revenue ₹481 cr, EBIT ₹46 cr.','Packaging: films, protective packaging. Q2 revenue ₹481 cr, EBIT ₹46 cr.'],
+   p2:['Industrial: moulded parts for appliances and autos, crates, composite LPG cylinders. Revenue +48% YoY.','Industrial: appliances, auto parts, crates, composite LPG cylinders. Revenue +48% YoY.'],
+   p3:['Consumer: moulded furniture (chairs, tables). Small: ₹105 cr in Q2.','Consumer: moulded furniture (chairs, tables). சின்னது: Q2-ல ₹105 cr.'],
+   c0:['Housing/plumbing drove most of Q2 demand, per the chairman.','Q2 demand பெரும்பாலும் housing/plumbing-ல இருந்து வந்துச்சுன்னு chairman சொன்னார்.'],
+   c1:['Agriculture pipes add demand over the full year; government water-scheme orders stayed weak.','Agri pipes full year-ல demand கொடுக்கும்; government water scheme orders weak-ஆ இருக்கு.'],
+   c2:['Industrial customers: appliance and auto makers buy moulded components.','Industrial customers: appliance, auto companies moulded parts வாங்குறாங்க.'],
+   c3:['Exports go to 55 countries; a UAE subsidiary helps.','55 நாடுகளுக்கு export; UAE subsidiary உதவுது.'],
+   m0:['Revenue ₹3,361 cr: +40% YoY. Volume +19% and price per kg +18% (PVC prices rose).','Revenue ₹3,361 cr: +40% YoY. Volume +19%, kg விலை +18% (PVC விலை ஏறுச்சு).'],
+   m1:['Gross profit ₹1,001 cr = revenue minus raw material. Gross margin fell to 29.8% from 33.7% as resin got costlier.','Gross profit ₹1,001 cr = revenue − raw material. Resin விலை ஏறுனதால gross margin 33.7%-ல இருந்து 29.8%.'],
+   m2:['EBITDA ₹431 cr, +45% YoY; margin 12.8% vs FY27 guidance of 14–14.5%.','EBITDA ₹431 cr, +45% YoY; margin 12.8% — FY27 guidance 14–14.5%.'],
+   m3:['Standalone PBT ₹361 cr after depreciation ₹122 cr, other income ₹55 cr (includes dividend from Supreme Petrochem).','Depreciation ₹122 cr, other income ₹55 cr (Supreme Petrochem dividend உட்பட) போக standalone PBT ₹361 cr.'],
+   m4:['Consolidated PAT ₹262 cr, +59% YoY. Standalone PAT ₹279 cr is higher because it books the Petrochem dividend; consolidation swaps that for the share of profit.','Consolidated PAT ₹262 cr, +59% YoY. Standalone PAT ₹279 cr அதிகமா தெரியக் காரணம் Petrochem dividend; consolidated-ல அதுக்கு பதிலா profit share.']}});
+ var a=flowMap('a',C.ast,C.asoft,{
+  inp:[['resin','PVC resin','PVC resin','uPVC pipes'],['pipe','CPVC compound','CPVC compound','own resin plant Dec 26'],['flask','Adhesive chemicals','Adhesive chemicals','resins, solvents'],['paint','Paint inputs','Paint inputs','pigments, binders']],
+  hub:['Astral',[['Pipes capacity 4.21 lakh t','Pipes capacity 4.21 லட்சம் t'],['Q1 sold 56,146 t','Q1 விற்பனை 56,146 t'],['₹187 per kg realised','ஒரு kg-க்கு ₹187'],['New plants: Kanpur, Hyderabad','புது plants: Kanpur, Hyderabad'],['Net cash ₹470 cr (Jun 26)','Net cash ₹470 cr (Jun 26)'],['Paints arm 100% owned','Paints arm 100% சொந்தம்']]],
+  prod:[['pipe','Plumbing','Plumbing','₹1,051 cr · 67%'],['glue','Adhesives India','Adhesives India','₹326 cr'],['globe','Adhesives UK','Adhesives UK','₹121 cr'],['paint','Paints (ex-Gem)','Paints (ex-Gem)','₹75 cr']],
+  cust:[['house','Homes & builders','வீடு & builders','via plumbers'],['people','Carpenters, painters','Carpenters, painters','retail counters'],['bath','Bathware buyers','Bathware buyers','₹29 cr'],['tank','Projects & infra','Projects & infra','tanks, drainage']],
+  money:[['Revenue','Revenue','₹1,578 cr','+16% YoY (Q1)','+16% YoY (Q1)'],['Gross profit','Gross profit','₹641 cr','40.6% margin','40.6% margin'],['EBITDA','EBITDA','₹244 cr','15.5% margin','15.5% margin'],['PBT','PBT','₹163 cr','Q1 FY27','Q1 FY27'],['PAT','PAT','₹120 cr','+52% YoY','+52% YoY']],
+  f:['Plumbing = 56,146 t × ₹187/kg ≈ ₹1,051 cr; + paints & adhesives ₹528 cr = ₹1,578 cr (Q1 FY27)','Plumbing = 56,146 t × ₹187/kg ≈ ₹1,051 cr; + paints & adhesives ₹528 cr = ₹1,578 cr (Q1 FY27)'],
+  detail:{i0:['PVC resin for uPVC pipes. Q1 FY27 was hit when PVC prices fell and dealers destocked.','uPVC pipes-க்கு PVC resin. Q1 FY27-ல PVC விலை இறங்கி dealers stock குறைச்சதால அடி.'],
+   i1:['CPVC compound is bought today. Astral is building its own 40,000 t CPVC resin plant: ready Dec 2026, trial runs Q4 FY27, full benefit FY28 (under construction, not commercial yet).','CPVC compound இப்போ வெளியே வாங்குறாங்க. சொந்த 40,000 t CPVC resin plant கட்டுறாங்க: Dec 2026 ready, Q4 FY27 trial, FY28-ல full benefit (இன்னும் commercial இல்ல).'],
+   i2:['Adhesive chemicals: costly inventory hurt India adhesive margin (12.2% in Q1). Price hikes of 6–8% should help.','Adhesive chemicals: விலை அதிக stock-ஆல India adhesive margin 12.2%. 6–8% price hike உதவும்.'],
+   i3:['Paint inputs for the Gem Paints business, now Astral Coatings.','Gem Paints (இப்போ Astral Coatings) business-க்கு paint inputs.'],
+   hub:['Astral: pipes capacity 4.21 lakh t, decentralised plants (Kanpur from Oct 2025, Hyderabad). Two divisions: Plumbing, and Paints & Adhesives.','Astral: pipes capacity 4.21 லட்சம் t, பல இடங்கள்ல plants (Kanpur Oct 2025, Hyderabad). இரண்டு division: Plumbing, Paints & Adhesives.'],
+   p0:['Plumbing (pipes, fittings, tanks, bathware): Q1 revenue ₹1,051 cr, EBITDA ₹198 cr (18.9%). Volume flat while industry fell ~10%.','Plumbing: Q1 revenue ₹1,051 cr, EBITDA ₹198 cr (18.9%). Industry ~10% இறங்கியும் volume flat.'],
+   p1:['Adhesives India (Resinova brand): ₹326 cr, +25% YoY; EBITDA margin 12.2%.','Adhesives India (Resinova): ₹326 cr, +25% YoY; margin 12.2%.'],
+   p2:['Adhesives UK (Seal It): ₹121 cr, +26% YoY; EBITDA turned positive at 4.9%.','Adhesives UK (Seal It): ₹121 cr, +26%; EBITDA 4.9% positive-ஆ மாறிச்சு.'],
+   p3:['Paints (ex-Gem Paints): ₹74.5 cr, +48.7% YoY; EBITDA at break-even for the first time.','Paints (ex-Gem Paints): ₹74.5 cr, +48.7%; முதல் முறையா EBITDA break-even.'],
+   c0:['Plumbers recommend the brand to home builders; CPVC is used for hot and cold water lines.','Plumbers தான் brand-ஐ recommend பண்றாங்க; CPVC hot & cold water lines-க்கு.'],
+   c1:['Carpenters and painters buy adhesives and paints over the same hardware counters.','Carpenters, painters அதே hardware கடையில adhesives, paints வாங்குறாங்க.'],
+   c2:['Bathware: ₹28.7 cr in Q1, +18%; target 20–25% CAGR.','Bathware: Q1-ல ₹28.7 cr, +18%; target 20–25% CAGR.'],
+   c3:['Projects: water tanks, drainage and the newly acquired DSS business (₹6.7 cr in Q1).','Projects: water tanks, drainage, புதுசா வாங்கின DSS business (Q1-ல ₹6.7 cr).'],
+   m0:['Q1 FY27 revenue ₹1,578 cr, +16% YoY. Q2 FY27 numbers come on 5 Nov.','Q1 FY27 revenue ₹1,578 cr, +16% YoY. Q2 FY27 5 Nov-ல வரும்.'],
+   m1:['Gross margin 40.6%: far above Supreme’s ~30% because of CPVC, fittings and adhesives.','Gross margin 40.6%: CPVC, fittings, adhesives-ஆல Supreme-ஐ (~30%) விட ரொம்ப அதிகம்.'],
+   m2:['EBITDA ₹244 cr, +26% YoY; margin 15.5% (up 120 bps).','EBITDA ₹244 cr, +26% YoY; margin 15.5% (120 bps ஏற்றம்).'],
+   m3:['PBT ₹163 cr after depreciation and interest.','Depreciation, interest போக PBT ₹163 cr.'],
+   m4:['PAT ₹120 cr, +52% YoY.','PAT ₹120 cr, +52% YoY.']}});
+ var cmp='<div class="grid g2">'+card('','' +L('Price per kg vs EBITDA per kg (₹)','kg விலை vs kg EBITDA (₹)'),box(bars({cats:[['Realisation ₹/kg','kg விலை ₹'],['EBITDA ₹/kg','EBITDA ₹/kg']],series:[{n:['Supreme Q2','Supreme Q2'],color:C.sup,vals:[siPerKg(0),siEbKg(0)]},{n:['Astral pipes Q1','Astral pipes Q1'],color:C.ast,vals:[asPerKg(1),asEbKg(1)]}],fmt:f0,vfmt:f1,label:'per kg'}))+bl([['Astral earns ~1.5x EBITDA per kg: more CPVC and fittings','Astral-க்கு per kg EBITDA ~1.5 மடங்கு: CPVC, fittings அதிகம்'],['Supreme wins on tonnes and spread of products','Supreme tonnes-லயும் products variety-லயும் முன்னாடி']]))+
+  card('','' +L('How each earns a rupee','ஒவ்வொரு ரூபாயும் எங்கிருந்து'),'<div class="grid g2">'+box(donut([{lab:['Piping','Piping'],v:2274,c:C.sup},{lab:['Packaging','Packaging'],v:481,c:'#6F8FD0'},{lab:['Industrial','Industrial'],v:420,c:'#9DB3E3'},{lab:['Consumer+other','Consumer+other'],v:186,c:C.line}],['Supreme','Supreme','Q2 FY27'],{label:'Supreme mix'}))+box(donut([{lab:['Plumbing','Plumbing'],v:1050.5,c:C.ast},{lab:['Adhesives India','Adhesives India'],v:326,c:'#4FAF93'},{lab:['Adhesives UK','Adhesives UK'],v:121,c:'#8FD1BD'},{lab:['Paints + other','Paints + other'],v:80.5,c:C.acc}],['Astral','Astral','Q1 FY27'],{label:'Astral mix'}))+'</div>'+bl([['Supreme: one material (plastic), many end-uses','Supreme: ஒரே material (plastic), பல பயன்பாடு'],['Astral: one customer (the home), many products','Astral: ஒரே customer (வீடு), பல products']]))+'</div>';
+ return head('Business model: from resin to customer','பிசினஸ் மாடல்: resin-ல இருந்து customer வரை','Both buy polymer, shape it in plants near customers, sell through dealers and plumbers.','இரண்டு பேரும் polymer வாங்கி, customer பக்கத்துல plants-ல pipes ஆக்கி, dealers & plumbers மூலமா விக்குறாங்க.')+three(s,a,cmp);
+};
+/* ===== SEGMENTS ===== */
+P.seg=function(){var S=SI.seg;var names={pipe:['Piping','Piping'],ind:['Industrial','Industrial'],pack:['Packaging','Packaging'],cons:['Consumer','Consumer']};
+ var rows=Object.keys(S).map(function(k){var s=S[k];return '<tr><td>'+L(names[k][0],names[k][1])+'</td><td class="n">'+f0(s.vol[0])+'</td><td>'+gr(pc(s.vol[0],s.vol[2]))+'</td><td class="n">'+f0(s.rev[0])+'</td><td class="n">'+f0(s.rev[1])+'</td><td class="n">'+f0(s.rev[2])+'</td><td>'+gr(pc(s.rev[0],s.rev[1]))+'</td><td>'+gr(pc(s.rev[0],s.rev[2]))+'</td><td class="n">'+f0(s.ebit[0])+'</td><td class="n">'+f1(s.ebit[0]/s.rev[0]*100)+'%</td><td class="n">'+f1(s.ebit[2]/s.rev[2]*100)+'%</td></tr>';}).join('');
+ var tS='<div class="tbl"><table><thead><tr><th>'+L('Segment','Segment')+'</th><th>Vol t Q2</th><th>Vol YoY</th><th>Rev Q2 FY27</th><th>Rev Q1 FY27</th><th>Rev Q2 FY26</th><th>QoQ</th><th>YoY</th><th>EBIT Q2</th><th>EBIT % Q2</th><th>EBIT % Q2 FY26</th></tr></thead><tbody>'+rows+'</tbody></table></div>';
+ var gS=bars({cats:Object.keys(S).map(function(k){return names[k];}),series:[{n:['Q2 FY26','Q2 FY26'],color:'#9DB3E3',vals:Object.keys(S).map(function(k){return S[k].rev[2];})},{n:['Q1 FY27','Q1 FY27'],color:'#6F8FD0',vals:Object.keys(S).map(function(k){return S[k].rev[1];})},{n:['Q2 FY27','Q2 FY27'],color:C.sup,vals:Object.keys(S).map(function(k){return S[k].rev[0];})}],unit:['₹ cr','₹ cr'],label:'Supreme segment revenue'});
+ var eS=hbars({items:Object.keys(S).map(function(k){return {lab:names[k],v:pc(S[k].vol[0],S[k].vol[2]),c:pc(S[k].vol[0],S[k].vol[2])>=0?C.sup:C.bad};}),suf:'%',label:'volume growth'});
+ var s='<div class="grid g2">'+card('s',L('Revenue by segment','Segment-வாரி revenue'),box(gS))+card('s',L('Volume growth YoY, Q2','Volume growth YoY, Q2'),box(eS)+bl([['Piping volume +24%: housing demand + restocking after Q1','Piping volume +24%: housing demand + Q1-க்கு அப்புறம் restocking'],['Consumer (furniture) volume fell 14%','Consumer (furniture) volume 14% குறைஞ்சது'],['Piping EBIT margin rose to 10.6% from 7.9%','Piping EBIT margin 7.9%-ல இருந்து 10.6%']]))+'</div><div style="margin-top:12px">'+tS+'</div>';
+ var aRev=[['Plumbing','Plumbing',AS.pRev[1],AS.pRev[3],AS.pEb[1]/AS.pRev[1]*100],['Paints & Adhesives','Paints & Adhesives',AS.paRev[1],AS.paRev[3],AS.paEb[1]/AS.paRev[1]*100]];
+ var gA=bars({cats:[['Plumbing','Plumbing'],['Paints & Adhesives','Paints & Adhesives']],series:[{n:['Q1 FY26','Q1 FY26'],color:'#8FD1BD',vals:[AS.pRev[3],AS.paRev[3]]},{n:['Q2 FY26','Q2 FY26'],color:'#4FAF93',vals:[AS.pRev[2],AS.paRev[2]]},{n:['Q1 FY27','Q1 FY27'],color:C.ast,vals:[AS.pRev[1],AS.paRev[1]]},{n:['Q2 FY27','Q2 FY27'],color:C.wait,vals:[null,null]}],unit:['₹ cr','₹ cr'],label:'Astral segment revenue'});
+ var subA=hbars({items:[{lab:['Paints (ex-Gem)','Paints (ex-Gem)'],v:48.7,c:C.acc},{lab:['Adhesives UK','Adhesives UK'],v:26,c:C.ast},{lab:['Adhesives India','Adhesives India'],v:24.8,c:C.ast},{lab:['Bathware','Bathware'],v:18.1,c:'#4FAF93'},{lab:['Plumbing','Plumbing'],v:10.1,c:'#4FAF93'}],suf:'%',label:'Astral growth by business'});
+ var tA='<div class="tbl"><table><thead><tr><th>'+L('Segment','Segment')+'</th><th class="pend">Q2 FY27</th><th>Q1 FY27</th><th>Q2 FY26</th><th>Q1 FY26</th><th>YoY (Q1)</th><th>EBITDA % Q1 FY27</th></tr></thead><tbody>'+aRev.map(function(r){return '<tr><td>'+L(r[0],r[1])+'</td><td class="pend">'+L('5 Nov','5 Nov')+'</td><td class="n">'+f1(r[2])+'</td><td class="n">'+f1(r===aRev[0]?AS.pRev[2]:AS.paRev[2])+'</td><td class="n">'+f1(r[3])+'</td><td>'+gr(pc(r[2],r[3]))+'</td><td class="n">'+f1(r[4])+'%</td></tr>';}).join('')+'<tr><td>'+L('Pipe volume (t)','Pipe volume (t)')+'</td><td class="pend">5 Nov</td><td class="n">56,146</td><td class="n">61,224</td><td class="n">≈56,090</td><td>'+gr(0.1)+'</td><td>—</td></tr></tbody></table></div>';
+ var a='<div class="grid g2">'+card('a',L('Revenue by division','Division-வாரி revenue'),box(gA))+card('a',L('Growth by business, Q1 FY27 YoY','Business-வாரி growth, Q1 FY27'),box(subA)+bl([['Paints grew fastest and hit EBITDA break-even','Paints தான் வேகமா வளர்ந்துச்சு, break-even வந்தாச்சு'],['Plumbing value +10% though volume flat','Volume flat-ஆ இருந்தாலும் plumbing value +10%'],['July pipe volume jumped ~40%','July-ல pipe volume ~40% ஏறிச்சு']]))+'</div><div style="margin-top:12px">'+tA+'</div>';
+ var c='<div class="grid g2">'+card('',L('Pipe volume, latest quarter (tonnes)','Pipe volume, latest quarter (t)'),box(bars({cats:[['Supreme piping Q2','Supreme piping Q2'],['Astral plumbing Q1','Astral plumbing Q1']],series:[{n:['tonnes','tonnes'],color:C.acc,vals:[148157,56146]}],label:'volume'}))+bl([['Supreme sells ~2.6x Astral’s pipe tonnes','Supreme ~2.6 மடங்கு pipe tonnes விக்குது']]))+
+ card('',L('Pipe segment margin (latest)','Pipe segment margin'),box(hbars({items:[{lab:['Astral plumbing EBITDA','Astral plumbing EBITDA'],v:18.9,c:C.ast},{lab:['Supreme piping EBIT','Supreme piping EBIT'],v:10.6,c:C.sup}],suf:'%',label:'margin'}))+bl([['Measures differ: Astral reports EBITDA, Supreme reports EBIT (after depreciation)','அளவுகோல் வேற: Astral EBITDA, Supreme EBIT (depreciation போக)'],['Even so, Astral’s pipe margin is clearly higher','இருந்தாலும் Astral pipe margin அதிகம் தான்']]))+'</div>';
+ return head('Segments','Segment performance','Which business drove the quarter.','எந்த business quarter-ஐ ஓட்டிச்சு.')+three(s,a,c);};
+
+/* ===== FINANCIALS ===== */
+P.fin=function(){
+ function row(lab,arr,fmt,hl){fmt=fmt||f1;return '<tr'+(hl?' class="hl"':'')+'><td>'+L(lab[0],lab[1])+'</td><td class="n">'+fmt(arr[0])+'</td><td class="n">'+fmt(arr[1])+'</td><td class="n">'+fmt(arr[2])+'</td><td>'+gr(pc(arr[0],arr[1]))+'</td><td>'+gr(pc(arr[0],arr[2]))+'</td></tr>';}
+ function mrow(lab,arr){return '<tr><td>'+L(lab[0],lab[1])+'</td><td class="n">'+f1(arr[0])+'%</td><td class="n">'+f1(arr[1])+'%</td><td class="n">'+f1(arr[2])+'%</td><td class="n">'+f0((arr[0]-arr[1])*100)+' bps</td><td class="n">'+f0((arr[0]-arr[2])*100)+' bps</td></tr>';}
+ var gp=[0,1,2].map(function(i){return SI.rev[i]-SI.rm[i];});
+ var tS='<div class="tbl"><table><thead><tr><th>₹ crore</th><th>Q2 FY27</th><th>Q1 FY27</th><th>Q2 FY26</th><th>QoQ</th><th>YoY</th></tr></thead><tbody>'+
+  row(['Volume sold (tonnes)','விற்ற volume (t)'],SI.vol,f0)+row(['Revenue from operations','Revenue'],SI.rev,f1,1)+row(['Raw material','Raw material'],SI.rm)+row(['Gross profit','Gross profit'],gp)+row(['Employee cost','Employee cost'],SI.emp)+row(['Other expenses','Other expenses'],SI.oth)+row(['EBITDA','EBITDA'],SI.ebitda,f1,1)+row(['Depreciation','Depreciation'],SI.dep)+row(['Other income','Other income'],SI.oi)+row(['Finance cost','Finance cost'],SI.fin)+row(['PBT (standalone)','PBT (standalone)'],SI.pbt)+row(['PAT (standalone)','PAT (standalone)'],SI.patS)+row(['PAT (consolidated)','PAT (consolidated)'],SI.patC,f1,1)+row(['Value-added products sales','Value-added products'],SI.vap,f0)+
+  mrow(['Gross margin','Gross margin'],gp.map(function(g,i){return g/SI.rev[i]*100;}))+mrow(['EBITDA margin','EBITDA margin'],SI.ebitda.map(function(g,i){return g/SI.rev[i]*100;}))+mrow(['PAT margin (consol.)','PAT margin'],SI.patC.map(function(g,i){return g/SI.rev[i]*100;}))+'</tbody></table></div>';
+ var leaksS=hbars({items:[{lab:['Volume','Volume'],v:pc(SI.vol[0],SI.vol[2]),c:'#9DB3E3'},{lab:['Revenue','Revenue'],v:pc(SI.rev[0],SI.rev[2]),c:'#6F8FD0'},{lab:['EBITDA','EBITDA'],v:pc(SI.ebitda[0],SI.ebitda[2]),c:C.sup},{lab:['PAT (consol.)','PAT (consol.)'],v:pc(SI.patC[0],SI.patC[2]),c:C.good}],suf:'%',label:'growth ladder'});
+ var bridge=waterfall([{lab:['EBITDA Q2 FY26','EBITDA Q2 FY26'],v:297,type:'total',c:'#9DB3E3'},{lab:['Gross profit','Gross profit'],lab2:['up','ஏற்றம்'],v:195},{lab:['Employee','Employee'],v:-34},{lab:['Other exp.','Other exp.'],v:-27},{lab:['EBITDA Q2 FY27','EBITDA Q2 FY27'],v:431,type:'total',c:C.sup}],{label:'EBITDA bridge'});
+ var s=card('s',L('Growth ladder, Q2 FY27 vs Q2 FY26','Growth ladder, YoY'),box(leaksS)+bl([['Volume +19% became PAT +59%: higher prices and operating leverage','Volume +19% → PAT +59%: விலை ஏற்றம் + operating leverage'],['But EBITDA margin 12.8% is below the 14–14.5% guidance','ஆனா EBITDA margin 12.8% — guidance 14–14.5%-ஐ விட குறைவு'],['QoQ consolidated PAT fell 7%: Q1 had a big associate profit (₹73 cr)','QoQ consolidated PAT 7% குறைவு: Q1-ல associate profit ₹73 cr பெருசு']]))+
+  '<div class="grid g2" style="margin-top:12px">'+card('s',L('EBITDA bridge YoY (₹ cr)','EBITDA bridge YoY (₹ cr)'),box(bridge))+card('s',L('Five years of Q2','5 வருஷ Q2'),box(bars({cats:SI.hist.q.map(function(q){return [q,q];}),series:[{n:['Revenue ₹ cr','Revenue ₹ cr'],color:'#9DB3E3',vals:SI.hist.rev},{n:['EBITDA ₹ cr','EBITDA ₹ cr'],color:C.sup,vals:SI.hist.ebitda}],label:'5 year Q2'})))+'</div><div style="margin-top:12px">'+tS+'</div>';
+ function arow(lab,arr,fmt,hl){fmt=fmt||f1;return '<tr'+(hl?' class="hl"':'')+'><td>'+L(lab[0],lab[1])+'</td><td class="pend">'+L('5 Nov','5 Nov')+'</td><td class="n">'+fmt(arr[1])+'</td><td class="n">'+fmt(arr[2])+'</td><td class="n">'+fmt(arr[3])+'</td><td>'+gr(pc(arr[1],arr[2]))+'</td><td>'+gr(pc(arr[1],arr[3]))+'</td></tr>';}
+ var mA=AS.ebitda.map(function(e,i){return e==null?null:e/AS.rev[i]*100;});
+ var tA='<div class="tbl"><table><thead><tr><th>₹ crore</th><th class="pend">Q2 FY27</th><th>Q1 FY27</th><th>Q2 FY26</th><th>Q1 FY26</th><th>Q1 FY27 vs Q2 FY26</th><th>Q1 YoY</th></tr></thead><tbody>'+
+  arow(['Revenue','Revenue'],AS.rev,f1,1)+arow(['EBITDA','EBITDA'],AS.ebitda,f1,1)+arow(['PAT','PAT'],AS.pat,f1,1)+arow(['Plumbing revenue','Plumbing revenue'],AS.pRev)+arow(['Plumbing EBITDA','Plumbing EBITDA'],AS.pEb)+arow(['Plumbing volume (t)','Plumbing volume (t)'],AS.pVol,f0)+arow(['Paints & Adhesives revenue','Paints & Adhesives revenue'],AS.paRev)+
+  '<tr><td>'+L('EBITDA margin','EBITDA margin')+'</td><td class="pend">5 Nov</td><td class="n">'+f1(mA[1])+'%</td><td class="n">'+f1(mA[2])+'%</td><td class="n">'+f1(mA[3])+'%</td><td class="n">'+f0((mA[1]-mA[2])*100)+' bps</td><td class="n">'+f0((mA[1]-mA[3])*100)+' bps</td></tr></tbody></table></div>';
+ var wait='<div class="card a"><div class="pic">'+svg(110,110,ic('hourglass',8,8,2.4,C.wait),'pending')+'<div><h3>'+L('Astral Q2 FY27: results on 5 Nov 2026','Astral Q2 FY27: 5 Nov 2026-ல ரிசல்ட்')+'</h3>'+bl([['Board meets 5 Nov for Q2 results and interim dividend','5 Nov board meeting: Q2 ரிசல்ட் + interim dividend'],['Bar to beat (Q2 FY26): revenue ₹1,577 cr, EBITDA ₹257 cr, PAT ₹135 cr, volume 61,224 t','Beat பண்ண வேண்டியது (Q2 FY26): revenue ₹1,577 cr, EBITDA ₹257 cr, PAT ₹135 cr, volume 61,224 t'],['Watch: pipe volume after July’s +40%, adhesive margin, paints, CPVC plant date','கவனிங்க: July +40%-க்கு அப்புறம் pipe volume, adhesive margin, paints, CPVC plant date']])+'</div></div></div>';
+ var trend=bars({cats:[['Q1 FY26','Q1 FY26'],['Q2 FY26','Q2 FY26'],['Q4 FY26','Q4 FY26'],['Q1 FY27','Q1 FY27'],['Q2 FY27','Q2 FY27']],series:[{n:['Revenue ₹ cr','Revenue ₹ cr'],color:'#8FD1BD',vals:[AS.rev[3],AS.rev[2],AS.rev[4],AS.rev[1],null]},{n:['EBITDA ₹ cr','EBITDA ₹ cr'],color:C.ast,vals:[AS.ebitda[3],AS.ebitda[2],AS.ebitda[4],AS.ebitda[1],null]}],label:'Astral trend'});
+ var a=wait+'<div class="grid g2" style="margin-top:12px">'+card('a',L('Quarter trend (Q3 FY26 not shown)','Quarter trend'),box(trend))+card('a',L('Growth ladder, Q1 FY27 YoY','Growth ladder, Q1 YoY'),box(hbars({items:[{lab:['Pipe volume','Pipe volume'],v:0.1,c:'#8FD1BD'},{lab:['Revenue','Revenue'],v:pc(AS.rev[1],AS.rev[3]),c:'#4FAF93'},{lab:['EBITDA','EBITDA'],v:pc(AS.ebitda[1],AS.ebitda[3]),c:C.ast},{lab:['PAT','PAT'],v:pc(AS.pat[1],AS.pat[3]),c:C.good}],suf:'%',label:'Astral ladder'}))+bl([['Flat volume, yet PAT +52%: better mix and new plants running fuller','Volume flat, ஆனா PAT +52%: நல்ல mix, புது plants நிறைய ஓடுது']]))+'</div><div style="margin-top:12px">'+tA+'</div>';
+ var c=card('',L('Latest reported quarter side by side (₹ cr)','Latest quarter பக்கம் பக்கமா (₹ cr)'),box(bars({cats:[['Revenue','Revenue'],['EBITDA','EBITDA'],['PAT','PAT']],series:[{n:['Supreme Q2 FY27','Supreme Q2 FY27'],color:C.sup,vals:[SI.rev[0],SI.ebitda[0],SI.patC[0]]},{n:['Astral Q1 FY27','Astral Q1 FY27'],color:C.ast,vals:[AS.rev[1],AS.ebitda[1],AS.pat[1]]}],label:'compare'})))+
+  '<div class="grid g2" style="margin-top:12px">'+card('',L('EBITDA margin, last three reported quarters','EBITDA margin trend'),box(lines({cats:[['Q2 FY26','Q2 FY26'],['Q1 FY27','Q1 FY27'],['Q2 FY27','Q2 FY27']],series:[{n:['Supreme','Supreme'],color:C.sup,vals:[12.4,14.6,12.8]},{n:['Astral','Astral'],color:C.ast,vals:[16.3,15.5,null]}],suf:'%',label:'margin'})))+card('',L('What the numbers say','Numbers சொல்றது'),bl([['Supreme is bigger and grew faster this quarter (+40% revenue)','Supreme பெருசு, இந்த quarter வேகமா வளர்ந்துச்சு (+40%)'],['Astral keeps 3–4 points more margin','Astral-க்கு 3–4 points margin அதிகம்'],['Fair comparison of Q2 only after 5 Nov','Q2-வை சரியா compare பண்ண 5 Nov வரை காத்திருக்கணும்']]))+'</div>';
+ return head('Financials: actual results first','ரிசல்ட்ஸ்: முதல்ல actual numbers','Current quarter vs previous quarter vs same quarter last year.','இந்த quarter vs போன quarter vs போன வருஷம் அதே quarter.')+three(s,a,c);};
+
+/* ===== METRICS (grouped heads) ===== */
+P.met=function(){
+ function tb(rows){return '<div class="tbl" style="margin-top:10px"><table><thead><tr><th>Metric</th><th>Supreme</th><th>Change</th><th>Astral</th><th>Change</th></tr></thead><tbody>'+rows.map(function(r){return '<tr><td>'+L(r[0][0],r[0][1])+'</td><td class="n">'+r[1]+'</td><td>'+r[2]+'</td><td class="n">'+r[3]+'</td><td>'+r[4]+'</td></tr>';}).join('')+'</tbody></table></div>';}
+ var g=card('',L('Growth (YoY, latest quarter)','Growth (YoY)'),box(bars({cats:[['Volume','Volume'],['Revenue','Revenue'],['EBITDA','EBITDA'],['PAT','PAT']],series:[{n:['Supreme Q2','Supreme Q2'],color:C.sup,vals:[19.4,40.4,45.0,59.3]},{n:['Astral Q1','Astral Q1'],color:C.ast,vals:[0.1,15.9,25.8,51.8]}],fmt:f0,vfmt:function(v){return f1(v)+'%';},label:'growth'}))+tb([[['Volume growth','Volume growth'],'+19.4%',gr(19.4),'+0.1%',gr(0.1)],[['Revenue growth','Revenue growth'],'+40.4%',gr(40.4),'+15.9%',gr(15.9)],[['EBITDA growth','EBITDA growth'],'+45.0%',gr(45),'+25.8%',gr(25.8)],[['PAT growth','PAT growth'],'+59.3%',gr(59.3),'+51.8%',gr(51.8)]]));
+ var pr='<div class="grid g4">'+[['Supreme EBITDA %',12.8,20,C.sup],['Astral EBITDA %',15.5,20,C.ast],['Supreme gross %',29.8,45,C.sup],['Astral gross %',40.6,45,C.ast]].map(function(x){return '<div class="card">'+gauge(x[1],x[2],[x[0],x[0]],x[3],{txt:f1(x[1])+'%'})+'</div>';}).join('')+'</div>'+tb([[['EBITDA margin','EBITDA margin'],'12.8%','<span class="up">+41 bps YoY</span>','15.5%','<span class="up">+120 bps YoY</span>'],[['Gross margin','Gross margin'],'29.8%','<span class="dn">−390 bps YoY</span>','40.6%','—'],[['PAT margin','PAT margin'],'7.8%','<span class="up">+93 bps</span>','7.6%','<span class="up">+180 bps</span>'],[['ROCE FY26','ROCE FY26'],'~21%','—','~20%','—'],[['ROE FY26','ROE FY26'],'~16%','—','~16%','—']]);
+ var ef=card('',L('Efficiency: rupees per kg and cash cycle','Efficiency: kg-க்கு ரூபாய், cash cycle'),box(bars({cats:[['₹/kg realised','kg விலை'],['EBITDA ₹/kg','EBITDA ₹/kg'],['Cash cycle (days)','Cash cycle (days)']],series:[{n:['Supreme','Supreme'],color:C.sup,vals:[siPerKg(0),siEbKg(0),SIWC.sep26[3]]},{n:['Astral','Astral'],color:C.ast,vals:[asPerKg(1),asEbKg(1),AS.wc.fy26[3]]}],vfmt:f0,label:'efficiency'}))+tb([[['Realisation ₹/kg','kg விலை ₹'],'₹'+f1(siPerKg(0)),gr(pc(siPerKg(0),siPerKg(2))),'₹'+f1(asPerKg(1)),gr(pc(asPerKg(1),953.9e7/56090e3))],[['EBITDA ₹/kg','EBITDA ₹/kg'],'₹'+f1(siEbKg(0)),gr(pc(siEbKg(0),siEbKg(2))),'₹'+f1(asEbKg(1)),gr(pc(asEbKg(1),156.5e7/56090e3))],[['Cash conversion cycle','Cash cycle'],'47 days (Sep 26)','<span class="dn">+3 vs Mar</span>','~36 days (FY26)','<span class="up">−8 vs FY25</span>']]));
+ var bs=card('',L('Balance sheet & liquidity','Balance sheet & liquidity'),'<div class="grid g2">'+box(bars({cats:[['Cash ₹ cr','Cash ₹ cr'],['Debt ₹ cr','Debt ₹ cr']],series:[{n:['Supreme Sep 26','Supreme Sep 26'],color:C.sup,vals:[685,0.1]},{n:['Astral Jun 26','Astral Jun 26'],color:C.ast,vals:[470,0.1]}],vfmt:f0,label:'cash'}))+'<div>'+bl([['Both are effectively debt-free','இரண்டும் கிட்டத்தட்ட debt இல்லாதவை'],['Supreme: ₹685 cr cash after ₹815 cr capex in FY26','Supreme: FY26-ல ₹815 cr capex பண்ணியும் ₹685 cr cash'],['Astral: cash fell to ₹470 cr (Jun) from ₹943 cr (Mar) — capex ₹137 cr in Q1 + buyout payments','Astral: cash ₹943 cr (Mar) → ₹470 cr (Jun) — Q1 capex ₹137 cr உட்பட'],['Supreme current ratio ~2.2x','Supreme current ratio ~2.2x']])+'</div></div>');
+ var sh=card('',L('Shareholder returns','Shareholder returns'),box(bars({cats:[['Dividend ₹/share FY26','Dividend ₹/share'],['Dividend yield %','Dividend yield %'],['Payout % FY26','Payout %']],series:[{n:['Supreme','Supreme'],color:C.sup,vals:[36,1.1,48]},{n:['Astral','Astral'],color:C.ast,vals:[4,0.3,20]}],vfmt:f1,label:'dividends'}))+bl([['Supreme pays far more of its profit out; interim ₹12/share declared for FY27','Supreme profit-ல அதிகமா dividend கொடுக்குது; FY27 interim ₹12/share'],['Astral keeps more cash to fund new businesses','Astral புது business-க்கு cash வச்சுக்குது']]));
+ return head('Metrics, grouped by head','Metrics — தலைப்பு வாரியா','Growth · Profitability · Efficiency · Balance sheet · Shareholder returns.','Growth · Profitability · Efficiency · Balance sheet · Shareholder returns.')+
+ subtabs([{k:'c',en:'Growth',ta:'Growth',html:g},{k:'c',en:'Profitability',ta:'Profitability',html:pr},{k:'c',en:'Efficiency',ta:'Efficiency',html:ef},{k:'c',en:'Balance sheet',ta:'Balance sheet',html:bs},{k:'c',en:'Shareholder returns',ta:'Shareholder returns',html:sh}]);};
+
+/* ===== CASH FLOW & RATIOS ===== */
+P.cf=function(){
+ function cfChart(d,col,lab){return bars({cats:[['FY25','FY25'],['FY26','FY26']],series:[{n:['Operating cash','Operating cash'],color:col,vals:[d.cfo25,d.cfo]},{n:['Capex','Capex'],color:C.line,vals:[d.cfo25-d.fcf25,d.capex]},{n:['Free cash','Free cash'],color:C.good,vals:[d.fcf25,d.fcf]}],unit:['₹ cr','₹ cr'],label:lab});}
+ function wcChart(a,b,labs,col){return bars({cats:[['Inventory','Inventory'],['Receivables','Receivables'],['Payables','Payables'],['Cash cycle','Cash cycle']],series:[{n:labs[0],color:C.line,vals:a},{n:labs[1],color:col,vals:b}],unit:['days','days'],label:'wc days'});}
+ var s='<div class="grid g2">'+card('s',L('Cash flow (₹ cr)','Cash flow (₹ cr)'),box(cfChart(SI.fy26,C.sup,'Supreme cf'))+bl([['FY26 operating cash ₹1,225 cr (+22%)','FY26 operating cash ₹1,225 cr (+22%)'],['Capex ₹815 cr (Wavin plants, capacity); free cash ~₹410 cr','Capex ₹815 cr; free cash ~₹410 cr'],['Dividends ₹445 cr paid; FY27 capex plan above ₹1,000 cr','Dividend ₹445 cr; FY27 capex ₹1,000 cr-க்கு மேல']]))+
+ card('s',L('Working capital days','Working capital days'),box(wcChart(SIWC.mar26,SIWC.sep26,[['Mar 2026','Mar 2026'],['Sep 2026','Sep 2026']],C.sup))+bl([['Inventory 76 days on raw-material cost; receivables only 16 days','Inventory 76 நாள்; receivables 16 நாள் மட்டும்'],['Payables shrank to 45 days, so cash cycle rose to 47 days','Payables 45 நாள் ஆனதால cash cycle 47 நாள்']]))+'</div>';
+ var a='<div class="grid g2">'+card('a',L('Cash flow (₹ cr)','Cash flow (₹ cr)'),box(cfChart(AS.fy26,C.ast,'Astral cf'))+bl([['FY26 operating cash ≈₹1,030 cr; capex ₹373 cr','FY26 operating cash ≈₹1,030 cr; capex ₹373 cr'],['Free cash ≈₹660 cr, a big jump from FY25','Free cash ≈₹660 cr — FY25-ஐ விட பெரிய jump'],['FY27 capex guided ₹300–350 cr (CPVC resin, PEX-Al-PEX)','FY27 capex ₹300–350 cr (CPVC resin, PEX-Al-PEX)']]))+
+ card('a',L('Working capital days','Working capital days'),box(wcChart(AS.wc.fy25,AS.wc.fy26,[['FY25','FY25'],['FY26','FY26']],C.ast))+bl([['Inventory ~103 days: CPVC compound is bought and stocked','Inventory ~103 நாள்: CPVC compound வாங்கி stock வைக்கணும்'],['Own resin plant should cut CPVC inventory days','சொந்த resin plant வந்தா inventory days குறையும்']]))+'</div>';
+ var rt='<div class="tbl"><table><thead><tr><th>Ratio</th><th>Supreme</th><th>Astral</th></tr></thead><tbody>'+[['Operating cash / EBITDA (FY26)','79%','~93%'],['Free cash FY26 (₹ cr)','~410','~660'],['ROCE FY26','~21%','~20%'],['ROE FY26','~16%','~16%'],['Debt / equity','~0.02','~0 (net cash)'],['Cash conversion cycle','47 days (Sep 26)','~36 days (FY26)'],['Dividend payout FY26','~48%','~20%']].map(function(r){return '<tr><td>'+r[0]+'</td><td class="n">'+r[1]+'</td><td class="n">'+r[2]+'</td></tr>';}).join('')+'</tbody></table></div>';
+ var c='<div class="grid g2">'+card('',L('Free cash flow FY26 (₹ cr)','Free cash flow FY26'),box(hbars({items:[{lab:['Astral','Astral'],v:660,c:C.ast,txt:'₹660 cr'},{lab:['Supreme','Supreme'],v:410,c:C.sup,txt:'₹410 cr'}],label:'fcf'}))+bl([['Astral spent less on capex in FY26, so more cash was left','FY26-ல Astral capex குறைவு, அதனால free cash அதிகம்'],['Supreme spends more to grow capacity and still pays a fat dividend','Supreme capacity-க்கு அதிகம் செலவு பண்ணியும் நல்ல dividend']]))+card('',L('Key ratios','முக்கிய ratios'),rt)+'</div>'+'<p class="note">'+L('Inventory and payable days use raw-material cost; receivable days use sales. Astral days are approximate.','Inventory, payable days raw-material cost மேல; receivable days sales மேல. Astral days approx.')+'</p>';
+ return head('Cash flow & ratios','கேஷ் ஃப்ளோ & ரேஷியோ','Profit is opinion; cash is fact. Both fund growth from their own cash.','Profit ஒரு கணக்கு; cash தான் உண்மை. இரண்டும் சொந்த cash-ல வளருது.')+three(s,a,c);};
+
+/* ===== VALUATIONS ===== */
+P.val=function(){
+ function v(d,col,lab,bandO){return '<div class="grid g2">'+card(lab==='s'?'s':'a',L('Where the price sits in its 52-week range','52-week range-ல விலை எங்க'),box(range52(d.lo,d.hi,d.price,col,lab==='s'?['≈3.5% above the low','low-ஐ விட ≈3.5% மேல']:['≈3% above the low','low-ஐ விட ≈3% மேல'])))+card(lab==='s'?'s':'a',L('P/E now vs its usual range','P/E இப்போ vs வழக்கமான range'),box(band(bandO)))+'</div>'+
+  '<div class="grid g4" style="margin-top:12px">'+[['Price (approx.)','₹'+f0(d.price)],['Market cap','₹'+f0(d.mcap)+' cr'],['TTM EPS','₹'+f1(d.eps)],['P/E (TTM)',f1(d.pe)+'x'],['P/B',f1(d.pb)+'x'],['EV / EBITDA','~'+d.evE+'x'],['Dividend yield',f1(d.yld)+'%'],['ROCE FY26','~'+d.roce+'%']].map(function(x){return '<div class="card"><div class="kpi"><span class="k">'+x[0]+'</span><span class="v">'+x[1]+'</span></div></div>';}).join('')+'</div>';}
+ var s=v(SI,C.sup,'s',{min:20,max:70,blo:40,bhi:60,cur:SI.pe,col:C.sup})+card('s',L('Read it right','சரியா புரிஞ்சுக்கோங்க'),bl([['P/E looks lower (36x) because H1 profit jumped, partly from inventory gains on rising PVC','P/E குறைவா (36x) தெரியுது — PVC ஏறுனதால inventory gain-ஆல profit jump'],['If PVC falls again, those gains can reverse','PVC மறுபடி இறங்கினா அந்த gain திரும்பலாம்']]));
+ var a=v(AS,C.ast,'a',{min:20,max:110,blo:60,bhi:100,cur:AS.pe,col:C.ast})+card('a',L('Read it right','சரியா புரிஞ்சுக்கோங்க'),bl([['Even at a 52-week low, Astral trades near 63x earnings','52-week low-லயும் Astral ~63x earnings'],['The price already assumes years of 20%+ growth','20%+ growth பல வருஷம் வரும்னு price ஏற்கனவே எதிர்பார்க்குது'],['TTM uses Q1 FY27; Q2 on 5 Nov will update it','TTM Q1 FY27 வரை; 5 Nov Q2 வந்தா மாறும்']]));
+ var c='<div class="grid g2">'+card('',L('Multiples side by side','Multiples பக்கம் பக்கமா'),box(bars({cats:[['P/E','P/E'],['EV/EBITDA','EV/EBITDA'],['P/B','P/B']],series:[{n:['Supreme','Supreme'],color:C.sup,vals:[SI.pe,SI.evE,SI.pb]},{n:['Astral','Astral'],color:C.ast,vals:[AS.pe,AS.evE,AS.pb]}],vfmt:f1,label:'multiples'})))+card('',L('What you pay for ₹100 of yearly profit','₹100 வருஷ profit-க்கு நீங்க கொடுக்குறது'),box(hbars({items:[{lab:['Astral','Astral'],v:6300,c:C.ast,txt:'₹6,300'},{lab:['Supreme','Supreme'],v:3650,c:C.sup,txt:'₹3,650'}],label:'price per profit'}))+bl([['Astral costs ~1.7x Supreme per rupee of profit','ஒரு ரூபாய் profit-க்கு Astral ~1.7 மடங்கு விலை'],['The gap is the premium for Astral’s margins and new engines','அந்த gap = Astral margin & புது engines-க்கு premium']]))+'</div><p class="note">'+L('Prices approximate as of late Oct 2026 (Supreme ~₹3,250, Astral ~₹1,350). Valuation is a measure, not advice.','Price approx, Oct 2026 கடைசி (Supreme ~₹3,250, Astral ~₹1,350). Valuation ஒரு அளவு மட்டும், advice இல்ல.')+'</p>';
+ return head('Valuations','வேல்யூவேஷன்','Both trade near 52-week lows. One is cheaper than its history; the other is still richly priced.','இரண்டும் 52-week low பக்கத்துல. ஒன்னு தன் history-ஐ விட மலிவு; இன்னொன்னு இன்னும் விலை அதிகம்.')+three(s,a,c);};
+/* ===== 5 KEY TAKEAWAYS ===== */
+function picCards(items,col){return '<div class="grid g3">'+items.map(function(x,i){return '<div class="card"><div class="pic">'+svg(64,64,'<circle cx="32" cy="32" r="30" fill="'+(col===C.sup?C.ssoft:col===C.ast?C.asoft:C.soft)+'"/>'+ic(x[0],12,12,1,col),'icon')+'<div><h3>'+(i+1)+'. '+L(x[1],x[2])+'</h3><p style="margin:0;font-weight:600">'+L(x[3],x[4])+'</p></div></div></div>';}).join('')+'</div>';}
+P.kt=function(){
+ var s=picCards([['up','Volume is back','Volume திரும்ப வந்தாச்சு','Q2 tonnes +19% YoY, piping +24% after a 14% fall in Q1. October piping running +23%.','Q2 tonnes +19%, piping +24% — Q1-ல 14% விழுந்த பிறகு. October piping +23%.'],['rupee','Profit jumped 59%','Profit 59% ஏற்றம்','Consolidated PAT ₹262 cr. Higher PVC prices lifted revenue per kg by 18%.','Consolidated PAT ₹262 cr. PVC விலை ஏறுனதால kg விலை 18% ஏற்றம்.'],['warn','Margin still below guidance','Margin இன்னும் guidance-க்கு கீழ','EBITDA margin 12.8% vs 14–14.5% guided; H2 must do ~15%.','EBITDA margin 12.8% — guidance 14–14.5%; H2-ல ~15% வேணும்.'],['target','Guidance trimmed on volume','Volume guidance குறைப்பு','FY27 volume ~10% (was 12–13%), piping 13% (was 15–17%); revenue guide ₹13,500–14,000 cr.','FY27 volume ~10% (முன்பு 12–13%), piping 13% (முன்பு 15–17%); revenue ₹13,500–14,000 cr.'],['shield','Balance sheet is a fortress','Balance sheet ரொம்ப strong','Debt-free, ₹685 cr cash, ₹12 interim dividend, capex above ₹1,000 cr planned.','Debt இல்ல, ₹685 cr cash, ₹12 interim dividend, ₹1,000 cr+ capex.']],C.sup);
+ var a=picCards([['hourglass','Q2 arrives 5 Nov','Q2 5 Nov-ல','Latest actuals are Q1 FY27; judge Q2 against ₹1,577 cr revenue and 61,224 t a year ago.','இப்போ Q1 FY27 தான்; Q2-ஐ போன வருஷ ₹1,577 cr, 61,224 t-ஓட compare பண்ணுங்க.'],['up','Share gains in a bad market','மோசமான market-லயும் share gain','Q1 pipe volume flat while the industry fell ~10%; July volume +40%.','Industry ~10% விழுந்தும் Q1 pipe volume flat; July +40%.'],['paint','Paints turned the corner','Paints திருப்பம்','Gem Paints (now Astral Coatings, 100% owned) grew 49% and hit EBITDA break-even.','Gem Paints (இப்போ Astral Coatings, 100%) 49% வளர்ந்து break-even.'],['flask','CPVC resin plant is the next lever','CPVC resin plant அடுத்த lever','40,000 t plant ready Dec 2026, trials Q4 FY27, benefit FY28. Under construction today.','40,000 t plant Dec 2026, trial Q4 FY27, benefit FY28. இப்போ construction-ல.'],['scale','Valuation is the debate','Valuation தான் விவாதம்','~63x trailing earnings even at a 52-week low.','52-week low-லயும் ~63x earnings.']],C.ast);
+ var c=picCards([['scale','Scale vs margin','Scale vs margin','Supreme sells ~3x the tonnes; Astral earns ~1.5x EBITDA per kg.','Supreme ~3 மடங்கு tonnes; Astral ~1.5 மடங்கு per kg EBITDA.'],['house','Same tailwind','அதே tailwind','Housing drove demand for both; government water-scheme orders stayed weak.','இரண்டுக்கும் housing demand; government water scheme weak.'],['resin','Same risk','அதே risk','PVC price swings decide quarterly profits and dealer stocking.','PVC விலை ஏற்ற-இறக்கம் தான் quarterly profit-ஐ தீர்மானிக்குது.'],['paint','Different diversification','வேற வேற diversification','Supreme spreads across plastics uses; Astral spreads across the home (glue, paint, bath).','Supreme plastics பயன்பாடுகள்ல; Astral வீட்டுக்குள்ள (glue, paint, bath).'],['rupee','Different price tags','வேற வேற விலை','Supreme ~36x vs Astral ~63x trailing earnings.','Supreme ~36x vs Astral ~63x earnings.']],C.acc);
+ return head('5 key takeaways','5 முக்கிய பாயிண்ட்ஸ்')+three(s,a,c);};
+
+/* ===== SHARE MOVES (see-saw) ===== */
+function seesaw(pos,neg,tilt){var W=720,H=330,h='';var ang=tilt;h+='<path d="M360 300 l-30 0 l30 -50 l30 50z" fill="'+C.acc+'" stroke="'+C.ink+'" stroke-width="2"/>';
+ h+='<g transform="rotate('+ang+' 360 250)"><rect x="60" y="244" width="600" height="12" rx="6" fill="'+C.ink+'"/>';
+ h+='<rect x="70" y="'+(244-34*neg.length)+'" width="250" height="'+(34*neg.length)+'" rx="8" fill="#FBE0DD" stroke="'+C.bad+'" stroke-width="2"/>';
+ neg.forEach(function(n,i){h+=tx(80,244-34*neg.length+22+i*34,'− '+n[0],'− '+n[1],'font-size="12.5" font-weight="800" fill="'+C.bad+'"');});
+ h+='<rect x="400" y="'+(244-34*pos.length)+'" width="250" height="'+(34*pos.length)+'" rx="8" fill="#DDF3E3" stroke="'+C.good+'" stroke-width="2"/>';
+ pos.forEach(function(n,i){h+=tx(410,244-34*pos.length+22+i*34,'+ '+n[0],'+ '+n[1],'font-size="12.5" font-weight="800" fill="'+C.good+'"');});h+='</g>';
+ h+=tx(195,320,'Pulling the price down','விலையை இழுக்குது','text-anchor="middle" font-size="13" font-weight="900" fill="'+C.bad+'"')+tx(525,320,'Holding it up','விலையை தாங்குது','text-anchor="middle" font-size="13" font-weight="900" fill="'+C.good+'"');
+ return svg(W,H,h,'see-saw');}
+P.mv=function(){
+ var s=card('s',L('Fell ~2% on results day despite +59% profit; ~22% down in a year','+59% profit வந்தும் result day ~2% இறக்கம்; ஒரு வருஷத்துல ~22% கீழ'),box(seesaw([['Oct piping volume +23%','Oct piping +23%'],['MIP on PVC: steadier prices','PVC-க்கு MIP: விலை நிலைப்பு'],['Market share gain','Market share gain'],['Debt-free, fat dividend','Debt இல்ல, நல்ல dividend']],[['Volume guidance cut','Volume guidance குறைப்பு'],['Margin 12.8% below guide','Margin 12.8% guide-க்கு கீழ'],['Profit helped by inventory gains','Inventory gain-ஆல profit'],['Water-scheme orders weak','Water scheme orders weak'],['Q1 volume fell 14%','Q1 volume 14% விழுந்தது']],-6),true)+bl([['Market looked past the headline profit to the lower volume guide','Headline profit-ஐ தாண்டி volume guide குறைப்பை market பார்த்துச்சு'],['Stock ~₹3,250, close to its 52-week low of ₹3,140','Stock ~₹3,250, 52-week low ₹3,140 பக்கத்துல']]));
+ var a=card('a',L('Near 52-week low (₹1,311.6); ~24% below March high','52-week low (₹1,311.6) பக்கம்; March high-ல இருந்து ~24% கீழ'),box(seesaw([['July pipe volume +40%','July pipe volume +40%'],['Paints at break-even','Paints break-even'],['CPVC resin plant Dec 2026','CPVC resin plant Dec 2026']],[['Q1 missed broker estimates','Q1 broker estimate-ஐ விட குறைவு'],['Adhesive margin squeeze','Adhesive margin அழுத்தம்'],['Rich valuation (~63x)','விலை அதிகம் (~63x)'],['SAP switch hit April sales','SAP மாற்றம் April sales பாதிப்பு'],['Wait for Q2 on 5 Nov','5 Nov Q2-க்கு காத்திருப்பு']],-8),true)+bl([['Weak Q1 + high price = little room for disappointment','Weak Q1 + அதிக விலை = ஏமாற்றத்துக்கு இடம் இல்ல'],['5 Nov results are the next big event','5 Nov ரிசல்ட் தான் அடுத்த பெரிய event']]));
+ var c=card('',L('Both fell together: the sector, not just the companies','இரண்டும் சேர்ந்து விழுந்துச்சு: sector காரணம்'),box(bars({cats:[['From 52-wk high','52-wk high-ல இருந்து'],['Above 52-wk low','52-wk low-க்கு மேல']],series:[{n:['Supreme','Supreme'],color:C.sup,vals:[-30.3,3.5]},{n:['Astral','Astral'],color:C.ast,vals:[-23.6,2.9]}].map(function(s){s.vals=s.vals.map(Math.abs);return s;}),vfmt:function(v){return f1(v)+'%';},label:'drawdown'}))+bl([['PVC price crash in April 2026 → dealers emptied shelves → Q1 volumes fell','April 2026 PVC விலை crash → dealers stock காலி → Q1 volume விழுந்தது'],['Recovery is visible in Q2 volumes, but prices wait for proof','Q2 volume-ல recovery தெரியுது, ஆனா price proof-க்கு காத்திருக்கு']]));
+ return head('Why the shares moved','ஷேர் ஏன் நகருது','Reasons pulling down vs holding up — explained, not advised.','இழுக்குறது vs தாங்குறது — விளக்கம் மட்டும், advice இல்ல.')+three(s,a,c);};
+
+/* ===== TRIGGERS & CYCLE ===== */
+function cycleClock(phase,stage,col,lab){var W=360,H=330,cx=180,cy=170,R=120;var ph=[['P1 Trough','P1 அடி'],['P2 Early recovery','P2 ஆரம்ப மீட்சி'],['P3 Expansion','P3 வளர்ச்சி'],['P4 Peak','P4 உச்சம்'],['P5 Downturn','P5 சரிவு']];var cols=['#F6D4A8','#9BD7A8','#C6E8B0','#F7C59F','#F2A7A0'];var h='';
+ ph.forEach(function(p,i){var a0=-Math.PI/2+i*2*Math.PI/5,a1=a0+2*Math.PI/5;h+='<path d="M'+cx+' '+cy+' L'+(cx+R*Math.cos(a0))+' '+(cy+R*Math.sin(a0))+' A'+R+' '+R+' 0 0 1 '+(cx+R*Math.cos(a1))+' '+(cy+R*Math.sin(a1))+'Z" fill="'+cols[i]+'" stroke="'+C.card+'" stroke-width="3"/>';var am=(a0+a1)/2;h+=wrapT(cx+R*0.72*Math.cos(am),cy+R*0.72*Math.sin(am)-4,p[0],p[1],11,'text-anchor="middle" font-size="11" font-weight="900"');});
+ var am=-Math.PI/2+(phase-0.5)*2*Math.PI/5;h+='<line x1="'+cx+'" y1="'+cy+'" x2="'+(cx+R*0.42*Math.cos(am))+'" y2="'+(cy+R*0.42*Math.sin(am))+'" stroke="'+C.ink+'" stroke-width="5" stroke-linecap="round"/><circle cx="'+cx+'" cy="'+cy+'" r="9" fill="'+C.ink+'"/>';
+ h+=tx(cx,22,'Sector: P2 Early recovery','Sector: P2 ஆரம்ப மீட்சி','text-anchor="middle" font-size="13" font-weight="900"');
+ h+='<rect x="40" y="298" width="280" height="26" rx="13" fill="'+C.soft+'" stroke="'+col+'" stroke-width="2"/>'+tx(cx,316,lab[0],lab[1],'text-anchor="middle" font-size="12" font-weight="900" fill="'+col+'"');return svg(W,H,h,'cycle clock');}
+function trigTable(tr){return '<div class="tbl"><table><thead><tr><th>Trigger</th><th>+/−</th><th>Impact I</th><th>Certainty C</th><th>Timing W</th><th>Priced-in P</th><th>Points</th><th>'+L('What to watch','என்ன கவனிக்கணும்')+'</th></tr></thead><tbody>'+tr.map(function(t){var p=t[2]*t[3]*t[4]*t[5];return '<tr><td>'+L(t[0][0],t[0][1])+'</td><td class="'+(t[1]>0?'up':'dn')+'" style="font-weight:900">'+(t[1]>0?'+':'−')+'</td><td class="n">'+t[2]+'</td><td class="n">'+t[3]+'</td><td class="n">'+t[4]+'</td><td class="n">'+t[5]+'</td><td class="n" style="font-weight:900">'+(t[1]>0?'+':'−')+p.toFixed(2)+'</td><td>'+L(t[6][0],t[6][1])+'</td></tr>';}).join('')+'</tbody></table></div>';}
+function trigBars(tr){return hbars({items:tr.map(function(t){var p=t[2]*t[3]*t[4]*t[5];return {lab:[t[0][0].length>24?t[0][0].slice(0,23)+'…':t[0][0],t[0][1].length>22?t[0][1].slice(0,21)+'…':t[0][1]],v:t[1]*p,c:t[1]>0?C.good:C.bad,txt:(t[1]>0?'+':'−')+p.toFixed(2)};}),l:200,label:'trigger points'});}
+var TRS=[[['H2 volume revival (Oct piping +23%)','H2 volume மீட்சி (Oct +23%)'],1,3,0.7,1,1,['Q3 piping volume ≥20%','Q3 piping volume ≥20%']],[['PVC price stability under MIP','MIP-ஆல PVC விலை நிலைப்பு'],1,2,1,1,1,['MIP renewal, resin prices','MIP தொடர்ச்சி, resin விலை']],[['Capex >₹1,000 cr: new capacity','₹1,000 cr+ capex: புது capacity'],1,2,0.7,0.7,1,['Plant start dates','Plant start dates']],[['MOHO bath fittings, value-added mix','MOHO bath fittings, VAP mix'],1,2,0.4,0.7,1,['VAP share above 44%','VAP share 44%-க்கு மேல']],[['Inventory-gain reversal if PVC falls','PVC விழுந்தா inventory loss'],-1,3,0.4,1,1,['PVC price trend','PVC விலை போக்கு']],[['Weak government water-scheme orders','Government water scheme orders weak'],-1,2,0.7,1,1,['State payments to contractors','State payments']],[['Competition & new capacity','Competition & புது capacity'],-1,2,0.4,0.7,1,['Price cuts by peers','Peers விலை குறைப்பு']]];
+var TRA=[[['Pipe volume rebound (July +40%)','Pipe volume மீட்சி (July +40%)'],1,3,0.7,1,1,['Q2 volume on 5 Nov','5 Nov Q2 volume']],[['Own CPVC resin plant 40,000 t','சொந்த CPVC resin plant 40,000 t'],1,3,0.7,0.7,1,['Trial run Q4 FY27','Q4 FY27 trial run']],[['Paints scale-up after break-even','Break-even-க்கு அப்புறம் paints வளர்ச்சி'],1,2,0.7,0.7,1,['Paint margin turning positive','Paint margin positive']],[['Adhesive margin squeeze','Adhesive margin அழுத்தம்'],-1,2,0.7,1,1,['India adhesive margin back to ~15%','India adhesive margin ~15%']],[['De-rating if growth slips (63x)','Growth குறைஞ்சா de-rating (63x)'],-1,3,0.4,1,1,['Q2 vs estimates','Q2 vs estimates']],[['PVC volatility','PVC volatility'],-1,2,0.4,1,1,['Resin prices','Resin விலை']]];
+function tg(tr){var pos=tr.filter(function(t){return t[1]>0;}).map(function(t){return t[2]*t[3]*t[4]*t[5];}).sort(function(a,b){return b-a;}).slice(0,3).reduce(function(a,b){return a+b;},0);var neg=tr.filter(function(t){return t[1]<0;}).reduce(function(a,t){return a+t[2]*t[3]*t[4]*t[5];},0);return Math.max(0,Math.min(100,Math.round(50+8*pos-8*neg)));}
+P.tc=function(){
+ var ev=[{d:'26 Oct',en:'Supreme Q2 results',ta:'Supreme Q2 ரிசல்ட்',done:1,c:C.sup},{d:'5 Nov',en:'Astral Q2 results',ta:'Astral Q2 ரிசல்ட்',done:0},{d:'Dec 26',en:'Astral CPVC resin plant ready',ta:'Astral CPVC resin plant ready',done:0},{d:'Late Jan',en:'Q3 FY27 results (both)',ta:'Q3 FY27 ரிசல்ட் (இரண்டும்)',done:0},{d:'1 Feb 27',en:'Union Budget: housing, water',ta:'Union Budget: housing, water',done:0},{d:'Q4 FY27',en:'CPVC resin trial runs',ta:'CPVC resin trial runs',done:0}];
+ function side(tr,stock,col,cy,stages,name){var t=tg(tr);return '<div class="grid g2">'+card('',L('Cycle clock','Cycle clock'),box(cycleClock(2,4,col,stock)))+card('',L('Scores','Scores'),'<div class="grid g2">'+gauge(cy,100,['CY cycle','CY cycle'],col)+gauge(t,100,['TG trigger','TG trigger'],col)+'</div>'+'<div class="tbl"><table><thead><tr><th>'+L('Stock-cycle part','Stock-cycle பகுதி')+'</th><th>Score</th></tr></thead><tbody>'+stages.map(function(s){return '<tr><td>'+L(s[0],s[1])+'</td><td class="n">'+s[2]+'</td></tr>';}).join('')+'</tbody></table></div>'+'<p class="note">'+L('Sector P2 = 85. CY = half sector + half stock. Price in Weinstein Stage 4 (below a falling 30-week average) caps CB Conviction at 55.','Sector P2 = 85. CY = பாதி sector + பாதி stock. Price Stage 4-ல (இறங்குற 30-week average-க்கு கீழ) இருக்கிறதால CB Conviction 55-க்கு மேல போகாது.')+'</p>')+'</div>'+
+  '<div class="grid g2" style="margin-top:12px">'+card('',L('Trigger points (I × C × W × P)','Trigger points'),box(trigBars(tr)))+card('',L('What would change this view','இந்த view எப்போ மாறும்'),bl(name==='s'?[['Q3 piping volume ≥20% with margin ≥14% → upgrade','Q3 piping ≥20%, margin ≥14% → upgrade'],['PVC price slump and inventory loss → downgrade','PVC விழுந்து inventory loss → downgrade'],['Price back above 30-week average → Stage 1/2','30-week average-க்கு மேல → Stage 1/2']]:[['Q2 volume ≥15% with plumbing margin ≥18% → upgrade','Q2 volume ≥15%, plumbing margin ≥18% → upgrade'],['CPVC plant delay beyond FY27 → downgrade','CPVC plant FY27 தாண்டி தள்ளிப்போனா → downgrade'],['Price back above 30-week average → Stage 1/2','30-week average-க்கு மேல → Stage 1/2']]))+'</div><div style="margin-top:12px">'+trigTable(tr)+'</div>';}
+ var s=side(TRS,['Supreme stock: Stage 4 · cycle 56','Supreme stock: Stage 4 · cycle 56'],C.sup,71,[['Lifecycle: mature','Lifecycle: mature',55],['Earnings: rising off low base','Earnings: low base-ல இருந்து ஏற்றம்',70],['Valuation: below own P/E band','Valuation: தன் P/E band-க்கு கீழ',85],['Price: Stage 4 decline','Price: Stage 4 சரிவு',15]],'s');
+ var a=side(TRA,['Astral stock: Stage 4 · cycle 49','Astral stock: Stage 4 · cycle 49'],C.ast,67,[['Lifecycle: re-inventing (paints, resin)','Lifecycle: புது வடிவம் (paints, resin)',75],['Earnings: flat mid-range','Earnings: நடுவில flat',50],['Valuation: low end of band','Valuation: band-ன் கீழ் முனை',55],['Price: Stage 4 decline','Price: Stage 4 சரிவு',15]],'a');
+ var c=card('',L('Dated events ahead','வரப்போகும் events'),box(timeline(ev),true))+'<div class="grid g2" style="margin-top:12px">'+card('',L('Sector cycle evidence','Sector cycle ஆதாரம்'),bl([['Cycle type: commodity spread (PVC resin) + housing demand','Cycle type: commodity spread (PVC) + housing demand'],['April 2026 PVC price crash → Q1 destocking (Supreme −14% tonnes)','April 2026 PVC crash → Q1 destocking (Supreme −14%)'],['Q2: restocking + MIP → Supreme +19%, Astral July +40%','Q2: restocking + MIP → Supreme +19%, Astral July +40%'],['Water-scheme spend weak, so recovery rests on housing','Water scheme weak — recovery housing மேல தான்']]))+card('',L('Scores compared','Scores compare'),box(bars({cats:[['CY','CY'],['TG','TG']],series:[{n:['Supreme','Supreme'],color:C.sup,vals:[71,tg(TRS)]},{n:['Astral','Astral'],color:C.ast,vals:[67,tg(TRA)]}],label:'scores'})))+'</div>';
+ return head('Triggers & cycle','Triggers & Cycle','Where the cycle is, and what could move earnings next.','Cycle எங்க இருக்கு, அடுத்து earnings-ஐ நகர்த்துறது என்ன.')+three(s,a,c);};
+
+/* ===== 6 PILLARS (temple) ===== */
+var PIL=[['Business quality','Business quality'],['Competitive advantage','Competitive advantage'],['Growth opportunity','Growth opportunity'],['Financial strength','Financial strength'],['Valuation','Valuation'],['Risk & reward','Risk & reward']];
+var PS=[[8,'Largest processor, 9 verticals, 80+ years','Biggest processor, 9 verticals, 80+ வருஷம்'],[8,'Scale, 35 plants, resin buying power, 7,000+ distributors','Scale, 35 plants, resin buying power, 7,000+ distributors'],[7,'FY27 revenue guide +20–25%; volume ~10%','FY27 revenue +20–25% guide; volume ~10%'],[9,'Debt-free, ₹685 cr cash, ROCE ~21%','Debt இல்ல, ₹685 cr cash, ROCE ~21%'],[6,'~36x TTM, below its band but on boosted profit','~36x TTM, band-க்கு கீழ், ஆனா boosted profit'],[6,'Near 52-wk low; margin guide still to prove','52-wk low பக்கம்; margin guide prove பண்ணணும்']];
+var PA=[[8,'CPVC leader, 40% gross margin','CPVC leader, 40% gross margin'],[8,'Brand + plumber network + CPVC know-how','Brand + plumber network + CPVC know-how'],[8,'Pipes + adhesives + paints + bathware + resin','Pipes + adhesives + paints + bathware + resin'],[8,'Net cash, ROCE ~20%, FCF ~₹660 cr','Net cash, ROCE ~20%, FCF ~₹660 cr'],[4,'~63x TTM even at the low','Low-லயும் ~63x TTM'],[5,'Q2 pending; adhesive margin; high price','Q2 pending; adhesive margin; அதிக விலை']];
+function temple(sc,col,name){var W=640,H=360,h='';var tot=sc.reduce(function(a,s){return a+s[0];},0);
+ h+='<path d="M40 92 L320 20 L600 92Z" fill="'+(col===C.sup?C.ssoft:C.asoft)+'" stroke="'+col+'" stroke-width="3"/>'+t1(320,72,name+' · '+tot+'/60','text-anchor="middle" font-size="20" font-weight="900" class="mono" fill="'+col+'"');
+ h+='<rect x="40" y="92" width="560" height="14" fill="'+col+'"/>';
+ sc.forEach(function(s,i){var x=62+i*92,ph=180*s[0]/10;h+='<rect x="'+x+'" y="'+(306-ph)+'" width="54" height="'+ph+'" rx="4" fill="'+col+'" fill-opacity="'+(0.35+s[0]/20)+'" stroke="'+col+'" stroke-width="2"/>';
+  h+='<rect x="'+x+'" y="106" width="54" height="200" rx="4" fill="none" stroke="'+C.line+'" stroke-dasharray="4 3"/>'+t1(x+27,(306-ph)-8,s[0],'text-anchor="middle" font-size="16" font-weight="900" class="mono"');
+  h+=wrapT(x+27,326,PIL[i][0],PIL[i][1],12,'text-anchor="middle" font-size="10.5" font-weight="800"');});
+ h+='<rect x="30" y="306" width="580" height="10" fill="'+C.ink+'"/>';return svg(W,H+16,h,'temple');}
+P.p6=function(){
+ function tb(sc){return '<div class="tbl" style="margin-top:10px"><table><thead><tr><th>Pillar</th><th>Score</th><th>'+L('Evidence','ஆதாரம்')+'</th></tr></thead><tbody>'+sc.map(function(s,i){return '<tr><td>'+L(PIL[i][0],PIL[i][1])+'</td><td class="n" style="font-weight:900">'+s[0]+'/10</td><td style="text-align:left;white-space:normal">'+L(s[1],s[2])+'</td></tr>';}).join('')+'</tbody></table></div>';}
+ var note='<p class="note">'+L('How graded: 9–10 best in sector; 7–8 strong; 5–6 average; ≤4 weak. Scored on Q2/Q1 FY27 numbers, FY26 balance sheet and prices in late Oct 2026.','எப்படி grade: 9–10 sector-ல best; 7–8 strong; 5–6 average; ≤4 weak. Q2/Q1 FY27 numbers, FY26 balance sheet, Oct 2026 price வச்சு.')+'</p>';
+ var s=card('s','',box(temple(PS,C.sup,'Supreme'))+tb(PS)+note),a=card('a','',box(temple(PA,C.ast,'Astral'))+tb(PA)+note);
+ var c=card('',L('Pillar by pillar','தூண் வாரியா'),box(bars({cats:PIL.map(function(p){return [p[0].split(' ')[0],p[1].split(' ')[0]];}),series:[{n:['Supreme 44/60','Supreme 44/60'],color:C.sup,vals:PS.map(function(s){return s[0];})},{n:['Astral 41/60','Astral 41/60'],color:C.ast,vals:PA.map(function(s){return s[0];})}],label:'pillars'}))+bl([['Supreme leads on financial strength and valuation','Financial strength, valuation-ல Supreme முன்னாடி'],['Astral leads on growth options','Growth options-ல Astral முன்னாடி'],['Scores are an education tool, not a recommendation','Scores கற்றுக்கொள்ள மட்டும், recommendation இல்ல']]));
+ return head('6 Pillars','6 தூண்கள்','Each pillar scored 1–10; the taller the pillar, the stronger the roof.','ஒவ்வொரு தூணும் 1–10; தூண் உயரமா இருந்தா கூரை strong.')+three(s,a,c);};
+/* ===== BIG BETS ===== */
+function wheel(items,col,title){var W=420,H=330,cx=210,cy=170,R=125,r=48,n=items.length,h='';items.forEach(function(it,i){var a0=-Math.PI/2+i*2*Math.PI/n,a1=a0+2*Math.PI/n,lg=0;var f=it[2]?col:C.wsoft;
+ h+='<path d="M'+(cx+r*Math.cos(a0))+' '+(cy+r*Math.sin(a0))+' L'+(cx+R*Math.cos(a0))+' '+(cy+R*Math.sin(a0))+' A'+R+' '+R+' 0 '+lg+' 1 '+(cx+R*Math.cos(a1))+' '+(cy+R*Math.sin(a1))+' L'+(cx+r*Math.cos(a1))+' '+(cy+r*Math.sin(a1))+' A'+r+' '+r+' 0 0 0 '+(cx+r*Math.cos(a0))+' '+(cy+r*Math.sin(a0))+'Z" fill="'+f+'" fill-opacity="'+(it[2]?0.28:1)+'" stroke="'+(it[2]?col:C.wait)+'" stroke-width="2.5"'+(it[2]?'':' stroke-dasharray="5 3"')+'/>';
+ var am=(a0+a1)/2,rx=cx+(R+r)/2*Math.cos(am),ry=cy+(R+r)/2*Math.sin(am);h+=ic(it[3],rx-14,ry-30,0.7,it[2]?col:C.wait)+wrapT(rx,ry+12,it[0],it[1],12,'text-anchor="middle" font-size="10.5" font-weight="900"');});
+ h+='<circle cx="'+cx+'" cy="'+cy+'" r="'+(r-4)+'" fill="'+C.card+'" stroke="'+col+'" stroke-width="3"/>'+wrapT(cx,cy-4,title[0],title[1],9,'text-anchor="middle" font-size="12" font-weight="900" fill="'+col+'"');
+ h+='<rect x="10" y="'+(H-22)+'" width="14" height="14" fill="'+col+'" fill-opacity=".28" stroke="'+col+'"/>'+tx(30,H-10,'running','இயங்குது','font-size="11" font-weight="800"')+'<rect x="120" y="'+(H-22)+'" width="14" height="14" fill="'+C.wsoft+'" stroke="'+C.wait+'" stroke-dasharray="3 2"/>'+tx(140,H-10,'coming / guided','வரப்போகுது','font-size="11" font-weight="800"');return svg(W,H,h,'business wheel');}
+P.bet=function(){
+ var tA=[{d:'Apr 2022',en:'Deal: 51% of Gem Paints for ₹194 cr',ta:'Deal: Gem Paints 51% ₹194 cr',done:1,c:C.ast},{d:'Jun 2022',en:'Paid via OCDs; board control',ta:'OCD மூலம் பணம்; board control',done:1,c:C.ast},{d:'Dec 2023',en:'Stake raised to 80%',ta:'Stake 80% ஆனது',done:1,c:C.ast},{d:'Oct 2025',en:'Last 20% bought (₹75 cr) → 100%, renamed Astral Coatings',ta:'கடைசி 20% (₹75 cr) → 100%, Astral Coatings',done:1,c:C.ast},{d:'Q1 FY27',en:'Paint sales +49%, EBITDA break-even',ta:'Paint sales +49%, break-even',done:1,c:C.ast},{d:'FY27',en:'Guided: +20–25% sales, low single-digit margin',ta:'Guide: +20–25% sales, சின்ன margin',done:0}];
+ var tR=[{d:'FY26',en:'Plan: 40,000 t CPVC resin plant',ta:'Plan: 40,000 t CPVC resin plant',done:1,c:C.ast},{d:'FY27 H1',en:'Construction, ₹137 cr capex in Q1',ta:'Construction, Q1 capex ₹137 cr',done:1,c:C.ast},{d:'Dec 2026',en:'Plant ready (guided)',ta:'Plant ready (guide)',done:0},{d:'Q4 FY27',en:'Trial runs (guided)',ta:'Trial runs (guide)',done:0},{d:'FY28',en:'Full benefit: lower cost, fewer inventory days',ta:'Full benefit: செலவு குறைவு, inventory days குறைவு',done:0}];
+ var tS=[{d:'1942',en:'Founded; 80+ years in plastics',ta:'1942 தொடக்கம்; 80+ வருஷம்',done:1,c:C.sup},{d:'FY25–26',en:'Wavin India pipes business bought',ta:'Wavin India pipes business வாங்கினாங்க',done:1,c:C.sup},{d:'FY26',en:'Pipes capacity reaches ~10 lakh t',ta:'Pipes capacity ~10 லட்சம் t',done:1,c:C.sup},{d:'FY27',en:'MOHO premium bath fittings launched',ta:'MOHO premium bath fittings launch',done:1,c:C.sup},{d:'FY27',en:'Capex >₹1,000 cr (guided)',ta:'Capex ₹1,000 cr+ (guide)',done:0},{d:'FY27',en:'Revenue ₹13,500–14,000 cr (guided)',ta:'Revenue ₹13,500–14,000 cr (guide)',done:0}];
+ var a='<div class="grid g2">'+card('a',L('Astral’s business wheel','Astral business wheel'),box(wheel([['Pipes & fittings','Pipes & fittings',1,'pipe'],['Adhesives India','Adhesives India',1,'glue'],['Adhesives UK','Adhesives UK',1,'globe'],['Paints (ex-Gem)','Paints (ex-Gem)',1,'paint'],['Bathware','Bathware',1,'bath'],['CPVC resin (own)','CPVC resin (சொந்தம்)',0,'flask']],C.ast,['From pipes to the whole home','Pipes-ல இருந்து முழு வீடு'])))+
+  card('a',L('Status words, precisely','Status — சரியான வார்த்தைகள்'),bl([['Gem Paints: an acquisition, now a 100% subsidiary (Astral Coatings) — not a JV or licence','Gem Paints: acquisition, இப்போ 100% subsidiary (Astral Coatings) — JV-யோ licence-ஓ இல்ல'],['Paints are made in Gem’s own plant: own manufacturing','Paints Gem-ஓட சொந்த plant-ல: own manufacturing'],['CPVC resin plant: under construction, not commercial; trials Q4 FY27','CPVC resin plant: construction-ல, commercial இல்ல; trial Q4 FY27'],['Today CPVC compound is bought from outside suppliers','இப்போ CPVC compound வெளியே வாங்குறாங்க']]))+'</div>'+
+  card('a',L('Paints race: Gem Paints milestones (done ✔ vs guided …)','Paints race: Gem Paints milestones'),box(timeline(tA),true))+card('a',L('CPVC resin backward integration','CPVC resin backward integration'),box(timeline(tR),true))+
+  card('a',L('How Astral got here','Astral இங்க எப்படி வந்துச்சு'),'<div class="pic">'+svg(90,90,ic('up',6,6,1.95,C.ast),'up')+'<div>'+bl([['1996: started as a CPVC pipe maker; brought CPVC plumbing to Indian homes','1996: CPVC pipe maker-ஆ ஆரம்பம்; இந்திய வீடுகளுக்கு CPVC plumbing'],['Built a plumber-first brand with heavy marketing','Plumber-first brand, நிறைய marketing'],['Added adhesives (Resinova, UK Seal It), then paints (Gem) and bathware','Adhesives (Resinova, UK Seal It), அப்புறம் paints (Gem), bathware'],['Same dealer counter, more products: that is the plan','அதே dealer கடை, நிறைய products: இது தான் plan']])+'</div></div>');
+ var s='<div class="grid g2">'+card('s',L('Supreme’s business wheel','Supreme business wheel'),box(wheel([['Piping','Piping',1,'pipe'],['Packaging','Packaging',1,'box'],['Industrial','Industrial',1,'gear'],['Furniture','Furniture',1,'chair'],['Windows & doors','Windows & doors',1,'house'],['MOHO bath fittings','MOHO bath fittings',1,'bath'],['New capacity ₹1,000 cr+','புது capacity',0,'factory']],C.sup,['One material, many uses','ஒரே material, பல பயன்'])))+
+  card('s',L('Supreme’s bet: scale + value-added products','Supreme பந்தயம்: scale + value-added products'),bl([['No paints bet: Supreme stays inside plastics','Paints இல்ல: Supreme plastics-க்குள்ளயே'],['Value-added products ₹1,476 cr in Q2 (+38%), ~44% of sales','Value-added products Q2-ல ₹1,476 cr (+38%), sales-ல ~44%'],['Wavin India purchase added plants and technology','Wavin India purchase: plants + technology'],['MOHO premium bath fittings: first step into bathroom brands','MOHO bath fittings: bathroom brand-க்குள்ள முதல் அடி']]))+'</div>'+card('s',L('Milestones (done ✔ vs guided …)','Milestones'),box(timeline(tS),true))+
+  card('s',L('How Supreme got here','Supreme இங்க எப்படி வந்துச்சு'),'<div class="pic">'+svg(90,90,ic('shield',6,6,1.95,C.sup),'shield')+'<div>'+bl([['Founded 1942; the Taparia family has run it for 60 years','1942-ல ஆரம்பம்; Taparia family 60 வருஷமா நடத்துது'],['Grew plant by plant to 35 locations close to customers','Plant-plant-ஆ 35 இடங்களுக்கு வளர்ந்துச்சு'],['Stayed debt-free and kept paying dividends through cycles','Debt இல்லாம, எல்லா cycle-லயும் dividend'],['Uses its scale to buy resin cheaper than smaller rivals','Scale-ஆல சின்ன rivals-ஐ விட resin மலிவா வாங்குது']])+'</div></div>');
+ var c='<div class="grid g2">'+card('',L('Who is ahead, race by race','எந்த race-ல யார் முன்னாடி'),box(hbars({items:[{lab:['Pipe tonnes','Pipe tonnes'],v:-2.6,c:C.sup,txt:'Supreme ~2.6x'},{lab:['Margin per kg','Margin per kg'],v:1.5,c:C.ast,txt:'Astral ~1.5x'},{lab:['Paints','Paints'],v:2,c:C.ast,txt:'Astral only'},{lab:['Adhesives','Adhesives'],v:2,c:C.ast,txt:'Astral only'},{lab:['Product range','Product range'],v:-2,c:C.sup,txt:'Supreme 9 verticals'},{lab:['Balance sheet','Balance sheet'],v:-1.2,c:C.sup,txt:'Supreme'}],l:150,label:'who leads'}))+'<p class="note">'+L('Left = Supreme ahead · right = Astral ahead','இடது = Supreme முன்னாடி · வலது = Astral முன்னாடி')+'</p>')+
+  card('',L('The paints question','Paints கேள்வி'),'<div class="pic">'+svg(90,90,ic('paint',6,6,1.95,C.acc),'paint')+'<div>'+bl([['Paints is crowded: Asian Paints, Berger, Birla Opus, JSW','Paints-ல போட்டி அதிகம்: Asian Paints, Berger, Birla Opus, JSW'],['Astral plays small: ₹75 cr a quarter, using its plumbing dealers','Astral சின்னதா: quarter-க்கு ₹75 cr, plumbing dealers மூலம்'],['Success test: margin rising above low single digits by FY28','Success test: FY28-க்குள் margin உயரணும்']])+'</div></div>')+'</div>';
+ return head('Big bets: what each is building next','பெரிய பந்தயம்: அடுத்து என்ன கட்டுறாங்க','Astral is buying into the whole home (paints, glue, bath, its own resin). Supreme doubles down on plastics scale.','Astral முழு வீட்டுக்குள்ள (paints, glue, bath, சொந்த resin). Supreme plastics scale-ல இன்னும் ஆழமா.')+three(s,a,c);};
+
+/* ===== VALUE CHAIN ===== */
+P.vc=function(){var W=1000,H=300,h='';var st=[['Crude / naphtha, salt','Crude / naphtha, salt','drop'],['Ethylene, EDC, chlorine','Ethylene, EDC, chlorine','flask'],['PVC / CPVC resin','PVC / CPVC resin','resin'],['Pipes & fittings made','Pipes & fittings உற்பத்தி','factory'],['Dealers & plumbers','Dealers & plumbers','truck'],['Homes, farms, projects','வீடு, farms, projects','house']];
+ st.forEach(function(s,i){var x=10+i*165;var me=i===3;h+='<rect x="'+x+'" y="60" width="150" height="120" rx="12" fill="'+(me?C.soft:C.card)+'" stroke="'+(me?C.acc:C.line)+'" stroke-width="'+(me?4:2.5)+'"/>'+ic(s[2],x+55,72,1,C.ink)+wrapT(x+75,130,s[0],s[1],16,'text-anchor="middle" font-size="12" font-weight="900"');if(i<5)h+='<path d="M'+(x+150)+' 120 l13 0" stroke="'+C.ink+'" stroke-width="3"/><path d="M'+(x+163)+' 114 l6 6 -6 6z" fill="'+C.ink+'"/>';});
+ h+='<rect x="340" y="200" width="150" height="34" rx="17" fill="'+C.asoft+'" stroke="'+C.ast+'" stroke-width="2"/>'+tx(415,222,'Astral CPVC resin (Dec 26)','Astral CPVC resin (Dec 26)','text-anchor="middle" font-size="11" font-weight="900" fill="'+C.ast+'"');
+ h+='<rect x="505" y="200" width="150" height="34" rx="17" fill="'+C.ssoft+'" stroke="'+C.sup+'" stroke-width="2"/>'+tx(580,222,'Supreme + Astral','Supreme + Astral','text-anchor="middle" font-size="12" font-weight="900" fill="'+C.sup+'"');
+ h+='<rect x="670" y="200" width="150" height="34" rx="17" fill="'+C.soft+'" stroke="'+C.acc+'" stroke-width="2"/>'+tx(745,222,'7,000+ distributors (SI)','7,000+ distributors (SI)','text-anchor="middle" font-size="11" font-weight="900"');
+ h+=tx(10,30,'Where the money is made in pipes','Pipes-ல பணம் எங்க வருது','font-size="15" font-weight="900"')+tx(10,270,'Resin makers: Reliance, Chemplast, DCW, imports (PVC); Lubrizol and others (CPVC). Minimum import price (MIP) now steadies PVC.','Resin makers: Reliance, Chemplast, DCW, imports (PVC); Lubrizol போன்றவை (CPVC). MIP இப்போ PVC விலையை நிலைப்படுத்துது.','font-size="12" font-weight="700" fill="'+C.ink2+'"');
+ var chain=svg(W,H,h,'value chain');
+ var need=bars({cats:[['Housing / plumbing','Housing / plumbing'],['Agriculture','Agriculture'],['Water schemes','Water schemes'],['Industrial','Industrial']],series:[{n:['Demand strength now (1–5)','இப்போ demand (1–5)'],color:C.acc,vals:[4,3,1.5,3]}],vfmt:f1,label:'demand drivers'});
+ var s=card('s',L('Where Supreme plays','Supreme எங்க'),bl([['Converter stage: pipes, packaging, industrial, furniture','Converter stage: pipes, packaging, industrial, furniture'],['Upstream link via 30.8% in Supreme Petrochem (polystyrene, not PVC)','Supreme Petrochem 30.8% (polystyrene, PVC இல்ல)'],['Buys PVC resin; wins on bulk buying and freight','PVC resin வாங்குது; bulk buying & freight-ல லாபம்']]));
+ var a=card('a',L('Where Astral plays','Astral எங்க'),bl([['Converter stage: pipes, fittings, tanks, bathware','Converter stage: pipes, fittings, tanks, bathware'],['Moving one step upstream: own CPVC resin from Dec 2026','ஒரு படி மேல: Dec 2026-ல சொந்த CPVC resin'],['Also sells adhesives and paints to the same home','அதே வீட்டுக்கு adhesives, paints']]));
+ return head('Sector need & value chain','Sector தேவை & value chain','From oil and salt to the tap in your home.','Oil, salt-ல இருந்து உங்க வீட்டு tap வரை.')+card('',L('Value chain','Value chain'),box(chain,true))+'<div class="grid g2" style="margin-top:12px">'+card('',L('What drives pipe demand today','இப்போ pipe demand எதனால'),box(need)+bl([['Housing led Q2 demand for both','இரண்டுக்கும் Q2 demand housing-ல'],['Jal Jeevan Mission runs to Dec 2028, but state payments are slow','Jal Jeevan Mission Dec 2028 வரை, ஆனா state payments slow'],['Astral expects ~8% industry volume growth in FY27','FY27-ல industry ~8% வளரும்னு Astral எதிர்பார்க்குது']]))+'<div class="grid">'+s+a+'</div></div>';};
+
+/* ===== SWOT ===== */
+function quad(sw,col){var W=640,H=420,h='';var q=[['Strengths','பலம்',C.good,'#DDF3E3','shield'],['Weaknesses','பலவீனம்',C.bad,'#FBE0DD','warn'],['Opportunities','வாய்ப்பு',C.sup,C.ssoft,'up'],['Threats','அச்சுறுத்தல்',C.wait,C.wsoft,'down']];
+ q.forEach(function(x,i){var X=(i%2)*322,Y=Math.floor(i/2)*212;h+='<rect x="'+(X+4)+'" y="'+(Y+4)+'" width="312" height="204" rx="12" fill="'+x[3]+'" stroke="'+x[2]+'" stroke-width="2.5"/>'+ic(x[4],X+14,Y+12,0.8,x[2])+tx(X+52,Y+34,x[0],x[1],'font-size="15" font-weight="900" fill="'+x[2]+'"');
+  sw[i].forEach(function(t,j){h+=wrapT(X+18,Y+62+j*46,'• '+t[0],'• '+t[1],44,'font-size="12" font-weight="700"');});});return svg(W,H,h,'SWOT');}
+P.swot=function(){
+ var s=card('s','',box(quad([[['Largest plastics processor, 35 plants','Biggest processor, 35 plants'],['Debt-free; steady dividends','Debt இல்ல; நிலையான dividend'],['9 verticals spread the risk','9 verticals — risk பிரியுது']],[['Lower margin per kg than Astral','Astral-ஐ விட per kg margin குறைவு'],['Margin 12.8% below guidance','Margin 12.8% guidance-க்கு கீழ'],['Profit sensitive to PVC swings','PVC ஏற்ற-இறக்கத்துக்கு sensitive']],[['Housing upcycle and pipe restocking','Housing upcycle, pipe restocking'],['Bath fittings (MOHO), windows','Bath fittings (MOHO), windows'],['Unorganised players losing share','Unorganised players share இழப்பு']],[['PVC price fall → inventory loss','PVC விழுந்தா inventory loss'],['New entrants adding pipe capacity','புது players pipe capacity'],['Weak government water spending','Government water spending weak']]],C.sup),true));
+ var a=card('a','',box(quad([[['CPVC pioneer, strong plumber brand','CPVC pioneer, strong plumber brand'],['~40% gross margin','~40% gross margin'],['Several growth engines','பல growth engines']],[['High valuation leaves no room','அதிக valuation — இடம் இல்ல'],['Adhesive margins under pressure','Adhesive margin அழுத்தம்'],['High inventory days (~103)','Inventory days அதிகம் (~103)']],[['Own CPVC resin from FY28','FY28-ல சொந்த CPVC resin'],['Paints after break-even','Break-even-க்கு அப்புறம் paints'],['Bathware 20–25% CAGR target','Bathware 20–25% CAGR target']],[['Crowded paints market','Paints-ல போட்டி அதிகம்'],['Resin plant delays','Resin plant தாமதம்'],['Q2 miss could hit a rich stock','Q2 miss ஆனா அதிக விலை stock-க்கு அடி']]],C.ast),true));
+ var c=card('',L('Side by side','பக்கம் பக்கமா'),'<div class="tbl"><table><thead><tr><th></th><th>Supreme</th><th>Astral</th></tr></thead><tbody>'+[['Biggest strength','பெரிய பலம்','Scale & balance sheet','Margins & brand'],['Biggest weakness','பெரிய பலவீனம்','Margin vs guidance','Valuation'],['Best opportunity','பெரிய வாய்ப்பு','Housing volume recovery','CPVC resin + paints'],['Biggest threat','பெரிய அச்சுறுத்தல்','PVC price fall','Growth disappointment']].map(function(r){return '<tr><td>'+L(r[0],r[1])+'</td><td style="text-align:left">'+r[2]+'</td><td style="text-align:left">'+r[3]+'</td></tr>';}).join('')+'</tbody></table></div>'+box(bars({cats:[['Strengths','பலம்'],['Weaknesses','பலவீனம்'],['Opportunities','வாய்ப்பு'],['Threats','அச்சுறுத்தல்']],series:[{n:['Supreme','Supreme'],color:C.sup,vals:[4.5,2.5,3.5,3]},{n:['Astral','Astral'],color:C.ast,vals:[4,3.5,4.5,3.5]}],vfmt:f1,label:'swot weight'}))+'<p class="note">'+L('Bars show CB’s weight of each box on a 1–5 scale.','Bars = ஒவ்வொரு box-க்கும் CB weight (1–5).')+'</p>');
+ return head('SWOT','SWOT')+three(s,a,c);};
+/* ===== SELF-CHECK ===== */
+var SC=[
+ {g:['1. Questions about the stock','1. Stock பற்றிய கேள்விகள்'],it:[
+  ['I know the size of each company and what I would be paying','ஒவ்வொரு company size-உம், நான் கொடுக்குற விலையும் தெரியும்','Supreme mcap ~₹41,300 cr at ~₹3,250 · Astral ~₹36,300 cr at ~₹1,350'],
+  ['I checked where the price sits vs its 52-week range','52-week range-ல விலை எங்கன்னு பார்த்தேன்','Supreme 3,140–4,665 · Astral 1,311.6–1,768.7: both near lows'],
+  ['I know how the business uses its cash (capex, dividends)','Cash எப்படி use ஆகுதுன்னு தெரியும் (capex, dividend)','Supreme capex >₹1,000 cr FY27, dividend ₹36 FY26 · Astral capex ₹300–350 cr'],
+  ['I checked the latest results date','Latest results date பார்த்தேன்','Supreme Q2 out 26 Oct · Astral Q2 on 5 Nov 2026']]},
+ {g:['2. Problems investors face','2. Investors-க்கு வர்ற problems'],it:[
+  ['I can explain how a pipe company makes money','Pipe company எப்படி பணம் பண்ணுதுன்னு சொல்ல முடியும்','Tonnes × price per kg − resin cost'],
+  ['I understand why PVC prices swing profits','PVC விலை profit-ஐ ஏன் ஆட்டுதுன்னு புரியுது','April 2026 PVC crash → Q1 destocking; Q2 rise → inventory gains'],
+  ['I know the main risks','முக்கிய risks தெரியும்','PVC swings, weak water-scheme orders, Astral valuation ~63x'],
+  ['I connect with the business (I see these pipes/brands around me)','இந்த business-ஓட connect ஆகுறேன் (pipes, brands பார்க்குறேன்)','Supreme, Astral pipes at hardware shops; Astral Resinova glue, Gem paints']]},
+ {g:['3. What I did about those problems','3. அந்த problems-க்கு நான் செஞ்சது'],it:[
+  ['I read the business and risk pages of the annual report','Annual report-ல business & risk pages படிச்சேன்','Supreme AR FY26; Astral AR FY26'],
+  ['I compared with a listed peer','ஒரு listed peer-ஓட compare பண்ணினேன்','Finolex, Prince Pipes, Apollo Pipes'],
+  ['I will keep the amount small','சின்ன amount தான் போடுவேன்','Both sit in Stage 4 price trend'],
+  ['I fixed my horizon and a review date','Horizon, review date fix பண்ணினேன்','Review after Q3 results (late Jan 2027)'],
+  ['I am ready for a results-day dip','Results day dip-க்கு ready','Supreme fell ~2% on a +59% profit day']]},
+ {g:['4. Anchors’ and analysts’ view','4. Funds & analysts பார்வை'],it:[
+  ['I checked who owns the stock','யார் hold பண்றாங்கன்னு பார்த்தேன்','Supreme promoters 48.96%, FIIs 17.1% (down from 24.7% in Dec 2024), DIIs 19.2%'],
+  ['I read independent analyst reviews','Independent analyst reviews படிச்சேன்','Brokers mostly positive on both after Q1; Supreme volume guide cut in Q2'],
+  ['I looked at the CB cycle & trigger view','CB cycle & trigger பார்வை பார்த்தேன்','Supreme CY 71 / TG 65 · Astral CY 67 / TG 59'],
+  ['I considered the market mood','Market mood பார்த்தேன்','Both near 52-week lows; sector out of favour']]},
+ {g:['5. My own conditions','5. என் சொந்த conditions'],it:[],own:1}];
+var SCK='cb_q2fy27_supast_sc';
+function scLoad(){try{return JSON.parse(localStorage.getItem(SCK)||'{}');}catch(e){return {};}}
+function scSave(d){try{localStorage.setItem(SCK,JSON.stringify(d));}catch(e){}}
+P.sc=function(){var d=scLoad();d.own=d.own||[];var h=head('Investor self-check','Investor சுய சோதனை','Tick what YOU have checked. It counts only your own conditions; it is not a recommendation.','நீங்க check பண்ணதை tick பண்ணுங்க. இது உங்க conditions மட்டும் — recommendation இல்ல.');
+ h+='<div class="grid g2"><div class="card" style="display:flex;gap:14px;align-items:center"><div id="scRing"></div><div><h3>'+L('Overall progress','மொத்த progress')+'</h3><div id="scBars"></div></div></div><div class="card">'+bl([['Data lines show facts for both companies','Data lines-ல இரண்டு company facts'],['Ticks are saved only in your browser','Ticks உங்க browser-ல மட்டும் save ஆகும்']])+'</div></div><div class="grid g2" style="margin-top:12px">';
+ SC.forEach(function(g,gi){h+='<div class="sc-g"><h3>'+L(g.g[0],g.g[1])+'<span class="chip w" id="scg'+gi+'"></span></h3>';
+  g.it.forEach(function(it,ii){var id='sc_'+gi+'_'+ii;h+='<label class="sc-i" for="'+id+'"><input type="checkbox" id="'+id+'" data-k="'+id+'"'+(d[id]?' checked':'')+'><div>'+L(it[0],it[1])+'<div class="dt">Data: '+it[2]+'</div></div></label>';});
+  if(g.own){d.own.forEach(function(o,oi){var id='sco_'+oi;h+='<div class="sc-i"><input type="checkbox" id="'+id+'" data-o="'+oi+'"'+(o.c?' checked':'')+'><label for="'+id+'" style="flex:1">'+o.t.replace(/</g,'&lt;')+'</label><button class="btn" type="button" data-del="'+oi+'">✕</button></div>';});
+   h+='<div class="sc-add"><input id="scNew" type="text" placeholder="Add your own condition / உங்க condition"><button class="btn" type="button" id="scAdd">'+L('Add','சேர்')+'</button></div>';}
+  h+='</div>';});return h+'</div>';};
+function scWire(){var d=scLoad();d.own=d.own||[];function upd(){var tot=0,done=0,html='';SC.forEach(function(g,gi){var t=g.own?d.own.length:g.it.length,c=0;if(g.own)d.own.forEach(function(o){if(o.c)c++;});else g.it.forEach(function(it,ii){if(d['sc_'+gi+'_'+ii])c++;});tot+=t;done+=c;var e=document.getElementById('scg'+gi);if(e)e.textContent=c+'/'+t;
+  html+='<div style="display:flex;align-items:center;gap:6px;font-size:12px;font-weight:800"><span style="width:16px">'+(gi+1)+'</span><div style="flex:1;height:9px;background:'+C.line+';border-radius:5px"><div style="height:9px;border-radius:5px;background:'+C.acc+';width:'+(t?c/t*100:0)+'%"></div></div><span>'+c+'/'+t+'</span></div>';});
+  document.getElementById('scRing').innerHTML=ring(done,tot,['my checks','என் checks']);document.getElementById('scBars').innerHTML=html;}
+ var p=document.getElementById('p_sc');p.addEventListener('change',function(e){var k=e.target.getAttribute('data-k'),o=e.target.getAttribute('data-o');if(k){d[k]=e.target.checked;}if(o!=null){d.own[+o].c=e.target.checked;}scSave(d);upd();});
+ p.addEventListener('click',function(e){var del=e.target.closest('[data-del]');if(del){d.own.splice(+del.getAttribute('data-del'),1);scSave(d);rerender('sc');}if(e.target.closest('#scAdd')){var v=document.getElementById('scNew').value.trim();if(v){d.own.push({t:v,c:false});scSave(d);rerender('sc');}}});upd();}
+
+/* ===== QUIZ ===== */
+var QZ=[
+ ['Which company sold more tonnes of plastic goods in its latest quarter?','Latest quarter-ல அதிக tonnes வித்தது யாரு?',['Supreme','Astral','About equal'],['Supreme','Astral','கிட்டத்தட்ட சமம்'],0,'Supreme sold 1.84 lakh t in Q2; Astral sold 56,146 t of pipes in Q1.','Supreme Q2-ல 1.84 லட்சம் t; Astral Q1-ல 56,146 t.'],
+ ['Why did Supreme’s profit jump 59% while volume rose 19%?','Volume 19% தான், ஆனா Supreme profit 59% ஏன்?',['Higher PVC-linked prices and operating leverage','A big tax refund','It sold a plant'],['PVC-ஆல விலை ஏற்றம் + operating leverage','பெரிய tax refund','Plant வித்தாங்க'],0,'Revenue per kg rose ~18% and fixed costs were spread over more tonnes.','kg விலை ~18% ஏறுச்சு; fixed cost அதிக tonnes மேல பிரிஞ்சது.'],
+ ['Which paints company did Astral acquire?','Astral எந்த paints company-ஐ வாங்குச்சு?',['Gem Paints','Indigo Paints','Shalimar Paints'],['Gem Paints','Indigo Paints','Shalimar Paints'],0,'Gem Paints (2022), now 100% owned and renamed Astral Coatings.','Gem Paints (2022), இப்போ 100% — Astral Coatings.'],
+ ['What is the status of Astral’s CPVC resin plant today?','Astral CPVC resin plant இப்போ என்ன நிலை?',['Under construction; trials in Q4 FY27','Running commercially','A licence deal only'],['Construction-ல; Q4 FY27 trial','Commercial-ஆ ஓடுது','Licence deal மட்டும்'],0,'Ready Dec 2026, trial runs Q4 FY27, full benefit FY28.','Dec 2026 ready, Q4 FY27 trial, FY28 full benefit.'],
+ ['Which company earns more EBITDA per kg of pipe?','Pipe kg-க்கு அதிக EBITDA யாருக்கு?',['Astral','Supreme','Same'],['Astral','Supreme','சமம்'],0,'Astral ~₹35/kg vs Supreme ~₹23/kg overall.','Astral ~₹35/kg vs Supreme ~₹23/kg.'],
+ ['Where is the pipe sector in its cycle, per CB?','CB படி pipe sector cycle-ல எங்க?',['P2 Early recovery','P4 Peak','P5 Downturn'],['P2 ஆரம்ப மீட்சி','P4 உச்சம்','P5 சரிவு'],0,'Q1 destocking ended; Q2 volumes rose and MIP steadied PVC.','Q1 destocking முடிஞ்சது; Q2 volume ஏறுச்சு, MIP PVC-ஐ நிலைப்படுத்துச்சு.'],
+ ['Why did Supreme’s share fall after strong results?','நல்ல results வந்தும் Supreme share ஏன் இறங்குச்சு?',['Volume guidance was cut','It took on debt','The dividend was cancelled'],['Volume guidance குறைச்சாங்க','Debt எடுத்தாங்க','Dividend cancel'],0,'FY27 volume guide cut to ~10%; margin below guidance.','FY27 volume guide ~10%-க்கு குறைப்பு; margin guidance-க்கு கீழ.'],
+ ['Which stock trades at the higher P/E?','எந்த stock-க்கு P/E அதிகம்?',['Astral (~63x)','Supreme (~36x)','Equal'],['Astral (~63x)','Supreme (~36x)','சமம்'],0,'Astral’s premium reflects higher margins and new engines.','Astral premium = அதிக margin + புது engines.']];
+P.quiz=function(){var h=head('Cauvery Socrates','Cauvery Socrates','8 questions. Tap an answer to see why.','8 கேள்விகள். Answer tap பண்ணுங்க, காரணம் வரும்.')+'<div class="grid g2"><div id="qzList">';
+ QZ.forEach(function(q,i){h+='<div class="q" data-q="'+i+'"><b>'+(i+1)+'. '+L(q[0],q[1])+'</b><div class="opts">'+[0,1,2].map(function(k){return (k+i)%3;}).map(function(j){return '<button type="button" class="opt" data-o="'+j+'">'+L(q[2][j],q[3][j])+'</button>';}).join('')+'</div><div class="ex" hidden></div></div>';});
+ return h+'</div><div><div class="card" style="position:sticky;top:150px"><h3>'+L('Your score','உங்க score')+'</h3><div id="qzBars"></div><button class="btn" type="button" id="qzReset">'+L('Try again','மறுபடி')+'</button></div></div></div>';};
+var QS={};function qzDraw(){var ok=0,no=0;Object.keys(QS).forEach(function(k){QS[k]?ok++:no++;});document.getElementById('qzBars').innerHTML=bars({cats:[['Right','சரி'],['Wrong','தவறு'],['Left','மீதம்']],series:[{n:['questions','questions'],color:C.acc,vals:[ok,no,QZ.length-ok-no]}],h:220,w:360,fmt:f0,label:'score'});}
+function qzWire(){var p=document.getElementById('p_quiz');qzDraw();p.addEventListener('click',function(e){var b=e.target.closest('.opt');if(b){var q=b.closest('.q'),i=+q.getAttribute('data-q');if(QS[i]!=null)return;var j=+b.getAttribute('data-o'),r=QZ[i][4];QS[i]=(j===r);q.querySelectorAll('.opt').forEach(function(x){var k=+x.getAttribute('data-o');if(k===r)x.classList.add('ok');else if(k===j)x.classList.add('no');});var ex=q.querySelector('.ex');ex.hidden=false;ex.innerHTML=(j===r?'✔ ':'✘ ')+L(QZ[i][5],QZ[i][6]);qzDraw();}
+ if(e.target.closest('#qzReset')){QS={};rerender('quiz');}});}
+
+/* ===== ANALYST VIEW ===== */
+P.av=function(){var conv=function(n,col,lab){return '<div class="card">'+gauge(n,100,lab,col)+'</div>';};
+ var s=card('s',L('Supreme: analyst view','Supreme: analyst பார்வை'),bl([['Q2 proved demand is back: tonnes +19%, piping +24%, October +23%','Demand திரும்பி வந்துச்சு: tonnes +19%, piping +24%, Oct +23%'],['The open question is margin: 12.8% now vs 14–14.5% guided','கேள்வி margin தான்: இப்போ 12.8% vs guide 14–14.5%'],['Cycle: sector in early recovery; stock still in a falling trend (Stage 4)','Cycle: sector ஆரம்ப மீட்சி; stock இன்னும் இறங்கு trend (Stage 4)'],['Top triggers: H2 volume, PVC stability under MIP. Top risk: PVC fall reversing gains','Triggers: H2 volume, MIP-ஆல PVC நிலைப்பு. Risk: PVC விழுந்தா gain திரும்பும்'],['Valuation ~36x is below its own history, helped by boosted profit','Valuation ~36x தன் history-க்கு கீழ — boosted profit உதவியோட']]));
+ var a=card('a',L('Astral: analyst view','Astral: analyst பார்வை'),bl([['Quality franchise: CPVC leader, 40% gross margin, three growth engines','Quality franchise: CPVC leader, 40% gross margin, 3 growth engines'],['Paints (ex-Gem) has reached break-even; resin plant lands Dec 2026','Paints (ex-Gem) break-even; resin plant Dec 2026'],['Cycle: same sector recovery; stock also in Stage 4','Cycle: அதே sector மீட்சி; stock-உம் Stage 4'],['Top triggers: pipe volume rebound, CPVC resin. Top risk: de-rating at ~63x','Triggers: pipe volume, CPVC resin. Risk: ~63x-ல de-rating'],['5 Nov results decide the near-term story','5 Nov results தான் அடுத்த கதை']]));
+ var c='<div class="grid g4">'+conv(55,C.sup,['Supreme CB Conviction (capped)','Supreme CB Conviction (cap)'])+conv(52,C.ast,['Astral CB Conviction (capped)','Astral CB Conviction (cap)'])+'</div>'+card('',L('One-line verdicts (education only)','ஒரு வரி முடிவு (education மட்டும்)'),bl([['Supreme: the steadier, cheaper-on-history scale player — watch H2 margin','Supreme: steady, history-படி மலிவு scale player — H2 margin கவனிங்க'],['Astral: the higher-quality, higher-priced growth player — watch 5 Nov and the resin plant','Astral: quality அதிகம், விலையும் அதிகம் — 5 Nov, resin plant கவனிங்க'],['Both scores are capped at 55 while prices stay below falling 30-week averages','இரண்டு price-உம் இறங்குற 30-week average-க்கு கீழ — score 55 cap'],['Not SEBI-registered; not a buy/sell/hold call','SEBI-registered இல்ல; buy/sell/hold இல்ல']]));
+ return head('Analyst view','அனலிஸ்ட் பார்வை')+three(s,a,c);};
+P.ask=function(){return head('Cauvery Assist','Cauvery Assist','Ask by typing or voice, in English or Tamil. Answers come first, in one line.','Type பண்ணுங்க அல்லது பேசுங்க — English / தமிழ். முதல் வரியிலேயே பதில்.')+'<div class="grid g2"><div id="assist"></div><div class="card"><div class="pic">'+svg(120,120,'<circle cx="60" cy="60" r="56" fill="'+C.soft+'"/><rect x="45" y="22" width="30" height="50" rx="15" fill="'+C.acc+'" stroke="'+C.ink+'" stroke-width="3"/><path d="M35 58a25 25 0 0 0 50 0M60 83v14M46 97h28" fill="none" stroke="'+C.ink+'" stroke-width="3"/>','mic')+'<div>'+bl([['Read-aloud starts slow (0.8x); change speed anytime','Read-aloud 0.8x slow-ஆ; எப்போ வேணும்னாலும் speed மாத்தலாம்'],['Mic waits until you stop speaking (3 s by default)','நீங்க பேசி முடிக்கும் வரை mic காத்திருக்கும் (3 s)'],['Mic works when this file is opened in Chrome/Edge (blocked inside claude.ai)','Chrome/Edge-ல file திறந்தா mic வேலை செய்யும் (claude.ai-க்குள் block)'],['Never gives buy/sell advice','Buy/sell advice கொடுக்காது']])+'</div></div></div></div>';};
+/* ===== CAUVERY ASSIST (lite build; swap in master cauvery-assist.js when attached) ===== */
+var LANG='en';
+var AE={sup:{n:'Supreme',k:['supreme','சுப்ரீம்','சூப்ரீம்','supreme industries'],v:{rev:['₹3,361 crore in Q2 FY27, up 40% YoY','Q2 FY27-ல ₹3,361 கோடி, 40% ஏற்றம்',3361],ebitda:['₹431 crore, a 12.8% margin','₹431 கோடி, margin 12.8%',12.8],pat:['₹262 crore consolidated, up 59% YoY','consolidated ₹262 கோடி, 59% ஏற்றம்',262],vol:['1.84 lakh tonnes, up 19% YoY','1.84 லட்சம் tonne, 19% ஏற்றம்',184455],pe:['about 36x trailing earnings','சுமார் 36x earnings',36.5],cash:['debt-free with ₹685 crore cash','debt இல்ல, ₹685 கோடி cash',685],roce:['about 21% in FY26','FY26-ல சுமார் 21%',21],div:['₹36 per share for FY26, plus ₹12 interim for FY27','FY26-க்கு ₹36/share, FY27 interim ₹12',36],perkg:['about ₹23 EBITDA per kg','kg-க்கு சுமார் ₹23 EBITDA',23.4],guide:['FY27 revenue ₹13,500–14,000 crore, margin 14–14.5%, volume about 10%','FY27 revenue ₹13,500–14,000 கோடி, margin 14–14.5%, volume ~10%',null],risk:['a PVC price fall that reverses inventory gains','PVC விழுந்தா inventory gain திரும்பும்',null],tg:['CY 71 and TG 65','CY 71, TG 65',65]}},
+ ast:{n:'Astral',k:['astral','ஆஸ்ட்ரல்','அஸ்ட்ரல்'],v:{rev:['₹1,578 crore in Q1 FY27, up 16%; Q2 comes on 5 Nov','Q1 FY27-ல ₹1,578 கோடி, 16% ஏற்றம்; Q2 5 Nov-ல',1578],ebitda:['₹244 crore, a 15.5% margin (Q1 FY27)','₹244 கோடி, margin 15.5% (Q1)',15.5],pat:['₹120 crore in Q1 FY27, up 52%','Q1 FY27-ல ₹120 கோடி, 52% ஏற்றம்',120],vol:['56,146 tonnes of pipes in Q1 FY27, flat YoY','Q1 FY27-ல 56,146 tonne pipes, flat',56146],pe:['about 63x trailing earnings','சுமார் 63x earnings',63],cash:['net cash of about ₹470 crore in June 2026','June 2026-ல net cash சுமார் ₹470 கோடி',470],roce:['about 20% in FY26','FY26-ல சுமார் 20%',20],div:['₹4 per share for FY26','FY26-க்கு ₹4/share',4],perkg:['about ₹35 EBITDA per kg of pipe','pipe kg-க்கு சுமார் ₹35 EBITDA',35.3],guide:['double-digit pipe volume growth with 16–18% plumbing margin in FY27','FY27-ல double-digit pipe volume, plumbing margin 16–18%',null],risk:['de-rating at about 63x if growth slips','growth குறைஞ்சா ~63x-ல de-rating',null],tg:['CY 67 and TG 59','CY 67, TG 59',59]}}};
+var AM=[['rev',['revenue','sales','turnover','ரெவின்யூ','வருமானம்','வருவாய்','விற்பனை'],['revenue','revenue']],['ebitda',['ebitda','margin','மார்ஜின்','இபிட்டா'],['EBITDA margin','EBITDA margin']],['pat',['profit','pat','net profit','லாபம்','ப்ராஃபிட்','பிராஃபிட்'],['profit','profit']],['vol',['volume','tonnes','tonne','வால்யூம்','டன்'],['volume','volume']],['pe',['p/e','pe ','valuation','expensive','cheap','வேல்யூவேஷன்','பிஇ','விலை அதிகம்'],['valuation','valuation']],['cash',['cash','debt','கடன்','கேஷ்'],['cash & debt','cash & debt']],['roce',['roce','roe','return','ரிட்டர்ன்'],['ROCE','ROCE']],['div',['dividend','டிவிடெண்ட்'],['dividend','dividend']],['perkg',['per kg','kg','கிலோ'],['EBITDA per kg','EBITDA per kg']],['guide',['guidance','outlook','future','கைடன்ஸ்','எதிர்காலம்'],['guidance','guidance']],['risk',['risk','danger','ரிஸ்க்','ஆபத்து'],['main risk','main risk']],['tg',['trigger','cycle','ட்ரிக்கர்','சைக்கிள்'],['CB scores','CB scores']]];
+var AK=[[['paint','gem','பெயிண்ட்','கெம்'],['Astral entered paints by buying Gem Paints in 2022; it is now 100% owned (Astral Coatings) and hit EBITDA break-even in Q1 FY27.','Astral 2022-ல Gem Paints வாங்கி paints-க்குள்ள வந்துச்சு; இப்போ 100% (Astral Coatings), Q1 FY27-ல break-even.'],'bet'],
+ [['supreme so supreme','what makes supreme','why supreme','ஏன் supreme','சுப்ரீம் ஏன்'],['Scale: India’s largest plastics processor with 35 plants, 9 verticals and no debt.','Scale: 35 plants, 9 verticals, debt இல்லாத இந்தியாவின் biggest plastics processor.'],'dash'],
+ [['cpvc resin','resin plant','ரெசின்'],['Astral’s own 40,000 t CPVC resin plant is under construction: ready Dec 2026, trials Q4 FY27, full benefit FY28.','Astral-ஓட 40,000 t CPVC resin plant construction-ல: Dec 2026 ready, Q4 FY27 trial, FY28 benefit.'],'bet'],
+ [['when','5 nov','result date','எப்போ','ரிசல்ட்'],['Supreme reported Q2 on 26 Oct; Astral reports Q2 FY27 on 5 Nov 2026.','Supreme Q2 26 Oct-ல வந்துச்சு; Astral Q2 FY27 5 Nov 2026-ல.'],'fin'],
+ [['why fall','why down','share fall','fell','ஏன் இறங்கு','விழுந்'],['Supreme fell because volume guidance was cut; Astral sits near its low on a weak Q1 and rich valuation.','Supreme volume guidance குறைச்சதால இறங்குச்சு; Astral weak Q1, அதிக valuation-ஆல low பக்கம்.'],'mv'],
+ [['pvc','mip','பிவிசி'],['PVC prices crashed in April 2026, then rose; a minimum import price (MIP) now steadies them.','April 2026-ல PVC விலை crash, அப்புறம் ஏறுச்சு; இப்போ MIP நிலைப்படுத்துது.'],'vc'],
+ [['cycle','சைக்கிள்'],['CB puts the pipe sector in P2 early recovery; both stocks are still in a Stage 4 price downtrend.','CB படி pipe sector P2 ஆரம்ப மீட்சி; இரண்டு stock-உம் இன்னும் Stage 4 இறங்கு trend.'],'tc']];
+var NOADV=['CB Research is not SEBI-registered, so I can’t say buy, sell or hold. I can explain the numbers and risks.','CB Research SEBI-registered இல்ல — buy, sell, hold சொல்ல முடியாது. Numbers, risks விளக்கலாம்.'];
+var ALAST=null,ASP={rate:0.8,wait:3,voice:''};try{var sv=JSON.parse(localStorage.getItem('cba_q2fy27_supast')||'{}');for(var k in sv)ASP[k]=sv[k];}catch(e){}
+function aSave(){try{localStorage.setItem('cba_q2fy27_supast',JSON.stringify(ASP));}catch(e){}}
+function ans(q){var s=' '+q.toLowerCase()+' ',ta=LANG==='ta',X=ta?1:0;
+ if(/\b(buy|sell|hold|invest|should i|target price)\b|வாங்கலாமா|விக்கலாமா|வாங்கணுமா|முதலீடு/.test(s))return {a:NOADV[X]};
+ var ents=[];['sup','ast'].forEach(function(e){if(AE[e].k.some(function(k){return s.indexOf(k)>=0;}))ents.push(e);});
+ var met=null;AM.forEach(function(m){if(!met&&m[1].some(function(k){return s.indexOf(k)>=0;}))met=m;});
+ var kb=null;AK.forEach(function(k){if(!kb&&k[0].some(function(w){return s.indexOf(w)>=0;}))kb=k;});
+ if(kb&&(!met||kb[0][0]==='paint'||kb[0][0]==='supreme so supreme'||kb[0][0]==='cpvc resin'))return {a:kb[1][X],tab:kb[2]};
+ var cmp=/ vs | versus |compare|which|higher|highest|more|better|lower|யார்|எது|அதிகம்|ஒப்பிடு|compare/.test(s);
+ if(!ents.length&&/\b(its|it|their)\b|அதோட|அதுக்கு/.test(s)&&ALAST)ents=ALAST.slice();
+ if(met&&(ents.length===2||(cmp&&ents.length!==1))){var a=AE.sup.v[met[0]],b=AE.ast.v[met[0]];ALAST=['sup','ast'];
+  if(a[2]!=null&&b[2]!=null&&met[0]!=='rev'&&met[0]!=='pat'&&met[0]!=='vol'&&met[0]!=='cash'){var hi=a[2]>b[2]?'sup':'ast';return {a:(ta?AE[hi].n+'-க்கு '+met[2][1]+' அதிகம். ':AE[hi].n+' has the higher '+met[2][0]+'. ')+'Supreme: '+a[X]+'. Astral: '+b[X]+'.'};}
+  return {a:'Supreme: '+a[X]+'. Astral: '+b[X]+'.'};}
+ if(met&&ents.length===1){ALAST=ents;var v=AE[ents[0]].v[met[0]];return {a:(ta?AE[ents[0]].n+' '+met[2][1]+': ':AE[ents[0]].n+'’s '+met[2][0]+': ')+v[X]+'.'};}
+ if(ents.length===1){ALAST=ents;var e=ents[0];return {a:e==='sup'?(ta?'Supreme Q2 FY27: revenue ₹3,361 கோடி (+40%), PAT ₹262 கோடி (+59%), debt இல்ல.':'Supreme Q2 FY27: revenue ₹3,361 crore (+40%), PAT ₹262 crore (+59%), debt-free.'):(ta?'Astral Q1 FY27: revenue ₹1,578 கோடி (+16%), PAT ₹120 கோடி (+52%); Q2 5 Nov-ல.':'Astral Q1 FY27: revenue ₹1,578 crore (+16%), PAT ₹120 crore (+52%); Q2 comes on 5 Nov.')};}
+ if(kb)return {a:kb[1][X],tab:kb[2]};
+ if(/boon|good company|nalla|நல்ல/.test(s))return {a:ta?'ஆமா, இரண்டும் quality companies தான் — Supreme scale-ல, Astral margin-ல strong. Decision உங்களோடது.':'Yes, both are quality businesses: Supreme on scale, Astral on margins. The decision is yours.'};
+ return {a:ta?'இந்த dashboard data-வுக்குள்ள கேளுங்க: revenue, profit, margin, valuation, paints, CPVC resin.':'Please ask about this dashboard: revenue, profit, margin, valuation, paints or the CPVC resin plant.'};}
+function voices(){try{return speechSynthesis.getVoices();}catch(e){return [];}}
+function pickVoice(){var vs=voices(),want=LANG==='ta'?'ta':'en';if(ASP.voice){var f=vs.find(function(v){return v.name===ASP.voice&&v.lang.toLowerCase().indexOf(want)===0;});if(f)return f;}
+ return vs.find(function(v){return v.lang==='ta-IN'&&want==='ta';})||vs.find(function(v){return v.lang==='en-IN'&&want==='en';})||vs.find(function(v){return v.lang.toLowerCase().indexOf(want)===0;})||null;}
+function speak(text){try{speechSynthesis.cancel();}catch(e){return;}var parts=(text||'').replace(/\s+/g,' ').split(/(?<=[.!?।])\s+/).filter(Boolean);var v=pickVoice();
+ if(LANG==='ta'&&!v){var n=document.getElementById('aNote');if(n)n.textContent='No Tamil voice on this device; reading may use English voice.';}
+ parts.forEach(function(p){var u=new SpeechSynthesisUtterance(p);u.rate=ASP.rate;u.lang=LANG==='ta'?'ta-IN':'en-IN';if(v)u.voice=v;speechSynthesis.speak(u);});}
+var REC=null,LISTEN=false,STIMER=null,FINAL='';
+function mountAssist(){var el=document.getElementById('assist');if(!el)return;
+ el.innerHTML='<div class="as"><div class="as-h"><b>'+L('Cauvery Assist','Cauvery Assist')+'</b><div class="as-set"><label for="aRate">'+L('Speed','Speed')+'</label><input id="aRate" type="range" min="0.5" max="1.5" step="0.05" value="'+ASP.rate+'"><span id="aRateV">'+ASP.rate+'x</span><label for="aWait">'+L('Wait','காத்திரு')+'</label><select id="aWait"><option value="2">2 s</option><option value="3">3 s</option><option value="5">5 s</option><option value="0">tap Done</option></select><button type="button" class="btn" id="aPause">⏯</button><button type="button" class="btn" id="aStop">⏹</button></div></div><div class="cd" id="aCd"></div><div class="as-log" id="aLog" aria-live="polite"></div><div class="sugg" id="aSug"></div><div class="as-in"><input id="aIn" type="text" autocomplete="off"><button type="button" class="btn" id="aMic">🎙</button><button type="button" class="btn on" id="aGo">'+L('Ask','கேளு')+'</button></div><div class="note" id="aNote" style="padding:0 10px 10px"></div></div>';
+ document.getElementById('aWait').value=String(ASP.wait);
+ var log=document.getElementById('aLog');function add(cls,html,tab){var d=document.createElement('div');d.className='msg '+cls;d.innerHTML=html+(tab?'<details><summary>'+(LANG==='ta'?'Related tab':'Open related tab')+'</summary><button class="btn" type="button" data-open="'+tab+'">→ '+tab+'</button></details>':'');log.appendChild(d);log.scrollTop=log.scrollHeight;}
+ function go(q){q=(q||'').trim();if(!q)return;add('u',q.replace(/</g,'&lt;'));var r=ans(q);add('b',r.a,r.tab);speak(r.a);document.getElementById('aIn').value='';}
+ function sugg(){var S=LANG==='ta'?['Supreme ஏன் supreme?','யாருக்கு margin அதிகம்?','Astral paints பத்தி சொல்லுங்க','Supreme profit எவ்வளவு?','Astral ரிசல்ட் எப்போ?','Astral வாங்கலாமா?']:['What makes Supreme so supreme?','Which has the higher margin?','Tell me about Astral paints','What is Supreme’s profit?','When is Astral’s result?','Should I buy Astral?'];
+  document.getElementById('aSug').innerHTML=S.map(function(s){return '<button type="button">'+s+'</button>';}).join('');document.getElementById('aIn').placeholder=LANG==='ta'?'கேளுங்க: யாருக்கு margin அதிகம்?':'Ask: Which company has the higher margin?';}
+ sugg();add('b',LANG==='ta'?'வணக்கம்! Supreme, Astral பத்தி என்ன வேணும்னாலும் கேளுங்க.':'Vanakam! Ask me anything about Supreme and Astral in this dashboard.');
+ el.addEventListener('click',function(e){var b=e.target.closest('#aSug button');if(b)go(b.textContent);if(e.target.closest('#aGo'))go(document.getElementById('aIn').value);var o=e.target.closest('[data-open]');if(o)showTab(o.getAttribute('data-open'));
+  if(e.target.closest('#aStop')){try{speechSynthesis.cancel();}catch(x){}}if(e.target.closest('#aPause')){try{speechSynthesis.paused?speechSynthesis.resume():speechSynthesis.pause();}catch(x){}}if(e.target.closest('#aMic'))toggleMic();});
+ document.getElementById('aIn').addEventListener('keydown',function(e){if(e.key==='Enter')go(this.value);});
+ document.getElementById('aRate').addEventListener('input',function(){ASP.rate=+this.value;document.getElementById('aRateV').textContent=ASP.rate+'x';aSave();});
+ document.getElementById('aWait').addEventListener('change',function(){ASP.wait=+this.value;aSave();});
+ window._aGo=go;window._aSugg=sugg;}
+function toggleMic(){var SR=window.SpeechRecognition||window.webkitSpeechRecognition,n=document.getElementById('aNote'),btn=document.getElementById('aMic');
+ if(LISTEN){LISTEN=false;try{REC.stop();}catch(e){}btn.classList.remove('on');if(FINAL.trim())window._aGo(FINAL);FINAL='';return;}
+ if(!SR){n.textContent=LANG==='ta'?'இந்த browser-ல mic இல்ல. Chrome/Edge-ல file-ஐ திறங்க.':'Voice input is not available here. Open this file in Chrome or Edge.';return;}
+ REC=new SR();REC.lang=LANG==='ta'?'ta-IN':'en-IN';REC.continuous=true;REC.interimResults=true;FINAL='';LISTEN=true;btn.classList.add('on');
+ REC.onresult=function(e){var t='';for(var i=e.resultIndex;i<e.results.length;i++){if(e.results[i].isFinal)FINAL+=e.results[i][0].transcript+' ';else t+=e.results[i][0].transcript;}document.getElementById('aIn').value=FINAL+t;armSilence();};
+ REC.onerror=function(e){n.textContent=(LANG==='ta'?'Mic block ஆகியிருக்கு — Chrome/Edge-ல file-ஐ திறங்க. ':'Mic blocked here — open this file in Chrome or Edge. ')+'('+e.error+')';LISTEN=false;btn.classList.remove('on');};
+ REC.onend=function(){if(LISTEN){try{REC.start();}catch(x){}}};try{REC.start();}catch(x){}}
+function armSilence(){clearInterval(STIMER);if(!ASP.wait)return;var t0=Date.now(),cd=document.getElementById('aCd');STIMER=setInterval(function(){var f=(Date.now()-t0)/(ASP.wait*1000);cd.style.width=Math.min(100,f*100)+'%';if(f>=1){clearInterval(STIMER);cd.style.width='0';if(LISTEN)toggleMic();}},100);}
+
+/* ===== SHELL ===== */
+var CUR='dash';
+function rerender(id){var p=document.getElementById('p_'+id);if(!p)return;p.innerHTML=P[id]();wire(id);}
+function wire(id){if(id==='sc')scWire();if(id==='quiz')qzWire();if(id==='ask')mountAssist();}
+function showTab(id){CUR=id;document.querySelectorAll('.panel').forEach(function(p){p.hidden=p.id!=='p_'+id;});document.querySelectorAll('.tab').forEach(function(t){t.classList.toggle('on',t.getAttribute('data-id')===id);});
+ var b=document.querySelector('.tab[data-id="'+id+'"]');if(b&&b.scrollIntoView)b.scrollIntoView({block:'nearest',inline:'center'});try{if(location.hash!=='#'+id)history.replaceState(null,'','#'+id);}catch(e){}window.scrollTo(0,0);}
+function setLang(l){LANG=l;document.documentElement.classList.toggle('ta',l==='ta');document.documentElement.lang=l==='ta'?'ta':'en';document.getElementById('bEN').classList.toggle('on',l==='en');document.getElementById('bTA').classList.toggle('on',l==='ta');if(window._aSugg)window._aSugg();try{localStorage.setItem('cb_supast_lang',l);}catch(e){}}
+(function init(){var nav=document.getElementById('tabs'),main=document.getElementById('main');
+ nav.innerHTML=TABS.map(function(t){return '<button type="button" class="tab" data-id="'+t[0]+'">'+L(t[1],t[2])+'</button>';}).join('');
+ main.innerHTML=TABS.map(function(t){var html='';try{html=P[t[0]]();}catch(e){html='<p>Error building '+t[1]+': '+e.message+'</p>';console.error(e);}return '<section class="panel" id="p_'+t[0]+'" hidden>'+html+'</section>';}).join('');
+ TABS.forEach(function(t){wire(t[0]);});
+ nav.addEventListener('click',function(e){var b=e.target.closest('.tab');if(b)showTab(b.getAttribute('data-id'));});
+ main.addEventListener('click',function(e){var s=e.target.closest('.stab');if(s){var g=s.parentNode;g.querySelectorAll('.stab').forEach(function(x){x.classList.toggle('on',x===s);var pn=document.getElementById(x.getAttribute('data-t'));if(pn)pn.hidden=x!==s;});}
+  var f=e.target.closest('.fm-box');if(f){var id=f.getAttribute('data-fm'),k=f.getAttribute('data-k'),d=FM[id]&&FM[id][k];if(d)document.getElementById('fmd_'+id).innerHTML='👉 '+L(d[0],d[1]);}});
+ main.addEventListener('keydown',function(e){if(e.key==='Enter'){var f=e.target.closest('.fm-box');if(f)f.dispatchEvent(new MouseEvent('click',{bubbles:true}));}});
+ document.getElementById('bEN').addEventListener('click',function(){setLang('en');});document.getElementById('bTA').addEventListener('click',function(){setLang('ta');});
+ document.getElementById('bRead').addEventListener('click',function(){var p=document.getElementById('p_'+CUR);if(p)speak(p.innerText.slice(0,4000));});
+ document.getElementById('vaBubble').addEventListener('click',function(){showTab('ask');setTimeout(function(){var i=document.getElementById('aIn');if(i)i.focus();},50);});
+ var bd=document.getElementById('cbBadge');bd.querySelector('.logo').addEventListener('click',function(){bd.classList.toggle('open');});
+ var l0='en';try{l0=localStorage.getItem('cb_supast_lang')||'en';}catch(e){}setLang(l0);
+ var h=(location.hash||'').slice(1);showTab(TABS.some(function(t){return t[0]===h;})?h:'dash');
+ window.addEventListener('hashchange',function(){var h=(location.hash||'').slice(1);if(TABS.some(function(t){return t[0]===h;})&&h!==CUR)showTab(h);});})();
+</script>
