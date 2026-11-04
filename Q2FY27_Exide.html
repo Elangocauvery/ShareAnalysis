@@ -1,0 +1,977 @@
+<title>Exide Q2 FY27</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800;900&family=Inter:wght@400;600;700;800&family=IBM+Plex+Mono:wght@500;700&family=Noto+Sans+Tamil:wght@500;700;800&display=swap">
+<style>
+/* Layout: sticky brand bar + scrollable tab rail; each tab = graphic first, short bullets after */
+:root{
+  --bg:#FFF3E4; --panel:#FFF9F1; --soft:#FFE6CC; --line:#F3C99A;
+  --acc:#E8771A; --acc2:#F6A55A; --ink:#1A0F05; --ink2:#4A2E12;
+  --pep:#0B4DA2; --afr:#0B7A64; --good:#16723A; --bad:#B3261E; --warn:#B86A00;
+  --disp:"Playfair Display",Georgia,serif; --body:Inter,"Noto Sans Tamil",system-ui,sans-serif; --mono:"IBM Plex Mono",ui-monospace,monospace;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+html,body{background:var(--bg)}
+body{color:var(--ink);font-family:var(--body);font-size:15px;line-height:1.5;font-weight:500;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:0 90px}
+body.ta{font-family:"Noto Sans Tamil",Inter,system-ui,sans-serif}
+body:not(.ta) .ta{display:none!important} body.ta .en{display:none!important}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bg)}
+.wrap{max-width:1180px;margin:0 auto}
+header.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:var(--bg);padding-block:10px 6px;border-bottom:2px solid var(--line)}
+.brand{display:flex;flex-wrap:wrap;gap:8px 16px;align-items:center;justify-content:space-between}
+.brand h1{font-family:var(--disp);font-weight:900;font-size:clamp(20px,3.4vw,30px);margin:0;line-height:1.1;text-wrap:balance}
+.brand h1 small{display:block;font-family:var(--body);font-size:13px;font-weight:700;color:var(--ink2);letter-spacing:.02em}
+.slogan{font-family:var(--disp);font-style:italic;font-weight:800;color:var(--acc);font-size:15px}
+.ctrls{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.btn{font:inherit;font-weight:800;border:2px solid var(--acc);background:var(--panel);color:var(--ink);border-radius:999px;padding:6px 14px;cursor:pointer}
+.btn.on,.btn:hover{background:var(--acc);color:var(--ink)}
+.btn:focus-visible,.tab:focus-visible{outline:3px solid var(--pep);outline-offset:2px}
+nav.tabs{display:flex;gap:6px;overflow-x:auto;padding-block:8px 4px;scrollbar-width:thin}
+.tab{flex:0 0 auto;font:inherit;font-size:13px;font-weight:800;border:2px solid var(--line);background:var(--panel);color:var(--ink);border-radius:10px;padding:6px 11px;cursor:pointer;white-space:nowrap}
+.tab.on{background:var(--acc);border-color:var(--acc)}
+section.pane{display:none;padding-block:18px 10px}
+section.pane.on{display:block}
+h2{font-family:var(--disp);font-weight:900;font-size:clamp(22px,3vw,30px);margin:0 0 4px;text-wrap:balance}
+h3{font-size:17px;font-weight:800;margin:14px 0 6px}
+.sub{color:var(--ink2);font-weight:700;margin:0 0 12px}
+.grid{display:grid;gap:14px}
+.g2{grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr))}
+.g3{grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr))}
+.g4{grid-template-columns:repeat(auto-fit,minmax(min(100%,200px),1fr))}
+.card{background:var(--panel);border:2px solid var(--line);border-radius:14px;padding:14px;min-width:0}
+.fig{background:var(--panel);border:2px solid var(--line);border-radius:14px;padding:10px;overflow-x:auto}
+.fig svg{display:block;width:100%;height:auto}
+ul.b{margin:6px 0;padding-left:20px} ul.b li{margin:4px 0}
+.kpi{display:flex;flex-direction:column;gap:2px}
+.kpi .v{font-family:var(--mono);font-weight:700;font-size:24px;font-variant-numeric:tabular-nums}
+.kpi .l{font-size:13px;font-weight:800;color:var(--ink2);text-transform:uppercase;letter-spacing:.04em}
+.kpi .d{font-weight:800;font-size:13px}
+.up{color:var(--good)} .dn{color:var(--bad)} .wn{color:var(--warn)}
+.chip{display:inline-block;font-size:12px;font-weight:800;border-radius:999px;padding:2px 9px;border:2px solid currentColor}
+.c-done{color:var(--good)} .c-prog{color:var(--warn)} .c-plan{color:var(--pep)} .c-stuck{color:var(--bad)}
+.tbl{overflow-x:auto;border:2px solid var(--line);border-radius:12px;background:var(--panel)}
+table{border-collapse:collapse;width:100%;font-variant-numeric:tabular-nums;font-size:14px}
+th,td{padding:7px 10px;border-bottom:1px solid var(--line);text-align:right;white-space:nowrap}
+th:first-child,td:first-child{text-align:left;white-space:normal;min-width:150px}
+thead th{background:var(--soft);font-weight:800}
+td.n{font-family:var(--mono);font-weight:700}
+.note{font-size:13px;color:var(--ink2);font-weight:600}
+.subtabs{display:flex;gap:6px;flex-wrap:wrap;margin:6px 0 10px}
+.subtabs .btn{font-size:13px;padding:4px 12px}
+.sp{display:none}.sp.on{display:block}
+.detail{margin-top:10px;border:2px dashed var(--acc);border-radius:12px;padding:10px 12px;background:var(--soft);font-weight:700}
+svg text{font-family:var(--body);fill:var(--ink)}
+svg .mono{font-family:var(--mono)}
+.clickable{cursor:pointer}
+.clickable:hover rect,.clickable:focus rect{stroke:var(--pep);stroke-width:3}
+/* CB badge + voice bubble */
+#cb{position:fixed;right:calc(14px + env(safe-area-inset-right,0px));bottom:calc(14px + env(safe-area-inset-bottom,0px));z-index:40;width:46px;height:46px;border-radius:50%;background:var(--acc);color:var(--ink);font-family:var(--disp);font-weight:900;font-size:18px;display:grid;place-items:center;border:3px solid var(--ink);cursor:pointer;animation:blink 1.6s ease-in-out infinite}
+@keyframes blink{50%{opacity:.45}}
+#cbtip{position:fixed;right:calc(14px + env(safe-area-inset-right,0px));bottom:calc(68px + env(safe-area-inset-bottom,0px));z-index:41;max-width:min(330px,calc(100vw - 32px));background:var(--panel);border:2px solid var(--ink);border-radius:12px;padding:10px 12px;font-size:13px;font-weight:700}
+#vbub{position:fixed;right:calc(14px + env(safe-area-inset-right,0px));bottom:calc(70px + env(safe-area-inset-bottom,0px));z-index:39;background:var(--pep);color:#FFF3E4;border:none;border-radius:999px;padding:9px 14px;font:inherit;font-weight:800;cursor:pointer;box-shadow:0 3px 0 var(--ink)}
+@media (prefers-reduced-motion:reduce){#cb{animation:none}}
+/* assist */
+.chat{display:flex;flex-direction:column;gap:8px;max-height:420px;overflow-y:auto;padding:6px}
+.msg{padding:8px 12px;border-radius:12px;max-width:92%;font-weight:700}
+.msg.u{align-self:flex-end;background:var(--soft);border:2px solid var(--line)}
+.msg.a{align-self:flex-start;background:var(--panel);border:2px solid var(--acc)}
+.msg details{margin-top:6px;font-weight:600}
+.ask{display:flex;gap:8px;flex-wrap:wrap}
+.ask input{flex:1 1 220px;min-width:0;font:inherit;font-weight:700;padding:9px 12px;border:2px solid var(--acc);border-radius:10px;background:var(--panel);color:var(--ink)}
+.sugs{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
+.sugs button{font:inherit;font-size:13px;font-weight:700;border:2px solid var(--line);background:var(--panel);color:var(--ink);border-radius:999px;padding:4px 10px;cursor:pointer}
+.bar{height:8px;background:var(--soft);border-radius:99px;overflow:hidden}.bar i{display:block;height:100%;background:var(--acc)}
+.chk{display:flex;gap:10px;align-items:flex-start;padding:8px 0;border-bottom:1px dashed var(--line)}
+.chk input{width:20px;height:20px;accent-color:var(--acc);flex:0 0 auto;margin-top:2px}
+.quiz .opt{display:block;width:100%;text-align:left;font:inherit;font-weight:700;margin:6px 0;padding:8px 12px;border:2px solid var(--line);border-radius:10px;background:var(--panel);color:var(--ink);cursor:pointer}
+.quiz .opt.ok{border-color:var(--good);background:#DDF1E2}.quiz .opt.no{border-color:var(--bad);background:#F8DCD9}
+label.sel{font-weight:700;font-size:13px}
+select,input[type=range]{accent-color:var(--acc)}
+select{font:inherit;font-weight:700;border:2px solid var(--line);border-radius:8px;background:var(--panel);color:var(--ink);padding:3px 6px}
+</style>
+<div class="wrap">
+<header class="top">
+  <div class="brand">
+    <h1>Exide Industries · Q2 FY27
+      <small><span class="en">Jul–Sep 2026 · standalone results 4 Nov 2026 · NSE: EXIDEIND</span><span class="ta">Jul–Sep 2026 · standalone results 4 Nov 2026 · NSE: EXIDEIND</span></small>
+    </h1>
+    <div class="ctrls">
+      <span class="slogan"><span class="en">Know before you own</span><span class="ta">புரிஞ்சு வாங்குங்க!</span></span>
+      <button class="btn on" id="bEN" type="button">EN</button>
+      <button class="btn" id="bTA" type="button">தமிழ்</button>
+      <button class="btn" id="readTab" type="button"><span class="en">🔊 Read this tab</span><span class="ta">🔊 இந்த tab-ஐ படிங்க</span></button>
+    </div>
+  </div>
+  <nav class="tabs" id="tabs" aria-label="Sections"></nav>
+</header>
+
+<section class="pane on" id="t-dash">
+  <h2><span class="en">At a glance</span><span class="ta">ஒரே பார்வையில</span></h2>
+  <p class="sub"><span class="en">Lead-acid business fired on all cylinders; the Li-ion cell plant is switched on but not yet selling.</span><span class="ta">Lead-acid business சூப்பரா ஓடுது; Li-ion cell plant switch on ஆச்சு, ஆனா இன்னும் விற்பனை ஆரம்பிக்கல.</span></p>
+  <div class="grid g4" id="kpis"></div>
+  <div class="grid g2" style="margin-top:14px">
+    <div class="fig" id="f-dash3q"></div>
+    <div class="fig" id="f-dashroad"></div>
+  </div>
+  <div class="card" style="margin-top:14px">
+    <ul class="b en">
+      <li>Revenue +20.3% YoY to ₹5,026 cr; EBITDA +53% to ₹606 cr; PAT +75% to ₹386 cr (standalone).</li>
+      <li>EBITDA margin 12.1% vs 9.4% a year ago — cost cuts + price hikes; low base (GST transition hit Q2 FY26).</li>
+      <li>Auto OEM 25%+ growth (4th straight quarter); inverters &amp; solar 20%+.</li>
+      <li>6 GWh Li-ion cell plant (EESL, Bengaluru) commissioned 23 Sep 2026; first LFP revenue targeted Q3 FY27.</li>
+      <li>Not in the PLI-ACC scheme — but no PLI winner has received a rupee yet either.</li>
+      <li>CB Cycle 62 · Trigger 42 · 6 Pillars 41/60.</li>
+    </ul>
+    <ul class="b ta">
+      <li>Revenue +20.3% YoY, ₹5,026 cr; EBITDA +53%, ₹606 cr; PAT +75%, ₹386 cr (standalone).</li>
+      <li>EBITDA margin 12.1% (போன வருஷம் 9.4%) — cost குறைப்பு + விலை ஏற்றம்; base low (Q2 FY26-ல GST மாற்றம் அடி).</li>
+      <li>Auto OEM 25%+ (தொடர்ந்து 4வது quarter); inverter &amp; solar 20%+.</li>
+      <li>6 GWh Li-ion cell plant (EESL, Bengaluru) 23 Sep 2026-ல commission; முதல் LFP revenue Q3 FY27-ல வரும்னு target.</li>
+      <li>PLI-ACC scheme-ல இல்ல — ஆனா PLI ஜெயிச்சவங்களுக்கும் இதுவரை ஒரு ரூபா கூட வரல.</li>
+      <li>CB Cycle 62 · Trigger 42 · 6 Pillars 41/60.</li>
+    </ul>
+  </div>
+</section>
+
+<section class="pane" id="t-bm">
+  <h2><span class="en">From lead &amp; lithium to customer</span><span class="ta">Lead, lithium-ல இருந்து customer வரைக்கும்</span></h2>
+  <p class="sub"><span class="en">Tap any box to see what it means.</span><span class="ta">எந்த box-ஐ வேணாலும் tap பண்ணுங்க, அர்த்தம் வரும்.</span></p>
+  <div class="fig" id="f-bm"></div>
+  <div class="detail" id="bmDetail"><span class="en">Tap a box above.</span><span class="ta">மேல ஒரு box-ஐ tap பண்ணுங்க.</span></div>
+  <div class="card" style="margin-top:12px;font-weight:800">
+    <span class="en">Revenue formula: batteries sold (auto OEM + replacement + inverter/solar + industrial + exports) × price per battery ≈ ₹5,026 cr. Price hikes added ~4–6% of growth (Q1 FY27 call).</span>
+    <span class="ta">Revenue formula: விற்ற battery (auto OEM + replacement + inverter/solar + industrial + exports) × ஒரு battery விலை ≈ ₹5,026 cr. விலை ஏற்றம் growth-ல ~4–6% (Q1 FY27 call).</span>
+  </div>
+</section>
+
+<section class="pane" id="t-seg">
+  <h2><span class="en">Segments</span><span class="ta">Segments</span></h2>
+  <p class="sub"><span class="en">Exide gives growth rates by business, not revenue split. Bars show the minimum growth disclosed.</span><span class="ta">Exide business வாரியா growth % மட்டும் சொல்லுது, revenue split சொல்லல. Bar = சொன்ன குறைந்தபட்ச growth.</span></p>
+  <div class="subtabs">
+    <button class="btn on" data-sp="seg-auto" type="button">Auto</button>
+    <button class="btn" data-sp="seg-home" type="button"><span class="en">Inverter &amp; Solar</span><span class="ta">Inverter &amp; Solar</span></button>
+    <button class="btn" data-sp="seg-ind" type="button"><span class="en">Industrial &amp; Exports</span><span class="ta">Industrial &amp; Exports</span></button>
+    <button class="btn" data-sp="seg-ne" type="button"><span class="en">New Energy (EESL)</span><span class="ta">New Energy (EESL)</span></button>
+    <button class="btn" data-sp="seg-cmp" type="button">Compare</button>
+  </div>
+  <div class="sp on" id="seg-auto"><div class="grid g2"><div class="fig" id="f-auto"></div><div class="card">
+    <ul class="b en"><li>Auto OEM +25% YoY — 4th straight quarter above 25%.</li><li>2W and 4W replacement: double-digit for the 4th quarter.</li><li>New wins: auxiliary batteries for EV and PHEV models (MG Hector Tomahawk, Tata Aeris).</li><li>New product: EXIDE DARE SUV-ready battery; rural outreach drive.</li><li>Driver: GST 2.0 cut made vehicles cheaper → more cars and bikes sold.</li></ul>
+    <ul class="b ta"><li>Auto OEM +25% YoY — தொடர்ந்து 4வது quarter 25%-க்கு மேல.</li><li>2W, 4W replacement: 4வது quarter-ஆ double-digit.</li><li>புது orders: EV, PHEV-க்கு auxiliary battery (MG Hector Tomahawk, Tata Aeris).</li><li>புது product: EXIDE DARE SUV battery; கிராமப்புற outreach.</li><li>காரணம்: GST 2.0 வரி குறைப்பு → வண்டி விலை குறைஞ்சு, sales ஏறுச்சு.</li></ul>
+  </div></div></div>
+  <div class="sp" id="seg-home"><div class="grid g2"><div class="fig" id="f-home"></div><div class="card">
+    <ul class="b en"><li>Home inverters &amp; solar: 20%+ growth for the 2nd quarter running.</li><li>Solar crossed ₹400 cr in one quarter for the first time in Q1 FY27 (record).</li><li>Rooftop solar push (PM Surya Ghar) needs batteries and inverters.</li></ul>
+    <ul class="b ta"><li>Home inverter &amp; solar: தொடர்ந்து 2வது quarter 20%+.</li><li>Q1 FY27-ல solar ஒரே quarter-ல ₹400 cr தாண்டுச்சு (record).</li><li>Rooftop solar (PM Surya Ghar) — battery, inverter தேவை ஏறுது.</li></ul>
+  </div></div></div>
+  <div class="sp" id="seg-ind"><div class="grid g2"><div class="fig" id="f-ind"></div><div class="card">
+    <ul class="b en"><li>Industrial: UPS, telecom, power plants, railways, defence and submarine batteries.</li><li>"Most businesses grew double-digit" — no separate industrial number given for Q2.</li><li>Europe: long-term deal with ExCom Energy Solutions (Germany), signed 15 Sep 2026, to sell industrial batteries.</li><li>Infra capex (data centres, power, rail) is the demand driver.</li></ul>
+    <ul class="b ta"><li>Industrial: UPS, telecom, power plant, railways, defence, submarine battery.</li><li>"பெரும்பாலான business double-digit" — Q2-க்கு industrial தனி எண் சொல்லல.</li><li>Europe: ExCom Energy Solutions (Germany) கூட நீண்டகால deal, 15 Sep 2026 — industrial battery விற்க.</li><li>Infra capex (data centre, power, rail) தான் demand.</li></ul>
+  </div></div></div>
+  <div class="sp" id="seg-ne"><div class="grid g2"><div class="fig" id="f-eesl"></div><div class="card">
+    <ul class="b en"><li>EESL = 100% subsidiary. Not in standalone numbers; shows in consolidated.</li><li>FY26: turnover ₹158 cr (packs/modules), loss ₹248 cr. FY25: ₹117 cr, loss ₹209 cr.</li><li>Exide money in so far: ₹5,352 cr (₹550 cr in Apr–Oct 2026).</li><li>Losses will rise first as the new plant's depreciation starts.</li></ul>
+    <ul class="b ta"><li>EESL = 100% subsidiary. Standalone எண்ல இல்ல; consolidated-ல வரும்.</li><li>FY26: turnover ₹158 cr (pack/module), நஷ்டம் ₹248 cr. FY25: ₹117 cr, நஷ்டம் ₹209 cr.</li><li>இதுவரை Exide போட்ட பணம்: ₹5,352 cr (Apr–Oct 2026-ல ₹550 cr).</li><li>புது plant depreciation ஆரம்பிச்சா முதல்ல நஷ்டம் ஏறும்.</li></ul>
+  </div></div></div>
+  <div class="sp" id="seg-cmp"><div class="fig" id="f-segcmp"></div><div class="tbl" style="margin-top:12px"><table id="tbSeg"></table></div></div>
+</section>
+
+<section class="pane" id="t-fin">
+  <h2><span class="en">Financials — three quarters side by side</span><span class="ta">Financials — மூணு quarter பக்கத்துல பக்கத்துல</span></h2>
+  <p class="sub"><span class="en">₹ crore, standalone (lead-acid business). Q2 FY27 = Jul–Sep 2026.</span><span class="ta">₹ crore, standalone (lead-acid business). Q2 FY27 = Jul–Sep 2026.</span></p>
+  <div class="tbl"><table id="tbFin"></table></div>
+  <p class="note"><span class="en">Q2 FY26 was a weak base: GST rate change made dealers hold back stock. Consolidated PAT for Q2 FY27 was not in the summaries available on 4 Nov.</span><span class="ta">Q2 FY26 weak base: GST மாற்றத்தால dealers stock வாங்காம காத்திருந்தாங்க. Q2 FY27 consolidated PAT 4 Nov summary-ல கிடைக்கல.</span></p>
+  <div class="grid g2" style="margin-top:14px">
+    <div class="fig" id="f-fin3"></div>
+    <div class="fig" id="f-marg"></div>
+  </div>
+  <h3><span class="en">Half year (Apr–Sep)</span><span class="ta">அரை வருஷம் (Apr–Sep)</span></h3>
+  <div class="tbl"><table id="tbH1"></table></div>
+  <h3><span class="en">Consolidated (includes EESL)</span><span class="ta">Consolidated (EESL சேர்த்து)</span></h3>
+  <div class="tbl"><table id="tbCons"></table></div>
+</section>
+
+<section class="pane" id="t-met">
+  <h2><span class="en">Metrics — grouped so they are easy to remember</span><span class="ta">Metrics — நினைவுல வைக்க ஈஸியா group பண்ணது</span></h2>
+  <div class="subtabs">
+    <button class="btn on" data-sp="m-gr" type="button"><span class="en">Growth</span><span class="ta">Growth</span></button>
+    <button class="btn" data-sp="m-pr" type="button"><span class="en">Profitability</span><span class="ta">Profitability</span></button>
+    <button class="btn" data-sp="m-ef" type="button"><span class="en">Efficiency</span><span class="ta">Efficiency</span></button>
+    <button class="btn" data-sp="m-bs" type="button"><span class="en">Balance sheet &amp; Capital</span><span class="ta">Balance sheet &amp; Capital</span></button>
+    <button class="btn" data-sp="m-ca" type="button"><span class="en">Cash</span><span class="ta">Cash</span></button>
+  </div>
+  <div class="sp on" id="m-gr"><div class="grid g2"><div class="fig" id="f-mgr"></div><div class="tbl"><table id="tbMgr"></table></div></div></div>
+  <div class="sp" id="m-pr"><div class="grid g2"><div class="fig" id="f-mpr"></div><div class="tbl"><table id="tbMpr"></table></div></div></div>
+  <div class="sp" id="m-ef"><div class="grid g2"><div class="fig" id="f-mef"></div><div class="tbl"><table id="tbMef"></table></div></div></div>
+  <div class="sp" id="m-bs"><div class="grid g2"><div class="fig" id="f-mbs"></div><div class="tbl"><table id="tbMbs"></table></div></div></div>
+  <div class="sp" id="m-ca"><div class="grid g2"><div class="fig" id="f-mca"></div><div class="tbl"><table id="tbMca"></table></div></div></div>
+</section>
+
+<section class="pane" id="t-cf">
+  <h2><span class="en">Cash flow, ratios &amp; working capital</span><span class="ta">Cash flow, ratios &amp; working capital</span></h2>
+  <p class="sub"><span class="en">Standalone, full years (H1 cash flow not yet in public summaries).</span><span class="ta">Standalone, முழு வருஷம் (H1 cash flow இன்னும் வெளிவரல).</span></p>
+  <div class="grid g2"><div class="fig" id="f-cf"></div><div class="fig" id="f-wc"></div></div>
+  <div class="grid g2" style="margin-top:14px"><div class="tbl"><table id="tbCF"></table></div><div class="tbl"><table id="tbWC"></table></div></div>
+  <div class="card" style="margin-top:14px">
+    <ul class="b en">
+      <li>Lead-acid business is a cash machine: ₹2,231 cr operating cash in FY26 on ₹1,111 cr profit.</li>
+      <li>Own capex only ~₹420 cr a year — most spare cash goes into EESL (₹1,478 cr "other investing" in FY26).</li>
+      <li>Cash conversion cycle fell to ~49 days in FY26 as payable days rose to 61.</li>
+      <li>Standalone: zero debt. Consolidated: EESL carries project borrowings (net debt ~₹842 cr reported at Q1).</li>
+    </ul>
+    <ul class="b ta">
+      <li>Lead-acid business ஒரு cash machine: FY26-ல ₹1,111 cr லாபத்துக்கு ₹2,231 cr operating cash.</li>
+      <li>சொந்த capex வருஷத்துக்கு ~₹420 cr தான் — மிச்ச cash பெரும்பாலும் EESL-க்கு (FY26-ல ₹1,478 cr).</li>
+      <li>Payable days 61-க்கு ஏறுனதால cash conversion cycle ~49 நாள் ஆச்சு.</li>
+      <li>Standalone: கடன் இல்ல. Consolidated: EESL project கடன் (Q1-ல net debt ~₹842 cr).</li>
+    </ul>
+  </div>
+</section>
+
+<section class="pane" id="t-val">
+  <h2><span class="en">Valuations at ~₹365 (4 Nov 2026, intraday)</span><span class="ta">~₹365-ல valuation (4 Nov 2026, intraday)</span></h2>
+  <div class="grid g2"><div class="fig" id="f-pe"></div><div class="fig" id="f-range"></div></div>
+  <div class="tbl" style="margin-top:14px"><table id="tbVal"></table></div>
+  <div class="card" style="margin-top:14px">
+    <ul class="b en"><li>Standalone trailing P/E ~23× on TTM EPS ₹16.0 — lower than the 30–40× it carried in 2025–26.</li><li>The price also carries EESL: ₹5,352 cr invested ≈ ₹63 per share, still loss-making.</li><li>Sum-of-parts thinking: lead-acid at a normal multiple + cells at "what you think it will earn".</li></ul>
+    <ul class="b ta"><li>Standalone trailing P/E ~23× (TTM EPS ₹16.0) — 2025–26-ல இருந்த 30–40×-ஐ விட கம்மி.</li><li>விலைக்குள்ள EESL-ம் இருக்கு: ₹5,352 cr ≈ ஒரு share-க்கு ₹63, இன்னும் நஷ்டத்துல.</li><li>Sum-of-parts: lead-acid சாதாரண multiple + cells "எவ்வளவு சம்பாதிக்கும்னு நீங்க நினைக்கிறீங்க".</li></ul>
+  </div>
+</section>
+
+<section class="pane" id="t-key">
+  <h2><span class="en">5 Key Takeaways</span><span class="ta">5 முக்கிய விஷயங்கள்</span></h2>
+  <div class="grid g3" id="keys"></div>
+</section>
+
+<section class="pane" id="t-mkt">
+  <h2><span class="en">Why the share jumped ~7% today</span><span class="ta">இன்னைக்கு share ஏன் ~7% ஏறுச்சு?</span></h2>
+  <div class="grid g2"><div class="fig" id="f-seesaw"></div><div class="fig" id="f-pricepath"></div></div>
+  <div class="card" style="margin-top:14px">
+    <ul class="b en">
+      <li>4 Nov: opened ₹348, hit ₹373 intraday (prev close ₹346.25).</li>
+      <li>Profit +75% and margin back above 12% beat a nervous market.</li>
+      <li>Cell plant commissioning removed the "will it ever start?" doubt.</li>
+      <li>Context: stock had fallen ~32% from its 52-week high (₹496) to ₹338 on 2 Nov.</li>
+      <li>Still flat over 12 months (TTM ~−2%): investors wait for cell revenue.</li>
+    </ul>
+    <ul class="b ta">
+      <li>4 Nov: ₹348-ல open, intraday ₹373 (முந்தைய close ₹346.25).</li>
+      <li>Profit +75%, margin மறுபடி 12%-க்கு மேல — பயந்திருந்த market-க்கு surprise.</li>
+      <li>Cell plant commission → "எப்போ ஆரம்பிக்கும்?" சந்தேகம் போச்சு.</li>
+      <li>Context: 52-week high (₹496)-ல இருந்து 2 Nov ₹338 வரை ~32% விழுந்திருந்துச்சு.</li>
+      <li>12 மாசத்துல இன்னும் flat (~−2%): cell revenue-க்கு காத்திருக்காங்க.</li>
+    </ul>
+  </div>
+</section>
+
+<section class="pane" id="t-tc">
+  <h2><span class="en">Triggers &amp; Cycle</span><span class="ta">Triggers &amp; Cycle</span></h2>
+  <div class="grid g2">
+    <div class="fig" id="f-clock"></div>
+    <div class="card">
+      <h3>CY 62 · TG <span id="tgv">42</span></h3>
+      <ul class="b en">
+        <li>Sector (auto/consumption + infra): P3 Expansion — GST 2.0 lifted vehicle sales; score 70.</li>
+        <li>Stock: re-inventing 75 · margin rising mid-range 70 · P/E in own band 55 · Weinstein Stage 4 15 → 54.</li>
+        <li>Stage 4 gate: CB Conviction capped at 55 until price reclaims its 30-week average.</li>
+        <li>What would change this view: first cell invoices; consolidated loss narrowing; price base above ~₹400.</li>
+      </ul>
+      <ul class="b ta">
+        <li>Sector (auto/consumption + infra): P3 Expansion — GST 2.0 வண்டி sales ஏத்துச்சு; score 70.</li>
+        <li>Stock: புது business-ல இறங்குது 75 · margin நடு range-ல ஏறுது 70 · P/E சொந்த band-க்குள்ள 55 · Weinstein Stage 4 15 → 54.</li>
+        <li>Stage 4 gate: price 30-week average-ஐ மீண்டும் தாண்டுற வரை Conviction 55 cap.</li>
+        <li>View மாறணும்னா: முதல் cell invoice; consolidated நஷ்டம் குறையணும்; ~₹400-க்கு மேல base.</li>
+      </ul>
+    </div>
+  </div>
+  <div class="tbl" style="margin-top:14px"><table id="tbTrig"></table></div>
+  <div class="fig" id="f-trigtl" style="margin-top:14px"></div>
+</section>
+
+<section class="pane" id="t-pil">
+  <h2><span class="en">6 Pillars — 41 / 60</span><span class="ta">6 தூண்கள் — 41 / 60</span></h2>
+  <div class="fig" id="f-temple"></div>
+  <div class="grid g3" id="pillars" style="margin-top:14px"></div>
+  <p class="note"><span class="en">Grading: 9–10 rare/best-in-class · 7–8 strong with small gaps · 5–6 average or mixed · ≤4 weak. Evidence only from disclosed data.</span><span class="ta">Grading: 9–10 அபூர்வம்/best · 7–8 strong, சின்ன குறை · 5–6 சராசரி/கலவை · ≤4 weak. Disclosed data மட்டும் வச்சு.</span></p>
+</section>
+
+<section class="pane" id="t-bet">
+  <h2><span class="en">The big bet: Li-ion cells — how far has Exide got?</span><span class="ta">பெரிய bet: Li-ion cells — Exide எவ்வளவு தூரம் வந்திருக்கு?</span></h2>
+  <div class="fig" id="f-score"></div>
+  <div class="fig" id="f-bettl" style="margin-top:14px"></div>
+  <div class="grid g2" style="margin-top:14px">
+    <div class="fig" id="f-plant"></div>
+    <div class="fig" id="f-race"></div>
+  </div>
+  <div class="grid g2" style="margin-top:14px">
+    <div class="fig" id="f-pli"></div>
+    <div class="card">
+      <h3><span class="en">Outside the PLI — does it matter?</span><span class="ta">PLI-க்கு வெளியே — பாதிப்பு உண்டா?</span></h3>
+      <ul class="b en">
+        <li>Round 1 (2022): winners Ola, Reliance, Rajesh Exports; Exide and Amara Raja were left on the waiting list.</li>
+        <li>Round 2 (2024): Exide did not bid.</li>
+        <li>Cost of missing it: no sales-linked subsidy over 2025–29 — a margin handicap vs PLI makers.</li>
+        <li>Upside of missing it: no 25%/60% local-content deadlines and no penalties for delay; Exide picks its own pace.</li>
+        <li>Reality check: only ~1.4 GWh of the 50 GWh target was commissioned by Oct 2025, and ₹0 had been paid to any winner by Sep 2026.</li>
+      </ul>
+      <ul class="b ta">
+        <li>Round 1 (2022): Ola, Reliance, Rajesh Exports ஜெயிச்சாங்க; Exide, Amara Raja waiting list-ல.</li>
+        <li>Round 2 (2024): Exide bid பண்ணல.</li>
+        <li>இழப்பு: 2025–29 sales-linked subsidy கிடையாது — PLI company-களோட margin-ல பின்னடைவு.</li>
+        <li>லாபம்: 25%/60% local-content deadline இல்ல, தாமதத்துக்கு penalty இல்ல; Exide தன் வேகத்துல போகலாம்.</li>
+        <li>நிஜம்: Oct 2025 வரை 50 GWh target-ல ~1.4 GWh தான் commission; Sep 2026 வரை எந்த winner-க்கும் ₹0.</li>
+      </ul>
+    </div>
+  </div>
+  <div class="tbl" style="margin-top:14px"><table id="tbBet"></table></div>
+  <div class="card" style="margin-top:14px">
+    <h3><span class="en">How Exide got here — story of the cell plant</span><span class="ta">Exide இங்க எப்படி வந்துச்சு — cell plant கதை</span></h3>
+    <div class="fig" id="f-story" style="border:none;max-width:640px"></div>
+  </div>
+</section>
+
+<section class="pane" id="t-lfp">
+  <h2><span class="en">Why is LFP so hard to make in India?</span><span class="ta">India-ல LFP செய்யறது ஏன் இவ்வளவு கஷ்டம்?</span></h2>
+  <p class="sub"><span class="en">Exide can assemble the cell, but most of what goes inside it still comes from China.</span><span class="ta">Exide cell-ஐ செய்யலாம், ஆனா உள்ள போற பொருள் பெரும்பாலும் இன்னும் China-ல இருந்து தான்.</span></p>
+  <div class="fig" id="f-lfpcell"></div>
+  <div class="fig" id="f-lfpchain" style="margin-top:14px"></div>
+  <div class="grid g2" style="margin-top:14px">
+    <div class="fig" id="f-lfpscale"></div>
+    <div class="fig" id="f-lfpcost"></div>
+  </div>
+  <h3><span class="en">"Himadri and others are making it — so why is it still hard?"</span><span class="ta">"Himadri மாதிரி company செய்யுறாங்களே — அப்புறம் ஏன் கஷ்டம்?"</span></h3>
+  <div class="fig" id="f-lfpwhy"></div>
+  <div class="fig" id="f-lfpctl" style="margin-top:14px"></div>
+  <div class="tbl" style="margin-top:14px"><table id="tbLfp"></table></div>
+  <div class="card" style="margin-top:14px">
+    <ul class="b en">
+      <li>Making cathode in India ≠ materials from India: Himadri and Altmin still need imported lithium carbonate; India has no lithium refining yet.</li>
+      <li>A cell maker must test a new cathode or anode supplier for months before switching — and Exide's licensed SVOLT cell designs were built around the partner's supply chain.</li>
+      <li>Exide's plan: localise electrolyte first, then 50–60% of the bill of materials in 2–3 years as Indian suppliers qualify.</li>
+      <li>Watch 10 Nov 2026: China's suspension of its Oct 2025 battery-material curbs is documented to that date. Its July 2025 curbs on LFP-cathode technology are still in force.</li>
+    </ul>
+    <ul class="b ta">
+      <li>India-ல cathode செய்யுறது ≠ India பொருள்: Himadri, Altmin-க்கும் lithium carbonate import தான்; India-ல lithium refining இன்னும் இல்ல.</li>
+      <li>புது cathode/anode supplier-ஐ மாத்தணும்னா cell maker மாசக்கணக்குல test பண்ணணும் — Exide-ஓட SVOLT licence cell design partner supply chain-ஐ வச்சு உருவானது.</li>
+      <li>Exide plan: முதல்ல electrolyte local, அப்புறம் 2–3 வருஷத்துல bill of materials-ல 50–60%, Indian suppliers qualify ஆக ஆக.</li>
+      <li>10 Nov 2026 கவனிங்க: China Oct 2025 battery-material கட்டுப்பாடு suspension அந்த தேதி வரை தான். July 2025 LFP-cathode technology கட்டுப்பாடு இன்னும் அமல்ல.</li>
+    </ul>
+  </div>
+  <div class="card" style="margin-top:14px"><h3><span class="en">Where Acutaas Chemicals (ex-Ami Organics) fits</span><span class="ta">Acutaas Chemicals (முன்ன Ami Organics) எங்க வருது</span></h3><ul class="b en"><li>Makes electrolyte additives (VC, FEC) at Jhagadia, Gujarat — plant inaugurated Jan 2026; production started.</li><li>Phase-1 capacity 2,000 t each of VC and FEC, reported as contracted for three years; two more products due in FY27.</li><li>It does not make cathode or anode — so it fills the electrolyte gap, the part Exide plans to localise first, not the LFP-cathode gap.</li></ul><ul class="b ta"><li>Jhagadia, Gujarat-ல electrolyte additives (VC, FEC) — Jan 2026 plant திறப்பு; production ஆரம்பம்.</li><li>Phase-1: VC, FEC தலா 2,000 t; 3 வருஷம் contract-னு சொல்றாங்க; FY27-ல இன்னும் 2 products.</li><li>Cathode, anode செய்யல — electrolyte இடைவெளியை நிரப்புது (Exide முதல்ல local பண்ண நினைக்கிறது இதைத்தான்), LFP cathode இடைவெளியை இல்ல.</li></ul></div>
+</section>
+
+<section class="pane" id="t-vc">
+  <h2><span class="en">Sector need &amp; value chain — where Exide plays</span><span class="ta">Sector தேவை &amp; value chain — Exide எங்க இருக்கு</span></h2>
+  <div class="fig" id="f-vc"></div>
+  <div class="grid g2" style="margin-top:14px">
+    <div class="fig" id="f-need"></div>
+    <div class="card">
+      <ul class="b en"><li>Lead-acid: Exide is present end to end — recycling-linked lead supply, plates, batteries, dealer network.</li><li>Li-ion: Exide now makes cells (EESL) and packs; cathode, anode, separator and most electrolyte are bought.</li><li>Need: India's domestic cell supply was ~2 GWh at end-2025 vs ~17 GWh demand, and a ~260 GWh storage tender pipeline.</li><li>Grid storage (BESS) is the fastest-growing user of LFP: India added 8.2 GWh of storage in H1 2026.</li></ul>
+      <ul class="b ta"><li>Lead-acid: Exide முழு chain-லயும் இருக்கு — lead supply, plates, battery, dealer network.</li><li>Li-ion: இப்போ cells (EESL), packs செய்யுது; cathode, anode, separator, பெரும்பாலான electrolyte வாங்குது.</li><li>தேவை: 2025 முடிவுல India cell supply ~2 GWh, demand ~17 GWh; storage tender pipeline ~260 GWh.</li><li>Grid storage (BESS) தான் LFP-ஐ வேகமா வாங்குது: H1 2026-ல India 8.2 GWh storage சேர்த்துச்சு.</li></ul>
+    </div>
+  </div>
+</section>
+
+<section class="pane" id="t-swot"><h2>SWOT</h2><div class="fig" id="f-swot"></div></section>
+
+<section class="pane" id="t-self">
+  <h2><span class="en">CB Investor Self-Check</span><span class="ta">CB Investor Self-Check</span></h2>
+  <p class="sub"><span class="en">Counts only your own conditions. Not a recommendation.</span><span class="ta">உங்க சொந்த conditions மட்டும் எண்ணுது. இது recommendation இல்ல.</span></p>
+  <div class="grid g2"><div class="fig" id="f-ring"></div><div class="card" id="selfGroups"></div></div>
+</section>
+
+<section class="pane" id="t-assist">
+  <h2>Cauvery Assist</h2>
+  <div class="grid g2">
+    <div class="card">
+      <div class="chat" id="chat" aria-live="polite"></div>
+      <div class="ask" style="margin-top:8px">
+        <input id="q" type="text" autocomplete="off" aria-label="Question">
+        <button class="btn" id="askBtn" type="button"><span class="en">Ask</span><span class="ta">கேளுங்க</span></button>
+        <button class="btn" id="micBtn" type="button">🎤</button>
+      </div>
+      <div class="sugs" id="sugs"></div>
+    </div>
+    <div class="card">
+      <div class="fig" id="f-assistpic" style="border:none;padding:0"></div>
+      <h3><span class="en">Voice settings</span><span class="ta">Voice settings</span></h3>
+      <div class="grid" style="gap:8px">
+        <label class="sel"><span class="en">Speed</span><span class="ta">வேகம்</span> <b id="spdV">0.8×</b>
+          <input id="spd" type="range" min="0.5" max="1.5" step="0.05" value="0.8" style="width:100%"></label>
+        <div class="ctrls"><button class="btn" data-spd="0.6" type="button">Slow</button><button class="btn" data-spd="0.8" type="button">Relaxed</button><button class="btn" data-spd="1" type="button">Normal</button><button class="btn" data-spd="1.2" type="button">Fast</button></div>
+        <label class="sel"><span class="en">Wait after you stop speaking</span><span class="ta">பேசி முடிச்சதும் காத்திருக்கும் நேரம்</span>
+          <select id="waitSel"><option value="2000">2 s</option><option value="3000" selected>3 s</option><option value="5000">5 s</option><option value="0">Tap Done</option></select></label>
+        <div class="ctrls"><button class="btn" id="pauseBtn" type="button">⏯</button><button class="btn" id="stopBtn" type="button">⏹</button></div>
+        <p class="note" id="voiceNote"></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="pane" id="t-quiz">
+  <h2><span class="en">Cauvery Socrates — test yourself</span><span class="ta">Cauvery Socrates — உங்களை test பண்ணுங்க</span></h2>
+  <div class="grid g2"><div class="card quiz" id="quiz"></div><div class="fig" id="f-qscore"></div></div>
+</section>
+
+<section class="pane" id="t-view">
+  <h2><span class="en">CB Analyst View</span><span class="ta">CB Analyst View</span></h2>
+  <div class="grid g2">
+    <div class="fig" id="f-gauge"></div>
+    <div class="card">
+      <ul class="b en">
+        <li>Core business: best quarter in years — demand, pricing and cost control all helped.</li>
+        <li>Cells: "built and switched on, not yet proven". 4 of 9 milestones done; revenue, utilisation and break-even still ahead.</li>
+        <li>Status words: Bengaluru = commercial plant commissioned (not yet invoicing); Prantij = pack/module assembly; SVOLT = technology licence, not a JV.</li>
+        <li>Cycle: sector in expansion; stock price still in a Stage-4 downtrend.</li>
+        <li>Top positive triggers: first LFP revenue (Q3 FY27); OEM cell approvals.</li>
+        <li>Top risk: EESL ramp losses, plus dependence on Chinese materials and technology.</li>
+        <li>Next review: Q3 FY27 results (Feb 2027) — look for cell revenue and EESL loss.</li>
+      </ul>
+      <ul class="b ta">
+        <li>Core business: பல வருஷத்துல சிறந்த quarter — demand, விலை, cost control எல்லாம் உதவுச்சு.</li>
+        <li>Cells: "கட்டி, switch on ஆச்சு, இன்னும் நிரூபிக்கல". 9 milestone-ல 4 முடிஞ்சது; revenue, utilisation, break-even இன்னும் வரணும்.</li>
+        <li>Status: Bengaluru = commercial plant commission (invoice இன்னும் இல்ல); Prantij = pack/module assembly; SVOLT = technology licence, JV இல்ல.</li>
+        <li>Cycle: sector expansion; stock price இன்னும் Stage-4 இறக்கத்துல.</li>
+        <li>முக்கிய positive triggers: முதல் LFP revenue (Q3 FY27); OEM cell approvals.</li>
+        <li>முக்கிய risk: EESL ramp நஷ்டம், Chinese material, technology மேல சார்பு.</li>
+        <li>அடுத்த review: Q3 FY27 results (Feb 2027) — cell revenue, EESL நஷ்டம் பாருங்க.</li>
+      </ul>
+      <p class="note"><span class="en">Education only. CB Research is not SEBI-registered and gives no buy/sell/hold calls.</span><span class="ta">கல்விக்காக மட்டும். CB Research SEBI-registered இல்ல; buy/sell/hold சொல்றதில்ல.</span></p>
+    </div>
+  </div>
+</section>
+</div>
+
+<button id="vbub" type="button"><span class="en">🎙 Voice Assist</span><span class="ta">🎙 Voice Assist</span></button>
+<div id="cb" role="button" tabindex="0" aria-label="Disclaimer">CB</div>
+<div id="cbtip" hidden><span class="en">CB Research (Cauvery Business Research) is an education platform, not SEBI-registered. Nothing here is a buy, sell or hold recommendation. Figures from company filings and public data as of 4 Nov 2026; price is intraday; some items are CB estimates (marked ≈). Do your own research.</span><span class="ta">CB Research (Cauvery Business Research) ஒரு கல்வி platform, SEBI-registered இல்ல. இங்க எதுவும் buy/sell/hold recommendation இல்ல. எண்கள் company filings, public data (4 Nov 2026); விலை intraday; சில எண் CB கணக்கு (≈). நீங்களே research பண்ணுங்க.</span></div>
+<script>
+var LANG="en";
+function h(en,ta){return '<span class="en">'+en+'</span><span class="ta">'+(ta||en)+'</span>';}
+function t(en,ta){return '<tspan class="en">'+en+'</tspan><tspan class="ta">'+(ta||en)+'</tspan>';}
+function S(w,hh,inner,minw){return '<svg viewBox="0 0 '+w+' '+hh+'" role="img" style="min-width:'+(minw||0)+'px" xmlns="http://www.w3.org/2000/svg">'+inner+'</svg>';}
+function $(id){return document.getElementById(id);}
+function put(id,html){var e=$(id); if(e) e.innerHTML=html;}
+function fmt(v,d){return v.toLocaleString("en-IN",{minimumFractionDigits:d||0,maximumFractionDigits:d||0});}
+function pct(a,b){return (a/b-1)*100;}
+function sg(v,d){d=d==null?1:d;return (v>=0?"+":"")+v.toFixed(d)+"%";}
+function cls(v){return v>=0?"up":"dn";}
+var C={acc:"#E8771A",acc2:"#F6A55A",pep:"#0B4DA2",afr:"#0B7A64",good:"#16723A",bad:"#B3261E",warn:"#B86A00",ink:"#1A0F05",ink2:"#4A2E12",soft:"#FFE6CC",line:"#F3C99A",panel:"#FFF9F1"};
+function title(x,y,en,ta,size){return '<text x="'+x+'" y="'+y+'" font-size="'+(size||17)+'" font-weight="800">'+t(en,ta)+'</text>';}
+var ARW0='<defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#4A2E12"/></marker></defs>';
+document.body.insertAdjacentHTML("afterbegin",'<svg width="0" height="0" style="position:absolute" aria-hidden="true">'+ARW0+'</svg>');var ARW="";
+
+/* vertical grouped/stacked bar chart */
+function bars(o){
+  var W=o.w||520,H=o.h||300,L=48,R=12,T=40,B=48,pw=W-L-R,ph=H-T-B;
+  var max=o.max,min=o.min||0,n=o.cats.length,gw=pw/n,s="";
+  function y(v){return T+ph-(v-min)/(max-min)*ph;}
+  s+=title(8,22,o.ten,o.tta,16);
+  for(var k=0;k<=4;k++){var v=min+(max-min)*k/4;s+='<line x1="'+L+'" x2="'+(W-R)+'" y1="'+y(v)+'" y2="'+y(v)+'" stroke="'+C.line+'" stroke-width="1"/><text x="'+(L-6)+'" y="'+(y(v)+4)+'" font-size="11" text-anchor="end" class="mono">'+(o.tick?o.tick(v):Math.round(v))+'</text>';}
+  if(min<0) s+='<line x1="'+L+'" x2="'+(W-R)+'" y1="'+y(0)+'" y2="'+y(0)+'" stroke="'+C.ink+'" stroke-width="1.5"/>';
+  var ns=o.series.length;
+  o.cats.forEach(function(c,i){
+    var gx=L+i*gw;
+    if(o.stack){
+      var acc=0;
+      o.series.forEach(function(se){var v=se.vals[i];var y1=y(acc+v),y0=y(acc);s+='<rect x="'+(gx+gw*0.22)+'" y="'+y1+'" width="'+(gw*0.56)+'" height="'+(y0-y1)+'" fill="'+se.c+'"/>';
+        if(y0-y1>16) s+='<text x="'+(gx+gw/2)+'" y="'+((y0+y1)/2+4)+'" font-size="12" font-weight="800" text-anchor="middle" fill="'+C.panel+'" style="fill:'+C.panel+'" class="mono">'+(se.lab?se.lab(v):fmt(v,1))+'</text>';acc+=v;});
+      s+='<text x="'+(gx+gw/2)+'" y="'+(y(acc)-6)+'" font-size="13" font-weight="800" text-anchor="middle" class="mono">'+(o.tot?o.tot(acc,i):fmt(acc,1))+'</text>';
+    }else{
+      var bw=gw*0.72/ns;
+      o.series.forEach(function(se,j){var v=se.vals[i];var yy=Math.min(y(v),y(0)),hh=Math.abs(y(v)-y(0));var bx=gx+gw*0.14+j*bw;
+        s+='<rect x="'+bx+'" y="'+yy+'" width="'+(bw-3)+'" height="'+Math.max(hh,1)+'" rx="3" fill="'+se.c+'"/>';
+        s+='<text x="'+(bx+(bw-3)/2)+'" y="'+(v>=0?yy-5:yy+hh+13)+'" font-size="11" font-weight="800" text-anchor="middle" class="mono">'+(o.lab?o.lab(v):fmt(v))+'</text>';});
+    }
+    s+='<text x="'+(gx+gw/2)+'" y="'+(H-B+18)+'" font-size="12" font-weight="800" text-anchor="middle">'+(Array.isArray(c)?t(c[0],c[1]):c)+'</text>';
+  });
+  var lx=L;o.series.forEach(function(se){s+='<rect x="'+lx+'" y="'+(H-16)+'" width="12" height="12" fill="'+se.c+'"/><text x="'+(lx+16)+'" y="'+(H-6)+'" font-size="12" font-weight="700">'+t(se.en,se.ta)+'</text>';lx+=Math.max(110,se.en.length*8+30);});
+  return S(W,H,s,o.minw||320);
+}
+/* donut */
+function donut(cx,cy,r,parts,lw){var s="",a0=-Math.PI/2,tot=parts.reduce(function(a,p){return a+p.v;},0);
+  parts.forEach(function(p){var a1=a0+p.v/tot*2*Math.PI;var large=a1-a0>Math.PI?1:0;
+    s+='<path d="M'+(cx+r*Math.cos(a0))+','+(cy+r*Math.sin(a0))+' A'+r+','+r+' 0 '+large+' 1 '+(cx+r*Math.cos(a1))+','+(cy+r*Math.sin(a1))+'" fill="none" stroke="'+p.c+'" stroke-width="'+(lw||26)+'"/>';a0=a1;});return s;}
+/* line chart */
+function lines(o){var W=o.w||520,H=o.h||280,L=44,R=70,T=40,B=40,pw=W-L-R,ph=H-T-B,s="";
+  function x(i){return L+i*pw/(o.cats.length-1);} function y(v){return T+ph-(v-o.min)/(o.max-o.min)*ph;}
+  s+=title(8,22,o.ten,o.tta,16);
+  for(var k=0;k<=4;k++){var v=o.min+(o.max-o.min)*k/4;s+='<line x1="'+L+'" x2="'+(W-R)+'" y1="'+y(v)+'" y2="'+y(v)+'" stroke="'+C.line+'"/><text x="'+(L-6)+'" y="'+(y(v)+4)+'" font-size="11" text-anchor="end" class="mono">'+Math.round(v)+'</text>';}
+  if(o.min<0) s+='<line x1="'+L+'" x2="'+(W-R)+'" y1="'+y(0)+'" y2="'+y(0)+'" stroke="'+C.ink+'"/>';
+  o.cats.forEach(function(c,i){s+='<text x="'+x(i)+'" y="'+(H-B+18)+'" font-size="11" font-weight="700" text-anchor="middle">'+c+'</text>';});
+  o.series.forEach(function(se){var d=se.vals.map(function(v,i){return (i?"L":"M")+x(i)+","+y(v);}).join(" ");
+    s+='<path d="'+d+'" fill="none" stroke="'+se.c+'" stroke-width="3"/>';
+    se.vals.forEach(function(v,i){s+='<circle cx="'+x(i)+'" cy="'+y(v)+'" r="'+(i==se.vals.length-1?5:3)+'" fill="'+se.c+'"/>';});
+    var lv=se.vals[se.vals.length-1];s+='<text x="'+(x(se.vals.length-1)+8)+'" y="'+(y(lv)+4)+'" font-size="12" font-weight="800" fill="'+se.c+'" style="fill:'+se.c+'">'+t(se.en+" "+lv,se.ta+" "+lv)+'</text>';});
+  return S(W,H,s,o.minw||320);}
+
+
+/* ---------- tabs ---------- */
+var TABS=[["t-dash","Dashboard","Dashboard"],["t-bm","Business Model","Business Model"],["t-seg","Segments","Segments"],["t-fin","Financials","Financials"],["t-met","Metrics","Metrics"],["t-cf","Cash Flow & Ratios","Cash Flow & Ratios"],["t-val","Valuations","Valuations"],["t-key","5 Key Takeaways","5 முக்கிய விஷயம்"],["t-mkt","Share move reasons","Share ஏன் நகர்ந்துச்சு"],["t-tc","Triggers & Cycle","Triggers & Cycle"],["t-pil","6 Pillars","6 தூண்கள்"],["t-bet","Big Bet: Li-ion cells","Big Bet: Li-ion cells"],["t-lfp","LFP: why hard in India","LFP: ஏன் கஷ்டம்"],["t-vc","Sector & Value Chain","Sector & Value Chain"],["t-swot","SWOT","SWOT"],["t-self","Self-Check","Self-Check"],["t-assist","Cauvery Assist","Cauvery Assist"],["t-quiz","Cauvery Socrates","Cauvery Socrates"],["t-view","Analyst View","Analyst View"]];
+function showTab(id){document.querySelectorAll("section.pane").forEach(function(p){p.classList.toggle("on",p.id==id);});
+  document.querySelectorAll(".tab").forEach(function(b){b.classList.toggle("on",b.dataset.t==id);b.setAttribute("aria-selected",b.dataset.t==id);});
+  try{localStorage.setItem("exd_tab",id);}catch(e){} window.scrollTo({top:0});}
+put("tabs",TABS.map(function(x){return '<button class="tab" type="button" role="tab" data-t="'+x[0]+'">'+h(x[1],x[2])+'</button>';}).join(""));
+document.querySelectorAll(".tab").forEach(function(b){b.onclick=function(){showTab(b.dataset.t);};});
+document.querySelectorAll(".subtabs").forEach(function(g){g.querySelectorAll("button").forEach(function(b){b.onclick=function(){
+  g.querySelectorAll("button").forEach(function(x){x.classList.toggle("on",x==b);});
+  g.parentNode.querySelectorAll(".sp").forEach(function(p){p.classList.toggle("on",p.id==b.dataset.sp);});};});});
+function setLang(l){LANG=l;document.body.classList.toggle("ta",l=="ta");$("bEN").classList.toggle("on",l=="en");$("bTA").classList.toggle("on",l=="ta");
+  try{localStorage.setItem("exd_lang",l);}catch(e){} if(window.assistLang) assistLang(l);}
+$("bEN").onclick=function(){setLang("en");};$("bTA").onclick=function(){setLang("ta");};
+var cb=$("cb"),tip=$("cbtip");cb.onclick=function(){tip.hidden=!tip.hidden;};cb.onkeydown=function(e){if(e.key=="Enter"||e.key==" "){e.preventDefault();tip.hidden=!tip.hidden;}};
+cb.onmouseenter=function(){tip.hidden=false;};cb.onmouseleave=function(){tip.hidden=true;};
+C.red="#B3161B";
+function box(x,y,w,hh,fill,stroke,sw){return '<rect x="'+x+'" y="'+y+'" width="'+w+'" height="'+hh+'" rx="12" fill="'+fill+'" stroke="'+(stroke||C.acc)+'" stroke-width="'+(sw||2)+'"/>';}
+function fo(x,y,w,hh,html,size,color,align){return '<foreignObject x="'+x+'" y="'+y+'" width="'+w+'" height="'+hh+'"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:'+(size||12)+'px;font-weight:800;line-height:1.2;text-align:'+(align||"center")+';color:'+(color||C.ink)+'">'+html+'</div></foreignObject>';}
+
+/* ---------- DATA ---------- */
+var Q=["Q2 FY27","Q1 FY27","Q2 FY26"];
+var FIN=[["Revenue from operations","Revenue from operations",5026,5305,4178,0],
+ ["EBITDA","EBITDA",606,655,395,0],
+ ["EBITDA margin %","EBITDA margin %",12.1,12.4,9.4,1,1],
+ ["Profit before tax","Profit before tax",522,543,297,0],
+ ["PAT","PAT",386,407,221,0],
+ ["PAT margin %","PAT margin %",7.7,7.7,5.3,1,1],
+ ["EPS (₹)","EPS (₹)",4.54,4.79,2.60,2]];
+function finTable(rows,hdr){var s='<thead><tr><th>₹ crore</th><th>'+Q[0]+'<br><small>Jul–Sep 26</small></th><th>'+Q[1]+'<br><small>Apr–Jun 26</small></th><th>QoQ</th><th>'+Q[2]+'<br><small>Jul–Sep 25</small></th><th>YoY</th></tr></thead><tbody>';
+ rows.forEach(function(r){var d=r[5],p=r[6];
+  function cell(v){return v==null?"—":fmt(v,d)+(p?"%":"");}
+  function ch(a,b){if(a==null||b==null)return '<td>—</td>';if(p){var bp=Math.round((a-b)*100);return '<td class="n '+cls(bp)+'">'+(bp>=0?"+":"")+bp+' bps</td>';}var g=pct(a,b);return '<td class="n '+cls(g)+'">'+sg(g)+'</td>';}
+  s+='<tr><td>'+h(r[0],r[1])+'</td><td class="n">'+cell(r[2])+'</td><td class="n">'+cell(r[3])+'</td>'+ch(r[2],r[3])+'<td class="n">'+cell(r[4])+'</td>'+ch(r[2],r[4])+'</tr>';});
+ return s+'</tbody>';}
+put("tbFin",finTable(FIN));
+put("tbCons",finTable([["Revenue from operations","Revenue from operations",5334,5528,4365,0],["PAT (owners)","PAT (owners)",null,350,174,0]]));
+put("tbH1",'<thead><tr><th>₹ crore</th><th>H1 FY27</th><th>H1 FY26</th><th>YoY</th></tr></thead><tbody><tr><td>Revenue</td><td class="n">10,331</td><td class="n">8,688</td><td class="n up">+18.9%</td></tr><tr><td>PAT</td><td class="n">794</td><td class="n">541</td><td class="n up">+46.7%</td></tr><tr><td>EBITDA</td><td class="n">1,261</td><td class="n">943</td><td class="n up">+33.7%</td></tr></tbody>');
+
+/* ---------- KPIs ---------- */
+var KP=[["Revenue","Revenue","₹5,026 cr","+20.3% YoY","up"],["EBITDA","EBITDA","₹606 cr","+53% · margin 12.1%","up"],["PAT","PAT","₹386 cr","+75.1% YoY","up"],["Auto OEM","Auto OEM","25%+","4th straight quarter","up"],["Cell plant","Cell plant","6 GWh","Commissioned 23 Sep","wn"],["Into EESL","EESL-ல போட்டது","₹5,352 cr","≈ ₹63 per share","wn"],["Share price","Share விலை","~₹365","high ₹373 today","up"],["P/E (TTM, SA)","P/E (TTM, SA)","~23×","EPS ₹16.0","wn"]];
+put("kpis",KP.map(function(k){return '<div class="card kpi"><span class="l">'+h(k[0],k[1])+'</span><span class="v">'+k[2]+'</span><span class="d '+k[4]+'">'+k[3]+'</span></div>';}).join(""));
+put("f-dash3q",bars({ten:"Three quarters, ₹ crore (standalone)",tta:"மூணு quarter, ₹ crore (standalone)",cats:Q.slice().reverse(),max:800,
+ series:[{en:"EBITDA",ta:"EBITDA",c:C.acc,vals:[395,655,606]},{en:"PAT",ta:"PAT",c:C.pep,vals:[221,407,386]}]}));
+(function(){var st=[["Built","கட்டியாச்சு",1],["Switched on","Switch on",1],["Samples out","Samples",1],["First sale","முதல் sale",0],["Break-even","Break-even",0]];
+ var s=title(8,22,"Cell plant road: how far?","Cell plant பாதை: எவ்வளவு தூரம்?",16);
+ s+='<path d="M30,150 C150,90 260,200 380,130 S560,90 600,120" fill="none" stroke="'+C.line+'" stroke-width="22" stroke-linecap="round"/>';
+ s+='<path d="M30,150 C150,90 260,200 330,150" fill="none" stroke="'+C.good+'" stroke-width="10" stroke-linecap="round"/>';
+ var px=[40,165,290,430,580],py=[147,123,165,124,116];
+ st.forEach(function(p,i){s+='<circle cx="'+px[i]+'" cy="'+py[i]+'" r="14" fill="'+(p[2]?C.good:C.panel)+'" stroke="'+(p[2]?C.ink:C.warn)+'" stroke-width="3"/><text x="'+px[i]+'" y="'+(py[i]+5)+'" font-size="13" font-weight="800" text-anchor="middle" style="fill:'+(p[2]?"#FFF9F1":C.warn)+'">'+(p[2]?"✓":"…")+'</text><text x="'+px[i]+'" y="'+(py[i]+40)+'" font-size="12" font-weight="800" text-anchor="middle">'+t(p[0],p[1])+'</text>';});
+ s+='<text x="330" y="232" font-size="12" font-weight="700" text-anchor="middle">'+t("First LFP revenue targeted Q3 FY27 · break-even needs 40–50% use (≈ analyst view)","முதல் LFP revenue Q3 FY27 target · break-even-க்கு 40–50% use வேணும் (≈ analyst)")+'</text>';
+ put("f-dashroad",S(640,250,s,360));})();
+</script>
+<script>
+/* ---------- BUSINESS MODEL flow map ---------- */
+(function(){
+ var B=[
+  {id:"lead",x:20,y:60,w:200,h:62,ic:"⚙️",en:"Lead & antimony",ta:"Lead & antimony",n:"LME-linked",d:["Lead is the biggest input. LME lead and antimony softened in Q2, but a weaker rupee meant the full benefit didn't reach Exide. Year on year, input costs stayed high on geopolitics.","Lead தான் பெரிய input. Q2-ல LME lead, antimony விலை குறைஞ்சுது, ஆனா rupee வீக்கா இருந்ததால முழு லாபம் வரல. YoY input cost geopolitics-ஆல அதிகம் தான்."]},
+  {id:"oth",x:20,y:140,w:200,h:62,ic:"🧪",en:"Acid, plastic, separators",ta:"Acid, plastic, separator",n:"Bought in",d:["Sulphuric acid, polypropylene containers and separators — bought inputs; cost-optimisation programmes worked on these.","Sulphuric acid, plastic container, separator — வாங்குற பொருள்; cost குறைப்பு இதுல வேலை செஞ்சுது."]},
+  {id:"li",x:20,y:220,w:200,h:62,ic:"🔋",en:"Li-ion materials",ta:"Li-ion materials",n:"Mostly imported",d:["For EESL: cathode (LFP/NMC), graphite anode, electrolyte, separator — sourced through the technology partner's (SVOLT) supply chain for now. Electrolyte is planned to be localised first.","EESL-க்கு: cathode (LFP/NMC), graphite anode, electrolyte, separator — இப்போ technology partner (SVOLT) supply chain வழியா. முதல்ல electrolyte local ஆகும்."]},
+  {id:"tech",x:20,y:300,w:200,h:62,ic:"📜",en:"Tech licence",ta:"Tech licence",n:"SVOLT (China)",d:["A technology licence for 4–5 cell products from SVOLT — not a joint venture. Exide also has 100+ R&D engineers in Bengaluru and a pilot line due by end-2026 to build its own know-how.","SVOLT-கிட்ட 4–5 cell product-க்கு technology licence — JV இல்ல. Bengaluru-ல 100+ R&D engineers; சொந்த know-how-க்கு 2026 முடிவுல pilot line."]},
+  {id:"hub",x:290,y:100,w:250,h:220,hub:1,ic:"🏭",en:"Exide plants",ta:"Exide plants",n:"16 plants · zero debt",d:["16 manufacturing plants for lead-acid batteries; standalone zero debt. Plus EESL: 6 GWh Li-ion cell plant at Devanahalli, Bengaluru (commissioned 23 Sep 2026) and a pack/module assembly unit at Prantij, Gujarat.","Lead-acid-க்கு 16 plants; standalone கடன் இல்ல. கூடவே EESL: Devanahalli, Bengaluru-ல 6 GWh Li-ion cell plant (23 Sep 2026 commission), Prantij, Gujarat-ல pack/module assembly."]},
+  {id:"auto",x:610,y:30,w:180,h:56,ic:"🚗",en:"Auto batteries",ta:"Auto batteries",n:"OEM +25%",d:["Batteries for cars, two-wheelers, trucks — fitted by vehicle makers (OEM) and replaced later through dealers.","Car, bike, truck battery — வண்டி company (OEM) போடுறது, அப்புறம் dealers வழியா replacement."]},
+  {id:"inv",x:610,y:94,w:180,h:56,ic:"🏠",en:"Inverter & solar",ta:"Inverter & solar",n:"20%+",d:["Home inverter batteries and solar batteries/systems; 20%+ growth two quarters running.","Home inverter battery, solar battery/system; தொடர்ந்து 2 quarter 20%+."]},
+  {id:"ind",x:610,y:158,w:180,h:56,ic:"🏗️",en:"Industrial",ta:"Industrial",n:"UPS · telecom · rail",d:["UPS, telecom towers, power plants, railways, defence and submarine batteries.","UPS, telecom tower, power plant, railways, defence, submarine battery."]},
+  {id:"exp",x:610,y:222,w:180,h:56,ic:"🌍",en:"Exports",ta:"Exports",n:"Europe via ExCom",d:["Export sales; a long-term deal with Germany's ExCom Energy Solutions (Sep 2026) targets European industrial batteries.","Export; Germany ExCom Energy Solutions கூட (Sep 2026) Europe industrial battery deal."]},
+  {id:"cell",x:610,y:286,w:180,h:56,ic:"⚡",en:"Li-ion cells (new)",ta:"Li-ion cells (புது)",n:"LFP + NMC",d:["LFP prismatic cells for 3-wheelers, telecom and grid storage; NMC cylindrical cells for 2-wheelers. Samples shipped; first revenue targeted Q3 FY27.","LFP prismatic cell — 3W, telecom, grid storage; NMC cylindrical — 2W. Samples போயாச்சு; முதல் revenue Q3 FY27 target."]},
+  {id:"cus",x:830,y:140,w:160,h:110,ic:"🛒",en:"Customers",ta:"Customers",n:"OEMs · dealers · govt",d:["Vehicle makers, a large dealer/retailer network for replacement, telecom and power companies, railways and defence, households.","Vehicle company, replacement-க்கு பெரிய dealer network, telecom, power company, railways, defence, வீடுகள்."]}
+ ];
+ var M=[["Revenue","Revenue","₹5,026"],["Costs (materials, staff, other)","Costs (materials, staff, other)","₹4,420"],["EBITDA 12.1%","EBITDA 12.1%","₹606"],["− D&A, interest; + other inc.","− D&A, interest; + other inc.","₹522 PBT"],["PAT (after ₹136 tax)","PAT (₹136 tax போக)","₹386"]];
+ var s=title(20,22,"Q2 FY27 business flow (₹ crore, standalone)","Q2 FY27 business flow (₹ crore, standalone)",17);
+ s+='<text x="20" y="50" font-size="12" font-weight="800">INPUTS</text><text x="610" y="22" font-size="12" font-weight="800">PRODUCTS</text>';
+ B.forEach(function(b){
+  s+='<g class="clickable" tabindex="0" data-id="'+b.id+'"><rect x="'+b.x+'" y="'+b.y+'" width="'+b.w+'" height="'+b.h+'" rx="12" fill="'+(b.hub?C.red:C.panel)+'" stroke="'+(b.hub?C.ink:(b.id=="cell"||b.id=="li"||b.id=="tech"?C.pep:C.acc))+'" stroke-width="'+(b.id=="cell"?3:2)+'"/>';
+  if(b.hub){s+='<text x="'+(b.x+b.w/2)+'" y="'+(b.y+70)+'" font-size="46" text-anchor="middle">'+b.ic+'</text><text x="'+(b.x+b.w/2)+'" y="'+(b.y+118)+'" font-size="20" font-weight="800" text-anchor="middle" style="fill:#FFF3E4">'+t(b.en,b.ta)+'</text><text x="'+(b.x+b.w/2)+'" y="'+(b.y+144)+'" font-size="13" font-weight="700" text-anchor="middle" style="fill:#FFF3E4">'+b.n+'</text><text x="'+(b.x+b.w/2)+'" y="'+(b.y+168)+'" font-size="12" font-weight="700" text-anchor="middle" style="fill:#FFF3E4">+ EESL 6 GWh cells (Bengaluru)</text><text x="'+(b.x+b.w/2)+'" y="'+(b.y+190)+'" font-size="12" font-weight="700" text-anchor="middle" style="fill:#FFF3E4">'+t("79 years · 50 yrs of R&D","79 வருஷம் · 50 வருஷ R&D")+'</text>';}
+  else{s+='<text x="'+(b.x+10)+'" y="'+(b.y+b.h/2+9)+'" font-size="24">'+b.ic+'</text><text x="'+(b.x+44)+'" y="'+(b.y+b.h/2-3)+'" font-size="14" font-weight="800">'+t(b.en,b.ta)+'</text><text x="'+(b.x+44)+'" y="'+(b.y+b.h/2+15)+'" font-size="12" font-weight="700" class="mono">'+b.n+'</text>';}
+  s+='</g>';});
+ [91,171,251,331].forEach(function(y){s+='<line x1="222" y1="'+y+'" x2="286" y2="'+(150+(y-91)*0.45)+'" stroke="'+C.ink2+'" stroke-width="2" marker-end="url(#ah)"/>';});
+ [58,122,186,250,314].forEach(function(y){s+='<line x1="542" y1="'+(160+(y-58)*0.38)+'" x2="606" y2="'+y+'" stroke="'+C.ink2+'" stroke-width="2" marker-end="url(#ah)"/>';});
+ [58,122,186,250,314].forEach(function(y){s+='<line x1="792" y1="'+y+'" x2="826" y2="'+(170+(y-186)*0.25)+'" stroke="'+C.ink2+'" stroke-width="2" marker-end="url(#ah)"/>';});
+ s+='<path d="M910,252 C910,380 600,370 520,404" fill="none" stroke="'+C.acc+'" stroke-width="3" stroke-dasharray="6 4" marker-end="url(#ah)"/><text x="700" y="378" font-size="12" font-weight="800">'+t("cash comes back","காசு திரும்ப வருது")+'</text>';
+ s+='<text x="20" y="400" font-size="12" font-weight="800">MONEY FLOW</text>';
+ M.forEach(function(m,i){var x=20+i*196;s+='<rect x="'+x+'" y="412" width="180" height="70" rx="10" fill="'+(i==4?C.acc:C.soft)+'" stroke="'+C.acc+'" stroke-width="2"/>'+fo(x+6,416,168,30,h(m[0],m[1]),12,C.ink,"left")+'<text x="'+(x+10)+'" y="470" font-size="19" font-weight="800" class="mono">'+m[2]+'</text>';
+  if(i<4) s+='<line x1="'+(x+182)+'" y1="447" x2="'+(x+194)+'" y2="447" stroke="'+C.ink2+'" stroke-width="2" marker-end="url(#ah)"/>';});
+ s+='<text x="20" y="500" font-size="11" font-weight="700">'+t("Blue border = new Li-ion business (EESL, consolidated only)","நீல border = புது Li-ion business (EESL, consolidated-ல மட்டும்)")+'</text>';
+ put("f-bm",S(1000,510,s,760));
+ var map={};B.forEach(function(b){map[b.id]=b;});
+ document.querySelectorAll("#f-bm .clickable").forEach(function(g){function go(){var b=map[g.dataset.id];put("bmDetail",'<b>'+b.ic+' '+h(b.en,b.ta)+'</b> — '+h(b.d[0],b.d[1]));}g.onclick=go;g.onkeydown=function(e){if(e.key=="Enter")go();};});
+})();
+
+/* ---------- SEGMENTS ---------- */
+function growBars(id,ten,tta,rows){var s=title(8,22,ten,tta,16);
+ rows.forEach(function(r,i){var y=48+i*56,w=r[2]*12;s+='<text x="8" y="'+(y+18)+'" font-size="13" font-weight="800">'+t(r[0],r[1])+'</text><rect x="190" y="'+y+'" width="'+w+'" height="30" rx="6" fill="'+r[4]+'"/>'+(r[3]?'<path d="M'+(190+w)+','+y+' l18,15 l-18,15 z" fill="'+r[4]+'" opacity=".5"/>':'')+'<text x="'+(196+w+(r[3]?20:0))+'" y="'+(y+20)+'" font-size="13" font-weight="800" class="mono">'+r[5]+'</text>';});
+ put(id,S(640,60+rows.length*56,s,340));}
+growBars("f-auto","Auto: growth YoY (Q2 FY27)","Auto: YoY growth (Q2 FY27)",[["Auto OEM","Auto OEM",25,1,C.good,"25%+"],["2W replacement","2W replacement",10,1,C.good,"double-digit"],["4W replacement","4W replacement",10,1,C.good,"double-digit"]]);
+growBars("f-home","Home: growth YoY","Home: YoY growth",[["Home inverters","Home inverters",20,1,C.good,"20%+"],["Solar","Solar",20,1,C.good,"20%+"]]);
+growBars("f-ind","Company total vs business lines","Company total vs business lines",[["Company revenue","Company revenue",20.3,0,C.pep,"+20.3%"],["Industrial","Industrial",10,1,C.warn,"not split out"],["Exports","Exports",10,1,C.warn,"not split out"]]);
+put("f-eesl",bars({ten:"EESL: sales vs loss (₹ crore)",tta:"EESL: sales vs நஷ்டம் (₹ crore)",cats:["FY25","FY26"],min:-300,max:200,tick:function(v){return Math.round(v);},
+ series:[{en:"Turnover",ta:"Turnover",c:C.pep,vals:[116.89,157.56]},{en:"Loss after tax",ta:"நஷ்டம்",c:C.bad,vals:[-209.12,-248.16]}],lab:function(v){return fmt(v);}}));
+(function(){var R=[["Auto OEM","25%+","4th straight qtr ≥25%","GST 2.0, EV/PHEV aux wins"],["2W/4W replacement","Double-digit","4th qtr","Dealer reach, EXIDE DARE"],["Inverter & solar","20%+","2nd qtr","Rooftop solar"],["Industrial","Not split","—","Infra capex, ExCom Europe"],["EESL (cells)","Pre-revenue","—","LFP sales from Q3 FY27"]];
+ put("tbSeg",'<thead><tr><th>Business</th><th>Q2 FY27 YoY</th><th>Streak</th><th style="text-align:left">Driver</th></tr></thead><tbody>'+R.map(function(r){return '<tr><td><b>'+r[0]+'</b></td><td class="n">'+r[1]+'</td><td>'+r[2]+'</td><td style="text-align:left">'+r[3]+'</td></tr>';}).join("")+'</tbody>');
+ var s=title(8,22,"Where growth came from — speed meter","Growth எங்கிருந்து — speed meter",16);
+ var G=[["Auto OEM",25,C.good],["Replace.",10,C.good],["Inv/Solar",20,C.good],["Company",20.3,C.pep],["EESL",0,C.warn]];
+ G.forEach(function(g,i){var cx=70+i*130,cy=130,r=48,a=Math.PI+Math.min(g[1],30)/30*Math.PI;
+  s+='<path d="M'+(cx-r)+','+cy+' A'+r+','+r+' 0 0 1 '+(cx+r)+','+cy+'" fill="none" stroke="'+C.soft+'" stroke-width="14"/>';
+  if(g[1]>0) s+='<path d="M'+(cx-r)+','+cy+' A'+r+','+r+' 0 0 1 '+(cx+r*Math.cos(a))+','+(cy+r*Math.sin(a))+'" fill="none" stroke="'+g[2]+'" stroke-width="14"/>';
+  s+='<text x="'+cx+'" y="'+(cy-6)+'" font-size="15" font-weight="800" text-anchor="middle" class="mono">'+(g[1]?(g[1]+(i==1?"+":"")+"%"):"—")+'</text><text x="'+cx+'" y="'+(cy+24)+'" font-size="12" font-weight="800" text-anchor="middle">'+g[0]+'</text>';});
+ s+='<text x="10" y="186" font-size="11" font-weight="700">'+t("Dial full = 30% growth. Replacement shown at the 10% floor of 'double-digit'.","முழு dial = 30%. Replacement 'double-digit'-ன் 10% floor-ல.")+'</text>';
+ put("f-segcmp",S(660,196,s,420));})();
+
+/* ---------- FINANCIAL CHARTS ---------- */
+put("f-fin3",bars({ten:"Revenue (₹ crore)",tta:"Revenue (₹ crore)",cats:Q.slice().reverse(),max:6000,series:[{en:"Revenue",ta:"Revenue",c:C.acc,vals:[4178,5305,5026]}]}));
+put("f-marg",lines({ten:"EBITDA margin % — back above 12",tta:"EBITDA margin % — மீண்டும் 12-க்கு மேல",cats:["Q2 FY26","Q4 FY26","Q1 FY27","Q2 FY27"],min:8,max:14,series:[{en:"Margin",ta:"Margin",c:C.good,vals:[9.4,10.3,12.4,12.1]}]}));
+
+/* ---------- METRICS ---------- */
+function mtab(id,rows){put(id,'<thead><tr><th>Metric</th><th>Value</th><th>Change / compare</th></tr></thead><tbody>'+rows.map(function(r){return '<tr><td>'+h(r[0],r[1])+'</td><td class="n">'+r[2]+'</td><td class="n '+(r[4]||"")+'">'+r[3]+'</td></tr>';}).join("")+'</tbody>');}
+mtab("tbMgr",[["Revenue YoY","Revenue YoY","+20.3%","H1: +18.9%","up"],["EBITDA YoY","EBITDA YoY","+53.4%","H1: +33.7%","up"],["PAT YoY","PAT YoY","+75.1%","H1: +46.7%","up"],["Revenue QoQ","Revenue QoQ","−5.3%","seasonal (Q1 peak)","dn"],["Auto OEM","Auto OEM","25%+","4th straight qtr","up"]]);
+growBars("f-mgr","Growth ladder YoY (Q2 FY27)","Growth ladder YoY (Q2 FY27)",[["Revenue","Revenue",20.3/2.5,0,C.acc,"+20.3%"],["EBITDA","EBITDA",53.4/2.5,0,C.good,"+53.4%"],["PAT","PAT",75.1/2.5,0,C.good,"+75.1%"]]);
+mtab("tbMpr",[["EBITDA margin","EBITDA margin","12.1%","+270 bps YoY","up"],["PAT margin","PAT margin","7.7%","5.3% a year ago","up"],["ROE (FY26)","ROE (FY26)","7.6%","EESL capital drags it","dn"],["ROCE (FY26)","ROCE (FY26)","10.5%","~20% a decade ago","dn"]]);
+(function(){var s=title(8,22,"Profit per ₹100 of sales","₹100 sales-க்கு லாபம்",16);
+ [["Q2 FY26",9.4,5.3],["Q2 FY27",12.1,7.7]].forEach(function(r,i){var x=40+i*260;
+  for(var k=0;k<10;k++)for(var j=0;j<10;j++){var n=k*10+j,c=n<r[2]?C.good:(n<r[1]?C.acc:C.soft);s+='<rect x="'+(x+j*18)+'" y="'+(40+k*18)+'" width="15" height="15" rx="3" fill="'+c+'"/>';}
+  s+='<text x="'+(x+90)+'" y="236" font-size="14" font-weight="800" text-anchor="middle">'+r[0]+'</text><text x="'+(x+90)+'" y="256" font-size="12" font-weight="700" text-anchor="middle" class="mono">EBITDA ₹'+r[1]+' · PAT ₹'+r[2]+'</text>';});
+ s+='<rect x="40" y="270" width="14" height="14" fill="'+C.good+'"/><text x="60" y="282" font-size="12" font-weight="800">PAT</text><rect x="110" y="270" width="14" height="14" fill="'+C.acc+'"/><text x="130" y="282" font-size="12" font-weight="800">'+t("Rest of EBITDA","மீதி EBITDA")+'</text>';
+ put("f-mpr",S(560,296,s,340));})();
+mtab("tbMef",[["Receivable days (FY26)","Receivable days (FY26)","32","31 in FY25",""],["Inventory days (FY26)","Inventory days (FY26)","77","78 in FY25","up"],["Payable days (FY26)","Payable days (FY26)","61","52 in FY25","up"],["Cash conversion cycle","Cash conversion cycle","49 days","57 in FY25","up"],["Asset turnover","Asset turnover","0.91×","1.04× in FY24","dn"]]);
+mtab("tbMbs",[["Standalone debt","Standalone debt","Zero","debt-free","up"],["Invested in EESL","EESL-ல முதலீடு","₹5,352 cr","₹2,852 cr (Oct 2024)","wn"],["EESL net worth (Mar-26)","EESL net worth (Mar-26)","₹3,991 cr","after losses",""],["Consolidated net debt (Q1)","Consolidated net debt (Q1)","~₹842 cr","EESL project debt","wn"],["Book value / share","Book value / share","~₹173","P/B ~2.1×",""]]);
+(function(){var s=title(8,22,"Where Exide's money sits","Exide பணம் எங்க இருக்கு",16);
+ s+=donut(150,160,90,[{v:5352,c:C.pep},{v:9300,c:C.acc}],34);
+ s+='<text x="150" y="156" font-size="18" font-weight="800" text-anchor="middle" class="mono">₹5,352 cr</text><text x="150" y="176" font-size="12" font-weight="700" text-anchor="middle">'+t("in EESL","EESL-ல")+'</text>';
+ s+='<rect x="290" y="110" width="14" height="14" fill="'+C.pep+'"/><text x="310" y="122" font-size="13" font-weight="800">'+t("Equity in EESL (cells)","EESL equity (cells)")+'</text><rect x="290" y="140" width="14" height="14" fill="'+C.acc+'"/><text x="310" y="152" font-size="13" font-weight="800">'+t("≈ Rest of net worth (lead-acid)","≈ மீதி net worth (lead-acid)")+'</text><text x="290" y="190" font-size="12" font-weight="700">'+t("≈ total net worth ₹14,650 cr (₹173 × 85 cr shares)","≈ மொத்த net worth ₹14,650 cr")+'</text>';
+ put("f-mbs",S(600,280,s,340));})();
+mtab("tbMca",[["Operating cash (FY26)","Operating cash (FY26)","₹2,231 cr","₹1,298 cr FY25","up"],["Own capex (FY26)","Own capex (FY26)","₹419 cr","~₹500 cr/yr planned",""],["CFO / PAT","CFO / PAT","2.0×","1.2× in FY25","up"],["Sent to EESL (FY26)","EESL-க்கு (FY26)","≈ ₹1,478 cr","'other investing'","wn"]]);
+put("f-mca",bars({ten:"FY26 cash: where it went (₹ crore)",tta:"FY26 cash: எங்க போச்சு (₹ crore)",cats:[["Cash made","வந்த cash"],["Own capex","சொந்த capex"],["To EESL ≈","EESL ≈"],["Dividend","Dividend"]],max:2400,series:[{en:"₹ crore",ta:"₹ crore",c:C.acc,vals:[2231,419,1478,170]}]}));
+put("f-mef",lines({ten:"Working capital days (standalone)",tta:"Working capital days (standalone)",cats:["FY24","FY25","FY26"],min:20,max:90,series:[{en:"Inventory",ta:"Inventory",c:C.acc,vals:[71,78,77]},{en:"Payable",ta:"Payable",c:C.pep,vals:[41,52,61]},{en:"Receivable",ta:"Receivable",c:C.good,vals:[29,31,32]}]}));
+
+/* ---------- CASH FLOW ---------- */
+put("f-cf",bars({ten:"Operating cash vs capex (₹ crore, standalone)",tta:"Operating cash vs capex (₹ crore)",cats:["FY24","FY25","FY26"],max:2400,series:[{en:"Operating cash",ta:"Operating cash",c:C.good,vals:[1997,1298,2231]},{en:"Own capex",ta:"சொந்த capex",c:C.warn,vals:[484,424,419]}]}));
+put("f-wc",lines({ten:"Cash conversion cycle (days)",tta:"Cash conversion cycle (நாள்)",cats:["FY24","FY25","FY26"],min:40,max:65,series:[{en:"CCC",ta:"CCC",c:C.acc,vals:[59,57,49]}]}));
+put("tbCF",'<thead><tr><th>₹ crore</th><th>FY24</th><th>FY25</th><th>FY26</th></tr></thead><tbody><tr><td>PAT</td><td class="n">1,041</td><td class="n">1,080</td><td class="n">1,111</td></tr><tr><td>Operating cash</td><td class="n">1,997</td><td class="n">1,298</td><td class="n">2,231</td></tr><tr><td>Own capex</td><td class="n">484</td><td class="n">424</td><td class="n">419</td></tr><tr><td>CFO / PAT</td><td class="n">1.9×</td><td class="n">1.2×</td><td class="n">2.0×</td></tr><tr><td>ROE</td><td class="n">8.7%</td><td class="n">7.8%</td><td class="n">7.6%</td></tr><tr><td>ROCE</td><td class="n">12.0%</td><td class="n">10.8%</td><td class="n">10.5%</td></tr></tbody>');
+put("tbWC",'<thead><tr><th>Days</th><th>FY24</th><th>FY25</th><th>FY26</th></tr></thead><tbody><tr><td>Receivable</td><td class="n">29</td><td class="n">31</td><td class="n">32</td></tr><tr><td>Inventory</td><td class="n">71</td><td class="n">78</td><td class="n">77</td></tr><tr><td>Payable</td><td class="n">41</td><td class="n">52</td><td class="n">61</td></tr><tr><td><b>Cash conversion cycle</b></td><td class="n">59</td><td class="n">57</td><td class="n"><b>49</b></td></tr></tbody>');
+
+/* ---------- VALUATION ---------- */
+(function(){var s=title(8,22,"Price split: what are you paying for?","விலையை பிரிச்சு பாருங்க",16);
+ var tot=365,parts=[["EESL money in (₹63)","EESL பணம் (₹63)",63,C.pep],["Lead-acid business (₹302)","Lead-acid business (₹302)",302,C.acc]];
+ var x=30;parts.forEach(function(p){var w=p[2]/tot*560;s+='<rect x="'+x+'" y="60" width="'+w+'" height="60" fill="'+p[3]+'"/>'+fo(x+4,70,w-8,44,h(p[0],p[1]),13,"#FFF9F1");x+=w;});
+ s+='<text x="30" y="148" font-size="13" font-weight="800">'+t("Lead-acid part ÷ standalone EPS ₹16.0 ≈ 19× P/E (≈ CB working)","Lead-acid பங்கு ÷ EPS ₹16.0 ≈ 19× P/E (≈ CB கணக்கு)")+'</text>';
+ s+='<text x="30" y="172" font-size="12" font-weight="700">'+t("Simple view: EESL counted at the cash put in, not at a fair value.","எளிமையா: EESL-ஐ போட்ட பணத்துக்கு எண்ணுறோம், fair value இல்ல.")+'</text>';
+ put("f-pe",S(620,190,s,360));})();
+(function(){var lo=287,hi=496,cur=365,s=title(8,22,"52-week range (₹)","52-week range (₹)",16),x=function(v){return 40+(v-lo)/(hi-lo)*520;};
+ s+='<rect x="40" y="70" width="520" height="18" rx="9" fill="'+C.soft+'" stroke="'+C.acc+'"/>';
+ [[287,"Low 287"],[338,"2 Nov 338"],[460,"Q1 high ~460"],[496,"High 496"]].forEach(function(m){s+='<line x1="'+x(m[0])+'" y1="62" x2="'+x(m[0])+'" y2="96" stroke="'+C.ink2+'" stroke-width="2"/><text x="'+x(m[0])+'" y="114" font-size="11" font-weight="700" text-anchor="middle" class="mono">'+m[1]+'</text>';});
+ s+='<polygon points="'+x(cur)+',60 '+(x(cur)-9)+',44 '+(x(cur)+9)+',44" fill="'+C.red+'"/><text x="'+x(cur)+'" y="38" font-size="13" font-weight="800" text-anchor="middle" class="mono">~365 today</text>';
+ s+='<text x="40" y="150" font-size="12" font-weight="700">'+t("~26% below the high, ~27% above the low.","High-ல இருந்து ~26% கீழ, low-ல இருந்து ~27% மேல.")+'</text>';
+ put("f-range",S(600,170,s,340));})();
+put("tbVal",'<thead><tr><th>Measure</th><th>Value</th><th style="text-align:left">Note</th></tr></thead><tbody>'+
+ [["Price","~₹365","4 Nov intraday; prev close ₹346.25"],["Market cap","≈ ₹31,000 cr","85 cr shares"],["TTM PAT (standalone)","₹1,363 cr","Q3 FY26 ₹258 + Q4 ₹312 + Q1 ₹407 + Q2 ₹386"],["P/E (standalone TTM)","~23×","EPS ₹16.0"],["P/B","~2.1×","book ~₹173/share"],["EESL invested","₹5,352 cr","≈ ₹63/share, loss-making"],["Dividend yield","~0.5%","₹2/share"]].map(function(r){return '<tr><td>'+r[0]+'</td><td class="n">'+r[1]+'</td><td style="text-align:left;white-space:normal">'+r[2]+'</td></tr>';}).join("")+'</tbody>');
+
+/* ---------- 5 KEYS ---------- */
+(function(){var K=[["📈","Best quarter in years","பல வருஷத்துல சிறந்த quarter","PAT +75%, margin 12.1% vs 9.4%.","PAT +75%, margin 12.1% (9.4%-ல இருந்து)."],
+ ["🚗","GST 2.0 is real demand","GST 2.0 நிஜ demand","Auto OEM 25%+ four quarters running.","Auto OEM 4 quarter-ஆ 25%+."],
+ ["🏭","Cell plant is ON","Cell plant ON","6 GWh commissioned 23 Sep; samples out, revenue from Q3 FY27.","6 GWh 23 Sep commission; samples போயாச்சு, Q3 FY27 revenue."],
+ ["🇨🇳","Cells still need China","Cells-க்கு இன்னும் China","SVOLT licence + imported cathode/anode; localise 50–60% in 2–3 yrs.","SVOLT licence + import cathode/anode; 2–3 வருஷத்துல 50–60% local."],
+ ["💸","Cash pays for the bet","Cash தான் bet-க்கு","Lead-acid cash (₹2,231 cr FY26) funds EESL (₹5,352 cr so far); no PLI help.","Lead-acid cash (FY26 ₹2,231 cr) EESL-க்கு (₹5,352 cr); PLI உதவி இல்ல."]];
+ put("keys",K.map(function(k,i){return '<div class="card"><svg viewBox="0 0 300 90" style="width:100%;height:auto"><circle cx="45" cy="45" r="38" fill="'+[C.good,C.acc,C.pep,C.bad,C.warn][i]+'"/><text x="45" y="58" font-size="36" text-anchor="middle">'+k[0]+'</text><text x="100" y="38" font-size="15" font-weight="800">'+t(k[1],k[2])+'</text><text x="100" y="62" font-size="24" font-weight="800" class="mono">#'+(i+1)+'</text></svg><p style="margin:6px 0 0;font-weight:700">'+h(k[3],k[4])+'</p></div>';}).join(""));})();
+
+/* ---------- REASONS ---------- */
+(function(){var s=title(8,22,"Today's see-saw","இன்றைய see-saw",16);
+ s+='<polygon points="300,230 280,262 320,262" fill="'+C.ink2+'"/><line x1="90" y1="250" x2="510" y2="200" stroke="'+C.ink+'" stroke-width="8" stroke-linecap="round"/>';
+ var up=[["PAT +75%","PAT +75%"],["Margin 12.1%","Margin 12.1%"],["Cell plant ON","Cell plant ON"]],dn=[["EESL losses ahead","EESL நஷ்டம் வரும்"],["No PLI","PLI இல்ல"]];
+ up.forEach(function(u,i){s+=box(60,180-i*46,170,38,C.panel,C.good,3)+'<text x="145" y="'+(205-i*46)+'" font-size="13" font-weight="800" text-anchor="middle">'+t(u[0],u[1])+'</text>';});
+ dn.forEach(function(u,i){s+=box(400,140-i*46,180,38,C.panel,C.bad,3)+'<text x="490" y="'+(165-i*46)+'" font-size="13" font-weight="800" text-anchor="middle">'+t(u[0],u[1])+'</text>';});
+ s+='<text x="300" y="290" font-size="13" font-weight="800" text-anchor="middle">'+t("Good news weighed more → +7% intraday","நல்ல செய்தி கனமா → intraday +7%")+'</text>';
+ put("f-seesaw",S(620,300,s,360));})();
+put("f-pricepath",lines({ten:"Price path (₹, key points)",tta:"விலை பாதை (₹)",cats:["52w high","31 Jul (Q1)","2 Nov","4 Nov high"],min:300,max:520,series:[{en:"₹",ta:"₹",c:C.red,vals:[496,447,338,373]}]}));
+
+/* ---------- TRIGGERS & CYCLE ---------- */
+(function(){var cx=200,cy=190,r=120,s=title(8,22,"Cycle clock","Cycle clock",16);
+ var ph=[["P1 Trough","P1 Trough"],["P2 Early recovery","P2 Early recovery"],["P3 Expansion","P3 Expansion"],["P4 Late/peak","P4 Late/peak"],["P5 Downturn","P5 Downturn"]];
+ ph.forEach(function(p,i){var a0=-Math.PI/2+i*2*Math.PI/5,a1=a0+2*Math.PI/5,am=(a0+a1)/2;
+  s+='<path d="M'+cx+','+cy+' L'+(cx+r*Math.cos(a0))+','+(cy+r*Math.sin(a0))+' A'+r+','+r+' 0 0 1 '+(cx+r*Math.cos(a1))+','+(cy+r*Math.sin(a1))+' Z" fill="'+(i==2?C.acc:C.soft)+'" stroke="'+C.acc+'" stroke-width="2"/>';
+  s+='<text x="'+(cx+(r+38)*Math.cos(am))+'" y="'+(cy+(r+38)*Math.sin(am))+'" font-size="12" font-weight="800" text-anchor="middle">'+t(p[0],p[1])+'</text>';});
+ var ap=-Math.PI/2+2.5*2*Math.PI/5;s+='<line x1="'+cx+'" y1="'+cy+'" x2="'+(cx+(r-15)*Math.cos(ap))+'" y2="'+(cy+(r-15)*Math.sin(ap))+'" stroke="'+C.ink+'" stroke-width="5"/><circle cx="'+cx+'" cy="'+cy+'" r="9" fill="'+C.ink+'"/>';
+ s+='<rect x="410" y="80" width="150" height="86" rx="10" fill="'+C.panel+'" stroke="'+C.bad+'" stroke-width="3"/><text x="485" y="104" font-size="12" font-weight="800" text-anchor="middle">'+t("Stock price stage","Stock price stage")+'</text><text x="485" y="132" font-size="22" font-weight="800" text-anchor="middle" style="fill:'+C.bad+'">Stage 4 ↘</text><text x="485" y="154" font-size="11" font-weight="700" text-anchor="middle">'+t("results bounce; base not yet","results bounce; base இன்னும் இல்ல")+'</text>';
+ s+='<text x="410" y="200" font-size="13" font-weight="800">'+t("Sector: auto + infra","Sector: auto + infra")+'</text><text x="410" y="222" font-size="13" font-weight="800">CY = 62</text>';
+ put("f-clock",S(590,360,s,380));
+ var TR=[["+","First LFP cell revenue (Q3 FY27 target)","முதல் LFP cell revenue (Q3 FY27)",4,0.7,1.0,1.0,"Q3 results: EESL revenue line"],
+  ["+","OEM cell approvals (3 OEMs ≈ 80% of EV volume testing)","OEM cell approval (3 OEM ≈ EV volume-ல 80%)",4,0.4,0.7,1.0,"Homologation news"],
+  ["+","Lead/antimony prices softening","Lead/antimony விலை குறையுது",2,0.4,1.0,1.0,"Gross margin, rupee"],
+  ["+","Phase II (6 → 12 GWh) go-ahead","Phase II (6 → 12 GWh) முடிவு",3,0.4,0.4,1.0,"Board approval"],
+  ["+","ExCom Europe industrial deal","ExCom Europe industrial deal",1,0.7,0.7,1.0,"Export growth"],
+  ["−","EESL ramp losses hit consolidated profit","EESL ramp நஷ்டம் consolidated-ல",3,1.0,1.0,0.7,"Consolidated PAT vs standalone"],
+  ["−","China curbs: suspension end 10 Nov 2026 (materials, equipment)","China கட்டுப்பாடு: suspension 10 Nov 2026 முடிவு",3,0.4,1.0,1.0,"MOFCOM notice"],
+  ["−","No PLI subsidy vs PLI-backed rivals","PLI subsidy இல்ல vs PLI rivals",2,0.7,0.7,1.0,"Cell pricing vs rivals"],
+  ["−","Weak rupee keeps input cost high","Rupee வீக் → input cost அதிகம்",2,0.7,1.0,1.0,"USD-INR, LME lead"]];
+ var sn=0,posPts=[];
+ var rows=TR.map(function(r){var p=r[3]*r[4]*r[5]*r[6];if(r[0]=="+")posPts.push(p);else sn+=p;
+  return '<tr><td>'+h(r[1],r[2])+'</td><td class="n '+(r[0]=="+"?"up":"dn")+'">'+r[0]+'</td><td class="n">'+r[3]+'</td><td class="n">'+r[4]+'</td><td class="n">'+r[5]+'</td><td class="n">'+r[6]+'</td><td class="n">'+p.toFixed(2)+'</td><td>'+r[7]+'</td></tr>';});
+ posPts.sort(function(a,b){return b-a;});var sp=posPts.slice(0,3).reduce(function(a,b){return a+b;},0);
+ var tg=Math.round(Math.max(0,Math.min(100,50+8*sp-8*sn)));put("tgv",String(tg));
+ put("tbTrig",'<thead><tr><th>Trigger</th><th>±</th><th>Impact</th><th>Certainty</th><th>Timing</th><th>Priced-in</th><th>Points</th><th>'+h("What to watch","எதை பார்க்கணும்")+'</th></tr></thead><tbody>'+rows.join("")+
+  '<tr><td colspan="6"><b>TG = 50 + 8×'+sp.toFixed(2)+' (top 3 +) − 8×'+sn.toFixed(2)+' (all −)</b></td><td class="n"><b>'+tg+'</b></td><td></td></tr></tbody>');
+ var ev=[["5 Nov 26","Earnings call","Earnings call",C.pep],["10 Nov 26","China curb suspension ends?","China suspension முடிவு?",C.bad],["End-CY26","Pilot line (own tech)","Pilot line (சொந்த tech)",C.warn],["Q3 FY27","First LFP revenue","முதல் LFP revenue",C.good],["Feb 27","Q3 results","Q3 results",C.acc],["End-FY27","4W LFP line","4W LFP line",C.pep]];
+ var s2=title(8,22,"Dated events to watch","கவனிக்க வேண்டிய தேதிகள்",16)+'<line x1="40" y1="90" x2="840" y2="90" stroke="'+C.ink2+'" stroke-width="3"/>';
+ ev.forEach(function(e,i){var x=60+i*150;s2+='<circle cx="'+x+'" cy="90" r="10" fill="'+e[3]+'" stroke="'+C.ink+'" stroke-width="2"/><text x="'+x+'" y="66" font-size="13" font-weight="800" text-anchor="middle" class="mono">'+e[0]+'</text>'+fo(x-70,106,140,50,h(e[1],e[2]));});
+ put("f-trigtl",S(880,165,s2,700));
+})();
+
+/* ---------- 6 PILLARS ---------- */
+(function(){
+ var P=[["Business quality","Business quality",7,"Market leader, strong brand and dealer reach; but ROE only ~7.6% as EESL capital earns nothing yet.","Market leader, brand, dealer network strong; ஆனா EESL capital இன்னும் சம்பாதிக்காததால ROE ~7.6% தான்."],
+  ["Competitive advantage","Competitive edge",7,"Distribution, OEM relationships, 79 years; in Li-ion it competes with PLI-backed and global players.","Distribution, OEM உறவு, 79 வருஷம்; Li-ion-ல PLI rivals, global players போட்டி."],
+  ["Growth opportunity","Growth opportunity",8,"GST 2.0 auto demand, solar, data-centre UPS, and India's cell gap (~2 GWh supply vs ~17 GWh demand).","GST 2.0 auto demand, solar, data-centre UPS, India cell பற்றாக்குறை (~2 GWh vs ~17 GWh)."],
+  ["Financial strength","Financial strength",8,"Standalone zero debt; ₹2,231 cr operating cash FY26; but ₹5,352 cr already into EESL.","Standalone கடன் இல்ல; FY26 ₹2,231 cr operating cash; ஆனா ₹5,352 cr EESL-ல."],
+  ["Valuation","Valuation",6,"~23× standalone P/E, ~2.1× book — cheaper than its recent past, with cells as an unpriced option or a drag.","~23× standalone P/E, ~2.1× book — சமீபத்தை விட கம்மி; cells option-ஆ அல்லது பாரமா."],
+  ["Risk & reward","Risk & reward",5,"Cell ramp risk, China tech/material dependence, no PLI, Stage-4 price trend.","Cell ramp risk, China tech/material சார்பு, PLI இல்ல, Stage-4 price trend."]];
+ var s=title(8,22,"The Exide temple: 41 / 60","Exide கோவில்: 41 / 60",16);
+ s+='<polygon points="40,110 330,40 620,110" fill="'+C.acc+'" stroke="'+C.ink+'" stroke-width="3"/><text x="330" y="96" font-size="26" font-weight="800" text-anchor="middle" class="mono">41 / 60</text><rect x="50" y="110" width="560" height="14" fill="'+C.ink2+'"/>';
+ P.forEach(function(p,i){var x=72+i*92,hgt=p[2]*20,yb=330;
+  s+='<rect x="'+x+'" y="'+(yb-hgt)+'" width="50" height="'+hgt+'" fill="'+(p[2]>=8?C.pep:(p[2]>=6?C.acc:C.warn))+'" stroke="'+C.ink+'" stroke-width="2"/>';
+  s+='<rect x="'+x+'" y="124" width="50" height="'+(yb-hgt-124)+'" fill="none" stroke="'+C.ink2+'" stroke-dasharray="4 4"/>';
+  s+='<text x="'+(x+25)+'" y="'+(yb-hgt+26)+'" font-size="20" font-weight="800" text-anchor="middle" style="fill:#FFF3E4">'+p[2]+'</text>'+fo(x-18,yb+22,86,40,h(p[0],p[1]),11);});
+ s+='<rect x="40" y="330" width="580" height="18" fill="'+C.ink2+'"/><text x="330" y="395" font-size="11" font-weight="700" text-anchor="middle">'+t("Dashed gap = what the pillar is missing to reach 10","Dashed gap = 10-க்கு என்ன குறையுது")+'</text>';
+ put("f-temple",S(660,405,s,420));
+ put("pillars",P.map(function(p){return '<div class="card"><h3>'+h(p[0],p[1])+' — <span class="mono">'+p[2]+'/10</span></h3><div class="bar"><i style="width:'+p[2]*10+'%"></i></div><p style="margin:8px 0 0;font-weight:700">'+h(p[3],p[4])+'</p></div>';}).join(""));
+})();
+</script>
+<script>
+/* ---------- BIG BET ---------- */
+(function(){
+ var SC=[["Plant built","Plant கட்டியாச்சு","done"],["Commissioned (23 Sep 26)","Commission (23 Sep 26)","done"],["Samples to customers","Customer samples","done"],["Tech licence secured before China curbs","China தடைக்கு முன் licence","done"],["First commercial revenue (Q3 FY27)","முதல் revenue (Q3 FY27)","plan"],["25–30% use in year 1","முதல் வருஷம் 25–30% use","plan"],["Own pilot line (end-CY26)","சொந்த pilot line (2026 முடிவு)","prog"],["50–60% local materials (2–3 yrs)","50–60% local material (2–3 வருஷம்)","prog"],["Break-even (≈ late FY27–FY28)","Break-even (≈ FY27–FY28)","plan"]];
+ var col={done:C.good,prog:C.warn,plan:C.pep,stuck:C.bad},done=SC.filter(function(x){return x[2]=="done";}).length;
+ var s=title(8,22,"Cell scorecard: "+done+" of "+SC.length+" milestones done","Cell scorecard: "+SC.length+"-ல "+done+" முடிஞ்சது",17);
+ SC.forEach(function(m,i){var c=i%3,r=Math.floor(i/3),x=10+c*330,y=40+r*70;
+  s+=box(x,y,318,58,C.panel,col[m[2]],3)+'<circle cx="'+(x+28)+'" cy="'+(y+29)+'" r="16" fill="'+(m[2]=="done"?col.done:C.panel)+'" stroke="'+col[m[2]]+'" stroke-width="3"/><text x="'+(x+28)+'" y="'+(y+35)+'" font-size="16" font-weight="800" text-anchor="middle" style="fill:'+(m[2]=="done"?"#FFF9F1":col[m[2]])+'">'+(m[2]=="done"?"✓":(m[2]=="prog"?"◐":"○"))+'</text>'+fo(x+52,y+8,258,44,h(m[0],m[1]),13,C.ink,"left");});
+ s+='<text x="10" y="262" font-size="12" font-weight="700">'+t("✓ done · ◐ in progress · ○ guided/expected","✓ முடிஞ்சது · ◐ நடக்குது · ○ சொன்னது/எதிர்பார்ப்பு")+'</text>';
+ put("f-score",S(1000,272,s,700));
+ var M=[["~2018","Nexcharge pack JV (Leclanché)","Nexcharge pack JV","done"],["2022","EESL set up; SVOLT licence","EESL; SVOLT licence","done"],["Oct 24","₹2,852 cr invested","₹2,852 cr","done"],["Mar 26","₹4,802 cr; construction ends","₹4,802 cr","done"],["Jul 26","All 4 lines installed; samples","4 lines; samples","done"],["23 Sep 26","6 GWh Phase-I commissioned","6 GWh commission","done"],["Q3 FY27","First LFP revenue","முதல் LFP revenue","plan"],["End-CY26","Pilot line, own R&D","Pilot line","plan"],["End-FY27","4W LFP line","4W LFP line","plan"],["Demand-led","Phase II → 12 GWh","Phase II → 12 GWh","plan"]];
+ var s2=title(8,22,"Done vs guided milestones","முடிஞ்சது vs சொன்னது",16)+'<line x1="30" y1="90" x2="1080" y2="90" stroke="'+C.ink2+'" stroke-width="3"/>';
+ M.forEach(function(m,i){var x=60+i*104;s2+='<circle cx="'+x+'" cy="90" r="10" fill="'+(m[3]=="done"?col.done:C.panel)+'" stroke="'+col[m[3]]+'" stroke-width="3"/><text x="'+x+'" y="68" font-size="12" font-weight="800" text-anchor="middle" class="mono">'+m[0]+'</text>'+fo(x-50,106,100,60,h(m[1],m[2]),11);});
+ s2+='<text x="30" y="186" font-size="12" font-weight="700">'+t("Filled = done · hollow blue = guided. Early dates approximate (~).","நிரம்பியது = முடிஞ்சது · நீல வட்டம் = சொன்னது. பழைய தேதி தோராயம் (~).")+'</text>';
+ put("f-bettl",S(1100,200,s2,860));
+ var s3=title(8,22,"Inside Phase-I: 6 GWh, 4 lines","Phase-I உள்ள: 6 GWh, 4 lines",16);
+ [["LFP prismatic","LFP prismatic","3W · telecom · BESS",C.good],["LFP prismatic","LFP prismatic","3W · telecom · BESS",C.good],["NMC cylindrical","NMC cylindrical","2W · high-power EV",C.pep],["4W LFP line","4W LFP line","due end-FY27",C.warn]].forEach(function(l,i){var y=44+i*54;
+  s3+=box(20,y,330,44,C.panel,l[3],3)+'<rect x="20" y="'+y+'" width="14" height="44" rx="4" fill="'+l[3]+'"/><text x="46" y="'+(y+20)+'" font-size="13" font-weight="800">'+t(l[0],l[1])+'</text><text x="46" y="'+(y+37)+'" font-size="11" font-weight="700">'+l[2]+'</text>';});
+ s3+='<text x="370" y="70" font-size="13" font-weight="800">≈ 3 GWh LFP</text><text x="370" y="92" font-size="13" font-weight="800">≈ 3 GWh NMC</text><text x="370" y="130" font-size="12" font-weight="700">'+t("LFP ramps first:","LFP முதல்ல:")+'</text><text x="370" y="148" font-size="12" font-weight="700">'+t("shorter customer tests","customer test சீக்கிரம்")+'</text><text x="370" y="186" font-size="12" font-weight="700">'+t("3W: 70–75% is aftermarket","3W: 70–75% aftermarket")+'</text><text x="370" y="204" font-size="12" font-weight="700">'+t("→ Exide dealers can sell it","→ Exide dealers விக்கலாம்")+'</text>';
+ s3+='<text x="20" y="270" font-size="11" font-weight="700">'+t("Line split as reported in Sep 2026 coverage; 4th-line wording varies across reports.","Line split Sep 2026 செய்தி அடிப்படையில்.")+'</text>';
+ put("f-plant",S(560,282,s3,360));
+ var R=[["Exide (EESL)",6,"Commercial plant commissioned","Commercial plant commission",C.red],["Amara Raja",0.06,"60 MWh qualification plant; 2 GWh in CY27","60 MWh qualification plant; CY27-ல 2 GWh",C.acc],["PLI makers (all)",1.4,"≈ PLI capacity commissioned by Oct 25 (sector total)","≈ Oct 25 வரை PLI commission (மொத்தம்)",C.pep]];
+ var s4=title(8,22,"Who is ahead in cells? (GWh commissioned)","Cells-ல யார் முன்னாடி? (GWh)",16);
+ R.forEach(function(r,i){var y=48+i*66,w=Math.max(r[1]/6*380,4);s4+='<text x="10" y="'+(y+18)+'" font-size="13" font-weight="800">'+r[0]+'</text><rect x="140" y="'+y+'" width="'+w+'" height="28" rx="6" fill="'+r[4]+'"/><text x="'+(146+w)+'" y="'+(y+19)+'" font-size="13" font-weight="800" class="mono">'+r[1]+'</text>'+fo(140,y+30,400,30,h(r[2],r[3]),11,C.ink2,"left");});
+ s4+='<text x="10" y="258" font-size="11" font-weight="700">'+t("Commissioned ≠ selling. Exide's 6 GWh is not yet invoicing.","Commission ≠ விற்பனை. Exide 6 GWh இன்னும் invoice இல்ல.")+'</text>';
+ put("f-race",S(560,270,s4,360));
+ var s5=title(8,22,"PLI-ACC: promise vs delivery","PLI-ACC: சொன்னது vs நடந்தது",16);
+ s5+='<rect x="30" y="50" width="480" height="40" rx="8" fill="'+C.soft+'" stroke="'+C.acc+'"/><rect x="30" y="50" width="'+(1.4/50*480)+'" height="40" rx="4" fill="'+C.bad+'"/><text x="40" y="76" font-size="13" font-weight="800">'+t("Target 50 GWh · commissioned ~1.4 GWh (Oct 25)","Target 50 GWh · ~1.4 GWh தான் (Oct 25)")+'</text>';
+ s5+='<rect x="30" y="110" width="480" height="40" rx="8" fill="'+C.soft+'" stroke="'+C.acc+'"/><text x="40" y="136" font-size="13" font-weight="800">'+t("Incentive outlay ₹18,100 cr · paid so far: ₹0 (Sep 26)","Outlay ₹18,100 cr · கொடுத்தது ₹0 (Sep 26)")+'</text>';
+ s5+=box(30,170,230,70,C.panel,C.bad,3)+fo(36,178,218,58,h("Exide misses: sales-linked subsidy","Exide-க்கு இல்ல: sales subsidy"),13);
+ s5+=box(280,170,230,70,C.panel,C.good,3)+fo(286,178,218,58,h("Exide avoids: local-content deadlines &amp; penalties","Exide தப்பிச்சது: local-content deadline, penalty"),13);
+ put("f-pli",S(540,252,s5,360));
+ var chip={done:'<span class="chip c-done">'+h("Done","முடிஞ்சது")+'</span>',prog:'<span class="chip c-prog">'+h("In progress","நடக்குது")+'</span>',plan:'<span class="chip c-plan">'+h("Guided","சொன்னது")+'</span>'};
+ var T=[["Bengaluru cell plant","Commercial plant, 6 GWh, commissioned — not yet invoicing","Commercial plant, 6 GWh, commission — invoice இன்னும் இல்ல","done"],["Prantij, Gujarat","Pack/module assembly (imported cells) — ₹158 cr FY26 sales","Pack/module assembly (import cells) — FY26 ₹158 cr","done"],["SVOLT","Technology licence for 4–5 cell products, not a JV","4–5 cell product technology licence, JV இல்ல","done"],["Pilot line","Own R&D line, 100+ engineers; due end-CY26","சொந்த R&D line, 100+ engineers; 2026 முடிவு","prog"],["OEM approvals","3 OEMs (~80% of EV volume) homologating; 1–2 car makers evaluating","3 OEM (~80% EV volume) homologation; 1–2 car company பார்க்குது","prog"],["Phase II","6 → 12 GWh, timing linked to demand","6 → 12 GWh, demand-ஐ பொறுத்து","plan"]];
+ put("tbBet",'<thead><tr><th>Item</th><th style="text-align:left">'+h("What exactly","சரியா என்ன")+'</th><th>Status</th></tr></thead><tbody>'+T.map(function(r){return '<tr><td><b>'+r[0]+'</b></td><td style="text-align:left;white-space:normal;min-width:260px">'+h(r[1],r[2])+'</td><td>'+chip[r[3]]+'</td></tr>';}).join("")+'</tbody>');
+ var st=[["1947","Exide in India — lead-acid leader","India-ல Exide — lead-acid leader"],["~2018","First Li-ion step: pack assembly","Li-ion முதல் படி: pack assembly"],["2022","Chose to make cells, not just packs","Pack இல்ல, cell செய்ய முடிவு"],["2022–25","Locked licence + equipment before China curbs","China தடைக்கு முன் licence, equipment"],["2026","Built commercial lines before pilot line → no equipment delay","Pilot-க்கு முன் commercial lines → தாமதம் இல்ல"],["23 Sep 26","6 GWh plant switched on, without PLI money","PLI இல்லாம 6 GWh switch on"]];
+ var s6="";st.forEach(function(x,i){var y=20+i*46;s6+='<circle cx="22" cy="'+y+'" r="9" fill="'+(i==st.length-1?C.acc:C.red)+'"/>'+(i<st.length-1?'<line x1="22" y1="'+(y+9)+'" x2="22" y2="'+(y+37)+'" stroke="'+C.ink2+'" stroke-width="2"/>':'')+'<text x="40" y="'+(y+5)+'" font-size="13" font-weight="800" class="mono">'+x[0]+'</text><text x="130" y="'+(y+5)+'" font-size="13" font-weight="700">'+t(x[1],x[2])+'</text>';});
+ put("f-story",S(620,280,s6,420));
+})();
+
+/* ---------- LFP ---------- */
+(function(){
+ /* cell anatomy */
+ var P=[["Cathode (LFP)","Cathode (LFP)","~40%","Lithium iron phosphate powder","China",C.red],["Anode","Anode","~15%","Graphite","China",C.red],["Electrolyte","Electrolyte","~10%","LiPF6 salt + solvents","Localising first",C.warn],["Separator","Separator","~8%","Thin plastic film","Imported",C.red],["Foils, can, rest","Foils, can, மீதி","~27%","Copper/aluminium foil, casing","Mixed",C.acc]];
+ var s=title(8,22,"What is inside an LFP cell — and where it comes from","LFP cell உள்ள என்ன — எங்கிருந்து வருது",16);
+ s+='<rect x="30" y="50" width="230" height="260" rx="22" fill="'+C.panel+'" stroke="'+C.ink+'" stroke-width="4"/><rect x="110" y="34" width="70" height="18" rx="5" fill="'+C.ink2+'"/>';
+ var y0=62;P.forEach(function(p,i){var hgt=parseInt(p[2].slice(1))*2.4;s+='<rect x="44" y="'+y0+'" width="202" height="'+(hgt-4)+'" rx="8" fill="'+[C.red,C.ink2,C.warn,C.acc2,C.soft][i]+'"/><text x="145" y="'+(y0+hgt/2+3)+'" font-size="12" font-weight="800" text-anchor="middle" style="fill:'+(i<2?"#FFF9F1":C.ink)+'">'+t(p[0],p[1])+' '+p[2]+'</text>';
+  s+='<line x1="250" y1="'+(y0+hgt/2)+'" x2="300" y2="'+(70+i*52)+'" stroke="'+C.ink2+'" stroke-width="2"/>'+box(300,50+i*52,380,44,C.panel,p[5],3)+'<text x="314" y="'+(70+i*52)+'" font-size="12" font-weight="800">'+p[3]+'</text><text x="314" y="'+(87+i*52)+'" font-size="12" font-weight="800" style="fill:'+p[5]+'">'+t("Today: "+p[4],"இன்று: "+p[4])+'</text>';y0+=hgt;});
+ s+='<text x="30" y="335" font-size="11" font-weight="700">'+t("≈ Typical share of cell material cost; varies with prices. Red = mainly from China today.","≈ வழக்கமான material cost பங்கு. சிவப்பு = இன்று பெரும்பாலும் China.")+'</text>';
+ put("f-lfpcell",S(700,345,s,440));
+ /* mine-to-cell chain */
+ var L=[["⛏️","Lithium ore","Lithium ore","India: none mined",C.red],["🧪","Lithium refining","Lithium refining","India: ~zero",C.red],["🔩","Iron phosphate","Iron phosphate","India: not at scale",C.red],["🔥","LFP cathode","LFP cathode","Himadri, Altmin, GFL: not commercial yet",C.warn],["⚫","Graphite anode","Graphite anode","Epsilon, Himadri: early",C.warn],["🔋","Cell","Cell","Exide 6 GWh: ON",C.good],["📦","Pack / BESS","Pack / BESS","India: ~60 GWh",C.good]];
+ var s2=title(8,22,"Mine to cell: India's gaps (red) — LFP's chain","Mine-ல இருந்து cell: India இடைவெளி (சிவப்பு)",16);
+ L.forEach(function(l,i){var x=10+i*140;s2+=box(x,50,128,130,C.panel,l[4],4)+'<text x="'+(x+64)+'" y="92" font-size="30" text-anchor="middle">'+l[0]+'</text>'+fo(x+4,104,120,30,h(l[1],l[2]),13)+fo(x+4,138,120,40,l[3],11,l[4]);
+  if(i<L.length-1) s2+='<line x1="'+(x+130)+'" y1="115" x2="'+(x+148)+'" y2="115" stroke="'+C.ink2+'" stroke-width="3" marker-end="url(#ah)"/>';});
+ s2+='<text x="10" y="210" font-size="12" font-weight="700">'+t("India is strong at the end (packs, now cells) and weak at the start (minerals, refining, precursors).","India கடைசி பக்கம் strong (pack, இப்போ cell), ஆரம்ப பக்கம் weak (mineral, refining, precursor).")+'</text>';
+ put("f-lfpchain",S(990,222,s2,760));
+ /* scale */
+ var s3=title(8,22,"LFP cathode made in H1 2026 (tonnes)","H1 2026-ல செய்த LFP cathode (tonnes)",16);
+ for(var i=0;i<94;i++){var c=i%14,r=Math.floor(i/14);s3+='<rect x="'+(20+c*22)+'" y="'+(46+r*22)+'" width="18" height="18" rx="3" fill="'+C.red+'"/>';}
+ s3+='<rect x="20" y="'+(46+7*22)+'" width="18" height="18" rx="3" fill="'+C.pep+'"/>';
+ s3+='<text x="350" y="80" font-size="22" font-weight="800" class="mono" style="fill:'+C.red+'">2.63 mn t</text><text x="350" y="100" font-size="13" font-weight="800">China</text><text x="350" y="160" font-size="22" font-weight="800" class="mono" style="fill:'+C.pep+'">28,000 t</text><text x="350" y="180" font-size="13" font-weight="800">'+t("Rest of world","மற்ற உலகம்")+'</text>';
+ s3+='<text x="20" y="232" font-size="11" font-weight="700">'+t("Each square ≈ 28,000 t. China ≈ 94 squares; the rest of the world = 1 blue square.","ஒரு கட்டம் ≈ 28,000 t. China ≈ 94; மற்ற உலகம் = 1 நீலம்.")+'</text>';
+ put("f-lfpscale",S(540,244,s3,340));
+ /* cost */
+ var s4=title(8,22,"Cost gap: Indian vs imported cell","Cost இடைவெளி: India vs import cell",16);
+ s4+='<rect x="40" y="60" width="200" height="40" rx="6" fill="'+C.pep+'"/><text x="250" y="86" font-size="13" font-weight="800">'+t("Imported (China) = 100","Import (China) = 100")+'</text>';
+ s4+='<rect x="40" y="120" width="250" height="40" rx="6" fill="'+C.warn+'"/><rect x="290" y="120" width="30" height="40" fill="'+C.bad+'" opacity=".6"/><text x="330" y="146" font-size="13" font-weight="800">'+t("India-made = 125–140","India-made = 125–140")+'</text>';
+ s4+='<text x="40" y="196" font-size="12" font-weight="700">'+t("Cheapest Chinese LFP cells: cost floor ~$36/kWh.","மலிவான Chinese LFP cell: ~$36/kWh.")+'</text><text x="40" y="216" font-size="12" font-weight="700">'+t("100% local content in a 100 MW/2 h BESS adds ~30% capex.","100 MW/2 h BESS-ல 100% local → capex ~30% அதிகம்.")+'</text>';
+ put("f-lfpcost",S(540,232,s4,340));
+ /* why even with Himadri */
+ var W=[["⏳","Tiny and early","சின்னது, ஆரம்பம்","Himadri's first milestone ~2,000 t (Q3 FY27) vs China's 2.63 mn t in six months.","Himadri முதல் milestone ~2,000 t (Q3 FY27); China 6 மாசத்துல 2.63 mn t."],
+  ["🧂","Lithium still imported","Lithium இன்னும் import","Cathode makers need battery-grade lithium carbonate; India refines almost none, ~68% of imports from China.","Cathode-க்கு lithium carbonate வேணும்; India refining கிட்டத்தட்ட இல்ல, import-ல ~68% China."],
+  ["🔬","Recipe is the secret","Recipe தான் ரகசியம்","Sintering, particle size, density (≥2.5 g/cm³) and batch consistency take years; China restricted LFP-cathode tech exports from Jul 2025.","Sintering, particle size, density (≥2.5 g/cm³), batch consistency — வருஷக்கணக்கு; Jul 2025-ல இருந்து China LFP tech export கட்டுப்பாடு."],
+  ["🧾","Months of testing","மாசக்கணக்கு testing","A cell maker must re-qualify cells with a new cathode; licensed designs (SVOLT) were built on partner materials.","புது cathode-க்கு cell-ஐ மறுபடி qualify பண்ணணும்; SVOLT design partner material வச்சு."],
+  ["💰","Scale = price","Scale = விலை","Chinese plants run at huge scale and set the price; Indian material costs more until volumes grow.","China பெரிய scale-ல விலை fix பண்ணுது; volume வர வரை India material விலை அதிகம்."]];
+ var s5="";W.forEach(function(w,i){var x=10+(i%3)*330,y=10+Math.floor(i/3)*150;
+  s5+=box(x,y,318,138,C.panel,[C.warn,C.red,C.pep,C.acc,C.good][i],3)+'<circle cx="'+(x+34)+'" cy="'+(y+34)+'" r="24" fill="'+C.soft+'"/><text x="'+(x+34)+'" y="'+(y+44)+'" font-size="24" text-anchor="middle">'+w[0]+'</text><text x="'+(x+68)+'" y="'+(y+30)+'" font-size="15" font-weight="800">'+(i+1)+'. '+t(w[1],w[2])+'</text>'+fo(x+12,y+62,296,72,h(w[3],w[4]),12,C.ink,"left");});
+ s5+=box(670,160,318,138,C.soft,C.ink,3)+fo(684,172,292,120,h("Bottom line: Indian LFP materials are coming, but Exide's cells will lean on Chinese inputs for 2–3 more years.","முடிவு: India LFP material வருது, ஆனா இன்னும் 2–3 வருஷம் Exide cell China input-ஐ நம்பியிருக்கும்."),14,C.ink,"left");
+ put("f-lfpwhy",S(1000,310,s5,720));
+ /* China control timeline */
+ var E=[["2023","Graphite export curbs begin","Graphite கட்டுப்பாடு ஆரம்பம்",C.bad],["Jul 25","LFP cathode + lithium tech: licence needed (in force)","LFP cathode + lithium tech: licence (அமல்ல)",C.bad],["9 Oct 25","Wider curbs: materials, anode, equipment","பெரிய கட்டுப்பாடு: material, anode, equipment",C.bad],["7 Nov 25","Oct curbs suspended","Oct கட்டுப்பாடு suspend",C.good],["10 Nov 26","Suspension end date","Suspension முடிவு தேதி",C.warn],["10 Jan 27","US–China truce end","US–China truce முடிவு",C.warn]];
+ var s6=title(8,22,"China's battery export rules — timeline","China battery export விதிகள் — timeline",16)+'<line x1="40" y1="90" x2="960" y2="90" stroke="'+C.ink2+'" stroke-width="3"/>';
+ E.forEach(function(e,i){var x=100+i*164;s6+='<circle cx="'+x+'" cy="90" r="11" fill="'+e[3]+'" stroke="'+C.ink+'" stroke-width="2"/><text x="'+x+'" y="66" font-size="13" font-weight="800" text-anchor="middle" class="mono">'+e[0]+'</text>'+fo(x-78,108,156,56,h(e[1],e[2]),11);});
+ put("f-lfpctl",S(1000,175,s6,760));
+ put("tbLfp",'<thead><tr><th>Company</th><th style="text-align:left">'+h("Material","Material")+'</th><th style="text-align:left">'+h("Plan / status","Plan / நிலை")+'</th><th>Status</th></tr></thead><tbody>'+
+  [["Himadri Speciality","LFP cathode (Odisha)","Phase 1: 40,000 t/yr, ₹1,125 cr; up to 2 lakh t/yr; first ~2,000 t milestone Q3 FY27; no customer named","Phase 1: 40,000 t, ₹1,125 cr; 2 லட்சம் t வரை; முதல் ~2,000 t Q3 FY27; customer பெயர் சொல்லல","prog"],
+   ["Altmin","LFP cathode (Telangana)","₹750 cr, ~8 GWh-equivalent; launch targeted Q4 2026","₹750 cr, ~8 GWh அளவு; Q4 2026 launch target","plan"],
+   ["Epsilon Advanced Materials","Graphite anode","₹4,000 cr, 30,000 t/yr; production was scheduled from Mar 2026","₹4,000 cr, 30,000 t; Mar 2026 production schedule","prog"],
+   ["Acutaas Chemicals (ex-Ami Organics)","Electrolyte additives (VC, FEC)","Jhagadia plant opened Jan 2026; 2,000 t each VC/FEC, contracted 3 yrs; no cathode/anode","Jhagadia plant Jan 2026; VC/FEC தலா 2,000 t, 3 வருஷ contract; cathode/anode இல்ல","done"],
+   ["Exide (EESL)","Cells, LFP + NMC","Commercial 6 GWh commissioned; materials via SVOLT chain; electrolyte to localise first","6 GWh commission; material SVOLT chain வழியா; முதல்ல electrolyte local","done"]].map(function(r){var ch={done:'<span class="chip c-done">ON</span>',prog:'<span class="chip c-prog">'+h("Building","கட்டுது")+'</span>',plan:'<span class="chip c-plan">'+h("Planned","திட்டம்")+'</span>'};return '<tr><td><b>'+r[0]+'</b></td><td style="text-align:left">'+r[1]+'</td><td style="text-align:left;white-space:normal;min-width:260px">'+h(r[2],r[3])+'</td><td>'+ch[r[4]]+'</td></tr>';}).join("")+'</tbody>');
+})();
+
+/* ---------- VALUE CHAIN ---------- */
+(function(){var s=title(8,22,"Battery value chain — Exide's part in red","Battery value chain — சிவப்பு = Exide",16);
+ var V=[["⛏️","Minerals","Minerals","Imported",0],["🧪","Materials","Materials","Mostly China",0],["⚡","Cells","Cells","EESL 6 GWh",1],["📦","Packs / modules","Packs / modules","EESL (Prantij)",1],["🔋","Lead-acid batteries","Lead-acid batteries","Exide 16 plants",1],["🏪","Dealers & OEMs","Dealers & OEMs","Exide network",1],["🏠","Users","Users","Cars · homes · grid",0]];
+ V.forEach(function(v,i){var x=14+i*136;s+='<rect x="'+x+'" y="60" width="122" height="110" rx="12" fill="'+(v[4]?C.red:C.panel)+'" stroke="'+(v[4]?C.ink:C.acc)+'" stroke-width="2"/><text x="'+(x+61)+'" y="98" font-size="28" text-anchor="middle">'+v[0]+'</text>'+fo(x+4,108,114,60,h(v[1],v[2])+'<br>'+v[3],12,v[4]?"#FFF3E4":C.ink);
+  if(i<V.length-1) s+='<path d="M'+(x+124)+',115 L'+(x+134)+',115" stroke="'+C.ink2+'" stroke-width="3"/>';});
+ put("f-vc",S(972,190,s,760));
+ put("f-need",bars({ten:"India cells: supply vs need (GWh)",tta:"India cells: supply vs தேவை (GWh)",cats:[["Supply end-25","Supply 2025"],["Demand end-25","Demand 2025"],["Exide Ph-I","Exide Ph-I"],["Exide Ph-II","Exide Ph-II"]],max:20,series:[{en:"GWh",ta:"GWh",c:C.pep,vals:[2,17,6,12]}]}));
+})();
+
+/* ---------- SWOT ---------- */
+(function(){var Q4=[["Strengths","பலம்",C.good,[["Market leader, dealer reach","Market leader, dealer network"],["Zero debt, strong cash flow","கடன் இல்ல, cash flow strong"],["First big Indian cell plant ON","முதல் பெரிய Indian cell plant ON"]]],
+ ["Weaknesses","பலவீனம்",C.bad,[["ROE ~7.6% (EESL capital idle)","ROE ~7.6%"],["Cell tech licensed from China","Cell tech China licence"],["No PLI subsidy","PLI subsidy இல்ல"]]],
+ ["Opportunities","வாய்ப்பு",C.pep,[["Grid storage (BESS) boom","Grid storage boom"],["3W/telecom LFP via dealers","3W/telecom LFP dealers வழியா"],["GST 2.0 auto demand, solar","GST 2.0, solar"]]],
+ ["Threats","அச்சுறுத்தல்",C.warn,[["China curbs on tech/materials","China tech/material தடை"],["Cheap Chinese cells","மலிவான China cells"],["Lead price & weak rupee","Lead விலை, rupee"]]]];
+ var s="";Q4.forEach(function(q,i){var x=(i%2)*330+10,y=Math.floor(i/2)*190+10;s+='<rect x="'+x+'" y="'+y+'" width="320" height="180" rx="14" fill="'+C.panel+'" stroke="'+q[2]+'" stroke-width="4"/><circle cx="'+(x+30)+'" cy="'+(y+30)+'" r="16" fill="'+q[2]+'"/><text x="'+(x+30)+'" y="'+(y+36)+'" font-size="16" font-weight="800" text-anchor="middle" style="fill:#FFF3E4">'+q[0][0]+'</text><text x="'+(x+56)+'" y="'+(y+36)+'" font-size="17" font-weight="800">'+t(q[0],q[1])+'</text>';
+  q[3].forEach(function(p,j){s+='<circle cx="'+(x+24)+'" cy="'+(y+76+j*36)+'" r="5" fill="'+q[2]+'"/><text x="'+(x+38)+'" y="'+(y+81+j*36)+'" font-size="14" font-weight="700">'+t(p[0],p[1])+'</text>';});});
+ put("f-swot",S(670,390,s,520));})();
+
+/* ---------- SELF-CHECK ---------- */
+var SCK=[["About the stock","Stock பற்றி",[["Do I know the size and price level?","Size, விலை நிலை தெரியுமா?","Mcap ≈ ₹31,000 cr; ~₹365 vs 52w ₹287–496."],["Do I know earnings vs price?","Earnings vs price புரியுதா?","H1 PAT +46.7%; stock ~flat over 12 months."],["Do I know how much went into cells?","Cells-ல எவ்வளவு போச்சு தெரியுமா?","₹5,352 cr ≈ ₹63/share; EESL lost ₹248 cr in FY26."],["Do I know there is no PLI support?","PLI உதவி இல்லனு தெரியுமா?","Waitlisted 2022; didn't bid 2024."]]],
+ ["Problems investors face","Investor சிக்கல்கள்",[["Can I explain how Exide makes money?","Exide எப்படி சம்பாதிக்குது சொல்ல முடியுமா?","Batteries × price; EBITDA 12.1%."],["Do I understand LFP vs NMC?","LFP vs NMC புரியுதா?","LFP: 3W, telecom, BESS; NMC: 2W."],["Do I know the China dependence?","China சார்பு தெரியுமா?","SVOLT licence; imported cathode/anode."],["Do I know consolidated ≠ standalone?","Consolidated ≠ standalone தெரியுமா?","Q1: SA PAT ₹407 cr vs consol ₹350 cr."]]],
+ ["What I did about it","நான் என்ன பண்ணேன்",[["Read the Q2 presentation & 5 Nov call","Q2 presentation, 5 Nov call","Investor deck filed 4 Nov 2026."],["Compared with Amara Raja","Amara Raja-வோட compare","ARE&M: 60 MWh qualification plant, 2 GWh in CY27."],["Kept the amount small for my size","என் அளவுக்கு சின்ன amount","Your own rule."],["Fixed a horizon and review date","Horizon, review தேதி","Next: Q3 results, Feb 2027 (first cell revenue?)."],["Ready for EESL-loss dips","EESL நஷ்ட dip-க்கு ready","Depreciation starts as plant runs."]]],
+ ["Analysts & CB view","Analysts & CB view",[["Checked institutional holding trend","Institution holding பார்த்தேன்","See NSE shareholding (Sep 2026 filing)."],["Read independent reviews","Independent reviews படிச்சேன்","Post-results broker notes after 5 Nov call."],["Checked CB cycle & trigger view","CB cycle & trigger பார்த்தேன்","CY 62, TG 42; Stage 4 price."],["Checked market mood","Market mood பார்த்தேன்","Results-day up to +7% intraday."]]],
+ ["My own conditions","என் conditions",[]]];
+function selfRender(){var done=0,total=0,html="",saved={},custom=[];
+ try{saved=JSON.parse(localStorage.getItem("exd_self")||"{}");}catch(e){}
+ try{custom=JSON.parse(localStorage.getItem("exd_selfc")||"[]");}catch(e){}
+ SCK.forEach(function(g,gi){var items=gi==4?custom.map(function(c){return [c,c,"Your condition"];}):g[2];var gd=0;
+  var rows=items.map(function(it,ii){var k=gi+"_"+ii,c=!!saved[k];if(c){gd++;done++;}total++;
+   return '<label class="chk"><input type="checkbox" id="sc'+k+'" data-k="'+k+'"'+(c?" checked":"")+'><span><b>'+h(it[0],it[1])+'</b><br><span class="note">Data: '+it[2]+'</span></span>'+(gi==4?'<button class="btn" type="button" data-del="'+ii+'" style="margin-left:auto;padding:2px 8px">✕</button>':'')+'</label>';}).join("");
+  html+='<h3>'+(gi+1)+'. '+h(g[0],g[1])+' <span class="mono" style="font-size:13px">'+gd+'/'+items.length+'</span></h3><div class="bar"><i style="width:'+(items.length?gd/items.length*100:0)+'%"></i></div>'+rows;
+  if(gi==4) html+='<div class="ask" style="margin-top:8px"><input id="scNew" type="text" placeholder="Add your own check…"><button class="btn" id="scAdd" type="button">+</button></div>';});
+ html+='<p class="note">'+h("This only counts your own conditions. It is not a recommendation.","இது உங்க conditions-ஐ மட்டும் எண்ணுது. Recommendation இல்ல.")+'</p>';
+ put("selfGroups",html);
+ var p=total?done/total:0,r=80,cir=2*Math.PI*r;
+ put("f-ring",S(300,260,title(8,22,"My checklist","என் checklist",16)+'<circle cx="150" cy="140" r="'+r+'" fill="none" stroke="'+C.soft+'" stroke-width="22"/><circle cx="150" cy="140" r="'+r+'" fill="none" stroke="'+C.acc+'" stroke-width="22" stroke-dasharray="'+(cir*p)+' '+cir+'" transform="rotate(-90 150 140)"/><text x="150" y="150" font-size="30" font-weight="800" text-anchor="middle" class="mono">'+done+'/'+total+'</text>',240));
+ document.querySelectorAll("#selfGroups input[type=checkbox]").forEach(function(c){c.onchange=function(){saved[c.dataset.k]=c.checked;try{localStorage.setItem("exd_self",JSON.stringify(saved));}catch(e){}selfRender();};});
+ var add=$("scAdd");if(add)add.onclick=function(){var v=$("scNew").value.trim();if(!v)return;custom.push(v);try{localStorage.setItem("exd_selfc",JSON.stringify(custom));}catch(e){}selfRender();};
+ document.querySelectorAll("#selfGroups [data-del]").forEach(function(b){b.onclick=function(e){e.preventDefault();custom.splice(+b.dataset.del,1);try{localStorage.setItem("exd_selfc",JSON.stringify(custom));}catch(x){}selfRender();};});}
+selfRender();
+
+/* ---------- GAUGE ---------- */
+(function(){var cx=230,cy=200,r=150,s=title(8,22,"CB Conviction (indicative)","CB Conviction (indicative)",16);
+ [[0,40,C.bad],[40,60,C.warn],[60,100,C.good]].forEach(function(z){var a0=Math.PI+z[0]/100*Math.PI,a1=Math.PI+z[1]/100*Math.PI;s+='<path d="M'+(cx+r*Math.cos(a0))+','+(cy+r*Math.sin(a0))+' A'+r+','+r+' 0 0 1 '+(cx+r*Math.cos(a1))+','+(cy+r*Math.sin(a1))+'" fill="none" stroke="'+z[2]+'" stroke-width="28"/>';});
+ var a=Math.PI+55/100*Math.PI;s+='<line x1="'+cx+'" y1="'+cy+'" x2="'+(cx+(r-30)*Math.cos(a))+'" y2="'+(cy+(r-30)*Math.sin(a))+'" stroke="'+C.ink+'" stroke-width="6"/><circle cx="'+cx+'" cy="'+cy+'" r="12" fill="'+C.ink+'"/>';
+ s+='<text x="'+cx+'" y="'+(cy+44)+'" font-size="26" font-weight="800" text-anchor="middle" class="mono">55 / 100</text><text x="'+cx+'" y="'+(cy+66)+'" font-size="12" font-weight="700" text-anchor="middle">'+t("Raw ~58, capped at 55 by Stage-4 price gate","Raw ~58, Stage-4 gate-ஆல 55 cap")+'</text>';
+ s+='<text x="20" y="300" font-size="11" font-weight="700">E 75 · F 60 · M 60 · T 40 · CY 62 · TG 42</text>';
+ put("f-gauge",S(460,310,s,320));})();
+put("f-assistpic",S(300,120,'<path d="M0,90 C60,70 100,110 160,90 S260,70 300,90 L300,120 L0,120 Z" fill="'+C.red+'" opacity=".25"/><rect x="128" y="18" width="44" height="66" rx="22" fill="'+C.acc+'" stroke="'+C.ink+'" stroke-width="3"/><path d="M112,60 C112,96 188,96 188,60" fill="none" stroke="'+C.ink+'" stroke-width="4"/><line x1="150" y1="92" x2="150" y2="108" stroke="'+C.ink+'" stroke-width="4"/><text x="210" y="50" font-size="13" font-weight="800">'+t("Ask in English","English-ல கேளுங்க")+'</text><text x="210" y="70" font-size="13" font-weight="800">'+t("or Tamil","அல்லது தமிழ்ல")+'</text>'));
+</script>
+<script>
+/* ---------- CAUVERY ASSIST (dashboard-local engine; swap for cauvery-assist.js when attached) ---------- */
+function A(en,ta){return {en:en,ta:ta};}
+var CLIPS={greeting:A("",""),noAdvice:A("",""),fallback:A("","")};
+var KB=[
+ {k:["revenue","sales","ரெவின்யூ","வருமானம்","turnover"],a:A("Standalone revenue was ₹5,026 crore in Jul–Sep 2026, up 20.3% year on year.","Jul–Sep 2026-ல standalone revenue ₹5,026 crore, 20.3% அதிகம்."),tab:"t-fin"},
+ {k:["profit","pat","net profit","லாபம்","ப்ராஃபிட்"],a:A("Standalone net profit was ₹386 crore, up 75.1% from ₹221 crore a year ago.","Standalone net profit ₹386 crore, போன வருஷம் ₹221 crore-ல இருந்து 75.1% ஏறுச்சு."),tab:"t-fin"},
+ {k:["margin","ebitda","மார்ஜின்"],a:A("EBITDA margin was 12.1%, up from 9.4% a year ago, helped by cost cuts and price hikes.","EBITDA margin 12.1%, போன வருஷம் 9.4%; cost குறைப்பு, விலை ஏற்றம் உதவுச்சு."),tab:"t-fin"},
+ {k:["auto","oem","car","bike","வண்டி","ஆட்டோ"],a:A("Auto OEM sales grew over 25%, the fourth straight quarter, helped by GST 2.0.","Auto OEM 25%-க்கு மேல, தொடர்ந்து 4வது quarter; GST 2.0 உதவுச்சு."),tab:"t-seg"},
+ {k:["solar","inverter","சோலார்","இன்வர்ட்டர்"],a:A("Home inverters and solar grew over 20% for the second quarter in a row.","Home inverter, solar தொடர்ந்து 2வது quarter 20%-க்கு மேல."),tab:"t-seg"},
+ {k:["cell","gigafactory","plant","lithium","eesl","செல்","லித்தியம்"],preferOverMetric:1,a:A("The 6 GWh cell plant in Bengaluru was commissioned on 23 September 2026; samples have gone out, and first LFP revenue is targeted for Oct–Dec 2026.","Bengaluru 6 GWh cell plant 23 September 2026-ல commission; samples போயாச்சு, முதல் LFP revenue Oct–Dec 2026-ல target."),tab:"t-bet"},
+ {k:["success","successful","how far","வெற்றி","எவ்வளவு தூரம்"],a:A("Partly: 4 of 9 milestones are done — plant built and switched on, samples shipped — but no commercial sales yet.","பாதி: 9 milestone-ல 4 முடிஞ்சது — plant கட்டி switch on, samples போயாச்சு — ஆனா commercial sales இன்னும் இல்ல."),tab:"t-bet"},
+ {k:["pli","subsidy","scheme","incentive","பிஎல்ஐ","மானியம்"],a:A("Exide is not in the PLI-ACC scheme — it was waitlisted in 2022 and did not bid in 2024 — so it gets no sales subsidy, but also faces no local-content penalties.","Exide PLI-ACC-ல இல்ல — 2022-ல waiting list, 2024-ல bid பண்ணல — subsidy கிடையாது, ஆனா local-content penalty-யும் இல்ல."),tab:"t-bet"},
+ {k:["lfp","hard","difficult","tough","கஷ்டம்","எல்எஃப்பி"],preferOverMetric:1,a:A("LFP is hard in India because the materials — lithium refining, iron phosphate, cathode and graphite anode — are still mostly made in China.","LFP India-ல கஷ்டம்; lithium refining, iron phosphate, cathode, graphite anode எல்லாம் இன்னும் பெரும்பாலும் China-ல தான்."),tab:"t-lfp"},
+ {k:["acutaas","acitass","actutass","ami organics","additive","அக்யூட்டாஸ்"],a:A("Acutaas Chemicals, formerly Ami Organics, makes electrolyte additives VC and FEC at Jhagadia from January 2026; it does not make cathode or anode.","Acutaas Chemicals (முன்ன Ami Organics) January 2026-ல இருந்து Jhagadia-ல VC, FEC electrolyte additives செய்யுது; cathode, anode செய்யல."),tab:"t-lfp"},
+ {k:["himadri","altmin","epsilon","ஹிமாத்ரி"],a:A("Himadri, Altmin and Epsilon are building Indian cathode and anode plants, but they are early, small, still import lithium, and need months of customer testing.","Himadri, Altmin, Epsilon India-ல cathode, anode plant கட்டுறாங்க; ஆனா ஆரம்ப நிலை, சின்ன அளவு, lithium import, customer testing-க்கு மாசக்கணக்கு ஆகும்."),tab:"t-lfp"},
+ {k:["cathode","anode","graphite","கேத்தோட்","ஆனோட்"],a:A("Cathode and anode are the costliest parts of a cell, and China makes about 95% of the world's LFP cathode today.","Cathode, anode தான் cell-ல விலை அதிகம்; உலக LFP cathode-ல ~95% China தான்."),tab:"t-lfp"},
+ {k:["china","svolt","சீனா","export control"],a:A("Exide uses a technology licence from China's SVOLT and imports most materials; China's July 2025 curbs on LFP technology still apply, and its October 2025 curbs are suspended until 10 November 2026.","Exide China SVOLT licence use பண்ணுது, material பெரும்பாலும் import; July 2025 LFP tech கட்டுப்பாடு அமல்ல, October 2025 கட்டுப்பாடு 10 November 2026 வரை suspend."),tab:"t-lfp"},
+ {k:["amara raja","amara","அமர ராஜா","competitor","rival"],a:A("Amara Raja has a 60 MWh qualification plant and targets 2 GWh in 2027; Exide already has 6 GWh commissioned.","Amara Raja-கிட்ட 60 MWh qualification plant, 2027-ல 2 GWh; Exide-கிட்ட 6 GWh commission ஆயிடுச்சு."),tab:"t-bet"},
+ {k:["invested","investment","money","₹5352","5352","முதலீடு"],a:A("Exide has put ₹5,352 crore into EESL so far, about ₹63 per share.","இதுவரை Exide EESL-ல ₹5,352 crore போட்டிருக்கு, ஒரு share-க்கு ~₹63."),tab:"t-bet"},
+ {k:["loss","eesl loss","நஷ்டம்"],a:A("EESL lost ₹248 crore in FY26 on ₹158 crore of sales; losses may rise first as the new plant starts depreciating.","FY26-ல EESL ₹158 crore sales-ல ₹248 crore நஷ்டம்; புது plant depreciation-ஆல முதல்ல நஷ்டம் ஏறலாம்."),tab:"t-seg"},
+ {k:["share","price","jump","stock","ஷேர்","விலை","ஏறுச்சு"],a:A("The share rose about 7% intraday to ₹373 on results day, as profit jumped 75% and the cell plant is now running.","Results நாள் share ~7% ஏறி ₹373 தொட்டுச்சு; profit 75% ஏறுச்சு, cell plant ஓட ஆரம்பிச்சுது."),tab:"t-mkt"},
+ {k:["p/e","pe ratio","valuation","expensive","cheap","வேல்யுவேஷன்"],a:A("At about ₹365 the stock trades near 23 times standalone trailing earnings and about 2.1 times book.","~₹365-ல standalone trailing P/E ~23 மடங்கு, book-ஐ விட ~2.1 மடங்கு."),tab:"t-val"},
+ {k:["debt","கடன்"],a:A("Exide standalone has zero debt; the cell subsidiary carries project borrowings.","Exide standalone-ல கடன் இல்ல; cell subsidiary-ல project கடன் இருக்கு."),tab:"t-cf"},
+ {k:["cash flow","cash","கேஷ்"],a:A("Standalone operating cash was ₹2,231 crore in FY26, twice its profit, and most spare cash is funding the cell plant.","FY26 standalone operating cash ₹2,231 crore, profit-ஐ விட ரெண்டு மடங்கு; மிச்ச cash cell plant-க்கு போகுது."),tab:"t-cf"},
+ {k:["working capital","inventory","debtor","வொர்க்கிங்"],a:A("The cash conversion cycle improved to about 49 days in FY26 from 57, as payable days rose to 61.","Cash conversion cycle FY26-ல ~49 நாள் (57-ல இருந்து); payable days 61-க்கு ஏறுச்சு."),tab:"t-cf"},
+ {k:["trigger","catalyst","ட்ரிகர்"],a:A("The top positive trigger is first LFP cell revenue in Oct–Dec 2026; the top risk is cell-plant losses and China supply curbs.","முக்கிய positive trigger: Oct–Dec 2026 முதல் LFP revenue; முக்கிய risk: cell plant நஷ்டம், China supply தடை."),tab:"t-tc"},
+ {k:["cycle","stage","சைக்கிள்"],a:A("The sector is in an expansion phase, but the stock price is still in a Stage 4 downtrend; cycle score 62.","Sector expansion-ல, ஆனா stock price இன்னும் Stage 4 இறக்கத்துல; cycle score 62."),tab:"t-tc"},
+ {k:["pillar","rating","தூண்"],a:A("Exide scores 41 out of 60 on the 6 Pillars: strong on finances and growth, weaker on risk.","6 Pillars-ல Exide 60-க்கு 41: finance, growth strong; risk-ல கம்மி."),tab:"t-pil"},
+ {k:["bess","storage","grid","ஸ்டோரேஜ்"],a:A("Grid storage is the biggest new LFP user; India added 8.2 GWh of storage in the first half of 2026.","Grid storage தான் LFP-ஓட பெரிய புது பயனர்; 2026 முதல் பாதியில India 8.2 GWh storage சேர்த்துச்சு."),tab:"t-vc"},
+ {k:["boon","good","strong","நல்லா","சூப்பர்"],a:A("Yes for the core business — a strong quarter — and not yet proven for cells, which still have to start selling.","Core business-க்கு ஆமா — strong quarter; cells இன்னும் நிரூபிக்கல, விற்பனை ஆரம்பிக்கணும்."),tab:"t-key"}
+];
+var NOADV=A("I can't say buy, sell or hold — CB Research is not SEBI-registered. Use the Self-Check tab to test your own conditions.","Buy, sell, hold சொல்ல முடியாது — CB Research SEBI-registered இல்ல. உங்க conditions-க்கு Self-Check tab பாருங்க.");
+var FALLBACK=A("That isn't on this dashboard. Try revenue, margin, cell plant, LFP, PLI or valuation.","இது இந்த dashboard-ல இல்ல. Revenue, margin, cell plant, LFP, PLI, valuation கேளுங்க.");
+var GREET=A("Vanakam! Ask me about Exide's July–September quarter or its cell plant.","வணக்கம்! Exide Jul–Sep quarter, cell plant பத்தி கேளுங்க.");
+var SUG=[["How far has the cell plant got?","Cell plant எவ்வளவு தூரம் வந்திருக்கு?"],["Why is LFP hard in India?","India-ல LFP ஏன் கஷ்டம்?"],["What about PLI?","PLI என்ன ஆச்சு?"],["What is the margin?","Margin எவ்வளவு?"],["Is it expensive?","Valuation எப்படி?"],["Should I buy?","வாங்கலாமா?"]];
+function norm(s){return (s||"").toLowerCase().replace(/[?.!,]/g," ");}
+function answer(q){var n=norm(q);
+ if(/\b(buy|sell|hold|invest in|target price)\b/.test(n)||/வாங்கலாமா|விக்கலாமா|வாங்கணுமா/.test(q)) return {a:NOADV,clip:"noAdvice"};
+ var best=null,bs=0;KB.forEach(function(e){var sc=0;e.k.forEach(function(k){if(n.indexOf(k.toLowerCase())>=0)sc+=k.length>4?2:1;});if(e.preferOverMetric&&sc)sc+=0.5;if(sc>bs){bs=sc;best=e;}});
+ return best?{a:best.a,tab:best.tab}:{a:FALLBACK,clip:"fallback"};}
+var chat=$("chat");
+function addMsg(who,html){var d=document.createElement("div");d.className="msg "+who;d.innerHTML=html;chat.appendChild(d);chat.scrollTop=chat.scrollHeight;return d;}
+function ask(q){if(!q.trim())return;addMsg("u",q);var r=answer(q);var txt=r.a[LANG];
+ var d=addMsg("a",txt+(r.tab?'<div><button class="btn" type="button" style="margin-top:6px;font-size:12px;padding:2px 10px">'+h("Open related tab","அந்த tab-ஐ திறங்க")+'</button></div>':""));
+ if(r.tab) d.querySelector("button").onclick=function(){showTab(r.tab);};
+ speak(txt,r.clip);}
+$("askBtn").onclick=function(){ask($("q").value);$("q").value="";};
+$("q").onkeydown=function(e){if(e.key=="Enter"){ask($("q").value);$("q").value="";}};
+function renderSug(){put("sugs",SUG.map(function(s){return '<button type="button">'+(LANG=="ta"?s[1]:s[0])+'</button>';}).join(""));
+ document.querySelectorAll("#sugs button").forEach(function(b){b.onclick=function(){ask(b.textContent);};});
+ $("q").placeholder=LANG=="ta"?"கேளுங்க: LFP ஏன் கஷ்டம்?":"Ask: Why is LFP hard in India?";}
+window.assistLang=function(l){renderSug();if(rec)rec.lang=l=="ta"?"ta-IN":"en-IN";};
+var RATE=0.8,synth=window.speechSynthesis,curAudio=null;
+try{var sr=parseFloat(localStorage.getItem("exd_rate"));if(sr)RATE=sr;}catch(e){}
+function setRate(v){RATE=v;$("spd").value=v;$("spdV").textContent=v.toFixed(2).replace(/0$/,"")+"×";try{localStorage.setItem("exd_rate",v);}catch(e){}}
+$("spd").oninput=function(){setRate(parseFloat(this.value));};
+document.querySelectorAll("[data-spd]").forEach(function(b){b.onclick=function(){setRate(parseFloat(b.dataset.spd));};});
+function pickVoice(){if(!synth)return null;var vs=synth.getVoices(),want=LANG=="ta"?"ta":"en-IN";
+ return vs.find(function(v){return v.lang.replace("_","-").indexOf(want)==0;})||(LANG=="en"?vs.find(function(v){return /^en/.test(v.lang);}):null);}
+function speak(text,clip){stopSpeak();
+ if(clip&&CLIPS[clip]&&CLIPS[clip][LANG]){curAudio=new Audio(CLIPS[clip][LANG]);curAudio.playbackRate=RATE;curAudio.play().catch(function(){});return;}
+ if(!synth){put("voiceNote",h("This browser can't read aloud.","இந்த browser படிக்காது."));return;}
+ var v=pickVoice();if(LANG=="ta"&&!v)put("voiceNote",h("No Tamil voice on this device — reading may be skipped.","இந்த device-ல தமிழ் voice இல்ல."));
+ var parts=String(text).replace(/<[^>]+>/g," ").split(/(?<=[.!?])\s+/).filter(function(x){return x.trim();});
+ parts.forEach(function(p){var u=new SpeechSynthesisUtterance(p.replace(/₹/g,"rupees ").replace(/×/g," times"));u.rate=RATE;u.lang=LANG=="ta"?"ta-IN":"en-IN";if(v)u.voice=v;synth.speak(u);});}
+function stopSpeak(){if(synth)synth.cancel();if(curAudio){curAudio.pause();curAudio=null;}}
+$("stopBtn").onclick=stopSpeak;
+$("pauseBtn").onclick=function(){if(!synth)return;if(synth.paused)synth.resume();else synth.pause();};
+$("readTab").onclick=function(){var p=document.querySelector("section.pane.on");if(!p)return;
+ var txt=Array.from(p.querySelectorAll("h2,.sub,ul.b li,.detail,p.note")).filter(function(e){return e.offsetParent!==null;}).map(function(e){return e.innerText;}).join(". ");speak(txt);};
+$("vbub").onclick=function(){showTab("t-assist");$("q").focus();};
+var REC=window.SpeechRecognition||window.webkitSpeechRecognition,rec=null,listening=false,heard="",silTimer=null;
+function waitMs(){return parseInt($("waitSel").value,10);}
+function finishListen(){if(!listening)return;listening=false;try{rec.stop();}catch(e){}$("micBtn").textContent="🎤";if(heard.trim()){ask(heard.trim());}heard="";}
+if(REC){rec=new REC();rec.continuous=true;rec.interimResults=true;rec.lang="en-IN";
+ rec.onresult=function(e){var s="";for(var i=0;i<e.results.length;i++)s+=e.results[i][0].transcript;heard=s;$("q").value=s;clearTimeout(silTimer);if(waitMs()>0)silTimer=setTimeout(finishListen,waitMs());};
+ rec.onend=function(){if(listening){try{rec.start();}catch(e){}}};
+ rec.onerror=function(e){if(e.error=="not-allowed"||e.error=="service-not-allowed"){listening=false;$("micBtn").textContent="🎤";put("voiceNote",h("Microphone is blocked here. Voice input works when this file is opened from GitHub Pages in Chrome or Edge; read-aloud works everywhere.","இங்க mic block. GitHub Pages-ல Chrome/Edge-ல திறந்தா voice input வேலை செய்யும்; படிக்கிறது எல்லா இடத்துலயும் வேலை செய்யும்."));}};}
+$("micBtn").onclick=function(){if(!rec){put("voiceNote",h("Voice input isn't supported in this browser. Type your question.","இந்த browser-ல voice input இல்ல. Type பண்ணுங்க."));return;}
+ if(listening){finishListen();return;}stopSpeak();heard="";listening=true;rec.lang=LANG=="ta"?"ta-IN":"en-IN";try{rec.start();}catch(e){}
+ $("micBtn").textContent=waitMs()>0?"⏺":(LANG=="ta"?"முடிஞ்சது":"Done");};
+
+/* ---------- SOCRATES QUIZ ---------- */
+var QZ=[[A("What lifted Exide's EBITDA margin to 12.1%?","Exide EBITDA margin 12.1%-க்கு ஏற காரணம்?"),[A("Li-ion cell sales","Li-ion cell sales"),A("Cost cuts, price hikes and a low base","Cost குறைப்பு, விலை ஏற்றம், low base"),A("PLI subsidy","PLI subsidy")],1,A("Cells aren't selling yet and Exide has no PLI; the core business did the work.","Cells இன்னும் விற்கல, PLI இல்ல; core business தான் காரணம்.")],
+ [A("What is the status of Exide's Bengaluru cell plant?","Exide Bengaluru cell plant நிலை என்ன?"),[A("Commissioned, not yet invoicing","Commission ஆச்சு, invoice இன்னும் இல்ல"),A("Still under construction","இன்னும் கட்டுது"),A("Selling at full capacity","Full capacity-ல விக்குது")],0,A("Commissioned 23 Sep 2026; first LFP revenue targeted Q3 FY27.","23 Sep 2026 commission; முதல் LFP revenue Q3 FY27.")],
+ [A("What is SVOLT to Exide?","Exide-க்கு SVOLT என்ன?"),[A("A joint venture partner","JV partner"),A("A technology licensor","Technology licence கொடுத்தவங்க"),A("A customer","Customer")],1,A("Licence for 4–5 cell products — not a JV.","4–5 cell product licence — JV இல்ல.")],
+ [A("Why is LFP hard to make in India?","India-ல LFP ஏன் கஷ்டம்?"),[A("No demand","Demand இல்ல"),A("Materials and know-how sit mostly in China","Material, know-how பெரும்பாலும் China-ல"),A("Government bans it","அரசு தடை")],1,A("China makes ~95% of LFP cathode and controls the technology exports.","LFP cathode-ல ~95% China; technology export-ஐயும் கட்டுப்படுத்துது.")],
+ [A("Himadri makes LFP cathode in India. What does it still import?","Himadri India-ல LFP cathode செய்யுது. இன்னும் என்ன import?"),[A("Battery-grade lithium carbonate","Battery-grade lithium carbonate"),A("Iron ore","Iron ore"),A("Nothing","எதுவும் இல்ல")],0,A("India has almost no lithium refining yet.","India-ல lithium refining கிட்டத்தட்ட இல்ல.")],
+ [A("Exide is outside the PLI-ACC scheme. One upside?","Exide PLI-க்கு வெளியே. ஒரு நன்மை?"),[A("Higher subsidy","அதிக subsidy"),A("No local-content deadlines or penalties","Local-content deadline, penalty இல்ல"),A("Free land","Free land")],1,A("It loses the subsidy but sets its own localisation pace.","Subsidy இல்ல, ஆனா தன் வேகத்துல localise பண்ணலாம்.")],
+ [A("Which Weinstein stage is the stock price in?","Stock price எந்த Weinstein stage?"),[A("Stage 2 advance","Stage 2"),A("Stage 4 decline","Stage 4 இறக்கம்"),A("Stage 3 top","Stage 3")],1,A("A results bounce, but no base yet → Conviction capped at 55.","Results bounce, base இன்னும் இல்ல → Conviction 55 cap.")]];
+var qi=0,qs=0,qans=false;
+function qRender(){var q=QZ[qi];if(!q){put("quiz",'<h3>'+h("Done!","முடிஞ்சது!")+' '+qs+'/'+QZ.length+'</h3><button class="btn" id="qre" type="button">'+h("Try again","மறுபடி")+'</button>');$("qre").onclick=function(){qi=0;qs=0;qRender();};qScore();return;}
+ qans=false;put("quiz",'<p class="note">'+(qi+1)+' / '+QZ.length+'</p><h3>'+h(q[0].en,q[0].ta)+'</h3>'+q[1].map(function(o,i){return '<button class="opt" type="button" data-i="'+i+'">'+h(o.en,o.ta)+'</button>';}).join("")+'<div id="qexp"></div>');
+ document.querySelectorAll("#quiz .opt").forEach(function(b){b.onclick=function(){if(qans)return;qans=true;var i=+b.dataset.i;b.classList.add(i==q[2]?"ok":"no");document.querySelectorAll("#quiz .opt")[q[2]].classList.add("ok");if(i==q[2])qs++;
+  put("qexp",'<p style="font-weight:800">'+(i==q[2]?h("Right!","சரி!"):h("Not quite.","கொஞ்சம் மிஸ்."))+' '+h(q[3].en,q[3].ta)+'</p><button class="btn" id="qn" type="button">'+h("Next","அடுத்தது")+' →</button>');$("qn").onclick=function(){qi++;qRender();};qScore();};});qScore();}
+function qScore(){var s=title(8,22,"Your score","உங்க score",16);for(var i=0;i<QZ.length;i++){var x=30+i*38,fill=i<qi||(i==qi&&qans)?(i<qs?C.good:C.acc2):C.soft;s+='<rect x="'+x+'" y="'+(150-(i+1)*14)+'" width="30" height="'+((i+1)*14)+'" rx="4" fill="'+fill+'" stroke="'+C.acc+'"/>';}
+ s+='<text x="30" y="185" font-size="22" font-weight="800" class="mono">'+qs+' / '+QZ.length+'</text><text x="320" y="80" font-size="44" text-anchor="middle">🦉</text>';put("f-qscore",S(360,200,s,260));}
+qRender();
+(function(){var l="en",tb="t-dash";try{l=localStorage.getItem("exd_lang")||"en";tb=localStorage.getItem("exd_tab")||"t-dash";}catch(e){}
+ setRate(RATE);setLang(l);if(document.getElementById(tb))showTab(tb);addMsg("a",GREET[LANG]);})();
+</script>
