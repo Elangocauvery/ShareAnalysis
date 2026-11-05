@@ -1,0 +1,585 @@
+<title>Fractal Analytics Q2 FY27</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&family=Inter:wght@500;600;700;800&family=IBM+Plex+Mono:wght@500;600&family=Noto+Sans+Tamil:wght@500;700;800&display=swap">
+<style>
+/* Layout: sticky orange-cream header with scrollable tab rail; each tab = graphic first, short bullets after. Single light-orange look by design (CB house style). */
+:root{
+  --bg:#FFF3E4; --panel:#FFFAF3; --line:#F1C99A; --accent:#F9B66B; --accent-soft:#FDE3C2; --strong:#D9650A;
+  --ink:#140C02; --ink2:#3A2A16; --good:#17803D; --bad:#C2321F; --blue:#1C5BA6; --blue-soft:#DCEAFB; --warn:#B7791F;
+  --f-display:"Playfair Display",Georgia,serif; --f-body:"Inter","Noto Sans Tamil",system-ui,sans-serif; --f-mono:"IBM Plex Mono",ui-monospace,monospace;
+  color-scheme:light;
+}
+html,body{background:var(--bg);color:var(--ink)}
+body{font-family:var(--f-body);font-weight:600;font-size:15px;line-height:1.5;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:0 90px}
+body.ta{font-family:"Noto Sans Tamil","Inter",system-ui,sans-serif}
+body.ta .en,body:not(.ta) .ta{display:none!important}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bg)}
+h1,h2,h3{text-wrap:balance;margin:0}
+h1{font-family:var(--f-display);font-size:clamp(24px,4vw,36px);font-weight:800;line-height:1.1}
+h2{font-family:var(--f-display);font-size:22px;font-weight:800;margin-bottom:6px}
+h3{font-size:15px;font-weight:800;letter-spacing:.02em}
+.wrap{max-width:1180px;margin:0 auto}
+header.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:9;background:var(--bg);padding-top:12px;border-bottom:2px solid var(--line)}
+.hrow{display:flex;flex-wrap:wrap;gap:10px 18px;align-items:center;justify-content:space-between}
+.eyebrow{font-family:var(--f-mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--strong);font-weight:600}
+.slogan{font-weight:800;color:var(--ink2);font-size:13px}
+.ctrls{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+button,.btn{font:inherit;font-weight:800;cursor:pointer;border:2px solid var(--strong);background:var(--panel);color:var(--ink);border-radius:999px;padding:6px 14px}
+button:hover{background:var(--accent-soft)}
+button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid var(--blue);outline-offset:2px}
+.lang button.on{background:var(--accent)}
+nav.tabs{display:flex;gap:6px;overflow-x:auto;padding:10px 0;scrollbar-width:thin}
+nav.tabs button{white-space:nowrap;border-radius:8px;border-width:2px;border-color:var(--line);padding:6px 11px;font-size:13px}
+nav.tabs button.on{background:var(--accent);border-color:var(--strong)}
+section.tab{display:none;padding-top:18px}
+section.tab.on{display:block}
+.lede{color:var(--ink2);max-width:72ch;margin:4px 0 14px}
+.grid{display:grid;gap:14px}
+.g2{grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr))}
+.g3{grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr))}
+.g4{grid-template-columns:repeat(auto-fit,minmax(min(100%,230px),1fr))}
+.card{background:var(--panel);border:2px solid var(--line);border-radius:12px;padding:14px;min-width:0}
+.card h3{margin-bottom:8px}
+.kpi .v{font-family:var(--f-mono);font-size:26px;font-weight:600;font-variant-numeric:tabular-nums}
+.kpi .l{font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--ink2)}
+.kpi .d{font-size:13px;font-weight:800}
+.up{color:var(--good)} .dn{color:var(--bad)} .nt{color:var(--warn)}
+ul.b{margin:6px 0 0;padding-left:18px} ul.b li{margin:3px 0}
+.svgbox{overflow-x:auto} .svgbox svg{display:block;width:100%;height:auto}
+.svgbox.wide svg{min-width:860px}
+svg text{font-family:var(--f-body);fill:var(--ink);font-weight:700}
+svg .mono{font-family:var(--f-mono)}
+table{border-collapse:collapse;width:100%;font-variant-numeric:tabular-nums}
+.tbl{overflow-x:auto}
+th,td{padding:7px 9px;border-bottom:1px solid var(--line);text-align:right;white-space:nowrap}
+th:first-child,td:first-child{text-align:left;white-space:normal}
+thead th{background:var(--accent-soft);font-size:13px}
+.pill{display:inline-block;border-radius:999px;padding:2px 10px;font-size:12px;font-weight:800;border:2px solid currentColor}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.subtabs{display:flex;flex-wrap:wrap;gap:6px;margin:6px 0 12px}
+.subtabs button{border-radius:8px;font-size:13px;border-color:var(--line)}
+.subtabs button.on{background:var(--accent);border-color:var(--strong)}
+.sub{display:none}.sub.on{display:block}
+.detail{margin-top:10px;background:var(--blue-soft);border:2px solid var(--blue);border-radius:10px;padding:10px 12px}
+.verdict{background:var(--accent-soft);border:3px solid var(--strong);border-radius:14px;padding:14px 16px}
+.verdict .big{font-family:var(--f-display);font-size:24px;font-weight:800}
+.note{font-size:12.5px;color:var(--ink2)}
+.chk{display:flex;gap:10px;align-items:flex-start;padding:7px 0;border-bottom:1px dashed var(--line)}
+.chk input{width:20px;height:20px;margin-top:2px;accent-color:var(--strong);flex:none}
+.chk .dt{font-size:12.5px;color:var(--blue);font-weight:700}
+.qopt{display:block;width:100%;text-align:left;border-radius:10px;margin:5px 0;border-color:var(--line)}
+.qopt.right{background:#D8F1DF;border-color:var(--good)} .qopt.wrong{background:#F9DAD4;border-color:var(--bad)}
+input[type=text]{font:inherit;padding:8px 10px;border:2px solid var(--line);border-radius:10px;background:#fff;color:var(--ink);min-width:0;flex:1}
+.assist-ans{background:#fff;border:2px solid var(--line);border-radius:12px;padding:12px;margin-top:10px;min-height:60px}
+/* floating CB badge + voice bubble */
+.cb-badge{position:fixed;right:calc(14px + env(safe-area-inset-right,0px));bottom:calc(14px + env(safe-area-inset-bottom,0px));z-index:20;width:52px;height:52px;border-radius:50%;background:var(--accent);border:3px solid var(--strong);display:grid;place-items:center;font-family:var(--f-display);font-weight:800;font-size:18px;color:var(--ink);cursor:pointer;animation:blink 1.6s ease-in-out infinite;padding:0}
+@keyframes blink{50%{box-shadow:0 0 0 7px rgba(217,101,10,.25);opacity:.75}}
+@media (prefers-reduced-motion:reduce){.cb-badge{animation:none}}
+.cb-pop{position:fixed;right:calc(14px + env(safe-area-inset-right,0px));bottom:calc(74px + env(safe-area-inset-bottom,0px));z-index:21;max-width:min(360px,calc(100vw - 32px));background:var(--panel);border:2px solid var(--strong);border-radius:12px;padding:10px 12px;font-size:12.5px;display:none}
+.cb-badge:hover+.cb-pop,.cb-pop.show{display:block}
+.va-bubble{position:fixed;right:calc(10px + env(safe-area-inset-right,0px));bottom:calc(76px + env(safe-area-inset-bottom,0px));z-index:19;font-size:12px;padding:6px 10px;background:var(--blue-soft);border-color:var(--blue)}
+</style>
+
+<header class="top"><div class="wrap">
+  <div class="hrow">
+    <div>
+      <div class="eyebrow"><span class="en">CB Research · Q2 FY27 (Jul–Sep 2026) · NSE: FRACTAL · BSE: 544700</span><span class="ta">CB Research · Q2 FY27 (Jul–Sep 2026) · NSE: FRACTAL</span></div>
+      <h1><span class="en">Fractal Analytics</span><span class="ta">Fractal Analytics</span></h1>
+      <div class="slogan"><span class="en">Vanakam! · Know before you own</span><span class="ta">வணக்கம்! · புரிஞ்சு வாங்குங்க!</span></div>
+    </div>
+    <div class="ctrls">
+      <div class="lang"><button id="bEN" class="on" onclick="setLang('en')">English</button> <button id="bTA" onclick="setLang('ta')">தமிழ்</button></div>
+      <button id="readTab" onclick="readTab()"><span class="en">🔊 Read this tab</span><span class="ta">🔊 இந்த tab-ஐ படிங்க</span></button>
+      <button onclick="stopSpeak()" aria-label="Stop"><span class="en">■ Stop</span><span class="ta">■ நிறுத்து</span></button>
+    </div>
+  </div>
+  <nav class="tabs" id="tabnav" aria-label="Sections"></nav>
+</div></header>
+
+<main class="wrap" id="main"></main>
+
+<button class="btn va-bubble" onclick="showTab('assist')"><span class="en">🎙 Voice Assist</span><span class="ta">🎙 Voice Assist</span></button>
+<button class="cb-badge" id="cbBadge" aria-label="Disclaimer" onclick="document.getElementById('cbPop').classList.toggle('show')">CB</button>
+<div class="cb-pop" id="cbPop"><span class="en"><b>Disclaimer:</b> CB Research (Cauvery Business Research) is an education platform, not SEBI-registered. Nothing here is a buy, sell or hold recommendation. Figures are from company results (Q2 FY27, 3 Nov 2026) and public market data; prices are approximate as of 4–5 Nov 2026. Do your own research.</span><span class="ta"><b>Disclaimer:</b> CB Research ஒரு education platform — SEBI-registered இல்ல. இதுல எதுவும் buy / sell / hold recommendation இல்ல. Numbers company Q2 FY27 results (3 Nov 2026)-லிருந்து; price 4–5 Nov 2026 அளவுல approximate. நீங்களே research பண்ணுங்க.</span></div>
+
+<script>
+/* ===================== helpers ===================== */
+const L=(en,ta)=>`<span class="en">${en}</span><span class="ta">${ta??en}</span>`;
+const ST=(x,y,en,ta,a='')=>`<text x="${x}" y="${y}" class="en" ${a}>${en}</text><text x="${x}" y="${y}" class="ta" ${a}>${ta??en}</text>`;
+const C={ink:'#140C02',ink2:'#3A2A16',accent:'#F9B66B',soft:'#FDE3C2',strong:'#D9650A',good:'#17803D',bad:'#C2321F',blue:'#1C5BA6',bsoft:'#DCEAFB',line:'#F1C99A',panel:'#FFFAF3',warn:'#B7791F'};
+const ul=items=>`<ul class="b">${items.map(i=>`<li>${L(i[0],i[1])}</li>`).join('')}</ul>`;
+const pct=(a,b)=>((a/b-1)*100);
+const sg=v=>(v>=0?'+':'')+v.toFixed(1)+'%';
+const cls=v=>v>=0?'up':'dn';
+const card=(t,body,extra='')=>`<div class="card ${extra}">${t?`<h3>${t}</h3>`:''}${body}</div>`;
+
+/* vertical bar chart (one series), scaled */
+function vbars(d,o={}){const W=o.w||520,H=o.h||250,pl=40,pb=48,pt=26,max=o.max||(m=>{const st=Math.pow(10,Math.floor(Math.log10(m)))/2;return Math.ceil(m/st)*st})(Math.max(...d.map(x=>x.v))*1.1),min=Math.min(0,...d.map(x=>x.v));const span=max-min;const bw=(W-pl-10)/d.length;const y=v=>pt+(H-pt-pb)*(1-(v-min)/span);let s=`<svg viewBox="0 0 ${W} ${H}" role="img">`;
+ for(let i=0;i<=4;i++){const v=min+span*i/4;s+=`<line x1="${pl}" x2="${W-6}" y1="${y(v)}" y2="${y(v)}" stroke="${C.line}" stroke-width="1"/><text x="${pl-5}" y="${y(v)+4}" font-size="10" text-anchor="end" class="mono">${(o.tick||(v=>Math.round(v)))(v)}</text>`}
+ d.forEach((x,i)=>{const cx=pl+bw*i+bw*0.15,w=bw*0.7,y0=y(Math.max(0,x.v)),h=Math.abs(y(x.v)-y(0));s+=`<rect x="${cx}" y="${y0}" width="${w}" height="${Math.max(h,1)}" rx="3" fill="${x.c||C.accent}" stroke="${C.strong}" stroke-width="${x.hi?2.5:1}"/>`;
+ s+=`<text x="${cx+w/2}" y="${x.v>=0?y0-6:y0+h+14}" font-size="12" text-anchor="middle" class="mono">${(o.fmt||(v=>v))(x.v)}</text>`;s+=ST(cx+w/2,H-pb+18,x.l,x.lt,`font-size="11" text-anchor="middle"`);if(x.l2)s+=ST(cx+w/2,H-pb+33,x.l2,x.l2t,`font-size="10" text-anchor="middle" fill="${C.ink2}"`)});
+ return s+`<line x1="${pl}" x2="${W-6}" y1="${y(0)}" y2="${y(0)}" stroke="${C.ink}" stroke-width="1.5"/></svg>`}
+
+/* horizontal bars, diverging around 0 */
+function hbars(d,o={}){const W=o.w||520,rh=34,pl=o.pl||150,H=d.length*rh+30;const mx=Math.max(...d.map(x=>Math.abs(x.v)))*1.15;const neg=d.some(x=>x.v<0);const zero=neg?pl+(W-pl-60)*0.3:pl;const sc=(W-60-zero)/mx;let s=`<svg viewBox="0 0 ${W} ${H}" role="img">`;
+ d.forEach((x,i)=>{const yy=14+i*rh;const w=Math.abs(x.v)*sc;const xx=x.v>=0?zero:zero-w;s+=ST(6,yy+17,x.l,x.lt,`font-size="12"`);s+=`<rect x="${xx}" y="${yy+4}" width="${Math.max(w,2)}" height="${rh-12}" rx="4" fill="${x.c||(x.v>=0?C.accent:'#F2A99E')}" stroke="${x.v>=0?C.strong:C.bad}"/>`;s+=`<text x="${x.v>=0?xx+w+6:xx-6}" y="${yy+19}" font-size="12" class="mono" text-anchor="${x.v>=0?'start':'end'}" fill="${x.v>=0?C.ink:C.bad}">${(o.fmt||sg)(x.v)}</text>`});
+ return s+`<line x1="${zero}" x2="${zero}" y1="8" y2="${H-10}" stroke="${C.ink}" stroke-width="1.5"/></svg>`}
+
+/* donut */
+function donut(d,center,ct,o={}){const R=o.r||80,r=R*0.58,cx=R+10,cy=R+10,W=o.w||420;let a=-Math.PI/2,tot=d.reduce((s,x)=>s+x.v,0);let s=`<svg viewBox="0 0 ${W} ${2*R+20}" role="img">`;
+ d.forEach(x=>{const b=a+2*Math.PI*x.v/tot;const L1=b-a>Math.PI?1:0;const p=(rr,t)=>[cx+rr*Math.cos(t),cy+rr*Math.sin(t)];const [x1,y1]=p(R,a),[x2,y2]=p(R,b),[x3,y3]=p(r,b),[x4,y4]=p(r,a);s+=`<path d="M${x1} ${y1}A${R} ${R} 0 ${L1} 1 ${x2} ${y2}L${x3} ${y3}A${r} ${r} 0 ${L1} 0 ${x4} ${y4}Z" fill="${x.c}" stroke="#fff" stroke-width="2"/>`;a=b});
+ s+=ST(cx,cy-2,center,ct,`text-anchor="middle" font-size="15"`);if(o.sub)s+=ST(cx,cy+16,o.sub,o.subt,`text-anchor="middle" font-size="11" fill="${C.ink2}"`);
+ d.forEach((x,i)=>{const ly=18+i*24;s+=`<rect x="${2*R+34}" y="${ly-11}" width="14" height="14" rx="3" fill="${x.c}" stroke="${C.ink}" stroke-width=".8"/>`+ST(2*R+54,ly,x.l+' — '+x.f,(x.lt||x.l)+' — '+x.f,`font-size="12"`)});return s+`</svg>`}
+
+/* line chart, multiple series on same labels */
+function lineChart(labels,series,o={}){const W=o.w||560,H=o.h||250,pl=44,pr=16,pt=22,pb=34;const all=series.flatMap(s=>s.v.filter(v=>v!=null));const max=o.max??Math.max(...all)*1.12,min=o.min??Math.min(0,...all);const X=i=>pl+(W-pl-pr)*i/(labels.length-1),Y=v=>pt+(H-pt-pb)*(1-(v-min)/(max-min));let s=`<svg viewBox="0 0 ${W} ${H}" role="img">`;
+ for(let i=0;i<=4;i++){const v=min+(max-min)*i/4;s+=`<line x1="${pl}" x2="${W-pr}" y1="${Y(v)}" y2="${Y(v)}" stroke="${C.line}"/><text x="${pl-5}" y="${Y(v)+4}" font-size="10" text-anchor="end" class="mono">${(o.tick||(v=>Math.round(v)))(v)}</text>`}
+ labels.forEach((l,i)=>s+=`<text x="${X(i)}" y="${H-12}" font-size="10.5" text-anchor="middle">${l}</text>`);
+ series.forEach(se=>{const pts=se.v.map((v,i)=>v==null?null:[X(i),Y(v)]).filter(Boolean);if(se.area)s+=`<path d="M${pts[0][0]} ${Y(min)}L${pts.map(p=>p.join(' ')).join('L')}L${pts[pts.length-1][0]} ${Y(min)}Z" fill="${se.c}" fill-opacity=".14"/>`;s+=`<polyline points="${pts.map(p=>p.join(',')).join(' ')}" fill="none" stroke="${se.c}" stroke-width="3"/>`;
+ se.v.forEach((v,i)=>{if(v==null)return;const last=i===se.v.length-1;s+=`<circle cx="${X(i)}" cy="${Y(v)}" r="${last?6:4}" fill="${last?se.c:'#fff'}" stroke="${se.c}" stroke-width="2.5"/>`;if(o.labels!==false)s+=`<text x="${X(i)}" y="${Y(v)-10}" font-size="11" text-anchor="middle" class="mono">${(se.fmt||(v=>v))(v)}</text>`})});
+ if(series.length>1)series.forEach((se,i)=>{s+=`<rect x="${pl+i*150}" y="2" width="14" height="5" fill="${se.c}"/>`+ST(pl+20+i*150,9,se.n,se.nt,`font-size="11"`)});return s+`</svg>`}
+
+/* semicircle gauge */
+function gauge(v,max,label,lt,o={}){const W=280,H=170,cx=140,cy=140,R=110;const ang=t=>Math.PI*(1-t);let s=`<svg viewBox="0 0 ${W} ${H}" role="img">`;const bands=o.bands||[[0,.4,'#F6C1B7'],[.4,.65,'#FCE2A6'],[.65,1,'#BFE6C9']];
+ bands.forEach(([a,b,c])=>{const p=t=>[cx+R*Math.cos(ang(t)),cy-R*Math.sin(ang(t))];const [x1,y1]=p(a),[x2,y2]=p(b);s+=`<path d="M${x1} ${y1}A${R} ${R} 0 0 1 ${x2} ${y2}" stroke="${c}" stroke-width="26" fill="none"/>`});
+ const t=v/max,px=cx+(R-6)*Math.cos(ang(t)),py=cy-(R-6)*Math.sin(ang(t));s+=`<line x1="${cx}" y1="${cy}" x2="${px}" y2="${py}" stroke="${C.ink}" stroke-width="4" stroke-linecap="round"/><circle cx="${cx}" cy="${cy}" r="8" fill="${C.strong}"/>`;
+ s+=`<text x="${cx}" y="${cy-34}" font-size="28" text-anchor="middle" class="mono">${o.disp||v}</text>`+ST(cx,cy+24,label,lt,`font-size="12" text-anchor="middle"`);return s+`</svg>`}
+
+/* progress ring */
+function ring(p,txt,size=90){const r=size/2-9,c=2*Math.PI*r;return `<svg viewBox="0 0 ${size} ${size}" width="${size}" height="${size}" role="img"><circle cx="${size/2}" cy="${size/2}" r="${r}" stroke="${C.soft}" stroke-width="10" fill="none"/><circle cx="${size/2}" cy="${size/2}" r="${r}" stroke="${C.strong}" stroke-width="10" fill="none" stroke-dasharray="${c*p} ${c}" transform="rotate(-90 ${size/2} ${size/2})" stroke-linecap="round"/><text x="${size/2}" y="${size/2+5}" font-size="15" text-anchor="middle" class="mono">${txt}</text></svg>`}
+
+/* pictogram icons (simple drawn symbols) */
+const IC={
+ person:(x,y,c=C.blue)=>`<circle cx="${x}" cy="${y-7}" r="6" fill="${c}"/><path d="M${x-10} ${y+12}q10-16 20 0z" fill="${c}"/>`,
+ chip:(x,y,c=C.strong)=>`<rect x="${x-9}" y="${y-9}" width="18" height="18" rx="3" fill="none" stroke="${c}" stroke-width="2.5"/><rect x="${x-4}" y="${y-4}" width="8" height="8" fill="${c}"/><path d="M${x-13} ${y-4}h4M${x-13} ${y+4}h4M${x+9} ${y-4}h4M${x+9} ${y+4}h4M${x-4} ${y-13}v4M${x+4} ${y-13}v4M${x-4} ${y+9}v4M${x+4} ${y+9}v4" stroke="${c}" stroke-width="2"/>`,
+ flask:(x,y,c=C.good)=>`<path d="M${x-4} ${y-12}h8v8l7 13q1 3-2 3h-18q-3 0-2-3l7-13z" fill="none" stroke="${c}" stroke-width="2.5"/><path d="M${x-8} ${y+6}h16l2 4h-20z" fill="${c}"/>`,
+ link:(x,y,c=C.blue)=>`<circle cx="${x-6}" cy="${y}" r="7" fill="none" stroke="${c}" stroke-width="2.5"/><circle cx="${x+6}" cy="${y}" r="7" fill="none" stroke="${c}" stroke-width="2.5"/>`,
+ cube:(x,y,c=C.strong)=>`<path d="M${x} ${y-12}l11 6v12l-11 6l-11-6v-12z M${x-11} ${y-6}l11 6l11-6 M${x} ${y}v12" fill="none" stroke="${c}" stroke-width="2.3"/>`,
+ cart:(x,y,c=C.strong)=>`<path d="M${x-12} ${y-9}h4l4 13h12l3-9h-17" fill="none" stroke="${c}" stroke-width="2.5"/><circle cx="${x-2}" cy="${y+9}" r="2.5" fill="${c}"/><circle cx="${x+8}" cy="${y+9}" r="2.5" fill="${c}"/>`,
+ heart:(x,y,c=C.bad)=>`<path d="M${x} ${y+10}l-10-10a6 6 0 0 1 10-7a6 6 0 0 1 10 7z" fill="${c}"/><path d="M${x-7} ${y-1}h4l2-4l3 7l2-3h4" stroke="#fff" stroke-width="1.8" fill="none"/>`,
+ bank:(x,y,c=C.blue)=>`<path d="M${x-12} ${y-4}l12-8l12 8z" fill="${c}"/><path d="M${x-9} ${y-2}v10M${x-3} ${y-2}v10M${x+3} ${y-2}v10M${x+9} ${y-2}v10" stroke="${c}" stroke-width="2.5"/><rect x="${x-12}" y="${y+8}" width="24" height="3" fill="${c}"/>`,
+ tower:(x,y,c=C.ink2)=>`<path d="M${x} ${y-8}l-7 20M${x} ${y-8}l7 20M${x-4} ${y+3}h8" stroke="${c}" stroke-width="2.3" fill="none"/><path d="M${x-8} ${y-14}q8-6 16 0M${x-12} ${y-18}q12-9 24 0" stroke="${c}" stroke-width="2" fill="none"/>`,
+ globe:(x,y,c=C.blue)=>`<circle cx="${x}" cy="${y}" r="11" fill="none" stroke="${c}" stroke-width="2.3"/><ellipse cx="${x}" cy="${y}" rx="5" ry="11" fill="none" stroke="${c}" stroke-width="1.8"/><path d="M${x-11} ${y}h22" stroke="${c}" stroke-width="1.8"/>`,
+ coin:(x,y,c=C.warn)=>`<circle cx="${x}" cy="${y}" r="11" fill="${C.accent}" stroke="${c}" stroke-width="2.5"/><text x="${x}" y="${y+5}" font-size="13" text-anchor="middle">₹</text>`,
+ bolt:(x,y,c=C.strong)=>`<path d="M${x+3} ${y-13}l-10 15h7l-3 11l10-15h-7z" fill="${c}"/>`,
+ factory:(x,y,c=C.ink2)=>`<path d="M${x-12} ${y+10}v-12l7 4v-4l7 4v-4l7 4v-6h3v14z" fill="${c}"/>`,
+ grad:(x,y,c=C.blue)=>`<path d="M${x-13} ${y-3}l13-7l13 7l-13 7z" fill="${c}"/><path d="M${x-7} ${y}v6q7 5 14 0v-6" fill="none" stroke="${c}" stroke-width="2"/>`
+};
+const icon=(k,x,y,c)=>IC[k](x,y,c);
+
+/* ===================== DATA ===================== */
+const Q={lab:['Q2 FY27','Q1 FY27','Q2 FY26'],
+ rev:[956.5,912.5,798.5],gp:[420.5,417.0,369.0],gm:[44.0,45.7,46.2],ebitda:[154.9,153.7,119.5],em:[16.2,16.8,15.0],
+ pat:[79.2,72.3,33.2],pm:[8.3,7.9,4.2],patx:[102.4,95.7,null],eps:[4.71,4.09,2.15],ebit:[102.9,null,63.4],exp:[858.9,null,746.6]};
+const TREND={lab:["Q1'26","Q2'26","Q3'26","Q4'26","Q1'27","Q2'27"],rev:[760.5,798.5,854.4,886.3,912.5,956.5],pat:[37.7,33.2,100.1,115.8,72.3,79.2]};
+const VAL={cmp:830,mcap:14300,cash:1727.7,ev:12570,ttmRev:3609.7,ttmPat:367.4,pe:39,ps:4.0,evs:3.5,eve:20,pex:36,lo:696.3,hi:1118,ipo:900};
+
+/* ===================== TABS ===================== */
+const TABS=[
+ ['dash','Dashboard','டாஷ்போர்டு'],['aiit','AI or IT?','AI-ஆ IT-ஆ?'],['bm','Business Model','Business Model'],['seg','Segments','Segments'],
+ ['fin','Financials','Financials'],['met','Metrics','Metrics'],['cf','Cash Flow & Ratios','Cash Flow & Ratios'],['val','Valuations','Valuation'],
+ ['kt','5 Key Takeaways','5 முக்கிய பாடங்கள்'],['why','Share Moves','Share ஏன் நகருது'],['tc','Triggers & Cycle','Triggers & Cycle'],
+ ['pil','6 Pillars','6 தூண்கள்'],['bet','Big Bet: Products','பெரிய Bet: Products'],['vc','AI Value Chain','AI Value Chain'],['swot','SWOT','SWOT'],
+ ['self','Self-Check','Self-Check'],['assist','Cauvery Assist','Cauvery Assist'],['quiz','Cauvery Socrates','Cauvery Socrates'],['av','Analyst View','Analyst View']];
+const R={};
+/* ---------- 1. DASHBOARD ---------- */
+R.dash=()=>{const k=(l,lt,v,d,dc)=>`<div class="card kpi"><div class="l">${L(l,lt)}</div><div class="v">${v}</div><div class="d ${dc}">${d}</div></div>`;
+return `<h2>${L('Q2 FY27 at a glance','Q2 FY27 — ஒரே பார்வையில')}</h2>
+<p class="lede">${L('First-ever $100 million quarter. Profit more than doubled. Gross margin dipped because Fractal hired costly AI engineers ahead of demand.','முதல் முறையா ஒரு quarter-ல $100 million revenue. Profit 2 மடங்குக்கு மேல. ஆனா demand-க்கு முன்னாடியே costly AI engineers-ஐ hire பண்ணதால gross margin கொஞ்சம் இறங்கியிருக்கு.')}</p>
+<div class="grid g4">
+${k('Revenue','Revenue','₹956.5 cr',L('+19.8% YoY · +4.8% QoQ','+19.8% YoY · +4.8% QoQ'),'up')}
+${k('Net profit','Net profit','₹79.2 cr',L('+139% YoY · +9.5% QoQ','+139% YoY · +9.5% QoQ'),'up')}
+${k('Adj. EBITDA margin','Adj. EBITDA margin','16.2%',L('+123 bps YoY · −60 bps QoQ','+123 bps YoY · −60 bps QoQ'),'up')}
+${k('Gross margin','Gross margin','44.0%',L('−225 bps YoY (AI talent build-up)','−225 bps YoY (AI talent hiring)'),'dn')}
+${k('Constant-currency growth','Constant currency growth','10%',L('Weak rupee added ~10 pts','Rupee பலவீனம் ~10 pts சேர்த்தது'),'nt')}
+${k('Net revenue retention','Net revenue retention','115%',L('Zero churn · NPS 76','Churn zero · NPS 76'),'up')}
+${k('Cash + investments','Cash + investments','₹1,728 cr',L('Debt-free; ₹608 cr IPO money unused','Debt இல்ல; ₹608 cr IPO பணம் இன்னும் use ஆகல'),'up')}
+${k('Share price','Share price','~₹830',L('IPO ₹900 · 52-wk ₹696–1,118','IPO ₹900 · 52-wk ₹696–1,118'),'nt')}
+</div>
+<div class="grid g2" style="margin-top:14px">
+${card(L('Six-quarter revenue (₹ cr)','6 quarter revenue (₹ cr)'),`<div class="svgbox">${vbars(TREND.lab.map((l,i)=>({l,v:TREND.rev[i],hi:i===5,c:i===5?C.strong:C.accent})),{fmt:v=>v.toFixed(0)})}</div>`)}
+${card(L('Six-quarter net profit (₹ cr)','6 quarter net profit (₹ cr)'),`<div class="svgbox">${vbars(TREND.lab.map((l,i)=>({l,v:TREND.pat[i],hi:i===5,c:i===5?C.good:'#A9DDB8'})),{fmt:v=>v.toFixed(0)})}</div><p class="note">${L('Q3–Q4 FY26 profit was helped by one-offs; Q2 FY27 is the cleaner run-rate.','Q3–Q4 FY26 profit-ல one-off items இருந்தது; Q2 FY27 தான் clean run-rate.')}</p>`)}
+</div>
+<div class="grid g3" style="margin-top:14px">
+${card(L('CB verdict on your question','உங்க கேள்விக்கு CB பதில்'),`<div class="big" style="font-family:var(--f-display);font-size:20px">${L('AI-native services company','AI-native services company')}</div>${ul([['Work content = AI. Economics = IT services.','வேலை = AI. வருமான முறை = IT services.'],['Only 4% of revenue is products/licences.','Revenue-ல 4% தான் products/licences.']])}<button style="margin-top:8px" onclick="showTab('aiit')">${L('See the 8 tests →','8 tests பாருங்க →')}</button>`)}
+${card(L('CB lenses','CB lenses'),`<div class="chips"><span class="pill" style="color:var(--strong)">6 Pillars 40/60</span><span class="pill" style="color:var(--blue)">CY 63</span><span class="pill" style="color:var(--good)">TG 56</span><span class="pill" style="color:var(--ink)">Conviction 65</span></div>${ul([['Cycle: IT services bottoming; enterprise AI still early.','Cycle: IT services அடிமட்டம்; enterprise AI இன்னும் ஆரம்பம்.'],['Watch: gross margin recovery in Q3.','Q3-ல gross margin திரும்ப ஏறுதான்னு பாருங்க.']])}`)}
+${card(L('Profit grew 7× faster than revenue','Revenue-ஐ விட profit 7 மடங்கு வேகமா வளர்ந்தது'),`<div class="svgbox">${hbars([{l:'Revenue',v:19.8},{l:'Gross profit',v:14.0},{l:'Adj. EBITDA',v:29.6},{l:'Operating EBIT',v:62.3},{l:'Net profit',v:138.6,c:'#A9DDB8'}],{w:420,pl:120})}</div>`)}
+</div>`};
+
+/* ---------- 2. AI or IT ---------- */
+R.aiit=()=>{const tests=[
+ ['What it sells','என்ன விக்கிறாங்க','AI & analytics to change decisions (pricing, demand, drug launch, fraud) — not app maintenance or infra.','AI & analytics வச்சு decisions மாத்துறாங்க (pricing, demand, drug launch, fraud) — app maintenance, infra இல்ல.',2],
+ ['How it bills','எப்படி bill பண்றாங்க','58% of revenue is input-based (people × hours), like IT services. 42% output/outcome-based.','Revenue-ல 58% input-based (ஆட்கள் × நேரம்) — IT services மாதிரி. 42% output/outcome-based.',0],
+ ['Product share','Product பங்கு','Products & licences = 4% of revenue (₹38 cr in Q2). A product company would be 50%+.','Products & licences = revenue-ல 4% (Q2-ல ₹38 cr). Product company-ன்னா 50%+ இருக்கணும்.',0],
+ ['Gross margin','Gross margin','44% — higher than typical IT services, far below software products (70%+).','44% — சாதாரண IT services-ஐ விட அதிகம், software products (70%+)-ஐ விட ரொம்ப கம்மி.',1],
+ ['Own IP & R&D','சொந்த IP & R&D','R&D is 6.3% of revenue (₹60 cr). Owns Cogentiq platform, Asper.ai, Analytics Vidhya, 31.5% of Qure.ai.','R&D revenue-ல 6.3% (₹60 cr). Cogentiq platform, Asper.ai, Analytics Vidhya, Qure.ai-ல 31.5% stake — எல்லாம் சொந்தம்.',2],
+ ['Growth engine','வளர்ச்சி எஞ்சின்','Revenue still tracks headcount: ₹75 lakh per billable person a year (+2%).','Revenue இன்னும் headcount-ஐ பொறுத்து தான்: ஒரு billable நபருக்கு வருஷம் ₹75 lakh (+2%).',0],
+ ['Who brings deals','Deals யார் கொண்டு வர்றாங்க','Frontier labs (Anthropic, OpenAI), Microsoft, AWS, Databricks send leads; AI deals are getting bigger.','Frontier labs (Anthropic, OpenAI), Microsoft, AWS, Databricks leads அனுப்புறாங்க; AI deals பெருசாகுது.',2],
+ ['Label','Label','Exchanges list it as IT–Software. Management says "we are not an IT services player".','Exchange-ல IT–Software-ன்னு தான் list. Management "நாங்க IT services player இல்ல"-ன்னு சொல்றாங்க.',1]];
+ const tot=tests.reduce((s,t)=>s+t[4],0);
+ const row=t=>{const col=t[4]===2?C.blue:t[4]===0?C.strong:C.warn;const tag=t[4]===2?L('AI-like','AI மாதிரி'):t[4]===0?L('IT-services-like','IT services மாதிரி'):L('In between','நடுவுல');return `<div class="chk"><svg width="34" height="34" viewBox="0 0 34 34" style="flex:none"><circle cx="17" cy="17" r="15" fill="${t[4]===2?C.bsoft:t[4]===0?C.soft:'#FCEFC7'}" stroke="${col}" stroke-width="2.5"/><text x="17" y="22" font-size="14" text-anchor="middle" fill="${col}">${t[4]===2?'AI':t[4]===0?'IT':'≈'}</text></svg><div><b>${L(t[0],t[1])}</b> <span class="pill" style="color:${col}">${tag}</span><div>${L(t[2],t[3])}</div></div></div>`};
+ // spectrum
+ const sp=`<svg viewBox="0 0 900 190" role="img"><defs><linearGradient id="spg"><stop offset="0" stop-color="${C.accent}"/><stop offset="1" stop-color="#9CC3EF"/></linearGradient></defs>
+ <rect x="40" y="70" width="820" height="26" rx="13" fill="url(#spg)" stroke="${C.ink}" stroke-width="1.2"/>
+ ${ST(40,30,'Pure IT services (people-hours)','முழு IT services (ஆட்கள்-நேரம்)','font-size="13"')}${ST(860,30,'Pure AI product (licences)','முழு AI product (licences)','font-size="13" text-anchor="end"')}
+ ${[[0.12,'Large IT services','பெரிய IT services'],[0.32,'Analytics services peers','Analytics services peers'],[0.5,'FRACTAL','FRACTAL'],[0.9,'AI software / platforms','AI software / platforms']].map(([p,a,b],i)=>{const x=40+820*p;const me=i===2;return `<path d="M${x} ${me?66:70}l${me?-11:-7} ${me?-20:-14}h${me?22:14}z" fill="${me?C.ink:C.ink2}" transform="translate(0 0)"/><line x1="${x}" x2="${x}" y1="96" y2="${me?140:124}" stroke="${me?C.ink:C.ink2}" stroke-width="${me?3:1.5}" stroke-dasharray="${me?'':'4 3'}"/>`+ST(x,me?160:140,a,b,`font-size="${me?16:12}" text-anchor="middle" ${me?'fill="'+C.blue+'"':''}`)}).join('')}
+ ${ST(450,182,'Fractal scores 8 of 16 on the CB tests below → middle of the line','கீழே உள்ள CB tests-ல Fractal 16-க்கு 8 → சரியா நடுவுல','font-size="12" text-anchor="middle" fill="'+C.ink2+'"')}</svg>`;
+ return `<h2>${L('Is Fractal an IT services company or an AI company?','Fractal ஒரு IT services company-ஆ, AI company-ஆ?')}</h2>
+<div class="verdict"><div class="big">${L('Answer: an AI-native services company','பதில்: AI-native services company')}</div>
+${ul([['What it does is AI. How it earns is still IT-services style — people billed by time.','செய்யுற வேலை AI. சம்பாதிக்கிற முறை இன்னும் IT services style — ஆட்களை நேரத்துக்கு bill பண்றாங்க.'],['Not yet an "AI product company": products are only 4% of revenue.','இன்னும் "AI product company" இல்ல: products revenue-ல 4% தான்.'],['It would move right on this line if products reach 10–20% of revenue (management aims for this over ~12 quarters).','Products revenue-ல 10–20% ஆனா இந்த line-ல வலது பக்கம் நகரும் (~12 quarters-ல அதுதான் management target).']])}</div>
+<div class="card" style="margin-top:14px"><div class="svgbox wide">${sp}</div></div>
+<div class="grid g2" style="margin-top:14px">
+${card(L('How revenue is earned (Q2 FY27)','Revenue எப்படி வருது (Q2 FY27)'),`<div class="svgbox">${donut([{l:'Input-based (time & people)',lt:'Input-based (நேரம் & ஆட்கள்)',v:58,f:'58%',c:C.accent},{l:'Output / outcome-based',lt:'Output / outcome-based',v:38,f:'38%',c:'#9CC3EF'},{l:'Products & licences',lt:'Products & licences',v:4,f:'4%',c:C.blue}],'58 : 42','58 : 42',{w:470,sub:'input : output',subt:'input : output'})}</div>`)}
+${card(L('The 8 CB tests','8 CB tests'),`<div style="display:flex;gap:12px;align-items:center;margin-bottom:6px">${ring(tot/16,tot+'/16',86)}<div>${L('<b>AI score 8/16 = hybrid.</b> 3 tests look AI, 3 look IT services, 2 sit between.','<b>AI score 8/16 = hybrid.</b> 3 tests AI மாதிரி, 3 IT services மாதிரி, 2 நடுவுல.')}</div></div>${tests.map(row).join('')}`)}
+</div>
+<div class="card" style="margin-top:14px"><h3>${L('Why it matters for valuation','Valuation-க்கு ஏன் முக்கியம்')}</h3>${ul([['IT services trade on earnings growth; AI product firms trade on revenue multiples. Fractal is priced in between (~39× P/E, ~4× sales).','IT services-க்கு earnings growth வச்சு valuation; AI product company-க்கு revenue multiple. Fractal நடுவுல price ஆகுது (~39× P/E, ~4× sales).'],['Cheaper AI models can shrink "people × hours" work. Fractal\'s answer: outcome pricing + Cogentiq licences.','AI models விலை குறைஞ்சா "ஆட்கள் × நேரம்" வேலை குறையலாம். Fractal பதில்: outcome pricing + Cogentiq licences.']])}</div>`};
+
+/* ---------- 3. BUSINESS MODEL ---------- */
+const BMD={
+ talent:['AI engineers & forward-deployed engineers sit at client sites and build solutions. Revenue per billable person is ₹75 lakh a year (TTM, +2%).','AI engineers, forward-deployed engineers client இடத்துலயே இருந்து solution build பண்றாங்க. ஒரு billable நபருக்கு வருஷம் ₹75 lakh revenue (TTM, +2%).'],
+ rd:['₹60 cr R&D in Q2 (6.3% of revenue); ₹40 cr expensed, ₹20 cr capitalised. Most goes to Cogentiq and Asper.ai.','Q2-ல ₹60 cr R&D (revenue-ல 6.3%); ₹40 cr expense, ₹20 cr capitalise. பெரும்பாலும் Cogentiq, Asper.ai-க்கு.'],
+ part:['Partners: Anthropic, OpenAI, Microsoft (retail-CPG partner of the year), AWS, Google Cloud, Databricks. Frontier labs now send inbound leads.','Partners: Anthropic, OpenAI, Microsoft, AWS, Google Cloud, Databricks. Frontier labs இப்போ leads அனுப்புறாங்க.'],
+ ip:['Own IP: Cogentiq (agentic AI platform), Asper.ai (pricing & revenue growth for CPG), Analytics Vidhya (AI learning), 31.5% of Qure.ai (medical imaging AI).','சொந்த IP: Cogentiq (agentic AI platform), Asper.ai (CPG pricing), Analytics Vidhya (AI learning), Qure.ai-ல 31.5%.'],
+ hub:['Fractal Group: Fractal.ai (services, ₹936 cr revenue, ₹161 cr segment profit) + Fractal Alpha (products, ₹34 cr, ₹11 cr loss). 58 clients pay >$1M a year.','Fractal Group: Fractal.ai (services, ₹936 cr, ₹161 cr segment profit) + Fractal Alpha (products, ₹34 cr, ₹11 cr loss). 58 clients வருஷம் $1M-க்கு மேல கொடுக்குறாங்க.'],
+ svc:['AI services ≈96% of revenue: AI-led transformation (~60%), knowledge & context layer (~35%), work redesign (~5%).','AI services ≈ revenue-ல 96%: AI transformation (~60%), knowledge & context layer (~35%), work redesign (~5%).'],
+ prod:['Products & licences: ₹38 cr in Q2 (4%). Run-rate above ₹150 cr a year (+39%); ₹200 cr+ already contracted (RPO).','Products & licences: Q2-ல ₹38 cr (4%). Run-rate வருஷம் ₹150 cr+ (+39%); ₹200 cr+ ஏற்கனவே contract ஆயிருக்கு (RPO).'],
+ qure:['Qure.ai is an associate (31.5%). Fractal books its share of loss: ₹23 cr in Q2. Qure revenue grew 82%.','Qure.ai associate (31.5%). அதோட loss share ₹23 cr Q2-ல Fractal books-ல வருது. Qure revenue 82% வளர்ந்தது.'],
+ dir:['Direct enterprise sales to Fortune-500-size clients; about one new client every 10 days. Top 10 clients = 51.7% of revenue.','Fortune-500 அளவு clients-க்கு நேரடி sales; ~10 நாளுக்கு ஒரு புது client. Top 10 clients = revenue-ல 51.7%.'],
+ ptn:['Partner-led deals: five of the largest Q1 deals came through partners. A new large-deals team targets multi-year programmes.','Partner மூலமா deals: Q1-ல பெரிய 5 deals partners மூலமா. Multi-year deals-க்கு புது large-deals team.'],
+ cust:['Industries: CPG & retail 34.7%, healthcare & life sciences 25.1%, tech-media-telecom 17.9%, banking & insurance 13.6%, others 8.7%. Americas 67% of revenue.','Industries: CPG & retail 34.7%, healthcare 25.1%, TMT 17.9%, BFSI 13.6%, others 8.7%. Americas = revenue-ல 67%.'],
+ money:['Q2 money flow: revenue ₹956.5 cr → gross profit ₹420.5 cr → adj. EBITDA ₹154.9 cr → operating EBIT ₹102.9 cr → net profit ₹79.2 cr (after ₹23 cr Qure loss).','Q2 பணம்: revenue ₹956.5 cr → gross profit ₹420.5 cr → adj. EBITDA ₹154.9 cr → EBIT ₹102.9 cr → net profit ₹79.2 cr (Qure ₹23 cr loss-க்கு அப்புறம்).']};
+function bmPick(k){const d=document.getElementById('bmDetail');d.innerHTML=L(BMD[k][0],BMD[k][1]);document.querySelectorAll('#bmsvg g[data-k]').forEach(g=>g.querySelector('rect').setAttribute('stroke-width',g.dataset.k===k?4:2))}
+R.bm=()=>{const box=(k,x,y,w,h,ic,en,ta,num,numt,fill=C.panel,stroke=C.strong)=>`<g data-k="${k}" style="cursor:pointer" onclick="bmPick('${k}')" tabindex="0" onkeydown="if(event.key==='Enter')bmPick('${k}')"><rect x="${x}" y="${y}" width="${w}" height="${h}" rx="10" fill="${fill}" stroke="${stroke}" stroke-width="2"/>${icon(ic,x+24,y+h/2)}${ST(x+46,y+h/2-4,en,ta,'font-size="13"')}${ST(x+46,y+h/2+13,num,numt,`font-size="11" fill="${C.ink2}"`)}</g>`;
+ const arr=(x1,y1,x2,y2,d='')=>`<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="${C.ink2}" stroke-width="2.2" marker-end="url(#ah)" ${d?`stroke-dasharray="${d}"`:''}/>`;
+ const mf=[['Revenue','Revenue',956.5],['Gross profit','Gross profit',420.5],['Adj. EBITDA','Adj. EBITDA',154.9],['Op. EBIT','Op. EBIT',102.9],['Net profit','Net profit',79.2]];
+ let s=`<svg id="bmsvg" viewBox="0 0 1100 600" role="img"><defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="${C.ink2}"/></marker></defs>
+ ${ST(20,24,'INPUTS','INPUTS','font-size="12" fill="'+C.strong+'"')}${ST(300,24,'FRACTAL HUB','FRACTAL HUB','font-size="12" fill="'+C.blue+'"')}${ST(560,24,'WHAT IT SELLS','என்ன விக்கிறாங்க','font-size="12" fill="'+C.strong+'"')}${ST(790,24,'CHANNELS','CHANNELS','font-size="12" fill="'+C.strong+'"')}${ST(960,24,'CUSTOMERS','CUSTOMERS','font-size="12" fill="'+C.strong+'"')}
+ ${box('talent',10,40,240,64,'person','AI talent & FDEs','AI talent & FDEs','₹75 lakh revenue / person / yr','₹75 lakh / நபர் / வருஷம்')}
+ ${box('rd',10,116,240,64,'flask','R&D','R&D','₹60 cr · 6.3% of revenue','₹60 cr · revenue-ல 6.3%')}
+ ${box('part',10,192,240,64,'link','AI partners','AI partners','Frontier labs · MSFT · AWS','Frontier labs · MSFT · AWS')}
+ ${box('ip',10,268,240,64,'cube','Own IP','சொந்த IP','Cogentiq · Asper · Qure 31.5%','Cogentiq · Asper · Qure 31.5%')}
+ <g data-k="hub" style="cursor:pointer" onclick="bmPick('hub')"><rect x="290" y="70" width="240" height="230" rx="14" fill="${C.bsoft}" stroke="${C.blue}" stroke-width="2"/>${icon('chip',410,104,C.blue)}
+ ${ST(410,140,'Fractal Group','Fractal Group','font-size="17" text-anchor="middle"')}${ST(410,164,'Fractal.ai · ₹936 cr','Fractal.ai · ₹936 cr','font-size="12.5" text-anchor="middle"')}${ST(410,184,'Fractal Alpha · ₹34 cr','Fractal Alpha · ₹34 cr','font-size="12.5" text-anchor="middle"')}${ST(410,212,'58 clients > $1M','58 clients > $1M','font-size="12" text-anchor="middle" fill="'+C.blue+'"')}${ST(410,232,'6 clients > $20M','6 clients > $20M','font-size="12" text-anchor="middle" fill="'+C.blue+'"')}${ST(410,258,'NRR 115% · churn 0','NRR 115% · churn 0','font-size="12" text-anchor="middle" fill="'+C.blue+'"')}${ST(410,282,'tap any box ↓','எந்த box-ஐயும் tap பண்ணுங்க','font-size="11" text-anchor="middle" fill="'+C.ink2+'"')}</g>
+ ${arr(250,72,288,130)}${arr(250,148,288,170)}${arr(250,224,288,205)}${arr(250,300,288,250)}
+ ${box('svc',550,60,220,72,'bolt','AI services','AI services','≈96% of revenue','≈ revenue-ல 96%')}
+ ${box('prod',550,148,220,72,'cube','Products & licences','Products & licences','₹38 cr · 4% · +39%','₹38 cr · 4% · +39%')}
+ ${box('qure',550,236,220,72,'heart','Qure.ai (31.5%)','Qure.ai (31.5%)','₹23 cr loss share','₹23 cr loss share')}
+ ${arr(530,120,548,96)}${arr(530,184,548,184)}${arr(530,250,548,268,'5 4')}
+ ${box('dir',790,80,150,72,'globe','Direct sales','Direct sales','1 client / 10 days','10 நாளுக்கு 1 client')}
+ ${box('ptn',790,180,150,72,'link','Partner-led','Partner-led','large-deals team','large-deals team')}
+ ${arr(770,96,788,110)}${arr(770,184,788,210)}
+ <g data-k="cust" style="cursor:pointer" onclick="bmPick('cust')"><rect x="958" y="40" width="132" height="300" rx="10" fill="${C.panel}" stroke="${C.strong}" stroke-width="2"/>
+ ${[['cart','CPG 34.7%'],['heart','Health 25.1%'],['tower','TMT 17.9%'],['bank','BFSI 13.6%'],['factory','Others 8.7%']].map(([ic,t],i)=>icon(ic,982,72+i*54)+`<text x="1000" y="${77+i*54}" font-size="12.5">${t}</text>`).join('')}</g>
+ ${arr(940,116,956,140)}${arr(940,216,956,210)}
+ <path d="M1024 342 v40 H40 v40" fill="none" stroke="${C.good}" stroke-width="2.5" stroke-dasharray="7 5" marker-end="url(#ah)"/>${ST(540,374,'cash comes back as fees','fees-ஆ பணம் திரும்ப வருது','font-size="12" text-anchor="middle" fill="'+C.good+'"')}
+ <g data-k="money" style="cursor:pointer" onclick="bmPick('money')">${mf.map(([a,b,v],i)=>{const x=20+i*214,w=190;const hh=40+90*v/956.5;return `<rect x="${x}" y="${560-hh}" width="${w}" height="${hh}" rx="8" fill="${i===4?'#BFE6C9':C.soft}" stroke="${i===4?C.good:C.strong}" stroke-width="2"/>`+ST(x+w/2,548-hh+30,a,b,'font-size="13" text-anchor="middle"')+`<text x="${x+w/2}" y="${552-hh+50}" font-size="15" text-anchor="middle" class="mono">₹${v} cr</text>`+(i<4?`<text x="${x+w+12}" y="${520}" font-size="18" text-anchor="middle">→</text>`:'')}).join('')}</g>
+ </svg>`;
+ return `<h2>${L('Business model — from talent to client outcomes','Business model — talent-லிருந்து client outcome வரை')}</h2>
+<p class="lede">${L('Tap any box to see what it means.','எந்த box-ஐ tap பண்ணாலும் அதோட அர்த்தம் வரும்.')}</p>
+<div class="card"><div class="svgbox wide">${s}</div><div class="detail" id="bmDetail">${L(BMD.hub[0],BMD.hub[1])}</div>
+<p style="margin:10px 0 0;font-family:var(--f-mono);font-size:13px">${L('Revenue ≈ billable AI people × ₹75 lakh a year + outcome fees + product licences (4%)','Revenue ≈ billable AI ஆட்கள் × வருஷம் ₹75 lakh + outcome fees + product licences (4%)')}</p></div>
+<div class="card" style="margin-top:14px"><h3>${L('Abbreviations used above','மேலே உள்ள சுருக்கங்கள்')}</h3><div class="tbl"><table><tbody>${[['AI','Artificial Intelligence','செயற்கை நுண்ணறிவு (Artificial Intelligence)'],['FDE','Forward-Deployed Engineer — engineer who works at the client\'s site','Forward-Deployed Engineer — client இடத்துலயே வேலை செய்யுற engineer'],['R&D','Research & Development','ஆராய்ச்சி & மேம்பாடு (Research & Development)'],['IP','Intellectual Property — own software, platforms, products','அறிவுசார் சொத்து (Intellectual Property) — சொந்த software, platforms'],['MSFT','Microsoft','Microsoft'],['AWS','Amazon Web Services (Amazon\'s cloud)','Amazon Web Services (Amazon cloud)'],['NRR','Net Revenue Retention — how much more existing clients spend vs last year','Net Revenue Retention — பழைய clients போன வருஷத்தை விட எவ்வளவு அதிகம் செலவு பண்றாங்க'],['RPO','Remaining Performance Obligation — revenue already contracted but not yet billed','Remaining Performance Obligation — contract ஆயிட்டு, இன்னும் bill ஆகாத revenue'],['CPG','Consumer Packaged Goods (soaps, foods, drinks)','Consumer Packaged Goods (சோப், உணவு, drinks)'],['TMT','Technology, Media & Telecom','Technology, Media & Telecom'],['BFSI','Banking, Financial Services & Insurance','Banking, Financial Services & Insurance'],['CX','Customer Experience (customer service)','Customer Experience (customer service)'],['Adj. EBITDA','Adjusted Earnings Before Interest, Tax, Depreciation & Amortisation (excludes one-offs)','Adjusted Earnings Before Interest, Tax, Depreciation & Amortisation (one-offs இல்லாம)'],['Op. EBIT','Operating Earnings Before Interest & Tax','Operating Earnings Before Interest & Tax'],['PAT','Profit After Tax (net profit)','Profit After Tax (net profit)'],['cr','crore (₹1 crore = ₹10 million)','கோடி (₹1 crore = ₹1 கோடி)'],['$1M / $20M','US$ 1 million / 20 million per year','வருஷம் US$ 1 million / 20 million']].map(r=>`<tr><td style="width:120px"><b>${r[0]}</b></td><td style="text-align:left;white-space:normal">${L(r[1],r[2])}</td></tr>`).join('')}</tbody></table></div></div>`};
+
+/* ---------- 4. SEGMENTS ---------- */
+R.seg=()=>{const segT=`<div class="tbl"><table><thead><tr><th>${L('₹ cr','₹ cr')}</th><th>Q2 FY27</th><th>Q1 FY27</th><th>Q2 FY26</th><th>QoQ</th><th>YoY</th></tr></thead><tbody>
+<tr><td>${L('Fractal.ai revenue','Fractal.ai revenue')}</td><td>936.1</td><td>894.2</td><td>775.8</td><td class="up">+4.7%</td><td class="up">+20.7%</td></tr>
+<tr><td>${L('Fractal.ai segment result','Fractal.ai segment result')}</td><td>161.3</td><td>157.7</td><td>113.5</td><td class="up">+2.3%</td><td class="up">+42.1%</td></tr>
+<tr><td>${L('Fractal.ai margin','Fractal.ai margin')}</td><td>17.2%</td><td>17.6%</td><td>14.6%</td><td class="dn">−40 bps</td><td class="up">+260 bps</td></tr>
+<tr><td>${L('Fractal Alpha revenue','Fractal Alpha revenue')}</td><td>34.0</td><td>24.0</td><td>24.3</td><td class="up">+41.7%</td><td class="up">+39.9%</td></tr>
+<tr><td>${L('Fractal Alpha segment result','Fractal Alpha segment result')}</td><td class="dn">(11.2)</td><td class="dn">(14.8)</td><td class="dn">(8.7)</td><td class="up">${L('loss narrower','loss குறைஞ்சது')}</td><td class="dn">${L('loss wider','loss அதிகம்')}</td></tr>
+</tbody></table></div><p class="note">${L('Segment totals include ₹13.6 cr inter-segment sales that are removed in consolidation.','Segment total-ல ₹13.6 cr inter-segment sales இருக்கு; consolidation-ல நீக்கிடுவாங்க.')}</p>`;
+ const vert=hbars([{l:'Healthcare & life sci.',lt:'Healthcare',v:79},{l:'Others (energy, travel)',lt:'Others',v:47},{l:'BFSI',v:30},{l:'CPG & retail',v:11},{l:'TMT',v:-18}],{w:520,pl:170});
+ const geo=`<svg viewBox="0 0 560 250" role="img"><rect x="0" y="0" width="560" height="250" rx="12" fill="${C.bsoft}"/>
+ <path d="M40 60q40-30 90-20q30 10 40 40q-10 30-40 40q-10 25-25 55q-20-10-20-40q-30-20-45-75z" fill="#F7D3A6" stroke="${C.strong}"/>
+ <path d="M250 55q40-15 70 0q10 20-10 35q-30 10-55 0q-15-15-5-35z" fill="#F7D3A6" stroke="${C.strong}"/>
+ <path d="M360 60q70-20 130 10q20 40-20 70q-40 20-80 0q-30-30-30-80z M450 170q30-5 50 15q-10 20-40 15z" fill="#F7D3A6" stroke="${C.strong}"/>
+ ${[[110,95,'Americas','Americas','67.3%','+22%',34],[285,72,'Europe','Europe','21.5%','+20%',20],[430,110,'APAC & others','APAC & others','11.2%','+7%',14]].map(([x,y,a,b,s,g,r])=>`<circle cx="${x}" cy="${y}" r="${r}" fill="${C.strong}" fill-opacity=".85" stroke="#fff" stroke-width="2"/><text x="${x}" y="${y+5}" font-size="13" text-anchor="middle" class="mono">${s}</text>`+ST(x,y+r+18,a,b,'font-size="13" text-anchor="middle"')+`<text x="${x}" y="${y+r+34}" font-size="12" text-anchor="middle" fill="${C.good}">${g} YoY</text>`).join('')}</svg>`;
+ return `<h2>${L('Segments — where the money comes from','Segments — பணம் எங்கிருந்து வருது')}</h2>
+<div class="grid g2">
+${card(L('Two segments (Q2 FY27 revenue)','இரண்டு segments (Q2 FY27 revenue)'),`<div class="svgbox">${donut([{l:'Fractal.ai (AI services)',lt:'Fractal.ai (AI services)',v:936.1,f:'₹936 cr',c:C.accent},{l:'Fractal Alpha (products)',lt:'Fractal Alpha (products)',v:34,f:'₹34 cr',c:C.blue}],'96.5%','96.5%',{w:470,sub:'services',subt:'services'})}</div>${ul([['Fractal.ai makes all the profit; margin 17.2%.','Profit முழுசும் Fractal.ai-ல; margin 17.2%.'],['Alpha (Asper.ai, Analytics Vidhya) still loses ₹11 cr; aims near break-even by March 2027.','Alpha (Asper.ai, Analytics Vidhya) இன்னும் ₹11 cr loss; March 2027-க்குள் break-even பக்கம் வரும்னு target.']])}`)}
+${card(L('Segment profit (₹ cr)','Segment profit (₹ cr)'),`<div class="svgbox">${vbars([{l:'Fractal.ai',l2:'Q2 FY26',v:113.5},{l:'Fractal.ai',l2:'Q2 FY27',v:161.3,c:C.strong,hi:1},{l:'Alpha',l2:'Q2 FY26',v:-8.7,c:'#F2A99E'},{l:'Alpha',l2:'Q2 FY27',v:-11.2,c:'#F2A99E'}],{fmt:v=>v.toFixed(1)})}</div>`)}
+${card(L('Industry growth, YoY','Industry வாரியா growth, YoY'),`<div class="svgbox">${vert}</div>${ul([['Healthcare is now 25% of revenue and the growth leader.','Healthcare இப்போ revenue-ல 25%; growth leader.'],['TMT fell 18% YoY but grew 6% QoQ — the bottom looks behind.','TMT YoY 18% இறங்குச்சு, ஆனா QoQ 6% ஏறுச்சு — அடிமட்டம் முடிஞ்ச மாதிரி.']])}`)}
+${card(L('Where clients are (share · growth)','Clients எங்கே (share · growth)'),`<div class="svgbox">${geo}</div>`)}
+</div>
+<div class="card" style="margin-top:14px"><h3>${L('Segment numbers','Segment numbers')}</h3>${segT}</div>`};
+/* ---------- 5. FINANCIALS ---------- */
+R.fin=()=>{const rows=[['Revenue from operations','Revenue','rev','cr'],['Gross profit','Gross profit','gp','cr'],['Gross margin','Gross margin','gm','pp'],['Adjusted EBITDA','Adjusted EBITDA','ebitda','cr'],['Adj. EBITDA margin','Adj. EBITDA margin','em','pp'],['Operating EBIT','Operating EBIT','ebit','cr'],['Total expenses','Total expenses','exp','cr'],['Net profit (PAT)','Net profit (PAT)','pat','cr'],['Net margin','Net margin','pm','pp'],['PAT excl. Qure.ai loss','PAT (Qure loss இல்லாம)','patx','cr'],['Basic EPS (₹)','Basic EPS (₹)','eps','cr']];
+ const f=(v,t)=>v==null?'—':t==='pp'?v.toFixed(1)+'%':v.toLocaleString('en-IN',{minimumFractionDigits:v<10?2:1,maximumFractionDigits:2});
+ const OV={gm:-225,em:123,pm:413};const ch=(a,b,t,k,yoy)=>a==null||b==null?'<td>—</td>':(t==='pp'&&yoy&&OV[k]!=null)?`<td class="${cls(OV[k])}">${OV[k]>0?'+':''}${OV[k]} bps</td>`:t==='pp'?`<td class="${cls(a-b)}">${a-b>=0?'+':''}${Math.round((a-b)*100)} bps</td>`:`<td class="${cls(a-b)}">${sg(pct(a,b))}</td>`;
+ const tb=`<div class="tbl"><table><thead><tr><th>${L('₹ crore','₹ crore')}</th><th>Q2 FY27</th><th>Q1 FY27</th><th>Q2 FY26</th><th>QoQ</th><th>YoY</th></tr></thead><tbody>${rows.map(([a,b,k,t])=>`<tr><td>${L(a,b)}</td>${Q[k].map(v=>`<td>${f(v,t)}</td>`).join('')}${ch(Q[k][0],Q[k][1],t,k)}${ch(Q[k][0],Q[k][2],t,k,1)}</tr>`).join('')}</tbody></table></div>`;
+ // grouped bars
+ const W=560,H=260,pl=40,pb=40,pt=24,max=1050;const gs=[['Revenue','rev'],['Gross profit','gp'],['Adj. EBITDA','ebitda'],['PAT','pat']];const cols=['#9CC3EF',C.accent,C.strong];const gw=(W-pl-10)/4;const y=v=>pt+(H-pt-pb)*(1-v/max);
+ let g=`<svg viewBox="0 0 ${W} ${H}">`;[0,250,500,750,1000].forEach(v=>g+=`<line x1="${pl}" x2="${W-6}" y1="${y(v)}" y2="${y(v)}" stroke="${C.line}"/><text x="${pl-5}" y="${y(v)+4}" font-size="10" text-anchor="end" class="mono">${v}</text>`);
+ gs.forEach(([n,k],i)=>{[2,1,0].forEach((qi,j)=>{const v=Q[k][qi],bw=gw*0.26,x=pl+gw*i+gw*0.1+j*bw;g+=`<rect x="${x}" y="${y(v)}" width="${bw-3}" height="${y(0)-y(v)}" fill="${cols[j]}" stroke="${C.ink}" stroke-width=".6"/><text x="${x+bw/2-1}" y="${y(v)-4}" font-size="9" text-anchor="middle" class="mono">${Math.round(v)}</text>`});g+=`<text x="${pl+gw*i+gw/2}" y="${H-pb+18}" font-size="12" text-anchor="middle">${n}</text>`});
+ ['Q2 FY26','Q1 FY27','Q2 FY27'].forEach((n,j)=>g+=`<rect x="${pl+j*110}" y="4" width="12" height="10" fill="${cols[j]}"/><text x="${pl+16+j*110}" y="13" font-size="11">${n}</text>`);g+=`</svg>`;
+ // waterfall gross margin bridge
+ const steps=[['Q2 FY26 GM','Q2 FY26 GM',46.2,'t'],['AI talent hiring','AI talent hiring',-2.79],['Annual pay rise','சம்பள உயர்வு',-2.16],['Weaker rupee','Rupee பலவீனம்',2.70],['Q2 FY27 GM','Q2 FY27 GM',44.0,'t']];
+ const WW=560,HH=250,mn=40,mx=48,yy=v=>24+(HH-70)*(1-(v-mn)/(mx-mn));let run=0,wf=`<svg viewBox="0 0 ${WW} ${HH}">`;[40,42,44,46,48].forEach(v=>wf+=`<line x1="40" x2="${WW-6}" y1="${yy(v)}" y2="${yy(v)}" stroke="${C.line}"/><text x="35" y="${yy(v)+4}" font-size="10" text-anchor="end" class="mono">${v}%</text>`);
+ steps.forEach((s,i)=>{const x=50+i*102,w=70;let a,b,c;if(s[3]){a=mn;b=s[2];run=s[2];c=C.accent}else{a=run;b=run+s[2];run=b;c=s[2]<0?'#F2A99E':'#A9DDB8'}wf+=`<rect x="${x}" y="${yy(Math.max(a,b))}" width="${w}" height="${Math.abs(yy(a)-yy(b))}" fill="${c}" stroke="${C.ink}" stroke-width=".8"/><text x="${x+w/2}" y="${yy(Math.max(a,b))-6}" font-size="12" text-anchor="middle" class="mono">${s[3]?s[2].toFixed(1)+'%':(s[2]>0?'+':'')+Math.round(s[2]*100)+' bps'}</text>`+ST(x+w/2,HH-26,s[0],s[1],'font-size="10.5" text-anchor="middle"')});wf+=`</svg>`;
+ return `<h2>${L('Financials — the results first','Financials — முதல்ல results')}</h2>
+<div class="card">${tb}<p class="note">${L('Operating EBIT and total expenses were not split out for Q1 FY27 in the material reviewed. Q1 PAT included one-off items.','Q1 FY27-க்கு operating EBIT, total expenses தனியா கிடைக்கல. Q1 PAT-ல one-off items இருக்கு.')}</p></div>
+<div class="grid g2" style="margin-top:14px">
+${card(L('Three quarters side by side (₹ cr)','மூணு quarters பக்கத்துல பக்கத்துல (₹ cr)'),`<div class="svgbox">${g}</div>`)}
+${card(L('Why gross margin fell 225 bps (YoY)','Gross margin 225 bps ஏன் இறங்குச்சு (YoY)'),`<div class="svgbox">${wf}</div>${ul([['Hiring scarce AI engineers before projects start cost 279 bps.','Project வர்றதுக்கு முன்னாடியே AI engineers hire — 279 bps செலவு.'],['A weak rupee gave back 270 bps. Management expects margin to recover in Q3–Q4.','Rupee பலவீனம் 270 bps திருப்பி கொடுத்தது. Q3–Q4-ல margin திரும்பும்னு management சொல்றாங்க.']])}`)}
+${card(L('H1 FY27 (Apr–Sep 2026)','H1 FY27 (Apr–Sep 2026)'),`<div class="grid g3"><div class="kpi"><div class="l">Revenue</div><div class="v">₹1,869 cr</div><div class="d up">+20%</div></div><div class="kpi"><div class="l">PAT</div><div class="v">₹151 cr</div><div class="d up">+114%</div></div><div class="kpi"><div class="l">Adj. EBITDA %</div><div class="v">16.5%</div><div class="d up">+155 bps</div></div></div>`)}
+${card(L('Costs that fell as a share of revenue','Revenue-ல பங்கு குறைஞ்ச செலவுகள்'),`<div class="svgbox">${hbars([{l:'SG&A Q2 FY26',lt:'SG&A Q2 FY26',v:27.0,c:'#F2A99E'},{l:'SG&A Q2 FY27',lt:'SG&A Q2 FY27',v:23.6},{l:'ESOP cost Q2 FY26',lt:'ESOP Q2 FY26',v:2.8,c:'#F2A99E'},{l:'ESOP cost Q2 FY27',lt:'ESOP Q2 FY27',v:0.5}],{w:480,pl:150,fmt:v=>v.toFixed(1)+'%'})}</div>`)}
+</div>`};
+
+/* ---------- 6. METRICS (grouped heads) ---------- */
+R.met=()=>{const heads=[['g','Growth','Growth'],['p','Profitability','Profitability'],['e','Efficiency','Efficiency'],['c','Client quality','Client quality'],['b','Cash & balance sheet','Cash & balance sheet'],['i','Products & IP','Products & IP']];
+ const tbl=r=>`<div class="tbl"><table><thead><tr><th>${L('Metric','Metric')}</th><th>Q2 FY27</th><th>${L('Compare','ஒப்பீடு')}</th><th>${L('Change','மாற்றம்')}</th></tr></thead><tbody>${r.map(x=>`<tr><td>${L(x[0],x[1])}</td><td>${x[2]}</td><td>${x[3]}</td><td class="${x[5]||''}">${x[4]}</td></tr>`).join('')}</tbody></table></div>`;
+ const S={
+ g:[`<div class="svgbox">${lineChart(TREND.lab,[{v:TREND.rev,c:C.strong,area:1,fmt:v=>Math.round(v)}],{min:700,max:1000})}</div>`,tbl([['Revenue YoY (₹)','Revenue YoY (₹)','+19.8%','Q1: +20.0%','≈ flat','nt'],['Constant-currency YoY','Constant currency YoY','10%','Q3 FY26: 14%','slower','dn'],['Revenue QoQ','Revenue QoQ','+4.8%','Q1: +3.0%','faster','up'],['Healthcare YoY','Healthcare YoY','+79%','Q1: +69%','faster','up'],['TMT QoQ','TMT QoQ','+6%','prior 5 qtrs: falling','turned','up']])],
+ p:[`<div class="svgbox">${lineChart(Q.lab.slice().reverse(),[{n:'Gross margin',nt:'Gross margin',v:Q.gm.slice().reverse(),c:C.strong,fmt:v=>v+'%'},{n:'Adj. EBITDA',nt:'Adj. EBITDA',v:Q.em.slice().reverse(),c:C.blue,fmt:v=>v+'%'},{n:'Net margin',nt:'Net margin',v:Q.pm.slice().reverse(),c:C.good,fmt:v=>v+'%'}],{min:0,max:52,tick:v=>v+'%'})}</div>`,tbl([['Gross margin','Gross margin','44.0%','46.2%','−225 bps','dn'],['Adj. EBITDA margin','Adj. EBITDA margin','16.2%','15.0%','+123 bps','up'],['Operating EBIT margin','Operating EBIT margin','10.8%','7.9%','+281 bps','up'],['Net margin','Net margin','8.3%','4.2%','+413 bps','up'],['Net margin ex-Qure','Net margin (Qure இல்லாம)','10.7%','—','—']])],
+ e:[`<div class="svgbox">${hbars([{l:'SG&A % rev',v:23.6},{l:'R&D % rev',v:6.3},{l:'G&A % rev (approx.)',lt:'G&A % rev (approx.)',v:12},{l:'ESOP % rev',v:0.5}],{w:480,pl:150,fmt:v=>v+'%'})}</div>`,tbl([['Revenue per billable FTE (TTM)','Billable FTE-க்கு revenue (TTM)','₹75 lakh','₹73.5 lakh*','+2%','up'],['SG&A % of revenue','SG&A % revenue','23.6%','27.0%','−340 bps','up'],['ESOP & retention cost','ESOP & retention cost','0.5%','2.8%','−230 bps','up'],['G&A % of revenue','G&A % revenue','~12%','Q1: ~12%','flat','nt']])+`<p class="note">${L('* implied from +2%.','* +2% வச்சு கணக்கு.')}</p>`],
+ c:[`<div class="svgbox">${vbars([{l:'>$1M',l2:'52→58',v:58},{l:'>$5M',l2:'17→20',v:20},{l:'>$10M',l2:'7→8',v:8},{l:'>$20M',l2:'4→6',v:6,c:C.strong,hi:1}],{fmt:v=>v})}</div>`,tbl([['Net revenue retention','Net revenue retention','115%','Q2 FY26: 112%','+3 pts','up'],['Churn','Churn','0%','0%','—'],['NPS','NPS','76','Q2 FY26: 78','−2','nt'],['Top-10 client share','Top-10 client share','51.7%','53.2%','less concentrated','up'],['Clients > $20M','Clients > $20M','6','4','+2','up']])],
+ b:[`<div class="svgbox">${vbars([{l:'Q2 FY26',v:107.4,c:'#A9DDB8'},{l:'Q1 FY27',v:-103.0,c:'#F2A99E'},{l:'Q2 FY27',v:79.3,c:C.good,hi:1},{l:'H1 FY27',v:-24,c:'#F2A99E'}],{fmt:v=>v.toFixed(0)})}</div><p class="note">${L('Operating cash flow, ₹ cr. Q1 is always negative (annual bonus payout).','Operating cash flow, ₹ cr. Q1-ல bonus கொடுக்குறதால எப்பவும் negative.')}</p>`,tbl([['Cash + MF + FDs','Cash + MF + FDs','₹1,728 cr','Q1: ₹1,638 cr','+₹90 cr','up'],['Debt','Debt','nil','₹289 cr repaid Apr-26','debt-free','up'],['DSO (days)','DSO (days)','76','71','+5 days','dn'],['TTM operating cash flow','TTM operating cash flow','₹407 cr','₹368 cr','+11%','up']])],
+ i:[`<div class="svgbox">${vbars([{l:'Products qtr',lt:'Products qtr',v:38},{l:'Run-rate /yr',lt:'Run-rate /yr',v:150,c:C.strong},{l:'Contracted (RPO)',lt:'Contracted (RPO)',v:200,c:C.blue}],{fmt:v=>'₹'+v+(v>=150?'+':'')+' cr'})}</div>`,tbl([['Products % of revenue','Products % revenue','4%','Q1: ~3% licences','rising','up'],['Products run-rate growth','Products run-rate growth','+39%','—','—'],['R&D spend','R&D spend','₹60 cr','+13% YoY','6.3% of rev','nt'],['Fractal Alpha revenue','Fractal Alpha revenue','₹34 cr','₹24.3 cr','+40%','up']])]};
+ return `<h2>${L('Metrics — grouped so they are easy to remember','Metrics — ஞாபகம் வச்சுக்க எளிதா groups-ஆ')}</h2>
+<div class="subtabs">${heads.map((h,i)=>`<button data-sg="met" data-s="${h[0]}" class="${i?'':'on'}" onclick="sub('met','${h[0]}')">${L(h[1],h[2])}</button>`).join('')}</div>
+${heads.map((h,i)=>`<div class="sub ${i?'':'on'}" data-sg="met" data-s="${h[0]}"><div class="grid g2">${card(L(h[1],h[2]),S[h[0]][0])}${card(L('Numbers & change','Numbers & மாற்றம்'),S[h[0]][1])}</div></div>`).join('')}`};
+
+/* ---------- 7. CASH FLOW & RATIOS ---------- */
+R.cf=()=>{const dso=(()=>{const W=520,H=230,y=v=>30+150*(1-v/90);let s=`<svg viewBox="0 0 ${W} ${H}">`;[0,30,60,90].forEach(v=>s+=`<line x1="40" x2="${W-6}" y1="${y(v)}" y2="${y(v)}" stroke="${C.line}"/><text x="35" y="${y(v)+4}" font-size="10" text-anchor="end" class="mono">${v}</text>`);
+ [['Q2 FY26',52,19],['Q2 FY27',58,18]].forEach(([l,b,u],i)=>{const x=110+i*200;s+=`<rect x="${x}" y="${y(b)}" width="90" height="${y(0)-y(b)}" fill="${C.accent}" stroke="${C.ink}" stroke-width=".7"/><rect x="${x}" y="${y(b+u)}" width="90" height="${y(b)-y(b+u)}" fill="#9CC3EF" stroke="${C.ink}" stroke-width=".7"/><text x="${x+45}" y="${y(b/2)+4}" font-size="12" text-anchor="middle">billed ${b}</text><text x="${x+45}" y="${y(b+u/2)+4}" font-size="11" text-anchor="middle">unbilled ${u}</text><text x="${x+45}" y="${y(b+u)-8}" font-size="15" text-anchor="middle" class="mono">${b+u} d</text><text x="${x+45}" y="${H-18}" font-size="12" text-anchor="middle">${l}</text>`});return s+`</svg>`})();
+ const pile=`<svg viewBox="0 0 520 210"><rect x="60" y="30" width="400" height="56" rx="8" fill="#9CC3EF" stroke="${C.ink}"/><rect x="60" y="30" width="${400*1119.9/1727.7}" height="56" rx="8" fill="${C.accent}" stroke="${C.ink}"/>
+ ${ST(60+200*1119.9/1727.7,63,'Own cash ₹1,120 cr','சொந்த cash ₹1,120 cr','font-size="13" text-anchor="middle"')}${ST(60+400*1119.9/1727.7+200*607.8/1727.7,63,'IPO ₹608 cr','IPO ₹608 cr','font-size="12" text-anchor="middle"')}
+ <text x="260" y="20" font-size="14" text-anchor="middle" class="mono">₹1,727.7 cr · debt nil</text>
+ ${ST(60,120,'IPO money still unused (Sep-26):','இன்னும் use ஆகாத IPO பணம் (Sep-26):','font-size="12"')}
+ ${[['Alpha R&D & sales','Alpha R&D & sales',284],['Inorganic & general','Inorganic & general',161.1],['New India offices','புது India offices',121.1]].map(([a,b,v],i)=>`<rect x="60" y="${132+i*24}" width="${v*1.1}" height="18" fill="${C.soft}" stroke="${C.strong}"/>`+ST(66+v*1.1,145+i*24,a+' ₹'+v+' cr',b+' ₹'+v+' cr','font-size="11.5"')).join('')}</svg>`;
+ return `<h2>${L('Cash flow & ratios','Cash flow & ratios')}</h2>
+<div class="grid g2">
+${card(L('Operating cash flow (₹ cr)','Operating cash flow (₹ cr)'),`<div class="svgbox">${vbars([{l:'Q2 FY26',v:107.4,c:'#A9DDB8'},{l:'Q1 FY27',v:-103.0,c:'#F2A99E'},{l:'Q2 FY27',v:79.3,c:C.good,hi:1},{l:'TTM Sep-25',v:367.8,c:C.soft},{l:'TTM Sep-26',v:406.7,c:C.accent,hi:1}],{fmt:v=>v.toFixed(0)})}</div>${ul([['TTM cash flow up 11% to ₹407 cr — profits are turning into cash.','TTM cash flow 11% ஏறி ₹407 cr — profit cash-ஆ மாறுது.'],['H1 is −₹24 cr only because annual bonuses are paid in Q1.','H1 −₹24 cr ஆனது Q1-ல வருஷ bonus கொடுத்ததால தான்.']])}`)}
+${card(L('Working capital days — DSO','Working capital days — DSO'),`<div class="svgbox">${dso}</div>${ul([['Clients took 5 more days to pay (76 vs 71). Management calls it timing; expects normal by March.','Clients 5 நாள் late-ஆ கொடுத்தாங்க (76 vs 71). Timing தான்னு management; March-க்குள் normal ஆகும்.'],['A services firm has no inventory; DSO is the main working-capital number.','Services company-க்கு inventory இல்ல; DSO தான் முக்கிய working capital number.']])}`)}
+${card(L('Cash pile & IPO money','Cash & IPO பணம்'),`<div class="svgbox">${pile}</div>`)}
+${card(L('Key ratios','முக்கிய ratios'),`<div class="tbl"><table><thead><tr><th>${L('Ratio','Ratio')}</th><th>${L('Value','Value')}</th><th>${L('Read','அர்த்தம்')}</th></tr></thead><tbody>
+<tr><td>Debt / equity</td><td>0</td><td class="up">${L('debt-free','debt இல்ல')}</td></tr>
+<tr><td>${L('Cash as % of market cap','Market cap-ல cash %')}</td><td>~12%</td><td class="up">${L('cushion for M&A','M&A-க்கு cushion')}</td></tr>
+<tr><td>ROCE (TTM)</td><td>~10%</td><td class="nt">${L('low — IPO cash idle','குறைவு — IPO cash சும்மா இருக்கு')}</td></tr>
+<tr><td>${L('TTM cash flow / TTM PAT','TTM cash flow / TTM PAT')}</td><td>~1.1×</td><td class="up">${L('good conversion','நல்ல conversion')}</td></tr>
+<tr><td>DSO</td><td>76 d</td><td class="dn">${L('up 5 days','5 நாள் ஏறிச்சு')}</td></tr>
+<tr><td>R&D / revenue</td><td>6.3%</td><td class="up">${L('high for services','services-க்கு அதிகம்')}</td></tr>
+</tbody></table></div>`)}
+</div>`};
+
+/* ---------- 8. VALUATIONS ---------- */
+R.val=()=>{const rng=(()=>{const W=560,x=v=>40+480*(v-650)/(1250-650);let s=`<svg viewBox="0 0 ${W} 170"><rect x="${x(VAL.lo)}" y="70" width="${x(VAL.hi)-x(VAL.lo)}" height="18" rx="9" fill="${C.soft}" stroke="${C.strong}"/>`;
+ [[VAL.lo,'52-wk low ₹696','52-wk low ₹696',110,C.bad],[VAL.hi,'High ₹1,118','High ₹1,118',110,C.good],[VAL.ipo,'IPO ₹900','IPO ₹900',50,C.ink2],[946,'Analyst avg ₹946','Analyst avg ₹946',30,C.blue],[1010,'PL TP ₹1,010','PL TP ₹1,010',50,C.blue]].forEach(([v,a,b,yy,c])=>s+=`<line x1="${x(v)}" x2="${x(v)}" y1="${yy+6}" y2="${yy<70?68:90}" stroke="${c}" stroke-width="2" stroke-dasharray="3 2"/>`+ST(x(v),yy,a,b,`font-size="11" text-anchor="middle" fill="${c}"`));
+ s+=`<circle cx="${x(VAL.cmp)}" cy="79" r="11" fill="${C.strong}" stroke="#fff" stroke-width="3"/>`+ST(x(VAL.cmp),145,'Now ~₹830 (32% up the range)','இப்போ ~₹830 (range-ல 32%)','font-size="13" text-anchor="middle"');return s+`</svg>`})();
+ const pe=vbars([{l:'At IPO ₹900',lt:'IPO ₹900',l2:'on FY26 EPS',l2t:'FY26 EPS',v:54,c:'#F2A99E'},{l:'Now ~₹830',lt:'இப்போ ~₹830',l2:'TTM EPS',l2t:'TTM EPS',v:39,c:C.strong,hi:1},{l:'Ex-Qure',lt:'Qure இல்லாம',l2:'H1 ×2',l2t:'H1 ×2',v:36,c:C.accent}],{fmt:v=>'~'+v+'×'});
+ return `<h2>${L('Valuations','Valuation')}</h2>
+<p class="lede">${L('Price ~₹830 (4–5 Nov 2026) · market cap ~₹14,300 cr · cash ₹1,728 cr · EV ~₹12,570 cr','Price ~₹830 (4–5 Nov 2026) · market cap ~₹14,300 cr · cash ₹1,728 cr · EV ~₹12,570 cr')}</p>
+<div class="grid g4">
+${[['P/E (TTM)','~39×','TTM PAT ₹367 cr'],['P/E ex-Qure','~36×','H1 annualised'],['Price / sales','~4.0×','TTM revenue ₹3,610 cr'],['EV / adj. EBITDA','~20×','H1 annualised ₹617 cr']].map(([a,b,c])=>`<div class="card kpi"><div class="l">${a}</div><div class="v">${b}</div><div class="d">${c}</div></div>`).join('')}
+</div>
+<div class="grid g2" style="margin-top:14px">
+${card(L('Where the price sits','Price எங்கே இருக்கு'),`<div class="svgbox">${rng}</div>${ul([['Still 8% below the ₹900 IPO price, 34% below the May high.','₹900 IPO price-ஐ விட இன்னும் 8% கீழே; May high-ஐ விட 34% கீழே.'],['Brokers\' average target ~₹946 (range ₹700–1,200); this is their view, not CB advice.','Brokers average target ~₹946 (₹700–1,200); இது அவங்க view, CB advice இல்ல.']])}`)}
+${card(L('P/E then vs now','P/E அன்று vs இன்று'),`<div class="svgbox">${pe}</div>${ul([['Earnings grew while price fell, so P/E dropped from ~54× to ~39×.','Earnings ஏறிச்சு, price இறங்குச்சு — P/E ~54×-லிருந்து ~39×.'],['Only 9 months of listed history — no 5-year band to compare yet.','Listing ஆகி 9 மாசம் தான் — 5 வருஷ band இன்னும் இல்ல.']])}`)}
+${card(L('Peer check: LatentView (Q2 FY27)','Peer ஒப்பீடு: LatentView (Q2 FY27)'),`<div class="tbl"><table><thead><tr><th></th><th>Fractal</th><th>LatentView</th></tr></thead><tbody><tr><td>Revenue</td><td>₹956.5 cr</td><td>₹294.1 cr</td></tr><tr><td>YoY growth</td><td class="up">+19.8%</td><td>+14.2%</td></tr><tr><td>Adj. EBITDA margin</td><td>16.2%</td><td class="up">20.7%</td></tr><tr><td>${L('Own products','சொந்த products')}</td><td class="up">4% + Qure stake</td><td>${L('mostly services','பெரும்பாலும் services')}</td></tr></tbody></table></div><p class="note">${L('Fractal grows faster and owns more IP; LatentView earns a higher margin today.','Fractal வேகமா வளருது, IP அதிகம்; LatentView margin இப்போ அதிகம்.')}</p>`)}
+${card(L('What the market is paying for','Market எதுக்கு pay பண்ணுது'),`<div class="svgbox"><svg viewBox="0 0 500 200">${[['Fractal.ai services','Fractal.ai services',340,C.accent],['Products option','Products option',90,C.blue],['Qure.ai stake (hidden)','Qure.ai stake (மறைஞ்சிருக்கு)',40,'#BFE6C9']].reduce((a,[n,t,w,c],i)=>{a.s+=`<rect x="${a.x}" y="50" width="${w}" height="60" fill="${c}" stroke="${C.ink}"/>`+ST(a.x+w/2,140+i*18,n,t,'font-size="11.5" text-anchor="middle"');a.x+=w;return a},{s:'',x:30}).s}${ST(250,35,'Illustrative split, not a valuation','Illustrative மட்டும், valuation இல்ல','font-size="13" text-anchor="middle"')}</svg></div>${ul([['Qure.ai losses cut reported EPS, so the stake can look like a negative to P/E-based investors (management\'s own point).','Qure.ai loss EPS-ஐ குறைக்குது; P/E பார்க்குறவங்களுக்கு stake negative மாதிரி தெரியும் (management சொன்னது).']])}`)}
+</div>`};
+/* ---------- 9. 5 KEY TAKEAWAYS ---------- */
+R.kt=()=>{const pic=(k)=>{const s=`<svg viewBox="0 0 120 90" width="120" height="90">`;const m={
+ a:`<rect x="10" y="50" width="16" height="30" fill="${C.soft}" stroke="${C.strong}"/><rect x="32" y="40" width="16" height="40" fill="${C.soft}" stroke="${C.strong}"/><rect x="54" y="30" width="16" height="50" fill="${C.soft}" stroke="${C.strong}"/><rect x="76" y="12" width="16" height="68" fill="${C.strong}"/><text x="84" y="9" font-size="11" text-anchor="middle">$100M</text>`,
+ b:`<path d="M10 75 L40 60 L70 45 L105 12" stroke="${C.good}" stroke-width="4" fill="none"/><path d="M10 75 L105 62" stroke="${C.accent}" stroke-width="4" fill="none"/><text x="100" y="30" font-size="12" text-anchor="end" fill="${C.good}">PAT ×2.4</text><text x="105" y="80" font-size="10" text-anchor="end">rev +20%</text>`,
+ c:`${icon('heart',30,40)}${icon('bank',62,40)}${icon('tower',94,40)}<text x="30" y="75" font-size="11" text-anchor="middle" fill="${C.good}">+79%</text><text x="62" y="75" font-size="11" text-anchor="middle" fill="${C.good}">+30%</text><text x="94" y="75" font-size="11" text-anchor="middle" fill="${C.good}">+6% QoQ</text>`,
+ d:`${icon('person',30,45)}${icon('person',55,45)}${icon('person',80,45)}<path d="M15 72 h90" stroke="${C.bad}" stroke-width="3"/><text x="60" y="86" font-size="11" text-anchor="middle" fill="${C.bad}">GM −225 bps</text>`,
+ e:`<circle cx="45" cy="45" r="30" fill="${C.soft}" stroke="${C.strong}" stroke-width="2"/><path d="M45 45 L45 15 A30 30 0 0 1 52.5 16 Z" fill="${C.blue}"/><text x="45" y="50" font-size="12" text-anchor="middle">4%</text>${icon('cube',100,45,C.blue)}`};return s+m[k]+`</svg>`};
+ const T=[['a','First $100M quarter','முதல் $100M quarter','Revenue ₹956.5 cr (+20%) crossed $100 million in one quarter for the first time.','Revenue ₹956.5 cr (+20%) — முதல் தடவையா ஒரு quarter-ல $100 million.'],
+ ['b','Operating leverage works','Operating leverage வேலை செய்யுது','PAT +139% on +20% revenue: lower SG&A (23.6% of revenue) and lower ESOP cost.','Revenue +20%-க்கு PAT +139%: SG&A (23.6%) குறைஞ்சது, ESOP cost குறைஞ்சது.'],
+ ['c','Healthcare & banks carry growth','Healthcare & banks வளர்ச்சியை தூக்குது','Healthcare +79%, BFSI +30%; TMT turned up 6% QoQ after five falling quarters.','Healthcare +79%, BFSI +30%; 5 quarter இறக்கத்துக்கு அப்புறம் TMT QoQ 6% ஏறுச்சு.'],
+ ['d','Margin paid for future talent','Future talent-க்கு margin கொடுத்தாங்க','Gross margin fell to 44% as costly AI engineers were hired early. Watch Q3 for the promised recovery.','Costly AI engineers-ஐ முன்னாடியே hire பண்ணதால gross margin 44%. Q3-ல recovery வருதான்னு பாருங்க.'],
+ ['e','Still services at heart','இன்னும் services தான்','Products are 4% of revenue. The AI-company label depends on Cogentiq licences growing.','Products revenue-ல 4% தான். AI company label வேணும்னா Cogentiq licences வளரணும்.']];
+ return `<h2>${L('5 key takeaways','5 முக்கிய பாடங்கள்')}</h2><div class="grid g3">${T.map(t=>`<div class="card" style="display:flex;gap:12px;align-items:flex-start">${pic(t[0])}<div><h3>${L(t[1],t[2])}</h3><div>${L(t[3],t[4])}</div></div></div>`).join('')}</div>`};
+
+/* ---------- 10. SHARE MOVES ---------- */
+R.why=()=>{const pts=[['IPO 16 Feb','IPO 16 Feb',900],['6 Mar Q3','6 Mar Q3',798],['May high','May high',1118],['Low','Low',696],['3 Nov','3 Nov',733],['4 Nov Q2','4 Nov Q2',836]];
+ const W=560,H=240,X=i=>50+i*92,Y=v=>30+170*(1-(v-650)/(1200-650));let s=`<svg viewBox="0 0 ${W} ${H}">`;[700,900,1100].forEach(v=>s+=`<line x1="40" x2="${W-6}" y1="${Y(v)}" y2="${Y(v)}" stroke="${C.line}"/><text x="35" y="${Y(v)+4}" font-size="10" text-anchor="end" class="mono">${v}</text>`);
+ s+=`<line x1="40" x2="${W-6}" y1="${Y(900)}" y2="${Y(900)}" stroke="${C.ink2}" stroke-dasharray="5 4"/><text x="${W-8}" y="${Y(900)-5}" font-size="10" text-anchor="end">IPO ₹900</text>`;
+ s+=`<polyline points="${pts.map((p,i)=>X(i)+','+Y(p[2])).join(' ')}" fill="none" stroke="${C.strong}" stroke-width="3"/>`;pts.forEach((p,i)=>{s+=`<circle cx="${X(i)}" cy="${Y(p[2])}" r="${i===5?7:4.5}" fill="${i===5?C.good:'#fff'}" stroke="${C.strong}" stroke-width="2.5"/><text x="${X(i)}" y="${Y(p[2])-10}" font-size="11" text-anchor="middle" class="mono">₹${p[2]}</text>`+ST(X(i),H-12,p[0],p[1],'font-size="10" text-anchor="middle"')});s+=`</svg>`;
+ const up=[['$100M quarter, PAT +139%','$100M quarter, PAT +139%'],['TMT stopped falling (+6% QoQ)','TMT இறக்கம் நின்னுச்சு (+6% QoQ)'],['Guide: margins up in H2, YoY and QoQ','Guide: H2-ல margins ஏறும்'],['Alpha near break-even by Mar-27','Mar-27-க்குள் Alpha break-even பக்கம்']];
+ const dn=[['Gross margin −225 bps','Gross margin −225 bps'],['Constant-currency growth only 10%','Constant currency growth 10% தான்'],['CPG (largest vertical) slow, +11%','CPG (பெரிய vertical) மெதுவா, +11%'],['Fear: cheaper AI shrinks services work','பயம்: AI மலிவானா services வேலை குறையும்']];
+ const saw=`<svg viewBox="0 0 560 230"><polygon points="280,170 262,205 298,205" fill="${C.ink2}"/><line x1="40" y1="182" x2="520" y2="140" stroke="${C.ink}" stroke-width="6" stroke-linecap="round"/>
+ ${up.map((u,i)=>`<rect x="330" y="${10+i*30}" width="220" height="26" rx="6" fill="#BFE6C9" stroke="${C.good}"/>`+ST(338,28+i*30,'▲ '+u[0],'▲ '+u[1],'font-size="11"')).join('')}
+ ${dn.map((u,i)=>`<rect x="10" y="${10+i*30}" width="240" height="26" rx="6" fill="#F9DAD4" stroke="${C.bad}"/>`+ST(18,28+i*30,'▼ '+u[0],'▼ '+u[1],'font-size="11"')).join('')}
+ ${ST(280,226,'4 Nov: positives outweighed → stock +12–14%','4 Nov: positives அதிகம் → share +12–14%','font-size="12" text-anchor="middle" fill="'+C.good+'"')}</svg>`;
+ return `<h2>${L('Reasons for share market activity','Share price ஏன் நகருது')}</h2>
+<div class="grid g2">${card(L('Price path since listing (₹)','Listing-லிருந்து price பாதை (₹)'),`<div class="svgbox">${s}</div><p class="note">${L('Points in order, not to time scale. 1-year return about −18%.','வரிசைப்படி; time scale இல்ல. 1 வருஷ return சுமார் −18%.')}</p>`)}
+${card(L('Results day see-saw','Results நாள் see-saw'),`<div class="svgbox">${saw}</div>`)}</div>
+<div class="grid g2" style="margin-top:14px">${card(L('Why it fell from ₹1,118 to ₹696','₹1,118-லிருந்து ₹696 வரை ஏன் விழுந்துச்சு'),ul([['Q4 FY26 grew only 3.7% QoQ vs ~8% expected; PL Capital downgraded to Hold in May.','Q4 FY26 QoQ 3.7% தான் (எதிர்பார்ப்பு ~8%); May-ல PL Capital Hold-க்கு downgrade.'],['TMT fell for five quarters; Q1 FY27 TMT −22% YoY.','TMT 5 quarters விழுந்தது; Q1 FY27 TMT −22% YoY.'],['IT stocks broadly weak on fears that AI will deflate services pricing.','AI services pricing-ஐ குறைக்கும்னு பயத்துல IT stocks மொத்தமா weak.'],['Post-IPO supply as pre-IPO holders became free to sell.','IPO-க்கு முன் இருந்தவங்க விக்க முடிஞ்சதால supply அதிகம்.']]))}
+${card(L('Why it jumped on 4 Nov','4 Nov ஏன் jump'),ul([['Volume 64× the weekly average; intraday high ₹844.','Volume வார average-ஐ விட 64 மடங்கு; intraday high ₹844.'],['Profit beat came with a clear H2 margin promise and a new CFO (ex-J&J, Unilever).','Profit beat + H2 margin promise + புது CFO (ex-J&J, Unilever).'],['Stock was near its 52-week low, so expectations were low.','Share 52-week low பக்கத்துல இருந்ததால எதிர்பார்ப்பு குறைவு.']]))}</div>`};
+
+/* ---------- 11. TRIGGERS & CYCLE ---------- */
+R.tc=()=>{const clock=(()=>{const cx=150,cy=150,R=110;const ph=[['P1 Trough','P1 அடிமட்டம்'],['P2 Early recovery','P2 Early recovery'],['P3 Expansion','P3 Expansion'],['P4 Peak','P4 Peak'],['P5 Downturn','P5 Downturn']];let s=`<svg viewBox="0 0 300 300">`;const cols=['#FCE2A6','#BFE6C9','#A9DDB8','#F6C1B7','#F2A99E'];
+ ph.forEach((p,i)=>{const a0=-Math.PI/2+i*2*Math.PI/5,a1=a0+2*Math.PI/5;const P=(r,a)=>[cx+r*Math.cos(a),cy+r*Math.sin(a)];const [x1,y1]=P(R,a0),[x2,y2]=P(R,a1);s+=`<path d="M${cx} ${cy}L${x1} ${y1}A${R} ${R} 0 0 1 ${x2} ${y2}Z" fill="${cols[i]}" stroke="#fff" stroke-width="3"/>`;const [tx,ty]=P(R*0.68,(a0+a1)/2);s+=ST(tx,ty,p[0],p[1],'font-size="10.5" text-anchor="middle"')});
+ const a=-Math.PI/2+0.85*2*Math.PI/5;s+=`<line x1="${cx}" y1="${cy}" x2="${cx+95*Math.cos(a)}" y2="${cy+95*Math.sin(a)}" stroke="${C.ink}" stroke-width="5" stroke-linecap="round"/><circle cx="${cx}" cy="${cy}" r="9" fill="${C.strong}"/>`;
+ const b=-Math.PI/2+1.1*2*Math.PI/5;s+=`<circle cx="${cx+122*Math.cos(b)}" cy="${cy+122*Math.sin(b)}" r="9" fill="${C.blue}" stroke="#fff" stroke-width="2"/>`;return s+`</svg>`})();
+ const T=[['+','Enterprise AI wave (FY28, per mgmt)','Enterprise AI wave (FY28, mgmt சொன்னது)',5,0.4,0.7,1.0,'Pipeline & large deals','Pipeline & large deals'],
+ ['+','Cogentiq / product licences scaling','Cogentiq / product licences வளர்ச்சி',4,0.7,0.7,0.7,'Products % of revenue 4→6%','Products % 4→6%'],
+ ['+','TMT recovery continues','TMT recovery தொடரும்',2,0.7,1.0,0.7,'TMT QoQ growth in Q3','Q3 TMT QoQ'],
+ ['+','Gross margin recovers in Q3–Q4','Q3–Q4 gross margin recovery',3,0.4,1.0,0.7,'GM back to 45–46%','GM 45–46% திரும்புமா'],
+ ['+','M&A using ₹1,728 cr cash','₹1,728 cr cash வச்சு M&A',3,0.4,0.7,1.0,'Deal announcements','Deal announcements'],
+ ['−','AI makes services cheaper (pricing deflation)','AI services-ஐ மலிவாக்கும் (pricing deflation)',4,0.4,0.7,1.0,'Revenue per FTE trend','Revenue per FTE'],
+ ['−','CPG slowdown (34.7% of revenue)','CPG slowdown (revenue-ல 34.7%)',2,0.7,1.0,1.0,'CPG QoQ in Q3','Q3 CPG QoQ'],
+ ['−','Rupee strengthens (weak ₹ added 270 bps GM)','Rupee strong ஆனா (weak ₹ 270 bps GM கொடுத்தது)',3,0.2,0.7,1.0,'USD/INR','USD/INR']];
+ const pts=t=>t[3]*t[4]*t[5]*t[6];
+ const tb=`<div class="tbl"><table><thead><tr><th>${L('Trigger','Trigger')}</th><th>±</th><th>I</th><th>C</th><th>W</th><th>P</th><th>${L('Points','Points')}</th><th>${L('Watch','கவனிங்க')}</th></tr></thead><tbody>${T.map(t=>`<tr><td>${L(t[1],t[2])}</td><td class="${t[0]==='+'?'up':'dn'}">${t[0]}</td><td>${t[3]}</td><td>${t[4]}</td><td>${t[5]}</td><td>${t[6]}</td><td class="${t[0]==='+'?'up':'dn'}"><b>${pts(t).toFixed(2)}</b></td><td>${L(t[7],t[8])}</td></tr>`).join('')}</tbody></table></div>`;
+ const tl=`<svg viewBox="0 0 900 150"><line x1="30" x2="870" y1="70" y2="70" stroke="${C.ink}" stroke-width="3"/>${[['Oct-26','New CFO joins','புது CFO',1],['3 Nov','Pricing One (Europe) closed','Pricing One deal',1],['~Feb-27','Q3 FY27: GM recovery test','Q3: GM recovery test',0],['Mar-27','Alpha near break-even','Alpha break-even பக்கம்',0],['~May-27','Q4 FY27 results','Q4 FY27 results',0],['FY28','Enterprise AI scale-up; Alpha profit','Enterprise AI scale-up',0],['~FY30','Products ~$100M aim','Products ~$100M aim',0]].map(([d,a,b,done],i)=>{const x=50+i*133;return `<circle cx="${x}" cy="70" r="10" fill="${done?C.good:'#fff'}" stroke="${done?C.good:C.strong}" stroke-width="3"/><text x="${x}" y="${i%2?110:42}" font-size="12" text-anchor="middle" class="mono">${d}</text>`+ST(x,i%2?128:24,a,b,'font-size="11" text-anchor="middle"')}).join('')}</svg>`;
+ return `<h2>${L('Triggers & cycle','Triggers & cycle')}</h2>
+<div class="grid g4">${[['CY score','63',L('Sector ~58 · stock 69','Sector ~58 · stock 69')],['TG score','56',L('3 positives 3.75 · negatives 2.94','Positives 3.75 · negatives 2.94')],['Sector phase',L('Bottoming','அடிமட்டம்'),L('IT services P1 + AI S-curve emerging','IT services P1 + AI emerging')],['Stock stage',L('Stage 4 → 1','Stage 4 → 1'),L('Base forming near ₹700–830','₹700–830 பக்கம் base')]].map(([a,b,c])=>`<div class="card kpi"><div class="l">${a}</div><div class="v">${b}</div><div class="d">${c}</div></div>`).join('')}</div>
+<div class="grid g2" style="margin-top:14px">
+${card(L('Cycle clock','Cycle clock'),`<div class="svgbox" style="max-width:330px;margin:auto">${clock}</div>${ul([['Black hand: sector — global IT services near the trough; enterprise AI adoption still "emerging" (management: "floodgates not opened yet").','கருப்பு முள்: sector — IT services அடிமட்டம் பக்கம்; enterprise AI இன்னும் ஆரம்பம்.'],['Blue dot: stock — fell in a Stage 4 decline, now trying to build a Stage 1 base after the +14% results jump.','நீல புள்ளி: share — Stage 4 இறக்கம், results jump-க்கு அப்புறம் Stage 1 base கட்ட முயற்சி.']])}`)}
+${card(L('Stock cycle sub-scores','Stock cycle sub-scores'),`<div class="svgbox">${hbars([{l:'Business lifecycle',lt:'Business lifecycle',v:80},{l:'Earnings cycle',lt:'Earnings cycle',v:70},{l:'Valuation cycle',lt:'Valuation cycle',v:70},{l:'Price stage',lt:'Price stage',v:55,c:'#FCE2A6'}],{w:480,pl:150,fmt:v=>v})}</div><p class="note">${L('Scaling + re-inventing (products) → 80. Margins rising mid-range → 70. P/E fell 54×→39× with earnings rising, but short history → 70. Price base not yet confirmed → 55.','Scaling + products → 80. Margins நடுத்தரத்துல ஏறுது → 70. P/E 54×→39×, history குறைவு → 70. Base இன்னும் confirm ஆகல → 55.')}</p>`)}
+</div>
+<div class="card" style="margin-top:14px"><h3>${L('Trigger table (I × C × W × P)','Trigger table (I × C × W × P)')}</h3>${tb}<p class="note">${L('TG = 50 + 8 × (top-3 positives 1.40+1.37+0.98) − 8 × (negatives 1.12+1.40+0.42) ≈ 56.','TG = 50 + 8 × (top-3 positives) − 8 × (negatives) ≈ 56.')}</p></div>
+<div class="card" style="margin-top:14px"><h3>${L('Trigger timeline','Trigger timeline')}</h3><div class="svgbox wide">${tl}</div></div>
+<div class="card" style="margin-top:14px"><h3>${L('What would change this view','இந்த view எது மாத்தும்')}</h3>${ul([['Gross margin stays near 44% in Q3 → the "investing ahead" story weakens.','Q3-லயும் GM 44% பக்கம் இருந்தா → "முன்கூட்டியே invest" கதை weak.'],['Products share stuck at ~4% for 3–4 quarters → AI-company re-rating unlikely.','3–4 quarters products ~4%-லயே இருந்தா → AI re-rating வராது.'],['Revenue per FTE falling in rupees → AI deflation risk is real.','Rupee-ல revenue per FTE குறைஞ்சா → AI deflation risk உண்மை.']])}</div>`};
+
+/* ---------- 12. 6 PILLARS ---------- */
+R.pil=()=>{const P=[['Business quality','Business quality',7,'NRR 115%, zero churn, NPS 76, Fortune-500 clients','NRR 115%, churn 0, NPS 76'],['Competitive edge','Competitive edge',7,'Deep AI talent, Cogentiq, domain depth in CPG & health; rivals: Accenture, Tiger, Tredence, in-house teams','AI talent, Cogentiq, CPG/health domain'],['Growth runway','Growth runway',7,'Healthcare +79%, 6 clients >$20M; but CC growth only 10%','Healthcare +79%; CC growth 10% தான்'],['Financial strength','Financial strength',8,'₹1,728 cr cash, no debt, TTM cash flow ₹407 cr; DSO up','₹1,728 cr cash, debt இல்ல'],['Valuation','Valuation',5,'~39× TTM P/E — premium to IT services, below AI-product names','~39× P/E — IT-ஐ விட premium'],['Risk & reward','Risk & reward',6,'Margin, AI deflation, CPG; offset by cash and Qure stake','Margin, AI deflation, CPG risk']];
+ const tot=P.reduce((s,p)=>s+p[2],0);let s=`<svg class="temple" viewBox="0 0 640 360"><polygon points="20,80 320,10 620,80" fill="${C.accent}" stroke="${C.strong}" stroke-width="3"/>${ST(320,62,'Fractal · '+tot+' / 60','Fractal · '+tot+' / 60','font-size="20" text-anchor="middle"')}<rect x="30" y="80" width="580" height="16" fill="${C.soft}" stroke="${C.strong}"/>`;
+ P.forEach((p,i)=>{const x=50+i*96,h=22*p[2];s+=`<rect x="${x}" y="96" width="60" height="220" fill="#fff" stroke="${C.line}" stroke-dasharray="4 3"/><rect x="${x}" y="${316-h}" width="60" height="${h}" fill="${p[2]>=7?'#BFE6C9':p[2]>=6?'#FCE2A6':'#F6C1B7'}" stroke="${C.ink2}" stroke-width="1.5"/><text x="${x+30}" y="${306-h}" font-size="20" text-anchor="middle" class="mono">${p[2]}</text>`+ST(x+30,336,p[0].split(' ')[0],p[1].split(' ')[0],'font-size="12" text-anchor="middle"')+ST(x+30,352,p[0].split(' ').slice(1).join(' '),p[1].split(' ').slice(1).join(' '),'font-size="12" text-anchor="middle"')});s+=`<rect x="20" y="316" width="600" height="6" fill="${C.ink2}"/></svg>`;
+ return `<h2>${L('6 Pillars — CB temple','6 தூண்கள் — CB கோயில்')}</h2><div class="grid g2">${card('',`<div class="svgbox">${s}</div>`)}${card(L('Evidence behind each score','ஒவ்வொரு score-க்கும் ஆதாரம்'),`<div class="tbl"><table><tbody>${P.map(p=>`<tr><td><b>${L(p[0],p[1])}</b><div class="note">${L(p[3],p[4])}</div></td><td><b>${p[2]}/10</b></td></tr>`).join('')}</tbody></table></div><p class="note">${L('Grading: 8–10 strong evidence in numbers; 6–7 good with a clear gap; 4–5 average or stretched; below 4 weak. Pillar height = score.','Grading: 8–10 numbers-ல வலுவான ஆதாரம்; 6–7 நல்லது, ஒரு gap; 4–5 சராசரி; 4-க்கு கீழ் weak.')}</p>`)}</div>`};
+
+/* ---------- 13. BIG BET ---------- */
+R.bet=()=>{const wheel=(()=>{const it=[['Cogentiq platform','Cogentiq platform',C.blue],['Cogentiq Invoice-to-Cash','Cogentiq I2C',C.blue],['Cogentiq CX (voice)','Cogentiq CX',C.blue],['Asper.ai (CPG pricing)','Asper.ai',C.strong],['Analytics Vidhya','Analytics Vidhya',C.warn],['Qure.ai 31.5%','Qure.ai 31.5%',C.good]];let s=`<svg viewBox="0 0 520 330"><circle cx="260" cy="165" r="62" fill="${C.bsoft}" stroke="${C.blue}" stroke-width="3"/>${ST(260,160,'Products','Products','font-size="16" text-anchor="middle"')}<text x="260" y="182" font-size="13" text-anchor="middle" class="mono">₹150 cr+/yr</text>`;
+ it.forEach((t,i)=>{const a=-Math.PI/2+i*Math.PI/3,x=260+165*Math.cos(a),y=165+125*Math.sin(a);s+=`<line x1="${260+62*Math.cos(a)}" y1="${165+62*Math.sin(a)}" x2="${x}" y2="${y}" stroke="${t[2]}" stroke-width="2"/><rect x="${x-82}" y="${y-16}" width="164" height="32" rx="16" fill="#fff" stroke="${t[2]}" stroke-width="2.5"/>`+ST(x,y+5,t[0],t[1],'font-size="11.5" text-anchor="middle"')});return s+`</svg>`})();
+ const ms=[[1,'2020','Qure.ai incubated & spun out','Qure.ai spin-out'],[1,'Feb-26','IPO ₹2,834 cr; ₹355 cr set aside for Alpha','IPO; Alpha-க்கு ₹355 cr'],[1,'Mar-26','Analytics Vidhya made 100% owned','Analytics Vidhya 100%'],[1,'Q2 FY27','Products 4% of revenue; ₹200 cr+ contracted','Products 4%; ₹200 cr+ RPO'],[1,'3 Nov 26','Pricing One: Asper.ai base in Europe','Pricing One: Europe base'],[0,'Q3–Q4 FY27','Alpha near break-even','Alpha break-even பக்கம்'],[0,'FY28','Alpha profitable; enterprise AI scale-up','Alpha profit; AI scale-up'],[0,'~FY30','Products ~$100M run-rate (12-quarter aim)','Products ~$100M (12 quarter aim)']];
+ const tl=`<svg viewBox="0 0 900 170"><line x1="30" x2="870" y1="80" y2="80" stroke="${C.ink}" stroke-width="3"/>${ms.map((m,i)=>{const x=50+i*114;return `<circle cx="${x}" cy="80" r="11" fill="${m[0]?C.good:'#fff'}" stroke="${m[0]?C.good:C.strong}" stroke-width="3" ${m[0]?'':'stroke-dasharray="4 3"'}/><text x="${x}" y="${i%2?118:50}" font-size="11.5" text-anchor="middle" class="mono">${m[1]}</text>`+ST(x,i%2?136:32,m[2].length>30?m[2].slice(0,30)+'…':m[2],m[3],'font-size="10.5" text-anchor="middle"')}).join('')}<circle cx="40" cy="160" r="6" fill="${C.good}"/><text x="52" y="164" font-size="11">done</text><circle cx="110" cy="160" r="6" fill="#fff" stroke="${C.strong}" stroke-width="2"/><text x="122" y="164" font-size="11">guided</text></svg>`;
+ return `<h2>${L('The big bet: from services to products','பெரிய bet: services-லிருந்து products-க்கு')}</h2>
+<p class="lede">${L('This is what decides whether Fractal becomes a true AI company.','Fractal உண்மையான AI company ஆகுமா என்பதை இது தான் முடிவு பண்ணும்.')}</p>
+<div class="grid g2">${card(L('The product family','Product குடும்பம்'),`<div class="svgbox">${wheel}</div>`)}
+${card(L('Who is ahead?','யார் முன்னாடி?'),`<div class="svgbox">${hbars([{l:'Fractal (products % rev)',lt:'Fractal (products %)',v:4,c:C.blue},{l:'Most Indian IT/analytics peers',lt:'பெரும்பாலான IT/analytics peers',v:1,c:C.soft},{l:'Mgmt aim (~12 qtrs)',lt:'Mgmt aim (~12 qtrs)',v:20,c:'#9CC3EF'}],{w:480,pl:190,fmt:v=>(v===1?'≤1':v)+'%'})}</div>${ul([['Among listed Indian analytics firms, Fractal has the largest own-IP layer (platform + Asper + Qure stake).','Listed Indian analytics firms-ல Fractal-கிட்ட தான் அதிக சொந்த IP.'],['The aim needs ~70–80% yearly product growth (an analyst\'s maths on the call); today +39%.','Aim-க்கு வருஷம் ~70–80% product growth வேணும்; இப்போ +39%.']])}<p class="note">${L('Peer figure is a CB estimate for illustration.','Peer number CB estimate மட்டும்.')}</p>`)}</div>
+<div class="card" style="margin-top:14px"><h3>${L('Done vs guided milestones','முடிஞ்சது vs guided milestones')}</h3><div class="svgbox wide">${tl}</div></div>
+<div class="card" style="margin-top:14px;background:var(--accent-soft)"><h3>${L('How Fractal got here','Fractal இங்கே எப்படி வந்தது')}</h3>${ul([['2000: five founders start an analytics firm in Mumbai, serving consumer-goods giants.','2000: Mumbai-ல 5 founders analytics firm ஆரம்பிச்சாங்க; consumer goods companies தான் clients.'],['2019: Apax invests $200M; 2022: TPG invests $360M — unicorn.','2019: Apax $200M; 2022: TPG $360M — unicorn.'],['2020: Qure.ai spun out — now in 100+ countries for TB and lung-cancer X-ray screening.','2020: Qure.ai spin-out — TB, lung cancer X-ray screening 100+ நாடுகள்ல.'],['Feb 2026: IPO at ₹900; Q2 FY27: first $100M quarter.','Feb 2026: ₹900-ல IPO; Q2 FY27: முதல் $100M quarter.']])}</div>`};
+/* ---------- 14. VALUE CHAIN ---------- */
+R.vc=()=>{const L5=[['Chips & compute','Chips & compute','Nvidia, others',0],['Cloud','Cloud','AWS, Azure, Google',0],['Foundation models','Foundation models','OpenAI, Anthropic, Google',0],['Data platforms','Data platforms','Databricks, Snowflake',0],['AI platform / harness','AI platform / harness','Cogentiq',1],['AI services & FDEs','AI services & FDEs','Fractal.ai',1],['Industry apps','Industry apps','Asper.ai, Qure.ai, Cogentiq CX/I2C',1],['Enterprise users','Enterprise users','CPG, pharma, banks, telcos',0]];
+ let s=`<svg viewBox="0 0 960 230"><defs><marker id="ah2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="${C.ink2}"/></marker></defs>`;
+ L5.forEach((l,i)=>{const x=8+i*119;s+=`<rect x="${x}" y="${l[3]?40:60}" width="106" height="${l[3]?130:90}" rx="10" fill="${l[3]?C.bsoft:C.panel}" stroke="${l[3]?C.blue:C.line}" stroke-width="${l[3]?3:2}"/>`;const w=l[0].split(' ');s+=ST(x+53,l[3]?72:88,w.slice(0,2).join(' '),l[1].split(' ').slice(0,2).join(' '),'font-size="12" text-anchor="middle"')+ST(x+53,l[3]?88:104,w.slice(2).join(' '),l[1].split(' ').slice(2).join(' '),'font-size="12" text-anchor="middle"')+`<foreignObject x="${x+4}" y="${l[3]?100:112}" width="98" height="60"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:10.5px;text-align:center;font-weight:700;color:${l[3]?C.blue:C.ink2}">${l[2]}</div></foreignObject>`;if(i<7)s+=`<line x1="${x+106}" y1="115" x2="${x+117}" y2="115" stroke="${C.ink2}" stroke-width="2" marker-end="url(#ah2)"/>`});
+ s+=ST(8+4*119,28,'◀ Fractal plays in these three layers ▶','◀ Fractal இந்த 3 layers-ல இருக்கு ▶','font-size="13" fill="'+C.blue+'"')+ST(480,212,'Margin rises as you move from people-work to licensed software','ஆட்கள் வேலையிலிருந்து licensed software-க்கு போனா margin ஏறும்','font-size="12" text-anchor="middle" fill="'+C.ink2+'"')+`</svg>`;
+ return `<h2>${L('Sector need & AI value chain','Sector தேவை & AI value chain')}</h2>
+<div class="card"><div class="svgbox wide">${s}</div></div>
+<div class="grid g2" style="margin-top:14px">
+${card(L('Why enterprises need a Fractal','Enterprises-க்கு Fractal ஏன் தேவை'),`<div class="svgbox"><svg viewBox="0 0 480 200"><circle cx="110" cy="100" r="70" fill="${C.bsoft}" stroke="${C.blue}" stroke-width="2"/><circle cx="210" cy="100" r="70" fill="${C.soft}" stroke="${C.strong}" stroke-width="2" fill-opacity=".8"/>${ST(85,100,'World knowledge','உலக அறிவு','font-size="12" text-anchor="middle"')}${ST(85,116,'(AI models)','(AI models)','font-size="11" text-anchor="middle"')}${ST(240,100,'Company context','Company context','font-size="12" text-anchor="middle"')}${ST(240,116,'(data, process)','(data, process)','font-size="11" text-anchor="middle"')}<text x="160" y="104" font-size="13" text-anchor="middle" fill="${C.blue}">Fractal</text><path d="M300 100h40" stroke="${C.ink2}" stroke-width="2" marker-end="url(#ah2)"/>${ST(350,95,'Reliable AI','நம்பகமான AI','font-size="14"')}${ST(350,113,'inside the firm','company உள்ளே','font-size="12"')}</svg></div>${ul([['Models know the world but not a company\'s data or rules; the "harness" (Cogentiq) fills that gap.','Models-க்கு உலகம் தெரியும், company data, rules தெரியாது; அந்த gap-ஐ Cogentiq நிரப்புது.'],['Management says cost of AI intelligence falls ~93% a year — more use cases become worth doing.','AI cost வருஷம் ~93% குறையுதுன்னு management — இன்னும் நிறைய use cases லாபமாகும்.']])}`)}
+${card(L('Where the risk sits in the chain','Chain-ல risk எங்கே'),ul([['Upstream giants (model labs, hyperscalers) could build the services layer themselves.','மேல இருக்குற giants (model labs, hyperscalers) services-ஐ தாங்களே செய்யலாம்.'],['Today they partner: labs send Fractal leads where their own products don\'t fit.','இப்போ partner பண்றாங்க: labs தங்க product fit ஆகாத இடத்துக்கு Fractal-ஐ கூப்பிடுறாங்க.'],['Big IT firms (Accenture, TCS, Infosys) also sell AI services — scale vs Fractal\'s depth.','பெரிய IT firms-ம் AI services விக்குறாங்க — scale vs Fractal depth.']]))}
+</div>`};
+
+/* ---------- 15. SWOT ---------- */
+R.swot=()=>{const Q4=[['S','Strengths','பலம்',C.good,'#D8F1DF',[['NRR 115%, zero churn','NRR 115%, churn 0'],['Debt-free, ₹1,728 cr cash','Debt இல்ல, ₹1,728 cr cash'],['Own IP: Cogentiq, Asper, Qure','சொந்த IP'],['Healthcare & BFSI momentum','Healthcare & BFSI வேகம்']]],['W','Weaknesses','பலவீனம்',C.bad,'#F9DAD4',[['58% time-and-people billing','58% நேரம்-ஆட்கள் billing'],['Top-10 clients = 51.7%','Top-10 = 51.7%'],['Gross margin fell to 44%','GM 44%-க்கு இறங்குச்சு'],['Alpha & Qure still loss-making','Alpha, Qure இன்னும் loss']]],['O','Opportunities','வாய்ப்பு',C.blue,C.bsoft,[['Enterprise AI scale-up (FY28)','Enterprise AI scale-up (FY28)'],['Product licences to 10–20%','Products 10–20%'],['M&A with cash pile','Cash வச்சு M&A'],['Frontier-lab partnerships','Frontier-lab partnerships']]],['T','Threats','அச்சுறுத்தல்',C.warn,'#FCEFC7',[['AI cuts the price of services','AI services விலையை குறைக்கும்'],['CPG consolidation','CPG consolidation'],['Rupee strengthening','Rupee strong ஆனா'],['Big IT & labs competing','Big IT, labs போட்டி']]]];
+ let s=`<svg viewBox="0 0 640 420">`;Q4.forEach((q,i)=>{const x=10+(i%2)*315,y=10+Math.floor(i/2)*205;s+=`<rect x="${x}" y="${y}" width="305" height="195" rx="12" fill="${q[4]}" stroke="${q[3]}" stroke-width="2.5"/><circle cx="${x+32}" cy="${y+32}" r="20" fill="${q[3]}"/><text x="${x+32}" y="${y+39}" font-size="20" text-anchor="middle" style="fill:#fff">${q[0]}</text>`+ST(x+62,y+38,q[1],q[2],'font-size="17"');q[5].forEach((b,j)=>s+=ST(x+20,y+80+j*28,'• '+b[0],'• '+b[1],'font-size="13"'))});
+ return `<h2>SWOT</h2><div class="card" style="max-width:760px"><div class="svgbox">${s}</svg></div></div>`};
+
+/* ---------- 16. SELF-CHECK ---------- */
+const SC=[['g1','1. Questions about the stock','1. Stock பற்றிய கேள்விகள்',[
+ ['Do I know the issue: IPO ₹900, ₹2,834 cr, of which ₹1,810 cr was OFS (sellers cashing out)?','IPO ₹900, ₹2,834 cr, அதுல ₹1,810 cr OFS (விக்குறவங்க பணம்) — தெரியுமா?','IPO Feb-26; fresh ₹1,023.5 cr, OFS ₹1,810.4 cr; subscribed ~2.7×'],
+ ['Do I know where the fresh money went?','Fresh பணம் எங்கே போச்சு தெரியுமா?','₹265 cr debt repaid; ₹608 cr unused (Alpha ₹284 cr, offices ₹121 cr, M&A ₹161 cr)'],
+ ['Am I comfortable buying below the IPO price after a 38% fall from the high?','High-லிருந்து 38% விழுந்த பிறகு IPO price-க்கு கீழே வாங்குறது சரியா?','Now ~₹830 vs IPO ₹900; range ₹696–1,118'],
+ ['Do I know the lock-in and supply picture?','Lock-in, supply நிலைமை தெரியுமா?','Pre-IPO investors\' 6-month lock-in ended Aug-26; check shareholding each quarter']]],
+ ['g2','2. Problems investors face','2. Investors சந்திக்கும் சிக்கல்கள்',[
+ ['Can I explain in one line what Fractal sells?','Fractal என்ன விக்குதுன்னு ஒரு வரியில சொல்ல முடியுமா?','AI services to big firms (96%) + products (4%)'],
+ ['Do I understand why profit grew 139% but gross margin fell?','Profit 139% ஏறியும் GM ஏன் இறங்குச்சுன்னு புரியுதா?','SG&A down to 23.6%; GM down 225 bps on AI hiring'],
+ ['Do I know the Qure.ai effect on EPS?','Qure.ai EPS-ஐ எப்படி பாதிக்குதுன்னு தெரியுமா?','₹23 cr loss share per quarter; PAT ex-Qure ₹102 cr'],
+ ['Do I know the biggest risk (AI deflation of services)?','பெரிய risk (AI services விலை குறைப்பு) தெரியுமா?','58% revenue is time-and-people billing']]],
+ ['g3','3. What I did about these problems','3. இந்த சிக்கல்களுக்கு நான் என்ன செஞ்சேன்',[
+ ['I read the business and risk pages of the RHP / annual report.','RHP / annual report-ல business, risk pages படிச்சேன்.','RHP Feb-26; Q2 FY27 investor deck'],
+ ['I compared with a listed peer.','ஒரு listed peer-ஓட ஒப்பிட்டேன்.','LatentView: +14.2% growth, 20.7% margin'],
+ ['I kept the amount small for a new listing.','புது listing-ல amount சின்னதா வச்சேன்.','Listed only 9 months; no 5-year history'],
+ ['I fixed my horizon and a review point (Q3 gross margin).','Horizon, review point (Q3 GM) fix பண்ணேன்.','Q3 FY27 results ~Feb-27']]],
+ ['g4','4. Anchors\' & analysts\' view','4. Anchors & analysts view',[
+ ['Did institutions back the IPO?','IPO-வை institutions support பண்ணாங்களா?','Anchors ₹1,248 cr; QIB 4.2× vs retail 1.0×'],
+ ['What do analysts say?','Analysts என்ன சொல்றாங்க?','Avg target ~₹946 (₹700–1,200); 5 buy / 2 hold / 1 sell'],
+ ['What does the CB cycle & trigger view say?','CB cycle & trigger view என்ன?','CY 63, TG 56; sector bottoming'],
+ ['What is the market mood?','Market mood எப்படி?','+14% on results; 1-year −18%']]]];
+let SCS={};try{SCS=JSON.parse(localStorage.getItem('cbf_sc')||'{}')}catch(e){}
+function scSave(){try{localStorage.setItem('cbf_sc',JSON.stringify(SCS))}catch(e){}}
+function scToggle(id,v){SCS[id]=v;scSave();scDraw()}
+function scAdd(){const i=document.getElementById('scNew');const t=i.value.trim();if(!t)return;SCS.custom=SCS.custom||[];SCS.custom.push(t);i.value='';scSave();document.getElementById('scCustom').innerHTML=scCustom();scDraw()}
+function scDel(n){SCS.custom.splice(n,1);scSave();document.getElementById('scCustom').innerHTML=scCustom();scDraw()}
+function scCustom(){return (SCS.custom||[]).map((t,n)=>`<label class="chk"><input type="checkbox" ${SCS['c'+n]?'checked':''} onchange="scToggle('c${n}',this.checked)"><span style="flex:1">${t.replace(/</g,'&lt;')}</span><button onclick="scDel(${n})" aria-label="remove">✕</button></label>`).join('')}
+function scDraw(){let all=0,done=0;SC.forEach(g=>{let d=0;g[3].forEach((_,j)=>{if(SCS[g[0]+j])d++});all+=g[3].length;done+=d;const e=document.getElementById('ring_'+g[0]);if(e)e.innerHTML=ring(d/g[3].length,d+'/'+g[3].length,64)});const cu=SCS.custom||[];cu.forEach((_,n)=>{all++;if(SCS['c'+n])done++});const o=document.getElementById('ringAll');if(o)o.innerHTML=ring(all?done/all:0,done+'/'+all,110)}
+R.self=()=>`<h2>${L('CB investor self-check','CB investor self-check')}</h2>
+<div class="card" style="display:flex;gap:16px;align-items:center;flex-wrap:wrap"><div id="ringAll"></div><div style="flex:1;min-width:0">${L('Tick what you have checked. This only counts <b>your own</b> conditions — it is not a recommendation.','நீங்க check பண்ணதை tick பண்ணுங்க. இது <b>உங்க</b> conditions-ஐ மட்டும் எண்ணுது — recommendation இல்ல.')}</div></div>
+<div class="grid g2" style="margin-top:14px">${SC.map(g=>`<div class="card"><div style="display:flex;gap:10px;align-items:center"><span id="ring_${g[0]}"></span><h3>${L(g[1],g[2])}</h3></div>${g[3].map((it,j)=>`<label class="chk"><input type="checkbox" id="${g[0]}${j}" ${SCS[g[0]+j]?'checked':''} onchange="scToggle('${g[0]}${j}',this.checked)"><span>${L(it[0],it[1])}<div class="dt">Data: ${it[2]}</div></span></label>`).join('')}</div>`).join('')}
+<div class="card"><h3>${L('5. My own conditions','5. என் சொந்த conditions')}</h3><div id="scCustom">${scCustom()}</div><div style="display:flex;gap:8px;margin-top:8px"><input type="text" id="scNew" placeholder="Add a check, e.g. GM ≥ 45% in Q3"><button onclick="scAdd()">${L('Add','சேர்')}</button></div></div></div>`;
+
+/* ---------- 17. CAUVERY ASSIST (stand-in engine; swap for cauvery-assist.js) ---------- */
+const KB=[
+ {k:['ai or it','ai company','it service','it company','classify','classification','ஏஐ','ஐடி','ai-ஆ','it-ஆ'],a:['Fractal is an AI-native services company: the work is AI, but 96% of revenue still comes from services billed like IT.','Fractal ஒரு AI-native services company: வேலை AI, ஆனா revenue-ல 96% இன்னும் IT மாதிரி bill பண்ற services.'],tab:'aiit'},
+ {k:['revenue','sales','ரெவின்யூ','வருமானம்','top line'],a:['Q2 FY27 revenue was ₹956.5 crore, up 19.8% year on year — its first $100 million quarter.','Q2 FY27 revenue ₹956.5 கோடி, YoY 19.8% ஏற்றம் — முதல் $100 million quarter.'],tab:'fin'},
+ {k:['profit','pat','net income','லாபம்','ப்ராஃபிட்'],a:['Net profit was ₹79.2 crore, up 139% year on year and 9.5% over Q1.','Net profit ₹79.2 கோடி — YoY 139%, Q1-ஐ விட 9.5% அதிகம்.'],tab:'fin'},
+ {k:['gross margin','margin fall','மார்ஜின்','margin'],a:['Gross margin fell 225 bps to 44% because Fractal hired costly AI engineers early; EBITDA margin still rose to 16.2%.','AI engineers-ஐ முன்னாடியே hire பண்ணதால gross margin 225 bps இறங்கி 44%; ஆனா EBITDA margin 16.2%-க்கு ஏறுச்சு.'],tab:'fin'},
+ {k:['ebitda'],a:['Adjusted EBITDA was ₹154.9 crore, up 30%, with a 16.2% margin.','Adjusted EBITDA ₹154.9 கோடி, 30% ஏற்றம், margin 16.2%.'],tab:'fin'},
+ {k:['healthcare','pharma','hls','ஹெல்த்'],a:['Healthcare and life sciences grew 79% and is now 25.1% of revenue.','Healthcare & life sciences 79% வளர்ந்து இப்போ revenue-ல 25.1%.'],tab:'seg'},
+ {k:['tmt','telecom','tech media'],a:['TMT fell 18% year on year but grew 6% over Q1, so the decline looks to have bottomed.','TMT YoY 18% இறங்குச்சு, ஆனா Q1-ஐ விட 6% ஏறுச்சு — அடிமட்டம் முடிஞ்ச மாதிரி.'],tab:'seg'},
+ {k:['cpg','retail','consumer'],a:['CPG and retail, the largest vertical at 34.7%, grew only 11% due to client consolidation and inflation.','பெரிய vertical CPG & retail (34.7%) 11% தான் வளர்ந்தது — consolidation, inflation காரணம்.'],tab:'seg'},
+ {k:['bfsi','bank','insurance'],a:['Banking and insurance grew 30% and is 13.6% of revenue.','Banking & insurance 30% வளர்ந்தது; revenue-ல 13.6%.'],tab:'seg'},
+ {k:['product','cogentiq','licence','license','ப்ராடக்ட்','asper'],a:['Products earned ₹38 crore, 4% of revenue, with a run-rate above ₹150 crore a year, up 39%.','Products ₹38 கோடி — revenue-ல 4%; run-rate வருஷம் ₹150 கோடிக்கு மேல, 39% ஏற்றம்.'],tab:'bet'},
+ {k:['qure'],a:['Fractal owns 31.5% of Qure.ai; its share of Qure\'s loss was ₹23 crore this quarter.','Qure.ai-ல Fractal-க்கு 31.5%; இந்த quarter Qure loss share ₹23 கோடி.'],tab:'bm'},
+ {k:['cash','debt','கடன்','கேஷ்'],a:['Fractal has ₹1,728 crore of cash and investments and no debt.','Fractal-கிட்ட ₹1,728 கோடி cash & investments; debt இல்ல.'],tab:'cf'},
+ {k:['dso','receivable','working capital'],a:['DSO rose to 76 days from 71; management calls it a timing effect.','DSO 71-லிருந்து 76 நாள்; timing தான்னு management சொல்றாங்க.'],tab:'cf'},
+ {k:['nrr','retention','churn','nps'],a:['Net revenue retention was 115% with zero churn; NPS was 76.','Net revenue retention 115%, churn zero; NPS 76.'],tab:'met'},
+ {k:['pe','p/e','valuation','வேல்யுவேஷன்','expensive','cheap'],a:['At about ₹830, Fractal trades near 39 times trailing earnings and about 4 times sales.','~₹830-ல Fractal TTM earnings-க்கு ~39 மடங்கு, sales-க்கு ~4 மடங்கு.'],tab:'val'},
+ {k:['share price','stock','why up','jump','rally','ஷேர்'],a:['The stock rose 12–14% on 4 November after the $100 million quarter and a promise of better margins in H2.','$100 million quarter, H2 margin promise-னால 4 Nov share 12–14% ஏறுச்சு.'],tab:'why'},
+ {k:['ipo','listing'],a:['Fractal listed on 16 February 2026 at ₹900; the ₹2,834 crore IPO had ₹1,810 crore of OFS.','Fractal 16 Feb 2026-ல ₹900-ல list ஆச்சு; ₹2,834 கோடி IPO-ல ₹1,810 கோடி OFS.'],tab:'self'},
+ {k:['cycle','trigger','catalyst','சைக்கிள்','ட்ரிகர்'],a:['Cycle score is 63 and trigger score 56: IT services are bottoming and enterprise AI is still early.','Cycle score 63, trigger score 56: IT services அடிமட்டம், enterprise AI இன்னும் ஆரம்பம்.'],tab:'tc'},
+ {k:['risk','ரிஸ்க்'],a:['The biggest risk is cheaper AI shrinking time-and-people billing, which is 58% of revenue.','பெரிய risk: AI மலிவானா நேரம்-ஆட்கள் billing (revenue-ல 58%) குறையும்.'],tab:'swot'},
+ {k:['pillar','score','temple'],a:['Fractal scores 40 out of 60 on the CB 6 Pillars; valuation is the weakest pillar at 5.','CB 6 தூண்கள்-ல Fractal 60-க்கு 40; valuation தான் weak — 5.'],tab:'pil'},
+ {k:['cfo','management','ceo'],a:['Shilpa Kedia, ex-Johnson & Johnson and Unilever, joined as CFO in October 2026; Srikanth Velamakanni is Group CEO.','Shilpa Kedia (ex-J&J, Unilever) Oct 2026-ல CFO ஆனாங்க; Srikanth Velamakanni Group CEO.'],tab:'dash'},
+ {k:['guidance','outlook','future','next quarter'],a:['Management expects gross margin to recover in Q3–Q4 and net margin to rise both QoQ and YoY in H2.','Q3–Q4-ல gross margin திரும்பும், H2-ல net margin QoQ, YoY ரெண்டும் ஏறும்னு management.'],tab:'tc'}];
+const NOADV=['CB Research is not SEBI-registered, so I can\'t say buy, sell or hold. I can explain the numbers to help you decide.','CB Research SEBI-registered இல்ல — buy, sell, hold சொல்ல முடியாது. Numbers-ஐ விளக்க முடியும்.'];
+function answer(q){const s=q.toLowerCase();if(/\b(buy|sell|hold|invest|target)\b|வாங்க|விக்க/.test(s))return {a:NOADV};let best=null,sc=0;KB.forEach(e=>{let n=0;e.k.forEach(k=>{if(s.includes(k))n+=k.length});if(n>sc){sc=n;best=e}});return best||{a:['I don\'t have that on this page. Try revenue, profit, margin, products, cash, valuation or "AI or IT".','இந்த page-ல அது இல்ல. revenue, profit, margin, products, cash, valuation, "AI-ஆ IT-ஆ" கேளுங்க.']}}
+function ask(q){q=q??document.getElementById('aq').value;if(!q.trim())return;const r=answer(q);const t=LANG==='ta'?r.a[1]:r.a[0];document.getElementById('aout').innerHTML=`<div class="note">${q.replace(/</g,'&lt;')}</div><div style="font-size:16px;margin-top:4px">${t}</div>${r.tab?`<button style="margin-top:8px" onclick="showTab('${r.tab}')">${L('Open related tab →','தொடர்புடைய tab →')}</button>`:''}`;speak(t)}
+let REC=null;function mic(){const SR=window.SpeechRecognition||window.webkitSpeechRecognition;const st=document.getElementById('micst');if(!SR){st.textContent=LANG==='ta'?'இந்த browser-ல mic இல்ல; type பண்ணுங்க.':'Mic not available here; please type. (Works on GitHub Pages in Chrome/Edge.)';return}
+ try{REC=new SR();REC.lang=LANG==='ta'?'ta-IN':'en-IN';REC.interimResults=true;REC.continuous=true;let txt='',timer=null;REC.onresult=e=>{txt=Array.from(e.results).map(r=>r[0].transcript).join(' ');document.getElementById('aq').value=txt;clearTimeout(timer);timer=setTimeout(()=>{REC.stop();ask(txt)},3000)};REC.onerror=()=>{st.textContent=LANG==='ta'?'Mic block ஆயிருக்கு; type பண்ணுங்க.':'Microphone blocked here; please type.'};REC.start();st.textContent=LANG==='ta'?'கேட்குறேன்… பேசி முடிச்சு 3 நொடி காத்திருப்பேன்.':'Listening… I wait 3 seconds after you stop.'}catch(e){st.textContent='Mic unavailable.'}}
+function setRate(v){RATE=+v;document.getElementById('rv').textContent=RATE.toFixed(1)+'×';try{localStorage.setItem('cbf_rate',RATE)}catch(e){}}
+R.assist=()=>{const sug=[['Is Fractal an AI or IT company?','Fractal AI company-ஆ IT company-ஆ?'],['Why did gross margin fall?','Gross margin ஏன் இறங்குச்சு?'],['How big are products?','Products எவ்வளவு பெருசு?'],['What is the P/E?','P/E என்ன?'],['Should I buy?','வாங்கலாமா?'],['How much cash?','Cash எவ்வளவு?']];
+ return `<h2>Cauvery Assist</h2>
+<div class="grid g2"><div class="card"><div style="display:flex;gap:12px;align-items:center"><svg viewBox="0 0 120 90" width="110"><rect x="44" y="10" width="26" height="44" rx="13" fill="${C.accent}" stroke="${C.strong}" stroke-width="3"/><path d="M34 40q0 24 23 24q23 0 23-24M57 64v14M44 80h26" stroke="${C.ink}" stroke-width="3" fill="none"/><path d="M88 18q16 10 0 26M96 10q26 18 0 42" stroke="${C.blue}" stroke-width="3" fill="none"/></svg><div>${L('Ask by voice or text. Answers are one line and read aloud slowly.','Voice-லயோ type பண்ணியோ கேளுங்க. பதில் ஒரு வரி, மெதுவா படிக்கும்.')}</div></div>
+<div style="display:flex;gap:8px;margin-top:10px"><input type="text" id="aq" placeholder="Ask: Is Fractal an AI company?" onkeydown="if(event.key==='Enter')ask()"><button onclick="ask()">${L('Ask','கேளு')}</button><button onclick="mic()" aria-label="mic">🎙</button></div>
+<div class="note" id="micst"></div>
+<div class="chips" style="margin-top:8px">${sug.map(s=>`<button style="font-size:12px" onclick="ask(LANG==='ta'?'${s[1]}':'${s[0].replace(/'/g,"\\'")}')">${L(s[0],s[1])}</button>`).join('')}</div>
+<div class="assist-ans" id="aout">${L('Vanakam! Ask me anything about Fractal\'s Q2 FY27.','வணக்கம்! Fractal Q2 FY27 பற்றி எதுவும் கேளுங்க.')}</div></div>
+<div class="card"><h3>${L('Voice settings','Voice settings')}</h3><label>${L('Speed','வேகம்')} <b id="rv">${RATE.toFixed(1)}×</b></label><input type="range" id="rate" min="0.5" max="1.5" step="0.1" value="${RATE}" oninput="setRate(this.value)" style="width:100%">
+<div class="chips">${[['Slow',0.6],['Relaxed',0.8],['Normal',1.0],['Fast',1.2]].map(([n,v])=>`<button onclick="setRate(${v});document.getElementById('rate').value=${v}">${n}</button>`).join('')}<button onclick="speechSynthesis.pause()">⏸</button><button onclick="speechSynthesis.resume()">▶</button><button onclick="stopSpeak()">■</button></div>
+<p class="note" style="margin-top:10px">${L('Built-in light version. Microphone works on GitHub Pages in Chrome/Edge, not inside claude.ai. Never gives buy/sell advice.','Built-in light version. Mic GitHub Pages-ல Chrome/Edge-ல வேலை செய்யும். Buy/sell advice கொடுக்காது.')}</p></div></div>`};
+
+/* ---------- 18. SOCRATES QUIZ ---------- */
+const QZ=[['What share of Fractal\'s Q2 revenue came from products & licences?','Q2 revenue-ல products & licences பங்கு எவ்வளவு?',['4%','25%','58%'],0,'Only 4% — that is why it is still a services company.','4% தான் — அதனால தான் இன்னும் services company.'],
+ ['Why did gross margin fall 225 bps?','Gross margin 225 bps ஏன் இறங்குச்சு?',['Rupee got stronger','Early hiring of costly AI engineers','Lost a big client'],1,'AI talent cost 279 bps; the weak rupee actually helped.','AI talent 279 bps; rupee பலவீனம் உதவி தான் பண்ணுச்சு.'],
+ ['Which industry grew fastest?','எந்த industry வேகமா வளர்ந்தது?',['CPG & retail','TMT','Healthcare & life sciences'],2,'Healthcare grew 79%.','Healthcare 79%.'],
+ ['Constant-currency growth was…','Constant currency growth…',['20%','10%','30%'],1,'10%; the weak rupee lifted reported growth to 20%.','10%; rupee பலவீனத்தால reported growth 20%.'],
+ ['NRR of 115% means…','NRR 115%-ன்னா…',['Existing clients spent 15% more','15% clients left','Prices rose 15%'],0,'Clients present a year ago now pay 15% more.','போன வருஷ clients இப்போ 15% அதிகம் கொடுக்குறாங்க.'],
+ ['What is the CB sector cycle phase here?','CB sector cycle phase என்ன?',['Peak','Bottoming / emerging','Downturn'],1,'IT services bottoming; enterprise AI still early.','IT services அடிமட்டம்; enterprise AI ஆரம்பம்.'],
+ ['Which trigger scored highest?','எந்த trigger அதிக points?',['Enterprise AI wave','Rupee move','CPG slowdown'],0,'1.40 points — big impact, but only management intent so far.','1.40 points — impact பெருசு, ஆனா இன்னும் intent தான்.'],
+ ['Qure.ai affects Fractal\'s profit through…','Qure.ai Fractal profit-ஐ எப்படி பாதிக்குது…',['Revenue','Share of associate loss','Debt'],1,'31.5% stake; ₹23 cr loss share in Q2.','31.5% stake; Q2-ல ₹23 cr loss share.']];
+let QA={};function qPick(i,j){if(QA[i]!=null)return;QA[i]=j;const q=QZ[i];document.querySelectorAll(`[data-q="${i}"]`).forEach((b,k)=>{b.classList.add(k===q[3]?'right':(k===j?'wrong':''))});document.getElementById('qe'+i).innerHTML=`<b>${j===q[3]?L('Right!','சரி!'):L('Not quite.','கொஞ்சம் தவறு.')}</b> ${L(q[4],q[5])}`;qScore()}
+function qScore(){const n=Object.keys(QA).length,r=Object.entries(QA).filter(([i,j])=>QZ[i][3]===j).length;const W=440;document.getElementById('qbar').innerHTML=`<svg viewBox="0 0 ${W} 60"><rect x="10" y="20" width="${W-20}" height="22" rx="11" fill="${C.soft}" stroke="${C.line}"/><rect x="10" y="20" width="${(W-20)*n/QZ.length}" height="22" rx="11" fill="${C.accent}"/><rect x="10" y="20" width="${(W-20)*r/QZ.length}" height="22" rx="11" fill="${C.good}"/><text x="${W/2}" y="14" font-size="12" text-anchor="middle">${r} correct · ${n}/${QZ.length} answered</text></svg>`}
+R.quiz=()=>`<h2>Cauvery Socrates</h2><div class="card"><div class="svgbox" id="qbar"></div></div><div class="grid g2" style="margin-top:14px">${QZ.map((q,i)=>`<div class="card"><h3>${i+1}. ${L(q[0],q[1])}</h3>${q[2].map((o,j)=>`<button class="qopt" data-q="${i}" onclick="qPick(${i},${j})">${o}</button>`).join('')}<div class="note" id="qe${i}"></div></div>`).join('')}</div>`;
+
+/* ---------- 19. ANALYST VIEW ---------- */
+R.av=()=>`<h2>${L('Analyst view','Analyst view')}</h2>
+<div class="grid g2">${card(L('CB Conviction (education score, not advice)','CB Conviction (education score, advice இல்ல)'),`<div class="svgbox" style="max-width:360px;margin:auto">${gauge(65,100,'Constructive watch','கவனமா கவனிக்கலாம்')}</div><div class="svgbox">${hbars([{l:'Earnings (25%)',v:78},{l:'Fundamentals (20%)',v:67},{l:'Macro (15%)',v:55},{l:'Market pulse (15%)',v:60},{l:'Cycle (10%)',v:63},{l:'Trigger (15%)',v:56}],{w:480,pl:150,fmt:v=>v})}</div>`)}
+${card(L('Our read','எங்க பார்வை'),ul([['<b>Classification:</b> an AI-native services company; becomes an "AI company" only if products move from 4% toward 10–20%.','<b>Classification:</b> AI-native services company; products 4%-லிருந்து 10–20% போனா தான் "AI company".'],['<b>Quarter:</b> strong profit (+139%) and the first $100M quarter; growth helped by the weak rupee (CC 10%).','<b>Quarter:</b> profit +139%, முதல் $100M quarter; weak rupee உதவி (CC 10%).'],['<b>Cycle:</b> IT services bottoming; enterprise AI still early — the good phase may start in FY28.','<b>Cycle:</b> IT services அடிமட்டம்; enterprise AI ஆரம்பம் — நல்ல phase FY28-ல ஆரம்பிக்கலாம்.'],['<b>Top triggers:</b> enterprise AI scale-up; Cogentiq licence growth.','<b>Top triggers:</b> enterprise AI scale-up; Cogentiq licence growth.'],['<b>Top risk:</b> AI cutting the price of people-based services (58% of revenue).','<b>Top risk:</b> AI ஆட்கள் services விலையை குறைக்கும் (revenue-ல 58%).'],['<b>Next check:</b> Q3 FY27 gross margin back to 45%+ and products share above 4%.','<b>Next check:</b> Q3 FY27 GM 45%+, products 4%-க்கு மேல.']]))}</div>`;
+
+window.afterBuild=()=>{scDraw();qScore()};
+
+/* ===================== engine ===================== */
+let LANG='en';
+function setLang(l){LANG=l;document.body.classList.toggle('ta',l==='ta');document.getElementById('bEN').classList.toggle('on',l==='en');document.getElementById('bTA').classList.toggle('on',l==='ta');try{localStorage.setItem('cbf_lang',l)}catch(e){}}
+function showTab(id){document.querySelectorAll('section.tab').forEach(s=>s.classList.toggle('on',s.id==='t_'+id));document.querySelectorAll('nav.tabs button').forEach(b=>b.classList.toggle('on',b.dataset.t===id));const b=document.querySelector(`nav.tabs button[data-t="${id}"]`);if(b)b.scrollIntoView({block:'nearest',inline:'center'});window.scrollTo({top:0});try{if(location.hash!=='#'+id)location.hash=id}catch(e){}}
+function sub(group,id){document.querySelectorAll(`[data-sg="${group}"]`).forEach(e=>e.classList.toggle('on',e.dataset.s===id))}
+function build(){const nav=document.getElementById('tabnav'),main=document.getElementById('main');
+ TABS.forEach(([id,en,ta])=>{nav.insertAdjacentHTML('beforeend',`<button data-t="${id}" onclick="showTab('${id}')">${L(en,ta)}</button>`);main.insertAdjacentHTML('beforeend',`<section class="tab" id="t_${id}">${R[id]?R[id]():''}</section>`)});
+ let l='en';try{l=localStorage.getItem('cbf_lang')||'en'}catch(e){}setLang(l);
+ const h=location.hash.slice(1);showTab(TABS.some(t=>t[0]===h)?h:'dash');if(window.afterBuild)afterBuild()}
+window.addEventListener('hashchange',()=>{const h=location.hash.slice(1);if(TABS.some(t=>t[0]===h))showTab(h)});
+
+/* ---- speech ---- */
+let RATE=0.8;try{RATE=parseFloat(localStorage.getItem('cbf_rate'))||0.8}catch(e){}
+function voiceFor(lang){const vs=speechSynthesis.getVoices();const want=lang==='ta'?'ta':'en-IN';return vs.find(v=>v.lang&&v.lang.replace('_','-').startsWith(want))||vs.find(v=>v.lang&&v.lang.startsWith(lang==='ta'?'ta':'en'))}
+function speak(text){if(!('speechSynthesis' in window))return;speechSynthesis.cancel();const parts=text.replace(/\s+/g,' ').split(/(?<=[.!?।])\s+/).filter(p=>p.trim());const v=voiceFor(LANG);parts.forEach(p=>{const u=new SpeechSynthesisUtterance(p);u.rate=RATE;u.lang=LANG==='ta'?'ta-IN':'en-IN';if(v)u.voice=v;speechSynthesis.speak(u)})}
+function stopSpeak(){try{speechSynthesis.cancel()}catch(e){}}
+function plain(el){const c=el.cloneNode(true);c.querySelectorAll(LANG==='ta'?'.en':'.ta').forEach(n=>n.remove());c.querySelectorAll('svg,script,button,input,table').forEach(n=>n.remove());return c.textContent.replace(/\s+/g,' ').trim()}
+function readTab(){const s=document.querySelector('section.tab.on');if(s)speak(plain(s).slice(0,2500))}
+</script>
+<script>build()</script>
