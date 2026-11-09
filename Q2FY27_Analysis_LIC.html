@@ -1,0 +1,863 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Q2 FY27 Analysis — Life Insurance Corporation of India (LIC)</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<style>
+:root{--bg:#fff4e8;--card:#fffdf9;--or:#f07c1b;--or2:#ffb366;--dk:#3b2a1a;--mut:#7a6552;--gr:#1f9d55;--am:#e0a100;--rd:#d64541;--bl:#2f6fb5;--pu:#7b4bb7;--tl:#14928a;--line:#f3d9bd}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI",Roboto,"Noto Sans Tamil",Arial,sans-serif;background:var(--bg);color:var(--dk);font-size:15px;line-height:1.55}
+body::before{content:"CB Research";position:fixed;top:45%;left:50%;transform:translate(-50%,-50%) rotate(-24deg);font-size:110px;font-weight:800;color:rgba(240,124,27,.045);pointer-events:none;z-index:0;white-space:nowrap}
+header{background:linear-gradient(120deg,#fff0de,#ffe2c2);padding:16px 18px 10px;border-bottom:3px solid var(--or);position:relative;z-index:2}
+header h1{margin:0;font-size:22px}
+header .sub{color:var(--mut);font-size:13px;margin-top:2px}
+.lang{position:absolute;right:14px;top:14px;display:flex;gap:4px}
+.lang button{border:1px solid var(--or);background:#fff;color:var(--or);border-radius:16px;padding:4px 12px;cursor:pointer;font-weight:600}
+.lang button.on{background:var(--or);color:#fff}
+nav{position:sticky;top:0;z-index:5;background:#fff7ee;border-bottom:1px solid var(--line);display:flex;overflow-x:auto;gap:2px;padding:6px 8px}
+nav button{flex:0 0 auto;border:none;background:transparent;padding:8px 12px;border-radius:18px;cursor:pointer;font-size:13.5px;color:var(--dk);font-weight:600}
+nav button.on{background:var(--or);color:#fff}
+main{max-width:1180px;margin:auto;padding:14px;position:relative;z-index:1}
+.tab{display:none;animation:fade .35s}
+.tab.on{display:block}
+@keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1}}
+h2{font-size:19px;margin:6px 0 10px;color:#a14c05}
+h3{font-size:16px;margin:14px 0 8px;color:#7a3c06}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px;margin-bottom:14px;box-shadow:0 2px 8px rgba(160,90,20,.06)}
+.grid{display:grid;gap:10px}
+.g4{grid-template-columns:repeat(auto-fit,minmax(200px,1fr))}
+.g3{grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
+.g2{grid-template-columns:repeat(auto-fit,minmax(340px,1fr))}
+.kpi{background:#fff;border:1px solid var(--line);border-radius:12px;padding:10px 12px;position:relative;overflow:hidden}
+.kpi::after{content:"";position:absolute;left:0;top:0;bottom:0;width:5px;background:var(--or)}
+.kpi .l{font-size:12px;color:var(--mut)}
+.kpi .v{font-size:21px;font-weight:800}
+.kpi .d{font-size:12.5px;font-weight:700}
+.up{color:var(--gr)}.dn{color:var(--rd)}.fl{color:var(--am)}
+.blockt{display:inline-block;background:var(--or);color:#fff;border-radius:8px;padding:3px 10px;font-size:13px;font-weight:700;margin-bottom:8px}
+.blockt.b2{background:var(--bl)}
+table{border-collapse:collapse;width:100%;font-size:13.5px;background:#fff}
+th,td{border:1px solid #f1dcc4;padding:6px 8px;text-align:left;vertical-align:top}
+th{background:#ffeedd;color:#6b3507}
+td.n{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+tr.cat td{background:#fff3e3;font-weight:800;color:#a14c05}
+.note{font-size:12.5px;color:var(--mut)}
+.dag{color:var(--pu);font-weight:700}
+.chartbox{position:relative;width:100%;overflow-x:auto}
+.chartbox .in{min-width:640px;height:300px}
+.pill{display:inline-block;border-radius:12px;padding:2px 9px;font-size:12px;font-weight:700;margin:2px}
+.pg{background:#e3f6ea;color:var(--gr)}.pr{background:#fde6e5;color:var(--rd)}.pa{background:#fff2cc;color:#8a6400}.pb{background:#e4eefa;color:var(--bl)}
+.explain{background:#fff;border:2px solid var(--or2);border-radius:12px;padding:12px;margin-top:8px;min-height:70px;transition:.3s}
+.explain h4{margin:0 0 4px;color:#a14c05}
+svg .box{cursor:pointer;transition:.25s}
+svg .box:hover rect{filter:brightness(1.07);stroke-width:3}
+svg .box.sel rect{stroke:#3b2a1a;stroke-width:3.5}
+.flow{stroke-dasharray:7 6;animation:dash 1.2s linear infinite}
+@keyframes dash{to{stroke-dashoffset:-26}}
+.code{font-size:34px;font-weight:900;letter-spacing:1px;text-align:center;padding:14px;background:linear-gradient(90deg,#fff1df,#ffe0bd);border-radius:14px;border:2px dashed var(--or)}
+.pcc{cursor:help;padding:0 4px;border-radius:6px;transition:.2s;display:inline-block}
+.pcc:hover,.pcc:focus{background:#ffd6a8;outline:none;transform:translateY(-2px)}
+#tip{position:fixed;z-index:50;max-width:300px;background:#eaf4ff;border:1px solid #9cc3ec;color:#16365a;border-radius:10px;padding:8px 10px;font-size:13px;box-shadow:0 6px 18px rgba(0,0,0,.15);display:none;animation:pop .2s}
+@keyframes pop{from{transform:scale(.85);opacity:0}to{transform:scale(1);opacity:1}}
+.gl{background:#fff;border:1px solid var(--line);border-radius:12px;padding:10px;cursor:pointer;transition:.2s;display:flex;gap:10px;align-items:flex-start}
+.gl:hover{transform:translateY(-2px);box-shadow:0 4px 12px rgba(200,110,20,.15)}
+.gl svg{flex:0 0 54px}
+.gl .t{font-weight:800}
+.gl .m{font-size:13px;color:var(--mut)}
+.gl .x{display:none;font-size:13px;margin-top:6px;border-top:1px dashed var(--line);padding-top:6px}
+.gl.open .x{display:block}
+.gl .lv{font-size:12.5px;color:var(--or);font-weight:700}
+.gl2{background:#fff;border:1px solid var(--line);border-radius:14px;padding:10px;cursor:pointer;transition:.2s}
+.gl2:hover{box-shadow:0 4px 14px rgba(200,110,20,.18)}
+.gl2 .gh{display:flex;gap:8px;align-items:center}.gl2 .gh>div{flex:1}.gl2 .t{font-weight:800}.gl2 .m{font-size:12.5px;color:var(--mut)}
+.gl2 .sbox{background:linear-gradient(180deg,#fffaf4,#fff1e2);border-radius:10px;margin:8px 0;border:1px dashed #f3c99c}
+.gl2 .stg{width:100%;display:block}.gl2 .x2{font-size:13px}.gl2 .lv{font-size:12.5px;color:var(--or);font-weight:700;margin-top:4px}
+.reg{border-left:6px solid var(--or);background:#fff;border-radius:10px;padding:10px 12px;margin-bottom:10px}
+.meter{height:9px;border-radius:6px;background:#eee;overflow:hidden;margin-top:5px}
+.meter i{display:block;height:100%}
+input[type=range]{width:100%}
+.calc{background:#fff;border:1px solid var(--line);border-radius:12px;padding:12px}
+.big{font-size:24px;font-weight:800;color:#a14c05}
+.chk label{display:block;padding:6px 4px;border-bottom:1px dashed #f1dcc4;cursor:pointer}
+.chk .data{font-size:12px;color:var(--bl);margin-left:24px}
+.bar{height:10px;background:#f5e6d6;border-radius:6px;overflow:hidden}.bar i{display:block;height:100%;background:var(--gr);transition:.4s}
+.btn{border:1px solid var(--or);background:#fff;color:#a14c05;border-radius:16px;padding:5px 12px;cursor:pointer;font-weight:600;margin:3px}
+.btn:hover{background:#ffe9d2}
+.mcq button{display:block;width:100%;text-align:left;margin:4px 0;border:1px solid var(--line);background:#fff;border-radius:10px;padding:8px;cursor:pointer}
+.mcq button.ok{background:#e3f6ea;border-color:var(--gr)}.mcq button.no{background:#fde6e5;border-color:var(--rd)}
+/* CB badge */
+#cb{position:fixed;right:16px;bottom:16px;width:58px;height:58px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#ffb163,#f07c1b 60%,#c95d06);color:#fff;font-weight:900;font-size:20px;display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:40;box-shadow:0 4px 14px rgba(240,124,27,.5);animation:blink 2.2s infinite;border:3px solid #fff}
+@keyframes blink{0%,100%{box-shadow:0 0 0 0 rgba(240,124,27,.55)}50%{box-shadow:0 0 0 12px rgba(240,124,27,0)}}
+#disc{position:fixed;right:16px;bottom:84px;max-width:330px;background:#fff;border:2px solid var(--or);border-radius:12px;padding:12px;font-size:12.5px;z-index:41;display:none;box-shadow:0 8px 24px rgba(0,0,0,.18)}
+#cb:hover+#disc,#disc.on{display:block}
+/* CB Assist */
+#asb{position:fixed;right:86px;bottom:20px;background:#2f6fb5;color:#fff;border-radius:24px;padding:10px 14px;cursor:pointer;z-index:40;font-weight:700;box-shadow:0 4px 12px rgba(47,111,181,.4)}
+#asp{position:fixed;right:16px;bottom:86px;width:min(370px,92vw);height:460px;background:#fff;border:2px solid var(--bl);border-radius:14px;z-index:42;display:none;flex-direction:column;overflow:hidden}
+#asp.on{display:flex}
+#asp .hd{background:#2f6fb5;color:#fff;padding:8px 12px;font-weight:700;display:flex;justify-content:space-between}
+#asl{flex:1;overflow-y:auto;padding:10px;font-size:13.5px;background:#f6faff}
+#asl .q{background:#ffe9d2;border-radius:10px;padding:6px 9px;margin:6px 0 6px 30px}
+#asl .a{background:#fff;border:1px solid #cfe0f3;border-radius:10px;padding:6px 9px;margin:6px 30px 6px 0}
+#asp .ft{display:flex;gap:4px;padding:6px;border-top:1px solid #dbe7f5}
+#asp input{flex:1;border:1px solid #bcd3ee;border-radius:16px;padding:6px 10px}
+#asp .ft button{border:none;border-radius:16px;padding:6px 10px;background:#2f6fb5;color:#fff;cursor:pointer}
+#mic.rec{background:var(--rd)}
+.sugg{display:flex;flex-wrap:wrap;gap:4px;padding:0 8px 6px}
+.sugg span{font-size:11.5px;background:#e4eefa;color:#1f4d82;border-radius:10px;padding:3px 7px;cursor:pointer}
+.ta{display:none}
+body.TA .ta{display:inline}body.TA div.ta,body.TA p.ta,body.TA li.ta,body.TA ul.ta{display:block}
+body.TA .en{display:none}
+ul{margin:4px 0 6px;padding-left:20px}
+@media(max-width:600px){header h1{font-size:18px}.lang{position:static;margin-top:6px}.code{font-size:24px}}
+</style>
+</head>
+<body>
+<header>
+  <h1>Life Insurance Corporation of India (LIC) <span style="font-size:14px;color:#7a6552">NSE: LICI · BSE: 543526</span></h1>
+  <div class="sub"><span class="en">Q2 FY27 (quarter ended 30 Sep 2026) results · business &amp; investment analysis · results declared 5 Nov 2026</span><span class="ta">Q2 FY27 (30 செப் 2026-ல் முடிந்த காலாண்டு) முடிவுகள் · பிசினஸ் &amp; முதலீட்டு பார்வை · 5 நவ 2026 அன்று வெளியானது</span></div>
+  <div class="lang"><button id="bEN" class="on" onclick="setLang('en')">English</button><button id="bTA" onclick="setLang('ta')">தமிழ்</button></div>
+</header>
+<nav id="nav"></nav>
+<main>
+
+<!-- ============ OVERVIEW ============ -->
+<section class="tab on" id="t-ov">
+ <div class="card">
+  <h2><span class="en">Quarter in one look</span><span class="ta">இந்த காலாண்டு ஒரே பார்வையில்</span></h2>
+  <p class="en">Profit rose about 20% to ₹12,076 crore. The big driver was not new customers but <b>renewals and large single-premium group money</b>, plus better margins on new business. First-year premium actually slipped 3.7%. Over the half-year, the value LIC creates from each rupee of new business (VNB margin) jumped to 22.3% from 17.6%.</p>
+  <p class="ta">லாபம் சுமார் 20% ஏறி ₹12,076 கோடி ஆச்சு. இதுக்கு முக்கிய காரணம் புது வாடிக்கையாளர்கள் இல்ல — <b>ரினியூவல் பிரீமியமும், குரூப் பிசினஸ்ல வந்த பெரிய சிங்கிள் பிரீமியம் பணமும்</b>, அதோட புது பிசினஸ்ல மார்ஜின் கூடினதும் தான். முதல் வருட பிரீமியம் உண்மையில 3.7% குறைஞ்சிருக்கு. அரையாண்டுக்கு, ஒவ்வொரு ரூபாய் புது பிசினஸ்லயும் LIC உருவாக்குற மதிப்பு (VNB மார்ஜின்) 17.6%-லிருந்து 22.3%-க்கு எகிறிருக்கு.</p>
+ </div>
+ <div class="card">
+  <span class="blockt">Consolidated results — Q2 FY27</span>
+  <div class="grid g4">
+   <div class="kpi"><div class="l">Total revenue / மொத்த வருவாய்</div><div class="v">₹2,66,117 cr</div><div class="d note">Q2 FY27</div></div>
+   <div class="kpi"><div class="l">Net profit / நிகர லாபம்</div><div class="v">₹12,115 cr</div><div class="d up">▲ 20.0% YoY (₹10,098 cr)</div></div>
+   <div class="kpi"><div class="l">Market cap / சந்தை மதிப்பு</div><div class="v">₹5,16,120 cr</div><div class="d note">6 Nov 2026 · ₹408/share</div></div>
+   <div class="kpi"><div class="l">Govt holding / அரசு பங்கு</div><div class="v">90.0%</div><div class="d note">after Aug 2026 OFS (96.5% before)</div></div>
+  </div>
+ </div>
+ <div class="card">
+  <span class="blockt b2">Standalone results — Q2 FY27 vs Q2 FY26</span>
+  <div class="grid g4">
+   <div class="kpi"><div class="l">Net profit</div><div class="v">₹12,076 cr</div><div class="d up">▲ 20.1% (₹10,053 cr)</div></div>
+   <div class="kpi"><div class="l">Total income</div><div class="v">₹2,62,739 cr</div><div class="d up">▲ 9.7% (₹2,39,614 cr)</div></div>
+   <div class="kpi"><div class="l">Net premium income</div><div class="v">₹1,47,018 cr</div><div class="d up">▲ 16.2% (₹1,26,479 cr)</div></div>
+   <div class="kpi"><div class="l">Renewal premium</div><div class="v">₹68,375 cr</div><div class="d up">▲ 5.2% (₹64,996 cr)</div></div>
+   <div class="kpi"><div class="l">First-year premium</div><div class="v">₹10,432 cr</div><div class="d dn">▼ 3.7% (₹10,836 cr)</div></div>
+   <div class="kpi"><div class="l">Total expenses</div><div class="v">₹2,52,116 cr</div><div class="d fl">▲ 9.5% (₹2,30,160 cr)</div></div>
+   <div class="kpi"><div class="l">VNB (Q2, derived)<span class="dag">†</span></div><div class="v">₹3,710 cr</div><div class="d up">H1 ₹6,846 cr ▲ 34.0%</div></div>
+   <div class="kpi"><div class="l">Solvency ratio</div><div class="v">2.35x</div><div class="d up">▲ from 2.13x</div></div>
+  </div>
+  <p class="note"><span class="dag">†</span> Q2 VNB = H1 VNB ₹6,846 cr − Q1 VNB ₹3,136 cr. Q2 APE (≈₹17,000 cr) and Q2 VNB margin (≈21.8%) are derived the same way; LIC reports these on a half-year basis.</p>
+ </div>
+ <div class="grid g2">
+  <div class="card"><h3><span class="en">Where Q2 premium came from</span><span class="ta">Q2 பிரீமியம் எங்கிருந்து வந்தது</span></h3><div style="height:270px"><canvas id="cMix"></canvas></div><p class="note"><span class="en">Single premium (≈₹68,211 cr) derived as net premium − renewal − first-year; mostly group fund money.</span><span class="ta">சிங்கிள் பிரீமியம் (≈₹68,211 கோடி) = நிகர பிரீமியம் − ரினியூவல் − முதல் வருடம்; பெரும்பாலும் குரூப் பண்ட் பணம்.</span></p></div>
+  <div class="card"><h3><span class="en">Profit: Q2 FY26 vs Q2 FY27 (₹ cr)</span><span class="ta">லாபம்: Q2 FY26 vs Q2 FY27 (₹ கோடி)</span></h3><div style="height:270px"><canvas id="cPat"></canvas></div></div>
+ </div>
+ <div class="card">
+  <h3><span class="en">Three things that matter this quarter</span><span class="ta">இந்த காலாண்டில முக்கியமான மூணு விஷயம்</span></h3>
+  <div class="grid g3">
+   <div class="reg"><b class="en">1 · Margin beats volume</b><b class="ta">1 · வால்யூம விட மார்ஜின்</b><p class="en">Individual APE grew only 0.3% in H1, yet VNB grew 34%. LIC is selling bigger-ticket, higher-margin policies rather than more policies (policies sold −2.25%).</p><p class="ta">H1-ல தனிநபர் APE 0.3% தான் வளர்ந்துச்சு, ஆனா VNB 34% வளர்ந்துச்சு. அதிக பாலிசி விக்கறதுக்கு பதிலா, பெரிய டிக்கெட், அதிக மார்ஜின் பாலிசி விக்குது (விற்ற பாலிசி −2.25%).</p></div>
+   <div class="reg" style="border-color:var(--bl)"><b class="en">2 · Higher bond yields</b><b class="ta">2 · பாண்ட் ஈல்ட் ஏறியது</b><p class="en">India's 10-year yield went from about 6.5% (Oct 2025) to 7.39% (29 Oct 2026). Every new rupee LIC invests now locks in a higher coupon for decades. See the Bonds tab.</p><p class="ta">இந்தியாவோட 10 வருட ஈல்ட் சுமார் 6.5%-லிருந்து (அக் 2025) 7.39%-க்கு (29 அக் 2026) ஏறிருக்கு. LIC இப்போ போடுற ஒவ்வொரு புது ரூபாயும் பல வருஷத்துக்கு அதிக கூப்பன்ல லாக் ஆகுது. Bonds டேப் பாருங்க.</p></div>
+   <div class="reg" style="border-color:var(--tl)"><b class="en">3 · IDBI Bank exit</b><b class="ta">3 · IDBI பேங்க்லிருந்து வெளியேற்றம்</b><p class="en">Cabinet approved selling 60.72% of IDBI to Fairfax at ₹81/share (14 Oct 2026). LIC's share of that is ~₹26,440 cr. Banca partnership continues under open architecture.</p><p class="ta">IDBI-யோட 60.72% பங்கை ₹81/பங்கு விலையில Fairfax-க்கு விக்க கேபினெட் ஒப்புதல் (14 அக் 2026). அதுல LIC பங்கு சுமார் ₹26,440 கோடி. பேங்கஷ்யூரன்ஸ் கூட்டணி ஓபன் ஆர்கிடெக்சர்ல தொடரும்.</p></div>
+  </div>
+ </div>
+</section>
+
+<!-- ============ BUSINESS MODEL ============ -->
+<section class="tab" id="t-bm">
+ <div class="card">
+  <h2><span class="en">How LIC makes money — tap any box</span><span class="ta">LIC எப்படி பணம் சம்பாதிக்குது — எந்த பெட்டியையும் தொடுங்க</span></h2>
+  <p class="note en">Read left to right: customers → channels → LIC → product segments → revenue → costs → profit. The dotted line underneath is the investment "float" — premiums are invested for decades before claims are paid.</p>
+  <p class="note ta">இடமிருந்து வலம் படிங்க: வாடிக்கையாளர் → விற்பனை வழி → LIC → பிராடக்ட் பிரிவுகள் → வருவாய் → செலவு → லாபம். கீழே உள்ள புள்ளிக்கோடு தான் முதலீட்டு "ஃப்ளோட்" — க்ளெய்ம் கொடுக்கறதுக்கு முன்னாடி பல வருஷம் பிரீமியம் முதலீடா இருக்கும்.</p>
+  <div class="chartbox"><svg id="bmsvg" viewBox="0 0 1000 560" style="min-width:760px;width:100%"></svg></div>
+  <div class="explain" id="bmx"><h4>👆</h4><span class="en">Tap a box to see what it means and LIC's numbers.</span><span class="ta">ஒரு பெட்டியைத் தொட்டா அதோட அர்த்தமும் LIC எண்களும் வரும்.</span></div>
+  <p class="note" style="margin-top:8px"><b>Revenue formula:</b> <span class="en">Profit ≈ (Premiums + Investment income) − (Claims &amp; benefits + Increase in policy reserves + Commission + Operating cost). Shareholders get all non-par surplus and up to 10% of par surplus; policyholders get the rest as bonus.</span><span class="ta">லாபம் ≈ (பிரீமியம் + முதலீட்டு வருமானம்) − (க்ளெய்ம் &amp; பலன்கள் + பாலிசி ரிசர்வ் அதிகரிப்பு + கமிஷன் + இயக்க செலவு). நான்-பார் சர்ப்ளஸ் முழுசும், பார் சர்ப்ளஸ்ல 10% வரையும் பங்குதாரர்களுக்கு; மீதி பாலிசிதாரர்களுக்கு போனஸா.</span></p>
+ </div>
+ <div class="card">
+  <h3><span class="en">Revenue engine — what drives the numbers (H1 FY27)</span><span class="ta">வருவாய் இன்ஜின் — எண்களை ஓட்டுவது எது (H1 FY27)</span></h3>
+  <table><tr><th>Driver</th><th>H1 FY27</th><th>H1 FY26</th><th>Change</th><th><span class="en">Why it matters</span><span class="ta">ஏன் முக்கியம்</span></th></tr>
+  <tr><td>Total premium income</td><td class="n">₹2,74,269 cr</td><td class="n">₹2,45,680 cr</td><td class="n up">+11.6%</td><td><span class="en">Top line; mostly renewals and group money</span><span class="ta">டாப் லைன்; பெரும்பாலும் ரினியூவல், குரூப் பணம்</span></td></tr>
+  <tr><td>Individual new-business premium</td><td class="n">₹32,725 cr</td><td class="n">₹28,491 cr</td><td class="n up">+14.9%</td><td><span class="en">Fresh retail selling, helped by GST exemption</span><span class="ta">புது ரீடெய்ல் விற்பனை, GST விலக்கு உதவியது</span></td></tr>
+  <tr><td>Individual renewal premium</td><td class="n">₹1.28 lakh cr</td><td class="n">₹1.22 lakh cr</td><td class="n up">+4.7%</td><td><span class="en">Annuity-like base income from old policies</span><span class="ta">பழைய பாலிசிகளிலிருந்து நிலையான வருமானம்</span></td></tr>
+  <tr><td>Group premium</td><td class="n">₹1,13,594 cr</td><td class="n">—</td><td class="n up">+19.6%</td><td><span class="en">Big, lumpy, low-margin fund money</span><span class="ta">பெருசு, ஏற்ற இறக்கம், குறைந்த மார்ஜின்</span></td></tr>
+  <tr><td>Total APE</td><td class="n">₹30,696 cr</td><td class="n">₹29,034 cr</td><td class="n up">+5.7%</td><td><span class="en">True new-business size</span><span class="ta">உண்மையான புது பிசினஸ் அளவு</span></td></tr>
+  <tr><td>VNB margin</td><td class="n">22.3%</td><td class="n">17.6%</td><td class="n up">+470 bps</td><td><span class="en">Profit in each rupee of new business</span><span class="ta">ஒவ்வொரு ரூபாய் புது பிசினஸ்லயும் லாபம்</span></td></tr>
+  <tr><td>Yield on policyholder funds (excl. unrealised gains)</td><td class="n">8.67%</td><td class="n">8.90%</td><td class="n dn">−23 bps</td><td><span class="en">Book yield still drifting down; new money now earns more</span><span class="ta">புக் ஈல்ட் இன்னும் கொஞ்சம் இறங்குது; புது பணம் இப்போ அதிகம் சம்பாதிக்குது</span></td></tr>
+  <tr><td>AUM</td><td class="n">₹59,60,941 cr</td><td class="n">₹57,22,896 cr</td><td class="n up">+4.2%</td><td><span class="en">The investment float</span><span class="ta">முதலீட்டு ஃப்ளோட்</span></td></tr>
+  </table>
+ </div>
+ <div class="card">
+  <h3><span class="en">Group companies (subsidiaries &amp; associates)</span><span class="ta">குழும நிறுவனங்கள்</span></h3>
+  <table><tr><th>Entity</th><th>LIC link</th><th><span class="en">Latest</span><span class="ta">சமீபத்தியது</span></th></tr>
+  <tr><td>LIC Housing Finance</td><td>45.24% stake</td><td><span class="en">Q2 FY27 PAT ₹1,508.78 cr (+11%); loan book ₹3,26,173 cr (+5%)</span><span class="ta">Q2 FY27 லாபம் ₹1,508.78 கோடி (+11%); கடன் புத்தகம் ₹3,26,173 கோடி (+5%)</span></td></tr>
+  <tr><td>IDBI Bank</td><td>49.24% → ~19% after sale</td><td><span class="en">30.24% being sold to Fairfax at ₹81/share</span><span class="ta">30.24% Fairfax-க்கு ₹81/பங்கு விலையில் விற்பனை</span></td></tr>
+  <tr><td>LIC Mutual Fund, LIC Pension Fund, LIC Cards Services</td><td>Subsidiaries</td><td>n/a</td></tr>
+  </table>
+  <p class="note"><span class="en">Consolidated Q2 profit (₹12,115 cr) is only ₹39 cr above standalone (₹12,076 cr): LIC is basically the insurance company itself.</span><span class="ta">கன்சாலிடேட்டட் Q2 லாபம் (₹12,115 கோடி) ஸ்டாண்ட்அலோனை விட ₹39 கோடி தான் அதிகம்: LIC-ன்னா அடிப்படையில இன்ஷ்யூரன்ஸ் நிறுவனம் தான்.</span></p>
+ </div>
+</section>
+
+<!-- ============ INSURANCE CODE ============ -->
+<section class="tab" id="t-ic">
+ <div class="card">
+  <h2><span class="en">CB Insurance Code — LIC</span><span class="ta">CB இன்ஷ்யூரன்ஸ் கோட் — LIC</span></h2>
+  <p class="note en">A short code that tells you what kind of life insurer this is. Format: OWNER – PRODUCT MIX – CHANNEL – BOOK · FLAGS. Hover or tap each letter.</p>
+  <p class="note ta">இது எந்த மாதிரி லைஃப் இன்ஷ்யூரர்னு சொல்லும் சின்ன கோட். வடிவம்: உரிமையாளர் – பிராடக்ட் கலவை – விற்பனை வழி – புக் · கொடிகள். ஒவ்வொரு எழுத்தையும் தொடுங்க.</p>
+  <div class="code" id="liccode"></div>
+  <div class="note" style="text-align:center;margin-top:6px"><span class="en">Read as: government-owned · par-heavy with growing non-par · agency-led · both individual and group-heavy · solvency above 2x · systemically important · ~59% market share</span><span class="ta">படிக்கும் விதம்: அரசு உரிமை · பார் அதிகம், நான்-பார் வளருது · ஏஜென்சி முக்கியம் · தனிநபர், குரூப் ரெண்டும் பெருசு · சால்வென்சி 2x-க்கு மேல · முக்கிய அமைப்பு நிறுவனம் · ~59% சந்தை பங்கு</span></div>
+ </div>
+ <div class="card">
+  <h3><span class="en">Code table</span><span class="ta">கோட் அட்டவணை</span></h3>
+  <div id="codetable"></div>
+  <p class="note"><span class="en">Codes are indicative and should be re-checked every year from segment data. LIC is the first company coded; peers can be added in their own analyses.</span><span class="ta">கோட்கள் குறிப்புக்காக மட்டும்; ஒவ்வொரு வருஷமும் செக் பண்ணணும். முதலில கோட் போட்டது LIC; மத்த நிறுவனங்களை அவங்க பகுப்பாய்வுல சேர்க்கலாம்.</span></p>
+ </div>
+ <div class="card" style="border:2px solid var(--or)">
+  <h2><span class="en">APE vs VNB — the key difference</span><span class="ta">APE vs VNB — முக்கிய வித்தியாசம்</span></h2>
+  <div class="code" style="font-size:19px;line-height:1.6"><span class="en"><b style="color:#2f6fb5">APE</b> measures how much new business LIC sold.<br><b style="color:#1f9d55">VNB</b> measures how much profit that new business will make.</span><span class="ta"><b style="color:#2f6fb5">APE</b> = LIC எவ்வளவு புது பிசினஸ் விற்றது என்பதை அளக்கும்.<br><b style="color:#1f9d55">VNB</b> = அந்த புது பிசினஸ் எவ்வளவு லாபம் தரும் என்பதை அளக்கும்.</span></div>
+  <svg viewBox="0 0 640 190" style="width:100%;max-width:700px;display:block;margin:10px auto">
+   <rect x="20" y="30" width="220" height="130" rx="14" fill="#e4eefa" stroke="#2f6fb5" stroke-width="2"/>
+   <text x="130" y="62" text-anchor="middle" font-size="20" font-weight="900" fill="#2f6fb5">APE</text>
+   <text x="130" y="88" text-anchor="middle" font-size="13" font-weight="700"><tspan class="en">Size of sales</tspan><tspan class="ta">விற்பனை அளவு</tspan></text>
+   <text x="130" y="118" text-anchor="middle" font-size="17" font-weight="900">₹30,696 cr</text>
+   <text x="130" y="142" text-anchor="middle" font-size="12" fill="#7a6552">H1 FY27 · +5.7%</text>
+   <line x1="245" y1="95" x2="390" y2="95" stroke="#f07c1b" stroke-width="3" stroke-dasharray="7 6" class="flow"/>
+   <text x="318" y="82" text-anchor="middle" font-size="13" font-weight="800" fill="#a14c05">× 22.3%</text>
+   <text x="318" y="115" text-anchor="middle" font-size="11" fill="#7a6552">VNB margin</text>
+   <rect x="400" y="30" width="220" height="130" rx="14" fill="#e3f6ea" stroke="#1f9d55" stroke-width="2"/>
+   <text x="510" y="62" text-anchor="middle" font-size="20" font-weight="900" fill="#1f9d55">VNB</text>
+   <text x="510" y="88" text-anchor="middle" font-size="13" font-weight="700"><tspan class="en">Profit locked in</tspan><tspan class="ta">லாக் ஆன லாபம்</tspan></text>
+   <text x="510" y="118" text-anchor="middle" font-size="17" font-weight="900">₹6,846 cr</text>
+   <text x="510" y="142" text-anchor="middle" font-size="12" fill="#7a6552">H1 FY27 · +34%</text>
+  </svg>
+  <table><tr><th></th><th style="color:#2f6fb5">APE</th><th style="color:#1f9d55">VNB</th></tr>
+   <tr><td><b><span class="en">Measures</span><span class="ta">அளப்பது</span></b></td><td><span class="en">How much new business was sold</span><span class="ta">எவ்வளவு புது பிசினஸ் விற்றது</span></td><td><span class="en">How much profit that business will make</span><span class="ta">அந்த பிசினஸ் எவ்வளவு லாபம் தரும்</span></td></tr>
+   <tr><td><b><span class="en">Formula</span><span class="ta">சூத்திரம்</span></b></td><td><span class="en">Regular premium + 10% of single premium</span><span class="ta">ரெகுலர் பிரீமியம் + சிங்கிள் பிரீமியத்தில் 10%</span></td><td><span class="en">Today's value of future profits after costs, claims and capital charges</span><span class="ta">செலவு, க்ளெய்ம், மூலதனச் செலவு போக, எதிர்கால லாபத்தின் இன்றைய மதிப்பு</span></td></tr>
+   <tr><td><b><span class="en">Shop analogy</span><span class="ta">கடை உதாரணம்</span></b></td><td><span class="en">Sales</span><span class="ta">விற்பனை</span></td><td><span class="en">Profit on those sales</span><span class="ta">அந்த விற்பனையில் லாபம்</span></td></tr>
+   <tr><td><b>LIC H1 FY27</b></td><td class="n">₹30,696 cr (+5.7%)</td><td class="n">₹6,846 cr (+34%)</td></tr>
+  </table>
+  <p class="en" style="margin-top:8px"><b>Link:</b> VNB margin = VNB ÷ APE = 6,846 ÷ 30,696 ≈ <b>22.3%</b>, so every ₹100 of new business creates about ₹22 of value. This half-year APE grew only 5.7% but VNB grew 34%: LIC didn't sell much more, it sold <b>better</b>. If APE rises but VNB doesn't, the insurer is chasing volume; if VNB rises faster than APE, quality is improving.</p>
+  <p class="ta" style="margin-top:8px"><b>இணைப்பு:</b> VNB மார்ஜின் = VNB ÷ APE = 6,846 ÷ 30,696 ≈ <b>22.3%</b>, அதாவது ஒவ்வொரு ₹100 புது பிசினஸும் சுமார் ₹22 மதிப்பு உருவாக்குது. இந்த அரையாண்டுல APE 5.7% தான் வளர்ந்துச்சு, ஆனா VNB 34% வளர்ந்துச்சு: LIC அதிகமா விக்கல, <b>சிறப்பா</b> வித்திருக்கு. APE ஏறி VNB ஏறலன்னா வால்யூம் பின்னாடி ஓடுறாங்க; VNB, APE-ஐ விட வேகமா ஏறினா தரம் கூடுது.</p>
+ </div>
+ <div class="card">
+  <h2><span class="en">Insurance dictionary — tap a card</span><span class="ta">இன்ஷ்யூரன்ஸ் அகராதி — ஒரு கார்டைத் தொடுங்க</span></h2>
+  <div class="grid g3" id="glossold"></div>
+ </div>
+ <div class="card">
+  <h2><span class="en">Insurance dictionary in pictures — watch each term build up (tap a card to replay)</span><span class="ta">படங்களில் இன்ஷ்யூரன்ஸ் அகராதி — ஒவ்வொரு சொல்லும் உருவாவதைப் பாருங்க (மீண்டும் பார்க்க தொடுங்க)</span></h2>
+  <div class="grid" id="gloss" style="grid-template-columns:repeat(auto-fit,minmax(330px,1fr))"></div>
+ </div>
+ <div class="grid g2">
+  <div class="card calc">
+   <h3><span class="en">Try it: how APE is counted</span><span class="ta">செஞ்சு பாருங்க: APE எப்படி கணக்கு</span></h3>
+   <div><span class="en">Regular premium per year (₹)</span><span class="ta">வருட ரெகுலர் பிரீமியம் (₹)</span>: <b id="rpv">50,000</b><input type="range" id="rp" min="0" max="500000" step="10000" value="50000"></div>
+   <div><span class="en">One-time single premium (₹)</span><span class="ta">ஒருமுறை சிங்கிள் பிரீமியம் (₹)</span>: <b id="spv">5,00,000</b><input type="range" id="sp" min="0" max="5000000" step="100000" value="500000"></div>
+   <div class="big" id="apev"></div>
+   <p class="note"><span class="en">APE = regular premium + 10% of single premium. That is why ₹68,000 cr of single premium in Q2 adds only ~₹6,800 cr of APE.</span><span class="ta">APE = ரெகுலர் பிரீமியம் + சிங்கிள் பிரீமியத்தோட 10%. அதனால தான் Q2-ல வந்த ₹68,000 கோடி சிங்கிள் பிரீமியம் APE-ல சுமார் ₹6,800 கோடி தான் சேர்க்குது.</span></p>
+  </div>
+  <div class="card">
+   <h3><span class="en">How VNB is born</span><span class="ta">VNB எப்படி பிறக்குது</span></h3>
+   <svg viewBox="0 0 460 230" style="width:100%">
+    <defs><marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6" fill="#f07c1b"/></marker></defs>
+    <rect x="8" y="80" width="110" height="60" rx="10" fill="#ffe2c2" stroke="#f07c1b"/><text x="63" y="106" text-anchor="middle" font-size="12" font-weight="700">New policy sold</text><text x="63" y="124" text-anchor="middle" font-size="11">APE ₹100</text>
+    <line x1="118" y1="110" x2="168" y2="110" stroke="#f07c1b" stroke-width="2" class="flow" marker-end="url(#ar)"/>
+    <g font-size="10"><rect x="170" y="20" width="22" height="40" fill="#9fd9b4"/><rect x="196" y="30" width="22" height="30" fill="#9fd9b4"/><rect x="222" y="36" width="22" height="24" fill="#9fd9b4"/><rect x="248" y="42" width="22" height="18" fill="#9fd9b4"/><rect x="274" y="46" width="22" height="14" fill="#9fd9b4"/><text x="235" y="76" text-anchor="middle">future profits each year</text>
+    <rect x="170" y="150" width="126" height="20" fill="#f6b3b1"/><text x="233" y="185" text-anchor="middle">minus cost of capital &amp; risk</text></g>
+    <line x1="300" y1="110" x2="340" y2="110" stroke="#f07c1b" stroke-width="2" class="flow" marker-end="url(#ar)"/>
+    <text x="320" y="100" text-anchor="middle" font-size="10">discount</text>
+    <rect x="342" y="80" width="110" height="60" rx="10" fill="#1f9d55"/><text x="397" y="106" text-anchor="middle" font-size="12" fill="#fff" font-weight="700">VNB ₹22.3</text><text x="397" y="124" text-anchor="middle" font-size="11" fill="#fff">margin 22.3%</text>
+   </svg>
+   <p class="note"><span class="en">VNB is today's value of all profits a policy will earn over its life. Higher interest rates raise the discount rate but also raise the earnings on guaranteed products, so the net effect depends on product pricing.</span><span class="ta">VNB = ஒரு பாலிசி அதன் வாழ்நாள் முழுக்க தரப்போற லாபத்தோட இன்றைய மதிப்பு. வட்டி விகிதம் ஏறினா டிஸ்கவுண்ட் ரேட்டும் ஏறும், ஆனா கியாரண்டி பிராடக்ட்ல சம்பாத்தியமும் ஏறும்; நிகர விளைவு பிராடக்ட் விலையைப் பொருத்தது.</span></p>
+  </div>
+ </div>
+</section>
+
+<!-- ============ FINANCIALS ============ -->
+<section class="tab" id="t-fn">
+ <div class="card">
+  <h2><span class="en">Financial metrics (H1 FY27, standalone)</span><span class="ta">நிதி அளவீடுகள் (H1 FY27, ஸ்டாண்ட்அலோன்)</span></h2>
+  <table id="fintab"></table>
+  <p class="note"><span class="dag">†</span> <span class="en">derived by CB Research from reported numbers. n/a = not disclosed in the material available.</span><span class="ta">அறிவிக்கப்பட்ட எண்களிலிருந்து CB Research கணக்கிட்டது. n/a = கிடைக்கல.</span></p>
+ </div>
+ <div class="grid g2">
+  <div class="card"><h3><span class="en">APE mix (₹ cr)</span><span class="ta">APE கலவை (₹ கோடி)</span></h3><div style="height:260px"><canvas id="cApe"></canvas></div></div>
+  <div class="card"><h3><span class="en">Individual APE: par vs non-par</span><span class="ta">தனிநபர் APE: பார் vs நான்-பார்</span></h3><div style="height:260px"><canvas id="cPar"></canvas></div></div>
+  <div class="card"><h3><span class="en">VNB margin path</span><span class="ta">VNB மார்ஜின் பயணம்</span></h3><div style="height:260px"><canvas id="cVnb"></canvas></div><p class="note">† Q2 FY26 (≈19.3%) and Q2 FY27 (≈21.8%) implied from half-year data.</p></div>
+  <div class="card"><h3><span class="en">Persistency — do customers keep paying?</span><span class="ta">பெர்சிஸ்டன்சி — வாடிக்கையாளர் தொடர்ந்து கட்டுறாங்களா?</span></h3><div style="height:260px"><canvas id="cPers"></canvas></div><p class="note"><span class="en">13th-month (premium basis) dipped slightly; 61st-month fell ~280 bps — a watch point.</span><span class="ta">13வது மாதம் லேசா இறங்கியது; 61வது மாதம் ~280 bps இறங்கியது — கவனிக்க வேண்டியது.</span></p></div>
+ </div>
+ <div class="card">
+  <h3><span class="en">Cash flow &amp; working capital</span><span class="ta">பணப்புழக்கம் &amp; வொர்க்கிங் கேபிடல்</span></h3>
+  <p class="en">For a life insurer, inventory, receivable and payable days do not exist in the usual sense. The "cash cycle" is the float: premium comes in first, claims are paid years later, and the gap is invested. The right checks are AUM growth (+4.2%), investment yield (8.67%), solvency (2.35x) and persistency. Detailed half-year cash-flow statement figures were not available at the time of writing.</p>
+  <p class="ta">லைஃப் இன்ஷ்யூரருக்கு இன்வென்டரி, ரிசீவபிள், பேயபிள் நாட்கள்னு வழக்கமான அர்த்தத்துல கிடையாது. இங்கே "பண சுழற்சி" தான் ஃப்ளோட்: பிரீமியம் முதல்ல வருது, க்ளெய்ம் பல வருஷம் கழிச்சு போகுது, இடையில அந்த பணம் முதலீடா இருக்குது. பார்க்க வேண்டியது AUM வளர்ச்சி (+4.2%), முதலீட்டு ஈல்ட் (8.67%), சால்வென்சி (2.35x), பெர்சிஸ்டன்சி. விரிவான அரையாண்டு பணப்புழக்க எண்கள் இப்போ கிடைக்கல.</p>
+ </div>
+</section>
+
+<!-- ============ BONDS ============ -->
+<section class="tab" id="t-bd">
+ <div class="card">
+  <h2><span class="en">Bond yields went up — why that helps LIC</span><span class="ta">பாண்ட் ஈல்ட் ஏறியது — அது LIC-க்கு ஏன் நல்லது</span></h2>
+  <div class="grid g4">
+   <div class="kpi"><div class="l">10-yr G-sec, ~Oct 2025</div><div class="v">~6.5%</div></div>
+   <div class="kpi"><div class="l">10-yr G-sec, 29 Oct 2026</div><div class="v">7.39%</div><div class="d up">▲ ~90 bps</div></div>
+   <div class="kpi"><div class="l">RBI repo (Oct 2026 hike)</div><div class="v">5.50%</div><div class="d dn">▲ 25 bps</div></div>
+   <div class="kpi"><div class="l">Street view by Dec 2026</div><div class="v">7.70–7.75%</div><div class="d note">one bank sees 8% by Jun 2027</div></div>
+  </div>
+  <div class="chartbox" style="margin-top:10px"><div class="in"><canvas id="cYld"></canvas></div></div>
+  <p class="note"><span class="en">Approximate month-end levels of India's 10-year government bond yield.</span><span class="ta">இந்திய 10 வருட அரசு பாண்ட் ஈல்டின் தோராயமான மாத இறுதி அளவு.</span></p>
+ </div>
+ <div class="card">
+  <h3><span class="en">The see-saw: price falls, yield rises — tap each step</span><span class="ta">சீ-சா: விலை இறங்குது, ஈல்ட் ஏறுது — ஒவ்வொரு படியையும் தொடுங்க</span></h3>
+  <div class="chartbox"><svg id="bdsvg" viewBox="0 0 1000 300" style="min-width:740px;width:100%"></svg></div>
+  <div class="explain" id="bdx"><h4>👆</h4><span class="en">Tap a step.</span><span class="ta">ஒரு படியைத் தொடுங்க.</span></div>
+ </div>
+ <div class="grid g2">
+  <div class="card calc">
+   <h3><span class="en">Calculator: extra income from locking higher yields (illustrative)</span><span class="ta">கால்குலேட்டர்: அதிக ஈல்ட்ல லாக் பண்ணா கூடுதல் வருமானம் (உதாரணம்)</span></h3>
+   <div><span class="en">Fresh money invested in bonds (₹ lakh crore)</span><span class="ta">பாண்ட்ல போட்ட புது பணம் (₹ லட்சம் கோடி)</span>: <b id="fmv">2.0</b><input type="range" id="fm" min="0.5" max="6" step="0.5" value="2"></div>
+   <div><span class="en">Yield locked</span><span class="ta">லாக் ஆன ஈல்ட்</span>: <b id="ylv">7.40%</b><input type="range" id="yl" min="6.5" max="8" step="0.05" value="7.4"></div>
+   <div><span class="en">Compared with yield a year ago</span><span class="ta">ஒரு வருஷம் முன்னாடி ஈல்ட்</span>: <b>6.50%</b></div>
+   <div class="big" id="extra"></div>
+   <div class="note" id="extra2"></div>
+   <p class="note"><span class="en">Illustrative only: LIC has not disclosed the exact rupee amount of fresh bond buying in the quarter. Net premium alone was ₹1.47 lakh crore in Q2, and maturing bonds are reinvested too.</span><span class="ta">உதாரணம் மட்டும்: இந்த காலாண்டுல எவ்வளவு புது பாண்ட் வாங்கினாங்கன்னு LIC சரியான தொகை சொல்லல. Q2-ல நிகர பிரீமியமே ₹1.47 லட்சம் கோடி; மெச்சூர் ஆகும் பாண்டுகளும் மறுமுதலீடு ஆகுது.</span></p>
+  </div>
+  <div class="card">
+   <h3><span class="en">Good news and the catch</span><span class="ta">நல்ல செய்தியும், கவனிக்க வேண்டியதும்</span></h3>
+   <table>
+    <tr><th class="up">✔ <span class="en">Benefits</span><span class="ta">பலன்கள்</span></th><th class="dn">✖ <span class="en">Costs / catches</span><span class="ta">செலவு / சிக்கல்</span></th></tr>
+    <tr><td><span class="en">New money earns ~90 bps more for 10–40 years</span><span class="ta">புது பணம் 10–40 வருஷத்துக்கு ~90 bps அதிகம் சம்பாதிக்கும்</span></td><td><span class="en">Market value of the old bond book falls; Indian Embedded Value fell 1.95% YoY to ₹7,97,378 cr</span><span class="ta">பழைய பாண்டுகளோட சந்தை மதிப்பு இறங்குது; IEV ஆண்டுக்கு 1.95% இறங்கி ₹7,97,378 கோடி</span></td></tr>
+    <tr><td><span class="en">Guaranteed non-par savings products become easier to price profitably</span><span class="ta">கியாரண்டி நான்-பார் சேமிப்பு பிராடக்டை லாபமா விலை வைக்க சுலபம்</span></td><td><span class="en">Debt held to maturity is carried at cost, so no P&amp;L hit, but Ind AS reporting will make such moves more visible</span><span class="ta">மெச்சூரிட்டி வரை வைக்கும் கடன் காஸ்ட்ல இருக்கும், P&amp;L-ல அடி இல்ல; ஆனா Ind AS-ல இது இன்னும் தெளிவா தெரியும்</span></td></tr>
+    <tr><td><span class="en">Book yield (8.67%, still falling from 8.90%) should stop sliding and slowly turn up</span><span class="ta">புக் ஈல்ட் (8.67%, 8.90%-லிருந்து இறங்குது) இறங்குவது நின்று மெல்ல ஏறணும்</span></td><td><span class="en">Higher rates often hurt equity prices — LIC is India's largest equity investor</span><span class="ta">வட்டி ஏறினா ஷேர் விலை அடிக்கடி இறங்கும் — LIC இந்தியாவின் பெரிய ஈக்விட்டி முதலீட்டாளர்</span></td></tr>
+    <tr><td><span class="en">FD-competing traditional plans look attractive to savers</span><span class="ta">FD-யோட போட்டி போடும் பாரம்பரிய திட்டங்கள் கவர்ச்சியா தெரியும்</span></td><td><span class="en">ULIP sales weaken in falling markets (CEO cited this for the first-year premium dip)</span><span class="ta">சந்தை இறங்கும்போது ULIP விற்பனை குறையும் (முதல் வருட பிரீமியம் இறக்கத்துக்கு CEO இதைச் சொன்னார்)</span></td></tr>
+   </table>
+  </div>
+ </div>
+</section>
+
+<!-- ============ IDBI & BANKS ============ -->
+<section class="tab" id="t-id">
+ <div class="card">
+  <h2><span class="en">IDBI Bank disinvestment — what changes for LIC</span><span class="ta">IDBI பேங்க் பங்கு விற்பனை — LIC-க்கு என்ன மாறுது</span></h2>
+  <div class="grid g4">
+   <div class="kpi"><div class="l">Deal (CCEA, 14 Oct 2026)</div><div class="v">₹52,878 cr</div><div class="d note">60.72% at ₹81/share to Fairfax</div></div>
+   <div class="kpi"><div class="l">LIC's part (30.24%)</div><div class="v">~₹26,440 cr</div><div class="d up">cash to LIC</div></div>
+   <div class="kpi"><div class="l">LIC paid for 51% (Jan 2019)</div><div class="v">₹21,624 cr</div></div>
+   <div class="kpi"><div class="l">LIC stake after sale</div><div class="v">~19%</div><div class="d fl">must reach 15% in 2 yrs</div></div>
+  </div>
+  <h3><span class="en">Ownership before and after</span><span class="ta">விற்பனைக்கு முன்னும் பின்னும் உரிமை</span></h3>
+  <div class="chartbox"><svg id="idsvg" viewBox="0 0 900 170" style="min-width:640px;width:100%"></svg></div>
+ </div>
+ <div class="card">
+  <h3><span class="en">LIC's bank-partner network (bancassurance)</span><span class="ta">LIC வங்கி கூட்டணி வலைப்பின்னல் (பேங்கஷ்யூரன்ஸ்)</span></h3>
+  <div class="chartbox"><svg id="bksvg" viewBox="0 0 900 330" style="min-width:640px;width:100%"></svg></div>
+  <div class="explain" id="bkx"><h4>👆</h4><span class="en">Tap a bank.</span><span class="ta">ஒரு வங்கியைத் தொடுங்க.</span></div>
+ </div>
+ <div class="card">
+  <h3><span class="en">Will the business be hurt, or will it go up?</span><span class="ta">பிசினஸ் பாதிக்குமா, இல்ல ஏறுமா?</span></h3>
+  <div class="grid g3">
+   <div class="reg" style="border-color:var(--gr)"><b class="en">Why the hit is small</b><b class="ta">அடி ஏன் சின்னது</b><ul class="en"><li>Bank and alternate channels are only 7.53% of individual new-business premium; agents bring the rest.</li><li>CEO: banca runs on open architecture, so the IDBI partnership continues after the sale.</li><li>SEBI has allowed LIC to be reclassified as a public shareholder of IDBI.</li></ul><ul class="ta"><li>தனிநபர் புது பிசினஸ் பிரீமியத்துல வங்கி &amp; மாற்று வழிகள் 7.53% தான்; மீதி ஏஜெண்ட்கள் கொண்டு வர்றாங்க.</li><li>CEO: பேங்கஷ்யூரன்ஸ் ஓபன் ஆர்கிடெக்சர்ல ஓடுது, அதனால விற்பனைக்கு அப்புறமும் IDBI கூட்டணி தொடரும்.</li><li>IDBI-ல LIC-ஐ பொது பங்குதாரரா மாற்ற SEBI அனுமதி கொடுத்திருக்கு.</li></ul></div>
+   <div class="reg" style="border-color:var(--rd)"><b class="en">What could hurt</b><b class="ta">எது பாதிக்கலாம்</b><ul class="en"><li>Fairfax also owns stakes in other insurance businesses in India; a new owner may push its own partners over time.</li><li>IDBI was LIC's largest banca partner; its share of LIC's new-business premium was 4.23% in Q1 FY26.</li><li>Employee unions and opposition parties oppose the sale, so closing could take time.</li></ul><ul class="ta"><li>Fairfax-க்கு இந்தியாவில மற்ற இன்ஷ்யூரன்ஸ் பிசினஸ்லயும் பங்கு இருக்கு; புது உரிமையாளர் காலப்போக்குல தன்னோட கூட்டாளிகளை முன்னிறுத்தலாம்.</li><li>IDBI தான் LIC-யோட பெரிய பேங்கா கூட்டாளி; Q1 FY26-ல LIC புது பிசினஸ் பிரீமியத்துல அதோட பங்கு 4.23%.</li><li>ஊழியர் சங்கங்களும் எதிர்க்கட்சிகளும் எதிர்க்குறாங்க; முடிக்க நேரம் ஆகலாம்.</li></ul></div>
+   <div class="reg" style="border-color:var(--bl)"><b class="en">Why it could go up</b><b class="ta">ஏன் ஏறலாம்</b><ul class="en"><li>New tie-ups with RBL Bank (~570 branches + 1,474 business correspondent outlets) and Yes Bank; CEO expects the impact in H2 FY27.</li><li>~₹26,440 cr of cash can be redeployed at today's higher bond yields.</li><li>A stronger, privately run IDBI could sell more insurance even as a non-exclusive partner.</li></ul><ul class="ta"><li>RBL பேங்க் (~570 கிளைகள் + 1,474 பிசினஸ் கரஸ்பாண்டன்ட் மையங்கள்), யெஸ் பேங்க் கூட புது கூட்டணி; H2 FY27-ல பலன் தெரியும்னு CEO சொல்றார்.</li><li>~₹26,440 கோடி பணத்தை இப்போதைய அதிக பாண்ட் ஈல்ட்ல மறுமுதலீடு பண்ணலாம்.</li><li>தனியார் நிர்வாகத்துல வலுவான IDBI, எக்ஸ்க்ளூசிவ் இல்லாமலும் அதிக இன்ஷ்யூரன்ஸ் விக்கலாம்.</li></ul></div>
+  </div>
+  <p class="note"><span class="en">Open question: management has said the IDBI investment was made from LIC's unified fund before the IPO, so how much of any gain reaches shareholders (versus policyholders) is not yet clear.</span><span class="ta">திறந்த கேள்வி: IDBI முதலீடு IPO-க்கு முன்னாடி யூனிஃபைட் ஃபண்ட்லிருந்து போட்டதுன்னு நிர்வாகம் சொல்லியிருக்கு; அதனால லாபத்துல எவ்வளவு பங்குதாரர்களுக்கு (பாலிசிதாரர்களுக்கு எதிரா) போகும்னு இன்னும் தெளிவில்ல.</span></p>
+ </div>
+</section>
+
+<!-- ============ REGULATION ============ -->
+<section class="tab" id="t-rg">
+ <div class="card">
+  <h2><span class="en">Regulation — the rules that shape LIC's future</span><span class="ta">ஒழுங்குமுறை — LIC எதிர்காலத்தை வடிவமைக்கும் விதிகள்</span></h2>
+  <div class="chartbox"><svg id="rgsvg" viewBox="0 0 1000 150" style="min-width:760px;width:100%"></svg></div>
+  <div id="reglist"></div>
+ </div>
+</section>
+
+<!-- ============ TRIGGERS & CYCLE ============ -->
+<section class="tab" id="t-tc">
+ <div class="grid g2">
+  <div class="card">
+   <h2><span class="en">Cycle clock</span><span class="ta">சுழற்சி கடிகாரம்</span></h2>
+   <svg id="cysvg" viewBox="0 0 320 300" style="width:100%;max-width:380px;display:block;margin:auto"></svg>
+   <p class="note"><span class="en">Cycle type: policy/regulated + interest-rate. Sector phase P3 Expansion (score 70): GST exemption lifted individual new-business premium +14.9%, margins at record levels, but total APE growth only 5.7% and rates now rising. Stock: Stage 1 base (price ~₹382–424 since the Aug 2026 OFS; estimated, not computed from a 30-week average).</span><span class="ta">சுழற்சி வகை: கொள்கை/ஒழுங்குமுறை + வட்டி விகிதம். செக்டார் கட்டம் P3 விரிவாக்கம் (70): GST விலக்கால தனிநபர் புது பிசினஸ் +14.9%, மார்ஜின் சாதனை அளவு, ஆனா மொத்த APE வளர்ச்சி 5.7% தான், வட்டி ஏறுது. பங்கு: ஸ்டேஜ் 1 அடித்தளம் (Aug 2026 OFS-லிருந்து ~₹382–424; தோராயம்).</span></p>
+  </div>
+  <div class="card">
+   <h2><span class="en">Scores</span><span class="ta">மதிப்பெண்கள்</span></h2>
+   <div class="grid g4">
+    <div class="kpi"><div class="l">CY — Cycle</div><div class="v">65</div><div class="d note">sector 70 · stock 60</div></div>
+    <div class="kpi"><div class="l">TG — Trigger</div><div class="v">57</div><div class="d note">+ 4.07 pts · − 3.19 pts</div></div>
+   </div>
+   <table style="margin-top:10px"><tr><th>Stock cycle sub-item</th><th>Score</th></tr>
+   <tr><td><span class="en">Lifecycle: re-inventing (par → non-par, banca)</span><span class="ta">வாழ்க்கைச் சுழற்சி: மறு உருவாக்கம்</span></td><td class="n">75</td></tr>
+   <tr><td><span class="en">Earnings: VNB margin at/near record high</span><span class="ta">வருமானம்: VNB மார்ஜின் சாதனை உச்சம்</span></td><td class="n">40</td></tr>
+   <tr><td><span class="en">Valuation: P/EV ~0.65x, within its usual band</span><span class="ta">மதிப்பீடு: P/EV ~0.65x, வழக்கமான வரம்புக்குள்</span></td><td class="n">55</td></tr>
+   <tr><td><span class="en">Price stage: Stage 1 late (estimated)</span><span class="ta">விலை கட்டம்: ஸ்டேஜ் 1 (தோராயம்)</span></td><td class="n">70</td></tr></table>
+   <h3><span class="en">What would change this view</span><span class="ta">இந்த பார்வையை எது மாற்றும்</span></h3>
+   <ul class="en"><li>Individual APE turning to double-digit growth in H2 (banca ramp-up).</li><li>Ind AS 117 restated profits coming in much lower than IGAAP.</li><li>Another large government OFS announced at a discount.</li></ul>
+   <ul class="ta"><li>H2-ல தனிநபர் APE இரட்டை இலக்க வளர்ச்சிக்கு மாறினால்.</li><li>Ind AS 117-ல லாபம் IGAAP-ஐ விட ரொம்ப குறைவா வந்தால்.</li><li>அரசு இன்னொரு பெரிய OFS-ஐ தள்ளுபடியில அறிவிச்சா.</li></ul>
+  </div>
+ </div>
+ <div class="card">
+  <h3><span class="en">Trigger table</span><span class="ta">தூண்டுதல் அட்டவணை</span></h3>
+  <table id="trtab"></table>
+  <p class="note">Points = Impact × Certainty × Timing × Priced-in. TG = 50 + 8 × (top-3 positive) − 8 × (negatives).</p>
+ </div>
+ <div class="card">
+  <h3><span class="en">Trigger timeline</span><span class="ta">தூண்டுதல் காலவரிசை</span></h3>
+  <div class="chartbox"><svg id="tlsvg" viewBox="0 0 1000 140" style="min-width:740px;width:100%"></svg></div>
+ </div>
+</section>
+
+<!-- ============ VALUATION & ANALYSTS ============ -->
+<section class="tab" id="t-va">
+ <div class="card">
+  <h2><span class="en">CB 6-pillar temple</span><span class="ta">CB 6-தூண் கோவில்</span></h2>
+  <svg id="tmsvg" viewBox="0 0 700 420" style="width:100%;max-width:720px;display:block;margin:auto"></svg>
+  <div id="pillcards" class="grid g3"></div>
+ </div>
+ <div class="card">
+  <h2><span class="en">Valuation</span><span class="ta">மதிப்பீடு</span></h2>
+  <div class="grid g4">
+   <div class="kpi"><div class="l">Share price (6 Nov 2026)</div><div class="v">₹408</div><div class="d note">after 1:1 bonus (May 2026)</div></div>
+   <div class="kpi"><div class="l">Embedded value per share†</div><div class="v">₹630</div><div class="d note">IEV ₹7,97,378 cr ÷ ~1,265 cr shares</div></div>
+   <div class="kpi"><div class="l">Price / EV†</div><div class="v">0.65x</div><div class="d up">market pays 65 paise per ₹1 of value</div></div>
+   <div class="kpi"><div class="l">P/E (trailing 12 months)†</div><div class="v">~8.3x</div><div class="d note">TTM PAT ≈ ₹61,950 cr</div></div>
+  </div>
+  <div class="calc" style="margin-top:10px">
+   <b><span class="en">What-if: price at a different P/EV</span><span class="ta">என்னாகும்: வேற P/EV-ல விலை</span></b>
+   <input type="range" id="pev" min="0.4" max="1.5" step="0.05" value="0.65"><div class="big" id="pevv"></div>
+   <p class="note"><span class="en">Private peers have usually traded well above 1x EV; LIC trades at a discount for government ownership, the par-heavy book and repeated stake sales. This is arithmetic, not a target.</span><span class="ta">தனியார் நிறுவனங்கள் பொதுவா 1x EV-க்கு மேல டிரேட் ஆகும்; அரசு உரிமை, பார் அதிகமான புக், அடிக்கடி பங்கு விற்பனை — இதனால LIC தள்ளுபடியில இருக்கு. இது கணக்கு மட்டும், இலக்கு இல்ல.</span></p>
+  </div>
+ </div>
+ <div class="card">
+  <h2><span class="en">Analysts' rating (third-party brokers)</span><span class="ta">அனலிஸ்ட் ரேட்டிங் (வெளி புரோக்கர்கள்)</span></h2>
+  <div style="height:240px"><canvas id="cAn"></canvas></div>
+  <table><tr><th>Broker</th><th>Rating</th><th>Target (₹)</th><th>vs ₹408</th></tr>
+  <tr><td>Elara Securities</td><td><span class="pill pg">Buy</span></td><td class="n">635</td><td class="n up">+56%</td></tr>
+  <tr><td>Emkay Global</td><td><span class="pill pg">Buy</span></td><td class="n">550</td><td class="n up">+35%</td></tr>
+  <tr><td>Jefferies</td><td>n/a (target raised)</td><td class="n">530</td><td class="n up">+30%</td></tr>
+  <tr><td>Motilal Oswal</td><td><span class="pill pg">Buy</span></td><td class="n">480</td><td class="n up">+18%</td></tr></table>
+  <p class="note"><span class="en">These are post-bonus targets published after Q1 FY27 (Aug 2026). Post-Q2 updates were not yet available when this file was built. CB Research does not give buy/sell/hold views.</span><span class="ta">இவை Q1 FY27-க்கு அப்புறம் (Aug 2026) வந்த போனஸுக்கு பிந்தைய இலக்குகள். Q2-க்கு அப்புறம் வந்தவை இன்னும் கிடைக்கல. CB Research வாங்க/விற்க/வைக்க பரிந்துரை தருவதில்லை.</span></p>
+ </div>
+</section>
+
+<!-- ============ MANAGEMENT ============ -->
+<section class="tab" id="t-mg">
+ <div class="card">
+  <h2><span class="en">Management &amp; Board</span><span class="ta">நிர்வாகம் &amp; இயக்குநர் குழு</span></h2>
+  <table><tr><th>Name</th><th>Role</th><th><span class="en">Note</span><span class="ta">குறிப்பு</span></th></tr>
+  <tr><td>R. Doraiswamy</td><td>CEO &amp; Managing Director</td><td><span class="en">Took charge in 2025; strategy: profitable growth, keep market leadership, non-par at ~one-third of individual APE</span><span class="ta">2025-ல பொறுப்பேற்றார்; உத்தி: லாபகரமான வளர்ச்சி, முன்னிலை தக்கவைப்பு, நான்-பார் ~மூணுல ஒரு பங்கு</span></td></tr>
+  <tr><td>Ratnakar Patnaik</td><td>Managing Director</td><td>—</td></tr>
+  <tr><td>Dinesh Pant</td><td>Managing Director</td><td>—</td></tr>
+  <tr><td>Ramakrishnan Chander</td><td>Managing Director</td><td><span class="en">Former CFO, elevated to MD</span><span class="ta">முன்னாள் CFO, MD-ஆக உயர்வு</span></td></tr>
+  <tr><td>Shatmanyu Shrivastava</td><td>Chief Financial Officer</td><td><span class="en">Appointed July 2026</span><span class="ta">ஜூலை 2026-ல நியமனம்</span></td></tr>
+  <tr><td>—</td><td>Chief Compliance Officer</td><td><span class="en">New appointment approved at the 5 Nov 2026 board meeting (name n/a)</span><span class="ta">5 நவ 2026 கூட்டத்துல புது நியமனம் (பெயர் n/a)</span></td></tr>
+  <tr><td>Government of India</td><td>Promoter, 90.0%</td><td><span class="en">Must reach 25% public float in future; 10% met via Aug 2026 OFS</span><span class="ta">எதிர்காலத்துல 25% பொது பங்கு வேணும்; 10% Aug 2026 OFS-ல எட்டியாச்சு</span></td></tr></table>
+  <p class="note"><span class="en">Independent director details: n/a in the material reviewed.</span><span class="ta">சுயாதீன இயக்குநர் விவரங்கள்: n/a.</span></p>
+ </div>
+ <div class="card">
+  <h3><span class="en">What management said (Q2 FY27)</span><span class="ta">நிர்வாகம் சொன்னது (Q2 FY27)</span></h3>
+  <ul class="en"><li>First-year premium dip: ULIP buying weakens when markets are subdued.</li><li>Higher ticket sizes could lift VNB margin further in Q3 and Q4.</li><li>IDBI sale: little banca impact (open architecture); RBL and Yes Bank tie-ups to show in H2 FY27.</li><li>Non-par at 34.03% of individual APE is in line with the one-third strategy.</li></ul>
+  <ul class="ta"><li>முதல் வருட பிரீமியம் இறக்கம்: சந்தை மந்தமா இருந்தா ULIP வாங்குவது குறையும்.</li><li>பெரிய டிக்கெட் சைஸால Q3, Q4-ல VNB மார்ஜின் இன்னும் ஏறலாம்.</li><li>IDBI விற்பனை: பேங்கஷ்யூரன்ஸ்ல பெரிய பாதிப்பு இல்ல; RBL, யெஸ் பேங்க் பலன் H2 FY27-ல.</li><li>தனிநபர் APE-ல நான்-பார் 34.03% — மூணுல ஒரு பங்கு உத்திக்கு ஏத்தபடி.</li></ul>
+ </div>
+</section>
+
+<!-- ============ SWOT & RISKS ============ -->
+<section class="tab" id="t-sw">
+ <div class="card">
+  <h2>SWOT</h2>
+  <div class="grid g2">
+   <div class="reg" style="border-color:var(--gr)"><b>Strengths / பலங்கள்</b><ul class="en"><li>~58.8% share of first-year premium; 70.45% in group</li><li>₹59.6 lakh crore AUM; solvency 2.35x</li><li>VNB margin now close to private peers</li><li>Trust and agency reach in small towns</li></ul><ul class="ta"><li>முதல் வருட பிரீமியத்துல ~58.8% பங்கு; குரூப்ல 70.45%</li><li>₹59.6 லட்சம் கோடி AUM; சால்வென்சி 2.35x</li><li>VNB மார்ஜின் தனியார் அளவுக்கு நெருங்குது</li><li>சிறு நகரங்கள்ல நம்பிக்கை, ஏஜெண்ட் வலை</li></ul></div>
+   <div class="reg" style="border-color:var(--rd)"><b>Weaknesses / பலவீனங்கள்</b><ul class="en"><li>Individual APE flat (+0.3%), policies sold −2.25%</li><li>Individual market share 37.51% and slipping</li><li>61st-month persistency 61.03% (down)</li><li>Heavy dependence on agents</li></ul><ul class="ta"><li>தனிநபர் APE தேக்கம் (+0.3%), விற்ற பாலிசி −2.25%</li><li>தனிநபர் சந்தை பங்கு 37.51%, இறங்குது</li><li>61வது மாத பெர்சிஸ்டன்சி 61.03% (குறைவு)</li><li>ஏஜெண்ட்களை அதிகம் சார்ந்திருத்தல்</li></ul></div>
+   <div class="reg" style="border-color:var(--bl)"><b>Opportunities / வாய்ப்புகள்</b><ul class="en"><li>Higher yields for guaranteed products</li><li>New banks (RBL, Yes) and digital</li><li>Protection APE +58.6% from a small base</li><li>Possible entry into health insurance under the new law</li></ul><ul class="ta"><li>கியாரண்டி பிராடக்டுக்கு அதிக ஈல்ட்</li><li>புது வங்கிகள் (RBL, யெஸ்), டிஜிட்டல்</li><li>பாதுகாப்பு APE +58.6% (சின்ன அடிப்படையில)</li><li>புது சட்டத்தின்படி ஹெல்த் இன்ஷ்யூரன்ஸ் நுழைவு சாத்தியம்</li></ul></div>
+   <div class="reg" style="border-color:var(--am)"><b>Threats / அச்சுறுத்தல்கள்</b><ul class="en"><li>100% FDI brings well-funded global rivals</li><li>Commission and mis-selling rules</li><li>Ind AS 117 may lower reported profit</li><li>Further government stake sales (overhang)</li></ul><ul class="ta"><li>100% FDI — பண பலம் உள்ள உலக போட்டியாளர்கள்</li><li>கமிஷன், தவறான விற்பனை விதிகள்</li><li>Ind AS 117-ல அறிவிக்கும் லாபம் குறையலாம்</li><li>அரசு இன்னும் பங்கு விற்பது (அழுத்தம்)</li></ul></div>
+  </div>
+ </div>
+</section>
+
+<!-- ============ SELF-CHECK & SOCRATES ============ -->
+<section class="tab" id="t-sc">
+ <div class="card">
+  <h2><span class="en">CB Investor Self-check</span><span class="ta">CB முதலீட்டாளர் சுய சோதனை</span></h2>
+  <div class="bar"><i id="allbar" style="width:0"></i></div><div class="note" id="allmsg"></div>
+  <div id="selfck" class="chk"></div>
+  <button class="btn" onclick="clearSC()">Clear / அழி</button>
+ </div>
+ <div class="card">
+  <h2>Cauvery Socrates</h2>
+  <div id="socr"></div>
+ </div>
+</section>
+</main>
+
+<div id="tip"></div>
+<div id="asb" onclick="toggleAs()">🎙 CB Assist</div>
+<div id="asp"><div class="hd"><span>CB Assist — LIC Q2 FY27</span><span style="cursor:pointer" onclick="toggleAs()">✕</span></div><div id="asl"></div><div class="sugg" id="sugg"></div><div class="ft"><input id="asi" placeholder="Ask… / கேளுங்க…" onkeydown="if(event.key==='Enter')ask()"><button id="mic" onclick="micGo()">🎤</button><button onclick="ask()">➤</button></div></div>
+<div id="cb" onclick="document.getElementById('disc').classList.toggle('on')">CB</div>
+<div id="disc"><b>Prepared by CB Research (Cauvery Business Research)</b><br><span class="en">For education only. Not a SEBI-registered research analyst; this is not investment advice or a recommendation to buy, sell or hold. Figures are from company filings and public disclosures as of 6 Nov 2026; derived figures are marked †. Please verify before acting and consult a registered adviser.</span><span class="ta">கல்விக்காக மட்டும். SEBI பதிவு பெற்ற ஆய்வாளர் இல்லை; இது முதலீட்டு ஆலோசனையோ வாங்க/விற்க/வைக்க பரிந்துரையோ அல்ல. எண்கள் 6 நவ 2026 வரையிலான நிறுவன அறிவிப்புகளிலிருந்து; கணக்கிட்டவை † குறியிட்டவை. செயல்படும் முன் சரிபாருங்கள், பதிவுபெற்ற ஆலோசகரை அணுகுங்கள்.</span></div>
+
+<script>
+var LANG='en';
+function L(o){return (o&&typeof o==='object')?(o[LANG]||o.en):o;}
+function fmt(n,d){return Number(n).toLocaleString('en-IN',{maximumFractionDigits:d||0,minimumFractionDigits:d||0});}
+
+/* ---------- machine-readable data ---------- */
+var CO={
+ name:"Life Insurance Corporation of India",ticker:"LICI",bse:"543526",quarter:"Q2FY27",asOf:"2026-11-06",
+ standalone:{q2:{pat:12076,patPY:10053,totalIncome:262739,totalIncomePY:239614,npi:147018,npiPY:126479,renewal:68375,renewalPY:64996,fyp:10432,fypPY:10836,expenses:252116,expensesPY:230160,vnbDerived:3710},
+  h1:{pat:25568,patPY:21040,tpi:274269,tpiPY:245680,vnb:6846,vnbPY:5111,vnbMargin:22.3,vnbMarginPY:17.6,ape:30696,apePY:29034,indApe:17224,indApePY:17170,grpApe:13472,grpApePY:11864,nonParApe:5861,nonParApePY:6234,nonParShare:34.03,nonParSharePY:36.31,indNBP:32725,indNBPPY:28491,grpPrem:113594,policies:7097094,policiesPY:7260573,expRatio:10.41,expRatioPY:11.28,solvency:2.35,solvencyPY:2.13,aum:5960941,aumPY:5722896,iev:797378,ievPY:813230,ievMar26:789185,p13:74.69,p13PY:75.29,p61:61.03,p61PY:63.81,yieldPH:8.67,yieldPHPY:8.90,yieldSH:6.54,mktShareFYP:58.77,mktShareInd:37.51,mktShareGrp:70.45,bancaAlt:7.53,bancaAltPY:7.12,protectionApeGrowth:58.59}},
+ consolidated:{q2:{revenue:266117.46,pat:12114.78,patPY:10098.48}},
+ market:{price:408,mcap:516120,sharesCr:1265,govt:90.0,pev:0.65,evps:630,peTTM:8.3},
+ idbi:{dealCr:52878,price:81,stakeSold:60.72,licSold:30.24,licProceeds:26440,licAfter:19.0,govAfter:15.0},
+ cbf26:{g:6.0,m:8.5,d:9.0,v:8.5,t:7.0,r:7.0},
+ cbScore:7.7,
+ cycle:{sectorPhase:"P3",stockStage:"Stage 1 (est.)",cy:65},
+ triggers:[]
+};
+
+/* ---------- tabs ---------- */
+var TABS=[["t-ov",{en:"Overview",ta:"மேலோட்டம்"}],["t-bm",{en:"Business Model",ta:"பிசினஸ் மாடல்"}],["t-ic",{en:"Insurance Code",ta:"இன்ஷ்யூரன்ஸ் கோட்"}],["t-fn",{en:"Financials",ta:"நிதி நிலை"}],["t-bd",{en:"Bonds & Yields",ta:"பாண்ட் & ஈல்ட்"}],["t-id",{en:"IDBI & Banks",ta:"IDBI & வங்கிகள்"}],["t-rg",{en:"Regulation",ta:"ஒழுங்குமுறை"}],["t-tc",{en:"Triggers & Cycle",ta:"தூண்டுதல் & சுழற்சி"}],["t-va",{en:"Valuation & Analysts",ta:"மதிப்பீடு & அனலிஸ்ட்"}],["t-mg",{en:"Management & Board",ta:"நிர்வாகம்"}],["t-sw",{en:"SWOT & Risks",ta:"SWOT & அபாயங்கள்"}],["t-sc",{en:"Self-check & Socrates",ta:"சுய சோதனை & சாக்ரடீஸ்"}]];
+var curTab='t-ov';
+function drawNav(){var n=document.getElementById('nav');n.innerHTML='';TABS.forEach(function(t){var b=document.createElement('button');b.textContent=L(t[1]);if(t[0]===curTab)b.className='on';b.onclick=function(){go(t[0]);};n.appendChild(b);});}
+function go(id){curTab=id;document.querySelectorAll('.tab').forEach(function(s){s.classList.toggle('on',s.id===id);});drawNav();window.scrollTo({top:0,behavior:'smooth'});if(id==='t-va')animTemple();if(id==='t-ic')drawGloss();}
+
+/* ---------- charts ---------- */
+var CH={};
+function mk(id,cfg){if(CH[id])CH[id].destroy();var el=document.getElementById(id);if(!el||typeof Chart==='undefined')return;CH[id]=new Chart(el,cfg);}
+var tickINR={callback:function(v){return fmt(v);}};
+var lblPlugin={id:'lbl',afterDatasetsDraw:function(c){if(c.config.type!=='bar')return;var x=c.ctx;x.save();x.font='bold 11px sans-serif';x.fillStyle='#3b2a1a';x.textAlign='center';c.data.datasets.forEach(function(ds,i){c.getDatasetMeta(i).data.forEach(function(b,j){var v=ds.data[j];if(v==null)return;var s=(ds.suffix?fmt(v,ds.dp||0)+ds.suffix:fmt(v,ds.dp||0));x.fillText(s,b.x,b.y-4);});});x.restore();}};
+function charts(){
+ if(typeof Chart==='undefined')return;
+ if(!window._lb){Chart.register(lblPlugin);window._lb=1;}
+ mk('cMix',{type:'doughnut',data:{labels:[L({en:'Single premium†',ta:'சிங்கிள் பிரீமியம்†'}),L({en:'Renewal',ta:'ரினியூவல்'}),L({en:'First-year',ta:'முதல் வருடம்'})],datasets:[{data:[68211,68375,10432],backgroundColor:['#2f6fb5','#f07c1b','#1f9d55']}]},options:{maintainAspectRatio:false,plugins:{tooltip:{callbacks:{label:function(c){return c.label+': ₹'+fmt(c.raw)+' cr';}}}}}});
+ mk('cPat',{type:'bar',data:{labels:[L({en:'Standalone',ta:'ஸ்டாண்ட்அலோன்'}),L({en:'Consolidated',ta:'கன்சாலிடேட்டட்'})],datasets:[{label:'Q2 FY26',data:[10053,10098],backgroundColor:'#ffc28a'},{label:'Q2 FY27',data:[12076,12115],backgroundColor:'#f07c1b'}]},options:{maintainAspectRatio:false,scales:{y:{beginAtZero:true,ticks:tickINR}}}});
+ mk('cApe',{type:'bar',data:{labels:['H1 FY26','H1 FY27'],datasets:[{label:L({en:'Individual APE',ta:'தனிநபர் APE'}),data:[17170,17224],backgroundColor:'#f07c1b'},{label:L({en:'Group APE',ta:'குரூப் APE'}),data:[11864,13472],backgroundColor:'#2f6fb5'}]},options:{maintainAspectRatio:false,scales:{y:{beginAtZero:true,ticks:tickINR}}}});
+ mk('cPar',{type:'bar',data:{labels:['H1 FY26','H1 FY27'],datasets:[{label:'Par',data:[10936,11363],backgroundColor:'#ffc28a'},{label:'Non-par',data:[6234,5861],backgroundColor:'#1f9d55'}]},options:{maintainAspectRatio:false,scales:{x:{stacked:true},y:{stacked:true,beginAtZero:true,ticks:tickINR}}}});
+ mk('cVnb',{type:'line',data:{labels:['Q1 FY26','Q2 FY26†','H1 FY26','Q4 FY26','Q1 FY27','Q2 FY27†','H1 FY27'],datasets:[{label:'VNB margin %',data:[15.4,19.3,17.6,25.7,22.9,21.8,22.3],borderColor:'#f07c1b',backgroundColor:'rgba(240,124,27,.15)',fill:true,tension:.3,pointRadius:5}]},options:{maintainAspectRatio:false,scales:{y:{min:10,max:28}}}});
+ mk('cPers',{type:'bar',data:{labels:[L({en:'13th month',ta:'13வது மாதம்'}),L({en:'61st month',ta:'61வது மாதம்'})],datasets:[{label:'H1 FY26',data:[75.29,63.81],backgroundColor:'#ffc28a',suffix:'%',dp:1},{label:'H1 FY27',data:[74.69,61.03],backgroundColor:'#f07c1b',suffix:'%',dp:1}]},options:{maintainAspectRatio:false,scales:{y:{min:40,max:85}}}});
+ mk('cYld',{type:'line',data:{labels:['Oct 25','Jan 26','Feb 26','Mar 26','Apr 26','May 26','Jun 26','Jul 26','Aug 26','Sep 26','Oct 26'],datasets:[{label:L({en:'India 10-yr G-sec yield %',ta:'இந்திய 10 வருட ஈல்ட் %'}),data:[6.5,6.6,6.7,7.1,7.1,7.1,6.7,6.69,6.85,7.2,7.39],borderColor:'#2f6fb5',backgroundColor:'rgba(47,111,181,.12)',fill:true,tension:.3,pointRadius:4}]},options:{maintainAspectRatio:false,scales:{y:{min:6.2,max:7.6}}}});
+ mk('cAn',{type:'bar',data:{labels:['Elara','Emkay','Jefferies','Motilal','CMP'],datasets:[{label:L({en:'Target price ₹',ta:'இலக்கு விலை ₹'}),data:[635,550,530,480,408],backgroundColor:['#1f9d55','#1f9d55','#14928a','#1f9d55','#f07c1b']}]},options:{maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{y:{beginAtZero:true}}}});
+}
+
+/* ---------- business model SVG ---------- */
+var BM=[
+ {id:'cu',x:15,y:190,w:140,h:130,c:'#fff1df',s:'#f07c1b',t:['Customers','70.97 lakh policies','H1 · −2.25%'],
+  d:{en:'<b>Who buys:</b> individuals (savings, pension, term cover) and groups (employers, government schemes, gratuity and superannuation funds). 70.97 lakh individual policies were sold in H1, 2.25% fewer than last year, but each policy is bigger.',ta:'<b>யார் வாங்குறாங்க:</b> தனிநபர்கள் (சேமிப்பு, ஓய்வூதியம், டேர்ம் கவர்), குரூப்கள் (நிறுவனங்கள், அரசு திட்டங்கள், கிராஜுவிட்டி, சூப்பரானுவேஷன் ஃபண்ட்). H1-ல 70.97 லட்சம் தனிநபர் பாலிசி விற்றாங்க, போன வருஷத்தை விட 2.25% குறைவு, ஆனா ஒவ்வொரு பாலிசியும் பெருசு.'}},
+ {id:'ag',x:185,y:60,w:150,h:90,c:'#ffe2c2',s:'#f07c1b',t:['Agents','~92% of ind. NBP†','core channel'],
+  d:{en:'<b>Agency:</b> LIC\'s lakhs of agents remain its engine. With banca &amp; alternates at 7.53% of individual new-business premium, agents and direct sales bring roughly the remaining 92% (derived).',ta:'<b>ஏஜென்சி:</b> LIC-யோட லட்சக்கணக்கான ஏஜெண்ட்கள் தான் இன்ஜின். பேங்கா &amp; மாற்று வழிகள் 7.53% என்பதால, மீதி ~92% ஏஜெண்ட்களும் நேரடி விற்பனையும் (கணக்கிட்டது).'}},
+ {id:'bn',x:185,y:215,w:150,h:90,c:'#e4eefa',s:'#2f6fb5',t:['Banca & alternates','7.53% of ind. NBP','▲ from 7.12%'],
+  d:{en:'<b>Banks &amp; others:</b> IDBI (largest), RBL Bank and Yes Bank (new), plus brokers and corporate agents. Small but growing; the RBL and Yes tie-ups should show from H2 FY27.',ta:'<b>வங்கிகள் &amp; மற்றவை:</b> IDBI (பெரியது), RBL, யெஸ் பேங்க் (புதுசு), புரோக்கர், கார்ப்பரேட் ஏஜெண்ட். சின்னது ஆனா வளருது; RBL, யெஸ் பலன் H2 FY27-லிருந்து.'}},
+ {id:'dg',x:185,y:370,w:150,h:90,c:'#e3f6ea',s:'#1f9d55',t:['Group sales & digital','70.45% group share','direct to employers'],
+  d:{en:'<b>Group &amp; direct:</b> LIC holds 70.45% of the group market. Employers and government schemes hand over large single premiums to manage.',ta:'<b>குரூப் &amp; நேரடி:</b> குரூப் சந்தையில LIC-க்கு 70.45% பங்கு. நிறுவனங்களும் அரசு திட்டங்களும் பெரிய சிங்கிள் பிரீமியத்தை நிர்வகிக்க கொடுக்குறாங்க.'}},
+ {id:'lic',x:370,y:170,w:170,h:170,c:'url(#gor)',s:'#c95d06',t:['LIC','Premium ₹2.74 L cr','H1 FY27'],dark:1,
+  d:{en:'<b>LIC (the insurer):</b> collects premium, promises future payments, sets aside reserves and invests the money. Total premium in H1 was ₹2,74,269 crore (+11.6%).',ta:'<b>LIC (இன்ஷ்யூரர்):</b> பிரீமியம் வசூலிக்குது, எதிர்கால பணம் கொடுப்பதா வாக்குறுதி, ரிசர்வ் வைச்சு முதலீடு பண்ணுது. H1 மொத்த பிரீமியம் ₹2,74,269 கோடி (+11.6%).'}},
+ {id:'par',x:575,y:25,w:175,h:90,c:'#ffd9b0',s:'#f07c1b',t:['Individual Par','65.98% of ind. APE','margin ~12–14%'],
+  d:{en:'<b>Participating (with-profit) policies:</b> customers share 90% of profits as bonus; shareholders get up to 10%. Low margin for shareholders but huge stable volume. Par share of individual APE rose to 65.98% in H1.',ta:'<b>பார்டிசிபேட்டிங் (லாபப் பங்கு) பாலிசிகள்:</b> லாபத்துல 90% பாலிசிதாரருக்கு போனஸா; 10% வரை பங்குதாரருக்கு. பங்குதாரருக்கு குறைந்த மார்ஜின், ஆனா பெரிய நிலையான வால்யூம். H1-ல பார் பங்கு 65.98%.'}},
+ {id:'np',x:575,y:135,w:175,h:90,c:'#c8f0d6',s:'#1f9d55',t:['Individual Non-par','₹5,861 cr APE','34.03% · margin ~40–49%'],
+  d:{en:'<b>Non-participating (guaranteed, ULIP, annuity, term):</b> all profit goes to shareholders, so margins are several times par. Non-par APE fell 6% in H1 (ULIPs weak in subdued markets); share now 34.03% vs 36.31%.',ta:'<b>நான்-பார்டிசிபேட்டிங் (கியாரண்டி, ULIP, ஆனுவிட்டி, டேர்ம்):</b> முழு லாபமும் பங்குதாரருக்கு, அதனால மார்ஜின் பாரை விட பல மடங்கு. H1-ல நான்-பார் APE 6% இறங்கியது (சந்தை மந்தத்துல ULIP பலவீனம்); பங்கு 34.03% (முன்பு 36.31%).'}},
+ {id:'gp',x:575,y:245,w:175,h:90,c:'#d6e6fa',s:'#2f6fb5',t:['Group business','₹13,472 cr APE · +13.6%','43.89% of APE'],
+  d:{en:'<b>Group:</b> fund management for employers (gratuity, leave encashment, superannuation) and group term cover. Group premium grew 19.6% in H1. Thin margins (~11%) but large money.',ta:'<b>குரூப்:</b> நிறுவனங்களுக்கான ஃபண்ட் நிர்வாகம் (கிராஜுவிட்டி, லீவ் என்கேஷ்மென்ட், சூப்பரானுவேஷன்), குரூப் டேர்ம். H1-ல குரூப் பிரீமியம் 19.6% வளர்ச்சி. மெல்லிய மார்ஜின் (~11%), பெரிய பணம்.'}},
+ {id:'pt',x:575,y:355,w:175,h:90,c:'#efe1fa',s:'#7b4bb7',t:['Protection (term)','APE +58.6%','small base'],
+  d:{en:'<b>Protection:</b> pure risk cover — the highest-margin product. Individual protection APE grew 58.59% in H1, though it is still a small slice of LIC.',ta:'<b>பாதுகாப்பு:</b> தூய ரிஸ்க் கவர் — அதிக மார்ஜின் பிராடக்ட். H1-ல தனிநபர் பாதுகாப்பு APE 58.59% வளர்ந்துச்சு, ஆனா இன்னும் சின்ன பங்கு தான்.'}},
+ {id:'rv',x:790,y:40,w:195,h:110,c:'#fff1df',s:'#f07c1b',t:['Revenue','Premium + investment','income ₹2.63 L cr (Q2)'],
+  d:{en:'<b>Revenue:</b> premiums plus investment income (interest, dividends, gains). Q2 total income was ₹2,62,739 crore, up 9.7%.',ta:'<b>வருவாய்:</b> பிரீமியம் + முதலீட்டு வருமானம் (வட்டி, டிவிடெண்ட், லாபம்). Q2 மொத்த வருமானம் ₹2,62,739 கோடி, 9.7% ஏற்றம்.'}},
+ {id:'cs',x:790,y:180,w:195,h:110,c:'#fde6e5',s:'#d64541',t:['Costs','Claims, reserves, opex','expense ratio 10.41%'],
+  d:{en:'<b>Costs:</b> claims and maturities, money put into reserves for future promises, commission and operating cost. Expense ratio fell to 10.41% from 11.28%. Q2 total expenses ₹2,52,116 crore.',ta:'<b>செலவுகள்:</b> க்ளெய்ம், மெச்சூரிட்டி, எதிர்கால வாக்குறுதிக்கான ரிசர்வ், கமிஷன், இயக்க செலவு. செலவு விகிதம் 11.28%-லிருந்து 10.41%. Q2 மொத்த செலவு ₹2,52,116 கோடி.'}},
+ {id:'pf',x:790,y:320,w:195,h:120,c:'#e3f6ea',s:'#1f9d55',t:['Profit ₹12,076 cr (Q2)','→ Shareholders (Govt 90%)','→ Policyholder bonus'],
+  d:{en:'<b>Profit split:</b> Q2 PAT ₹12,076 crore (+20%). Shareholders (Government 90%, public 10%) get non-par profits and up to 10% of par surplus; the remaining par surplus goes to policyholders as bonus.',ta:'<b>லாப பகிர்வு:</b> Q2 லாபம் ₹12,076 கோடி (+20%). பங்குதாரர்களுக்கு (அரசு 90%, பொது 10%) நான்-பார் லாபமும் பார் சர்ப்ளஸ்ல 10% வரையும்; மீதி பார் சர்ப்ளஸ் பாலிசிதாரருக்கு போனஸா.'}},
+ {id:'iv',x:370,y:440,w:380,h:90,c:'#e4eefa',s:'#2f6fb5',t:['Investment float — AUM ₹59.6 lakh crore','Govt bonds · corporate bonds · equities · loans','policyholder yield 8.67%'],
+  d:{en:'<b>The float:</b> premiums are invested until claims fall due — mostly government securities, plus corporate bonds, equities and loans. This is where higher bond yields directly help.',ta:'<b>ஃப்ளோட்:</b> க்ளெய்ம் வரும் வரை பிரீமியம் முதலீடா இருக்கும் — பெரும்பாலும் அரசு பத்திரங்கள், கார்ப்பரேட் பாண்ட், பங்குகள், கடன்கள். அதிக பாண்ட் ஈல்ட் நேரடியா உதவுறது இங்கே தான்.'}}
+];
+function drawBM(){
+ var s=document.getElementById('bmsvg');
+ var h='<defs><linearGradient id="gor" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ffb163"/><stop offset="1" stop-color="#e06a0c"/></linearGradient><marker id="am" markerWidth="9" markerHeight="9" refX="7" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7" fill="#c95d06"/></marker></defs>';
+ var L2=[[155,255,185,105],[155,255,185,260],[155,255,185,415],[335,105,370,220],[335,260,370,255],[335,415,370,300],[540,215,575,70],[540,240,575,180],[540,270,575,290],[540,300,575,400],[750,70,790,95],[750,180,790,95],[750,290,790,95],[750,400,790,95],[887,150,887,180],[887,290,887,320]];
+ L2.forEach(function(a){h+='<line x1="'+a[0]+'" y1="'+a[1]+'" x2="'+a[2]+'" y2="'+a[3]+'" stroke="#e08a3c" stroke-width="2.2" class="flow" marker-end="url(#am)"/>';});
+ h+='<path d="M455,340 L455,440" stroke="#2f6fb5" stroke-width="2.2" class="flow" marker-end="url(#am)"/><path d="M750,485 L985,485 L985,110" fill="none" stroke="#2f6fb5" stroke-width="2.2" stroke-dasharray="4 5" class="flow" marker-end="url(#am)"/>';
+ BM.forEach(function(b){h+='<g class="box" data-id="'+b.id+'"><rect x="'+b.x+'" y="'+b.y+'" width="'+b.w+'" height="'+b.h+'" rx="14" fill="'+b.c+'" stroke="'+b.s+'" stroke-width="2"/>';var cy=b.y+b.h/2-((b.t.length-1)*9);b.t.forEach(function(t,i){h+='<text x="'+(b.x+b.w/2)+'" y="'+(cy+i*19)+'" text-anchor="middle" font-size="'+(i===0?(b.id==='lic'?26:14):11.5)+'" font-weight="'+(i===0?800:500)+'" fill="'+(b.dark?'#fff':'#3b2a1a')+'">'+t+'</text>';});h+='</g>';});
+ s.innerHTML=h;
+ s.querySelectorAll('.box').forEach(function(g){g.onclick=function(){s.querySelectorAll('.box').forEach(function(x){x.classList.remove('sel');});g.classList.add('sel');var b=BM.filter(function(z){return z.id===g.dataset.id;})[0];document.getElementById('bmx').innerHTML='<h4>'+b.t[0]+'</h4>'+L(b.d);};});
+}
+
+/* ---------- insurance code ---------- */
+var CODEP=[
+ {c:'PSU',p:{en:'Owner',ta:'உரிமையாளர்'},m:{en:'Government-owned insurer (Government of India holds 90%)',ta:'அரசு உரிமை இன்ஷ்யூரர் (இந்திய அரசு 90%)'}},
+ {c:'–',sep:1},
+ {c:'P',p:{en:'Product mix',ta:'பிராடக்ட் கலவை'},m:{en:'Par-heavy: participating policies are more than half of individual APE (65.98%)',ta:'பார் அதிகம்: தனிநபர் APE-ல பாதிக்கு மேல பார்டிசிபேட்டிங் (65.98%)'}},
+ {c:'(N)',p:{en:'Product mix',ta:'பிராடக்ட் கலவை'},m:{en:'Non-par is a secondary but meaningful line (20–49%): 34.03% of individual APE',ta:'நான்-பார் இரண்டாம் நிலை ஆனா முக்கியமானது (20–49%): 34.03%'}},
+ {c:'–',sep:1},
+ {c:'AG',p:{en:'Channel',ta:'விற்பனை வழி'},m:{en:'Agency-led: agents bring over 60% of individual new business (~92%)',ta:'ஏஜென்சி முக்கியம்: தனிநபர் புது பிசினஸ்ல 60%-க்கு மேல ஏஜெண்ட்கள் (~92%)'}},
+ {c:'–',sep:1},
+ {c:'IG',p:{en:'Book',ta:'புக்'},m:{en:'Both individual and group are large: group is 43.89% of APE (≥40% flags G)',ta:'தனிநபர், குரூப் ரெண்டும் பெருசு: குரூப் APE-ல 43.89% (≥40% என்றால் G)'}},
+ {c:'·',sep:1},
+ {c:'S+',p:{en:'Flag',ta:'கொடி'},m:{en:'Solvency ratio at or above 2.0x (LIC: 2.35x vs 1.5x minimum)',ta:'சால்வென்சி 2.0x அல்லது அதற்கு மேல் (LIC: 2.35x; குறைந்தபட்சம் 1.5x)'}},
+ {c:'DSII',p:{en:'Flag',ta:'கொடி'},m:{en:'Domestic systemically important insurer — extra supervision (IRDAI retained LIC on the list)',ta:'உள்நாட்டு முக்கிய அமைப்பு இன்ஷ்யூரர் — கூடுதல் கண்காணிப்பு (IRDAI பட்டியலில் LIC தொடருது)'}},
+ {c:'MS',p:{en:'Flag',ta:'கொடி'},m:{en:'Market leader with ≥50% of first-year premium (LIC: 58.77% in H1)',ta:'முதல் வருட பிரீமியத்துல ≥50% பங்குடன் முன்னிலை (LIC: H1-ல 58.77%)'}}
+];
+var CODETAB=[
+ [{en:'Owner',ta:'உரிமையாளர்'},'PSU',{en:'Government-owned',ta:'அரசு உரிமை'}],['','BNK',{en:'Bank-promoted (bank parent)',ta:'வங்கி தொடங்கியது'}],['','PVT',{en:'Other private / foreign-owned',ta:'மற்ற தனியார் / வெளிநாட்டு'}],
+ [{en:'Product mix',ta:'பிராடக்ட் கலவை'},'P',{en:'Participating (with-profit)',ta:'பார்டிசிபேட்டிங்'}],['','N',{en:'Non-par savings (guaranteed)',ta:'நான்-பார் சேமிப்பு (கியாரண்டி)'}],['','U',{en:'ULIP-led',ta:'ULIP முக்கியம்'}],['','R',{en:'Protection / term-led',ta:'பாதுகாப்பு / டேர்ம்'}],['','A',{en:'Annuity-led',ta:'ஆனுவிட்டி'}],
+ [{en:'Channel',ta:'விற்பனை வழி'},'AG',{en:'Agency >60%',ta:'ஏஜென்சி >60%'}],['','BA',{en:'Bancassurance >60%',ta:'பேங்கஷ்யூரன்ஸ் >60%'}],['','DG',{en:'Digital / direct',ta:'டிஜிட்டல் / நேரடி'}],['','MX',{en:'Mixed — no channel >60%',ta:'கலப்பு'}],
+ [{en:'Book',ta:'புக்'},'I',{en:'Individual-led',ta:'தனிநபர் முக்கியம்'}],['','G',{en:'Group ≥40% of APE',ta:'குரூப் APE-ல ≥40%'}],
+ [{en:'Flags',ta:'கொடிகள்'},'S+',{en:'Solvency ≥2.0x',ta:'சால்வென்சி ≥2.0x'}],['','DSII',{en:'Systemically important',ta:'முக்கிய அமைப்பு'}],['','MS',{en:'≥50% first-year premium share',ta:'≥50% முதல் வருட பிரீமியம் பங்கு'}],['','SUB',{en:'Listed subsidiary value',ta:'லிஸ்டட் துணை நிறுவன மதிப்பு'}]
+];
+function drawCode(){
+ var h='';CODEP.forEach(function(p,i){if(p.sep)h+='<span style="color:#c9a27b"> '+p.c+' </span>';else h+='<span class="pcc" tabindex="0" data-i="'+i+'">'+p.c+'</span>';});
+ var el=document.getElementById('liccode');el.innerHTML=h;
+ el.querySelectorAll('.pcc').forEach(function(s){var p=CODEP[s.dataset.i];var f=function(e){showTip(e,'<b>'+p.c+'</b> = '+L(p.p)+'<br>'+L(p.m));};s.onmouseenter=f;s.onfocus=f;s.onclick=f;s.onmouseleave=hideTip;s.onblur=hideTip;});
+ var t='<table><tr><th>Part</th><th>Code</th><th>Meaning</th></tr>';CODETAB.forEach(function(r){t+='<tr><td>'+(r[0]?'<b>'+L(r[0])+'</b>':'')+'</td><td><b>'+r[1]+'</b></td><td>'+L(r[2])+'</td></tr>';});document.getElementById('codetable').innerHTML=t+'</table>';
+}
+var tip=document.getElementById('tip');
+function showTip(e,html){tip.innerHTML=html;tip.style.display='block';var r=(e.target||e.srcElement).getBoundingClientRect();var x=Math.min(r.left,window.innerWidth-310);tip.style.left=Math.max(6,x)+'px';tip.style.top=(r.bottom+8)+'px';}
+function hideTip(){tip.style.display='none';}
+
+/* glossary */
+function ic(sh,col){var m={bar:'<rect x="8" y="28" width="9" height="18" /><rect x="22" y="18" width="9" height="28"/><rect x="36" y="8" width="9" height="38"/>',pie:'<circle cx="27" cy="27" r="19" fill="none" stroke-width="8" stroke="'+col+'" stroke-dasharray="80 120"/>',shield:'<path d="M27 6 L45 13 V27 C45 38 37 45 27 49 C17 45 9 38 9 27 V13 Z"/>',coin:'<circle cx="27" cy="27" r="19"/><text x="27" y="33" text-anchor="middle" font-size="18" fill="#fff" font-weight="800">₹</text>',loop:'<path d="M14 27 a13 13 0 1 1 13 13" fill="none" stroke="'+col+'" stroke-width="6"/><path d="M22 40 l6 -6 l1 9z"/>',scale:'<rect x="25" y="10" width="4" height="34"/><rect x="8" y="16" width="38" height="4"/><circle cx="12" cy="30" r="7"/><circle cx="42" cy="30" r="7"/>',bank:'<path d="M6 20 L27 8 L48 20 Z"/><rect x="10" y="22" width="5" height="18"/><rect x="24" y="22" width="5" height="18"/><rect x="38" y="22" width="5" height="18"/><rect x="6" y="42" width="42" height="5"/>',book:'<rect x="10" y="8" width="34" height="40" rx="3"/><rect x="16" y="16" width="22" height="3" fill="#fff"/><rect x="16" y="24" width="22" height="3" fill="#fff"/>'};return '<svg viewBox="0 0 54 54" width="54" height="54" fill="'+col+'">'+(m[sh]||m.bar)+'</svg>';}
+var GL=[
+ ['APE','bar','#f07c1b',{en:'Annualised Premium Equivalent',ta:'வருடாந்திர பிரீமியம் சமமான அளவு'},{en:'Regular premium + 10% of single premium. Fair way to measure new business.',ta:'ரெகுலர் பிரீமியம் + சிங்கிள் பிரீமியத்தோட 10%. புது பிசினஸை சரியா அளக்கும் வழி.'},'H1: ₹30,696 cr (+5.7%)'],
+ ['VNB','coin','#1f9d55',{en:'Value of New Business',ta:'புது பிசினஸ் மதிப்பு'},{en:'Present value of future profits from policies sold in the period, after cost of capital. Like the "profit locked in" at the time of sale.',ta:'இந்த காலத்துல விற்ற பாலிசிகளோட எதிர்கால லாபத்தோட இன்றைய மதிப்பு. விற்கும்போதே "லாக் ஆன லாபம்" மாதிரி.'},'H1: ₹6,846 cr (+34%)'],
+ ['VNB margin','pie','#1f9d55',{en:'VNB ÷ APE',ta:'VNB ÷ APE'},{en:'How many paise of value each rupee of new business creates. LIC 22.3% vs 17.6%.',ta:'ஒவ்வொரு ரூபாய் புது பிசினஸும் எத்தனை பைசா மதிப்பு உருவாக்குது. LIC 22.3% (முன்பு 17.6%).'},'H1: 22.3%'],
+ ['IEV / EV','book','#2f6fb5',{en:'Indian Embedded Value',ta:'இந்திய எம்பெடட் மதிப்பு'},{en:'Net worth + present value of profits from the policies already on the books. The insurer\'s "intrinsic value".',ta:'நிகர மதிப்பு + ஏற்கனவே உள்ள பாலிசிகளோட எதிர்கால லாப மதிப்பு. இன்ஷ்யூரரோட "உள்ளார்ந்த மதிப்பு".'},'₹7,97,378 cr (−1.95% YoY)'],
+ ['Par','scale','#f07c1b',{en:'Participating policy',ta:'பார்டிசிபேட்டிங் பாலிசி'},{en:'Policyholder shares in profits via bonus (90:10 split with shareholders).',ta:'பாலிசிதாரர் போனஸா லாபத்துல பங்கு பெறுவார் (பங்குதாரருடன் 90:10).'},'65.98% of ind. APE'],
+ ['Non-par','shield','#1f9d55',{en:'Non-participating policy',ta:'நான்-பார்டிசிபேட்டிங் பாலிசி'},{en:'Fixed/guaranteed or market-linked benefits; all profit to shareholders, so margin is much higher.',ta:'நிலையான/கியாரண்டி அல்லது சந்தை சார்ந்த பலன்; முழு லாபமும் பங்குதாரருக்கு, அதனால மார்ஜின் அதிகம்.'},'34.03% of ind. APE'],
+ ['ULIP','bar','#7b4bb7',{en:'Unit Linked Insurance Plan',ta:'யூனிட் லிங்க்டு இன்ஷ்யூரன்ஸ் திட்டம்'},{en:'Insurance + market investment; sales follow stock-market mood.',ta:'இன்ஷ்யூரன்ஸ் + சந்தை முதலீடு; விற்பனை ஷேர் சந்தை மனநிலையைப் பின்பற்றும்.'},'weak in Q2'],
+ ['FYP / Renewal / Single','loop','#f07c1b',{en:'Three kinds of premium',ta:'மூணு வகை பிரீமியம்'},{en:'First-year = first payment on new regular policy; Renewal = later years; Single = one-time lump sum.',ta:'முதல் வருடம் = புது பாலிசியோட முதல் கட்டணம்; ரினியூவல் = அடுத்த வருடங்கள்; சிங்கிள் = ஒரே தொகை.'},'Q2: ₹10,432 / ₹68,375 / ~₹68,211 cr'],
+ ['Persistency','loop','#2f6fb5',{en:'Do customers keep paying?',ta:'வாடிக்கையாளர் தொடர்ந்து கட்டுறாங்களா?'},{en:'% of policies still paying after 13, 25, 37, 49, 61 months. Low persistency = lost future profit.',ta:'13, 25, 37, 49, 61 மாதங்களுக்கு அப்புறமும் கட்டும் பாலிசி %. குறைவு = எதிர்கால லாப இழப்பு.'},'13th 74.69% · 61st 61.03%'],
+ ['Solvency ratio','shield','#2f6fb5',{en:'Capital cushion',ta:'மூலதன மெத்தை'},{en:'Available capital ÷ required capital. IRDAI minimum 1.5x.',ta:'இருக்கும் மூலதனம் ÷ தேவையான மூலதனம். IRDAI குறைந்தபட்சம் 1.5x.'},'2.35x'],
+ ['Expense ratio','pie','#d64541',{en:'Cost per premium rupee',ta:'ஒவ்வொரு பிரீமியம் ரூபாய்க்கும் செலவு'},{en:'Operating expenses + commission ÷ premium. Lower is better.',ta:'இயக்க செலவு + கமிஷன் ÷ பிரீமியம். குறைவா இருந்தா நல்லது.'},'10.41% (11.28%)'],
+ ['AUM','coin','#2f6fb5',{en:'Assets Under Management',ta:'நிர்வாகத்தில் உள்ள சொத்து'},{en:'All money invested on behalf of policyholders and shareholders.',ta:'பாலிசிதாரர், பங்குதாரர் சார்பா முதலீடு செய்த மொத்த பணம்.'},'₹59.61 lakh cr'],
+ ['Bancassurance','bank','#14928a',{en:'Selling insurance through banks',ta:'வங்கிகள் மூலம் இன்ஷ்யூரன்ஸ் விற்பனை'},{en:'Bank branches sell the insurer\'s policies for a commission. "Open architecture" = a bank can tie up with several insurers.',ta:'வங்கி கிளைகள் கமிஷனுக்கு பாலிசி விக்கும். "ஓபன் ஆர்கிடெக்சர்" = ஒரு வங்கி பல இன்ஷ்யூரர்களுடன் இணையலாம்.'},'7.53% of ind. NBP (with alternates)'],
+ ['Group business','bank','#2f6fb5',{en:'Policies for organisations',ta:'நிறுவனங்களுக்கான பாலிசிகள்'},{en:'Employer gratuity, superannuation and group term schemes. Large volume, thin margin.',ta:'நிறுவன கிராஜுவிட்டி, சூப்பரானுவேஷன், குரூப் டேர்ம். பெரிய அளவு, மெல்லிய மார்ஜின்.'},'Group APE ₹13,472 cr'],
+ ['Surrender value','scale','#e0a100',{en:'Money back if you quit early',ta:'முன்கூட்டியே நிறுத்தினா திரும்ப வரும் பணம்'},{en:'IRDAI rules (Oct 2024) raised the special surrender value payable from the first year.',ta:'IRDAI விதிகள் (அக் 2024) முதல் வருஷத்திலிருந்தே சிறப்பு சரண்டர் மதிப்பை அதிகமாக்கியது.'},'—'],
+ ['Ind AS 117 / CSM','book','#7b4bb7',{en:'New insurance accounting',ta:'புது இன்ஷ்யூரன்ஸ் கணக்கியல்'},{en:'Profits are released over the policy life through a Contractual Service Margin (CSM) instead of mostly at sale. Profits may look lower and more volatile at transition.',ta:'லாபம் விற்கும்போதே இல்லாம, பாலிசி வாழ்நாள் முழுக்க CSM மூலமா வெளிவரும். மாற்றத்தின்போது லாபம் குறைவா, ஏற்ற இறக்கமா தெரியலாம்.'},'transition from Apr 2026'],
+ ['P/EV','scale','#f07c1b',{en:'Price ÷ Embedded Value',ta:'விலை ÷ எம்பெடட் மதிப்பு'},{en:'The insurer version of price-to-book. Below 1x = market values it below intrinsic value.',ta:'இன்ஷ்யூரருக்கான பிரைஸ்-டு-புக். 1x-க்கு கீழே = உள்ளார்ந்த மதிப்புக்கு கீழே சந்தை மதிப்பு.'},'~0.65x'],
+ ['Yield on investments','bar','#2f6fb5',{en:'Return on the investment book',ta:'முதலீட்டு புக்கோட வருமானம்'},{en:'Interest/dividend income ÷ invested assets, excluding unrealised gains.',ta:'வட்டி/டிவிடெண்ட் ÷ முதலீட்டு சொத்து (உணராத லாபம் தவிர).'},'8.67% (8.90%)']
+];
+/* ---------- animated dictionary ---------- */
+function A0(b,d){return '<animate attributeName="opacity" from="0" to="1" begin="'+b+'s" dur="'+(d||.5)+'s" fill="freeze"/>';}
+function AT(v,b){return '<animate attributeName="opacity" to="'+v+'" begin="'+b+'s" dur=".5s" fill="freeze"/>';}
+function MV(dx,dy,b,d){return '<animateTransform attributeName="transform" type="translate" from="0 0" to="'+dx+' '+dy+'" begin="'+b+'s" dur="'+(d||1)+'s" fill="freeze"/>';}
+function GR(y0,h0,y1,h1,b,d){d=d||1;return '<animate attributeName="y" from="'+y0+'" to="'+y1+'" begin="'+b+'s" dur="'+d+'s" fill="freeze"/><animate attributeName="height" from="'+h0+'" to="'+h1+'" begin="'+b+'s" dur="'+d+'s" fill="freeze"/>';}
+function TX(x,y,s,o){o=o||{};return '<text x="'+x+'" y="'+y+'" text-anchor="'+(o.a||'middle')+'" font-size="'+(o.z||11)+'" font-weight="'+(o.w||600)+'" fill="'+(o.c||'#3b2a1a')+'"'+(o.b!=null?' opacity="0"':'')+'>'+L(s)+(o.b!=null?A0(o.b):'')+'</text>';}
+function RC(x,y,w,h,f,o){o=o||{};return '<rect x="'+x+'" y="'+y+'" width="'+w+'" height="'+h+'" rx="'+(o.r!=null?o.r:5)+'" fill="'+f+'"'+(o.s?' stroke="'+o.s+'" stroke-width="1.5"':'')+(o.b!=null?' opacity="0"':'')+(o.d?' stroke-dasharray="4 3"':'')+'>'+(o.b!=null?A0(o.b):'')+(o.in||'')+'</rect>';}
+function CAP(list){return list.map(function(c){return '<text x="160" y="16" text-anchor="middle" font-size="12" font-weight="800" fill="#a14c05" opacity="0">'+L(c[0])+A0(c[1],.4)+(c[2]?'<animate attributeName="opacity" from="1" to="0" begin="'+c[2]+'s" dur=".3s" fill="freeze"/>':'')+'</text>';}).join('');}
+function RES(s,b){return '<text x="160" y="164" text-anchor="middle" font-size="11.5" font-weight="800" fill="#1f6d3c" opacity="0">'+L(s)+A0(b)+'</text>';}
+function COIN(x,y,r,f,b,lab){return '<g opacity="0">'+A0(b)+'<circle cx="'+x+'" cy="'+y+'" r="'+r+'" fill="'+f+'"/><text x="'+x+'" y="'+(y+4)+'" text-anchor="middle" font-size="10" font-weight="800" fill="#fff">'+(lab||'₹')+'</text></g>';}
+var O='#f07c1b',B='#2f6fb5',G='#1f9d55',RD='#d64541',P='#7b4bb7',AM='#e0a100',TL='#14928a';
+var ANIM={
+ APE:function(){var s='';for(var i=1;i<10;i++)s+='<rect x="150" y="'+(40+i*9)+'" width="70" height="9" fill="'+B+'" stroke="#fff">'+AT(.25,2.9)+'</rect>';
+  s+='<rect x="150" y="40" width="70" height="9" fill="'+B+'" stroke="#fff"><animate attributeName="fill" to="'+AM+'" begin="1s" dur=".4s" fill="freeze"/>'+MV(-130,41,1.8,1.1)+'</rect>';
+  return CAP([[{en:'1. Two kinds of premium',ta:'1. இரண்டு வகை பிரீமியம்'},0,1],[{en:'2. Cut 10% of the single premium',ta:'2. சிங்கிள் பிரீமியத்தில் 10% எடு'},1,2.8],[{en:'3. Add it to regular premium = APE',ta:'3. ரெகுலருடன் சேர் = APE'},2.8]])+
+  RC(20,90,70,40,O)+TX(55,114,'₹100',{c:'#fff',w:800})+TX(55,146,{en:'Regular / yr',ta:'ரெகுலர் / வருடம்'})+TX(118,98,'+',{z:20,w:800})+s+TX(185,146,{en:'Single ₹1,000',ta:'சிங்கிள் ₹1,000'})+TX(185,74,'10%',{c:'#fff',w:800,b:1.1})+
+  '<path d="M14,78 L14,134" stroke="'+G+'" stroke-width="3" opacity="0">'+A0(3)+'</path>'+TX(258,100,{en:'APE',ta:'APE'},{z:16,w:900,c:G,b:3})+TX(258,118,'₹200',{z:16,w:900,c:G,b:3.2})+RES({en:'APE = 100 + 10% × 1,000 = ₹200',ta:'APE = 100 + 1,000-ல் 10% = ₹200'},3.4);},
+ VNB:function(){var xs=[80,115,150,185,220],rs=[12,10.5,9,7.5,6],s='';xs.forEach(function(x,i){s+='<g opacity="0">'+A0(.6+i*.3)+'<circle cx="'+x+'" cy="95" r="12" fill="'+G+'"><animate attributeName="r" to="'+rs[i]+'" begin="2.6s" dur=".8s" fill="freeze"/></circle>'+MV(283-x,-20,3.8,1)+'<animate attributeName="opacity" to="0" begin="4.6s" dur=".3s" fill="freeze"/></g>'+TX(x,130,'Y'+(i+1),{z:10});});
+  return CAP([[{en:'1. A policy earns profit every year',ta:'1. பாலிசி ஒவ்வொரு வருடமும் லாபம் தரும்'},0,2.4],[{en:'2. Future rupees are worth less today',ta:'2. எதிர்கால ரூபாய் இன்று குறைவு மதிப்பு'},2.4,3.6],[{en:'3. Add them up today = VNB',ta:'3. இன்றைய மதிப்பில் கூட்டு = VNB'},3.6]])+
+  RC(8,70,52,46,O)+TX(34,97,{en:'Policy',ta:'பாலிசி'},{c:'#fff',w:800})+'<line x1="66" y1="115" x2="235" y2="115" stroke="#c9a27b" stroke-width="2"/>'+s+RC(255,50,58,50,'#0f6b37',{b:3.4})+TX(284,80,'VNB',{c:'#fff',w:900,z:14,b:3.6})+RES({en:'VNB = today\'s value of all future profits',ta:'VNB = எதிர்கால லாபங்களின் இன்றைய மதிப்பு'},4.2);},
+ 'VNB margin':function(){return CAP([[{en:'1. ₹100 of new business (APE)',ta:'1. ₹100 புது பிசினஸ் (APE)'},0,1],[{en:'2. Value created inside it (VNB)',ta:'2. அதில் உருவான மதிப்பு (VNB)'},1,2.8],[{en:'3. VNB ÷ APE = margin',ta:'3. VNB ÷ APE = மார்ஜின்'},2.8]])+
+  RC(110,40,100,100,'#ffe2c2',{s:O,r:4})+TX(160,60,'APE ₹100',{w:800})+'<rect x="110" y="140" width="100" height="0" fill="'+G+'">'+GR(140,0,117.7,22.3,1,1.4)+'</rect>'+TX(222,133,'VNB ₹22.3',{a:'start',c:G,w:800,b:2.4})+TX(160,100,'22.3%',{z:22,w:900,c:G,b:3})+RES({en:'LIC H1 FY27: 22.3% (17.6% a year ago)',ta:'LIC H1 FY27: 22.3% (முன்பு 17.6%)'},3.4);},
+ 'IEV / EV':function(){return CAP([[{en:'1. Net worth today',ta:'1. இன்றைய நிகர மதிப்பு'},0,.9],[{en:'2. Profits still to come from existing policies',ta:'2. இருக்கும் பாலிசிகளிலிருந்து வரவேண்டிய லாபம்'},.9,2.2],[{en:'3. Stack them = Embedded Value',ta:'3. சேர் = எம்பெடட் மதிப்பு'},2.2]])+
+  RC(60,100,80,40,B)+TX(100,124,{en:'Net worth',ta:'நிகர மதிப்பு'},{c:'#fff',w:800})+'<g opacity="0">'+A0(.9)+MV(-130,-40,2.2,1)+RC(190,60,80,80,G)+TX(230,96,{en:'Future',ta:'எதிர்கால'},{c:'#fff',w:800})+TX(230,110,{en:'profits',ta:'லாபம்'},{c:'#fff',w:800})+'</g>'+'<path d="M150,22 L156,22 L156,138 L150,138" fill="none" stroke="'+O+'" stroke-width="2.5" opacity="0">'+A0(3.2)+'</path>'+TX(165,84,'= EV',{a:'start',z:18,w:900,c:O,b:3.3})+RES({en:'LIC IEV: ₹7,97,378 cr (Sep 2026)',ta:'LIC IEV: ₹7,97,378 கோடி (செப் 2026)'},3.6);},
+ Par:function(){return CAP([[{en:'1. Par fund earns a profit',ta:'1. பார் ஃபண்ட் லாபம் ஈட்டுது'},0,1.2],[{en:'2. Profit is shared',ta:'2. லாபம் பகிரப்படுது'},1.2]])+
+  '<rect x="130" y="46" width="60" height="54" fill="'+AM+'">'+MV(-100,54,1.3,1.1)+'</rect><rect x="130" y="40" width="60" height="6" fill="#c97f00">'+MV(100,104,1.3,1.1)+'</rect>'+TX(160,76,{en:'Profit ₹100',ta:'லாபம் ₹100'},{w:800})+
+  TX(60,96,{en:'Policyholders',ta:'பாலிசிதாரர்'},{w:800,c:B,b:2.3})+TX(60,128,'₹90 '+L({en:'bonus',ta:'போனஸ்'}),{c:'#fff',w:800,b:2.4})+TX(260,135,{en:'Shareholders ₹10',ta:'பங்குதாரர் ₹10'},{w:800,c:G,b:2.4})+RES({en:'Par: up to 10% of surplus to shareholders',ta:'பார்: சர்ப்ளஸில் 10% வரை பங்குதாரருக்கு'},3);},
+ 'Non-par':function(){return CAP([[{en:'1. Customer gets a fixed, promised benefit',ta:'1. வாடிக்கையாளருக்கு நிலையான வாக்குறுதி பலன்'},0,1.2],[{en:'2. All profit goes to shareholders',ta:'2. முழு லாபமும் பங்குதாரருக்கு'},1.2]])+
+  RC(15,90,90,44,B,{b:.3})+TX(60,110,{en:'Guaranteed',ta:'கியாரண்டி'},{c:'#fff',w:800,b:.4})+TX(60,125,'₹ fixed',{c:'#fff',b:.4})+'<g>'+MV(95,40,1.4,1.1)+RC(130,40,60,50,AM)+TX(160,70,{en:'Profit',ta:'லாபம்'},{w:800})+'</g>'+TX(255,145,{en:'Shareholders 100%',ta:'பங்குதாரர் 100%'},{w:800,c:G,b:2.5})+RES({en:'So margin is high: ~40–49% vs ~12–14% for par',ta:'அதனால மார்ஜின் அதிகம்: ~40–49% (பார் ~12–14%)'},3);},
+ ULIP:function(){return CAP([[{en:'1. You pay ₹100 premium',ta:'1. ₹100 பிரீமியம் கட்டுறீங்க'},0,1],[{en:'2. Small part buys cover, most is invested',ta:'2. சிறிய பகுதி கவர், பெரும்பகுதி முதலீடு'},1,2.3],[{en:'3. Fund value moves with the market',ta:'3. ஃபண்ட் மதிப்பு சந்தையோடு மாறும்'},2.3]])+
+  '<rect x="20" y="40" width="60" height="12" fill="'+P+'">'+MV(200,-10,1.1,1)+'</rect><rect x="20" y="52" width="60" height="78" fill="'+O+'">'+MV(100,0,1.1,1)+'</rect>'+TX(50,146,'₹100',{w:800})+TX(250,52,{en:'Life cover',ta:'லைஃப் கவர்'},{w:800,c:P,b:2})+TX(150,146,{en:'Fund',ta:'ஃபண்ட்'},{w:800,c:O,b:2})+
+  '<polyline points="190,120 210,100 225,110 245,80 260,95 280,65 300,85" fill="none" stroke="'+B+'" stroke-width="3" stroke-dasharray="200" stroke-dashoffset="200"><animate attributeName="stroke-dashoffset" to="0" begin="2.4s" dur="1.6s" fill="freeze"/></polyline>'+RES({en:'ULIP sales rise and fall with market mood',ta:'ULIP விற்பனை சந்தை மனநிலையைப் பொருத்து'},3.6);},
+ 'FYP / Renewal / Single':function(){var s='',xs=[50,110,170,230,290];xs.forEach(function(x,i){s+=TX(x,148,'Y'+(i+1),{z:10});if(i)s+=COIN(x,60,13,B,.9+i*.3);else s+=COIN(x,60,13,O,.3);});
+  return CAP([[{en:'Regular policy: first payment = FYP',ta:'ரெகுலர் பாலிசி: முதல் கட்டணம் = FYP'},0,.9],[{en:'Later payments = Renewal',ta:'அடுத்த கட்டணங்கள் = ரினியூவல்'},.9,2.4],[{en:'Single: one lump sum, nothing later',ta:'சிங்கிள்: ஒரே தொகை, பிறகு இல்லை'},2.4]])+s+TX(50,85,'FYP',{w:800,c:O,b:.5})+TX(200,85,{en:'Renewal',ta:'ரினியூவல்'},{w:800,c:B,b:1.8})+RC(25,100,50,30,G,{b:2.5})+TX(50,119,{en:'Single',ta:'சிங்கிள்'},{c:'#fff',w:800,b:2.6})+
+  [110,170,230,290].map(function(x){return '<circle cx="'+x+'" cy="115" r="11" fill="none" stroke="#bbb" stroke-dasharray="3 3" opacity="0">'+A0(2.9)+'</circle>';}).join('')+RES({en:'LIC Q2: FYP ₹10,432 · Renewal ₹68,375 cr',ta:'LIC Q2: FYP ₹10,432 · ரினியூவல் ₹68,375 கோடி'},3.4);},
+ Persistency:function(){var s='',drop1=[19,9,14,4,17],drop2=[2,12,7];for(var i=0;i<20;i++){var x=45+(i%10)*25,y=i<10?65:100,a='';if(drop1.indexOf(i)>=0)a=AT(.12,1.5);if(drop2.indexOf(i)>=0)a=AT(.12,3.1);s+='<g>'+a+'<circle cx="'+x+'" cy="'+(y-6)+'" r="5" fill="'+B+'"/><rect x="'+(x-6)+'" y="'+y+'" width="12" height="12" rx="4" fill="'+B+'"/></g>';}
+  return CAP([[{en:'Start: 100 policies sold',ta:'தொடக்கம்: 100 பாலிசிகள்'},0,1.3],[{en:'After 13 months: ~75 still paying',ta:'13 மாதம் கழித்து: ~75 கட்டுறாங்க'},1.3,2.9],[{en:'After 61 months: ~61 still paying',ta:'61 மாதம் கழித்து: ~61 கட்டுறாங்க'},2.9]])+s+RES({en:'LIC: 13th month 74.69% · 61st month 61.03%',ta:'LIC: 13வது மாதம் 74.69% · 61வது 61.03%'},3.6);},
+ 'Solvency ratio':function(){return CAP([[{en:'1. Capital the rules require',ta:'1. விதிப்படி தேவையான மூலதனம்'},0,1.2],[{en:'2. Minimum allowed: 1.5x',ta:'2. குறைந்தபட்சம்: 1.5x'},1.2,2],[{en:'3. LIC actually has 2.35x',ta:'3. LIC-யிடம் இருப்பது 2.35x'},2]])+
+  '<line x1="30" y1="140" x2="300" y2="140" stroke="#999"/>'+'<rect x="60" y="140" width="60" height="0" fill="#c9a27b">'+GR(140,0,100,40,.3,.8)+'</rect>'+TX(90,94,'1.0x',{w:800,b:1})+TX(90,154,{en:'Required',ta:'தேவை'},{z:10})+
+  '<line x1="40" y1="80" x2="290" y2="80" stroke="'+RD+'" stroke-dasharray="5 4" stroke-width="2" opacity="0">'+A0(1.2)+'</line>'+TX(296,76,'1.5x min',{a:'end',c:RD,z:10,b:1.3})+'<rect x="190" y="140" width="60" height="0" fill="'+G+'">'+GR(140,0,46,94,2,1.2)+'</rect>'+TX(220,40,'2.35x',{w:900,z:14,c:G,b:3})+TX(220,154,{en:'Available',ta:'இருப்பது'},{z:10})+RES('',9);},
+ 'Expense ratio':function(){var s='';for(var i=1;i<10;i++)s+='<rect x="40" y="'+(40+i*10)+'" width="80" height="10" fill="'+O+'" stroke="#fff"/>';
+  return CAP([[{en:'1. ₹100 of premium comes in',ta:'1. ₹100 பிரீமியம் வருது'},0,1.1],[{en:'2. Commission + running costs take a slice',ta:'2. கமிஷன் + இயக்க செலவு ஒரு பங்கு'},1.1]])+s+'<rect x="40" y="40" width="80" height="10" fill="'+RD+'" stroke="#fff">'+MV(160,80,1.2,1)+'</rect>'+TX(80,152,'₹100',{w:800})+TX(240,112,{en:'Costs',ta:'செலவு'},{w:800,c:RD,b:2})+TX(240,145,'₹10.41',{w:900,c:RD,b:2.2})+RES({en:'Expense ratio 10.41% (was 11.28%) — lower is better',ta:'செலவு விகிதம் 10.41% (முன்பு 11.28%) — குறைவு நல்லது'},2.8);},
+ AUM:function(){return CAP([[{en:'Premiums flow in and are invested',ta:'பிரீமியம் உள்ளே வந்து முதலீடாகுது'},0,2],[{en:'The pool keeps growing = AUM',ta:'குளம் வளர்ந்துட்டே இருக்கும் = AUM'},2]])+
+  '<path d="M20,60 L100,60" stroke="'+O+'" stroke-width="3" class="flow"/>'+TX(55,52,{en:'Premiums',ta:'பிரீமியம்'},{z:10})+'<rect x="110" y="30" width="100" height="112" rx="6" fill="none" stroke="#7a6552" stroke-width="2"/>'+
+  '<rect x="112" y="140" width="96" height="0" fill="'+B+'">'+GR(140,0,72,68,.4,1.4)+'</rect><rect x="112" y="72" width="96" height="0" fill="'+O+'">'+GR(72,0,52,20,1.9,.7)+'</rect><rect x="112" y="52" width="96" height="0" fill="'+G+'">'+GR(52,0,40,12,2.6,.5)+'</rect>'+
+  TX(218,110,{en:'Bonds',ta:'பாண்ட்'},{a:'start',z:10,c:B,b:1.5})+TX(218,66,{en:'Equities',ta:'பங்குகள்'},{a:'start',z:10,c:O,b:2.3})+TX(218,48,{en:'Loans & others',ta:'கடன் & மற்றவை'},{a:'start',z:10,c:G,b:2.9})+RES({en:'LIC AUM ₹59.6 lakh cr (mix illustrative)',ta:'LIC AUM ₹59.6 லட்சம் கோடி (உதாரணம்)'},3.3);},
+ Bancassurance:function(){return CAP([[{en:'1. LIC gives its policies to the bank',ta:'1. LIC பாலிசிகளை வங்கிக்கு தருது'},0,1.4],[{en:'2. Bank sells them to its customers',ta:'2. வங்கி தன் வாடிக்கையாளருக்கு விக்குது'},1.4,2.6],[{en:'3. Premium to LIC, commission to bank',ta:'3. பிரீமியம் LIC-க்கு, கமிஷன் வங்கிக்கு'},2.6]])+
+  RC(15,60,70,50,O)+TX(50,90,'LIC',{c:'#fff',w:900,z:14})+RC(125,60,70,50,TL)+TX(160,90,{en:'Bank',ta:'வங்கி'},{c:'#fff',w:900,z:13})+[255,280,305].map(function(x){return '<circle cx="'+x+'" cy="75" r="7" fill="'+B+'"/><rect x="'+(x-8)+'" y="84" width="16" height="16" rx="5" fill="'+B+'"/>';}).join('')+
+  '<g>'+MV(110,0,.4,.9)+'<animateTransform attributeName="transform" type="translate" from="110 0" to="210 0" begin="1.5s" dur=".9s" fill="freeze"/>'+RC(35,40,30,16,'#fff',{s:O,r:3})+TX(50,52,{en:'Policy',ta:'பாலிசி'},{z:8})+'</g>'+
+  COIN(270,125,9,G,2.6)+'<g opacity="0">'+A0(2.7)+MV(-220,0,2.8,1)+'<circle cx="270" cy="125" r="9" fill="'+G+'"/></g>'+'<g opacity="0">'+A0(3.8)+MV(110,0,3.9,.8)+'<circle cx="50" cy="135" r="7" fill="'+AM+'"/></g>'+TX(160,150,{en:'commission',ta:'கமிஷன்'},{z:9,c:'#8a6400',b:4.4})+RES('',9);},
+ 'Group business':function(){var s='';for(var i=0;i<8;i++){var x=25+(i%4)*22,y=i<4?120:142;s+='<circle cx="'+x+'" cy="'+y+'" r="6" fill="'+B+'" opacity="0">'+A0(.3+i*.1)+'</circle>';}
+  return CAP([[{en:'1. One employer, many employees',ta:'1. ஒரு நிறுவனம், பல ஊழியர்கள்'},0,1.3],[{en:'2. One contract, one big premium to LIC',ta:'2. ஒரு ஒப்பந்தம், LIC-க்கு ஒரு பெரிய பிரீமியம்'},1.3]])+
+  RC(20,45,90,55,'#7a6552')+TX(65,77,{en:'Employer',ta:'நிறுவனம்'},{c:'#fff',w:800})+s+RC(220,50,80,60,O)+TX(260,85,'LIC',{c:'#fff',w:900,z:15})+'<g opacity="0">'+A0(1.3)+MV(105,0,1.5,1.1)+RC(110,62,50,26,G,{r:3})+TX(135,79,'₹₹₹',{c:'#fff',w:800})+'</g>'+RES({en:'LIC group APE ₹13,472 cr (H1, +13.6%)',ta:'LIC குரூப் APE ₹13,472 கோடி (H1, +13.6%)'},2.8);},
+ 'Surrender value':function(){var s='';for(var i=0;i<5;i++){var x=30+i*26;s+='<rect x="'+x+'" y="'+(70)+'" width="20" height="50" rx="3" fill="'+O+'" opacity="0">'+A0(.2+i*.2)+(i<3?MV(150-i*0,0,2.4,1):AT(.25,2.4))+'</rect>';}
+  return CAP([[{en:'1. You have paid premiums for a few years',ta:'1. சில வருடம் பிரீமியம் கட்டினீங்க'},0,1.4],[{en:'2. You stop the policy early',ta:'2. முன்கூட்டியே நிறுத்துறீங்க'},1.4,2.4],[{en:'3. You get back only a part',ta:'3. ஒரு பகுதி மட்டும் திரும்ப வரும்'},2.4]])+s+
+  '<text x="95" y="62" text-anchor="middle" font-size="26" font-weight="900" fill="'+RD+'" opacity="0">✕'+A0(1.5)+'</text>'+TX(230,140,{en:'Surrender value',ta:'சரண்டர் மதிப்பு'},{w:800,c:G,b:3.3})+TX(108,140,{en:'Charges kept',ta:'கட்டணம் கழிவு'},{z:10,c:RD,b:3.3})+RES({en:'Rules since Oct 2024 pay more from year one',ta:'அக் 2024 விதி: முதல் வருடமே அதிகம்'},3.8);},
+ 'Ind AS 117 / CSM':function(){var s='';for(var i=0;i<5;i++){var x=120+i*36;s+='<rect x="'+x+'" y="148" width="24" height="0" fill="'+G+'">'+GR(148,0,139,9,1.6+i*.35,.4)+'</rect>';}
+  return CAP([[{en:'Old way: most profit shown at sale',ta:'பழைய முறை: விற்கும்போதே பெரும்பகுதி லாபம்'},0,1.5],[{en:'Ind AS 117: same profit released over the years',ta:'Ind AS 117: அதே லாபம் வருடங்களாக வெளிவரும்'},1.5]])+
+  TX(20,62,{en:'Old',ta:'பழைய'},{a:'start',w:800})+'<rect x="120" y="75" width="24" height="0" fill="'+AM+'">'+GR(75,0,30,45,.3,.7)+'</rect>'+'<line x1="110" y1="75" x2="300" y2="75" stroke="#bbb"/>'+TX(20,140,'Ind AS',{a:'start',w:800})+'<line x1="110" y1="148" x2="300" y2="148" stroke="#bbb"/>'+s+TX(300,128,'CSM',{a:'end',w:900,c:G,b:3.4})+RES('',9);},
+ 'P/EV':function(){return CAP([[{en:'1. Value per share (EV)',ta:'1. ஒரு பங்கின் மதிப்பு (EV)'},0,1.2],[{en:'2. What the market pays',ta:'2. சந்தை கொடுக்கும் விலை'},1.2,2.4],[{en:'3. Price ÷ EV',ta:'3. விலை ÷ EV'},2.4]])+
+  '<line x1="40" y1="140" x2="280" y2="140" stroke="#999"/><rect x="80" y="140" width="60" height="0" fill="'+B+'">'+GR(140,0,40,100,.2,.9)+'</rect>'+TX(110,34,'EV ₹630',{w:800,c:B,b:1})+'<rect x="180" y="140" width="60" height="0" fill="'+O+'">'+GR(140,0,75,65,1.3,.9)+'</rect>'+TX(210,69,{en:'Price ₹408',ta:'விலை ₹408'},{w:800,c:O,b:2})+
+  '<line x1="140" y1="40" x2="240" y2="40" stroke="'+RD+'" stroke-dasharray="4 3" opacity="0">'+A0(2.4)+'</line>'+TX(255,110,'0.65x',{a:'start',z:16,w:900,c:RD,b:2.6})+RES({en:'Below 1x = market pays less than the value',ta:'1x-க்கு கீழே = மதிப்பை விட குறைவான விலை'},3.1);},
+ 'Yield on investments':function(){var s='';[0,1,2].forEach(function(i){s+='<g opacity="0">'+A0(1+i*.8)+MV(130+i*45,0,1.1+i*.8,.7)+'<circle cx="80" cy="90" r="13" fill="'+G+'"/><text x="80" y="94" text-anchor="middle" font-size="8.5" fill="#fff" font-weight="800">₹8.67</text></g>'+TX(210+i*45,125,'Y'+(i+1),{z:10,b:1.6+i*.8});});
+  return CAP([[{en:'1. ₹100 invested',ta:'1. ₹100 முதலீடு'},0,1],[{en:'2. It earns interest every year',ta:'2. ஒவ்வொரு வருடமும் வட்டி'},1]])+'<circle cx="80" cy="90" r="34" fill="'+B+'"/><text x="80" y="96" text-anchor="middle" font-size="16" font-weight="900" fill="#fff">₹100</text>'+s+RES({en:'8.67% yield = ₹8.67 a year on ₹100 (was 8.90%)',ta:'8.67% ஈல்ட் = ₹100-க்கு வருடம் ₹8.67 (முன்பு 8.90%)'},3.6);}
+};
+function drawGlossOld(){var h='';GL.forEach(function(g){h+='<div class="gl" onclick="this.classList.toggle(\'open\')">'+ic(g[1],g[2])+'<div><div class="t">'+g[0]+'</div><div class="m">'+L(g[3])+'</div><div class="lv">LIC: '+g[5]+'</div><div class="x">'+L(g[4])+'</div></div></div>';});document.getElementById('glossold').innerHTML=h;}
+function stage(k){var f=ANIM[k];return f?'<svg viewBox="0 0 320 170" class="stg">'+f()+'</svg>':'';}
+function drawGloss(){var h='';GL.forEach(function(g,i){h+='<div class="gl2" data-i="'+i+'"><div class="gh">'+ic(g[1],g[2]).replace('width="54" height="54"','width="34" height="34"')+'<div><div class="t">'+g[0]+'</div><div class="m">'+L(g[3])+'</div></div><button class="btn rp" title="Replay">▶ '+L({en:'Replay',ta:'மீண்டும்'})+'</button></div><div class="sbox">'+stage(g[0])+'</div><div class="x2">'+L(g[4])+'</div><div class="lv">LIC: '+g[5]+'</div></div>';});
+ var el=document.getElementById('gloss');el.innerHTML=h;
+ el.querySelectorAll('.gl2').forEach(function(c){c.onclick=function(){c.querySelector('.sbox').innerHTML=stage(GL[c.dataset.i][0]);};});}
+
+function apeCalc(){var r=+document.getElementById('rp').value,s=+document.getElementById('sp').value;document.getElementById('rpv').textContent=fmt(r);document.getElementById('spv').textContent=fmt(s);document.getElementById('apev').textContent='APE = ₹'+fmt(r+0.1*s);}
+
+/* ---------- financial table ---------- */
+var FT=[
+ {cat:{en:'Growth & Balance sheet',ta:'வளர்ச்சி & இருப்புநிலை'}},
+ ['Total premium income','₹2,74,269 cr','₹2,45,680 cr','+11.6%','up'],['Individual new-business premium','₹32,725 cr','₹28,491 cr','+14.9%','up'],['Group premium','₹1,13,594 cr','n/a','+19.6%','up'],['Total APE','₹30,696 cr','₹29,034 cr','+5.7%','up'],['Individual APE','₹17,224 cr','₹17,170 cr','+0.3%','fl'],['Group APE','₹13,472 cr','₹11,864 cr','+13.6%','up'],['Individual policies sold','70.97 lakh','72.61 lakh','−2.25%','dn'],['AUM','₹59,60,941 cr','₹57,22,896 cr','+4.2%','up'],['FYP market share','58.77%','n/a','—','fl'],['Individual / Group market share','37.51% / 70.45%','n/a','—','fl'],
+ {cat:{en:'Profitability',ta:'லாபத்தன்மை'}},
+ ['Profit after tax','₹25,568 cr','₹21,040 cr','+21.5%','up'],['Net VNB','₹6,846 cr','₹5,111 cr','+34.0%','up'],['VNB margin (net)','22.3%','17.6%','+470 bps','up'],['Non-par share of individual APE','34.03%','36.31%','−228 bps','dn'],['Individual protection APE','—','—','+58.6%','up'],
+ {cat:{en:'Efficiency',ta:'திறன்'}},
+ ['Expense ratio','10.41%','11.28%','−87 bps','up'],['13th-month persistency (premium)','74.69%','75.29%','−60 bps','dn'],['61st-month persistency (premium)','61.03%','63.81%','−278 bps','dn'],['Banca + alternates (% of ind. NBP)','7.53%','7.12%','+41 bps','up'],
+ {cat:{en:'Asset quality & investments',ta:'சொத்து தரம் & முதலீடுகள்'}},
+ ['Yield on policyholder funds (excl. unrealised)','8.67%','8.90%','−23 bps','dn'],['Yield on shareholder funds','6.54%','6.48%†','+6 bps','up'],['Gross NPA (% of debt book)','n/a','n/a','—','fl'],
+ {cat:{en:'Capital & Liquidity',ta:'மூலதனம் & நீர்மை'}},
+ ['Solvency ratio','2.35x','2.13x','+0.22x','up'],['Indian Embedded Value','₹7,97,378 cr','₹8,13,230 cr','−1.95%','dn'],['IEV vs Mar 2026','₹7,97,378 cr','₹7,89,185 cr','+1.04%','up'],
+ {cat:{en:'Valuation',ta:'மதிப்பீடு'}},
+ ['Share price (6 Nov 2026)','₹408','—','—','fl'],['Market cap','₹5,16,120 cr','—','—','fl'],['EV per share†','₹630','—','—','fl'],['P/EV†','0.65x','—','—','up'],['P/E TTM†','~8.3x','—','—','up']
+];
+function drawFin(){var h='<tr><th>Metric</th><th>H1 FY27</th><th>H1 FY26</th><th>Change</th></tr>';FT.forEach(function(r){if(r.cat)h+='<tr class="cat"><td colspan="4">'+L(r.cat)+'</td></tr>';else h+='<tr><td>'+r[0]+'</td><td class="n">'+r[1]+'</td><td class="n">'+r[2]+'</td><td class="n '+r[4]+'">'+r[3]+'</td></tr>';});document.getElementById('fintab').innerHTML=h;}
+
+/* ---------- bonds see-saw ---------- */
+var BS=[
+ {t:{en:'1 · Rates rise',ta:'1 · வட்டி ஏறுது'},c:'#2f6fb5',d:{en:'Inflation, oil, a global bond sell-off and an RBI hike to 5.50% pushed India\'s 10-year yield to 7.39%.',ta:'பணவீக்கம், எண்ணெய், உலக பாண்ட் விற்பனை, RBI 5.50%-க்கு உயர்த்தியது — 10 வருட ஈல்ட் 7.39%-க்கு போச்சு.'}},
+ {t:{en:'2 · Old bond prices fall',ta:'2 · பழைய பாண்ட் விலை இறங்குது'},c:'#d64541',d:{en:'A bond paying 6.5% is worth less when new bonds pay 7.4%. LIC holds most debt to maturity at cost, so this does not hit profit, but it lowers market-value measures like Embedded Value (−1.95% YoY).',ta:'புது பாண்ட் 7.4% தரும்போது 6.5% தரும் பழைய பாண்டோட மதிப்பு குறையும். LIC பெரும்பாலான கடனை மெச்சூரிட்டி வரை காஸ்ட்ல வைச்சிருக்கு, அதனால லாபம் பாதிக்காது, ஆனா EV மாதிரி சந்தை மதிப்பு அளவுகள் குறையும் (−1.95%).'}},
+ {t:{en:'3 · New money locks higher coupon',ta:'3 · புது பணம் அதிக கூப்பனில் லாக்'},c:'#1f9d55',d:{en:'Every rupee of fresh premium and maturing bonds is reinvested at ~7.4% for 10–40 years. For a ₹59.6 lakh crore book, even small improvements compound into thousands of crores a year.',ta:'ஒவ்வொரு புது பிரீமியம் ரூபாயும், மெச்சூர் ஆகும் பாண்ட் பணமும் ~7.4%-ல 10–40 வருஷத்துக்கு மறுமுதலீடு. ₹59.6 லட்சம் கோடி புக்குக்கு, சின்ன முன்னேற்றமும் வருஷத்துக்கு ஆயிரக்கணக்கான கோடியா பெருகும்.'}},
+ {t:{en:'4 · Better product pricing',ta:'4 · சிறந்த பிராடக்ட் விலை'},c:'#f07c1b',d:{en:'Guaranteed non-par savings and annuity products can offer attractive returns and still keep a healthy spread — supporting VNB margin.',ta:'கியாரண்டி நான்-பார் சேமிப்பு, ஆனுவிட்டி பிராடக்ட்கள் நல்ல ரிட்டர்ன் கொடுத்தும் நல்ல இடைவெளி வைக்க முடியும் — VNB மார்ஜினுக்கு ஆதரவு.'}},
+ {t:{en:'5 · Book yield turns',ta:'5 · புக் ஈல்ட் திரும்புது'},c:'#7b4bb7',d:{en:'Policyholder fund yield is 8.67% (from 8.90%) as old high-coupon bonds mature. Higher reinvestment rates should slow and later reverse this slide — a multi-year tailwind.',ta:'பழைய அதிக கூப்பன் பாண்டுகள் மெச்சூர் ஆவதால பாலிசிதாரர் ஃபண்ட் ஈல்ட் 8.67% (8.90%-லிருந்து). அதிக மறுமுதலீட்டு விகிதம் இந்த இறக்கத்தை குறைச்சு, பின்னாடி திருப்பும் — பல வருட சாதகம்.'}}
+];
+function drawBS(){var s=document.getElementById('bdsvg');var h='<defs><marker id="ab" markerWidth="9" markerHeight="9" refX="7" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7" fill="#555"/></marker></defs>';
+ h+='<g transform="translate(110,60)"><polygon points="-20,90 20,90 0,62" fill="#c9a27b"/><g id="saw"><rect x="-95" y="56" width="190" height="7" rx="3" fill="#7a6552"/><circle cx="-80" cy="40" r="17" fill="#d64541"/><text x="-80" y="45" text-anchor="middle" fill="#fff" font-size="11" font-weight="700">Price</text><circle cx="80" cy="40" r="17" fill="#2f6fb5"/><text x="80" y="45" text-anchor="middle" fill="#fff" font-size="11" font-weight="700">Yield</text></g></g>';
+ BS.forEach(function(b,i){var x=250+i*150;h+='<g class="box" data-i="'+i+'"><rect x="'+x+'" y="60" width="135" height="110" rx="14" fill="#fff" stroke="'+b.c+'" stroke-width="2.5"/><circle cx="'+(x+67)+'" cy="95" r="18" fill="'+b.c+'"/><text x="'+(x+67)+'" y="101" text-anchor="middle" fill="#fff" font-weight="800">'+(i+1)+'</text><text x="'+(x+67)+'" y="140" text-anchor="middle" font-size="10.5" font-weight="700">'+L(b.t).replace(/^\d · /,'').slice(0,24)+'</text></g>';if(i<4)h+='<line x1="'+(x+135)+'" y1="115" x2="'+(x+150)+'" y2="115" stroke="#555" stroke-width="2" marker-end="url(#ab)"/>';});
+ h+='<text x="500" y="230" text-anchor="middle" font-size="13" fill="#7a6552">'+L({en:'Short-term pain on paper → long-term gain in income',ta:'காகிதத்துல குறுகிய கால வலி → வருமானத்துல நீண்ட கால லாபம்'})+'</text>';
+ s.innerHTML=h;
+ var saw=s.querySelector('#saw');var a=0;if(window._sw)clearInterval(window._sw);window._sw=setInterval(function(){a=a?0:-12;saw.setAttribute('transform','rotate('+(-a)+')');saw.style.transition='transform 1.2s';},1600);
+ s.querySelectorAll('.box').forEach(function(g){g.onclick=function(){s.querySelectorAll('.box').forEach(function(z){z.classList.remove('sel');});g.classList.add('sel');var b=BS[g.dataset.i];document.getElementById('bdx').innerHTML='<h4>'+L(b.t)+'</h4>'+L(b.d);};});}
+function bondCalc(){var f=+document.getElementById('fm').value,y=+document.getElementById('yl').value;document.getElementById('fmv').textContent=f.toFixed(1);document.getElementById('ylv').textContent=y.toFixed(2)+'%';var ex=f*100000*(y-6.5)/100;document.getElementById('extra').textContent=L({en:'Extra ≈ ₹'+fmt(ex)+' cr per year',ta:'கூடுதல் ≈ ₹'+fmt(ex)+' கோடி / வருஷம்'});document.getElementById('extra2').textContent=L({en:'Over 20 years ≈ ₹'+fmt(ex*20)+' cr of extra interest (simple, not compounded).',ta:'20 வருஷத்துல ≈ ₹'+fmt(ex*20)+' கோடி கூடுதல் வட்டி (எளிய கணக்கு).'});}
+
+/* ---------- IDBI ownership ---------- */
+function drawID(){var s=document.getElementById('idsvg');var rows=[[L({en:'Before',ta:'முன்பு'}),[['Govt',45.48,'#f07c1b'],['LIC',49.24,'#2f6fb5'],['Public',5.28,'#bbb']]],[L({en:'After',ta:'பின்பு'}),[['Fairfax',60.72,'#14928a'],['LIC',19.0,'#2f6fb5'],['Govt',15.0,'#f07c1b'],['Public',5.28,'#bbb']]]];var h='';rows.forEach(function(r,i){var y=20+i*70,x=90;h+='<text x="10" y="'+(y+28)+'" font-weight="700" font-size="14">'+r[0]+'</text>';r[1].forEach(function(p){var w=p[1]*7.8;h+='<rect x="'+x+'" y="'+y+'" width="0" height="44" rx="6" fill="'+p[2]+'"><animate attributeName="width" from="0" to="'+w+'" dur="1.2s" fill="freeze"/></rect>';if(w>50)h+='<text x="'+(x+w/2)+'" y="'+(y+27)+'" text-anchor="middle" fill="#fff" font-size="12" font-weight="700">'+p[0]+' '+p[1]+'%</text>';x+=w;});});s.innerHTML=h;}
+var BK=[
+ {n:'IDBI Bank',x:150,y:70,c:'#14928a',d:{en:'Largest banca partner for years. In Q1 FY26, IDBI brought ₹862 cr of LIC premium (4.23% of LIC\'s new-business premium). After Fairfax takes control, the tie-up continues under open architecture.',ta:'பல வருஷமா பெரிய பேங்கா கூட்டாளி. Q1 FY26-ல IDBI மூலம் ₹862 கோடி பிரீமியம் (LIC புது பிசினஸ் பிரீமியத்துல 4.23%). Fairfax கட்டுப்பாட்டுக்கு வந்த பின்னும் ஓபன் ஆர்கிடெக்சர்ல தொடரும்.'}},
+ {n:'RBL Bank',x:150,y:250,c:'#d64541',d:{en:'Tie-up announced 30 Sep 2025: ~570 branches and 1,474 business correspondent outlets, plus digital channels. Products: term, endowment, pension, ULIP.',ta:'30 செப் 2025-ல அறிவிப்பு: ~570 கிளைகள், 1,474 பிசினஸ் கரஸ்பாண்டன்ட் மையங்கள், டிஜிட்டல். பிராடக்ட்: டேர்ம், எண்டோமென்ட், பென்ஷன், ULIP.'}},
+ {n:'Yes Bank',x:750,y:70,c:'#2f6fb5',d:{en:'New bancassurance partner; CEO expects the benefit of RBL and Yes Bank tie-ups in H2 FY27.',ta:'புது பேங்கஷ்யூரன்ஸ் கூட்டாளி; RBL, யெஸ் பேங்க் பலன் H2 FY27-ல தெரியும்னு CEO.'}},
+ {n:L({en:'Other banks & brokers',ta:'மற்ற வங்கிகள் & புரோக்கர்கள்'}),x:750,y:250,c:'#7b4bb7',d:{en:'Other bank partners, brokers, corporate agents and digital make up the rest of the 7.53% "banca & alternates" share.',ta:'மற்ற வங்கிகள், புரோக்கர்கள், கார்ப்பரேட் ஏஜெண்ட், டிஜிட்டல் — 7.53% "பேங்கா & மாற்று" பங்கின் மீதி.'}}
+];
+function drawBK(){var s=document.getElementById('bksvg');var h='';BK.forEach(function(b){h+='<line x1="450" y1="165" x2="'+b.x+'" y2="'+b.y+'" stroke="'+b.c+'" stroke-width="3" class="flow"/>';});h+='<circle cx="450" cy="165" r="70" fill="url(#gor2)"/><defs><radialGradient id="gor2"><stop offset="0" stop-color="#ffb163"/><stop offset="1" stop-color="#e06a0c"/></radialGradient></defs><text x="450" y="160" text-anchor="middle" fill="#fff" font-size="28" font-weight="900">LIC</text><text x="450" y="185" text-anchor="middle" fill="#fff" font-size="11">7.53% via banca+alt</text>';BK.forEach(function(b,i){h+='<g class="box" data-i="'+i+'"><rect x="'+(b.x-85)+'" y="'+(b.y-28)+'" width="170" height="56" rx="28" fill="#fff" stroke="'+b.c+'" stroke-width="3"/><text x="'+b.x+'" y="'+(b.y+5)+'" text-anchor="middle" font-weight="800" fill="'+b.c+'">'+b.n+'</text></g>';});s.innerHTML=h;s.querySelectorAll('.box').forEach(function(g){g.onclick=function(){var b=BK[g.dataset.i];document.getElementById('bkx').innerHTML='<h4>'+b.n+'</h4>'+L(b.d);};});}
+
+/* ---------- regulation ---------- */
+var RG=[
+ {d:'Oct 2024',t:{en:'Surrender value rules',ta:'சரண்டர் மதிப்பு விதிகள்'},i:-1,w:{en:'Higher special surrender value from year one. Insurers reworked commissions and product design; can pressure margins on early exits.',ta:'முதல் வருஷத்திலிருந்தே அதிக சிறப்பு சரண்டர் மதிப்பு. கமிஷன், பிராடக்ட் வடிவமைப்பு மாற்றம்; முன்கூட்டிய வெளியேற்றத்துல மார்ஜின் அழுத்தம்.'}},
+ {d:'Sep 2025',t:{en:'GST exemption on individual life premiums',ta:'தனிநபர் லைஃப் பிரீமியத்துக்கு GST விலக்கு'},i:2,w:{en:'Policies became cheaper for buyers; CEO credits it for sales momentum. Individual new-business premium +14.9% in H1. Insurers lose input tax credit, a cost to absorb.',ta:'வாங்குபவருக்கு பாலிசி மலிவாச்சு; விற்பனை வேகத்துக்கு இதுதான் காரணம்னு CEO. H1-ல தனிநபர் புது பிசினஸ் +14.9%. இன்புட் டாக்ஸ் கிரெடிட் போனது ஒரு செலவு.'}},
+ {d:'Dec 2025',t:{en:'Sabka Bima Sabki Raksha Act — 100% FDI',ta:'சப்கா பீமா சப்கி ரக்ஷா சட்டம் — 100% FDI'},i:-1,w:{en:'Foreign insurers can now own 100% of Indian insurers (notified in early 2026). More capital and competition for LIC; the Act also strengthens IRDAI and may open composite (life + health) possibilities.',ta:'வெளிநாட்டு இன்ஷ்யூரர்கள் இப்போ 100% வைச்சுக்கலாம் (2026 தொடக்கத்துல அமல்). LIC-க்கு அதிக போட்டி; சட்டம் IRDAI-ஐ வலுப்படுத்துது, லைஃப் + ஹெல்த் வாய்ப்பும் திறக்கலாம்.'}},
+ {d:'Feb 2026',t:{en:'Commission overhaul & Bima Sugam',ta:'கமிஷன் மாற்றம் & பீமா சுகம்'},i:-1,w:{en:'IRDAI plans effort-based, less front-loaded commissions and a digital insurance marketplace. Agency-heavy LIC must adapt payouts; digital lowers distribution cost over time.',ta:'IRDAI முன்கூட்டிய கமிஷனைக் குறைச்சு, உழைப்பு அடிப்படையிலான கமிஷன், டிஜிட்டல் சந்தை கொண்டு வர திட்டம். ஏஜென்சி அதிகமான LIC மாறணும்; டிஜிட்டல் செலவு குறைக்கும்.'}},
+ {d:'Apr 2026',t:{en:'Ind AS 117 accounting transition',ta:'Ind AS 117 கணக்கியல் மாற்றம்'},i:-1,w:{en:'Insurers move to Ind AS with forbearance windows. Profits will be released over policy life (CSM); reported profits may look lower and more volatile at first. LIC has run parallel Ind AS books.',ta:'சலுகை காலத்துடன் Ind AS-க்கு மாற்றம். லாபம் பாலிசி வாழ்நாள் முழுக்க (CSM) வெளிவரும்; தொடக்கத்துல குறைவா, ஏற்ற இறக்கமா தெரியலாம். LIC இணையான Ind AS கணக்கு வைச்சிருக்கு.'}},
+ {d:'2026–27',t:{en:'Risk-based capital (RBC)',ta:'ரிஸ்க் அடிப்படை மூலதனம் (RBC)'},i:1,w:{en:'Solvency will depend on actual risks, not a fixed formula. Two impact studies done; drafts expected. LIC\'s 2.35x cushion gives room.',ta:'சால்வென்சி நிலையான ஃபார்முலா இல்லாம உண்மையான ரிஸ்க்கை பொருத்து. இரண்டு ஆய்வுகள் முடிஞ்சது; வரைவு வரும். LIC-யோட 2.35x மெத்தை இடம் தருது.'}},
+ {d:'Aug 2026',t:{en:'SEBI public float — 10% met',ta:'SEBI பொது பங்கு — 10% எட்டியது'},i:-1,w:{en:'Government sold 6.5% via OFS (~₹31,552 cr) to reach 10% public holding ahead of May 2027. Next goal is 25% — a supply overhang for the share price.',ta:'May 2027-க்கு முன்னாடியே 10% பொது பங்கு எட்ட அரசு OFS மூலம் 6.5% விற்றது (~₹31,552 கோடி). அடுத்த இலக்கு 25% — பங்கு விலைக்கு அழுத்தம்.'}},
+ {d:'Sep 2026',t:{en:'Proposed mis-selling rules',ta:'தவறான விற்பனைக்கு எதிரான விதிகள் (முன்மொழிவு)'},i:-1,w:{en:'IRDAI listed mis-selling patterns (insurance sold as FDs, ULIPs to the risk-averse) and proposed checks. Better for customers; may slow aggressive selling.',ta:'IRDAI தவறான விற்பனை முறைகளை (FD மாதிரி இன்ஷ்யூரன்ஸ், ரிஸ்க் பயம் உள்ளவர்களுக்கு ULIP) பட்டியலிட்டு கட்டுப்பாடு முன்மொழிந்தது. வாடிக்கையாளருக்கு நல்லது; அதீத விற்பனை குறையலாம்.'}},
+ {d:'Oct 2026',t:{en:'RBI: LIC to cut IDBI stake to 15%',ta:'RBI: IDBI-ல LIC பங்கு 15%-க்கு குறைக்கணும்'},i:0,w:{en:'After the Fairfax deal LIC keeps ~19% and must reach 15% within two years — more cash to come, but a small seller overhang on IDBI shares.',ta:'Fairfax ஒப்பந்தத்துக்கு அப்புறம் LIC ~19% வைச்சிருக்கும், இரண்டு வருஷத்துல 15%-க்கு வரணும் — இன்னும் பணம் வரும், IDBI பங்குக்கு சின்ன அழுத்தம்.'}},
+ {d:'Ongoing',t:{en:'D-SII status & investment norms',ta:'D-SII நிலை & முதலீட்டு விதிகள்'},i:0,w:{en:'LIC stays a systemically important insurer with closer supervision. Investment rules require a large share of life funds in government securities — which is why yield moves matter so much.',ta:'LIC முக்கிய அமைப்பு இன்ஷ்யூரரா தொடருது, அதிக கண்காணிப்பு. லைஃப் ஃபண்டின் பெரிய பங்கு அரசு பத்திரத்துல இருக்கணும் — அதனால தான் ஈல்ட் மாற்றம் இவ்வளவு முக்கியம்.'}}
+];
+function drawRG(){var s=document.getElementById('rgsvg');var h='<line x1="30" y1="70" x2="970" y2="70" stroke="#f07c1b" stroke-width="4"/>';RG.forEach(function(r,i){var x=50+i*102;var col=r.i>0?'#1f9d55':(r.i<0?'#d64541':'#e0a100');h+='<circle cx="'+x+'" cy="70" r="11" fill="'+col+'" stroke="#fff" stroke-width="3"><animate attributeName="r" values="9;13;9" dur="2s" begin="'+(i*0.2)+'s" repeatCount="indefinite"/></circle><text x="'+x+'" y="'+(i%2?110:40)+'" text-anchor="middle" font-size="11" font-weight="700">'+r.d+'</text>';});h+='<text x="30" y="140" font-size="11" fill="#1f9d55">● '+L({en:'helps',ta:'உதவும்'})+'</text><text x="110" y="140" font-size="11" fill="#d64541">● '+L({en:'pressure',ta:'அழுத்தம்'})+'</text><text x="200" y="140" font-size="11" fill="#e0a100">● '+L({en:'mixed',ta:'கலவை'})+'</text>';s.innerHTML=h;
+ var l='';RG.forEach(function(r){var col=r.i>0?'#1f9d55':(r.i<0?'#d64541':'#e0a100');var pct=r.i>0?(50+r.i*20):(r.i<0?35:50);l+='<div class="reg" style="border-color:'+col+'"><b>'+r.d+' · '+L(r.t)+'</b><div>'+L(r.w)+'</div><div class="meter"><i style="width:'+pct+'%;background:'+col+'"></i></div></div>';});document.getElementById('reglist').innerHTML=l;}
+
+/* ---------- triggers ---------- */
+var TR=[
+ {n:{en:'Higher bond yields locking in new money / better non-par pricing',ta:'அதிக பாண்ட் ஈல்ட் — புது பணம் லாக், சிறந்த நான்-பார் விலை'},s:'+',I:3,C:0.7,W:0.7,P:1.0,w:{en:'Book yield vs 8.67%; non-par margins',ta:'புக் ஈல்ட் 8.67%-உடன் ஒப்பீடு'}},
+ {n:{en:'RBL Bank & Yes Bank banca ramp-up',ta:'RBL, யெஸ் பேங்க் பேங்கா வளர்ச்சி'},s:'+',I:2,C:0.7,W:1.0,P:1.0,w:{en:'Banca share above 7.53% in H2',ta:'H2-ல பேங்கா பங்கு 7.53%-க்கு மேல'}},
+ {n:{en:'Further VNB margin gains from bigger ticket sizes (guided Q3–Q4)',ta:'பெரிய டிக்கெட்டால VNB மார்ஜின் ஏற்றம் (Q3–Q4 வழிகாட்டல்)'},s:'+',I:3,C:0.4,W:1.0,P:1.0,w:{en:'9M VNB margin > 22.3%',ta:'9 மாத VNB மார்ஜின் > 22.3%'}},
+ {n:{en:'IDBI stake sale cash ~₹26,440 cr',ta:'IDBI பங்கு விற்பனை பணம் ~₹26,440 கோடி'},s:'+',I:2,C:0.7,W:0.7,P:1.0,w:{en:'Closing approvals; how gain is split',ta:'இறுதி ஒப்புதல்; லாப பகிர்வு'}},
+ {n:{en:'Ind AS 117 / risk-based capital transition',ta:'Ind AS 117 / RBC மாற்றம்'},s:'−',I:3,C:0.7,W:0.7,P:1.0,w:{en:'Restated profit and solvency',ta:'மறுகணக்கிட்ட லாபம், சால்வென்சி'}},
+ {n:{en:'Individual APE stagnation & market-share loss',ta:'தனிநபர் APE தேக்கம், சந்தை பங்கு இழப்பு'},s:'−',I:2,C:1.0,W:1.0,P:0.7,w:{en:'Monthly IRDAI new-business data',ta:'மாதாந்திர IRDAI தரவு'}},
+ {n:{en:'Next government OFS toward 25% public float',ta:'25% பொது பங்கை நோக்கி அடுத்த OFS'},s:'−',I:2,C:0.4,W:0.4,P:1.0,w:{en:'DIPAM announcements',ta:'DIPAM அறிவிப்புகள்'}}
+];
+function drawTR(){var h='<tr><th>Trigger</th><th>+/−</th><th>I</th><th>C</th><th>W</th><th>P</th><th>Points</th><th>'+L({en:'What to watch',ta:'கவனிக்க'})+'</th></tr>';var pos=[],neg=0;TR.forEach(function(t){var p=t.I*t.C*t.W*t.P;if(t.s==='+')pos.push(p);else neg+=p;h+='<tr><td>'+L(t.n)+'</td><td class="'+(t.s==='+'?'up':'dn')+'"><b>'+t.s+'</b></td><td class="n">'+t.I+'</td><td class="n">'+t.C+'</td><td class="n">'+t.W+'</td><td class="n">'+t.P+'</td><td class="n"><b>'+p.toFixed(2)+'</b></td><td>'+L(t.w)+'</td></tr>';});document.getElementById('trtab').innerHTML=h;
+ CO.triggers=TR.map(function(t){return {name:t.n.en,sign:t.s,I:t.I,C:t.C,W:t.W,P:t.P,pts:+(t.I*t.C*t.W*t.P).toFixed(2)};});}
+function drawCY(){var s=document.getElementById('cysvg');var ph=[['P1','Trough',60,'#f6b3b1'],['P2','Early recovery',85,'#9fd9b4'],['P3','Expansion',70,'#c8f0d6'],['P4','Late / peak',35,'#ffe08a'],['P5','Downturn',20,'#f6b3b1']];var cx=160,cy=150,r=110,h='';ph.forEach(function(p,i){var a0=(i*72-90)*Math.PI/180,a1=((i+1)*72-90)*Math.PI/180;var x0=cx+r*Math.cos(a0),y0=cy+r*Math.sin(a0),x1=cx+r*Math.cos(a1),y1=cy+r*Math.sin(a1);h+='<path d="M'+cx+','+cy+' L'+x0+','+y0+' A'+r+','+r+' 0 0,1 '+x1+','+y1+' Z" fill="'+p[3]+'" stroke="#fff" stroke-width="3"/>';var am=((i+0.5)*72-90)*Math.PI/180;h+='<text x="'+(cx+72*Math.cos(am))+'" y="'+(cy+72*Math.sin(am))+'" text-anchor="middle" font-size="11" font-weight="800">'+p[0]+'</text><text x="'+(cx+72*Math.cos(am))+'" y="'+(cy+72*Math.sin(am)+13)+'" text-anchor="middle" font-size="9">'+p[1]+'</text>';});
+ var ap=(2.5*72-90);h+='<g><line x1="'+cx+'" y1="'+cy+'" x2="'+cx+'" y2="'+(cy-95)+'" stroke="#3b2a1a" stroke-width="5" stroke-linecap="round"><animateTransform attributeName="transform" type="rotate" from="0 '+cx+' '+cy+'" to="'+(ap+90)+' '+cx+' '+cy+'" dur="1.6s" fill="freeze"/></line></g><circle cx="'+cx+'" cy="'+cy+'" r="9" fill="#f07c1b"/>';
+ h+='<text x="160" y="290" text-anchor="middle" font-size="12" font-weight="700">Sector: P3 Expansion · Stock: Stage 1 (est.)</text>';s.innerHTML=h;}
+function drawTL(){var s=document.getElementById('tlsvg');var ev=[['Nov 2026',{en:'Q2 results; IDBI unions\' strike',ta:'Q2 முடிவு; IDBI ஸ்ட்ரைக்'}],['Dec 2026',{en:'RBI policy; 10-yr seen 7.70–7.75%',ta:'RBI கொள்கை; 10 வருட 7.70–7.75%'}],['H2 FY27',{en:'RBL / Yes Bank banca impact',ta:'RBL / யெஸ் பலன்'}],['Feb 2027',{en:'Q3 FY27 results (expected)',ta:'Q3 FY27 முடிவு (எதிர்பார்ப்பு)'}],['2027',{en:'IDBI deal closing (approvals pending)',ta:'IDBI ஒப்பந்தம் முடிவு (ஒப்புதல் நிலுவை)'}],['≤ Oct 2028',{en:'LIC IDBI stake to 15%',ta:'IDBI-ல LIC 15%'}]];var h='<line x1="40" y1="60" x2="960" y2="60" stroke="#2f6fb5" stroke-width="4"/>';ev.forEach(function(e,i){var x=70+i*175;h+='<circle cx="'+x+'" cy="60" r="10" fill="#f07c1b"/><text x="'+x+'" y="35" text-anchor="middle" font-size="12" font-weight="800">'+e[0]+'</text><text x="'+x+'" y="90" text-anchor="middle" font-size="11">'+L(e[1])+'</text>';});s.innerHTML=h;}
+
+/* ---------- temple ---------- */
+var PIL=[
+ {n:{en:'Growth',ta:'வளர்ச்சி'},s:6.0,d:{en:'APE +5.7%, individual APE flat, but premium +11.6% and protection +58.6%.',ta:'APE +5.7%, தனிநபர் தேக்கம், ஆனா பிரீமியம் +11.6%, பாதுகாப்பு +58.6%.'}},
+ {n:{en:'Profitability',ta:'லாபத்தன்மை'},s:8.5,d:{en:'PAT +21.5%, VNB +34%, VNB margin 22.3%.',ta:'லாபம் +21.5%, VNB +34%, மார்ஜின் 22.3%.'}},
+ {n:{en:'Capital strength',ta:'மூலதன வலிமை'},s:9.0,d:{en:'Solvency 2.35x; AUM ₹59.6 lakh crore.',ta:'சால்வென்சி 2.35x; AUM ₹59.6 லட்சம் கோடி.'}},
+ {n:{en:'Efficiency',ta:'திறன்'},s:7.0,d:{en:'Expense ratio down 87 bps, but 61st-month persistency fell ~280 bps.',ta:'செலவு விகிதம் 87 bps இறக்கம், ஆனா 61வது மாத பெர்சிஸ்டன்சி ~280 bps இறக்கம்.'}},
+ {n:{en:'Valuation',ta:'மதிப்பீடு'},s:8.5,d:{en:'~0.65x P/EV and ~8x trailing P/E — a deep discount to private peers.',ta:'~0.65x P/EV, ~8x P/E — தனியார் நிறுவனங்களை விட பெரிய தள்ளுபடி.'}},
+ {n:{en:'Moat & governance',ta:'அகழி & நிர்வாகம்'},s:7.0,d:{en:'Unmatched reach and trust; offset by state ownership, OFS overhang and slipping individual share.',ta:'ஒப்பில்லா வலை, நம்பிக்கை; ஆனா அரசு உரிமை, OFS அழுத்தம், தனிநபர் பங்கு இறக்கம்.'}}
+];
+function pc(s){return s>=8?'#1f9d55':(s>=6?'#e0a100':'#d64541');}
+function drawTemple(){var s=document.getElementById('tmsvg');var avg=(PIL.reduce(function(a,p){return a+p.s;},0)/PIL.length);var h='<polygon points="350,15 660,115 40,115" fill="#f07c1b" stroke="#c95d06" stroke-width="3"/><text x="350" y="72" text-anchor="middle" fill="#fff" font-size="15" font-weight="700">CB Score</text><text x="350" y="102" text-anchor="middle" fill="#fff" font-size="28" font-weight="900">'+avg.toFixed(1)+' / 10</text><rect x="50" y="117" width="600" height="34" fill="#ffe2c2" stroke="#c95d06"/><text x="350" y="140" text-anchor="middle" font-weight="800" font-size="14">LIC · Q2 FY27</text>';PIL.forEach(function(p,i){var x=80+i*95;h+='<g class="box" data-i="'+i+'" style="cursor:pointer"><rect x="'+x+'" y="155" width="60" height="200" fill="#fff6ec" stroke="#d9b48c"/>';for(var k=1;k<5;k++)h+='<line x1="'+(x+k*12)+'" y1="155" x2="'+(x+k*12)+'" y2="355" stroke="#efd6bb"/>';h+='<rect class="fill" x="'+x+'" y="355" width="60" height="0" fill="'+pc(p.s)+'" opacity=".8" data-h="'+(p.s*20)+'"/><circle cx="'+(x+30)+'" cy="185" r="20" fill="#fff" stroke="'+pc(p.s)+'" stroke-width="3"/><text x="'+(x+30)+'" y="191" text-anchor="middle" font-weight="900" font-size="14">'+p.s.toFixed(1)+'</text></g>';h+='<text x="'+(x+30)+'" y="405" text-anchor="middle" font-size="11.5" font-weight="700">'+L(p.n)+'</text>';});h+='<rect x="40" y="357" width="620" height="12" fill="#e5c3a0"/><rect x="25" y="369" width="650" height="14" fill="#d9b48c"/>';s.innerHTML=h;
+ var c='';PIL.forEach(function(p,i){c+='<div class="reg" id="pc'+i+'" style="border-color:'+pc(p.s)+'"><b>'+L(p.n)+' — '+p.s.toFixed(1)+'</b><div>'+L(p.d)+'</div></div>';});document.getElementById('pillcards').innerHTML=c;
+ s.querySelectorAll('.box').forEach(function(g){g.onclick=function(){var el=document.getElementById('pc'+g.dataset.i);el.scrollIntoView({behavior:'smooth',block:'center'});el.style.background='#fff1df';setTimeout(function(){el.style.background='#fff';},1500);};});
+ animTemple();}
+function animTemple(){document.querySelectorAll('#tmsvg .fill').forEach(function(r){var H=+r.dataset.h;r.setAttribute('height',0);r.setAttribute('y',355);var t=0;var iv=setInterval(function(){t+=0.05;if(t>=1){t=1;clearInterval(iv);}r.setAttribute('height',H*t);r.setAttribute('y',355-H*t);},30);});}
+function pevCalc(){var v=+document.getElementById('pev').value;document.getElementById('pevv').textContent=v.toFixed(2)+'x P/EV → ₹'+fmt(630*v)+' / share';}
+
+/* ---------- self-check ---------- */
+var SC=[
+ {g:{en:'1 · Questions about the stock',ta:'1 · பங்கைப் பற்றிய கேள்விகள்'},it:[[{en:'I understand how LIC earns (premium, float, par/non-par split)',ta:'LIC எப்படி சம்பாதிக்குதுன்னு புரியுது'},'PAT ₹25,568 cr H1; non-par 34.03% of ind. APE'],[{en:'I know why profit grew faster than new business',ta:'புது பிசினஸை விட லாபம் ஏன் வேகமா வளர்ந்ததுன்னு தெரியும்'},'VNB margin 22.3% vs 17.6%; ind. APE +0.3%'],[{en:'I have checked the valuation, not just the price',ta:'விலை மட்டுமல்லாம மதிப்பீட்டையும் பார்த்தேன்'},'P/EV ~0.65x; P/E ~8.3x (derived)']]},
+ {g:{en:'2 · Problems investors face',ta:'2 · முதலீட்டாளர் சந்திக்கும் சிக்கல்கள்'},it:[[{en:'I am ready for more government stake sales',ta:'அரசு இன்னும் பங்கு விற்பதுக்கு தயார்'},'Govt 90%; 25% public float needed later'],[{en:'I understand Ind AS 117 may change reported profit',ta:'Ind AS 117 லாபத்தை மாற்றலாம்னு புரியுது'},'Transition from Apr 2026'],[{en:'I accept that individual market share is slipping',ta:'தனிநபர் சந்தை பங்கு இறங்குவதை ஏற்கிறேன்'},'37.51% individual share H1']]},
+ {g:{en:'3 · Solutions (what I did)',ta:'3 · தீர்வுகள் (நான் செய்தது)'},it:[[{en:'I read the Q2 FY27 press release / investor presentation',ta:'Q2 FY27 பிரஸ் ரிலீஸ் படிச்சேன்'},'Results 5 Nov 2026'],[{en:'I compared with private insurers\' margins and valuations',ta:'தனியார் நிறுவனங்களுடன் ஒப்பிட்டேன்'},''],[{en:'I sized this within my overall portfolio',ta:'மொத்த போர்ட்ஃபோலியோவுல அளவு பார்த்தேன்'},'']]},
+ {g:{en:'4 · Anchors\' and analysts\' view',ta:'4 · ஆங்கர், அனலிஸ்ட் பார்வை'},it:[[{en:'I noted broker targets and their dates',ta:'புரோக்கர் இலக்குகளையும் தேதிகளையும் குறிச்சேன்'},'₹480–635 (Aug 2026, post-Q1)'],[{en:'I noted institutional demand in the OFS',ta:'OFS-ல நிறுவன தேவையை குறிச்சேன்'},'₹36,400 cr institutional bids; OFS floor ₹382']]},
+ {g:{en:'5 · My own conditions',ta:'5 · என் சொந்த நிபந்தனைகள்'},it:[],own:1}
+];
+var SCK='cb_lic_q2fy27_sc';
+function scLoad(){try{return JSON.parse(localStorage.getItem(SCK))||{t:{},own:[]};}catch(e){return {t:{},own:[]};}}
+function scSave(o){try{localStorage.setItem(SCK,JSON.stringify(o));}catch(e){}}
+function drawSC(){var o=scLoad();var h='',tot=0,on=0;SC.forEach(function(g,gi){var items=g.own?o.own.map(function(x){return [{en:x,ta:x},''];}):g.it;var c=0;var ih='';items.forEach(function(it,ii){var k=gi+'_'+ii;var ck=!!o.t[k];if(ck)c++;ih+='<label><input type="checkbox" data-k="'+k+'" '+(ck?'checked':'')+'> '+L(it[0])+(it[1]?'<div class="data">Data: '+it[1]+'</div>':'<div class="data">Data:</div>')+'</label>';});tot+=items.length;on+=c;h+='<h3>'+L(g.g)+' <span class="note">'+c+'/'+items.length+'</span></h3><div class="bar"><i style="width:'+(items.length?c/items.length*100:0)+'%"></i></div>'+ih;if(g.own){h+='<div style="margin-top:6px"><input id="ownin" placeholder="'+L({en:'Add your condition',ta:'உங்கள் நிபந்தனை'})+'" style="border:1px solid #f1dcc4;border-radius:12px;padding:5px 9px"> <button class="btn" onclick="addOwn()">+</button></div><div>';['P/EV below 0.8x','VNB margin above 20%','Solvency above 2x','Individual APE growth above 10%','No OFS in next 6 months'].forEach(function(sg){h+='<span class="btn" style="font-size:11.5px" onclick="addOwn(\''+sg+'\')">'+sg+'</span>';});h+='</div>';}});
+ document.getElementById('selfck').innerHTML=h;document.getElementById('allbar').style.width=(tot?on/tot*100:0)+'%';document.getElementById('allmsg').textContent=L({en:on+' of '+tot+' of your own conditions line up. This only counts how many of your own conditions line up. It is not a recommendation.',ta:tot+'-ல '+on+' உங்கள் நிபந்தனைகள் பொருந்துது. இது உங்கள் நிபந்தனைகள் எத்தனை பொருந்துதுன்னு மட்டும் எண்ணுது. இது பரிந்துரை அல்ல.'});
+ document.querySelectorAll('#selfck input[type=checkbox]').forEach(function(b){b.onchange=function(){var o=scLoad();o.t[b.dataset.k]=b.checked;scSave(o);drawSC();};});}
+function addOwn(v){var o=scLoad();v=v||(document.getElementById('ownin')||{}).value;if(!v||o.own.length>=8)return;o.own.push(v);scSave(o);drawSC();}
+function clearSC(){scSave({t:{},own:[]});drawSC();}
+
+/* ---------- Socrates ---------- */
+var SQ=[
+ {q:{en:'LIC\'s individual APE grew only 0.3% in H1 but VNB grew 34%. What best explains this?',ta:'H1-ல தனிநபர் APE 0.3% தான், ஆனா VNB 34%. இதுக்கு சிறந்த விளக்கம் எது?'},o:[{en:'Higher margin per policy (mix, ticket size, costs)',ta:'ஒவ்வொரு பாலிசிக்கும் அதிக மார்ஜின் (கலவை, டிக்கெட், செலவு)'},{en:'More policies sold',ta:'அதிக பாலிசி விற்பனை'},{en:'Higher equity market gains',ta:'அதிக பங்குச் சந்தை லாபம்'}],a:0},
+ {q:{en:'When bond yields rise, what happens to the market value of bonds LIC already holds?',ta:'பாண்ட் ஈல்ட் ஏறினா, LIC ஏற்கனவே வைச்சிருக்கும் பாண்ட் சந்தை மதிப்பு என்னாகும்?'},o:[{en:'It rises',ta:'ஏறும்'},{en:'It falls',ta:'இறங்கும்'},{en:'No change',ta:'மாற்றமில்லை'}],a:1},
+ {q:{en:'APE counts a ₹10 lakh single premium as…',ta:'₹10 லட்சம் சிங்கிள் பிரீமியத்தை APE எப்படி எண்ணும்?'},o:[{en:'₹10 lakh',ta:'₹10 லட்சம்'},{en:'₹1 lakh',ta:'₹1 லட்சம்'},{en:'₹0',ta:'₹0'}],a:1},
+ {q:{en:'Which sector cycle phase did CB assign to life insurance this quarter?',ta:'இந்த காலாண்டுல லைஃப் இன்ஷ்யூரன்ஸுக்கு CB கொடுத்த சுழற்சி கட்டம் எது?'},o:[{en:'P1 Trough',ta:'P1 அடிமட்டம்'},{en:'P3 Expansion',ta:'P3 விரிவாக்கம்'},{en:'P5 Downturn',ta:'P5 சரிவு'}],a:1}
+];
+function drawSQ(){var h='';SQ.forEach(function(q,i){h+='<div class="mcq card"><b>Q'+(i+1)+'. '+L(q.q)+'</b>';q.o.forEach(function(o,j){h+='<button onclick="ansQ(this,'+i+','+j+')">'+L(o)+'</button>';});h+='</div>';});h+='<div class="card"><b>'+L({en:'Your turn (free text): If yields fall back to 6.5%, which LIC numbers would you watch first, and why?',ta:'உங்க முறை: ஈல்ட் மீண்டும் 6.5%-க்கு இறங்கினா, LIC-ல எந்த எண்களை முதல்ல பார்ப்பீங்க, ஏன்?'})+'</b><textarea style="width:100%;height:70px;margin-top:6px;border:1px solid #f1dcc4;border-radius:10px"></textarea><div class="note">'+L({en:'Hint: VNB margin, non-par pricing, Embedded Value, book yield.',ta:'குறிப்பு: VNB மார்ஜின், நான்-பார் விலை, EV, புக் ஈல்ட்.'})+'</div></div>';document.getElementById('socr').innerHTML=h;}
+function ansQ(b,i,j){var bs=b.parentNode.querySelectorAll('button');bs.forEach(function(x,k){x.className=k===SQ[i].a?'ok':(k===j?'no':'');});}
+
+/* ---------- CB Assist (voice Q&A) ---------- */
+var KB=[
+ [['profit','pat','net profit','லாபம்'],{en:'Q2 FY27 standalone profit was ₹12,076 crore, up 20% from ₹10,053 crore. Consolidated profit was ₹12,115 crore. For the half-year, profit was ₹25,568 crore, up 21.5%.',ta:'Q2 FY27 ஸ்டாண்ட்அலோன் லாபம் ₹12,076 கோடி, ₹10,053 கோடியிலிருந்து 20% ஏற்றம். கன்சாலிடேட்டட் ₹12,115 கோடி. அரையாண்டு லாபம் ₹25,568 கோடி, 21.5% ஏற்றம்.'}],
+ [['vnb','margin','மார்ஜின்'],{en:'Half-year VNB was ₹6,846 crore, up 34%, and VNB margin rose to 22.3% from 17.6%. Q2 alone is about ₹3,710 crore, derived from half-year minus Q1.',ta:'அரையாண்டு VNB ₹6,846 கோடி, 34% ஏற்றம்; மார்ஜின் 17.6%-லிருந்து 22.3%. Q2 மட்டும் சுமார் ₹3,710 கோடி (கணக்கிட்டது).'}],
+ [['bond','yield','interest','rate','பாண்ட்','ஈல்ட்','வட்டி'],{en:'India\'s 10-year yield rose from about 6.5% to 7.39%. New money LIC invests now earns roughly 90 basis points more for decades, which helps guaranteed product pricing and the book yield. The catch: the market value of old bonds falls, which is one reason embedded value dipped 1.95% year on year.',ta:'இந்திய 10 வருட ஈல்ட் சுமார் 6.5%-லிருந்து 7.39%-க்கு ஏறியது. LIC இப்போ போடுற புது பணம் பல வருஷத்துக்கு சுமார் 90 bps அதிகம் சம்பாதிக்கும்; கியாரண்டி பிராடக்ட் விலைக்கும் புக் ஈல்டுக்கும் உதவும். சிக்கல்: பழைய பாண்ட் சந்தை மதிப்பு குறையும், EV 1.95% இறங்கியதுக்கு இதுவும் ஒரு காரணம்.'}],
+ [['idbi','fairfax','disinvest','stake sale','ஐடிபிஐ','idbi bank'],{en:'Cabinet approved selling 60.72% of IDBI Bank to Fairfax at ₹81 per share, ₹52,878 crore in total. LIC sells 30.24%, about ₹26,440 crore, keeps about 19% and must reach 15% within two years. Management says banca impact will be limited because of open architecture.',ta:'IDBI பேங்கோட 60.72%-ஐ ₹81/பங்கு, மொத்தம் ₹52,878 கோடிக்கு Fairfax-க்கு விக்க கேபினெட் ஒப்புதல். LIC 30.24% விற்கும், சுமார் ₹26,440 கோடி; ~19% வைச்சிருக்கும், இரண்டு வருஷத்துல 15% ஆகணும். ஓபன் ஆர்கிடெக்சர் என்பதால பேங்கா பாதிப்பு குறைவுன்னு நிர்வாகம்.'}],
+ [['rbl','yes bank','banca','bank','வங்கி'],{en:'LIC tied up with RBL Bank (about 570 branches and 1,474 business correspondent outlets) and Yes Bank. Banca and alternate channels are 7.53% of individual new-business premium; the CEO expects the new tie-ups to show in H2 FY27.',ta:'LIC, RBL பேங்க் (~570 கிளை, 1,474 BC மையம்), யெஸ் பேங்க் கூட கூட்டணி. பேங்கா & மாற்று வழிகள் தனிநபர் புது பிசினஸ்ல 7.53%; புது கூட்டணி பலன் H2 FY27-ல தெரியும்னு CEO.'}],
+ [['regulation','irdai','gst','fdi','ind as','ஒழுங்கு'],{en:'Key rules: GST exemption on individual life premiums helped sales; 100% FDI brings more competition; Ind AS 117 changes how profit is reported; risk-based capital is coming; commission and mis-selling reforms are in progress. See the Regulation tab.',ta:'முக்கிய விதிகள்: GST விலக்கு விற்பனைக்கு உதவியது; 100% FDI போட்டியை கூட்டும்; Ind AS 117 லாப அறிக்கையை மாற்றும்; RBC வருது; கமிஷன், தவறான விற்பனை சீர்திருத்தம் நடக்குது. ஒழுங்குமுறை டேப் பாருங்க.'}],
+ [['valuation','p/ev','embedded','pe','cheap','மதிப்பீடு'],{en:'At ₹408, LIC trades around 0.65 times embedded value per share of about ₹630, and about 8 times trailing earnings. Both are derived figures.',ta:'₹408-ல LIC, பங்குக்கு சுமார் ₹630 EV-யோட 0.65 மடங்கு, ட்ரெய்லிங் லாபத்தோட சுமார் 8 மடங்குல டிரேட் ஆகுது. இரண்டும் கணக்கிட்டவை.'}],
+ [['target','analyst','broker','அனலிஸ்ட்','இலக்கு'],{en:'Latest post-bonus targets (Aug 2026): Elara ₹635 Buy, Emkay ₹550 Buy, Jefferies ₹530, Motilal Oswal ₹480 Buy. These are third-party views.',ta:'சமீபத்திய இலக்குகள் (Aug 2026): Elara ₹635, Emkay ₹550, Jefferies ₹530, Motilal Oswal ₹480. இவை வெளி நிறுவன பார்வைகள்.'}],
+ [['solvency','capital','சால்வென்சி'],{en:'Solvency ratio is 2.35 times against a 1.5 times minimum, up from 2.13.',ta:'சால்வென்சி 2.35 மடங்கு (குறைந்தபட்சம் 1.5), முன்பு 2.13.'}],
+ [['premium','ape','renewal','first year','பிரீமியம்'],{en:'Q2 net premium was ₹1,47,018 crore, up 16%. Renewal premium rose 5.2% to ₹68,375 crore, first-year premium fell 3.7% to ₹10,432 crore. Half-year APE was ₹30,696 crore, up 5.7%.',ta:'Q2 நிகர பிரீமியம் ₹1,47,018 கோடி, 16% ஏற்றம். ரினியூவல் 5.2% ஏறி ₹68,375 கோடி, முதல் வருடம் 3.7% இறங்கி ₹10,432 கோடி. அரையாண்டு APE ₹30,696 கோடி, 5.7% ஏற்றம்.'}],
+ [['trigger','cycle','catalyst','தூண்டுதல்','சுழற்சி'],{en:'Cycle score 65 with the sector in P3 expansion; trigger score 57. Top positive triggers are higher bond yields and the banca ramp-up; the main risk trigger is the Ind AS 117 and risk-based capital transition.',ta:'சுழற்சி மதிப்பெண் 65, செக்டார் P3 விரிவாக்கம்; தூண்டுதல் 57. முக்கிய நல்ல தூண்டுதல்: அதிக பாண்ட் ஈல்ட், பேங்கா வளர்ச்சி; முக்கிய அபாயம்: Ind AS 117, RBC மாற்றம்.'}],
+ [['compare','rank','best','weakest','ஒப்பிடு'],{en:'Ranking LIC\'s six pillars: capital strength 9.0 is strongest, then profitability and valuation 8.5, efficiency and moat 7.0, and growth 6.0 is the weakest.',ta:'LIC-யோட ஆறு தூண்களின் வரிசை: மூலதன வலிமை 9.0 முதலிடம், லாபத்தன்மை, மதிப்பீடு 8.5, திறன், அகழி 7.0, வளர்ச்சி 6.0 கடைசி.'}]
+];
+function answer(q){var s=q.toLowerCase();if(/(should i|buy|sell|hold|invest now|வாங்கலாமா|விக்கலாமா)/.test(s))return {t:L({en:'CB Research does not give buy, sell or hold advice. The Self-check tab lets you test your own conditions.',ta:'CB Research வாங்க, விற்க, வைக்க ஆலோசனை தருவதில்லை. சுய சோதனை டேப்ல உங்கள் நிபந்தனைகளை சோதிக்கலாம்.'}),btn:1};var best=null,bs=0;KB.forEach(function(k){var sc=0;k[0].forEach(function(w){if(s.indexOf(w)>=0)sc+=w.length;});if(sc>bs){bs=sc;best=k;}});return {t:best?L(best[1]):L({en:'Try asking about profit, VNB, bonds, IDBI, banks, regulation, valuation, targets or triggers.',ta:'லாபம், VNB, பாண்ட், IDBI, வங்கி, ஒழுங்குமுறை, மதிப்பீடு, இலக்கு, தூண்டுதல் பற்றி கேளுங்க.'})};}
+function say(t){try{var u=new SpeechSynthesisUtterance(t);u.lang=LANG==='ta'?'ta-IN':'en-IN';speechSynthesis.cancel();speechSynthesis.speak(u);}catch(e){}}
+function ask(qq){var i=document.getElementById('asi');var q=qq||i.value.trim();if(!q)return;i.value='';var l=document.getElementById('asl');var r=answer(q);l.innerHTML+='<div class="q">'+q.replace(/</g,'&lt;')+'</div><div class="a">'+r.t+(r.btn?'<br><button class="btn" onclick="go(\'t-sc\');toggleAs()">Self-check</button>':'')+'</div>';l.scrollTop=l.scrollHeight;say(r.t);}
+var rec=null;
+function micGo(){var SR=window.SpeechRecognition||window.webkitSpeechRecognition;if(!SR){ask(L({en:'help',ta:'help'}));return;}if(rec){rec.stop();return;}rec=new SR();rec.lang=LANG==='ta'?'ta-IN':'en-IN';var m=document.getElementById('mic');m.classList.add('rec');rec.onresult=function(e){ask(e.results[0][0].transcript);};rec.onend=function(){m.classList.remove('rec');rec=null;};rec.start();}
+function toggleAs(){var p=document.getElementById('asp');p.classList.toggle('on');if(p.classList.contains('on')&&!document.getElementById('asl').innerHTML){document.getElementById('asl').innerHTML='<div class="a">'+L({en:'Hi! Ask me by voice 🎤 or text about LIC\'s Q2 FY27 results.',ta:'வணக்கம்! LIC Q2 FY27 பற்றி குரலில 🎤 அல்லது எழுத்தில கேளுங்க.'})+'</div>';}drawSugg();}
+function drawSugg(){var s=LANG==='ta'?['லாபம் எவ்வளவு?','பாண்ட் ஈல்ட் எப்படி உதவும்?','IDBI விற்பனை','வாங்கலாமா?']:['What was the profit?','How do bond yields help?','IDBI sale impact','Should I buy?'];document.getElementById('sugg').innerHTML=s.map(function(x){return '<span onclick="ask(\''+x.replace(/'/g,"\\'")+'\')">'+x+'</span>';}).join('');}
+
+/* ---------- language ---------- */
+function setLang(l){LANG=l;document.body.classList.toggle('TA',l==='ta');document.documentElement.lang=l==='ta'?'ta':'en';document.getElementById('bEN').classList.toggle('on',l==='en');document.getElementById('bTA').classList.toggle('on',l==='ta');renderAll();}
+function renderAll(){drawNav();drawBM();drawCode();drawGlossOld();drawGloss();drawFin();drawBS();drawID();drawBK();drawRG();drawTR();drawCY();drawTL();drawTemple();drawSC();drawSQ();drawSugg();bondCalc();apeCalc();pevCalc();charts();}
+['rp','sp'].forEach(function(id){document.getElementById(id).oninput=apeCalc;});
+['fm','yl'].forEach(function(id){document.getElementById(id).oninput=bondCalc;});
+document.getElementById('pev').oninput=pevCalc;
+document.addEventListener('click',function(e){if(!e.target.classList.contains('pcc'))hideTip();});
+renderAll();
+</script>
+</body>
+</html>

@@ -1,0 +1,980 @@
+<title>VA Tech Wabag Q2 FY27</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Catamaran:wght@500;700;800&family=Noto+Sans+Tamil:wght@500;700&display=swap">
+<style>
+/* Layout: plant-control-room board — sticky header + scrolling tab rail, one panel per tab, graphics first, short bullets second */
+:root{
+  --bg:#FFF4E6;        /* very light orange page */
+  --card:#FFEBD3;      /* card fill, slightly deeper orange */
+  --card2:#FFE0BC;
+  --line:#EDB57A;      /* borders */
+  --acc:#F6A04D;       /* light orange accent */
+  --acc-strong:#C25E00;
+  --ink:#1A0F05;       /* bold high-contrast text */
+  --ink2:#3D2A17;
+  --water:#0B6E8A;     /* WABAG entity colour: deep water teal */
+  --water2:#29A3B8;
+  --water3:#9ED8E2;
+  --good:#11713A; --bad:#B3261E; --warn:#A35C00;
+  --f-disp:"Bricolage Grotesque","Catamaran",system-ui,sans-serif;
+  --f-body:"Catamaran","Noto Sans Tamil",system-ui,sans-serif;
+  color-scheme:light;
+}
+html,body{background:var(--bg)}
+body{color:var(--ink);font-family:var(--f-body);font-weight:700;font-size:15.5px;line-height:1.5;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:0 90px;font-variant-numeric:tabular-nums}
+[data-lang="en"] .ta{display:none!important}
+[data-lang="ta"] .en{display:none!important}
+[data-lang="ta"] body{font-family:"Noto Sans Tamil","Catamaran",system-ui,sans-serif;font-weight:700}
+h1,h2,h3{font-family:var(--f-disp);text-wrap:balance;margin:0;line-height:1.15;color:var(--ink)}
+[data-lang="ta"] h2,[data-lang="ta"] h3{font-family:"Noto Sans Tamil",var(--f-disp)}
+h2{font-size:1.45rem;font-weight:800}
+h3{font-size:1.08rem;font-weight:800}
+a{color:var(--acc-strong)}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bg)}
+.wrap{max-width:1180px;margin:0 auto}
+header.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:var(--bg);padding-block:10px 0;border-bottom:2px solid var(--line)}
+.hrow{display:flex;flex-wrap:wrap;gap:10px 16px;align-items:center;justify-content:space-between}
+.brand{display:flex;gap:10px;align-items:center;min-width:0}
+.logo{width:42px;height:42px;border-radius:10px;background:var(--acc);display:grid;place-items:center;font-family:var(--f-disp);font-weight:800;color:var(--ink);font-size:1.05rem;flex:none;border:2px solid var(--acc-strong)}
+.brand h1{font-size:1.25rem;font-weight:800}
+.sub{font-size:.85rem;color:var(--ink2)}
+.slogan{font-family:var(--f-disp);font-weight:800;color:var(--acc-strong);font-size:.95rem}
+.hctl{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.btn{font:inherit;font-weight:800;border:2px solid var(--acc-strong);background:var(--card);color:var(--ink);border-radius:999px;padding:6px 14px;cursor:pointer}
+.btn:hover,.btn:focus-visible{background:var(--acc);outline:none}
+.btn.on{background:var(--acc)}
+.price{font-weight:800;font-size:.95rem}
+nav.tabs{display:flex;gap:6px;overflow-x:auto;padding:10px 0 8px;scrollbar-width:thin}
+nav.tabs button{flex:none;font:inherit;font-weight:800;font-size:.88rem;border:2px solid var(--line);background:var(--card);color:var(--ink);border-radius:10px;padding:6px 11px;cursor:pointer;white-space:nowrap}
+nav.tabs button[aria-selected="true"]{background:var(--acc);border-color:var(--acc-strong)}
+nav.tabs button:focus-visible,.subtabs button:focus-visible{outline:3px solid var(--water);outline-offset:2px}
+section.tab{padding-top:18px;display:grid;gap:18px}
+section.tab>*,.sub-p>*{min-width:0}
+.sub-p{display:grid;gap:14px;min-width:0}
+.tabhead{display:flex;justify-content:space-between;align-items:flex-end;gap:10px;flex-wrap:wrap}
+.code{font-size:.85rem;color:var(--ink2)}
+.grid{display:grid;gap:14px}
+.g2{grid-template-columns:repeat(auto-fit,minmax(min(100%,340px),1fr))}
+.g3{grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr))}
+.g4{grid-template-columns:repeat(auto-fit,minmax(min(100%,250px),1fr))}
+#c-dashgauge svg,#c-conv2 svg{max-width:340px;margin:0 auto}
+.card{background:var(--card);border:2px solid var(--line);border-radius:14px;padding:14px;min-width:0}
+.card h3{margin-bottom:8px}
+.kpi{display:grid;gap:2px}
+.kpi .k{font-size:.82rem;color:var(--ink2);text-transform:uppercase;letter-spacing:.04em}
+[data-lang="ta"] .kpi .k{text-transform:none;letter-spacing:0}
+.kpi .v{font-family:var(--f-disp);font-size:1.75rem;font-weight:800;line-height:1.1}
+.kpi .d{font-size:.88rem}
+.up{color:var(--good)} .dn{color:var(--bad)} .wr{color:var(--warn)}
+ul.pts{margin:0;padding-left:1.15em;display:grid;gap:4px}
+ul.pts li::marker{color:var(--acc-strong)}
+.chart{width:100%;overflow-x:auto}
+.chart svg{display:block;width:100%;height:auto;max-width:100%}
+table{border-collapse:collapse;width:100%;font-size:.92rem}
+.tw{overflow-x:auto}
+th,td{padding:7px 9px;border-bottom:1.5px solid var(--line);text-align:right;white-space:nowrap}
+th:first-child,td:first-child{text-align:left;white-space:normal}
+thead th{background:var(--card2);font-weight:800}
+.pill{display:inline-block;border-radius:999px;padding:2px 10px;font-size:.8rem;font-weight:800;border:2px solid currentColor}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{background:var(--card2);border:2px solid var(--line);border-radius:10px;padding:6px 10px;font-weight:800}
+.chip b{font-family:var(--f-disp);font-size:1.15rem}
+.subtabs{display:flex;gap:6px;flex-wrap:wrap}
+.subtabs button{font:inherit;font-weight:800;font-size:.86rem;border:2px solid var(--line);background:var(--bg);color:var(--ink);border-radius:8px;padding:5px 10px;cursor:pointer}
+.subtabs button[aria-selected="true"]{background:var(--water3);border-color:var(--water)}
+.note{font-size:.84rem;color:var(--ink2)}
+.readbtn{font-size:.82rem;padding:5px 11px}
+/* 3D */
+#plant3d{position:relative;width:100%;aspect-ratio:16/9;max-height:560px;border-radius:14px;overflow:hidden;border:2px solid var(--water);background:linear-gradient(#FFE9D0,#FFF6EC)}
+#plant3d canvas{display:block;width:100%;height:100%;cursor:grab;touch-action:none}
+.lbl3d{position:absolute;transform:translate(-50%,-100%);font-size:.74rem;font-weight:800;background:var(--bg);border:2px solid var(--water);color:var(--ink);border-radius:8px;padding:1px 7px;white-space:nowrap;pointer-events:auto;cursor:pointer}
+.lbl3d:hover{background:var(--water3)}
+.ctl3d{position:absolute;left:10px;bottom:10px;display:flex;gap:6px;flex-wrap:wrap}
+.ctl3d .btn{font-size:.78rem;padding:4px 10px;background:var(--bg)}
+#info3d{min-height:120px}
+@media (max-width:560px){#plant3d{aspect-ratio:4/5}.lbl3d{font-size:.66rem}}
+/* flow map */
+.flow svg text{font-family:var(--f-body)}
+.flow .box{cursor:pointer}
+.flow .box:hover rect{stroke-width:4}
+/* CB badge + voice bubble */
+#cbBadge{position:fixed;right:calc(14px + env(safe-area-inset-right,0px));bottom:calc(14px + env(safe-area-inset-bottom,0px));z-index:40}
+#cbBadge .b{width:52px;height:52px;border-radius:50%;background:var(--acc);border:3px solid var(--acc-strong);display:grid;place-items:center;font-family:var(--f-disp);font-weight:800;color:var(--ink);cursor:pointer;animation:blink 1.8s infinite}
+@keyframes blink{50%{box-shadow:0 0 0 7px rgba(246,160,77,.35)}}
+#cbBadge .tip{display:none;position:absolute;right:0;bottom:62px;width:min(330px,80vw);background:var(--card);border:2px solid var(--acc-strong);border-radius:12px;padding:10px;font-size:.82rem;line-height:1.4}
+#cbBadge:hover .tip,#cbBadge.open .tip{display:block}
+#voiceBubble{position:fixed;right:calc(10px + env(safe-area-inset-right,0px));bottom:calc(76px + env(safe-area-inset-bottom,0px));z-index:40;border-radius:999px;background:var(--water3);border:2px solid var(--water);font:inherit;font-weight:800;padding:8px 13px;cursor:pointer;color:var(--ink)}
+/* assist */
+.assist{display:grid;gap:10px}
+.as-log{max-height:420px;overflow:auto;display:grid;gap:8px;padding:4px}
+.as-q{justify-self:end;background:var(--water3);border:2px solid var(--water);border-radius:12px 12px 2px 12px;padding:7px 11px;max-width:85%}
+.as-a{justify-self:start;background:var(--bg);border:2px solid var(--line);border-radius:12px 12px 12px 2px;padding:8px 12px;max-width:92%}
+.as-a details{margin-top:4px;font-size:.88rem}
+.as-row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.as-row input[type=text]{flex:1 1 220px;min-width:0;font:inherit;font-weight:700;border:2px solid var(--acc-strong);border-radius:10px;padding:8px 10px;background:var(--bg);color:var(--ink)}
+.as-sug button{font-size:.8rem;padding:4px 10px}
+.cdbar{height:6px;background:var(--card2);border-radius:4px;overflow:hidden}
+.cdbar i{display:block;height:100%;width:0;background:var(--water)}
+select,input[type=range]{accent-color:var(--acc-strong);font:inherit;font-weight:700}
+select{border:2px solid var(--line);border-radius:8px;background:var(--bg);color:var(--ink);padding:3px 6px}
+/* self-check */
+.sc-item{display:grid;grid-template-columns:auto 1fr;gap:8px;align-items:start;padding:7px 0;border-bottom:1.5px dashed var(--line)}
+.sc-item input{width:20px;height:20px;accent-color:var(--good);margin-top:3px}
+.sc-data{font-size:.82rem;color:var(--ink2)}
+/* quiz */
+.qz-opt{display:block;width:100%;text-align:left;margin:5px 0;font:inherit;font-weight:700;border:2px solid var(--line);background:var(--bg);color:var(--ink);border-radius:10px;padding:8px 10px;cursor:pointer}
+.qz-opt.ok{border-color:var(--good);background:#DDF3E3}
+.qz-opt.no{border-color:var(--bad);background:#FBE0DD}
+.swot{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr));gap:12px}
+.swot .card{border-width:3px}
+@media (prefers-reduced-motion:reduce){#cbBadge .b{animation:none}}
+</style>
+
+<div class="wrap">
+<header class="top">
+  <div class="hrow">
+    <div class="brand">
+      <div class="logo">CB</div>
+      <div style="min-width:0">
+        <h1>VA Tech Wabag · Q2 FY27</h1>
+        <div class="sub"><span class="en">CB Research business &amp; investment analysis · NSE: WABAG · BSE: 533269</span><span class="ta">CB Research business &amp; investment analysis · NSE: WABAG · BSE: 533269</span></div>
+        <div class="slogan"><span class="en">Know before you own</span><span class="ta">புரிஞ்சு வாங்குங்க!</span></div>
+      </div>
+    </div>
+    <div class="hctl">
+      <span class="price">₹1,865.6 <span class="note"><span class="en">(close 5 Nov 2026)</span><span class="ta">(5 Nov 2026 close)</span></span></span>
+      <button class="btn" id="langBtn" type="button">தமிழ்</button>
+      <button class="btn readbtn" id="readTab" type="button"><span class="en">🔊 Read this tab</span><span class="ta">🔊 இந்த tab-ஐ படிங்க</span></button>
+    </div>
+  </div>
+  <nav class="tabs" id="tabs" role="tablist"></nav>
+</header>
+<main id="main">
+
+<!-- ============ DASHBOARD ============ -->
+<section class="tab" id="t-dash" data-en="Dashboard" data-ta="Dashboard">
+  <div class="tabhead"><h2><span class="en">Q2 FY27 at a glance</span><span class="ta">Q2 FY27 ஒரே பார்வையில</span></h2><span class="code">Quarter ended 30 Sep 2026 · ₹ crore · consolidated</span></div>
+  <div class="grid g4">
+    <div class="card kpi"><span class="k"><span class="en">Revenue</span><span class="ta">Revenue</span></span><span class="v">₹1,000.2</span><span class="d up">▲ 19.9% YoY · ▲ 12.8% QoQ</span></div>
+    <div class="card kpi"><span class="k">EBITDA</span><span class="v">₹144.6</span><span class="d up">▲ 20.0% YoY · margin 14.5%</span></div>
+    <div class="card kpi"><span class="k">PAT</span><span class="v">₹104.5</span><span class="d up">▲ 23.2% YoY · ▲ 16.0% QoQ</span></div>
+    <div class="card kpi"><span class="k"><span class="en">Order book</span><span class="ta">Order book</span></span><span class="v">₹20,207</span><span class="d up"><span class="en">Record · 4.7× TTM revenue</span><span class="ta">Record · TTM revenue-ஐ விட 4.7 மடங்கு</span></span></div>
+    <div class="card kpi"><span class="k"><span class="en">Net cash (ex-HAM)</span><span class="ta">Net cash (HAM தவிர)</span></span><span class="v">₹1,144</span><span class="d up"><span class="en">15th net-cash quarter in a row</span><span class="ta">தொடர்ந்து 15-வது net-cash quarter</span></span></div>
+    <div class="card kpi"><span class="k"><span class="en">H1 operating cash flow</span><span class="ta">H1 operating cash flow</span></span><span class="v">₹224.6</span><span class="d up"><span class="en">vs −₹48.6 in H1 FY26</span><span class="ta">H1 FY26-ல −₹48.6</span></span></div>
+    <div class="card kpi"><span class="k"><span class="en">International share (H1)</span><span class="ta">International பங்கு (H1)</span></span><span class="v">54%</span><span class="d"><span class="en">Overseas rev ▲38% · India ▲5%</span><span class="ta">Overseas ▲38% · India ▲5%</span></span></div>
+    <div class="card kpi"><span class="k">P/E (TTM)</span><span class="v">28.1×</span><span class="d"><span class="en">EV/EBITDA 18.4× · FY27e P/E 25.3×</span><span class="ta">EV/EBITDA 18.4× · FY27e P/E 25.3×</span></span></div>
+  </div>
+  <div class="grid g2">
+    <div class="card"><h3><span class="en">Five quarters: revenue &amp; PAT (₹ cr)</span><span class="ta">5 quarter-ல revenue, PAT (₹ கோடி)</span></h3><div class="chart" id="c-dash5q"></div><p class="note"><span class="en">Q4 is the seasonal peak for WABAG, so read Q2 against Q2.</span><span class="ta">WABAG-க்கு Q4 தான் வழக்கமா பெரிய quarter. அதனால Q2-ஐ Q2-ஓட compare பண்ணுங்க.</span></p></div>
+    <div class="card"><h3><span class="en">CB scorecard</span><span class="ta">CB scorecard</span></h3><div class="chart" id="c-dashgauge"></div>
+      <div class="chips" style="margin-top:8px">
+        <span class="chip"><span class="en">6 Pillars</span><span class="ta">6 தூண்கள்</span> <b>42/60</b></span>
+        <span class="chip">CY <b>63</b></span><span class="chip">TG <b>60</b></span>
+        <span class="chip"><span class="en">Conviction</span><span class="ta">Conviction</span> <b>66</b></span>
+      </div>
+      <p class="note"><span class="en">Education scores, not a buy/sell/hold call.</span><span class="ta">இது கல்விக்கான score தான், buy/sell/hold சொல்லல.</span></p>
+    </div>
+  </div>
+  <div class="card"><h3><span class="en">In one breath</span><span class="ta">சுருக்கமா</span></h3>
+    <ul class="pts">
+      <li><span class="en">Growth stayed inside the 15–20% guide: revenue +20%, PAT +23%.</span><span class="ta">Growth guidance 15–20%-க்குள்ள இருக்கு: revenue +20%, PAT +23%.</span></li>
+      <li><span class="en">Overseas projects did the heavy lifting; India grew only ~5–7% in H1.</span><span class="ta">Overseas projects தான் growth-ஐ தூக்கிச்சு; India H1-ல ~5–7% தான் வளர்ந்துச்சு.</span></li>
+      <li><span class="en">Cash finally followed profit: H1 operating cash flow turned positive.</span><span class="ta">Profit-ஓட சேர்ந்து cash-உம் வந்திருக்கு: H1 operating cash flow positive ஆயிடுச்சு.</span></li>
+      <li><span class="en">The watch item is still receivables, about 272 days of revenue.</span><span class="ta">கவனிக்க வேண்டியது receivables தான் — revenue-ல சுமார் 272 நாள் அளவு.</span></li>
+    </ul>
+  </div>
+</section>
+
+<!-- ============ BUSINESS MODEL ============ -->
+<section class="tab" id="t-bm" data-en="Business Model" data-ta="Business Model" hidden>
+  <div class="tabhead"><h2><span class="en">How WABAG makes money — walk through a 3D plant</span><span class="ta">WABAG எப்படி சம்பாதிக்குது — 3D plant-ல சுத்திப் பாருங்க</span></h2>
+  <a class="btn readbtn" href="https://www.wabag.com/" target="_blank" rel="noopener"><span class="en">See real plant photos &amp; videos on wabag.com ↗</span><span class="ta">உண்மையான plant photos, videos — wabag.com ↗</span></a></div>
+  <div class="grid g2" style="grid-template-columns:repeat(auto-fit,minmax(min(100%,520px),1fr))">
+    <div class="card" style="padding:8px">
+      <div id="plant3d"><div class="ctl3d"><button class="btn" id="rot3d" type="button"><span class="en">Pause spin</span><span class="ta">சுத்தல் நிறுத்து</span></button><button class="btn" id="reset3d" type="button"><span class="en">Reset view</span><span class="ta">View reset</span></button></div></div>
+      <p class="note" style="margin:6px 4px 0"><span class="en">Drag to turn · pinch / scroll to zoom · tap a label or a unit. Illustrative model drawn by CB, not a real WABAG site.</span><span class="ta">இழுத்து சுத்துங்க · pinch/scroll zoom · label-ஐ தொடுங்க. இது CB வரைஞ்ச model, உண்மையான WABAG site இல்ல.</span></p>
+    </div>
+    <div class="card" id="info3d"><h3 id="info3dT"><span class="en">Tap any unit in the plant</span><span class="ta">Plant-ல எதாவது unit-ஐ தொடுங்க</span></h3><div id="info3dB"><ul class="pts"><li><span class="en">Left side: seawater → desalination → clean water to the city.</span><span class="ta">இடது பக்கம்: கடல் நீர் → desalination → நகரத்துக்கு சுத்தமான தண்ணி.</span></li><li><span class="en">Right side: city sewage → treatment → reuse water + biogas.</span><span class="ta">வலது பக்கம்: நகர sewage → treatment → reuse தண்ணி + biogas.</span></li><li><span class="en">WABAG designs, builds (EPC) and then runs (O&amp;M) such plants for cities and industry.</span><span class="ta">இப்படிப்பட்ட plants-ஐ WABAG design பண்ணி, கட்டி (EPC), அப்புறம் நடத்துது (O&amp;M).</span></li></ul></div></div>
+  </div>
+  <div class="card flow"><h3><span class="en">From source to customer — the money map (H1 FY27, ₹ cr)</span><span class="ta">Source-ல இருந்து customer வரை — பண வரைபடம் (H1 FY27, ₹ கோடி)</span></h3><div class="chart" id="c-flow"></div>
+    <div class="card" id="flowInfo" style="margin-top:10px;background:var(--bg)"><span class="en">Tap any box to see what it means.</span><span class="ta">எந்த box-ஐ தொட்டாலும் அதோட அர்த்தம் வரும்.</span></div>
+    <p style="margin:10px 0 0;font-weight:800"><span class="en">Revenue formula: Revenue ≈ order book executed in the year (about a quarter of the book) + O&amp;M fees from plants it runs.</span><span class="ta">Revenue formula: Revenue ≈ அந்த வருஷம் execute ஆன order book (book-ல சுமார் கால் பங்கு) + நடத்துற plants-ல வர்ற O&amp;M fees.</span></p>
+  </div>
+  <div class="card"><h3><span class="en">Abbreviations used</span><span class="ta">சுருக்கங்கள்</span></h3>
+    <div class="grid g3 note" style="font-size:.86rem;color:var(--ink)">
+      <div><b>EPC</b> Engineering, Procurement &amp; Construction<br><b>EP</b> Engineering &amp; Procurement (supply, no civil work)<br><b>DBO</b> Design-Build-Operate<br><b>O&amp;M</b> Operation &amp; Maintenance<br><b>HAM</b> Hybrid Annuity Model<br><b>BOOT</b> Build-Own-Operate-Transfer</div>
+      <div><b>SWRO</b> Sea Water Reverse Osmosis<br><b>BWRO</b> Brackish Water Reverse Osmosis<br><b>RO</b> Reverse Osmosis<br><b>ETP</b> Effluent Treatment Plant<br><b>STP</b> Sewage Treatment Plant<br><b>ZLD</b> Zero Liquid Discharge</div>
+      <div><b>UPW</b> Ultra-Pure Water<br><b>CBG</b> Compressed Bio-Gas<br><b>MLD</b> Million Litres per Day<br><b>RIL</b> Reliance Industries Ltd<br><b>EBITDA</b> Earnings before interest, tax, depreciation &amp; amortisation<br><b>PAT</b> Profit After Tax</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SEGMENTS ============ -->
+<section class="tab" id="t-seg" data-en="Segments" data-ta="Segments" hidden>
+  <div class="tabhead"><h2><span class="en">Segment performance</span><span class="ta">Segment performance</span></h2><span class="code">₹ crore</span></div>
+  <div class="subtabs" data-group="seg">
+    <button type="button" data-sub="seg-geo" aria-selected="true"><span class="en">India vs Overseas</span><span class="ta">India vs Overseas</span></button>
+    <button type="button" data-sub="seg-off"><span class="en">EPC vs O&amp;M</span><span class="ta">EPC vs O&amp;M</span></button>
+    <button type="button" data-sub="seg-cus"><span class="en">Municipal vs Industrial</span><span class="ta">Municipal vs Industrial</span></button>
+  </div>
+  <div class="sub-p" id="seg-geo">
+    <div class="grid g2">
+      <div class="card"><h3><span class="en">Quarterly revenue by region</span><span class="ta">Region வாரியா quarter revenue</span></h3><div class="chart" id="c-geo"></div></div>
+      <div class="card"><h3><span class="en">Overseas segment result (profit) jumped</span><span class="ta">Overseas segment result (லாபம்) தாவிடுச்சு</span></h3><div class="chart" id="c-rowres"></div></div>
+    </div>
+    <div class="card tw"><table><thead><tr><th>₹ cr</th><th>Q2 FY27</th><th>Q1 FY27</th><th>Q2 FY26</th><th>QoQ</th><th>YoY</th></tr></thead><tbody>
+      <tr><td><span class="en">Overseas (Rest of World) revenue</span><span class="ta">Overseas revenue</span></td><td>544.4</td><td>466.0</td><td>431.3</td><td class="up">+16.8%</td><td class="up">+26.2%</td></tr>
+      <tr><td><span class="en">Overseas segment result</span><span class="ta">Overseas segment result</span></td><td>171.9</td><td>111.3</td><td>113.2</td><td class="up">+54.4%</td><td class="up">+51.9%</td></tr>
+      <tr><td><span class="en">India revenue (≈, derived)</span><span class="ta">India revenue (≈, கணக்கிட்டது)</span></td><td>≈456</td><td>≈421</td><td>≈403</td><td class="up">+8.5%</td><td class="up">+13.2%</td></tr>
+    </tbody></table></div>
+    <div class="card"><ul class="pts">
+      <li><span class="en">H1 overseas revenue ₹1,010 cr (+35%) is now bigger than India ₹877 cr (+7%).</span><span class="ta">H1 overseas revenue ₹1,010 கோடி (+35%), இப்போ India-வ (₹877 கோடி, +7%) விட பெருசு.</span></li>
+      <li><span class="en">Overseas gave ~83% of the H1 revenue increase.</span><span class="ta">H1 revenue ஏற்றத்துல ~83% overseas-ல இருந்து தான்.</span></li>
+      <li><span class="en">Middle East desalination (Saudi, Kuwait, UAE) is the engine.</span><span class="ta">Middle East desalination (Saudi, Kuwait, UAE) தான் engine.</span></li>
+    </ul></div>
+  </div>
+  <div class="sub-p" id="seg-off" hidden>
+    <div class="grid g2">
+      <div class="card"><h3><span class="en">H1 FY27 revenue mix</span><span class="ta">H1 FY27 revenue mix</span></h3><div class="chart" id="c-offrev"></div></div>
+      <div class="card"><h3><span class="en">Order book mix (₹20,207 cr)</span><span class="ta">Order book mix (₹20,207 கோடி)</span></h3><div class="chart" id="c-offob"></div></div>
+    </div>
+    <div class="card"><ul class="pts">
+      <li><span class="en">EPC (build) ₹1,538 cr = 82% of H1 revenue, up 22%.</span><span class="ta">EPC (கட்டுறது) ₹1,538 கோடி = H1 revenue-ல 82%, +22%.</span></li>
+      <li><span class="en">O&amp;M (run) ≈ ₹330 cr = 18%, but 32% of the order book — slow, steady annuity money.</span><span class="ta">O&amp;M (நடத்துறது) ≈ ₹330 கோடி = 18%; ஆனா order book-ல 32% — மெதுவா, தொடர்ந்து வர்ற annuity பணம்.</span></li>
+      <li><span class="en">EPC share of backlog rose to 68% (62% a year ago) after mega desal wins.</span><span class="ta">Mega desal orders-ஆல backlog-ல EPC பங்கு 68% ஆச்சு (ஒரு வருஷம் முன்ன 62%).</span></li>
+    </ul></div>
+  </div>
+  <div class="sub-p" id="seg-cus" hidden>
+    <div class="grid g2">
+      <div class="card"><h3><span class="en">H1 FY27 revenue by customer</span><span class="ta">Customer வாரியா H1 revenue</span></h3><div class="chart" id="c-cusrev"></div></div>
+      <div class="card"><h3><span class="en">Order book by customer &amp; offering (₹ cr)</span><span class="ta">Customer, offering வாரியா order book (₹ கோடி)</span></h3><div class="chart" id="c-cusob"></div></div>
+    </div>
+    <div class="card"><ul class="pts">
+      <li><span class="en">Municipal (cities, govts) ₹1,472 cr = 79% of H1 revenue, +23%.</span><span class="ta">Municipal (நகரங்கள், அரசு) ₹1,472 கோடி = H1 revenue-ல 79%, +23%.</span></li>
+      <li><span class="en">Industrial ₹396 cr = 21%, +12%; but 33% of H1 new orders (RIL, refineries).</span><span class="ta">Industrial ₹396 கோடி = 21%, +12%; ஆனா H1 புது orders-ல 33% (RIL, refineries).</span></li>
+      <li><span class="en">Goal: industrial at 20–25% of backlog; now ~19%.</span><span class="ta">இலக்கு: backlog-ல industrial 20–25%; இப்போ ~19%.</span></li>
+    </ul></div>
+  </div>
+</section>
+
+<!-- ============ FINANCIALS ============ -->
+<section class="tab" id="t-fin" data-en="Financials" data-ta="Financials" hidden>
+  <div class="tabhead"><h2><span class="en">Results: three quarters side by side</span><span class="ta">Results: மூணு quarter பக்கத்துல பக்கத்துல</span></h2><span class="code">₹ crore · consolidated</span></div>
+  <div class="card tw"><table><thead><tr><th></th><th>Q2 FY27</th><th>Q1 FY27</th><th>Q2 FY26</th><th>QoQ</th><th>YoY</th></tr></thead><tbody>
+    <tr><td><span class="en">Revenue from operations</span><span class="ta">Revenue</span></td><td>1,000.2</td><td>886.8</td><td>834.5</td><td class="up">+12.8%</td><td class="up">+19.9%</td></tr>
+    <tr><td>EBITDA</td><td>144.6</td><td>116.3</td><td>120.5</td><td class="up">+24.3%</td><td class="up">+20.0%</td></tr>
+    <tr><td><span class="en">EBITDA margin</span><span class="ta">EBITDA margin</span></td><td>14.5%</td><td>13.1%</td><td>14.4%</td><td class="up">+140 bps</td><td class="up">+10 bps</td></tr>
+    <tr><td>PAT</td><td>104.5</td><td>90.1</td><td>84.8</td><td class="up">+16.0%</td><td class="up">+23.2%</td></tr>
+    <tr><td><span class="en">PAT margin</span><span class="ta">PAT margin</span></td><td>10.4%</td><td>10.2%</td><td>10.2%</td><td class="up">+20 bps</td><td class="up">+20 bps</td></tr>
+    <tr><td><span class="en">Order book (period end)</span><span class="ta">Order book (முடிவில்)</span></td><td>20,207</td><td>19,394</td><td>≈14,750</td><td class="up">+4.2%</td><td class="up">+37%</td></tr>
+  </tbody></table></div>
+  <div class="grid g2">
+    <div class="card"><h3><span class="en">Revenue, EBITDA, PAT — 3 quarters</span><span class="ta">Revenue, EBITDA, PAT — 3 quarters</span></h3><div class="chart" id="c-fin3"></div></div>
+    <div class="card"><h3><span class="en">Growth leaks or gains? (YoY)</span><span class="ta">Growth கசியுதா, கூடுதா? (YoY)</span></h3><div class="chart" id="c-leak"></div><p class="note"><span class="en">PAT grew faster than revenue: lower interest, net interest income on cash.</span><span class="ta">Revenue-ஐ விட PAT வேகமா வளர்ந்துச்சு: interest குறைவு, cash-ல interest வருமானம்.</span></p></div>
+  </div>
+  <div class="grid g2">
+    <div class="card tw"><h3><span class="en">Half-year view</span><span class="ta">அரை வருஷ நிலவரம்</span></h3><table><thead><tr><th>₹ cr</th><th>H1 FY27</th><th>H1 FY26</th><th>YoY</th></tr></thead><tbody>
+      <tr><td>Revenue</td><td>1,887.0</td><td>1,568.5</td><td class="up">+20.3%</td></tr>
+      <tr><td>EBITDA</td><td>260.8</td><td>216.1</td><td class="up">+20.7%</td></tr>
+      <tr><td>EBITDA margin</td><td>13.8%</td><td>13.8%</td><td>flat</td></tr>
+      <tr><td>PAT</td><td>194.7</td><td>150.6</td><td class="up">+29.3%</td></tr>
+      <tr><td><span class="en">Standalone revenue</span><span class="ta">Standalone revenue</span></td><td>1,587.1</td><td>1,330.2</td><td class="up">+19.3%</td></tr>
+      <tr><td><span class="en">Standalone PAT</span><span class="ta">Standalone PAT</span></td><td>168.7</td><td>131.2</td><td class="up">+28.6%</td></tr>
+    </tbody></table></div>
+    <div class="card"><h3><span class="en">Margin vs guided band</span><span class="ta">Margin vs guidance band</span></h3><div class="chart" id="c-mband"></div><p class="note"><span class="en">Guide: 13–15% medium term, 13–14% "realistic" for FY27.</span><span class="ta">Guidance: medium term 13–15%, FY27-க்கு 13–14%.</span></p></div>
+  </div>
+</section>
+
+<!-- ============ METRICS ============ -->
+<section class="tab" id="t-met" data-en="Metrics" data-ta="Metrics" hidden>
+  <div class="tabhead"><h2><span class="en">Key metrics, grouped</span><span class="ta">முக்கிய metrics, group-ஆ</span></h2></div>
+  <div class="subtabs" data-group="met">
+    <button type="button" data-sub="met-g" aria-selected="true"><span class="en">Growth</span><span class="ta">Growth</span></button>
+    <button type="button" data-sub="met-p"><span class="en">Profitability</span><span class="ta">Profitability</span></button>
+    <button type="button" data-sub="met-e"><span class="en">Efficiency &amp; working capital</span><span class="ta">Efficiency, working capital</span></button>
+    <button type="button" data-sub="met-o"><span class="en">Order book</span><span class="ta">Order book</span></button>
+    <button type="button" data-sub="met-l"><span class="en">Liquidity &amp; capital</span><span class="ta">Liquidity, capital</span></button>
+  </div>
+  <div class="sub-p" id="met-g"><div class="grid g2"><div class="card"><h3>YoY growth, Q2 FY27</h3><div class="chart" id="c-mg"></div></div><div class="card tw"><table><thead><tr><th>Metric</th><th>Actual</th><th>Change</th></tr></thead><tbody>
+    <tr><td>Revenue Q2</td><td>₹1,000.2 cr</td><td class="up">+19.9%</td></tr><tr><td>EBITDA Q2</td><td>₹144.6 cr</td><td class="up">+20.0%</td></tr><tr><td>PAT Q2</td><td>₹104.5 cr</td><td class="up">+23.2%</td></tr><tr><td><span class="en">Overseas revenue Q2</span><span class="ta">Overseas revenue Q2</span></td><td>₹544.4 cr</td><td class="up">+26.2%</td></tr><tr><td><span class="en">Order book</span><span class="ta">Order book</span></td><td>₹20,207 cr</td><td class="up">+37%</td></tr></tbody></table></div></div></div>
+  <div class="sub-p" id="met-p" hidden><div class="grid g2"><div class="card"><h3><span class="en">Margins, 5 quarters</span><span class="ta">Margins, 5 quarters</span></h3><div class="chart" id="c-mp"></div></div><div class="card tw"><table><thead><tr><th>Metric</th><th>Actual</th><th>Change</th></tr></thead><tbody>
+    <tr><td>EBITDA margin Q2</td><td>14.5%</td><td class="up">+10 bps YoY</td></tr><tr><td>PAT margin Q2</td><td>10.4%</td><td class="up">+20 bps YoY</td></tr><tr><td>EBITDA margin H1</td><td>13.8%</td><td>flat</td></tr><tr><td><span class="en">Overseas result / revenue Q2</span><span class="ta">Overseas result / revenue Q2</span></td><td>31.6%</td><td class="up">+530 bps YoY</td></tr><tr><td>RoCE (co.)</td><td>~19.6%</td><td>—</td></tr><tr><td>RoE (co.)</td><td>~16%</td><td>—</td></tr></tbody></table></div></div></div>
+  <div class="sub-p" id="met-e" hidden><div class="grid g2"><div class="card"><h3><span class="en">Receivable days (total receivables ÷ revenue × 365)</span><span class="ta">Receivable days</span></h3><div class="chart" id="c-me"></div></div><div class="card tw"><table><thead><tr><th>Metric</th><th>Actual</th><th>Change</th></tr></thead><tbody>
+    <tr><td><span class="en">Trade receivables (current + non-current)</span><span class="ta">Trade receivables (மொத்தம்)</span></td><td>₹3,174.7 cr</td><td>+₹3 cr vs Mar</td></tr><tr><td>Receivable days</td><td>≈272</td><td class="up">−21 days vs Mar (≈293)</td></tr><tr><td><span class="en">Net working capital days (co., Q1)</span><span class="ta">Net working capital days (co., Q1)</span></td><td>108</td><td><span class="en">guide 100–110</span><span class="ta">guide 100–110</span></td></tr><tr><td><span class="en">Cash used in receivables (H1)</span><span class="ta">Receivables-ல போன cash (H1)</span></td><td>₹80.7 cr</td><td class="up">vs ₹326.7 cr</td></tr></tbody></table></div></div></div>
+  <div class="sub-p" id="met-o" hidden><div class="grid g2"><div class="card"><h3><span class="en">Order book trend (₹ cr)</span><span class="ta">Order book trend (₹ கோடி)</span></h3><div class="chart" id="c-mo"></div></div><div class="card tw"><table><thead><tr><th>Metric</th><th>Actual</th><th>Change</th></tr></thead><tbody>
+    <tr><td>Order book</td><td>₹20,207 cr</td><td class="up">+37% YoY</td></tr><tr><td>H1 order intake</td><td>₹5,191 cr</td><td>EPC ₹4,718 · O&amp;M ₹473</td></tr><tr><td>Q2 order intake (≈)</td><td>≈₹1,760 cr</td><td class="wr">Q1 ≈₹3,430 cr</td></tr><tr><td>Book-to-bill (book ÷ TTM rev)</td><td>4.7×</td><td>—</td></tr><tr><td>H1 intake ÷ H1 revenue</td><td>2.8×</td><td>—</td></tr></tbody></table></div></div></div>
+  <div class="sub-p" id="met-l" hidden><div class="grid g2"><div class="card"><h3><span class="en">Net cash (ex-HAM) and debt (₹ cr)</span><span class="ta">Net cash (HAM தவிர), debt (₹ கோடி)</span></h3><div class="chart" id="c-ml"></div></div><div class="card tw"><table><thead><tr><th>Metric</th><th>Sep 2026</th><th>Mar 2026</th></tr></thead><tbody>
+    <tr><td>Gross cash</td><td>₹1,218.2 cr</td><td>—</td></tr><tr><td>Net cash ex-HAM</td><td>₹1,144.2 cr</td><td>₹950 cr</td></tr><tr><td>Borrowings ex-HAM</td><td>₹66.1 cr</td><td>₹109.1 cr</td></tr><tr><td><span class="en">Total borrowings (incl. HAM)</span><span class="ta">மொத்த borrowings (HAM உட்பட)</span></td><td>₹182.1 cr</td><td>₹225.5 cr</td></tr><tr><td>Cash &amp; equivalents</td><td>₹875.5 cr</td><td>₹785.1 cr</td></tr></tbody></table></div></div></div>
+</section>
+
+<!-- ============ CASH FLOW & RATIOS ============ -->
+<section class="tab" id="t-cf" data-en="Cash Flow &amp; Ratios" data-ta="Cash Flow, Ratios" hidden>
+  <div class="tabhead"><h2><span class="en">Did profit turn into cash?</span><span class="ta">Profit, cash-ஆ மாறுச்சா?</span></h2><span class="code">H1, ₹ crore</span></div>
+  <div class="grid g2">
+    <div class="card"><h3><span class="en">Operating cash flow: H1 FY26 vs H1 FY27</span><span class="ta">Operating cash flow: H1 FY26 vs H1 FY27</span></h3><div class="chart" id="c-ocf"></div></div>
+    <div class="card"><h3><span class="en">Cash conversion (OCF ÷ PAT)</span><span class="ta">Cash conversion (OCF ÷ PAT)</span></h3><div class="chart" id="c-conv"></div></div>
+  </div>
+  <div class="grid g2">
+    <div class="card"><h3><span class="en">Working-capital days</span><span class="ta">Working capital days</span></h3><div class="chart" id="c-wcd"></div></div>
+    <div class="card tw"><h3><span class="en">Key ratios</span><span class="ta">முக்கிய ratios</span></h3><table><thead><tr><th>Ratio</th><th>Value</th><th><span class="en">Read</span><span class="ta">அர்த்தம்</span></th></tr></thead><tbody>
+      <tr><td>EBITDA margin (TTM)</td><td>13.4%</td><td><span class="en">Inside 13–15% band</span><span class="ta">13–15% band-க்குள்ள</span></td></tr>
+      <tr><td>PAT margin (TTM)</td><td>9.7%</td><td><span class="en">Steady</span><span class="ta">நிலையா</span></td></tr>
+      <tr><td>RoCE (co.)</td><td>~19.6%</td><td><span class="en">Target &gt;20%</span><span class="ta">இலக்கு &gt;20%</span></td></tr>
+      <tr><td>RoE (co.)</td><td>~16%</td><td><span class="en">Target &gt;15%</span><span class="ta">இலக்கு &gt;15%</span></td></tr>
+      <tr><td>Net debt / equity</td><td><span class="en">Net cash</span><span class="ta">Net cash</span></td><td class="up"><span class="en">No leverage risk</span><span class="ta">கடன் பயம் இல்ல</span></td></tr>
+      <tr><td>Receivable days</td><td>≈272</td><td class="wr"><span class="en">High, improving</span><span class="ta">அதிகம், குறையுது</span></td></tr>
+      <tr><td>NWC days (Q1, co.)</td><td>108</td><td><span class="en">Guide 100–110</span><span class="ta">Guide 100–110</span></td></tr>
+    </tbody></table></div>
+  </div>
+  <div class="card"><ul class="pts">
+    <li><span class="en">OCF swung by ₹273 cr: receivables absorbed ₹81 cr vs ₹327 cr last year.</span><span class="ta">OCF ₹273 கோடி மாறுச்சு: receivables-ல போனது ₹81 கோடி தான் (போன வருஷம் ₹327 கோடி).</span></li>
+    <li><span class="en">Non-current receivables (long-pending dues) fell ₹54 cr to ₹594 cr — old money coming back.</span><span class="ta">Non-current receivables (ரொம்ப நாள் pending) ₹54 கோடி குறைஞ்சு ₹594 கோடி — பழைய பணம் திரும்பி வருது.</span></li>
+    <li><span class="en">Still, ₹3,175 cr sits with customers — about 9 months of revenue.</span><span class="ta">ஆனாலும் ₹3,175 கோடி customers கிட்ட இருக்கு — சுமார் 9 மாச revenue.</span></li>
+  </ul></div>
+</section>
+
+<!-- ============ VALUATIONS ============ -->
+<section class="tab" id="t-val" data-en="Valuations" data-ta="Valuations" hidden>
+  <div class="tabhead"><h2><span class="en">What the price already assumes</span><span class="ta">Price ஏற்கனவே எதை எதிர்பார்க்குது</span></h2><span class="code">Price ₹1,865.6 · ~6.24 cr shares · M-cap ≈ ₹11,640 cr</span></div>
+  <div class="grid g4">
+    <div class="card kpi"><span class="k">P/E TTM</span><span class="v">28.1×</span><span class="d">EPS ₹66.4</span></div>
+    <div class="card kpi"><span class="k">P/E FY27e</span><span class="v">25.3×</span><span class="d"><span class="en">Consensus PAT ≈ ₹460 cr</span><span class="ta">Consensus PAT ≈ ₹460 கோடி</span></span></div>
+    <div class="card kpi"><span class="k">EV/EBITDA TTM</span><span class="v">18.4×</span><span class="d">EV ≈ ₹10,497 cr</span></div>
+    <div class="card kpi"><span class="k">M-cap / order book</span><span class="v">0.58×</span><span class="d"><span class="en">₹1 of value per ₹1.7 of orders</span><span class="ta">₹1 value-க்கு ₹1.7 orders</span></span></div>
+  </div>
+  <div class="grid g2">
+    <div class="card"><h3><span class="en">52-week range</span><span class="ta">52 வார range</span></h3><div class="chart" id="c-52w"></div></div>
+    <div class="card"><h3><span class="en">P/E strip: where 28× sits in the last year</span><span class="ta">P/E strip: 28× கடந்த ஒரு வருஷத்துல எங்க இருக்கு</span></h3><div class="chart" id="c-pestrip"></div><p class="note"><span class="en">Approx. trailing P/E at the Jan 2026 low and Sep 2026 high (CB est.).</span><span class="ta">Jan 2026 low, Sep 2026 high-ல தோராய trailing P/E (CB est.).</span></p></div>
+  </div>
+  <div class="card"><ul class="pts">
+    <li><span class="en">At 28× trailing, the price assumes ~20% earnings growth continues for several years.</span><span class="ta">28× trailing-ல, ~20% earnings growth பல வருஷம் தொடரும்னு price நினைக்குது.</span></li>
+    <li><span class="en">Net cash is ~10% of market value — a cushion, not the story.</span><span class="ta">Net cash market value-ல ~10% — ஒரு cushion, முக்கிய கதை இல்ல.</span></li>
+    <li><span class="en">FY28e P/E falls to ~20.6× if consensus PAT of ~₹566 cr comes through.</span><span class="ta">Consensus FY28 PAT ~₹566 கோடி வந்தா P/E ~20.6× ஆகும்.</span></li>
+  </ul></div>
+</section>
+
+<!-- ============ 5 KEY TAKEAWAYS ============ -->
+<section class="tab" id="t-key" data-en="5 Key Takeaways" data-ta="5 முக்கிய பாடங்கள்" hidden>
+  <h2><span class="en">5 key takeaways</span><span class="ta">5 முக்கிய பாடங்கள்</span></h2>
+  <div class="grid g3" id="keyCards"></div>
+</section>
+
+<!-- ============ 6 PILLARS ============ -->
+<section class="tab" id="t-pil" data-en="6 Pillars" data-ta="6 தூண்கள்" hidden>
+  <div class="tabhead"><h2><span class="en">6 Pillars: 42 / 60</span><span class="ta">6 தூண்கள்: 42 / 60</span></h2></div>
+  <div class="card"><div class="chart" id="c-temple"></div></div>
+  <div class="grid g3" id="pilCards"></div>
+  <p class="note"><span class="en">How graded: each pillar 1–10 against WABAG's own history and Indian water/EPC peers; 8+ = clear strength, 5–7 = average with a caveat, &lt;5 = weakness.</span><span class="ta">எப்படி மதிப்பிட்டோம்: ஒவ்வொரு தூணும் 1–10, WABAG-ஓட பழைய record, India water/EPC peers-ஓட compare பண்ணி; 8+ = பலம், 5–7 = சராசரி, &lt;5 = பலவீனம்.</span></p>
+</section>
+
+<!-- ============ BIG BET ============ -->
+<section class="tab" id="t-bet" data-en="Big Bet: Desal &amp; New Energy" data-ta="பெரிய பந்தயம்: Desal, New Energy" hidden>
+  <div class="tabhead"><h2><span class="en">The big bet: mega desalination + "Future Energy" water</span><span class="ta">பெரிய பந்தயம்: Mega desalination + "Future Energy" தண்ணி</span></h2></div>
+  <div class="grid g2">
+    <div class="card"><h3><span class="en">The new-business wheel</span><span class="ta">புது business சக்கரம்</span></h3><div class="chart" id="c-wheel"></div></div>
+    <div class="card"><h3><span class="en">Done vs guided milestones</span><span class="ta">முடிஞ்சது vs சொன்னது</span></h3><div class="chart" id="c-mile"></div></div>
+  </div>
+  <div class="grid g2">
+    <div class="card"><h3><span class="en">Who is ahead?</span><span class="ta">யாரு முன்னால?</span></h3><ul class="pts">
+      <li><span class="en">Desal: global leaders (Acciona, Veolia, Metito, Doosan) compete in the Gulf; WABAG is the main Indian name winning there.</span><span class="ta">Desal: Gulf-ல global leaders (Acciona, Veolia, Metito, Doosan) போட்டி; அங்க ஜெயிக்கிற முக்கிய Indian பெயர் WABAG.</span></li>
+      <li><span class="en">India: competes with EPC firms such as Enviro Infra Engineers (EIEL) and L&amp;T's water business for municipal STPs.</span><span class="ta">India-ல municipal STP-க்கு Enviro Infra Engineers (EIEL), L&amp;T water business மாதிரி EPC firms-ஓட போட்டி.</span></li>
+      <li><span class="en">UPW &amp; CBG: early stage — first orders won (H1 FY26), not yet a revenue line.</span><span class="ta">UPW, CBG: ஆரம்ப நிலை — முதல் orders கிடைச்சிருக்கு (H1 FY26), இன்னும் தனி revenue line இல்ல.</span></li>
+    </ul></div>
+    <div class="card" style="background:var(--water3);border-color:var(--water)"><h3><span class="en">How WABAG got here</span><span class="ta">WABAG இங்க எப்படி வந்துச்சு</span></h3><ul class="pts">
+      <li><span class="en">Roots in a European water firm founded in 1924; Indian arm set up in Chennai.</span><span class="ta">1924-ல ஆரம்பிச்ச European water company-ல வேர்; Indian unit Chennai-ல.</span></li>
+      <li><span class="en">Indian management bought out the parent group in 2007 — the child acquired the mother.</span><span class="ta">2007-ல Indian management parent group-ஐயே வாங்கிடுச்சு — குழந்தை அம்மாவை வாங்கின கதை.</span></li>
+      <li><span class="en">Listed 2010; moved from EPC contractor to technology-led, asset-light, net-cash company.</span><span class="ta">2010-ல list ஆச்சு; சாதாரண EPC contractor-ல இருந்து technology-led, asset-light, net-cash company ஆச்சு.</span></li>
+    </ul></div>
+  </div>
+</section>
+
+<!-- ============ VALUE CHAIN ============ -->
+<section class="tab" id="t-vc" data-en="Sector Need &amp; Value Chain" data-ta="Sector தேவை, Value Chain" hidden>
+  <div class="tabhead"><h2><span class="en">The water loop — where WABAG plays</span><span class="ta">தண்ணி சுழற்சி — WABAG எங்க விளையாடுது</span></h2></div>
+  <div class="card"><div class="chart" id="c-loop"></div><p class="note"><span class="en">Orange = WABAG's play (design, technology, build, run plants). Grey = others (pipes, networks, utilities' billing).</span><span class="ta">Orange = WABAG-ஓட இடம் (plant design, technology, கட்டுறது, நடத்துறது). Grey = மத்தவங்க (pipes, networks, billing).</span></p></div>
+  <div class="grid g3">
+    <div class="card"><h3><span class="en">India need</span><span class="ta">India தேவை</span></h3><ul class="pts"><li><span class="en">Cities treat only part of their sewage; Namami Gange, AMRUT and Jal Jeevan push STPs and drinking water.</span><span class="ta">நகரங்கள் sewage-ல ஒரு பகுதியை தான் treat பண்ணுது; Namami Gange, AMRUT, Jal Jeevan — STP, குடிநீர் projects.</span></li><li><span class="en">Coastal cities (Chennai first) turn to desal.</span><span class="ta">கடலோர நகரங்கள் (முதல்ல Chennai) desal பக்கம் போகுது.</span></li></ul></div>
+    <div class="card"><h3><span class="en">Gulf need</span><span class="ta">Gulf தேவை</span></h3><ul class="pts"><li><span class="en">Almost no rivers: drinking water = desalination.</span><span class="ta">ஆறு கிட்டத்தட்ட இல்ல: குடிநீர் = desalination.</span></li><li><span class="en">Saudi, Kuwait, UAE replacing old thermal plants with RO.</span><span class="ta">Saudi, Kuwait, UAE பழைய thermal plants-ஐ RO-வா மாத்துது.</span></li></ul></div>
+    <div class="card"><h3><span class="en">Industry need</span><span class="ta">Industry தேவை</span></h3><ul class="pts"><li><span class="en">Refineries, data centres and chip fabs need reuse, ZLD and ultra-pure water.</span><span class="ta">Refineries, data centres, chip fabs-க்கு reuse, ZLD, ultra-pure water தேவை.</span></li><li><span class="en">RIL Jamnagar desal (302 MLD) is a live example.</span><span class="ta">RIL Jamnagar desal (302 MLD) நேரடி உதாரணம்.</span></li></ul></div>
+  </div>
+</section>
+
+<!-- ============ SHARE MOVE ============ -->
+<section class="tab" id="t-move" data-en="Share Move Reasons" data-ta="Share அசைவு காரணம்" hidden>
+  <div class="tabhead"><h2><span class="en">Why the share moved</span><span class="ta">Share ஏன் அசைஞ்சது</span></h2><span class="code">52-wk ₹1,033 (27 Jan 26) → ₹2,319 (11 Sep 26) → ₹1,865.6</span></div>
+  <div class="card"><div class="chart" id="c-seesaw"></div></div>
+  <div class="card"><h3><span class="en">Dated events</span><span class="ta">தேதி வாரியா நிகழ்வுகள்</span></h3><div class="chart" id="c-events"></div></div>
+  <div class="card"><ul class="pts">
+    <li><span class="en">The stock doubled from the Jan low on a run of big orders; it then gave back ~20% from the Sep high.</span><span class="ta">பெரிய orders வரிசையா வந்ததால Jan low-ல இருந்து share இரண்டு மடங்கு ஆச்சு; Sep high-ல இருந்து ~20% இறங்கிடுச்சு.</span></li>
+    <li><span class="en">The fall looks like profit-taking after a fast run (CB view); no company-specific bad news was found.</span><span class="ta">வேகமான ஏற்றத்துக்கு அப்புறம் profit-taking மாதிரி தெரியுது (CB view); company-ல கெட்ட செய்தி எதுவும் இல்ல.</span></li>
+    <li><span class="en">Results came on 5 Nov; the first full market reaction is today, 6 Nov.</span><span class="ta">Results 5 Nov வந்துச்சு; முழு market reaction இன்னைக்கு, 6 Nov.</span></li>
+  </ul></div>
+</section>
+
+<!-- ============ TRIGGERS & CYCLE ============ -->
+<section class="tab" id="t-tc" data-en="Triggers &amp; Cycle" data-ta="Triggers, Cycle" hidden>
+  <div class="tabhead"><h2><span class="en">Cycle and triggers</span><span class="ta">Cycle, triggers</span></h2><div class="chips"><span class="chip">CY <b>63</b></span><span class="chip">TG <b>60</b></span></div></div>
+  <div class="grid g2">
+    <div class="card"><h3><span class="en">Cycle clock</span><span class="ta">Cycle கடிகாரம்</span></h3><div class="chart" id="c-clock"></div></div>
+    <div class="card"><h3><span class="en">Cycle reading</span><span class="ta">Cycle நிலவரம்</span></h3><ul class="pts">
+      <li><span class="en">Type: capex / order-book cycle + structural water growth.</span><span class="ta">வகை: capex / order-book cycle + நீண்டகால water growth.</span></li>
+      <li><span class="en">Sector phase P3 Expansion (70): record backlogs, Gulf desal tenders, India STPs steady.</span><span class="ta">Sector phase P3 Expansion (70): record backlog, Gulf desal tenders, India STP நிலையா.</span></li>
+      <li><span class="en">Stock 55: scaling business 80 · margin flat at top of band 50 · P/E in band 55 · price Stage 3 (top-forming, CB est.) 35.</span><span class="ta">Stock 55: வளர்ற business 80 · margin band மேல நிலையா 50 · P/E band-க்குள்ள 55 · price Stage 3 (CB est.) 35.</span></li>
+      <li><span class="en">CY = (70 + 55) ÷ 2 ≈ 63.</span><span class="ta">CY = (70 + 55) ÷ 2 ≈ 63.</span></li>
+    </ul></div>
+  </div>
+  <div class="card tw"><h3><span class="en">Trigger table (points = Impact × Certainty × Timing × Priced-in)</span><span class="ta">Trigger table (points = Impact × Certainty × Timing × Priced-in)</span></h3>
+    <table><thead><tr><th>Trigger</th><th>±</th><th>I</th><th>C</th><th>W</th><th>P</th><th>Pts</th><th><span class="en">Watch</span><span class="ta">கவனிங்க</span></th></tr></thead><tbody id="trigBody"></tbody></table>
+    <p class="note"><span class="en">TG = 50 + 8 × (1.47 + 1.40 + 0.64) − 8 × (0.84 + 0.84 + 0.56) ≈ 60.</span><span class="ta">TG = 50 + 8 × (1.47 + 1.40 + 0.64) − 8 × (0.84 + 0.84 + 0.56) ≈ 60.</span></p>
+  </div>
+  <div class="card"><h3><span class="en">Trigger timeline</span><span class="ta">Trigger timeline</span></h3><div class="chart" id="c-trigtl"></div></div>
+  <div class="card"><h3><span class="en">What would change this view</span><span class="ta">இந்த பார்வை எப்போ மாறும்</span></h3><ul class="pts">
+    <li><span class="en">Receivable days back above 300, or OCF negative again → weaker.</span><span class="ta">Receivable days மறுபடி 300-க்கு மேல, அல்லது OCF negative → பலவீனம்.</span></li>
+    <li><span class="en">Cost overrun on a mega fixed-price desal job → margin hit.</span><span class="ta">Mega desal job-ல cost overrun → margin அடி.</span></li>
+    <li><span class="en">Industrial/UPW orders crossing 25% of backlog → stronger.</span><span class="ta">Industrial/UPW orders backlog-ல 25% தாண்டினா → பலம்.</span></li>
+  </ul></div>
+</section>
+
+<!-- ============ SWOT ============ -->
+<section class="tab" id="t-swot" data-en="SWOT" data-ta="SWOT" hidden>
+  <h2>SWOT</h2>
+  <div class="card"><div class="chart" id="c-swot"></div></div>
+</section>
+
+<!-- ============ SELF-CHECK ============ -->
+<section class="tab" id="t-sc" data-en="Investor Self-Check" data-ta="Investor Self-Check" hidden>
+  <div class="tabhead"><h2><span class="en">CB investor self-check</span><span class="ta">CB investor self-check</span></h2><div class="chart" id="c-ring" style="width:130px"></div></div>
+  <p class="note"><span class="en">Tick what you have checked yourself. It counts only your own conditions — it is not a recommendation.</span><span class="ta">நீங்களே check பண்ணதை tick பண்ணுங்க. இது உங்க சொந்த conditions-ஐ மட்டும் எண்ணும் — பரிந்துரை இல்ல.</span></p>
+  <div class="grid g2" id="scGroups"></div>
+</section>
+
+<!-- ============ CAUVERY ASSIST ============ -->
+<section class="tab" id="t-assist" data-en="Cauvery Assist" data-ta="Cauvery Assist" hidden>
+  <div class="tabhead"><h2>Cauvery Assist</h2><div class="chart" id="c-assistpic" style="width:150px"></div></div>
+  <div class="card"><div id="assist"></div></div>
+</section>
+
+<!-- ============ SOCRATES ============ -->
+<section class="tab" id="t-quiz" data-en="Cauvery Socrates" data-ta="Cauvery Socrates" hidden>
+  <div class="tabhead"><h2><span class="en">Cauvery Socrates — test yourself</span><span class="ta">Cauvery Socrates — உங்களை test பண்ணுங்க</span></h2></div>
+  <div class="grid g2"><div class="card" id="quiz"></div><div class="card"><h3><span class="en">Your score</span><span class="ta">உங்க score</span></h3><div class="chart" id="c-qscore"></div></div></div>
+</section>
+
+<!-- ============ ANALYST VIEW ============ -->
+<section class="tab" id="t-av" data-en="Analyst View" data-ta="Analyst View" hidden>
+  <div class="tabhead"><h2><span class="en">CB analyst view</span><span class="ta">CB analyst view</span></h2></div>
+  <div class="grid g2">
+    <div class="card"><h3><span class="en">CB Conviction (education score)</span><span class="ta">CB Conviction (கல்வி score)</span></h3><div class="chart" id="c-conv2"></div></div>
+    <div class="card"><h3><span class="en">Lens by lens</span><span class="ta">Lens வாரியா</span></h3><div class="chart" id="c-lens"></div></div>
+  </div>
+  <div class="card"><ul class="pts">
+    <li><span class="en">Quality of growth improved: profit grew faster than revenue and cash finally came in.</span><span class="ta">Growth-ஓட தரம் கூடியிருக்கு: revenue-ஐ விட profit வேகமா, cash-உம் வந்துச்சு.</span></li>
+    <li><span class="en">Cycle: sector in expansion; stock cooling after a 2× run (price Stage 3).</span><span class="ta">Cycle: sector expansion-ல; 2× ஏற்றத்துக்கு அப்புறம் share ஆறுது (Stage 3).</span></li>
+    <li><span class="en">Top positive triggers: RIL Jamnagar mega desal, Kuwait DBO execution.</span><span class="ta">முக்கிய positive triggers: RIL Jamnagar mega desal, Kuwait DBO execution.</span></li>
+    <li><span class="en">Top risk: receivables (~272 days) and execution on fixed-price mega jobs.</span><span class="ta">முக்கிய risk: receivables (~272 நாள்), fixed-price mega jobs execution.</span></li>
+    <li><span class="en">Valuation (28× TTM) already prices in steady 20% growth — less room for error.</span><span class="ta">Valuation (28× TTM) 20% growth-ஐ ஏற்கனவே price பண்ணிடுச்சு — தவறுக்கு இடம் கம்மி.</span></li>
+  </ul></div>
+</section>
+</main>
+</div>
+
+<div id="cbBadge"><div class="b" tabindex="0" aria-label="Disclaimer">CB</div><div class="tip"><span class="en"><b>CB Research (Cauvery Business Research)</b> is an independent education platform, not SEBI-registered. Nothing here is a recommendation to buy, sell or hold. Figures are from company disclosures and market data up to 5–6 Nov 2026; "≈", "derived" and "CB est." items are approximate. Do your own research or consult a SEBI-registered adviser.</span><span class="ta"><b>CB Research</b> ஒரு சுயாதீன கல்வி தளம், SEBI-ல register ஆகல. இங்க எதுவும் buy, sell, hold பரிந்துரை இல்ல. எண்கள் 5–6 Nov 2026 வரையிலான company disclosures, market data-ல இருந்து; "≈", "derived", "CB est." தோராயம். நீங்களே ஆராய்ச்சி பண்ணுங்க அல்லது SEBI-registered adviser-ஐ கேளுங்க.</span></div></div>
+<button id="voiceBubble" type="button"><span class="en">🎙 Voice Assist</span><span class="ta">🎙 Voice Assist</span></button>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+/* ================= core: language, tabs, sub-tabs ================= */
+var LANG="en";
+var C={water:"#0B6E8A",water2:"#29A3B8",water3:"#9ED8E2",acc:"#F6A04D",accS:"#C25E00",ink:"#1A0F05",ink2:"#3D2A17",line:"#EDB57A",card:"#FFEBD3",card2:"#FFE0BC",bg:"#FFF4E6",good:"#11713A",bad:"#B3261E",warn:"#A35C00",grey:"#B9AFA4"};
+function ls(k,v){try{if(v===undefined)return localStorage.getItem(k);localStorage.setItem(k,v);}catch(e){return null;}}
+function setLang(l){LANG=l;document.documentElement.setAttribute("data-lang",l);document.documentElement.lang=l==="ta"?"ta":"en";
+  document.getElementById("langBtn").textContent=l==="ta"?"English":"தமிழ்";
+  document.querySelectorAll("#tabs button").forEach(function(b){b.textContent=b.dataset[l];});
+  if(window.assist)assist.setLang(l);ls("cb_wabag_lang",l);}
+document.documentElement.setAttribute("data-lang","en");
+var tabsEl=document.getElementById("tabs"),secs=[].slice.call(document.querySelectorAll("section.tab"));
+secs.forEach(function(s){var b=document.createElement("button");b.type="button";b.setAttribute("role","tab");b.dataset.en=s.dataset.en.replace("&amp;","&");b.dataset.ta=s.dataset.ta.replace("&amp;","&");b.dataset.t=s.id;b.textContent=b.dataset.en;tabsEl.appendChild(b);});
+tabsEl.addEventListener("click",function(e){var b=e.target.closest("button[data-t]");if(b)showTab(b.dataset.t);});
+function showTab(id){secs.forEach(function(s){s.hidden=s.id!==id;});tabsEl.querySelectorAll("button").forEach(function(b){var on=b.dataset.t===id;b.setAttribute("aria-selected",on);if(on){try{tabsEl.scrollLeft=Math.max(0,b.offsetLeft-tabsEl.clientWidth/2+b.offsetWidth/2);}catch(e){}}});
+  if(id==="t-bm"&&window.plantResize)setTimeout(plantResize,30);try{window.scrollTo(0,0);}catch(e){}}
+document.querySelectorAll(".subtabs").forEach(function(g){g.querySelectorAll("button").forEach(function(b){b.onclick=function(){g.querySelectorAll("button").forEach(function(x){x.setAttribute("aria-selected",x===b);var p=document.getElementById(x.dataset.sub);if(p)p.hidden=x!==b;});};});});
+document.getElementById("langBtn").onclick=function(){setLang(LANG==="en"?"ta":"en");};
+document.getElementById("cbBadge").querySelector(".b").onclick=function(){this.parentNode.classList.toggle("open");};
+
+/* ================= SVG helpers ================= */
+function esc(s){return String(s).replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c];});}
+function tx(x,y,en,ta,a){a=a||"";var st='font-family:Catamaran,Noto Sans Tamil,sans-serif;font-weight:800;';
+  if(ta===undefined||ta===null||ta===en)return '<text x="'+x+'" y="'+y+'" '+a+' style="'+st+'fill:'+(a.indexOf("data-f")>-1?"":C.ink)+'">'+esc(en)+'</text>';
+  return '<text class="en" x="'+x+'" y="'+y+'" '+a+' style="'+st+'fill:'+C.ink+'">'+esc(en)+'</text><text class="ta" x="'+x+'" y="'+y+'" '+a+' style="'+st+'fill:'+C.ink+'">'+esc(ta)+'</text>';}
+function T(o){return typeof o==="object"?o:{en:o,ta:o};}
+function svg(w,h,inner,extra){return '<svg viewBox="0 0 '+w+' '+h+'" xmlns="http://www.w3.org/2000/svg" role="img" '+(extra||"")+'>'+inner+'</svg>';}
+function put(id,html){var e=document.getElementById(id);if(e)e.innerHTML=html;}
+function fmt(v,d){return v.toLocaleString("en-IN",{minimumFractionDigits:d||0,maximumFractionDigits:d===undefined?1:d});}
+
+/* grouped bars, handles negatives */
+function bars(o){var W=o.w||560,H=o.h||280,L=46,R=12,Tp=28,B=48,cats=o.cats,S=o.series;
+  var all=[];S.forEach(function(s){s.vals.forEach(function(v){if(v!=null)all.push(v);});});
+  var mx=Math.max.apply(null,all.concat([0]))*1.15,mn=Math.min.apply(null,all.concat([0]));mn=mn<0?mn*1.25:0;
+  var y=function(v){return Tp+(mx-v)/(mx-mn)*(H-Tp-B);};
+  var gw=(W-L-R)/cats.length,bw=Math.min(46,gw*0.75/S.length),out="";
+  for(var i=0;i<=4;i++){var v=mn+(mx-mn)*i/4,yy=y(v);out+='<line x1="'+L+'" x2="'+(W-R)+'" y1="'+yy+'" y2="'+yy+'" style="stroke:'+C.line+';stroke-width:1"/>'+tx(L-6,yy+4,fmt(v,0),null,'text-anchor="end" font-size="11"');}
+  out+='<line x1="'+L+'" x2="'+(W-R)+'" y1="'+y(0)+'" y2="'+y(0)+'" style="stroke:'+C.ink2+';stroke-width:1.5"/>';
+  cats.forEach(function(c,i){var cx=L+gw*i+gw/2,x0=cx-bw*S.length/2;c=T(c);
+    S.forEach(function(s,j){var v=s.vals[i];if(v==null)return;var y1=y(Math.max(v,0)),y2=y(Math.min(v,0));
+      out+='<rect x="'+(x0+j*bw+2)+'" y="'+y1+'" width="'+(bw-4)+'" height="'+Math.max(1,y2-y1)+'" rx="4" style="fill:'+(v<0?C.bad:s.col)+'"/>';
+      out+=tx(x0+j*bw+bw/2,v<0?y2+14:y1-5,(o.pre||"")+fmt(v,o.dec)+(o.suf||""),null,'text-anchor="middle" font-size="12"');});
+    out+=tx(cx,H-B+18,c.en,c.ta,'text-anchor="middle" font-size="12.5"');});
+  if(S.length>1){var lx=L;S.forEach(function(s){var n=T(s.name);out+='<rect x="'+lx+'" y="'+(H-16)+'" width="12" height="12" rx="3" style="fill:'+s.col+'"/>'+tx(lx+16,H-6,n.en,n.ta,'font-size="12"');lx+=Math.max(110,n.en.length*8+30);});}
+  if(o.band){var b1=y(o.band[1]),b0=y(o.band[0]);out='<rect x="'+L+'" y="'+b1+'" width="'+(W-L-R)+'" height="'+(b0-b1)+'" style="fill:'+C.water3+';opacity:.45"/>'+out;}
+  return svg(W,H,out);}
+/* line chart */
+function lines(o){var W=o.w||560,H=o.h||260,L=44,R=40,Tp=24,B=46,cats=o.cats,S=o.series,all=[];
+  S.forEach(function(s){all=all.concat(s.vals);});var mx=o.max||Math.max.apply(null,all)*1.1,mn=o.min!==undefined?o.min:Math.min.apply(null,all)*0.9;
+  var x=function(i){return L+(W-L-R)*i/(cats.length-1);},y=function(v){return Tp+(mx-v)/(mx-mn)*(H-Tp-B);},out="";
+  if(o.band)out+='<rect x="'+L+'" y="'+y(o.band[1])+'" width="'+(W-L-R)+'" height="'+(y(o.band[0])-y(o.band[1]))+'" style="fill:'+C.water3+';opacity:.5"/>'+tx(W-R-4,y(o.band[1])+14,o.bandLabel.en,o.bandLabel.ta,'text-anchor="end" font-size="11"');
+  for(var i=0;i<=4;i++){var v=mn+(mx-mn)*i/4;out+='<line x1="'+L+'" x2="'+(W-R)+'" y1="'+y(v)+'" y2="'+y(v)+'" style="stroke:'+C.line+'"/>'+tx(L-6,y(v)+4,fmt(v,1)+(o.suf||""),null,'text-anchor="end" font-size="11"');}
+  cats.forEach(function(c,i){c=T(c);out+=tx(x(i),H-B+18,c.en,c.ta,'text-anchor="middle" font-size="12"');});
+  S.forEach(function(s,k){var d=s.vals.map(function(v,i){return(i?"L":"M")+x(i)+" "+y(v);}).join(" ");
+    out+='<path d="'+d+'" style="fill:none;stroke:'+s.col+';stroke-width:3.5"/>';
+    s.vals.forEach(function(v,i){var last=i===s.vals.length-1;out+='<circle cx="'+x(i)+'" cy="'+y(v)+'" r="'+(last?7:4.5)+'" style="fill:'+s.col+';stroke:'+C.bg+';stroke-width:2"/>'+tx(x(i),y(v)-10,fmt(v,1)+(o.suf||""),null,'text-anchor="middle" font-size="11.5"');});
+    var n=T(s.name);out+='<rect x="'+(L+k*150)+'" y="'+(H-16)+'" width="12" height="12" rx="3" style="fill:'+s.col+'"/>'+tx(L+k*150+16,H-6,n.en,n.ta,'font-size="12"');});
+  return svg(W,H,out);}
+/* donut */
+function donut(parts,center,sub){var W=360,H=230,cx=110,cy=115,r=88,ri=54,tot=parts.reduce(function(a,p){return a+p.v;},0),a0=-Math.PI/2,out="";
+  parts.forEach(function(p,i){var a1=a0+p.v/tot*Math.PI*2,lg=a1-a0>Math.PI?1:0;
+    var P=function(a,rr){return[cx+rr*Math.cos(a),cy+rr*Math.sin(a)];},p1=P(a0,r),p2=P(a1,r),p3=P(a1,ri),p4=P(a0,ri);
+    out+='<path d="M'+p1+' A'+r+' '+r+' 0 '+lg+' 1 '+p2+' L'+p3+' A'+ri+' '+ri+' 0 '+lg+' 0 '+p4+'Z" style="fill:'+p.col+';stroke:'+C.bg+';stroke-width:2"/>';
+    var n=T(p.label);out+='<rect x="222" y="'+(48+i*46)+'" width="14" height="14" rx="3" style="fill:'+p.col+'"/>'+tx(242,60+i*46,n.en,n.ta,'font-size="13"')+tx(242,78+i*46,(p.txt||fmt(p.v,0))+" · "+Math.round(p.v/tot*100)+"%",null,'font-size="13"');a0=a1;});
+  out+=tx(cx,cy+2,center,null,'text-anchor="middle" font-size="18"');if(sub)out+=tx(cx,cy+20,T(sub).en,T(sub).ta,'text-anchor="middle" font-size="11"');
+  return svg(W,H,out);}
+/* horizontal bars (diverging ok) */
+function hbars(items,o){o=o||{};var W=560,rowH=40,H=items.length*rowH+20,L=o.L||190,R=70,vals=items.map(function(i){return i.v;}),mx=Math.max.apply(null,vals.concat([0])),mn=Math.min.apply(null,vals.concat([0]));
+  var x=function(v){return L+(v-mn)/(mx-mn||1)*(W-L-R);},out="";
+  items.forEach(function(it,i){var y=12+i*rowH,n=T(it.label),x0=x(Math.min(0,it.v)),x1=x(Math.max(0,it.v));
+    out+=tx(L-8,y+19,n.en,n.ta,'text-anchor="end" font-size="13"')+'<rect x="'+x0+'" y="'+(y+4)+'" width="'+Math.max(2,x1-x0)+'" height="24" rx="5" style="fill:'+(it.v<0?C.bad:(it.col||C.water))+'"/>'+tx(it.v<0?x0-6:x1+6,y+21,(it.txt||fmt(it.v,o.dec)+(o.suf||"")),null,'text-anchor="'+(it.v<0?"end":"start")+'" font-size="13"');});
+  if(mn<0)out+='<line x1="'+x(0)+'" x2="'+x(0)+'" y1="6" y2="'+(H-6)+'" style="stroke:'+C.ink2+';stroke-width:1.5"/>';
+  return svg(W,H,out);}
+/* gauge */
+function gauge(v,mx,lab){var W=300,H=180,cx=150,cy=150,r=110,out="",segs=[[0,40,C.bad],[40,60,C.warn],[60,75,C.acc],[75,100,C.good]];
+  segs.forEach(function(s){var a0=Math.PI*(1-s[0]/mx),a1=Math.PI*(1-s[1]/mx);out+='<path d="M'+(cx+r*Math.cos(a0))+' '+(cy-r*Math.sin(a0))+' A'+r+' '+r+' 0 0 1 '+(cx+r*Math.cos(a1))+' '+(cy-r*Math.sin(a1))+'" style="fill:none;stroke:'+s[2]+';stroke-width:22"/>';});
+  var a=Math.PI*(1-v/mx);out+='<line x1="'+cx+'" y1="'+cy+'" x2="'+(cx+(r-18)*Math.cos(a))+'" y2="'+(cy-(r-18)*Math.sin(a))+'" style="stroke:'+C.ink+';stroke-width:5;stroke-linecap:round"/><circle cx="'+cx+'" cy="'+cy+'" r="9" style="fill:'+C.ink+'"/>';
+  out+=tx(cx,cy-38,String(v),null,'text-anchor="middle" font-size="34"')+tx(cx,cy+24,T(lab).en,T(lab).ta,'text-anchor="middle" font-size="13"');
+  return svg(W,H+20,out);}
+
+/* ================= data + charts ================= */
+var Q5=["Q2 FY26","Q3 FY26","Q4 FY26","Q1 FY27","Q2 FY27"],Q3=["Q2 FY26","Q1 FY27","Q2 FY27"];
+put("c-dash5q",bars({cats:Q5,series:[{name:{en:"Revenue",ta:"Revenue"},vals:[834.5,961.5,1414,886.8,1000.2],col:C.water2},{name:{en:"PAT",ta:"PAT"},vals:[84.8,91.4,128.5,90.1,104.5],col:C.acc}]}));
+put("c-dashgauge",gauge(66,100,{en:"CB Conviction / 100",ta:"CB Conviction / 100"}));
+put("c-geo",bars({cats:Q3,series:[{name:{en:"Overseas",ta:"Overseas"},vals:[431.3,466,544.4],col:C.water},{name:{en:"India (≈)",ta:"India (≈)"},vals:[403.2,420.8,456.5],col:C.acc}]}));
+put("c-rowres",bars({cats:Q3,series:[{name:"Result",vals:[113.2,111.3,171.9],col:C.water}]}));
+put("c-offrev",donut([{label:"EPC",v:1538.1,col:C.water},{label:"O&M",v:330.1,col:C.acc}],"₹1,868",{en:"H1 cr",ta:"H1 கோடி"}));
+put("c-offob",donut([{label:"EPC",v:13697,col:C.water},{label:"O&M",v:6510,col:C.acc}],"₹20,207",{en:"cr",ta:"கோடி"}));
+put("c-cusrev",donut([{label:{en:"Municipal",ta:"Municipal (நகரம்)"},v:1472.2,col:C.water},{label:{en:"Industrial",ta:"Industrial"},v:396,col:C.acc}],"₹1,868",{en:"H1 cr",ta:"H1 கோடி"}));
+put("c-cusob",hbars([{label:"Municipal EPC",v:10829,col:C.water},{label:"Municipal O&M",v:5519,col:C.water2},{label:"Industrial EPC",v:2869,col:C.accS},{label:"Industrial O&M",v:991,col:C.acc}],{dec:0}));
+put("c-fin3",bars({cats:Q3,series:[{name:"Revenue",vals:[834.5,886.8,1000.2],col:C.water2},{name:"EBITDA",vals:[120.5,116.3,144.6],col:C.water},{name:"PAT",vals:[84.8,90.1,104.5],col:C.acc}]}));
+put("c-leak",hbars([{label:"Revenue",v:19.9},{label:"EBITDA",v:20.0},{label:"PAT",v:23.2,col:C.good}],{suf:"%"}));
+put("c-mband",lines({cats:Q5,series:[{name:"EBITDA margin",vals:[14.4,13.6,12.6,13.1,14.5],col:C.water}],suf:"%",min:11,max:16,band:[13,15],bandLabel:{en:"Guided 13–15%",ta:"Guidance 13–15%"}}));
+put("c-mg",hbars([{label:"Revenue",v:19.9},{label:"EBITDA",v:20.0},{label:"PAT",v:23.2},{label:{en:"Overseas revenue",ta:"Overseas revenue"},v:26.2},{label:{en:"Overseas result",ta:"Overseas result"},v:51.9,col:C.good},{label:{en:"Order book",ta:"Order book"},v:37,col:C.accS}],{suf:"%"}));
+put("c-mp",lines({cats:Q5,series:[{name:"EBITDA %",vals:[14.4,13.6,12.6,13.1,14.5],col:C.water},{name:"PAT %",vals:[10.2,9.5,9.1,10.2,10.4],col:C.accS}],suf:"%",min:8,max:16}));
+put("c-me",bars({cats:[{en:"Mar 2026",ta:"Mar 2026"},{en:"Sep 2026",ta:"Sep 2026"}],series:[{name:"days",vals:[293,272],col:C.accS}],suf:"",dec:0}));
+put("c-mo",bars({cats:["Sep 25 (≈)","Dec 25","Mar 26","Jun 26","Sep 26"],series:[{name:"OB",vals:[14750,16300,17235,19394,20207],col:C.water}],dec:0}));
+put("c-ml",bars({cats:["Mar 26","Jun 26","Sep 26"],series:[{name:{en:"Net cash ex-HAM",ta:"Net cash (HAM தவிர)"},vals:[950,965,1144.2],col:C.good},{name:{en:"Borrowings ex-HAM",ta:"Borrowings (HAM தவிர)"},vals:[109.1,null,66.1],col:C.bad}],dec:0}));
+put("c-ocf",bars({cats:["H1 FY26","H1 FY27"],series:[{name:"OCF",vals:[-48.6,224.6],col:C.good}]}));
+put("c-conv",hbars([{label:"H1 FY26",v:-32,txt:"−32%"},{label:"H1 FY27",v:115,txt:"115%",col:C.good}],{L:110}));
+put("c-wcd",hbars([{label:{en:"Receivable days (Mar)",ta:"Receivable days (Mar)"},v:293,col:C.bad},{label:{en:"Receivable days (Sep)",ta:"Receivable days (Sep)"},v:272,col:C.accS},{label:{en:"Net WC days (Q1, co.)",ta:"Net WC days (Q1)"},v:108,col:C.water},{label:{en:"Guide (upper)",ta:"Guide (மேல் அளவு)"},v:110,col:C.water3}],{dec:0,L:220}));
+(function(){var W=560,H=120,lo=1033,hi=2319,cur=1865.6,x=function(v){return 30+(v-lo)/(hi-lo)*(W-60);},out='<rect x="30" y="50" width="'+(W-60)+'" height="16" rx="8" style="fill:'+C.card2+';stroke:'+C.line+'"/>';
+  out+='<rect x="30" y="50" width="'+(x(cur)-30)+'" height="16" rx="8" style="fill:'+C.water2+'"/>';
+  out+='<polygon points="'+x(cur)+',44 '+(x(cur)-9)+',30 '+(x(cur)+9)+',30" style="fill:'+C.ink+'"/>'+tx(x(cur),24,"₹1,865.6",null,'text-anchor="middle" font-size="14"');
+  out+=tx(30,90,"₹1,033",null,'font-size="13"')+tx(30,108,"27 Jan 2026",null,'font-size="11"')+tx(W-30,90,"₹2,319",null,'text-anchor="end" font-size="13"')+tx(W-30,108,"11 Sep 2026",null,'text-anchor="end" font-size="11"');
+  out+=tx(W/2,108,"+81% from low · −20% from high","low-ல இருந்து +81% · high-ல இருந்து −20%",'text-anchor="middle" font-size="12"');put("c-52w",svg(W,H,out));
+  var mn=12,mx=40,xp=function(v){return 30+(v-mn)/(mx-mn)*(W-60);},o2='<rect x="30" y="52" width="'+(W-60)+'" height="14" rx="7" style="fill:url(#pg)"/>';
+  o2='<defs><linearGradient id="pg"><stop offset="0" stop-color="'+C.good+'"/><stop offset=".5" stop-color="'+C.acc+'"/><stop offset="1" stop-color="'+C.bad+'"/></linearGradient></defs>'+o2;
+  [[17.6,"Jan low ≈17.6×","Jan low ≈17.6×",1],[25.3,"FY27e 25.3×","FY27e 25.3×",0],[28.1,"Now 28.1×","இப்போ 28.1×",1],[36.6,"Sep high ≈36.6×","Sep high ≈36.6×",0]].forEach(function(m){var xx=xp(m[0]);o2+='<line x1="'+xx+'" x2="'+xx+'" y1="44" y2="74" style="stroke:'+C.ink+';stroke-width:'+(m[1].indexOf("Now")>-1?4:2)+'"/>'+tx(xx,m[3]?36:92,m[1],m[2],'text-anchor="middle" font-size="12"');});
+  put("c-pestrip",svg(W,H,o2));})();
+
+/* ================= flow map (business model) ================= */
+var FLOW={
+ inp:[["tech",{en:"Technology & IP",ta:"Technology, IP"},{en:"RO, MBR, sludge-to-energy",ta:"RO, MBR, sludge-to-energy"},"🔬"],["eq",{en:"Membranes, pumps, pipes",ta:"Membranes, pumps, pipes"},{en:"Bought in, integrated by WABAG",ta:"வாங்கி, WABAG இணைக்குது"},"⚙️"],["civ",{en:"Civil partners",ta:"Civil partners"},{en:"Share construction risk",ta:"கட்டுமான risk பகிர்வு"},"🏗️"],["ppl",{en:"Engineers & operators",ta:"Engineers, operators"},{en:"Design centres + O&M crews",ta:"Design centres + O&M குழுக்கள்"},"👷"]],
+ out:[["desal",{en:"Desalination",ta:"Desalination"},{en:"Sea water → drinking water",ta:"கடல் நீர் → குடிநீர்"},"🌊"],["stp",{en:"Sewage & reuse",ta:"Sewage, reuse"},{en:"STPs, reuse, biogas",ta:"STP, reuse, biogas"},"♻️"],["dw",{en:"Drinking water",ta:"குடிநீர்"},{en:"River & lake water plants",ta:"ஆறு, ஏரி நீர் plants"},"🚰"],["ind",{en:"Industrial ETP/ZLD/UPW",ta:"Industrial ETP/ZLD/UPW"},{en:"Refineries, chips, data centres",ta:"Refineries, chips, data centres"},"🏭"]],
+ ch:[["epc",{en:"EPC / EP",ta:"EPC / EP"},{en:"82% of revenue",ta:"Revenue-ல 82%"},"📐"],["om",{en:"O&M / DBO",ta:"O&M / DBO"},{en:"18% rev · 32% backlog",ta:"18% rev · 32% backlog"},"🔧"],["ham",{en:"HAM / BOOT",ta:"HAM / BOOT"},{en:"Few annuity projects",ta:"சில annuity projects"},"📄"]],
+ cu:[["mun",{en:"Municipal",ta:"Municipal (நகரம்)"},{en:"79% · cities, utilities",ta:"79% · நகரங்கள்"},"🏙️"],["indc",{en:"Industrial",ta:"Industrial"},{en:"21% · RIL, refiners",ta:"21% · RIL, refiners"},"🛢️"],["geo",{en:"Abroad 54%",ta:"வெளிநாடு 54%"},{en:"India 46% · Gulf, Europe",ta:"India 46% · Gulf, Europe"},"🌍"]]};
+var FINFO={hub:{en:"WABAG hub: designs the plant, buys and integrates equipment, manages partners, then often runs the plant for years. Order book ₹20,207 cr; net cash ₹1,144 cr; asset-light (owns few plants).",ta:"WABAG hub: plant design பண்ணுது, equipment வாங்கி இணைக்குது, partners-ஐ நிர்வகிக்குது, அப்புறம் பல வருஷம் plant-ஐ நடத்துது. Order book ₹20,207 கோடி; net cash ₹1,144 கோடி; asset-light."},
+ rev:{en:"Revenue ₹1,887 cr in H1 FY27 (+20%). Most of it is EPC work billed as construction progresses.",ta:"H1 FY27 revenue ₹1,887 கோடி (+20%). பெரும்பாலும் கட்டுமானம் முன்னேறும்போது bill பண்ற EPC வேலை."},
+ cost:{en:"Project costs, partners and staff ≈ ₹1,626 cr — about 86% of revenue.",ta:"Project costs, partners, staff ≈ ₹1,626 கோடி — revenue-ல சுமார் 86%."},
+ ebitda:{en:"EBITDA ₹260.8 cr, 13.8% margin — inside the 13–15% guide.",ta:"EBITDA ₹260.8 கோடி, 13.8% margin — 13–15% guidance-க்குள்ள."},
+ other:{en:"Interest, depreciation, tax and other items net ≈ ₹66 cr; WABAG earns net interest on its cash.",ta:"Interest, depreciation, tax மற்றவை ≈ ₹66 கோடி; cash-ல WABAG-க்கு net interest வருமானம் வருது."},
+ pat:{en:"PAT ₹194.7 cr (+29%), 10.3% margin.",ta:"PAT ₹194.7 கோடி (+29%), 10.3% margin."}};
+(function(){var W=980,H=600,out='<defs><marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" style="fill:'+C.water+'"/></marker></defs>';
+ function box(k,x,y,w,h,t,s,ic,col){out+='<g class="box" data-k="'+k+'" tabindex="0"><rect x="'+x+'" y="'+y+'" width="'+w+'" height="'+h+'" rx="10" style="fill:'+(col||C.card2)+';stroke:'+C.water+';stroke-width:2.5"/>'+
+   '<text x="'+(x+10)+'" y="'+(y+h/2+8)+'" font-size="22">'+ic+'</text>'+tx(x+42,y+22,t.en,t.ta,'font-size="13.5"')+tx(x+42,y+40,s.en,s.ta,'font-size="10.5"')+'</g>';FINFO[k]=FINFO[k]||{en:t.en+": "+s.en,ta:t.ta+": "+s.ta};}
+ function ar(x1,y1,x2,y2,dash){out+='<path d="M'+x1+' '+y1+' C'+((x1+x2)/2)+' '+y1+','+((x1+x2)/2)+' '+y2+','+x2+' '+y2+'" style="fill:none;stroke:'+C.water+';stroke-width:2.5'+(dash?';stroke-dasharray:7 5':'')+'" marker-end="url(#ar)"/>';}
+ out+=tx(20,22,"INPUTS","உள்ளீடு",'font-size="12"')+tx(400,22,"WABAG","WABAG",'font-size="12"')+tx(548,22,"PRODUCTS","Products",'font-size="12"')+tx(800,22,"CUSTOMERS","Customers",'font-size="12"');
+ FLOW.inp.forEach(function(b,i){box(b[0],10,34+i*84,230,60,b[1],b[2],b[3]);ar(240,64+i*84,330,200);});
+ out+='<g class="box" data-k="hub" tabindex="0"><rect x="332" y="110" width="190" height="200" rx="14" style="fill:'+C.water+';stroke:'+C.ink+';stroke-width:2.5"/><rect x="342" y="120" width="170" height="180" rx="10" style="fill:'+C.water3+'"/>'+
+   tx(427,148,"WABAG","WABAG",'text-anchor="middle" font-size="20"')+tx(427,170,"Chennai HQ · global","Chennai HQ · உலகம் முழுக்க",'text-anchor="middle" font-size="11"')+tx(427,198,"Order book","Order book",'text-anchor="middle" font-size="12"')+tx(427,220,"₹20,207 cr","₹20,207 கோடி",'text-anchor="middle" font-size="18"')+tx(427,248,"Net cash ₹1,144 cr","Net cash ₹1,144 கோடி",'text-anchor="middle" font-size="12"')+tx(427,272,"Design · Build · Run","Design · கட்டு · நடத்து",'text-anchor="middle" font-size="12"')+'</g>';
+ FLOW.out.forEach(function(b,i){box(b[0],548,34+i*72,228,56,b[1],b[2],b[3]);ar(522,210,548,62+i*72);});
+ /* delivery-model row under hub */
+ FLOW.ch.forEach(function(b,i){box(b[0],262+i*178,334,170,56,b[1],b[2],b[3]);});
+ ar(427,310,427,334);
+ FLOW.cu.forEach(function(b,i){box(b[0],800,60+i*90,176,62,b[1],b[2],b[3]);});
+ for(var i=0;i<4;i++)ar(776,62+i*72,800,91+Math.min(i,2)*90);
+ /* money strip */
+ var y0=440;out+=tx(10,y0-12,"MONEY FLOW · H1 FY27 (₹ cr)","பண ஓட்டம் · H1 FY27 (₹ கோடி)",'font-size="12"');
+ ar(888,302,888,y0-6,true);out+=tx(880,y0-24,"cash comes back","cash திரும்ப வருது",'font-size="10.5" text-anchor="end"');
+ var M=[["rev","Revenue","Revenue","1,887",C.water3],["cost","Costs","செலவு","−1,626",C.card2],["ebitda","EBITDA","EBITDA","260.8",C.water3],["other","Int/D&A/Tax","Int/D&A/Tax","−66",C.card2],["pat","PAT","PAT","194.7",C.acc]];
+ M.forEach(function(m,i){var x=10+i*196;out+='<g class="box" data-k="'+m[0]+'" tabindex="0"><rect x="'+x+'" y="'+y0+'" width="170" height="80" rx="10" style="fill:'+m[4]+';stroke:'+C.water+';stroke-width:2.5"/>'+tx(x+85,y0+30,m[1],m[2],'text-anchor="middle" font-size="14"')+tx(x+85,y0+60,m[3],null,'text-anchor="middle" font-size="22"')+'</g>';if(i<4)ar(x+170,y0+40,x+196,y0+40);});
+ out+=tx(10,y0+112,"EBITDA margin 13.8% · PAT margin 10.3% · PAT +29% YoY","EBITDA margin 13.8% · PAT margin 10.3% · PAT +29% YoY",'font-size="13"');
+ put("c-flow",'<div style="min-width:640px">'+svg(W,H-40,out)+'</div>');
+ document.querySelectorAll("#c-flow .box").forEach(function(g){var f=function(){var i=FINFO[g.dataset.k];if(i)document.getElementById("flowInfo").innerHTML='<span class="en">'+esc(i.en)+'</span><span class="ta">'+esc(i.ta)+'</span>';};g.addEventListener("click",f);g.addEventListener("keydown",function(e){if(e.key==="Enter")f();});});})();
+</script>
+
+<script>
+/* ================= 3D plant (Three.js) ================= */
+var UNITS={
+ intake:{t:{en:"Seawater intake",ta:"கடல் நீர் intake"},b:{en:"Pipes pull seawater in from offshore. Gulf desal plants like Kuwait's Doha Stage II start here.",ta:"கடல்ல இருந்து pipes வழியா தண்ணி இழுக்குது. Kuwait Doha Stage II மாதிரி Gulf plants இங்க தான் ஆரம்பம்."}},
+ pre:{t:{en:"Pre-treatment",ta:"Pre-treatment"},b:{en:"Filters remove sand, algae and oil so the RO membranes last longer.",ta:"மணல், பாசி, எண்ணெய் எல்லாம் வடிகட்டி, RO membranes நீண்டகாலம் வாழ வைக்குது."}},
+ ro:{t:{en:"RO membrane hall (SWRO)",ta:"RO membrane hall (SWRO)"},b:{en:"High-pressure pumps push water through membranes; salt stays back. This is WABAG's core technology — RIL Jamnagar's new plant is ~302 MLD of this.",ta:"High-pressure pumps தண்ணியை membranes வழியா தள்ளுது; உப்பு பின்னாடி நிக்குது. இது WABAG-ஓட core technology — RIL Jamnagar புது plant ~302 MLD."}},
+ tank:{t:{en:"Treated-water reservoir",ta:"சுத்த நீர் தொட்டி"},b:{en:"Remineralised drinking water is stored and pumped to the city network (the network itself is usually built by others).",ta:"Minerals சேர்த்த குடிநீர் இங்க சேமிச்சு நகரத்துக்கு pump ஆகுது (pipe network பொதுவா வேற ஆட்கள் கட்டுவாங்க)."}},
+ city:{t:{en:"City (municipal customer)",ta:"நகரம் (municipal customer)"},b:{en:"Cities and water boards are 79% of revenue. They pay in milestones — the source of WABAG's high receivables.",ta:"நகரங்கள், water boards = revenue-ல 79%. Milestone வாரியா பணம் தருவாங்க — அதனால தான் receivables அதிகம்."}},
+ aer:{t:{en:"Aeration basins (STP)",ta:"Aeration basins (STP)"},b:{en:"Air bubbles feed bacteria that eat the dirt in sewage — the heart of a sewage treatment plant.",ta:"காற்று குமிழிகள் bacteria-க்கு உணவு; அது sewage அழுக்கை சாப்பிடுது — STP-ஓட இதயம்."}},
+ clar:{t:{en:"Clarifiers",ta:"Clarifiers"},b:{en:"Slow rotating bridges let sludge settle; clear water flows over the rim.",ta:"மெதுவா சுத்துற bridge-ல sludge அடியில உட்காருது; தெளிவான தண்ணி மேல வழியுது."}},
+ dig:{t:{en:"Digesters → biogas",ta:"Digesters → biogas"},b:{en:"Sludge is digested to make biogas that can power the plant — WABAG's sludge-to-energy and CBG play.",ta:"Sludge-ல இருந்து biogas — அது plant-க்கே மின்சாரம் தரும். இது WABAG-ஓட sludge-to-energy, CBG வாய்ப்பு."}},
+ reuse:{t:{en:"Reuse water → industry",ta:"Reuse தண்ணி → industry"},b:{en:"Tertiary-treated water goes to refineries and factories instead of fresh water. Industrial = 21% of revenue, 33% of H1 orders.",ta:"சுத்திகரிச்ச reuse தண்ணி refineries, factories-க்கு போகுது. Industrial = revenue-ல 21%, H1 orders-ல 33%."}},
+ om:{t:{en:"O&M control room",ta:"O&M control room"},b:{en:"After building, WABAG often runs the plant for 5–20 years (O&M). That's 32% of the order book — steady annuity income.",ta:"கட்டி முடிச்சதும் WABAG பெரும்பாலும் 5–20 வருஷம் plant-ஐ நடத்துது (O&M). Order book-ல 32% — நிலையான annuity வருமானம்."}}};
+function showUnit(k){var u=UNITS[k];if(!u)return;document.getElementById("info3dT").innerHTML='<span class="en">'+esc(u.t.en)+'</span><span class="ta">'+esc(u.t.ta)+'</span>';
+  document.getElementById("info3dB").innerHTML='<p style="margin:0"><span class="en">'+esc(u.b.en)+'</span><span class="ta">'+esc(u.b.ta)+'</span></p>';}
+(function(){var host=document.getElementById("plant3d");
+ if(typeof THREE==="undefined"){host.insertAdjacentHTML("beforeend",'<p style="padding:20px">3D library could not load. The flow map below shows the same model.</p>');return;}
+ var R=new THREE.WebGLRenderer({antialias:true,alpha:true});R.setPixelRatio(Math.min(2,window.devicePixelRatio||1));host.insertBefore(R.domElement,host.firstChild);
+ var S=new THREE.Scene(),cam=new THREE.PerspectiveCamera(42,16/9,0.1,200);
+ S.add(new THREE.HemisphereLight(0xfff4e6,0xc9a27a,0.95));var sun=new THREE.DirectionalLight(0xffffff,0.75);sun.position.set(8,18,10);S.add(sun);
+ var M=function(c,o){return new THREE.MeshStandardMaterial(Object.assign({color:c,roughness:.75,metalness:.05},o||{}));};
+ var mConc=M(0xead8c2),mWater=M(0x29a3b8,{roughness:.25,metalness:.1}),mPipe=M(0x0b6e8a,{metalness:.3,roughness:.4}),mOr=M(0xf6a04d),mBld=M(0xf3c79a),mDark=M(0x5a4a3a),mGreen=M(0x8fbf7a);
+ var pick=[];function add(geo,mat,x,y,z,key){var m=new THREE.Mesh(geo,mat);m.position.set(x,y,z);if(key){m.userData.k=key;pick.push(m);}S.add(m);return m;}
+ /* ground + sea */
+ add(new THREE.BoxGeometry(26,0.4,16),mGreen,1,-0.2,0);
+ var sea=add(new THREE.BoxGeometry(8,0.3,16),M(0x2d8fb3,{roughness:.2}),-15,-0.25,0,"intake");
+ /* intake pipe */
+ function pipe(pts,r){var c=new THREE.CatmullRomCurve3(pts.map(function(p){return new THREE.Vector3(p[0],p[1],p[2]);}),false,"catmullrom",0.05);add(new THREE.TubeGeometry(c,60,r||0.18,8,false),mPipe,0,0,0);return c;}
+ var paths=[];
+ paths.push(pipe([[-17,0.1,2],[-12,0.3,2],[-9.5,0.4,1.5],[-8.5,0.5,1]]));
+ /* pre-treatment tanks */
+ for(var i=0;i<3;i++){add(new THREE.CylinderGeometry(0.9,0.9,1.4,24),mConc,-8.2,0.7,-1.6+i*2.2,"pre");add(new THREE.CylinderGeometry(0.8,0.8,0.05,24),mWater,-8.2,1.42,-1.6+i*2.2,"pre");}
+ paths.push(pipe([[-8.2,0.5,1],[-6.6,0.5,0.6],[-5.4,0.5,0]]));
+ /* RO hall: open frame with racks */
+ add(new THREE.BoxGeometry(5,0.2,4.4),mConc,-3.2,0.1,0,"ro");
+ [[-5.6,-2.1],[-0.8,-2.1],[-5.6,2.1],[-0.8,2.1]].forEach(function(p){add(new THREE.BoxGeometry(0.2,2.6,0.2),mDark,-3.2+p[0]+3.2,1.3,p[1]);});
+ add(new THREE.BoxGeometry(5.2,0.15,4.6),M(0xf6a04d,{transparent:true,opacity:.55}),-3.2,2.65,0,"ro");
+ for(var r=0;r<3;r++)for(var s=0;s<5;s++){var c=add(new THREE.CylinderGeometry(0.16,0.16,3.6,12),M(0xf7f0e6),-3.2,0.5+s*0.38,-1.3+r*1.3,"ro");c.rotation.z=Math.PI/2;}
+ /* reservoir tank */
+ add(new THREE.CylinderGeometry(1.5,1.5,1.6,32),mConc,1.2,0.8,-3.6,"tank");add(new THREE.SphereGeometry(1.5,32,12,0,Math.PI*2,0,Math.PI/2),M(0x9ed8e2),1.2,1.6,-3.6,"tank");
+ paths.push(pipe([[-0.6,0.5,-0.5],[0.2,0.5,-2.2],[1.2,0.4,-3.6]]));
+ /* city */
+ var bh=[2.2,3.4,1.6,2.8,4.2,2.0,3.0,1.8];bh.forEach(function(h,i){add(new THREE.BoxGeometry(0.9,h,0.9),i%2?mBld:M(0xe7b383),-1+(i%4)*1.2,h/2,-6.4-Math.floor(i/4)*1.3,"city");});
+ paths.push(pipe([[1.2,0.4,-3.6],[1.2,0.4,-5.2],[0.8,0.4,-6]]));
+ /* sewage to STP */
+ paths.push(pipe([[3,0.3,-6.5],[5,0.3,-5],[6.2,0.3,-2.6]],0.16));
+ /* aeration basins */
+ for(var a=0;a<2;a++){add(new THREE.BoxGeometry(2.6,0.8,1.6),mConc,6.6,0.4,-2+a*1.9,"aer");add(new THREE.BoxGeometry(2.4,0.05,1.4),M(0x7a6a3a),6.6,0.82,-2+a*1.9,"aer");}
+ var bubbles=[];for(var bI=0;bI<70;bI++){var bb=add(new THREE.SphereGeometry(0.05,6,6),M(0xffffff),6.6+(Math.random()-.5)*2.3,0.85+Math.random()*0.5,-2+(bI%2)*1.9+(Math.random()-.5)*1.2);bb.userData.y0=0.85;bubbles.push(bb);}
+ /* clarifiers with rotating bridges */
+ var bridges=[];[[9.6,-1.6],[9.6,1.6]].forEach(function(p){add(new THREE.CylinderGeometry(1.3,1.3,0.7,32),mConc,p[0],0.35,p[1],"clar");add(new THREE.CylinderGeometry(1.2,1.2,0.05,32),mWater,p[0],0.72,p[1],"clar");var br=add(new THREE.BoxGeometry(2.5,0.12,0.18),mOr,p[0],0.85,p[1],"clar");bridges.push(br);});
+ /* digesters (egg) + biogas flame */
+ [[12.2,-3.2],[12.2,-5.2]].forEach(function(p){var e=add(new THREE.SphereGeometry(0.9,24,16),M(0xc9b8a6,{metalness:.2}),p[0],1.4,p[1],"dig");e.scale.set(1,1.6,1);});
+ var flame=add(new THREE.ConeGeometry(0.22,0.7,12),M(0xff8a00,{emissive:0xff6a00,emissiveIntensity:.8}),13.5,2.6,-4.2,"dig");add(new THREE.CylinderGeometry(0.08,0.08,2.2,8),mDark,13.5,1.1,-4.2);
+ /* reuse tank + factory */
+ add(new THREE.CylinderGeometry(0.9,0.9,1.3,24),mConc,10,0.65,4.2,"reuse");add(new THREE.CylinderGeometry(0.85,0.85,0.05,24),mWater,10,1.32,4.2,"reuse");
+ add(new THREE.BoxGeometry(3,1.6,2),M(0xd9c2a8),13.2,0.8,5,"reuse");add(new THREE.CylinderGeometry(0.25,0.3,3,12),mDark,14.2,2.4,4.4,"reuse");
+ paths.push(pipe([[9.6,0.3,1.6],[10,0.3,3.2],[10,0.4,4.2]],0.15));paths.push(pipe([[10,0.4,4.2],[11.7,0.4,4.8]],0.15));
+ paths.push(pipe([[7.9,0.3,-1],[8.6,0.3,-1.4]],0.14));
+ /* O&M control room */
+ add(new THREE.BoxGeometry(2.4,1.3,1.8),M(0xfff1de),3.6,0.65,4,"om");add(new THREE.BoxGeometry(2.6,0.2,2),mOr,3.6,1.4,4,"om");
+ var dish=add(new THREE.CylinderGeometry(0.05,0.05,1,6),mDark,4.5,2,4);
+ /* water particles along pipes */
+ var parts=[];paths.forEach(function(p,i){for(var n=0;n<6;n++){var m=add(new THREE.SphereGeometry(0.12,8,8),M(i>=4?0xa0855a:0x9ed8e2,{emissive:i>=4?0x3a2a10:0x2ba3b8,emissiveIntensity:.35}),0,0,0);parts.push({m:m,c:p,t:n/6});}});
+ /* labels */
+ var LBL=[["intake",-14,1.2,2],["pre",-8.2,2.2,0.6],["ro",-3.2,3.3,0],["tank",1.2,3.4,-3.6],["city",0.8,4.8,-7],["aer",6.6,1.9,-1],["clar",9.6,1.5,0],["dig",12.2,3.6,-4.2],["reuse",12.5,2.4,5.2],["om",3.6,2.4,4]],lblEls=[];
+ LBL.forEach(function(l){var d=document.createElement("button");d.type="button";d.className="lbl3d";d.innerHTML='<span class="en">'+UNITS[l[0]].t.en+'</span><span class="ta">'+UNITS[l[0]].t.ta+'</span>';d.onclick=function(){showUnit(l[0]);};host.appendChild(d);lblEls.push({el:d,v:new THREE.Vector3(l[1],l[2],l[3])});});
+ /* camera orbit */
+ var th=-0.35,ph=0.92,rad=21,tgt=new THREE.Vector3(-1,0.5,0),spin=true;
+ try{if(window.matchMedia("(prefers-reduced-motion: reduce)").matches)spin=false;}catch(e){}
+ function placeCam(){cam.position.set(tgt.x+rad*Math.sin(ph)*Math.sin(th),tgt.y+rad*Math.cos(ph),tgt.z+rad*Math.sin(ph)*Math.cos(th));cam.lookAt(tgt);}
+ var ptrs={},lastD=0,moved=0,down=null,cv=R.domElement;
+ cv.addEventListener("pointerdown",function(e){ptrs[e.pointerId]=[e.clientX,e.clientY];down=[e.clientX,e.clientY];moved=0;cv.setPointerCapture(e.pointerId);});
+ cv.addEventListener("pointermove",function(e){if(!ptrs[e.pointerId])return;var ids=Object.keys(ptrs);
+   if(ids.length===2){var o=ptrs[ids[0]],p=ptrs[ids[1]];ptrs[e.pointerId]=[e.clientX,e.clientY];o=ptrs[ids[0]];p=ptrs[ids[1]];var d=Math.hypot(o[0]-p[0],o[1]-p[1]);if(lastD)rad=Math.max(12,Math.min(55,rad*lastD/d));lastD=d;moved=9;return;}
+   var q=ptrs[e.pointerId],dx=e.clientX-q[0],dy=e.clientY-q[1];ptrs[e.pointerId]=[e.clientX,e.clientY];moved+=Math.abs(dx)+Math.abs(dy);th-=dx*0.008;ph=Math.max(0.25,Math.min(1.45,ph-dy*0.006));spin=false;});
+ function up(e){delete ptrs[e.pointerId];lastD=0;if(moved<6&&down)clickAt(e.clientX,e.clientY);down=null;}
+ cv.addEventListener("pointerup",up);cv.addEventListener("pointercancel",function(e){delete ptrs[e.pointerId];lastD=0;});
+ cv.addEventListener("wheel",function(e){e.preventDefault();rad=Math.max(12,Math.min(55,rad*(1+e.deltaY*0.001)));},{passive:false});
+ var rc=new THREE.Raycaster(),mv=new THREE.Vector2();
+ function clickAt(x,y){var b=cv.getBoundingClientRect();mv.x=(x-b.left)/b.width*2-1;mv.y=-(y-b.top)/b.height*2+1;rc.setFromCamera(mv,cam);var h=rc.intersectObjects(pick);if(h.length)showUnit(h[0].object.userData.k);}
+ document.getElementById("rot3d").onclick=function(){spin=!spin;};
+ document.getElementById("reset3d").onclick=function(){th=-0.35;ph=0.92;rad=21;};
+ window.plantResize=function(){var w=host.clientWidth,h=host.clientHeight;if(!w||!h)return;R.setSize(w,h,false);cam.aspect=w/h;cam.updateProjectionMatrix();if(w<500&&rad<34)rad=34;};
+ try{new ResizeObserver(plantResize).observe(host);}catch(e){window.addEventListener("resize",plantResize);}
+ var clock=new THREE.Clock(),tmp=new THREE.Vector3();
+ (function loop(){requestAnimationFrame(loop);if(host.offsetParent===null)return;var dt=Math.min(clock.getDelta(),0.05),t=clock.elapsedTime;
+   if(spin)th+=dt*0.12;placeCam();
+   parts.forEach(function(p){p.t=(p.t+dt*0.18)%1;p.m.position.copy(p.c.getPointAt(p.t));p.m.position.y+=0.05;});
+   bubbles.forEach(function(b,i){b.position.y+=dt*0.5;if(b.position.y>1.35)b.position.y=0.85;});
+   bridges.forEach(function(b,i){b.rotation.y=t*0.4*(i?1:-1);});
+   flame.scale.set(1,0.85+0.25*Math.sin(t*9),1);sea.position.y=-0.25+0.04*Math.sin(t*1.5);
+   R.render(S,cam);var b=host.clientWidth,hh=host.clientHeight;
+   lblEls.forEach(function(l){tmp.copy(l.v).project(cam);var vis=tmp.z<1&&Math.abs(tmp.x)<1.05&&Math.abs(tmp.y)<1.05;l.el.style.display=vis?"":"none";l.el.style.left=((tmp.x+1)/2*b)+"px";l.el.style.top=((1-tmp.y)/2*hh)+"px";});})();
+ plantResize();
+})();
+
+/* ================= Key takeaways, pillars ================= */
+function icon(k){var I={
+ grow:'<path d="M8 52 L24 36 L36 44 L56 18" style="fill:none;stroke:'+C.good+';stroke-width:6;stroke-linecap:round"/><path d="M46 16 L58 16 L58 28" style="fill:none;stroke:'+C.good+';stroke-width:6"/>',
+ globe:'<circle cx="32" cy="32" r="24" style="fill:'+C.water3+';stroke:'+C.water+';stroke-width:4"/><path d="M8 32h48M32 8c-10 12-10 36 0 48M32 8c10 12 10 36 0 48" style="fill:none;stroke:'+C.water+';stroke-width:3"/>',
+ cash:'<rect x="6" y="18" width="52" height="30" rx="5" style="fill:'+C.good+'"/><circle cx="32" cy="33" r="9" style="fill:'+C.bg+'"/><text x="32" y="38" text-anchor="middle" font-size="13" style="font-weight:800;fill:'+C.good+'">₹</text>',
+ book:'<rect x="10" y="8" width="44" height="48" rx="5" style="fill:'+C.card2+';stroke:'+C.accS+';stroke-width:4"/><path d="M18 22h28M18 32h28M18 42h18" style="stroke:'+C.accS+';stroke-width:4"/>',
+ clock:'<circle cx="32" cy="32" r="24" style="fill:'+C.card2+';stroke:'+C.bad+';stroke-width:5"/><path d="M32 16v17l11 7" style="fill:none;stroke:'+C.bad+';stroke-width:5;stroke-linecap:round"/>'};
+ return '<svg viewBox="0 0 64 64" width="56" height="56">'+I[k]+'</svg>';}
+var KEYS=[["grow",{en:"Growth on guide",ta:"Guidance-படி growth"},{en:"Revenue +19.9%, PAT +23.2% YoY; H1 revenue +20.3% sits at the top of the 15–20% guide.",ta:"Revenue +19.9%, PAT +23.2% YoY; H1 revenue +20.3% — 15–20% guidance-ஓட மேல் அளவு."}],
+ ["globe",{en:"Gulf is the engine",ta:"Gulf தான் engine"},{en:"Overseas revenue +26% in Q2 and its segment profit +52%; India grew ~13% (derived).",ta:"Q2-ல overseas revenue +26%, segment profit +52%; India ~13% (கணக்கிட்டது)."}],
+ ["cash",{en:"Cash came in",ta:"Cash வந்துச்சு"},{en:"H1 operating cash flow ₹225 cr vs −₹49 cr; net cash ₹1,144 cr (ex-HAM).",ta:"H1 operating cash flow ₹225 கோடி (போன வருஷம் −₹49 கோடி); net cash ₹1,144 கோடி."}],
+ ["book",{en:"Record order book",ta:"Record order book"},{en:"₹20,207 cr = 4.7× TTM revenue; Q2 intake was lighter (≈₹1,760 cr), but RIL's >₹1,000 cr order lands in Q3.",ta:"₹20,207 கோடி = TTM revenue-ஐ விட 4.7×; Q2 intake கம்மி (≈₹1,760 கோடி), ஆனா RIL ₹1,000+ கோடி order Q3-ல சேரும்."}],
+ ["clock",{en:"Receivables still heavy",ta:"Receivables இன்னும் கனம்"},{en:"₹3,175 cr due from customers ≈ 272 days of revenue; improving from ≈293 days in March.",ta:"Customers தர வேண்டியது ₹3,175 கோடி ≈ 272 நாள் revenue; March-ல ≈293 நாள், இப்போ குறையுது."}]];
+document.getElementById("keyCards").innerHTML=KEYS.map(function(k,i){return '<div class="card" style="display:grid;grid-template-columns:56px 1fr;gap:12px;align-items:start">'+icon(k[0])+'<div><h3>'+(i+1)+'. <span class="en">'+k[1].en+'</span><span class="ta">'+k[1].ta+'</span></h3><p style="margin:0"><span class="en">'+k[2].en+'</span><span class="ta">'+k[2].ta+'</span></p></div></div>';}).join("");
+var PIL=[[{en:"Business quality",ta:"Business தரம்"},8,{en:"Technology-led, asset-light; designs + runs plants; 15 straight net-cash quarters.",ta:"Technology-led, asset-light; design + நடத்துறது; தொடர்ந்து 15 net-cash quarters."}],
+ [{en:"Competitive advantage",ta:"போட்டி நன்மை"},7,{en:"Rare Indian winner of Gulf mega desal; repeat RIL orders. Bids are still price-competitive.",ta:"Gulf mega desal ஜெயிக்கிற அரிய Indian company; RIL repeat orders. ஆனா bids இன்னும் விலைப் போட்டி."}],
+ [{en:"Growth opportunity",ta:"வளர்ச்சி வாய்ப்பு"},8,{en:"Book 4.7× revenue; desal, reuse, UPW, CBG all growing markets.",ta:"Book revenue-ஐ விட 4.7×; desal, reuse, UPW, CBG எல்லாம் வளர்ற markets."}],
+ [{en:"Financial strength",ta:"நிதி பலம்"},7,{en:"Net cash ₹1,144 cr; but ~272 receivable days tie up money.",ta:"Net cash ₹1,144 கோடி; ஆனா ~272 receivable days-ல பணம் மாட்டியிருக்கு."}],
+ [{en:"Valuation",ta:"Valuation"},6,{en:"28× TTM, 25× FY27e — fair for 20% growth, not cheap.",ta:"28× TTM, 25× FY27e — 20% growth-க்கு நியாயம், மலிவு இல்ல."}],
+ [{en:"Risk & reward",ta:"Risk, reward"},6,{en:"Execution on fixed-price mega jobs, Gulf geopolitics, low promoter stake (~19%).",ta:"Fixed-price mega jobs execution, Gulf அரசியல், promoter பங்கு கம்மி (~19%)."}]];
+document.getElementById("pilCards").innerHTML=PIL.map(function(p){return '<div class="card"><h3><span class="en">'+p[0].en+'</span><span class="ta">'+p[0].ta+'</span> · '+p[1]+'/10</h3><div style="height:10px;border-radius:5px;background:'+C.card2+';border:1.5px solid '+C.line+'"><div style="height:100%;width:'+p[1]*10+'%;background:'+(p[1]>=8?C.good:p[1]>=6?C.acc:C.bad)+';border-radius:4px"></div></div><p style="margin:8px 0 0"><span class="en">'+p[2].en+'</span><span class="ta">'+p[2].ta+'</span></p></div>';}).join("");
+(function(){var W=640,H=340,out='<polygon points="40,90 320,14 600,90" style="fill:'+C.acc+';stroke:'+C.accS+';stroke-width:4"/>'+tx(320,66,"CB 6 Pillars · 42 / 60","CB 6 தூண்கள் · 42 / 60",'text-anchor="middle" font-size="20"')+'<rect x="40" y="90" width="560" height="14" style="fill:'+C.accS+'"/>';
+ PIL.forEach(function(p,i){var x=70+i*88,h=p[1]*20,y=290-h;out+='<rect x="'+x+'" y="104" width="56" height="186" style="fill:'+C.card2+';stroke:'+C.line+'"/><rect x="'+x+'" y="'+(104+186-h*0.93)+'" width="56" height="'+h*0.93+'" style="fill:'+(p[1]>=8?C.good:p[1]>=6?C.water2:C.bad)+'"/>'+tx(x+28,y+40>270?270:Math.max(130,104+186-h*0.93+24),p[1]+"",null,'text-anchor="middle" font-size="20"')+tx(x+28,312,p[0].en.split(" ")[0],p[0].ta.split(" ")[0],'text-anchor="middle" font-size="11.5"');});
+ out+='<rect x="30" y="290" width="580" height="12" style="fill:'+C.accS+'"/><rect x="20" y="320" width="600" height="10" style="fill:'+C.line+'"/>';put("c-temple",svg(W,H,out));})();
+
+/* ================= Big bet: wheel + milestones ================= */
+(function(){var W=420,H=330,cx=210,cy=160,r=130,ri=50,seg=[[{en:"Gulf desal",ta:"Gulf desal"},"done"],[{en:"Industrial desal",ta:"Industrial desal"},"done"],[{en:"Reuse & ZLD",ta:"Reuse, ZLD"},"done"],[{en:"UPW (chips)",ta:"UPW (chips)"},"early"],[{en:"CBG / sludge",ta:"CBG / sludge"},"early"],[{en:"Green H₂ water",ta:"Green H₂ தண்ணி"},"guided"]],out="";
+ var col={done:C.good,early:C.acc,guided:C.grey};
+ seg.forEach(function(s,i){var a0=-Math.PI/2+i*Math.PI/3,a1=a0+Math.PI/3,P=function(a,rr){return[cx+rr*Math.cos(a),cy+rr*Math.sin(a)];};
+  out+='<path d="M'+P(a0,r)+' A'+r+' '+r+' 0 0 1 '+P(a1,r)+' L'+P(a1,ri)+' A'+ri+' '+ri+' 0 0 0 '+P(a0,ri)+'Z" style="fill:'+col[s[1]]+';stroke:'+C.bg+';stroke-width:3"/>';
+  var m=P((a0+a1)/2,(r+ri)/2+4);out+=tx(m[0],m[1],s[0].en,s[0].ta,'text-anchor="middle" font-size="11.5"');});
+ out+='<circle cx="'+cx+'" cy="'+cy+'" r="'+(ri-4)+'" style="fill:'+C.water3+'"/>'+tx(cx,cy+5,"WABAG",null,'text-anchor="middle" font-size="14"');
+ [["done",{en:"Winning orders",ta:"Orders வருது"}],["early",{en:"First orders",ta:"முதல் orders"}],["guided",{en:"Guided / pipeline",ta:"திட்டத்துல"}]].forEach(function(l,i){out+='<rect x="'+(20+i*135)+'" y="306" width="14" height="14" rx="3" style="fill:'+col[l[0]]+'"/>'+tx(38+i*135,318,l[1].en,l[1].ta,'font-size="12"');});
+ put("c-wheel",svg(W,H,out));
+ var ms=[["2024",{en:"Saudi Yanbu 300 MLD SWRO",ta:"Saudi Yanbu 300 MLD SWRO"},1],["2025",{en:"Saudi Al Haer STP ($371m consortium)",ta:"Saudi Al Haer STP ($371m)"},1],["H1 FY26",{en:"First UPW & CBG wins",ta:"முதல் UPW, CBG orders"},1],["Jun 2026",{en:"Kuwait Doha SWRO Stage II DBO (>$150m)",ta:"Kuwait Doha SWRO Stage II DBO (>$150m)"},1],["Q1 FY27",{en:"Ajman (UAE) 60 MLD entry",ta:"Ajman (UAE) 60 MLD"},1],["Oct 2026",{en:"RIL Jamnagar desal, up to 302 MLD (>₹1,000 cr)",ta:"RIL Jamnagar desal, 302 MLD வரை (>₹1,000 கோடி)"},1],["May 2027",{en:"Vridhi 2.0 targets refresh",ta:"Vridhi 2.0 இலக்குகள்"},0],["FY28–30",{en:"Industrial 20–25% of backlog (now ~19%)",ta:"Backlog-ல industrial 20–25% (இப்போ ~19%)"},0]];
+ var W2=420,H2=ms.length*38+16,o2='<line x1="70" x2="70" y1="10" y2="'+(H2-10)+'" style="stroke:'+C.water+';stroke-width:4"/>';
+ ms.forEach(function(m,i){var y=24+i*38;o2+='<circle cx="70" cy="'+y+'" r="9" style="fill:'+(m[2]?C.good:C.bg)+';stroke:'+(m[2]?C.good:C.accS)+';stroke-width:3'+(m[2]?'':';stroke-dasharray:4 3')+'"/>'+tx(58,y+4,m[0],null,'text-anchor="end" font-size="11"')+tx(88,y+5,m[1].en,m[1].ta,'font-size="12"');});
+ put("c-mile",svg(W2,H2,o2));})();
+
+/* ================= value chain loop ================= */
+(function(){var W=760,H=400,cx=380,cy=200,R=150,st=[[{en:"Source: sea, river, lake",ta:"Source: கடல், ஆறு, ஏரி"},0],[{en:"Treat: desal / drinking water",ta:"Treat: desal / குடிநீர்"},1],[{en:"Distribute: pipe network",ta:"Distribute: pipe network"},0],[{en:"Use: homes & industry",ta:"Use: வீடு, industry"},0],[{en:"Collect: sewers",ta:"Collect: sewers"},0],[{en:"Clean: STP / ETP / ZLD",ta:"Clean: STP / ETP / ZLD"},1],[{en:"Reuse water + biogas",ta:"Reuse தண்ணி + biogas"},1],[{en:"Operate plants (O&M)",ta:"Plants நடத்துதல் (O&M)"},1]],out='<circle cx="'+cx+'" cy="'+cy+'" r="'+R+'" style="fill:none;stroke:'+C.water3+';stroke-width:18"/>';
+ out+='<defs><marker id="ar2" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0L10 5L0 10z" style="fill:'+C.water+'"/></marker></defs>';
+ for(var k=0;k<8;k++){var a=-Math.PI/2+(k+0.5)*Math.PI/4;out+='<path d="M'+(cx+R*Math.cos(a-0.12))+' '+(cy+R*Math.sin(a-0.12))+' A'+R+' '+R+' 0 0 1 '+(cx+R*Math.cos(a+0.08))+' '+(cy+R*Math.sin(a+0.08))+'" style="fill:none;stroke:'+C.water+';stroke-width:4" marker-end="url(#ar2)"/>';}
+ st.forEach(function(s,i){var a=-Math.PI/2+i*Math.PI/4,x=cx+R*Math.cos(a),y=cy+R*Math.sin(a),bw=170,bx=Math.max(4,Math.min(W-bw-4,x-bw/2));
+  out+='<rect x="'+bx+'" y="'+(y-20)+'" width="'+bw+'" height="40" rx="10" style="fill:'+(s[1]?C.acc:"#E4DDD5")+';stroke:'+(s[1]?C.accS:C.grey)+';stroke-width:2.5"/>'+tx(bx+bw/2,y+5,s[0].en,s[0].ta,'text-anchor="middle" font-size="12"');});
+ out+=tx(cx,cy-6,"The water loop","தண்ணி சுழற்சி",'text-anchor="middle" font-size="18"')+tx(cx,cy+18,"WABAG = 4 of 8 steps","WABAG = 8-ல 4 இடம்",'text-anchor="middle" font-size="13"');
+ put("c-loop",'<div style="min-width:560px">'+svg(W,H,out)+'</div>');})();
+
+/* ================= share move: see-saw + events ================= */
+(function(){var W=640,H=260,out='<polygon points="320,200 296,240 344,240" style="fill:'+C.ink2+'"/>';
+ out+='<g transform="rotate(-7 320 200)"><rect x="60" y="192" width="520" height="12" rx="6" style="fill:'+C.accS+'"/>';
+ var up=[{en:"RIL mega order (+3.9% day)",ta:"RIL mega order (+3.9%)"},{en:"Kuwait entry",ta:"Kuwait entry"},{en:"Record order book",ta:"Record order book"}],dn=[{en:"Profit-taking after 2× run",ta:"2× ஏற்றத்துக்கு பின் profit-taking"},{en:"28× P/E leaves little room",ta:"28× P/E — இடம் கம்மி"}];
+ up.forEach(function(u,i){out+='<rect x="'+(330+i*84)+'" y="'+(150-i*0)+'" width="78" height="40" rx="8" style="fill:'+C.good+'"/>';});
+ dn.forEach(function(u,i){out+='<rect x="'+(70+i*110)+'" y="140" width="100" height="50" rx="8" style="fill:'+C.bad+'"/>';});out+='</g>';
+ up.forEach(function(u,i){out+=tx(380+i*84,40+i*26,"▲ "+u.en,"▲ "+u.ta,'text-anchor="middle" font-size="12"');});
+ dn.forEach(function(u,i){out+=tx(140+i*120,92+i*22,"▼ "+u.en,"▼ "+u.ta,'text-anchor="middle" font-size="12"');});
+ out+=tx(320,256,"Orders lift the right side; valuation and profit-taking weigh on the left","Orders வலது பக்கம் தூக்குது; valuation, profit-taking இடது பக்கம் அழுத்துது",'text-anchor="middle" font-size="12"');
+ put("c-seesaw",svg(W,H,out));
+ var ev=[["27 Jan 26",{en:"52-wk low ₹1,033",ta:"52-wk low ₹1,033"},C.bad],["19 Jun 26",{en:"Kuwait mega desal",ta:"Kuwait mega desal"},C.good],["12 Aug 26",{en:"Q1: PAT +37%",ta:"Q1: PAT +37%"},C.good],["11 Sep 26",{en:"52-wk high ₹2,319",ta:"52-wk high ₹2,319"},C.accS],["27 Oct 26",{en:"RIL mega order",ta:"RIL mega order"},C.good],["5 Nov 26",{en:"Q2 results",ta:"Q2 results"},C.water]];
+ var W2=760,o2='<line x1="30" x2="730" y1="70" y2="70" style="stroke:'+C.water+';stroke-width:4"/>';
+ ev.forEach(function(e,i){var x=50+i*134;o2+='<circle cx="'+x+'" cy="70" r="10" style="fill:'+e[2]+'"/>'+tx(x,48,e[0],null,'text-anchor="middle" font-size="12"')+tx(x,100+(i%2)*20,e[1].en,e[1].ta,'text-anchor="middle" font-size="12"');});
+ put("c-events",'<div style="min-width:620px">'+svg(W2,135,o2)+'</div>');})();
+
+/* ================= triggers & cycle ================= */
+(function(){var W=380,H=330,cx=190,cy=160,r=120,ph=[["P1",{en:"Trough",ta:"அடிமட்டம்"}],["P2",{en:"Early recovery",ta:"மீட்சி ஆரம்பம்"}],["P3",{en:"Expansion",ta:"விரிவாக்கம்"}],["P4",{en:"Late / peak",ta:"உச்சம்"}],["P5",{en:"Downturn",ta:"சரிவு"}]],out="",cols=[C.water3,C.good,C.water2,C.acc,C.bad];
+ ph.forEach(function(p,i){var a0=-Math.PI/2+i*2*Math.PI/5,a1=a0+2*Math.PI/5,P=function(a,rr){return[cx+rr*Math.cos(a),cy+rr*Math.sin(a)];};
+  out+='<path d="M'+cx+' '+cy+' L'+P(a0,r)+' A'+r+' '+r+' 0 0 1 '+P(a1,r)+'Z" style="fill:'+cols[i]+';opacity:'+(i===2?1:.55)+';stroke:'+C.bg+';stroke-width:3"/>';
+  var m=P((a0+a1)/2,r*0.66);out+=tx(m[0],m[1]-4,p[0],null,'text-anchor="middle" font-size="14"')+tx(m[0],m[1]+13,p[1].en,p[1].ta,'text-anchor="middle" font-size="11"');});
+ var a=-Math.PI/2+2.62*2*Math.PI/5;out+='<line x1="'+cx+'" y1="'+cy+'" x2="'+(cx+(r-8)*Math.cos(a))+'" y2="'+(cy+(r-8)*Math.sin(a))+'" style="stroke:'+C.ink+';stroke-width:6;stroke-linecap:round"/><circle cx="'+cx+'" cy="'+cy+'" r="10" style="fill:'+C.ink+'"/>';
+ var b=-Math.PI/2+3.15*2*Math.PI/5;out+='<circle cx="'+(cx+(r+10)*Math.cos(b))+'" cy="'+(cy+(r+10)*Math.sin(b))+'" r="10" style="fill:'+C.accS+';stroke:'+C.ink+';stroke-width:2"/>';
+ out+=tx(20,312,"Pointer = sector (P3) · dot = stock price stage 3","முள் = sector (P3) · புள்ளி = share price stage 3",'font-size="12"');
+ put("c-clock",svg(W,H,out));
+ var TR=[[{en:"RIL Jamnagar mega desal (>₹1,000 cr, 25 months)",ta:"RIL Jamnagar mega desal (>₹1,000 கோடி, 25 மாசம்)"},"+",3,0.7,0.7,1.0,1.47,{en:"Margin & billing pace from Q3",ta:"Q3-ல இருந்து margin, billing வேகம்"}],
+  [{en:"Kuwait Doha SWRO Stage II DBO ramp-up",ta:"Kuwait Doha SWRO Stage II DBO ramp-up"},"+",2,1.0,1.0,0.7,1.40,{en:"Overseas revenue run-rate",ta:"Overseas revenue வேகம்"}],
+  [{en:"Industrial / UPW / data-centre mix to 20–25%",ta:"Industrial / UPW / data-centre mix 20–25%"},"+",4,0.4,0.4,1.0,0.64,{en:"Industrial share of new orders",ta:"புது orders-ல industrial பங்கு"}],
+  [{en:"Gulf & India desal tender pipeline",ta:"Gulf, India desal tender pipeline"},"+",2,0.4,0.7,1.0,0.56,{en:"Next mega award",ta:"அடுத்த mega order"}],
+  [{en:"Receivables / municipal payment delays",ta:"Receivables / municipal பணம் தாமதம்"},"−",3,0.4,0.7,1.0,0.84,{en:"Receivable days, OCF each half",ta:"ஒவ்வொரு half-ம் receivable days, OCF"}],
+  [{en:"Cost overrun on fixed-price mega jobs",ta:"Fixed-price mega jobs-ல cost overrun"},"−",3,0.4,0.7,1.0,0.84,{en:"Gross margin, project provisions",ta:"Gross margin, project provisions"}],
+  [{en:"Gulf geopolitics / currency",ta:"Gulf அரசியல் / currency"},"−",2,0.4,0.7,1.0,0.56,{en:"Middle East news, forex line",ta:"Middle East செய்தி, forex"}]];
+ document.getElementById("trigBody").innerHTML=TR.map(function(t){return '<tr><td><span class="en">'+t[0].en+'</span><span class="ta">'+t[0].ta+'</span></td><td class="'+(t[1]==="+"?"up":"dn")+'" style="font-size:1.1rem">'+t[1]+'</td><td>'+t[2]+'</td><td>'+t[3]+'</td><td>'+t[4]+'</td><td>'+t[5]+'</td><td><b>'+t[6].toFixed(2)+'</b></td><td style="white-space:normal"><span class="en">'+t[7].en+'</span><span class="ta">'+t[7].ta+'</span></td></tr>';}).join("");
+ var tl=[["Nov 26",{en:"Q2 concall & price reaction",ta:"Q2 concall, price reaction"}],["Feb 27",{en:"Q3 FY27 results (RIL in book)",ta:"Q3 FY27 results (RIL book-ல)"}],["May 27",{en:"Q4/FY27 + Vridhi 2.0 targets",ta:"Q4/FY27 + Vridhi 2.0 இலக்கு"}],["FY28",{en:"Kuwait & RIL peak execution",ta:"Kuwait, RIL உச்ச execution"}],["~Nov 28",{en:"RIL Jamnagar 25-month window ends",ta:"RIL Jamnagar 25 மாசம் முடிவு"}]];
+ var W2=760,o='<line x1="30" x2="730" y1="60" y2="60" style="stroke:'+C.accS+';stroke-width:4"/>';tl.forEach(function(e,i){var x=60+i*160;o+='<rect x="'+(x-8)+'" y="52" width="16" height="16" rx="3" style="fill:'+C.acc+';stroke:'+C.accS+';stroke-width:2"/>'+tx(x,40,e[0],null,'text-anchor="middle" font-size="12"')+tx(x,92+(i%2)*18,e[1].en,e[1].ta,'text-anchor="middle" font-size="11.5"');});
+ put("c-trigtl",'<div style="min-width:640px">'+svg(W2,125,o)+'</div>');})();
+
+/* ================= SWOT ================= */
+(function(){var W=760,H=470,q=[["S",{en:"Strengths",ta:"பலம்"},C.good,[{en:"Net cash ₹1,144 cr, asset-light",ta:"Net cash ₹1,144 கோடி, asset-light"},{en:"Desal + reuse technology record",ta:"Desal, reuse technology record"},{en:"Order book 4.7× revenue",ta:"Order book revenue-ஐ விட 4.7×"},{en:"O&M annuity: 32% of backlog",ta:"O&M annuity: backlog-ல 32%"}]],
+ ["W",{en:"Weaknesses",ta:"பலவீனம்"},C.bad,[{en:"Receivables ≈272 days",ta:"Receivables ≈272 நாள்"},{en:"India growth only ~5–7% in H1",ta:"H1-ல India growth ~5–7% தான்"},{en:"Lumpy, seasonal quarters",ta:"Quarter-க்கு quarter ஏற்ற இறக்கம்"},{en:"Promoter holding ~19%",ta:"Promoter பங்கு ~19%"}]],
+ ["O",{en:"Opportunities",ta:"வாய்ப்பு"},C.water,[{en:"Gulf desal replacement cycle",ta:"Gulf desal மாற்றம் cycle"},{en:"UPW for chips & data centres",ta:"Chips, data centres-க்கு UPW"},{en:"Sewage reuse mandates in India",ta:"India-ல sewage reuse கட்டாயம்"},{en:"CBG / sludge-to-energy",ta:"CBG / sludge-to-energy"}]],
+ ["T",{en:"Threats",ta:"அச்சுறுத்தல்"},C.warn,[{en:"Cost overrun on fixed-price jobs",ta:"Fixed-price jobs-ல cost overrun"},{en:"Middle East conflict, currency",ta:"Middle East சண்டை, currency"},{en:"Aggressive bids from global rivals",ta:"Global போட்டியாளர்கள் குறைஞ்ச bids"},{en:"Municipal payment delays",ta:"Municipal பணம் தாமதம்"}]]],out="";
+ q.forEach(function(s,i){var x=(i%2)*382+4,y=Math.floor(i/2)*234+4;out+='<rect x="'+x+'" y="'+y+'" width="370" height="224" rx="14" style="fill:'+C.card2+';stroke:'+s[2]+';stroke-width:4"/><circle cx="'+(x+34)+'" cy="'+(y+34)+'" r="22" style="fill:'+s[2]+'"/>'+'<text x="'+(x+34)+'" y="'+(y+42)+'" text-anchor="middle" font-size="22" style="font-weight:800;fill:'+C.bg+'">'+s[0]+'</text>'+tx(x+66,y+40,s[1].en,s[1].ta,'font-size="17"');
+  s[3].forEach(function(t,j){out+='<circle cx="'+(x+24)+'" cy="'+(y+84+j*36)+'" r="5" style="fill:'+s[2]+'"/>'+tx(x+38,y+89+j*36,t.en,t.ta,'font-size="13.5"');});});
+ put("c-swot",'<div style="min-width:560px">'+svg(W,H,out)+'</div>');})();
+</script>
+
+<script>
+/* ================= Analyst view charts ================= */
+put("c-conv2",gauge(66,100,{en:"CB Conviction",ta:"CB Conviction"}));
+put("c-lens",hbars([{label:{en:"E · Earnings (25%)",ta:"E · Earnings (25%)"},v:80,col:C.good},{label:{en:"F · Fundamentals (20%)",ta:"F · Fundamentals (20%)"},v:72,col:C.water},{label:{en:"M · Macro (15%)",ta:"M · Macro (15%)"},v:60,col:C.water2},{label:{en:"T · Market (15%)",ta:"T · Market (15%)"},v:50,col:C.acc},{label:{en:"CY · Cycle (10%)",ta:"CY · Cycle (10%)"},v:63,col:C.water2},{label:{en:"TG · Triggers (15%)",ta:"TG · Triggers (15%)"},v:60,col:C.water2}],{dec:0,L:200}));
+put("c-assistpic",svg(150,70,'<rect x="4" y="8" width="96" height="44" rx="14" style="fill:'+C.water3+';stroke:'+C.water+';stroke-width:3"/><path d="M24 52 L20 64 L36 52" style="fill:'+C.water3+';stroke:'+C.water+';stroke-width:3"/>'+tx(52,36,"Ask me","கேளுங்க",'text-anchor="middle" font-size="15"')+'<rect x="116" y="10" width="20" height="32" rx="10" style="fill:'+C.accS+'"/><path d="M110 32 a16 16 0 0 0 32 0 M126 48 v12" style="fill:none;stroke:'+C.accS+';stroke-width:3"/>'));
+
+/* ================= Investor self-check (5 groups) ================= */
+var SC=[
+ {id:"g1",t:{en:"1. About the stock",ta:"1. இந்த stock பத்தி"},items:[
+  [{en:"I know the company's size",ta:"Company அளவு தெரியும்"},{en:"M-cap ≈ ₹11,640 cr; revenue TTM ₹4,263 cr; PAT TTM ₹415 cr",ta:"M-cap ≈ ₹11,640 கோடி; TTM revenue ₹4,263 கோடி; TTM PAT ₹415 கோடி"}],
+  [{en:"I checked price vs 52-week range",ta:"52 வார range-ஓட price பாத்தேன்"},{en:"₹1,865.6 vs ₹1,033–₹2,319; −20% from high",ta:"₹1,865.6 vs ₹1,033–₹2,319; high-ல இருந்து −20%"}],
+  [{en:"I know recent equity changes",ta:"சமீப equity மாற்றம் தெரியும்"},{en:"~6.24 cr shares; promoter ~19%; no new issue in Q2 found",ta:"~6.24 கோடி shares; promoter ~19%; Q2-ல புது issue இல்ல"}],
+  [{en:"I know what the market already expects",ta:"Market என்ன எதிர்பார்க்குதுனு தெரியும்"},{en:"28× TTM P/E; consensus FY27 PAT ≈ ₹460 cr",ta:"28× TTM P/E; consensus FY27 PAT ≈ ₹460 கோடி"}]]},
+ {id:"g2",t:{en:"2. Problems investors face",ta:"2. Investors-க்கு வர்ற சிக்கல்"},items:[
+  [{en:"I understand EPC vs O&M billing",ta:"EPC vs O&M billing புரியுது"},{en:"EPC 82% of revenue, O&M 18%; O&M 32% of backlog",ta:"EPC revenue-ல 82%, O&M 18%; backlog-ல O&M 32%"}],
+  [{en:"I can connect with the business",ta:"Business-ஓட connect ஆக முடியுது"},{en:"Desal, sewage, reuse plants for cities (79%) and industry (21%)",ta:"நகரம் (79%), industry (21%)-க்கு desal, sewage, reuse plants"}],
+  [{en:"I know earnings are lumpy",ta:"Earnings ஏற்ற இறக்கம்னு தெரியும்"},{en:"Q4 FY26 revenue ₹1,414 cr vs Q1 FY27 ₹887 cr",ta:"Q4 FY26 revenue ₹1,414 கோடி vs Q1 FY27 ₹887 கோடி"}],
+  [{en:"I know the main risks",ta:"முக்கிய risks தெரியும்"},{en:"Receivables ≈272 days; fixed-price mega jobs; Gulf exposure",ta:"Receivables ≈272 நாள்; fixed-price mega jobs; Gulf exposure"}]]},
+ {id:"g3",t:{en:"3. What I did about them",ta:"3. அதுக்கு நான் என்ன பண்ணேன்"},items:[
+  [{en:"Read the annual report business & risk pages",ta:"Annual report business, risk பக்கங்கள் படிச்சேன்"},{en:"Check contingent liabilities and receivable ageing",ta:"Contingent liabilities, receivable ageing பாருங்க"}],
+  [{en:"Compared a listed peer",ta:"ஒரு listed peer-ஓட compare பண்ணேன்"},{en:"e.g. Enviro Infra Engineers, Ion Exchange — compare margin & receivable days",ta:"உதா: Enviro Infra Engineers, Ion Exchange — margin, receivable days compare"}],
+  [{en:"Kept the amount small for my portfolio",ta:"Portfolio-க்கு ஏத்த மாதிரி amount சின்னதா"},{en:"Mid-cap EPC stock: swung between ₹1,033 and ₹2,319 within the last year",ta:"Mid-cap EPC stock: கடந்த ஒரு வருஷத்துல ₹1,033–₹2,319 வரை ஆடிச்சு"}],
+  [{en:"Fixed my horizon and review point",ta:"Horizon, review point முடிவு பண்ணேன்"},{en:"Next review: Q3 FY27 results (Feb 2027) — RIL billing & receivables",ta:"அடுத்த review: Q3 FY27 results (Feb 2027) — RIL billing, receivables"}]]},
+ {id:"g4",t:{en:"4. Funds' & analysts' view",ta:"4. Funds, analysts பார்வை"},items:[
+  [{en:"Checked institutional holding trend",ta:"Institutional holding trend பாத்தேன்"},{en:"See Q2 FY27 shareholding pattern on NSE/BSE",ta:"NSE/BSE-ல Q2 FY27 shareholding pattern பாருங்க"}],
+  [{en:"Read independent analyst reviews",ta:"சுயாதீன analyst reviews படிச்சேன்"},{en:"9 analysts' average target ≈ ₹2,324 (pre-results) — opinions, not facts",ta:"9 analysts சராசரி target ≈ ₹2,324 (results முன்) — கருத்து தான், உண்மை இல்ல"}],
+  [{en:"Noted the CB cycle & trigger view",ta:"CB cycle, trigger view கவனிச்சேன்"},{en:"Sector P3 expansion; stock Stage 3; CY 63, TG 60",ta:"Sector P3 expansion; stock Stage 3; CY 63, TG 60"}],
+  [{en:"Checked market mood",ta:"Market mood பாத்தேன்"},{en:"Stock −7% in the last month before results",ta:"Results முன் ஒரு மாசத்துல −7%"}]]},
+ {id:"g5",t:{en:"5. My own conditions",ta:"5. என் சொந்த conditions"},custom:true,items:[]}];
+var scState={};try{scState=JSON.parse(ls("cb_wabag_sc")||"{}")||{};}catch(e){scState={};}
+function scSave(){ls("cb_wabag_sc",JSON.stringify(scState));}
+function scRender(){var host=document.getElementById("scGroups"),h="",done=0,tot=0;
+ SC.forEach(function(g){var items=g.custom?(scState.custom||[]).map(function(t){return[{en:t,ta:t},null];}):g.items,gd=0;
+  var rows=items.map(function(it,i){var k=g.id+"_"+i,on=!!scState[k];if(on)gd++;return '<label class="sc-item"><input type="checkbox" data-k="'+k+'" '+(on?"checked":"")+'><span><span class="en">'+esc(it[0].en)+'</span><span class="ta">'+esc(it[0].ta)+'</span>'+(it[1]?'<br><span class="sc-data"><span class="en">Data: '+esc(it[1].en)+'</span><span class="ta">Data: '+esc(it[1].ta)+'</span></span>':'')+(g.custom?' <button type="button" class="btn" style="font-size:.72rem;padding:1px 8px" data-del="'+i+'">✕</button>':'')+'</span></label>';}).join("");
+  done+=gd;tot+=items.length;var pc=items.length?gd/items.length:0;
+  h+='<div class="card"><h3><span class="en">'+g.t.en+'</span><span class="ta">'+g.t.ta+'</span> · '+gd+'/'+items.length+'</h3><div style="height:8px;background:'+C.card2+';border-radius:4px;margin-bottom:6px"><div style="height:100%;width:'+pc*100+'%;background:'+C.good+';border-radius:4px"></div></div>'+rows+
+   (g.custom?'<div class="as-row" style="margin-top:8px"><input type="text" id="scNew" placeholder="Add your own check… / உங்க check சேருங்க…"><button type="button" class="btn" id="scAdd">+</button></div>':'')+'</div>';});
+ host.innerHTML=h;
+ var p=tot?done/tot:0,r=46,c=2*Math.PI*r;put("c-ring",svg(120,120,'<circle cx="60" cy="60" r="'+r+'" style="fill:none;stroke:'+C.card2+';stroke-width:14"/><circle cx="60" cy="60" r="'+r+'" transform="rotate(-90 60 60)" style="fill:none;stroke:'+C.good+';stroke-width:14;stroke-dasharray:'+(c*p)+' '+c+'"/>'+tx(60,66,done+"/"+tot,null,'text-anchor="middle" font-size="20"')));
+ host.querySelectorAll("input[type=checkbox]").forEach(function(cb){cb.onchange=function(){scState[cb.dataset.k]=cb.checked;scSave();scRender();};});
+ host.querySelectorAll("[data-del]").forEach(function(b){b.onclick=function(e){e.preventDefault();var i=+b.dataset.del;(scState.custom||[]).splice(i,1);Object.keys(scState).forEach(function(k){if(k.indexOf("g5_")===0)delete scState[k];});scSave();scRender();};});
+ var add=document.getElementById("scAdd");if(add)add.onclick=function(){var v=document.getElementById("scNew").value.trim();if(!v)return;(scState.custom=scState.custom||[]).push(v);scSave();scRender();};}
+scRender();
+
+/* ================= Cauvery Assist (compatible inline build) =================
+   Same API as the master component: CauveryAssist.A, CauveryAssist.mount(el, CONFIG) -> {setLang, speak, plain}.
+   To use the master file, replace this whole block with the contents of cauvery-assist.js; CONFIG below stays unchanged. */
+(function(){
+ function A(en,ta){return{en:en,ta:ta};}
+ function mount(root,CF){var lang=CF.lang||"en",K=CF.storageKey||"cba",last=null;
+  var st={rate:parseFloat(ls(K+"_rate"))||0.8,wait:ls(K+"_wait")||"3",voice:ls(K+"_voice")||"",review:ls(K+"_review")==="1",conv:false};
+  var L=function(o){return o&&typeof o==="object"?(o[lang]||o.en):o;};
+  root.innerHTML='<div class="assist"><div class="as-row"><b>'+esc(CF.title)+'</b><span class="note" id="asVoiceNote"></span></div>'+
+   '<div class="as-row"><label><span class="en">Speed</span><span class="ta">வேகம்</span> <input type="range" id="asRate" min="0.5" max="1.5" step="0.05"></label><b id="asRateV"></b>'+
+   '<button type="button" class="btn" data-r="0.6">Slow</button><button type="button" class="btn" data-r="0.8">Relaxed</button><button type="button" class="btn" data-r="1">Normal</button><button type="button" class="btn" data-r="1.2">Fast</button></div>'+
+   '<div class="as-row"><label><span class="en">Voice</span><span class="ta">குரல்</span> <select id="asVoice"></select></label><label><span class="en">Wait after I stop</span><span class="ta">பேசி முடிச்சதும் காத்திரு</span> <select id="asWait"><option value="2">2 s</option><option value="3">3 s</option><option value="5">5 s</option><option value="tap">Tap Done</option></select></label>'+
+   '<label><input type="checkbox" id="asReview"> <span class="en">Check text before sending</span><span class="ta">அனுப்பும் முன் text பாரு</span></label><label><input type="checkbox" id="asConv"> <span class="en">Conversation mode</span><span class="ta">Conversation mode</span></label></div>'+
+   '<div class="as-log" id="asLog" aria-live="polite"></div><div class="cdbar"><i id="asCd"></i></div>'+
+   '<div class="as-row"><input type="text" id="asIn"><button type="button" class="btn" id="asMic">🎙</button><button type="button" class="btn" id="asDone" hidden><span class="en">Done</span><span class="ta">முடிஞ்சது</span></button><button type="button" class="btn" id="asSend"><span class="en">Ask</span><span class="ta">கேளு</span></button>'+
+   '<button type="button" class="btn" id="asPause">⏯</button><button type="button" class="btn" id="asStop">⏹</button></div><div class="as-row as-sug" id="asSug"></div></div>';
+  var $=function(id){return root.querySelector("#"+id);},log=$("asLog");
+  function setRate(r){st.rate=+r;$("asRate").value=r;$("asRateV").textContent=(+r).toFixed(2)+"×";ls(K+"_rate",r);}
+  setRate(st.rate);$("asRate").oninput=function(){setRate(this.value);};root.querySelectorAll("[data-r]").forEach(function(b){b.onclick=function(){setRate(b.dataset.r);};});
+  $("asWait").value=st.wait;$("asWait").onchange=function(){st.wait=this.value;ls(K+"_wait",st.wait);};
+  $("asReview").checked=st.review;$("asReview").onchange=function(){st.review=this.checked;ls(K+"_review",st.review?"1":"0");};$("asConv").onchange=function(){st.conv=this.checked;};
+  var synth=window.speechSynthesis,voices=[];
+  function loadVoices(){if(!synth)return;voices=synth.getVoices().slice().sort(function(a,b){var s=function(v){return(/IN/.test(v.lang)?0:1)+(/^ta/.test(v.lang)?-1:0);};return s(a)-s(b);});
+   $("asVoice").innerHTML='<option value="">Auto</option>'+voices.map(function(v){return '<option value="'+esc(v.name)+'">'+esc(v.name+" ("+v.lang+")")+'</option>';}).join("");$("asVoice").value=st.voice;
+   var hasTa=voices.some(function(v){return/^ta/.test(v.lang);});$("asVoiceNote").textContent=lang==="ta"&&!hasTa?"(No Tamil voice on this device — reading with the closest voice)":"";}
+  if(synth){loadVoices();synth.onvoiceschanged=loadVoices;}$("asVoice").onchange=function(){st.voice=this.value;ls(K+"_voice",st.voice);};
+  function pickVoice(){var v=voices.filter(function(x){return x.name===st.voice;})[0];if(v)return v;var want=lang==="ta"?/^ta/:/^en-IN/;return voices.filter(function(x){return want.test(x.lang);})[0]||voices.filter(function(x){return/^en/.test(x.lang);})[0];}
+  /* own-voice clip library: put recorded files in ./clips/ on GitHub Pages; falls back to device voice */
+  var CLIPS=CF.clips||{};
+  function speak(text,clipKey){if(clipKey&&CLIPS[clipKey]&&CLIPS[clipKey][lang]){try{var au=new Audio(CLIPS[clipKey][lang]);au.playbackRate=st.rate;au.onerror=function(){tts(text);};var pr=au.play();if(pr&&pr.catch)pr.catch(function(){tts(text);});return;}catch(e){}}tts(text);}
+  function tts(text){if(!synth)return;synth.cancel();var parts=String(text).replace(/([.!?।])\s+/g,"$1\n").split("\n").filter(Boolean);
+   parts.forEach(function(p,i){var u=new SpeechSynthesisUtterance(p);u.rate=st.rate;u.lang=lang==="ta"?"ta-IN":"en-IN";var v=pickVoice();if(v)u.voice=v;if(i===parts.length-1)u.onend=function(){if(st.conv)startMic();};synth.speak(u);});}
+  $("asPause").onclick=function(){if(!synth)return;if(synth.paused)synth.resume();else synth.pause();};$("asStop").onclick=function(){if(synth)synth.cancel();};
+  function plain(h){var d=document.createElement("div");d.innerHTML=h;d.querySelectorAll(lang==="ta"?".en":".ta").forEach(function(n){n.remove();});d.querySelectorAll("script,style,svg,button,select,input").forEach(function(n){n.remove();});return d.textContent.replace(/\s+/g," ").trim();}
+  function norm(s){return String(s).toLowerCase().replace(/[?!.,]/g," ");}
+  function answer(q){var n=norm(q);
+   if(/\b(buy|sell|hold|invest|target|should i|enter|exit|multibagger)\b/.test(n)||/வாங்க|விக்க|வாங்கலாமா|விக்கலாமா|ஹோல்ட்|target/.test(q))return{a:CF.noAdvice,clip:"noAdvice"};
+   var best=null,bs=0;CF.kb.forEach(function(e){var s=0;e.k.forEach(function(k){if(n.indexOf(k.toLowerCase())>-1)s+=k.length>3?2:1;});if(/\b(it|its|that)\b|அது|அதோட/.test(n)&&last&&e===last)s+=1;if(s>bs){bs=s;best=e;}});
+   if(best&&bs>=2){last=best;return best;}return{a:CF.fallback,clip:"fallback"};}
+  function ask(q){q=q.trim();if(!q)return;log.insertAdjacentHTML("beforeend",'<div class="as-q">'+esc(q)+'</div>');var r=answer(q),a=L(r.a);
+   var h='<div class="as-a"><div>'+esc(a)+'</div>'+(r.d?'<details><summary><span class="en">More details</span><span class="ta">கூடுதல் விவரம்</span></summary>'+L(r.d)+'</details>':'')+(r.tab&&CF.onOpenTab?'<button type="button" class="btn" style="font-size:.76rem;padding:2px 9px;margin-top:4px" data-tab="'+r.tab+'"><span class="en">Open related tab</span><span class="ta">தொடர்புடைய tab திற</span></button>':'')+'</div>';
+   log.insertAdjacentHTML("beforeend",h);log.scrollTop=log.scrollHeight;var b=log.querySelector(".as-a:last-child [data-tab]");if(b)b.onclick=function(){CF.onOpenTab(b.dataset.tab);};speak(a,r.clip);}
+  $("asSend").onclick=function(){ask($("asIn").value);$("asIn").value="";};$("asIn").onkeydown=function(e){if(e.key==="Enter")$("asSend").onclick();};
+  function sug(){$("asSug").innerHTML=CF.suggestions.map(function(s,i){return '<button type="button" class="btn" data-s="'+i+'">'+esc(lang==="ta"?s[1]:s[0])+'</button>';}).join("");$("asSug").querySelectorAll("[data-s]").forEach(function(b){b.onclick=function(){ask(b.textContent);};});$("asIn").placeholder=L(CF.placeholder);}
+  /* mic: waits for silence before answering */
+  var SR=window.SpeechRecognition||window.webkitSpeechRecognition,rec=null,listening=false,buf="",timer=null,cdT=null;
+  function cd(ms){var cdEl=$("asCd"),t0=Date.now();clearInterval(cdT);if(!ms){cdEl.style.width="0";return;}cdT=setInterval(function(){var p=Math.min(1,(Date.now()-t0)/ms);cdEl.style.width=(p*100)+"%";if(p>=1)clearInterval(cdT);},60);}
+  function finish(){listening=false;clearTimeout(timer);cd(0);$("asDone").hidden=true;$("asMic").classList.remove("on");try{rec&&rec.stop();}catch(e){}var q=buf.trim();buf="";if(!q)return;if(st.review){$("asIn").value=q;$("asIn").focus();}else ask(q);}
+  function startMic(){if(!SR){log.insertAdjacentHTML("beforeend",'<div class="as-a">'+esc(L(A("Voice input isn't available here. It works on GitHub Pages in Chrome or Edge; read-aloud works everywhere.","இங்க voice input இல்ல. GitHub Pages-ல Chrome/Edge-ல வேலை செய்யும்; read-aloud எல்லா இடத்திலும் வேலை செய்யும்.")))+'</div>');return;}
+   if(synth)synth.cancel();rec=new SR();rec.lang=lang==="ta"?"ta-IN":"en-IN";rec.continuous=true;rec.interimResults=true;listening=true;buf="";$("asMic").classList.add("on");if(st.wait==="tap")$("asDone").hidden=false;
+   rec.onresult=function(e){var f="",im="";for(var i=0;i<e.results.length;i++){if(e.results[i].isFinal)f+=e.results[i][0].transcript+" ";else im+=e.results[i][0].transcript;}buf=f;$("asIn").value=(f+im).trim();
+     if(st.wait!=="tap"){clearTimeout(timer);var ms=(+st.wait)*1000;cd(ms);timer=setTimeout(function(){buf=$("asIn").value;$("asIn").value="";finish();},ms);}};
+   rec.onerror=function(e){if(e.error==="not-allowed"||e.error==="service-not-allowed"){listening=false;$("asMic").classList.remove("on");log.insertAdjacentHTML("beforeend",'<div class="as-a">'+esc(L(A("The microphone is blocked here (claude.ai blocks it). Open the GitHub Pages copy in Chrome or Edge to talk; you can still type.","இங்க microphone block (claude.ai block பண்ணும்). பேச GitHub Pages copy-ஐ Chrome/Edge-ல திறங்க; type பண்ணலாம்.")))+'</div>');}};
+   rec.onend=function(){if(listening){try{rec.start();}catch(e){}}};try{rec.start();}catch(e){}}
+  $("asMic").onclick=function(){if(listening){buf=$("asIn").value;$("asIn").value="";finish();}else startMic();};$("asDone").onclick=function(){buf=$("asIn").value;$("asIn").value="";finish();};
+  function setLangA(l){lang=l;sug();if(synth)loadVoices();}
+  sug();log.insertAdjacentHTML("beforeend",'<div class="as-a"><span class="en">'+esc(CF.greeting.en)+'</span><span class="ta">'+esc(CF.greeting.ta)+'</span></div>');
+  return{setLang:setLangA,speak:function(t){speak(t);},plain:plain,open:function(){CF.onOpenTab&&CF.onOpenTab("t-assist");setTimeout(function(){$("asIn").focus();},50);}};}
+ window.CauveryAssist={A:A,mount:mount};})();
+
+var A=CauveryAssist.A;
+var CONFIG={title:"Cauvery Assist",storageKey:"cba_q2fy27_wabag",lang:"en",
+ placeholder:A("Ask: How much did profit grow?","கேளுங்க: Profit எவ்வளவு வளர்ந்துச்சு?"),
+ greeting:A("Vanakam! Ask me anything about VA Tech Wabag's Q2 FY27 — I'll answer in a line.","வணக்கம்! VA Tech Wabag Q2 FY27 பத்தி எதுவும் கேளுங்க — ஒரு வரியில பதில் சொல்றேன்."),
+ noAdvice:A("I can't say buy, sell or hold — CB Research is an education platform, not SEBI-registered. Use the Self-Check tab to test your own conditions.","Buy, sell, hold சொல்ல முடியாது — CB Research கல்வி தளம், SEBI-ல register ஆகல. உங்க conditions-ஐ Self-Check tab-ல test பண்ணுங்க."),
+ fallback:A("I don't have that in this dashboard. Try revenue, profit, order book, cash, receivables, valuation or triggers.","இந்த dashboard-ல அது இல்ல. Revenue, profit, order book, cash, receivables, valuation, triggers பத்தி கேளுங்க."),
+ clips:{noAdvice:{en:"clips/no_advice_en.mp3",ta:"clips/no_advice_ta.mp3"},fallback:{en:"clips/fallback_en.mp3",ta:"clips/fallback_ta.mp3"}},
+ onOpenTab:function(id){showTab(id);},
+ kb:[
+  {k:["revenue","sales","turnover","ரெவின்யூ","வருமானம்","விற்பனை"],a:A("Q2 FY27 revenue was ₹1,000.2 crore, up 19.9% from a year ago.","Q2 FY27 revenue ₹1,000.2 கோடி, போன வருஷத்தை விட 19.9% அதிகம்."),d:A("Q1 FY27 ₹886.8 cr; Q2 FY26 ₹834.5 cr; H1 ₹1,887 cr (+20.3%).","Q1 FY27 ₹886.8 கோடி; Q2 FY26 ₹834.5 கோடி; H1 ₹1,887 கோடி (+20.3%)."),tab:"t-fin"},
+  {k:["profit","pat","net profit","earnings","லாபம்","ப்ராஃபிட்","பேட்"],a:A("Q2 PAT was ₹104.5 crore, up 23.2% year on year.","Q2 PAT ₹104.5 கோடி, YoY 23.2% வளர்ச்சி."),d:A("H1 PAT ₹194.7 cr, +29.3%. PAT margin 10.4%.","H1 PAT ₹194.7 கோடி, +29.3%. PAT margin 10.4%."),tab:"t-fin"},
+  {k:["ebitda","margin","மார்ஜின்","லாப வரம்பு"],a:A("EBITDA was ₹144.6 crore with a 14.5% margin, at the top of the 13–15% guide.","EBITDA ₹144.6 கோடி, margin 14.5% — 13–15% guidance-ஓட மேல் அளவு."),tab:"t-fin"},
+  {k:["order book","order","backlog","ஆர்டர்","ஆர்டர் புக்","order intake"],a:A("The order book is a record ₹20,207 crore, about 4.7 times trailing revenue.","Order book record ₹20,207 கோடி — TTM revenue-ஐ விட சுமார் 4.7 மடங்கு."),d:A("H1 intake ₹5,191 cr; EPC 68%, O&M 32%; municipal 81%.","H1 intake ₹5,191 கோடி; EPC 68%, O&M 32%; municipal 81%."),tab:"t-met"},
+  {k:["cash","net cash","debt","கேஷ்","கடன்","பணம்"],a:A("Net cash excluding HAM is ₹1,144 crore — the 15th net-cash quarter in a row.","HAM தவிர net cash ₹1,144 கோடி — தொடர்ந்து 15-வது net-cash quarter."),tab:"t-cf"},
+  {k:["cash flow","ocf","operating cash","கேஷ் ஃப்ளோ"],a:A("H1 operating cash flow was ₹224.6 crore, against an outflow of ₹48.6 crore last year.","H1 operating cash flow ₹224.6 கோடி; போன வருஷம் ₹48.6 கோடி வெளியே போச்சு."),tab:"t-cf"},
+  {k:["receivable","debtor","working capital","ரிசீவபிள்","பாக்கி","working capital days"],a:A("Receivables are ₹3,175 crore, about 272 days of revenue, down from about 293 days in March.","Receivables ₹3,175 கோடி — சுமார் 272 நாள் revenue; March-ல ~293 நாள்."),tab:"t-cf"},
+  {k:["overseas","international","gulf","middle east","kuwait","saudi","வெளிநாடு","கல்ஃப்"],a:A("Overseas revenue rose 26% to ₹544 crore in Q2 and is now 54% of H1 revenue.","Q2-ல overseas revenue 26% ஏறி ₹544 கோடி; H1 revenue-ல 54%."),tab:"t-seg"},
+  {k:["india","domestic","உள்நாடு","இந்தியா"],a:A("India revenue grew only about 5–7% in H1, to roughly ₹861–877 crore.","H1-ல India revenue ~5–7% தான் வளர்ந்துச்சு, சுமார் ₹861–877 கோடி."),tab:"t-seg"},
+  {k:["reliance","ril","jamnagar","ரிலையன்ஸ்","ஜாம்நகர்"],a:A("RIL gave a 'Mega' order above ₹1,000 crore for a Jamnagar desal plant expandable to 302 MLD, over 25 months.","RIL Jamnagar desal plant-க்கு ₹1,000 கோடிக்கு மேல 'Mega' order — 302 MLD வரை, 25 மாசம்."),tab:"t-bet"},
+  {k:["valuation","pe","p/e","expensive","cheap","வேல்யூவேஷன்","விலை அதிகமா"],a:A("At ₹1,865.6 the stock trades at about 28 times trailing earnings and 25 times FY27 estimates.","₹1,865.6-ல share TTM earnings-ஐ விட ~28 மடங்கு, FY27 estimate-ஐ விட 25 மடங்கு."),tab:"t-val"},
+  {k:["business model","what does","how does","make money","desalination","பிசினஸ்","எப்படி சம்பாதிக்குது"],a:A("WABAG designs, builds and runs water and wastewater plants; 82% of revenue is building (EPC), 18% is running (O&M).","WABAG water, wastewater plants-ஐ design பண்ணி, கட்டி, நடத்துது; revenue-ல 82% கட்டுறது (EPC), 18% நடத்துறது (O&M)."),tab:"t-bm"},
+  {k:["risk","danger","worry","ரிஸ்க்","ஆபத்து","பயம்"],a:A("The main risks are slow customer payments (about 272 receivable days) and cost overruns on fixed-price mega projects.","முக்கிய risks: customers பணம் தாமதம் (~272 receivable days), fixed-price mega projects-ல cost overrun."),tab:"t-swot"},
+  {k:["trigger","catalyst","ட்ரிகர்"],a:A("Top triggers: the RIL Jamnagar mega order and the Kuwait desal ramp-up; trigger score 60.","முக்கிய triggers: RIL Jamnagar mega order, Kuwait desal ramp-up; trigger score 60."),tab:"t-tc"},
+  {k:["cycle","phase","சைக்கிள்"],a:A("The water-EPC sector is in expansion (P3); the stock looks in a top-forming Stage 3 after doubling. Cycle score 63.","Water-EPC sector expansion-ல (P3); இரண்டு மடங்கு ஏறின share Stage 3-ல இருக்கு. Cycle score 63."),tab:"t-tc"},
+  {k:["pillar","score","6 pillars","தூண்"],a:A("WABAG scores 42 out of 60 on CB's six pillars — strongest on business quality and growth.","CB 6 தூண்கள்ல WABAG 60-க்கு 42 — business தரம், growth-ல பலம்."),tab:"t-pil"},
+  {k:["share fall","why fall","why down","stock fall","share move","ஏன் இறங்குச்சு","இறக்கம்"],a:A("The share is about 20% below its September high, likely profit-taking after it doubled; no company-specific bad news was found.","Share Sep high-ல இருந்து ~20% கீழ — இரண்டு மடங்கு ஏறினதுக்கு அப்புறம் profit-taking மாதிரி; company-ல கெட்ட செய்தி இல்ல."),tab:"t-move"},
+  {k:["guidance","guide","outlook","target growth","கைடன்ஸ்"],a:A("Management guides 15–20% revenue growth and a 13–15% EBITDA margin; H1 delivered 20.3% and 13.8%.","Management guidance: 15–20% revenue growth, 13–15% EBITDA margin; H1-ல 20.3%, 13.8% கிடைச்சுது."),tab:"t-fin"},
+  {k:["o&m","operation","maintenance","annuity","ஓ அண்ட் எம்"],a:A("O&M is about 18% of revenue but 32% of the order book — steady annuity income.","O&M revenue-ல ~18%, ஆனா order book-ல 32% — நிலையான annuity வருமானம்."),tab:"t-seg"},
+  {k:["dividend","டிவிடெண்ட்"],a:A("WABAG paid a ₹5 per share dividend for FY26.","FY26-க்கு share-க்கு ₹5 dividend கொடுத்தாங்க."),tab:"t-val"}],
+ suggestions:[["How much did profit grow?","Profit எவ்வளவு வளர்ந்துச்சு?"],["What is the order book?","Order book எவ்வளவு?"],["Why did the share fall?","Share ஏன் இறங்குச்சு?"],["What are the risks?","Risk என்ன?"],["Should I buy?","வாங்கலாமா?"]]};
+var assist=CauveryAssist.mount(document.getElementById("assist"),CONFIG);
+document.getElementById("voiceBubble").onclick=function(){assist.open();};
+document.getElementById("readTab").onclick=function(){var s=secs.filter(function(x){return!x.hidden;})[0];if(!s)return;var c=s.cloneNode(true);c.querySelectorAll("#assist,.chart,table").forEach(function(n){n.remove();});assist.speak(assist.plain(c.innerHTML));};
+
+/* ================= Cauvery Socrates quiz ================= */
+var QZ=[[A("What share of H1 FY27 revenue came from building plants (EPC)?","H1 FY27 revenue-ல plant கட்டுறது (EPC) எவ்வளவு?"),["18%","54%","82%","100%"],2,A("EPC was ₹1,538 cr of ₹1,868 cr — about 82%.","₹1,868 கோடியில ₹1,538 கோடி EPC — ~82%.")],
+ [A("Where did most of the growth come from?","பெரும்பாலான growth எங்க இருந்து?"),[A("India municipal","India municipal"),A("Overseas (Gulf) projects","Overseas (Gulf) projects"),A("Dividend income","Dividend வருமானம்"),A("Selling plants","Plants விற்பனை")],1,A("Overseas gave ~83% of the H1 revenue increase.","H1 revenue ஏற்றத்துல ~83% overseas.")],
+ [A("The order book is about how many times trailing revenue?","Order book TTM revenue-ஐ விட எத்தனை மடங்கு?"),["1.2×","2.8×","4.7×","10×"],2,A("₹20,207 cr ÷ ₹4,263 cr ≈ 4.7×.","₹20,207 ÷ ₹4,263 ≈ 4.7×.")],
+ [A("Which number is the biggest watch item?","எந்த எண்ணை அதிகம் கவனிக்கணும்?"),[A("Net cash ₹1,144 cr","Net cash ₹1,144 கோடி"),A("Receivables ≈272 days","Receivables ≈272 நாள்"),A("Dividend ₹5","Dividend ₹5"),A("PAT margin 10.4%","PAT margin 10.4%")],1,A("Money stuck with customers can turn into write-offs or delays.","Customers கிட்ட மாட்டின பணம் தாமதம் அல்லது இழப்பு ஆகலாம்.")],
+ [A("In CB's cycle view, where is the water-EPC sector?","CB cycle view-ல water-EPC sector எங்க?"),[A("P1 Trough","P1 அடிமட்டம்"),A("P3 Expansion","P3 விரிவாக்கம்"),A("P5 Downturn","P5 சரிவு"),A("No cycle","Cycle இல்ல")],1,A("Record backlogs and steady tenders point to expansion.","Record backlog, நிலையான tenders — expansion.")],
+ [A("Why can the RIL order matter more than its size?","RIL order அளவை விட ஏன் முக்கியம்?"),[A("It is a government order","அரசு order"),A("It grows the industrial mix","Industrial mix-ஐ கூட்டுது"),A("It has no execution risk","Execution risk இல்ல"),A("It pays a dividend","Dividend தரும்")],1,A("Industrial orders help WABAG move toward its 20–25% industrial target.","Industrial orders 20–25% இலக்கை நோக்கி நகர்த்துது.")]];
+var qAns={};function qRender(){var h="";QZ.forEach(function(q,i){var a=qAns[i];h+='<div style="margin-bottom:14px"><b>'+(i+1)+'. <span class="en">'+q[0].en+'</span><span class="ta">'+q[0].ta+'</span></b>';
+  q[1].forEach(function(o,j){o=T(o);var cls=a===undefined?"":(j===q[2]?" ok":(j===a?" no":""));h+='<button type="button" class="qz-opt'+cls+'" data-q="'+i+'" data-o="'+j+'" '+(a!==undefined?"disabled":"")+'><span class="en">'+o.en+'</span><span class="ta">'+o.ta+'</span></button>';});
+  if(a!==undefined)h+='<p class="note" style="margin:4px 0 0"><span class="en">'+(a===q[2]?"Right! ":"Not quite. ")+q[3].en+'</span><span class="ta">'+(a===q[2]?"சரி! ":"இல்ல. ")+q[3].ta+'</span></p>';h+='</div>';});
+ h+='<button type="button" class="btn" id="qReset"><span class="en">Try again</span><span class="ta">மறுபடி</span></button>';document.getElementById("quiz").innerHTML=h;
+ document.querySelectorAll("#quiz [data-q]").forEach(function(b){b.onclick=function(){qAns[b.dataset.q]=+b.dataset.o;qRender();};});document.getElementById("qReset").onclick=function(){qAns={};qRender();};
+ var right=0,done=0;QZ.forEach(function(q,i){if(qAns[i]!==undefined){done++;if(qAns[i]===q[2])right++;}});
+ put("c-qscore",bars({cats:[{en:"Right",ta:"சரி"},{en:"Wrong",ta:"தவறு"},{en:"Left",ta:"மீதி"}],series:[{name:"n",vals:[right,done-right,QZ.length-done],col:C.water}],dec:0,w:420,h:240}));}
+qRender();
+
+/* ================= init ================= */
+(function(){var h=(location.hash||"").slice(1),id="t-"+h;showTab(document.getElementById(id)?id:"t-dash");var l=ls("cb_wabag_lang");setLang(l==="ta"?"ta":"en");})();
+
+</script>

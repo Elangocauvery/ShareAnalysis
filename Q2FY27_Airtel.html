@@ -1,0 +1,681 @@
+<title>Airtel Q2 FY27 vs Jio</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;800&family=Noto+Sans:wght@500;700;800&family=Noto+Sans+Tamil:wght@500;700;800&family=IBM+Plex+Mono:wght@500;600&display=swap">
+<style>
+/* Layout: sticky brand bar + scrollable tab rail; each tab = one panel led by a drawn graphic, short bullets below */
+:root{
+  --bg:#FFF3E6; --panel:#FFF8F0; --line:#EFC79C; --accent:#F59E4C; --accent-soft:#FFE1BF;
+  --ink:#1A1105; --ink2:#43300F; --air:#C8101A; --air-soft:#FDE0DD; --jio:#0B45A6; --jio-soft:#DDE8FB;
+  --good:#0E6E37; --good-soft:#D9F2E2; --bad:#B42318; --bad-soft:#FBE0DC; --warn:#8A4B00;
+  --f-display:"Bricolage Grotesque","Noto Sans Tamil","Noto Sans",system-ui,sans-serif;
+  --f-body:"Noto Sans","Noto Sans Tamil",system-ui,sans-serif;
+  --f-data:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+  color-scheme:light;
+}
+html,body{background:var(--bg)}
+body{color:var(--ink);font-family:var(--f-body);font-weight:500;font-size:15px;line-height:1.5}
+.ta{display:none!important}
+body.L-ta .ta{display:inline!important}
+body.L-ta .en{display:none!important}
+body.L-ta svg text.ta{display:inline!important}
+*{box-sizing:border-box}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bg)}
+header.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:9;background:var(--bg);border-bottom:2px solid var(--line)}
+.wrap{max-width:1180px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.brand{display:flex;flex-wrap:wrap;align-items:center;gap:10px 16px;padding-block:10px}
+.brand h1{font-family:var(--f-display);font-size:clamp(20px,3.2vw,30px);font-weight:800;margin:0;letter-spacing:-.01em;text-wrap:balance}
+.brand h1 b{color:var(--air)}
+.slogan{font-weight:800;color:var(--ink2);background:var(--accent-soft);border:1.5px solid var(--accent);border-radius:999px;padding:3px 12px;font-size:13px}
+.spacer{flex:1}
+.ctrl{display:flex;gap:8px;align-items:center}
+button{font:inherit;cursor:pointer}
+.btn{background:var(--panel);border:2px solid var(--accent);color:var(--ink);font-weight:800;border-radius:10px;padding:6px 12px}
+.btn:hover,.btn.on{background:var(--accent-soft)}
+.btn:focus-visible,.tab:focus-visible,.sub:focus-visible{outline:3px solid var(--air);outline-offset:2px}
+nav.tabs{display:flex;gap:6px;overflow-x:auto;padding-block:8px;scrollbar-width:thin}
+.tab{flex:0 0 auto;background:transparent;border:2px solid transparent;border-radius:10px;padding:6px 11px;font-weight:800;color:var(--ink2);white-space:nowrap}
+.tab:hover{border-color:var(--line)}
+.tab.on{background:var(--accent-soft);border-color:var(--accent);color:var(--ink)}
+main{padding-block:18px 120px}
+.panel h2{font-family:var(--f-display);font-size:clamp(22px,3vw,30px);margin:0 0 4px;font-weight:800;text-wrap:balance}
+.lede{color:var(--ink2);margin:0 0 14px;font-weight:700}
+.grid{display:grid;gap:14px}
+.g2{grid-template-columns:repeat(auto-fit,minmax(300px,1fr))}
+.g3{grid-template-columns:repeat(auto-fit,minmax(320px,1fr))}
+.g4{grid-template-columns:repeat(auto-fit,minmax(240px,1fr))}
+.card{background:var(--panel);border:1.5px solid var(--line);border-radius:14px;padding:14px;min-width:0}
+.card h3{margin:0 0 8px;font-family:var(--f-display);font-size:18px;font-weight:800}
+.card ul{margin:6px 0 0;padding-left:18px}
+.card li{margin:3px 0}
+.kpi{display:flex;flex-direction:column;gap:2px}
+.kpi .k{font-size:12.5px;font-weight:800;text-transform:uppercase;letter-spacing:.04em;color:var(--ink2)}
+.kpi .v{font-family:var(--f-data);font-size:24px;font-weight:600;font-variant-numeric:tabular-nums}
+.kpi .d{font-size:13px;font-weight:800}
+.up{color:var(--good)} .dn{color:var(--bad)} .nt{color:var(--warn)}
+.chip{display:inline-block;border-radius:999px;padding:2px 10px;font-weight:800;font-size:12.5px;border:1.5px solid}
+.chip.a{background:var(--air-soft);border-color:var(--air);color:#7A0A10}
+.chip.j{background:var(--jio-soft);border-color:var(--jio);color:#08306F}
+.chip.o{background:var(--accent-soft);border-color:var(--accent);color:var(--ink)}
+.chip.g{background:var(--good-soft);border-color:var(--good);color:var(--good)}
+.chip.r{background:var(--bad-soft);border-color:var(--bad);color:var(--bad)}
+.svgbox{overflow-x:auto}
+.svgbox svg{display:block;width:100%;height:auto}
+.svgbox.wide svg{min-width:680px}
+svg text{font-family:var(--f-body);font-weight:700}
+svg text:not([fill]){fill:var(--ink)}
+svg .num{font-family:var(--f-data);font-weight:600}
+.tw{overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-variant-numeric:tabular-nums;min-width:520px}
+th,td{padding:7px 9px;border-bottom:1.5px solid var(--line);text-align:right;white-space:nowrap}
+th:first-child,td:first-child{text-align:left;white-space:normal}
+th{font-size:12.5px;text-transform:uppercase;letter-spacing:.04em;color:var(--ink2);background:var(--accent-soft)}
+td.n{font-family:var(--f-data);font-weight:600}
+.subs{display:flex;flex-wrap:wrap;gap:6px;margin:4px 0 12px}
+.sub{background:var(--panel);border:1.5px solid var(--line);border-radius:999px;padding:5px 12px;font-weight:800;color:var(--ink2)}
+.sub.on{border-color:var(--air);background:var(--air-soft);color:#6B0A0F}
+.sp[hidden]{display:none}
+.note{font-size:13px;color:var(--ink2);font-weight:700}
+.detail{margin-top:10px;background:var(--accent-soft);border:2px solid var(--accent);border-radius:12px;padding:10px 12px;font-weight:700}
+.formula{font-family:var(--f-data);font-weight:600;background:var(--panel);border:1.5px dashed var(--accent);border-radius:10px;padding:8px 12px;margin-top:10px;overflow-x:auto}
+.abbr{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:4px 16px;font-size:13.5px}
+.abbr b{font-family:var(--f-data)}
+.pill{display:inline-block;padding:1px 8px;border-radius:6px;font-weight:800;font-size:12px}
+.pill.win-a{background:var(--air-soft);color:#7A0A10;border:1.5px solid var(--air)}
+.pill.win-j{background:var(--jio-soft);color:#08306F;border:1.5px solid var(--jio)}
+.verdict{background:var(--air-soft);border:2.5px solid var(--air);border-radius:16px;padding:14px 16px}
+.verdict h3{font-size:22px}
+/* checks & quiz */
+.chk{display:flex;gap:10px;align-items:flex-start;padding:8px 0;border-bottom:1px dashed var(--line)}
+.chk input{width:20px;height:20px;margin-top:2px;accent-color:var(--air);flex:0 0 auto}
+.chk .data{display:block;font-size:13px;color:var(--ink2)}
+.bar{height:10px;background:var(--accent-soft);border-radius:99px;overflow:hidden;border:1px solid var(--line)}
+.bar i{display:block;height:100%;background:var(--air)}
+.opt{display:block;width:100%;text-align:left;background:var(--panel);border:2px solid var(--line);border-radius:10px;padding:8px 10px;margin:5px 0;font-weight:700;color:var(--ink)}
+.opt.ok{border-color:var(--good);background:var(--good-soft)}
+.opt.no{border-color:var(--bad);background:var(--bad-soft)}
+/* assist */
+.chat{display:flex;flex-direction:column;gap:8px;max-height:420px;overflow-y:auto;padding:4px}
+.msg{padding:9px 12px;border-radius:12px;max-width:90%;font-weight:700}
+.msg.u{align-self:flex-end;background:var(--jio-soft);border:1.5px solid var(--jio)}
+.msg.b{align-self:flex-start;background:var(--accent-soft);border:1.5px solid var(--accent)}
+.ask{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+.ask input[type=text]{flex:1 1 220px;min-width:0;font:inherit;font-weight:700;padding:8px 10px;border:2px solid var(--accent);border-radius:10px;background:var(--panel);color:var(--ink)}
+.sugg{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.sugg button{background:var(--panel);border:1.5px solid var(--line);border-radius:999px;padding:4px 10px;font-weight:700;color:var(--ink2);font-size:13px}
+/* fixed badge + voice bubble */
+.cb{position:fixed;right:calc(14px + env(safe-area-inset-right,0px));bottom:calc(14px + env(safe-area-inset-bottom,0px));z-index:20}
+.cb .logo{width:46px;height:46px;border-radius:50%;background:var(--air);color:#fff;font-family:var(--f-display);font-weight:800;font-size:17px;display:grid;place-items:center;border:3px solid var(--accent);animation:blink 1.6s ease-in-out infinite;cursor:help}
+.cb .tip{position:absolute;right:0;bottom:56px;width:min(300px,80vw);background:var(--panel);border:2px solid var(--air);border-radius:12px;padding:10px 12px;font-size:13px;font-weight:700;display:none}
+.cb:hover .tip,.cb.open .tip{display:block}
+.vbub{position:fixed;right:calc(14px + env(safe-area-inset-right,0px));bottom:calc(72px + env(safe-area-inset-bottom,0px));z-index:20;background:var(--accent-soft);border:2px solid var(--accent);border-radius:999px;padding:7px 12px;font-weight:800;color:var(--ink)}
+@keyframes blink{50%{opacity:.45}}
+@media (prefers-reduced-motion:reduce){.cb .logo{animation:none}}
+@media (max-width:560px){.g4{grid-template-columns:1fr 1fr}.kpi .v{font-size:18px}.brand h1{font-size:20px}}
+</style>
+
+<header class="top">
+ <div class="wrap">
+  <div class="brand">
+   <h1><b>Bharti Airtel</b> · Q2 FY27</h1>
+   <span class="slogan"><span class="en">Know before you own</span><span class="ta">புரிஞ்சு வாங்குங்க!</span></span>
+   <span class="spacer"></span>
+   <div class="ctrl">
+    <button class="btn" id="readTab" type="button"><span class="en">🔊 Read this tab</span><span class="ta">🔊 இந்த tab-ஐ படிங்க</span></button>
+    <button class="btn on" id="lEN" type="button">EN</button>
+    <button class="btn" id="lTA" type="button">தமிழ்</button>
+   </div>
+  </div>
+  <nav class="tabs" id="tabs" aria-label="Sections"></nav>
+ </div>
+</header>
+<main class="wrap" id="main"></main>
+
+<button class="vbub" id="vbub" type="button"><span class="en">🎙 Voice Assist</span><span class="ta">🎙 Voice Assist</span></button>
+<div class="cb" id="cb"><div class="logo" tabindex="0" aria-label="Disclaimer">CB</div>
+ <div class="tip"><span class="en">CB Research (Cauvery Business Research) is an education platform, not SEBI-registered. Nothing here is a buy, sell or hold recommendation. Figures are from company filings and media reports of Q2 FY27 (Jul–Sep 2026); please verify before acting.</span><span class="ta">CB Research ஒரு education platform தான், SEBI-registered இல்லை. இங்க இருக்கிறது buy, sell, hold advice இல்லை. எண்கள் Q2 FY27 (Jul–Sep 2026) company filings, news-ல இருந்து எடுத்தது; நீங்களே ஒருமுறை verify பண்ணிக்கோங்க.</span></div></div>
+
+<script>
+/* ---------- helpers ---------- */
+var B=function(e,t){return '<span class="en">'+e+'</span><span class="ta">'+t+'</span>';};
+var ST=function(x,y,e,t,a){a=a||'';return '<text x="'+x+'" y="'+y+'" '+a+' class="en">'+e+'</text><text x="'+x+'" y="'+y+'" '+a+' class="ta">'+t+'</text>';};
+var TX=function(x,y,s,a){return '<text x="'+x+'" y="'+y+'" '+(a||'')+'>'+s+'</text>';};
+var f0=function(n){return Math.round(n).toLocaleString('en-IN');};
+var f1=function(n){return n.toFixed(1);};
+var C={air:'#C8101A',airS:'#FDE0DD',jio:'#0B45A6',jioS:'#DDE8FB',acc:'#F59E4C',accS:'#FFE1BF',ink:'#1A1105',ink2:'#43300F',line:'#EFC79C',good:'#0E6E37',bad:'#B42318',panel:'#FFF8F0',sand:'#E9B47A',teal:'#0F766E',plum:'#7B2D8E'};
+function lis(arr){return '<ul>'+arr.map(function(p){return '<li>'+B(p[0],p[1])+'</li>';}).join('')+'</ul>';}
+function card(tEn,tTa,body,extra){return '<div class="card" '+(extra||'')+'><h3>'+B(tEn,tTa)+'</h3>'+body+'</div>';}
+function kpi(kEn,kTa,v,dEn,dTa,cls){return '<div class="card kpi"><span class="k">'+B(kEn,kTa)+'</span><span class="v">'+v+'</span><span class="d '+(cls||'up')+'">'+B(dEn,dTa)+'</span></div>';}
+function subtabs(id,items){ // items:[{k,en,ta,html}]
+  var h='<div class="subs" role="tablist">';
+  items.forEach(function(it,i){h+='<button type="button" class="sub'+(i?'':' on')+'" data-grp="'+id+'" data-k="'+it.k+'">'+B(it.en,it.ta)+'</button>';});
+  h+='</div>';
+  items.forEach(function(it,i){h+='<div class="sp" data-grp="'+id+'" data-k="'+it.k+'"'+(i?' hidden':'')+'>'+it.html+'</div>';});
+  return h;
+}
+/* vertical grouped bars. groups:[{en,ta,v:[..]}], series:[{en,ta,c}] */
+function vbars(groups,series,o){
+  o=o||{};var W=o.w||560,H=o.h||250,L=46,R=10,T=26,Bm=44,ih=H-T-Bm,iw=W-L-R;
+  var mx=o.max||Math.max.apply(null,groups.map(function(g){return Math.max.apply(null,g.v.map(function(x){return x||0;}));}))*1.12;
+  var s='<svg viewBox="0 0 '+W+' '+H+'" role="img">';
+  for(var i=0;i<=4;i++){var y=T+ih-ih*i/4;s+='<line x1="'+L+'" x2="'+(W-R)+'" y1="'+y+'" y2="'+y+'" stroke="'+C.line+'" stroke-width="1"/>'+TX(L-6,y+4,(o.tick?o.tick(mx*i/4):f0(mx*i/4)),'text-anchor="end" font-size="10" class="num"');}
+  var gw=iw/groups.length,bw=Math.min(34,(gw-14)/series.length);
+  groups.forEach(function(g,gi){var x0=L+gi*gw+(gw-bw*series.length)/2;
+    g.v.forEach(function(v,si){if(v==null)return;var h=ih*v/mx,x=x0+si*bw,y=T+ih-h;
+      s+='<rect x="'+x+'" y="'+y+'" width="'+(bw-3)+'" height="'+h+'" rx="3" fill="'+series[si].c+'"/>';
+      s+=TX(x+(bw-3)/2,y-4,(o.fmt?o.fmt(v):f0(v)),'text-anchor="middle" font-size="10" class="num"');});
+    s+=ST(L+gi*gw+gw/2,H-24,g.en,g.ta,'text-anchor="middle" font-size="12"');});
+  var lx=L;series.forEach(function(se){s+='<rect x="'+lx+'" y="4" width="12" height="12" rx="2" fill="'+se.c+'"/>'+ST(lx+16,14,se.en,se.ta,'font-size="11.5"');lx+=o.legw||120;});
+  return s+'</svg>';
+}
+/* horizontal bars: items [{en,ta,v,c,lab}] */
+function hbars(items,o){
+  o=o||{};var W=o.w||560,rowH=o.row||34,L=o.L||170,H=items.length*rowH+12,mx=o.max||Math.max.apply(null,items.map(function(i){return Math.abs(i.v);}))*1.15;
+  var s='<svg viewBox="0 0 '+W+' '+H+'" role="img">';
+  items.forEach(function(it,i){var y=8+i*rowH,w=(W-L-70)*Math.abs(it.v)/mx;
+    s+=ST(L-8,y+rowH/2+2,it.en,it.ta,'text-anchor="end" font-size="12.5"');
+    s+='<rect x="'+L+'" y="'+(y+5)+'" width="'+Math.max(w,2)+'" height="'+(rowH-12)+'" rx="4" fill="'+(it.c||C.air)+'"/>';
+    s+=TX(L+w+6,y+rowH/2+3,(it.lab||f1(it.v)),'font-size="12" class="num"');});
+  return s+'</svg>';
+}
+function donut(items,o){
+  o=o||{};var W=o.w||420,H=o.h||230,cx=115,cy=H/2,r=88,rr=52,tot=items.reduce(function(a,b){return a+b.v;},0),a0=-Math.PI/2;
+  var s='<svg viewBox="0 0 '+W+' '+H+'" role="img">';
+  items.forEach(function(it){var a1=a0+2*Math.PI*it.v/tot,lg=(a1-a0)>Math.PI?1:0;
+    var p='M'+(cx+r*Math.cos(a0))+' '+(cy+r*Math.sin(a0))+' A'+r+' '+r+' 0 '+lg+' 1 '+(cx+r*Math.cos(a1))+' '+(cy+r*Math.sin(a1))+' L'+(cx+rr*Math.cos(a1))+' '+(cy+rr*Math.sin(a1))+' A'+rr+' '+rr+' 0 '+lg+' 0 '+(cx+rr*Math.cos(a0))+' '+(cy+rr*Math.sin(a0))+'Z';
+    s+='<path d="'+p+'" fill="'+it.c+'" stroke="'+C.panel+'" stroke-width="2"/>';a0=a1;});
+  if(o.center)s+=ST(cx,cy-2,o.center[0],o.center[1],'text-anchor="middle" font-size="13"')+(o.center[2]?TX(cx,cy+16,o.center[2],'text-anchor="middle" font-size="13" class="num"'):'');
+  items.forEach(function(it,i){var y=22+i*26;s+='<rect x="225" y="'+(y-11)+'" width="13" height="13" rx="3" fill="'+it.c+'"/>'+ST(244,y,it.en,it.ta,'font-size="12"')+TX(W-4,y,(it.lab||(f1(100*it.v/tot)+'%')),'text-anchor="end" font-size="12" class="num"');});
+  return s+'</svg>';
+}
+function gauge(v,max,cEn,cTa,col,o){
+  o=o||{};var W=260,H=160,cx=130,cy=130,r=100,a=Math.PI*(1-Math.min(v,max)/max);
+  var s='<svg viewBox="0 0 '+W+' '+H+'" role="img"><path d="M30 130 A100 100 0 0 1 230 130" fill="none" stroke="'+C.accS+'" stroke-width="22"/>';
+  s+='<path d="M30 130 A100 100 0 0 1 '+(cx+r*Math.cos(a))+' '+(cy-r*Math.sin(a))+'" fill="none" stroke="'+(col||C.air)+'" stroke-width="22"/>';
+  s+='<line x1="'+cx+'" y1="'+cy+'" x2="'+(cx+(r-28)*Math.cos(a))+'" y2="'+(cy-(r-28)*Math.sin(a))+'" stroke="'+C.ink+'" stroke-width="4" stroke-linecap="round"/><circle cx="'+cx+'" cy="'+cy+'" r="7" fill="'+C.ink+'"/>';
+  s+=TX(cx,cy-38,(o.lab||v),'text-anchor="middle" font-size="26" class="num"')+ST(cx,152,cEn,cTa,'text-anchor="middle" font-size="12.5"');
+  return s+'</svg>';
+}
+function ring(id){return '<svg viewBox="0 0 120 120" width="120" height="120" role="img"><circle cx="60" cy="60" r="48" fill="none" stroke="'+C.accS+'" stroke-width="14"/><circle id="'+id+'" cx="60" cy="60" r="48" fill="none" stroke="'+C.air+'" stroke-width="14" stroke-dasharray="0 302" transform="rotate(-90 60 60)" stroke-linecap="round"/><text id="'+id+'t" x="60" y="66" text-anchor="middle" font-size="20" class="num">0%</text></svg>';}
+/* quarterly table: rows [en,ta,q2,q1,ly,type('n'|'p'|'x'|'r'),lowerBetter] */
+function qtable(rows,heads){
+  heads=heads||['Q2 FY27','Q1 FY27','Q2 FY26'];
+  var h='<div class="tw"><table><thead><tr><th>'+B('Metric','அளவுகோல்')+'</th><th>'+heads[0]+'</th><th>'+heads[1]+'</th><th>'+heads[2]+'</th><th>QoQ</th><th>YoY</th></tr></thead><tbody>';
+  rows.forEach(function(r){
+    var fm=function(v){if(v==null)return '—';if(typeof v==='string')return v;return r[5]==='p'?f1(v)+'%':r[5]==='x'?v.toFixed(2)+'x':r[5]==='r'?'₹'+f1(v).replace('.0',''):f0(v);};
+    var g=function(a,b){if(a==null||b==null||typeof a==='string'||typeof b==='string')return '—';var lb=r[6];
+      if(r[5]==='p'){var d=Math.round((a-b)*100);var good=lb?d<0:d>0;return '<span class="'+(d===0?'nt':good?'up':'dn')+'">'+(d>0?'+':'')+d+' bps</span>';}
+      if(r[5]==='x'){var dx=a-b;return '<span class="'+((lb?dx<0:dx>0)?'up':'dn')+'">'+(dx>0?'+':'')+dx.toFixed(2)+'x</span>';}
+      var p=100*(a-b)/Math.abs(b);var gd=lb?p<0:p>0;return '<span class="'+(Math.abs(p)<0.05?'nt':gd?'up':'dn')+'">'+(p>0?'+':'')+f1(p)+'%</span>';};
+    h+='<tr><td>'+B(r[0],r[1])+'</td><td class="n">'+fm(r[2])+'</td><td class="n">'+fm(r[3])+'</td><td class="n">'+fm(r[4])+'</td><td class="n">'+g(r[2],r[3])+'</td><td class="n">'+g(r[2],r[4])+'</td></tr>';});
+  return h+'</tbody></table></div>';
+}
+/* simple pictogram icons (24x24 drawn at x,y with scale s) */
+function ico(name,x,y,s,col){s=s||1;col=col||C.ink;var g='<g transform="translate('+x+' '+y+') scale('+s+')" fill="none" stroke="'+col+'" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">';
+  var P={
+   tower:'<path d="M12 3 L7 21 M12 3 L17 21 M8.5 15 H15.5 M10 9 H14"/><path d="M5 5 Q3 8 5 11 M19 5 Q21 8 19 11"/>',
+   wave:'<path d="M2 12 Q5 4 8 12 T14 12 T20 12 T22 12"/>',
+   fibre:'<path d="M3 18 C8 18 8 6 13 6 S18 18 21 18"/><circle cx="3" cy="18" r="1.5"/><circle cx="21" cy="18" r="1.5"/>',
+   server:'<rect x="4" y="3" width="16" height="7" rx="1.5"/><rect x="4" y="13" width="16" height="7" rx="1.5"/><path d="M8 6.5h.01M8 16.5h.01"/>',
+   store:'<path d="M3 9 L5 4 H19 L21 9 Z M4 9 V20 H20 V9 M10 20 V14 H14 V20"/>',
+   phone:'<rect x="7" y="2" width="10" height="20" rx="2"/><path d="M11 18h2"/>',
+   home:'<path d="M3 11 L12 4 L21 11 M5 10 V20 H19 V10"/><path d="M10 20 V14 H14 V20"/>',
+   bldg:'<rect x="5" y="3" width="14" height="18"/><path d="M9 7h2M13 7h2M9 11h2M13 11h2M9 15h2M13 15h2"/>',
+   tv:'<rect x="3" y="6" width="18" height="12" rx="2"/><path d="M8 21h8M9 3l3 3 3-3"/>',
+   globe:'<circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3 C8 8 8 16 12 21 C16 16 16 8 12 3"/>',
+   wallet:'<rect x="3" y="6" width="18" height="13" rx="2"/><path d="M16 12.5h2M3 9h18"/>',
+   users:'<circle cx="9" cy="8" r="3.5"/><path d="M2.5 20 C3 15 15 15 15.5 20"/><circle cx="17" cy="9" r="2.5"/><path d="M16 14 C19 14 21.5 15.5 21.5 19"/>',
+   app:'<rect x="4" y="3" width="16" height="18" rx="3"/><path d="M8 8h8M8 12h8M8 16h5"/>',
+   handshake:'<path d="M2 12 L7 7 L12 10 L17 7 L22 12 L16 18 L12 15 L8 18 Z"/>',
+   coin:'<circle cx="12" cy="12" r="9"/><path d="M9 8h6M9 11h6M11 8 C15 8 15 13 11 13 L15 17"/>',
+   arrowup:'<path d="M12 20 V5 M6 11 L12 5 L18 11"/>',
+   arrowdn:'<path d="M12 4 V19 M6 13 L12 19 L18 13"/>',
+   shield:'<path d="M12 3 L20 6 V12 C20 17 16 20 12 21 C8 20 4 17 4 12 V6 Z"/><path d="M9 12 L11 14 L15 10"/>',
+   warn:'<path d="M12 3 L22 20 H2 Z"/><path d="M12 10 V14 M12 17h.01"/>',
+   target:'<circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.5"/>',
+   scale:'<path d="M12 3 V21 M5 21 H19 M4 7 H20 M7 7 L4 14 H10 Z M17 7 L14 14 H20 Z"/>'
+  };return g+(P[name]||'')+'</g>';}
+
+/* ---------- DATA ---------- */
+var A={rev:[60878,58539,52145],ebitda:[35240,33599,29919],m:[57.9,57.4,57.4],pat:[8888,8167,6792],nibe:[9015,8057,6792],
+  india:[42308,41214,38690],mob:[30943,29929,28104],biz:[5878,5665,5276],dth:[771,773,753],arpu:[271,264,256]};
+var J={rev:[40475,39173,36332],ebitda:[21879,20865,18764],m:[54.1,53.3,51.6],pat:[8387,7764,7379],arpu:[218.8,215.6,211.4],subs:[542.4,533.3,506.4]};
+
+var TABS=[];
+function T(id,en,ta,fn){TABS.push({id:id,en:en,ta:ta,fn:fn});}
+
+/* ================= 1. DASHBOARD ================= */
+T('dash','Dashboard','ஒரே பார்வையில்',function(){
+ var h='<h2>'+B('Airtel Q2 FY27 at a glance','Airtel Q2 FY27 — ஒரே பார்வையில்')+'</h2><p class="lede">'+B('Quarter ended 30 Sep 2026 · results out 5 Nov 2026 · ₹ crore unless stated','30 Sep 2026 வரை quarter · results 5 Nov 2026 · ₹ கோடி')+'</p>';
+ h+='<div class="grid g4">'+
+  kpi('Revenue','Revenue','₹'+f0(60878),'+16.7% YoY · +4.0% QoQ','+16.7% YoY · +4.0% QoQ')+
+  kpi('EBITDA','EBITDA','₹'+f0(35240),'Margin 57.9% (+50 bps QoQ)','Margin 57.9% (+50 bps QoQ)')+
+  kpi('Net profit (PAT)','Net profit (PAT)','₹'+f0(8888),'+30.9% YoY · +8.8% QoQ','+30.9% YoY · +8.8% QoQ')+
+  kpi('India mobile ARPU','India mobile ARPU','₹271','vs ₹256 a year ago','ஒரு வருஷம் முன்னாடி ₹256')+
+  kpi('Customers','Customers','692.6 mn','+12 mn added in the quarter','இந்த quarter-ல +12 mn')+
+  kpi('Net debt / EBITDA','Net debt / EBITDA','1.18x','Down from 1.63x a year ago','ஒரு வருஷத்துல 1.63x-ல இருந்து இறங்கியிருக்கு')+
+  kpi('Profit vs street','Profit vs street','₹8,888','Below LSEG estimate ₹9,673 cr','LSEG estimate ₹9,673 cr-ஐ விட குறைவு','dn')+
+  kpi('India mobile churn','India mobile churn','2.9%','Up from 2.6% in Q1','Q1-ல 2.6% — இப்போ ஏறியிருக்கு','dn')+'</div>';
+ h+='<div class="grid g2" style="margin-top:14px">';
+ h+=card('Where the money came from','பணம் எங்கிருந்து வந்தது','<div class="svgbox">'+donut([
+   {en:'India mobile',ta:'India mobile',v:30943,c:C.air},{en:'Africa',ta:'Africa',v:18817,c:C.acc},{en:'Airtel Business',ta:'Airtel Business',v:5878,c:C.teal},
+   {en:'Homes (est.)',ta:'Homes (est.)',v:2300,c:C.plum},{en:'Digital TV',ta:'Digital TV',v:771,c:C.sand},{en:'Towers & others (net)',ta:'Towers & மற்றவை (net)',v:2169,c:'#8C7B66'}],{center:['Revenue','Revenue','₹60,878']})+'</div>'+
+   '<p class="note">'+B('Homes is estimated from customers × ARPU; towers & others is the balancing figure after eliminations.','Homes = customers × ARPU வைச்சு கணக்கு; towers & others = மீதி balancing figure.')+'</p>');
+ h+=card('Airtel vs Jio — this quarter','Airtel vs Jio — இந்த quarter','<div class="svgbox">'+vbars([
+   {en:'Revenue*',ta:'Revenue*',v:[42308,40475]},{en:'EBITDA*',ta:'EBITDA*',v:[25729,21879]},{en:'Net profit',ta:'Net profit',v:[8888,8387]}],
+   [{en:'Airtel',ta:'Airtel',c:C.air},{en:'Jio Platforms',ta:'Jio Platforms',c:C.jio}],{legw:90})+'</div><p class="note">'+B('*Airtel India business (incl. towers) vs Jio Platforms. Airtel profit includes Africa.','*Airtel India business (towers சேர்த்து) vs Jio Platforms. Airtel profit-ல Africa-வும் இருக்கு.')+'</p>');
+ h+='</div><div class="grid g3" style="margin-top:14px">'+
+  card('CB lenses','CB lenses','<p><span class="chip o">CB Conviction 65/100</span> <span class="chip o">6 Pillars 42/60</span></p><p><span class="chip g">CY 63</span> <span class="chip o">TG 57</span></p>'+lis([['Cycle: telecom in expansion phase (P3).','Cycle: telecom expansion phase (P3)-ல இருக்கு.'],['Triggers: debt falling and premium mix are positive; churn and Jio’s pace are the watch-outs.','Triggers: debt குறையறதும் premium mix-உம் positive; churn, Jio speed — கவனிக்கணும்.']]))+
+  card('Earnings verdict vs Jio','Jio-வோட earnings verdict','<p style="font-size:20px;font-weight:800;margin:4px 0"><span class="chip a">Airtel 7</span> – <span class="chip j">Jio 5</span></p>'+lis([['Airtel wins on ARPU, margin, profit and profit growth.','ARPU, margin, profit, profit growth — Airtel ஜெயிக்குது.'],['Jio wins on customer adds, churn, home broadband and debt.','Customer adds, churn, home broadband, debt — Jio ஜெயிக்குது.']]))+
+  card('In one line','ஒரே வரியில','<svg viewBox="0 0 260 70" role="img">'+ico('arrowup',8,10,1.8,C.good)+ST(60,30,'Earns more per customer','ஒரு customer-க்கு அதிகம் சம்பாதிக்குது','font-size="13"')+ST(60,52,'than Jio, with fewer customers.','Jio-வை விட, customers குறைவா இருந்தாலும்.','font-size="13"')+'</svg>'+lis([['Profit up 31% YoY, but missed the street estimate.','Profit 31% ஏறிச்சு, ஆனா street estimate-ஐ miss பண்ணிச்சு.']]))+'</div>';
+ return h;});
+
+/* ================= 2. BUSINESS MODEL ================= */
+var BM=[
+ /* inputs */
+ {x:10,y:50,w:175,h:62,ic:'wave',en:'Spectrum',ta:'Spectrum',nen:'Licence + spectrum fees',nta:'Licence + spectrum fee',den:'Airwaves bought in government auctions. Without spectrum, no mobile service. Paid as upfront cost plus a share of revenue.',dta:'அரசு auction-ல வாங்குற airwaves. Spectrum இல்லாம mobile service இல்லை. Upfront செலவு + revenue-ல ஒரு பங்கு.'},
+ {x:10,y:122,w:175,h:62,ic:'tower',en:'Towers (Indus)',ta:'Towers (Indus)',nen:'Inside India revenue',nta:'India revenue-க்குள்ள',den:'Indus Towers is a subsidiary, so its tower rent from other telcos counts inside Airtel India revenue.',dta:'Indus Towers ஒரு subsidiary; மத்த telcos கட்டுற tower rent-உம் Airtel India revenue-ல வருது.'},
+ {x:10,y:194,w:175,h:62,ic:'fibre',en:'Network & fibre',ta:'Network & fibre',nen:'Capex ₹12,467 cr this qtr',nta:'இந்த qtr capex ₹12,467 cr',den:'Money spent on 4G/5G sites, fibre and home connections. India ₹9,908 cr, Africa ₹2,559 cr.',dta:'4G/5G sites, fibre, home connections-க்கு செலவு. India ₹9,908 cr, Africa ₹2,559 cr.'},
+ {x:10,y:266,w:175,h:62,ic:'server',en:'Data centres (Nxtra)',ta:'Data centres (Nxtra)',nen:'₹2,826 cr land bought',nta:'₹2,826 cr-க்கு land வாங்கியாச்சு',den:'Bought a land parcel for its planned 1 GW data centre business. Land is acquired; the capacity is still a plan.',dta:'Plan பண்ணியிருக்கிற 1 GW data centre-க்கு land வாங்கியாச்சு. Land ready; capacity இன்னும் plan தான்.'},
+ {x:10,y:338,w:175,h:62,ic:'store',en:'People & distribution',ta:'People & distribution',nen:'Stores, retailers, app',nta:'Stores, retailers, app',den:'Retail partners sell SIMs and recharges; the Airtel Thanks app handles service and upsell.',dta:'Retail partners SIM, recharge விற்கிறாங்க; Airtel Thanks app service, upsell பார்த்துக்குது.'},
+ /* hub */
+ {hub:1,x:212,y:110,w:186,h:250,en:'Bharti Airtel',ta:'Bharti Airtel',den:'692.6 mn customers in 15 countries: India & South Asia 498.7 mn, Africa 193.9 mn. EBITDA margin 57.9%.',dta:'15 நாடுகள்ல 692.6 mn customers: India & South Asia 498.7 mn, Africa 193.9 mn. EBITDA margin 57.9%.'},
+ /* products */
+ {x:428,y:44,w:172,h:52,ic:'phone',en:'India Mobile',ta:'India Mobile',nen:'₹30,943 cr · ARPU ₹271',nta:'₹30,943 cr · ARPU ₹271',den:'Biggest engine: 377 mn mobile customers paying ₹271 a month on average. Revenue +10.1% YoY.',dta:'பெரிய engine: 377 mn customers, சராசரி மாசம் ₹271. Revenue +10.1% YoY.'},
+ {x:428,y:102,w:172,h:52,ic:'home',en:'Homes',ta:'Homes',nen:'15.4 mn homes · +25.3%',nta:'15.4 mn வீடுகள் · +25.3%',den:'Fibre and wireless home broadband. 676K homes added this quarter; ARPU ₹509.',dta:'Fibre, wireless home broadband. இந்த quarter 676K வீடுகள் சேர்ந்தது; ARPU ₹509.'},
+ {x:428,y:160,w:172,h:52,ic:'bldg',en:'Airtel Business',ta:'Airtel Business',nen:'₹5,878 cr · +11.4%',nta:'₹5,878 cr · +11.4%',den:'Connectivity, cloud, cybersecurity and IoT for companies and government.',dta:'Companies, அரசுக்கு connectivity, cloud, cybersecurity, IoT.'},
+ {x:428,y:218,w:172,h:52,ic:'tv',en:'Digital TV',ta:'Digital TV',nen:'₹771 cr · 15.6 mn',nta:'₹771 cr · 15.6 mn',den:'DTH and IPTV. Smallest segment; lost 443K customers this quarter.',dta:'DTH, IPTV. சின்ன segment; இந்த quarter 443K customers போயிட்டாங்க.'},
+ {x:428,y:276,w:172,h:52,ic:'globe',en:'Africa',ta:'Africa',nen:'₹18,817 cr · +20.6% cc',nta:'₹18,817 cr · +20.6% cc',den:'Mobile and data in African markets via Airtel Africa. Growth 20.6% in constant currency.',dta:'Airtel Africa மூலமா Africa-ல mobile, data. Constant currency-ல 20.6% growth.'},
+ {x:428,y:334,w:172,h:52,ic:'wallet',en:'Airtel Money',ta:'Airtel Money',nen:'$437 mn · 60.9 mn users',nta:'$437 mn · 60.9 mn users',den:'Mobile money in Africa. Revenue +25.8% in constant currency.',dta:'Africa-ல mobile money. Revenue constant currency-ல +25.8%.'},
+ /* channels */
+ {x:632,y:62,w:150,h:62,ic:'store',en:'Retail & partners',ta:'Retail & partners',nen:'SIMs, recharges',nta:'SIM, recharge',den:'Shops and retailers across towns sell connections and recharges.',dta:'ஊர் முழுக்க கடைகள் connection, recharge விற்கிறாங்க.'},
+ {x:632,y:140,w:150,h:62,ic:'app',en:'Thanks app',ta:'Thanks app',nen:'Upgrades, bills',nta:'Upgrade, bill',den:'Digital channel for postpaid upgrades, home broadband and bill payments.',dta:'Postpaid upgrade, home broadband, bill payment-க்கு digital channel.'},
+ {x:632,y:218,w:150,h:62,ic:'handshake',en:'Enterprise sales',ta:'Enterprise sales',nen:'Large deals',nta:'பெரிய deals',den:'Direct sales team for companies and government contracts.',dta:'Companies, அரசு contracts-க்கு direct sales team.'},
+ {x:632,y:296,w:150,h:62,ic:'coin',en:'Africa agents',ta:'Africa agents',nen:'Money + airtime',nta:'Money + airtime',den:'Agent network in Africa for airtime and Airtel Money.',dta:'Africa-ல airtime, Airtel Money-க்கு agent network.'},
+ /* customers */
+ {x:812,y:44,w:178,h:56,ic:'users',en:'Prepaid users',ta:'Prepaid users',nen:'91.7% of India mobile',nta:'India mobile-ல 91.7%',den:'Most customers pay in advance, so cash comes in before the service is used.',dta:'பெரும்பாலும் முன்னாடியே pay பண்றாங்க — service-க்கு முன்னாடியே cash வந்துடுது.'},
+ {x:812,y:110,w:178,h:56,ic:'phone',en:'Postpaid',ta:'Postpaid',nen:'31.2 mn · +1.2 mn record',nta:'31.2 mn · +1.2 mn record',den:'Higher-paying customers; record 1.2 mn added this quarter.',dta:'அதிகம் pay பண்ற customers; இந்த quarter record 1.2 mn சேர்ந்தாங்க.'},
+ {x:812,y:176,w:178,h:56,ic:'home',en:'Households',ta:'வீடுகள்',nen:'15.4 mn broadband',nta:'15.4 mn broadband',den:'Homes on fibre or wireless broadband, often bundled with mobile and TV.',dta:'Fibre / wireless broadband வீடுகள்; mobile, TV-யோட bundle.'},
+ {x:812,y:242,w:178,h:56,ic:'bldg',en:'Companies & govt',ta:'Companies & அரசு',nen:'B2B contracts',nta:'B2B contracts',den:'Enterprise and government clients on multi-year contracts.',dta:'பல வருஷ contract-ல enterprise, அரசு clients.'},
+ {x:812,y:308,w:178,h:56,ic:'globe',en:'Africa users',ta:'Africa users',nen:'193.9 mn',nta:'193.9 mn',den:'Customers across Airtel’s African markets; 89.9 mn use data.',dta:'Airtel-ஓட Africa markets-ல customers; 89.9 mn data use பண்றாங்க.'}
+];
+var MF=[{en:'Revenue',ta:'Revenue',v:'₹60,878',den:'Total money billed in the quarter.',dta:'Quarter-ல bill பண்ண மொத்த பணம்.'},
+ {en:'EBITDA',ta:'EBITDA',v:'₹35,240 · 57.9%',den:'Revenue minus network, staff, licence and selling costs.',dta:'Revenue-ல இருந்து network, staff, licence, selling செலவு கழிச்சது.'},
+ {en:'EBIT',ta:'EBIT',v:'₹20,556',den:'After depreciation and amortisation of towers, spectrum and equipment.',dta:'Towers, spectrum, equipment depreciation கழிச்சது.'},
+ {en:'PBT',ta:'PBT',v:'₹15,608',den:'After interest cost.',dta:'Interest கழிச்சது.'},
+ {en:'PAT (owners)',ta:'PAT (owners)',v:'₹8,888',den:'After tax and minority holders’ share (Airtel Africa, Indus outside holders).',dta:'Tax, minority share (Airtel Africa, Indus வெளி shareholders) கழிச்சு owners-க்கு மிஞ்சுறது.'}];
+T('bm','Business Model','பிசினஸ் மாடல்',function(){
+ var s='<svg viewBox="0 0 1000 600" role="img" id="bmsvg"><defs><marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10z" fill="'+C.ink2+'"/></marker><marker id="arA" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10z" fill="'+C.air+'"/></marker></defs>';
+ [['Inputs','உள்ளீடுகள்',97],['Airtel hub','Airtel மையம்',305],['Products','Products',514],['Channels','Channels',707],['Customers','Customers',901]].forEach(function(c){s+=ST(c[2],26,c[0],c[1],'text-anchor="middle" font-size="14" font-weight="800"');});
+ var hub=BM[5];
+ BM.slice(0,5).forEach(function(b){s+='<path d="M'+(b.x+b.w)+' '+(b.y+b.h/2)+' L'+hub.x+' '+(hub.y+hub.h/2)+'" stroke="'+C.ink2+'" stroke-width="1.6" fill="none" marker-end="url(#ar)" opacity=".7"/>';});
+ BM.slice(6,12).forEach(function(b){s+='<path d="M'+(hub.x+hub.w)+' '+(hub.y+hub.h/2)+' L'+b.x+' '+(b.y+b.h/2)+'" stroke="'+C.air+'" stroke-width="1.8" fill="none" marker-end="url(#arA)" opacity=".8"/>';});
+ var pc=[0,1,2,0,3,3];BM.slice(6,12).forEach(function(b,i){var c=BM[12+pc[i]];s+='<path d="M'+(b.x+b.w)+' '+(b.y+b.h/2)+' L'+c.x+' '+(c.y+c.h/2)+'" stroke="'+C.ink2+'" stroke-width="1.3" fill="none" marker-end="url(#ar)" opacity=".55"/>';});
+ [[0,0],[0,1],[1,1],[1,2],[2,3],[3,4]].forEach(function(m){var a=BM[12+m[0]],c=BM[16+m[1]];s+='<path d="M'+(a.x+a.w)+' '+(a.y+a.h/2)+' L'+c.x+' '+(c.y+c.h/2)+'" stroke="'+C.ink2+'" stroke-width="1.3" fill="none" marker-end="url(#ar)" opacity=".55"/>';});
+ BM.forEach(function(b,i){
+  if(b.hub){s+='<g class="bmb" data-i="'+i+'" style="cursor:pointer"><rect x="'+b.x+'" y="'+b.y+'" width="'+b.w+'" height="'+b.h+'" rx="16" fill="'+C.airS+'" stroke="'+C.air+'" stroke-width="3"/>'+
+    '<circle cx="'+(b.x+b.w/2)+'" cy="'+(b.y+44)+'" r="26" fill="'+C.air+'"/>'+ico('tower',b.x+b.w/2-16,b.y+28,1.35,'#FFFFFF')+
+    TX(b.x+b.w/2,b.y+96,'Bharti Airtel','text-anchor="middle" font-size="17" font-weight="800"')+
+    ST(b.x+b.w/2,b.y+122,'692.6 mn customers','692.6 mn customers','text-anchor="middle" font-size="12.5"')+
+    ST(b.x+b.w/2,b.y+142,'15 countries','15 நாடுகள்','text-anchor="middle" font-size="12.5"')+
+    ST(b.x+b.w/2,b.y+166,'India 498.7 mn','India 498.7 mn','text-anchor="middle" font-size="12"')+
+    ST(b.x+b.w/2,b.y+184,'Africa 193.9 mn','Africa 193.9 mn','text-anchor="middle" font-size="12"')+
+    ST(b.x+b.w/2,b.y+208,'ARPU ₹271 / month','ARPU ₹271 / மாசம்','text-anchor="middle" font-size="12.5"')+
+    ST(b.x+b.w/2,b.y+228,'EBITDA margin 57.9%','EBITDA margin 57.9%','text-anchor="middle" font-size="12.5"')+'</g>';return;}
+  var col=i<5?C.panel:i<12?C.panel:i<16?'#FFF0E0':C.panel,st=i<5?C.sand:i<12?C.air:i<16?C.acc:C.jio;
+  s+='<g class="bmb" data-i="'+i+'" style="cursor:pointer"><rect x="'+b.x+'" y="'+b.y+'" width="'+b.w+'" height="'+b.h+'" rx="10" fill="'+col+'" stroke="'+st+'" stroke-width="2"/>'+ico(b.ic,b.x+8,b.y+b.h/2-12,1,st)+
+   ST(b.x+38,b.y+b.h/2-3,b.en,b.ta,'font-size="12.5" font-weight="800"')+ST(b.x+38,b.y+b.h/2+14,b.nen,b.nta,'font-size="10.5" font-weight="600"')+'</g>';});
+ s+='<path d="M901 364 L901 432 L110 432 L110 466" stroke="'+C.good+'" stroke-width="2.4" stroke-dasharray="7 5" fill="none" marker-end="url(#ar)"/>'+ST(505,425,'Cash comes back as revenue','Cash revenue-ஆ திரும்ப வருது','text-anchor="middle" font-size="12.5" fill="'+C.good+'"');
+ MF.forEach(function(m,i){var x=20+i*196;s+='<g class="mfb" data-i="'+i+'" style="cursor:pointer"><rect x="'+x+'" y="470" width="170" height="72" rx="12" fill="'+(i===4?C.good+'22':C.accS)+'" stroke="'+(i===4?C.good:C.acc)+'" stroke-width="2"/>'+ST(x+85,496,m.en,m.ta,'text-anchor="middle" font-size="13" font-weight="800"')+TX(x+85,522,m.v,'text-anchor="middle" font-size="13.5" class="num"')+'</g>';
+   if(i<4)s+='<path d="M'+(x+172)+' 506 L'+(x+194)+' 506" stroke="'+C.ink2+'" stroke-width="2" marker-end="url(#ar)"/>';});
+ s+=ST(500,580,'Tap any box to see what it means','எந்த box-ஐ வேணும்னாலும் tap பண்ணுங்க — அர்த்தம் தெரியும்','text-anchor="middle" font-size="12.5" fill="'+C.ink2+'"')+'</svg>';
+ var h='<h2>'+B('From spectrum to customer','Spectrum-ல இருந்து customer வரை')+'</h2><p class="lede">'+B('How Airtel turns towers, airwaves and fibre into monthly bills','Towers, airwaves, fibre-ஐ Airtel எப்படி மாச bill-ஆ மாத்துது')+'</p>';
+ h+='<div class="card"><div class="svgbox wide">'+s+'</div><div class="detail" id="bmd">'+B('Tap a box: the meaning and its number appear here.','ஒரு box tap பண்ணுங்க — அர்த்தமும் எண்ணும் இங்க வரும்.')+'</div>'+
+  '<div class="formula">'+B('India mobile revenue ≈ customers × ARPU × 3 months = 377 mn × ₹271 × 3 ≈ ₹30,700 cr (reported ₹30,943 cr)','India mobile revenue ≈ customers × ARPU × 3 மாசம் = 377 mn × ₹271 × 3 ≈ ₹30,700 cr (reported ₹30,943 cr)')+'</div></div>';
+ h+='<div class="grid g2" style="margin-top:14px">'+card('Why this model works','இந்த model ஏன் வேலை செய்யுது',lis([['Network is built once; each extra customer adds little cost.','Network ஒருமுறை கட்டியாச்சு; extra customer-க்கு செலவு கம்மி.'],['Prepaid means cash before service.','Prepaid — service-க்கு முன்னாடியே cash.'],['ARPU rise flows almost fully to EBITDA.','ARPU ஏறினா அது கிட்டத்தட்ட முழுசா EBITDA-க்கு போகுது.']]))+
+  card('Abbreviations used','Abbreviations',
+  '<div class="abbr">'+[['ARPU','Average revenue per user (monthly)','ஒரு user-க்கு மாச சராசரி revenue'],['EBITDA','Earnings before interest, tax, depreciation & amortisation','Interest, tax, depreciation முன்னாடி லாபம்'],['EBIT','Earnings before interest & tax','Interest, tax முன்னாடி லாபம்'],['PBT','Profit before tax','Tax முன்னாடி லாபம்'],['PAT','Profit after tax','Tax-க்கு அப்புறம் லாபம்'],['cc','Constant currency (currency moves removed)','Currency மாற்றம் நீக்கின growth'],['DTH','Direct-to-home satellite TV','Satellite TV வீட்டுக்கு நேரா'],['IPTV','TV over the internet','Internet வழியா TV'],['IoT','Internet of Things (machine connections)','Machine connections'],['Nxtra','Airtel’s data centre arm','Airtel data centre பிரிவு'],['B2B','Business-to-business','Business-to-business'],['mn / cr','Million / crore','Million / கோடி']].map(function(a){return '<div><b>'+a[0]+'</b> — '+B(a[1],a[2])+'</div>';}).join('')+'</div>')+'</div>';
+ return h;});
+
+/* ================= 3. SEGMENTS ================= */
+function segCard(enT,taT,bars,chips,pts){return '<div class="grid g2"><div class="card"><h3>'+B(enT,taT)+'</h3><div class="svgbox">'+bars+'</div></div><div class="card">'+chips+lis(pts)+'</div></div>';}
+var q3=[{en:'Q2 FY26',ta:'Q2 FY26'},{en:'Q1 FY27',ta:'Q1 FY27'},{en:'Q2 FY27',ta:'Q2 FY27'}];
+function q3bars(vals,col,fmt){return vbars(q3.map(function(q,i){return {en:q.en,ta:q.ta,v:[vals[i]]};}),[{en:'',ta:'',c:col}],{fmt:fmt,h:220});}
+T('seg','Segments','Segments',function(){
+ var h='<h2>'+B('Segment performance','Segment performance')+'</h2><p class="lede">'+B('Six engines. India mobile pays the bills; Africa and Homes grow fastest.','ஆறு engines. India mobile தான் அடிப்படை; Africa, Homes வேகமா வளருது.')+'</p>';
+ h+='<div class="card" style="margin-bottom:14px"><h3>'+B('Growth by segment (YoY)','Segment-வாரியா growth (YoY)')+'</h3><div class="svgbox">'+hbars([
+  {en:'Homes',ta:'Homes',v:25.3,c:C.plum,lab:'+25.3%'},{en:'Africa (cc)',ta:'Africa (cc)',v:20.6,c:C.acc,lab:'+20.6%'},{en:'Airtel Business',ta:'Airtel Business',v:11.4,c:C.teal,lab:'+11.4%'},
+  {en:'India mobile',ta:'India mobile',v:10.1,c:C.air,lab:'+10.1%'},{en:'Digital TV',ta:'Digital TV',v:2.4,c:C.sand,lab:'+2.4%'}],{max:30})+'</div></div>';
+ h+=subtabs('seg',[
+  {k:'mob',en:'India Mobile',ta:'India Mobile',html:segCard('India mobile revenue (₹ cr)','India mobile revenue (₹ cr)',q3bars(A.mob,C.air),
+   '<p><span class="chip a">ARPU ₹271</span> <span class="chip a">377.2 mn subs</span> <span class="chip r">Churn 2.9%</span></p>',
+   [['Revenue ₹30,943 cr: +10.1% YoY, +3.4% QoQ.','Revenue ₹30,943 cr: +10.1% YoY, +3.4% QoQ.'],['ARPU ₹271, up from ₹264 (Q1) and ₹256 (last year).','ARPU ₹271 — Q1-ல ₹264, போன வருஷம் ₹256.'],['Record 1.2 mn postpaid adds; postpaid base 31.2 mn.','Record 1.2 mn postpaid adds; postpaid base 31.2 mn.'],['Net mobile adds only 0.72 mn vs 3.27 mn in Q1.','Net mobile adds 0.72 mn தான் — Q1-ல 3.27 mn.'],['Churn rose to 2.9% from 2.6%.','Churn 2.6%-ல இருந்து 2.9%-க்கு ஏறிச்சு.']])},
+  {k:'home',en:'Homes',ta:'Homes',html:segCard('Homes customers (mn)','Homes customers (mn)',q3bars([11.93,14.69,15.37],C.plum,function(v){return v.toFixed(2);}),
+   '<p><span class="chip o">+676K adds</span> <span class="chip o">Rev +25.3%</span> <span class="chip r">ARPU ₹509</span></p>',
+   [['15.37 mn homes, +28.9% YoY.','15.37 mn வீடுகள், +28.9% YoY.'],['676K added vs 473K in Q1.','676K சேர்ந்தது — Q1-ல 473K.'],['ARPU fell to ₹509 from ₹534 a year ago; growth comes from volume.','ARPU ₹534-ல இருந்து ₹509-க்கு இறங்கிச்சு; growth volume-ல இருந்து.'],['Homes capex ₹2,181 cr, +17% YoY.','Homes capex ₹2,181 cr, +17% YoY.']])},
+  {k:'biz',en:'Airtel Business',ta:'Airtel Business',html:segCard('Airtel Business revenue (₹ cr)','Airtel Business revenue (₹ cr)',q3bars(A.biz,C.teal),
+   '<p><span class="chip o">+11.4% YoY</span> <span class="chip o">+3.8% QoQ</span></p>',
+   [['₹5,878 cr from connectivity and digital services.','Connectivity, digital services-ல ₹5,878 cr.'],['Partnership with ITI Ltd for enterprise digital work.','Enterprise digital work-க்கு ITI Ltd-ஓட partnership.'],['Capex up 53% to ₹1,171 cr.','Capex 53% ஏறி ₹1,171 cr.']])},
+  {k:'dth',en:'Digital TV',ta:'Digital TV',html:segCard('Digital TV revenue (₹ cr)','Digital TV revenue (₹ cr)',q3bars(A.dth,C.sand),
+   '<p><span class="chip r">−443K subs</span> <span class="chip r">Churn 3.5%</span> <span class="chip o">ARPU ₹163</span></p>',
+   [['Flat revenue ₹771 cr.','Revenue flat — ₹771 cr.'],['Base fell to 15.56 mn from 16.0 mn.','Base 16.0 mn-ல இருந்து 15.56 mn-க்கு இறங்கிச்சு.'],['Weakest segment; TV viewing moves to OTT.','பலவீனமான segment; பார்வையாளர்கள் OTT-க்கு போறாங்க.']])},
+  {k:'afr',en:'Africa',ta:'Africa',html:segCard('Africa: what grew (YoY, cc)','Africa: எது வளர்ந்தது (YoY, cc)',hbars([{en:'Mobile data revenue',ta:'Mobile data revenue',v:28.8,c:C.acc,lab:'+28.8%'},{en:'Airtel Money revenue',ta:'Airtel Money revenue',v:25.8,c:C.teal,lab:'+25.8%'},{en:'Total revenue',ta:'மொத்த revenue',v:20.6,c:C.air,lab:'+20.6%'},{en:'Customers',ta:'Customers',v:11.6,c:C.jio,lab:'+11.6%'}],{max:34}),
+   '<p><span class="chip o">₹18,817 cr</span> <span class="chip o">193.9 mn</span> <span class="chip r">Churn 4.8%</span></p>',
+   [['Revenue +20.6% in constant currency, +25.7% reported (USD).','Constant currency-ல +20.6%, reported (USD) +25.7%.'],['+6.7% QoQ in constant currency — a standout quarter.','QoQ constant currency-ல +6.7% — நல்ல quarter.'],['ARPU $2.8; data users 89.9 mn.','ARPU $2.8; data users 89.9 mn.'],['Churn rose to 4.8% from 4.5%.','Churn 4.5%-ல இருந்து 4.8%-க்கு ஏறிச்சு.']])},
+  {k:'twr',en:'Towers (Indus)',ta:'Towers (Indus)',html:segCard('Where towers sit','Towers எங்க இருக்கு','<svg viewBox="0 0 560 170" role="img">'+ico('tower',30,40,3,C.sand)+ST(130,60,'Indus Towers is consolidated into Airtel India.','Indus Towers, Airtel India-ல consolidate ஆகுது.','font-size="14"')+ST(130,88,'Rent from Jio, Vi and others shows up','Jio, Vi மாதிரி மத்தவங்க கட்டுற rent','font-size="14"')+ST(130,112,'inside Airtel’s India revenue.','Airtel India revenue-ல வருது.','font-size="14"')+'</svg>',
+   '<p><span class="chip o">'+B('Part of India ₹42,308 cr','India ₹42,308 cr-ல ஒரு பகுதி')+'</span></p>',
+   [['Separate quarterly tower revenue is not in the press release we used.','Tower revenue தனியா இந்த press release-ல இல்லை.'],['Keep this in mind when comparing Airtel India with Jio.','Airtel India-வை Jio-வோட compare பண்ணும்போது இதை நினைவுல வைங்க.']])}
+ ]);
+ return h;});
+
+/* ================= 4. FINANCIALS ================= */
+T('fin','Financials','Financials',function(){
+ var h='<h2>'+B('Results: three quarters side by side','Results: மூணு quarters பக்கத்துல பக்கத்துல')+'</h2><p class="lede">'+B('Consolidated, ₹ crore','Consolidated, ₹ கோடி')+'</p>';
+ h+='<div class="card">'+qtable([
+  ['Revenue from operations','Revenue',60878,58539,52145,'n'],['EBITDA','EBITDA',35240,33599,29919,'n'],['EBITDA margin','EBITDA margin',57.9,57.4,57.4,'p'],
+  ['EBITDAaL (after leases)','EBITDAaL (lease-க்கு அப்புறம்)',31488,29800,null,'n'],['EBIT','EBIT',20556,null,16672,'n'],['Profit before tax','PBT',15608,null,12319,'n'],
+  ['Net income before exceptional items','Exceptional முன்னாடி net income',9015,8057,6792,'n'],['PAT (owners)','PAT (owners)',8888,8167,6792,'n'],['PAT margin','PAT margin',14.6,14.0,13.0,'p'],
+  ['India revenue','India revenue',42308,41214,38690,'n'],['Africa revenue (₹)','Africa revenue (₹)','18,817','≈17,570',13680,'n']])+
+  '<p class="note">'+B('Q2 FY26 EBIT and PBT are worked back from the reported YoY growth. Q1 FY27 Africa is derived (consolidated − India). Q1 EBITDAaL is rounded from the earnings call. “—” = not available.','Q2 FY26 EBIT, PBT reported YoY growth-ல இருந்து கணக்கு பண்ணது. Q1 Africa = consolidated − India. Q1 EBITDAaL call-ல சொன்ன rounded எண். “—” = கிடைக்கல.')+'</p></div>';
+ h+='<div class="grid g2" style="margin-top:14px">'+card('Revenue, EBITDA, PAT (₹ cr)','Revenue, EBITDA, PAT (₹ cr)','<div class="svgbox">'+vbars([{en:'Q2 FY26',ta:'Q2 FY26',v:[52145,29919,6792]},{en:'Q1 FY27',ta:'Q1 FY27',v:[58539,33599,8167]},{en:'Q2 FY27',ta:'Q2 FY27',v:[60878,35240,8888]}],[{en:'Revenue',ta:'Revenue',c:C.acc},{en:'EBITDA',ta:'EBITDA',c:C.air},{en:'PAT',ta:'PAT',c:C.good}],{legw:100})+'</div>')+
+  card('Growth builds down the P&L (YoY)','P&L கீழ போகப்போக growth அதிகம் (YoY)','<div class="svgbox">'+hbars([{en:'Customers',ta:'Customers',v:11.1,c:C.jio,lab:'+11.1%'},{en:'Revenue',ta:'Revenue',v:16.7,c:C.acc,lab:'+16.7%'},{en:'EBITDA',ta:'EBITDA',v:17.8,c:C.air,lab:'+17.8%'},{en:'EBIT',ta:'EBIT',v:23.3,c:C.air,lab:'+23.3%'},{en:'PBT',ta:'PBT',v:26.7,c:C.plum,lab:'+26.7%'},{en:'PAT',ta:'PAT',v:30.9,c:C.good,lab:'+30.9%'}],{max:36,L:110})+'</div>'+lis([['Operating leverage: costs grow slower than revenue.','Operating leverage: செலவு revenue-ஐ விட மெதுவா வளருது.']]))+'</div>';
+ h+='<div class="grid g3" style="margin-top:14px">'+card('Good','நல்லது',lis([['EBITDA margin 57.9%, up 50 bps QoQ.','EBITDA margin 57.9%, QoQ +50 bps.'],['Net income before exceptional items +32.7% YoY.','Exceptional முன்னாடி net income +32.7% YoY.']]))+card('Watch','கவனிக்கணும்',lis([['PAT ₹8,888 cr missed the ₹9,673 cr street estimate.','PAT ₹8,888 cr — street estimate ₹9,673 cr-ஐ miss.'],['Exceptional items cut ₹127 cr (₹9,015 → ₹8,888).','Exceptional items ₹127 cr குறைச்சது (₹9,015 → ₹8,888).']]))+card('H1 FY27','H1 FY27',lis([['Six-month revenue ₹1,19,417 cr, +18% YoY.','ஆறு மாச revenue ₹1,19,417 cr, +18% YoY.'],['Six-month capex ₹25,853 cr, +31% YoY.','ஆறு மாச capex ₹25,853 cr, +31% YoY.']]))+'</div>';
+ return h;});
+
+/* ================= 5. CASH FLOW & RATIOS ================= */
+T('cf','Cash Flow & Ratios','Cash Flow & Ratios',function(){
+ var h='<h2>'+B('Cash, debt and ratios','Cash, debt, ratios')+'</h2><p class="lede">'+B('What is left after paying for the network','Network-க்கு செலவு பண்ணின அப்புறம் மிஞ்சுறது')+'</p>';
+ var w='<svg viewBox="0 0 560 250" role="img">';var mx=33000,base=210,sc=170/mx;
+ [[ 'EBITDAaL','EBITDAaL',0,31488,C.air],['Capex','Capex',31488-12467,31488,C.bad],['Op. free cash','Op. free cash',0,19021,C.good]].forEach(function(b,i){var x=60+i*170,y1=base-b[3]*sc,y0=base-b[2]*sc;w+='<rect x="'+x+'" y="'+y1+'" width="110" height="'+(y0-y1)+'" rx="6" fill="'+b[4]+'"/>'+TX(x+55,y1-6,'₹'+f0(i===1?12467:b[3]),'text-anchor="middle" font-size="12.5" class="num"')+ST(x+55,base+20,b[0],b[1],'text-anchor="middle" font-size="12.5"');if(i<2)w+='<line x1="'+(x+110)+'" x2="'+(x+170)+'" y1="'+(i===0?y1:y0)+'" y2="'+(i===0?y1:y0)+'" stroke="'+C.ink2+'" stroke-dasharray="4 4"/>';});
+ w+='<line x1="40" x2="540" y1="'+base+'" y2="'+base+'" stroke="'+C.ink2+'"/></svg>';
+ h+='<div class="grid g2">'+card('Operating free cash flow (₹ cr)','Operating free cash flow (₹ cr)','<div class="svgbox">'+w+'</div><p class="note">'+B('Op. free cash = EBITDAaL − capex (our calculation). Excludes the ₹2,826 cr data-centre land.','Op. free cash = EBITDAaL − capex (நம்ம கணக்கு). ₹2,826 cr data-centre land சேர்க்கல.')+'</p>')+
+  card('Where capex went (₹ cr)','Capex எங்க போச்சு (₹ cr)','<div class="svgbox">'+donut([{en:'India mobile',ta:'India mobile',v:3600,c:C.air,lab:'3,600'},{en:'Africa',ta:'Africa',v:2559,c:C.acc,lab:'2,559'},{en:'Other India (towers etc.)',ta:'மற்ற India (towers etc.)',v:2479,c:'#8C7B66',lab:'2,479'},{en:'Homes',ta:'Homes',v:2181,c:C.plum,lab:'2,181'},{en:'Airtel Business',ta:'Airtel Business',v:1171,c:C.teal,lab:'1,171'},{en:'Digital TV',ta:'Digital TV',v:477,c:C.sand,lab:'477'}],{center:['Capex','Capex','₹12,467']})+'</div>')+'</div>';
+ h+='<div class="grid g3" style="margin-top:14px">'+card('Net debt / EBITDA','Net debt / EBITDA','<div class="svgbox">'+vbars([{en:'Jun 2024',ta:'Jun 2024',v:[2.54]},{en:'Jun 2025',ta:'Jun 2025',v:[1.70]},{en:'Sep 2025',ta:'Sep 2025',v:[1.63]},{en:'Sep 2026',ta:'Sep 2026',v:[1.18]}],[{en:'incl. leases',ta:'leases சேர்த்து',c:C.air}],{h:210,max:3,fmt:function(v){return v.toFixed(2)+'x';},tick:function(v){return v.toFixed(1)+'x';}})+'</div>'+lis([['Ex-lease net debt is 0.70x EBITDAaL.','Lease தவிர net debt = 0.70x EBITDAaL.']]))+
+  card('Working capital: cash first','Working capital: முதல்ல cash','<svg viewBox="0 0 300 150" role="img">'+ico('users',20,30,1.6,C.jio)+ico('coin',130,30,1.6,C.good)+ico('tower',240,30,1.6,C.air)+'<path d="M62 50 L122 50" stroke="'+C.ink2+'" stroke-width="2" marker-end="url(#ar2)"/><path d="M172 50 L232 50" stroke="'+C.ink2+'" stroke-width="2" marker-end="url(#ar2)"/><defs><marker id="ar2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10z" fill="'+C.ink2+'"/></marker></defs>'+ST(40,105,'Pays','Pay','text-anchor="middle" font-size="12"')+ST(150,105,'Cash in','Cash உள்ள','text-anchor="middle" font-size="12"')+ST(260,105,'Service later','Service அப்புறம்','text-anchor="middle" font-size="12"')+'</svg>'+lis([['91.7% of India mobile is prepaid: customers pay before use.','India mobile-ல 91.7% prepaid: use பண்றதுக்கு முன்னாடியே pay.'],['Receivable, inventory and payable days are not in the quarterly release; we show them only when the half-year balance sheet is published.','Receivable, inventory, payable days quarterly release-ல இல்லை; half-year balance sheet வந்ததும் காட்டுவோம்.']]))+
+  card('Key ratios','முக்கிய ratios','<div class="tw"><table style="min-width:0"><tbody>'+[['EBITDA margin','57.9%'],['EBITDAaL margin','51.7%'],['EBIT margin','33.8%'],['PAT margin','14.6%'],['India EBITDA margin','60.8%'],['Capex / revenue','20.5%'],['Net debt / EBITDA','1.18x'],['P/B (approx.)','7.1x']].map(function(r){return '<tr><td>'+r[0]+'</td><td class="n">'+r[1]+'</td></tr>';}).join('')+'</tbody></table></div>')+'</div>';
+ return h;});
+
+/* ================= 6. METRICS ================= */
+T('met','Metrics','Metrics',function(){
+ var h='<h2>'+B('Metrics by head','Head-வாரியா metrics')+'</h2><p class="lede">'+B('Grouped so they are easy to remember','நினைவுல வைக்க சுலபமா group பண்ணியிருக்கோம்')+'</p>';
+ h+=subtabs('met',[
+  {k:'g',en:'Growth',ta:'Growth',html:'<div class="grid g2"><div class="card"><div class="svgbox">'+hbars([{en:'Revenue',ta:'Revenue',v:16.7,c:C.acc,lab:'+16.7%'},{en:'India revenue',ta:'India revenue',v:9.4,c:C.air,lab:'+9.4%'},{en:'Africa (cc)',ta:'Africa (cc)',v:20.6,c:C.acc,lab:'+20.6%'},{en:'EBITDA',ta:'EBITDA',v:17.8,c:C.air,lab:'+17.8%'},{en:'PAT',ta:'PAT',v:30.9,c:C.good,lab:'+30.9%'},{en:'Customers',ta:'Customers',v:11.1,c:C.jio,lab:'+11.1%'}],{max:36,L:120})+'</div></div><div class="card">'+qtable([['Revenue','Revenue',60878,58539,52145,'n'],['India revenue','India revenue',42308,41214,38690,'n'],['PAT','PAT',8888,8167,6792,'n']])+'</div></div>'},
+  {k:'p',en:'Profitability',ta:'Profitability',html:'<div class="grid g2"><div class="card"><div class="svgbox">'+vbars([{en:'EBITDA',ta:'EBITDA',v:[57.4,57.4,57.9]},{en:'India EBITDA',ta:'India EBITDA',v:[null,null,60.8]},{en:'EBIT',ta:'EBIT',v:[32.0,null,33.8]},{en:'PAT',ta:'PAT',v:[13.0,14.0,14.6]}],[{en:'Q2 FY26',ta:'Q2 FY26',c:C.sand},{en:'Q1 FY27',ta:'Q1 FY27',c:C.acc},{en:'Q2 FY27',ta:'Q2 FY27',c:C.air}],{max:70,fmt:function(v){return f1(v)+'%';},tick:function(v){return Math.round(v)+'%';},legw:95})+'</div></div><div class="card">'+qtable([['EBITDA margin','EBITDA margin',57.9,57.4,57.4,'p'],['PAT margin','PAT margin',14.6,14.0,13.0,'p'],['EBIT margin','EBIT margin',33.8,null,32.0,'p']])+'</div></div>'},
+  {k:'e',en:'Efficiency',ta:'Efficiency',html:'<div class="grid g2"><div class="card"><div class="svgbox">'+gauge(20.5,40,'Capex as % of revenue','Revenue-ல capex %',C.acc,{lab:'20.5%'})+'</div>'+lis([['Each ₹100 of revenue needs ₹20.5 of capex.','₹100 revenue-க்கு ₹20.5 capex.']])+'</div><div class="card">'+qtable([['Capex','Capex',12467,null,11362,'n',true],['India capex','India capex',9908,null,9643,'n',true],['India mobile capex','India mobile capex',3600,null,4271,'n',true],['EBITDAaL margin','EBITDAaL margin',51.7,51.0,null,'p']])+'</div></div>'},
+  {k:'c',en:'Customer quality',ta:'Customer quality',html:'<div class="grid g2"><div class="card"><div class="svgbox">'+vbars([{en:'Q2 FY26',ta:'Q2 FY26',v:[256]},{en:'Q1 FY27',ta:'Q1 FY27',v:[264]},{en:'Q2 FY27',ta:'Q2 FY27',v:[271]}],[{en:'ARPU ₹',ta:'ARPU ₹',c:C.air}],{max:300,fmt:function(v){return '₹'+v;},h:220})+'</div></div><div class="card">'+qtable([['ARPU (₹)','ARPU (₹)',271,264,256,'r'],['India mobile churn','India mobile churn',2.9,2.6,2.9,'p',true],['Postpaid base (mn)','Postpaid base (mn)','31.24',null,'27.52','n'],['4G/5G data customers (mn)','4G/5G data customers (mn)','304.6',null,'285.8','n'],['Homes ARPU (₹)','Homes ARPU (₹)',509,523,534,'r']])+'</div></div>'},
+  {k:'b',en:'Capital & funding',ta:'Capital & funding',html:'<div class="grid g2"><div class="card"><div class="svgbox">'+gauge(1.18,3,'Net debt / EBITDA (lower is safer)','Net debt / EBITDA (குறைவு = பாதுகாப்பு)',C.good,{lab:'1.18x'})+'</div></div><div class="card">'+lis([['Net debt / EBITDA 1.18x (1.63x a year ago).','Net debt / EBITDA 1.18x (போன வருஷம் 1.63x).'],['Ex-lease net debt / EBITDAaL 0.70x.','Lease தவிர net debt / EBITDAaL 0.70x.'],['Promoter holding 50.07% (Sep 2026).','Promoter holding 50.07% (Sep 2026).']])+'</div></div>'}
+ ]);
+ return h;});
+
+/* ================= 7. AIRTEL vs JIO ================= */
+var VS=[ // en,ta,airtel,jio,unit,winner('a'|'j'),fmt
+ ['Revenue (₹ cr)*','Revenue (₹ cr)*',42308,40475,'a'],['EBITDA (₹ cr)*','EBITDA (₹ cr)*',25729,21879,'a'],['EBITDA margin*','EBITDA margin*','60.8%','54.1%','a'],
+ ['ARPU (₹/month)','ARPU (₹/மாசம்)',271,218.8,'a'],['Net profit (₹ cr)','Net profit (₹ cr)',8888,8387,'a'],['Profit growth YoY','Profit growth YoY','+30.9%','+13.7%','a'],['EBITDA growth YoY','EBITDA growth YoY','+17.8%','+16.6%','a'],
+ ['Revenue growth YoY*','Revenue growth YoY*','+9.4%','+11.4%','j'],['Net customer adds (mn)','Net customer adds (mn)','0.72','9.1','j'],['Monthly churn','மாச churn','2.9%','1.6%','j'],['Home broadband (mn)','Home broadband (mn)','15.4','30.0','j'],['Net debt / EBITDA','Net debt / EBITDA','1.18x','0.10x','j']];
+T('vs','Airtel vs Jio','Airtel vs Jio',function(){
+ var h='<h2>'+B('Airtel vs Jio: who earned better?','Airtel vs Jio: யாரு நல்லா சம்பாதிச்சாங்க?')+'</h2><p class="lede">'+B('Q2 FY27 for both · Jio Platforms reported on 30 Oct 2026, its first results as a listed company','ரெண்டுக்கும் Q2 FY27 · Jio Platforms 30 Oct 2026-ல listed company-ஆ முதல் results')+'</p>';
+ var tug='<svg viewBox="0 0 560 120" role="img"><rect x="20" y="52" width="520" height="14" rx="7" fill="'+C.accS+'"/><rect x="20" y="52" width="'+(520*7/12)+'" height="14" rx="7" fill="'+C.air+'"/><rect x="'+(20+520*7/12)+'" y="52" width="'+(520*5/12)+'" height="14" rx="7" fill="'+C.jio+'"/>'+
+  '<circle cx="34" cy="59" r="24" fill="'+C.air+'"/>'+TX(34,65,'7','text-anchor="middle" font-size="20" fill="#FFFFFF"')+'<circle cx="526" cy="59" r="24" fill="'+C.jio+'"/>'+TX(526,65,'5','text-anchor="middle" font-size="20" fill="#FFFFFF"')+
+  TX(80,35,'Airtel','font-size="16" fill="'+C.air+'"')+TX(480,35,'Jio','text-anchor="end" font-size="16" fill="'+C.jio+'"')+ST(280,104,'Metrics won out of 12','12-ல ஜெயிச்ச metrics','text-anchor="middle" font-size="13"')+'</svg>';
+ var tbl='<div class="tw"><table><thead><tr><th>'+B('Metric','அளவுகோல்')+'</th><th style="color:#7A0A10">Airtel</th><th style="color:#08306F">Jio</th><th>'+B('Better','சிறந்தது')+'</th></tr></thead><tbody>'+VS.map(function(r){var fa=typeof r[2]==='number'?(r[2]%1?r[2].toFixed(1):f0(r[2])):r[2],fj=typeof r[3]==='number'?(r[3]%1?r[3].toFixed(1):f0(r[3])):r[3];return '<tr><td>'+B(r[0],r[1])+'</td><td class="n">'+fa+'</td><td class="n">'+fj+'</td><td>'+(r[4]==='a'?'<span class="pill win-a">Airtel</span>':'<span class="pill win-j">Jio</span>')+'</td></tr>';}).join('')+'</tbody></table></div><p class="note">'+B('*Airtel India business (incl. Indus towers) vs Jio Platforms consolidated. Airtel net profit includes Africa; Jio has no Africa business. Airtel net adds are India mobile; Jio’s are total.','*Airtel India business (Indus towers சேர்த்து) vs Jio Platforms. Airtel profit-ல Africa இருக்கு; Jio-க்கு Africa இல்லை. Airtel net adds India mobile மட்டும்; Jio மொத்தம்.')+'</p>';
+ var aud=function(who){var a=who==='a';return '<div class="grid g2"><div class="card"><h3>'+B(a?'Airtel India + Africa (₹ cr)':'Jio Platforms (₹ cr)',a?'Airtel India + Africa (₹ cr)':'Jio Platforms (₹ cr)')+'</h3>'+(a?qtable([['Consolidated revenue','Consolidated revenue',60878,58539,52145,'n'],['India revenue','India revenue',42308,41214,38690,'n'],['EBITDA','EBITDA',35240,33599,29919,'n'],['EBITDA margin','EBITDA margin',57.9,57.4,57.4,'p'],['PAT','PAT',8888,8167,6792,'n'],['ARPU (₹)','ARPU (₹)',271,264,256,'r']]):qtable([['Revenue','Revenue',40475,39173,36332,'n'],['EBITDA','EBITDA',21879,20865,18764,'n'],['EBITDA margin','EBITDA margin',54.1,53.3,51.6,'p'],['PAT','PAT',8387,7764,7379,'n'],['ARPU (₹)','ARPU (₹)',218.8,215.6,211.4,'r'],['Customers (mn)','Customers (mn)',542.4,533.3,506.4,'n']]))+(a?'':'<p class="note">'+B('Jio Q1 FY27 and Q2 FY26 EBITDA are worked back from its H1 total and reported YoY growth.','Jio Q1 FY27, Q2 FY26 EBITDA — H1 மொத்தம், YoY growth-ல இருந்து கணக்கு பண்ணது.')+'</p>')+'</div><div class="card"><div class="svgbox">'+vbars(q3.map(function(q,i){return {en:q.en,ta:q.ta,v:[a?A.ebitda[2-i]:J.ebitda[2-i],a?A.pat[2-i]:J.pat[2-i]]};}),[{en:'EBITDA',ta:'EBITDA',c:a?C.air:C.jio},{en:'PAT',ta:'PAT',c:C.good}],{legw:90,h:220})+'</div>'+lis(a?[['ARPU ₹271 is the highest in Indian telecom.','ARPU ₹271 — Indian telecom-லயே அதிகம்.'],['Africa adds ₹18,817 cr revenue Jio does not have.','Jio-க்கு இல்லாத ₹18,817 cr Africa revenue.'],['Weak spots: churn 2.9%, mobile adds slowed, DTH shrinking.','பலவீனம்: churn 2.9%, mobile adds குறைஞ்சது, DTH சுருங்குது.']]:[['542.4 mn customers; 9.1 mn added; churn only 1.6%.','542.4 mn customers; 9.1 mn சேர்ந்தாங்க; churn 1.6% தான்.'],['300 mn+ on 5G; 30 mn home broadband (15.1 mn AirFiber).','5G-ல 300 mn+; home broadband 30 mn (AirFiber 15.1 mn).'],['IPO money cut net debt 78.6% to ₹8,822 cr.','IPO பணத்தால net debt 78.6% குறைஞ்சு ₹8,822 cr.'],['Data use 44.2 GB per user per month.','ஒரு user-க்கு மாசம் 44.2 GB data.']])+'</div></div>';};
+ var bf='<svg viewBox="0 0 560 300" role="img">'+ST(140,18,'Airtel','Airtel','text-anchor="middle" font-size="14" fill="'+C.air+'"')+ST(420,18,'Jio','Jio','text-anchor="middle" font-size="14" fill="'+C.jio+'"');
+ [['ARPU (₹)','ARPU (₹)',271,218.8,300],['EBITDA margin %','EBITDA margin %',60.8,54.1,70],['Profit growth %','Profit growth %',30.9,13.7,35],['Revenue growth %','Revenue growth %',9.4,11.4,14],['Churn % (lower better)','Churn % (குறைவு நல்லது)',2.9,1.6,3.5],['Home broadband (mn)','Home broadband (mn)',15.4,30,34]].forEach(function(r,i){var y=40+i*42,wa=200*r[2]/r[4],wj=200*r[3]/r[4];
+  bf+='<rect x="'+(270-wa)+'" y="'+(y+13)+'" width="'+wa+'" height="16" rx="3" fill="'+C.air+'"/><rect x="290" y="'+(y+13)+'" width="'+wj+'" height="16" rx="3" fill="'+C.jio+'"/>'+TX(264-wa,y+25,r[2],'text-anchor="end" font-size="11.5" class="num"')+TX(296+wj,y+25,r[3],'font-size="11.5" class="num"')+ST(280,y+5,r[0],r[1],'text-anchor="middle" font-size="11.5"');});
+ bf+='<line x1="280" x2="280" y1="44" y2="296" stroke="'+C.ink2+'" stroke-width="1.5"/></svg>';
+ h+=subtabs('vs',[
+  {k:'c',en:'Compare',ta:'Compare',html:'<div class="grid g2"><div class="card"><h3>'+B('Scorecard','Scorecard')+'</h3><div class="svgbox">'+tug+'</div>'+tbl+'</div><div class="card"><h3>'+B('Side by side','பக்கத்துல பக்கத்துல')+'</h3><div class="svgbox">'+bf+'</div></div></div>'},
+  {k:'a',en:'Airtel alone',ta:'Airtel மட்டும்',html:aud('a')},
+  {k:'j',en:'Jio alone',ta:'Jio மட்டும்',html:aud('j')},
+  {k:'v',en:'Verdict',ta:'Verdict',html:'<div class="verdict"><svg viewBox="0 0 560 120" role="img" style="max-width:560px;width:100%"><path d="M250 20 H310 V60 C310 80 296 92 280 92 C264 92 250 80 250 60 Z" fill="'+C.acc+'" stroke="'+C.ink+'" stroke-width="2"/><path d="M250 30 H232 C232 52 244 60 250 60 M310 30 H328 C328 52 316 60 310 60" fill="none" stroke="'+C.ink+'" stroke-width="2"/><rect x="266" y="92" width="28" height="12" fill="'+C.ink2+'"/><rect x="254" y="104" width="52" height="10" rx="2" fill="'+C.ink+'"/>'+TX(280,62,'A','text-anchor="middle" font-size="26" fill="'+C.air+'"')+ST(120,62,'On earnings:','Earnings-ல:','text-anchor="middle" font-size="16"')+ST(440,62,'Airtel','Airtel','text-anchor="middle" font-size="22" fill="'+C.air+'"')+'</svg>'+
+   '<h3>'+B('On earnings, Airtel is the better performer this quarter.','Earnings பார்த்தா, இந்த quarter Airtel தான் best.')+'</h3>'+lis([
+   ['Airtel makes more money from fewer customers: ARPU ₹271 vs ₹218.8.','குறைவான customers-ல இருந்து Airtel அதிகம் சம்பாதிக்குது: ARPU ₹271 vs ₹218.8.'],
+   ['Higher margin (60.8% India vs 54.1%) and faster profit growth (+30.9% vs +13.7%).','Margin அதிகம் (India 60.8% vs 54.1%), profit growth வேகம் (+30.9% vs +13.7%).'],
+   ['Jio leads on scale, customer growth, low churn, home broadband and a near debt-free balance sheet.','Scale, customer growth, குறைஞ்ச churn, home broadband, கிட்டத்தட்ட debt-free — இதுல Jio முன்னாடி.'],
+   ['So yes, Airtel is holding its ground against the biggest player, but on volume Jio is pulling ahead: 9.1 mn adds vs 0.72 mn.','ஆமா, பெரிய player-க்கு எதிரா Airtel நல்லா நிக்குது; ஆனா volume-ல Jio முன்னேறுது: 9.1 mn vs 0.72 mn.'],
+   ['Watch next quarter: if Airtel’s churn keeps rising, its ARPU lead could cost it customers.','அடுத்த quarter கவனிங்க: churn தொடர்ந்து ஏறினா, ARPU lead-க்காக customers-ஐ இழக்கலாம்.']])+'<p class="note">'+B('Education only. Not a recommendation on either stock.','Education மட்டும். எந்த stock-க்கும் recommendation இல்லை.')+'</p></div>'}
+ ]);
+ return h;});
+
+/* ================= 8. VALUATIONS ================= */
+T('val','Valuations','Valuations',function(){
+ var h='<h2>'+B('What the market pays','Market எவ்வளவு கொடுக்குது')+'</h2><p class="lede">'+B('Prices around 5 Nov 2026 (Airtel ₹2,050; Jio ₹1,431). Multiples use Q2 FY27 × 4.','5 Nov 2026 விலை (Airtel ₹2,050; Jio ₹1,431). Multiples = Q2 FY27 × 4.')+'</p>';
+ var rng='<svg viewBox="0 0 560 120" role="img"><rect x="40" y="50" width="480" height="12" rx="6" fill="'+C.accS+'" stroke="'+C.line+'"/>';var lo=1726.3,hi=2174.5,p=2050,x=40+480*(p-lo)/(hi-lo);
+ rng+='<circle cx="'+x+'" cy="56" r="11" fill="'+C.air+'"/>'+TX(x,36,'₹2,050','text-anchor="middle" font-size="13" class="num"')+TX(40,88,'₹1,726','font-size="12" class="num"')+TX(520,88,'₹2,175','text-anchor="end" font-size="12" class="num"')+ST(40,108,'52-week low','52-week low','font-size="11.5"')+ST(520,108,'52-week high','52-week high','text-anchor="end" font-size="11.5"')+'</svg>';
+ h+='<div class="grid g3">'+kpi('Market cap','Market cap','₹12.3 lakh cr','Jio: ₹13.2 lakh cr','Jio: ₹13.2 lakh cr','nt')+kpi('P/E (annualised)','P/E (annualised)','34.6x','Jio: 39.3x','Jio: 39.3x','up')+kpi('EV / EBITDA','EV / EBITDA','≈9.9x','Jio: ≈15.2x','Jio: ≈15.2x','up')+'</div>';
+ h+='<div class="grid g2" style="margin-top:14px">'+card('Airtel vs Jio multiples','Airtel vs Jio multiples','<div class="svgbox">'+vbars([{en:'P/E',ta:'P/E',v:[34.6,39.3]},{en:'EV/EBITDA',ta:'EV/EBITDA',v:[9.9,15.2]}],[{en:'Airtel',ta:'Airtel',c:C.air},{en:'Jio',ta:'Jio',c:C.jio}],{max:45,fmt:function(v){return f1(v)+'x';},tick:function(v){return Math.round(v)+'x';},legw:90})+'</div>'+lis([['Airtel looks cheaper on both, but its EV leaves out minority value in Africa and Indus.','ரெண்டுலயும் Airtel மலிவா தெரியுது; ஆனா EV-ல Africa, Indus minority value சேர்க்கல.'],['Jio’s free float is only about 2.2%, which can inflate its price.','Jio free float 2.2% தான் — விலையை ஏத்தலாம்.']]))+
+  card('Where the price sits','விலை எங்க இருக்கு','<div class="svgbox">'+rng+'</div>'+lis([['About 6% below the 52-week high.','52-week high-ஐ விட சுமார் 6% கீழ.'],['P/B about 7.1x; market cap was ₹12.4 lakh cr on 2 Nov.','P/B சுமார் 7.1x; 2 Nov-ல market cap ₹12.4 lakh cr.']]))+'</div>';
+ h+='<div class="card" style="margin-top:14px"><h3>'+B('How we worked it out','எப்படி கணக்கு பண்ணோம்')+'</h3>'+lis([['P/E = market cap ÷ (Q2 PAT × 4): ₹12.3 lakh cr ÷ ₹35,550 cr.','P/E = market cap ÷ (Q2 PAT × 4): ₹12.3 lakh cr ÷ ₹35,550 cr.'],['EV = market cap + net debt (1.18 × annualised EBITDA ≈ ₹1.66 lakh cr).','EV = market cap + net debt (1.18 × annualised EBITDA ≈ ₹1.66 lakh cr).'],['Jio EV = ₹13.2 lakh cr + ₹8,822 cr net debt; EBITDA ₹21,879 × 4.','Jio EV = ₹13.2 lakh cr + ₹8,822 cr net debt; EBITDA ₹21,879 × 4.']])+'</div>';
+ return h;});
+
+/* ================= 9. 5 KEY TAKEAWAYS ================= */
+T('kt','5 Key Takeaways','5 முக்கிய பாயிண்ட்ஸ்',function(){
+ var K=[['coin',C.air,'Premium pricing works','Premium pricing வேலை செய்யுது','ARPU ₹271, up 5.9% YoY; record 1.2 mn postpaid adds.','ARPU ₹271, YoY 5.9% ஏற்றம்; record 1.2 mn postpaid adds.'],
+  ['arrowup',C.good,'Profit grows faster than sales','Sales-ஐ விட profit வேகமா வளருது','Revenue +16.7%, PAT +30.9%: operating leverage at work.','Revenue +16.7%, PAT +30.9% — operating leverage.'],
+  ['globe',C.acc,'Africa is the second engine','Africa தான் ரெண்டாவது engine','₹18,817 cr revenue; +20.6% in constant currency.','₹18,817 cr revenue; constant currency-ல +20.6%.'],
+  ['shield',C.teal,'Debt keeps falling','Debt தொடர்ந்து குறையுது','Net debt / EBITDA 1.18x vs 1.63x a year ago.','Net debt / EBITDA 1.18x — போன வருஷம் 1.63x.'],
+  ['warn',C.bad,'Volume is the weak spot','Volume தான் பலவீனம்','Churn 2.9%, mobile adds 0.72 mn vs Jio’s 9.1 mn; profit missed estimates.','Churn 2.9%, mobile adds 0.72 mn vs Jio 9.1 mn; profit estimate-ஐ miss.']];
+ return '<h2>'+B('5 key takeaways','5 முக்கிய பாயிண்ட்ஸ்')+'</h2><p class="lede">'+B('What to remember from this quarter','இந்த quarter-ல நினைவுல வைக்க வேண்டியது')+'</p><div class="grid g3">'+K.map(function(k,i){return '<div class="card"><svg viewBox="0 0 220 70" role="img"><circle cx="35" cy="35" r="30" fill="'+k[1]+'22" stroke="'+k[1]+'" stroke-width="2.5"/>'+ico(k[0],17,17,1.5,k[1])+TX(80,46,(i+1),'font-size="30" class="num" fill="'+k[1]+'"')+'</svg><h3>'+B(k[2],k[3])+'</h3><p style="margin:0">'+B(k[4],k[5])+'</p></div>';}).join('')+'</div>';});
+
+/* ================= 10. SHARE MOVE ================= */
+T('mv','Share Move Reasons','Share ஏன் நகருது?',function(){
+ var ss='<svg viewBox="0 0 560 230" role="img"><polygon points="280,150 262,190 298,190" fill="'+C.ink2+'"/><line x1="70" y1="160" x2="490" y2="130" stroke="'+C.ink+'" stroke-width="6" stroke-linecap="round"/>';
+ ss+='<rect x="80" y="104" width="130" height="50" rx="8" fill="'+C.good+'22" stroke="'+C.good+'" stroke-width="2"/>'+ST(145,126,'Pushing up','மேல தள்ளுது','text-anchor="middle" font-size="13" fill="'+C.good+'"')+ST(145,144,'ARPU, margins, debt','ARPU, margins, debt','text-anchor="middle" font-size="11.5"');
+ ss+='<rect x="350" y="72" width="130" height="50" rx="8" fill="'+C.bad+'22" stroke="'+C.bad+'" stroke-width="2"/>'+ST(415,94,'Pulling down','கீழ இழுக்குது','text-anchor="middle" font-size="13" fill="'+C.bad+'"')+ST(415,112,'Profit miss, churn, Jio','Profit miss, churn, Jio','text-anchor="middle" font-size="11.5"')+ST(280,220,'Balance is slightly positive','Balance கொஞ்சம் positive பக்கம்','text-anchor="middle" font-size="12.5"')+'</svg>';
+ var hold=[['Dec 23',54.57],['Jun 24',53.17],['Dec 24',53.11],['Jun 25',51.25],['Dec 25',48.87],['Mar 26',48.87],['Jun 26',50.07],['Sep 26',50.07]];
+ var hs='<svg viewBox="0 0 560 210" role="img">';var pts=hold.map(function(p,i){return [50+i*68,170-(p[1]-46)*15];});
+ for(var g=46;g<=56;g+=2){var y=170-(g-46)*15;hs+='<line x1="40" x2="540" y1="'+y+'" y2="'+y+'" stroke="'+C.line+'"/>'+TX(34,y+4,g+'%','text-anchor="end" font-size="10" class="num"');}
+ hs+='<polyline points="'+pts.map(function(p){return p.join(',');}).join(' ')+'" fill="none" stroke="'+C.air+'" stroke-width="3"/>';
+ pts.forEach(function(p,i){hs+='<circle cx="'+p[0]+'" cy="'+p[1]+'" r="'+(i===7?6:4)+'" fill="'+C.air+'"/>'+TX(p[0],196,hold[i][0],'text-anchor="middle" font-size="10.5"');});
+ hs+=TX(pts[7][0]-6,pts[7][1]-10,'50.07%','text-anchor="end" font-size="12" class="num"')+'</svg>';
+ return '<h2>'+B('Why the share moves','Share ஏன் நகருது')+'</h2><p class="lede">'+B('Results came out on 5 Nov 2026; the stock was near ₹2,050 that day','Results 5 Nov 2026-ல வந்தது; அன்னைக்கு விலை சுமார் ₹2,050')+'</p><div class="grid g2">'+card('The see-saw','See-saw','<div class="svgbox">'+ss+'</div>')+
+ card('Promoter holding trend','Promoter holding trend','<div class="svgbox">'+hs+'</div>'+lis([['Promoters went back up to 50.07% in Jun 2026 after falling to 48.87%.','48.87%-க்கு இறங்கின promoter holding Jun 2026-ல 50.07%-க்கு மறுபடி ஏறிச்சு.'],['Sep 2026 split: FIIs ~25.4%, DIIs ~21.8%.','Sep 2026: FIIs ~25.4%, DIIs ~21.8%.']]))+'</div>'+
+ '<div class="grid g2" style="margin-top:14px">'+card('Up forces','மேல தள்றது',lis([['ARPU ₹271 came in above estimates.','ARPU ₹271 — estimate-ஐ விட அதிகம்.'],['Revenue +16.7% and margin 57.9%.','Revenue +16.7%, margin 57.9%.'],['Debt ratio down to 1.18x; Africa strong.','Debt ratio 1.18x; Africa வலுவா இருக்கு.']]))+
+ card('Down forces','கீழ இழுக்கிறது',lis([['PAT ₹8,888 cr missed the ₹9,673 cr estimate (LSEG).','PAT ₹8,888 cr, estimate ₹9,673 cr-ஐ miss (LSEG).'],['Churn up; mobile adds slowed sharply.','Churn ஏறிச்சு; mobile adds ரொம்ப குறைஞ்சது.'],['Jio listed on 28 Oct and is now bigger by market cap, which can pull fund flows.','Jio 28 Oct-ல list ஆச்சு; market cap-ல பெருசு — fund flows அங்க போகலாம்.'],['Stock is down about 4–7% over one year.','ஒரு வருஷத்துல stock சுமார் 4–7% இறங்கியிருக்கு.']]))+'</div>';});
+
+/* ================= 11. TRIGGERS & CYCLE ================= */
+var TRG=[['Deleveraging: net debt/EBITDA 1.18x from 1.63x','Deleveraging: net debt/EBITDA 1.63x → 1.18x','+',2,1.0,1.0,1.0,'Executing','Q2 FY27 results, 5 Nov 2026'],
+ ['Premium mix: postpaid adds, Apple bundle on ₹999+ plans','Premium mix: postpaid adds, ₹999+ plans-ல Apple bundle','+',2,1.0,1.0,0.7,'Executing','Q2 FY27 release, 5 Nov 2026'],
+ ['1 GW data centre plan; ₹2,826 cr land bought','1 GW data centre plan; ₹2,826 cr land வாங்கியாச்சு','+',3,0.7,0.4,1.0,'Approved','Q2 FY27 release, 5 Nov 2026'],
+ ['Homes fibre-first pivot','Homes fibre-first மாற்றம்','+',2,0.4,0.7,1.0,'Announced','Q1 FY27 call, Aug 2026'],
+ ['Churn rise and slower mobile adds vs Jio','Churn ஏற்றம், Jio-வை விட mobile adds குறைவு','−',2,1.0,1.0,1.0,'Executing','Q2 FY27 release, 5 Nov 2026'],
+ ['Listed Jio: competitor with net-cash path, flows shift','Listed Jio: net-cash பாதையில போட்டியாளர், flows மாறலாம்','−',2,0.7,1.0,1.0,'Executing','Jio listing 28 Oct 2026']];
+T('tc','Triggers & Cycle','Triggers & Cycle',function(){
+ var clock='<svg viewBox="0 0 300 300" role="img">';var ph=[['P1 Trough','P1 Trough'],['P2 Early recovery','P2 ஆரம்ப மீட்சி'],['P3 Expansion','P3 Expansion'],['P4 Late cycle','P4 Late cycle'],['P5 Downturn','P5 சரிவு']];var cols=[C.sand,C.good,C.air,C.acc,C.bad];
+ ph.forEach(function(p,i){var a0=-Math.PI/2+i*2*Math.PI/5,a1=a0+2*Math.PI/5,r=120,rr=70,cx=150,cy=150;clock+='<path d="M'+(cx+r*Math.cos(a0))+' '+(cy+r*Math.sin(a0))+' A'+r+' '+r+' 0 0 1 '+(cx+r*Math.cos(a1))+' '+(cy+r*Math.sin(a1))+' L'+(cx+rr*Math.cos(a1))+' '+(cy+rr*Math.sin(a1))+' A'+rr+' '+rr+' 0 0 0 '+(cx+rr*Math.cos(a0))+' '+(cy+rr*Math.sin(a0))+'Z" fill="'+cols[i]+(i===2?'':'33')+'" stroke="'+C.panel+'" stroke-width="3"/>';var am=(a0+a1)/2;clock+=ST(cx+95*Math.cos(am),cy+95*Math.sin(am)+4,p[0].split(' ')[0],p[1].split(' ')[0],'text-anchor="middle" font-size="13" '+(i===2?'fill="#FFFFFF"':''));});
+ var ap=-Math.PI/2+2.5*2*Math.PI/5;clock+='<line x1="150" y1="150" x2="'+(150+62*Math.cos(ap))+'" y2="'+(150+62*Math.sin(ap))+'" stroke="'+C.ink+'" stroke-width="5" stroke-linecap="round"/><circle cx="150" cy="150" r="9" fill="'+C.ink+'"/>'+ST(150,290,'Sector: P3 · Stock: Stage 1 late','Sector: P3 · Stock: Stage 1 late','text-anchor="middle" font-size="12.5"')+'</svg>';
+ var pos=0,neg=0;var rows=TRG.map(function(t){var pt=t[3]*t[4]*t[5]*t[6];if(t[2]==='+')pos+=pt;else neg+=pt;return '<tr><td>'+B(t[0],t[1])+'</td><td class="n" style="color:'+(t[2]==='+'?C.good:C.bad)+'">'+t[2]+'</td><td class="n">'+t[3]+'</td><td class="n">'+t[4]+'</td><td class="n">'+t[5]+'</td><td class="n">'+t[6]+'</td><td class="n">'+pt.toFixed(2)+'</td><td>'+t[7]+'</td><td>'+t[8]+'</td></tr>';}).join('');
+ var top3=TRG.filter(function(t){return t[2]==='+';}).map(function(t){return t[3]*t[4]*t[5]*t[6];}).sort(function(a,b){return b-a;}).slice(0,3).reduce(function(a,b){return a+b;},0);
+ var tg=Math.round(Math.max(0,Math.min(100,50+8*top3-8*neg)));
+ var tl='<svg viewBox="0 0 560 120" role="img"><line x1="30" x2="530" y1="60" y2="60" stroke="'+C.ink2+'" stroke-width="2"/>';[['28 Oct 26','Jio lists','Jio list ஆச்சு',C.jio],['5 Nov 26','Q2 results','Q2 results',C.air],['Jan–Feb 27','Q3 FY27 results','Q3 FY27 results',C.acc],['Feb 27','Union Budget','Union Budget',C.teal],['Sep 27','Jio Nifty-eligible','Jio Nifty-க்கு தகுதி',C.jio]].forEach(function(e,i){var x=56+i*112;tl+='<circle cx="'+x+'" cy="60" r="8" fill="'+e[3]+'"/>'+TX(x,40,e[0],'text-anchor="middle" font-size="11" class="num"')+ST(x,84,e[1],e[2],'text-anchor="middle" font-size="11"');});tl+='</svg>';
+ return '<h2>'+B('Triggers & cycle','Triggers & cycle')+'</h2><p class="lede">'+B('Telecom is a policy-led sector: tariffs, regulation and competition set the clock','Telecom policy-led sector: tariff, regulation, போட்டி தான் clock')+'</p>'+
+ '<div class="grid g2">'+card('Cycle clock','Cycle clock','<div class="svgbox" style="max-width:320px;margin:auto">'+clock+'</div>')+
+ card('Cycle score (CY 63)','Cycle score (CY 63)',lis([['Sector P3 Expansion = 70: ARPU rising at both big players, margins at highs (Jio +250 bps, Airtel 57.9%).','Sector P3 Expansion = 70: ரெண்டு பெரிய players-க்கும் ARPU ஏறுது, margins உச்சம்.'],['Stock = 55: mature business 55, margin near multi-year high 40, valuation in band 55, price stage 1 late 70.','Stock = 55: mature business 55, margin உச்சம் 40, valuation band-ல 55, price stage 1 late 70.'],['Price stage is approximate; we did not have the 30-week average series.','Price stage தோராயம்; 30-week average data இல்லை.'],['CY = (70 + 55) ÷ 2 ≈ 63.','CY = (70 + 55) ÷ 2 ≈ 63.']]))+'</div>'+
+ '<div class="card" style="margin-top:14px"><h3>'+B('Trigger table (TG '+tg+')','Trigger table (TG '+tg+')')+'</h3><div class="tw"><table><thead><tr><th>'+B('Trigger','Trigger')+'</th><th>±</th><th>I</th><th>C</th><th>W</th><th>P</th><th>'+B('Points','Points')+'</th><th>'+B('Status','Status')+'</th><th>'+B('Evidence date','ஆதாரம் தேதி')+'</th></tr></thead><tbody>'+rows+'</tbody></table></div><p class="note">'+B('TG = 50 + 8 × top-3 positives − 8 × negatives. A tariff hike is on watch but unscored: we found no dated source for one this quarter.','TG = 50 + 8 × top-3 positives − 8 × negatives. Tariff hike கவனத்துல இருக்கு, ஆனா dated source இல்லாததால score பண்ணல.')+'</p></div>'+
+ '<div class="grid g2" style="margin-top:14px">'+card('Dates to watch','கவனிக்க வேண்டிய தேதிகள்','<div class="svgbox">'+tl+'</div>')+card('What would change this view','இந்த view எது மாத்தும்',lis([['A sector tariff hike would lift both CY and TG.','Sector tariff hike வந்தா CY, TG ரெண்டும் ஏறும்.'],['Churn above 3% for two quarters would cut TG.','ரெண்டு quarter churn 3%-க்கு மேல போனா TG இறங்கும்.'],['Aggressive Jio pricing after listing would move the sector toward P4.','Listing-க்கு அப்புறம் Jio விலை குறைச்சா sector P4 பக்கம் நகரும்.']]))+'</div>';});
+
+/* ================= 12. 6 PILLARS ================= */
+var PIL=[['Business quality','Business தரம்',9,'Highest ARPU in India; 57.9% margin; 15-country footprint.','India-லயே அதிக ARPU; 57.9% margin; 15 நாடுகள்.'],
+ ['Competitive advantage','போட்டி பலம்',8,'Spectrum, towers via Indus, premium base; Jio is the only peer at scale.','Spectrum, Indus towers, premium customers; scale-ல Jio மட்டும் தான் போட்டி.'],
+ ['Growth opportunity','Growth வாய்ப்பு',7,'Africa +20.6% cc, Homes +25.3%, data centres; India mobile ~10%.','Africa +20.6% cc, Homes +25.3%, data centres; India mobile ~10%.'],
+ ['Financial strength','Financial பலம்',7,'Net debt/EBITDA 1.18x and falling; capex ~20% of revenue.','Net debt/EBITDA 1.18x, குறையுது; capex revenue-ல ~20%.'],
+ ['Valuation','Valuation',5,'P/E ~35x annualised; cheaper than Jio but not cheap.','P/E ~35x; Jio-வை விட மலிவு, ஆனா மலிவு இல்லை.'],
+ ['Risk & reward','Risk & reward',6,'Churn and Jio’s pace are real risks; regulation can swing either way.','Churn, Jio speed — உண்மையான risk; regulation எந்த பக்கமும் போகலாம்.']];
+T('pil','6 Pillars','6 தூண்கள்',function(){
+ var tot=PIL.reduce(function(a,p){return a+p[2];},0);
+ var s='<svg viewBox="0 0 600 330" role="img"><polygon points="300,14 570,80 30,80" fill="'+C.air+'"/>'+ST(300,60,'Airtel · '+tot+' / 60','Airtel · '+tot+' / 60','text-anchor="middle" font-size="18" fill="#FFFFFF"')+'<rect x="30" y="80" width="540" height="14" fill="'+C.ink2+'"/>';
+ PIL.forEach(function(p,i){var x=48+i*88,h=200*p[2]/10,y=294-h;s+='<rect x="'+x+'" y="94" width="64" height="200" fill="'+C.accS+'" stroke="'+C.line+'"/><rect x="'+x+'" y="'+y+'" width="64" height="'+h+'" fill="'+(p[2]>=8?C.good:p[2]>=6?C.acc:C.sand)+'"/>'+TX(x+32,y+22,p[2],'text-anchor="middle" font-size="18" class="num"');
+  var w=p[0].split(' ');s+=ST(x+32,312,w[0],p[1].split(' ')[0],'text-anchor="middle" font-size="10.5"')+ST(x+32,325,w.slice(1).join(' '),p[1].split(' ').slice(1).join(' '),'text-anchor="middle" font-size="10.5"');});
+ s+='<rect x="20" y="294" width="560" height="6" fill="'+C.ink2+'"/></svg>';
+ return '<h2>'+B('6 Pillars','6 தூண்கள்')+'</h2><p class="lede">'+B('Each pillar scored 1–10; taller pillar, stronger roof','ஒவ்வொரு தூணுக்கும் 1–10; உயரமான தூண் = வலுவான கூரை')+'</p><div class="card"><div class="svgbox wide">'+s+'</div></div><div class="grid g3" style="margin-top:14px">'+PIL.map(function(p){return card(p[0]+' · '+p[2]+'/10',p[1]+' · '+p[2]+'/10','<p style="margin:0">'+B(p[3],p[4])+'</p>');}).join('')+'</div><p class="note">'+B('Grading: 9–10 best in sector, 7–8 clearly strong, 5–6 average or mixed, below 5 weak. Scores are CB’s educational judgement from this quarter’s data.','Grading: 9–10 sector-லயே best, 7–8 வலுவானது, 5–6 சராசரி, 5-க்கு கீழ பலவீனம். இந்த quarter data வைச்சு CB-யோட education மதிப்பீடு.')+'</p>';});
+
+/* ================= 13. BIG BET ================= */
+T('bet','Big Bet: Beyond Mobile','பெரிய பந்தயம்: Mobile-க்கு அப்பால்',function(){
+ var wh='<svg viewBox="0 0 320 320" role="img">';var cats=[['Data centres','Data centres',C.teal,'server'],['Homes fibre','Homes fibre',C.plum,'home'],['Airtel Money','Airtel Money',C.acc,'wallet'],['Enterprise digital','Enterprise digital',C.jio,'bldg']];
+ cats.forEach(function(c,i){var a0=-Math.PI/2+i*Math.PI/2,a1=a0+Math.PI/2,r=140,rr=58,cx=160,cy=160;wh+='<path d="M'+(cx+r*Math.cos(a0))+' '+(cy+r*Math.sin(a0))+' A'+r+' '+r+' 0 0 1 '+(cx+r*Math.cos(a1))+' '+(cy+r*Math.sin(a1))+' L'+(cx+rr*Math.cos(a1))+' '+(cy+rr*Math.sin(a1))+' A'+rr+' '+rr+' 0 0 0 '+(cx+rr*Math.cos(a0))+' '+(cy+rr*Math.sin(a0))+'Z" fill="'+c[2]+'2A" stroke="'+c[2]+'" stroke-width="2.5"/>';var am=(a0+a1)/2;wh+=ico(c[3],cx+100*Math.cos(am)-14,cy+100*Math.sin(am)-24,1.2,c[2])+ST(cx+100*Math.cos(am),cy+100*Math.sin(am)+20,c[0],c[1],'text-anchor="middle" font-size="12"');});
+ wh+='<circle cx="160" cy="160" r="54" fill="'+C.airS+'" stroke="'+C.air+'" stroke-width="3"/>'+ST(160,156,'Beyond','Mobile-க்கு','text-anchor="middle" font-size="13"')+ST(160,174,'mobile','அப்பால்','text-anchor="middle" font-size="13"')+'</svg>';
+ var ms=[['done','Data-centre land parcel bought: ₹2,826 cr','Data-centre land வாங்கியாச்சு: ₹2,826 cr','Q2 FY27'],['done','Homes base 15.4 mn; 676K adds','Homes base 15.4 mn; 676K adds','Q2 FY27'],['done','Airtel Money: 60.9 mn users, $437 mn revenue','Airtel Money: 60.9 mn users, $437 mn revenue','Q2 FY27'],['done','Apple iCloud+/TV/Arcade bundle on ₹999+ family plans','₹999+ family plans-ல Apple bundle','Q2 FY27'],['guided','Fibre-first Homes strategy','Fibre-first Homes strategy','From Q1 FY27'],['guided','1 GW data-centre business (capacity not yet built)','1 GW data-centre business (capacity இன்னும் கட்டல)','Planned']];
+ var tl='<svg viewBox="0 0 560 '+(ms.length*46+10)+'" role="img"><line x1="30" x2="30" y1="10" y2="'+(ms.length*46)+'" stroke="'+C.line+'" stroke-width="3"/>';ms.forEach(function(m,i){var y=26+i*46,d=m[0]==='done';tl+='<circle cx="30" cy="'+y+'" r="10" fill="'+(d?C.good:C.panel)+'" stroke="'+(d?C.good:C.acc)+'" stroke-width="3" '+(d?'':'stroke-dasharray="4 3"')+'/>'+ST(52,y+5,m[1],m[2],'font-size="13"')+TX(552,y+5,m[3],'text-anchor="end" font-size="11.5" class="num" fill="'+(d?C.good:C.warn)+'"');});tl+='</svg>';
+ return '<h2>'+B('The big bet: growth beyond mobile','பெரிய பந்தயம்: mobile-க்கு அப்பால் growth')+'</h2><p class="lede">'+B('Mobile pays today; data centres, homes and money are tomorrow','இன்னைக்கு mobile; நாளைக்கு data centres, homes, money')+'</p>'+
+ '<div class="grid g2">'+card('Four new engines','நாலு புது engines','<div class="svgbox" style="max-width:340px;margin:auto">'+wh+'</div>')+card('Done vs guided','முடிஞ்சது vs plan','<div class="svgbox">'+tl+'</div><p class="note">'+B('Solid dot = done and visible in filings. Dashed = guided or planned only.','நிரம்பின புள்ளி = முடிஞ்சது. Dashed = plan மட்டும்.')+'</p>')+'</div>'+
+ '<div class="grid g2" style="margin-top:14px">'+card('Who is ahead?','யாரு முன்னாடி?','<svg viewBox="0 0 400 130" role="img">'+[['Home broadband (mn)','Home broadband (mn)',15.4,30],['5G / smartphone base','5G / smartphone base',304.6,300]].map(function(r,i){var y=20+i*56,m=Math.max(r[2],r[3]);return ST(0,y,r[0],r[1],'font-size="12"')+'<rect x="0" y="'+(y+6)+'" width="'+(300*r[2]/m)+'" height="12" rx="3" fill="'+C.air+'"/>'+TX(306*r[2]/m+4,y+17,r[2]+(i?' (4G/5G)':''),'font-size="11" class="num"')+'<rect x="0" y="'+(y+22)+'" width="'+(300*r[3]/m)+'" height="12" rx="3" fill="'+C.jio+'"/>'+TX(306*r[3]/m+4,y+33,r[3]+(i?' (5G)':''),'font-size="11" class="num"');}).join('')+'</svg>'+lis([['Jio leads homes 30 mn vs 15.4 mn.','Homes-ல Jio முன்னாடி: 30 mn vs 15.4 mn.'],['Data use is not like-for-like (Airtel 4G/5G vs Jio 5G only).','Data base ஒரே மாதிரி இல்லை (Airtel 4G/5G vs Jio 5G மட்டும்).'],['Airtel alone has Africa and mobile money at scale.','Africa, mobile money — Airtel-க்கு மட்டும்.']]))+
+ card('How Airtel got here','Airtel இங்க எப்படி வந்தது','<svg viewBox="0 0 400 130" role="img">'+[[211,'Q1 FY25'],[250,'Q1 FY26'],[256,'Q2 FY26'],[264,'Q1 FY27'],[271,'Q2 FY27']].map(function(p,i){var x=30+i*85,h=(p[0]-190)*1.2;return '<rect x="'+(x-18)+'" y="'+(110-h)+'" width="36" height="'+h+'" rx="4" fill="'+C.air+'"/>'+TX(x,104-h,'₹'+p[0],'text-anchor="middle" font-size="11" class="num"')+TX(x,126,p[1],'text-anchor="middle" font-size="10.5"');}).join('')+'</svg>'+lis([['Story of success: chose quality customers over volume; ARPU ₹211 → ₹271 in nine quarters.','வெற்றிக் கதை: volume-ஐ விட quality customers; 9 quarters-ல ARPU ₹211 → ₹271.'],['Debt ratio fell from 2.54x (Jun 2024) to 1.18x.','Debt ratio 2.54x (Jun 2024) → 1.18x.']]))+'</div>';});
+
+/* ================= 14. VALUE CHAIN ================= */
+T('vc','Sector Need & Value Chain','Sector தேவை & Value Chain',function(){
+ var st=[['wave','Spectrum','Spectrum','Govt auctions','அரசு auction'],['tower','Towers','Towers','Indus (subsidiary)','Indus (subsidiary)'],['fibre','Fibre backhaul','Fibre backhaul','Own + leased','சொந்தம் + lease'],['server','Core & data centres','Core & data centres','Nxtra','Nxtra'],['store','Distribution','Distribution','Stores, app','Stores, app'],['phone','Services','Services','Mobile, home, B2B, TV','Mobile, home, B2B, TV'],['users','Customers','Customers','692.6 mn','692.6 mn']];
+ var s='<svg viewBox="0 0 980 190" role="img">';st.forEach(function(x,i){var X=10+i*138;s+='<rect x="'+X+'" y="40" width="122" height="110" rx="12" fill="'+C.airS+'" stroke="'+C.air+'" stroke-width="2"/>'+ico(x[0],X+43,52,1.5,C.air)+ST(X+61,108,x[1],x[2],'text-anchor="middle" font-size="12.5"')+ST(X+61,128,x[3],x[4],'text-anchor="middle" font-size="10.5" font-weight="600"');if(i<6)s+='<path d="M'+(X+124)+' 95 L'+(X+136)+' 95" stroke="'+C.ink2+'" stroke-width="2.5"/>';});
+ s+=ST(490,24,'Red = Airtel plays here (all seven links)','சிவப்பு = Airtel இங்க இருக்கு (ஏழு இடத்திலும்)','text-anchor="middle" font-size="13"')+ST(490,178,'Owning more links means fewer costs paid to others','அதிக links சொந்தமா இருந்தா மத்தவங்களுக்கு கொடுக்கிற செலவு கம்மி','text-anchor="middle" font-size="12"')+'</svg>';
+ return '<h2>'+B('Sector need and value chain','Sector தேவை, value chain')+'</h2><p class="lede">'+B('India keeps using more data; whoever owns the pipes earns','India-ல data use ஏறிக்கிட்டே இருக்கு; pipes யாரோடதோ அவங்களுக்கு வருமானம்')+'</p><div class="card"><div class="svgbox wide">'+s+'</div></div>'+
+ '<div class="grid g2" style="margin-top:14px">'+card('The need: data per user (Jio, GB/month)','தேவை: ஒரு user data (Jio, GB/மாசம்)','<div class="svgbox">'+vbars([{en:'Q2 FY26',ta:'Q2 FY26',v:[38.7]},{en:'Q2 FY27',ta:'Q2 FY27',v:[44.2]}],[{en:'GB per user',ta:'GB per user',c:C.jio}],{max:50,h:200,fmt:function(v){return v+' GB';}})+'</div>'+lis([['Usage up 14% in a year; networks must keep expanding.','ஒரு வருஷத்துல 14% ஏற்றம்; network விரிவாக்கம் தொடரணும்.'],['Airtel did not give a comparable figure in the sources we used.','Airtel-க்கு இதே மாதிரி எண் கிடைக்கல.']]))+
+ card('Where the money is made','பணம் எங்க வருது',lis([['Services and customers: ARPU is the main lever.','Services, customers: ARPU தான் முக்கிய lever.'],['Towers: rent from other telcos via Indus.','Towers: Indus மூலமா மத்த telcos-ஓட rent.'],['Data centres: next profit pool, still at land stage.','Data centres: அடுத்த profit pool, இப்போ land stage தான்.']]))+'</div>';});
+
+/* ================= 15. SWOT ================= */
+T('swot','SWOT','SWOT',function(){
+ var Q=[['Strengths','பலம்',C.good,[['ARPU ₹271, highest in India','ARPU ₹271, India-லயே அதிகம்'],['57.9% EBITDA margin','57.9% EBITDA margin'],['Africa: 193.9 mn users','Africa: 193.9 mn users']]],
+  ['Weaknesses','பலவீனம்',C.bad,[['Churn up to 2.9%','Churn 2.9%-க்கு ஏறிச்சு'],['Mobile adds 0.72 mn','Mobile adds 0.72 mn'],['DTH losing customers','DTH customers குறையுது']]],
+  ['Opportunities','வாய்ப்புகள்',C.jio,[['Data centres (1 GW plan)','Data centres (1 GW plan)'],['Homes fibre and convergence','Homes fibre, convergence'],['Airtel Money growth','Airtel Money growth']]],
+  ['Threats','அச்சுறுத்தல்',C.warn,[['Listed, cash-rich Jio','Listed, cash நிறைந்த Jio'],['Regulation and spectrum costs','Regulation, spectrum செலவு'],['Africa currency swings','Africa currency ஏற்ற இறக்கம்']]]];
+ var s='<svg viewBox="0 0 600 400" role="img">';Q.forEach(function(q,i){var x=(i%2)*300+4,y=Math.floor(i/2)*198+4;s+='<rect x="'+x+'" y="'+y+'" width="292" height="190" rx="14" fill="'+q[2]+'1A" stroke="'+q[2]+'" stroke-width="2.5"/>'+TX(x+260,y+40,['S','W','O','T'][i],'text-anchor="middle" font-size="34" class="num" fill="'+q[2]+'"')+ST(x+16,y+32,q[0],q[1],'font-size="17" fill="'+q[2]+'"');q[3].forEach(function(p,j){s+='<circle cx="'+(x+22)+'" cy="'+(y+72+j*38)+'" r="5" fill="'+q[2]+'"/>'+ST(x+36,y+77+j*38,p[0],p[1],'font-size="13.5"');});});
+ return '<h2>SWOT</h2><p class="lede">'+B('Four boxes, three points each','நாலு box, ஒவ்வொண்ணுலயும் மூணு point')+'</p><div class="card"><div class="svgbox" style="max-width:640px;margin:auto">'+s+'</svg></div></div>';});
+
+/* ================= 16. SELF-CHECK ================= */
+var SC=[
+ {en:'1 · About the stock',ta:'1 · Stock பற்றி',it:[['Do I know the size? Market cap ~₹12.3 lakh cr, large-cap.','Size தெரியுமா? Market cap ~₹12.3 lakh cr, large-cap.','Data: ₹2,050 on 5 Nov 2026; 52-week ₹1,726–₹2,175.','Data: 5 Nov 2026-ல ₹2,050; 52-week ₹1,726–₹2,175.'],['Do I know who owns it?','யாரு own பண்றாங்கன்னு தெரியுமா?','Data: promoters 50.07%, FIIs ~25.4%, DIIs ~21.8%.','Data: promoters 50.07%, FIIs ~25.4%, DIIs ~21.8%.'],['Do I know where the price sits vs its range?','விலை range-ல எங்கன்னு தெரியுமா?','Data: ~6% below the 52-week high.','Data: 52-week high-ஐ விட ~6% கீழ.']]},
+ {en:'2 · Problems I may face',ta:'2 · எனக்கு வரக்கூடிய சிக்கல்கள்',it:[['Do I understand ARPU, churn and EBITDA?','ARPU, churn, EBITDA புரியுதா?','Data: ARPU ₹271, churn 2.9%, margin 57.9%.','Data: ARPU ₹271, churn 2.9%, margin 57.9%.'],['Do I understand the Africa part and currency risk?','Africa பகுதி, currency risk புரியுதா?','Data: Africa ₹18,817 cr; cc growth 20.6% vs USD 25.7%.','Data: Africa ₹18,817 cr; cc 20.6% vs USD 25.7%.'],['Do I know the main risks?','முக்கிய risks தெரியுமா?','Data: churn up, Jio adds 9.1 mn vs Airtel 0.72 mn, profit missed estimate.','Data: churn ஏற்றம், Jio 9.1 mn vs Airtel 0.72 mn, profit miss.']]},
+ {en:'3 · What I did about it',ta:'3 · நான் என்ன செஞ்சேன்',it:[['Read the results press release and investor presentation.','Results press release, investor presentation படிச்சேன்.','Data: released 5 Nov 2026 on airtel.in investor page.','Data: 5 Nov 2026, airtel.in investor page.'],['Compared with the listed peer, Jio.','Listed peer Jio-வோட compare பண்ணேன்.','Data: see the Airtel vs Jio tab — 7 vs 5.','Data: Airtel vs Jio tab — 7 vs 5.'],['Kept the amount small and fixed a review point (next results).','சின்ன தொகை வைச்சு, review point (அடுத்த results) fix பண்ணேன்.','Data: Q3 FY27 results expected Jan–Feb 2027.','Data: Q3 FY27 results Jan–Feb 2027 எதிர்பார்ப்பு.']]},
+ {en:'4 · Funds’ and analysts’ view',ta:'4 · Funds, analysts view',it:[['Are long-term funds holding?','Long-term funds hold பண்றாங்களா?','Data: DIIs ~21.8%, FIIs ~25.4% (Sep 2026).','Data: DIIs ~21.8%, FIIs ~25.4% (Sep 2026).'],['Did I read independent analyst reviews?','Independent analyst reviews படிச்சேனா?','Data: street PAT estimate was ₹9,673 cr (LSEG); actual ₹8,888 cr.','Data: street PAT estimate ₹9,673 cr (LSEG); actual ₹8,888 cr.'],['Do I know CB’s cycle and trigger view?','CB cycle, trigger view தெரியுமா?','Data: CY 63, TG 57, Conviction 65.','Data: CY 63, TG 57, Conviction 65.']]},
+ {en:'5 · My own conditions',ta:'5 · என் சொந்த conditions',own:1,it:[['My time horizon is at least 3 years.','என் horizon குறைஞ்சது 3 வருஷம்.','Data: your choice.','Data: உங்க முடிவு.']]}];
+T('sc','Self-Check','உங்க Self-Check',function(){
+ var h='<h2>'+B('Your investor self-check','உங்க investor self-check')+'</h2><p class="lede">'+B('Tick what you have done. It counts only your own conditions; it is not a recommendation.','நீங்க செஞ்சதை tick பண்ணுங்க. இது உங்க conditions-ஐ மட்டும் எண்ணுது; recommendation இல்லை.')+'</p>';
+ h+='<div class="grid g2"><div class="card" style="display:flex;gap:16px;align-items:center;flex-wrap:wrap">'+ring('scr')+'<div><b id="sccount">0 / 0</b><div class="note">'+B('Overall ticks','மொத்த ticks')+'</div></div></div><div class="card" id="scbars"></div></div>';
+ SC.forEach(function(g,gi){h+='<div class="card" style="margin-top:14px"><h3>'+B(g.en,g.ta)+'</h3><div id="scg'+gi+'">';g.it.forEach(function(it,ii){h+='<label class="chk"><input type="checkbox" id="sc'+gi+'_'+ii+'" data-g="'+gi+'"><span>'+B(it[0],it[1])+'<span class="data">'+B(it[2],it[3])+'</span></span></label>';});h+='</div>';
+  if(g.own)h+='<div class="ask"><input type="text" id="scown" placeholder="Add your own check…" aria-label="Add your own check"><button class="btn" type="button" id="scadd">'+B('Add','சேர்')+'</button></div>';h+='</div>';});
+ return h;});
+
+/* ================= 17. CAUVERY ASSIST ================= */
+var KB=[
+ {k:['arpu','ஏஆர்பியு','average revenue'],a:['Airtel’s ARPU is ₹271, up from ₹256 a year ago. Jio’s is ₹218.8.','Airtel ARPU ₹271 — போன வருஷம் ₹256. Jio ARPU ₹218.8.'],tab:'met'},
+ {k:['profit','pat','லாபம்','ப்ராபிட்','net income'],a:['Airtel’s net profit is ₹8,888 crore, up 30.9% YoY. It missed the ₹9,673 crore estimate.','Airtel net profit ₹8,888 கோடி, YoY 30.9% ஏற்றம். ₹9,673 கோடி estimate-ஐ miss பண்ணிச்சு.'],tab:'fin'},
+ {k:['revenue','sales','ரெவின்யூ','வருமானம்'],a:['Revenue is ₹60,878 crore, up 16.7% YoY and 4% QoQ.','Revenue ₹60,878 கோடி — YoY 16.7%, QoQ 4% ஏற்றம்.'],tab:'fin'},
+ {k:['margin','ebitda','மார்ஜின்'],a:['EBITDA margin is 57.9%; India alone is 60.8%. Jio’s is 54.1%.','EBITDA margin 57.9%; India மட்டும் 60.8%. Jio 54.1%.'],tab:'fin'},
+ {k:['jio','ஜியோ','reliance','compare','vs','better','best','யாரு'],a:['On earnings, Airtel wins 7 of 12 metrics this quarter; Jio wins on customers, churn and debt.','Earnings-ல இந்த quarter Airtel 12-ல 7 ஜெயிக்குது; customers, churn, debt-ல Jio முன்னாடி.'],tab:'vs'},
+ {k:['churn','சர்ன்','leave'],a:['Airtel’s India churn rose to 2.9% from 2.6%. Jio’s is 1.6%.','Airtel India churn 2.6%-ல இருந்து 2.9%-க்கு ஏறிச்சு. Jio 1.6%.'],tab:'met'},
+ {k:['africa','ஆப்ரிக்கா','ஆப்பிரிக்கா'],a:['Africa revenue is ₹18,817 crore, growing 20.6% in constant currency.','Africa revenue ₹18,817 கோடி, constant currency-ல 20.6% growth.'],tab:'seg'},
+ {k:['home','homes','broadband','fibre','ஹோம்','வீடு'],a:['Homes has 15.4 million customers; revenue grew 25.3%. Jio has 30 million.','Homes-ல 15.4 million customers; revenue 25.3% ஏறிச்சு. Jio-க்கு 30 million.'],tab:'seg'},
+ {k:['debt','கடன்','டெட்','leverage'],a:['Net debt to EBITDA is 1.18x, down from 1.63x a year ago. Jio’s is 0.10x.','Net debt / EBITDA 1.18x — போன வருஷம் 1.63x. Jio 0.10x.'],tab:'cf'},
+ {k:['data centre','data center','nxtra','டேட்டா சென்டர்'],a:['Airtel bought land for ₹2,826 crore for its planned 1 GW data-centre business.','Plan பண்ணியிருக்கிற 1 GW data-centre-க்கு ₹2,826 கோடிக்கு land வாங்கியிருக்காங்க.'],tab:'bet'},
+ {k:['valuation','pe','p/e','cheap','expensive','வேல்யூ'],a:['Airtel trades near 35x annualised earnings; Jio near 39x.','Airtel annualised earnings-க்கு ~35x; Jio ~39x.'],tab:'val'},
+ {k:['customers','subscribers','users','கஸ்டமர்'],a:['Airtel has 692.6 million customers; it added 12 million this quarter.','Airtel-க்கு 692.6 million customers; இந்த quarter 12 million சேர்ந்தாங்க.'],tab:'dash'},
+ {k:['capex','investment','செலவு'],a:['Capex was ₹12,467 crore this quarter, about 20.5% of revenue.','இந்த quarter capex ₹12,467 கோடி — revenue-ல சுமார் 20.5%.'],tab:'cf'},
+ {k:['cycle','trigger','சைக்கிள்','ட்ரிகர்'],a:['Telecom is in the expansion phase (P3). CB scores: cycle 63, triggers 57.','Telecom expansion phase (P3)-ல இருக்கு. CB score: cycle 63, triggers 57.'],tab:'tc'},
+ {k:['why','share','price','fall','rise','ஏன்'],a:['The stock weighs strong ARPU and margins against a profit miss, rising churn and Jio’s listing.','நல்ல ARPU, margins ஒரு பக்கம்; profit miss, churn, Jio listing இன்னொரு பக்கம்.'],tab:'mv'}];
+var NOADV=['I can’t give buy, sell or hold advice. CB Research is not SEBI-registered; use the Self-Check tab to test your own conditions.','Buy, sell, hold advice கொடுக்க முடியாது. CB Research SEBI-registered இல்லை; Self-Check tab-ல உங்க conditions-ஐ check பண்ணுங்க.'];
+var FALLB=['I don’t have that on this dashboard. Try ARPU, profit, Jio, churn, Africa or debt.','இந்த dashboard-ல அது இல்லை. ARPU, profit, Jio, churn, Africa, debt பத்தி கேளுங்க.'];
+T('ca','Cauvery Assist','Cauvery Assist',function(){
+ return '<h2>Cauvery Assist</h2><p class="lede">'+B('Ask a question, get a one-line answer. Read-aloud speed is yours to set.','கேள்வி கேளுங்க — ஒரு வரி பதில். படிக்கும் வேகம் நீங்களே set பண்ணலாம்.')+'</p>'+
+ '<div class="grid g2"><div class="card"><div class="chat" id="chat"></div><div class="ask"><input type="text" id="q" aria-label="Your question" placeholder="Ask: Who is better, Airtel or Jio?"><button class="btn" type="button" id="qgo">'+B('Ask','கேளு')+'</button><button class="btn" type="button" id="qmic" aria-label="Speak">🎙</button></div>'+
+ '<div class="sugg" id="sugg"></div></div><div class="card"><h3>'+B('Voice settings','Voice settings')+'</h3><svg viewBox="0 0 300 70" role="img">'+ico('users',10,20,1.4,C.air)+'<path d="M60 35 Q80 15 100 35 T140 35 T180 35 T220 35 T260 35" fill="none" stroke="'+C.acc+'" stroke-width="3"/></svg>'+
+ '<label for="rate"><b>'+B('Speed','வேகம்')+': <span id="ratev">0.8×</span></b></label><input type="range" id="rate" min="0.5" max="1.5" step="0.1" value="0.8" style="width:100%;accent-color:#C8101A">'+
+ '<div class="ask"><button class="btn" type="button" id="vpause">'+B('Pause','நிறுத்து')+'</button><button class="btn" type="button" id="vresume">'+B('Resume','தொடர்')+'</button><button class="btn" type="button" id="vstop">'+B('Stop','Stop')+'</button></div>'+
+ lis([['The mic waits 3 seconds of silence before answering.','3 seconds அமைதிக்கு அப்புறம் தான் பதில்.'],['Inside claude.ai the mic may be blocked; typing and read-aloud still work.','claude.ai-க்குள்ள mic block ஆகலாம்; type பண்ணலாம், read-aloud வேலை செய்யும்.'],['No buy/sell advice, ever.','Buy/sell advice எப்பவும் இல்லை.']])+'<p class="note" id="vnote"></p></div></div>';});
+
+/* ================= 18. SOCRATES ================= */
+var QZ=[
+ ['What was Airtel’s India mobile ARPU in Q2 FY27?','Q2 FY27-ல Airtel India mobile ARPU எவ்வளவு?',['₹256','₹264','₹271','₹218.8'],2,'₹271, up from ₹264 in Q1.','₹271 — Q1-ல ₹264.'],
+ ['Which company added more customers this quarter?','இந்த quarter அதிக customers சேர்த்தது யாரு?',['Airtel','Jio','Same','Neither'],1,'Jio added 9.1 mn; Airtel India mobile 0.72 mn.','Jio 9.1 mn; Airtel India mobile 0.72 mn.'],
+ ['Why did PAT grow faster than revenue?','Revenue-ஐ விட PAT ஏன் வேகமா வளர்ந்தது?',['Operating leverage','Tax refund','Asset sale','Currency gain only'],0,'Costs grew slower than revenue.','செலவு revenue-ஐ விட மெதுவா வளர்ந்தது.'],
+ ['What phase is the telecom cycle in, per CB?','CB படி telecom cycle எந்த phase?',['P1 Trough','P2 Early recovery','P3 Expansion','P5 Downturn'],2,'P3 Expansion: ARPU and margins rising across players.','P3 Expansion: எல்லா players-க்கும் ARPU, margins ஏறுது.'],
+ ['What does a falling net debt/EBITDA mean?','Net debt/EBITDA குறைஞ்சா அர்த்தம்?',['More risk','Stronger balance sheet','Lower revenue','Higher tax'],1,'Debt is smaller compared with earnings.','Earnings-ஓட ஒப்பிட்டா debt சின்னதா ஆகுது.'],
+ ['Which risk worsened this quarter?','இந்த quarter எந்த risk மோசமாச்சு?',['Debt','Churn','ARPU','Margin'],1,'India churn rose to 2.9% from 2.6%.','India churn 2.6%-ல இருந்து 2.9%.']];
+T('soc','Cauvery Socrates','Cauvery Socrates',function(){
+ var h='<h2>Cauvery Socrates</h2><p class="lede">'+B('Six questions. Tap an answer to see why.','ஆறு கேள்விகள். பதில் tap பண்ணுங்க — ஏன்னு தெரியும்.')+'</p><div class="grid g2"><div class="card" id="quiz">';
+ QZ.forEach(function(q,i){h+='<div style="margin-bottom:12px"><b>'+(i+1)+'. '+B(q[0],q[1])+'</b>'+q[2].map(function(o,j){return '<button type="button" class="opt" data-q="'+i+'" data-o="'+j+'">'+o+'</button>';}).join('')+'<div class="note" id="qx'+i+'"></div></div>';});
+ h+='</div><div class="card"><h3>'+B('Your score','உங்க score')+'</h3><svg viewBox="0 0 300 180" role="img" id="qsvg"></svg><button class="btn" type="button" id="qreset">'+B('Try again','மறுபடி முயற்சி')+'</button></div></div>';return h;});
+
+/* ================= 19. ANALYST VIEW ================= */
+T('av','Analyst View','Analyst View',function(){
+ var L=[['E · Earnings','E · Earnings',25,75],['F · Fundamentals','F · Fundamentals',20,70],['M · Macro','M · Macro',15,60],['T · Market pulse','T · Market pulse',15,55],['CY · Cycle','CY · Cycle',10,63],['TG · Triggers','TG · Triggers',15,57]];
+ var tot=Math.round(L.reduce(function(a,l){return a+l[2]*l[3]/100;},0));
+ return '<h2>'+B('Analyst view','Analyst view')+'</h2><p class="lede">'+B('CB’s educational read of the quarter','இந்த quarter பற்றி CB-யோட education பார்வை')+'</p><div class="grid g2">'+card('CB Conviction','CB Conviction','<div class="svgbox" style="max-width:320px;margin:auto">'+gauge(tot,100,'Out of 100 (education score)','100-க்கு (education score)',C.air)+'</div>')+
+ card('How the score is built','Score எப்படி வந்தது','<div class="svgbox">'+hbars(L.map(function(l){return {en:l[0]+' ('+l[2]+'%)',ta:l[1]+' ('+l[2]+'%)',v:l[3],c:l[3]>=65?C.good:l[3]>=58?C.acc:C.sand,lab:String(l[3])};}),{max:100,L:170})+'</div>')+'</div>'+
+ '<div class="card" style="margin-top:14px">'+lis([['Cycle: telecom in P3 Expansion; Airtel at a mature stage with margins near highs.','Cycle: telecom P3 Expansion; Airtel mature stage, margins உச்சத்துல.'],['Top positive triggers: falling debt and the premium customer mix.','முக்கிய positive triggers: debt குறையறது, premium customer mix.'],['Top risk trigger: rising churn while Jio adds customers more than ten times faster.','முக்கிய risk: churn ஏறுது, Jio பத்து மடங்கு வேகமா customers சேர்க்குது.'],['Earnings verdict vs Jio: Airtel ahead this quarter, 7 metrics to 5.','Jio-வோட earnings verdict: இந்த quarter Airtel முன்னாடி, 7 vs 5.'],['This is education, not a recommendation.','இது education, recommendation இல்லை.']])+'</div>';});
+
+/* ---------- build ---------- */
+var nav=document.getElementById('tabs'),main=document.getElementById('main');
+TABS.forEach(function(t,i){var b=document.createElement('button');b.type='button';b.className='tab';b.dataset.id=t.id;b.innerHTML=B(t.en,t.ta);nav.appendChild(b);
+ var p=document.createElement('section');p.className='panel';p.id='p_'+t.id;p.hidden=true;p.innerHTML=t.fn();main.appendChild(p);});
+function show(id){TABS.forEach(function(t){document.getElementById('p_'+t.id).hidden=t.id!==id;});[].forEach.call(nav.children,function(b){b.classList.toggle('on',b.dataset.id===id);if(b.dataset.id===id)b.scrollIntoView({block:'nearest',inline:'nearest'});});try{localStorage.setItem('cb_air_tab',id);}catch(e){}window.scrollTo(0,0);}
+nav.addEventListener('click',function(e){var b=e.target.closest('.tab');if(b)show(b.dataset.id);});
+document.addEventListener('click',function(e){var s=e.target.closest('.sub');if(!s)return;var g=s.dataset.grp;document.querySelectorAll('.sub[data-grp="'+g+'"]').forEach(function(x){x.classList.toggle('on',x===s);});document.querySelectorAll('.sp[data-grp="'+g+'"]').forEach(function(x){x.hidden=x.dataset.k!==s.dataset.k;});});
+var start='dash';try{var sv=localStorage.getItem('cb_air_tab');if(sv&&document.getElementById('p_'+sv))start=sv;}catch(e){}
+show(start);
+
+/* language */
+var LANG='en';
+function setLang(l){LANG=l;document.body.classList.toggle('L-ta',l==='ta');document.getElementById('lEN').classList.toggle('on',l==='en');document.getElementById('lTA').classList.toggle('on',l==='ta');document.documentElement.lang=l==='ta'?'ta':'en';
+ var q=document.getElementById('q');if(q)q.placeholder=l==='ta'?'கேளுங்க: Airtel-ஆ Jio-வா யாரு best?':'Ask: Who is better, Airtel or Jio?';try{localStorage.setItem('cb_air_lang',l);}catch(e){}renderSugg();}
+document.getElementById('lEN').onclick=function(){setLang('en');};document.getElementById('lTA').onclick=function(){setLang('ta');};
+
+/* business model detail */
+document.getElementById('bmsvg').addEventListener('click',function(e){var g=e.target.closest('.bmb'),m=e.target.closest('.mfb'),d=document.getElementById('bmd');
+ if(g){var b=BM[+g.dataset.i];d.innerHTML='<b>'+B(b.en,b.ta)+'</b>'+(b.nen?' — '+B(b.nen,b.nta):'')+'<br>'+B(b.den,b.dta);}
+ if(m){var x=MF[+m.dataset.i];d.innerHTML='<b>'+B(x.en,x.ta)+'</b> — '+x.v+'<br>'+B(x.den,x.dta);}});
+
+/* speech */
+var synth=window.speechSynthesis,RATE=0.8;
+function voiceFor(l){if(!synth)return null;var v=synth.getVoices(),want=l==='ta'?'ta':'en';var pick=v.filter(function(x){return x.lang&&x.lang.toLowerCase().indexOf(want)===0;});var ind=pick.filter(function(x){return /IN/i.test(x.lang);});return ind[0]||pick[0]||null;}
+function speak(txt){if(!synth){note('Read-aloud is not supported in this browser.','இந்த browser-ல read-aloud இல்லை.');return;}synth.cancel();var parts=txt.replace(/\s+/g,' ').split(/(?<=[.!?।])\s+/).filter(Boolean);var v=voiceFor(LANG);
+ if(LANG==='ta'&&!v)note('No Tamil voice on this device; reading with the default voice.','இந்த device-ல Tamil voice இல்லை; default voice-ல படிக்குது.');
+ parts.forEach(function(p){var u=new SpeechSynthesisUtterance(p);u.rate=RATE;u.lang=LANG==='ta'?'ta-IN':'en-IN';if(v)u.voice=v;synth.speak(u);});}
+function note(e,t){var n=document.getElementById('vnote');if(n)n.innerHTML=B(e,t);}
+document.getElementById('readTab').onclick=function(){var p=document.querySelector('.panel:not([hidden])');speak(p.innerText.replace(/[─│▶●]/g,' ').slice(0,4000));};
+var rate=document.getElementById('rate');rate.oninput=function(){RATE=+rate.value;document.getElementById('ratev').textContent=RATE.toFixed(1)+'×';try{localStorage.setItem('cb_air_rate',RATE);}catch(e){}};
+try{var rr=localStorage.getItem('cb_air_rate');if(rr){RATE=+rr;rate.value=RATE;document.getElementById('ratev').textContent=RATE.toFixed(1)+'×';}}catch(e){}
+document.getElementById('vpause').onclick=function(){synth&&synth.pause();};document.getElementById('vresume').onclick=function(){synth&&synth.resume();};document.getElementById('vstop').onclick=function(){synth&&synth.cancel();};
+
+/* assist */
+var chat=document.getElementById('chat');
+function addMsg(txt,who){var d=document.createElement('div');d.className='msg '+who;d.innerHTML=txt;chat.appendChild(d);chat.scrollTop=chat.scrollHeight;}
+function answer(q){var s=q.toLowerCase();
+ if(/\b(buy|sell|hold|invest|target|should i)\b|வாங்க|விக்க|விற்க|முதலீடு/.test(s))return {a:NOADV};
+ var best=null,bs=0;KB.forEach(function(k){var sc=0;k.k.forEach(function(w){if(s.indexOf(w)>=0)sc+=w.length>3?2:1;});if(sc>bs){bs=sc;best=k;}});return best?best:{a:FALLB};}
+function ask(q){if(!q.trim())return;addMsg(q,'u');var r=answer(q);var t=LANG==='ta'?r.a[1]:r.a[0];addMsg(B(r.a[0],r.a[1])+(r.tab?' <button class="sugg-open btn" type="button" data-tab="'+r.tab+'" style="padding:2px 8px;font-size:12px;margin-left:6px">'+B('Open tab','Tab திற')+'</button>':''),'b');speak(t);}
+document.getElementById('qgo').onclick=function(){var q=document.getElementById('q');ask(q.value);q.value='';};
+document.getElementById('q').addEventListener('keydown',function(e){if(e.key==='Enter'){ask(this.value);this.value='';}});
+chat.addEventListener('click',function(e){var b=e.target.closest('.sugg-open');if(b)show(b.dataset.tab);});
+var SUG=[['Who is better, Airtel or Jio?','Airtel-ஆ Jio-வா யாரு best?'],['What is Airtel’s ARPU?','Airtel ARPU எவ்வளவு?'],['Why did churn rise?','Churn ஏன் ஏறிச்சு?'],['How much debt?','கடன் எவ்வளவு?'],['Should I buy Airtel?','Airtel வாங்கலாமா?']];
+function renderSugg(){var s=document.getElementById('sugg');if(!s)return;s.innerHTML=SUG.map(function(x){return '<button type="button">'+(LANG==='ta'?x[1]:x[0])+'</button>';}).join('');}
+document.getElementById('sugg').addEventListener('click',function(e){if(e.target.tagName==='BUTTON')ask(e.target.textContent);});
+addMsg(B('Vanakam! Ask me about Airtel’s Q2 FY27 results or how it compares with Jio.','வணக்கம்! Airtel Q2 FY27 results, Jio-வோட compare — எதுவும் கேளுங்க.'),'b');
+/* mic: waits 3s of silence */
+document.getElementById('qmic').onclick=function(){var SR=window.SpeechRecognition||window.webkitSpeechRecognition;if(!SR){note('Voice input is not available here. Please type your question.','இங்க voice input இல்லை. Type பண்ணுங்க.');return;}
+ try{var r=new SR(),txt='',tm=null;r.lang=LANG==='ta'?'ta-IN':'en-IN';r.continuous=true;r.interimResults=true;
+  r.onresult=function(e){txt='';for(var i=0;i<e.results.length;i++)txt+=e.results[i][0].transcript;document.getElementById('q').value=txt;clearTimeout(tm);tm=setTimeout(function(){r.stop();},3000);};
+  r.onend=function(){if(txt.trim()){ask(txt);document.getElementById('q').value='';}};
+  r.onerror=function(){note('Microphone blocked here. Open the downloaded file in Chrome or Edge to speak.','இங்க mic block. Download பண்ணின file-ஐ Chrome/Edge-ல திறந்து பேசுங்க.');};
+  r.start();note('Listening… I will answer after 3 seconds of silence.','கேட்டுக்கிட்டு இருக்கேன்… 3 seconds அமைதிக்கு அப்புறம் பதில்.');}catch(e){note('Microphone blocked here.','இங்க mic block.');}};
+document.getElementById('vbub').onclick=function(){show('ca');setTimeout(function(){document.getElementById('q').focus();},50);};
+var cb=document.getElementById('cb');cb.addEventListener('click',function(){cb.classList.toggle('open');});
+
+/* self-check */
+var own=[];try{own=JSON.parse(localStorage.getItem('cb_air_own')||'[]');}catch(e){}
+function addOwn(t,save){var g=document.getElementById('scg4'),i=g.querySelectorAll('input').length;var l=document.createElement('label');l.className='chk';l.innerHTML='<input type="checkbox" id="sc4_'+i+'" data-g="4"><span>'+t.replace(/</g,'&lt;')+'<span class="data">'+B('Data: your own condition.','Data: உங்க சொந்த condition.')+'</span></span>';g.appendChild(l);if(save){own.push(t);try{localStorage.setItem('cb_air_own',JSON.stringify(own));}catch(e){}}scUpd();}
+function scUpd(){var all=document.querySelectorAll('#p_sc input[type=checkbox]'),done=0,per=[];all.forEach(function(c){var g=+c.dataset.g;per[g]=per[g]||[0,0];per[g][1]++;if(c.checked){per[g][0]++;done++;}});
+ var pct=all.length?done/all.length:0;document.getElementById('scr').setAttribute('stroke-dasharray',(302*pct)+' 302');document.getElementById('scrt').textContent=Math.round(pct*100)+'%';document.getElementById('sccount').textContent=done+' / '+all.length;
+ document.getElementById('scbars').innerHTML='<h3>'+B('By group','Group-வாரியா')+'</h3>'+SC.map(function(g,i){var p=per[i]||[0,0];return '<div style="margin:6px 0"><div style="display:flex;justify-content:space-between;font-weight:800;font-size:13px">'+B(g.en,g.ta)+'<span class="num">'+p[0]+'/'+p[1]+'</span></div><div class="bar"><i style="width:'+(p[1]?100*p[0]/p[1]:0)+'%"></i></div></div>';}).join('');}
+document.getElementById('p_sc').addEventListener('change',scUpd);
+document.getElementById('scadd').onclick=function(){var i=document.getElementById('scown');if(i.value.trim()){addOwn(i.value.trim(),true);i.value='';}};
+own.forEach(function(t){addOwn(t,false);});scUpd();
+
+/* quiz */
+var QA={};
+function qDraw(){var n=Object.keys(QA).length,ok=Object.keys(QA).filter(function(k){return QA[k];}).length;var s='';[['Answered','பதில் சொன்னது',n,C.acc],['Correct','சரி',ok,C.good],['Wrong','தப்பு',n-ok,C.bad]].forEach(function(r,i){var y=20+i*48;s+=ST(0,y,r[0],r[1],'font-size="13"')+'<rect x="0" y="'+(y+6)+'" width="'+(280*r[2]/QZ.length||0)+'" height="16" rx="4" fill="'+r[3]+'"/><rect x="0" y="'+(y+6)+'" width="280" height="16" rx="4" fill="none" stroke="'+C.line+'"/>'+TX(286,y+19,r[2],'font-size="13" class="num"');});document.getElementById('qsvg').innerHTML=s;}
+document.getElementById('quiz').addEventListener('click',function(e){var b=e.target.closest('.opt');if(!b)return;var q=+b.dataset.q,o=+b.dataset.o;if(q in QA)return;var Z=QZ[q];QA[q]=o===Z[3];
+ document.querySelectorAll('.opt[data-q="'+q+'"]').forEach(function(x){if(+x.dataset.o===Z[3])x.classList.add('ok');else if(x===b)x.classList.add('no');});
+ document.getElementById('qx'+q).innerHTML='<b>'+(QA[q]?B('Right!','சரி!'):B('Not quite.','இல்லை.'))+'</b> '+B(Z[4],Z[5]);qDraw();});
+document.getElementById('qreset').onclick=function(){QA={};document.querySelectorAll('.opt').forEach(function(x){x.classList.remove('ok','no');});QZ.forEach(function(z,i){document.getElementById('qx'+i).innerHTML='';});qDraw();};
+qDraw();
+
+try{var sl=localStorage.getItem('cb_air_lang');setLang(sl==='ta'?'ta':'en');}catch(e){setLang('en');}
+</script>
