@@ -1,0 +1,1092 @@
+<title>Netweb Q2 FY27</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Catamaran:wght@500;700;800&family=Noto+Sans+Tamil:wght@500;700&display=swap">
+<style>
+/* Layout: server-room control board — sticky header + scrolling tab rail, one panel per tab, graphics first, short bullets second. Single light-orange look by house choice. */
+:root{
+  --bg:#FFF4E6;        /* very light orange page */
+  --card:#FFEBD3;      /* card fill, slightly deeper orange */
+  --card2:#FFE0BC;
+  --line:#EDB57A;      /* borders */
+  --acc:#F6A04D;       /* light orange accent */
+  --acc-strong:#C25E00;
+  --ink:#1A0F05;       /* bold high-contrast text */
+  --ink2:#3D2A17;
+  --water:#3B2F8F;     /* Netweb entity colour: silicon indigo */
+  --water2:#6A5FC8;
+  --water3:#D9D4F7;
+  --good:#11713A; --bad:#B3261E; --warn:#A35C00;
+  --f-disp:"Bricolage Grotesque","Catamaran",system-ui,sans-serif;
+  --f-body:"Catamaran","Noto Sans Tamil",system-ui,sans-serif;
+  color-scheme:light;
+}
+html,body{background:var(--bg)}
+body{color:var(--ink);font-family:var(--f-body);font-weight:700;font-size:15.5px;line-height:1.5;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:0 90px;font-variant-numeric:tabular-nums}
+[data-lang="en"] .ta{display:none!important}
+[data-lang="ta"] .en{display:none!important}
+[data-lang="ta"] body{font-family:"Noto Sans Tamil","Catamaran",system-ui,sans-serif;font-weight:700}
+h1,h2,h3{font-family:var(--f-disp);text-wrap:balance;margin:0;line-height:1.15;color:var(--ink)}
+[data-lang="ta"] h2,[data-lang="ta"] h3{font-family:"Noto Sans Tamil",var(--f-disp)}
+h2{font-size:1.45rem;font-weight:800}
+h3{font-size:1.08rem;font-weight:800}
+a{color:var(--acc-strong)}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bg)}
+.wrap{max-width:1180px;margin:0 auto}
+header.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:var(--bg);padding-block:10px 0;border-bottom:2px solid var(--line)}
+.hrow{display:flex;flex-wrap:wrap;gap:10px 16px;align-items:center;justify-content:space-between}
+.brand{display:flex;gap:10px;align-items:center;min-width:0}
+.logo{width:42px;height:42px;border-radius:10px;background:var(--acc);display:grid;place-items:center;font-family:var(--f-disp);font-weight:800;color:var(--ink);font-size:1.05rem;flex:none;border:2px solid var(--acc-strong)}
+.brand h1{font-size:1.25rem;font-weight:800}
+.sub{font-size:.85rem;color:var(--ink2)}
+.slogan{font-family:var(--f-disp);font-weight:800;color:var(--acc-strong);font-size:.95rem}
+.hctl{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.btn{font:inherit;font-weight:800;border:2px solid var(--acc-strong);background:var(--card);color:var(--ink);border-radius:999px;padding:6px 14px;cursor:pointer}
+.btn:hover,.btn:focus-visible{background:var(--acc);outline:none}
+.btn.on{background:var(--acc)}
+.price{font-weight:800;font-size:.95rem}
+nav.tabs{display:flex;gap:6px;overflow-x:auto;padding:10px 0 8px;scrollbar-width:thin}
+nav.tabs button{flex:none;font:inherit;font-weight:800;font-size:.88rem;border:2px solid var(--line);background:var(--card);color:var(--ink);border-radius:10px;padding:6px 11px;cursor:pointer;white-space:nowrap}
+nav.tabs button[aria-selected="true"]{background:var(--acc);border-color:var(--acc-strong)}
+nav.tabs button:focus-visible,.subtabs button:focus-visible{outline:3px solid var(--water);outline-offset:2px}
+section.tab{padding-top:18px;display:grid;gap:18px}
+section.tab>*,.sub-p>*{min-width:0}
+.sub-p{display:grid;gap:14px;min-width:0}
+.tabhead{display:flex;justify-content:space-between;align-items:flex-end;gap:10px;flex-wrap:wrap}
+.code{font-size:.85rem;color:var(--ink2)}
+.grid{display:grid;gap:14px}
+.g2{grid-template-columns:repeat(auto-fit,minmax(min(100%,340px),1fr))}
+.g3{grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr))}
+.g4{grid-template-columns:repeat(auto-fit,minmax(min(100%,250px),1fr))}
+#c-dashgauge svg,#c-conv2 svg{max-width:340px;margin:0 auto}
+.card{background:var(--card);border:2px solid var(--line);border-radius:14px;padding:14px;min-width:0}
+.card h3{margin-bottom:8px}
+.kpi{display:grid;gap:2px}
+.kpi .k{font-size:.82rem;color:var(--ink2);text-transform:uppercase;letter-spacing:.04em}
+[data-lang="ta"] .kpi .k{text-transform:none;letter-spacing:0}
+.kpi .v{font-family:var(--f-disp);font-size:1.75rem;font-weight:800;line-height:1.1}
+.kpi .d{font-size:.88rem}
+.up{color:var(--good)} .dn{color:var(--bad)} .wr{color:var(--warn)}
+ul.pts{margin:0;padding-left:1.15em;display:grid;gap:4px}
+ul.pts li::marker{color:var(--acc-strong)}
+.chart{width:100%;overflow-x:auto}
+.chart svg{display:block;width:100%;height:auto;max-width:100%}
+table{border-collapse:collapse;width:100%;font-size:.92rem}
+.tw{overflow-x:auto}
+th,td{padding:7px 9px;border-bottom:1.5px solid var(--line);text-align:right;white-space:nowrap}
+th:first-child,td:first-child{text-align:left;white-space:normal}
+thead th{background:var(--card2);font-weight:800}
+.pill{display:inline-block;border-radius:999px;padding:2px 10px;font-size:.8rem;font-weight:800;border:2px solid currentColor}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{background:var(--card2);border:2px solid var(--line);border-radius:10px;padding:6px 10px;font-weight:800}
+.chip b{font-family:var(--f-disp);font-size:1.15rem}
+.subtabs{display:flex;gap:6px;flex-wrap:wrap}
+.subtabs button{font:inherit;font-weight:800;font-size:.86rem;border:2px solid var(--line);background:var(--bg);color:var(--ink);border-radius:8px;padding:5px 10px;cursor:pointer}
+.subtabs button[aria-selected="true"]{background:var(--water3);border-color:var(--water)}
+.note{font-size:.84rem;color:var(--ink2)}
+.readbtn{font-size:.82rem;padding:5px 11px}
+/* animated plant picture */
+#plantPic svg{display:block;width:100%;height:auto;border-radius:12px;border:2px solid var(--water)}
+.punit{cursor:pointer}.punit:focus{outline:none}.punit:focus-visible .pb{stroke:var(--water);stroke-width:5}
+.punit:hover .pb{stroke-width:4}
+#plantLegend{display:flex;flex-wrap:wrap;gap:6px}
+#plantLegend button{font:inherit;font-weight:800;font-size:.84rem;border:2px solid var(--line);background:var(--bg);color:var(--ink);border-radius:999px;padding:4px 11px;cursor:pointer}
+#plantLegend button b{display:inline-grid;place-items:center;width:20px;height:20px;border-radius:50%;background:var(--acc);font-size:.75rem}
+#plantLegend button.on{background:var(--water3);border-color:var(--water)}
+#info3d{min-height:90px}
+@media (max-width:600px){#plantPic .plbl{display:none}}
+#c-flow-m{display:none}
+@media (max-width:700px){#c-flow{display:none}#c-flow-m{display:block}}
+/* flow map */
+.flow svg text{font-family:var(--f-body)}
+.flow .box{cursor:pointer}
+.flow .box:hover rect{stroke-width:4}
+/* CB badge + voice bubble */
+#cbBadge{position:fixed;right:calc(14px + env(safe-area-inset-right,0px));bottom:calc(14px + env(safe-area-inset-bottom,0px));z-index:40}
+#cbBadge .b{width:52px;height:52px;border-radius:50%;background:var(--acc);border:3px solid var(--acc-strong);display:grid;place-items:center;font-family:var(--f-disp);font-weight:800;color:var(--ink);cursor:pointer;animation:blink 1.8s infinite}
+@keyframes blink{50%{box-shadow:0 0 0 7px rgba(246,160,77,.35)}}
+#cbBadge .tip{display:none;position:absolute;right:0;bottom:62px;width:min(330px,80vw);background:var(--card);border:2px solid var(--acc-strong);border-radius:12px;padding:10px;font-size:.82rem;line-height:1.4}
+#cbBadge:hover .tip,#cbBadge.open .tip{display:block}
+#voiceBubble{position:fixed;right:calc(10px + env(safe-area-inset-right,0px));bottom:calc(76px + env(safe-area-inset-bottom,0px));z-index:40;border-radius:999px;background:var(--water3);border:2px solid var(--water);font:inherit;font-weight:800;padding:8px 13px;cursor:pointer;color:var(--ink)}
+/* assist */
+.assist{display:grid;gap:10px}
+.as-log{max-height:420px;overflow:auto;display:grid;gap:8px;padding:4px}
+.as-q{justify-self:end;background:var(--water3);border:2px solid var(--water);border-radius:12px 12px 2px 12px;padding:7px 11px;max-width:85%}
+.as-a{justify-self:start;background:var(--bg);border:2px solid var(--line);border-radius:12px 12px 12px 2px;padding:8px 12px;max-width:92%}
+.as-a details{margin-top:4px;font-size:.88rem}
+.as-row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.as-row input[type=text]{flex:1 1 220px;min-width:0;font:inherit;font-weight:700;border:2px solid var(--acc-strong);border-radius:10px;padding:8px 10px;background:var(--bg);color:var(--ink)}
+.as-sug button{font-size:.8rem;padding:4px 10px}
+.cdbar{height:6px;background:var(--card2);border-radius:4px;overflow:hidden}
+.cdbar i{display:block;height:100%;width:0;background:var(--water)}
+select,input[type=range]{accent-color:var(--acc-strong);font:inherit;font-weight:700}
+select{border:2px solid var(--line);border-radius:8px;background:var(--bg);color:var(--ink);padding:3px 6px}
+/* self-check */
+.sc-item{display:grid;grid-template-columns:auto 1fr;gap:8px;align-items:start;padding:7px 0;border-bottom:1.5px dashed var(--line)}
+.sc-item input{width:20px;height:20px;accent-color:var(--good);margin-top:3px}
+.sc-data{font-size:.82rem;color:var(--ink2)}
+/* quiz */
+.qz-opt{display:block;width:100%;text-align:left;margin:5px 0;font:inherit;font-weight:700;border:2px solid var(--line);background:var(--bg);color:var(--ink);border-radius:10px;padding:8px 10px;cursor:pointer}
+.qz-opt.ok{border-color:var(--good);background:#DDF3E3}
+.qz-opt.no{border-color:var(--bad);background:#FBE0DD}
+.swot{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr));gap:12px}
+.swot .card{border-width:3px}
+@media (prefers-reduced-motion:reduce){#cbBadge .b{animation:none}}
+</style>
+
+<style>
+[hidden]{display:none!important}
+/* Netweb additions: server rack picture */
+#rackPic svg{display:block;width:100%;height:auto;max-width:760px;margin:0 auto;border-radius:12px;border:2px solid var(--water)}
+.runit{cursor:pointer}.runit:focus{outline:none}.runit:focus-visible .rb{stroke:var(--water);stroke-width:5}
+#rackLegend{display:flex;flex-wrap:wrap;gap:6px}
+#rackLegend button{font:inherit;font-weight:800;font-size:.84rem;border:2px solid var(--line);background:var(--bg);color:var(--ink);border-radius:999px;padding:4px 11px;cursor:pointer}
+#rackLegend button b{display:inline-grid;place-items:center;width:20px;height:20px;border-radius:50%;background:var(--acc);font-size:.75rem}
+#rackLegend button.on{background:var(--water3);border-color:var(--water)}
+.big{font-family:var(--f-disp);font-weight:800;font-size:1.35rem}
+</style>
+
+<div class="wrap">
+<header class="top">
+  <div class="hrow">
+    <div class="brand">
+      <div class="logo">CB</div>
+      <div style="min-width:0">
+        <h1>Netweb Technologies · Q2 FY27</h1>
+        <div class="sub"><span class="en">CB Research business &amp; investment analysis · NSE: NETWEB · BSE: 543945</span><span class="ta">CB Research business &amp; investment analysis · NSE: NETWEB · BSE: 543945</span></div>
+        <div class="slogan"><span class="en">Know before you own</span><span class="ta">புரிஞ்சு வாங்குங்க!</span></div>
+      </div>
+    </div>
+    <div class="hctl">
+      <span class="price">₹3,848 <span class="note"><span class="en">(NSE, 9 Nov 2026, ~3 pm)</span><span class="ta">(NSE, 9 Nov 2026, ~3 pm)</span></span></span>
+      <button class="btn" id="langBtn" type="button">தமிழ்</button>
+      <button class="btn readbtn" id="readTab" type="button"><span class="en">🔊 Read this tab</span><span class="ta">🔊 இந்த tab-ஐ படிங்க</span></button>
+    </div>
+  </div>
+  <nav class="tabs" id="tabs" role="tablist"></nav>
+</header>
+<main id="main">
+
+<!-- ============ DASHBOARD ============ -->
+<section class="tab" id="t-dash" data-en="Dashboard" data-ta="Dashboard">
+  <div class="tabhead"><h2><span class="en">Q2 FY27 at a glance</span><span class="ta">Q2 FY27 ஒரே பார்வையில</span></h2><span class="code">Quarter ended 30 Sep 2026 · ₹ crore · standalone</span></div>
+  <div class="grid g4">
+    <div class="card kpi"><span class="k">Revenue</span><span class="v">₹1,323.3</span><span class="d up">▲ 335.7% YoY · ▲ 61.4% QoQ</span></div>
+    <div class="card kpi"><span class="k"><span class="en">Operating EBITDA</span><span class="ta">Operating EBITDA</span></span><span class="v">₹197.3</span><span class="d up">▲ 334.0% YoY · <span class="wr">margin 14.9%</span></span></div>
+    <div class="card kpi"><span class="k">PAT</span><span class="v">₹136.7</span><span class="d up">▲ 334.8% YoY · ▲ 60.2% QoQ</span></div>
+    <div class="card kpi"><span class="k"><span class="en">AI Systems share</span><span class="ta">AI Systems பங்கு</span></span><span class="v">58.4%</span><span class="d up"><span class="en">₹773.1 cr · ▲ 1,068% YoY</span><span class="ta">₹773.1 கோடி · ▲ 1,068% YoY</span></span></div>
+    <div class="card kpi"><span class="k"><span class="en">Order book + L1</span><span class="ta">Order book + L1</span></span><span class="v">₹3,282</span><span class="d"><span class="en">₹2,629 firm + ₹652.5 L1</span><span class="ta">₹2,629 உறுதி + ₹652.5 L1</span></span></div>
+    <div class="card kpi"><span class="k"><span class="en">QIP (Aug 2026)</span><span class="ta">QIP (Aug 2026)</span></span><span class="v">₹1,200</span><span class="d dn"><span class="en">At ₹4,790 · now −19.7%</span><span class="ta">₹4,790-ல · இப்போ −19.7%</span></span></div>
+    <div class="card kpi"><span class="k"><span class="en">Share vs 52-wk high</span><span class="ta">52-wk high-ல இருந்து</span></span><span class="v dn">−33.8%</span><span class="d"><span class="en">₹5,813 → ₹3,848</span><span class="ta">₹5,813 → ₹3,848</span></span></div>
+    <div class="card kpi"><span class="k">P/E (TTM)</span><span class="v">62.5×</span><span class="d"><span class="en">Was ~127× at the high · FY27 CB est. 55.5×</span><span class="ta">High-ல ~127× · FY27 CB est. 55.5×</span></span></div>
+  </div>
+  <div class="grid g2">
+    <div class="card"><h3><span class="en">Five quarters: revenue &amp; PAT (₹ cr)</span><span class="ta">5 quarter-ல revenue, PAT (₹ கோடி)</span></h3><div class="chart" id="c-dash5q"></div><p class="note"><span class="en">Q3 and Q4 FY26 PAT are CB estimates from reported growth and margin.</span><span class="ta">Q3, Q4 FY26 PAT — reported growth, margin வெச்சு CB கணக்கிட்டது.</span></p></div>
+    <div class="card"><h3><span class="en">CB scorecard</span><span class="ta">CB scorecard</span></h3><div class="chart" id="c-dashgauge"></div>
+      <div class="chips" style="margin-top:8px">
+        <span class="chip"><span class="en">6 Pillars</span><span class="ta">6 தூண்கள்</span> <b>37/60</b></span>
+        <span class="chip">CY <b>65</b></span><span class="chip">TG <b>52</b></span>
+        <span class="chip"><span class="en">Conviction</span><span class="ta">Conviction</span> <b>55</b></span>
+      </div>
+      <p class="note"><span class="en">Conviction would be 62; capped at 55 because the price is in a Stage 4 decline. Education score, not a buy/sell/hold call.</span><span class="ta">Conviction 62 வரும்; share Stage 4 சரிவுல இருக்கறதால 55-ல cap. இது கல்விக்கான score தான், buy/sell/hold இல்ல.</span></p>
+    </div>
+  </div>
+  <div class="card"><h3><span class="en">Business is booming, share is sliding — the gap in one picture</span><span class="ta">Business பறக்குது, share சறுக்குது — ஒரே படத்துல</span></h3><div class="chart" id="c-gap"></div></div>
+  <div class="card"><h3><span class="en">In one breath</span><span class="ta">சுருக்கமா</span></h3>
+    <ul class="pts">
+      <li><span class="en">Record quarter: revenue and profit both up ~4.4× YoY; AI servers did most of it.</span><span class="ta">Record quarter: revenue, profit ரெண்டும் YoY ~4.4 மடங்கு; பெரும்பகுதி AI servers தான்.</span></li>
+      <li><span class="en">Margin held near 15% — growth came from volume, not from better pricing.</span><span class="ta">Margin ~15%-லயே நிக்குது — growth volume-ல வந்துச்சு, விலை கூட்டி இல்ல.</span></li>
+      <li><span class="en">The ₹1,200 cr QIP money mostly went into stock and receivables to run bigger orders.</span><span class="ta">₹1,200 கோடி QIP பணம் பெரும்பாலும் பெரிய orders-க்கு stock, receivables-க்கு போச்சு.</span></li>
+      <li><span class="en">The share fell 34% from its high: global AI selloff + a very high starting P/E, not weak results.</span><span class="ta">Share high-ல இருந்து 34% இறங்கியிருக்கு: global AI selloff + ரொம்ப அதிக P/E-ல ஆரம்பிச்சது — results மோசம் இல்ல.</span></li>
+    </ul>
+  </div>
+</section>
+
+<!-- ============ BUSINESS MODEL ============ -->
+<section class="tab" id="t-bm" data-en="Business Model" data-ta="Business Model" hidden>
+  <div class="tabhead"><h2><span class="en">How Netweb makes money — open up an AI server rack</span><span class="ta">Netweb எப்படி சம்பாதிக்குது — ஒரு AI server rack-ஐ திறந்து பாருங்க</span></h2></div>
+  <div class="card" style="padding:10px;display:grid;gap:10px">
+    <div id="rackPic"></div>
+    <div class="as-row" style="justify-content:space-between"><div id="rackLegend"></div><button class="btn readbtn" id="rackPlay" type="button"><span class="en">⏸ Pause</span><span class="ta">⏸ நிறுத்து</span></button></div>
+    <ul class="pts note" style="color:var(--ink)"><li><span class="en">Netweb designs and builds the box; the chips inside (GPU, CPU, memory) are bought from NVIDIA, AMD, Intel, Samsung and others.</span><span class="ta">Box-ஐ design பண்ணி கட்டுறது Netweb; உள்ள இருக்குற chips (GPU, CPU, memory) NVIDIA, AMD, Intel, Samsung கிட்ட வாங்குறாங்க.</span></li><li><span class="en">Blue dots = liquid coolant; dense AI racks run hot, so cooling design is part of what Netweb sells.</span><span class="ta">நீல புள்ளி = liquid coolant; AI racks ரொம்ப சூடாகும், அதனால cooling design-உம் Netweb விக்கிறதுல ஒரு பகுதி.</span></li></ul>
+  </div>
+  <div class="card" id="rackInfo"><h3 id="rackInfoT"><span class="en">Tap any numbered part</span><span class="ta">எதாவது number-ஐ தொடுங்க</span></h3><div id="rackInfoB"><ul class="pts"><li><span class="en">Parts 1–3 are what customers pay for most: AI GPU servers, HPC nodes and private-cloud nodes.</span><span class="ta">1–3 தான் customers அதிகம் பணம் கொடுக்குறது: AI GPU servers, HPC nodes, private-cloud nodes.</span></li></ul></div></div>
+  <div class="card flow"><h3><span class="en">From source to customer — the money map (Q2 FY27, ₹ cr)</span><span class="ta">Source-ல இருந்து customer வரை — பண வரைபடம் (Q2 FY27, ₹ கோடி)</span></h3><div class="chart" id="c-flow"></div><div id="c-flow-m"></div>
+    <div class="card" id="flowInfo" style="margin-top:10px;background:var(--bg)"><span class="en">Tap any box to see what it means.</span><span class="ta">எந்த box-ஐ தொட்டாலும் அதோட அர்த்தம் வரும்.</span></div>
+    <p style="margin:10px 0 0;font-weight:800"><span class="en">Revenue formula: Revenue ≈ systems delivered × price per system. Orders turn into revenue in about 10–16 weeks, so the order book (₹2,629 cr) is roughly the next 2–3 quarters.</span><span class="ta">Revenue formula: Revenue ≈ deliver ஆன systems × ஒரு system விலை. Order 10–16 வாரத்துல revenue ஆகும் — அதனால order book (₹2,629 கோடி) ≈ அடுத்த 2–3 quarter.</span></p>
+  </div>
+  <div class="card"><h3><span class="en">Abbreviations used</span><span class="ta">சுருக்கங்கள்</span></h3>
+    <div class="grid g3 note" style="font-size:.86rem;color:var(--ink)">
+      <div><b>AI</b> Artificial Intelligence<br><b>GPU</b> Graphics Processing Unit (the AI chip)<br><b>CPU</b> Central Processing Unit<br><b>HPC</b> High-Performance Computing (supercomputers)<br><b>HCI</b> Hyper-Converged Infrastructure<br><b>HCS</b> High-end Computing Solutions</div>
+      <div><b>OEM</b> Original Equipment Manufacturer<br><b>CSP</b> Cloud Service Provider<br><b>NSM</b> National Supercomputing Mission<br><b>L1</b> Lowest (winning) bidder, order not yet signed<br><b>CDU</b> Coolant Distribution Unit<br><b>PDU</b> Power Distribution Unit</div>
+      <div><b>BFSI</b> Banking, Financial Services &amp; Insurance<br><b>QIP</b> Qualified Institutions Placement<br><b>R&amp;D</b> Research &amp; Development<br><b>EBITDA</b> Earnings before interest, tax, depreciation &amp; amortisation<br><b>D&amp;A</b> Depreciation &amp; Amortisation<br><b>PAT</b> Profit After Tax</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SEGMENTS ============ -->
+<section class="tab" id="t-seg" data-en="Segments" data-ta="Segments" hidden>
+  <div class="tabhead"><h2><span class="en">Segment performance</span><span class="ta">Segment performance</span></h2><span class="code">₹ crore · revenue by offering</span></div>
+  <div class="subtabs" data-group="seg">
+    <button type="button" data-sub="seg-mix" aria-selected="true"><span class="en">Q2 mix by offering</span><span class="ta">Q2 offering mix</span></button>
+    <button type="button" data-sub="seg-ai"><span class="en">AI vs non-AI</span><span class="ta">AI vs AI இல்லாதது</span></button>
+    <button type="button" data-sub="seg-cus"><span class="en">Customers</span><span class="ta">Customers</span></button>
+  </div>
+  <div class="sub-p" id="seg-mix">
+    <div class="grid g2">
+      <div class="card"><h3><span class="en">Q2 FY27 revenue ₹1,323 cr by offering</span><span class="ta">Q2 FY27 revenue ₹1,323 கோடி — offering வாரியா</span></h3><div class="chart" id="c-segdonut"></div></div>
+      <div class="card"><h3><span class="en">Each offering in ₹ cr</span><span class="ta">ஒவ்வொரு offering-உம் ₹ கோடியில</span></h3><div class="chart" id="c-segbars"></div></div>
+    </div>
+    <div class="card tw"><table><thead><tr><th>₹ cr · Q2 FY27</th><th>Revenue</th><th>Share</th><th><span class="en">What it is</span><span class="ta">என்னது</span></th></tr></thead><tbody>
+      <tr><td>AI Systems</td><td>773.1</td><td>58.4%</td><td style="text-align:left;white-space:normal"><span class="en">GPU servers for training and running AI models</span><span class="ta">AI model train/run பண்ண GPU servers</span></td></tr>
+      <tr><td>HPC</td><td>248.2</td><td>18.8%</td><td style="text-align:left;white-space:normal"><span class="en">Supercomputers for research, weather, defence</span><span class="ta">Research, weather, defence-க்கு supercomputers</span></td></tr>
+      <tr><td><span class="en">Private Cloud &amp; HCI</span><span class="ta">Private Cloud, HCI</span></td><td>244.8</td><td>18.5%</td><td style="text-align:left;white-space:normal"><span class="en">In-house cloud for data that must stay in India</span><span class="ta">India-லயே இருக்க வேண்டிய data-க்கு சொந்த cloud</span></td></tr>
+      <tr><td><span class="en">Others (derived)</span><span class="ta">மற்றவை (கணக்கிட்டது)</span></td><td>57.2</td><td>4.3%</td><td style="text-align:left;white-space:normal"><span class="en">Workstations, data-centre servers, storage, services</span><span class="ta">Workstations, data-centre servers, storage, services</span></td></tr>
+    </tbody></table></div>
+  </div>
+  <div class="sub-p" id="seg-ai" hidden>
+    <div class="grid g2">
+      <div class="card"><h3><span class="en">AI vs non-AI revenue, 3 quarters (₹ cr)</span><span class="ta">AI vs AI இல்லாத revenue, 3 quarters (₹ கோடி)</span></h3><div class="chart" id="c-aiq"></div></div>
+      <div class="card"><h3><span class="en">AI share of revenue keeps climbing</span><span class="ta">Revenue-ல AI பங்கு ஏறிக்கிட்டே இருக்கு</span></h3><div class="chart" id="c-aish"></div></div>
+    </div>
+    <div class="card tw"><table><thead><tr><th>₹ cr</th><th>Q2 FY27</th><th>Q1 FY27</th><th>Q2 FY26</th><th>QoQ</th><th>YoY</th></tr></thead><tbody>
+      <tr><td>AI Systems</td><td>773.1</td><td>≈510.5</td><td>≈66.2</td><td class="up">+51.4%</td><td class="up">+1,068%</td></tr>
+      <tr><td><span class="en">Non-AI (HPC + cloud + others)</span><span class="ta">AI இல்லாதது (HPC + cloud + மற்றவை)</span></td><td>550.2</td><td>≈309.2</td><td>≈237.5</td><td class="up">+77.9%</td><td class="up">+131.7%</td></tr>
+      <tr><td><span class="en">AI share</span><span class="ta">AI பங்கு</span></td><td>58.4%</td><td>≈62.3%</td><td>≈21.8%</td><td class="wr">−390 bps</td><td class="up">+36.6 pp</td></tr>
+    </tbody></table><p class="note"><span class="en">≈ = CB derived from H1 AI revenue ₹1,283.6 cr and the reported 1,068% growth.</span><span class="ta">≈ = H1 AI revenue ₹1,283.6 கோடி, reported 1,068% growth வெச்சு CB கணக்கிட்டது.</span></p></div>
+    <div class="card"><ul class="pts">
+      <li><span class="en">Non-AI revenue also more than doubled YoY (+132%) — HPC and private cloud are growing too.</span><span class="ta">AI இல்லாத revenue-உம் YoY இரண்டு மடங்குக்கு மேல (+132%) — HPC, private cloud-உம் வளருது.</span></li>
+      <li><span class="en">AI share dipped from ~62% to 58% this quarter because non-AI grew faster QoQ.</span><span class="ta">இந்த quarter AI பங்கு ~62%-ல இருந்து 58%-க்கு குறைஞ்சது — non-AI QoQ வேகமா வளர்ந்ததால.</span></li>
+    </ul></div>
+  </div>
+  <div class="sub-p" id="seg-cus" hidden>
+    <div class="grid g2">
+      <div class="card"><h3><span class="en">Top-10 customers' share of revenue</span><span class="ta">Top-10 customers revenue பங்கு</span></h3><div class="chart" id="c-top10"></div></div>
+      <div class="card"><h3><span class="en">Who buys (customer groups)</span><span class="ta">யாரு வாங்குறாங்க</span></h3><div class="chart" id="c-cuspic"></div></div>
+    </div>
+    <div class="card"><ul class="pts">
+      <li><span class="en">Top-10 customers = 85.2% of H1 FY27 revenue (76.4% in FY26) — concentration rose.</span><span class="ta">Top-10 customers = H1 FY27 revenue-ல 85.2% (FY26-ல 76.4%) — concentration கூடியிருக்கு.</span></li>
+      <li><span class="en">Repeat customers gave 94.4% of H1 revenue; top-10 have stayed 6 years on average.</span><span class="ta">H1 revenue-ல 94.4% பழைய customers-கிட்ட இருந்து; top-10 சராசரியா 6 வருஷமா இருக்காங்க.</span></li>
+      <li><span class="en">49 new customers in H1; management says 25–30 names rotate through the top 10.</span><span class="ta">H1-ல 49 புது customers; top 10-ல 25–30 பேர் மாறி மாறி வருவாங்கனு management சொல்றாங்க.</span></li>
+    </ul></div>
+  </div>
+</section>
+
+<!-- ============ FINANCIALS ============ -->
+<section class="tab" id="t-fin" data-en="Financials" data-ta="Financials" hidden>
+  <div class="tabhead"><h2><span class="en">Results: three quarters side by side</span><span class="ta">Results: மூணு quarter பக்கத்துல பக்கத்துல</span></h2><span class="code">₹ crore · standalone</span></div>
+  <div class="card tw"><table><thead><tr><th></th><th>Q2 FY27</th><th>Q1 FY27</th><th>Q2 FY26</th><th>QoQ</th><th>YoY</th></tr></thead><tbody>
+    <tr><td><span class="en">Revenue from operations</span><span class="ta">Revenue</span></td><td>1,323.3</td><td>819.7</td><td>303.7</td><td class="up">+61.4%</td><td class="up">+335.7%</td></tr>
+    <tr><td><span class="en">Operating EBITDA</span><span class="ta">Operating EBITDA</span></td><td>197.3</td><td>120.5</td><td>45.5</td><td class="up">+63.7%</td><td class="up">+334.0%</td></tr>
+    <tr><td><span class="en">EBITDA margin</span><span class="ta">EBITDA margin</span></td><td>14.9%</td><td>14.7%</td><td>15.0%</td><td class="up">+20 bps</td><td class="dn">−10 bps</td></tr>
+    <tr><td><span class="en">Other income</span><span class="ta">Other income</span></td><td>12.8</td><td>8.5</td><td>0.9</td><td class="up">+51%</td><td class="up">14×</td></tr>
+    <tr><td>PAT</td><td>136.7</td><td>85.3</td><td>31.4</td><td class="up">+60.2%</td><td class="up">+334.8%</td></tr>
+    <tr><td><span class="en">PAT margin (on revenue)</span><span class="ta">PAT margin (revenue மேல)</span></td><td>10.3%</td><td>10.4%</td><td>10.3%</td><td class="dn">−10 bps</td><td>flat</td></tr>
+    <tr><td><span class="en">Diluted EPS (₹)</span><span class="ta">Diluted EPS (₹)</span></td><td>23.54</td><td>14.98</td><td>≈5.55</td><td class="up">+57.1%</td><td class="up">+324.2%</td></tr>
+    <tr><td><span class="en">Order book (period end)</span><span class="ta">Order book (முடிவில்)</span></td><td>2,629</td><td>2,506.9</td><td>—</td><td class="up">+4.9%</td><td>—</td></tr>
+  </tbody></table></div>
+  <div class="grid g2">
+    <div class="card"><h3><span class="en">Revenue, EBITDA, PAT — 3 quarters</span><span class="ta">Revenue, EBITDA, PAT — 3 quarters</span></h3><div class="chart" id="c-fin3"></div></div>
+    <div class="card"><h3><span class="en">Growth leaks or gains? (YoY)</span><span class="ta">Growth கசியுதா, கூடுதா? (YoY)</span></h3><div class="chart" id="c-leak"></div><p class="note"><span class="en">Everything grew ~4.4× together. EPS grew a little less because the QIP added 25 lakh shares.</span><span class="ta">எல்லாம் சேர்ந்து ~4.4 மடங்கு. QIP 25 லட்சம் shares சேர்த்ததால EPS கொஞ்சம் கம்மியா வளர்ந்துச்சு.</span></p></div>
+  </div>
+  <div class="grid g2">
+    <div class="card tw"><h3><span class="en">Half-year view</span><span class="ta">அரை வருஷ நிலவரம்</span></h3><table><thead><tr><th>₹ cr</th><th>H1 FY27</th><th>H1 FY26</th><th>YoY</th></tr></thead><tbody>
+      <tr><td>Revenue</td><td>2,143.0</td><td>604.9</td><td class="up">+254%</td></tr>
+      <tr><td>Operating EBITDA</td><td>317.8</td><td>90.3</td><td class="up">+252%</td></tr>
+      <tr><td>EBITDA margin</td><td>14.8%</td><td>14.9%</td><td>−10 bps</td></tr>
+      <tr><td>PAT</td><td>222.0</td><td>61.9</td><td class="up">+259%</td></tr>
+      <tr><td><span class="en">AI Systems revenue</span><span class="ta">AI Systems revenue</span></td><td>1,283.6</td><td>—</td><td>59.9% <span class="en">of H1</span><span class="ta">H1-ல</span></td></tr>
+    </tbody></table><p class="note"><span class="en">H1 PAT ₹222 cr is already above full-year FY26 PAT ₹205.8 cr.</span><span class="ta">H1 PAT ₹222 கோடி — FY26 முழு வருஷ PAT ₹205.8 கோடியை விட ஏற்கனவே அதிகம்.</span></p></div>
+    <div class="card"><h3><span class="en">Margin vs guided band</span><span class="ta">Margin vs guidance band</span></h3><div class="chart" id="c-mband"></div><p class="note"><span class="en">Earlier guide: EBITDA 14–14.5%, PAT 10–10.5%. Q2 sits just above it.</span><span class="ta">முன்னாடி guidance: EBITDA 14–14.5%, PAT 10–10.5%. Q2 அதுக்கு கொஞ்சம் மேல.</span></p></div>
+  </div>
+  <div class="card"><h3><span class="en">FY27 guidance check</span><span class="ta">FY27 guidance check</span></h3><div class="chart" id="c-guide"></div>
+    <ul class="pts"><li><span class="en">Guide ₹4,000 cr for FY27; H1 already ₹2,143 cr. H2 needs only ₹1,857 cr — less than H1.</span><span class="ta">FY27 guidance ₹4,000 கோடி; H1-லயே ₹2,143 கோடி. H2-க்கு ₹1,857 கோடி போதும் — H1-ஐ விட கம்மி.</span></li>
+    <li><span class="en">Firm order book + L1 (₹3,282 cr) covers that H2 need ~1.8 times — the guide looks conservative, or H2 is lumpier.</span><span class="ta">Order book + L1 (₹3,282 கோடி) அந்த H2 தேவையை ~1.8 மடங்கு cover பண்ணுது — guidance conservative-ஆ இருக்கலாம், அல்லது H2 ஏற்ற இறக்கமா இருக்கலாம்.</span></li></ul></div>
+</section>
+
+<!-- ============ METRICS ============ -->
+<section class="tab" id="t-met" data-en="Metrics" data-ta="Metrics" hidden>
+  <div class="tabhead"><h2><span class="en">Key metrics, grouped</span><span class="ta">முக்கிய metrics, group-ஆ</span></h2></div>
+  <div class="subtabs" data-group="met">
+    <button type="button" data-sub="met-g" aria-selected="true"><span class="en">Growth</span><span class="ta">Growth</span></button>
+    <button type="button" data-sub="met-p"><span class="en">Profitability</span><span class="ta">Profitability</span></button>
+    <button type="button" data-sub="met-e"><span class="en">Efficiency &amp; working capital</span><span class="ta">Efficiency, working capital</span></button>
+    <button type="button" data-sub="met-o"><span class="en">Order book &amp; visibility</span><span class="ta">Order book, visibility</span></button>
+    <button type="button" data-sub="met-l"><span class="en">Liquidity &amp; capital</span><span class="ta">Liquidity, capital</span></button>
+  </div>
+  <div class="sub-p" id="met-g">
+    <div class="card"><h3><span class="en">YoY growth, Q2 FY27</span><span class="ta">YoY growth, Q2 FY27</span></h3><div class="chart" id="c-mg"></div></div>
+    <div class="card tw"><table><thead><tr><th>Metric</th><th>Q2 FY27</th><th>Q2 FY26</th><th>YoY</th></tr></thead><tbody>
+      <tr><td>Revenue</td><td>1,323.3</td><td>303.7</td><td class="up">+335.7%</td></tr><tr><td>AI Systems</td><td>773.1</td><td>≈66.2</td><td class="up">+1,068%</td></tr><tr><td>Non-AI</td><td>550.2</td><td>≈237.5</td><td class="up">+131.7%</td></tr><tr><td>PAT</td><td>136.7</td><td>31.4</td><td class="up">+334.8%</td></tr><tr><td>Diluted EPS (₹)</td><td>23.54</td><td>≈5.55</td><td class="up">+324.2%</td></tr></tbody></table></div>
+  </div>
+  <div class="sub-p" id="met-p" hidden>
+    <div class="card"><h3><span class="en">Margins over five quarters</span><span class="ta">5 quarter margins</span></h3><div class="chart" id="c-mp"></div></div>
+    <div class="card tw"><table><thead><tr><th>Metric</th><th>Q2 FY27</th><th>Q1 FY27</th><th>Q2 FY26</th><th><span class="en">Change YoY</span><span class="ta">YoY மாற்றம்</span></th></tr></thead><tbody>
+      <tr><td>EBITDA margin</td><td>14.9%</td><td>14.7%</td><td>15.0%</td><td class="dn">−10 bps</td></tr><tr><td>PAT margin</td><td>10.3%</td><td>10.4%</td><td>10.3%</td><td>flat</td></tr><tr><td>ROE (Sep 2026)</td><td>31.4%</td><td>—</td><td>—</td><td>—</td></tr><tr><td>ROCE (Sep 2026)</td><td>38.6%</td><td>—</td><td>—</td><td>—</td></tr></tbody></table></div>
+  </div>
+  <div class="sub-p" id="met-e" hidden>
+    <div class="card"><h3><span class="en">Working-capital days (Sep 2026)</span><span class="ta">Working-capital days (Sep 2026)</span></h3><div class="chart" id="c-me"></div></div>
+    <div class="card tw"><table><thead><tr><th>Metric</th><th>Value</th><th><span class="en">What it means</span><span class="ta">அர்த்தம்</span></th></tr></thead><tbody>
+      <tr><td>Net working-capital cycle</td><td>94 days</td><td style="text-align:left;white-space:normal"><span class="en">Inside the guided 90–110 days</span><span class="ta">Guidance 90–110 நாளுக்குள்ள</span></td></tr>
+      <tr><td>Inventory days</td><td>117 days</td><td style="text-align:left;white-space:normal"><span class="en">Stock built on purpose for the order book</span><span class="ta">Order book-க்காக வேணும்னே stock வெச்சிருக்காங்க</span></td></tr>
+      <tr><td>Gross fixed-asset turnover</td><td>55.5×</td><td style="text-align:left;white-space:normal"><span class="en">Very light on factories; heavy on stock</span><span class="ta">Factory செலவு கம்மி; stock செலவு அதிகம்</span></td></tr></tbody></table></div>
+  </div>
+  <div class="sub-p" id="met-o" hidden>
+    <div class="card"><h3><span class="en">The execution funnel (₹ cr, 30 Sep 2026)</span><span class="ta">Execution funnel (₹ கோடி, 30 Sep 2026)</span></h3><div class="chart" id="c-funnel"></div></div>
+    <div class="card tw"><table><thead><tr><th>₹ cr</th><th>Sep 2026</th><th>Jun 2026</th><th>QoQ</th></tr></thead><tbody>
+      <tr><td><span class="en">Firm order book</span><span class="ta">உறுதி order book</span></td><td>2,629.0</td><td>2,506.9</td><td class="up">+4.9%</td></tr>
+      <tr><td><span class="en">L1 (won, not signed)</span><span class="ta">L1 (ஜெயிச்சது, sign ஆகல)</span></td><td>652.5</td><td>848.0</td><td class="dn">−23.1%</td></tr>
+      <tr><td><span class="en">Active pipeline</span><span class="ta">Active pipeline</span></td><td>11,151.8</td><td>&gt;10,000</td><td class="up">up</td></tr>
+      <tr><td><span class="en">Order book ÷ TTM revenue (≈₹3,626 cr)</span><span class="ta">Order book ÷ TTM revenue (≈₹3,626 கோடி)</span></td><td>0.73×</td><td>—</td><td>—</td></tr></tbody></table>
+      <p class="note"><span class="en">Book rose even after ₹1,323 cr was billed in the quarter. Short 10–16 week cycles mean a small book still gives 2–3 quarters' view.</span><span class="ta">₹1,323 கோடி bill பண்ணின பிறகும் book கூடியிருக்கு. 10–16 வார cycle-ங்கறதால சின்ன book-உம் 2–3 quarter பார்வை தரும்.</span></p></div>
+  </div>
+  <div class="sub-p" id="met-l" hidden>
+    <div class="card"><h3><span class="en">Net debt turned into net cash (₹ cr)</span><span class="ta">Net debt → net cash ஆச்சு (₹ கோடி)</span></h3><div class="chart" id="c-ml"></div></div>
+    <div class="card tw"><table><thead><tr><th>Metric</th><th>Sep 2026</th><th>Jun 2026</th><th>Mar 2026</th></tr></thead><tbody>
+      <tr><td><span class="en">Net debt (− = net cash)</span><span class="ta">Net debt (− = net cash)</span></td><td class="up">−13.6</td><td class="dn">199.9</td><td>—</td></tr>
+      <tr><td><span class="en">Total debt</span><span class="ta">மொத்த கடன்</span></td><td>—</td><td>—</td><td>271.7</td></tr>
+      <tr><td><span class="en">Net debt / equity</span><span class="ta">Net debt / equity</span></td><td>−0.01</td><td>—</td><td>0.38 (gross D/E)</td></tr>
+      <tr><td><span class="en">Promoter holding</span><span class="ta">Promoter பங்கு</span></td><td>64.2%</td><td>≈67.0%</td><td>—</td></tr></tbody></table></div>
+  </div>
+</section>
+
+<!-- ============ CASH FLOW & RATIOS ============ -->
+<section class="tab" id="t-cf" data-en="Cash Flow &amp; Ratios" data-ta="Cash Flow, Ratios" hidden>
+  <div class="tabhead"><h2><span class="en">Where the cash went</span><span class="ta">Cash எங்க போச்சு</span></h2><span class="code">₹ crore</span></div>
+  <div class="card"><h3><span class="en">Q2 cash bridge: the QIP money filled the working-capital tank (CB derived)</span><span class="ta">Q2 cash bridge: QIP பணம் working-capital tank-ஐ நிரப்புச்சு (CB கணக்கு)</span></h3><div class="chart" id="c-bridge"></div>
+    <p class="note"><span class="en">Net debt ₹199.9 cr (Jun) → net cash ₹13.6 cr (Sep) despite ~₹1,177 cr of net QIP money in. So ≈₹965 cr went into stock, receivables and other uses during the quarter.</span><span class="ta">~₹1,177 கோடி net QIP பணம் வந்தும், net debt ₹199.9 கோடி (Jun) → net cash ₹13.6 கோடி (Sep) தான். அதாவது ≈₹965 கோடி stock, receivables-க்கு போச்சு.</span></p></div>
+  <div class="grid g2">
+    <div class="card"><h3><span class="en">Working-capital days vs guided band</span><span class="ta">Working-capital days vs guidance band</span></h3><div class="chart" id="c-wcd"></div></div>
+    <div class="card"><h3><span class="en">Returns (Sep 2026)</span><span class="ta">Returns (Sep 2026)</span></h3><div class="chart" id="c-ret"></div></div>
+  </div>
+  <div class="card tw"><h3><span class="en">Cash flow &amp; ratio table</span><span class="ta">Cash flow, ratio table</span></h3><table><thead><tr><th>Item</th><th>Value</th><th>Period</th></tr></thead><tbody>
+    <tr><td><span class="en">Operating cash flow</span><span class="ta">Operating cash flow</span></td><td>171.5</td><td>FY26</td></tr>
+    <tr><td><span class="en">OCF ÷ PAT</span><span class="ta">OCF ÷ PAT</span></td><td>0.83×</td><td>FY26</td></tr>
+    <tr><td><span class="en">Trade receivables</span><span class="ta">Trade receivables</span></td><td>670.0</td><td>Mar 2026</td></tr>
+    <tr><td><span class="en">QIP money used (mostly working capital)</span><span class="ta">பயன்படுத்தின QIP பணம் (பெரும்பாலும் working capital)</span></td><td>774.4</td><td>to 30 Sep 2026</td></tr>
+    <tr><td><span class="en">QIP money still unused</span><span class="ta">இன்னும் பயன்படுத்தாத QIP பணம்</span></td><td>≈403</td><td>30 Sep 2026</td></tr>
+    <tr><td>ROE / ROCE</td><td>31.4% / 38.6%</td><td>Sep 2026</td></tr>
+    <tr><td><span class="en">Net WC cycle / inventory days</span><span class="ta">Net WC cycle / inventory days</span></td><td>94 / 117 days</td><td>Sep 2026</td></tr>
+  </tbody></table><p class="note"><span class="en">The H1 cash-flow statement comes with the half-year balance sheet; check it on BSE/NSE for exact OCF.</span><span class="ta">H1 cash-flow statement half-year balance sheet-ஓட வரும்; சரியான OCF-க்கு BSE/NSE-ல பாருங்க.</span></p></div>
+  <div class="card"><ul class="pts">
+    <li><span class="en">Hardware makers buy chips first and get paid later — growth eats cash.</span><span class="ta">Hardware companies முதல்ல chips வாங்கணும், பணம் அப்புறம் தான் வரும் — growth cash-ஐ சாப்பிடும்.</span></li>
+    <li><span class="en">Management: some big orders need extra cash blocked beyond the 90–110 day cycle.</span><span class="ta">Management: சில பெரிய orders-க்கு 90–110 நாள் cycle-க்கு மேலயும் cash முடங்கும்.</span></li>
+    <li><span class="en">Watch: if growth continues at this pace, another fund-raise or more debt may be needed (CB view).</span><span class="ta">கவனிங்க: இதே வேகத்துல growth போனா, இன்னொரு fund-raise அல்லது கடன் தேவைப்படலாம் (CB பார்வை).</span></li>
+  </ul></div>
+</section>
+
+<!-- ============ QIP STORY ============ -->
+<section class="tab" id="t-qip" data-en="QIP Story" data-ta="QIP கதை" hidden>
+  <div class="tabhead"><h2><span class="en">The ₹1,200 cr QIP — who bought, at what price, and where they stand</span><span class="ta">₹1,200 கோடி QIP — யாரு வாங்கினாங்க, என்ன விலை, இப்போ நிலைமை</span></h2></div>
+  <div class="grid g4">
+    <div class="card kpi"><span class="k"><span class="en">Raised</span><span class="ta">திரட்டியது</span></span><span class="v">₹1,200 cr</span><span class="d"><span class="en">First raise since July 2023 IPO</span><span class="ta">July 2023 IPO-க்கு அப்புறம் முதல் தடவை</span></span></div>
+    <div class="card kpi"><span class="k"><span class="en">Shares issued</span><span class="ta">புது shares</span></span><span class="v">25,05,219</span><span class="d"><span class="en">≈4.2% of post-issue equity</span><span class="ta">Issue-க்கு பின் equity-ல ≈4.2%</span></span></div>
+    <div class="card kpi"><span class="k"><span class="en">Issue price</span><span class="ta">Issue விலை</span></span><span class="v">₹4,790</span><span class="d"><span class="en">1.96% below ₹4,885.90 floor</span><span class="ta">₹4,885.90 floor-ஐ விட 1.96% கம்மி</span></span></div>
+    <div class="card kpi"><span class="k"><span class="en">QIP buyers today</span><span class="ta">QIP வாங்கினவங்க இன்னைக்கு</span></span><span class="v dn">−19.7%</span><span class="d"><span class="en">₹4,790 → ₹3,848</span><span class="ta">₹4,790 → ₹3,848</span></span></div>
+  </div>
+  <div class="card"><h3><span class="en">Price ladder: market → floor → issue → now</span><span class="ta">விலை ஏணி: market → floor → issue → இப்போ</span></h3><div class="chart" id="c-ladder"></div></div>
+  <div class="grid g2">
+    <div class="card"><h3><span class="en">Allottees above 5% of the issue</span><span class="ta">Issue-ல 5%-க்கு மேல வாங்கினவங்க</span></h3><div class="chart" id="c-allot"></div><p class="note"><span class="en">Also in the book: Goldman Sachs AM, Amundi, Think Investments, HDFC, Kotak, Tata, Motilal Oswal MFs and others.</span><span class="ta">மற்றவங்க: Goldman Sachs AM, Amundi, Think Investments, HDFC, Kotak, Tata, Motilal Oswal MFs.</span></p></div>
+    <div class="card"><h3><span class="en">Use of the money (to 30 Sep 2026, ₹ cr)</span><span class="ta">பணம் எதுக்கு போச்சு (30 Sep 2026 வரை, ₹ கோடி)</span></h3><div class="chart" id="c-qipuse"></div><p class="note"><span class="en">Monitoring agency (CRISIL) report of 27 Oct: no deviation from stated use.</span><span class="ta">Monitoring agency (CRISIL) 27 Oct report: சொன்ன use-ல இருந்து மாற்றம் இல்ல.</span></p></div>
+  </div>
+  <div class="card"><h3><span class="en">QIP timeline</span><span class="ta">QIP timeline</span></h3><div class="chart" id="c-qiptl"></div></div>
+  <div class="card"><h3><span class="en">What the QIP means for you</span><span class="ta">QIP உங்களுக்கு என்ன சொல்லுது</span></h3><ul class="pts">
+    <li><span class="en">Good: big funds (Nomura, ICICI Pru, Edelweiss, Invesco) checked the books and paid ~₹4,790.</span><span class="ta">நல்லது: பெரிய funds (Nomura, ICICI Pru, Edelweiss, Invesco) கணக்கு பாத்து ~₹4,790 கொடுத்தாங்க.</span></li>
+    <li><span class="en">Good: balance sheet moved from net debt to net cash; bigger orders can be taken.</span><span class="ta">நல்லது: balance sheet net debt-ல இருந்து net cash ஆச்சு; பெரிய orders எடுக்க முடியும்.</span></li>
+    <li><span class="en">Watch: 64% of the money was used within six weeks — working capital needs are heavy.</span><span class="ta">கவனிங்க: ஆறு வாரத்துலயே 64% பணம் செலவாச்சு — working capital தேவை கனமா இருக்கு.</span></li>
+    <li><span class="en">Watch: QIP shares can be sold on the exchange; buyers now sit ~20% below cost, which can cap rallies near ₹4,790.</span><span class="ta">கவனிங்க: QIP shares-ஐ exchange-ல விக்கலாம்; வாங்கினவங்க இப்போ ~20% நஷ்டத்துல — ₹4,790 பக்கம் ஏற்றத்தை அது தடுக்கலாம்.</span></li>
+    <li><span class="en">Promoter stake fell ~2.8 points to 64.2% from dilution, not from promoter selling.</span><span class="ta">Promoter பங்கு ~2.8 points குறைஞ்சு 64.2% — dilution-ஆல, promoter வித்ததால இல்ல.</span></li>
+  </ul></div>
+</section>
+
+<!-- ============ VALUATIONS ============ -->
+<section class="tab" id="t-val" data-en="Valuations" data-ta="Valuations" hidden>
+  <div class="tabhead"><h2><span class="en">Valuation: profit doubled, the multiple halved</span><span class="ta">Valuation: profit இரண்டு மடங்கு, multiple பாதி</span></h2><span class="code">CMP ₹3,848 · M-cap ≈ ₹22,875 cr · ≈5.94 cr shares</span></div>
+  <div class="grid g2">
+    <div class="card"><h3><span class="en">P/E (TTM) then and now</span><span class="ta">P/E (TTM) அப்போ, இப்போ</span></h3><div class="chart" id="c-pestrip"></div></div>
+    <div class="card"><h3><span class="en">52-week range</span><span class="ta">52 வார range</span></h3><div class="chart" id="c-52w"></div></div>
+  </div>
+  <div class="card tw"><h3><span class="en">Valuation table (CB calculations)</span><span class="ta">Valuation table (CB கணக்கு)</span></h3><table><thead><tr><th>Measure</th><th>Earnings base</th><th>Multiple</th></tr></thead><tbody>
+    <tr><td>P/E · TTM</td><td>PAT ₹365.9 cr (EPS ≈ ₹61.6)</td><td>62.5×</td></tr>
+    <tr><td><span class="en">P/E · H1 FY27 annualised</span><span class="ta">P/E · H1 FY27 × 2</span></td><td>PAT ₹444 cr</td><td>51.5×</td></tr>
+    <tr><td><span class="en">P/E · FY27 at guided ₹4,000 cr revenue, 10.3% margin</span><span class="ta">P/E · FY27 guidance ₹4,000 கோடி, 10.3% margin</span></td><td>PAT ≈ ₹412 cr</td><td>55.5×</td></tr>
+    <tr><td><span class="en">P/E · FY27 if H2 = H1</span><span class="ta">P/E · FY27, H2 = H1 ஆனா</span></td><td>PAT ≈ ₹441 cr</td><td>51.9×</td></tr>
+    <tr><td>EV / EBITDA (H1 annualised)</td><td>EBITDA ₹636 cr</td><td>36.0×</td></tr>
+    <tr><td>P/B</td><td><span class="en">Book ≈ ₹2,066 cr</span><span class="ta">Book ≈ ₹2,066 கோடி</span></td><td>≈11.1×</td></tr>
+    <tr><td><span class="en">M-cap ÷ firm order book</span><span class="ta">M-cap ÷ order book</span></td><td>₹2,629 cr</td><td>8.7×</td></tr>
+  </tbody></table></div>
+  <div class="card"><ul class="pts">
+    <li><span class="en">At the ₹5,813 high the stock was ~127× TTM earnings; at the QIP it was ~105×; now 62.5×.</span><span class="ta">₹5,813 high-ல share TTM earnings-ஐ விட ~127×; QIP நேரம் ~105×; இப்போ 62.5×.</span></li>
+    <li><span class="en">The fall is a multiple cut, not an earnings cut: TTM PAT rose from ~₹261 cr to ~₹366 cr in the same period.</span><span class="ta">இது multiple குறைஞ்சது, earnings குறையல: அதே நேரத்துல TTM PAT ~₹261 கோடி → ~₹366 கோடி.</span></li>
+    <li><span class="en">Still a premium: a hardware maker with ~15% EBITDA margin at 50–60× earnings needs growth to stay very high for years.</span><span class="ta">இன்னும் premium தான்: ~15% EBITDA margin hardware company-க்கு 50–60× earnings — பல வருஷம் growth ரொம்ப அதிகமா இருக்கணும்.</span></li>
+  </ul></div>
+</section>
+
+<!-- ============ 5 KEY TAKEAWAYS ============ -->
+<section class="tab" id="t-key" data-en="5 Key Takeaways" data-ta="5 முக்கிய பாடங்கள்" hidden>
+  <h2><span class="en">5 key takeaways</span><span class="ta">5 முக்கிய பாடங்கள்</span></h2>
+  <div class="grid g3" id="keyCards"></div>
+</section>
+
+<!-- ============ 6 PILLARS ============ -->
+<section class="tab" id="t-pil" data-en="6 Pillars" data-ta="6 தூண்கள்" hidden>
+  <div class="tabhead"><h2><span class="en">6 Pillars: 37 / 60</span><span class="ta">6 தூண்கள்: 37 / 60</span></h2></div>
+  <div class="card"><div class="chart" id="c-temple"></div></div>
+  <div class="grid g3" id="pilCards"></div>
+  <p class="note"><span class="en">How graded: each pillar 1–10 against Netweb's own history and global AI-server makers; 8+ = clear strength, 5–7 = average with a caveat, below 5 = weakness.</span><span class="ta">எப்படி மதிப்பிட்டோம்: ஒவ்வொரு தூணும் 1–10, Netweb-ஓட பழைய நிலை, global AI-server companies-ஓட ஒப்பிட்டு; 8+ = பலம், 5–7 = சராசரி, 5-க்கு கீழ = பலவீனம்.</span></p>
+</section>
+
+<!-- ============ BIG BET ============ -->
+<section class="tab" id="t-bet" data-en="Big Bet: Sovereign AI" data-ta="பெரிய பந்தயம்: Sovereign AI" hidden>
+  <div class="tabhead"><h2><span class="en">The big bet: India's own AI compute — "Made-in-India GPU systems"</span><span class="ta">பெரிய பந்தயம்: India-வோட சொந்த AI compute — "Made-in-India GPU systems"</span></h2></div>
+  <div class="grid g2">
+    <div class="card"><h3><span class="en">The new-business wheel</span><span class="ta">புது business சக்கரம்</span></h3><div class="chart" id="c-wheel"></div></div>
+    <div class="card"><h3><span class="en">Done vs guided milestones</span><span class="ta">முடிஞ்சது vs சொன்னது</span></h3><div class="chart" id="c-mile"></div></div>
+  </div>
+  <div class="grid g2">
+    <div class="card"><h3><span class="en">Who is ahead?</span><span class="ta">யாரு முன்னால?</span></h3><ul class="pts">
+      <li><span class="en">Globally: Dell, HPE, Lenovo and Supermicro build far more AI servers.</span><span class="ta">உலக அளவுல: Dell, HPE, Lenovo, Supermicro இன்னும் ரொம்ப அதிகமா AI servers கட்டுறாங்க.</span></li>
+      <li><span class="en">In India: Netweb is the leading Indian-origin maker, with NVIDIA OEM status and own designs — an edge in government and "data stays in India" deals.</span><span class="ta">India-ல: Netweb தான் முன்னணி Indian-origin maker — NVIDIA OEM status, சொந்த design — அரசு, "data India-லயே" deals-ல பலம்.</span></li>
+      <li><span class="en">Status words: own design + own manufacturing of systems; the key chips are imported. Quantum work is R&amp;D (simulators), not a product yet.</span><span class="ta">நிலை: systems design, manufacturing சொந்தம்; முக்கிய chips import. Quantum இன்னும் R&amp;D (simulators) தான், product இல்ல.</span></li>
+    </ul></div>
+    <div class="card" style="background:var(--water3);border-color:var(--water)"><h3><span class="en">How Netweb got here</span><span class="ta">Netweb இங்க எப்படி வந்துச்சு</span></h3><ul class="pts">
+      <li><span class="en">Started 1999 in Haryana by the Lodha family; built the "Tyrone" brand of servers.</span><span class="ta">1999-ல Haryana-ல Lodha family ஆரம்பிச்சாங்க; "Tyrone" server brand கட்டினாங்க.</span></li>
+      <li><span class="en">Earned trust building supercomputers for Indian research labs — 600+ installed.</span><span class="ta">Indian research labs-க்கு supercomputers கட்டி நம்பிக்கை சம்பாதிச்சாங்க — 600+ install.</span></li>
+      <li><span class="en">Listed July 2023; rode the GPU wave — AI went from ~7% of revenue (FY24) to 58% now.</span><span class="ta">July 2023-ல list; GPU அலையில ஏறினாங்க — AI revenue-ல ~7% (FY24) → இப்போ 58%.</span></li>
+    </ul></div>
+  </div>
+</section>
+
+<!-- ============ VALUE CHAIN ============ -->
+<section class="tab" id="t-vc" data-en="Sector Need &amp; Value Chain" data-ta="Sector தேவை, Value Chain" hidden>
+  <div class="tabhead"><h2><span class="en">Is Netweb a "data-centre stock"? Where it sits in the AI value chain</span><span class="ta">Netweb "data-centre stock"-ஆ? AI value chain-ல எங்க இருக்கு</span></h2></div>
+  <div class="card"><div class="chart" id="c-chain"></div><p class="note"><span class="en">Orange = Netweb's play. Grey = others.</span><span class="ta">Orange = Netweb இடம். Grey = மற்றவங்க.</span></p></div>
+  <div class="grid g3">
+    <div class="card"><h3><span class="en">Short answer</span><span class="ta">சுருக்கமான பதில்</span></h3><ul class="pts"><li><span class="en">Netweb sells the computers that go inside data centres. It does not build or rent data-centre buildings.</span><span class="ta">Data centres உள்ள போற computers-ஐ Netweb விக்குது. Data-centre building கட்டறதோ, வாடகைக்கு விடுறதோ இல்ல.</span></li><li><span class="en">So it earns once per sale, not a monthly rent — revenue follows customers' buying cycles.</span><span class="ta">அதனால ஒவ்வொரு sale-க்கும் ஒரு தடவை வருமானம், மாச வாடகை இல்ல — customers வாங்குற cycle-ஐ follow பண்ணும்.</span></li></ul></div>
+    <div class="card"><h3><span class="en">India need</span><span class="ta">India தேவை</span></h3><ul class="pts"><li><span class="en">IndiaAI Mission, NSM 2.0 and data-localisation rules push AI compute that is built and kept in India.</span><span class="ta">IndiaAI Mission, NSM 2.0, data-localisation rules — India-லயே கட்டி, India-லயே வைக்கிற AI compute-க்கு தேவை.</span></li><li><span class="en">Banks, government and large firms want private clouds for sensitive data.</span><span class="ta">Banks, அரசு, பெரிய companies sensitive data-க்கு private cloud வேணும்னு கேக்குறாங்க.</span></li></ul></div>
+    <div class="card"><h3><span class="en">Why it moves with global AI mood</span><span class="ta">Global AI mood-ஓட ஏன் அசையுது</span></h3><ul class="pts"><li><span class="en">Investors group it with "AI-capex" stocks; when Nasdaq AI names fall, it falls too.</span><span class="ta">Investors இதை "AI-capex" stocks கூட சேர்த்து பாக்குறாங்க; Nasdaq AI names விழுந்தா இதுவும் விழும்.</span></li><li><span class="en">Its costs (GPUs, memory) are set globally; memory chip prices reportedly rose 200%+.</span><span class="ta">அதோட செலவு (GPU, memory) உலக விலையில; memory chip விலை 200%+ ஏறினதா தகவல்.</span></li></ul></div>
+  </div>
+</section>
+
+<!-- ============ SHARE MOVE ============ -->
+<section class="tab" id="t-move" data-en="Share Move Reasons" data-ta="Share அசைவு காரணம்" hidden>
+  <div class="tabhead"><h2><span class="en">Why the share corrected heavily</span><span class="ta">Share ஏன் பலமா இறங்குச்சு</span></h2><span class="code">52-wk ₹2,920 → high ₹5,813 → ₹3,848</span></div>
+  <div class="card"><h3><span class="en">Price path at key dates (₹)</span><span class="ta">முக்கிய தேதிகளில் விலை (₹)</span></h3><div class="chart" id="c-path"></div></div>
+  <div class="card"><div class="chart" id="c-seesaw"></div></div>
+  <div class="card tw"><h3><span class="en">The reasons, weighed (CB view)</span><span class="ta">காரணங்கள், எடை போட்டு (CB பார்வை)</span></h3><table><thead><tr><th><span class="en">Reason</span><span class="ta">காரணம்</span></th><th><span class="en">Evidence</span><span class="ta">ஆதாரம்</span></th><th><span class="en">Weight</span><span class="ta">எடை</span></th></tr></thead><tbody>
+    <tr><td><span class="en">Valuation was stretched</span><span class="ta">Valuation ரொம்ப அதிகமா இருந்துச்சு</span></td><td style="text-align:left;white-space:normal"><span class="en">~127× TTM P/E at the high</span><span class="ta">High-ல ~127× TTM P/E</span></td><td>●●●</td></tr>
+    <tr><td><span class="en">Global AI / tech selloff</span><span class="ta">Global AI / tech selloff</span></td><td style="text-align:left;white-space:normal"><span class="en">Nasdaq −5.52% on 5 Nov; Netweb −6.3% on 6 Nov; Indian AI-capex names (TD Power, Thermax ~−15%) fell too</span><span class="ta">5 Nov Nasdaq −5.52%; 6 Nov Netweb −6.3%; Indian AI-capex stocks (TD Power, Thermax ~−15%) உம் விழுந்துச்சு</span></td><td>●●●</td></tr>
+    <tr><td><span class="en">Data-centre spending fears after US midterms (press)</span><span class="ta">US midterms-க்கு அப்புறம் data-centre செலவு பயம் (press)</span></td><td style="text-align:left;white-space:normal"><span class="en">Linked by press to the AI selloff; no political view taken here</span><span class="ta">AI selloff-ஓட press இணைச்சது; இங்க அரசியல் பார்வை இல்ல</span></td><td>●●</td></tr>
+    <tr><td><span class="en">Margin slipped slightly; costs rising</span><span class="ta">Margin கொஞ்சம் குறைஞ்சது; செலவு ஏறுது</span></td><td style="text-align:left;white-space:normal"><span class="en">EBITDA 14.9% vs 15.0%; memory prices up 200%+</span><span class="ta">EBITDA 14.9% vs 15.0%; memory விலை 200%+</span></td><td>●●</td></tr>
+    <tr><td><span class="en">QIP supply and cash burn</span><span class="ta">QIP supply, cash செலவு</span></td><td style="text-align:left;white-space:normal"><span class="en">25 lakh new shares; buyers now −20%; ₹774 cr used in 6 weeks</span><span class="ta">25 லட்சம் புது shares; வாங்கினவங்க −20%; 6 வாரத்துல ₹774 கோடி செலவு</span></td><td>●●</td></tr>
+    <tr><td><span class="en">Rating downgrade, momentum selling</span><span class="ta">Rating குறைப்பு, momentum விற்பனை</span></td><td style="text-align:left;white-space:normal"><span class="en">MarketsMOJO Buy → Hold (30 Oct); 7 straight down days to 6 Nov; week −9.7% vs Sensex +7.2%</span><span class="ta">MarketsMOJO Buy → Hold (30 Oct); 6 Nov வரை 7 நாள் தொடர் சரிவு; வாரம் −9.7% vs Sensex +7.2%</span></td><td>●</td></tr>
+    <tr><td><span class="en">Results themselves</span><span class="ta">Results தானே</span></td><td style="text-align:left;white-space:normal"><span class="en">Record; stock only −1.2% on the first day after</span><span class="ta">Record; அடுத்த நாள் share −1.2% தான்</span></td><td><span class="en">not a cause</span><span class="ta">காரணம் இல்ல</span></td></tr>
+  </tbody></table></div>
+  <div class="card"><h3><span class="en">Dated events</span><span class="ta">தேதி வாரியா நிகழ்வுகள்</span></h3><div class="chart" id="c-events"></div></div>
+</section>
+
+<!-- ============ TRIGGERS & CYCLE ============ -->
+<section class="tab" id="t-tc" data-en="Triggers &amp; Cycle" data-ta="Triggers, Cycle" hidden>
+  <div class="tabhead"><h2><span class="en">Cycle and triggers</span><span class="ta">Cycle, triggers</span></h2><div class="chips"><span class="chip">CY <b>65</b></span><span class="chip">TG <b>52</b></span></div></div>
+  <div class="grid g2">
+    <div class="card"><h3><span class="en">Cycle clock (S-curve)</span><span class="ta">Cycle கடிகாரம் (S-curve)</span></h3><div class="chart" id="c-clock"></div></div>
+    <div class="card"><h3><span class="en">Cycle reading</span><span class="ta">Cycle நிலவரம்</span></h3><ul class="pts">
+      <li><span class="en">Type: structural growth (AI compute S-curve), with capex/order-book features.</span><span class="ta">வகை: structural growth (AI compute S-curve), order-book தன்மையோட.</span></li>
+      <li><span class="en">Sector: Rapid adoption (80) — AI revenue +1,068%, pipeline ₹11,152 cr, book rising after record billing. Caution: margins not expanding.</span><span class="ta">Sector: Rapid adoption (80) — AI revenue +1,068%, pipeline ₹11,152 கோடி, record billing-க்கு பின்னும் book ஏறுது. ஆனா margins விரியல.</span></li>
+      <li><span class="en">Stock 50: scaling business 80 · margin flat 50 · P/E treated in-band 55 (only 3 years listed) · price Stage 4 decline 15 (below a falling 30-week average, CB est.).</span><span class="ta">Stock 50: வளர்ற business 80 · margin நிலை 50 · P/E band-க்குள்ள 55 (3 வருஷம் தான் listed) · price Stage 4 சரிவு 15 (இறங்குற 30-week average-க்கு கீழ, CB est.).</span></li>
+      <li><span class="en">CY = (80 + 50) ÷ 2 = 65.</span><span class="ta">CY = (80 + 50) ÷ 2 = 65.</span></li>
+    </ul></div>
+  </div>
+  <div class="card tw"><h3><span class="en">Trigger table (points = Impact × Certainty × Timing × Priced-in)</span><span class="ta">Trigger table (points = Impact × Certainty × Timing × Priced-in)</span></h3>
+    <table><thead><tr><th>Trigger</th><th>±</th><th>I</th><th>C</th><th>W</th><th>P</th><th>Pts</th><th><span class="en">Watch</span><span class="ta">கவனிங்க</span></th></tr></thead><tbody id="trigBody"></tbody></table>
+    <p class="note"><span class="en">TG = 50 + 8 × (2.10 + 1.12 + 0.84) − 8 × (1.20 + 0.84 + 0.59 + 0.56 + 0.56) = 52.5 → 52.</span><span class="ta">TG = 50 + 8 × (2.10 + 1.12 + 0.84) − 8 × (1.20 + 0.84 + 0.59 + 0.56 + 0.56) = 52.5 → 52.</span></p>
+  </div>
+  <div class="card"><h3><span class="en">Trigger timeline</span><span class="ta">Trigger timeline</span></h3><div class="chart" id="c-trigtl"></div></div>
+  <div class="card"><h3><span class="en">What would change this view</span><span class="ta">இந்த பார்வை எப்போ மாறும்</span></h3><ul class="pts">
+    <li><span class="en">Big NSM 2.0 / IndiaAI order wins and L1 turning into firm orders → stronger.</span><span class="ta">பெரிய NSM 2.0 / IndiaAI orders, L1 உறுதி order ஆனா → பலம்.</span></li>
+    <li><span class="en">EBITDA margin below 13% for two quarters (memory costs) → weaker.</span><span class="ta">ரெண்டு quarter EBITDA margin 13%-க்கு கீழ (memory செலவு) → பலவீனம்.</span></li>
+    <li><span class="en">Price back above its 30-week average with that average turning up → cycle score improves.</span><span class="ta">Price மறுபடி 30-week average-க்கு மேல, average ஏற ஆரம்பிச்சா → cycle score கூடும்.</span></li>
+  </ul></div>
+</section>
+
+<!-- ============ SWOT ============ -->
+<section class="tab" id="t-swot" data-en="SWOT" data-ta="SWOT" hidden>
+  <h2>SWOT</h2>
+  <div class="card"><div class="chart" id="c-swot"></div></div>
+</section>
+
+<!-- ============ SELF-CHECK ============ -->
+<section class="tab" id="t-sc" data-en="Investor Self-Check" data-ta="Investor Self-Check" hidden>
+  <div class="tabhead"><h2><span class="en">CB investor self-check</span><span class="ta">CB investor self-check</span></h2><div class="chart" id="c-ring" style="width:130px"></div></div>
+  <p class="note"><span class="en">Tick what you have checked yourself. It counts only your own conditions — it is not a recommendation.</span><span class="ta">நீங்களே check பண்ணதை tick பண்ணுங்க. இது உங்க சொந்த conditions-ஐ மட்டும் எண்ணுது — recommendation இல்ல.</span></p>
+  <div class="grid g2" id="scGroups"></div>
+</section>
+
+<!-- ============ CAUVERY ASSIST ============ -->
+<section class="tab" id="t-assist" data-en="Cauvery Assist" data-ta="Cauvery Assist" hidden>
+  <div class="tabhead"><h2>Cauvery Assist</h2><div class="chart" id="c-assistpic" style="width:150px"></div></div>
+  <div class="card"><div id="assist"></div></div>
+</section>
+
+<!-- ============ SOCRATES ============ -->
+<section class="tab" id="t-quiz" data-en="Cauvery Socrates" data-ta="Cauvery Socrates" hidden>
+  <div class="tabhead"><h2><span class="en">Cauvery Socrates — test yourself</span><span class="ta">Cauvery Socrates — உங்களை test பண்ணுங்க</span></h2></div>
+  <div class="grid g2"><div class="card" id="quiz"></div><div class="card"><h3><span class="en">Your score</span><span class="ta">உங்க score</span></h3><div class="chart" id="c-qscore"></div></div></div>
+</section>
+
+<!-- ============ ANALYST VIEW ============ -->
+<section class="tab" id="t-av" data-en="Analyst View" data-ta="Analyst View" hidden>
+  <div class="tabhead"><h2><span class="en">CB analyst view</span><span class="ta">CB analyst view</span></h2></div>
+  <div class="grid g2">
+    <div class="card"><h3><span class="en">CB Conviction (education score)</span><span class="ta">CB Conviction (கல்வி score)</span></h3><div class="chart" id="c-conv2"></div><p class="note"><span class="en">Weighted score 62, capped at 55 by the Stage 4 price gate.</span><span class="ta">Weighted score 62; Stage 4 price gate-ஆல 55-ல cap.</span></p></div>
+    <div class="card"><h3><span class="en">Lens by lens</span><span class="ta">Lens வாரியா</span></h3><div class="chart" id="c-lens"></div></div>
+  </div>
+  <div class="card"><ul class="pts">
+    <li><span class="en">Business: a genuine record — revenue and profit ~4.4×, margins steady, order book still rising.</span><span class="ta">Business: உண்மையான record — revenue, profit ~4.4×, margin நிலையா, order book இன்னும் ஏறுது.</span></li>
+    <li><span class="en">Cycle: AI compute is in rapid adoption; the stock is in a Stage 4 decline after a ~127× peak multiple.</span><span class="ta">Cycle: AI compute rapid adoption-ல; ~127× peak multiple-க்கு அப்புறம் share Stage 4 சரிவுல.</span></li>
+    <li><span class="en">Top positive triggers: H2 delivery of the ₹3,282 cr book + L1; IndiaAI sovereign GPU orders.</span><span class="ta">முக்கிய positive triggers: ₹3,282 கோடி book + L1 H2 delivery; IndiaAI sovereign GPU orders.</span></li>
+    <li><span class="en">Top risks: memory/GPU cost squeeze on a thin margin; 85% top-10 concentration; cash-hungry growth.</span><span class="ta">முக்கிய risks: மெல்லிய margin-ல memory/GPU செலவு அழுத்தம்; top-10-ல 85%; cash அதிகம் சாப்பிடும் growth.</span></li>
+    <li><span class="en">QIP: smart money paid ₹4,790 and is now ~20% under water — a supply zone, and a test of conviction.</span><span class="ta">QIP: பெரிய funds ₹4,790 கொடுத்தாங்க, இப்போ ~20% நஷ்டம் — அது ஒரு supply zone, conviction-க்கு ஒரு test.</span></li>
+  </ul></div>
+</section>
+</main>
+</div>
+
+<div id="cbBadge"><div class="b" tabindex="0" aria-label="Disclaimer">CB</div><div class="tip"><span class="en"><b>CB Research (Cauvery Business Research)</b> is an independent education platform, not SEBI-registered. Nothing here is a recommendation to buy, sell or hold. Figures are from company filings and press reports up to 9 Nov 2026; ≈ marks CB estimates. Please verify on BSE/NSE and consult a SEBI-registered adviser before investing.</span><span class="ta"><b>CB Research (Cauvery Business Research)</b> ஒரு சுயாதீன கல்வி தளம், SEBI-ல register ஆகல. இங்க எதுவும் buy, sell, hold recommendation இல்ல. எண்கள் 9 Nov 2026 வரையிலான company filings, press reports-ல இருந்து; ≈ = CB கணக்கு. BSE/NSE-ல சரிபாருங்க, invest பண்ணும் முன் SEBI-registered adviser-ஐ கேளுங்க.</span></div></div>
+<button id="voiceBubble" type="button"><span class="en">🎙 Voice Assist</span><span class="ta">🎙 Voice Assist</span></button>
+
+<script>
+/* ================= core: language, tabs, sub-tabs ================= */
+var LANG="en";
+var C={water:"#3B2F8F",water2:"#6A5FC8",water3:"#D9D4F7",acc:"#F6A04D",accS:"#C25E00",ink:"#1A0F05",ink2:"#3D2A17",line:"#EDB57A",card:"#FFEBD3",card2:"#FFE0BC",bg:"#FFF4E6",good:"#11713A",bad:"#B3261E",warn:"#A35C00",grey:"#B9AFA4"};
+function ls(k,v){try{if(v===undefined)return localStorage.getItem(k);localStorage.setItem(k,v);}catch(e){return null;}}
+function setLang(l){LANG=l;document.documentElement.setAttribute("data-lang",l);document.documentElement.lang=l==="ta"?"ta":"en";
+  document.getElementById("langBtn").textContent=l==="ta"?"English":"தமிழ்";
+  document.querySelectorAll("#tabs button").forEach(function(b){b.textContent=b.dataset[l];});
+  if(window.assist)assist.setLang(l);ls("cb_netweb_lang",l);}
+document.documentElement.setAttribute("data-lang","en");
+var tabsEl=document.getElementById("tabs"),secs=[].slice.call(document.querySelectorAll("section.tab"));
+secs.forEach(function(s){var b=document.createElement("button");b.type="button";b.setAttribute("role","tab");b.dataset.en=s.dataset.en.replace("&amp;","&");b.dataset.ta=s.dataset.ta.replace("&amp;","&");b.dataset.t=s.id;b.textContent=b.dataset.en;tabsEl.appendChild(b);});
+tabsEl.addEventListener("click",function(e){var b=e.target.closest("button[data-t]");if(b)showTab(b.dataset.t);});
+function showTab(id){secs.forEach(function(s){s.hidden=s.id!==id;});tabsEl.querySelectorAll("button").forEach(function(b){var on=b.dataset.t===id;b.setAttribute("aria-selected",on);if(on){try{tabsEl.scrollLeft=Math.max(0,b.offsetLeft-tabsEl.clientWidth/2+b.offsetWidth/2);}catch(e){}}});
+  try{window.scrollTo(0,0);}catch(e){}}
+document.querySelectorAll(".subtabs").forEach(function(g){g.querySelectorAll("button").forEach(function(b){b.onclick=function(){g.querySelectorAll("button").forEach(function(x){x.setAttribute("aria-selected",x===b);var p=document.getElementById(x.dataset.sub);if(p)p.hidden=x!==b;});};});});
+document.getElementById("langBtn").onclick=function(){setLang(LANG==="en"?"ta":"en");};
+document.getElementById("cbBadge").querySelector(".b").onclick=function(){this.parentNode.classList.toggle("open");};
+
+/* ================= SVG helpers ================= */
+function esc(s){return String(s).replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c];});}
+function tx(x,y,en,ta,a){a=a||"";var st='font-family:Catamaran,Noto Sans Tamil,sans-serif;font-weight:800;';
+  if(ta===undefined||ta===null||ta===en)return '<text x="'+x+'" y="'+y+'" '+a+' style="'+st+'fill:'+(a.indexOf("data-f")>-1?"":C.ink)+'">'+esc(en)+'</text>';
+  return '<text class="en" x="'+x+'" y="'+y+'" '+a+' style="'+st+'fill:'+C.ink+'">'+esc(en)+'</text><text class="ta" x="'+x+'" y="'+y+'" '+a+' style="'+st+'fill:'+C.ink+'">'+esc(ta)+'</text>';}
+function T(o){return typeof o==="object"?o:{en:o,ta:o};}
+function svg(w,h,inner,extra){return '<svg viewBox="0 0 '+w+' '+h+'" xmlns="http://www.w3.org/2000/svg" role="img" '+(extra||"")+'>'+inner+'</svg>';}
+function put(id,html){var e=document.getElementById(id);if(e)e.innerHTML=html;}
+function fmt(v,d){return v.toLocaleString("en-IN",{minimumFractionDigits:d||0,maximumFractionDigits:d===undefined?1:d});}
+
+/* grouped bars, handles negatives */
+function bars(o){var W=o.w||560,H=o.h||280,L=46,R=12,Tp=28,B=48,cats=o.cats,S=o.series;
+  var all=[];S.forEach(function(s){s.vals.forEach(function(v){if(v!=null)all.push(v);});});
+  var mx=Math.max.apply(null,all.concat([0]))*1.15,mn=Math.min.apply(null,all.concat([0]));mn=mn<0?mn*1.25:0;
+  var y=function(v){return Tp+(mx-v)/(mx-mn)*(H-Tp-B);};
+  var gw=(W-L-R)/cats.length,bw=Math.min(46,gw*0.75/S.length),out="";
+  for(var i=0;i<=4;i++){var v=mn+(mx-mn)*i/4,yy=y(v);out+='<line x1="'+L+'" x2="'+(W-R)+'" y1="'+yy+'" y2="'+yy+'" style="stroke:'+C.line+';stroke-width:1"/>'+tx(L-6,yy+4,fmt(v,0),null,'text-anchor="end" font-size="11"');}
+  out+='<line x1="'+L+'" x2="'+(W-R)+'" y1="'+y(0)+'" y2="'+y(0)+'" style="stroke:'+C.ink2+';stroke-width:1.5"/>';
+  cats.forEach(function(c,i){var cx=L+gw*i+gw/2,x0=cx-bw*S.length/2;c=T(c);
+    S.forEach(function(s,j){var v=s.vals[i];if(v==null)return;var y1=y(Math.max(v,0)),y2=y(Math.min(v,0));
+      out+='<rect x="'+(x0+j*bw+2)+'" y="'+y1+'" width="'+(bw-4)+'" height="'+Math.max(1,y2-y1)+'" rx="4" style="fill:'+(v<0?C.bad:s.col)+'"/>';
+      out+=tx(x0+j*bw+bw/2,v<0?y2+14:y1-5,(o.pre||"")+fmt(v,o.dec)+(o.suf||""),null,'text-anchor="middle" font-size="12"');});
+    out+=tx(cx,H-B+18,c.en,c.ta,'text-anchor="middle" font-size="12.5"');});
+  if(S.length>1){var lx=L;S.forEach(function(s){var n=T(s.name);out+='<rect x="'+lx+'" y="'+(H-16)+'" width="12" height="12" rx="3" style="fill:'+s.col+'"/>'+tx(lx+16,H-6,n.en,n.ta,'font-size="12"');lx+=Math.max(110,n.en.length*8+30);});}
+  if(o.band){var b1=y(o.band[1]),b0=y(o.band[0]);out='<rect x="'+L+'" y="'+b1+'" width="'+(W-L-R)+'" height="'+(b0-b1)+'" style="fill:'+C.water3+';opacity:.45"/>'+out;}
+  return svg(W,H,out);}
+/* line chart */
+function lines(o){var W=o.w||560,H=o.h||260,L=44,R=40,Tp=24,B=46,cats=o.cats,S=o.series,all=[];
+  S.forEach(function(s){all=all.concat(s.vals);});var mx=o.max||Math.max.apply(null,all)*1.1,mn=o.min!==undefined?o.min:Math.min.apply(null,all)*0.9;
+  var x=function(i){return L+(W-L-R)*i/(cats.length-1);},y=function(v){return Tp+(mx-v)/(mx-mn)*(H-Tp-B);},out="";
+  if(o.band)out+='<rect x="'+L+'" y="'+y(o.band[1])+'" width="'+(W-L-R)+'" height="'+(y(o.band[0])-y(o.band[1]))+'" style="fill:'+C.water3+';opacity:.5"/>'+tx(W-R-4,y(o.band[1])+14,o.bandLabel.en,o.bandLabel.ta,'text-anchor="end" font-size="11"');
+  for(var i=0;i<=4;i++){var v=mn+(mx-mn)*i/4;out+='<line x1="'+L+'" x2="'+(W-R)+'" y1="'+y(v)+'" y2="'+y(v)+'" style="stroke:'+C.line+'"/>'+tx(L-6,y(v)+4,fmt(v,1)+(o.suf||""),null,'text-anchor="end" font-size="11"');}
+  cats.forEach(function(c,i){c=T(c);out+=tx(x(i),H-B+18,c.en,c.ta,'text-anchor="middle" font-size="12"');});
+  S.forEach(function(s,k){var d=s.vals.map(function(v,i){return(i?"L":"M")+x(i)+" "+y(v);}).join(" ");
+    out+='<path d="'+d+'" style="fill:none;stroke:'+s.col+';stroke-width:3.5"/>';
+    s.vals.forEach(function(v,i){var last=i===s.vals.length-1;out+='<circle cx="'+x(i)+'" cy="'+y(v)+'" r="'+(last?7:4.5)+'" style="fill:'+s.col+';stroke:'+C.bg+';stroke-width:2"/>'+tx(x(i),y(v)-10,fmt(v,1)+(o.suf||""),null,'text-anchor="middle" font-size="11.5"');});
+    var n=T(s.name);out+='<rect x="'+(L+k*150)+'" y="'+(H-16)+'" width="12" height="12" rx="3" style="fill:'+s.col+'"/>'+tx(L+k*150+16,H-6,n.en,n.ta,'font-size="12"');});
+  return svg(W,H,out);}
+/* donut */
+function donut(parts,center,sub){var W=360,H=230,cx=110,cy=115,r=88,ri=54,tot=parts.reduce(function(a,p){return a+p.v;},0),a0=-Math.PI/2,out="";
+  parts.forEach(function(p,i){var a1=a0+p.v/tot*Math.PI*2,lg=a1-a0>Math.PI?1:0;
+    var P=function(a,rr){return[cx+rr*Math.cos(a),cy+rr*Math.sin(a)];},p1=P(a0,r),p2=P(a1,r),p3=P(a1,ri),p4=P(a0,ri);
+    out+='<path d="M'+p1+' A'+r+' '+r+' 0 '+lg+' 1 '+p2+' L'+p3+' A'+ri+' '+ri+' 0 '+lg+' 0 '+p4+'Z" style="fill:'+p.col+';stroke:'+C.bg+';stroke-width:2"/>';
+    var n=T(p.label);out+='<rect x="222" y="'+(48+i*46)+'" width="14" height="14" rx="3" style="fill:'+p.col+'"/>'+tx(242,60+i*46,n.en,n.ta,'font-size="13"')+tx(242,78+i*46,(p.txt||fmt(p.v,0))+" · "+Math.round(p.v/tot*100)+"%",null,'font-size="13"');a0=a1;});
+  out+=tx(cx,cy+2,center,null,'text-anchor="middle" font-size="18"');if(sub)out+=tx(cx,cy+20,T(sub).en,T(sub).ta,'text-anchor="middle" font-size="11"');
+  return svg(W,H,out);}
+/* horizontal bars (diverging ok) */
+function hbars(items,o){o=o||{};var W=560,rowH=40,H=items.length*rowH+20,L=o.L||190,R=70,vals=items.map(function(i){return i.v;}),mx=Math.max.apply(null,vals.concat([0])),mn=Math.min.apply(null,vals.concat([0]));
+  var x=function(v){return L+(v-mn)/(mx-mn||1)*(W-L-R);},out="";
+  items.forEach(function(it,i){var y=12+i*rowH,n=T(it.label),x0=x(Math.min(0,it.v)),x1=x(Math.max(0,it.v));
+    out+=tx(L-8,y+19,n.en,n.ta,'text-anchor="end" font-size="13"')+'<rect x="'+x0+'" y="'+(y+4)+'" width="'+Math.max(2,x1-x0)+'" height="24" rx="5" style="fill:'+(it.v<0?C.bad:(it.col||C.water))+'"/>'+tx(it.v<0?x0-6:x1+6,y+21,(it.txt||fmt(it.v,o.dec)+(o.suf||"")),null,'text-anchor="'+(it.v<0?"end":"start")+'" font-size="13"');});
+  if(mn<0)out+='<line x1="'+x(0)+'" x2="'+x(0)+'" y1="6" y2="'+(H-6)+'" style="stroke:'+C.ink2+';stroke-width:1.5"/>';
+  return svg(W,H,out);}
+/* gauge */
+function gauge(v,mx,lab){var W=300,H=180,cx=150,cy=150,r=110,out="",segs=[[0,40,C.bad],[40,60,C.warn],[60,75,C.acc],[75,100,C.good]];
+  segs.forEach(function(s){var a0=Math.PI*(1-s[0]/mx),a1=Math.PI*(1-s[1]/mx);out+='<path d="M'+(cx+r*Math.cos(a0))+' '+(cy-r*Math.sin(a0))+' A'+r+' '+r+' 0 0 1 '+(cx+r*Math.cos(a1))+' '+(cy-r*Math.sin(a1))+'" style="fill:none;stroke:'+s[2]+';stroke-width:22"/>';});
+  var a=Math.PI*(1-v/mx);out+='<line x1="'+cx+'" y1="'+cy+'" x2="'+(cx+(r-18)*Math.cos(a))+'" y2="'+(cy-(r-18)*Math.sin(a))+'" style="stroke:'+C.ink+';stroke-width:5;stroke-linecap:round"/><circle cx="'+cx+'" cy="'+cy+'" r="9" style="fill:'+C.ink+'"/>';
+  out+=tx(cx,cy-38,String(v),null,'text-anchor="middle" font-size="34"')+tx(cx,cy+24,T(lab).en,T(lab).ta,'text-anchor="middle" font-size="13"');
+  return svg(W,H+20,out);}
+
+
+/* ================= data + charts (Netweb Q2 FY27) ================= */
+var Q5=["Q2 FY26","Q3 FY26","Q4 FY26","Q1 FY27","Q2 FY27"],Q3=["Q2 FY26","Q1 FY27","Q2 FY27"],Q4=["Q2 FY26","Q4 FY26","Q1 FY27","Q2 FY27"];
+put("c-dash5q",bars({cats:Q5,series:[{name:{en:"Revenue",ta:"Revenue"},vals:[303.7,804.9,678.3,819.7,1323.3],col:C.water2},{name:{en:"PAT (Q3, Q4 ≈)",ta:"PAT (Q3, Q4 ≈)"},vals:[31.4,74.6,61.0,85.3,136.7],col:C.acc}]}));
+put("c-dashgauge",gauge(55,100,{en:"CB Conviction / 100",ta:"CB Conviction / 100"}));
+
+/* scissors: profit up, price & multiple down */
+(function(){var W=640,H=250,rows=[
+  [{en:"TTM profit",ta:"TTM profit"},"₹261 cr","₹366 cr","▲ 40%",C.good,1],
+  [{en:"Share price",ta:"Share விலை"},"₹5,813","₹3,848","▼ 34%",C.bad,-1],
+  [{en:"P/E (TTM)",ta:"P/E (TTM)"},"~127×","62.5×","▼ 51%",C.bad,-1]],out="";
+ out+=tx(150,22,"52-wk high (Aug–Sep)","52-wk high (Aug–Sep)",'text-anchor="middle" font-size="12"')+tx(470,22,"Now (9 Nov)","இப்போ (9 Nov)",'text-anchor="middle" font-size="12"');
+ rows.forEach(function(r,i){var y=58+i*66;out+=tx(10,y+6,r[0].en,r[0].ta,'font-size="14"');
+  out+='<rect x="110" y="'+(y-18)+'" width="90" height="34" rx="8" style="fill:'+C.card2+';stroke:'+C.line+';stroke-width:2"/>'+tx(155,y+5,r[1],null,'text-anchor="middle" font-size="15"');
+  out+='<rect x="425" y="'+(y-18)+'" width="90" height="34" rx="8" style="fill:'+(r[5]>0?"#DDF3E3":"#FBE0DD")+';stroke:'+r[4]+';stroke-width:2.5"/>'+tx(470,y+5,r[2],null,'text-anchor="middle" font-size="15"');
+  var y2=y+(r[5]>0?-10:10);out+='<path d="M205 '+y+' C300 '+y+',330 '+y2+',418 '+y2+'" style="fill:none;stroke:'+r[4]+';stroke-width:5"/><polygon points="418,'+(y2-7)+' 426,'+y2+' 418,'+(y2+7)+'" style="fill:'+r[4]+'"/>'+tx(312,y-6+(r[5]>0?-8:12),r[3],null,'text-anchor="middle" font-size="14"');
+});
+ out+=tx(320,H-14,"The business grew; the price the market pays for each rupee of profit halved.","Business வளர்ந்துச்சு; ஒவ்வொரு ரூபாய் profit-க்கும் market தர்ற விலை பாதி ஆச்சு.",'text-anchor="middle" font-size="13"');
+ put("c-gap",svg(W,H,out));})();
+
+/* segments */
+put("c-segdonut",donut([{label:"AI Systems",v:773.1,col:C.water},{label:"HPC",v:248.2,col:C.water2},{label:{en:"Private cloud & HCI",ta:"Private cloud, HCI"},v:244.8,col:C.acc},{label:{en:"Others (≈)",ta:"மற்றவை (≈)"},v:57.2,col:C.grey}],"₹1,323",{en:"Q2 cr",ta:"Q2 கோடி"}));
+put("c-segbars",hbars([{label:"AI Systems",v:773.1,col:C.water},{label:"HPC",v:248.2,col:C.water2},{label:{en:"Private cloud & HCI",ta:"Private cloud, HCI"},v:244.8,col:C.accS},{label:{en:"Others (≈)",ta:"மற்றவை (≈)"},v:57.2,col:C.grey}],{dec:1}));
+put("c-aiq",bars({cats:Q3,series:[{name:{en:"AI Systems",ta:"AI Systems"},vals:[66.2,510.5,773.1],col:C.water},{name:{en:"Non-AI",ta:"AI இல்லாதது"},vals:[237.5,309.2,550.2],col:C.acc}]}));
+put("c-aish",lines({cats:["FY24","Q1 FY26","Q2 FY26 ≈","Q1 FY27 ≈","Q2 FY27"],series:[{name:{en:"AI share of revenue",ta:"Revenue-ல AI பங்கு"},vals:[7,29,21.8,62.3,58.4],col:C.water}],suf:"%",min:0,max:75}));
+put("c-top10",bars({cats:["FY26","H1 FY27"],series:[{name:{en:"Top-10 customers",ta:"Top-10 customers"},vals:[76.4,85.2],col:C.bad},{name:{en:"Repeat customers",ta:"பழைய customers"},vals:[75.6,94.4],col:C.water}],suf:"%",w:460}));
+(function(){var W=560,H=230,g=[["🏛️",{en:"Government & defence",ta:"அரசு, defence"}],["🔬",{en:"Academia & research labs",ta:"Academia, research labs"}],["🏦",{en:"Banks & financial firms",ta:"Banks, financial firms"}],["☁️",{en:"Large enterprises & cloud providers",ta:"பெரிய companies, cloud providers"}]],out="";
+ g.forEach(function(x,i){var cx=10+(i%2)*275,cy=10+Math.floor(i/2)*92;out+='<rect x="'+cx+'" y="'+cy+'" width="265" height="80" rx="12" style="fill:'+C.card2+';stroke:'+C.water+';stroke-width:2.5"/><text x="'+(cx+14)+'" y="'+(cy+52)+'" font-size="32">'+x[0]+'</text>'+tx(cx+62,cy+46,x[1].en,x[1].ta,'font-size="13.5"');});
+ out+=tx(W/2,H-12,"Top-10 = 85.2% of H1 revenue · 94.4% from repeat buyers","Top-10 = H1 revenue-ல 85.2% · 94.4% பழைய customers",'text-anchor="middle" font-size="13"');
+ put("c-cuspic",svg(W,H,out));})();
+
+/* financials */
+put("c-fin3",bars({cats:Q3,series:[{name:"Revenue",vals:[303.7,819.7,1323.3],col:C.water2},{name:"EBITDA",vals:[45.5,120.5,197.3],col:C.water},{name:"PAT",vals:[31.4,85.3,136.7],col:C.acc}]}));
+put("c-leak",hbars([{label:"Revenue",v:335.7},{label:"EBITDA",v:334.0},{label:"PAT",v:334.8},{label:{en:"Diluted EPS",ta:"Diluted EPS"},v:324.2,col:C.accS}],{suf:"%",dec:1}));
+put("c-mband",lines({cats:Q4,series:[{name:"EBITDA margin",vals:[15.0,14.2,14.7,14.9],col:C.water}],suf:"%",min:13,max:16,band:[14,14.5],bandLabel:{en:"Earlier guide 14–14.5%",ta:"முன் guidance 14–14.5%"}}));
+(function(){var W=600,H=200,mx=4000,x=function(v){return 150+v/mx*400;},out="";
+ out+=tx(10,50,"FY27 guide","FY27 guidance",'font-size="13"')+'<rect x="150" y="30" width="'+(x(2143)-150)+'" height="32" rx="6" style="fill:'+C.water+'"/><rect x="'+x(2143)+'" y="30" width="'+(x(4000)-x(2143))+'" height="32" rx="6" style="fill:'+C.card2+';stroke:'+C.water+';stroke-width:2;stroke-dasharray:6 4"/>';
+ out+='<rect x="158" y="38" width="120" height="16" rx="4" style="fill:'+C.water3+'"/>'+tx(218,51,"H1 done ₹2,143","H1 முடிஞ்சது ₹2,143",'text-anchor="middle" font-size="11.5"')+tx((x(2143)+x(4000))/2,51,"H2 needed ₹1,857","H2 தேவை ₹1,857",'text-anchor="middle" font-size="12"');
+ out+=tx(10,118,"Book + L1","Book + L1",'font-size="13"')+'<rect x="150" y="98" width="'+(x(2629)-150)+'" height="32" rx="6" style="fill:'+C.acc+'"/><rect x="'+x(2629)+'" y="98" width="'+(x(3281.5)-x(2629))+'" height="32" rx="6" style="fill:'+C.water2+'"/>'+tx(160+ (x(2629)-150)/2,119,"Firm ₹2,629","உறுதி ₹2,629",'text-anchor="middle" font-size="12"')+tx((x(2629)+x(3281.5))/2,150,"L1 ₹652",null,'text-anchor="middle" font-size="12"');
+ out+='<line x1="'+x(4000)+'" x2="'+x(4000)+'" y1="22" y2="140" style="stroke:'+C.ink+';stroke-width:2;stroke-dasharray:4 3"/>'+tx(x(4000),16,"₹4,000",null,'text-anchor="end" font-size="12"');
+ out+=tx(10,186,"Book + L1 ≈ 1.8× what H2 needs","Book + L1 ≈ H2 தேவையை விட 1.8×",'font-size="13"');
+ put("c-guide",svg(W,H,out));})();
+
+/* metrics */
+put("c-mg",hbars([{label:"Revenue",v:335.7},{label:"AI Systems",v:1068.1,col:C.water},{label:{en:"Non-AI",ta:"AI இல்லாதது"},v:131.7,col:C.acc},{label:"EBITDA",v:334.0},{label:"PAT",v:334.8,col:C.good},{label:"EPS",v:324.2,col:C.accS}],{suf:"%",dec:0}));
+put("c-mp",lines({cats:Q4,series:[{name:"EBITDA %",vals:[15.0,14.2,14.7,14.9],col:C.water},{name:"PAT %",vals:[10.3,9.0,10.4,10.3],col:C.accS}],suf:"%",min:8,max:16}));
+put("c-me",hbars([{label:{en:"Net WC cycle",ta:"Net WC cycle"},v:94,col:C.water},{label:{en:"Inventory days",ta:"Inventory days"},v:117,col:C.bad},{label:{en:"Guide: low end",ta:"Guidance: குறைந்த"},v:90,col:C.grey},{label:{en:"Guide: high end",ta:"Guidance: அதிக"},v:110,col:C.grey}],{suf:" d",dec:0}));
+(function(){var W=620,H=290,st=[[{en:"Active pipeline",ta:"Active pipeline"},"₹11,152",560,C.water3],[{en:"L1 (won, unsigned)",ta:"L1 (ஜெயிச்சது)"},"₹652.5",320,C.water2],[{en:"Firm order book",ta:"உறுதி order book"},"₹2,629",420,C.acc],[{en:"Billed in Q2",ta:"Q2-ல bill ஆனது"},"₹1,323",250,C.good]],out="";
+ st.forEach(function(s,i){var y=12+i*66,w=s[2],x=(W-w)/2;out+='<path d="M'+x+' '+y+' H'+(x+w)+' L'+(x+w-16)+' '+(y+54)+' H'+(x+16)+'Z" style="fill:'+s[3]+';stroke:'+C.ink2+';stroke-width:1.5"/>'+tx(W/2,y+24,s[0].en,s[0].ta,'text-anchor="middle" font-size="13.5"')+tx(W/2,y+44,s[1]+" cr",s[1]+" கோடி",'text-anchor="middle" font-size="15"');});
+ put("c-funnel",svg(W,H,out));})();
+put("c-ml",bars({cats:["Jun 2026","Sep 2026"],series:[{name:{en:"Net cash (+) / net debt (−)",ta:"Net cash (+) / net debt (−)"},vals:[-199.9,13.6],col:C.good}],w:460}));
+
+/* cash bridge (waterfall) */
+(function(){var W=640,H=300,mn=-250,mx=1050,y=function(v){return 30+(mx-v)/(mx-mn)*210;},out="",steps=[
+ [{en:"Jun: net debt",ta:"Jun: net debt"},0,-199.9,C.bad],[{en:"+ QIP net cash",ta:"+ QIP net பணம்"},-199.9,977.5,C.good],[{en:"− Stock, receivables, other (net of Q2 profit)",ta:"− Stock, receivables, மற்றவை"},977.5,13.6,C.accS],[{en:"Sep: net cash",ta:"Sep: net cash"},0,13.6,C.water]];
+ out+='<line x1="40" x2="'+(W-10)+'" y1="'+y(0)+'" y2="'+y(0)+'" style="stroke:'+C.ink2+';stroke-width:1.5"/>'+tx(34,y(0)+4,"0",null,'text-anchor="end" font-size="11"');
+ var vals=["−199.9","+1,177.4","−963.9","+13.6"];
+ steps.forEach(function(s,i){var x=60+i*145,a=y(Math.max(s[1],s[2])),b=y(Math.min(s[1],s[2]));out+='<rect x="'+x+'" y="'+a+'" width="100" height="'+Math.max(3,b-a)+'" rx="5" style="fill:'+s[3]+'"/>'+tx(x+50,a-6,vals[i],null,'text-anchor="middle" font-size="13"');
+  var lab=T(s[0]);out+=tx(x+50,H-30,lab.en.length>22?lab.en.slice(0,22)+"…":lab.en,lab.ta.length>22?lab.ta.slice(0,22)+"…":lab.ta,'text-anchor="middle" font-size="11.5"');
+  if(i<3)out+='<line x1="'+(x+100)+'" x2="'+(x+145)+'" y1="'+y(s[2])+'" y2="'+y(s[2])+'" style="stroke:'+C.ink2+';stroke-dasharray:4 3"/>';});
+ out+=tx(W/2,H-8,"₹ cr · QIP net = ₹774.4 used + ≈₹403 unused","₹ கோடி · QIP net = ₹774.4 பயன்பட்டது + ≈₹403 மீதி",'text-anchor="middle" font-size="12"');
+ put("c-bridge",'<div style="min-width:520px">'+svg(W,H,out)+'</div>');})();
+(function(){var W=560,H=140,x=function(v){return 30+v/140*(W-60);},out='<rect x="30" y="50" width="'+(W-60)+'" height="18" rx="9" style="fill:'+C.card2+';stroke:'+C.line+'"/><rect x="'+x(90)+'" y="50" width="'+(x(110)-x(90))+'" height="18" style="fill:'+C.good+';opacity:.55"/>';
+ out+=tx((x(90)+x(110))/2,90,"Guided 90–110 days","Guidance 90–110 நாள்",'text-anchor="middle" font-size="12"');
+ [[94,{en:"Net WC 94",ta:"Net WC 94"},C.water,-1],[117,{en:"Inventory 117",ta:"Inventory 117"},C.bad,1]].forEach(function(m){var xx=x(m[0]);out+='<polygon points="'+xx+',46 '+(xx-8)+',32 '+(xx+8)+',32" style="fill:'+m[2]+'"/>'+tx(xx+m[3]*6,26,m[1].en,m[1].ta,'text-anchor="'+(m[3]<0?"end":"start")+'" font-size="13"');});
+ [0,30,60,90,120].forEach(function(v){out+=tx(x(v),120,v+"",null,'text-anchor="middle" font-size="11"');});
+ put("c-wcd",svg(W,H,out));})();
+put("c-ret",bars({cats:["ROE","ROCE"],series:[{name:"%",vals:[31.4,38.6],col:C.good}],suf:"%",w:420,h:240}));
+
+/* QIP */
+(function(){var W=620,H=330,lo=2800,hi=6000,y=function(v){return 20+(hi-v)/(hi-lo)*270;},out='<line x1="200" x2="200" y1="14" y2="300" style="stroke:'+C.water+';stroke-width:6;stroke-linecap:round"/>';
+ var L=[[5813,{en:"52-wk high (after QIP)",ta:"52-wk high (QIP-க்கு பின்)"},C.ink2],[5219,{en:"Close on 17 Aug (QIP opens)",ta:"17 Aug close (QIP ஆரம்பம்)"},C.ink2],[4885.9,{en:"Floor price (SEBI formula)",ta:"Floor price (SEBI formula)"},C.warn],[4790,{en:"Issue price to funds",ta:"Funds-க்கு issue விலை"},C.water],[3848,{en:"Now (9 Nov) · −19.7% vs issue",ta:"இப்போ (9 Nov) · issue-ஐ விட −19.7%"},C.bad],[2920,{en:"52-wk low",ta:"52-wk low"},C.ink2]];
+ L.forEach(function(l,i){var yy=y(l[0]);var off=(i===3?10:(i===2?-8:0));out+='<line x1="180" x2="220" y1="'+yy+'" y2="'+yy+'" style="stroke:'+l[2]+';stroke-width:5"/>'+tx(170,yy+5+off,"₹"+fmt(l[0],l[0]%1?1:0),null,'text-anchor="end" font-size="14"')+tx(232,yy+5+off,l[1].en,l[1].ta,'font-size="13.5"');});
+ out+='<rect x="186" y="'+y(4790)+'" width="28" height="'+(y(3848)-y(4790))+'" style="fill:'+C.bad+';opacity:.35"/>';
+ put("c-ladder",svg(W,H,out));})();
+put("c-allot",hbars([{label:{en:"ICICI Pru MF (all schemes)",ta:"ICICI Pru MF (எல்லா schemes)"},v:16.67,col:C.water},{label:"Nomura India Inv. Fund",v:13.10,col:C.water2},{label:{en:"Edelweiss MF (schemes)",ta:"Edelweiss MF (schemes)"},v:8.33,col:C.water2},{label:"Invesco India Flexi Cap",v:6.25,col:C.water2},{label:{en:"Others (each <5%)",ta:"மற்றவங்க (ஒவ்வொருத்தரும் <5%)"},v:55.65,col:C.grey}],{suf:"%",dec:2,L:220}));
+put("c-qipuse",donut([{label:{en:"Used (mostly working capital)",ta:"பயன்பட்டது (WC)"},v:774.4,col:C.water},{label:{en:"Still unused",ta:"இன்னும் மீதி"},v:403,col:C.acc},{label:{en:"Issue costs (≈)",ta:"Issue செலவு (≈)"},v:22.6,col:C.grey}],"₹1,200",{en:"cr raised",ta:"கோடி"}));
+(function(){var ev=[["1 Jul",{en:"Board approves",ta:"Board ஒப்புதல்"}],["1 Aug",{en:"Shareholders OK",ta:"Shareholders OK"}],["10–12 Aug",{en:"HK, Singapore meets",ta:"HK, Singapore meets"}],["17 Aug",{en:"Opens · floor ₹4,885.9",ta:"திறப்பு · floor ₹4,885.9"}],["20 Aug",{en:"Allotted at ₹4,790",ta:"₹4,790-ல allot"}],["25 Aug",{en:"Stock −4%",ta:"Share −4%"}],["30 Sep",{en:"₹774 cr used",ta:"₹774 கோடி செலவு"}],["9 Nov",{en:"₹3,848 (−20%)",ta:"₹3,848 (−20%)"}]];
+ var W=860,o='<line x1="30" x2="830" y1="56" y2="56" style="stroke:'+C.water+';stroke-width:4"/>';
+ ev.forEach(function(e,i){var x=50+i*110;o+='<circle cx="'+x+'" cy="56" r="9" style="fill:'+(i===7?C.bad:i===4?C.good:C.acc)+';stroke:'+C.ink+';stroke-width:1.5"/>'+tx(x,36,e[0],null,'text-anchor="middle" font-size="12"')+tx(x,86+(i%2)*20,e[1].en,e[1].ta,'text-anchor="middle" font-size="11.5"');});
+ put("c-qiptl",'<div style="min-width:700px">'+svg(W,120,o)+'</div>');})();
+
+/* valuation */
+(function(){var W=560,H=130,mn=40,mx=140,xp=function(v){return 30+(v-mn)/(mx-mn)*(W-60);},o='<defs><linearGradient id="pg"><stop offset="0" stop-color="'+C.good+'"/><stop offset=".5" stop-color="'+C.acc+'"/><stop offset="1" stop-color="'+C.bad+'"/></linearGradient></defs><rect x="30" y="56" width="'+(W-60)+'" height="14" rx="7" style="fill:url(#pg)"/>';
+ [[51.5,"H1×2 51.5×","H1×2 51.5×",1],[62.5,"Now 62.5×","இப்போ 62.5×",0],[105,"QIP ~105×","QIP ~105×",1],[127,"High ~127×","High ~127×",0]].forEach(function(m){var xx=xp(m[0]);o+='<line x1="'+xx+'" x2="'+xx+'" y1="'+(m[3]?70:42)+'" y2="'+(m[3]?92:56)+'" style="stroke:'+C.ink+';stroke-width:3"/>'+tx(xx,m[3]?108:34,m[1],m[2],'text-anchor="middle" font-size="12.5"');});
+ put("c-pestrip",svg(W,H,o));
+ var lo=2920,hi=5813,cur=3848,x=function(v){return 30+(v-lo)/(hi-lo)*(W-60);},out='<rect x="30" y="50" width="'+(W-60)+'" height="16" rx="8" style="fill:'+C.card2+';stroke:'+C.line+'"/><rect x="30" y="50" width="'+(x(cur)-30)+'" height="16" rx="8" style="fill:'+C.water2+'"/>';
+ out+='<polygon points="'+x(cur)+',44 '+(x(cur)-9)+',30 '+(x(cur)+9)+',30" style="fill:'+C.ink+'"/>'+tx(x(cur),24,"₹3,848",null,'text-anchor="middle" font-size="14"');
+ out+='<line x1="'+x(4790)+'" x2="'+x(4790)+'" y1="46" y2="72" style="stroke:'+C.bad+';stroke-width:3"/>'+tx(x(4790),86,"QIP ₹4,790",null,'text-anchor="middle" font-size="11.5"');
+ out+=tx(30,90,"₹2,920",null,'font-size="13"')+tx(W-30,90,"₹5,813",null,'text-anchor="end" font-size="13"');
+ out+=tx(W/2,114,"+32% from low · −34% from high","low-ல இருந்து +32% · high-ல இருந்து −34%",'text-anchor="middle" font-size="12"');
+ put("c-52w",svg(W,H,out));})();
+
+/* ================= Business model: rack picture ================= */
+var RU={
+ gpu:{t:{en:"AI GPU server",ta:"AI GPU server"},b:{en:"8 GPUs per box, built on NVIDIA and other chips. AI Systems = ₹773 cr, 58.4% of Q2 revenue, up 1,068% YoY.",ta:"ஒரு box-ல 8 GPUs, NVIDIA மற்ற chips வெச்சு. AI Systems = ₹773 கோடி, Q2 revenue-ல 58.4%, YoY 1,068% ஏற்றம்."}},
+ hpc:{t:{en:"HPC compute nodes",ta:"HPC compute nodes"},b:{en:"Many CPU nodes linked into a supercomputer for weather, research and defence. HPC = ₹248 cr in Q2. 600+ systems installed so far.",ta:"நிறைய CPU nodes சேர்த்து supercomputer — weather, research, defence-க்கு. Q2 HPC = ₹248 கோடி. இதுவரை 600+ systems."}},
+ cloud:{t:{en:"Private cloud / HCI nodes",ta:"Private cloud / HCI nodes"},b:{en:"Compute + storage in one box, run by Netweb's own Tyrone Skylus software, so data stays inside the customer. ₹245 cr in Q2.",ta:"Compute + storage ஒரே box-ல, Netweb-ஓட Tyrone Skylus software ஓட்டுது — data customer கிட்டயே இருக்கும். Q2-ல ₹245 கோடி."}},
+ sto:{t:{en:"Storage",ta:"Storage"},b:{en:"Fast storage feeds data to the GPUs. Part of 'Others' (≈₹57 cr with workstations and services).",ta:"GPUs-க்கு வேகமா data கொடுக்குற storage. 'மற்றவை'-ல ஒரு பகுதி (workstations, services சேர்த்து ≈₹57 கோடி)."}},
+ net:{t:{en:"High-speed network switch",ta:"High-speed network switch"},b:{en:"Links GPUs so thousands work as one machine. Interconnect design is a key skill for big clusters.",ta:"ஆயிரக்கணக்கான GPUs-ஐ ஒரே machine மாதிரி இணைக்குது. பெரிய clusters-க்கு இந்த design முக்கியம்."}},
+ cool:{t:{en:"Liquid cooling (CDU)",ta:"Liquid cooling (CDU)"},b:{en:"Coolant pipes carry heat off the chips. Netweb is investing in direct liquid cooling for dense AI and exascale systems.",ta:"Coolant pipes chips-ல இருந்து சூட்டை எடுக்குது. Dense AI, exascale systems-க்கு direct liquid cooling-ல Netweb invest பண்ணுது."}},
+ pwr:{t:{en:"Power (PDUs)",ta:"Power (PDUs)"},b:{en:"An AI rack can draw as much power as dozens of homes; power design partners include Vertiv.",ta:"ஒரு AI rack டஜன் கணக்கான வீடுகள் அளவுக்கு power எடுக்கும்; power design partners-ல Vertiv உண்டு."}},
+ cost:{t:{en:"Bought-in chips = biggest cost",ta:"வாங்குற chips = பெரிய செலவு"},b:{en:"About 85% of revenue goes out as costs, mostly chips and memory. Memory prices reportedly rose 200%+, which can squeeze the ~15% margin.",ta:"Revenue-ல ~85% செலவா போகுது, பெரும்பாலும் chips, memory. Memory விலை 200%+ ஏறினதா தகவல் — ~15% margin-ஐ அழுத்தலாம்."}}};
+(function(){var host=document.getElementById("rackPic");if(!host)return;var I=C.ink,o="",units=[];
+ o+='<defs><linearGradient id="rk" x1="0" x2="1"><stop offset="0" stop-color="#E9E4F7"/><stop offset="1" stop-color="#F7F3FF"/></linearGradient></defs>';
+ o+='<rect x="0" y="0" width="760" height="520" style="fill:#FFF1DE"/>';
+ o+='<rect x="250" y="20" width="260" height="480" rx="10" style="fill:#2A2357;stroke:'+I+';stroke-width:3"/>';
+ function slot(y,h,fill){return '<rect x="266" y="'+y+'" width="228" height="'+h+'" rx="5" style="fill:'+fill+';stroke:'+I+';stroke-width:2"/>';}
+ function leds(y,n,col){var s="";for(var i=0;i<n;i++){var d=(0.6+(i%3)*0.35).toFixed(2);s+='<circle cx="'+(278+i*11)+'" cy="'+y+'" r="3.2" style="fill:'+col+'"><animate attributeName="opacity" values="1;.25;1" dur="'+d+'s" begin="-'+(i*0.2).toFixed(1)+'s" repeatCount="indefinite"/></circle>';}return s;}
+ var NUMS={};function unit(k,n,bx,by,lab,side,inner){units.push(k);NUMS[k]=n;var lx=side<0?bx-24:bx+24;
+  o+='<g class="runit" data-k="'+k+'" tabindex="0" role="button">'+inner+'<line x1="'+(side<0?250:510)+'" x2="'+bx+'" y1="'+by+'" y2="'+by+'" style="stroke:'+C.ink2+';stroke-width:2;stroke-dasharray:4 3"/><circle class="rb" cx="'+bx+'" cy="'+by+'" r="15" style="fill:'+C.acc+';stroke:'+C.accS+';stroke-width:2.5"/><text x="'+bx+'" y="'+(by+6)+'" text-anchor="middle" style="font:800 15px Catamaran,sans-serif;fill:'+I+'">'+n+'</text>'+tx(lx,by+5,lab.en,lab.ta,'font-size="14" text-anchor="'+(side<0?"end":"start")+'"')+'</g>';}
+ unit("net",5,560,48,{en:"Network switch",ta:"Network switch"},1,slot(34,26,"#4B4290")+leds(47,16,"#7CFFB2"));
+ var gpu=slot(70,120,"#5B50B0");for(var g=0;g<8;g++)gpu+='<rect x="'+(276+g*26)+'" y="82" width="20" height="58" rx="3" style="fill:#2E9E5B;stroke:'+I+';stroke-width:1.5"/>';gpu+=slot(146,36,"#3E3590")+leds(164,8,"#7CFFB2");
+ unit("gpu",1,200,110,{en:"AI GPU servers",ta:"AI GPU servers"},-1,gpu);
+ var hpc="";for(var h=0;h<4;h++)hpc+=slot(198+h*24,18,"#6A5FC8")+leds(207+h*24,6,"#FFD27A");
+ unit("hpc",2,560,232,{en:"HPC nodes",ta:"HPC nodes"},1,hpc);
+ var cl=slot(298,44,"#8378D6")+'<text x="380" y="326" text-anchor="middle" style="font:800 13px Catamaran,sans-serif;fill:'+I+'">Tyrone Skylus</text>';
+ unit("cloud",3,200,320,{en:"Private cloud nodes",ta:"Private cloud nodes"},-1,cl);
+ var st=slot(350,40,"#A79FE3");for(var d=0;d<12;d++)st+='<rect x="'+(274+d*18)+'" y="356" width="13" height="28" rx="2" style="fill:#E9E4F7;stroke:'+I+';stroke-width:1"/>';
+ unit("sto",4,560,370,{en:"Storage",ta:"Storage"},1,st);
+ unit("pwr",7,200,430,{en:"Power (PDUs)",ta:"Power (PDUs)"},-1,slot(400,26,"#3E3590")+'<text x="380" y="419" text-anchor="middle" style="font:800 16px sans-serif">⚡⚡⚡</text>');
+ /* cooling loop */
+ o+='<path id="cl1" d="M520 470 V90 H500 M500 150 H520" style="fill:none"/>';
+ var pipe='<path d="M520 470 V80" style="fill:none;stroke:#7BB6E8;stroke-width:10"/><path d="M240 80 V470" style="fill:none;stroke:#E88F7B;stroke-width:10"/>'+'<rect x="440" y="436" width="120" height="56" rx="8" style="fill:#D7ECFA;stroke:'+I+';stroke-width:2"/><text x="500" y="470" text-anchor="middle" style="font:800 14px Catamaran,sans-serif;fill:'+I+'">CDU</text>';
+ o+='<path id="cU" d="M520 470 V80" style="fill:none"/><path id="cD" d="M240 80 V470" style="fill:none"/>';
+ unit("cool",6,640,464,{en:"Liquid cooling",ta:"Liquid cooling"},1,pipe);
+ for(var i=0;i<6;i++){o+='<circle r="5" style="fill:#1E6FD9"><animateMotion dur="4s" begin="-'+(i*0.66).toFixed(2)+'s" repeatCount="indefinite"><mpath href="#cU"/></animateMotion></circle><circle r="5" style="fill:#C2410C"><animateMotion dur="4s" begin="-'+(i*0.66).toFixed(2)+'s" repeatCount="indefinite"><mpath href="#cD"/></animateMotion></circle>';}
+ /* cost tag */
+ unit("cost",8,200,382,{en:"Chips bought in",ta:"வாங்குற chips"},-1,'<rect x="20" y="180" width="150" height="40" rx="8" style="fill:'+C.card2+';stroke:'+C.accS+';stroke-width:2"/><text x="95" y="206" text-anchor="middle" style="font:800 13px Catamaran,sans-serif;fill:'+I+'">GPU · CPU · RAM</text>');
+ o+=tx(380,512,"Netweb designs & builds the rack · chips are bought in","Rack design, build — Netweb · chips வெளியில வாங்குறாங்க",'text-anchor="middle" font-size="13"');
+ host.innerHTML=svg(760,520,o,'aria-label="Animated AI server rack with numbered parts"');
+ var sv=host.querySelector("svg"),lg=document.getElementById("rackLegend");
+ units.forEach(function(k){var n=NUMS[k];var b=document.createElement("button");b.type="button";b.dataset.k=k;b.innerHTML='<b>'+n+'</b> <span class="en">'+esc(RU[k].t.en)+'</span><span class="ta">'+esc(RU[k].t.ta)+'</span>';lg.appendChild(b);});
+ [].slice.call(lg.children).sort(function(a,b){return +a.querySelector("b").textContent - +b.querySelector("b").textContent;}).forEach(function(b){lg.appendChild(b);});
+ function pick(k){var u=RU[k];document.getElementById("rackInfoT").innerHTML='<span class="en">'+esc(u.t.en)+'</span><span class="ta">'+esc(u.t.ta)+'</span>';document.getElementById("rackInfoB").innerHTML='<p style="margin:0"><span class="en">'+esc(u.b.en)+'</span><span class="ta">'+esc(u.b.ta)+'</span></p>';
+  sv.querySelectorAll(".runit").forEach(function(g){g.querySelector(".rb").style.fill=g.dataset.k===k?C.water3:C.acc;});lg.querySelectorAll("button").forEach(function(b){b.classList.toggle("on",b.dataset.k===k);});}
+ sv.querySelectorAll(".runit").forEach(function(g){g.addEventListener("click",function(){pick(g.dataset.k);});g.addEventListener("keydown",function(e){if(e.key==="Enter"||e.key===" "){e.preventDefault();pick(g.dataset.k);}});});
+ lg.addEventListener("click",function(e){var b=e.target.closest("button[data-k]");if(b)pick(b.dataset.k);});
+ var pb=document.getElementById("rackPlay"),run=true;function setRun(r){run=r;try{r?sv.unpauseAnimations():sv.pauseAnimations();}catch(e){}pb.innerHTML=r?'<span class="en">⏸ Pause</span><span class="ta">⏸ நிறுத்து</span>':'<span class="en">▶ Play</span><span class="ta">▶ ஓட்டு</span>';}
+ pb.onclick=function(){setRun(!run);};try{if(window.matchMedia("(prefers-reduced-motion: reduce)").matches)setRun(false);}catch(e){}
+})();
+
+/* ================= flow map (desktop + phone) ================= */
+var FLOW={
+ inp:[["chips",{en:"GPUs & CPUs",ta:"GPUs, CPUs"},{en:"NVIDIA, AMD, Intel — bought in",ta:"NVIDIA, AMD, Intel — வாங்குறது"},"🧠"],["mem",{en:"Memory & storage",ta:"Memory, storage"},{en:"Prices up 200%+ (reported)",ta:"விலை 200%+ ஏற்றம்"},"💾"],["rnd",{en:"Own R&D",ta:"சொந்த R&D"},{en:"128 engineers · 18 patents",ta:"128 engineers · 18 patents"},"🛠️"],["cap",{en:"Working capital",ta:"Working capital"},{en:"QIP ₹1,200 cr · 94-day cycle",ta:"QIP ₹1,200 கோடி · 94 நாள்"},"💰"]],
+ out:[["ai",{en:"AI Systems",ta:"AI Systems"},{en:"₹773 cr · 58.4%",ta:"₹773 கோடி · 58.4%"},"🤖"],["hpcp",{en:"HPC",ta:"HPC"},{en:"₹248 cr · 18.8%",ta:"₹248 கோடி · 18.8%"},"🌀"],["pc",{en:"Private cloud & HCI",ta:"Private cloud, HCI"},{en:"₹245 cr · 18.5%",ta:"₹245 கோடி · 18.5%"},"☁️"],["oth",{en:"Others (≈)",ta:"மற்றவை (≈)"},{en:"₹57 cr · workstations etc.",ta:"₹57 கோடி · workstations"},"🖥️"]],
+ ch:[["tend",{en:"Govt tenders (L1)",ta:"அரசு tenders (L1)"},{en:"L1 ₹652.5 cr pending",ta:"L1 ₹652.5 கோடி"},"📜"],["dir",{en:"Direct deals",ta:"நேரடி deals"},{en:"Repeat buyers 94.4%",ta:"பழைய buyers 94.4%"},"🤝"],["svc",{en:"Install & support",ta:"Install, support"},{en:"10–16 weeks to deliver",ta:"10–16 வாரத்துல delivery"},"🔧"]],
+ cu:[["gov",{en:"Govt & defence",ta:"அரசு, defence"},{en:"Supercomputers, AI",ta:"Supercomputers, AI"},"🏛️"],["acad",{en:"Research & academia",ta:"Research, academia"},{en:"IITs, labs, NSM",ta:"IITs, labs, NSM"},"🔬"],["ent",{en:"BFSI & enterprises",ta:"BFSI, enterprises"},{en:"Private cloud, AI",ta:"Private cloud, AI"},"🏦"],["csp",{en:"Cloud providers",ta:"Cloud providers"},{en:"GPU clusters",ta:"GPU clusters"},"☁️"]]};
+var FINFO={hub:{en:"Netweb hub (Faridabad, Haryana): designs and manufactures high-end computing systems under the Tyrone brand; 600+ supercomputers and 10,000+ GPU systems installed. Firm order book ₹2,629 cr; top-10 customers 85% of revenue.",ta:"Netweb hub (Faridabad, Haryana): Tyrone brand-ல high-end computing systems design, manufacture; 600+ supercomputers, 10,000+ GPU systems. Order book ₹2,629 கோடி; top-10 customers revenue-ல 85%."},
+ rev:{en:"Revenue ₹1,323.3 cr in Q2 FY27, 4.4× a year ago.",ta:"Q2 FY27 revenue ₹1,323.3 கோடி — ஒரு வருஷம் முன்னாடியை விட 4.4 மடங்கு."},
+ cost:{en:"Costs ≈ ₹1,126 cr (85% of revenue) — mostly chips, memory and parts bought in.",ta:"செலவு ≈ ₹1,126 கோடி (revenue-ல 85%) — பெரும்பாலும் வாங்குற chips, memory, parts."},
+ ebitda:{en:"Operating EBITDA ₹197.3 cr, 14.9% margin — about the same as a year ago.",ta:"Operating EBITDA ₹197.3 கோடி, 14.9% margin — ஒரு வருஷம் முன்னாடி மாதிரியே."},
+ oi:{en:"Other income ₹12.8 cr (mostly interest on QIP cash).",ta:"Other income ₹12.8 கோடி (பெரும்பாலும் QIP cash-ல interest)."},
+ other:{en:"Interest, depreciation and tax ≈ ₹73.4 cr together (CB derived).",ta:"Interest, depreciation, tax சேர்த்து ≈ ₹73.4 கோடி (CB கணக்கு)."},
+ pat:{en:"PAT ₹136.7 cr, 10.3% of revenue, up 334.8% YoY.",ta:"PAT ₹136.7 கோடி, revenue-ல 10.3%, YoY 334.8% ஏற்றம்."}};
+var MONEY=[["rev","Revenue","Revenue","1,323",C.water3],["cost","Costs","செலவு","−1,126",C.card2],["ebitda","EBITDA","EBITDA","197.3",C.water3],["oi","Other inc.","Other inc.","+12.8",C.card2],["other","Int/D&A/Tax","Int/D&A/Tax","−73.4",C.card2],["pat","PAT","PAT","136.7",C.acc]];
+function flowBind(id){document.querySelectorAll("#"+id+" .box").forEach(function(g){var f=function(){var i=FINFO[g.dataset.k];if(i)document.getElementById("flowInfo").innerHTML='<span class="en">'+esc(i.en)+'</span><span class="ta">'+esc(i.ta)+'</span>';};g.addEventListener("click",f);g.addEventListener("keydown",function(e){if(e.key==="Enter")f();});});}
+(function(){var W=1000,out='<defs><marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" style="fill:'+C.water+'"/></marker></defs>';
+ function box(k,x,y,w,h,t,s,ic,col){out+='<g class="box" data-k="'+k+'" tabindex="0"><rect x="'+x+'" y="'+y+'" width="'+w+'" height="'+h+'" rx="10" style="fill:'+(col||C.card2)+';stroke:'+C.water+';stroke-width:2.5"/><text x="'+(x+10)+'" y="'+(y+h/2+8)+'" font-size="22">'+ic+'</text>'+tx(x+42,y+24,t.en,t.ta,'font-size="13.5"')+tx(x+42,y+43,s.en,s.ta,'font-size="10.5"')+'</g>';FINFO[k]=FINFO[k]||{en:t.en+": "+s.en,ta:t.ta+": "+s.ta};}
+ function ar(x1,y1,x2,y2,dash){out+='<path d="M'+x1+' '+y1+' C'+((x1+x2)/2)+' '+y1+','+((x1+x2)/2)+' '+y2+','+x2+' '+y2+'" style="fill:none;stroke:'+C.water+';stroke-width:2.5'+(dash?';stroke-dasharray:7 5':'')+'" marker-end="url(#ar)"/>';}
+ out+=tx(10,22,"INPUTS","உள்ளீடு",'font-size="12"')+tx(352,22,"NETWEB","NETWEB",'font-size="12"')+tx(560,22,"PRODUCTS (Q2)","Products (Q2)",'font-size="12"')+tx(810,22,"CUSTOMERS","Customers",'font-size="12"');
+ FLOW.inp.forEach(function(b,i){box(b[0],10,34+i*76,236,60,b[1],b[2],b[3]);ar(246,64+i*76,330,190);});
+ out+='<g class="box" data-k="hub" tabindex="0"><rect x="332" y="96" width="200" height="200" rx="14" style="fill:'+C.water+';stroke:'+C.ink+';stroke-width:2.5"/><rect x="342" y="106" width="180" height="180" rx="10" style="fill:'+C.water3+'"/>'+
+   tx(432,136,"NETWEB","NETWEB",'text-anchor="middle" font-size="20"')+tx(432,158,"Faridabad · Tyrone","Faridabad · Tyrone",'text-anchor="middle" font-size="11.5"')+tx(432,190,"600+ supercomputers","600+ supercomputers",'text-anchor="middle" font-size="12"')+tx(432,210,"10,000+ GPU systems","10,000+ GPU systems",'text-anchor="middle" font-size="12"')+tx(432,240,"Order book","Order book",'text-anchor="middle" font-size="12"')+tx(432,266,"₹2,629 cr","₹2,629 கோடி",'text-anchor="middle" font-size="19"')+'</g>';
+ FLOW.out.forEach(function(b,i){box(b[0],560,34+i*76,228,60,b[1],b[2],b[3]);ar(532,196,560,64+i*76);});
+ FLOW.ch.forEach(function(b,i){box(b[0],262+i*178,330,170,58,b[1],b[2],b[3]);});ar(432,296,432,330);
+ FLOW.cu.forEach(function(b,i){box(b[0],812,34+i*76,182,60,b[1],b[2],b[3]);ar(788,64+i*76,812,64+i*76);});
+ var y0=450;out+=tx(10,y0-14,"MONEY FLOW · Q2 FY27 (₹ cr)","பண ஓட்டம் · Q2 FY27 (₹ கோடி)",'font-size="12"');
+ ar(900,334,900,y0-6,true);out+=tx(890,y0-26,"cash comes back","cash திரும்ப வருது",'font-size="10.5" text-anchor="end"');
+ MONEY.forEach(function(m,i){var x=10+i*164;out+='<g class="box" data-k="'+m[0]+'" tabindex="0"><rect x="'+x+'" y="'+y0+'" width="142" height="78" rx="10" style="fill:'+m[4]+';stroke:'+C.water+';stroke-width:2.5"/>'+tx(x+71,y0+30,m[1],m[2],'text-anchor="middle" font-size="14"')+tx(x+71,y0+60,m[3],null,'text-anchor="middle" font-size="21"')+'</g>';if(i<5)ar(x+142,y0+39,x+164,y0+39);});
+ out+=tx(10,y0+108,"EBITDA margin 14.9% · PAT margin 10.3% · PAT +334.8% YoY","EBITDA margin 14.9% · PAT margin 10.3% · PAT +334.8% YoY",'font-size="13"');
+ put("c-flow",svg(W,575,out));flowBind("c-flow");})();
+(function(){var W=400,out='<defs><marker id="arm" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" style="fill:'+C.water+'"/></marker></defs>';
+ function box(k,x,y,w,h,t,s,ic,col,fs){fs=fs||[13,10];out+='<g class="box" data-k="'+k+'" tabindex="0"><rect x="'+x+'" y="'+y+'" width="'+w+'" height="'+h+'" rx="9" style="fill:'+(col||C.card2)+';stroke:'+C.water+';stroke-width:2.2"/><text x="'+(x+7)+'" y="'+(y+h/2+7)+'" font-size="19">'+ic+'</text>'+tx(x+35,y+h/2-3,t.en,t.ta,'font-size="'+fs[0]+'"')+tx(x+35,y+h/2+13,s.en,s.ta,'font-size="'+fs[1]+'"')+'</g>';}
+ function ar(x1,y1,x2,y2,dash){out+='<path d="M'+x1+' '+y1+' C'+x1+' '+((y1+y2)/2)+','+x2+' '+((y1+y2)/2)+','+x2+' '+y2+'" style="fill:none;stroke:'+C.water+';stroke-width:2.2'+(dash?';stroke-dasharray:6 4':'')+'" marker-end="url(#arm)"/>';}
+ function head(y,en,ta){out+=tx(8,y,en,ta,'font-size="12"');}
+ head(16,"1 · INPUTS","1 · உள்ளீடு");
+ FLOW.inp.forEach(function(b,i){var x=8+(i%2)*196,yy=26+Math.floor(i/2)*64;box(b[0],x,yy,188,56,b[1],b[2],b[3],null,[12.5,8.8]);});
+ ar(102,148,170,176);ar(298,148,230,176);
+ out+='<g class="box" data-k="hub" tabindex="0"><rect x="60" y="178" width="280" height="130" rx="14" style="fill:'+C.water+';stroke:'+C.ink+';stroke-width:2.5"/><rect x="68" y="186" width="264" height="114" rx="10" style="fill:'+C.water3+'"/>'+
+   tx(200,212,"NETWEB · Faridabad","NETWEB · Faridabad",'text-anchor="middle" font-size="18"')+tx(200,236,"Order book ₹2,629 cr","Order book ₹2,629 கோடி",'text-anchor="middle" font-size="15"')+tx(200,258,"600+ supercomputers","600+ supercomputers",'text-anchor="middle" font-size="13"')+tx(200,280,"10,000+ GPU systems","10,000+ GPU systems",'text-anchor="middle" font-size="13"')+'</g>';
+ ar(200,308,200,340);head(334,"2 · WHAT IT SELLS (Q2)","2 · என்ன விக்குது (Q2)");
+ FLOW.out.forEach(function(b,i){var x=8+(i%2)*196,yy=344+Math.floor(i/2)*64;box(b[0],x,yy,188,56,b[1],b[2],b[3],null,[12.5,9]);});
+ ar(200,472,200,500);head(496,"3 · HOW IT SELLS","3 · எப்படி விக்குது");
+ FLOW.ch.forEach(function(b,i){box(b[0],8,506+i*50,384,44,b[1],b[2],b[3]);});
+ ar(200,656,200,684);head(680,"4 · WHO PAYS","4 · யார் பணம் தர்றாங்க");
+ FLOW.cu.forEach(function(b,i){box(b[0],8,690+i*50,384,44,b[1],b[2],b[3]);});
+ var y0=920;ar(380,886,380,y0-4,true);out+=tx(370,904,"cash comes back","cash திரும்ப வருது",'font-size="10.5" text-anchor="end"');
+ head(y0-8,"5 · MONEY FLOW · Q2 FY27 (₹ cr)","5 · பண ஓட்டம் · Q2 FY27 (₹ கோடி)");
+ MONEY.forEach(function(m,i){var yy=y0+i*58;out+='<g class="box" data-k="'+m[0]+'" tabindex="0"><rect x="40" y="'+yy+'" width="320" height="44" rx="9" style="fill:'+m[4]+';stroke:'+C.water+';stroke-width:2.2"/>'+tx(56,yy+28,m[1],m[2],'font-size="15"')+tx(344,yy+30,m[3],null,'text-anchor="end" font-size="20"')+'</g>';if(i<5)ar(200,yy+44,200,yy+58);});
+ out+=tx(200,y0+6*58+12,"EBITDA 14.9% · PAT 10.3% · PAT +334.8%","EBITDA 14.9% · PAT 10.3% · PAT +334.8%",'font-size="12" text-anchor="middle"');
+ put("c-flow-m",svg(W,y0+6*58+24,out));flowBind("c-flow-m");})();
+
+/* ================= Key takeaways, pillars ================= */
+function icon(k){var I={
+ grow:'<path d="M8 52 L24 36 L36 44 L56 18" style="fill:none;stroke:'+C.good+';stroke-width:6;stroke-linecap:round"/><path d="M46 16 L58 16 L58 28" style="fill:none;stroke:'+C.good+';stroke-width:6"/>',
+ chip:'<rect x="16" y="16" width="32" height="32" rx="4" style="fill:'+C.water+'"/><rect x="24" y="24" width="16" height="16" style="fill:'+C.water3+'"/><path d="M22 8v8M32 8v8M42 8v8M22 48v8M32 48v8M42 48v8M8 22h8M8 32h8M8 42h8M48 22h8M48 32h8M48 42h8" style="stroke:'+C.water+';stroke-width:3"/>',
+ cash:'<rect x="6" y="18" width="52" height="30" rx="5" style="fill:'+C.good+'"/><circle cx="32" cy="33" r="9" style="fill:'+C.bg+'"/><text x="32" y="38" text-anchor="middle" font-size="13" style="font-weight:800;fill:'+C.good+'">₹</text><path d="M20 58 L44 58" style="stroke:'+C.bad+';stroke-width:5"/>',
+ thin:'<path d="M6 40 H58" style="stroke:'+C.warn+';stroke-width:4"/><rect x="10" y="12" width="44" height="28" rx="4" style="fill:'+C.card2+';stroke:'+C.warn+';stroke-width:3"/><text x="32" y="32" text-anchor="middle" font-size="14" style="font-weight:800;fill:'+C.ink+'">15%</text>',
+ drop:'<path d="M8 14 L28 34 L38 26 L56 50" style="fill:none;stroke:'+C.bad+';stroke-width:6;stroke-linecap:round"/><path d="M46 50 L58 50 L58 38" style="fill:none;stroke:'+C.bad+';stroke-width:6"/>'};
+ return '<svg viewBox="0 0 64 64" width="56" height="56">'+I[k]+'</svg>';}
+var KEYS=[["grow",{en:"A true record quarter",ta:"உண்மையான record quarter"},{en:"Revenue ₹1,323 cr and PAT ₹137 cr, both ~4.4× YoY; H1 PAT already beats all of FY26.",ta:"Revenue ₹1,323 கோடி, PAT ₹137 கோடி — ரெண்டும் YoY ~4.4×; H1 PAT ஏற்கனவே FY26 முழுசையும் தாண்டிடுச்சு."}],
+ ["chip",{en:"AI is now the business",ta:"இப்போ AI தான் business"},{en:"AI Systems ₹773 cr = 58% of revenue (+1,068%); non-AI also +132%.",ta:"AI Systems ₹773 கோடி = revenue-ல 58% (+1,068%); AI இல்லாததும் +132%."}],
+ ["cash",{en:"QIP money went into stock",ta:"QIP பணம் stock-க்கு போச்சு"},{en:"₹1,200 cr raised in Aug; ₹774 cr used by Sep, mostly working capital. Net cash now only ₹13.6 cr.",ta:"Aug-ல ₹1,200 கோடி; Sep வரை ₹774 கோடி செலவு, பெரும்பாலும் working capital. Net cash இப்போ ₹13.6 கோடி தான்."}],
+ ["thin",{en:"Thin margin, rising chip costs",ta:"மெல்லிய margin, ஏறுற chip செலவு"},{en:"EBITDA margin 14.9% (15.0% a year ago); memory prices up 200%+ is the margin risk.",ta:"EBITDA margin 14.9% (போன வருஷம் 15.0%); memory விலை 200%+ — இது தான் margin risk."}],
+ ["drop",{en:"Price fell on mood and multiple",ta:"Mood, multiple-ஆல share விழுந்துச்சு"},{en:"−34% from the high: P/E cut from ~127× to 62.5× amid a global AI selloff; QIP buyers are −20%.",ta:"High-ல இருந்து −34%: global AI selloff-ல P/E ~127× → 62.5×; QIP வாங்கினவங்க −20%."}]];
+document.getElementById("keyCards").innerHTML=KEYS.map(function(k,i){return '<div class="card" style="display:grid;grid-template-columns:56px 1fr;gap:12px;align-items:start">'+icon(k[0])+'<div><h3>'+(i+1)+'. <span class="en">'+k[1].en+'</span><span class="ta">'+k[1].ta+'</span></h3><p style="margin:0"><span class="en">'+k[2].en+'</span><span class="ta">'+k[2].ta+'</span></p></div></div>';}).join("");
+var PIL=[[{en:"Business quality",ta:"Business தரம்"},7,{en:"Own designs, NVIDIA OEM, 94% repeat buyers; but a hardware model with ~15% EBITDA margin.",ta:"சொந்த design, NVIDIA OEM, 94% பழைய buyers; ஆனா ~15% EBITDA margin hardware model."}],
+ [{en:"Competitive advantage",ta:"போட்டி நன்மை"},6,{en:"Leading Indian-origin maker, trusted by government labs; global OEMs are far larger and chips are imported.",ta:"முன்னணி Indian-origin maker, அரசு labs நம்பிக்கை; global OEMs ரொம்ப பெருசு, chips import."}],
+ [{en:"Growth opportunity",ta:"வளர்ச்சி வாய்ப்பு"},9,{en:"Pipeline ₹11,152 cr; IndiaAI, NSM 2.0, sovereign cloud all early in India.",ta:"Pipeline ₹11,152 கோடி; IndiaAI, NSM 2.0, sovereign cloud — India-ல எல்லாம் ஆரம்ப நிலை."}],
+ [{en:"Financial strength",ta:"நிதி பலம்"},6,{en:"ROE 31%, net cash after QIP; but growth eats cash (117 inventory days) and FY26 OCF was only 0.83× PAT.",ta:"ROE 31%, QIP-க்கு பின் net cash; ஆனா growth cash-ஐ சாப்பிடுது (117 inventory days), FY26 OCF PAT-ல 0.83× தான்."}],
+ [{en:"Valuation",ta:"Valuation"},4,{en:"62.5× TTM, ~55× FY27 CB est. — cheaper than before, still rich for hardware.",ta:"62.5× TTM, ~55× FY27 CB est. — முன்னாடியை விட மலிவு, hardware-க்கு இன்னும் அதிகம்."}],
+ [{en:"Risk & reward",ta:"Risk, reward"},5,{en:"85% top-10 concentration, memory costs, AI-cycle mood; reward if orders keep compounding.",ta:"Top-10-ல 85%, memory செலவு, AI-cycle mood; orders தொடர்ந்து வளர்ந்தா reward."}]];
+document.getElementById("pilCards").innerHTML=PIL.map(function(p){return '<div class="card"><h3><span class="en">'+p[0].en+'</span><span class="ta">'+p[0].ta+'</span> · '+p[1]+'/10</h3><div style="height:10px;border-radius:5px;background:'+C.card2+';border:1.5px solid '+C.line+'"><div style="height:100%;width:'+p[1]*10+'%;background:'+(p[1]>=8?C.good:p[1]>=6?C.acc:C.bad)+';border-radius:4px"></div></div><p style="margin:8px 0 0"><span class="en">'+p[2].en+'</span><span class="ta">'+p[2].ta+'</span></p></div>';}).join("");
+(function(){var W=640,H=340,out='<polygon points="40,90 320,14 600,90" style="fill:'+C.acc+';stroke:'+C.accS+';stroke-width:4"/>'+tx(320,66,"CB 6 Pillars · 37 / 60","CB 6 தூண்கள் · 37 / 60",'text-anchor="middle" font-size="20"')+'<rect x="40" y="90" width="560" height="14" style="fill:'+C.accS+'"/>';
+ PIL.forEach(function(p,i){var x=70+i*88,h=p[1]*20,y=290-h;out+='<rect x="'+x+'" y="104" width="56" height="186" style="fill:'+C.card2+';stroke:'+C.line+'"/><rect x="'+x+'" y="'+(104+186-h*0.93)+'" width="56" height="'+h*0.93+'" style="fill:'+(p[1]>=8?C.good:p[1]>=6?C.water2:C.bad)+'"/>'+'<rect x="'+(x+12)+'" y="'+(104+186-h*0.93+6)+'" width="32" height="26" rx="5" style="fill:'+C.bg+'"/>'+tx(x+28,104+186-h*0.93+26,p[1]+"",null,'text-anchor="middle" font-size="18"')+tx(x+28,312,p[0].en.split(" ")[0],p[0].ta.split(" ")[0],'text-anchor="middle" font-size="11.5"');});
+ out+='<rect x="30" y="290" width="580" height="12" style="fill:'+C.accS+'"/><rect x="20" y="320" width="600" height="10" style="fill:'+C.line+'"/>';put("c-temple",svg(W,H,out));})();
+
+/* ================= Big bet: wheel + milestones ================= */
+(function(){var W=420,H=330,cx=210,cy=160,r=130,ri=50,seg=[[{en:"AI GPU systems",ta:"AI GPU systems"},"done"],[{en:"Supercomputers",ta:"Supercomputers"},"done"],[{en:"Private cloud",ta:"Private cloud"},"done"],[{en:"Sovereign AI",ta:"Sovereign AI"},"early"],[{en:"Physical AI",ta:"Physical AI"},"guided"],[{en:"Quantum (R&D)",ta:"Quantum (R&D)"},"guided"]],out="";
+ var col={done:C.good,early:C.acc,guided:C.grey};
+ seg.forEach(function(s,i){var a0=-Math.PI/2+i*Math.PI/3,a1=a0+Math.PI/3,P=function(a,rr){return[cx+rr*Math.cos(a),cy+rr*Math.sin(a)];};
+  out+='<path d="M'+P(a0,r)+' A'+r+' '+r+' 0 0 1 '+P(a1,r)+' L'+P(a1,ri)+' A'+ri+' '+ri+' 0 0 0 '+P(a0,ri)+'Z" style="fill:'+col[s[1]]+';stroke:'+C.bg+';stroke-width:3"/>';
+  var m=P((a0+a1)/2,(r+ri)/2+4);out+='<rect x="'+(m[0]-50)+'" y="'+(m[1]-13)+'" width="100" height="20" rx="6" style="fill:'+C.bg+';opacity:.9"/>'+tx(m[0],m[1]+2,s[0].en,s[0].ta,'text-anchor="middle" font-size="11.5"');});
+ out+='<circle cx="'+cx+'" cy="'+cy+'" r="'+(ri-4)+'" style="fill:'+C.water3+'"/>'+tx(cx,cy+5,"NETWEB",null,'text-anchor="middle" font-size="13"');
+ [["done",{en:"Selling now",ta:"இப்போ விக்குது"}],["early",{en:"First orders",ta:"முதல் orders"}],["guided",{en:"R&D / future",ta:"R&D / எதிர்காலம்"}]].forEach(function(l,i){out+='<rect x="'+(20+i*135)+'" y="306" width="14" height="14" rx="3" style="fill:'+col[l[0]]+'"/>'+tx(38+i*135,318,l[1].en,l[1].ta,'font-size="12"');});
+ put("c-wheel",svg(W,H,out));
+ var ms=[["Jul 2023",{en:"Listed on NSE/BSE",ta:"NSE/BSE-ல list"},1],["FY24",{en:"AI ≈7% of revenue",ta:"Revenue-ல AI ≈7%"},1],["Q1 FY26",{en:"AI 29% of revenue",ta:"Revenue-ல AI 29%"},1],["Q1 FY27",{en:"AI ~62%; 10,000+ GPU systems",ta:"AI ~62%; 10,000+ GPU systems"},1],["Aug 2026",{en:"₹1,200 cr QIP done",ta:"₹1,200 கோடி QIP முடிஞ்சது"},1],["Q2 FY27",{en:"Record ₹1,323 cr quarter",ta:"Record ₹1,323 கோடி quarter"},1],["Early 2027",{en:"NSM 2.0 orders expected",ta:"NSM 2.0 orders எதிர்பார்ப்பு"},0],["FY27",{en:"₹4,000 cr revenue guided",ta:"₹4,000 கோடி revenue guidance"},0],["Later",{en:"Quantum simulators, physical AI",ta:"Quantum simulators, physical AI"},0]];
+ var W2=420,H2=ms.length*38+16,o2='<line x1="70" x2="70" y1="10" y2="'+(H2-10)+'" style="stroke:'+C.water+';stroke-width:4"/>';
+ ms.forEach(function(m,i){var y=24+i*38;o2+='<circle cx="70" cy="'+y+'" r="9" style="fill:'+(m[2]?C.good:C.bg)+';stroke:'+(m[2]?C.good:C.accS)+';stroke-width:3'+(m[2]?'':';stroke-dasharray:4 3')+'"/>'+tx(58,y+4,m[0],null,'text-anchor="end" font-size="11"')+tx(88,y+5,m[1].en,m[1].ta,'font-size="12"');});
+ put("c-mile",svg(W2,H2,o2));})();
+
+/* ================= value chain ================= */
+(function(){var W=880,H=250,st=[[{en:"Chips",ta:"Chips"},{en:"NVIDIA, AMD, Intel, memory makers",ta:"NVIDIA, AMD, Intel, memory makers"},0,"🧠"],[{en:"System design & build",ta:"System design, build"},{en:"Servers, supercomputers, racks",ta:"Servers, supercomputers, racks"},1,"🏭"],[{en:"Cooling, power, network",ta:"Cooling, power, network"},{en:"Liquid-cooled rack design",ta:"Liquid-cooled rack design"},1,"❄️"],[{en:"Cloud & AI software",ta:"Cloud, AI software"},{en:"Tyrone Skylus, GPU orchestration",ta:"Tyrone Skylus, GPU orchestration"},1,"⚙️"],[{en:"Data-centre building",ta:"Data-centre building"},{en:"Land, power, colocation",ta:"நிலம், power, colocation"},0,"🏢"],[{en:"AI users",ta:"AI users"},{en:"Govt, labs, banks, enterprises",ta:"அரசு, labs, banks, enterprises"},0,"👥"]],out='<defs><marker id="ar3" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" style="fill:'+C.water+'"/></marker></defs>';
+ st.forEach(function(s,i){var x=8+i*146,y=60;out+='<rect x="'+x+'" y="'+y+'" width="132" height="120" rx="12" style="fill:'+(s[2]?C.acc:"#E4DDD5")+';stroke:'+(s[2]?C.accS:C.grey)+';stroke-width:3"/><text x="'+(x+66)+'" y="'+(y+38)+'" text-anchor="middle" font-size="26">'+s[3]+'</text>'+tx(x+66,y+68,s[0].en,s[0].ta,'text-anchor="middle" font-size="12.5"');
+  var sub=T(s[1]);out+=tx(x+66,y+90,sub.en.length>24?sub.en.slice(0,sub.en.lastIndexOf(" ",24)):sub.en,sub.ta.length>24?sub.ta.slice(0,sub.ta.lastIndexOf(" ",24)):sub.ta,'text-anchor="middle" font-size="10"');
+  if(sub.en.length>24)out+=tx(x+66,y+104,sub.en.slice(sub.en.lastIndexOf(" ",24)+1),sub.ta.length>24?sub.ta.slice(sub.ta.lastIndexOf(" ",24)+1):"",'text-anchor="middle" font-size="10"');
+  if(i<5)out+='<path d="M'+(x+132)+' 120 H'+(x+146)+'" style="stroke:'+C.water+';stroke-width:3" marker-end="url(#ar3)"/>';});
+ out+='<path d="M154 46 H584" style="stroke:'+C.accS+';stroke-width:4"/>'+tx(369,36,"NETWEB plays here (3 of 6 steps)","NETWEB இங்க (6-ல 3 இடம்)",'text-anchor="middle" font-size="14"');
+ out+=tx(W/2,220,"Netweb earns when customers buy compute — not from data-centre rent","Customers compute வாங்கும்போது தான் Netweb-க்கு வருமானம் — data-centre வாடகையில இல்ல",'text-anchor="middle" font-size="13"');
+ put("c-chain",'<div style="min-width:700px">'+svg(W,H,out)+'</div>');})();
+
+/* ================= share move ================= */
+(function(){var pts=[["28 Jul",4396,{en:"Q1 results",ta:"Q1 results"}],["17 Aug",5219,{en:"QIP opens",ta:"QIP திறப்பு"}],["21 Aug",5615,{en:"After allotment",ta:"Allot-க்கு பின்"}],["Aug–Sep",5813,{en:"52-wk high",ta:"52-wk high"}],["26 Oct",4282,{en:"After Q2 results",ta:"Q2 results-க்கு பின்"}],["30 Oct",4176,{en:"Rating cut",ta:"Rating குறைப்பு"}],["5 Nov",4024,{en:"Nasdaq −5.5%",ta:"Nasdaq −5.5%"}],["6 Nov",3771,{en:"−6.3% day",ta:"ஒரே நாள் −6.3%"}],["9 Nov",3848,{en:"Now",ta:"இப்போ"}]];
+ var W=820,H=280,L=50,R=30,Tp=40,B=60,mx=6000,mn=3500,x=function(i){return L+(W-L-R)*i/(pts.length-1);},y=function(v){return Tp+(mx-v)/(mx-mn)*(H-Tp-B);},out="";
+ out+='<line x1="'+L+'" x2="'+(W-R)+'" y1="'+y(4790)+'" y2="'+y(4790)+'" style="stroke:'+C.bad+';stroke-width:2;stroke-dasharray:6 4"/>'+tx(W-R,y(4790)-6,"QIP ₹4,790",null,'text-anchor="end" font-size="12"');
+ out+='<path d="'+pts.map(function(p,i){return(i?"L":"M")+x(i)+" "+y(p[1]);}).join(" ")+'" style="fill:none;stroke:'+C.water+';stroke-width:4"/>';
+ pts.forEach(function(p,i){out+='<circle cx="'+x(i)+'" cy="'+y(p[1])+'" r="'+(i===8?8:5.5)+'" style="fill:'+(i===3?C.good:i>=4?C.bad:C.water)+';stroke:'+C.bg+';stroke-width:2"/>'+tx(x(i),y(p[1])-12,"₹"+fmt(p[1],0),null,'text-anchor="middle" font-size="11.5"')+tx(x(i),H-B+20,p[0],null,'text-anchor="middle" font-size="11"')+tx(x(i),H-B+38,p[2].en,p[2].ta,'text-anchor="middle" font-size="10"');});
+ put("c-path",'<div style="min-width:680px">'+svg(W,H,out)+'</div>');})();
+(function(){var W=640,H=270,out='<polygon points="320,200 296,240 344,240" style="fill:'+C.ink2+'"/>';
+ out+='<g transform="rotate(8 320 200)"><rect x="60" y="192" width="520" height="12" rx="6" style="fill:'+C.accS+'"/>';
+ var up=[{en:"Record results",ta:"Record results"},{en:"Order book up",ta:"Order book ஏற்றம்"},{en:"Net cash after QIP",ta:"QIP-க்கு பின் net cash"}],dn=[{en:"Stretched P/E (~127×)",ta:"அதிக P/E (~127×)"},{en:"Global AI selloff",ta:"Global AI selloff"},{en:"QIP supply & cash use",ta:"QIP supply, cash செலவு"}];
+ dn.forEach(function(u,i){out+='<rect x="'+(70+i*84)+'" y="140" width="78" height="50" rx="8" style="fill:'+C.bad+'"/>';});
+ up.forEach(function(u,i){out+='<rect x="'+(360+i*76)+'" y="160" width="70" height="30" rx="8" style="fill:'+C.good+'"/>';});out+='</g>';
+ dn.forEach(function(u,i){out+=tx(130+i*110,60+i*24,"▼ "+u.en,"▼ "+u.ta,'text-anchor="middle" font-size="12.5"');});
+ up.forEach(function(u,i){out+=tx(420+i*90,40+i*24,"▲ "+u.en,"▲ "+u.ta,'text-anchor="middle" font-size="12.5"');});
+ out+=tx(320,262,"The heavy left side (valuation + mood) outweighed record results","கனமான இடது பக்கம் (valuation + mood) record results-ஐ விட அதிகம் அழுத்துச்சு",'text-anchor="middle" font-size="13"');
+ put("c-seesaw",svg(W,H,out));
+ var ev=[["28 Jul",{en:"Q1: PAT +180%; stock +~10%",ta:"Q1: PAT +180%; share +~10%"},C.good],["20 Aug",{en:"QIP at ₹4,790",ta:"QIP ₹4,790"},C.acc],["Aug–Sep",{en:"52-wk high ₹5,813",ta:"52-wk high ₹5,813"},C.good],["24 Oct",{en:"Q2 record results",ta:"Q2 record results"},C.good],["30 Oct",{en:"Rating Buy → Hold",ta:"Rating Buy → Hold"},C.bad],["6 Nov",{en:"7th fall in a row, −6.3%",ta:"தொடர் 7-வது சரிவு, −6.3%"},C.bad]];
+ var W2=820,o2='<line x1="30" x2="790" y1="70" y2="70" style="stroke:'+C.water+';stroke-width:4"/>';
+ ev.forEach(function(e,i){var x=70+i*136;o2+='<circle cx="'+x+'" cy="70" r="10" style="fill:'+e[2]+'"/>'+tx(x,48,e[0],null,'text-anchor="middle" font-size="12"')+tx(x,100+(i%2)*20,e[1].en,e[1].ta,'text-anchor="middle" font-size="11.5"');});
+ put("c-events",'<div style="min-width:680px">'+svg(W2,135,o2)+'</div>');})();
+
+/* ================= triggers & cycle ================= */
+(function(){var W=380,H=340,cx=190,cy=160,r=120,ph=[["S1",{en:"Emerging",ta:"ஆரம்பம்"}],["S2",{en:"Rapid adoption",ta:"வேக வளர்ச்சி"}],["S3",{en:"Maturing",ta:"முதிர்ச்சி"}],["S4",{en:"Saturation",ta:"நிறைவு"}]],out="",cols=[C.water3,C.good,C.acc,C.bad];
+ ph.forEach(function(p,i){var a0=-Math.PI/2+i*Math.PI/2,a1=a0+Math.PI/2,P=function(a,rr){return[cx+rr*Math.cos(a),cy+rr*Math.sin(a)];};
+  out+='<path d="M'+cx+' '+cy+' L'+P(a0,r)+' A'+r+' '+r+' 0 0 1 '+P(a1,r)+'Z" style="fill:'+cols[i]+';opacity:'+(i===1?1:.55)+';stroke:'+C.bg+';stroke-width:3"/>';
+  var m=P((a0+a1)/2,r*0.62);out+='<rect x="'+(m[0]-46)+'" y="'+(m[1]-20)+'" width="92" height="38" rx="6" style="fill:'+C.bg+';opacity:.85"/>'+tx(m[0],m[1]-4,p[0],null,'text-anchor="middle" font-size="14"')+tx(m[0],m[1]+13,p[1].en,p[1].ta,'text-anchor="middle" font-size="11"');});
+ var a=-Math.PI/2+1.6*Math.PI/2;out+='<line x1="'+cx+'" y1="'+cy+'" x2="'+(cx+(r-8)*Math.cos(a))+'" y2="'+(cy+(r-8)*Math.sin(a))+'" style="stroke:'+C.ink+';stroke-width:6;stroke-linecap:round"/><circle cx="'+cx+'" cy="'+cy+'" r="10" style="fill:'+C.ink+'"/>';
+ out+='<circle cx="'+(cx+(r+14)*Math.cos(-Math.PI/2+2.5*Math.PI/2))+'" cy="'+(cy+(r+14)*Math.sin(-Math.PI/2+2.5*Math.PI/2))+'" r="11" style="fill:'+C.bad+';stroke:'+C.ink+';stroke-width:2"/>';
+ out+=tx(10,312,"Pointer = AI compute sector (S2)","முள் = AI compute sector (S2)",'font-size="12"')+tx(10,330,"Red dot = share price in Stage 4 decline","சிவப்பு புள்ளி = share Stage 4 சரிவு",'font-size="12"');
+ put("c-clock",svg(W,H,out));
+ var TR=[[{en:"Deliver book + L1 in H2 (₹3,282 cr vs ₹1,857 cr needed)",ta:"H2-ல book + L1 delivery (₹3,282 vs ₹1,857 தேவை)"},"+",3,0.7,1.0,1.0,2.10,{en:"Q3 revenue, L1 conversion",ta:"Q3 revenue, L1 மாற்றம்"}],
+  [{en:"IndiaAI / sovereign GPU orders from ₹11,152 cr pipeline",ta:"₹11,152 கோடி pipeline-ல IndiaAI / sovereign GPU orders"},"+",4,0.4,0.7,1.0,1.12,{en:"Large order announcements",ta:"பெரிய order அறிவிப்பு"}],
+  [{en:"NSM 2.0 supercomputing orders (early 2027)",ta:"NSM 2.0 supercomputing orders (2027 ஆரம்பம்)"},"+",3,0.4,0.7,1.0,0.84,{en:"Tender awards",ta:"Tender முடிவுகள்"}],
+  [{en:"Quantum / physical AI",ta:"Quantum / physical AI"},"+",2,0.2,0.2,1.0,0.08,{en:"R&D only for now",ta:"இப்போ R&D தான்"}],
+  [{en:"Memory & GPU cost spike squeezing margin",ta:"Memory, GPU செலவு ஏற்றம் margin-ஐ அழுத்துது"},"−",3,0.4,1.0,1.0,1.20,{en:"Q3 EBITDA margin vs 14%",ta:"Q3 EBITDA margin vs 14%"}],
+  [{en:"Top-10 customers 85% — order timing risk",ta:"Top-10 customers 85% — order timing risk"},"−",3,0.4,0.7,1.0,0.84,{en:"Quarterly lumpiness",ta:"Quarter ஏற்ற இறக்கம்"}],
+  [{en:"Global AI-capex / data-centre spending scare",ta:"Global AI-capex / data-centre செலவு பயம்"},"−",3,0.4,0.7,0.7,0.59,{en:"Nasdaq AI names, hyperscaler capex",ta:"Nasdaq AI stocks, hyperscaler capex"}],
+  [{en:"Cash-hungry growth → new raise or debt",ta:"Cash சாப்பிடும் growth → புது raise அல்லது கடன்"},"−",2,0.4,0.7,1.0,0.56,{en:"Net debt, inventory days",ta:"Net debt, inventory days"}],
+  [{en:"QIP holders under water — selling near ₹4,790",ta:"QIP holders நஷ்டத்துல — ₹4,790 பக்கம் விற்பனை"},"−",2,0.4,1.0,0.7,0.56,{en:"Bulk/block deals, volumes",ta:"Bulk/block deals, volumes"}]];
+ document.getElementById("trigBody").innerHTML=TR.map(function(t){return '<tr><td style="white-space:normal;min-width:180px"><span class="en">'+t[0].en+'</span><span class="ta">'+t[0].ta+'</span></td><td class="'+(t[1]==="+"?"up":"dn")+'" style="font-size:1.1rem">'+t[1]+'</td><td>'+t[2]+'</td><td>'+t[3]+'</td><td>'+t[4]+'</td><td>'+t[5]+'</td><td><b>'+t[6].toFixed(2)+'</b></td><td style="white-space:normal"><span class="en">'+t[7].en+'</span><span class="ta">'+t[7].ta+'</span></td></tr>';}).join("");
+ var tl=[["Jan–Feb 27",{en:"Q3 FY27 results",ta:"Q3 FY27 results"}],["Early 2027",{en:"NSM 2.0 order window",ta:"NSM 2.0 orders"}],["Feb 2027",{en:"Union Budget: AI / IT hardware",ta:"Budget: AI / IT hardware"}],["Apr–May 27",{en:"FY27 vs ₹4,000 cr guide",ta:"FY27 vs ₹4,000 கோடி"}],["Aug 2027",{en:"QIP one-year mark",ta:"QIP ஒரு வருஷம்"}]];
+ var W2=820,o='<line x1="30" x2="790" y1="60" y2="60" style="stroke:'+C.accS+';stroke-width:4"/>';tl.forEach(function(e,i){var x=80+i*165;o+='<rect x="'+(x-8)+'" y="52" width="16" height="16" rx="3" style="fill:'+C.acc+';stroke:'+C.accS+';stroke-width:2"/>'+tx(x,40,e[0],null,'text-anchor="middle" font-size="12"')+tx(x,92+(i%2)*18,e[1].en,e[1].ta,'text-anchor="middle" font-size="11.5"');});
+ put("c-trigtl",'<div style="min-width:680px">'+svg(W2,125,o)+'</div>');})();
+
+/* ================= SWOT ================= */
+(function(){var W=760,H=470,out="",q=[["S",{en:"Strengths",ta:"பலம்"},C.good,[{en:"NVIDIA OEM; own designs, India-made",ta:"NVIDIA OEM; சொந்த design, India-made"},{en:"600+ supercomputers, 10,000+ GPU systems",ta:"600+ supercomputers, 10,000+ GPU systems"},{en:"94% repeat revenue; ROE 31%",ta:"94% பழைய customers; ROE 31%"},{en:"Net cash after QIP",ta:"QIP-க்கு பின் net cash"}]],
+ ["W",{en:"Weaknesses",ta:"பலவீனம்"},C.bad,[{en:"~15% EBITDA margin; chips imported",ta:"~15% EBITDA margin; chips import"},{en:"Top-10 = 85% of revenue",ta:"Top-10 = revenue-ல 85%"},{en:"Inventory 117 days; cash-hungry",ta:"Inventory 117 நாள்; cash தேவை அதிகம்"},{en:"Lumpy, tender-driven quarters",ta:"Tender-ஆல ஏற்ற இறக்க quarters"}]],
+ ["O",{en:"Opportunities",ta:"வாய்ப்பு"},C.water,[{en:"IndiaAI sovereign GPU compute",ta:"IndiaAI sovereign GPU compute"},{en:"NSM 2.0 'design in India' orders",ta:"NSM 2.0 'design in India' orders"},{en:"Data-localisation private clouds",ta:"Data-localisation private clouds"},{en:"Liquid cooling, quantum, physical AI",ta:"Liquid cooling, quantum, physical AI"}]],
+ ["T",{en:"Threats",ta:"அச்சுறுத்தல்"},C.warn,[{en:"Memory/GPU price spikes",ta:"Memory/GPU விலை ஏற்றம்"},{en:"Global OEMs (Dell, HPE, Supermicro)",ta:"Global OEMs (Dell, HPE, Supermicro)"},{en:"AI-capex slowdown or chip export curbs",ta:"AI-capex மந்தம் அல்லது chip export தடை"},{en:"Supply share overhang after QIP",ta:"QIP-க்கு பின் share supply அழுத்தம்"}]]];
+ q.forEach(function(s,i){var x=(i%2)*382+4,y=Math.floor(i/2)*234+4;out+='<rect x="'+x+'" y="'+y+'" width="370" height="224" rx="14" style="fill:'+C.card2+';stroke:'+s[2]+';stroke-width:4"/><circle cx="'+(x+34)+'" cy="'+(y+34)+'" r="22" style="fill:'+s[2]+'"/>'+'<text x="'+(x+34)+'" y="'+(y+42)+'" text-anchor="middle" font-size="22" style="font-weight:800;fill:'+C.bg+'">'+s[0]+'</text>'+tx(x+66,y+40,s[1].en,s[1].ta,'font-size="17"');
+  s[3].forEach(function(t,j){out+='<circle cx="'+(x+24)+'" cy="'+(y+84+j*36)+'" r="5" style="fill:'+s[2]+'"/>'+tx(x+38,y+89+j*36,t.en,t.ta,'font-size="13.5"');});});
+ put("c-swot",'<div style="min-width:560px">'+svg(W,H,out)+'</div>');})();
+
+</script>
+<script>
+
+/* ================= Analyst view charts ================= */
+put("c-conv2",gauge(55,100,{en:"CB Conviction (capped)",ta:"CB Conviction (cap)"}));
+put("c-lens",hbars([{label:{en:"E · Earnings (25%)",ta:"E · Earnings (25%)"},v:85,col:C.good},{label:{en:"F · Fundamentals (20%)",ta:"F · Fundamentals (20%)"},v:68,col:C.water},{label:{en:"M · Macro (15%)",ta:"M · Macro (15%)"},v:55,col:C.water2},{label:{en:"T · Market (15%)",ta:"T · Market (15%)"},v:30,col:C.bad},{label:{en:"CY · Cycle (10%)",ta:"CY · Cycle (10%)"},v:65,col:C.water2},{label:{en:"TG · Triggers (15%)",ta:"TG · Triggers (15%)"},v:52,col:C.acc}],{dec:0,L:200}));
+put("c-assistpic",svg(150,70,'<rect x="4" y="8" width="96" height="44" rx="14" style="fill:'+C.water3+';stroke:'+C.water+';stroke-width:3"/><path d="M24 52 L20 64 L36 52" style="fill:'+C.water3+';stroke:'+C.water+';stroke-width:3"/>'+tx(52,36,"Ask me","கேளுங்க",'text-anchor="middle" font-size="15"')+'<circle cx="124" cy="30" r="18" style="fill:'+C.acc+';stroke:'+C.accS+';stroke-width:3"/>'+tx(124,36,"🎙",null,'text-anchor="middle" font-size="16"')));
+
+/* ================= Investor self-check (5 groups) ================= */
+var SC=[
+ {id:"g1",t:{en:"1. About the stock & the QIP",ta:"1. Stock, QIP பத்தி"},items:[
+  [{en:"I know the company's size",ta:"Company அளவு தெரியும்"},{en:"M-cap ≈ ₹22,875 cr; TTM revenue ≈ ₹3,626 cr; TTM PAT ≈ ₹366 cr",ta:"M-cap ≈ ₹22,875 கோடி; TTM revenue ≈ ₹3,626 கோடி; TTM PAT ≈ ₹366 கோடி"}],
+  [{en:"I know the fresh equity and its use",ta:"புது equity, அதோட use தெரியும்"},{en:"QIP ₹1,200 cr at ₹4,790 (Aug 2026); ₹774 cr used, mostly working capital",ta:"QIP ₹1,200 கோடி, ₹4,790 (Aug 2026); ₹774 கோடி செலவு, பெரும்பாலும் working capital"}],
+  [{en:"I checked price vs QIP and 52-week range",ta:"QIP விலை, 52 வார range-ஓட price பாத்தேன்"},{en:"₹3,848 vs QIP ₹4,790; range ₹2,920–₹5,813",ta:"₹3,848 vs QIP ₹4,790; range ₹2,920–₹5,813"}],
+  [{en:"I know what the market already expects",ta:"Market என்ன எதிர்பார்க்குதுனு தெரியும்"},{en:"62.5× TTM P/E; guide ₹4,000 cr FY27 revenue",ta:"62.5× TTM P/E; FY27 revenue guidance ₹4,000 கோடி"}]]},
+ {id:"g2",t:{en:"2. Problems investors face",ta:"2. Investors-க்கு வர்ற சிக்கல்"},items:[
+  [{en:"I understand what Netweb actually makes",ta:"Netweb என்ன செய்யுதுனு புரியுது"},{en:"AI GPU servers 58%, HPC 19%, private cloud 19%; chips bought in",ta:"AI GPU servers 58%, HPC 19%, private cloud 19%; chips வாங்குறது"}],
+  [{en:"I can connect with the business",ta:"Business-ஓட connect ஆக முடியுது"},{en:"Sells computers into data centres; does not own data centres",ta:"Data centres-க்கு computers விக்குது; data centres சொந்தம் இல்ல"}],
+  [{en:"I know earnings are lumpy",ta:"Earnings ஏற்ற இறக்கம்னு தெரியும்"},{en:"Q3 FY26 ₹805 cr → Q4 ₹678 cr → Q1 ₹820 cr → Q2 ₹1,323 cr",ta:"Q3 FY26 ₹805 கோடி → Q4 ₹678 → Q1 ₹820 → Q2 ₹1,323"}],
+  [{en:"I know the main risks",ta:"முக்கிய risks தெரியும்"},{en:"Top-10 = 85%; ~15% margin vs memory costs; cash-hungry growth",ta:"Top-10 = 85%; memory செலவு vs ~15% margin; cash சாப்பிடும் growth"}]]},
+ {id:"g3",t:{en:"3. What I did about them",ta:"3. அதுக்கு நான் என்ன பண்ணேன்"},items:[
+  [{en:"Read the annual report and QIP placement document",ta:"Annual report, QIP placement document படிச்சேன்"},{en:"Check risk factors, customer concentration, inventory",ta:"Risk factors, customer concentration, inventory பாருங்க"}],
+  [{en:"Compared a peer",ta:"ஒரு peer-ஓட compare பண்ணேன்"},{en:"No close listed Indian peer; compare global AI-server makers' margins (~10–15%)",ta:"நெருக்கமான Indian listed peer இல்ல; global AI-server makers margins (~10–15%) ஓட compare"}],
+  [{en:"Kept the amount small for my portfolio",ta:"Portfolio-க்கு ஏத்த மாதிரி amount சின்னதா"},{en:"Swung ₹2,920 → ₹5,813 → ₹3,848 within a year",ta:"ஒரு வருஷத்துல ₹2,920 → ₹5,813 → ₹3,848"}],
+  [{en:"Fixed my horizon and review point",ta:"Horizon, review point முடிவு பண்ணேன்"},{en:"Next review: Q3 FY27 results — margin and L1 conversion",ta:"அடுத்த review: Q3 FY27 results — margin, L1 மாற்றம்"}]]},
+ {id:"g4",t:{en:"4. Funds' & analysts' view",ta:"4. Funds, analysts பார்வை"},items:[
+  [{en:"Checked institutional holding",ta:"Institutional holding பாத்தேன்"},{en:"FII 9.47%, DII 6.68%; QIP buyers include Nomura, ICICI Pru, Edelweiss, Invesco",ta:"FII 9.47%, DII 6.68%; QIP-ல Nomura, ICICI Pru, Edelweiss, Invesco"}],
+  [{en:"Read independent analyst reviews",ta:"சுயாதீன analyst reviews படிச்சேன்"},{en:"One rating service cut Buy → Hold on 30 Oct — opinions, not facts",ta:"30 Oct ஒரு rating service Buy → Hold — கருத்து தான், fact இல்ல"}],
+  [{en:"Noted the CB cycle & trigger view",ta:"CB cycle, trigger view கவனிச்சேன்"},{en:"Sector S2 rapid adoption; stock Stage 4; CY 65, TG 52",ta:"Sector S2 வேக வளர்ச்சி; share Stage 4; CY 65, TG 52"}],
+  [{en:"Checked market mood",ta:"Market mood பாத்தேன்"},{en:"7 straight falls to 6 Nov; week −9.7% vs Sensex +7.2%",ta:"6 Nov வரை தொடர் 7 சரிவு; வாரம் −9.7% vs Sensex +7.2%"}]]},
+ {id:"g5",t:{en:"5. My own conditions",ta:"5. என் சொந்த conditions"},custom:true,items:[]}];
+var scState={};try{scState=JSON.parse(ls("cb_netweb_sc")||"{}")||{};}catch(e){scState={};}
+function scSave(){ls("cb_netweb_sc",JSON.stringify(scState));}
+function scRender(){var host=document.getElementById("scGroups"),h="",done=0,tot=0;
+ SC.forEach(function(g){var items=g.custom?(scState.custom||[]).map(function(t){return[{en:t,ta:t},null];}):g.items,gd=0;
+  var rows=items.map(function(it,i){var k=g.id+"_"+i,on=!!scState[k];if(on)gd++;return '<label class="sc-item"><input type="checkbox" data-k="'+k+'" '+(on?"checked":"")+'><span><span class="en">'+esc(it[0].en)+'</span><span class="ta">'+esc(it[0].ta)+'</span>'+(it[1]?'<br><span class="sc-data">Data: <span class="en">'+esc(it[1].en)+'</span><span class="ta">'+esc(it[1].ta)+'</span></span>':' <button type="button" class="btn readbtn" data-del="'+i+'">✕</button>')+'</span></label>';}).join("");
+  done+=gd;tot+=items.length;var pc=items.length?gd/items.length:0;
+  h+='<div class="card"><h3><span class="en">'+g.t.en+'</span><span class="ta">'+g.t.ta+'</span> · '+gd+'/'+items.length+'</h3><div style="height:8px;background:'+C.card2+';border-radius:4px;margin-bottom:6px"><div style="height:100%;width:'+pc*100+'%;background:'+C.good+';border-radius:4px"></div></div>'+rows+
+   (g.custom?'<div class="as-row" style="margin-top:8px"><input type="text" id="scNew" placeholder="Add your own check… / உங்க check சேருங்க…"><button type="button" class="btn" id="scAdd">+</button></div>':'')+'</div>';});
+ host.innerHTML=h;
+ var p=tot?done/tot:0,r=46,c=2*Math.PI*r;put("c-ring",svg(120,120,'<circle cx="60" cy="60" r="'+r+'" style="fill:none;stroke:'+C.card2+';stroke-width:14"/><circle cx="60" cy="60" r="'+r+'" transform="rotate(-90 60 60)" style="fill:none;stroke:'+C.good+';stroke-width:14;stroke-dasharray:'+(c*p)+' '+c+'"/>'+tx(60,66,done+"/"+tot,null,'text-anchor="middle" font-size="20"')));
+ host.querySelectorAll("input[type=checkbox]").forEach(function(cb){cb.onchange=function(){scState[cb.dataset.k]=cb.checked;scSave();scRender();};});
+ host.querySelectorAll("[data-del]").forEach(function(b){b.onclick=function(e){e.preventDefault();var i=+b.dataset.del;(scState.custom||[]).splice(i,1);Object.keys(scState).forEach(function(k){if(k.indexOf("g5_")===0)delete scState[k];});scSave();scRender();};});
+ var add=document.getElementById("scAdd");if(add)add.onclick=function(){var v=document.getElementById("scNew").value.trim();if(!v)return;(scState.custom=scState.custom||[]).push(v);scSave();scRender();};}
+scRender();
+/* ================= Cauvery Assist (compatible inline build) =================
+   Same API as the master component: CauveryAssist.A, CauveryAssist.mount(el, CONFIG) -> {setLang, speak, plain}.
+   To use the master file, replace this whole block with the contents of cauvery-assist.js; CONFIG below stays unchanged. */
+(function(){
+ function A(en,ta){return{en:en,ta:ta};}
+ function mount(root,CF){var lang=CF.lang||"en",K=CF.storageKey||"cba",last=null;
+  var st={rate:parseFloat(ls(K+"_rate"))||0.8,wait:ls(K+"_wait")||"3",voice:ls(K+"_voice")||"",review:ls(K+"_review")==="1",conv:false};
+  var L=function(o){return o&&typeof o==="object"?(o[lang]||o.en):o;};
+  root.innerHTML='<div class="assist"><div class="as-row"><b>'+esc(CF.title)+'</b><span class="note" id="asVoiceNote"></span></div>'+
+   '<div class="as-row"><label><span class="en">Speed</span><span class="ta">வேகம்</span> <input type="range" id="asRate" min="0.5" max="1.5" step="0.05"></label><b id="asRateV"></b>'+
+   '<button type="button" class="btn" data-r="0.6">Slow</button><button type="button" class="btn" data-r="0.8">Relaxed</button><button type="button" class="btn" data-r="1">Normal</button><button type="button" class="btn" data-r="1.2">Fast</button></div>'+
+   '<div class="as-row"><label><span class="en">Voice</span><span class="ta">குரல்</span> <select id="asVoice"></select></label><label><span class="en">Wait after I stop</span><span class="ta">பேசி முடிச்சதும் காத்திரு</span> <select id="asWait"><option value="2">2 s</option><option value="3">3 s</option><option value="5">5 s</option><option value="tap">Tap Done</option></select></label>'+
+   '<label><input type="checkbox" id="asReview"> <span class="en">Check text before sending</span><span class="ta">அனுப்பும் முன் text பாரு</span></label><label><input type="checkbox" id="asConv"> <span class="en">Conversation mode</span><span class="ta">Conversation mode</span></label></div>'+
+   '<div class="as-log" id="asLog" aria-live="polite"></div><div class="cdbar"><i id="asCd"></i></div>'+
+   '<div class="as-row"><input type="text" id="asIn"><button type="button" class="btn" id="asMic">🎙</button><button type="button" class="btn" id="asDone" hidden><span class="en">Done</span><span class="ta">முடிஞ்சது</span></button><button type="button" class="btn" id="asSend"><span class="en">Ask</span><span class="ta">கேளு</span></button>'+
+   '<button type="button" class="btn" id="asPause">⏯</button><button type="button" class="btn" id="asStop">⏹</button></div><div class="as-row as-sug" id="asSug"></div></div>';
+  var $=function(id){return root.querySelector("#"+id);},log=$("asLog");
+  function setRate(r){st.rate=+r;$("asRate").value=r;$("asRateV").textContent=(+r).toFixed(2)+"×";ls(K+"_rate",r);}
+  setRate(st.rate);$("asRate").oninput=function(){setRate(this.value);};root.querySelectorAll("[data-r]").forEach(function(b){b.onclick=function(){setRate(b.dataset.r);};});
+  $("asWait").value=st.wait;$("asWait").onchange=function(){st.wait=this.value;ls(K+"_wait",st.wait);};
+  $("asReview").checked=st.review;$("asReview").onchange=function(){st.review=this.checked;ls(K+"_review",st.review?"1":"0");};$("asConv").onchange=function(){st.conv=this.checked;};
+  var synth=window.speechSynthesis,voices=[];
+  function loadVoices(){if(!synth)return;voices=synth.getVoices().slice().sort(function(a,b){var s=function(v){return(/IN/.test(v.lang)?0:1)+(/^ta/.test(v.lang)?-1:0);};return s(a)-s(b);});
+   $("asVoice").innerHTML='<option value="">Auto</option>'+voices.map(function(v){return '<option value="'+esc(v.name)+'">'+esc(v.name+" ("+v.lang+")")+'</option>';}).join("");$("asVoice").value=st.voice;
+   var hasTa=voices.some(function(v){return/^ta/.test(v.lang);});$("asVoiceNote").textContent=lang==="ta"&&!hasTa?"(No Tamil voice on this device — reading with the closest voice)":"";}
+  if(synth){loadVoices();synth.onvoiceschanged=loadVoices;}$("asVoice").onchange=function(){st.voice=this.value;ls(K+"_voice",st.voice);};
+  function pickVoice(){var v=voices.filter(function(x){return x.name===st.voice;})[0];if(v)return v;var want=lang==="ta"?/^ta/:/^en-IN/;return voices.filter(function(x){return want.test(x.lang);})[0]||voices.filter(function(x){return/^en/.test(x.lang);})[0];}
+  /* own-voice clip library: put recorded files in ./clips/ on GitHub Pages; falls back to device voice */
+  var CLIPS=CF.clips||{};
+  function speak(text,clipKey){if(clipKey&&CLIPS[clipKey]&&CLIPS[clipKey][lang]){try{var au=new Audio(CLIPS[clipKey][lang]);au.playbackRate=st.rate;au.onerror=function(){tts(text);};var pr=au.play();if(pr&&pr.catch)pr.catch(function(){tts(text);});return;}catch(e){}}tts(text);}
+  function tts(text){if(!synth)return;synth.cancel();var parts=String(text).replace(/([.!?।])\s+/g,"$1\n").split("\n").filter(Boolean);
+   parts.forEach(function(p,i){var u=new SpeechSynthesisUtterance(p);u.rate=st.rate;u.lang=lang==="ta"?"ta-IN":"en-IN";var v=pickVoice();if(v)u.voice=v;if(i===parts.length-1)u.onend=function(){if(st.conv)startMic();};synth.speak(u);});}
+  $("asPause").onclick=function(){if(!synth)return;if(synth.paused)synth.resume();else synth.pause();};$("asStop").onclick=function(){if(synth)synth.cancel();};
+  function plain(h){var d=document.createElement("div");d.innerHTML=h;d.querySelectorAll(lang==="ta"?".en":".ta").forEach(function(n){n.remove();});d.querySelectorAll("script,style,svg,button,select,input").forEach(function(n){n.remove();});return d.textContent.replace(/\s+/g," ").trim();}
+  function norm(s){return String(s).toLowerCase().replace(/[?!.,]/g," ");}
+  function answer(q){var n=norm(q);
+   if(/\b(buy|sell|hold|invest|target|should i|enter|exit|multibagger)\b/.test(n)||/வாங்க|விக்க|வாங்கலாமா|விக்கலாமா|ஹோல்ட்|target/.test(q))return{a:CF.noAdvice,clip:"noAdvice"};
+   var best=null,bs=0;CF.kb.forEach(function(e){var s=0;e.k.forEach(function(k){if(n.indexOf(k.toLowerCase())>-1)s+=k.length>3?2:1;});if(/\b(it|its|that)\b|அது|அதோட/.test(n)&&last&&e===last)s+=1;if(s>bs){bs=s;best=e;}});
+   if(best&&bs>=2){last=best;return best;}return{a:CF.fallback,clip:"fallback"};}
+  function ask(q){q=q.trim();if(!q)return;log.insertAdjacentHTML("beforeend",'<div class="as-q">'+esc(q)+'</div>');var r=answer(q),a=L(r.a);
+   var h='<div class="as-a"><div>'+esc(a)+'</div>'+(r.d?'<details><summary><span class="en">More details</span><span class="ta">கூடுதல் விவரம்</span></summary>'+L(r.d)+'</details>':'')+(r.tab&&CF.onOpenTab?'<button type="button" class="btn" style="font-size:.76rem;padding:2px 9px;margin-top:4px" data-tab="'+r.tab+'"><span class="en">Open related tab</span><span class="ta">தொடர்புடைய tab திற</span></button>':'')+'</div>';
+   log.insertAdjacentHTML("beforeend",h);log.scrollTop=log.scrollHeight;var b=log.querySelector(".as-a:last-child [data-tab]");if(b)b.onclick=function(){CF.onOpenTab(b.dataset.tab);};speak(a,r.clip);}
+  $("asSend").onclick=function(){ask($("asIn").value);$("asIn").value="";};$("asIn").onkeydown=function(e){if(e.key==="Enter")$("asSend").onclick();};
+  function sug(){$("asSug").innerHTML=CF.suggestions.map(function(s,i){return '<button type="button" class="btn" data-s="'+i+'">'+esc(lang==="ta"?s[1]:s[0])+'</button>';}).join("");$("asSug").querySelectorAll("[data-s]").forEach(function(b){b.onclick=function(){ask(b.textContent);};});$("asIn").placeholder=L(CF.placeholder);}
+  /* mic: waits for silence before answering */
+  var SR=window.SpeechRecognition||window.webkitSpeechRecognition,rec=null,listening=false,buf="",timer=null,cdT=null;
+  function cd(ms){var cdEl=$("asCd"),t0=Date.now();clearInterval(cdT);if(!ms){cdEl.style.width="0";return;}cdT=setInterval(function(){var p=Math.min(1,(Date.now()-t0)/ms);cdEl.style.width=(p*100)+"%";if(p>=1)clearInterval(cdT);},60);}
+  function finish(){listening=false;clearTimeout(timer);cd(0);$("asDone").hidden=true;$("asMic").classList.remove("on");try{rec&&rec.stop();}catch(e){}var q=buf.trim();buf="";if(!q)return;if(st.review){$("asIn").value=q;$("asIn").focus();}else ask(q);}
+  function startMic(){if(!SR){log.insertAdjacentHTML("beforeend",'<div class="as-a">'+esc(L(A("Voice input isn't available here. It works on GitHub Pages in Chrome or Edge; read-aloud works everywhere.","இங்க voice input இல்ல. GitHub Pages-ல Chrome/Edge-ல வேலை செய்யும்; read-aloud எல்லா இடத்திலும் வேலை செய்யும்.")))+'</div>');return;}
+   if(synth)synth.cancel();rec=new SR();rec.lang=lang==="ta"?"ta-IN":"en-IN";rec.continuous=true;rec.interimResults=true;listening=true;buf="";$("asMic").classList.add("on");if(st.wait==="tap")$("asDone").hidden=false;
+   rec.onresult=function(e){var f="",im="";for(var i=0;i<e.results.length;i++){if(e.results[i].isFinal)f+=e.results[i][0].transcript+" ";else im+=e.results[i][0].transcript;}buf=f;$("asIn").value=(f+im).trim();
+     if(st.wait!=="tap"){clearTimeout(timer);var ms=(+st.wait)*1000;cd(ms);timer=setTimeout(function(){buf=$("asIn").value;$("asIn").value="";finish();},ms);}};
+   rec.onerror=function(e){if(e.error==="not-allowed"||e.error==="service-not-allowed"){listening=false;$("asMic").classList.remove("on");log.insertAdjacentHTML("beforeend",'<div class="as-a">'+esc(L(A("The microphone is blocked here (claude.ai blocks it). Open the GitHub Pages copy in Chrome or Edge to talk; you can still type.","இங்க microphone block (claude.ai block பண்ணும்). பேச GitHub Pages copy-ஐ Chrome/Edge-ல திறங்க; type பண்ணலாம்.")))+'</div>');}};
+   rec.onend=function(){if(listening){try{rec.start();}catch(e){}}};try{rec.start();}catch(e){}}
+  $("asMic").onclick=function(){if(listening){buf=$("asIn").value;$("asIn").value="";finish();}else startMic();};$("asDone").onclick=function(){buf=$("asIn").value;$("asIn").value="";finish();};
+  function setLangA(l){lang=l;sug();if(synth)loadVoices();}
+  sug();log.insertAdjacentHTML("beforeend",'<div class="as-a"><span class="en">'+esc(CF.greeting.en)+'</span><span class="ta">'+esc(CF.greeting.ta)+'</span></div>');
+  return{setLang:setLangA,speak:function(t){speak(t);},plain:plain,open:function(){CF.onOpenTab&&CF.onOpenTab("t-assist");setTimeout(function(){$("asIn").focus();},50);}};}
+ window.CauveryAssist={A:A,mount:mount};})();
+
+
+var A=CauveryAssist.A;
+var CONFIG={title:"Cauvery Assist",storageKey:"cba_q2fy27_netweb",lang:"en",
+ placeholder:A("Ask: Why did the share fall?","கேளுங்க: Share ஏன் இறங்குச்சு?"),
+ greeting:A("Vanakam! Ask me anything about Netweb's Q2 FY27, the QIP or the share fall — I'll answer in a line.","வணக்கம்! Netweb Q2 FY27, QIP, share சரிவு பத்தி எதுவும் கேளுங்க — ஒரு வரியில பதில் சொல்றேன்."),
+ noAdvice:A("I can't say buy, sell or hold — CB Research is an education platform, not SEBI-registered. Use the Self-Check tab to test your own conditions.","Buy, sell, hold சொல்ல முடியாது — CB Research கல்வி தளம், SEBI-ல register ஆகல. உங்க conditions-ஐ Self-Check tab-ல test பண்ணுங்க."),
+ fallback:A("I don't have that in this dashboard. Try revenue, profit, AI, QIP, order book, margin, valuation, share fall or triggers.","இந்த dashboard-ல அது இல்ல. Revenue, profit, AI, QIP, order book, margin, valuation, share சரிவு, triggers பத்தி கேளுங்க."),
+ clips:{noAdvice:{en:"clips/no_advice_en.mp3",ta:"clips/no_advice_ta.mp3"},fallback:{en:"clips/fallback_en.mp3",ta:"clips/fallback_ta.mp3"}},
+ onOpenTab:function(id){showTab(id);},
+ kb:[
+  {k:["share fall","why fall","why down","fell","correct","correction","crash","stock fall","share move","ஏன் இறங்குச்சு","இறக்கம்","சரிவு","விழுந்துச்சு"],preferOverMetric:true,a:A("The share is 34% below its ₹5,813 high mainly because its P/E was very high (~127×) and a global AI selloff hit AI-linked stocks; results were a record.","Share ₹5,813 high-ல இருந்து 34% கீழ — P/E ரொம்ப அதிகமா (~127×) இருந்துச்சு, global AI selloff AI stocks-ஐ அடிச்சுது; results record தான்."),d:A("<ul><li>Nasdaq −5.52% on 5 Nov; Netweb −6.3% on 6 Nov</li><li>7 straight falls to 6 Nov, &gt;15%</li><li>EBITDA margin 14.9% vs 15.0%; memory costs up</li><li>QIP buyers at ₹4,790 now −20%</li></ul>","<ul><li>5 Nov Nasdaq −5.52%; 6 Nov Netweb −6.3%</li><li>6 Nov வரை தொடர் 7 சரிவு, &gt;15%</li><li>EBITDA margin 14.9% vs 15.0%; memory செலவு ஏற்றம்</li><li>₹4,790-ல QIP வாங்கினவங்க இப்போ −20%</li></ul>"),tab:"t-move"},
+  {k:["qip","qib","placement","fund raise","fundraise","raised","க்யூஐபி","க்யூஐபீ","நிதி திரட்டல்"],preferOverMetric:true,a:A("Netweb raised ₹1,200 crore through a QIP in August 2026 at ₹4,790 a share; the stock is now about 20% below that price.","Netweb August 2026-ல ₹4,790 விலையில QIP மூலமா ₹1,200 கோடி திரட்டுச்சு; share இப்போ அந்த விலையை விட ~20% கீழ."),d:A("25,05,219 shares; floor ₹4,885.90; top allottees ICICI Pru 16.7%, Nomura 13.1%, Edelweiss 8.3%, Invesco 6.3%. ₹774 cr used by 30 Sep, mostly working capital.","25,05,219 shares; floor ₹4,885.90; ICICI Pru 16.7%, Nomura 13.1%, Edelweiss 8.3%, Invesco 6.3%. 30 Sep வரை ₹774 கோடி செலவு, பெரும்பாலும் working capital."),tab:"t-qip"},
+  {k:["who bought","allottee","nomura","icici","edelweiss","invesco","யார் வாங்கினாங்க"],a:A("The biggest QIP buyers were ICICI Prudential MF (16.7% of the issue) and Nomura India Investment Fund (13.1%).","QIP-ல அதிகம் வாங்கினது ICICI Prudential MF (issue-ல 16.7%), Nomura India Investment Fund (13.1%)."),tab:"t-qip"},
+  {k:["use of fund","qip money","where money","proceeds","பணம் எங்க"],a:A("Of the QIP money, ₹774 crore was used by 30 September, mostly for working capital; about ₹403 crore was still unused.","QIP பணத்துல 30 Sep வரை ₹774 கோடி செலவு, பெரும்பாலும் working capital; ~₹403 கோடி இன்னும் மீதி."),tab:"t-qip"},
+  {k:["revenue","sales","turnover","ரெவின்யூ","வருமானம்","விற்பனை"],a:A("Q2 FY27 revenue was ₹1,323.3 crore, up 335.7% from a year ago.","Q2 FY27 revenue ₹1,323.3 கோடி, போன வருஷத்தை விட 335.7% அதிகம்."),d:A("Q1 FY27 ₹819.7 cr; Q2 FY26 ₹303.7 cr; H1 ₹2,143 cr.","Q1 FY27 ₹819.7 கோடி; Q2 FY26 ₹303.7 கோடி; H1 ₹2,143 கோடி."),tab:"t-fin"},
+  {k:["profit","pat","net profit","earnings","லாபம்","ப்ராஃபிட்","பேட்"],a:A("Q2 PAT was ₹136.7 crore, up 334.8% year on year.","Q2 PAT ₹136.7 கோடி, YoY 334.8% வளர்ச்சி."),d:A("H1 PAT ₹222 cr — already above all of FY26 (₹205.8 cr).","H1 PAT ₹222 கோடி — FY26 முழுசையும் (₹205.8 கோடி) தாண்டிடுச்சு."),tab:"t-fin"},
+  {k:["ebitda","margin","மார்ஜின்","லாப வரம்பு"],a:A("Operating EBITDA was ₹197.3 crore at a 14.9% margin, almost the same as 15.0% a year ago.","Operating EBITDA ₹197.3 கோடி, margin 14.9% — போன வருஷம் 15.0% மாதிரியே."),tab:"t-fin"},
+  {k:["ai","ai systems","gpu","nvidia","ஏஐ","ஜிபியு"],a:A("AI Systems brought ₹773.1 crore, 58.4% of Q2 revenue, up 1,068% year on year.","AI Systems ₹773.1 கோடி — Q2 revenue-ல 58.4%, YoY 1,068% ஏற்றம்."),tab:"t-seg"},
+  {k:["data centre","data center","datacenter","டேட்டா சென்டர்"],preferOverMetric:true,a:A("Netweb sells the servers that go inside data centres; it does not build or rent data-centre buildings.","Data centres உள்ள போற servers-ஐ Netweb விக்குது; data-centre building கட்டறதோ வாடகைக்கு விடுறதோ இல்ல."),tab:"t-vc"},
+  {k:["order book","order","backlog","pipeline","ஆர்டர்","ஆர்டர் புக்","l1"],a:A("The firm order book is ₹2,629 crore plus ₹652.5 crore in L1 positions, with a ₹11,152 crore pipeline.","உறுதி order book ₹2,629 கோடி, L1 ₹652.5 கோடி, pipeline ₹11,152 கோடி."),tab:"t-met"},
+  {k:["guidance","guide","target","outlook","4000","கைடன்ஸ்"],a:A("Management targets ₹4,000 crore revenue for FY27; after ₹2,143 crore in H1, H2 needs only ₹1,857 crore.","FY27-க்கு ₹4,000 கோடி revenue இலக்கு; H1-ல ₹2,143 கோடி, H2-க்கு ₹1,857 கோடி போதும்."),tab:"t-fin"},
+  {k:["cash","net cash","debt","கேஷ்","கடன்","பணம்"],a:A("Netweb had net cash of ₹13.6 crore on 30 September, against net debt of ₹199.9 crore in June.","30 Sep-ல net cash ₹13.6 கோடி; June-ல net debt ₹199.9 கோடி."),tab:"t-cf"},
+  {k:["working capital","inventory","stock days","receivable","வொர்கிங் கேபிடல்","இன்வென்டரி"],a:A("The net working-capital cycle is 94 days, inside the 90–110 day guide; inventory is 117 days.","Net working-capital cycle 94 நாள் — 90–110 guidance-க்குள்ள; inventory 117 நாள்."),tab:"t-cf"},
+  {k:["customer","concentration","top 10","கஸ்டமர்"],a:A("Top-10 customers gave 85.2% of H1 revenue, up from 76.4% in FY26.","H1 revenue-ல top-10 customers 85.2%; FY26-ல 76.4%."),tab:"t-seg"},
+  {k:["valuation","pe","p/e","expensive","cheap","வேல்யூவேஷன்","விலை அதிகமா"],a:A("At ₹3,848 the stock trades at about 62.5 times trailing earnings, down from about 127 times at its high.","₹3,848-ல share TTM earnings-ஐ விட ~62.5 மடங்கு; high-ல ~127 மடங்கு இருந்துச்சு."),tab:"t-val"},
+  {k:["business model","what does","how does","make money","பிசினஸ்","எப்படி சம்பாதிக்குது"],a:A("Netweb designs and builds high-end computers — AI GPU servers, supercomputers and private-cloud systems — using bought-in chips.","Netweb high-end computers design பண்ணி கட்டுது — AI GPU servers, supercomputers, private-cloud systems — chips வெளியில வாங்கி."),tab:"t-bm"},
+  {k:["risk","danger","worry","ரிஸ்க்","ஆபத்து","பயம்"],a:A("Main risks: rising memory and GPU costs on a ~15% margin, 85% top-10 customer concentration, and cash-hungry growth.","முக்கிய risks: ~15% margin-ல memory, GPU செலவு ஏற்றம், top-10-ல 85%, cash சாப்பிடும் growth."),tab:"t-swot"},
+  {k:["trigger","catalyst","ட்ரிகர்"],a:A("Top triggers: delivering the ₹3,282 crore book plus L1 in H2, and IndiaAI sovereign GPU orders; trigger score 52.","முக்கிய triggers: H2-ல ₹3,282 கோடி book + L1 delivery, IndiaAI sovereign GPU orders; trigger score 52."),tab:"t-tc"},
+  {k:["cycle","phase","stage","சைக்கிள்"],a:A("AI compute is in rapid adoption, but the share is in a Stage 4 decline; cycle score 65.","AI compute வேக வளர்ச்சி நிலையில; ஆனா share Stage 4 சரிவுல; cycle score 65."),tab:"t-tc"},
+  {k:["pillar","score","6 pillars","conviction","தூண்"],a:A("Netweb scores 37 out of 60 on CB's six pillars — strong on growth, weak on valuation; conviction 55.","CB 6 தூண்கள்ல Netweb 60-க்கு 37 — growth-ல பலம், valuation-ல பலவீனம்; conviction 55."),tab:"t-pil"},
+  {k:["promoter","holding","shareholding","ப்ரமோட்டர்"],a:A("Promoters hold about 64.2%, down roughly 2.8 points because of QIP dilution, not selling.","Promoters ~64.2% வெச்சிருக்காங்க — QIP dilution-ஆல ~2.8 points குறைஞ்சது, விக்கல."),tab:"t-qip"}],
+ suggestions:[["Why did the share fall?","Share ஏன் இறங்குச்சு?"],["Tell me about the QIP","QIP பத்தி சொல்லுங்க"],["Is it a data centre stock?","இது data centre stock-ஆ?"],["What is the order book?","Order book எவ்வளவு?"],["Should I buy?","வாங்கலாமா?"]]};
+var assist=CauveryAssist.mount(document.getElementById("assist"),CONFIG);
+document.getElementById("voiceBubble").onclick=function(){assist.open();};
+document.getElementById("readTab").onclick=function(){var s=secs.filter(function(x){return!x.hidden;})[0];if(!s)return;var c=s.cloneNode(true);c.querySelectorAll("#assist,.chart,table").forEach(function(n){n.remove();});assist.speak(assist.plain(c.innerHTML));};
+
+/* ================= Cauvery Socrates quiz ================= */
+var QZ=[[A("What share of Q2 FY27 revenue came from AI Systems?","Q2 FY27 revenue-ல AI Systems பங்கு எவ்வளவு?"),["19%","38%","58%","90%"],2,A("₹773.1 cr of ₹1,323.3 cr ≈ 58.4%.","₹1,323.3 கோடியில ₹773.1 கோடி ≈ 58.4%.")],
+ [A("Is Netweb a data-centre landlord?","Netweb data-centre வாடகை company-ஆ?"),[A("Yes, it rents racks","ஆமா, racks வாடகை"),A("No, it sells the computers inside","இல்ல, உள்ள இருக்குற computers விக்குது"),A("It builds power plants","Power plants கட்டுது"),A("It makes GPU chips","GPU chips செய்யுது")],1,A("It designs and builds servers using bought-in chips; it earns per sale.","வாங்குற chips வெச்சு servers கட்டுது; ஒவ்வொரு sale-க்கும் வருமானம்.")],
+ [A("At what price did funds buy in the QIP?","QIP-ல funds என்ன விலைக்கு வாங்கினாங்க?"),["₹2,920","₹3,848","₹4,790","₹5,813"],2,A("₹4,790, 1.96% below the ₹4,885.90 floor.","₹4,790 — ₹4,885.90 floor-ஐ விட 1.96% கம்மி.")],
+ [A("What mainly drove the 34% fall from the high?","High-ல இருந்து 34% சரிவுக்கு முக்கிய காரணம்?"),[A("Weak results","மோசமான results"),A("High P/E plus a global AI selloff","அதிக P/E + global AI selloff"),A("A dividend cut","Dividend குறைப்பு"),A("Promoter selling","Promoter விற்பனை")],1,A("Results were a record; the P/E fell from ~127× to 62.5×.","Results record தான்; P/E ~127× → 62.5×.")],
+ [A("Where did most QIP money go by 30 Sep?","30 Sep வரை QIP பணம் பெரும்பாலும் எங்க போச்சு?"),[A("Dividends","Dividends"),A("New factories","புது factories"),A("Working capital (stock, receivables)","Working capital (stock, receivables)"),A("Buyback","Buyback")],2,A("₹774 cr used, mostly working capital; inventory is 117 days.","₹774 கோடி செலவு, பெரும்பாலும் working capital; inventory 117 நாள்.")],
+ [A("In CB's cycle view, where is the share price?","CB cycle view-ல share price எங்க?"),[A("Stage 2 advance","Stage 2 ஏற்றம்"),A("Stage 1 base","Stage 1 அடித்தளம்"),A("Stage 4 decline","Stage 4 சரிவு"),A("No stage","Stage இல்ல")],2,A("Price is below a falling 30-week average, so conviction is capped at 55.","Price இறங்குற 30-week average-க்கு கீழ — அதனால conviction 55-ல cap.")]];
+var qAns={};function qRender(){var h="";QZ.forEach(function(q,i){var a=qAns[i];h+='<div style="margin-bottom:14px"><b>'+(i+1)+'. <span class="en">'+q[0].en+'</span><span class="ta">'+q[0].ta+'</span></b>';
+  q[1].forEach(function(o,j){o=T(o);var cls=a===undefined?"":(j===q[2]?" ok":(j===a?" no":""));h+='<button type="button" class="qz-opt'+cls+'" data-q="'+i+'" data-o="'+j+'" '+(a!==undefined?"disabled":"")+'><span class="en">'+o.en+'</span><span class="ta">'+o.ta+'</span></button>';});
+  if(a!==undefined)h+='<p class="note" style="margin:4px 0 0"><span class="en">'+(a===q[2]?"Right! ":"Not quite. ")+q[3].en+'</span><span class="ta">'+(a===q[2]?"சரி! ":"இல்ல. ")+q[3].ta+'</span></p>';h+='</div>';});
+ h+='<button type="button" class="btn" id="qReset"><span class="en">Try again</span><span class="ta">மறுபடி</span></button>';document.getElementById("quiz").innerHTML=h;
+ document.querySelectorAll("#quiz [data-q]").forEach(function(b){b.onclick=function(){qAns[b.dataset.q]=+b.dataset.o;qRender();};});document.getElementById("qReset").onclick=function(){qAns={};qRender();};
+ var right=0,done=0;QZ.forEach(function(q,i){if(qAns[i]!==undefined){done++;if(qAns[i]===q[2])right++;}});
+ put("c-qscore",bars({cats:[{en:"Right",ta:"சரி"},{en:"Wrong",ta:"தவறு"},{en:"Left",ta:"மீதி"}],series:[{name:"n",vals:[right,done-right,QZ.length-done],col:C.water}],dec:0,w:420,h:240}));}
+qRender();
+
+/* ================= init ================= */
+(function(){var h=(location.hash||"").slice(1),id="t-"+h;showTab(document.getElementById(id)?id:"t-dash");var l=ls("cb_netweb_lang");setLang(l==="ta"?"ta":"en");})();
+
+</script>
